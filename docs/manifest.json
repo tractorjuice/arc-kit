@@ -1,5 +1,5 @@
 {
-  "generated": "2026-01-24T12:00:00Z",
+  "generated": "2026-07-27T00:00:00Z",
   "repository": {
     "owner": "tractorjuice",
     "name": "arc-kit",
@@ -32,70 +32,45 @@
       "category": "Overview"
     },
     {
-      "path": "docs/TOKEN-LIMITS.md",
-      "title": "Token Limits Guide",
-      "category": "Technical"
+      "path": "docs/RELEASING.md",
+      "title": "Release Process",
+      "category": "Overview"
     }
   ],
   "projects": [
     {
-      "id": "guides-core",
-      "name": "Core Workflow Guides",
+      "id": "guides-ai-agent-architecture-overlay",
+      "name": "AI Agent Architecture Overlay Guides",
       "documents": [
         {
-          "path": "docs/guides/plan.md",
-          "title": "Project Plan",
-          "category": "Planning"
+          "path": "docs/guides/agent-design.md",
+          "title": "AI Agent Design Playbook",
+          "category": "AI Agent Architecture Overlay"
         },
         {
-          "path": "docs/guides/principles.md",
-          "title": "Architecture Principles",
-          "category": "Architecture"
+          "path": "docs/guides/agent-governance.md",
+          "title": "AI Agent Governance Playbook",
+          "category": "AI Agent Architecture Overlay"
         },
         {
-          "path": "docs/guides/stakeholders.md",
-          "title": "Stakeholder Analysis",
-          "category": "Discovery"
+          "path": "docs/guides/agent-integration.md",
+          "title": "AI Agent Integration Playbook",
+          "category": "AI Agent Architecture Overlay"
         },
         {
-          "path": "docs/guides/risk-management.md",
-          "title": "Risk Management",
-          "category": "Governance"
+          "path": "docs/guides/agent-inventory.md",
+          "title": "AI Agent Inventory Playbook",
+          "category": "AI Agent Architecture Overlay"
         },
         {
-          "path": "docs/guides/risk.md",
-          "title": "Risk Command",
-          "category": "Governance"
+          "path": "docs/guides/agent-maturity.md",
+          "title": "AI Agent Maturity Playbook",
+          "category": "AI Agent Architecture Overlay"
         },
         {
-          "path": "docs/guides/business-case.md",
-          "title": "Business Case (SOBC)",
-          "category": "Planning"
-        },
-        {
-          "path": "docs/guides/sobc.md",
-          "title": "SOBC Command",
-          "category": "Planning"
-        },
-        {
-          "path": "docs/guides/requirements.md",
-          "title": "Requirements Definition",
-          "category": "Discovery"
-        },
-        {
-          "path": "docs/guides/roadmap.md",
-          "title": "Roadmap",
-          "category": "Planning"
-        },
-        {
-          "path": "docs/guides/backlog.md",
-          "title": "Product Backlog",
-          "category": "Planning"
-        },
-        {
-          "path": "docs/guides/traceability.md",
-          "title": "Traceability",
-          "category": "Governance"
+          "path": "docs/guides/agent-security.md",
+          "title": "AI Agent Security Playbook",
+          "category": "AI Agent Architecture Overlay"
         }
       ]
     },
@@ -104,80 +79,324 @@
       "name": "Architecture Guides",
       "documents": [
         {
-          "path": "docs/guides/platform-design.md",
-          "title": "Platform Design",
+          "path": "docs/guides/adr.md",
+          "title": "Architecture Decision Record (ADR) Guide",
           "category": "Architecture"
         },
         {
-          "path": "docs/guides/data-model.md",
-          "title": "Data Model",
+          "path": "docs/guides/c4-layout-science.md",
+          "title": "C4 Layout Science Guide",
           "category": "Architecture"
         },
         {
           "path": "docs/guides/data-mesh-contract.md",
-          "title": "Data Mesh Contract",
+          "title": "Data Mesh Contract Quick Guide",
           "category": "Architecture"
         },
         {
-          "path": "docs/guides/wardley-mapping.md",
-          "title": "Wardley Mapping",
-          "category": "Strategy"
-        },
-        {
-          "path": "docs/guides/wardley.md",
-          "title": "Wardley Command",
-          "category": "Strategy"
-        },
-        {
-          "path": "docs/guides/diagram.md",
-          "title": "Architecture Diagrams",
-          "category": "Architecture"
-        },
-        {
-          "path": "docs/guides/adr.md",
-          "title": "Architecture Decision Records",
+          "path": "docs/guides/data-model.md",
+          "title": "Data Model Quick Guide",
           "category": "Architecture"
         },
         {
           "path": "docs/guides/design-review.md",
-          "title": "Design Reviews",
+          "title": "Design Review Guide",
           "category": "Architecture"
         },
         {
-          "path": "docs/guides/hld-review.md",
-          "title": "HLD Review",
+          "path": "docs/guides/dfd.md",
+          "title": "Data Flow Diagram Guide",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/diagram.md",
+          "title": "Architecture Diagram Guide",
           "category": "Architecture"
         },
         {
           "path": "docs/guides/dld-review.md",
-          "title": "DLD Review",
+          "title": "Detailed Design Review Playbook",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/framework.md",
+          "title": "Framework Guide",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/hld-review.md",
+          "title": "High-Level Design Review Playbook",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/platform-design.md",
+          "title": "Platform Strategy Design Guide",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/principles.md",
+          "title": "Architecture Principles Guide",
           "category": "Architecture"
         }
       ]
     },
     {
-      "id": "guides-research",
-      "name": "Research & Analysis Guides",
+      "id": "guides-australian-federal-energy-overlay",
+      "name": "Australian Federal / Energy Overlay Guides",
       "documents": [
         {
-          "path": "docs/guides/research.md",
-          "title": "Research",
-          "category": "Research"
+          "path": "docs/guides/au-aescsf.md",
+          "title": "AU AESCSF Maturity Assessment",
+          "category": "Australian Federal / Energy Overlay"
         },
         {
-          "path": "docs/guides/analyze.md",
-          "title": "Governance Analysis",
-          "category": "Analysis"
+          "path": "docs/guides/au-ai-assurance.md",
+          "title": "Australian AI Assurance Baseline Playbook",
+          "category": "Australian Federal / Energy Overlay"
         },
         {
-          "path": "docs/guides/principles-compliance.md",
-          "title": "Principles Compliance",
-          "category": "Compliance"
+          "path": "docs/guides/au-disp-attestation.md",
+          "title": "Australian DISP Member Self-Attestation Pack Playbook",
+          "category": "Australian Federal / Energy Overlay"
         },
         {
-          "path": "docs/guides/story.md",
-          "title": "Project Story",
-          "category": "Analysis"
+          "path": "docs/guides/au-dss.md",
+          "title": "Australian DTA Digital Service Standard Conformance Playbook",
+          "category": "Australian Federal / Energy Overlay"
+        },
+        {
+          "path": "docs/guides/au-e8-posture.md",
+          "title": "Australian Essential Eight Maturity Posture Playbook",
+          "category": "Australian Federal / Energy Overlay"
+        },
+        {
+          "path": "docs/guides/au-energy-compliance.md",
+          "title": "AU Energy Compliance Pack",
+          "category": "Australian Federal / Energy Overlay"
+        },
+        {
+          "path": "docs/guides/au-ism-controls.md",
+          "title": "Australian ISM Statement of Applicability Playbook",
+          "category": "Australian Federal / Energy Overlay"
+        },
+        {
+          "path": "docs/guides/au-ndb-playbook.md",
+          "title": "Australian Notifiable Data Breach Response Playbook",
+          "category": "Australian Federal / Energy Overlay"
+        },
+        {
+          "path": "docs/guides/au-ot-security.md",
+          "title": "AU OT Security",
+          "category": "Australian Federal / Energy Overlay"
+        },
+        {
+          "path": "docs/guides/au-pia.md",
+          "title": "Australian Privacy Impact Assessment Playbook",
+          "category": "Australian Federal / Energy Overlay"
+        },
+        {
+          "path": "docs/guides/au-pspf.md",
+          "title": "Australian Protective Security Policy Framework Scorecard Playbook",
+          "category": "Australian Federal / Energy Overlay"
+        },
+        {
+          "path": "docs/guides/au-soci-cirmp.md",
+          "title": "AU SOCI CIRMP",
+          "category": "Australian Federal / Energy Overlay"
+        }
+      ]
+    },
+    {
+      "id": "guides-canada-federal-overlay",
+      "name": "Canada Federal Overlay Guides",
+      "documents": [
+        {
+          "path": "docs/guides/ca-aia.md",
+          "title": "Canada Algorithmic Impact Assessment Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-atip.md",
+          "title": "Canada ATIP Reconciliation Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-charter.md",
+          "title": "Canada Charter Rights Design Review Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-cloud-residency.md",
+          "title": "Canada Sovereign Cloud Residency Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-fitaa.md",
+          "title": "Canada FITAA Compliance Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-gc-digital-standards.md",
+          "title": "Canada GC Digital Standards Conformance Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-itsg-33.md",
+          "title": "Canada ITSG-33 Statement of Applicability Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-ocap.md",
+          "title": "Canada First Nations OCAP® Sovereignty Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-ola.md",
+          "title": "Canada Official Languages Act Review Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-pia.md",
+          "title": "Canada Privacy Impact Assessment Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-pspc.md",
+          "title": "Canada Federal Procurement Strategy Playbook",
+          "category": "Canada Federal Overlay"
+        },
+        {
+          "path": "docs/guides/ca-soia.md",
+          "title": "Canada Security of Information Act Handling Playbook",
+          "category": "Canada Federal Overlay"
+        }
+      ]
+    },
+    {
+      "id": "guides-community-overlays-austria",
+      "name": "Community overlays - Austria Guides",
+      "documents": [
+        {
+          "path": "docs/guides/at-bvergg.md",
+          "title": "Austrian Federal Procurement Act (BVergG 2018) Playbook",
+          "category": "Community overlays - Austria"
+        },
+        {
+          "path": "docs/guides/at-dsgvo.md",
+          "title": "Austrian DSG / DSGVO Compliance Playbook",
+          "category": "Community overlays - Austria"
+        },
+        {
+          "path": "docs/guides/at-nisg.md",
+          "title": "Austrian NIS Act (NISG) Compliance Playbook",
+          "category": "Community overlays - Austria"
+        }
+      ]
+    },
+    {
+      "id": "guides-community-overlays-eu",
+      "name": "Community overlays - EU Guides",
+      "documents": [
+        {
+          "path": "docs/guides/eu-ai-act.md",
+          "title": "EU AI Act Compliance Assessment Playbook",
+          "category": "Community overlays - EU"
+        },
+        {
+          "path": "docs/guides/eu-cra.md",
+          "title": "EU Cyber Resilience Act Compliance Playbook",
+          "category": "Community overlays - EU"
+        },
+        {
+          "path": "docs/guides/eu-data-act.md",
+          "title": "EU Data Act Compliance Playbook",
+          "category": "Community overlays - EU"
+        },
+        {
+          "path": "docs/guides/eu-dora.md",
+          "title": "EU DORA Compliance Playbook",
+          "category": "Community overlays - EU"
+        },
+        {
+          "path": "docs/guides/eu-dsa.md",
+          "title": "EU Digital Services Act Compliance Playbook",
+          "category": "Community overlays - EU"
+        },
+        {
+          "path": "docs/guides/eu-nis2.md",
+          "title": "EU NIS2 Directive Compliance Playbook",
+          "category": "Community overlays - EU"
+        },
+        {
+          "path": "docs/guides/eu-rgpd.md",
+          "title": "EU GDPR Compliance Assessment Playbook",
+          "category": "Community overlays - EU"
+        }
+      ]
+    },
+    {
+      "id": "guides-community-overlays-france",
+      "name": "Community overlays - France Guides",
+      "documents": [
+        {
+          "path": "docs/guides/fr-algorithme-public.md",
+          "title": "French Public Algorithm Transparency Notice Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-anssi-carto.md",
+          "title": "ANSSI IS Cartography Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-anssi.md",
+          "title": "ANSSI Security Posture Assessment Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-code-reuse.md",
+          "title": "French Public Code Reuse Assessment Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-dinum.md",
+          "title": "DINUM Digital Standards Assessment Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-dr.md",
+          "title": "Diffusion Restreinte (DR) Handling Assessment Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-ebios.md",
+          "title": "EBIOS Risk Manager Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-irn.md",
+          "title": "IRN — Indice de Résilience Numérique Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-marche-public.md",
+          "title": "French Public Procurement Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-pssi.md",
+          "title": "PSSI (Information System Security Policy) Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-rgpd.md",
+          "title": "French GDPR / CNIL Compliance Playbook",
+          "category": "Community overlays - France"
+        },
+        {
+          "path": "docs/guides/fr-secnumcloud.md",
+          "title": "SecNumCloud Qualification Assessment Playbook",
+          "category": "Community overlays - France"
         }
       ]
     },
@@ -186,106 +405,454 @@
       "name": "Compliance Guides",
       "documents": [
         {
-          "path": "docs/guides/dpia.md",
-          "title": "Data Protection Impact Assessment",
-          "category": "Privacy"
-        },
-        {
-          "path": "docs/guides/service-assessment.md",
-          "title": "GDS Service Assessment",
-          "category": "UK Government"
-        }
-      ]
-    },
-    {
-      "id": "guides-uk-gov",
-      "name": "UK Government Guides",
-      "documents": [
-        {
-          "path": "docs/guides/uk-government/technology-code-of-practice.md",
-          "title": "Technology Code of Practice",
-          "category": "Standards"
-        },
-        {
-          "path": "docs/guides/tcop.md",
-          "title": "TCoP Command",
-          "category": "Standards"
-        },
-        {
-          "path": "docs/guides/uk-government/ai-playbook.md",
-          "title": "AI Playbook",
-          "category": "AI Governance"
-        },
-        {
           "path": "docs/guides/ai-playbook.md",
-          "title": "AI Playbook Command",
-          "category": "AI Governance"
-        },
-        {
-          "path": "docs/guides/uk-government/algorithmic-transparency.md",
-          "title": "Algorithmic Transparency (ATRS)",
-          "category": "AI Governance"
+          "title": "AI Playbook Assessment Playbook",
+          "category": "Compliance"
         },
         {
           "path": "docs/guides/atrs.md",
-          "title": "ATRS Command",
-          "category": "AI Governance"
+          "title": "Algorithmic Transparency Recording Standard Playbook",
+          "category": "Compliance"
         },
         {
-          "path": "docs/guides/uk-government/secure-by-design.md",
-          "title": "Secure by Design",
-          "category": "Security"
+          "path": "docs/guides/codes-of-practice.md",
+          "title": "UK Government Codes of Practice — ArcKit Reference Guide",
+          "category": "Compliance"
+        },
+        {
+          "path": "docs/guides/dpia.md",
+          "title": "Data Protection Impact Assessment (DPIA) Guide",
+          "category": "Compliance"
+        },
+        {
+          "path": "docs/guides/govs-007-security.md",
+          "title": "GovS 007: Security — ArcKit Reference Guide",
+          "category": "Compliance"
+        },
+        {
+          "path": "docs/guides/jsp-936.md",
+          "title": "JSP 936 AI Assurance Guide",
+          "category": "Compliance"
+        },
+        {
+          "path": "docs/guides/mod-secure.md",
+          "title": "MOD Secure by Design Playbook",
+          "category": "Compliance"
+        },
+        {
+          "path": "docs/guides/national-data-strategy.md",
+          "title": "UK National Data Strategy — ArcKit Reference Guide",
+          "category": "Compliance"
         },
         {
           "path": "docs/guides/secure.md",
-          "title": "Secure Command",
-          "category": "Security"
+          "title": "Secure by Design Playbook",
+          "category": "Compliance"
         },
         {
-          "path": "docs/guides/uk-government/digital-marketplace.md",
-          "title": "Digital Marketplace",
-          "category": "Procurement"
+          "path": "docs/guides/service-assessment.md",
+          "title": "GDS Service Assessment Guide",
+          "category": "Compliance"
         },
         {
-          "path": "docs/guides/gcloud-search.md",
-          "title": "G-Cloud Search",
-          "category": "Procurement"
-        },
-        {
-          "path": "docs/guides/gcloud-clarify.md",
-          "title": "G-Cloud Clarify",
-          "category": "Procurement"
-        },
-        {
-          "path": "docs/guides/dos.md",
-          "title": "DOS Procurement",
-          "category": "Procurement"
-        },
-        {
-          "path": "docs/guides/uk-government/standards-map.md",
-          "title": "UK Standards Map",
-          "category": "Standards"
+          "path": "docs/guides/tcop.md",
+          "title": "Technology Code of Practice Playbook",
+          "category": "Compliance"
         }
       ]
     },
     {
-      "id": "guides-uk-mod",
-      "name": "UK MOD Guides",
+      "id": "guides-discovery",
+      "name": "Discovery Guides",
       "documents": [
         {
-          "path": "docs/guides/uk-mod/secure-by-design.md",
-          "title": "MOD Secure by Design",
-          "category": "Security"
+          "path": "docs/guides/datascout.md",
+          "title": "Data Source Discovery Guide",
+          "category": "Discovery"
         },
         {
-          "path": "docs/guides/mod-secure.md",
-          "title": "MOD Secure Command",
-          "category": "Security"
+          "path": "docs/guides/gov-code-search.md",
+          "title": "Government Code Search Guide",
+          "category": "Discovery"
         },
         {
-          "path": "docs/guides/jsp-936.md",
-          "title": "JSP 936 AI Assurance",
-          "category": "AI Governance"
+          "path": "docs/guides/gov-landscape.md",
+          "title": "Government Code Landscape Analysis Guide",
+          "category": "Discovery"
+        },
+        {
+          "path": "docs/guides/gov-reuse.md",
+          "title": "Government Code Reuse Assessment Guide",
+          "category": "Discovery"
+        },
+        {
+          "path": "docs/guides/grants.md",
+          "title": "UK Grants & Funding Research Playbook",
+          "category": "Discovery"
+        },
+        {
+          "path": "docs/guides/requirements.md",
+          "title": "Requirements Guide",
+          "category": "Discovery"
+        },
+        {
+          "path": "docs/guides/research.md",
+          "title": "Technology Research Guide",
+          "category": "Discovery"
+        },
+        {
+          "path": "docs/guides/stakeholder-analysis.md",
+          "title": "Stakeholder Analysis Guide",
+          "category": "Discovery"
+        },
+        {
+          "path": "docs/guides/stakeholders.md",
+          "title": "Stakeholder Analysis Playbook",
+          "category": "Discovery"
+        }
+      ]
+    },
+    {
+      "id": "guides-fde-site-generator",
+      "name": "FDE Site Generator Guides",
+      "documents": [
+        {
+          "path": "docs/guides/create.md",
+          "title": "FDE Site Generator Guide",
+          "category": "FDE Site Generator"
+        }
+      ]
+    },
+    {
+      "id": "guides-getting-started",
+      "name": "Getting Started Guides",
+      "documents": [
+        {
+          "path": "docs/guides/init.md",
+          "title": "Init Guide",
+          "category": "Getting Started"
+        },
+        {
+          "path": "docs/guides/start.md",
+          "title": "Getting Started with ArcKit",
+          "category": "Getting Started"
+        }
+      ]
+    },
+    {
+      "id": "guides-governance",
+      "name": "Governance Guides",
+      "documents": [
+        {
+          "path": "docs/guides/analyze.md",
+          "title": "Project Analysis Playbook",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/artifact-health.md",
+          "title": "Artifact Health Guide",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/conformance.md",
+          "title": "Architecture Conformance Guide",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/data-quality-framework.md",
+          "title": "UK Government Data Quality Framework — ArcKit Reference Guide",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/graph-report.md",
+          "title": "/arckit:graph-report` — governance metrics dashboard",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/health.md",
+          "title": "Health Check Guide",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/impact.md",
+          "title": "Impact Analysis",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/knowledge-compounding.md",
+          "title": "Knowledge Compounding Guide",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/maturity-model.md",
+          "title": "Maturity Model Guide",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/navigator.md",
+          "title": "/arckit:navigator` — what should I do next?",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/principles-compliance.md",
+          "title": "Principles Compliance Guide",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/risk-management.md",
+          "title": "Risk Management Guide",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/risk.md",
+          "title": "Risk Register Playbook",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/search.md",
+          "title": "Project Search",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/traceability.md",
+          "title": "Traceability Guide",
+          "category": "Governance"
+        }
+      ]
+    },
+    {
+      "id": "guides-integrations",
+      "name": "Integrations Guides",
+      "documents": [
+        {
+          "path": "docs/guides/aws-research.md",
+          "title": "AWS Technology Research Guide",
+          "category": "Integrations"
+        },
+        {
+          "path": "docs/guides/azure-research.md",
+          "title": "Azure Technology Research Guide",
+          "category": "Integrations"
+        },
+        {
+          "path": "docs/guides/gcp-research.md",
+          "title": "Google Cloud Technology Research Guide",
+          "category": "Integrations"
+        },
+        {
+          "path": "docs/guides/servicenow.md",
+          "title": "ServiceNow Service Design Playbook",
+          "category": "Integrations"
+        },
+        {
+          "path": "docs/guides/trello.md",
+          "title": "Trello Export Quick Guide",
+          "category": "Integrations"
+        }
+      ]
+    },
+    {
+      "id": "guides-interoperability",
+      "name": "Interoperability Guides",
+      "documents": [
+        {
+          "path": "docs/guides/export-okf.md",
+          "title": "/arckit:export-okf` - Open Knowledge Format export",
+          "category": "Interoperability"
+        },
+        {
+          "path": "docs/guides/import-okf.md",
+          "title": "/arckit:import-okf` - Open Knowledge Format import",
+          "category": "Interoperability"
+        }
+      ]
+    },
+    {
+      "id": "guides-operations",
+      "name": "Operations Guides",
+      "documents": [
+        {
+          "path": "docs/guides/devops.md",
+          "title": "DevOps Strategy Playbook",
+          "category": "Operations"
+        },
+        {
+          "path": "docs/guides/finops.md",
+          "title": "FinOps Strategy Playbook",
+          "category": "Operations"
+        },
+        {
+          "path": "docs/guides/mlops.md",
+          "title": "MLOps Strategy Playbook",
+          "category": "Operations"
+        },
+        {
+          "path": "docs/guides/operationalize.md",
+          "title": "Operational Readiness Playbook",
+          "category": "Operations"
+        }
+      ]
+    },
+    {
+      "id": "guides-other",
+      "name": "Other Guides",
+      "documents": [
+        {
+          "path": "docs/guides/au-federal-overlay.md",
+          "title": "Australian Federal / DISP-supplier Overlay Guide",
+          "category": "Other"
+        },
+        {
+          "path": "docs/guides/deepbook.md",
+          "title": "DeepBook Guide",
+          "category": "Other"
+        },
+        {
+          "path": "docs/guides/testing-plugin-branches.md",
+          "title": "Testing Plugin Branches",
+          "category": "Other"
+        },
+        {
+          "path": "docs/guides/uae-overlay-maintenance.md",
+          "title": "UAE Federal Overlay Maintenance Reference",
+          "category": "Other"
+        },
+        {
+          "path": "docs/guides/uae-overlay.md",
+          "title": "UAE Federal Overlay Guide",
+          "category": "Other"
+        },
+        {
+          "path": "docs/guides/uk-fs-payments-overlay.md",
+          "title": "UK Finance Payments Overlay",
+          "category": "Other"
+        },
+        {
+          "path": "docs/guides/uk-nhs-clinical-safety-overlay.md",
+          "title": "UK NHS Clinical Safety Overlay Guide",
+          "category": "Other"
+        },
+        {
+          "path": "docs/guides/us-federal-overlay.md",
+          "title": "USA Federal Civilian Overlay — Maintenance & Citation Register",
+          "category": "Other"
+        }
+      ]
+    },
+    {
+      "id": "guides-planning",
+      "name": "Planning Guides",
+      "documents": [
+        {
+          "path": "docs/guides/backlog.md",
+          "title": "Product Backlog Quick Guide",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/business-case.md",
+          "title": "Strategic Outline Business Case (SOBC) Guide",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/migration.md",
+          "title": "File Migration Playbook",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/plan.md",
+          "title": "Project Plan Playbook",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/roadmap.md",
+          "title": "Architecture Roadmap Playbook",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/sobc.md",
+          "title": "Strategic Outline Business Case Playbook",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/strategy.md",
+          "title": "Architecture Strategy Playbook",
+          "category": "Planning"
+        }
+      ]
+    },
+    {
+      "id": "guides-plugin-operations",
+      "name": "Plugin Operations Guides",
+      "documents": [
+        {
+          "path": "docs/guides/autoresearch.md",
+          "title": "Autoresearch Guide: Self-Improving Command Prompts",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/build.md",
+          "title": "Build Harness Guide",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/custom-commands.md",
+          "title": "Custom Commands Authoring Guide",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/customize.md",
+          "title": "Template Customization Guide",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/enterprise-scale.md",
+          "title": "ArcKit at Enterprise Scale",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/hooks.md",
+          "title": "Hooks Guide",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/mcp-servers.md",
+          "title": "ArcKit Plugin Setup Guide",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/pinecone-mcp.md",
+          "title": "Pinecone MCP Integration Guide",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/productivity.md",
+          "title": "Architecture Productivity Guide",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/remote-control.md",
+          "title": "Govern Architecture from Anywhere: Using Claude Code Remote Control with ArcKit",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/security-hooks.md",
+          "title": "Security Hooks Guide",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/session-memory.md",
+          "title": "Session Memory",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/template-builder.md",
+          "title": "Template Builder Guide",
+          "category": "Plugin Operations"
+        },
+        {
+          "path": "docs/guides/upgrading.md",
+          "title": "Upgrading ArcKit",
+          "category": "Plugin Operations"
         }
       ]
     },
@@ -294,77 +861,556 @@
       "name": "Procurement Guides",
       "documents": [
         {
-          "path": "docs/guides/procurement.md",
-          "title": "Vendor Procurement",
+          "path": "docs/guides/competitors.md",
+          "title": "Competitor Landscape Guide",
           "category": "Procurement"
         },
         {
-          "path": "docs/guides/sow.md",
-          "title": "Statement of Work",
+          "path": "docs/guides/dos.md",
+          "title": "Digital Outcomes and Specialists Playbook",
           "category": "Procurement"
         },
         {
           "path": "docs/guides/evaluate.md",
-          "title": "Vendor Evaluation",
+          "title": "Vendor Evaluation Playbook",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/gcloud-clarify.md",
+          "title": "G-Cloud Clarification Questions Playbook",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/gcloud-search.md",
+          "title": "G-Cloud Search Playbook",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/procurement.md",
+          "title": "Vendor Procurement Guide",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/score.md",
+          "title": "Vendor Scoring",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/sow.md",
+          "title": "Statement of Work Playbook",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/tenders.md",
+          "title": "Procurement Market Intelligence Guide",
           "category": "Procurement"
         }
       ]
     },
     {
-      "id": "guides-devops",
-      "name": "DevOps & Operations Guides",
+      "id": "guides-reporting",
+      "name": "Reporting Guides",
       "documents": [
         {
-          "path": "docs/guides/operationalize.md",
-          "title": "Operational Readiness",
-          "category": "Operations"
+          "path": "docs/guides/glossary.md",
+          "title": "Glossary Guide",
+          "category": "Reporting"
         },
-        {
-          "path": "docs/guides/devops.md",
-          "title": "DevOps Strategy",
-          "category": "DevOps"
-        },
-        {
-          "path": "docs/guides/mlops.md",
-          "title": "MLOps Strategy",
-          "category": "MLOps"
-        },
-        {
-          "path": "docs/guides/finops.md",
-          "title": "FinOps Strategy",
-          "category": "FinOps"
-        },
-        {
-          "path": "docs/guides/servicenow.md",
-          "title": "ServiceNow Design",
-          "category": "ITSM"
-        }
-      ]
-    },
-    {
-      "id": "guides-publishing",
-      "name": "Documentation & Publishing",
-      "documents": [
         {
           "path": "docs/guides/pages.md",
-          "title": "GitHub Pages Generator",
-          "category": "Publishing"
+          "title": "GitHub Pages Generator Playbook",
+          "category": "Reporting"
+        },
+        {
+          "path": "docs/guides/presentation.md",
+          "title": "Presentation Guide",
+          "category": "Reporting"
+        },
+        {
+          "path": "docs/guides/story.md",
+          "title": "Project Story Guide",
+          "category": "Reporting"
         }
       ]
     },
     {
-      "id": "guides-repository",
+      "id": "guides-repository-plugin",
       "name": "Repository Plugin Guides",
       "documents": [
         {
-          "path": "docs/guides/repo-docs.md",
-          "title": "Repository Documentation Wiki",
+          "path": "docs/guides/repo-audit.md",
+          "title": "Codebase Audit Guide",
           "category": "Repository Plugin"
         },
         {
-          "path": "docs/guides/repo-audit.md",
-          "title": "Codebase Audit",
+          "path": "docs/guides/repo-docs.md",
+          "title": "Repository Documentation Wiki Guide",
           "category": "Repository Plugin"
+        }
+      ]
+    },
+    {
+      "id": "guides-roles",
+      "name": "Roles Guides",
+      "documents": [
+        {
+          "path": "docs/guides/roles/README.md",
+          "title": "ArcKit DDaT Role Guides",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/business-analyst.md",
+          "title": "Business Analyst — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/business-architect.md",
+          "title": "Business Architect — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/cdo.md",
+          "title": "CDO (Chief Data Officer) — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/ciso.md",
+          "title": "CISO (Chief Information Security Officer) — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/cto-cdio.md",
+          "title": "CTO / CDIO — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/data-architect.md",
+          "title": "Data Architect — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/data-governance-manager.md",
+          "title": "Data Governance Manager — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/delivery-manager.md",
+          "title": "Delivery Manager — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/devops-engineer.md",
+          "title": "DevOps Engineer — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/enterprise-architect.md",
+          "title": "Enterprise Architect — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/it-service-manager.md",
+          "title": "IT Service Manager — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/network-architect.md",
+          "title": "Network Architect — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/performance-analyst.md",
+          "title": "Performance Analyst — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/product-manager.md",
+          "title": "Product Manager — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/security-architect.md",
+          "title": "Security Architect — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/service-owner.md",
+          "title": "Service Owner — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/solution-architect.md",
+          "title": "Solution Architect — ArcKit Command Guide",
+          "category": "Roles"
+        },
+        {
+          "path": "docs/guides/roles/technical-architect.md",
+          "title": "Technical Architect — ArcKit Command Guide",
+          "category": "Roles"
+        }
+      ]
+    },
+    {
+      "id": "guides-togaf-adm-overlay",
+      "name": "TOGAF ADM Overlay Guides",
+      "documents": [
+        {
+          "path": "docs/guides/adm-preliminary.md",
+          "title": "TOGAF ADM Preliminary Playbook",
+          "category": "TOGAF ADM Overlay"
+        },
+        {
+          "path": "docs/guides/application-inventory.md",
+          "title": "Application Inventory Playbook",
+          "category": "TOGAF ADM Overlay"
+        },
+        {
+          "path": "docs/guides/application-rationalization.md",
+          "title": "Application Rationalization Playbook",
+          "category": "TOGAF ADM Overlay"
+        },
+        {
+          "path": "docs/guides/architecture-board.md",
+          "title": "Architecture Board Playbook",
+          "category": "TOGAF ADM Overlay"
+        },
+        {
+          "path": "docs/guides/architecture-change.md",
+          "title": "Architecture Change Request Playbook",
+          "category": "TOGAF ADM Overlay"
+        },
+        {
+          "path": "docs/guides/architecture-repository.md",
+          "title": "Architecture Repository Playbook",
+          "category": "TOGAF ADM Overlay"
+        },
+        {
+          "path": "docs/guides/business-capability-map.md",
+          "title": "Business Capability Map Playbook",
+          "category": "TOGAF ADM Overlay"
+        },
+        {
+          "path": "docs/guides/gap-analysis.md",
+          "title": "TOGAF Gap Analysis Playbook",
+          "category": "TOGAF ADM Overlay"
+        },
+        {
+          "path": "docs/guides/transition-architecture.md",
+          "title": "Transition Architecture Playbook",
+          "category": "TOGAF ADM Overlay"
+        }
+      ]
+    },
+    {
+      "id": "guides-uae-federal-overlay",
+      "name": "UAE Federal Overlay Guides",
+      "documents": [
+        {
+          "path": "docs/guides/uae-ai-autonomy-tier.md",
+          "title": "UAE AI Autonomy Tier Posture Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-ai-charter.md",
+          "title": "UAE Charter for AI Compliance Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-classification.md",
+          "title": "UAE Smart Data Classification Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-cloud-residency.md",
+          "title": "UAE Sovereign Cloud Residency Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-data-sharing.md",
+          "title": "UAE Data Sharing Agreement Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-digital-records.md",
+          "title": "UAE Digital Records Plan Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-ias.md",
+          "title": "UAE Information Assurance Standard (IAS) Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-pdpl.md",
+          "title": "UAE PDPL Compliance Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-priorities-alignment.md",
+          "title": "UAE National Priorities Alignment Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-procurement.md",
+          "title": "UAE Federal Procurement Strategy Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-uaepass.md",
+          "title": "UAE Pass Integration Playbook",
+          "category": "UAE Federal Overlay"
+        },
+        {
+          "path": "docs/guides/uae-zero-bureaucracy.md",
+          "title": "UAE Zero Bureaucracy & Code for Government Services Playbook",
+          "category": "UAE Federal Overlay"
+        }
+      ]
+    },
+    {
+      "id": "guides-uk-finance-payments-overlay",
+      "name": "UK Finance Payments Overlay Guides",
+      "documents": [
+        {
+          "path": "docs/guides/uk-fs-consumer-duty.md",
+          "title": "Consumer Duty Annual Board Report",
+          "category": "UK Finance Payments Overlay"
+        },
+        {
+          "path": "docs/guides/uk-fs-ctp-dependency.md",
+          "title": "Critical Third Party Dependency Assessment",
+          "category": "UK Finance Payments Overlay"
+        },
+        {
+          "path": "docs/guides/uk-fs-safeguarding.md",
+          "title": "EMI / PI Safeguarding Assessment",
+          "category": "UK Finance Payments Overlay"
+        },
+        {
+          "path": "docs/guides/uk-fs-sca-rts.md",
+          "title": "SCA-RTS Exemption Design",
+          "category": "UK Finance Payments Overlay"
+        }
+      ]
+    },
+    {
+      "id": "guides-uk-g-cloud-supplier-overlay",
+      "name": "UK G-Cloud Supplier Overlay Guides",
+      "documents": [
+        {
+          "path": "docs/guides/declaration.md",
+          "title": "G-Cloud Supplier Declaration Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        },
+        {
+          "path": "docs/guides/gcloud-competitors.md",
+          "title": "G-Cloud Competitor Benchmark Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        },
+        {
+          "path": "docs/guides/pricing.md",
+          "title": "G-Cloud Pricing Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        },
+        {
+          "path": "docs/guides/review.md",
+          "title": "G-Cloud Submission Review Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        },
+        {
+          "path": "docs/guides/sdd-lot1.md",
+          "title": "G-Cloud Lot 1 Service Definition Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        },
+        {
+          "path": "docs/guides/sdd-lot2.md",
+          "title": "G-Cloud Lot 2 Service Definition Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        },
+        {
+          "path": "docs/guides/sdd-lot3.md",
+          "title": "G-Cloud Lot 3 Service Definition Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        },
+        {
+          "path": "docs/guides/security.md",
+          "title": "G-Cloud Security Assertions Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        },
+        {
+          "path": "docs/guides/service-design.md",
+          "title": "G-Cloud Service Design Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        },
+        {
+          "path": "docs/guides/submission-pack.md",
+          "title": "G-Cloud Submission Pack Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        },
+        {
+          "path": "docs/guides/supplier-profile.md",
+          "title": "G-Cloud Supplier Profile Guide",
+          "category": "UK G-Cloud Supplier Overlay"
+        }
+      ]
+    },
+    {
+      "id": "guides-uk-nhs-clinical-safety-overlay",
+      "name": "UK NHS Clinical Safety Overlay Guides",
+      "documents": [
+        {
+          "path": "docs/guides/uk-mdr-classification.md",
+          "title": "UK + EU MDR SaMD / AIaMD Classification Guide",
+          "category": "UK NHS Clinical Safety Overlay"
+        },
+        {
+          "path": "docs/guides/uk-nhs-dcb0129.md",
+          "title": "NHS DCB0129 Manufacturer Clinical Safety Case Guide",
+          "category": "UK NHS Clinical Safety Overlay"
+        },
+        {
+          "path": "docs/guides/uk-nhs-dcb0160.md",
+          "title": "NHS DCB0160 Deployer Clinical Safety Case Guide",
+          "category": "UK NHS Clinical Safety Overlay"
+        },
+        {
+          "path": "docs/guides/uk-nhs-dtac.md",
+          "title": "NHS DTAC v3 Assessment Guide",
+          "category": "UK NHS Clinical Safety Overlay"
+        }
+      ]
+    },
+    {
+      "id": "guides-usa-federal-civilian-overlay",
+      "name": "USA Federal Civilian Overlay Guides",
+      "documents": [
+        {
+          "path": "docs/guides/us-ai-impact.md",
+          "title": "US AI Impact Assessment",
+          "category": "USA Federal Civilian Overlay"
+        },
+        {
+          "path": "docs/guides/us-ai-rmf.md",
+          "title": "US NIST AI RMF Assessment",
+          "category": "USA Federal Civilian Overlay"
+        },
+        {
+          "path": "docs/guides/us-fedramp-readiness.md",
+          "title": "US FedRAMP Readiness Assessment Report",
+          "category": "USA Federal Civilian Overlay"
+        },
+        {
+          "path": "docs/guides/us-fedramp-ssp.md",
+          "title": "US FedRAMP System Security Plan",
+          "category": "USA Federal Civilian Overlay"
+        },
+        {
+          "path": "docs/guides/us-fisma-categorization.md",
+          "title": "US FIPS 199 System Categorization",
+          "category": "USA Federal Civilian Overlay"
+        },
+        {
+          "path": "docs/guides/us-icam.md",
+          "title": "US ICAM Architecture",
+          "category": "USA Federal Civilian Overlay"
+        },
+        {
+          "path": "docs/guides/us-nist-800-53.md",
+          "title": "US NIST SP 800-53 Rev 5 Tailored Control Set",
+          "category": "USA Federal Civilian Overlay"
+        },
+        {
+          "path": "docs/guides/us-privacy-pia.md",
+          "title": "US Privacy Impact Assessment",
+          "category": "USA Federal Civilian Overlay"
+        },
+        {
+          "path": "docs/guides/us-sbom-eo-14028.md",
+          "title": "US EO 14028 Secure-Software Self-Attestation + SBOM",
+          "category": "USA Federal Civilian Overlay"
+        },
+        {
+          "path": "docs/guides/us-zero-trust.md",
+          "title": "US CISA ZTMM v2.0 Maturity Posture",
+          "category": "USA Federal Civilian Overlay"
+        }
+      ]
+    },
+    {
+      "id": "guides-uk-government",
+      "name": "Uk Government Guides",
+      "documents": [
+        {
+          "path": "docs/guides/uk-government/ai-playbook.md",
+          "title": "UK Government AI Playbook Guide",
+          "category": "Uk Government"
+        },
+        {
+          "path": "docs/guides/uk-government/algorithmic-transparency.md",
+          "title": "Algorithmic Transparency Recording Standard (ATRS) Guide",
+          "category": "Uk Government"
+        },
+        {
+          "path": "docs/guides/uk-government/digital-marketplace.md",
+          "title": "Digital Marketplace Procurement Guide",
+          "category": "Uk Government"
+        },
+        {
+          "path": "docs/guides/uk-government/secure-by-design.md",
+          "title": "UK Government Secure by Design Guide",
+          "category": "Uk Government"
+        },
+        {
+          "path": "docs/guides/uk-government/standards-map.md",
+          "title": "UK Government Digital Policy & Standards Map",
+          "category": "Uk Government"
+        },
+        {
+          "path": "docs/guides/uk-government/technology-code-of-practice.md",
+          "title": "Technology Code of Practice (TCoP) Guide",
+          "category": "Uk Government"
+        }
+      ]
+    },
+    {
+      "id": "guides-uk-mod",
+      "name": "Uk Mod Guides",
+      "documents": [
+        {
+          "path": "docs/guides/uk-mod/secure-by-design.md",
+          "title": "MOD Secure by Design Guide",
+          "category": "Uk Mod"
+        }
+      ]
+    },
+    {
+      "id": "guides-wardley-mapping",
+      "name": "Wardley Mapping Guides",
+      "documents": [
+        {
+          "path": "docs/guides/wardley-climate.md",
+          "title": "Climate Assessment Playbook",
+          "category": "Wardley Mapping"
+        },
+        {
+          "path": "docs/guides/wardley-doctrine.md",
+          "title": "Doctrine Assessment Playbook",
+          "category": "Wardley Mapping"
+        },
+        {
+          "path": "docs/guides/wardley-gameplay.md",
+          "title": "Gameplay Analysis Playbook",
+          "category": "Wardley Mapping"
+        },
+        {
+          "path": "docs/guides/wardley-value-chain.md",
+          "title": "Value Chain Decomposition Playbook",
+          "category": "Wardley Mapping"
+        },
+        {
+          "path": "docs/guides/wardley.md",
+          "title": "Wardley Mapping Playbook",
+          "category": "Wardley Mapping"
         }
       ]
     },
@@ -373,229 +1419,834 @@
       "name": "Document Templates",
       "documents": [
         {
-          "path": ".arckit/templates/architecture-principles-template.md",
-          "title": "Architecture Principles Template",
-          "category": "Architecture"
-        },
-        {
-          "path": ".arckit/templates/requirements-template.md",
-          "title": "Requirements Template",
-          "category": "Discovery"
-        },
-        {
-          "path": ".arckit/templates/stakeholder-drivers-template.md",
-          "title": "Stakeholder Drivers Template",
-          "category": "Discovery"
-        },
-        {
-          "path": ".arckit/templates/risk-register-template.md",
-          "title": "Risk Register Template",
-          "category": "Governance"
-        },
-        {
-          "path": ".arckit/templates/sobc-template.md",
-          "title": "SOBC Template",
-          "category": "Planning"
-        },
-        {
-          "path": ".arckit/templates/roadmap-template.md",
-          "title": "Roadmap Template",
-          "category": "Planning"
-        },
-        {
-          "path": ".arckit/templates/backlog-template.md",
-          "title": "Backlog Template",
-          "category": "Planning"
-        },
-        {
-          "path": ".arckit/templates/data-model-template.md",
-          "title": "Data Model Template",
-          "category": "Architecture"
-        },
-        {
-          "path": ".arckit/templates/data-mesh-contract-template.md",
-          "title": "Data Mesh Contract Template",
-          "category": "Architecture"
-        },
-        {
-          "path": ".arckit/templates/platform-design-template.md",
-          "title": "Platform Design Template",
-          "category": "Architecture"
-        },
-        {
-          "path": ".arckit/templates/wardley-map-template.md",
-          "title": "Wardley Map Template",
-          "category": "Strategy"
-        },
-        {
-          "path": ".arckit/templates/architecture-diagram-template.md",
-          "title": "Architecture Diagram Template",
-          "category": "Architecture"
+          "path": ".arckit/templates/adm-preliminary-template.md",
+          "title": "Architecture Vision",
+          "category": "Templates"
         },
         {
           "path": ".arckit/templates/adr-template.md",
-          "title": "ADR Template",
-          "category": "Architecture"
+          "title": "Architecture Decision Record:",
+          "category": "Templates"
         },
         {
-          "path": ".arckit/templates/hld-review-template.md",
-          "title": "HLD Review Template",
-          "category": "Architecture"
+          "path": ".arckit/templates/agent-design-template.md",
+          "title": "Agent Architecture Specification",
+          "category": "Templates"
         },
         {
-          "path": ".arckit/templates/dld-review-template.md",
-          "title": "DLD Review Template",
-          "category": "Architecture"
+          "path": ".arckit/templates/agent-governance-template.md",
+          "title": "Agent Governance Framework",
+          "category": "Templates"
         },
         {
-          "path": ".arckit/templates/research-findings-template.md",
-          "title": "Research Findings Template",
-          "category": "Research"
+          "path": ".arckit/templates/agent-integration-template.md",
+          "title": "Agent Integration Architecture",
+          "category": "Templates"
         },
         {
-          "path": ".arckit/templates/evaluation-criteria-template.md",
-          "title": "Evaluation Criteria Template",
-          "category": "Procurement"
+          "path": ".arckit/templates/agent-inventory-template.md",
+          "title": "AI Agent Inventory",
+          "category": "Templates"
         },
         {
-          "path": ".arckit/templates/vendor-scoring-template.md",
-          "title": "Vendor Scoring Template",
-          "category": "Procurement"
+          "path": ".arckit/templates/agent-maturity-template.md",
+          "title": "Agent Program Maturity Model",
+          "category": "Templates"
         },
         {
-          "path": ".arckit/templates/sow-template.md",
-          "title": "Statement of Work Template",
-          "category": "Procurement"
-        },
-        {
-          "path": ".arckit/templates/traceability-matrix-template.md",
-          "title": "Traceability Matrix Template",
-          "category": "Governance"
-        },
-        {
-          "path": ".arckit/templates/principles-compliance-assessment-template.md",
-          "title": "Principles Compliance Template",
-          "category": "Governance"
-        },
-        {
-          "path": ".arckit/templates/story-template.md",
-          "title": "Project Story Template",
-          "category": "Governance"
-        },
-        {
-          "path": ".arckit/templates/dpia-template.md",
-          "title": "DPIA Template",
-          "category": "Privacy"
-        },
-        {
-          "path": ".arckit/templates/service-assessment-prep-template.md",
-          "title": "Service Assessment Prep Template",
-          "category": "UK Government"
-        },
-        {
-          "path": ".arckit/templates/tcop-review-template.md",
-          "title": "TCoP Assessment Template",
-          "category": "UK Government"
-        },
-        {
-          "path": ".arckit/templates/uk-gov-ai-playbook-template.md",
-          "title": "AI Playbook Template",
-          "category": "UK Government"
-        },
-        {
-          "path": ".arckit/templates/uk-gov-atrs-template.md",
-          "title": "ATRS Template",
-          "category": "UK Government"
-        },
-        {
-          "path": ".arckit/templates/ukgov-secure-by-design-template.md",
-          "title": "Secure by Design Template",
-          "category": "UK Government"
-        },
-        {
-          "path": ".arckit/templates/mod-secure-by-design-template.md",
-          "title": "MOD Secure by Design Template",
-          "category": "UK MOD"
-        },
-        {
-          "path": ".arckit/templates/jsp-936-template.md",
-          "title": "JSP 936 Template",
-          "category": "UK MOD"
-        },
-        {
-          "path": ".arckit/templates/devops-template.md",
-          "title": "DevOps Strategy Template",
-          "category": "Operations"
-        },
-        {
-          "path": ".arckit/templates/mlops-template.md",
-          "title": "MLOps Strategy Template",
-          "category": "Operations"
-        },
-        {
-          "path": ".arckit/templates/finops-template.md",
-          "title": "FinOps Strategy Template",
-          "category": "Operations"
-        },
-        {
-          "path": ".arckit/templates/operationalize-template.md",
-          "title": "Operational Readiness Template",
-          "category": "Operations"
-        },
-        {
-          "path": ".arckit/templates/servicenow-design-template.md",
-          "title": "ServiceNow Design Template",
-          "category": "Operations"
+          "path": ".arckit/templates/agent-security-template.md",
+          "title": "Agent Security Architecture",
+          "category": "Templates"
         },
         {
           "path": ".arckit/templates/analysis-report-template.md",
-          "title": "Governance Analysis Report Template",
-          "category": "Governance"
+          "title": "Architecture Governance Analysis Report:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/application-inventory-template.md",
+          "title": "Application Inventory",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/architecture-board-template.md",
+          "title": "Architecture Board Charter",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/architecture-change-template.md",
+          "title": "Architecture Change Request",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/architecture-diagram-template.md",
+          "title": "Architecture Diagram: {diagram_name}",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/architecture-principles-template.md",
+          "title": "[ORGANIZATION_NAME] Enterprise Architecture Principles",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/architecture-repository-template.md",
+          "title": "Architecture Repository",
+          "category": "Templates"
         },
         {
           "path": ".arckit/templates/architecture-strategy-template.md",
-          "title": "Architecture Strategy Template",
-          "category": "Planning"
+          "title": "Architecture Strategy:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/at-bvergg-template.md",
+          "title": "Austrian Public Procurement Documentation",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/at-dsgvo-template.md",
+          "title": "Austrian Data Protection Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/at-nisg-template.md",
+          "title": "Austrian NISG (NIS2 Transposition) Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-aescsf-template.md",
+          "title": "AU AESCSF Maturity Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-ai-assurance-template.md",
+          "title": "AI Assurance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-disp-attestation-template.md",
+          "title": "DISP Member Self-Attestation Pack",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-dss-template.md",
+          "title": "DTA Digital Service Standard Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-e8-posture-template.md",
+          "title": "ASD Essential Eight Maturity Posture Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-energy-compliance-template.md",
+          "title": "AU Energy Compliance Pack",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-ism-controls-template.md",
+          "title": "ASD Information Security Manual (ISM) Control Applicability Statement",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-ndb-playbook-template.md",
+          "title": "Notifiable Data Breach (NDB) Response Playbook",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-ot-security-template.md",
+          "title": "ASD Operational Technology Cyber Security Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-pia-template.md",
+          "title": "Privacy Impact Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-pspf-template.md",
+          "title": "PSPF Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/au-soci-cirmp-template.md",
+          "title": "SOCI Act / Critical Infrastructure Risk Management Program Pack",
+          "category": "Templates"
         },
         {
           "path": ".arckit/templates/aws-research-template.md",
-          "title": "AWS Research Template",
-          "category": "Research"
+          "title": "AWS Technology Research:",
+          "category": "Templates"
         },
         {
           "path": ".arckit/templates/azure-research-template.md",
-          "title": "Azure Research Template",
-          "category": "Research"
+          "title": "Azure Technology Research:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/backlog-template.md",
+          "title": "Product Backlog:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-aia-template.md",
+          "title": "Canada Algorithmic Impact Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-atip-template.md",
+          "title": "Canada ATIP Reconciliation",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-charter-template.md",
+          "title": "Canada Charter Rights Design Review",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-cloud-residency-template.md",
+          "title": "Canada Sovereign Cloud Residency Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-fitaa-template.md",
+          "title": "Canada FITAA Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-gc-digital-standards-template.md",
+          "title": "Canada GC Digital Standards Conformance Scorecard",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-itsg-33-template.md",
+          "title": "Canada ITSG-33 Statement of Applicability",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-ocap-template.md",
+          "title": "Canada First Nations OCAP® Sovereignty Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-ola-template.md",
+          "title": "Canada Official Languages Act Review",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-pia-template.md",
+          "title": "Canada Privacy Impact Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-pspc-template.md",
+          "title": "Canada Federal Procurement Strategy",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ca-soia-template.md",
+          "title": "Canada Security of Information Act Handling Plan",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/capability-map-template.md",
+          "title": "Business Capability Map",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/codebase-audit-template.md",
+          "title": "Codebase Audit:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/competitors-template.md",
+          "title": "Competitor Landscape:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/conformance-assessment-template.md",
+          "title": "Architecture Conformance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/data-mesh-contract-template.md",
+          "title": "Data Mesh Contract: {data_product_name}",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/data-model-template.md",
+          "title": "Data Model:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/data-source-profile-template.md",
+          "title": "Data Source Profile: {PROVIDER} — {SOURCE_NAME}",
+          "category": "Templates"
         },
         {
           "path": ".arckit/templates/datascout-template.md",
-          "title": "Data Source Discovery Template",
-          "category": "Research"
+          "title": "Data Source Discovery:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/devops-template.md",
+          "title": "DevOps Strategy",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/dfd-template.md",
+          "title": "Data Flow Diagram: {diagram_name}",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/dld-review-template.md",
+          "title": "Detailed Design",
+          "category": "Templates"
         },
         {
           "path": ".arckit/templates/dos-requirements-template.md",
-          "title": "DOS Requirements Template",
-          "category": "UK Government"
+          "title": "UK Digital Marketplace: Digital Outcomes and Specialists",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/dpia-template.md",
+          "title": "Data Protection Impact Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/eu-ai-act-template.md",
+          "title": "EU AI Act Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/eu-cra-template.md",
+          "title": "EU Cyber Resilience Act Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/eu-data-act-template.md",
+          "title": "EU Data Act Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/eu-dora-template.md",
+          "title": "DORA Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/eu-dsa-template.md",
+          "title": "EU Digital Services Act Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/eu-nis2-template.md",
+          "title": "NIS2 Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/eu-rgpd-template.md",
+          "title": "GDPR Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/evaluation-criteria-template.md",
+          "title": "Vendor Evaluation Criteria:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/finops-template.md",
+          "title": "FinOps Strategy",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-algorithme-public-template.md",
+          "title": "Public Algorithm Transparency Notice",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-anssi-carto-template.md",
+          "title": "ANSSI Information System Cartography",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-anssi-template.md",
+          "title": "ANSSI Security Posture Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-code-reuse-template.md",
+          "title": "Public Code Reuse Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-dinum-template.md",
+          "title": "DINUM Standards Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-dr-template.md",
+          "title": "Diffusion Restreinte Handling Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-ebios-template.md",
+          "title": "EBIOS Risk Manager — Risk Analysis Study",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-irn-template.md",
+          "title": "IRN — Indice de Résilience Numérique — Self-Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-marche-public-template.md",
+          "title": "French Public Procurement File",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-pssi-template.md",
+          "title": "Information System Security Policy",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-rgpd-template.md",
+          "title": "French GDPR / CNIL Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/fr-secnumcloud-template.md",
+          "title": "SecNumCloud 3.2 Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/framework-overview-template.md",
+          "title": "Framework Overview:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/gap-analysis-template.md",
+          "title": "Gap Analysis",
+          "category": "Templates"
         },
         {
           "path": ".arckit/templates/gcloud-clarify-template.md",
-          "title": "G-Cloud Clarification Template",
-          "category": "UK Government"
+          "title": "G-Cloud Service Clarification Questions",
+          "category": "Templates"
         },
         {
           "path": ".arckit/templates/gcloud-requirements-template.md",
-          "title": "G-Cloud Requirements Template",
-          "category": "UK Government"
+          "title": "UK Digital Marketplace: G-Cloud Service Procurement",
+          "category": "Templates"
         },
         {
-          "path": ".arckit/templates/pages-template.html",
-          "title": "GitHub Pages Template",
-          "category": "Publishing"
+          "path": ".arckit/templates/gcp-research-template.md",
+          "title": "Google Cloud Technology Research:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/glossary-template.md",
+          "title": "Glossary:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/gov-code-search-template.md",
+          "title": "Government Code Search Report:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/gov-landscape-template.md",
+          "title": "Government Landscape Analysis:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/gov-reuse-template.md",
+          "title": "Government Reuse Assessment:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/grants-template.md",
+          "title": "UK Grants Research:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/hld-review-template.md",
+          "title": "High-Level Design",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/jsp-936-template.md",
+          "title": "JSP 936 AI Assurance Documentation",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/maturity-model-template.md",
+          "title": "Maturity Model:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/mlops-template.md",
+          "title": "MLOps Strategy",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/mod-secure-by-design-template.md",
+          "title": "MOD Secure by Design Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/operationalize-template.md",
+          "title": "Operational Readiness Pack",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/platform-design-template.md",
+          "title": "Platform Strategy Design",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/presentation-template.md",
+          "title": "[PROJECT_NAME] — Architecture Presentation",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/principles-compliance-assessment-template.md",
+          "title": "Architecture Principles Compliance Assessment",
+          "category": "Templates"
         },
         {
           "path": ".arckit/templates/project-plan-template.md",
-          "title": "Project Plan Template",
-          "category": "Planning"
+          "title": "Project Plan:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/rationalization-template.md",
+          "title": "Application Rationalisation",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/requirements-template.md",
+          "title": "Project Requirements:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/research-findings-template.md",
+          "title": "Technology and Service Research:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/risk-register-template.md",
+          "title": "Risk Register",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/roadmap-template.md",
+          "title": "Architecture Roadmap:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/service-assessment-prep-template.md",
+          "title": "GDS Service Assessment Preparation Report",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/servicenow-design-template.md",
+          "title": "ServiceNow Service Design",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/sobc-template.md",
+          "title": "Strategic Outline Business Case",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/sow-template.md",
+          "title": "Statement of Work",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/stakeholder-drivers-template.md",
+          "title": "Stakeholder Drivers & Goals Analysis:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/story-template.md",
+          "title": "[PROJECT_NAME] - Project Story",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/tcop-review-template.md",
+          "title": "Technology Code of Practice (TCoP) Review",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/tech-note-template.md",
+          "title": "Tech Note: {TOPIC}",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/tenders-template.md",
+          "title": "Procurement Market Intelligence:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/traceability-matrix-template.md",
+          "title": "Requirements Traceability Matrix:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/transition-architecture-template.md",
+          "title": "Transition Architecture",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-ai-autonomy-tier-template.md",
+          "title": "UAE AI Autonomy Tier Posture",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-ai-charter-template.md",
+          "title": "UAE AI Charter Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-classification-template.md",
+          "title": "UAE Smart Data Classification Register",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-cloud-residency-template.md",
+          "title": "UAE Sovereign Cloud Residency Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-data-sharing-template.md",
+          "title": "UAE Data Sharing Agreement",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-digital-records-template.md",
+          "title": "UAE Digital Records Plan",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-ias-template.md",
+          "title": "UAE IAS Statement of Applicability",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-pdpl-template.md",
+          "title": "UAE PDPL Compliance Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-priorities-alignment-template.md",
+          "title": "UAE National Priorities Alignment Statement",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-procurement-template.md",
+          "title": "UAE Federal Procurement Strategy",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-uaepass-template.md",
+          "title": "UAE Pass Integration Design",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uae-zero-bureaucracy-template.md",
+          "title": "UAE Zero Bureaucracy Service Catalogue Review",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-fs-consumer-duty-board-report-template.md",
+          "title": "Uk Fs Consumer Duty Board Report Template",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-fs-consumer-duty-template.md",
+          "title": "FCA Consumer Duty Annual Board Report",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-fs-ctp-dependency-register-template.md",
+          "title": "Uk Fs Ctp Dependency Register Template",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-fs-ctp-dependency-template.md",
+          "title": "UK FS Critical Third Parties (CTP) Dependency Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-fs-safeguarding-reconciliation-template.md",
+          "title": "Uk Fs Safeguarding Reconciliation Template",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-fs-safeguarding-template.md",
+          "title": "UK EMI / PI Safeguarding Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-fs-sca-rts-exemption-matrix-template.md",
+          "title": "SCA-RTS Per-Exemption Matrix Block",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-fs-sca-rts-template.md",
+          "title": "UK PSD2 SCA-RTS Exemption Design",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-gov-ai-playbook-template.md",
+          "title": "UK Government AI Playbook Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-gov-atrs-template.md",
+          "title": "Algorithmic Transparency Recording Standard",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-mdr-classification-template.md",
+          "title": "UK MDR + EU MDR Software-as-Medical-Device Classification —",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-nhs-dcb0129-case-template.md",
+          "title": "Clinical Safety Case Report —",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-nhs-dcb0129-hazard-template.md",
+          "title": "Hazard Log —",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-nhs-dcb0129-safety-template.md",
+          "title": "Clinical Safety —",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-nhs-dcb0129-template.md",
+          "title": "NHS DCB0129 Clinical Safety Case — Wrapper Template",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-nhs-dcb0160-deployment-case-template.md",
+          "title": "Deployment Clinical Safety Case Report —",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-nhs-dcb0160-deployment-hazard-template.md",
+          "title": "Deployment Hazard Log —",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-nhs-dcb0160-deployment-safety-template.md",
+          "title": "Deployment Clinical Safety —",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-nhs-dcb0160-template.md",
+          "title": "NHS DCB0160 Deployment Clinical Safety Case — Wrapper Template",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/uk-nhs-dtac-template.md",
+          "title": "NHS Digital Technology Assessment Criteria",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/ukgov-secure-by-design-template.md",
+          "title": "UK Government Secure by Design Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/us-ai-impact-template.md",
+          "title": "AI Impact Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/us-ai-rmf-template.md",
+          "title": "NIST AI Risk Management Framework Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/us-fedramp-readiness-template.md",
+          "title": "FedRAMP Readiness Assessment Report",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/us-fedramp-ssp-template.md",
+          "title": "FedRAMP System Security Plan",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/us-fisma-categorization-template.md",
+          "title": "FIPS 199 System Categorization",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/us-icam-template.md",
+          "title": "ICAM Architecture",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/us-nist-800-53-template.md",
+          "title": "NIST SP 800-53 Rev 5 Tailored Control Set",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/us-privacy-pia-template.md",
+          "title": "Privacy Impact Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/us-sbom-eo-14028-template.md",
+          "title": "EO 14028 Secure-Software Self-Attestation + SBOM",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/us-zero-trust-template.md",
+          "title": "CISA Zero Trust Maturity Assessment",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/vendor-profile-template.md",
+          "title": "Vendor Profile: {VENDOR_NAME}",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/vendor-scoring-template.md",
+          "title": "Vendor Scoring Summary:",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/wardley-climate-template.md",
+          "title": "Wardley Climate Assessment: {context_name}",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/wardley-doctrine-template.md",
+          "title": "Wardley Doctrine Assessment: {context_name}",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/wardley-gameplay-template.md",
+          "title": "Wardley Gameplay Analysis: {context_name}",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/wardley-map-template.md",
+          "title": "Wardley Map: {map_name}",
+          "category": "Templates"
+        },
+        {
+          "path": ".arckit/templates/wardley-value-chain-template.md",
+          "title": "Wardley Value Chain: {context_name}",
+          "category": "Templates"
         }
       ]
     },
@@ -604,13 +2255,268 @@
       "name": "Articles",
       "documents": [
         {
-          "path": "docs/articles/arckit-medium-linkedin-article.md",
-          "title": "ArcKit Article",
+          "path": "docs/articles/2026-02-28-arckit-contributors-medium-post.md",
+          "title": "The People Behind ArcKit: How Open Source Contributors Are Shaping Enterprise Architecture Tooling",
           "category": "Marketing"
         },
         {
-          "path": "docs/articles/arckit-linkedin-post.md",
-          "title": "LinkedIn Post",
+          "path": "docs/articles/2026-02-28-arckit-v2163-linkedin-post.md",
+          "title": "ArcKit now recommends Claude Code v2.1.63+",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-03-08-v4-codex-gemini-support.md",
+          "title": "ArcKit v4: First-Class Codex and Gemini Support with Hooks, MCP Servers, and Native Policies",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-03-11-v411-copilot-vendor-scoring-impact.md",
+          "title": "ArcKit v4.1.1: GitHub Copilot, Vendor Scoring, and Blast Radius Analysis",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-03-12-document-map-medium.md",
+          "title": "Your Architecture Documents Are Connected — Now You Can See How",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-03-16-wardley-suite-strategic-mapping.md",
+          "title": "ArcKit v4.3.0: A Complete Wardley Mapping Suite for AI-Assisted Strategic Architecture",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code.md",
+          "title": "Building ClaudeClaw: An OpenClaw-Style Autonomous Agent System on Claude Code",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-03-23-government-code-discovery-commands.md",
+          "title": "Discovering What Government Has Already Built: Three New Commands for UK Public Sector Code Reuse",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-07-v464-grants-command-for-companies.md",
+          "title": "Finding Funding for Your Public Sector Project: How ArcKit Automates UK Grant Research",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-07-v464-grants-command-funding-research.md",
+          "title": "ArcKit v4.6.4: Automated UK Funding Research with the Grants Command",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-19-arckit-trending-on-github.md",
+          "title": "Why an Enterprise Architecture toolkit is trending on GitHub in 2026",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-19-v470-eu-french-regulatory.md",
+          "title": "ArcKit v4.7: 18 EU and French Regulatory Commands, Community-Maintained",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-20-consulting-deliverable-is-dead.md",
+          "title": "How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-20-v480-austrian-overlay.md",
+          "title": "What You Can Now Do in Austria with ArcKit v4.8",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-22-v490-wardley-mapping-support.md",
+          "title": "ArcKit 4.9.0: Wardley Maps Now Render Natively In Your Architecture Docs",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-22-wardley-commands-walkthrough.md",
+          "title": "The Five Wardley Commands in ArcKit: Every Command, What It Does, When to Run It",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-27-mckinsey-decks-from-arckit.md",
+          "title": "From ArcKit to McKinsey-Style Infographics in an Afternoon: AntV Infographic and the End of the £200k Wrap",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-28-pricing-arckit-investor.md",
+          "title": "Pricing the ArcKit Project: What Would an Investor Actually Pay?",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-30-toolkit-drafts-architect-judges.md",
+          "title": "The Toolkit Drafts. The Architect Judges.",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-30-uae-agentic-decree-90-day-playbook.md",
+          "title": "2026 04 30 Uae Agentic Decree 90 Day Playbook",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-30-uae-agentic-decree-arckit-v4-10.md",
+          "title": "How ArcKit v4.10 Accelerates the UAE's Federal Agentic Decree",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-30-uae-caio-first-90-days.md",
+          "title": "The CAIO's First 90 Days: Delivering the UAE Cabinet Agentic AI Mandate",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-04-30-uae-overlay-launch.md",
+          "title": "ArcKit v4.10: 12 UAE Federal Commands, Community Overlay",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-01-consulting-internal-memo.md",
+          "title": "Internal Memo, Somewhere in a Big 4 Consulting Company",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-03-build-harness-parallel-architecture-generation.md",
+          "title": "ArcKit v4.13.0: The Build Harness — Building a full architecture in one Claude Code session. AKA The GDS Harness",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-03-community-recipes-wanted.md",
+          "title": "Wanted: `/arckit:build` recipes for your jurisdiction",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-03-how-open-source-saved-uk-economy-12bn.md",
+          "title": "I have saved the UK economy £24 billion. ArcKit is the third time.",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-06-anthropics-financial-services-architecture-lesson.md",
+          "title": "Five patterns to steal from anthropics/financial-services",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-12-arckit-fde-launch.md",
+          "title": "We are launching ArcKit FDE: embedded architects for UK public sector",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-18-arckit-v5-plugin-split.md",
+          "title": "ArcKit v5.0.0: one toolkit, seven plugins, install only what you need",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-19-leaf-node-problem.md",
+          "title": "The Leaf Node Problem: Why Your AI Pilot Is Optimising the Wrong Thing",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-19-wardley-maps-mermaid-github.md",
+          "title": "Your Wardley Maps Belong in Git: What Mermaid Support Changes",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-20-plugin-split-token-budget.md",
+          "title": "The token budget behind ArcKit's plugin split, and how to split a plugin of your own",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-22-tidy-wardley-labels.md",
+          "title": "How ArcKit tidies Wardley Map labels: a deterministic placement engine, stepped through",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-24-v510-us-federal-civilian-overlay.md",
+          "title": "ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-27-v530-uk-finance-payments-overlay-medium.md",
+          "title": "ArcKit v5.3: The First Sector Overlay, for UK Payments",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-27-v530-uk-finance-payments-overlay.md",
+          "title": "ArcKit v5.3: The First Sector Overlay, for UK Payments",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-28-v540-uk-nhs-clinical-safety-overlay-medium.md",
+          "title": "ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-05-28-v540-uk-nhs-clinical-safety-overlay.md",
+          "title": "ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-02-uk-tenders-procurement-intelligence.md",
+          "title": "Grounding Procurement Decisions in Real Award Data: New ArcKit Commands for UK Market Intelligence",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-03-uk-government-consulting-spend.md",
+          "title": "Britain's War on Consultants: What the Procurement Data Actually Shows",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-09-arckit-fde-site-generator.md",
+          "title": "ArcKit FDE is now a plugin: generate your own forward deploy site in one command",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-10-arckit-uk-gcloud-supplier-overlay.md",
+          "title": "The Supplier Side of G-Cloud: ArcKit's New Bid-Authoring Overlay",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-15-ai-cli-harness-not-ai-app.md",
+          "title": "Don't Build an AI App. Build an AI CLI Harness.",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-17-arckit-vibe-extension.md",
+          "title": "ArcKit v5.14: Mistral Vibe Joins the Harness",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-19-okf-compatibility-workflows.md",
+          "title": "ArcKit and OKF: Knowledge Interoperability Without Giving Up Governance",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-19-self-harness-autoresearch.md",
+          "title": "ArcKit Self-Harness: When the Governance Harness Starts Improving Itself",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-25-arckit-architects-directory.md",
+          "title": "ArcKit Architects: A Directory for Enterprise Architecture Professionals",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-29-arckit-usage-signals-linkedin.md",
+          "title": "LinkedIn Version: I Built ArcKit for Myself. Thank You for Using It.",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-29-arckit-usage-signals.md",
+          "title": "I Built ArcKit for Myself. Thank You for Using It.",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-06-30-arckit-agent-architecture.md",
+          "title": "ArcKit AI Agent Architecture: Governed Design for Autonomous Systems",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-07-01-arckit-togaf-adm.md",
+          "title": "ArcKit TOGAF ADM: The Method Becomes a Governed Workflow",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/2026-07-22-atomic-task-graphs-documents-not-tool-calls.md",
+          "title": "Atomic Task Graphs for Documents, Not Tool Calls",
           "category": "Marketing"
         }
       ]
