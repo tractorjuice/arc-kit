@@ -12,6 +12,9 @@ on:
       - "scripts/check_doctype_collisions.py"
       - "scripts/check-guide-parity.py"
       - "scripts/check-multi-instance-parity.py"
+      - "scripts/check-guide-site-links.py"
+      - "docs/guides.html"
+      - "docs/roles.html"
       - "plugins/arckit-*/recipes/**"
       - "plugins/arckit-claude/skills/arckit-build/recipes/**"
       - "plugins/arckit-claude/config/doc-types.mjs"
@@ -31,6 +34,9 @@ on:
       - "scripts/check_doctype_collisions.py"
       - "scripts/check-guide-parity.py"
       - "scripts/check-multi-instance-parity.py"
+      - "scripts/check-guide-site-links.py"
+      - "docs/guides.html"
+      - "docs/roles.html"
       - "plugins/arckit-*/recipes/**"
       - "plugins/arckit-claude/skills/arckit-build/recipes/**"
       - "plugins/arckit-claude/config/doc-types.mjs"
@@ -75,6 +81,9 @@ jobs:
 
       - name: Multi-instance doc-type parity (doc-types.mjs vs both bash copies)
         run: python3 scripts/check-multi-instance-parity.py
+
+      - name: Guide site-link check (every guide reachable, no dead links)
+        run: python3 scripts/check-guide-site-links.py
 
       - uses: actions/setup-node@v4
         with:
