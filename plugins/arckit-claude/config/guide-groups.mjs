@@ -232,6 +232,7 @@ add(GUIDE_SECTIONS.OVERLAY, 'FDE Site Generator', 'community', ['create'], 'FDE 
 
 add(GUIDE_SECTIONS.OVERLAY, 'Repository Plugin', 'community', [
   'repo-docs',
+  'repo-audit',
 ], 'Repository Plugin');
 
 add(GUIDE_SECTIONS.OVERLAY, 'TOGAF ADM Overlay', 'community', [

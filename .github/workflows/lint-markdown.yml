@@ -11,9 +11,12 @@ on:
       - "scripts/check_recipes.py"
       - "scripts/check_doctype_collisions.py"
       - "scripts/check-guide-parity.py"
+      - "scripts/check-multi-instance-parity.py"
       - "plugins/arckit-*/recipes/**"
       - "plugins/arckit-claude/skills/arckit-build/recipes/**"
       - "plugins/arckit-claude/config/doc-types.mjs"
+      - "scripts/bash/generate-document-id.sh"
+      - "plugins/arckit-claude/scripts/bash/generate-document-id.sh"
       - "plugins/arckit-claude/.claude-plugin/plugin.json"
       - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
@@ -27,9 +30,12 @@ on:
       - "scripts/check_recipes.py"
       - "scripts/check_doctype_collisions.py"
       - "scripts/check-guide-parity.py"
+      - "scripts/check-multi-instance-parity.py"
       - "plugins/arckit-*/recipes/**"
       - "plugins/arckit-claude/skills/arckit-build/recipes/**"
       - "plugins/arckit-claude/config/doc-types.mjs"
+      - "scripts/bash/generate-document-id.sh"
+      - "plugins/arckit-claude/scripts/bash/generate-document-id.sh"
       - "plugins/arckit-claude/.claude-plugin/plugin.json"
       - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
@@ -66,6 +72,9 @@ jobs:
 
       - name: Guide-tree parity check (docs/guides vs plugin copy)
         run: python3 scripts/check-guide-parity.py --check
+
+      - name: Multi-instance doc-type parity (doc-types.mjs vs both bash copies)
+        run: python3 scripts/check-multi-instance-parity.py
 
       - uses: actions/setup-node@v4
         with:

@@ -272,7 +272,7 @@
     {
       "name": "arckit-repo",
       "source": "./plugins/arckit-repo",
-      "description": "Repository tooling plugin for ArcKit. Starts with /arckit:repo-docs for source-grounded, agent-readable repository documentation; future commands can cover git and repository operations. Requires arckit core. [COMMUNITY]",
+      "description": "Repository tooling plugin for ArcKit. /arckit:repo-docs generates source-grounded, agent-readable repository documentation; /arckit:repo-audit audits a codebase (local or public GitHub/GitLab) against architecture principles and requirements. Requires arckit core. [COMMUNITY]",
       "version": "6.6.0",
       "author": {
         "name": "ArcKit Contributors"
@@ -287,7 +287,9 @@
         "git",
         "documentation",
         "agents",
-        "openwiki"
+        "openwiki",
+        "audit",
+        "codebase"
       ],
       "category": "productivity"
     },

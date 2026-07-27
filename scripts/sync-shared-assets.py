@@ -28,11 +28,16 @@ SHARED_DIRS = ("templates/_partials", "references")
 
 
 # Plugins exempt from the shared-asset sync: the core plugin itself (the source
-# of truth), plus the tooling plugins — `arckit-fde` (white-label FDE site
-# generator) and `arckit-repo` (repository docs). Tooling plugins have no
-# governance commands and reference none of the shared partials/references, so
-# they must not carry them.
-SYNC_EXEMPT_PLUGINS = {"arckit-claude", "arckit-fde", "arckit-repo"}
+# of truth), plus `arckit-fde` (white-label FDE site generator). A tooling
+# plugin is exempt only while it has no governance commands and references none
+# of the shared partials/references.
+#
+# `arckit-repo` WAS exempt on that basis and no longer is. /arckit:repo-audit
+# writes a CDAU artefact with a standard Document Control header, which resolves
+# `${CLAUDE_PLUGIN_ROOT}/templates/_partials/document-control-*.md` against the
+# plugin's OWN root — so it must carry its own copy. Do not re-add it to this
+# set without first removing that command.
+SYNC_EXEMPT_PLUGINS = {"arckit-claude", "arckit-fde"}
 
 
 def discover_community_plugins() -> list[Path]:

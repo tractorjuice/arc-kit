@@ -82,7 +82,7 @@ PROJECT_ID_PADDED=$(printf "%03d" "$PROJECT_ID_CLEAN")
 
 # Multi-instance document types that require sequence numbers
 # Keep in sync with arckit-claude/config/doc-types.mjs MULTI_INSTANCE_TYPES
-MULTI_INSTANCE_TYPES="ADR DIAG DFD WARD DMC RSCH AWRS AZRS GCRS DSCT TNDR CMPT WGAM WCLM WVCH GOVR GCSR GLND"
+MULTI_INSTANCE_TYPES="ADR DIAG DFD WARD DMC RSCH AWRS AZRS GCRS DSCT TNDR CMPT WGAM WCLM WVCH GOVR GCSR GLND GRNT CDAU"
 
 # Check if this is a multi-instance type
 is_multi_instance() {

@@ -31,9 +31,12 @@ PLUGIN_SOURCES = [
     "plugins/arckit-uk-nhs",
     "plugins/arckit-togaf-adm",
     "plugins/arckit-agent-architecture",
+    "plugins/arckit-repo",
 ]
-# arckit-fde and arckit-repo are absent by design: tooling plugins with no
-# governance templates to mirror into .arckit/templates/.
+# arckit-fde is absent by design: a tooling plugin with no governance templates
+# to mirror into .arckit/templates/. arckit-repo was in that category until
+# /arckit:repo-audit added codebase-audit-template.md, which is a governance
+# template and must stay in sync with the CLI tree like any other.
 CLI_TEMPLATES_DIR = os.path.join(REPO_ROOT, ".arckit", "templates")
 
 _TEMPLATE_RE = re.compile(r"\$\{CLAUDE_PLUGIN_ROOT\}/templates/([\w-]+\.md)")
