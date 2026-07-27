@@ -54,6 +54,10 @@ You never pass a mode flag. The command works out which one applies.
 
 If only one of the two artefacts exists, the audit scores against it and marks the other as not assessed. Unlike `/arckit:conformance`, it does not refuse to run when prerequisites are thin, because auditing an inherited codebase is often the first thing you do on a project.
 
+**A project existing in your repo is not enough.** Before scoring anything, the audit checks that the project's requirements actually describe the codebase you pointed it at, and asks you if the evidence is ambiguous. A repository can easily hold a project about a market study, a policy, or a procurement; scoring source code against those would produce a page of confident verdicts that mean nothing. When correspondence is not confirmed, the audit falls back to cold mode and says so in its Audit Scope.
+
+Run with `--check` first to see which project and mode it would pick, without writing anything.
+
 ---
 
 ## What It Will Not Do

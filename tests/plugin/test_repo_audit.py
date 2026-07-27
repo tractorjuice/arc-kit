@@ -221,3 +221,77 @@ def test_guide_exists_in_both_trees_and_matches():
     assert root_guide.is_file(), "root guide missing"
     assert plugin_guide.is_file(), "plugin guide copy missing"
     assert read(root_guide) == read(plugin_guide), "guide trees drifted"
+
+
+# --- F-010: project/repo correspondence before conformance mode -----------
+
+
+def test_command_confirms_project_describes_the_repo():
+    """A project existing in the repo does not mean it describes the audited code.
+
+    Found on the first real run: arc-kit's only project is a UK-government
+    consulting market study, and the command would have scored this codebase
+    against its 28 unrelated requirements.
+    """
+    body = read(COMMAND)
+    assert "Confirm the project actually describes this repository" in body
+    assert "treat it as a *candidate*, not a decision" in body
+
+
+def test_command_falls_back_to_cold_when_correspondence_unconfirmed():
+    body = read(COMMAND)
+    assert "Neither, or correspondence not confirmed" in body, (
+        "unconfirmed correspondence must select cold mode, not conformance"
+    )
+
+
+def test_command_does_not_call_create_project_when_no_project_exists():
+    # create-project.sh requires ARC-000-PRIN-*.md and refuses without it,
+    # which would block the audit on a prerequisite it deliberately avoids.
+    body = read(COMMAND)
+    assert "Do **not** call `create-project.sh` here" in body
+
+
+def test_check_mode_reports_correspondence():
+    body = read(COMMAND)
+    assert "whether that project appears to describe this repository" in body
+
+
+# --- F-005: create-project.sh must not fail silently ---------------------
+
+
+CREATE_PROJECT_COPIES = (
+    REPO_ROOT / "scripts/bash/create-project.sh",
+    REPO_ROOT / "plugins/arckit-claude/scripts/bash/create-project.sh",
+)
+
+
+@pytest.mark.parametrize("script", CREATE_PROJECT_COPIES, ids=lambda p: str(p.relative_to(REPO_ROOT)))
+def test_create_project_guards_the_principles_lookup(script: Path):
+    """`find` on a missing dir exits non-zero; under `set -euo pipefail` that
+    killed the script before its own error message could print."""
+    body = read(script)
+    assert 'if [[ -d "$GLOBAL_DIR" ]]; then' in body, "missing directory guard"
+    assert '| head -1) || true' in body, "find failure must be tolerated"
+
+
+@pytest.mark.parametrize("script", CREATE_PROJECT_COPIES, ids=lambda p: str(p.relative_to(REPO_ROOT)))
+def test_create_project_reports_missing_principles(tmp_path: Path, script: Path):
+    """End-to-end: no projects/000-global at all must still explain itself."""
+    (tmp_path / ".arckit").mkdir()
+    (tmp_path / "projects").mkdir()
+    result = subprocess.run(
+        ["bash", str(script), "--name", "Test Project", "--json"],
+        capture_output=True, text=True, cwd=tmp_path,
+    )
+    assert result.returncode == 1, "should fail without principles"
+    combined = result.stdout + result.stderr
+    assert combined.strip(), "failed SILENTLY - the whole point of this fix"
+    assert "/arckit:principles" in combined, (
+        f"error must name the fix, got: {combined!r}"
+    )
+
+
+def test_create_project_copies_are_identical():
+    a, b = (read(p) for p in CREATE_PROJECT_COPIES)
+    assert a == b, "create-project.sh copies have drifted"
