@@ -53,6 +53,26 @@ Recipes ship at `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{name}.yaml`.
 7. **Halt-on-fail** — if any subagent fails or validation fails, write state, do *not* commit, surface a per-target error report. Resume with `--resume`
 8. **Post-build hooks** — `arckit:health` and `arckit:pages` run in parallel after the final target wave
 
+## Session limits (subagents and searches)
+
+Claude Code caps subagent activity per session. Every cap **denies** — none of them queues. Verified against the Claude Code v2.1.220 binary: an over-cap spawn throws a tool error rather than waiting for a slot.
+
+| Limit | Default | Override |
+|---|---|---|
+| Concurrently-running subagents | 20 | `CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS` |
+| Subagent spawns per session | 200 | `CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION` |
+| WebSearch calls per session | 200 | `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` |
+
+**Why this matters here specifically.** The harness dispatches one subagent per target per wave and is halt-on-fail. A wave wider than the concurrency cap therefore does not run slower — the 21st and later `Agent` calls fail immediately with *"Concurrent subagent limit reached … Do not retry"*, which the harness treats as wave failure and halts on. Hitting the per-session cap produces *"Subagent spawn limit reached"* and the same outcome.
+
+**No shipped recipe currently exceeds the concurrency cap.** The widest wave across all bundled recipes is **16 of 20**, in `uk-saas` and `uk-nhs-clinical-safety` with every optional target enabled. The largest total spawn count is 49, against a 200 per-session cap. `scripts/check_recipes.py` enforces this in CI: a recipe wave above 20 is an error, and above 16 warns, so the margin cannot quietly erode as recipes grow.
+
+That margin is only four agents, so it matters when you **write your own recipe**. If you add parallel targets to an existing wave, either keep the wave at 20 or fewer, or add a `deps:` edge to split it. Run `python3 scripts/check_recipes.py` to see the widest wave in your recipe.
+
+**Budgets are per session, not per build.** A build uses one spawn per target, so back-to-back builds, a `--refresh` pass, or research commands in the same session accumulate against the 200 ceiling. `/clear` resets the subagent budget. `--max-budget-usd`, if set, also halts running background subagents once reached.
+
+The concurrency cap is lifted in ultracode mode (which runs at `xhigh` effort and orchestrates dynamic workflows). Don't rely on that to make an over-wide wave work — the default path is what has to hold.
+
 ## Path allocation — trust the hook
 
 Workers don't construct filenames or call `generate-document-id.sh` themselves. The plugin's `validate-arc-filename.mjs` PreToolUse hook normalizes paths at write time: allocates the next sequence number for ADR/DIAG, applies `decisions/` and `diagrams/` subfolders, pads project IDs. Workers read the corrected `ACTUAL_PATH` from the Skill tool result and report it back.

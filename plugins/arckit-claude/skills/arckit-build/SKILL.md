@@ -165,7 +165,12 @@ Standard topological sort with parallelism:
 3. While pending non-empty:
    - `wave = { t ∈ pending : deps(t) ⊆ done }` (after expanding globs)
    - If wave empty → cycle / unresolvable. Halt with error, list involved targets.
+   - **If `|wave| > 20`, split it**: dispatch the first 20 (stable sort by target ID), and leave the remainder in `pending` for the next iteration. They have no unmet deps, so they form the next wave immediately.
    - Emit wave; remove its members from pending; (after dispatch + validate) add to done.
+
+**Why the 20 cap is load-bearing.** Claude Code caps concurrently-running subagents at 20 by default (`CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`, v2.1.217+) and **denies** over-cap spawns rather than queueing them — the 21st `Agent` call in a single message fails with *"Concurrent subagent limit reached … Do not retry"*. Because this harness is halt-on-fail, an over-wide wave does not run slower, it fails. No bundled recipe exceeds 16 (CI enforces this via `scripts/check_recipes.py`), but a user-authored recipe under `.arckit/recipes/` never passes through CI, so split at dispatch time rather than assuming the recipe is well-formed.
+
+A split wave is still one commit — commit after the whole logical wave completes, not after each chunk of 20.
 
 **Worked example** — for project 001 (UK-SaaS recipe) **starting from empty state**, the algorithm produces something like:
 
