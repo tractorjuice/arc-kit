@@ -76,7 +76,9 @@ arckit-claude/
     └── validate-handoff.mjs              # Shared pure-Node JSON Schema validator (zero npm deps)
 ```
 
-**Why the orchestrator lives in the slash command, not an agent file:** Claude Code plugin subagents cannot themselves dispatch further subagents (per the official docs: *"Subagents cannot spawn other subagents"*). Nested `Agent` dispatch is a Managed Agents API feature, not a plugin runtime feature. So the orchestrator role — which must call `Agent` to dispatch reader and writer — has to live where `Agent` is available, which is the main thread (i.e. the slash command's body). Reader and writer remain as proper subagents under `agents/`. Same security properties as the financial-services Cowork pattern; different file location dictated by the Claude Code plugin runtime.
+**Why the orchestrator lives in the slash command, not an agent file:** the orchestrator role must call `Agent` to dispatch reader and writer, so it has to live where `Agent` is reliably available — the main thread, i.e. the slash command's body. Reader and writer remain as proper subagents under `agents/`. Same security properties as the financial-services Cowork pattern; different file location.
+
+**This is a deliberate choice, not a platform limitation.** It used to be both: subagents genuinely could not spawn subagents, so the main thread was the only option. That is no longer true — nested `Agent` dispatch now works in the plugin runtime. But the nesting *default* has moved three times in three months (depth 5 in Claude Code v2.1.172, disabled entirely in v2.1.217, depth 3 in v2.1.219) and any user can turn it off with `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=1`. An orchestrator re-homed into `agents/` would not degrade under that setting — it would stop working outright, silently, for that user. Keeping the orchestrator on the main thread costs nothing and is robust to the setting in both directions. Do not "modernise" this by moving the orchestrators into `agents/`; see [#580](https://github.com/tractorjuice/arc-kit/issues/580) for the full reasoning.
 
 The `subagent: true` frontmatter field on reader and writer agents:
 

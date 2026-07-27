@@ -5,6 +5,23 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Documentation
+
+- **Claude Code v2.1.201–v2.1.220 adoption** (#580). Refreshed guidance against the current platform:
+  - `agents/READER-PATTERN.md` asserted that "subagents cannot spawn other subagents" — true when written, false since nested `Agent` dispatch returned. Rewrote the rationale: the orchestrators stay on the main thread by **choice**, not platform limitation, because the nesting default moved three times in three months (depth 5 in v2.1.172, disabled in v2.1.217, depth 3 in v2.1.219) and any user can disable it with `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=1`, which would break a re-homed orchestrator outright rather than degrade it.
+  - `CLAUDE.md` model guidance: Opus 5 is the default Opus model; effort support now covers Opus 5 / Sonnet 5 / Fable 5; fast mode applies to Opus 5 and Opus 4.8 only, with Opus 4.7 fast mode removed on 2026-07-24 (Claude Code still treats 4.7 as fast-mode-capable while the API rejects the requests, so it fails silently rather than degrading). Rates corrected to the documented $10/$50 per MTok. Verified against the official model-config and fast-mode docs.
+  - `mcp-servers.md`: MCP calls auto-background after 2 minutes (`CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS`, v2.1.212) and how that interacts with a raised `MCP_TOOL_TIMEOUT`; per-server `request_timeout_ms` is honoured again (v2.1.206); failed servers now report HTTP status and error text (v2.1.218).
+  - `enterprise-scale.md`: `sandbox.network.strictAllowlist` (v2.1.219) and `sandbox.filesystem.disabled` (v2.1.216) in the security baseline; plugin option values must be set at user or managed scope, since v2.1.207 stopped reading `pluginConfigs` from a repository's `.claude/settings.json`.
+  - `security-hooks.md`: sandboxed commands reach the network independently of `WebFetch` rules, and `strictAllowlist` closes that gap.
+  - `research.md` / `autoresearch.md`: the session-wide 200-call WebSearch budget and 200/20 subagent budgets (v2.1.212, v2.1.217), which a search-heavy run or a long optimisation loop can exhaust.
+
+### Fixed
+
+- **Plugin-tree guide drift.** `plugins/arckit-claude/docs/guides/mcp-servers.md` was missing the "Optional: MCP per-request timeout" section that four `*-research.md` guides in the same tree link to, leaving a dead anchor; `security-hooks.md` was missing "Restricting web access for research agents" entirely, so the plugin tree shipped no domain-restriction guidance. Both sections backfilled; the two trees now share a heading structure.
+- `mcp-servers.md` troubleshooting told users to run `echo $GOOGLE_API_KEY`, printing a live credential to the terminal in a guide that elsewhere highlights key redaction for OFFICIAL-SENSITIVE deployments. Replaced with a presence check that does not echo the value.
+
 ## [6.5.0] — 2026-07-27
 
 ### Added
