@@ -4,7 +4,7 @@
 
 **Goal:** Let ArcKit read a real codebase (local checkout or public GitHub/GitLab repo) and produce a governance-shaped audit: the as-built architecture, scored against the project's principles and requirements where they exist, with every gap expressed as a proposed ADR.
 
-**Architecture:** New command `/arckit:repo-audit` in the existing `arckit-repo` plugin, reusing the discovery, source-grounding, and secret-safety rules already proven in `/arckit:repo-docs`. New doc-type `CBAU`, multi-instance, written to `projects/{P}-{NAME}/audits/`.
+**Architecture:** New command `/arckit:repo-audit` in the existing `arckit-repo` plugin, reusing the discovery, source-grounding, and secret-safety rules already proven in `/arckit:repo-docs`. New doc-type `CDAU`, multi-instance, written to `projects/{P}-{NAME}/audits/`.
 
 **Tech stack:** Markdown command prompt with YAML frontmatter, a new template in both template trees, `doc-types.mjs` plus the bash helper for ID generation, `scripts/converter.py` for the seven non-Claude extensions.
 
@@ -128,11 +128,11 @@ Run all of these unless focus text narrows the set. Each finding must cite a rep
 
 This is the artefact the issue's own comment said had to be defined before coding.
 
-- **Doc type:** `CBAU`, display name `Codebase Audit`, category `Governance`, no `regime`, no `severity`. Registered in `plugins/arckit-claude/config/doc-types.mjs`.
-- **Multi-instance:** yes. A project may audit several repositories. Add `CBAU` to `MULTI_INSTANCE_TYPES` in `doc-types.mjs` **and** to the parallel bash list in `scripts/bash/generate-document-id.sh`.
+- **Doc type:** `CDAU`, display name `Codebase Audit`, category `Governance`, no `regime`, no `severity`. Registered in `plugins/arckit-claude/config/doc-types.mjs`.
+- **Multi-instance:** yes. A project may audit several repositories. Add `CDAU` to `MULTI_INSTANCE_TYPES` in `doc-types.mjs` **and** to the parallel bash list in `scripts/bash/generate-document-id.sh`.
 - **Subdirectory:** `audits`. New entry in `SUBDIR_MAP`. Deliberately not `research/`, because this is a governance assessment of code we control or intend to adopt, not market discovery.
-- **Filename:** `ARC-{PID}-CBAU-{NNN}-v{X.Y}.md`, generated via `generate-document-id.sh CBAU {PID} --next-num projects/{P}-{NAME}/audits`.
-- **Code choice:** `REPO` is already taken by the TOGAF ADM overlay (Architecture Repository), `ANAL` by `/arckit:analyze`, `CONF` by `/arckit:conformance`. `CBAU` is free against all 178 registered codes.
+- **Filename:** `ARC-{PID}-CDAU-{NNN}-v{X.Y}.md`, generated via `generate-document-id.sh CDAU {PID} --next-num projects/{P}-{NAME}/audits`.
+- **Code choice:** `REPO` is already taken by the TOGAF ADM overlay (Architecture Repository), `ANAL` by `/arckit:analyze`, `CONF` by `/arckit:conformance`. `CDAU` is free against all 178 registered codes.
 
 ### Document sections
 
@@ -207,11 +207,11 @@ The `.claude/skills/new-command-docs/` skill carries the exact grep patterns and
 
 ### Pre-existing defect this work touches
 
-`MULTI_INSTANCE_TYPES` has already drifted between the two registries. `doc-types.mjs` lists 19 types; `scripts/bash/generate-document-id.sh` lists 18 and is missing `GRNT`. The comment in `doc-types.mjs` claims the bash list has 10 entries, which was true a long time ago. Adding `CBAU` means touching both lists anyway, so fix `GRNT` and correct the stale comment in the same change. Consider a CI guard that diffs the two lists; there is currently nothing preventing the next drift.
+`MULTI_INSTANCE_TYPES` has already drifted between the two registries. `doc-types.mjs` lists 19 types; `scripts/bash/generate-document-id.sh` lists 18 and is missing `GRNT`. The comment in `doc-types.mjs` claims the bash list has 10 entries, which was true a long time ago. Adding `CDAU` means touching both lists anyway, so fix `GRNT` and correct the stale comment in the same change. Consider a CI guard that diffs the two lists; there is currently nothing preventing the next drift.
 
 ## Implementation tasks
 
-1. Register `CBAU` across `doc-types.mjs`, the bash helper, and `pages.md`. Fix the `GRNT` drift. Verify `generate-document-id.sh CBAU 001 --next-num <dir>` returns `ARC-001-CBAU-001-v1.0`.
+1. Register `CDAU` across `doc-types.mjs`, the bash helper, and `pages.md`. Fix the `GRNT` drift. Verify `generate-document-id.sh CDAU 001 --next-num <dir>` returns `ARC-001-CDAU-001-v1.0`.
 2. Write the template in both template trees, with the severity rubric and all 13 sections.
 3. Write the command prompt: argument parsing, mode inference, clone flow with confirmation, discovery, the 10 dimensions, and Write-tool output (never inline, given the 32K output cap).
 4. Add the guide, sync it, and confirm `check-guide-parity.py` passes clean.
@@ -239,9 +239,14 @@ The `.claude/skills/new-command-docs/` skill carries the exact grep patterns and
 - Vendoring any external audit or SAST tool.
 - Language-specific deep static analysis. This is architecture-level audit, and it should say so rather than pretend to be a linter.
 
+## Decisions taken
+
+Settled by the maintainer on 2026-07-27. Recorded here so the implementation does not reopen them.
+
+1. **Doc-type code is `CDAU`.** Chosen over `CBAU` and `SRCA`. Verified free against all 178 registered codes; nearest neighbours are `CACR`, `CHRT`, `CLAS`.
+2. **`audits/` is a new subdirectory**, not a reuse of `research/`. It costs one `SUBDIR_MAP` entry and one more directory in the project scaffold, and it keeps a governance assessment of code out of the market-discovery tree.
+
 ## Open questions for the maintainer
 
-1. **`CBAU` as the code.** It is free and 4 characters like its neighbours, but it is not pretty. `CDAU` and `SRCA` are also free.
-2. **`audits/` as a new subdirectory** versus reusing `research/`. New subdirectory is cleaner semantically and costs one `SUBDIR_MAP` entry, but it is another directory in the project scaffold.
-3. **Should CBAU carry `severity: 'HIGH'`?** That would make it count toward the Compliance Readiness scorecard in `/arckit:graph-report`. Recommendation: no. The audit is situational, and projects with no external codebase should not be penalised.
-4. **Confirm the reply to @johnfelipe.** They approved the original 7-point plan and have been waiting since 2026-07-08. This spec narrows that plan (local-first, public repos only, no GitLab metadata in v1) and should be summarised on the issue before implementation starts.
+1. **Should `CDAU` carry `severity: 'HIGH'`?** That would make it count toward the Compliance Readiness scorecard in `/arckit:graph-report`. Recommendation: no. The audit is situational, and projects with no external codebase should not be penalised for lacking one.
+2. **Confirm the reply to @johnfelipe.** They approved the original 7-point plan and have been waiting since 2026-07-08. This spec narrows that plan (local-first, public repos only, no GitLab metadata in v1) and should be summarised on the issue before implementation starts.
