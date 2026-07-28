@@ -301,7 +301,7 @@
 
     <div class="app-page-hero app-page-hero--contributors">
         <div class="govuk-width-container app-page-hero__content">
-            <span class="app-page-hero__stat">17 Open Source Contributors</span>
+            <span class="app-page-hero__stat">19 Open Source Contributors</span>
             <h1 class="app-page-hero__title">ArcKit Contributors</h1>
             <p class="app-page-hero__description">Meet the maintainers and community members improving ArcKit through code contributions, issues, feature requests, and feedback.</p>
         </div>
@@ -478,6 +478,22 @@
                         <li>DCB0129 1&ndash;5 severity / likelihood scoring scale and <code>open</code>&nbsp;/&nbsp;<code>mitigated</code>&nbsp;/&nbsp;<code>accepted</code>&nbsp;/&nbsp;<code>closed</code> status vocabulary</li>
                     </ul>
                 </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">Y</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/Yumstezy">@Yumstezy</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--code">Code Contributor</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Authored <code>docs/guides/custom-commands.md</code>, the authoring guide for contributors adding new ArcKit commands (<a href="https://github.com/tractorjuice/arc-kit/issues/111" class="govuk-link">#111</a>, <a href="https://github.com/tractorjuice/arc-kit/issues/357" class="govuk-link">#357</a>). Covers the converter fan-out from plugin source to every target format, the frontmatter reference, the <code>$ARGUMENTS</code> placeholder rewriting table, template-handling differences between Paperclip and the other targets, and the commands/skills/agents/hooks decision table.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Wrote the contributor-facing command authoring guide</li>
+                        <li>Documented the converter fan-out and frontmatter reference</li>
+                        <li>Added the commands vs skills vs agents vs hooks decision table</li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Feature Requesters & Bug Reporters -->
@@ -592,11 +608,27 @@
                         <li>Investigation surfaced the same blind spot in <code>validate-wardley-math.mjs</code>, where it had been letting <code>evolve</code> references to undeclared components pass silently</li>
                     </ul>
                 </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">J</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/jhonurrego-tekton">@jhonurrego-tekton</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--bug">Bug Reporter</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Reported duplicate plugin entries in <code>installed_plugins.json</code> alongside a "Plugin 'arckit' not cached" warning (<a href="https://github.com/tractorjuice/arc-kit/issues/688" class="govuk-link">#688</a>, fixed in v6.7.2). Root cause was documentation rather than code: <code>CLAUDE.md</code> recommended the <code>tractorjuice/arc-kit</code> marketplace while three other places recommended <code>tractorjuice/arckit-claude</code>. Both publish all 16 plugins under identical names, so a user following both instructions registered every plugin twice and left the plugin manager choosing between ambiguous entries.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Surfaced a conflict between four separate install instructions</li>
+                        <li>Reported with <code>installed_plugins.json</code> evidence showing the duplicate registrations</li>
+                        <li>Prompted a single-marketplace recommendation across all documentation</li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Community Summary -->
             <h2 class="govuk-heading-l govuk-!-margin-top-8">Community Impact</h2>
-            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 9 code contributors, 2 feature requesters, 5 bug reporters, and 1 domain/spec maintainer, these 17 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, plugin user-config wiring, secret-scanner accuracy, Wardley Map conversion fidelity, accessibility standards alignment, EU / French / Austrian / Australian regulatory compliance coverage, TOGAF ADM support, and AI agent architecture governance.</p>
+            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 10 code contributors, 2 feature requesters, 6 bug reporters, and 1 domain/spec maintainer, these 19 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, plugin user-config wiring, secret-scanner accuracy, Wardley Map conversion fidelity, accessibility standards alignment, EU / French / Austrian / Australian regulatory compliance coverage, TOGAF ADM support, and AI agent architecture governance.</p>
 
             <!-- Contributing CTA -->
             <div class="govuk-inset-text govuk-!-margin-top-6">
