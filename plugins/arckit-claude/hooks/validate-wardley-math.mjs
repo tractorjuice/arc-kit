@@ -147,7 +147,10 @@ const owmFenceOpenRe = /^\s*```(?:wardley|owm)\b/;
 // silently slipping through.
 const componentDeclRe = /^\s*(component|anchor|note|submap|market)\s+(.+?)\s+\[\s*(-?[0-9.]+)\s*,\s*(-?[0-9.]+)\s*\]/;
 const pipelineRe = /^\s*pipeline\s+(.+?)\s+\[\s*(-?[0-9.]+)\s*,\s*(-?[0-9.]+)\s*\]/;
-const evolveRe = /^\s*evolve\s+(.+?)\s+[0-9.]+\s*$/;
+// Optional non-capturing `label ...` suffix — without it a labelled evolve
+// line never lands in `references[]`, so an evolve pointing at an undeclared
+// or typo'd component silently skips the undeclared-reference check.
+const evolveRe = /^\s*evolve\s+(.+?)\s+[0-9.]+(?:\s+label\b.*)?$/;
 const annotationRe = /^\s*annotation\s+(\d+)\s+\[/;
 const styleRe = /^\s*style\s+(\S+)/;
 
@@ -316,7 +319,7 @@ function extractNameZones(line) {
   if (m) return [m[1]];
   m = line.match(/^\s*anchor\s+(.+?)\s*\[/);
   if (m) return [m[1]];
-  m = line.match(/^\s*evolve\s+(.+?)\s+[0-9.]+\s*$/);
+  m = line.match(/^\s*evolve\s+(.+?)\s+[0-9.]+(?:\s+label\b.*)?$/);
   if (m) return [m[1]];
   m = line.match(/^\s*pipeline\s+(.+?)(?:\s*\[|\s*$)/);
   if (m) return [m[1]];

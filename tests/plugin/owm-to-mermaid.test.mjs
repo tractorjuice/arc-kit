@@ -66,3 +66,31 @@ test('regression — inertia-only component unchanged', () => {
   const out = convert('component "X" [0.5, 0.5] inertia');
   assert.match(out, /component "X" \[0\.5, 0\.5\] \(inertia\)/);
 });
+
+test('issue #693 — evolve with a free-text label is emitted, label stripped', () => {
+  const out = convert('evolve Captioning and Transcription 0.86 label Commoditising fast');
+  assert.match(out, /evolve "Captioning and Transcription" 0\.86\s*$/m);
+  assert.doesNotMatch(out, /label/i);
+});
+
+test('issue #693 — evolve with an OWM label offset is emitted, offset stripped', () => {
+  const out = convert('evolve X 0.8 label [10, -5]');
+  assert.match(out, /evolve "X" 0\.8\s*$/m);
+  assert.doesNotMatch(out, /label/i);
+});
+
+test('issue #693 — embedded digits and a trailing label at once (neither old pattern handled this)', () => {
+  const out = convert('evolve "Foo (Project 003)" 0.74 label Moving right');
+  assert.match(out, /evolve "Foo \(Project 003\)" 0\.74\s*$/m);
+  assert.doesNotMatch(out, /label/i);
+});
+
+test('issue #693 — bare `label` with no trailing text is still tolerated', () => {
+  const out = convert('evolve X 0.8 label');
+  assert.match(out, /evolve "X" 0\.8\s*$/m);
+});
+
+test('issue #693 — a component name containing the word "label" is not truncated', () => {
+  const out = convert('evolve Label Printer 0.8');
+  assert.match(out, /evolve "Label Printer" 0\.8\s*$/m);
+});
