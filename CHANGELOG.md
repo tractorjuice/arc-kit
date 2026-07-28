@@ -5,6 +5,18 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.7.5] — 2026-07-28
+
+### Fixed
+
+- **The Build Provenance block failed markdownlint in every artefact ArcKit stamps.** `.markdownlint-cli2.jsonc` sets MD049 to `asterisk`; both provenance stamping hooks emitted their preamble as `_Stamped automatically by …_`. Because that block is appended to every stamped artefact, the violation shipped into each one — in user repos as much as this one, so this is a product defect rather than repo hygiene. Fixed in both sources: `plugins/arckit-claude/hooks/provenance-stamp.mjs`, which propagates to the generated extensions, and `extensions/arckit-codex/hooks/arckit-codex-hook.mjs`, which is hand-maintained, carries its own stamp string, and could not be reached by the converter. `tests/plugin/provenance-emphasis.test.mjs` now asserts both open and close on `*` in both sources (#701).
+
+- **The release flow's plugin-manifest validation had never validated anything.** Step 7/8 cross-checks every `plugin.json` against its marketplace entry to catch version drift before tagging. The `/release` skill discovered manifests with `find . -maxdepth 3`, but from the repo root they sit at depth 4 — the glob matched nothing, the loop body never ran, and it exited 0 reporting a clean pass. Every release from v6.0.0 through v6.7.4 "passed" that way. Separately, both the skill and `docs/RELEASING.md` passed the `name` field from `plugin.json` to `claude plugin tag`, which takes a path: `claude plugin tag arckit` fails with `Path not found`. Had the glob ever matched, every iteration would have failed anyway. Both now search from `plugins`, derive the directory path, and assert the glob found something before looping — the count assertion being the actual fix, since a loop whose body may never run is unvalidated until it reports what it covered (#700).
+
+### Changed
+
+- **`books/` and `docs/pitch-decks/` are no longer linted.** Both are gitignored with zero tracked files, so CI never saw them while every local run did — `books/` alone produced 1,259 errors. That volume of noise in `bump-version.sh` output is what let the provenance defect above sit unnoticed. Now excluded, matching the existing treatment of `docs/articles/`, `docs/plans/` and `research/`. `projects/**` stays in scope deliberately despite also being gitignored here: those artefacts are ArcKit's own output, and linting them is exactly what surfaced the defect. A repo-wide sweep is now clean at 3,502 files.
+
 ## [6.7.4] — 2026-07-28
 
 Repository and site maintenance. No changes to the plugin, commands, agents,
