@@ -66,10 +66,18 @@ git status && git diff --stat
 git add -A && git commit -m "chore: bump version to X.Y.Z"
 
 # 7. Validate EVERY plugin manifest against the marketplace entry.
-#    Discover plugins dynamically — do NOT hardcode the list (it grows):
-for manifest in $(find . -maxdepth 3 -path '*/.claude-plugin/plugin.json' -not -path '*/node_modules/*' | sort); do
-  p=$(python3 -c "import json;print(json.load(open('$manifest'))['name'])")
-  claude plugin tag "$p" --dry-run || { echo "VERSION DRIFT: $p"; exit 1; }
+#    Discover plugins dynamically — do NOT hardcode the list (it grows).
+#    Search from `plugins`, not `.`: from the repo root the manifests sit at
+#    depth 4, so `find . -maxdepth 3` matches nothing and the loop below
+#    "passes" having validated not one plugin.
+mapfile -t manifests < <(find plugins -maxdepth 3 -path '*/.claude-plugin/plugin.json' | sort)
+
+(( ${#manifests[@]} > 0 )) || { echo "No plugin manifests found — check the find path"; exit 1; }
+echo "Validating ${#manifests[@]} plugin manifests..."
+
+for manifest in "${manifests[@]}"; do
+  dir=${manifest%/.claude-plugin/plugin.json}   # PATH — `claude plugin tag` rejects the name
+  claude plugin tag "$dir" --dry-run || { echo "VERSION DRIFT: $dir"; exit 1; }
 done
 
 # 8. (optional) Prune orphaned plugin deps:
@@ -109,11 +117,24 @@ The highest-signal failures — collected from real releases. Read these before 
 - **Skipping extension tests.** Run the step 4 extension suite after `converter.py`. It validates
   Codex, Gemini, OpenCode, Copilot, Vibe, Paperclip, release inventory, version alignment, and
   platform-specific command rewrites before anything is tagged.
-- **Hardcoding the plugin list.** The Claude marketplace now ships 15 plugins (core plus
+- **Hardcoding the plugin list.** The Claude marketplace now ships 16 plugins (core plus
   regional, sector, method, agent-architecture, tooling, and supplier overlays) and keeps growing. Older examples listed
   only 7, silently skipping newer plugins. Discover plugins dynamically (step 7) -- this is the
   exact bug that shipped `arckit-uk-nhs` untagged mid-v5.4.0, which is why `tag-plugins.sh`
   now auto-discovers. Never copy a static plugin array.
+- **A `for` loop over an empty glob exits 0.** Step 7's discovery searched from `.` while the
+  manifests sit at depth 4, so `-maxdepth 3` matched nothing and the validation reported a
+  clean pass having checked not one plugin -- through every release from v6.0.0 to v6.7.4.
+  Dynamic discovery only helps if you assert it found something, hence the count check and the
+  `Validating N plugin manifests...` line. Treat any loop whose body might never run as
+  unvalidated until it prints what it covered.
+- **`claude plugin tag` takes a PATH, not a plugin name.** Passing the `name` from `plugin.json`
+  (`arckit`) resolves relative to the repo root and fails `✘ Path not found: /…/arckit`. Use the
+  plugin directory: `plugins/arckit-claude`. This compounded the bug above -- had the glob ever
+  matched, every iteration would have failed anyway.
+- **Validate before `tag-plugins.sh`, never after.** Once the native `name--vX.Y.Z` tags exist,
+  the dry-run fails with `Tag "…" already exists locally` -- correct behaviour, not version drift,
+  but it will send you hunting for a problem that isn't there.
 - **`claude plugin tag` needs a clean tree.** Run it *after* the commit (step 6), not before, or
   it errors on the dirty working tree.
 - **`claude plugin tag` is `--dry-run` only here.** It creates `name--vX.Y.Z` style tags that do

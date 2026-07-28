@@ -126,18 +126,38 @@ This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`)
 
 ## v6.0.0+ — single Claude marketplace repo
 
-From v6.0.0 the standalone `tractorjuice/arckit-claude` repo is the preferred Claude Code marketplace. It ships 15 plugins in one repo: the `arckit` core plugin at the root plus regional, sector, method, agent-architecture, tooling, and supplier overlays under structured `plugins/...` paths. All Claude plugins share one version, bumped together. The `arckit-uk-gcloud` overlay is public for installation and inspection but remains proprietary, so the standalone repo license carries an explicit exception for `plugins/uk/gcloud/`.
+From v6.0.0 the standalone `tractorjuice/arckit-claude` repo is the preferred Claude Code marketplace. It ships 16 plugins in one repo: the `arckit` core plugin at the root plus regional, sector, method, agent-architecture, tooling, and supplier overlays under structured `plugins/...` paths. All Claude plugins share one version, bumped together. The `arckit-uk-gcloud` overlay is public for installation and inspection but remains proprietary, so the standalone repo license carries an explicit exception for `plugins/uk/gcloud/`.
 
 The root `.claude-plugin/marketplace.json` in `tractorjuice/arc-kit` remains a compatibility marketplace for existing users who already added the old repo. Keep its `name` as `arc-kit` and its sources pointed at monorepo paths such as `./plugins/arckit-claude` and `./plugins/arckit-uae`. The standalone marketplace metadata lives at `plugins/arckit-claude/.claude-plugin/marketplace.json` and uses `.` plus `./plugins/...` sources for `tractorjuice/arckit-claude`.
 
 Step 8 changes — validate every plugin manifest:
 
 ```bash
-for manifest in $(find plugins -maxdepth 3 -path '*/.claude-plugin/plugin.json' | sort); do
-  p=$(python3 -c "import json;print(json.load(open('$manifest'))['name'])")
-  claude plugin tag "$p" --dry-run || { echo "VERSION DRIFT: $p"; exit 1; }
+mapfile -t manifests < <(find plugins -maxdepth 3 -path '*/.claude-plugin/plugin.json' | sort)
+
+# An empty glob would make the loop below exit 0 having validated nothing.
+(( ${#manifests[@]} > 0 )) || { echo "No plugin manifests found — check the find path"; exit 1; }
+echo "Validating ${#manifests[@]} plugin manifests..."
+
+for manifest in "${manifests[@]}"; do
+  dir=${manifest%/.claude-plugin/plugin.json}          # a PATH, not the plugin name
+  claude plugin tag "$dir" --dry-run || { echo "VERSION DRIFT: $dir"; exit 1; }
 done
 ```
+
+> **`claude plugin tag` takes a path, not a plugin name.** Passing the `name` field
+> from `plugin.json` (`arckit`) resolves it relative to the repo root and fails with
+> `✘ Path not found: /…/arckit`. Post-relayout the path is the plugin directory —
+> `plugins/arckit-claude`, not `arckit` and not a bare `arckit-claude`.
+>
+> **Keep the `-maxdepth 3` and the `plugins` prefix.** Together they select exactly
+> the 16 real plugin directories. Searching from `.` instead pushes the manifests to
+> depth 4 and matches nothing; raising the depth pulls in the nested publish mirrors
+> under `plugins/arckit-claude/plugins/…`, which are not separately taggable.
+>
+> **Run this before `tag-plugins.sh`, not after.** Once the native `name--vX.Y.Z`
+> tags exist the dry-run fails with `Tag "…" already exists locally`, which is not
+> version drift.
 
 After the umbrella tag (step 10), also create native per-plugin tags:
 
