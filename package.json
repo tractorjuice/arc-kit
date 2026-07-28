@@ -5,5 +5,8 @@
   "devDependencies": {
     "@mermaid-js/mermaid-cli": "^11.14.0",
     "mermaid": "11.15.0"
+  },
+  "overrides": {
+    "postcss": "^8.5.18"
   }
 }
