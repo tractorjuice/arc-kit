@@ -5,6 +5,18 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`evolve` lines carrying a trailing `label` were silently dropped from the generated Mermaid block — a side-effect of the #508 fix.** PR #511 anchored the evolve target at end-of-line to stop `003` being taken as the target in `evolve "Foo (Project 003)" 0.74`. That fix was correct, but the anchor also meant no evolve line with *any* trailing text could match, and `owm-to-mermaid.mjs` skips unmatched lines silently. The label suffix is now an optional non-capturing group, so the #508 anchor holds while labels are tolerated and stripped as they were before #511. Reported by @chrismckelt against 6.7.2 (#693).
+
+  Wider than reported in two ways. First, this is the **documented** syntax, not an edge case: `commands/wardley.md` gives the output template as `evolve {Component Name} {target_evolution} label {label text}`, repeats it in the syntax summary, and uses it in worked examples, and both `wardley-map-template.md` copies follow suit — so a `/arckit:wardley` run that followed ArcKit's own instructions lost *every* evolve line from the Mermaid block while the OWM block above it showed them all. Second, the canonical OWM offset form `evolve X 0.8 label [10, -5]` was dropped too, not just free-text labels.
+
+- **`validate-wardley-math.mjs` was blind to the same lines, so nothing caught the inconsistency at write time.** The hook carried the same end-anchored evolve pattern in two places. A labelled evolve line therefore never landed in the reference list, and an evolve pointing at an undeclared or misspelled component passed validation silently. Both patterns now take the same optional label suffix; the dangling-reference check fires on labelled lines as it always should have (#693).
+
+  No documentation change was needed: `commands/wardley.md` describes the converter as handling "`evolve`-label stripping", which was true before #511 and is true again now. The code was wrong, not the doc.
+
 ## [6.7.2] — 2026-07-27
 
 ### Fixed

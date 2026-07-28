@@ -281,7 +281,12 @@ export function convert(owm, filename = '') {
 
     // evolve — anchor target at end so quoted names with embedded digits
     // (e.g. "Foo (Project 003)") aren't mis-parsed by the lazy name group.
-    const mev = s.match(/^evolve\s+(.+?)\s+([\d.]+)\s*$/i);
+    // The trailing `label ...` suffix is optional and non-capturing: it keeps
+    // the end-anchor (so #508 stays fixed) while tolerating both the free-text
+    // form (`label Commoditising fast`) and the OWM offset form
+    // (`label [10, -5]`). The label is stripped, not emitted — Mermaid
+    // wardley-beta has no verified `label` grammar on an evolve statement.
+    const mev = s.match(/^evolve\s+(.+?)\s+([\d.]+)(?:\s+label\b.*)?$/i);
     if (mev) {
       out.push(`evolve ${quoteName(mev[1].trim())} ${mev[2]}`);
       continue;
