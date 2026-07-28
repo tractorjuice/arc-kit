@@ -5,6 +5,22 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **Three contributors credited in the CHANGELOGs were missing from `docs/contributors.html`.** @Yumstezy (authored `docs/guides/custom-commands.md`, #111/#357), @jhonurrego-tekton (reported #688, v6.7.2) and @chrismckelt (reported #693, v6.7.3) all had release-note credits and no card on the site. All three are now listed, and the two counts the page carries — the hero stat and the Community Impact paragraph — are consistent with the 19 cards on it.
+
+### Added
+
+- **`scripts/check-contributor-credits.py`, a CI guard against contributor-credit drift.** The page is hand-maintained and nothing derives it from the CHANGELOGs, so crediting someone at release time and listing them on the site are independent acts — and only one of them is part of the release flow. The failure was silent and one-directional (the CHANGELOG right, the site quietly incomplete), which is why it accumulated across three releases before anyone looked. The guard fails CI when a handle credited in either CHANGELOG has no profile link on the page.
+
+  Checked in one direction only. The reverse would be wrong: a card may legitimately predate the credit convention, or record a contribution such as a proposed overlay or an adopted external spec that never produced a release note.
+
+  Code spans and fenced blocks are stripped before scanning, because a credit is always prose and `@`-prefixed tokens are everywhere in a technical changelog — without it, PlantUML's `@startuml`/`@enduml` register as contributors, as would npm scopes and decorators. Bare version specifiers such as `mermaid@11.15.0` are excluded by a word-boundary guard rather than by the code stripping, so they stay excluded outside backticks too.
+
+  Wiring `docs/contributors.html` into the `lint-markdown.yml` path filters also closes a related gap: a PR touching only that file previously triggered no CI at all.
+
 ## [6.7.3] — 2026-07-28
 
 ### Fixed
