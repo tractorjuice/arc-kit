@@ -5,6 +5,14 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.7.5] — 2026-07-28
+
+### Fixed
+
+- **The Build Provenance block failed markdownlint in every artefact the plugin stamps.** `provenance-stamp.mjs` emitted its preamble as `_Stamped automatically by …_`, and MD049 is configured to `asterisk`. Since the hook appends that block to every artefact written under `projects/**`, the violation reached each one — so anyone linting their own artefacts saw a failure ArcKit itself had introduced. Now emitted with asterisk emphasis, with `tests/plugin/provenance-emphasis.test.mjs` asserting the preamble both opens and closes on `*` (#701).
+
+  The same defect existed independently in the Codex extension's hand-maintained `arckit-codex-hook.mjs`, which carries its own stamp string; both are fixed and both are covered by the test.
+
 ## [6.7.4] — 2026-07-28
 
 No plugin changes. Commands, agents, skills, hooks, templates, MCP servers and
