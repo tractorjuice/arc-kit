@@ -89,6 +89,12 @@
     "**/node_modules/**",
     "docs/articles/**",
     "docs/plans/**",
+    // Gitignored, zero tracked files — CI never sees these, but every local
+    // run (bump-version.sh included) reported errors in them, which is noise
+    // that can mask a real failure in tracked content. `books/` alone
+    // accounted for 1,259 of them.
+    "docs/pitch-decks/**",
+    "books/**",
     "docs/superpowers/**",
     "tests/mermaid-wardley/owm-maps/**",
     "tests/mermaid-wardley/node_modules/**",

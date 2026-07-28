@@ -237,7 +237,10 @@ function buildProvenanceBlock(fields) {
 
   rows.push(['Stamped at', timestamp]);
 
-  let body = `${PROV_START}\n\n## Build Provenance\n\n_Stamped automatically by the ArcKit plugin's \`provenance-stamp.mjs\` PostToolUse hook. Complements (does not replace) the human-authored footer above. Carries only fields the model can't authoritatively self-report: build context from \`.arckit/state.json\` and effort levels derived from command frontmatter + the silent-downgrade matrix._\n\n| Field | Value |\n|-------|-------|\n`;
+  // Emphasis uses asterisks, not underscores: MD049 is configured to
+  // `asterisk`, and this block is appended to every stamped artefact — an
+  // underscore here fails lint in each one, in user repos as well as this one.
+  let body = `${PROV_START}\n\n## Build Provenance\n\n*Stamped automatically by the ArcKit plugin's \`provenance-stamp.mjs\` PostToolUse hook. Complements (does not replace) the human-authored footer above. Carries only fields the model can't authoritatively self-report: build context from \`.arckit/state.json\` and effort levels derived from command frontmatter + the silent-downgrade matrix.*\n\n| Field | Value |\n|-------|-------|\n`;
   for (const [k, v] of rows) body += `| ${k} | ${v} |\n`;
   body += `\n${PROV_END}\n`;
   return body;
