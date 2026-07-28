@@ -5,6 +5,17 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.7.4] — 2026-07-28
+
+No plugin changes. Commands, agents, skills, hooks, templates, MCP servers and
+configuration are byte-identical to 6.7.3; the version moves only because the
+CLI, plugin and all seven generated extensions ship in lockstep.
+
+The release covers repository and site maintenance only — three contributors
+who were credited in the CHANGELOGs but missing from `docs/contributors.html`,
+and a new CI guard that fails the build when that happens again. See the root
+`CHANGELOG.md` for detail.
+
 ## [6.7.3] — 2026-07-28
 
 ### Fixed

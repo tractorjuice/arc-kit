@@ -5,7 +5,11 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [6.7.4] — 2026-07-28
+
+Repository and site maintenance. No changes to the plugin, commands, agents,
+hooks, templates or any generated extension — the version moves only because
+all distribution formats ship in lockstep.
 
 ### Fixed
 
@@ -19,7 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   Code spans and fenced blocks are stripped before scanning, because a credit is always prose and `@`-prefixed tokens are everywhere in a technical changelog — without it, PlantUML's `@startuml`/`@enduml` register as contributors, as would npm scopes and decorators. Bare version specifiers such as `mermaid@11.15.0` are excluded by a word-boundary guard rather than by the code stripping, so they stay excluded outside backticks too.
 
-  Wiring `docs/contributors.html` into the `lint-markdown.yml` path filters also closes a related gap: a PR touching only that file previously triggered no CI at all.
+  Wiring `docs/contributors.html` into the `lint-markdown.yml` path filters also closes a related gap: a PR touching only that file previously triggered no CI at all. Confirmed working: the next contributors-only PR ran the lint job, where the one before it had run no checks whatsoever.
+
+### Changed
+
+- **The Community Impact summary on `docs/contributors.html` now states its counting rule and the real domain-maintainer total.** The figures themselves were correct and are unchanged — they are a disjoint partition, every person counted once under their primary role, summing to the 19 cards on the page. But three of the code contributors also maintain a jurisdictional overlay (Austria, Australia, EU / France), which the sentence hid: it read as though ArcKit has one domain maintainer when it has four. Naming the partition rule matters as much as the figure, since without it the next reader mistakes those numbers for a badge tally and "corrects" a correct number into a wrong one.
 
 ## [6.7.3] — 2026-07-28
 
