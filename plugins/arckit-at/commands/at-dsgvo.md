@@ -100,7 +100,7 @@ Read all documents from Step 0. Identify:
    - Add note: "This document supplements ARC-{PROJECT_ID}-RGPD-v*.md with Austrian/DSB-specific requirements"
 
 3. **Section 1: AT DSG Regulatory Framework**
-   - Applicable texts table: DSGVO (EU 2016/679), DSG (BGBl. I 165/1999 idgF), sector laws (ELGA-G for health, StPO §§134–143b for law enforcement, GTelG 2012, ArbVG §96 Abs 1 Z 3 / §96a)
+   - Applicable texts table: DSGVO (EU 2016/679), DSG (BGBl. I 165/1999 idgF); law-enforcement/justice data processing under the **DSG 3. Hauptstück §§36–61** (transposing RL (EU) 2016/680; StPO §§134–143b apply as lex specialis); sector laws (ELGA-G for health, GTelG 2012, ArbVG §96 Abs 1 Z 3 / §96a)
    - DSB as supervisory authority — contact: dsb.gv.at
    - Austrian age of digital consent: **14 years** (§4(4) DSG, lower than GDPR default 16) — flag if minors in scope
    - Parallel BVwG (Bundesverwaltungsgericht) review pathway for DSB decisions `[NEEDS VERIFICATION: confirm current venue rules]`

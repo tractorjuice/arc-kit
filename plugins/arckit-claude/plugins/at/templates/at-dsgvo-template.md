@@ -47,6 +47,7 @@
 |------|-----------|--------------|
 | GDPR | Regulation (EU) 2016/679 | Yes |
 | Austrian Data Protection Act (DSG) | BGBl. I Nr. 165/1999 (idgF) | Yes |
+| DSG 3. Hauptstück §§36–61 (law enforcement / justice, RL (EU) 2016/680) | BGBl. I Nr. 165/1999 (idgF) | [Yes / No — law-enforcement or justice processing?] |
 | ELGA-Gesetz | BGBl. I Nr. 111/2012 | [Yes / No — health data?] |
 | Gesundheitstelematikgesetz (GTelG 2012) | BGBl. I Nr. 111/2012 | [Yes / No] |
 | ArbVG §96 Abs 1 Z 3 / §96a (Betriebsvereinbarung) | BGBl. Nr. 22/1974 idgF | [Yes / No — employee monitoring / personnel data system?] |
