@@ -114,6 +114,23 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
+### Bring Your Own LLM
+
+Run `arckit build` against any local or remote OpenAI-compatible endpoint:
+
+```bash
+# One-shot via flags
+arckit build my-project --base-url http://127.0.0.1:8080/v1 --model Qwen3.6-27B
+
+# Persistent config (arckit config)
+arckit config set llm.base_url http://127.0.0.1:8080/v1
+arckit config set llm.model Qwen3.6-27B
+```
+
+**Presets** — `arckit local setup` includes a wizard with common local endpoints (Ollama, SGLang, vLLM). SGLang on port 8080 is a built-in preset.
+
+**Retry behaviour** — failed LLM calls retry with exponential backoff (2s → 4s → 8s) before failing the wave. Configure via `--base-url` and `--model` per-build, or persist via `arckit config`.
+
 **Mistral Vibe CLI** — link the ArcKit extension:
 
 ```bash

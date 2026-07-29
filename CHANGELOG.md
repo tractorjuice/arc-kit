@@ -5,6 +5,18 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Bring Your Own LLM (BYO LLM).** The `arckit build` command now accepts `--base-url` and `--model` flags to target any OpenAI-compatible endpoint (local SGLang, vLLM, Ollama, or hosted API). Configurable via `arckit config set llm.base_url` and `arckit config set llm.model` for persistence. `arckit local setup` wizard includes presets for common local servers.
+- **SGLang 8080 preset.** The local config wizard (`arckit local setup`) includes SGLang on port 8080 as a built-in preset.
+- **BYO LLM test suite.** `tests/plugin/test_byo_llm.py` covers endpoint ping, config resolution, retry backoff, and build command flags (18 tests).
+
+### Changed
+
+- **Retry behaviour.** Failed LLM calls now retry with exponential backoff (2s → 4s → 8s) before failing the wave.
+
 ## [6.7.5] — 2026-07-28
 
 ### Fixed
