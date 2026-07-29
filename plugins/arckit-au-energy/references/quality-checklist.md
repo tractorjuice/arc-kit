@@ -619,11 +619,11 @@ All artifacts must pass these 10 checks:
 
 ### ATNISG -- Austrian NISG (NIS2) Assessment
 
-- Entity classification determined (Essential / Important / Out of scope) per NIS2 Annex I/II
-- Austrian sectoral authority identified (E-Control / FMA / BMK / ELGA / BMI / other)
-- Previous NISG 2018 Betreiber wesentlicher Dienste status captured with transition implications
-- All ten NIS2 Article 21 minimum security measures assessed with maturity and gap
-- Incident reporting channel established (GovCERT.gv.at and/or sectoral CERT)
+- Entity classification determined (Essential / Important / Out of scope) per NIS2 Annex I/II (§24)
+- Competent authority identified (Cybersicherheitsbehörde / Bundesamt für Cybersicherheit)
+- Previous NISG 2018 Betreiber wesentlicher Dienste status captured and re-assessed (NISG 2018 expires 30 Sep 2026)
+- All ten NIS2 Article 21 minimum security measures assessed with maturity and gap (§32)
+- Incident reporting channel established (CSIRT via the NIS2-Meldeplattform, §34)
 - 24-hour / 72-hour / intermediate / 1-month reporting capability readiness assessed
 - Cross-reporting to DSB for personal data breaches addressed
 - Supply chain security obligations including any AT sectoral secondary rules assessed

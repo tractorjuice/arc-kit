@@ -10,6 +10,15 @@ Automated session summaries captured by the ArcKit session-learner hook.
   - chore: bump version to 4.6.1
   - fix: trim skill descriptions to fit 250-char context cap (#215) (#266)
 
+### 2026-07-29 15:58 — general
+
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 24
+- **Artifacts:** none detected
+- **Summary:**
+  - fix(at): correct Austrian overlay legal citations and CODEOWNERS paths
+- **Telemetry:** 124 tool calls (p50=8ms, p95=19291ms)
+
 ### 2026-07-27 12:10 — general
 
 - **Effort:** xhigh
@@ -273,11 +282,4 @@ Automated session summaries captured by the ArcKit session-learner hook.
 - **Commits:** 0 | **Files changed:** 0
 - **Artifacts:** none detected
 - **Telemetry:** 132 tool calls (p50=5ms, p95=295080ms) | by agent: arckit-deepbook:arckit-deepbook-writer(61 calls, p95=7ms), arckit-deepbook:arckit-deepbook(54 calls, p95=354981ms), main(17 calls, p95=4765ms)
-
-### 2026-07-21 12:17 — failure (rate_limit)
-
-- **Status:** session interrupted by API error
-- **Effort:** xhigh
-- **Commits:** 0 | **Files changed:** 0
-- **Artifacts:** none detected
 
