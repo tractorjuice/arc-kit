@@ -96,7 +96,7 @@ Read all documents from Step 0. Identify:
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
-   - Classification: OFFICIAL-SENSITIVE (privacy assessments contain sensitive risk information)
+   - Classification: OFFICIAL-SENSITIVE — under the AT InfoSiG scheme use **Eingeschränkt** (or **Vertraulich** where criminal-law confidentiality applies); privacy assessments contain sensitive risk information. Emit the value from the active `classification_scheme` (UK / UAE Smart Data / AT InfoSiG).
    - Add note: "This document supplements ARC-{PROJECT_ID}-RGPD-v*.md with Austrian/DSB-specific requirements"
 
 3. **Section 1: AT DSG Regulatory Framework**
@@ -186,7 +186,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-ATDSG-v{VERSION}.md
 📄 Document: projects/{project_id}/ARC-{PROJECT_ID}-ATDSG-v{VERSION}.md
 📋 Document ID: {document_id}
 📅 Assessment Date: {date}
-🔒 Classification: OFFICIAL-SENSITIVE
+🔒 Classification: OFFICIAL-SENSITIVE (AT InfoSiG: Eingeschränkt / Vertraulich)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Austrian-Specific Compliance Areas

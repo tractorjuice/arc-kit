@@ -27,6 +27,10 @@ claude plugin install arckit-eu@arckit-claude
 
 Without it, those handoffs reference commands that are not installed.
 
+## Classification (InfoSiG)
+
+Set `classification_scheme` to `AT InfoSiG` (or `governance_framework` to `AT Gov`) to render Document Control headers with the Austrian Informationssicherheitsgesetz ladder — **Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim** — instead of the UK OFFICIAL scheme. Leaving it blank keeps the UK default; the UAE overlay's `UAE Smart Data` scheme is unaffected.
+
 ## Maintainer
 
 Austrian domain maintained by @gtonic (with @tractorjuice as repo maintainer). See [CONTRIBUTING.md](https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md).

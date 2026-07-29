@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Austrian InfoSiG classification scheme.** A new `classification_scheme` value **`AT InfoSiG`** (and `governance_framework: AT Gov`) renders Document Control headers with the Informationssicherheitsgesetz ladder — **Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim** — via a new `_partials/document-control-at.md` partial. `RENDERING.md` now resolves UAE → AT → UK in order; the quality-checklist Classification check and `default_classification` are scheme-aware; and `/arckit:at-bvergg` / `/arckit:at-dsgvo` emit the InfoSiG equivalent of their former UK defaults. UK and UAE overlays are unaffected. (Closes #709.)
+
 ### Fixed
 
 - **The Austrian overlay's NISG command and template described the wrong law.** They framed the NIS2 transposition as a 2018 amendment (`NISG, BGBl. I Nr. 111/2018 idF BGBl. I Nr. 94/2025`) and in places called it "NISG 2024". The enacted law is the standalone **NISG 2026** (BGBl. I Nr. 94/2025), which *replaces* the NISG 2018 (expiring 30 Sep 2026) and **enters into force on 1 October 2026** (§51), with registration due by 31 Dec 2026 (§29) — i.e. it is not yet in force. The competent authority is the new **Bundesamt für Cybersicherheit** (§3a), incident reports go to the responsible **CSIRT** (§8 — CERT.at as national CSIRT, GovCERT as public-administration sectoral CSIRT) via the NIS2-Meldeplattform (§34), and administrative penalties (§45) address the entity, not management personally (personal liability is not explicitly regulated). Fabricated paragraph references (§18, §§24-25, §4(4), §22, §3(4)) were replaced with the enacted numbering (§§2–14, 24, 29, 31–34, 45, 51) or honest `[NEEDS VERIFICATION]` flags. Verified against BGBl. I Nr. 94/2025 plus Schönherr and Hochleitner (iura.at) analyses.

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`AT InfoSiG` classification scheme** — new `_partials/document-control-at.md`, selected via `classification_scheme: AT InfoSiG` or `governance_framework: AT Gov`, with the InfoSiG ladder (Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim). `RENDERING.md` resolves UAE → AT → UK; the quality-checklist Classification check and `default_classification` are scheme-aware; `at-bvergg` / `at-dsgvo` emit InfoSiG equivalents. UK/UAE unaffected (closes #709).
+
 ### Fixed
 
 - **Austrian overlay (`arckit-at`) legal accuracy pass.** `/arckit:at-nisg` and its template were rewritten from the mistaken "NISG 2024 / 2018-amendment" framing to the enacted standalone **NISG 2026** (BGBl. I Nr. 94/2025): in force 1 Oct 2026 (§51), registration by 31 Dec 2026 (§29), competent **Bundesamt für Cybersicherheit** (§3a), CSIRT reporting (§8/§34, CERT.at + GovCERT), and enacted §-numbering replacing fabricated references; management-body personal liability noted as not explicitly regulated (§45 fines address the entity). `/arckit:at-bvergg` thresholds updated to Delegated Regulation (EU) 2025/2152 and fully aligned to the Vergaberechtsgesetz 2026 (BGBl. I Nr. 8/2026, in force 1 Mar 2026; eForms from 1 Oct 2026) — permanent Direktvergabe limits (supplies/services €143k, works €200k; ≥3 offers documented from €50k), harmonised Ausschlussgründe/Selbstreinigung, eForms below-threshold, tiered Nachprüfungs fees; BVERGG doc-type label updated (closes #708). `/arckit:at-dsgvo` now flags §§12–13 DSG as contested (BVwG vs OGH), records the §30 Abs 5 DSG public-authority fine exemption, and fixes three wrong citations (§2d DSG → §7 DSG / §2d FOG; §109 TKG 2021/€37k → §188 TKG 2021/€75k; §96a → §96 Abs 1 Z 3 vs §96a ArbVG). Guide `docs/guides/at-nisg.md`, the AT `quality-checklist.md` and `.arckit/templates/at-*` updated in lockstep.
