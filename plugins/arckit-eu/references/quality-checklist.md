@@ -634,21 +634,22 @@ All artifacts must pass these 10 checks:
 - DORA overlap flagged for financial sector entities
 - Items requiring practitioner verification marked `[NEEDS VERIFICATION]`
 
-### BVERGG -- Austrian Public Procurement (BVergG 2018)
+### BVERGG -- Austrian Public Procurement (BVergG 2018 idF VergabeRG 2026)
 
 - Auftraggeber classification confirmed (klassisch / Sektorenauftraggeber / subventioniert §4)
 - Threshold tier determined with current EU Oberschwellenwerte verified against latest regulation
+- Vergaberechtsgesetz 2026 (BGBl. I Nr. 8/2026) reflected: permanent Direktvergabe limits (supplies/services €143K, works €200K; document ≥3 Vergleichsangebote/Preisauskünfte from €50K), eForms below-threshold from 1 Oct 2026
 - Value aggregation (§13 BVergG) and §9 BVergG exceptions explicitly assessed
 - Procedure selected with BVergG 2018 justification (especially for non-open procedures)
 - Leistungsbeschreibung traced to REQ (FR-xxx / NFR-xxx / INT-xxx)
 - Eignungskriterien proportionate under §20 BVergG (not overly restrictive)
-- Ausschlussgründe (§78 BVergG) verification method documented
+- Ausschlussgründe (§78 BVergG, harmonised by the Vergaberechtsgesetz 2026) and Selbstreinigung verification method documented
 - Zuschlagskriterien weighted with transparent scoring; Bestbieterprinzip used unless lowest-price justified
 - SLA terms, vertragliche Regelungen, and penalty regime (Vertragsstrafe) drafted
 - Art. 28 GDPR + DSG processor clauses included where personal data processed
 - NISG supply-chain clauses included where contracting authority is Essential/Important
 - ANKÖ publication plan (plus TED for Oberschwellen) set
 - Angebotsfrist per §87 BVergG respected; Stillhaltefrist modelled in timeline
-- BVwG / LVwG review venue documented with application fee reference
+- BVwG / LVwG review venue documented with the tiered Pauschalgebühren (Vergaberechtsgesetz 2026) reference
 - Vergabeakt structure defined for Rechnungshof / EU audit defensibility
 - Items requiring practitioner verification marked `[NEEDS VERIFICATION]`

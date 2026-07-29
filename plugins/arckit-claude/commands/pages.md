@@ -324,7 +324,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | ATDSG | `ARC-*-ATDSG-*.md` | Austrian Data Protection Assessment |
 | | ATNISG | `ARC-*-ATNISG-*.md` | Austrian NISG (NIS2) Assessment |
 | **Procurement (Community-contributed — Austrian Government)** | | | |
-| | BVERGG | `ARC-*-BVERGG-*.md` | Austrian Public Procurement (BVergG 2018) |
+| | BVERGG | `ARC-*-BVERGG-*.md` | Austrian Public Procurement (BVergG 2018 idF VergabeRG 2026) |
 | **Compliance (Community-contributed — UAE Federal Overlay)** | | | |
 | | PDPL | `ARC-*-PDPL-*.md` | UAE PDPL Compliance Assessment |
 | | IAS | `ARC-*-IAS-*.md` | UAE IAS Statement of Applicability |

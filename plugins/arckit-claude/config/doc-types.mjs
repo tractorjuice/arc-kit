@@ -164,7 +164,7 @@ export const DOC_TYPES = {
   // Austrian Government (Community-contributed, maintained by @gtonic)
   'ATDSG':     { name: 'Austrian Data Protection Assessment',          category: 'Compliance',  regime: 'AT', severity: 'HIGH' },
   'ATNISG':    { name: 'Austrian NISG (NIS2) Assessment',              category: 'Compliance',  regime: 'AT', severity: 'HIGH' },
-  'BVERGG':    { name: 'Austrian Public Procurement (BVergG 2018)',    category: 'Procurement', regime: 'AT' },
+  'BVERGG':    { name: 'Austrian Public Procurement (BVergG 2018 idF VergabeRG 2026)', category: 'Procurement', regime: 'AT' },
   // UAE Federal Overlay (Community-contributed, maintained by @tractorjuice — recruiting UAE domain co-maintainer) — anchored on 23 April 2026 Cabinet decree
   'PDPL':      { name: 'UAE PDPL Compliance Assessment',               category: 'Compliance',  regime: 'UAE', severity: 'HIGH' },
   'IAS':       { name: 'UAE IAS Statement of Applicability',           category: 'Compliance',  regime: 'UAE', severity: 'HIGH' },

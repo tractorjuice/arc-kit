@@ -2,7 +2,7 @@
 
 3 slash commands covering Austrian regulatory compliance:
 
-- `/arckit-at:at-bvergg` — Austrian public procurement (Bundesvergabegesetz 2018, ANKÖ, BVwG)
+- `/arckit-at:at-bvergg` — Austrian public procurement (Bundesvergabegesetz 2018 as amended by the Vergaberechtsgesetz 2026, BGBl. I Nr. 8/2026; ANKÖ, BVwG)
 - `/arckit-at:at-dsgvo` — Austrian DSG / DSGVO obligations (Datenschutzbehörde, §§12–13 DSG)
 - `/arckit-at:at-nisg` — Austrian NISG 2026 obligations (BGBl. I Nr. 94/2025, in force 1 Oct 2026, Cybersicherheitsbehörde registration + CSIRT reporting)
 

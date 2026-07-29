@@ -17,9 +17,9 @@ handoffs:
 ---
 
 
-> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified Vergabejurist / Rechtsabteilung before reliance. Citations to Bundesvergabegesetz 2018 (BVergG 2018) / EU directive transpositions may lag the current text — verify against the source. Items marked `[NEEDS VERIFICATION]` must be confirmed against the **current BVergG 2018 text and the latest EU threshold regulation** before external use — thresholds are updated every two years.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified Vergabejurist / Rechtsabteilung before reliance. Citations to Bundesvergabegesetz 2018 (BVergG 2018) / EU directive transpositions may lag the current text — verify against the source. Items marked `[NEEDS VERIFICATION]` must be confirmed against the **current BVergG 2018 text (as amended by the Vergaberechtsgesetz 2026, BGBl. I Nr. 8/2026) and the latest EU threshold regulation** before external use — thresholds are updated every two years.
 
-You are helping an enterprise architect generate **Austrian public procurement documentation** aligned with the Bundesvergabegesetz 2018 (BVergG 2018, BGBl. I Nr. 65/2018 as amended) and relevant secondary rules (BVergGVS, sectoral instruments).
+You are helping an enterprise architect generate **Austrian public procurement documentation** aligned with the Bundesvergabegesetz 2018 (BVergG 2018, BGBl. I Nr. 65/2018), **as amended most recently by the Vergaberechtsgesetz 2026 (BGBl. I Nr. 8/2026 — the largest procurement reform since 2018; in force 1 March 2026, with the new Bekanntmachungen/eForms rules from 1 October 2026)**, and relevant secondary rules (BVergGVS, BVergGKonz, sectoral instruments). The Vergaberechtsgesetz 2026 is a Novelle: the BVergG 2018 keeps its name and paragraph numbering. Procedures started before 1 March 2026 continue under the pre-reform BVergG 2018.
 
 ## User Input
 
@@ -88,14 +88,13 @@ Read all documents from Step 0. Extract key information for the procurement file
 
 Before generating the document, determine the applicable procedure. **EU thresholds are updated every 2 years** — the values below reflect **Commission Delegated Regulation (EU) 2025/2152 (in force from 1 January 2026, for the 2026–2027 period)**. Verify against the current Delegierte Verordnung and the §12 BVergG 2018 transposition before use.
 
-> **Domestic reform**: the temporary Schwellenwerteverordnung has lapsed; its raised domestic values are now **permanent statutory law** under the **Vergaberechtsgesetz / BVergG-Novelle 2026 (BGBl. I Nr. 8/2026, in force 1 January 2026)**. New documentation rule: from **€50,000**, a Direktvergabe must document at least an attempt to obtain **three Preisauskünfte**. Confirm the exact instrument name and § against the reformed BVergG text `[NEEDS VERIFICATION]`.
+> **Domestic reform (Vergaberechtsgesetz 2026)**: the temporary Schwellenwerteverordnung has lapsed; the raised domestic Direktvergabe values are now **permanent statutory law** under the **Vergaberechtsgesetz 2026 (BGBl. I Nr. 8/2026)**, in force **1 March 2026**. New documentation rule: from **€50,000**, a Direktvergabe must document the attempt to obtain **at least three Vergleichsangebote or Preisauskünfte**.
 
 | Threshold Tier | Auftragswert (excl. VAT) | Procedure | Publication |
 |----------------|--------------------------|-----------|-------------|
-| **Direktvergabe** — supplies/services (classical) | < €140,000 | Direct award (no formal procedure) | Informal |
-| **Direktvergabe** — supplies/services (Sektoren) | < €150,000 | Direct award (no formal procedure) | Informal |
-| **Direktvergabe** — works (Bau) | < €200,000 | Direct award (no formal procedure) | Informal |
-| **Direktvergabe mit vorheriger Bekanntmachung** (§47) | up to applicable EU central-authority threshold `[VERIFY exact cap]` | Direct award with notice | ANKÖ |
+| **Direktvergabe** — supplies/services (§46) | < €143,000 (for central/Bund authorities effectively capped at the €140,000 EU Oberschwelle) | Direct award (no formal procedure) | Informal |
+| **Direktvergabe** — works/Bau (§46) | < €200,000 | Direct award (no formal procedure) | Informal |
+| **Direktvergabe mit vorheriger Bekanntmachung** (§47) | domestic Unterschwellen instrument | Direct award with notice | ANKÖ |
 | **Unterschwellenbereich** (non-open) | Up to EU threshold | Verhandlungsverfahren / nicht-offen | ANKÖ |
 | **Oberschwellenbereich — classical, central govt (Bund)** (supplies/services) | ≥ €140,000 | Offenes / Nicht-offenes / Verhandlungsverfahren | ANKÖ + TED |
 | **Oberschwellenbereich — classical, sub-central** (supplies/services) | ≥ €216,000 | Offenes / Nicht-offenes / Verhandlungsverfahren | ANKÖ + TED |
@@ -140,7 +139,7 @@ Show threshold determination to the user before generating the full document. Co
    - Barrier-free / Accessibility (§107 BVergG / EN 301 549 / WCAG 2.2) requirements
 
 5. **Section 3: Eignung (Suitability Criteria)**
-   - Berufliche Zuverlässigkeit (trade registration, no Ausschlussgründe under §78 BVergG)
+   - Berufliche Zuverlässigkeit (trade registration, no Ausschlussgründe under §78 BVergG — the Vergaberechtsgesetz 2026 harmonised the exclusion-ground offences and clarified the Selbstreinigung/self-cleaning rules)
    - Wirtschaftliche und finanzielle Leistungsfähigkeit (financial criteria)
    - Technische Leistungsfähigkeit (references, certifications)
    - ISO 27001 / ISO 22301 / ISO 9001 where justified and proportionate
@@ -165,6 +164,7 @@ Show threshold determination to the user before generating the full document. Co
 8. **Section 6: Publication and Timeline**
    - ANKÖ publication (mandatory for most above-threshold)
    - TED publication for Oberschwellenbereich
+   - **eForms (Digital-by-Default)**: from 1 October 2026 the Vergaberechtsgesetz 2026 requires standardised electronic forms for Bekanntmachungen and Bekanntgaben **including in the Unterschwellenbereich**
    - Minimum Angebotsfrist per §§71–76 BVergG (above-threshold open procedure: min. 30 days, classical sector)
    - Bidder question window (Bewerberfragen) and answers (Q&A published to all)
    - Opening session (Angebotsöffnung) formalities
@@ -174,7 +174,7 @@ Show threshold determination to the user before generating the full document. Co
 9. **Section 7: Review and Remedies (BVergG Book 4)**
    - Review before the Bundesverwaltungsgericht (BVwG) for Bundesvergaben
    - Landesverwaltungsgerichte for Land procurements
-   - Application fees and interim measures
+   - Application fees: the Vergaberechtsgesetz 2026 replaced the flat Pauschalgebühren with a **tiered fee system with defined value categories**; interim measures (einstweilige Verfügung) available
    - Standstill period compliance
    - Record-keeping for defensibility
 
@@ -228,6 +228,7 @@ Next steps:
 
 ## Important Notes
 
+- **Vergaberechtsgesetz 2026 (BGBl. I Nr. 8/2026)**: the largest reform since the BVergG 2018, in force 1 March 2026 (Bekanntmachungen/eForms from 1 October 2026). It amends the BVergG 2018 (name and numbering retained), makes the raised Direktvergabe limits permanent (supplies/services €143,000, works €200,000; from €50,000 document ≥3 Vergleichsangebote/Preisauskünfte), harmonises Ausschlussgründe and clarifies Selbstreinigung, tightens Rahmenvereinbarungen (binding Höchstwerte), mandates eForms including below-threshold, and replaces the flat Nachprüfungs-Pauschalgebühren with a tiered system. Procedures started before 1 March 2026 run out under the old text.
 - **Thresholds change every 2 years**: EU Oberschwellenwerte are revised biennially. Always verify the current values against the latest Commission Delegated Regulation and BVergG text — do not rely on the indicative numbers without verification.
 - **Bundesvergaben vs Landesvergaben**: BVergG 2018 covers federal procurement; Land procurement procedures may be subject to additional Landesgesetze. Confirm venue for review.
 - **ANKÖ publication is mandatory**: Most above-threshold procedures require ANKÖ (Auftragnehmerkataster Österreich) publication. TED publication is additionally required for EU Oberschwellen.
