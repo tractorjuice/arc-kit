@@ -5,6 +5,12 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **Austrian overlay (`arckit-at`) legal accuracy pass.** `/arckit:at-nisg` and its template were rewritten from the mistaken "NISG 2024 / 2018-amendment" framing to the enacted standalone **NISG 2026** (BGBl. I Nr. 94/2025): in force 1 Oct 2026 (§51), registration by 31 Dec 2026 (§29), competent **Bundesamt für Cybersicherheit** (§3a), CSIRT reporting (§8/§34, CERT.at + GovCERT), and enacted §-numbering replacing fabricated references; management-body personal liability noted as not explicitly regulated (§45 fines address the entity). `/arckit:at-bvergg` thresholds updated to Delegated Regulation (EU) 2025/2152 and the domestic Vergaberechtsgesetz/BVergG-Novelle 2026 (BGBl. I Nr. 8/2026). `/arckit:at-dsgvo` now flags §§12–13 DSG as contested (BVwG vs OGH) and records the §30 Abs 5 DSG public-authority fine exemption. Guide `docs/guides/at-nisg.md`, the AT `quality-checklist.md` and `.arckit/templates/at-*` updated in lockstep.
+
 ## [6.7.5] — 2026-07-28
 
 ### Fixed

@@ -106,11 +106,12 @@ Read all documents from Step 0. Identify:
    - Parallel BVwG (Bundesverwaltungsgericht) review pathway for DSB decisions `[NEEDS VERIFICATION: confirm current venue rules]`
 
 4. **Section 2: §§12–13 DSG — Image and Video Processing** (conditional — only if CCTV/imagery detected)
-   - §12 DSG specific lawfulness grounds for image processing (additional to Art. 6 GDPR)
-   - §13 DSG labelling obligation (Kennzeichnungspflicht) — visible notice with responsible controller
-   - Retention limit: 72 hours default unless justified documented exception
+   - ⚠️ **Disputed applicability**: the BVwG held §§12–13 DSG **inapplicable** because of the primacy of the GDPR / absence of an opening clause (BVwG W256 2214855-1, 20.11.2019; W211 2210458-1, 25.11.2019), while the OGH has continued to apply them (6 Ob 150/19f). Treat §§12–13 as **contested** and assess CCTV primarily on the GDPR (Art. 6 lawfulness, Art. 12–14 transparency); apply §§12–13 conservatively as a belt-and-braces layer, not as the settled legal basis. Confirm the current position with a practitioner.
+   - §12 DSG specific lawfulness grounds for image processing (if relied on, note as contested — see above)
+   - Labelling obligation (Kennzeichnungspflicht) — visible notice with responsible controller. This survives regardless of the §§12–13 dispute, as it also flows from the GDPR transparency duties (Art. 12–14)
+   - Retention limit: 72 hours default under §13 DSG unless justified documented exception (contested basis; keep retention short and documented on GDPR necessity/proportionality grounds in any case)
    - Prohibition of covert imaging except narrow statutory cases
-   - DSB Musterleitfaden Bildverarbeitung applicability `[NEEDS VERIFICATION: confirm current guidance version]`
+   - DSB / EDPB guidance on video processing (EDPB Guidelines 3/2019) applicability `[NEEDS VERIFICATION: confirm current guidance version]`
    - If no image processing: include section header with "N/A — no image or video processing identified"
 
 5. **Section 3: Health Data and ELGA** (conditional — only if health data detected)
@@ -218,8 +219,9 @@ Next steps:
 
 - **Run after eu-rgpd**: This command adds the Austrian layer on top of the EU GDPR baseline. For best results, run `/arckit:eu-rgpd` first, then this command.
 - **Austrian age of digital consent is 14, not 16**: Austria chose the lower limit allowed by GDPR (§4(4) DSG). Do not apply the GDPR default of 16.
-- **§§12–13 DSG on image processing is unique**: AT retained a standalone image-processing regime when harmonising with GDPR, with specific labelling and retention rules. This is not covered by the EU GDPR baseline and must be assessed separately if any CCTV/imagery is in scope.
+- **§§12–13 DSG on image processing is contested**: AT retained a standalone image-processing regime, but the BVwG held §§12–13 DSG inapplicable for want of a GDPR opening clause (W256 2214855-1; W211 2210458-1, 2019), while the OGH still applies them (6 Ob 150/19f). Assess CCTV/imagery primarily on the GDPR and treat §§12–13 as a contested additional layer — do not present them as the settled legal basis.
 - **ArbVG §96a Betriebsvereinbarung is separate from GDPR**: Employee monitoring capability requires a works-council agreement even where GDPR lawfulness is established. Flag if employee monitoring is possible.
+- **Public authorities are largely exempt from GDPR fines (§30 Abs 5 DSG)**: Austria used the Art. 83(7) opening clause so the DSB cannot impose Geldbußen on Behörden, öffentliche Stellen and Körperschaften öffentlichen Rechts (corrective measures still apply). For public-sector controllers, present the Art. 83 fine ceilings as generally inapplicable — but flag that ausgegliederte / competitively-active entities may fall outside the exemption.
 - **Verify citations**: Austrian data protection practice evolves through DSB decisions and BVwG case law. Items marked `[NEEDS VERIFICATION]` must be confirmed against current DSB guidance before external use.
 - **Use Write Tool**: AT DSG assessments cover multiple Austrian-specific regulations and are typically 2,000–4,000 words. Always use the Write tool.
 
@@ -227,7 +229,7 @@ Next steps:
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-ATDSG-v{VERSION}.md`
 - ✅ Applicable DSG sections identified (§§7–8, §§12–13, §4(4), §2d as applicable)
-- ✅ §§12–13 DSG image-processing regime assessed if CCTV/imagery in scope
+- ✅ §§12–13 DSG image-processing regime assessed if CCTV/imagery in scope, with its contested applicability (BVwG vs OGH) flagged and GDPR treated as the primary basis
 - ✅ ELGA-G / GTelG 2012 interop assessed if health data in scope
 - ✅ §96a ArbVG Betriebsvereinbarung requirement flagged if employee monitoring in scope
 - ✅ §§7–8 DSG research exemptions addressed if research use case in scope

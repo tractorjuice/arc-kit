@@ -23,7 +23,7 @@
 | 2 | Lawful Basis (Art. 6 / Art. 9) | [Identified / Unclear / Gap] | [Summary] |
 | 3 | Consent Management | [Compliant / Partial / N/A] | [Summary] |
 | 4 | DPIA Screening (Art. 35 + DSB Blacklist) | [Required / Not required] | [Summary] |
-| 5 | Image/Video Processing (§§12–13 DSG) | [Compliant / Non-compliant / Partial / N/A] | [Summary] |
+| 5 | Image/Video Processing (GDPR; §§12–13 DSG contested) | [Compliant / Non-compliant / Partial / N/A] | [Summary] |
 | 6 | Health Data / ELGA | [Compliant / Partial / N/A] | [Summary] |
 | 7 | Employee Data / §96/§96a ArbVG | [Compliant / Gap / N/A] | [Summary] |
 | 8 | Scientific Research (§§7–8 DSG) | [Compliant / Partial / N/A] | [Summary] |
@@ -139,11 +139,14 @@
 
 *Complete only if CCTV, bodycams, doorbell cameras, visitor imagery, AI-enabled video analytics, or any other Bildverarbeitung is in scope. Otherwise mark N/A.*
 
+> ⚠️ **Contested applicability**: the BVwG held §§12–13 DSG inapplicable due to the primacy of the GDPR (W256 2214855-1, 20.11.2019; W211 2210458-1, 25.11.2019); the OGH still applies them (6 Ob 150/19f). Assess CCTV **primarily on the GDPR** (Art. 6 lawfulness, Art. 12–14 transparency) and treat the §§12–13 rows below as a contested additional layer.
+
 | Control | Status | Evidence / Gap |
 |---------|--------|----------------|
-| Lawful ground under §12 DSG (not only Art. 6 GDPR) | [Yes / No / N/A] | |
-| §13 DSG labelling (Kennzeichnung) — visible notice with controller | [Yes / No / N/A] | |
-| Retention ≤ 72 hours unless documented justified exception | [Yes / No / N/A] | |
+| GDPR Art. 6 lawful ground for the imaging established | [Yes / No / N/A] | |
+| Lawful ground under §12 DSG (contested — additional layer only) | [Yes / No / N/A] | |
+| Labelling (Kennzeichnung) — visible notice with controller (Art. 12–14 GDPR + §13 DSG) | [Yes / No / N/A] | |
+| Retention ≤ 72 hours (§13 DSG) or documented GDPR necessity/proportionality limit | [Yes / No / N/A] | |
 | No covert imaging unless narrow statutory ground applies | [Yes / No / N/A] | |
 | DSB-Praxis und EDPB-Leitlinien 3/2019 zur Bildverarbeitung berücksichtigt | [Yes / No / N/A] | |
 | Access control to recordings (who, when, audited) | [Yes / No / N/A] | |
@@ -318,6 +321,8 @@
 | GDPR Art. 83(5) — principles, rights, transfers | Art. 83(5) | €20M / 4% turnover |
 | §62 DSG — Austrian-specific violations | §62 DSG | €50,000 |
 | §109 TKG 2021 — telecom/cookie violations | §109 TKG | €37,000 |
+
+> ⚠️ **Public-authority fine exemption (§30 Abs 5 DSG)**: Austria used the Art. 83(7) GDPR opening clause to exempt **Behörden, öffentliche Stellen and Körperschaften öffentlichen Rechts** from GDPR fines — the DSB **cannot impose Geldbußen** on them (but can still order corrective measures). If the controller is a public authority, the Art. 83 fine exposure above is generally **not** applicable. Note the boundary: ausgegliederte / competitively-active legal entities may fall **outside** the exemption — assess per entity. `[NEEDS VERIFICATION: confirm the controller qualifies as a covered public body]`
 
 **Current residual risk rating:** [Low / Medium / High / Critical]
 

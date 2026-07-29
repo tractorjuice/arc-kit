@@ -53,7 +53,7 @@
 
 ### 1.3 Threshold Determination
 
-*Confirm against current EU thresholds (VO 2025/2152 from 1.1.2026: classical €216K, Sektoren €432K, Bau €5,404K) and §12 BVergG 2018.*
+*Confirm against current EU thresholds (VO 2025/2152 from 1.1.2026: classical central govt/Bund €140K, classical sub-central €216K, Sektoren €432K, Bau €5,404K) and §12 BVergG 2018.*
 
 | Item | Value |
 |------|-------|

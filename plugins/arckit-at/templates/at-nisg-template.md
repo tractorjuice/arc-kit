@@ -1,8 +1,8 @@
-# Austrian NISG (NIS2 Transposition) Assessment
+# Austrian NISG 2026 (NIS2 Transposition) Assessment
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:at-nisg`
 >
-> ⚠️ **Community-contributed** — not yet validated against current BMI / A-SIT / EU regulatory text. Verify all citations before relying on output. The NISG NIS2 amendment (BGBl. I Nr. 94/2025) is recent; items marked `[NEEDS VERIFICATION]` must be confirmed against current text and implementing ordinances.
+> ⚠️ **Community-contributed** — not yet validated against the enacted NISG 2026 / A-SIT / EU regulatory text. Verify all citations before relying on output. The **NISG 2026 (BGBl. I Nr. 94/2025)** is a standalone act that replaces the NISG 2018; it enters into force **1 October 2026 (§51)**, with registration due by 31 December 2026 (§29). Its implementing ordinances are still forthcoming; items marked `[NEEDS VERIFICATION]` — including all paragraph (§) references — must be confirmed against the enacted text.
 
 ## Document Control
 
@@ -22,7 +22,7 @@
 | Austrian Scoping | [Essential / Important / Out of scope] | [Count] |
 | Governance | [Compliant / Partial / Gap] | [Count] |
 | Risk Management | [Compliant / Partial / Gap] | [Count] |
-| Incident Reporting (GovCERT) | [Compliant / Partial / Gap] | [Count] |
+| Incident Reporting (CSIRT) | [Compliant / Partial / Gap] | [Count] |
 | Supply Chain | [Compliant / Partial / Gap] | [Count] |
 | Business Continuity | [Compliant / Partial / Gap] | [Count] |
 
@@ -58,18 +58,18 @@
 
 ---
 
-## 2. Governance (NIS2 Art. 20 — as transposed)
+## 2. Governance (NIS2 Art. 20 → §31)
 
 | Obligation | Status | Evidence / Gap |
 |-----------|--------|----------------|
-| Geschäftsleitung approves security measures | [Yes / Partial / No] | |
-| Management body personally liable acknowledged (NIS2 Art. 20, NISG § transposed) | [Yes / Partial / No] | |
-| Management body cyber training completed | [Yes / Partial / No] | |
+| Geschäftsleitung approves security measures (§31) | [Yes / Partial / No] | |
+| Management body responsibility acknowledged (NIS2 Art. 20 → §31) | [Yes / Partial / No] | |
+| Management body cyber training completed (§31) | [Yes / Partial / No] | |
 | Responsibility mapped (CISO / Sicherheitsbeauftragter) | [Yes / Partial / No] | |
 
 ---
 
-## 3. Risk Management Measures (NIS2 Art. 21 — as transposed)
+## 3. Risk Management Measures (NIS2 Art. 21 → §32)
 
 | # | Measure | Status | Gap | Proportionality Note |
 |---|---------|--------|-----|----------------------|
@@ -88,18 +88,17 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 
 ---
 
-## 4. Incident Reporting — Austrian Channel
+## 4. Incident Reporting — Austrian Channel (§34)
 
 | Item | Status | Evidence / Gap |
 |------|--------|----------------|
-| Three-tier CERT reporting established: Sectoral CERT → CERT.at (BMI §5) → GovCERT (BKA §4(4), public-admin only) | | |
-| Correct reporting channel identified (non-public → CERT.at; public-admin → GovCERT) | | |
-| Sectoral CERT contact (if applicable) | | |
-| 24-hour early warning capability | | |
-| 72-hour notification capability | | |
-| Intermediate / final report process | | |
-| Cross-reporting to DSB for personal data breach | | |
-| Reporting language / form readiness (German, AT form) | | |
+| Reporting to the responsible CSIRT (§8) via the national NIS2-Meldeplattform established — CERT.at (national CSIRT), GovCERT (public-admin sectoral CSIRT); the CSIRT forwards to the Cybersicherheitsbehörde (§34) | | |
+| Registration with the Cybersicherheitsbehörde (§3a) completed (§29) | | |
+| 24-hour early warning capability (§34) | | |
+| 72-hour notification capability (§34) | | |
+| Intermediate (on request) / 1-month final report process (§34) | | |
+| Cross-reporting to DSB for personal data breach (Art. 33 GDPR) | | |
+| Reporting language / form readiness (German, NIS2-Meldeplattform) | | |
 | Tabletop exercise in last 12 months | | |
 
 ---
@@ -136,17 +135,17 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 | Item | Status | Notes |
 |------|--------|-------|
 | Supervisory posture | [Ex ante (Essential) / Ex post (Important)] | |
-| Lead supervisor | [BMI / sectoral] | |
-| Maximum penalty | Essential: ≥ €10M / 2% turnover; Important: ≥ €7M / 1.4% turnover (NIS2 Art. 34 floor) | |
+| Lead supervisor | Cybersicherheitsbehörde (Bundesamt für Cybersicherheit) | |
+| Maximum penalty (§45) | Essential: ≥ €10M / 2% turnover; Important: ≥ €7M / 1.4% turnover (NIS2 Art. 34 floor) | |
 | Appeal pathway | BVwG | |
 | CISO / Sicherheitsbeauftragter designated | [Yes / No] | |
 
-### 7.1 Qualifizierte Stellen (§18 NISG)
+### 7.1 Unabhängige Stellen und unabhängige Prüfer (§7)
 
 | Item | Status | Notes |
 |------|--------|-------|
-| Qualifizierte Stelle engaged for audit | [Yes / No / Planned] | BMI-accredited audit body |
-| Accreditation confirmed (BMI list) | [Yes / No] | |
+| Independent body / auditor (§7) engaged for the Wirksamkeitsnachweis (§33) | [Yes / No / Planned] | |
+| Eligibility / accreditation confirmed | [Yes / No] | |
 | Scope of assessment | [Full / Partial] | |
 | Last assessment date | [YYYY-MM-DD / N/A] | |
 | Findings remediated | [Yes / Partial / No] | |
@@ -158,34 +157,35 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 | Item | Status | Notes |
 |------|--------|-------|
 | KSÖ membership / participation | [Member / Observer / None] | Voluntary |
-| NCSC-AT (BKA) / GovCERT (BKA §4(4)) strategic contact | [Yes / No] | |
-| CERT.at (BMI §5) operative contact | [Yes / No] | BMI = SPOC + enforcement |
+| Cybersicherheitsbehörde contact — competent authority (§3a), zentrale Anlaufstelle/EU SPOC (§5) | [Yes / No] | |
+| CSIRT operative contact (§8) — CERT.at / GovCERT | [Yes / No] | |
 | Information-sharing MoUs | [List] | |
 
-### 8.1 Cyberkrise (§§24-25 NISG)
+### 8.1 National coordination structures (§§12–14)
 
 | Item | Status | Notes |
 |------|--------|-------|
-| Cyberkrise declaration awareness (BMI declares per §24) | [Yes / No] | |
-| Participation in national Cyberkrise exercises (§25) | [Yes / No / Planned] | |
-| Communication channel to BMI Cyberkrise-Koordination | [Established / Gap] | |
-| Internal escalation to Cyberkrise threshold defined | [Yes / No] | |
+| Awareness of the Cyber Sicherheit Steuerungsgruppe (CSS, §12) role | [Yes / No] | |
+| Awareness of IKDOK (§13) / OpKoord (§14) operative coordination | [Yes / No] | |
+| Communication channel to national coordination established | [Established / Gap] | |
+| Internal escalation to crisis threshold defined | [Yes / No] | |
 | Cross-sector coordination readiness | [Yes / Partial / No] | |
 
 ---
 
-## 8b. Austrian NISG Additions Beyond NIS2 Baseline
+## 8b. Austrian NISG 2026 Additions Beyond NIS2 Baseline
 
-| Austrian Addition | NISG Reference | NIS2 Equivalent | Compliance Status |
-|-------------------|---------------|-----------------|-------------------|
-| Qualifizierte Stellen (accredited audit bodies) | §18 | No direct equivalent (Art. 32(2) allows but doesn't mandate) | |
-| Cyberkrise framework (national crisis declaration) | §§24-25 | Art. 9(4) crisis mgmt, less prescriptive | |
-| GovCERT for public administration (BKA) | §4(4) | Art. 10 CSIRTs (generic) | |
-| Land opt-in mechanism | §22(5-6) | No equivalent (federal-only in most MS) | |
-| Bundeskanzler designation regardless of size | §3(4) | Art. 2(2)(b-e) similar but EU-level | |
-| Sectoral CERT designation by BMI | §14 | Art. 10 CSIRTs (generic) | |
-| IKDOK / OpKoord coordination bodies | §7 | Art. 8 competent authorities (generic) | |
-| Three-tier CERT escalation (sectoral→national→GovCERT) | §14, §19 | Art. 10-11 (less structured) | |
+> § references map to the enacted NISG 2026 (BGBl. I Nr. 94/2025). Sectors are set out in **Anlagen 1/2**; scope of wesentliche/wichtige Einrichtungen in **§24**. Confirm the exact wording against the official text before external reliance.
+
+| Austrian Addition | NISG 2026 Reference | NIS2 Equivalent | Compliance Status |
+|-------------------|---------------------|-----------------|-------------------|
+| Bundesamt für Cybersicherheit (single monocratic authority under BMI) | §3a (Aufgaben §4) | Art. 8 competent authority | |
+| Zentrale Anlaufstelle / SPOC + Nationales Koordinierungszentrum | §5, §6 | Art. 8(3) SPOC | |
+| Unabhängige Stellen und unabhängige Prüfer (accredited assessment bodies) | §7 | No direct equivalent (Art. 32(2) allows, not mandates) | |
+| Computer-Notfallteams / CSIRTs — CERT.at (national), GovCERT (public-admin sectoral) | §§8–11 | Art. 10–11 CSIRTs | |
+| National coordination bodies — CSS, IKDOK, OpKoord | §§12–14 | Art. 8/9 (less structured) | |
+| Land-level bodies scope / opt-in mechanism | `[VERIFY §]` (NISG 2026 is federal law) | No equivalent (federal-only in most MS) | |
+| Designation beyond size thresholds on criticality | `[VERIFY §]` (see §24 scope) | Art. 2(2)(b-e) similar but EU-level | |
 
 ---
 
@@ -204,7 +204,7 @@ gantt
 title NISG Remediation Roadmap
 dateFormat YYYY-MM-DD
 section Immediate
-Close high-priority gaps :active, a1, 2025-01-01, 90d
+Close high-priority gaps :active, a1, 2026-10-01, 90d
 section Short-term
 Formalise reporting channel :a2, after a1, 90d
 section Medium-term

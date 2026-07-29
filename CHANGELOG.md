@@ -5,6 +5,18 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **The Austrian overlay's NISG command and template described the wrong law.** They framed the NIS2 transposition as a 2018 amendment (`NISG, BGBl. I Nr. 111/2018 idF BGBl. I Nr. 94/2025`) and in places called it "NISG 2024". The enacted law is the standalone **NISG 2026** (BGBl. I Nr. 94/2025), which *replaces* the NISG 2018 (expiring 30 Sep 2026) and **enters into force on 1 October 2026** (§51), with registration due by 31 Dec 2026 (§29) — i.e. it is not yet in force. The competent authority is the new **Bundesamt für Cybersicherheit** (§3a), incident reports go to the responsible **CSIRT** (§8 — CERT.at as national CSIRT, GovCERT as public-administration sectoral CSIRT) via the NIS2-Meldeplattform (§34), and administrative penalties (§45) address the entity, not management personally (personal liability is not explicitly regulated). Fabricated paragraph references (§18, §§24-25, §4(4), §22, §3(4)) were replaced with the enacted numbering (§§2–14, 24, 29, 31–34, 45, 51) or honest `[NEEDS VERIFICATION]` flags. Verified against BGBl. I Nr. 94/2025 plus Schönherr and Hochleitner (iura.at) analyses.
+
+- **`/arckit:at-bvergg` shipped stale procurement thresholds.** The command used the 2024–2025 EU values (€221k/€443k/€5,538k); it now uses **Delegated Regulation (EU) 2025/2152** (€140k central / €216k sub-central / €432k utilities / €5,404k works, in force 1 Jan 2026) and reflects the domestic **Vergaberechtsgesetz / BVergG-Novelle 2026** (BGBl. I Nr. 8/2026) — permanent Direktvergabe limits (€140k supplies/services classical, €150k Sektoren, €200k works) and the new "document ≥3 Preisauskünfte from €50k" rule.
+
+- **`/arckit:at-dsgvo` overstated Austrian data-protection specifics.** The §§12–13 DSG image-processing regime is now flagged as **contested** — the BVwG held it inapplicable for want of a GDPR opening clause (W256 2214855-1; W211 2210458-1, 2019) while the OGH still applies it (6 Ob 150/19f) — and the assessment is anchored on the GDPR. The **§30 Abs 5 DSG** exemption of Behörden / öffentliche Stellen from GDPR fines (Art. 83(7)) is now recorded in the command and template.
+
+- **CODEOWNERS matched no overlay files.** The `at-*` / `eu-*` / `fr-*` / `ca-*` / `uae-*` patterns pointed at a non-existent `arckit-claude/…` root path, so the domain maintainers (@gtonic, @thomas-jardinet) were never auto-requested for review. Patterns now target the real `plugins/arckit-<x>/…`, the generated `plugins/arckit-claude/plugins/<x>/…` mirror, `.arckit/templates/…` and `docs/guides/…`.
+
 ## [6.7.5] — 2026-07-28
 
 ### Fixed

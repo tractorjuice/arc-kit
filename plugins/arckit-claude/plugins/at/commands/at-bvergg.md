@@ -86,16 +86,21 @@ Read all documents from Step 0. Extract key information for the procurement file
 
 ### Step 4: Threshold Analysis
 
-Before generating the document, determine the applicable procedure. **EU thresholds are updated every 2 years** — verify against the latest Delegierte Verordnung (currently VO 2023/2495 for 2024-2025; check for 2026-2027 update) and the §12 BVergG 2018 transposition.
+Before generating the document, determine the applicable procedure. **EU thresholds are updated every 2 years** — the values below reflect **Commission Delegated Regulation (EU) 2025/2152 (in force from 1 January 2026, for the 2026–2027 period)**. Verify against the current Delegierte Verordnung and the §12 BVergG 2018 transposition before use.
 
-| Threshold Tier | Indicative Auftragswert (excl. VAT) | Procedure | Publication |
-|----------------|--------------------------------------|-----------|-------------|
-| **Direktvergabe** | < €100,000 | Direct award (no formal procedure) | Informal |
-| **Direktvergabe mit Bekanntmachung** | €100,000 — €130,000 | Direct award with notice | ANKÖ |
+> **Domestic reform**: the temporary Schwellenwerteverordnung has lapsed; its raised domestic values are now **permanent statutory law** under the **Vergaberechtsgesetz / BVergG-Novelle 2026 (BGBl. I Nr. 8/2026, in force 1 January 2026)**. New documentation rule: from **€50,000**, a Direktvergabe must document at least an attempt to obtain **three Preisauskünfte**. Confirm the exact instrument name and § against the reformed BVergG text `[NEEDS VERIFICATION]`.
+
+| Threshold Tier | Auftragswert (excl. VAT) | Procedure | Publication |
+|----------------|--------------------------|-----------|-------------|
+| **Direktvergabe** — supplies/services (classical) | < €140,000 | Direct award (no formal procedure) | Informal |
+| **Direktvergabe** — supplies/services (Sektoren) | < €150,000 | Direct award (no formal procedure) | Informal |
+| **Direktvergabe** — works (Bau) | < €200,000 | Direct award (no formal procedure) | Informal |
+| **Direktvergabe mit vorheriger Bekanntmachung** (§47) | up to applicable EU central-authority threshold `[VERIFY exact cap]` | Direct award with notice | ANKÖ |
 | **Unterschwellenbereich** (non-open) | Up to EU threshold | Verhandlungsverfahren / nicht-offen | ANKÖ |
-| **Oberschwellenbereich — classical** (supplies/services, sub-central) | ≥ €221,000 | Offenes / Nicht-offenes Verfahren / Verhandlungsverfahren | ANKÖ + TED |
-| **Oberschwellenbereich — Sektorenauftraggeber** (supplies/services) | ≥ €443,000 | Sektor rules | ANKÖ + TED |
-| **Bauaufträge (Works)** — Oberschwellenbereich | ≥ €5,538,000 | Same as supplies/services | ANKÖ + TED |
+| **Oberschwellenbereich — classical, central govt (Bund)** (supplies/services) | ≥ €140,000 | Offenes / Nicht-offenes / Verhandlungsverfahren | ANKÖ + TED |
+| **Oberschwellenbereich — classical, sub-central** (supplies/services) | ≥ €216,000 | Offenes / Nicht-offenes / Verhandlungsverfahren | ANKÖ + TED |
+| **Oberschwellenbereich — Sektorenauftraggeber** (supplies/services) | ≥ €432,000 | Sektor rules | ANKÖ + TED |
+| **Bauaufträge (Works)** — Oberschwellenbereich | ≥ €5,404,000 | Same as supplies/services | ANKÖ + TED |
 
 Show threshold determination to the user before generating the full document. Confirm:
 
