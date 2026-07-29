@@ -70,8 +70,8 @@ Read all documents from Step 0. Identify:
 
 - Presence of health data (Gesundheitsdaten) → triggers §§12–13 DSG + ELGA interop section
 - Image/video processing (Bildverarbeitung, CCTV) → triggers §§12–13 DSG special regime
-- Employee data processing → triggers ArbVG §96a Betriebsvereinbarung requirement
-- Scientific research → triggers §§7–8 DSG (Forschungszwecke) with §2d DSG opinion possibility
+- Employee data processing → triggers ArbVG Betriebsvereinbarung: §96 Abs 1 Z 3 (control measures affecting human dignity) and/or §96a (Personaldatensysteme)
+- Scientific research → triggers §§7–8 DSG (Forschungszwecke); DSB approval (Genehmigung) under §7 DSG, and the Art. 89(1) data-subject-rights exemption under §2d FOG (Forschungsorganisationsgesetz) — there is no "§2d DSG"
 - Minors as data subjects → triggers §4(4) DSG (AT age of digital consent: **14 years**)
 - Third-party processors in non-EEA → triggers TIA with DSB transfer focus
 
@@ -100,7 +100,7 @@ Read all documents from Step 0. Identify:
    - Add note: "This document supplements ARC-{PROJECT_ID}-RGPD-v*.md with Austrian/DSB-specific requirements"
 
 3. **Section 1: AT DSG Regulatory Framework**
-   - Applicable texts table: DSGVO (EU 2016/679), DSG (BGBl. I 165/1999 idgF), sector laws (ELGA-G for health, StPO §§134–143b for law enforcement, GTelG 2012, ArbVG §96a)
+   - Applicable texts table: DSGVO (EU 2016/679), DSG (BGBl. I 165/1999 idgF), sector laws (ELGA-G for health, StPO §§134–143b for law enforcement, GTelG 2012, ArbVG §96 Abs 1 Z 3 / §96a)
    - DSB as supervisory authority — contact: dsb.gv.at
    - Austrian age of digital consent: **14 years** (§4(4) DSG, lower than GDPR default 16) — flag if minors in scope
    - Parallel BVwG (Bundesverwaltungsgericht) review pathway for DSB decisions `[NEEDS VERIFICATION: confirm current venue rules]`
@@ -123,7 +123,7 @@ Read all documents from Step 0. Identify:
    - If no health data: include section header with "N/A — no health data identified"
 
 6. **Section 4: Employee Data (Arbeitnehmerdatenschutz)** (conditional — only if employee data in scope)
-   - ArbVG §96a Betriebsvereinbarung requirement for any system that enables employee monitoring `[NEEDS VERIFICATION: confirm exact §96a(1) sub-point and threshold]`
+   - ArbVG Betriebsvereinbarung: employee **monitoring** measures that touch human dignity require a BV under **§96 Abs 1 Z 3** (consent-based); **Personaldatensysteme** (personnel data systems beyond general identification/qualification data) require a BV under **§96a**
    - Works council (Betriebsrat) co-determination rights
    - Data Protection Impact Assessment interface with co-determination
    - Distinction: systems touching "personal dignity" need Betriebsvereinbarung regardless of privacy level
@@ -131,7 +131,7 @@ Read all documents from Step 0. Identify:
 
 7. **Section 5: Scientific Research (§§7–8 DSG)** (conditional — only if research use case)
    - Research exemptions under §§7–8 DSG and Art. 89 GDPR
-   - Option to request DSB opinion under §2d DSG `[NEEDS VERIFICATION: confirm current §2d text and practice]`
+   - DSB approval (Genehmigung) for research/statistics processing under §7 (esp. §7 Abs 3) DSG; the exemption from Art. 89(1) GDPR data-subject rights for research sits in §2d FOG (Forschungsorganisationsgesetz), not in the DSG
    - Pseudonymisation obligations
    - Retention under research framework
    - If not applicable: include section header with "N/A — no scientific research processing identified"
@@ -196,7 +196,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-ATDSG-v{VERSION}.md
 |---------------------------------|--------------|------|
 | §§12–13 Image/Video Processing  | {N/A or status} | {N} |
 | Health Data / ELGA              | {N/A or status} | {N} |
-| Employee Data / §96a ArbVG      | {N/A or status} | {N} |
+| Employee Data / §96 Abs 1 Z 3 / §96a ArbVG | {N/A or status} | {N} |
 | Research Exemptions §§7–8 DSG   | {N/A or status} | {N} |
 | Age of Consent (14 years)       | {N/A or status} | {N} |
 | DPO Registration with DSB       | {status}     | {N}  |
@@ -220,7 +220,7 @@ Next steps:
 - **Run after eu-rgpd**: This command adds the Austrian layer on top of the EU GDPR baseline. For best results, run `/arckit-eu:eu-rgpd` first, then this command.
 - **Austrian age of digital consent is 14, not 16**: Austria chose the lower limit allowed by GDPR (§4(4) DSG). Do not apply the GDPR default of 16.
 - **§§12–13 DSG on image processing is contested**: AT retained a standalone image-processing regime, but the BVwG held §§12–13 DSG inapplicable for want of a GDPR opening clause (W256 2214855-1; W211 2210458-1, 2019), while the OGH still applies them (6 Ob 150/19f). Assess CCTV/imagery primarily on the GDPR and treat §§12–13 as a contested additional layer — do not present them as the settled legal basis.
-- **ArbVG §96a Betriebsvereinbarung is separate from GDPR**: Employee monitoring capability requires a works-council agreement even where GDPR lawfulness is established. Flag if employee monitoring is possible.
+- **ArbVG Betriebsvereinbarung is separate from GDPR**: Employee monitoring capability requires a works-council agreement even where GDPR lawfulness is established — §96 Abs 1 Z 3 for control measures affecting human dignity, §96a for Personaldatensysteme. Flag if employee monitoring or a personnel data system is possible.
 - **Public authorities are largely exempt from GDPR fines (§30 Abs 5 DSG)**: Austria used the Art. 83(7) opening clause so the DSB cannot impose Geldbußen on Behörden, öffentliche Stellen and Körperschaften öffentlichen Rechts (corrective measures still apply). For public-sector controllers, present the Art. 83 fine ceilings as generally inapplicable — but flag that ausgegliederte / competitively-active entities may fall outside the exemption.
 - **Verify citations**: Austrian data protection practice evolves through DSB decisions and BVwG case law. Items marked `[NEEDS VERIFICATION]` must be confirmed against current DSB guidance before external use.
 - **Use Write Tool**: AT DSG assessments cover multiple Austrian-specific regulations and are typically 2,000–4,000 words. Always use the Write tool.
@@ -228,10 +228,10 @@ Next steps:
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-ATDSG-v{VERSION}.md`
-- ✅ Applicable DSG sections identified (§§7–8, §§12–13, §4(4), §2d as applicable)
+- ✅ Applicable DSG sections identified (§§7–8, §§12–13, §4(4); §7 DSG Genehmigung / §2d FOG research provisions as applicable)
 - ✅ §§12–13 DSG image-processing regime assessed if CCTV/imagery in scope, with its contested applicability (BVwG vs OGH) flagged and GDPR treated as the primary basis
 - ✅ ELGA-G / GTelG 2012 interop assessed if health data in scope
-- ✅ §96a ArbVG Betriebsvereinbarung requirement flagged if employee monitoring in scope
+- ✅ ArbVG Betriebsvereinbarung (§96 Abs 1 Z 3 / §96a) flagged if employee monitoring or a personnel data system in scope
 - ✅ §§7–8 DSG research exemptions addressed if research use case in scope
 - ✅ Age of digital consent at 14 years applied (not GDPR default 16)
 - ✅ DPO registration with DSB assessed

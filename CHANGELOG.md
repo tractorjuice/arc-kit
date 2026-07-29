@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`/arckit:at-dsgvo` overstated Austrian data-protection specifics.** The §§12–13 DSG image-processing regime is now flagged as **contested** — the BVwG held it inapplicable for want of a GDPR opening clause (W256 2214855-1; W211 2210458-1, 2019) while the OGH still applies it (6 Ob 150/19f) — and the assessment is anchored on the GDPR. The **§30 Abs 5 DSG** exemption of Behörden / öffentliche Stellen from GDPR fines (Art. 83(7)) is now recorded in the command and template.
 
+- **`/arckit:at-dsgvo` carried three wrong statutory citations.** `§2d DSG` does not exist — the DSB research/statistics approval is **§7 DSG** and the Art. 89(1) data-subject-rights exemption is **§2d FOG** (Forschungsorganisationsgesetz); the cookie-penalty row cited `§109 TKG 2021 / €37,000` (that is the *TKG 2003* provision) and is corrected to **§188 TKG 2021, up to €75,000** for breach of the §165 Abs 3 information duty (Fernmeldebehörde); and the employee-monitoring trigger conflated §96a with **§96 Abs 1 Z 3 ArbVG** (control measures affecting human dignity), now distinguished from §96a (Personaldatensysteme).
+
 - **CODEOWNERS matched no overlay files.** The `at-*` / `eu-*` / `fr-*` / `ca-*` / `uae-*` patterns pointed at a non-existent `arckit-claude/…` root path, so the domain maintainers (@gtonic, @thomas-jardinet) were never auto-requested for review. Patterns now target the real `plugins/arckit-<x>/…`, the generated `plugins/arckit-claude/plugins/<x>/…` mirror, `.arckit/templates/…` and `docs/guides/…`.
 
 ## [6.7.5] — 2026-07-28

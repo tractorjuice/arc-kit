@@ -49,7 +49,7 @@
 | Austrian Data Protection Act (DSG) | BGBl. I Nr. 165/1999 (idgF) | Yes |
 | ELGA-Gesetz | BGBl. I Nr. 111/2012 | [Yes / No — health data?] |
 | Gesundheitstelematikgesetz (GTelG 2012) | BGBl. I Nr. 111/2012 | [Yes / No] |
-| ArbVG §96a (Betriebsvereinbarung) | BGBl. Nr. 22/1974 idgF | [Yes / No — employee monitoring?] |
+| ArbVG §96 Abs 1 Z 3 / §96a (Betriebsvereinbarung) | BGBl. Nr. 22/1974 idgF | [Yes / No — employee monitoring / personnel data system?] |
 | Telekommunikationsgesetz (TKG 2021) | BGBl. I Nr. 190/2021 | [Yes / No — electronic communications?] |
 | Age of Digital Consent — 14 years | §4(4) DSG | [Yes / No — minors in scope?] |
 
@@ -190,7 +190,8 @@
 |------|--------|-------|
 | Research purpose documented | [Yes / No / N/A] | |
 | Pseudonymisation in place | [Yes / No / N/A] | |
-| §7 Abs 3 DSG Genehmigung der DSB beantragt | [Yes / No / N/A] | |
+| §7 Abs 3 DSG Genehmigung der DSB beantragt (where consent impossible / disproportionate) | [Yes / No / N/A] | |
+| §2d FOG (Forschungsorganisationsgesetz) Art. 89(1) rights exemption assessed | [Yes / No / N/A] | |
 | Re-identification risk assessed | [Yes / No / N/A] | |
 | Publication plan compliant with Art. 89 GDPR | [Yes / No / N/A] | |
 
@@ -320,7 +321,7 @@
 | GDPR Art. 83(4) — controller/processor obligations | Art. 83(4) | €10M / 2% turnover |
 | GDPR Art. 83(5) — principles, rights, transfers | Art. 83(5) | €20M / 4% turnover |
 | §62 DSG — Austrian-specific violations | §62 DSG | €50,000 |
-| §109 TKG 2021 — telecom/cookie violations | §109 TKG | €37,000 |
+| §188 TKG 2021 — cookie non-information (breach of §165 Abs 3) | §188 Abs 5 TKG 2021 (Fernmeldebehörde) | up to €75,000 |
 
 > ⚠️ **Public-authority fine exemption (§30 Abs 5 DSG)**: Austria used the Art. 83(7) GDPR opening clause to exempt **Behörden, öffentliche Stellen and Körperschaften öffentlichen Rechts** from GDPR fines — the DSB **cannot impose Geldbußen** on them (but can still order corrective measures). If the controller is a public authority, the Art. 83 fine exposure above is generally **not** applicable. Note the boundary: ausgegliederte / competitively-active legal entities may fall **outside** the exemption — assess per entity. `[NEEDS VERIFICATION: confirm the controller qualifies as a covered public body]`
 
