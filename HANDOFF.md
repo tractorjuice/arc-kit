@@ -1,8 +1,9 @@
-# Session Handoff — 2026-07-29 04:30 UTC
+# Session Handoff — 2026-07-29 05:30 UTC
 
 **Project**: `arc-kit` | `/home/terry/workspace/projects/arc-kit`
 **Branch**: `main`
-**Last commit**: `4d01c972 refactor: label model examples by server type in local setup`
+**Last commit**: `a7160414 auto: handoff`
+**Uncommitted**: 1 files: `?? .arckit/state.json`
 
 ## Recent Goals
 - [Terry Zhou] introduce ACP and MCP in AI context
