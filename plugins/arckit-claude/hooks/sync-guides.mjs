@@ -307,6 +307,13 @@ function scanGlobalDocs(repoRoot) {
   return { global, globalExternal, globalPolicies };
 }
 
+// Manifest JSON key for a SUBDIR_MAP directory: 'wardley-maps' -> 'wardleyMaps'.
+// Used both to initialise the project's buckets and to route files into them;
+// they must agree, so they share this.
+function subdirKey(dir) {
+  return dir.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+}
+
 function scanProject(repoRoot, projectName) {
   const projectDir = join(repoRoot, 'projects', projectName);
   const projectPath = `projects/${projectName}`;
@@ -322,18 +329,24 @@ function scanProject(repoRoot, projectName) {
     id: projectName,
     name: displayName,
     documents: [],
-    diagrams: [],
-    decisions: [],
-    wardleyMaps: [],
-    dataContracts: [],
     reviews: [],
-    research: [],
     vendors: [],
     vendorProfiles: [],
     techNotes: [],
     dataSourceProfiles: [],
     external: [],
   };
+
+  // One bucket per SUBDIR_MAP destination, DERIVED rather than hand-listed.
+  // The loop below keys subdirMap the same way, so a hand-maintained list here
+  // silently goes stale the moment a doc-type registers a new subdirectory --
+  // and then scanProject pushes into `undefined` and /arckit:pages dies before
+  // it can rebuild the dashboard. That shipped twice: `audits` with CDAU in
+  // v6.7.0 and `framework` with FWRK in #714. Neither was reported, because
+  // the crash only fires in a repo that actually has one of those directories.
+  for (const dir of new Set(Object.values(SUBDIR_MAP))) {
+    project[subdirKey(dir)] = [];
+  }
 
   // Core documents in project root — accepts any extension registered in DOC_TYPES
   for (const f of listDir(projectDir)) {
@@ -355,7 +368,7 @@ function scanProject(repoRoot, projectName) {
   // Maps directory name → manifest JSON key (camelCase)
   const subdirMap = {};
   for (const dir of new Set(Object.values(SUBDIR_MAP))) {
-    subdirMap[dir] = dir.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    subdirMap[dir] = subdirKey(dir);
   }
   subdirMap['reviews'] = 'reviews';
 
