@@ -43,6 +43,18 @@ Issues = "https://github.com/tractorjuice/arc-kit/issues"
 [project.scripts]
 arckit = "arckit_cli:main"
 
+[tool.pytest.ini_options]
+# Without this the collected set depends on whatever path a caller happens to
+# type, which is the enumeration drift that hid the ungated Python suites
+# (#719). Setting testpaths means a bare `python -m pytest` from the repo root
+# collects exactly what CI collects.
+#
+# No `norecursedirs` entry is needed for tests/mermaid-wardley/node_modules:
+# pytest's default norecursedirs already excludes node_modules, and the
+# vendored katex Python files there are not named test_*.py, so they were
+# never collected.
+testpaths = ["tests"]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
