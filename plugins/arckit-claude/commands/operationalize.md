@@ -1,5 +1,6 @@
 ---
 description: Create operational readiness pack with support model, runbooks, DR/BCP, on-call, and handover documentation
+doc-type: OPS
 argument-hint: "<project ID or service, e.g. '001', 'Payments API'>"
 effort: high
 ---

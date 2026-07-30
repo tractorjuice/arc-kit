@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Service Catalogue review under the UAE Code for Government Services and Zero Bureaucracy. Captures service catalogue mapping, bureaucracy-elimination baseline, and customer-experience KPIs."
+doc-type: ZBUR
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

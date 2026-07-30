@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an Australian energy-sector compliance architecture pack covering AER ring-fencing, AEMC NER/NGR, AEMO interfaces, and SOCI escalation evidence."
+doc-type: AUENERGY
 argument-hint: "<project ID or system, e.g. '001', 'Retailer DER Platform'>"
 effort: high
 handoffs:

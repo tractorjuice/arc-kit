@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess SecNumCloud 3.2 qualification compliance for French sovereign cloud procurement and OIV/OSE obligations"
+doc-type: SECNUM
 argument-hint: "<project ID or cloud service description, e.g. '001', 'health data platform for CHR'>"
 effort: high
 handoffs:

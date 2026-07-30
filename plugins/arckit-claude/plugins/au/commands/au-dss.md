@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a DTA Digital Service Standard compliance assessment for Australian Government digital services against all 13 criteria."
+doc-type: AUDSS
 argument-hint: "<project ID or service, e.g. '001', 'MyGov Portal Redesign'>"
 effort: high
 handoffs:

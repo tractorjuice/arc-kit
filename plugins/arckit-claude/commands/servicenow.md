@@ -1,5 +1,6 @@
 ---
 description: Create comprehensive ServiceNow service design with CMDB, SLAs, incident management, and change control
+doc-type: SNOW
 argument-hint: "<project ID or service, e.g. '001', 'IT Asset Management'>"
 effort: high
 ---

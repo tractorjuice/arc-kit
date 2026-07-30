@@ -1,5 +1,6 @@
 ---
 description: Decompose user needs into value chains for Wardley Mapping
+doc-type: WVCH
 argument-hint: "<user need or domain, e.g. 'online shopping', 'patient booking'>"
 effort: max
 handoffs:

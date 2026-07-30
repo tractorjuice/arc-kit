@@ -1,5 +1,6 @@
 ---
 description: Create project plan with timeline, phases, gates, and Mermaid diagrams
+doc-type: PLAN
 argument-hint: "<project ID or initiative, e.g. '001', 'Alpha phase'>"
 effort: high
 ---

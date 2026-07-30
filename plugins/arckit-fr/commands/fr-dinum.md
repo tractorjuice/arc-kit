@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess compliance with French digital administration standards — RGI, RGAA, RGESN, RGS, and DINUM doctrine cloud de l'État"
+doc-type: DINUM
 argument-hint: "<project ID or service name, e.g. '001', 'citizen-facing tax declaration portal'>"
 effort: high
 handoffs:

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a NHS DCB0160 deployer Clinical Safety Case Report and deployment Hazard Log for an NHS organisation deploying or significantly configuring a health IT product into a specific clinical setting."
+doc-type: none
 argument-hint: "<project ID or deployment, e.g. '001', 'paediatric growth tool rollout — King's College Hospital'>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: Generate the Service Definition Document for Lot 1 (Cloud Hosting / IaaS / PaaS)
+doc-type: SDD
 effort: max
 handoffs:
   - command: /arckit:pricing

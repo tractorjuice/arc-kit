@@ -1,5 +1,6 @@
 ---
 description: Review a G-Cloud service submission for completeness before CCS submission
+doc-type: GCRV
 effort: high
 handoffs:
   - command: /arckit-uk-gcloud:submission-pack

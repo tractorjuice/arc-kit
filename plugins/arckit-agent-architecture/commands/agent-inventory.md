@@ -1,5 +1,6 @@
 ---
 description: Catalog existing AI agents with capabilities, security classification, and oversight level
+doc-type: AAGI
 argument-hint: "<project ID or scope, e.g. '001', 'all agents', 'production agents'>"
 effort: high
 handoffs:

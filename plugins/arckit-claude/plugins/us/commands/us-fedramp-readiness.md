@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Produce a 3PAO-style Readiness Assessment Report for a FedRAMP authorization — capability statement, gap register, evidence inventory, and recommended ATO path (Agency vs JAB)."
+doc-type: FRRR
 argument-hint: "<project ID or CSO name, e.g. '001', 'Agency Citizen Services Portal'>"
 effort: high
 handoffs:

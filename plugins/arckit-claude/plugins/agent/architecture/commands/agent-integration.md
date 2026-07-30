@@ -1,5 +1,6 @@
 ---
 description: Design multi-agent integration — inter-agent contracts, message protocols, shared state, failure isolation
+doc-type: AAIN
 argument-hint: "<project ID or agent group, e.g. '001', 'research swarm'>"
 effort: high
 handoffs:

@@ -196,6 +196,106 @@ def check_command_codes(known: set[str]) -> int:
     return checked
 
 
+def load_declarations() -> dict[str, object]:
+    """Map `arckit:<command>` to the doc-type it declares in frontmatter.
+
+    The declaration is `doc-type:` in a command's YAML frontmatter: a single
+    code, a `[A, B]` list for a command that writes more than one governed
+    artefact, or `none` for one that writes no ARC-* artefact at all.
+
+    It lives on the COMMAND even when the command delegates to an agent that
+    holds the Write call (/arckit:framework -> arckit-framework -> FWRK). The
+    declaration describes what running the command produces, which is what a
+    recipe target names; the agent is an implementation detail.
+    """
+    decls: dict[str, object] = {}
+    for path in sorted(glob.glob(str(ROOT / "plugins/*/commands/*.md"))):
+        text = Path(path).read_text()
+        if not text.startswith("---\n"):
+            continue
+        front = text.split("---\n", 2)[1]
+        m = re.search(r"^doc-type:\s*(.+?)\s*$", front, re.M)
+        if not m:
+            errors.append(
+                f"{Path(path).relative_to(ROOT)}: no `doc-type:` in frontmatter -- "
+                f"every command must declare what it writes, or `none`"
+            )
+            continue
+        raw = m.group(1)
+        if raw.startswith("["):
+            value = [c.strip() for c in raw.strip("[]").split(",") if c.strip()]
+        else:
+            value = raw
+        decls[f"arckit:{Path(path).stem}"] = value
+    return decls
+
+
+def recipe_targets() -> list[tuple[str, int, str, str, str]]:
+    """Every (recipe, line, target id, skill, output.type) in every recipe."""
+    tgt = re.compile(r"^\s*-\s*id:\s*(\S+)")
+    skl = re.compile(r"^\s*skill:\s*(\S+)")
+    typ = re.compile(r"\btype:\s*([A-Za-z0-9][A-Za-z0-9-]*)")
+    rows = []
+    for path in recipe_paths():
+        rel = str(Path(path).relative_to(ROOT))
+        cur_id = cur_skill = None
+        for lineno, line in enumerate(Path(path).read_text().splitlines(), 1):
+            m = tgt.match(line)
+            if m:
+                cur_id, cur_skill = m.group(1), None
+            m = skl.match(line)
+            if m:
+                cur_skill = m.group(1)
+            if "output:" in line and cur_skill:
+                m = typ.search(line)
+                if m:
+                    rows.append((rel, lineno, cur_id, cur_skill, m.group(1)))
+    return rows
+
+
+def check_recipe_declarations() -> int:
+    """A recipe's output.type must equal what its command declares it writes.
+
+    This is the check the registry gate could not make before #715: a code that
+    RESOLVES but names the wrong artefact was invisible. `UAE-PROC` was one
+    plausible fix away from `PROC`, which is registered -- to Canada's Federal
+    Procurement Strategy -- and would have keyed .arckit/state.json to the wrong
+    type while passing every existing check.
+    """
+    decls = load_declarations()
+    checked = 0
+    for rel, lineno, tid, skill, code in recipe_targets():
+        declared = decls.get(skill)
+        if declared is None:
+            errors.append(
+                f"{rel}:{lineno}: target {tid} names skill {skill!r}, which has no "
+                f"command in plugins/*/commands/"
+            )
+            continue
+        checked += 1
+        if declared == "none":
+            # The command writes no governed artefact, so output.type is an
+            # informational state.json key and must be declared exempt.
+            if code not in NOT_A_DOC_TYPE:
+                errors.append(
+                    f"{rel}:{lineno}: target {tid} sets output.type {code!r} but "
+                    f"{skill} declares `doc-type: none` -- either the command does "
+                    f"write {code!r} (fix its declaration) or add {code!r} to "
+                    f"NOT_A_DOC_TYPE with a reason"
+                )
+            continue
+        accepted = [declared] if isinstance(declared, str) else declared
+        if code not in accepted:
+            errors.append(
+                f"{rel}:{lineno}: target {tid} sets output.type {code!r} but "
+                f"{skill} declares it writes "
+                f"{accepted[0] if len(accepted) == 1 else accepted!r} -- "
+                f"output.type keys .arckit/state.json, so --resume and --target "
+                f"will not match"
+            )
+    return checked
+
+
 def check_pages_parity(known: set[str]) -> int:
     """The /arckit:pages known-types table must list exactly the registry."""
     rows = set(
@@ -227,6 +327,7 @@ def main() -> int:
     n_recipe = check_recipe_types(known)
     n_cmd = check_command_codes(known)
     n_pages = check_pages_parity(known)
+    n_decl = check_recipe_declarations()
 
     if errors:
         print(f"FAIL: {len(errors)} doc-type registry error(s):", file=sys.stderr)
@@ -244,7 +345,8 @@ def main() -> int:
     print(
         f"Doc-type registry OK: {len(known)} registered codes; "
         f"{n_recipe} recipe output.type, {n_cmd} command/agent filename, "
-        f"{n_pages} pages.md table reference(s) all resolve."
+        f"{n_pages} pages.md table reference(s) all resolve; "
+        f"{n_decl} recipe target(s) agree with their command's declared doc-type."
     )
     return 0
 

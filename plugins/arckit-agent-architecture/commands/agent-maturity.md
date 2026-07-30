@@ -1,5 +1,6 @@
 ---
 description: Assess AI agent program maturity across design, governance, security, integration, and operations
+doc-type: AAMT
 argument-hint: "<project ID or agent program, e.g. '001', 'enterprise agent program'>"
 effort: high
 handoffs:

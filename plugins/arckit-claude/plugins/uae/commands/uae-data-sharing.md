@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Data Sharing Agreement under the UAE Government Services Data Sharing Policy. Captures collect-once mapping, federation/API plan, and PDPL lawful basis per share."
+doc-type: DSHR
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

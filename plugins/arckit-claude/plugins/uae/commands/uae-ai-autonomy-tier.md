@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a three-tier AI autonomy posture (Tier 1 internal-productivity, Tier 2 investor-facing-with-approval, Tier 3 regulated/financial). Captures per-tier guard-rails, approval gates, audit obligations, and tier-promotion criteria."
+doc-type: AUTI
 argument-hint: "<project ID or AI system description>"
 effort: high
 handoffs:

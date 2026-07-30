@@ -1,5 +1,6 @@
 ---
 description: Assess UK Government AI Playbook compliance for responsible AI deployment
+doc-type: AIPB
 argument-hint: "<project or AI system, e.g. 'Fraud Detection ML Service'>"
 effort: max
 ---

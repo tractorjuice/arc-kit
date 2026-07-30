@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Canada ATIP reconciliation — Access to Information Act exemption mapping, Privacy Act §4–§8 use/disclosure register, severance design for hybrid public/protected systems, ATIP request workflow."
+doc-type: ATIP
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: Analyze strategic play options from Wardley Maps using 60+ gameplay patterns
+doc-type: WGAM
 argument-hint: "<strategic context, e.g. 'cloud migration', 'market entry for chatbot'>"
 effort: max
 handoffs:

@@ -1,5 +1,6 @@
 ---
 description: Generate comprehensive project story with timeline analysis, traceability, and governance achievements (project)
+doc-type: STORY
 argument-hint: "<project ID, e.g. '001'>"
 effort: high
 ---

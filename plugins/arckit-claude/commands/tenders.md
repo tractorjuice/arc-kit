@@ -1,5 +1,6 @@
 ---
 description: Procurement market intelligence — award-value benchmarks, top suppliers, incumbency and concentration, from the UK Tenders MCP
+doc-type: TNDR
 argument-hint: "[project-number-or-name] <capability | --cpv NNNNNNNN | --buyer 'Name' | --supplier 'Name'>"
 tags: [procurement, tenders, market-intelligence, incumbency, build-vs-buy, uk-gov]
 effort: high

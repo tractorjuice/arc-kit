@@ -1,5 +1,6 @@
 ---
 description: Score vendor proposals against evaluation criteria with persistent structured storage
+doc-type: none
 argument-hint: "<action> <args>, e.g. 'vendor Acme --project=001', 'compare --project=001', 'audit --project=001'"
 tags: [vendor, scoring, evaluation, procurement, comparison, audit]
 effort: high

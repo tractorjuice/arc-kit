@@ -1,5 +1,6 @@
 ---
 description: Design AI agent security — sandboxing, permissions, injection defences, output validation
+doc-type: AASE
 argument-hint: "<agent or project ID, e.g. 'research-agent', '001'>"
 effort: high
 handoffs:

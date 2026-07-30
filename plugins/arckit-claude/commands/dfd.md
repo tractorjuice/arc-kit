@@ -1,5 +1,6 @@
 ---
 description: Generate Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation
+doc-type: DFD
 argument-hint: "<system or process, e.g. 'user registration', 'claims processing'>"
 effort: high
 ---

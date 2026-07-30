@@ -1,5 +1,6 @@
 ---
 description: Bundle all approved documents for a G-Cloud service into a CCS submission pack
+doc-type: none
 effort: medium
 ---
 

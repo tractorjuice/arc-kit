@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a UAE Charter for AI compliance assessment against the 12 principles (human-machine ties, safety, bias mitigation, data privacy, transparency, human oversight, governance/accountability, technological excellence, human commitment, peaceful coexistence, inclusive access, lawful compliance)."
+doc-type: AICH
 argument-hint: "<project ID or AI system description>"
 effort: high
 handoffs:

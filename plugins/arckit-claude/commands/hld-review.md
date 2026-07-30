@@ -1,5 +1,6 @@
 ---
 description: Review High-Level Design (HLD) against architecture principles and requirements
+doc-type: HLDR
 argument-hint: "<project ID or HLD path, e.g. '001'>"
 effort: high
 ---

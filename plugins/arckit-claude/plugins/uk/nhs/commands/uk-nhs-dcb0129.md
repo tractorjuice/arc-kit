@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a NHS DCB0129 manufacturer Clinical Safety Case Report and Hazard Log (Marcus Baw SAFETY.md 3-file spec) for a digital health product placed on the NHS market."
+doc-type: none
 argument-hint: "<project ID or product, e.g. '001', 'paediatric growth tool'>"
 effort: high
 keep-coding-instructions: true

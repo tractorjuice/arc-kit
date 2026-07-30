@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess EU Data Act (Regulation 2023/2854) compliance for connected products, data holders, and data processing service providers"
+doc-type: DATAACT
 argument-hint: "<project ID or product/service description, e.g. '001', 'industrial IoT platform with smart sensor data'>"
 effort: high
 handoffs:

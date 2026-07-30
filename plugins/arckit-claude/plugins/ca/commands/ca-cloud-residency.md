@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Canada sovereign cloud residency assessment — GC Cloud Adoption Strategy alignment, Direction on the Secure Use of Commercial Cloud Services, residency at Protected B+, sovereign options matrix (AWS Canada, Azure Canada Central/East, GCP Canada), CLOUD Act foreign-access analysis, exit and portability plan."
+doc-type: CACR
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess Austrian DSG / DSGVO obligations — Datenschutzbehörde patterns, §§12–13 DSG special provisions, image processing (§12 DSG), and Austrian enforcement practice"
+doc-type: ATDSG
 argument-hint: "<project ID or processing description, e.g. '001', 'ministry HR system with CCTV and health data'>"
 effort: high
 handoffs:

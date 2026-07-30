@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a UAE PDPL (Federal Decree-Law 45/2021) compliance assessment including DPIA, lawful-basis register, data-subject-rights procedure, and cross-border transfer log. Anchored on the UAE Data Office statutory framework."
+doc-type: PDPL
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate GDPR (EU 2016/679) compliance assessment for EU/EEA data processing — legal basis mapping, data subject rights, transfers, DPIA screening, and breach notification across all member states"
+doc-type: RGPD
 argument-hint: "<project ID or processing description, e.g. '001', 'e-commerce platform expanding to DE and ES'>"
 effort: high
 handoffs:

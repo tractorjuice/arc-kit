@@ -1,5 +1,6 @@
 ---
 description: Create platform strategy using Platform Design Toolkit (8 canvases for multi-sided ecosystems)
+doc-type: PLAT
 argument-hint: "<platform name, e.g. 'NHS API marketplace'>"
 effort: max
 ---

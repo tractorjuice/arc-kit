@@ -1,5 +1,6 @@
 ---
 description: Create strategic architecture roadmap with multi-year timeline, capability evolution, and governance
+doc-type: ROAD
 argument-hint: "<project ID or initiative, e.g. '001', 'cloud migration 3-year'>"
 effort: high
 handoffs:

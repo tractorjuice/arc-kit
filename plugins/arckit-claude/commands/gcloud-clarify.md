@@ -1,5 +1,6 @@
 ---
 description: Analyze G-Cloud service gaps and generate supplier clarification questions
+doc-type: GCLC
 argument-hint: "<service name, e.g. 'Salesforce CRM Lot 2'>"
 effort: high
 ---

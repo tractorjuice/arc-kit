@@ -1,5 +1,6 @@
 ---
 description: Discover external data sources (APIs, datasets, open data portals) to fulfil project requirements
+doc-type: DSCT
 argument-hint: "[project-number-or-name] <data need, e.g. '002', 'sovereign real-time traffic data'>"
 tags: [data, api, open-data, datasets, data-sources, discovery, uk-gov, data-integration]
 effort: max

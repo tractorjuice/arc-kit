@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Tailor the NIST SP 800-53 Rev 5 control catalog against the Low / Moderate / High baseline for a US federal information system, recording implementation status, inheritance from cloud providers, parameter assignments, and compensating controls."
+doc-type: NIST
 argument-hint: "<project ID or system, e.g. '001', 'Agency Citizen Services Portal'>"
 effort: high
 keep-coding-instructions: true

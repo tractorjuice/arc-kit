@@ -1,5 +1,6 @@
 ---
 description: Import an Open Knowledge Format bundle into ArcKit as reviewable research notes
+doc-type: none
 argument-hint: "--bundle <path> --project <id> [--dry-run]"
 tags: [okf, import, interoperability, research, markdown]
 effort: medium

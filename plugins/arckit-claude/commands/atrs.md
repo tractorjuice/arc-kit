@@ -1,5 +1,6 @@
 ---
 description: Generate Algorithmic Transparency Recording Standard (ATRS) record for AI/algorithmic tools
+doc-type: ATRS
 argument-hint: "<AI tool name, e.g. 'Benefit Eligibility Scoring Model'>"
 effort: high
 ---

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Draft a FedRAMP System Security Plan (Moderate / High baseline) aligned to the current FedRAMP SSP template structure — system identification, boundary, types of users, interconnections, control implementations, continuous monitoring."
+doc-type: FRSSP
 argument-hint: "<project ID or CSO name, e.g. '001', 'Agency Citizen Services Portal'>"
 effort: high
 keep-coding-instructions: true

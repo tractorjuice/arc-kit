@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess a US federal civilian system against the CISA Zero Trust Maturity Model v2.0 — scoring 5 pillars (Identity, Devices, Networks, Apps & Workloads, Data) and 3 cross-cuts (Visibility & Analytics, Automation & Orchestration, Governance) across 4 maturity stages."
+doc-type: ZTA
 argument-hint: "<project ID or system, e.g. '001', 'Agency Citizen Services Portal'>"
 effort: high
 handoffs:

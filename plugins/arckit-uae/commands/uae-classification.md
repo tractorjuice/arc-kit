@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a UAE Smart Data Classification Register for a project, mapping every dataset to Open / Shared / Confidential / Secret / Top Secret with handling rules and declassification schedule. Anchored on the UAE Smart Data Framework."
+doc-type: CLAS
 argument-hint: "<project ID or service name>"
 effort: high
 handoffs:

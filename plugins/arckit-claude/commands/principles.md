@@ -1,5 +1,6 @@
 ---
 description: Create or update enterprise architecture principles
+doc-type: PRIN
 argument-hint: "<domain or focus, e.g. 'cloud-first', 'data governance'>"
 effort: high
 ---

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Design a US federal Identity, Credential, and Access Management architecture per OMB M-19-17 and NIST SP 800-63-3, determining IAL/AAL/FAL levels per use case and selecting PIV / login.gov / agency-specific identity providers."
+doc-type: ICAM
 argument-hint: "<project ID or system, e.g. '001', 'Agency Citizen Services Portal'>"
 effort: high
 handoffs:

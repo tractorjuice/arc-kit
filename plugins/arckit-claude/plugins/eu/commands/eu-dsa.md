@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess EU Digital Services Act (DSA, Regulation 2022/2065) compliance obligations for online intermediary services, platforms, and very large online platforms"
+doc-type: DSA
 argument-hint: "<project ID or service description, e.g. '001', 'online marketplace with 50M EU users'>"
 effort: high
 handoffs:

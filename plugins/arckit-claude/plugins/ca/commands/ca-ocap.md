@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a First Nations OCAP® (Ownership, Control, Access, Possession) sovereignty assessment — FNIGC pre-engagement gate, per-dataset OCAP mapping, USAI and ITK considerations, repatriation and co-governance plan. Not a substitute for direct FNIGC and community engagement."
+doc-type: OCAP
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

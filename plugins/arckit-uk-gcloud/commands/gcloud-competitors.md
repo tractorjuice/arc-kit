@@ -1,5 +1,6 @@
 ---
 description: Benchmark a G-Cloud service against Digital Marketplace rivals (supplier-side)
+doc-type: GCMP
 effort: high
 handoffs:
   - command: /arckit:pricing

@@ -1,5 +1,6 @@
 ---
 description: Create federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees (project)
+doc-type: DMC
 argument-hint: "<data product name, e.g. 'Customer Orders — Sales Domain'>"
 effort: high
 ---

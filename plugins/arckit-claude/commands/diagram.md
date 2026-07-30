@@ -1,5 +1,6 @@
 ---
 description: Generate architecture diagrams using Mermaid or PlantUML C4 for visual documentation
+doc-type: DIAG
 argument-hint: "<diagram type and subject, e.g. 'C4 context booking system', 'sequence login'>"
 effort: high
 ---

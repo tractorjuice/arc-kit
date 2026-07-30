@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Critical Third Parties (CTP) dependency assessment — register of designated CTPs the firm relies on (cloud hyperscalers, payment networks, BaaS providers), materiality assessment per provider, resilience testing plan including exit and substitution drills (BoE/PRA/FCA PS24/16)."
+doc-type: FSCTP
 argument-hint: "<project ID or product context, e.g. '004', 'core payments platform'>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: Rationalize application portfolio with keep/merge/replace/retire decisions
+doc-type: APPR
 argument-hint: "<project ID, e.g. '001', 'portfolio rationalization'>"
 effort: high
 handoffs:

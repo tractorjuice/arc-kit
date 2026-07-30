@@ -1,5 +1,6 @@
 ---
 description: Perform comprehensive governance quality analysis across architecture artifacts (requirements, principles, designs, assessments)
+doc-type: ANAL
 argument-hint: "<project ID or scope, e.g. '001', 'all projects'>"
 effort: high
 ---

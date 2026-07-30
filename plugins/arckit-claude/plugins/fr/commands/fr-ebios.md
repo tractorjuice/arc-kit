@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Conduct an EBIOS Risk Manager risk analysis study following the ANSSI methodology — five workshops from study framing to risk treatment and homologation recommendation"
+doc-type: EBIOS
 argument-hint: "<project ID or system description, e.g. '001', 'ministry citizen portal handling health data'>"
 effort: max
 keep-coding-instructions: true

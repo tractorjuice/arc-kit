@@ -1,5 +1,6 @@
 ---
 description: Generate and maintain agent-readable repository documentation from source, docs, and git history
+doc-type: none
 argument-hint: "<mode or focus, e.g. '--init', '--update', 'document hooks and release flow'>"
 tags: [repo-docs, documentation, source-wiki, agents, onboarding]
 effort: max

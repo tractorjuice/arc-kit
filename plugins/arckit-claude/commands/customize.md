@@ -1,5 +1,6 @@
 ---
 description: Copy plugin templates to project for customization
+doc-type: none
 argument-hint: "<template name or 'list', e.g. 'requirements', 'risk', 'list'>"
 ---
 

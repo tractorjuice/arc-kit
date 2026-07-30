@@ -1,5 +1,6 @@
 ---
 description: Create strategic Wardley Maps for architecture decisions and build vs buy analysis
+doc-type: WARD
 argument-hint: "<system or domain, e.g. 'NHS appointment system', 'cloud strategy'>"
 effort: max
 handoffs:

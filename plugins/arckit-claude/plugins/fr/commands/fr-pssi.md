@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an Information System Security Policy (PSSI) for French public or private organisations — security objectives, principles, organisational structure, and applicable ANSSI/RGS standards"
+doc-type: PSSI
 argument-hint: "<project ID or organisation description, e.g. '001', 'French ministry of culture IS — 2,000 users across 5 sites, OIV designation'>"
 effort: high
 keep-coding-instructions: true

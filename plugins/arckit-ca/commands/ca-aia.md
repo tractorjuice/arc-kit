@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Canada Algorithmic Impact Assessment per the TBS Directive on Automated Decision-Making — Levels I–IV questionnaire scoring across the six dimensions, transparency notice, peer review trigger, human-in-the-loop design, recourse mechanism."
+doc-type: AIA
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

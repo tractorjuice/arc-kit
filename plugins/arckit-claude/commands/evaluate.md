@@ -1,5 +1,6 @@
 ---
 description: Create vendor evaluation framework and score vendor proposals
+doc-type: EVAL
 argument-hint: "<project ID or category, e.g. '001', 'CRM platforms'>"
 effort: high
 ---

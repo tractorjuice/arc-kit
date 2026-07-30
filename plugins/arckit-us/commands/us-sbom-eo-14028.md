@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Produce an EO 14028 secure-software self-attestation (per OMB M-22-18 / M-23-16) and an accompanying Software Bill of Materials (SBOM) conforming to NTIA Minimum Elements in CycloneDX or SPDX format."
+doc-type: SBOM
 argument-hint: "<project ID or software product, e.g. '001', 'Agency Citizen Services Portal'>"
 effort: high
 handoffs:

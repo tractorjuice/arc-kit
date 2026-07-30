@@ -1,5 +1,6 @@
 ---
 description: Generate the supplier declaration for the G-Cloud framework
+doc-type: DECL
 effort: high
 handoffs:
   - command: /arckit:review

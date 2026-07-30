@@ -1,5 +1,6 @@
 ---
 description: Analyse the blast radius of a change to a requirement, decision, or design document
+doc-type: none
 argument-hint: "<document ID or requirement ID, e.g. 'ARC-001-REQ', 'BR-003', 'ADR-002'>"
 effort: high
 tags: [impact, change, blast-radius, dependency, traceability, governance]

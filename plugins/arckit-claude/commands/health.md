@@ -1,5 +1,6 @@
 ---
 description: Scan all projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift
+doc-type: none
 argument-hint: "<project ID or scope, e.g. '001', 'all', 'vendors only'>"
 tags: [health, quality, governance, staleness, maintenance, audit]
 ---

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a public algorithm transparency notice complying with Article L311-3-1 CRPA (Loi République Numérique) for French public administration algorithmic decisions"
+doc-type: ALGO
 argument-hint: "<project ID or algorithm description, e.g. '001', 'school admissions prioritisation algorithm used by the rectorate'>"
 effort: medium
 handoffs:

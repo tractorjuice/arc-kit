@@ -1,5 +1,6 @@
 ---
 description: Project-level GPS — show coverage against the essential ArcKit baseline, surface DRAFT/stale/orphan artifacts, and recommend the next slash command to run
+doc-type: none
 argument-hint: "<project ID, e.g. '001' or '001-payment-gateway'>"
 tags: [navigator, governance, planning, recommendations, graph]
 effort: low

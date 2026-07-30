@@ -1,5 +1,6 @@
 ---
 description: Export ArcKit project artifacts as an Open Knowledge Format bundle without changing source ARC files
+doc-type: none
 argument-hint: "(--all | --project <id>) [--out <path>]"
 tags: [okf, export, interoperability, knowledge, markdown]
 effort: medium

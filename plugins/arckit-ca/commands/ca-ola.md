@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an Official Languages Act review — Parts IV (services), V (language of work), VI (federal language obligations); service-equivalence matrix EN/FR; bilingual public-facing surface; active offer; Translation Bureau pipeline; OQLF acknowledgement where federal-Quebec overlap applies."
+doc-type: OLA
 argument-hint: "<project ID or service name>"
 effort: high
 handoffs:

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess compliance with ANSSI security recommendations — Guide d'hygiène informatique (42 measures) and cloud security recommendations"
+doc-type: ANSSI
 argument-hint: "<project ID or system description, e.g. '001', 'ministry intranet with 500 users on hybrid cloud'>"
 effort: high
 handoffs:

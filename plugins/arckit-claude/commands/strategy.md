@@ -1,5 +1,6 @@
 ---
 description: Synthesise strategic artifacts into executive-level Architecture Strategy document
+doc-type: STRAT
 argument-hint: "<project ID or focus, e.g. '001', 'cloud-first strategy'>"
 effort: max
 handoffs:

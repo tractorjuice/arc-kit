@@ -1,5 +1,6 @@
 ---
 description: Search across all project artifacts by keyword, document type, or requirement ID
+doc-type: none
 argument-hint: "<query, e.g. 'PostgreSQL', 'data residency', '--type=ADR', '--project=001'>"
 tags: [search, find, query, lookup, discover]
 handoffs:

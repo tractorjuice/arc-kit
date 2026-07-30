@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate UAE Pass integration design (OIDC/OAuth flow, claim mapping, Basic vs Verified profile selection, Service Provider onboarding pack, e-signature audit trail design)."
+doc-type: UPASS
 argument-hint: "<project ID or service name>"
 effort: high
 handoffs:

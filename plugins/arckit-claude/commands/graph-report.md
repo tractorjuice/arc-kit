@@ -1,5 +1,6 @@
 ---
 description: Governance metrics dashboard — coverage by category, cross-reference density, compliance readiness, and project comparison across all working projects
+doc-type: none
 argument-hint: ""
 tags: [graph-report, metrics, governance, dashboard, comparison, graph]
 effort: low

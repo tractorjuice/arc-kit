@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate French public procurement documentation aligned with code de la commande publique, UGAP catalogue, and DINUM digital standards"
+doc-type: MARPUB
 argument-hint: "<project ID or procurement description, e.g. '001', 'digital identity platform €2.5M ministry'>"
 effort: high
 handoffs:

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an Australian Energy Sector Cyber Security Framework maturity assessment for energy-sector projects with IT, OT, market, and grid-edge dependencies."
+doc-type: AUAESCSF
 argument-hint: "<project ID or system, e.g. '001', 'DNSP DERMS Platform'>"
 effort: high
 handoffs:

@@ -1,5 +1,6 @@
 ---
 description: Plan transition architectures with work packages, migration waves, and acceptance criteria
+doc-type: TRANS
 argument-hint: "<project ID, e.g. '001', 'transition architecture plan'>"
 effort: max
 handoffs:

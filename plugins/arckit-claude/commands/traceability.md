@@ -1,5 +1,6 @@
 ---
 description: Generate requirements traceability matrix from requirements to design to tests
+doc-type: TRAC
 argument-hint: "<project ID or scope, e.g. '001', 'FR-xxx only'>"
 effort: high
 ---

@@ -1,5 +1,6 @@
 ---
 description: Generate documentation site with governance dashboard, document viewer, and Mermaid diagram support
+doc-type: none
 argument-hint: "<project ID or 'all', e.g. '001', 'all'>"
 ---
 

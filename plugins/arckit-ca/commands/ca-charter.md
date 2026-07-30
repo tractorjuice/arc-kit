@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Canada Charter rights design review — s.2 (expression and association), s.7 (life, liberty, security of person), s.8 (search and seizure), s.15 (equality) — applying Oakes proportionality framing to system design with mitigation tracker and DOJ counsel sign-off block."
+doc-type: CHRT
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Privacy Impact Assessment (PIA) for Australian Government entities under Privacy Act 1988 s33D, assessing compliance with all 13 Australian Privacy Principles (APPs)."
+doc-type: AUPIA
 argument-hint: "<project ID or system, e.g. '001', 'Citizen Identity Verification'>"
 effort: high
 handoffs:

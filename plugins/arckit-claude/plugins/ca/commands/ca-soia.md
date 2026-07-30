@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Canada Security of Information Act handling plan — Special Operational Information (SOI) register, marking and handling matrix, transmission channels, compartments and need-to-know, destruction and sanitisation, CSIS Act §16 and §19 coordination, RCMP NSP liaison, breach response, personnel reliability prerequisites."
+doc-type: SOIA
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: Create DevOps strategy with CI/CD pipelines, IaC, container orchestration, and developer experience
+doc-type: DEVOPS
 argument-hint: "<project ID or platform, e.g. '001', 'GitHub Actions on AWS'>"
 effort: high
 ---

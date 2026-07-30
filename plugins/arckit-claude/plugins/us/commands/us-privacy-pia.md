@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Privacy Impact Assessment under E-Government Act §208 and OMB M-03-22 for a US federal civilian system handling PII, including Privacy Act §552a alignment and SORN trigger check."
+doc-type: USPIA
 argument-hint: "<project ID or system, e.g. '001', 'Agency Citizen Services Portal'>"
 effort: high
 handoffs:

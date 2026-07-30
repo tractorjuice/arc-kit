@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an AI assurance assessment for Australian Government / regulated-sector AI systems covering DTA AI Policy v2.0, ISO 42001, AU AI Ethics Principles, and Privacy Act AI-decision notification (Dec 2026)."
+doc-type: AUAIA
 argument-hint: "<project ID or system, e.g. '001'>"
 effort: high
 handoffs:

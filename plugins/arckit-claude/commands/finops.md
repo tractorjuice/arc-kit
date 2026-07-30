@@ -1,5 +1,6 @@
 ---
 description: Create FinOps strategy with cloud cost management, optimization, governance, and forecasting
+doc-type: FINOPS
 argument-hint: "<project ID or cloud provider, e.g. '001', 'AWS multi-account'>"
 effort: high
 ---

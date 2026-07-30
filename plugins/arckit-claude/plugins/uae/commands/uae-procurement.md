@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a federal procurement strategy under UAE Federal Decree-Law 11/2023. Produces ITT/RFP packs against the MoF Digital Procurement Platform templates, In-Country Value (ICV) plan, evaluation report structure, and contract register."
+doc-type: FPRO
 argument-hint: "<project ID or procurement scope>"
 effort: high
 handoffs:
