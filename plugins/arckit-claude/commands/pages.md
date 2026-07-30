@@ -237,6 +237,8 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | CONF | `ARC-*-CONF-*.md` | Conformance Assessment |
 | | GAPS | `ARC-*-GAPS-*.md` | Gap Analysis |
 | | CDAU | `ARC-*-CDAU-*.md` | Codebase Audit |
+| | GLOS | `ARC-*-GLOS-*.md` | Glossary |
+| | FWRK | `ARC-*-FWRK-*.md` | Framework Overview |
 | **Governance (Community-contributed — TOGAF ADM Overlay)** | | | |
 | | GAPA | `ARC-*-GAPA-*.md` | TOGAF Gap Analysis |
 | | BORD | `ARC-*-BORD-*.md` | Architecture Board Charter |
