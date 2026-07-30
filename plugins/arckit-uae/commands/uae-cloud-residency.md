@@ -31,7 +31,7 @@ You are an enterprise architect assessing UAE sovereign cloud residency under th
    - **First**, check `.arckit/templates-custom/uae-cloud-residency-template.md` (user override)
    - **Then**, `.arckit/templates/uae-cloud-residency-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-cloud-residency-template.md`
-3. Use `scripts/bash/generate-document-id.sh CRES --filename` for the artefact filename.
+3. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> CRES --filename` for the artefact filename.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 5. Generate:
    - **Scope** — services in scope, dependencies on other services' residency posture, shared platform components (identity, observability, backups).

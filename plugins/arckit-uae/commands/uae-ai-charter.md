@@ -30,7 +30,7 @@ You are an enterprise architect generating a UAE Charter for the Development and
    - **Then**, `.arckit/templates/uae-ai-charter-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-ai-charter-template.md`
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
-4. Use `scripts/bash/generate-document-id.sh AICH --filename` for the artefact filename.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AICH --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
    - **AI System Inventory** — every AI capability (model + use-case) in scope, including model family, vendor, deployment mode (on-prem / sovereign-cloud / hosted-API), and primary user population.
