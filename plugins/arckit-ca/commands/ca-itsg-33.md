@@ -38,7 +38,7 @@ You are an enterprise architect generating an ITSG-33 Statement of Applicability
    - **First**, check `.arckit/templates-custom/ca-itsg-33-template.md` (user override)
    - **Then**, `.arckit/templates/ca-itsg-33-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-itsg-33-template.md`
-3. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> ITSG --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> ITSG --filename` for the artefact filename.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
 5. Generate the following sections (the template provides skeletons for each):
    - **Information Asset Categorisation** — for each information asset, score Confidentiality (C), Integrity (I), and Availability (A) as Low / Medium / High using the TBS *Standard on Security Categorization* injury-based scoring matrix. Aggregate per-asset scores to a system-level categorisation (the high-water mark across the inventory) and map to one of UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET. Show the working — categorisation drives the rest of the artefact and audit trails on the C/I/A reasoning are mandatory.

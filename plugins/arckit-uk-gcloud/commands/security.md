@@ -239,7 +239,7 @@ fetch) is exploratory and is not cited — only cite a URL once it has actually 
 with the ArcKit helper (no `--next-num` — SECA is not multi-instance):
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh" \
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
      {PROJECT_ID} SECA --filename
 ```
 

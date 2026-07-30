@@ -173,6 +173,12 @@ def get_data_paths():
             "codex_hooks": base_path / "extensions" / "arckit-codex" / "hooks",
             "codex_schemas": base_path / "extensions" / "arckit-codex" / "schemas",
             "codex_validator": base_path / "extensions" / "arckit-codex" / "scripts" / "validate-handoff.mjs",
+            # The document-ID generator and the doc-type registry it imports.
+            # Sourced from the core plugin (the single copy) rather than from
+            # scripts/, and scaffolded to .arckit/scripts/ and .arckit/config/
+            # so the generator's ../config/doc-types.mjs import resolves.
+            "docid_generator": base_path / "plugins" / "arckit-claude" / "scripts" / "generate-document-id.mjs",
+            "doctypes_config": base_path / "plugins" / "arckit-claude" / "config" / "doc-types.mjs",
             "codex_config": base_path / "extensions" / "arckit-codex" / "config.toml",
             "copilot_prompts": base_path / "extensions" / "arckit-copilot" / "prompts",
             "copilot_agents": base_path / "extensions" / "arckit-copilot" / "agents",
@@ -515,6 +521,31 @@ def init(
         console.print(f"[green]✓[/green] Scripts copied")
     else:
         console.print(f"[yellow]Warning: Scripts not found at {scripts_src}[/yellow]")
+
+    # Copy the document-ID generator and the registry it imports. These live in
+    # the core plugin rather than scripts/, so that MULTI_INSTANCE_TYPES,
+    # KNOWN_TYPES and SUBDIR_MAP exist in exactly one place (#723). The relative
+    # layout matters: generate-document-id.mjs resolves ../config/doc-types.mjs,
+    # so .arckit/scripts/ and .arckit/config/ must sit side by side.
+    docid_src = data_paths.get("docid_generator")
+    doctypes_src = data_paths.get("doctypes_config")
+    if docid_src and docid_src.exists() and doctypes_src and doctypes_src.exists():
+        docid_dst = project_path / ".arckit" / "scripts" / "generate-document-id.mjs"
+        doctypes_dst = project_path / ".arckit" / "config" / "doc-types.mjs"
+        docid_dst.parent.mkdir(parents=True, exist_ok=True)
+        doctypes_dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(docid_src, docid_dst)
+        shutil.copy2(doctypes_src, doctypes_dst)
+        console.print(
+            "[green]✓[/green] Copied document-ID generator to .arckit/scripts/ "
+            "and doc-type registry to .arckit/config/"
+        )
+    else:
+        console.print(
+            "[yellow]Warning: document-ID generator or doc-type registry not "
+            "found; .arckit/scripts/bash/generate-document-id.sh will not "
+            "resolve[/yellow]"
+        )
 
     # Copy references if they exist
     references_src = data_paths.get("codex_references")

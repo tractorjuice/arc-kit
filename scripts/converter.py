@@ -787,6 +787,9 @@ def copy_extension_files(plugin_sources):
         ("scripts/bash", "scripts/bash"),
         ("scripts/python", "scripts/python"),
         ("scripts/validate-handoff.mjs", "scripts/validate-handoff.mjs"),
+        # Imports ../config/doc-types.mjs, which the ("config", "config")
+        # entry below places at the same relative depth in every extension.
+        ("scripts/generate-document-id.mjs", "scripts/generate-document-id.mjs"),
         ("scripts/owm-to-mermaid.mjs", "scripts/owm-to-mermaid.mjs"),
         ("scripts/export-okf.mjs", "scripts/export-okf.mjs"),
         ("scripts/import-okf.mjs", "scripts/import-okf.mjs"),
@@ -2088,7 +2091,7 @@ are in `.github/prompts/arckit-*.prompt.md` (type `/` in Copilot Chat).
 
 - All architecture artifacts go in `projects/` directories (e.g., `projects/001-project-name/`)
 - Use `bash .arckit/scripts/bash/create-project.sh --json` to create numbered project dirs
-- Use `bash .arckit/scripts/bash/generate-document-id.sh` for document IDs (e.g., ARC-001-REQ-v1.0)
+- Use `node .arckit/scripts/generate-document-id.mjs` for document IDs (e.g., ARC-001-REQ-v1.0)
 - Templates are in `.arckit/templates/` (custom overrides in `.arckit/templates-custom/`)
 - Always write large documents to files (avoid output token limits)
 - Show only a summary to the user after generating artifacts

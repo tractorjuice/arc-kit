@@ -169,7 +169,7 @@ Run all ten unless focus text narrows the set. Record any dimension skipped, and
 **Generate the document ID:**
 
 ```bash
-.arckit/scripts/bash/generate-document-id.sh {PID} CDAU --next-num projects/{P}-{NAME}/audits --filename
+.arckit/scripts/generate-document-id.mjs {PID} CDAU --next-num projects/{P}-{NAME}/audits --filename
 ```
 
 `CDAU` is multi-instance, so a project can hold audits of several repositories. Create `projects/{P}-{NAME}/audits/` if it does not exist.

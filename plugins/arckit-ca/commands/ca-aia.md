@@ -42,7 +42,7 @@ You are an enterprise architect generating a Canada Algorithmic Impact Assessmen
    - **First**, check `.arckit/templates-custom/ca-aia-template.md` (user override)
    - **Then**, `.arckit/templates/ca-aia-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-aia-template.md`
-3. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AIA --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AIA --filename` for the artefact filename.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
 5. Generate the following sections (the template provides skeletons for each):
    - **System Description** — purpose of the system, the specific decisions automated (or assisted), training-data lineage (sources, vintage, licensing), vendor / open-source provenance (model family, supplier, hosting jurisdiction), and the stewardship chain (owner, operator, accountable executive).

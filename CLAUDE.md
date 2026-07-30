@@ -190,10 +190,11 @@ project/
 
 - `common.sh` — shared utilities (find repo root, slugify, logging) sourced by all others
 - `create-project.sh` — creates numbered project dirs, returns JSON
-- `generate-document-id.sh` — generates IDs like `ARC-001-REQ-v1.0`. Flags: `--filename` (returns `.md` filename), `--next-num DIR` (next sequential number for ADR/DIAG/WARD/DMC)
 - `check-prerequisites.sh` — validates environment
 - `list-projects.sh` — lists projects with artifact counts (table or JSON)
 - `migrate-filenames.sh` — migrates files to new naming convention (`--dry-run` supported)
+
+`scripts/generate-document-id.mjs` (in `plugins/arckit-claude/scripts/`): generates IDs like `ARC-001-REQ-v1.0`. Flags: `--filename` (returns the `.md` filename), `--next-num DIR` (next sequential number for a multi-instance type), `--relpath` (prefixes the `SUBDIR_MAP` subdirectory). It **imports** `MULTI_INSTANCE_TYPES`, `KNOWN_TYPES` and `SUBDIR_MAP` from `config/doc-types.mjs`, so there is exactly one copy of each list, and it **rejects an unregistered doc-type code** rather than emitting a name `validate-arc-filename.mjs` will block. The bash version restated the multi-instance list in two hand-maintained copies, which drifted three times and needed a dedicated CI guard; `scripts/bash/generate-document-id.sh` is now a shim that execs the `.mjs` and will be removed a release after #723.
 
 `scripts/converter.py`: config-driven converter using `AGENT_CONFIG` dict — adding a new AI target only requires a new dict entry. Converts plugin commands to Codex Markdown, Codex Skills (directory-per-command with `SKILL.md` + `agents/openai.yaml`), OpenCode Markdown, Gemini extension TOML, and Copilot prompts. Rewrites `${CLAUDE_PLUGIN_ROOT}` paths, copies supporting files, generates Codex `config.toml` (MCP + agent roles), per-agent `.toml` files, and rewrites skill command references.
 

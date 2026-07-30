@@ -16,18 +16,17 @@
  * written by a command is fatal: validate-arc-filename.mjs blocks the write
  * and the command has no conforming name to fall back to (#712).
  *
- * ⚠️ MULTI_INSTANCE_TYPES IS DUPLICATED IN BASH — keep both in sync.
- * generate-document-id.sh carries its own space-separated MULTI_INSTANCE_TYPES
- * (line ~85) and there are TWO copies of that script: scripts/bash/ and
- * plugins/arckit-claude/scripts/bash/. The plugin copy is what the installed
- * plugin actually runs. All three lists must match.
+ * MULTI_INSTANCE_TYPES used to be duplicated in bash and is not any more.
+ * generate-document-id.sh carried its own space-separated copy, in TWO copies
+ * of the script, and the lists drifted twice: v5.9.0 added TNDR/CMPT without
+ * updating bash, so every /arckit:competitors run emitted the same colliding ID
+ * (fixed v5.9.2, PR #566), and GRNT went the same way, caught in 2026-07 while
+ * adding CDAU. A missing entry was silent -- the helper returned an ID with no
+ * -NNN- sequence and each run of a multi-instance command overwrote the last.
  *
- * This has drifted twice. v5.9.0 added TNDR/CMPT and bash was not updated, so
- * every /arckit:competitors run emitted the same colliding ID (fixed v5.9.2,
- * PR #566). GRNT then went the same way and was only caught in 2026-07 while
- * adding CDAU. A missing entry is silent: the helper returns an ID with no
- * -NNN- sequence and each run of a multi-instance command overwrites the last.
- * Verify with scripts/check-multi-instance-parity.py, which CI runs.
+ * generate-document-id.mjs (#723) imports this file instead, so the set below
+ * is the only copy and there is nothing left to keep in sync. Do not reintroduce
+ * a hardcoded list anywhere; import from here.
  *
  * Schema per entry:
  *   name:      Human-readable display name shown on the dashboard sidebar.

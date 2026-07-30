@@ -34,7 +34,7 @@ You are an enterprise architect generating a Canada ATIP (Access to Information 
    - **First**, check `.arckit/templates-custom/ca-atip-template.md` (user override)
    - **Then**, `.arckit/templates/ca-atip-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-atip-template.md`
-3. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> ATIP --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> ATIP --filename` for the artefact filename.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
 5. Generate the following sections (the template provides skeletons for each):
    - **Information Holdings Inventory** — categorise every dataset / holding as Public, Protected, or Classified. Map each holding to its Personal Information Bank (PIB) where applicable, and identify the owner and lifecycle stage. The inventory MUST account for every data element that surfaces in the data model, not just personal information.

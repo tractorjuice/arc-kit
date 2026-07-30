@@ -11,7 +11,6 @@ on:
       - "scripts/check_recipes.py"
       - "scripts/check_doctype_collisions.py"
       - "scripts/check-guide-parity.py"
-      - "scripts/check-multi-instance-parity.py"
       - "scripts/check-doc-type-registry.py"
       - "package.json"
       - "package-lock.json"
@@ -23,6 +22,7 @@ on:
       - "plugins/arckit-*/recipes/**"
       - "plugins/arckit-claude/skills/arckit-build/recipes/**"
       - "plugins/arckit-claude/config/doc-types.mjs"
+      - "plugins/arckit-claude/scripts/generate-document-id.mjs"
       - "scripts/bash/generate-document-id.sh"
       - "plugins/arckit-claude/scripts/bash/generate-document-id.sh"
       - "plugins/arckit-claude/.claude-plugin/plugin.json"
@@ -38,7 +38,6 @@ on:
       - "scripts/check_recipes.py"
       - "scripts/check_doctype_collisions.py"
       - "scripts/check-guide-parity.py"
-      - "scripts/check-multi-instance-parity.py"
       - "scripts/check-doc-type-registry.py"
       - "package.json"
       - "package-lock.json"
@@ -50,6 +49,7 @@ on:
       - "plugins/arckit-*/recipes/**"
       - "plugins/arckit-claude/skills/arckit-build/recipes/**"
       - "plugins/arckit-claude/config/doc-types.mjs"
+      - "plugins/arckit-claude/scripts/generate-document-id.mjs"
       - "scripts/bash/generate-document-id.sh"
       - "plugins/arckit-claude/scripts/bash/generate-document-id.sh"
       - "plugins/arckit-claude/.claude-plugin/plugin.json"
@@ -88,9 +88,6 @@ jobs:
 
       - name: Guide-tree parity check (docs/guides vs plugin copy)
         run: python3 scripts/check-guide-parity.py --check
-
-      - name: Multi-instance doc-type parity (doc-types.mjs vs both bash copies)
-        run: python3 scripts/check-multi-instance-parity.py
 
       - name: Doc-type registry references (recipes, commands, pages.md)
         run: python3 scripts/check-doc-type-registry.py

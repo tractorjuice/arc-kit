@@ -64,7 +64,7 @@ For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / M
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
 
-4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> NIST --filename` for the artefact filename. The type code for this command is `NIST`.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> NIST --filename` for the artefact filename. The type code for this command is `NIST`.
 
 5. Generate the following sections:
 
@@ -77,7 +77,7 @@ For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / M
    - **CUI Overlay (if applicable)** — for systems handling Controlled Unclassified Information, layer NIST SP 800-171 Rev 3 requirements per 32 CFR Part 2002.
    - **OSCAL Readiness** — note whether the implementation is published in OSCAL machine-readable format (FedRAMP increasingly mandates OSCAL SSP submission); flag as a roadmap item if not yet.
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.sh`.
+6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
 7. Emit a short summary to the user — baseline selected, control counts (Implemented / Inherited / Hybrid / Planned / N/A), open compensating controls, and OSCAL readiness. Do not echo the full artefact.
 

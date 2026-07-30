@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`generate-document-id.sh` is now `generate-document-id.mjs` and imports `config/doc-types.mjs`.** The bash version restated `MULTI_INSTANCE_TYPES` in two hand-maintained copies, which drifted and shipped three times (#566, the later `GRNT` miss, and the header comment fixed in #722) and needed `check-multi-instance-parity.py` purely to police the duplication. That guard is removed: the registry now has exactly one copy, and registering a multi-instance doc-type is one place rather than three (#723).
+
+  Because the registry is in scope, the generator now **rejects an unregistered doc-type code** instead of emitting a name `validate-arc-filename.mjs` will block two steps later — the `GLOS`/`FWRK` failure caught where it is actionable. It also gains `--relpath`, which applies `SUBDIR_MAP` and returns the project-relative path, and it reports a doc-type passed in the `PROJECT_ID` slot rather than dying in `printf`.
+
+  `scripts/bash/generate-document-id.sh` is now a shim that execs the `.mjs`, kept for projects scaffolded before this change and removed a release later. The generator ships to all seven extension formats and is allowlisted in `allow-plugin-internals.mjs`.
+
 ### Fixed
 
 - **The doc-type registry gate was blind to every multi-instance filename.** `check-doc-type-registry.py` required the code to be followed immediately by `-v`, so `ARC-001-WGAM-001-v1.0.md` and `ARC-{PID}-ADR-{NNN}-v1.0.md` produced no match at all, leaving all 20 `MULTI_INSTANCE_TYPES` codes unchecked in the form commands actually write. `validate-arc-filename.mjs` strips the sequence segment before its own `KNOWN_TYPES` lookup, so an unregistered multi-instance code passed the gate and was then blocked at runtime: the same failure as `GLOS` and `FWRK`. The pattern now accepts an optional sequence segment and is pinned by `tests/plugin/test_doc_type_registry.py` (#715).

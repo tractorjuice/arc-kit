@@ -300,7 +300,7 @@ to the project's `research/` directory. Run the bundled helper (it is
 positional-then-flags):
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh" \
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
      {P} CMPT --next-num "{project_path}/research"
 ```
 
@@ -414,7 +414,7 @@ Return ONLY a concise summary to the user:
 
 - **Template** — `${CLAUDE_PLUGIN_ROOT}/templates/competitors-template.md` (read by writer)
 - **Schema** — `${CLAUDE_PLUGIN_ROOT}/schemas/tenders-handoff.schema.json` (the **shared** tenders schema — there is no competitors-specific schema)
-- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh`
+- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`
 - **Subagents dispatched** — `arckit-tenders-reader` (shared reader: fetch + extract) · `arckit-competitors-writer` (final render + vendor-profile enrichment)
 - **External tools** — none directly (delegated to reader)
 - **Related commands** — `/arckit:research` (build-vs-buy with the competitive set) · `/arckit:score` (rival award history as Company Experience evidence) · `/arckit:risk` (supplier-concentration risk)

@@ -130,7 +130,7 @@ Insert alphabetically or in the same position as other files in its category. Up
 Update if needed:
 
 - **Command count references**: Search for "50 commands" or similar counts
-- **Multi-instance types list**: If the new command supports multi-instance documents (like ADR, DIAG, WARD, DMC, DFD), add it to the multi-instance list in the `generate-document-id.sh` section
+- **Multi-instance types**: nothing to update here. Since #723 `MULTI_INSTANCE_TYPES` lives only in `config/doc-types.mjs`, which `generate-document-id.mjs` imports; adding the code there is the whole job
 - **Agent System table**: If the command delegates to an agent, add it to the agent table
 
 ### 10. CHANGELOG.md (root - CLI changelog)

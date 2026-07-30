@@ -64,7 +64,7 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
 
 3. **Resolve the project** via `scripts/bash/create-project.sh --json`.
 
-4. **Generate the filename** via `scripts/bash/generate-document-id.sh <PROJECT_ID> NHSMDR --filename`.
+4. **Generate the filename** via `node scripts/generate-document-id.mjs <PROJECT_ID> NHSMDR --filename`.
 
 5. **Resolve the `<!-- DOC-CONTROL-HEADER -->` marker** per `RENDERING.md`. This is a conventional ArcKit `ARC-{NNN}-NHSMDR-v1.0.md` file.
 

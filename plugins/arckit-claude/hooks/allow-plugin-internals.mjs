@@ -117,6 +117,7 @@ function commandTouchesPluginScripts(cmd) {
 
   const KNOWN = new Set([
     'validate-handoff.mjs',
+    'generate-document-id.mjs',
     'bash/common.sh',
     'bash/create-project.sh',
     'bash/generate-document-id.sh',

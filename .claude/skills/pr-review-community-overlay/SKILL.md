@@ -73,22 +73,24 @@ grep -L "classification scheme\|UK line in the header" arckit-<prefix>/commands/
 
 **Proper long-term fix (separate PR):** ship a `document-control-<regime>.md` partial, extend RENDERING.md routing, extend `plugin.json` userConfig to accept the regime governance framework value.
 
-### B3 — `generate-document-id.sh` mis-invocation
+### B3 — `generate-document-id.mjs` mis-invocation
 
-**Symptom:** Commands write `scripts/bash/generate-document-id.sh <TYPECODE> --filename` (single positional arg).
+**Symptom:** Commands write `node scripts/generate-document-id.mjs <TYPECODE> --filename` (single positional arg).
 
-**Why it matters:** Script signature is `PROJECT_ID DOC_TYPE [VERSION] [OPTIONS]`. With one positional arg, TYPECODE is read as PROJECT_ID and DOC_TYPE is empty.
+**Why it matters:** The signature is `PROJECT_ID DOC_TYPE [VERSION] [OPTIONS]`. With one positional arg, TYPECODE is read as PROJECT_ID and DOC_TYPE is empty, so the call exits 1 and the model invents a filename.
+
+Since #723 the generator itself catches this (`PROJECT_ID must be numeric ... looks like a doc-type`), so it now fails loudly at runtime rather than silently. Still worth catching at review: a loud runtime failure is a broken command.
 
 **Verification:**
 
 ```bash
-grep -n "generate-document-id.sh" arckit-<prefix>/commands/<prefix>-*.md | grep -v "<PROJECT_ID>\|{P}"
+grep -n "generate-document-id.mjs" arckit-<prefix>/commands/<prefix>-*.md | grep -v "<PROJECT_ID>\|{P}"
 ```
 
 **Working precedent:** `plugins/arckit-ca/commands/ca-pia.md:32`:
-> `scripts/bash/generate-document-id.sh <PROJECT_ID> PIA --filename`
+> `node scripts/generate-document-id.mjs <PROJECT_ID> PIA --filename`
 
-**Note:** `uae-*` commands share this bug. Worth fixing in the same sweep.
+**Note:** all 12 `uae-*` commands had this bug; fixed in #722.
 
 ### B4 — Converter outputs are stale
 
@@ -153,7 +155,7 @@ For each new `xx-*` command file:
 - [ ] **Frontmatter:** `description` present. No invalid fields (`name:`, `color:`, `permissionMode:`, `tools:` are NOT valid plugin command frontmatter — `name:` in particular is a common contributor mistake; filename is source of truth).
 - [ ] **`$ARGUMENTS` placeholder** present in body — `tests/plugin/test_commands_structure.py::test_arguments_placeholder_present` checks this. Existing `ca-*`/`uae-*` commands fail this test (32 known failures); new overlay commands should pass.
 - [ ] **`create-project.sh` lookup** — only required for project-bootstrapping commands (`principles`, `requirements`, the first command someone runs). Most overlay commands assume the project already exists and skip this; that matches the FR/AT/EU/CA precedent. Not a defect when absent.
-- [ ] **`generate-document-id.sh`** invoked correctly (B3).
+- [ ] **`generate-document-id.mjs`** invoked correctly (B3).
 - [ ] **`<!-- DOC-CONTROL-HEADER -->` resolution** instruction (B2 — should override classification when not UK/UAE).
 - [ ] **Write tool** used to save artefact (32K output token limit otherwise).
 - [ ] **Handoffs:** every `handoffs.command` value resolves to a real file in `plugins/arckit-claude/commands/`. Common bug: pluralisation (`risks` vs `risk`); deps on commands shipping in sibling PRs. Validation needs YAML parsing (handoffs are nested under YAML frontmatter — raw grep misses), e.g.:
@@ -201,8 +203,8 @@ done | grep -E "<prefix>-"
 # B2: missing classification override
 grep -L "classification scheme\|UK line in the header" arckit-<prefix>/commands/<prefix>-*.md
 
-# B3: generate-document-id.sh mis-invocation
-grep -n "generate-document-id.sh [A-Z]\+ --filename" arckit-<prefix>/commands/<prefix>-*.md
+# B3: generate-document-id.mjs mis-invocation
+grep -n "generate-document-id.mjs [A-Z]\+ --filename" arckit-<prefix>/commands/<prefix>-*.md
 
 # B4: converter drift
 python scripts/converter.py && git status --porcelain | grep -v "memory/"

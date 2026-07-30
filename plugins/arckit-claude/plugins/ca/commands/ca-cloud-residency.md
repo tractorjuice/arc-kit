@@ -36,7 +36,7 @@ You are an enterprise architect generating a Canada sovereign cloud residency as
    - **First**, check `.arckit/templates-custom/ca-cloud-residency-template.md` (user override)
    - **Then**, `.arckit/templates/ca-cloud-residency-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-cloud-residency-template.md`
-3. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> CACR --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> CACR --filename` for the artefact filename.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
 5. Generate the following sections (the template provides skeletons for each):
    - **Workload Categorisation** — pull the system-level categorisation and the C / I / A scores from `ca-itsg-33` if that artefact is present. Otherwise, perform the categorisation here using the TBS *Standard on Security Categorization* injury-based matrix and state the resulting Protected level. The categorisation drives every downstream choice; do not skip the working.

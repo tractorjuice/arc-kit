@@ -65,7 +65,7 @@ Appendix I of M-24-10 lists **presumed-impacting** use cases (those agencies mus
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
 
-4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AIIA --filename` for the artefact filename. The type code for this command is `AIIA`.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AIIA --filename` for the artefact filename. The type code for this command is `AIIA`.
 
 5. Generate the following sections:
 
@@ -79,7 +79,7 @@ Appendix I of M-24-10 lists **presumed-impacting** use cases (those agencies mus
    - **Public Disclosure Obligations** — confirm the entry has been (or will be) submitted to the agency AI Use Case Inventory (federal.ai.gov); note any redactions required for sensitive law-enforcement or national-security carve-outs.
    - **CAIO Sign-Off Block** — agency Chief AI Officer review and approval section: reviewer, date, scope of approval, conditions, next review.
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.sh`.
+6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
 7. Emit a short summary to the user — impact verdict (rights-impacting / safety-impacting / both / neither), Appendix I match (Y/N), minimum-practice satisfaction percentage, waiver count, AI Use Case Inventory ID (or "pending"), and CAIO review status. Do not echo the full artefact.
 

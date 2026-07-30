@@ -177,7 +177,7 @@ present, defaulting the Classification field to `${user_config.default_classific
 the ArcKit helper:
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh" \
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
      {PROJECT_ID} SVCD --filename
 ```
 

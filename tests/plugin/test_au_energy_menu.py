@@ -22,7 +22,7 @@ def test_au_energy_source_files_exist_and_use_community_origin():
         template_text = read(f"plugins/arckit-au-energy/templates/{command}-template.md")
 
         assert "[COMMUNITY]" in command_text
-        assert f"generate-document-id.sh <PROJECT_ID> {doc_type} --filename" in command_text
+        assert f"generate-document-id.mjs <PROJECT_ID> {doc_type} --filename" in command_text
         assert anchor in command_text
         assert "Template Origin**: Community" in template_text
         assert f"Command**: `/arckit:{command}`" in template_text
