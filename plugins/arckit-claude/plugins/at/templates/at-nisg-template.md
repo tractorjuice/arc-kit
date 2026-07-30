@@ -2,7 +2,7 @@
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit-at:at-nisg`
 >
-> ⚠️ **Community-contributed** — not yet validated against the enacted NISG 2026 / A-SIT / EU regulatory text. Verify all citations before relying on output. The **NISG 2026 (BGBl. I Nr. 94/2025)** is a standalone act that replaces the NISG 2018; it enters into force **1 October 2026 (§51)**, with registration due by 31 December 2026 (§29). Its implementing ordinances are still forthcoming; items marked `[NEEDS VERIFICATION]` — including all paragraph (§) references — must be confirmed against the enacted text.
+> ⚠️ **Community-contributed** — review before relying on output. The **NISG 2026 (BGBl. I Nr. 94/2025)** is a standalone act that replaces the NISG 2018; it enters into force **1 October 2026 (§51)**, with registration due within three months (§29 Abs. 3). Paragraph (§) references in this template have been checked against the enacted text (BGBl. I Nr. 94/2025); its implementing ordinances (Verordnungen) are still forthcoming, so items marked `[NEEDS VERIFICATION]` — chiefly ordinance-dependent detail and operational channel names (e.g. the NIS2-Meldeplattform) — must still be confirmed before external reliance.
 
 ## Document Control
 
@@ -92,8 +92,8 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 
 | Item | Status | Evidence / Gap |
 |------|--------|----------------|
-| Reporting to the responsible CSIRT (§8) via the national NIS2-Meldeplattform established — CERT.at (national CSIRT), GovCERT (public-admin sectoral CSIRT); the CSIRT forwards to the Cybersicherheitsbehörde (§34) | | |
-| Registration with the Cybersicherheitsbehörde (§3a) completed (§29) | | |
+| Reporting to the responsible sector-specific CSIRT — or the national CSIRT if none — established (§34 Abs. 1; CSIRTs per §8) via the NIS2-Meldeplattform — CERT.at (national CSIRT), GovCERT (public-admin sectoral CSIRT); the CSIRT forwards to the Cybersicherheitsbehörde without delay (§34 Abs. 1) | | |
+| Registration with the Cybersicherheitsbehörde (§3a) completed (§29 Abs. 3) | | |
 | 24-hour early warning capability (§34) | | |
 | 72-hour notification capability (§34) | | |
 | Intermediate (on request) / 1-month final report process (§34) | | |
@@ -135,8 +135,10 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 | Item | Status | Notes |
 |------|--------|-------|
 | Supervisory posture | [Ex ante (Essential) / Ex post (Important)] | |
-| Lead supervisor | Cybersicherheitsbehörde (Bundesamt für Cybersicherheit) | |
-| Maximum penalty (§45) | Essential: ≥ €10M / 2% turnover; Important: ≥ €7M / 1.4% turnover (NIS2 Art. 34 floor) | |
+| Supervision & enforcement | Cybersicherheitsbehörde — Aufsichtsmaßnahmen (§38), Durchsetzungsmaßnahmen (§39) | |
+| Penalty — core duties (§45 Abs. 1) | Essential: up to €10M / 2% turnover (§45 Abs. 2); Important: up to €7M / 1.4% (§45 Abs. 3) — NIS2 Art. 34 minimum-maximum | |
+| Penalty — procedural breaches (§45 Abs. 4) | up to €50,000 (up to €100,000 repeat) | |
+| Fining authority | Bezirksverwaltungsbehörde (§44 Abs. 1); Cybersicherheitsbehörde notifies suspected breaches | |
 | Appeal pathway | BVwG | |
 | CISO / Sicherheitsbeauftragter designated | [Yes / No] | |
 
@@ -144,7 +146,8 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 
 | Item | Status | Notes |
 |------|--------|-------|
-| Independent body / auditor (§7) engaged for the Wirksamkeitsnachweis (§33) | [Yes / No / Planned] | |
+| Selbstdeklaration of implemented measures submitted (§33 Abs. 1 — within 12 months of the registration duty, ~by 30 Sep 2027) | [Yes / No / Planned] | |
+| Independent body / auditor (§7) engaged for the Wirksamkeitsnachweis (§33 Abs. 2 — first request earliest 2 years after entry into force, ~Oct 2028) | [Yes / No / Planned] | |
 | Eligibility / accreditation confirmed | [Yes / No] | |
 | Scope of assessment | [Full / Partial] | |
 | Last assessment date | [YYYY-MM-DD / N/A] | |
@@ -185,7 +188,7 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 | Computer-Notfallteams / CSIRTs — CERT.at (national), GovCERT (public-admin sectoral) | §§8–11 | Art. 10–11 CSIRTs | |
 | National coordination bodies — CSS, IKDOK, OpKoord | §§12–14 | Art. 8/9 (less structured) | |
 | Land-level bodies scope / opt-in mechanism | `[VERIFY §]` (NISG 2026 is federal law) | No equivalent (federal-only in most MS) | |
-| Designation beyond size thresholds on criticality | `[VERIFY §]` (see §24 scope) | Art. 2(2)(b-e) similar but EU-level | |
+| Designation beyond size thresholds on criticality (Größenunabhängige Einstufung by Bescheid) | §26 (grounds in §26 Abs. 3) | Art. 2(2)(b–e) similar but EU-level | |
 
 ---
 

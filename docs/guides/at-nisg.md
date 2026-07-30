@@ -88,7 +88,7 @@ Output: `projects/<id>/ARC-<id>-ATNISG-v1.0.md`
 
 ## Key Notes
 
-- **Newly enacted, not yet in force**: NISG 2026 (BGBl. I Nr. 94/2025) enters into force 1 October 2026 (§51) and replaces the NISG 2018 (expires 30 Sep 2026). Implementing ordinances are still forthcoming — items marked `[NEEDS VERIFICATION]`, including all § references, must be confirmed against the enacted text before external use.
+- **Newly enacted, not yet in force**: NISG 2026 (BGBl. I Nr. 94/2025) enters into force 1 October 2026 (§51) and replaces the NISG 2018 (expires 30 Sep 2026). The § references have been checked against the enacted text; implementing ordinances (Verordnungen) are still forthcoming, so items marked `[NEEDS VERIFICATION]` — chiefly ordinance-dependent detail and operational channel names — must be confirmed before external use.
 - **Sectoral overlay**: Some sectors (energy, transport, finance, health) have additional Austrian rules above NIS2 — confirm sectoral scope.
 - **Run order**: Supplements `/arckit:eu-nis2`. Do not run in isolation.
 - **Community-contributed**: Output should be reviewed by qualified CISO / Cybersicherheitsbehörde-liaison / Rechtsabteilung before reliance.

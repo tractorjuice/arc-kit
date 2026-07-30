@@ -18,7 +18,7 @@ handoffs:
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified CISO / Cybersicherheitsbehörde-liaison / Rechtsabteilung before reliance. Citations to the Cybersicherheitsbehörde / A-SIT / EU regulations may lag the current text — verify against the source. Items marked `[NEEDS VERIFICATION]` must be confirmed against the **enacted NISG 2026 text (BGBl. I Nr. 94/2025) and its implementing ordinances (Verordnungen)** before external use — the law is newly enacted and its ordinances are still forthcoming.
 
-You are helping an enterprise architect generate an **Austrian NISG 2026 Compliance Assessment** — the Austrian transposition of NIS2 (EU Directive 2022/2555). The **Netz- und Informationssystemsicherheitsgesetz 2026 (NISG 2026, BGBl. I Nr. 94/2025)** is a **standalone act** (not a mere amendment of the NISG 2018). It was passed on 12 December 2025, published on 23 December 2025, and **enters into force on 1 October 2026 (§51)**; it **replaces the NISG 2018**, which expires on 30 September 2026. Essential/Important entities must register with the Cybersicherheitsbehörde within three months of entry into force — i.e. **by 31 December 2026 (§29)** — and provide the first Wirksamkeitsnachweis by **30 September 2027 (§33)**. Run this after `/arckit-eu:eu-nis2` to add Austrian obligations that go beyond the EU baseline.
+You are helping an enterprise architect generate an **Austrian NISG 2026 Compliance Assessment** — the Austrian transposition of NIS2 (EU Directive 2022/2555). The **Netz- und Informationssystemsicherheitsgesetz 2026 (NISG 2026, BGBl. I Nr. 94/2025)** is a **standalone act** (not a mere amendment of the NISG 2018). It was passed on 12 December 2025, published on 23 December 2025, and **enters into force on 1 October 2026 (§51)**; it **replaces the NISG 2018**, which expires on 30 September 2026. Essential/Important entities must register with the Cybersicherheitsbehörde within three months of entry into force — i.e. **by end-December 2026 (§29 Abs. 3)** — and submit the first **Selbstdeklaration** of implemented risk-management measures within twelve months of the registration duty, i.e. by **30 September 2027 (§33 Abs. 1)**. The independent **Wirksamkeitsnachweis** (§33 Abs. 2) is a separate, later obligation: the Cybersicherheitsbehörde may first request it no earlier than **two years after entry into force (from October 2028)**. Run this after `/arckit-eu:eu-nis2` to add Austrian obligations that go beyond the EU baseline.
 
 ## User Input
 
@@ -94,7 +94,7 @@ Before generating the assessment, determine entity classification:
 
 **Austrian additions or scope differences**:
 
-- Austria may designate additional entities beyond the size thresholds where criticality warrants it `[NEEDS VERIFICATION: confirm the exact designation power and § in the enacted NISG 2026]`
+- Austria may designate additional entities beyond the size thresholds where criticality warrants it — the Cybersicherheitsbehörde issues a Bescheid on the criticality grounds in **§26** (Größenunabhängige Einstufung; §26 Abs. 3: sole national provider of an essential service, material impact on public order / safety / health, systemic risk, or particular national/regional significance for the sector)
 - Public-administration scope: federal bodies are in scope; the treatment of Land-level bodies (federal-only vs opt-in) must be confirmed against the enacted text `[NEEDS VERIFICATION: confirm Länder scope / any Landeshauptmann opt-in and its §]`
 - Transition from NISG 2018: the NISG 2018 expires on 30 September 2026 and entities previously designated as *Betreiber wesentlicher Dienste* must be re-assessed against the new Essential/Important classification; NISG 2026 obligations apply from entry into force (1 October 2026) `[NEEDS VERIFICATION: confirm transitional provisions and their § in the enacted text]`
 
@@ -131,7 +131,7 @@ Show entity classification before generating the full document.
 
 4. **Section 2: Governance (NIS2 Art. 20 — as transposed)**
    - Geschäftsleitung (management body) approval of security measures
-   - Management body responsibility to steer and oversee cybersecurity (§31). Note: the NISG 2026 does **not** explicitly regulate personal liability of the Leitungsorgane — it follows general principles, and administrative fines (§45) are addressed to the entity as a legal person, not to individuals
+   - Management body responsibility to steer and oversee cybersecurity (§31). Note: the NISG 2026 does **not** create explicit personal liability of the Leitungsorgane — administrative fines under §45 are addressed to the legal person (juristische Person / eingetragene Personengesellschaft) through the attribution rules in **§44**, and §44 Abs. 5 directs that punishment of a natural responsible person under §9 VStG be waived once the entity itself is fined for the same breach
    - Management body cybersecurity training requirement
    - Compliance status for each obligation
 
@@ -152,7 +152,7 @@ Show entity classification before generating the full document.
    - Extract existing controls from SECD artifact to pre-populate status
 
 6. **Section 4: Incident Reporting (§34)**
-   - Reporting channel: significant incidents are reported to the **responsible CSIRT (§8)** via the national **NIS2-Meldeplattform** — **CERT.at** as the national CSIRT and **GovCERT** as the public-administration sectoral CSIRT (run at the Cybersicherheitsbehörde); the CSIRT forwards the report to the **Cybersicherheitsbehörde (§3a)**
+   - Reporting channel: significant incidents (erhebliche Cybersicherheitsvorfälle, defined in §35) are reported to the **responsible sector-specific CSIRT** — or, absent one, the **national CSIRT** — under §34 Abs. 1 (CSIRTs are established in §8). In practice **CERT.at** acts as national CSIRT and **GovCERT** as the public-administration sectoral CSIRT; the CSIRT forwards the report to the **Cybersicherheitsbehörde without delay (§34 Abs. 1)**
    - Four-stage NIS2 reporting timeline per §34 (24h early warning, 72h notification, intermediate on request, 1-month final report)
    - Austrian form and language requirements for reports (German, NIS2-Meldeplattform)
    - Cross-reporting to DSB if personal data breach (Art. 33 GDPR + NISG)
@@ -172,9 +172,9 @@ Show entity classification before generating the full document.
    - RTO / RPO definition aligned with sectoral criticality expectations
 
 9. **Section 7: Supervision, Inspections, and Penalties**
-   - Supervisory regime: supervision and enforcement measures by the **Cybersicherheitsbehörde** (§45); administrative penalties (Verwaltungsstrafen) are imposed by the **Bezirksverwaltungsbehörde** `[NEEDS VERIFICATION: confirm the fining authority in the enacted text]`
+   - Supervisory regime: the **Cybersicherheitsbehörde** exercises supervision (Aufsichtsmaßnahmen, §38) and enforcement (Durchsetzungsmaßnahmen, §39); administrative penalties (Verwaltungsstrafen, §45) are imposed by the **Bezirksverwaltungsbehörde** (§44 Abs. 1), which the Cybersicherheitsbehörde notifies of suspected breaches
    - Ex ante (Essential) vs ex post (Important) supervision posture
-   - Maximum penalties (§45, per NIS2 Art. 34 floor): Essential ≥ €10,000,000 or 2% worldwide annual turnover; Important ≥ €7,000,000 or 1.4% worldwide annual turnover (the old NISG 2018 §26 ceilings of €50K/€100K are superseded by the NISG 2026). Fines address the entity, not the management personally
+   - Penalty ceilings are **two-tiered**. Core duties under §45 Abs. 1 (management/staff training §31 Abs. 2, risk-management measures §32, incident reporting §34, non-compliance with §39 Abs. 2 enforcement orders): Essential entities up to **€10,000,000 or 2%** of total worldwide annual turnover, whichever is higher (§45 Abs. 2); Important entities up to **€7,000,000 or 1.4%** (§45 Abs. 3) — satisfying the NIS2 Art. 34 minimum-maximum. A **separate lower tier** in §45 Abs. 4 covers procedural breaches (late/incorrect registration §29 Abs. 3, missing self-declaration or audit report §33, obstruction of supervision §38, non-compliance with §39 Abs. 3 orders, certification duty §40): up to **€50,000**, and up to **€100,000** for repeat offences. Fines address the entity, not the management personally (attribution via §44)
    - Right to be heard / appeals (BVwG pathway)
    - Responsible entities for internal governance (CISO / Sicherheitsbeauftragter designation)
 
@@ -238,8 +238,8 @@ Next steps:
 ## Important Notes
 
 - **Run after eu-nis2**: This command adds the Austrian layer. For best results, run `/arckit-eu:eu-nis2` first.
-- **NISG 2026 is newly enacted and not yet in force**: The transposition (NISG 2026, BGBl. I Nr. 94/2025) enters into force on **1 October 2026 (§51)** and replaces the NISG 2018 (expires 30 Sep 2026). Implementing ordinances (Verordnungen) are still forthcoming. Key deadlines: registration by **31 December 2026 (§29)**, first Wirksamkeitsnachweis by **30 September 2027 (§33)**. An AT cyber practitioner must confirm before external reliance.
-- **Management body duties (not personal liability)**: NIS2 Art. 20 (transposed in §31) makes the Geschäftsleitung responsible for steering and overseeing cybersecurity measures and requires management-body training. Note that the NISG 2026 does **not** explicitly regulate personal liability of management bodies — it follows general principles, and administrative fines under §45 are addressed to the entity as a legal person, not to individuals: Essential ≥ €10M / 2% turnover, Important ≥ €7M / 1.4% turnover (NIS2 Art. 34 floor).
+- **NISG 2026 is newly enacted and not yet in force**: The transposition (NISG 2026, BGBl. I Nr. 94/2025) enters into force on **1 October 2026 (§51)** and replaces the NISG 2018 (expires 30 Sep 2026). Implementing ordinances (Verordnungen) are still forthcoming. Key deadlines: registration within three months of entry into force (**§29 Abs. 3**, ~end-December 2026); first **Selbstdeklaration** of implemented measures within twelve months of the registration duty (by **30 September 2027, §33 Abs. 1**); the independent **Wirksamkeitsnachweis** (§33 Abs. 2) is requestable by the authority no earlier than two years after entry into force (from October 2028). An AT cyber practitioner must confirm before external reliance.
+- **Management body duties (not personal liability)**: NIS2 Art. 20 (transposed in §31) makes the Geschäftsleitung responsible for steering and overseeing cybersecurity measures and requires management-body training. Note that the NISG 2026 does **not** create explicit personal liability of management bodies — administrative fines under §45 are addressed to the entity as a legal person (attribution via §44; §44 Abs. 5 waives §9 VStG personal punishment once the entity is fined). Core-duty ceilings (§45 Abs. 1): Essential up to €10M / 2% turnover (§45 Abs. 2), Important up to €7M / 1.4% (§45 Abs. 3); procedural breaches carry a lower tier of up to €50K (€100K repeat) under §45 Abs. 4.
 - **24-hour reporting capability**: The 24-hour early warning window is tight. Flag if no 24/7 incident detection and reporting capability exists.
 - **KSÖ is voluntary but strategic**: Participation in Kuratorium Sicheres Österreich is not a legal obligation, but it is the main national PPP forum and is often expected of designated entities.
 - **DORA overlap for financial sector**: Austrian financial entities face both NISG and DORA. Use `/arckit-eu:eu-dora` to map the overlap; DORA generally takes precedence for ICT resilience obligations.
@@ -255,7 +255,7 @@ Next steps:
 - ✅ Incident reporting timeline mapped to the Austrian channel (CSIRT via NIS2-Meldeplattform, §34)
 - ✅ Supply chain obligations assessed
 - ✅ Business continuity requirements assessed
-- ✅ Supervision regime and penalty ceilings documented (with verification flags)
+- ✅ Supervision (§38) / enforcement (§39) regime and the two-tier penalty ceilings (§45 Abs. 2–4) documented
 - ✅ KSÖ / NCSC-AT coordination addressed
 - ✅ Gap analysis with maturity levels and roadmap generated
 
