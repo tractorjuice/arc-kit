@@ -12,6 +12,7 @@ on:
       - "scripts/check_doctype_collisions.py"
       - "scripts/check-guide-parity.py"
       - "scripts/check-multi-instance-parity.py"
+      - "scripts/check-doc-type-registry.py"
       - "scripts/check-guide-site-links.py"
       - "scripts/check-contributor-credits.py"
       - "docs/contributors.html"
@@ -36,6 +37,7 @@ on:
       - "scripts/check_doctype_collisions.py"
       - "scripts/check-guide-parity.py"
       - "scripts/check-multi-instance-parity.py"
+      - "scripts/check-doc-type-registry.py"
       - "scripts/check-guide-site-links.py"
       - "scripts/check-contributor-credits.py"
       - "docs/contributors.html"
@@ -85,6 +87,9 @@ jobs:
 
       - name: Multi-instance doc-type parity (doc-types.mjs vs both bash copies)
         run: python3 scripts/check-multi-instance-parity.py
+
+      - name: Doc-type registry references (recipes, commands, pages.md)
+        run: python3 scripts/check-doc-type-registry.py
 
       - name: Guide site-link check (every guide reachable, no dead links)
         run: python3 scripts/check-guide-site-links.py

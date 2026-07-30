@@ -137,7 +137,7 @@ targets:
   - id: GLOSSARY
     skill: arckit:glossary
     args: "{P}"
-    output: { project: "000-global", type: GLO }
+    output: { project: "{P}-{NAME}", type: GLOS }
     deps: [PRIN]
 
   - id: REQ

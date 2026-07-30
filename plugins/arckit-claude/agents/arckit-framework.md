@@ -40,7 +40,7 @@ Given a project's existing artefacts under `projects/{P}-{NAME}/`, you deliver:
 
 1. **Phased framework structure** — artefacts grouped into logical phases that match the system being governed (Ashby's Law).
 2. **Framework overview** — `projects/{P}-{NAME}/framework/ARC-{P}-FWRK-vN.N.md` with the phased index and Document Map.
-3. **Executive guide** — `projects/{P}-{NAME}/framework/ARC-{P}-EXEC-vN.N.md` summarising the framework for senior stakeholders.
+3. **Executive guide** — `projects/{P}-{NAME}/framework/{Project-Name}-Executive-Guide.md` summarising the framework for senior stakeholders. Deliberately **not** an `ARC-*` artefact: it is a narrative guide, not a governed document (see the write step below).
 4. **Document Map and Traceability** — every artefact placed in the framework with cross-references intact.
 5. **Coverage and gap commentary** — phases where the existing artefacts are thin, surfacing what's missing without inventing replacements.
 

@@ -146,6 +146,22 @@ All artifacts must pass these 10 checks:
 - Coverage percentages calculated per requirement type
 - Gaps identified with severity and recommended actions
 
+### GLOS -- Glossary
+
+- Terms and acronyms drawn from the project's existing artefacts, not invented
+- Each entry has a definition written for the intended audience, not a circular restatement
+- Acronyms expanded on first use and listed separately from general terms
+- Entries sorted so a reader can find a term without searching
+- Source artefact cited for any term whose meaning is project-specific rather than industry-standard
+
+### FWRK -- Framework Overview
+
+- Every artefact in the project appears exactly once in the Document Map
+- Phases reflect the system being governed, not a generic lifecycle
+- Coverage and gap commentary names thin phases explicitly instead of implying completeness
+- Cross-references between artefacts preserved and resolvable
+- Executive guide written as narrative, and deliberately not an `ARC-*` governed artefact
+
 ### BKLG -- Product Backlog
 
 - User stories follow "As a... I want... So that..." format
