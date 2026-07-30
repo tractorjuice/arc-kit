@@ -2,7 +2,7 @@
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:at-bvergg`
 >
-> ⚠️ **Community-contributed** — not yet validated against current Bundesvergabegesetz 2018 text or applicable EU threshold regulation. Verify all citations before relying on output. Items marked `[NEEDS VERIFICATION]` must be confirmed against current EU thresholds and §12 BVergG 2018.
+> ⚠️ **Community-contributed** — not yet validated against the current Bundesvergabegesetz 2018 (as amended by the **Vergaberechtsgesetz 2026**, BGBl. I Nr. 8/2026, in force 1 March 2026; eForms from 1 October 2026) or the applicable EU threshold regulation. Verify all citations before relying on output. Items marked `[NEEDS VERIFICATION]` must be confirmed against the current EU thresholds and §12 BVergG 2018.
 
 ## Document Control
 
@@ -53,7 +53,7 @@
 
 ### 1.3 Threshold Determination
 
-*Confirm against current EU thresholds (VO 2025/2152 from 1.1.2026: classical €216K, Sektoren €432K, Bau €5,404K) and §12 BVergG 2018.*
+*Confirm against current EU thresholds from 1.1.2026 (classical central govt/Bund €140K, classical sub-central €216K and Bau €5,404K per VO (EU) 2025/2152; Sektoren €432K per VO (EU) 2025/2150; concessions per VO (EU) 2025/2151; §12 BVergG 2018) and the domestic Direktvergabe limits set by the Vergaberechtsgesetz 2026 (§46: supplies/services €143K — Bund effectively capped at the €140K EU Oberschwelle; works €200K; from €50K document ≥3 Vergleichsangebote/Preisauskünfte).*
 
 | Item | Value |
 |------|-------|

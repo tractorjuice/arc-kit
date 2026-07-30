@@ -40,17 +40,17 @@
     },
     "default_classification": {
       "title": "Default Classification",
-      "description": "Default document classification: PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE, or SECRET",
+      "description": "Default document classification, using the values of the active classification_scheme (UK: PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET; UAE Smart Data: Open / Shared / Confidential / Secret / Top Secret; AT InfoSiG: Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim)",
       "type": "string"
     },
     "governance_framework": {
       "title": "Governance Framework",
-      "description": "Default governance framework: 'UK Gov' for Service Standard/TCoP/NCSC CAF, 'UAE Federal' for UAE Cabinet instruments + PDPL + IAS, or 'Generic' for non-government",
+      "description": "Default governance framework: 'UK Gov' for Service Standard/TCoP/NCSC CAF, 'UAE Federal' for UAE Cabinet instruments + PDPL + IAS, 'AT Gov' for Austrian federal bodies (DSG/NISG/BVergG + InfoSiG classification), or 'Generic' for non-government",
       "type": "string"
     },
     "classification_scheme": {
       "title": "Classification Scheme",
-      "description": "Classification ladder used in Document Control headers: 'UK' (PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET) or 'UAE Smart Data' (Open / Shared / Confidential / Secret / Top Secret). Defaults to UK when blank.",
+      "description": "Classification ladder used in Document Control headers: 'UK' (PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET), 'UAE Smart Data' (Open / Shared / Confidential / Secret / Top Secret), or 'AT InfoSiG' (Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim, per Informationssicherheitsgesetz). Defaults to UK when blank.",
       "type": "string"
     },
     "desktop_notifications": {

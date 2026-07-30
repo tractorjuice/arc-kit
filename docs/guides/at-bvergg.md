@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:at-bvergg` generates Austrian public procurement documentation aligned with **Bundesvergabegesetz 2018**. Covers Oberschwellen / Unterschwellen determination, ANKÖ publication requirements, BVergGVS secondary rules, and the BVwG review pathway.
+`/arckit:at-bvergg` generates Austrian public procurement documentation aligned with the **Bundesvergabegesetz 2018**, as amended by the **Vergaberechtsgesetz 2026** (BGBl. I Nr. 8/2026, in force 1 March 2026; eForms from 1 October 2026). Covers Oberschwellen / Unterschwellen determination, ANKÖ publication requirements, BVergGVS secondary rules, and the BVwG review pathway.
 
 ---
 
@@ -39,7 +39,7 @@ Output: `projects/<id>/ARC-<id>-BVERGG-v1.0.md`
 | BVergGVS Secondary Rules | Defence / security / utilities / concessions where applicable |
 | Vendor Security & Data-Protection Clauses | DSGVO processor clauses, NISG supply-chain clauses |
 | BVwG Review Pathway | Standstill, pre-review request, BVwG appeal route and timing |
-| External References | BVergG 2018 + EU directive transposition citations |
+| External References | BVergG 2018 (idF Vergaberechtsgesetz 2026) + EU directive transposition citations |
 
 ---
 
@@ -80,6 +80,7 @@ Output: `projects/<id>/ARC-<id>-BVERGG-v1.0.md`
 
 ## Key Notes
 
+- **Vergaberechtsgesetz 2026**: the BVergG 2018 was substantially amended (BGBl. I Nr. 8/2026, in force 1 March 2026; eForms from 1 October 2026) — permanent Direktvergabe limits (supplies/services €143K, works €200K; document ≥3 offers from €50K), harmonised Ausschlussgründe/Selbstreinigung, eForms below-threshold, and a tiered Nachprüfungs-fee system. The BVergG 2018 keeps its name and numbering.
 - **Threshold drift**: EU procurement thresholds change every two years — items marked `[NEEDS VERIFICATION]` must be confirmed against the latest regulation before external publication.
 - **Defence / utilities / concessions**: BVergGVS imposes additional rules — confirm sectoral scope before relying on the standard BVergG path.
 - **Run after pre-checks**: `/arckit:at-dsgvo` and `/arckit:at-nisg` should run first if either applies — their clauses feed the vendor pack.
