@@ -9,7 +9,6 @@ on:
       - "plugins/**"
       - "scripts/converter.py"
       - "src/arckit_cli/**"
-      - "tests/codex/**"
       - "pyproject.toml"
   pull_request:
     paths:
@@ -18,7 +17,6 @@ on:
       - "plugins/**"
       - "scripts/converter.py"
       - "src/arckit_cli/**"
-      - "tests/codex/**"
       - "pyproject.toml"
 
 jobs:
@@ -35,13 +33,17 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Python test dependencies
-        run: python -m pip install -e . pytest pyyaml
+      # converter.py imports yaml and nothing else third-party. pytest and
+      # `-e .` are no longer needed here: the pytest steps moved to
+      # python-tests.yml, which also runs `pip install -e .` unfiltered on every
+      # PR, so the pyproject build is still smoke-tested there.
+      - name: Install converter dependencies
+        run: python -m pip install pyyaml
 
       # The extensions/arckit-codex/ extension is generated from plugins/arckit-claude (and
       # the community overlays) by converter.py and is no longer tracked in git
-      # (see .gitignore "Generated distribution formats"). Regenerate it before
-      # the tests so a fresh checkout has the files the suite asserts against.
+      # (see .gitignore "Generated distribution formats"). Regenerate it so the
+      # hook syntax check below has a file to parse.
       - name: Generate extension formats
         run: python scripts/converter.py
 
@@ -50,9 +52,3 @@ jobs:
 
       - name: Check CLI syntax
         run: python -m py_compile src/arckit_cli/__init__.py
-
-      - name: Run Codex plugin tests
-        run: python -m pytest tests/codex/test_codex_extension.py
-
-      - name: Test Kimi extension
-        run: python -m pytest tests/kimi/
