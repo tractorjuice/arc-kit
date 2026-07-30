@@ -1,0 +1,51 @@
+name: Python Tests
+
+# Deliberately NOT path-filtered.
+#
+# Every other workflow in this repo gates on `paths:`, and that is what left
+# the Python suites ungated: `codex-plugin.yml` ran 52 of 1,445 collected tests
+# and `lint-markdown.yml` covered only the `.mjs` suites, so a failing Python
+# test showed green indefinitely (#719). A path filter on a test job
+# reintroduces exactly that class of gap — a PR is skipped by virtue of which
+# files it happens to touch, which is also how #718 broke `npm ci` for every
+# subsequent PR.
+#
+# The full suite runs in well under 30s, so there is nothing to buy by
+# filtering it.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    name: Full Python suite
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # The suite's only third-party imports are pytest and yaml. `-e .` is
+      # needed because several suites import from `src/arckit_cli/`.
+      - name: Install test dependencies
+        run: python -m pip install -e . pytest pyyaml
+
+      # The generated content under extensions/** is gitignored (see .gitignore
+      # "Generated distribution formats"), so a fresh checkout holds only each
+      # extension's tracked skeleton. The seven extension suites (codex,
+      # copilot, gemini, kimi, opencode, paperclip, vibe) assert against
+      # converter output — without this step they fail 74 / error 10 on a clean
+      # checkout. tests/plugin/ is converter-independent.
+      - name: Generate extension formats
+        run: python scripts/converter.py
+
+      # testpaths is set in pyproject.toml, so this collects the same tests a
+      # bare local `python -m pytest` does. Run via `python -m` (not the
+      # `pytest` entry point) so the repo root lands on sys.path for the
+      # `tests.extension_helpers` imports.
+      - name: Run Python test suite
+        run: python -m pytest -q
