@@ -44,6 +44,33 @@ See what would happen without writing or cloning anything:
 
 ---
 
+## Choosing the Diagram Format
+
+The audit includes a C4 container diagram of the as-built architecture. It is written as Mermaid by default, because the report is usually read in the repository it audits, and GitHub, GitLab and ArcKit Pages all render Mermaid inline with no toolchain to install.
+
+Pass `--diagram-format plantuml` when layout quality matters more than portability:
+
+```text
+/arckit:repo-audit https://github.com/org/service --diagram-format plantuml
+```
+
+C4-PlantUML lays out large container diagrams better and supports directional hints (`Lay_D`, `Lay_R`), which start to matter above roughly ten containers. The trade is that it needs a PlantUML server, the VS Code PlantUML extension, or ArcKit Pages to render, so it will not display inline on GitHub.
+
+To make one format the permanent default for a project rather than passing the flag each time, edit the template instead.
+
+Note that `/arckit:customize` cannot help here: it only copies templates from the core `arckit` plugin, and this template ships in `arckit-repo`. Copy it by hand. The plugin cache is version-pinned, and the path differs depending on whether you installed `arckit-repo` standalone or got it bundled inside `arckit`, so let `find` locate the newest copy:
+
+```bash
+mkdir -p .arckit/templates-custom
+find ~/.claude/plugins/cache -path '*/templates/codebase-audit-template.md' \
+  | sort -V | tail -1 \
+  | xargs -I{} cp {} .arckit/templates-custom/codebase-audit-template.md
+```
+
+Then edit the fenced diagram block in your copy. `/arckit:repo-audit` reads `.arckit/templates-custom/` before `.arckit/templates/` and before the plugin default, so every audit in that project picks up your version, and it survives plugin upgrades. An explicit `--diagram-format` on the command line still wins over whatever the template says.
+
+---
+
 ## Two Modes, Inferred Automatically
 
 You never pass a mode flag. The command works out which one applies.

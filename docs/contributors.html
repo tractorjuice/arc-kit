@@ -607,6 +607,12 @@
                         <li>Before/after behaviour table separating the digits-in-name case from the trailing-label case</li>
                         <li>Investigation surfaced the same blind spot in <code>validate-wardley-math.mjs</code>, where it had been letting <code>evolve</code> references to undeclared components pass silently</li>
                     </ul>
+                    <p class="govuk-body-s">Also reported that no glossary doc-type code was registered in <code>config/doc-types.mjs</code>, so <code>/arckit:glossary</code> could never write a conforming filename: the <code>validate-arc-filename.mjs</code> PreToolUse hook rejected every run as an unknown document type, with no correct name available to fall back to (<a href="https://github.com/tractorjuice/arc-kit/issues/712" class="govuk-link">#712</a>, fixed in <a href="https://github.com/tractorjuice/arc-kit/pull/714" class="govuk-link">#714</a>). Documented three different spellings of the missing code across four plugins, recommended <code>GLOS</code> with the reasoning that carried, and correctly identified it as the same class of registry drift as <a href="https://github.com/tractorjuice/arc-kit/issues/545" class="govuk-link">#545</a>.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Four-way evidence table locating every affected recipe and command reference, plus a standalone and a <code>/arckit:build</code> reproduction</li>
+                        <li>Argued that a registry-consistency gate was worth more than fixing the individual codes; that gate then found <code>/arckit:framework</code> broken the same way via an unregistered <code>FWRK</code>, which nobody had reported</li>
+                        <li>Flagged the unresolved question of whether a glossary is per-project or repo-wide, which the fix settled as per-project</li>
+                    </ul>
                 </div>
 
                 <div class="app-contributor-card">

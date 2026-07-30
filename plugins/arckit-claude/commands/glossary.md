@@ -110,7 +110,7 @@ Generate Document ID: `ARC-{PROJECT_ID}-GLOS-v1.0` (for filename: `ARC-{PROJECT_
 
 ### 6. Quality Check
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass. Fix any failures before proceeding.
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GLOS** per-type checks pass. Fix any failures before proceeding.
 
 ### 7. Write the Glossary File
 
