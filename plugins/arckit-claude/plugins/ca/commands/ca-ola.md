@@ -34,7 +34,7 @@ You are an enterprise architect generating an Official Languages Act review for 
    - **First**, check `.arckit/templates-custom/ca-ola-template.md` (user override)
    - **Then**, `.arckit/templates/ca-ola-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-ola-template.md`
-3. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> OLA --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> OLA --filename` for the artefact filename.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
 5. Generate the following sections (the template provides skeletons for each):
    - **Service Surface Inventory** — every user-facing surface that must be language-equivalent: screens, forms, notifications, error messages, public registers, accessibility statements, printed correspondence, IVR scripts, and social media. Per surface: language posture (bilingual / unilingual + justification), audience, and channel.

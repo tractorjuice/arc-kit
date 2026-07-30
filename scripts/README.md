@@ -217,31 +217,42 @@ The script automatically determines the next steps based on what artifacts exist
 7. /arckit:sow (if sow.md missing)
 8. /arckit:evaluate (if all above complete)
 
-### 4. generate-document-id.sh
+### 4. generate-document-id.mjs
 
 **Purpose**: Generate consistent ArcKit document IDs (`ARC-<PROJECT>-<TYPE>-vX.Y`) for traceability.
+
+Lives at `plugins/arckit-claude/scripts/generate-document-id.mjs` and is scaffolded to `.arckit/scripts/generate-document-id.mjs` by `arckit init`.
 
 **Usage**:
 
 ```bash
-./scripts/bash/generate-document-id.sh PROJECT_ID DOC_TYPE [VERSION]
+node plugins/arckit-claude/scripts/generate-document-id.mjs PROJECT_ID DOC_TYPE [VERSION] [OPTIONS]
 ```
 
 **Examples**:
 
 ```bash
 # Default version v1.0
-./scripts/bash/generate-document-id.sh 001 REQ
+node plugins/arckit-claude/scripts/generate-document-id.mjs 001 REQ
 
 # Explicit version
-./scripts/bash/generate-document-id.sh 042 HLD 2.1
+node plugins/arckit-claude/scripts/generate-document-id.mjs 042 HLDR 2.1
+
+# Filename, and the next sequence number for a multi-instance type
+node plugins/arckit-claude/scripts/generate-document-id.mjs 001 ADR --filename --next-num ./decisions
+
+# Project-relative path, with the artefact's subdirectory applied
+node plugins/arckit-claude/scripts/generate-document-id.mjs 001 RSCH --relpath --next-num ./research
 ```
 
 **Notes**:
 
 - Pads project numbers to three digits automatically.
-- Accepts any doc type (REQ, HLD, DPIA, ATRS, etc.).
+- **Rejects a doc-type code that is not registered** in `plugins/arckit-claude/config/doc-types.mjs`, rather than emitting a name the `validate-arc-filename.mjs` hook will then block.
+- `MULTI_INSTANCE_TYPES`, `KNOWN_TYPES` and `SUBDIR_MAP` are imported from that registry, so there is one copy of each list.
 - Emits the ID to stdout so it can be piped into editors or JSON payloads.
+
+`scripts/bash/generate-document-id.sh` is a shim that execs the `.mjs`, kept for projects scaffolded before #723. It will be removed a release later.
 
 ### 5. list-projects.sh
 

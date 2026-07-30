@@ -218,7 +218,7 @@ Update any count references found. Common locations:
 
 - Overview section ("50 slash commands")
 - Agent System table (if adding an agent)
-- Multi-instance types in `generate-document-id.sh` section
+- (Multi-instance types no longer appear here: since #723 the only list is `MULTI_INSTANCE_TYPES` in `config/doc-types.mjs`)
 
 ### Agent Table
 

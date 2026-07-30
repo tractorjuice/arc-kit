@@ -328,7 +328,7 @@ Return ONLY a concise summary to the user:
 
 - **Templates** — `${CLAUDE_PLUGIN_ROOT}/templates/gov-reuse-template.md` · `${CLAUDE_PLUGIN_ROOT}/templates/tech-note-template.md` (read by writer)
 - **Schemas** — `${CLAUDE_PLUGIN_ROOT}/schemas/gov-reuse-handoff.schema.json` · `${CLAUDE_PLUGIN_ROOT}/schemas/scoring-rubrics/gov-reuse-{generic,uk-gov}.yaml`
-- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh`
+- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`
 - **Subagents dispatched** — `arckit-gov-reuse-reader` (per capability) · `arckit-gov-reuse-writer` (final render)
 - **External tools** — none directly (delegated to reader)
 - **MCP servers** — none directly (the reader uses `mcp__govreposcrape__search_uk_gov_code` for discovery and `mcp__govreposcrape__dependency_compare` for pairwise overlap %)

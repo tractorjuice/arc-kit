@@ -63,7 +63,7 @@ Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** basel
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
 
-4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> FRSSP --filename` for the artefact filename. The type code for this command is `FRSSP`.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FRSSP --filename` for the artefact filename. The type code for this command is `FRSSP`.
 
 5. Generate the 15-section FedRAMP SSP structure:
 
@@ -84,7 +84,7 @@ Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** basel
    15. **Network Architecture** — boundary diagram, internal network topology, public-facing components, management plane separation
    16. **Continuous Monitoring (ConMon) Strategy** — monthly vulnerability scans (authenticated / unauthenticated / web app / container / database), annual assessment, POA&M cadence, ATO drift management
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.sh`.
+6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
 7. Emit a short summary to the user — CSO name, baseline (Moderate / High), authorization path (Agency / JAB), boundary component count, interconnection count, and any sections marked `<TBC>`. Do not echo the full artefact.
 

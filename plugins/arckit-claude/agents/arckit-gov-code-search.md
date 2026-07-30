@@ -281,7 +281,7 @@ Return ONLY a concise summary including:
 ## Toolchain
 
 - **Templates** — `${CLAUDE_PLUGIN_ROOT}/templates/gov-code-search-template.md` (override at `.arckit/templates-custom/gov-code-search-template.md`)
-- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh`
+- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`
 - **MCP server** — `govreposcrape` (`search_uk_gov_code` over 24,500+ UK government repositories)
 - **External tools** — `WebFetch` (deeper inspection of top hits)
 - **Related commands** — `/arckit:gov-reuse` (capability-driven reuse) · `/arckit:gov-landscape` (domain landscape)

@@ -16,7 +16,7 @@ You are running the ArcKit build harness. Your job is **orchestration only** —
 - **State is sacred** — update `projects/{P}-{NAME}/.arckit/state.json` after every wave, before moving on.
 - **Single message, multiple Agent calls** for parallelism within a wave. Never loop sequential Agent calls.
 - **Idempotency**: if state says `complete`, the file exists at the recorded path, AND every input file's SHA-256 matches the hash recorded at build time, skip. Otherwise the target is **stale** — rebuild it (and propagate staleness through the DAG). See § "Input-hash change detection".
-- **Trust the path-allocation hook.** ArcKit's `validate-arc-filename.mjs` PreToolUse hook is the authoritative path normalizer — it allocates sequence numbers, applies subfolders, pads project IDs at write time. The orchestrator and workers never construct paths by string substitution or call `generate-document-id.sh` directly. Read the corrected path back from the Write tool result.
+- **Trust the path-allocation hook.** ArcKit's `validate-arc-filename.mjs` PreToolUse hook is the authoritative path normalizer — it allocates sequence numbers, applies subfolders, pads project IDs at write time. The orchestrator and workers never construct paths by string substitution or call `generate-document-id.mjs` directly. Read the corrected path back from the Write tool result.
 
 ## Args
 
@@ -245,7 +245,7 @@ Steps:
    corrected path as `updatedInput.file_path` and the actual write proceeds
    there. You will see this corrected path in the Skill tool's result.
 
-   Read `ACTUAL_PATH` from that result. Do NOT call `generate-document-id.sh`
+   Read `ACTUAL_PATH` from that result. Do NOT call `generate-document-id.mjs`
    yourself or construct paths by string substitution — the hook is the
    authoritative path allocator.
 

@@ -36,7 +36,7 @@ You are an enterprise architect generating a federal Canadian procurement strate
    - **First**, check `.arckit/templates-custom/ca-pspc-template.md` (user override)
    - **Then**, `.arckit/templates/ca-pspc-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-pspc-template.md`
-3. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> PROC --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> PROC --filename` for the artefact filename.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
 5. Generate the following sections (the template provides skeletons for each):
    - **Procurement Scope** — what is being procured: goods, professional services, cloud, software licences, managed services. Per item, capture description, estimated value range, term, and any extension options. Aggregate to a single estimated procurement value used downstream for threshold analysis.

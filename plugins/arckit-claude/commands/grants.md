@@ -318,7 +318,7 @@ Return ONLY a concise summary to the user:
 
 - **Templates** — `${CLAUDE_PLUGIN_ROOT}/templates/grants-template.md` · `${CLAUDE_PLUGIN_ROOT}/templates/tech-note-template.md` (read by writer)
 - **Schemas** — `${CLAUDE_PLUGIN_ROOT}/schemas/grants-handoff.schema.json` · `${CLAUDE_PLUGIN_ROOT}/schemas/scoring-rubrics/grants-{generic,uk-gov}.yaml`
-- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh`
+- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`
 - **Subagents dispatched** — `arckit-grants-reader` (per funder_category) · `arckit-grants-writer` (final render)
 - **External tools** — none directly (delegated to reader)
 - **Related commands** — `/arckit:requirements` (input) · `/arckit:stakeholders` (input) · `/arckit:sobc` (downstream business case) · `/arckit:plan` (downstream timeline) · `/arckit:risk` (downstream risk register)

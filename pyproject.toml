@@ -64,6 +64,11 @@ packages = ["src/arckit_cli"]
 
 [tool.hatch.build.targets.wheel.shared-data]
 "scripts" = "share/arckit/scripts"
+# generate-document-id.mjs imports ../config/doc-types.mjs, so the registry
+# ships too. Both keep their repo-relative paths under share/arckit so
+# get_data_paths() resolves them identically in source and installed mode.
+"plugins/arckit-claude/scripts/generate-document-id.mjs" = "share/arckit/plugins/arckit-claude/scripts/generate-document-id.mjs"
+"plugins/arckit-claude/config" = "share/arckit/plugins/arckit-claude/config"
 ".arckit" = "share/arckit/.arckit"
 # Distribute only the docs the CLI scaffolds (guides + the three named files),
 # NOT the whole docs/ tree — mapping the directory shipped BUSINESS-PLAN.md,

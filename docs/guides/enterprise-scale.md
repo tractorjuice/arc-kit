@@ -446,7 +446,7 @@ With federated repos (Topologies 2 and 3), you need a **registry** so project ID
 
 - **Shared spreadsheet or wiki page** — low-tech, works up to ~50 apps
 - **Lightweight registry service** — issues IDs on request; stores `id → repo` mapping
-- **Namespaced IDs** — prefix per domain (`PAY-010-REQ-*`, `IAM-040-REQ-*`) to decentralise allocation (note: this requires a small tweak to `scripts/bash/generate-document-id.sh`)
+- **Namespaced IDs** — prefix per domain (`PAY-010-REQ-*`, `IAM-040-REQ-*`) to decentralise allocation (note: this requires a small tweak to `node scripts/generate-document-id.mjs`)
 
 Pick the lightest option that your auditors will accept.
 

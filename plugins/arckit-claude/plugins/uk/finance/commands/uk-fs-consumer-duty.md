@@ -57,7 +57,7 @@ instead of recreating it. Extract `project_dir` and `project_number` from the JS
 Run:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh <PROJECT_NUMBER> FSCD --filename
+${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_NUMBER> FSCD --filename
 ```
 
 This produces a filename of the form `ARC-NNN-FSCD-v1.0.md`. FSCD is the doc-type code for this

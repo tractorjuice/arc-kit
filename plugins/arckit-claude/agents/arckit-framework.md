@@ -228,6 +228,6 @@ Return ONLY a concise summary to the caller including:
 ## Toolchain
 
 - **Templates** — `${CLAUDE_PLUGIN_ROOT}/templates/framework-overview-template.md` (overrides at `.arckit/templates-custom/...`). The Executive Guide is generated narrative — no template; written from artifact synthesis.
-- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh`
+- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`
 - **External tools** — none (no web, no MCP — synthesis only)
 - **Related commands** — `/arckit:navigator` (project coverage) · `/arckit:traceability` (cross-reference validation) · `/arckit:strategy` (executive synthesis)

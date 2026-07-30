@@ -68,7 +68,7 @@ DTAC was introduced by NHSX (now part of NHS England's Transformation Directorat
 
 3. **Resolve the project** via `scripts/bash/create-project.sh --json`.
 
-4. **Generate the filename** via `scripts/bash/generate-document-id.sh <PROJECT_ID> NHSDTAC --filename` (this is a single-instance artefact; no `--next-num`).
+4. **Generate the filename** via `node scripts/generate-document-id.mjs <PROJECT_ID> NHSDTAC --filename` (this is a single-instance artefact; no `--next-num`).
 
 5. **Resolve the `<!-- DOC-CONTROL-HEADER -->` marker** per `RENDERING.md`. The DTAC artefact is a conventional ArcKit `ARC-{NNN}-NHSDTAC-v1.0.md` file.
 

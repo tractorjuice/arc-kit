@@ -54,6 +54,7 @@ const ALLOWED_MCP_PREFIXES = [
 
 const PLUGIN_SCRIPT_ALLOWLIST = new Set([
   "validate-handoff.mjs",
+  "generate-document-id.mjs",
   "bash/common.sh",
   "bash/create-project.sh",
   "bash/generate-document-id.sh",

@@ -68,7 +68,7 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if needed.
 
-4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AUDISP --filename` for the artefact filename.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUDISP --filename` for the artefact filename.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) — replace the standard UK line in the header.
 

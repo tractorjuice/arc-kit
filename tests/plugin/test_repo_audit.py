@@ -21,7 +21,8 @@ PAGES_CMD = REPO_ROOT / "plugins/arckit-claude/commands/pages.md"
 COMMAND = REPO_ROOT / "plugins/arckit-repo/commands/repo-audit.md"
 PLUGIN_TEMPLATE = REPO_ROOT / "plugins/arckit-repo/templates/codebase-audit-template.md"
 ARCKIT_TEMPLATE = REPO_ROOT / ".arckit/templates/codebase-audit-template.md"
-BASH_COPIES = (
+GENERATOR = REPO_ROOT / "plugins/arckit-claude/scripts/generate-document-id.mjs"
+SHIM_COPIES = (
     REPO_ROOT / "scripts/bash/generate-document-id.sh",
     REPO_ROOT / "plugins/arckit-claude/scripts/bash/generate-document-id.sh",
 )
@@ -42,10 +43,10 @@ def mjs_multi_instance() -> set[str]:
     return set(re.findall(r"['\"]([A-Z0-9-]+)['\"]", body))
 
 
-def bash_multi_instance(path: Path) -> set[str]:
+def bash_multi_instance(path: Path) -> set[str] | None:
+    """The hardcoded list a bash copy used to carry, or None if it carries none."""
     match = re.search(r'^MULTI_INSTANCE_TYPES="([^"]*)"', read(path), re.MULTILINE)
-    assert match, f"MULTI_INSTANCE_TYPES assignment not found in {path}"
-    return set(match.group(1).split())
+    return set(match.group(1).split()) if match else None
 
 
 # --- doc-type registration ------------------------------------------------
@@ -78,45 +79,56 @@ def test_cdau_does_not_collide_with_an_existing_code():
     assert codes.count("CDAU") == 1, f"CDAU declared {codes.count('CDAU')} times"
 
 
-# --- multi-instance parity (regression: TNDR/CMPT v5.9.0, GRNT 2026-07) ----
+# --- the registry is no longer duplicated in bash (#723) -------------------
+#
+# These tests used to assert that two hardcoded bash lists matched
+# MULTI_INSTANCE_TYPES, because they had drifted twice: v5.9.0 added TNDR/CMPT
+# without updating bash, so every /arckit:competitors run emitted the same
+# colliding ID, and GRNT went the same way. generate-document-id.mjs imports the
+# registry, so the correct assertion now is that no second copy exists at all.
 
 
-@pytest.mark.parametrize("bash_path", BASH_COPIES, ids=lambda p: str(p.relative_to(REPO_ROOT)))
-def test_multi_instance_parity_with_bash(bash_path: Path):
-    expected = mjs_multi_instance()
-    actual = bash_multi_instance(bash_path)
-    assert actual == expected, (
-        f"MULTI_INSTANCE_TYPES drift in {bash_path.relative_to(REPO_ROOT)}: "
-        f"missing={sorted(expected - actual)} extra={sorted(actual - expected)}"
+@pytest.mark.parametrize("shim", SHIM_COPIES, ids=lambda p: str(p.relative_to(REPO_ROOT)))
+def test_shim_carries_no_registry_copy(shim: Path):
+    assert bash_multi_instance(shim) is None, (
+        f"{shim.relative_to(REPO_ROOT)} has reintroduced a hardcoded "
+        f"MULTI_INSTANCE_TYPES list; import it from config/doc-types.mjs instead"
     )
 
 
-def test_grnt_present_in_bash_lists():
-    # Explicit regression: GRNT was registered in .mjs but absent from bash,
-    # so every /arckit:grants run emitted the same colliding ID.
-    for bash_path in BASH_COPIES:
-        assert "GRNT" in bash_multi_instance(bash_path), \
-            f"GRNT missing from {bash_path.relative_to(REPO_ROOT)}"
+@pytest.mark.parametrize("shim", SHIM_COPIES, ids=lambda p: str(p.relative_to(REPO_ROOT)))
+def test_shim_delegates_to_the_generator(shim: Path):
+    body = read(shim)
+    assert "generate-document-id.mjs" in body
+    assert "exec node" in body
 
 
-def test_parity_guard_script_exists_and_passes():
-    guard = REPO_ROOT / "scripts/check-multi-instance-parity.py"
-    assert guard.is_file(), "parity guard script missing"
-    result = subprocess.run(
-        ["python3", str(guard)], capture_output=True, text=True, cwd=REPO_ROOT
-    )
-    assert result.returncode == 0, f"parity guard failed:\n{result.stdout}\n{result.stderr}"
+def test_generator_imports_the_registry():
+    body = read(GENERATOR)
+    assert "from '../config/doc-types.mjs'" in body
+    for name in ("MULTI_INSTANCE_TYPES", "KNOWN_TYPES", "SUBDIR_MAP"):
+        assert name in body, f"{name} not imported by the generator"
+
+
+def test_generator_sequences_every_multi_instance_type():
+    # GRNT and CDAU are the two codes whose absence from the bash list shipped.
+    # Asserting the whole set means a future addition cannot regress the same way.
+    for code in sorted(mjs_multi_instance()):
+        result = subprocess.run(
+            ["node", str(GENERATOR), "001", code, "--next-num", "/nonexistent-dir"],
+            capture_output=True, text=True, cwd=REPO_ROOT,
+        )
+        assert result.returncode == 0, f"{code}: {result.stderr}"
+        assert result.stdout.strip() == f"ARC-001-{code}-001-v1.0", code
 
 
 # --- document ID generation ----------------------------------------------
 
 
 def test_generate_document_id_sequences_cdau(tmp_path: Path):
-    script = REPO_ROOT / "scripts/bash/generate-document-id.sh"
-
     def gen() -> str:
         result = subprocess.run(
-            ["bash", str(script), "001", "CDAU", "--next-num", str(tmp_path)],
+            ["node", str(GENERATOR), "001", "CDAU", "--next-num", str(tmp_path)],
             capture_output=True, text=True, cwd=REPO_ROOT,
         )
         assert result.returncode == 0, result.stderr
@@ -172,7 +184,7 @@ def test_command_exists():
 def test_command_writes_cdau_via_helper():
     body = read(COMMAND)
     assert "CDAU" in body
-    assert "generate-document-id.sh" in body
+    assert "generate-document-id.mjs" in body
     assert "--next-num" in body, "multi-instance types require --next-num"
 
 

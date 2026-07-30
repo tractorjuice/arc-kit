@@ -233,7 +233,7 @@ actually been fetched. When you carry award figures from a TNDR/CMPT artefact, q
 with the ArcKit helper (no `--next-num` — GCMP is not multi-instance):
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh" \
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
      {PROJECT_ID} GCMP --filename
 ```
 

@@ -35,7 +35,7 @@ You are an enterprise architect generating a Government of Canada Digital Standa
    - **First**, check `.arckit/templates-custom/ca-gc-digital-standards-template.md` (user override)
    - **Then**, `.arckit/templates/ca-gc-digital-standards-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-gc-digital-standards-template.md`
-3. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> DIGSTD --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> DIGSTD --filename` for the artefact filename.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
 5. Generate the following sections (the template provides skeletons for each):
    - **The 10 GC Digital Standards** — name them explicitly so the scorecard can be read without leaving the artefact:

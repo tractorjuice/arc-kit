@@ -151,7 +151,7 @@ unsure.
 with the ArcKit helper (no `--next-num` — SDD is not multi-instance):
 
 ```bash
-bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh" \
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
      {PROJECT_ID} SDD --filename
 ```
 

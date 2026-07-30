@@ -66,7 +66,7 @@ The AI RMF underpins the federal policy stack: OMB M-24-10 requires agencies to 
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
 
-4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AIRMF --filename` for the artefact filename. The type code for this command is `AIRMF`.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AIRMF --filename` for the artefact filename. The type code for this command is `AIRMF`.
 
 5. Generate the following sections:
 
@@ -80,7 +80,7 @@ The AI RMF underpins the federal policy stack: OMB M-24-10 requires agencies to 
    - **Residual Risk Register** — risks remaining after Manage actions, prioritised; each linked to a target review date.
    - **Control Crosswalk** — table mapping AI RMF subcategories to NIST 800-53 Rev 5 controls and to OMB M-24-10 minimum-practice items, so the assurance posture is traceable.
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.sh`.
+6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
 7. Emit a short summary to the user — AI system type, GenAI in scope (Y/N), top 5 residual risks, M-24-10 impact-class hint (rights-impacting / safety-impacting / neither), and CAIO review status. Do not echo the full artefact.
 
