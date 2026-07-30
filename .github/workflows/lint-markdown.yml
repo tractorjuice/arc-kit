@@ -130,8 +130,13 @@ jobs:
         run: node tests/plugin/test_validate_tenders_handoff.mjs
 
       - name: Plugin hook test suites
-        # Shell-expand every *.test.mjs so new suites are picked up automatically
-        # (avoids the per-file enumeration drift that left suites unrun). The
-        # test_hook_utils.mjs file uses a test_ prefix, so list it explicitly.
+        # Two naming conventions are in use, `*.test.mjs` and `test_*.mjs`, and
+        # globbing only the first left EIGHT suites unrun -- 64 tests including
+        # test_update_manifest.mjs, the docs/manifest.json coverage. That is the
+        # same enumeration drift this step's previous comment claimed to have
+        # solved, and the same class of gap as #719 (pytest running 52 of 1,445).
+        # Glob both patterns rather than enumerating exceptions: the four handoff
+        # validators are re-run here as well as in their own steps above, which
+        # costs a second and cannot go stale.
         shell: bash
-        run: node --test tests/plugin/*.test.mjs tests/plugin/test_hook_utils.mjs
+        run: node --test tests/plugin/*.test.mjs tests/plugin/test_*.mjs
