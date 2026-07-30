@@ -81,7 +81,7 @@ targets:
   - id: GLOSSARY
     skill: arckit:glossary
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: GLOSS }
+    output: { project: "{P}-{NAME}", type: GLOS }
     deps: [PRIN]
 
   - id: REQ

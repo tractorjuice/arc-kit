@@ -102,7 +102,7 @@ targets:
   - id: GLOSSARY
     skill: arckit:glossary
     args: "{P}"
-    output: { project: "000-global", type: GLO }
+    output: { project: "{P}-{NAME}", type: GLOS }
     deps: [PRIN]
 
   - id: REQ
@@ -281,7 +281,7 @@ targets:
   - id: HLD
     skill: arckit:hld-review
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: HLD }
+    output: { project: "{P}-{NAME}", type: HLDR }
     deps: [REQ, "ADR-*", PRIN]
 
   - id: SOBC
@@ -299,7 +299,7 @@ targets:
   - id: SBD
     skill: arckit:secure
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: SBD }
+    output: { project: "{P}-{NAME}", type: SECD }
     deps: [TCOP, RISK, REQ, "ADR-*"]
 
   - id: DPIA
@@ -324,7 +324,7 @@ targets:
   - id: AIP
     skill: arckit:ai-playbook
     args: "{P} ai-mode=auto-detect-from-REQ-FRs"
-    output: { project: "{P}-{NAME}", type: AIP }
+    output: { project: "{P}-{NAME}", type: AIPB }
     deps: [DPIA, RISK, REQ, ADR-005, UAE_AI_CHARTER]
 
   - id: ATRS
@@ -412,7 +412,7 @@ targets:
   - id: TRACE
     skill: arckit:traceability
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: TRACE }
+    output: { project: "{P}-{NAME}", type: TRAC }
     deps:
       [REQ, STKE, "ADR-*", RISK, HLD, DPIA, SBD, TCOP,
        PLAN, ROADMAP, AIP, ATRS, DEVOPS, FINOPS, OPS,

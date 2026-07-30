@@ -5,6 +5,20 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`/arckit:glossary` could never write a conforming filename.** `commands/glossary.md` writes `ARC-{PROJECT_ID}-GLOS-v1.0.md` in eight places, but `config/doc-types.mjs` had no `GLOS` entry, so the `validate-arc-filename.mjs` PreToolUse hook blocked every run as an unknown document type — with no correct name to fall back to. In practice the model either failed the write or invented a non-conforming name, producing an artefact that `/arckit:health`, `/arckit:graph-report`, `/arckit:traceability`, `/arckit:search` and the `docs/manifest.json` indexing could all not see. `GLOS` is now registered, and the `/arckit:build` recipes that carried `GLO` or `GLOSS` are converged on it. Reported by @chrismckelt against 6.7.5 (#712).
+
+- **`/arckit:framework` was blocked identically, via an unregistered `FWRK`.** `agents/arckit-framework.md` writes `framework/ARC-{P}-FWRK-v{VERSION}.md`; `FWRK` is now registered with a `SUBDIR_MAP` entry routing it to `framework/`. The agent's deliverables list also described the executive guide as an `ARC-*-EXEC-*` artefact, contradicting its own write step, which names it `{Project-Name}-Executive-Guide.md` and states it is deliberately not governed — the list now matches the write step.
+
+- **`quality-checklist.md` gained the `GLOS` and `FWRK` per-type sections.** `commands/framework.md` already instructed the model to verify "the **FWRK** per-type checks", which did not exist; `commands/glossary.md` now points at the `GLOS` checks in the same way the other commands do.
+
+- **Recipe doc-type drift corrected where a code resolved to the wrong type.** `AIP` → `AIPB`, `HLD` → `HLDR`, `SBD` → `SECD`, `TRACE` → `TRAC`, and the twelve `UAE-`-prefixed codes in `uae-federal-ai.yaml` reduced to the bare codes its commands actually write (including `UAE-PRIORITIES` → `NPRA` and `UAE-PROC` → `FPRO`, which were not simple de-prefixings). `output.type` keys `.arckit/state.json`, so these were silent: they broke `--resume` and `--target` matching rather than the write.
+
+The registry now holds 161 doc-type codes, up from 159.
+
 ## [6.7.5] — 2026-07-28
 
 ### Fixed
