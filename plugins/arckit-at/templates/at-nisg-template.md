@@ -138,7 +138,10 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 | Supervision & enforcement | Cybersicherheitsbehörde — Aufsichtsmaßnahmen (§38), Durchsetzungsmaßnahmen (§39) | |
 | Penalty — core duties (§45 Abs. 1) | Essential: up to €10M / 2% turnover (§45 Abs. 2); Important: up to €7M / 1.4% (§45 Abs. 3) — NIS2 Art. 34 minimum-maximum | |
 | Penalty — procedural breaches (§45 Abs. 4) | up to €50,000 (up to €100,000 repeat) | |
-| Fining authority | Bezirksverwaltungsbehörde (§44 Abs. 1); Cybersicherheitsbehörde notifies suspected breaches | |
+| Public-administration body? (§46 applies "abweichend von § 45") | [Yes / No] | If Yes, the §45 ceilings above do **not** apply |
+| Public-administration consequence (§46 Abs. 2, Verfassungsbestimmung) | Bescheid establishing non-compliance + remediation deadline; **publication** if unremedied once final. No fine. | |
+| Ne bis in idem with GDPR (§44 Abs. 7) | No NISG fine where the DSB already fined the same conduct under Art. 58(2)(i) GDPR | |
+| Fining authority | Bezirksverwaltungsbehörde (§44 Abs. 1); Cybersicherheitsbehörde notifies suspected breaches (§46 Abs. 1 for public-administration bodies) | |
 | Appeal pathway | BVwG | |
 | CISO / Sicherheitsbeauftragter designated | [Yes / No] | |
 
@@ -148,6 +151,7 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 |------|--------|-------|
 | Selbstdeklaration of implemented measures submitted (§33 Abs. 1 — within 12 months of the registration duty, ~by 30 Sep 2027) | [Yes / No / Planned] | |
 | Independent body / auditor (§7) engaged for the Wirksamkeitsnachweis (§33 Abs. 2 — first request earliest 2 years after entry into force, ~Oct 2028) | [Yes / No / Planned] | |
+| Essential entity: 2-month response capability for the operative/organisational Nachweis (§33 Abs. 2 second sentence — general window is 2 years, Essential entities only 2 months from the Aufforderung) | [Yes / No / Planned] | |
 | Eligibility / accreditation confirmed | [Yes / No] | |
 | Scope of assessment | [Full / Partial] | |
 | Last assessment date | [YYYY-MM-DD / N/A] | |

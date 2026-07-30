@@ -53,7 +53,7 @@
 
 ### 1.3 Threshold Determination
 
-*Confirm against current EU thresholds (VO 2025/2152 from 1.1.2026: classical central govt/Bund €140K, classical sub-central €216K, Sektoren €432K, Bau €5,404K, §12 BVergG 2018) and the domestic Direktvergabe limits set by the Vergaberechtsgesetz 2026 (§46: supplies/services €143K — Bund effectively capped at the €140K EU Oberschwelle; works €200K; from €50K document ≥3 Vergleichsangebote/Preisauskünfte).*
+*Confirm against current EU thresholds from 1.1.2026 (classical central govt/Bund €140K, classical sub-central €216K and Bau €5,404K per VO (EU) 2025/2152; Sektoren €432K per VO (EU) 2025/2150; concessions per VO (EU) 2025/2151; §12 BVergG 2018) and the domestic Direktvergabe limits set by the Vergaberechtsgesetz 2026 (§46: supplies/services €143K — Bund effectively capped at the €140K EU Oberschwelle; works €200K; from €50K document ≥3 Vergleichsangebote/Preisauskünfte).*
 
 | Item | Value |
 |------|-------|

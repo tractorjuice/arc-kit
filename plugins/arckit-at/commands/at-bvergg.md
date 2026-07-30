@@ -86,7 +86,7 @@ Read all documents from Step 0. Extract key information for the procurement file
 
 ### Step 4: Threshold Analysis
 
-Before generating the document, determine the applicable procedure. **EU thresholds are updated every 2 years** — the values below reflect **Commission Delegated Regulation (EU) 2025/2152 (in force from 1 January 2026, for the 2026–2027 period)**. Verify against the current Delegierte Verordnung and the §12 BVergG 2018 transposition before use.
+Before generating the document, determine the applicable procedure. **EU thresholds are updated every 2 years** — the values below reflect the three Commission Delegated Regulations of 22 October 2025, all in force from **1 January 2026** for the **2026–2027** period: **(EU) 2025/2152** amends Directive 2014/24/EU (classical sectors — the central and sub-central supplies/services and works figures), **(EU) 2025/2150** amends Directive 2014/25/EU (**Sektorenauftraggeber / utilities**), and **(EU) 2025/2151** amends Directive 2014/23/EU (concessions). Cite the regulation matching the tier — the utilities figure is **not** from 2025/2152. Verify against the current Delegierte Verordnung and the §12 BVergG 2018 transposition before use.
 
 > **Domestic reform (Vergaberechtsgesetz 2026)**: the temporary Schwellenwerteverordnung has lapsed; the raised domestic Direktvergabe values are now **permanent statutory law** under the **Vergaberechtsgesetz 2026 (BGBl. I Nr. 8/2026)**, in force **1 March 2026**. New documentation rule: from **€50,000**, a Direktvergabe must document the attempt to obtain **at least three Vergleichsangebote or Preisauskünfte**.
 
@@ -98,7 +98,7 @@ Before generating the document, determine the applicable procedure. **EU thresho
 | **Unterschwellenbereich** (non-open) | Up to EU threshold | Verhandlungsverfahren / nicht-offen | ANKÖ |
 | **Oberschwellenbereich — classical, central govt (Bund)** (supplies/services) | ≥ €140,000 | Offenes / Nicht-offenes / Verhandlungsverfahren | ANKÖ + TED |
 | **Oberschwellenbereich — classical, sub-central** (supplies/services) | ≥ €216,000 | Offenes / Nicht-offenes / Verhandlungsverfahren | ANKÖ + TED |
-| **Oberschwellenbereich — Sektorenauftraggeber** (supplies/services) | ≥ €432,000 | Sektor rules | ANKÖ + TED |
+| **Oberschwellenbereich — Sektorenauftraggeber** (supplies/services) | ≥ €432,000 (VO (EU) 2025/2150) | Sektor rules | ANKÖ + TED |
 | **Bauaufträge (Works)** — Oberschwellenbereich | ≥ €5,404,000 | Same as supplies/services | ANKÖ + TED |
 
 Show threshold determination to the user before generating the full document. Confirm:
