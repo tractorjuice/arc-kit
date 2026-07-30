@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Notifiable Data Breach (NDB) scheme response playbook under Privacy Act 1988 Part IIIC — eligible-data-breach test, 30-day OAIC notification timeline, individual notification, containment, and lessons-learned framework."
+doc-type: AUNDB
 argument-hint: "<project ID or system, e.g. '001'>"
 effort: medium
 handoffs:

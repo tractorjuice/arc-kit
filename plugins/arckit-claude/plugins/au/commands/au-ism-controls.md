@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an ASD Information Security Manual (ISM) control applicability statement for Australian Government projects, scoped to the system's classification and supporting DISP attestation."
+doc-type: AUISM
 argument-hint: "<project ID or system, e.g. '001', 'MyGov Portal'>"
 effort: high
 handoffs:

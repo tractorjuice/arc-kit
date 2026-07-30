@@ -1,5 +1,6 @@
 ---
 description: Generate a Secure by Design assessment for UK Government projects (civilian departments)
+doc-type: SECD
 argument-hint: "<project ID or system, e.g. '001', 'Citizen Portal'>"
 tags: [security, uk-government, ncsc, caf, cyber-essentials, gdpr, secure-by-design]
 effort: high

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a federal Canadian procurement strategy — PSPC Supply Manual route selection, Standing Offer / AgileIQ / RFP analysis, Procurement Strategy for Indigenous Business (PSAB 5%), CFTA/CETA threshold mapping, security-clearance prerequisites and lead times."
+doc-type: PROC
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate FIPS 199 system categorization (Low/Moderate/High water-mark) for a US federal civilian information system, mapping information types to NIST SP 800-60 Vol 2 and recording the CIA impact matrix."
+doc-type: FIPS199
 argument-hint: "<project ID or system, e.g. '001', 'Agency Citizen Services Portal'>"
 effort: high
 handoffs:

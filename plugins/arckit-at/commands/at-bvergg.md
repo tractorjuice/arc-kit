@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate Austrian public procurement documentation aligned with Bundesvergabegesetz 2018 — Oberschwellen/Unterschwellen determination, ANKÖ publication, BVergGVS secondary rules, and BVwG review pathway"
+doc-type: BVERGG
 argument-hint: "<project ID or procurement description, e.g. '001', 'federal IT platform €1.5M Oberschwellen'>"
 effort: high
 handoffs:

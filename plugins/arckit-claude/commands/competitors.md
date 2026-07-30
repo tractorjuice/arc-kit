@@ -1,5 +1,6 @@
 ---
 description: Competitor landscape — rival suppliers, awarded-value market share, head-to-head and concentration, from the UK Tenders MCP
+doc-type: CMPT
 argument-hint: "[project-number-or-name] <--supplier 'Name' | capability | --cpv NNNNNNNN>"
 tags: [procurement, competitors, suppliers, market-share, vendor-evaluation, uk-gov]
 effort: high

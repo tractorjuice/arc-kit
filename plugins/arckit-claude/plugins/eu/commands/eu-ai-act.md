@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess EU AI Act (Regulation 2024/1689) compliance obligations, risk classification, and conformity requirements for AI systems"
+doc-type: AIACT
 argument-hint: "<project ID or AI system description, e.g. '001', 'automated CV screening tool for public employment service'>"
 effort: high
 handoffs:

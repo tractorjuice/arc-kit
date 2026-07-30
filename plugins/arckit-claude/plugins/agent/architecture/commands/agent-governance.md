@@ -1,5 +1,6 @@
 ---
 description: Design AI agent governance — oversight models, approval workflows, audit requirements, compliance mapping
+doc-type: AAOV
 argument-hint: "<agent or project ID, e.g. 'research-agent', '001'>"
 effort: high
 handoffs:

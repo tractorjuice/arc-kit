@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Canada FITAA (Foreign Influence Transparency and Accountability Act, Bill C-70 2024) compliance assessment — activity scoping, arrangement register design, public vs protected views, Commissioner liaison protocol, Charter §2 risk register."
+doc-type: FITAA
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

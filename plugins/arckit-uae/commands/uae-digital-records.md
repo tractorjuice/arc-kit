@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Digital Records Plan under the UAE Government Services Digital Records Policy. Captures the source-of-truth register per service, retention schedule, and records-as-official-source designation."
+doc-type: DREC
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: Generate the Service Definition Document for Lot 3 (Cloud Support)
+doc-type: SDD
 effort: max
 handoffs:
   - command: /arckit:pricing

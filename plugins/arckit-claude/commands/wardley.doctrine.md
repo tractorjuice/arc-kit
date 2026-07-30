@@ -1,5 +1,6 @@
 ---
 description: Assess organizational doctrine maturity using Wardley's 4-phase framework
+doc-type: WDOC
 argument-hint: "<organization or project, e.g. 'DWP Benefits Team', 'Platform Engineering'>"
 effort: max
 handoffs:

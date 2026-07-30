@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Structure an IRN (Indice de Résilience Numérique) self-assessment following the aDRI framework — 8 resilience pillars × 5 organisational layers, with scoring scaffold and handoff to official aDRI methodology"
+doc-type: IRN
 argument-hint: "<project ID or organisation description, e.g. '001', 'SaaS fintech with AWS infrastructure and US sub-processors'>"
 effort: high
 handoffs:

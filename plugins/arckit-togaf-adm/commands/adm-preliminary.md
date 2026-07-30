@@ -1,5 +1,6 @@
 ---
 description: Set ADM scope, architecture vision, drivers, constraints, and success criteria
+doc-type: ADMP
 argument-hint: "<project ID or name, e.g. '001', 'enterprise transformation vision'>"
 effort: high
 handoffs:

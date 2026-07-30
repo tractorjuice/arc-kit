@@ -1,5 +1,6 @@
 ---
 description: Assess compliance with architecture principles and generate scorecard with evidence, gaps, and recommendations
+doc-type: PRIN-COMP
 argument-hint: "<project ID or scope, e.g. '001', 'security principles'>"
 effort: high
 ---

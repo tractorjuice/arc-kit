@@ -1,5 +1,6 @@
 ---
 description: Map business capabilities, value streams, and maturity for Phase A Business Architecture
+doc-type: BPCM
 argument-hint: "<project ID or name, e.g. '001', 'enterprise capability mapping'>"
 effort: high
 handoffs:

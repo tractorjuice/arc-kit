@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Produce an ANSSI-methodology information system cartography across four reading levels — business, application, system, and network"
+doc-type: CARTO
 argument-hint: "<project ID or system description, e.g. '001', 'ministry human resources platform with 3 data centres'>"
 effort: high
 handoffs:

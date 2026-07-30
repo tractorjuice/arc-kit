@@ -1,5 +1,6 @@
 ---
 description: Analyze stakeholder drivers, goals, and measurable outcomes
+doc-type: STKE
 argument-hint: "<project ID or group, e.g. '001', 'senior leadership'>"
 effort: high
 handoffs:

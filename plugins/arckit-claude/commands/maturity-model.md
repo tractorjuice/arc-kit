@@ -1,5 +1,6 @@
 ---
 description: Generate a capability maturity model with assessment criteria and level definitions
+doc-type: MMOD
 argument-hint: "<project ID or domain, e.g. '001', 'data management maturity'>"
 effort: high
 handoffs:

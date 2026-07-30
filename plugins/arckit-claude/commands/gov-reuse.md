@@ -1,5 +1,6 @@
 ---
 description: Discover reusable UK government code before building from scratch
+doc-type: GOVR
 argument-hint: "[project-number-or-name] <capability or domain, e.g. '001', 'case management', 'appointment booking NHS'>"
 tags: [gov, reuse, open-source, uk-gov, code-discovery, government-code]
 effort: max

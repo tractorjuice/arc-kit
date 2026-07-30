@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a SOCI Act Critical Infrastructure Risk Management Program (CIRMP) governance and evidence pack for Australian critical infrastructure assets."
+doc-type: AUSOCI
 argument-hint: "<project ID or system, e.g. '001', 'Critical Data Platform'>"
 effort: high
 handoffs:

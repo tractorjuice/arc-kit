@@ -1,5 +1,6 @@
 ---
 description: Search 24,500+ UK government repositories using natural language queries
+doc-type: GCSR
 argument-hint: "<query, e.g. 'FHIR patient data integration', 'GOV.UK Design System form components'>"
 tags: [gov, code-search, uk-gov, government-code, semantic-search, repositories]
 effort: high

@@ -1,5 +1,6 @@
 ---
 description: Map the UK government code landscape for a domain — who built what, common patterns, standards, maturity
+doc-type: GLND
 argument-hint: "<domain, e.g. 'health data integration', 'citizen identity verification'>"
 tags: [gov, landscape, uk-gov, government-code, patterns, standards, discovery]
 effort: max

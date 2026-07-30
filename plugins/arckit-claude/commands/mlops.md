@@ -1,5 +1,6 @@
 ---
 description: Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance
+doc-type: MLOPS
 argument-hint: "<project ID or ML platform, e.g. '001', 'SageMaker'>"
 effort: max
 ---

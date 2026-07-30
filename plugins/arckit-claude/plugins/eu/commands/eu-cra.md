@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess EU Cyber Resilience Act (CRA, Regulation 2024/2847) compliance obligations for products with digital elements placed on the EU market"
+doc-type: CRA
 argument-hint: "<project ID or product description, e.g. '001', 'industrial IoT gateway device Annex III Class I'>"
 effort: high
 handoffs:

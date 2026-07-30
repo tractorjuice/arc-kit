@@ -1,5 +1,6 @@
 ---
 description: Research technology, services, and products to meet requirements with build vs buy analysis
+doc-type: RSCH
 argument-hint: "<topic, e.g. 'CRM platforms for charity', 'API management tools'>"
 tags: [research, build-vs-buy, vendor, procurement, digital-marketplace, tco, saas, open-source]
 effort: max

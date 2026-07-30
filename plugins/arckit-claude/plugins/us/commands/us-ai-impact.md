@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Determine whether an AI system is rights-impacting or safety-impacting under OMB M-24-10 and document the minimum risk-management practices, M-25-21 acquisition controls, and public disclosure obligations."
+doc-type: AIIA
 argument-hint: "<project ID or AI system, e.g. '001', 'Benefits Eligibility ML Model'>"
 effort: high
 handoffs:

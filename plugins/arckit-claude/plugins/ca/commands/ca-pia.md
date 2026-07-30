@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Canada Privacy Impact Assessment per the Privacy Act and TBS Directive on Privacy Impact Assessment — personal-information inventory, lawful authority, necessity and proportionality, OPC notification trigger, and mitigation tracker."
+doc-type: PIA
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

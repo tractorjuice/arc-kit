@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess Diffusion Restreinte (DR) handling compliance — marking, storage, transmission, and destruction rules for French administrative sensitive information"
+doc-type: DR
 argument-hint: "<project ID or system description, e.g. '001', 'ministry IS processing internal audit reports and security assessments'>"
 effort: medium
 handoffs:

@@ -1,5 +1,6 @@
 ---
 description: Assess climatic patterns affecting Wardley Map components
+doc-type: WCLM
 argument-hint: "<domain or market, e.g. 'AI in healthcare', 'UK government digital services'>"
 effort: max
 handoffs:

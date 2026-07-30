@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Government of Canada Digital Standards conformance scorecard against the 10 standards — evidence per standard, gap remediation plan, and maturity roadmap."
+doc-type: DIGSTD
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

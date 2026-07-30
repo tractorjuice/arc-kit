@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a UK PSD2 SCA-RTS exemption design document — exemption applicability matrix, transaction risk analysis (TRA) thresholds, fraud monitoring framework, and per-exemption decision rationale."
+doc-type: FSSCA
 argument-hint: "<project ID or product context, e.g. '001', 'card-not-present checkout flow'>"
 effort: high
 keep-coding-instructions: true

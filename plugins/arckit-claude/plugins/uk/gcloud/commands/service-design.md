@@ -1,5 +1,6 @@
 ---
 description: Design a new cloud service offering for the G-Cloud marketplace
+doc-type: SVCD
 effort: high
 handoffs:
   - command: /arckit-uk-gcloud:sdd-lot2

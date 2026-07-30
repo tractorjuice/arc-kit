@@ -1,5 +1,6 @@
 ---
 description: Generate the G-Cloud pricing document for a service
+doc-type: PRIC
 effort: high
 handoffs:
   - command: /arckit:gcloud-competitors

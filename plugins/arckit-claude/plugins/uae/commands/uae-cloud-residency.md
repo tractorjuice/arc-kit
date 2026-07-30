@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, names approved CSP options (Core42 / G42 sovereign / Microsoft UAE North + Central, TDRA FedNet, e& Sovereign Launchpad on AWS), and captures shared-responsibility matrix and exit/portability plan."
+doc-type: CRES
 argument-hint: "<project ID or service name>"
 effort: high
 handoffs:

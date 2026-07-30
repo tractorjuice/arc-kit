@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a National Priorities Alignment Statement under the UAE Federal Government Guide. Captures reuse-vs-build justification, capability-reuse register (UAE Pass, FedNet), and strategy alignment to NIS 2031 / AI 2031 / Digital Economy Strategy / We the UAE 2031."
+doc-type: NPRA
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

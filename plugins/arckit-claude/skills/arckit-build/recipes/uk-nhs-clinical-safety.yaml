@@ -111,19 +111,19 @@ targets:
   - id: AWS_RESEARCH
     skill: arckit:aws-research
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research/aws }
+    output: { project: "{P}-{NAME}", type: AWRS, subfolder: research/aws, multi_instance: true }
     deps: [REQ, ORG_RESEARCH]
 
   - id: AZURE_RESEARCH
     skill: arckit:azure-research
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research/azure }
+    output: { project: "{P}-{NAME}", type: AZRS, subfolder: research/azure, multi_instance: true }
     deps: [REQ, ORG_RESEARCH]
 
   - id: GCP_RESEARCH
     skill: arckit:gcp-research
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research/gcp }
+    output: { project: "{P}-{NAME}", type: GCRS, subfolder: research/gcp, multi_instance: true }
     deps: [REQ, ORG_RESEARCH]
 
   - id: GOV_REUSE

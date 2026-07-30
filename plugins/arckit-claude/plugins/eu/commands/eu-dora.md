@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess DORA (Digital Operational Resilience Act, EU 2022/2554) compliance for financial sector entities operating in the EU"
+doc-type: DORA
 argument-hint: "<project ID or entity type, e.g. '001', 'French payment institution migrating to cloud'>"
 effort: high
 handoffs:

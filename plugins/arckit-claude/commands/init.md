@@ -1,5 +1,6 @@
 ---
 description: Initialize ArcKit project structure for enterprise architecture governance
+doc-type: none
 argument-hint: "<project name, e.g. 'NHS Appointment System'>"
 tags: [init, setup, project, start]
 ---

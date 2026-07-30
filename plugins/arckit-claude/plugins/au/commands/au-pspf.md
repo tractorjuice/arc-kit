@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a Protective Security Policy Framework (PSPF) compliance assessment for Australian Government entities and contractors against the four security outcomes and 16 core requirements."
+doc-type: AUPSPF
 argument-hint: "<project ID or system, e.g. '001'>"
 effort: high
 handoffs:

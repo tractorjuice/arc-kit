@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an ASD operational technology cyber security assessment for Australian Government and critical-infrastructure projects with connected OT environments."
+doc-type: AUOT
 argument-hint: "<project ID or system, e.g. '001', 'Water SCADA Platform'>"
 effort: high
 handoffs:

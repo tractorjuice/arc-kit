@@ -1,5 +1,6 @@
 ---
 description: Bulk-build ArcKit artefacts in parallel via subagent-orchestrated waves with resumable state
+doc-type: none
 argument-hint: "<project ID e.g. '001' or '001-arckit-saas'> [--plan] [--resume] [--target NAME] [--refresh NAME] [--no-commit] [--recipe NAME] [--enable ID] [--exclude ID]"
 effort: low
 tags: [build, orchestration, harness, recipe, parallel, governance, automation]

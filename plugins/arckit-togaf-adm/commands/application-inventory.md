@@ -1,5 +1,6 @@
 ---
 description: Catalog existing applications with strategic fit scoring, dependencies, and lifecycle status
+doc-type: APP
 argument-hint: "<project ID or scope, e.g. '001', 'all applications', 'cloud portfolio'>"
 effort: high
 handoffs:

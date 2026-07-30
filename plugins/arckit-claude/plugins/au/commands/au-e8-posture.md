@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an ASD Essential Eight maturity posture assessment for Australian Government projects against all eight mitigation strategies at ML0–ML3."
+doc-type: AUE8
 argument-hint: "<project ID or system, e.g. '001', 'MyGov Portal'>"
 effort: high
 handoffs:

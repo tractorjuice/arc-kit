@@ -1,5 +1,6 @@
 ---
 description: Audit a codebase (local or remote GitHub/GitLab) against architecture principles and requirements, surfacing drift, risk, and missing decisions
+doc-type: CDAU
 argument-hint: "<repo path or URL, plus optional focus and --diagram-format mermaid|plantuml, e.g. 'https://github.com/org/repo security --diagram-format plantuml'>"
 effort: max
 keep-coding-instructions: true

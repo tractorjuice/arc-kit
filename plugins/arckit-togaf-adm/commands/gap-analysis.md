@@ -1,5 +1,6 @@
 ---
 description: Perform gap analysis — capability matrix, gap severity scoring, workstream mapping
+doc-type: GAPA
 argument-hint: "<project ID, e.g. '001', 'capability gap analysis'>"
 effort: max
 handoffs:

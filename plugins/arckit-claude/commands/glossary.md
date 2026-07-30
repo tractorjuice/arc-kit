@@ -1,5 +1,6 @@
 ---
 description: Generate a consolidated project glossary of terms, acronyms, and definitions from existing artifacts
+doc-type: GLOS
 argument-hint: "<project ID or scope, e.g. '001', 'all projects'>"
 handoffs:
   - command: data-model

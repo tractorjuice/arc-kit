@@ -1,5 +1,6 @@
 ---
 description: Research UK government grants, charitable funding, and accelerator programmes with eligibility scoring
+doc-type: GRNT
 argument-hint: "[project-number-or-name] <funding need, e.g. '001', 'NHS digital health AI'>"
 tags: [grants, funding, ukri, innovate-uk, nihr, wellcome, nesta, accelerator, uk-government]
 effort: max

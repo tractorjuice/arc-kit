@@ -13,7 +13,9 @@ lookup, so an unregistered multi-instance code passed the gate and was then
 blocked at runtime. These tests pin the filename forms that must resolve.
 """
 
+import glob
 import importlib.util
+import re
 import subprocess
 import textwrap
 from pathlib import Path
@@ -115,3 +117,79 @@ def test_guard_rejects_unregistered_multi_instance_code(tmp_path):
     assert result.returncode == 1, "guard passed on unregistered codes"
     for code in ("BOGUS", "ZZZZ", "QQQQ"):
         assert code in result.stderr, f"{code} not reported:\n{result.stderr}"
+
+
+# --- doc-type declarations (#715) -------------------------------------------
+
+
+def test_every_command_declares_a_doc_type():
+    """A command with no declaration is a hole in the recipe/command check."""
+    missing = []
+    for path in sorted(glob.glob(str(REPO_ROOT / "plugins/*/commands/*.md"))):
+        text = Path(path).read_text()
+        front = text.split("---\n", 2)[1] if text.startswith("---\n") else ""
+        if not re.search(r"^doc-type:", front, re.M):
+            missing.append(str(Path(path).relative_to(REPO_ROOT)))
+    assert not missing, f"commands without a `doc-type:` declaration: {missing}"
+
+
+def test_declared_codes_resolve_or_are_none():
+    guard = load_guard()
+    known, _ = guard.load_registry()
+    bad = []
+    for cmd, declared in guard.load_declarations().items():
+        codes = [] if declared == "none" else (
+            [declared] if isinstance(declared, str) else declared
+        )
+        for code in codes:
+            if code not in known:
+                bad.append(f"{cmd} declares {code!r}")
+    assert not bad, f"unregistered codes in declarations: {bad}"
+
+
+def test_declaration_lives_on_the_command_for_delegating_commands():
+    """/arckit:framework delegates, but the FWRK declaration is on the command.
+
+    The gate resolves a recipe's `skill:` to a command file, so a declaration
+    parked only on the agent would be invisible.
+    """
+    guard = load_guard()
+    assert guard.load_declarations()["arckit:framework"] == "FWRK"
+
+
+def test_guard_rejects_a_recipe_type_that_resolves_but_is_wrong():
+    """The #715 case: a code that resolves, to the wrong artefact.
+
+    `PROC` is registered -- to Canada's Federal Procurement Strategy -- so
+    pointing the UAE procurement target at it passes every resolution check.
+    Only comparison against the command's declaration catches it.
+    """
+    recipe = REPO_ROOT / "plugins/arckit-uae/recipes/uae-federal-ai.yaml"
+    original = recipe.read_text()
+    assert "type: FPRO" in original, "recipe shape changed; update this test"
+    try:
+        recipe.write_text(original.replace("type: FPRO", "type: PROC", 1))
+        result = subprocess.run(
+            ["python3", str(GUARD)], capture_output=True, text=True, cwd=REPO_ROOT
+        )
+    finally:
+        recipe.write_text(original)
+    assert result.returncode == 1, "guard passed on a wrong-but-registered code"
+    assert "PROC" in result.stderr and "FPRO" in result.stderr, result.stderr
+
+
+def test_guard_rejects_an_artefact_type_on_a_none_command():
+    """A `none` command must pair with a NOT_A_DOC_TYPE recipe value."""
+    recipe = REPO_ROOT / "plugins/arckit-claude/skills/arckit-build/recipes/uk-nhs-clinical-safety.yaml"
+    original = recipe.read_text()
+    assert "type: NHSCSCR" in original, "recipe shape changed; update this test"
+    try:
+        recipe.write_text(original.replace("type: NHSCSCR", "type: REQ", 1))
+        result = subprocess.run(
+            ["python3", str(GUARD)], capture_output=True, text=True, cwd=REPO_ROOT
+        )
+    finally:
+        recipe.write_text(original)
+    assert result.returncode == 1, "guard passed on an artefact type for a `none` command"
+    assert "doc-type: none" in result.stderr, result.stderr
+

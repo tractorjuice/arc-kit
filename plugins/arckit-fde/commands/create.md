@@ -1,5 +1,6 @@
 ---
 description: Generate a brandable, GitHub-Pages-ready Forward Deploy Engineering consulting website into docs/ — interviews you for brand, pricing and contact, saves fde-site.config.yaml, and renders from a market preset.
+doc-type: none
 effort: high
 ---
 

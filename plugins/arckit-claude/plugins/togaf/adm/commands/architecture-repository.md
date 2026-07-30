@@ -1,5 +1,6 @@
 ---
 description: Build architecture repository — patterns library, standards register, reusable building blocks
+doc-type: REPO
 argument-hint: "<optional project ID for scope, e.g. '000', 'global repository'>"
 effort: max
 handoffs:

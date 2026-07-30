@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess CNIL-specific GDPR obligations for French deployments — cookies, health data (HDS), minors, délibérations CNIL, and French enforcement patterns"
+doc-type: CNIL
 argument-hint: "<project ID or processing description, e.g. '001', 'patient portal with health data and minors'>"
 effort: high
 handoffs:

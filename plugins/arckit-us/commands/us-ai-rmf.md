@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Conduct a NIST AI Risk Management Framework 1.0 assessment (Govern / Map / Measure / Manage) of an AI system, including the Generative AI Profile (NIST AI 600-1) where applicable."
+doc-type: AIRMF
 argument-hint: "<project ID or AI system, e.g. '001', 'Benefits Eligibility ML Model'>"
 effort: high
 keep-coding-instructions: true

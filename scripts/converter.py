@@ -10,6 +10,11 @@ CLAUDE_ONLY_COMMAND_FIELDS = (
     "effort",
     "keep-coding-instructions",
     "paths",
+    # `doc-type:` is ArcKit metadata read only by check-doc-type-registry.py,
+    # which asserts a recipe's output.type matches what its command declares it
+    # writes. Nothing consumes it at runtime on any platform, so it is stripped
+    # rather than carried into the generated extensions (#715).
+    "doc-type",
 )
 
 CLAUDE_ONLY_AGENT_FIELDS = (

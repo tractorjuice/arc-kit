@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Determine medical-device classification for software-as-medical-device (SaMD) or AI-as-medical-device (AIaMD) under UK MDR 2002 (as amended) and EU MDR 2017/745, including UKCA / UKNI / CE marking pathway and Windsor Framework NI handling."
+doc-type: NHSMDR
 argument-hint: "<project ID or product, e.g. '001', 'paediatric growth tool'>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess NIS2 Directive compliance obligations for EU member state operators of essential services and important entities"
+doc-type: NIS2
 argument-hint: "<project ID or organisation, e.g. '001', 'French regional energy DSO with OIV designation'>"
 effort: high
 handoffs:

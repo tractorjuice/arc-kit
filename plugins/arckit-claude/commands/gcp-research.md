@@ -1,5 +1,6 @@
 ---
 description: Research Google Cloud services and architecture patterns using Google Developer Knowledge MCP for authoritative guidance
+doc-type: GCRS
 argument-hint: "<topic or use case, e.g. 'BigQuery analytics', 'GKE Autopilot'>"
 tags: [gcp, google, cloud, architecture, mcp, research, architecture-framework]
 effort: high

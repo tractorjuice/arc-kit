@@ -1,5 +1,6 @@
 ---
 description: Generate NCSC Cloud Security Principles assertions and evidence for a service
+doc-type: SECA
 effort: high
 handoffs:
   - command: /arckit:dpia

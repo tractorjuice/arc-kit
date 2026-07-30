@@ -1,5 +1,6 @@
 ---
 description: Establish Architecture Board charter, compliance scorecard, and governance process
+doc-type: BORD
 argument-hint: "<project ID, e.g. '001', 'architecture board charter'>"
 effort: high
 handoffs:

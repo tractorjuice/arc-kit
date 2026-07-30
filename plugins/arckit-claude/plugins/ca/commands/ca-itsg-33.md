@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an ITSG-33 Statement of Applicability with TBS Standard on Security Categorization — Protected A/B/C, Secret, Top Secret tailoring, control profile selection (PBMM / PBMM-Cloud / Secret-High), CMVP / FIPS 140-3 module validation, supply chain security, and continuous monitoring plan."
+doc-type: ITSG
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true

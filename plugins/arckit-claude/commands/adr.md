@@ -1,5 +1,6 @@
 ---
 description: Document architectural decisions with options analysis and traceability
+doc-type: ADR
 argument-hint: "<decision topic, e.g. 'API gateway selection', 'database platform'>"
 effort: high
 handoffs:

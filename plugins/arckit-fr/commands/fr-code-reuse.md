@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Assess public code reuse opportunities before building from scratch — search code.gouv.fr, the SILL, and European public code repositories; produce a build-vs-reuse decision matrix"
+doc-type: REUSE
 argument-hint: "<project ID or component description, e.g. '001', 'citizen authentication portal, document management, API gateway'>"
 effort: medium
 handoffs:

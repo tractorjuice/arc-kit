@@ -1,5 +1,6 @@
 ---
 description: Design AI agent architecture — patterns, tool contracts, memory, orchestration, guardrails
+doc-type: AAGR
 argument-hint: "<agent name or project ID, e.g. 'research-agent', '001'>"
 effort: high
 handoffs:

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a UAE IAS Statement of Applicability against the 188 controls (60 management M1–M6 + 128 technical T1–T9), priority-tiered P1–P4. Anchored on the UAE Cybersecurity Council Information Assurance Standard v2."
+doc-type: IAS
 argument-hint: "<project ID or system description>"
 effort: high
 handoffs:

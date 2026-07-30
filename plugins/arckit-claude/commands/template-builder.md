@@ -1,5 +1,6 @@
 ---
 description: Create new document templates by interviewing the user about their organization's requirements
+doc-type: none
 argument-hint: "<template type> [--share], e.g. 'security assessment', 'vendor scorecard --share'"
 handoffs:
   - command: customize

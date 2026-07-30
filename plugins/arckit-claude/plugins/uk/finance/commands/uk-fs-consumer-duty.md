@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an FCA Consumer Duty annual Board Report — customer outcomes evidence pack across the four outcomes (Products & Services, Price & Value, Consumer Understanding, Consumer Support), price & value assessment, target market assessment, fair-value framework."
+doc-type: FSCD
 argument-hint: "<project ID or product context, e.g. '003', 'retail FX cross-border payments'>"
 effort: high
 keep-coding-instructions: true

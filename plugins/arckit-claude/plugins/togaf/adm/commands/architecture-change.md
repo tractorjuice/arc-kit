@@ -1,5 +1,6 @@
 ---
 description: Create architecture change request with impact assessment and ADM cycle re-entry
+doc-type: ACHG
 argument-hint: "<project ID, change type, e.g. '001', 'evolutionary', 'new capability'>"
 effort: high
 handoffs:

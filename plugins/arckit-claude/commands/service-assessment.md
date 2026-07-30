@@ -1,5 +1,6 @@
 ---
 description: Prepare for GDS Service Standard assessment - analyze evidence against 14 points, identify gaps, generate readiness report
+doc-type: SVCASS
 argument-hint: "<project ID and stage, e.g. '001 Alpha', '001 Beta'>"
 alwaysShow: true
 effort: max

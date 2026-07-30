@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate an NHS Digital Technology Assessment Criteria (DTAC v3) assessment for a digital health product being procured or assured by an NHS organisation."
+doc-type: NHSDTAC
 argument-hint: "<project ID or product, e.g. '001', 'paediatric growth tool'>"
 effort: high
 keep-coding-instructions: true

@@ -1,5 +1,6 @@
 ---
 description: "[COMMUNITY] Generate a DISP (Defence Industry Security Program) Member self-attestation pack covering E8 ML2, ISM applicability, governance, personnel security, and incident reporting — supports DISP Levels 1, 2, 3."
+doc-type: AUDISP
 argument-hint: "<project ID or system, e.g. '001'>"
 effort: high
 handoffs:

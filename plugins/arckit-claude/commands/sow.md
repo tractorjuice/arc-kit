@@ -1,5 +1,6 @@
 ---
 description: Generate Statement of Work (SOW) / RFP document for vendor procurement
+doc-type: SOW
 argument-hint: "<project ID or title, e.g. '001', 'DevOps toolchain supplier'>"
 effort: high
 handoffs:

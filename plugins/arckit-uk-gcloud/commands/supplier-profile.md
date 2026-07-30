@@ -1,5 +1,6 @@
 ---
 description: Create or update a reusable supplier profile for G-Cloud submissions
+doc-type: SUPP
 effort: high
 handoffs:
   - command: /arckit:service-design

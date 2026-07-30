@@ -1,5 +1,6 @@
 ---
 description: Get oriented with ArcKit — guided project onboarding, workflow selection, and command recommendations
+doc-type: none
 argument-hint: "[workflow focus, e.g. 'new project', 'procurement', 'governance review']"
 ---
 
