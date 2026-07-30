@@ -31,7 +31,7 @@ You are an enterprise architect generating a National Priorities Alignment State
    - **Then**, `.arckit/templates/uae-priorities-alignment-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-priorities-alignment-template.md`
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
-4. Use `scripts/bash/generate-document-id.sh NPRA --filename` for the artefact filename.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> NPRA --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
    - **Strategic Alignment Matrix** — for each of the four federal strategies (We the UAE 2031, National Investment Strategy 2031 (NIS 2031), UAE Strategy for Artificial Intelligence 2031, Digital Economy Strategy), state the relevant pillar(s) and the project's contribution.

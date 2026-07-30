@@ -15,8 +15,13 @@
 #   ./generate-document-id.sh 001 REQ 1.0 --filename → ARC-001-REQ-v1.0.md
 #   ./generate-document-id.sh 001 ADR 1.0 --filename --next-num ./decisions → ARC-001-ADR-001-v1.0.md
 #
-# Multi-instance types (require --next-num for sequence numbering):
-#   ADR, DIAG, DFD, WARD, DMC, RSCH, AWRS, AZRS, GCRS, DSCT, TNDR, CMPT, WGAM, WCLM, WVCH
+# Multi-instance types require --next-num for sequence numbering. See the
+# MULTI_INSTANCE_TYPES variable below for the list -- it is deliberately not
+# repeated up here. This comment used to carry its own copy, which drifted five
+# types behind the variable (CDAU, GCSR, GLND, GOVR, GRNT) and told anyone who
+# consulted it that those five needed no sequence number.
+# check-multi-instance-parity.py guards the variable across all three
+# registries; it does not read comments.
 
 set -euo pipefail
 

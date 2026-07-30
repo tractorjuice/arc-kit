@@ -75,6 +75,28 @@ NOT_A_CODE_IN_PROSE = {
     "DSCR",
 }
 
+# ARC-<pid-or-placeholder>-<CODE>[-<SEQ>]-v...
+#
+# CODE may be compound (PRIN-COMP).
+#
+# SEQ is the multi-instance sequence segment, and matching it is load-bearing:
+# without it, every MULTI_INSTANCE_TYPES filename in the form commands actually
+# write is invisible to check_command_codes. `ARC-001-WGAM-001-v` and
+# `ARC-{PID}-ADR-{NNN}-v` both fail a bare CODE-then-`-v` pattern, so an
+# unregistered multi-instance code sailed past the one check that catches the
+# fatal case -- validate-arc-filename.mjs strips the sequence before its own
+# KNOWN_TYPES lookup, and blocks the write this gate had just cleared. Only the
+# literal `NN`/`NNN` placeholder form ever matched, and only because CODE
+# swallowed it and the NOT_A_CODE_IN_PROSE fallback split it back off.
+#
+# tests/plugin/test_doc_type_registry.py pins the forms that must match.
+COMMAND_CODE_RE = re.compile(
+    r"ARC-[A-Za-z0-9{}\[\]_-]*?-"
+    r"([A-Z][A-Z0-9]*(?:-[A-Z][A-Z0-9]*)*)"  # CODE
+    r"(?:-(?:\d{1,3}|\{[A-Z]{1,4}\}))?"      # SEQ: -001, -{NNN}, -{NUM}
+    r"-v"
+)
+
 errors: list[str] = []
 
 
@@ -145,8 +167,7 @@ def check_command_codes(known: set[str]) -> int:
     blocks the write outright.
     """
     checked = 0
-    # ARC-<pid-or-placeholder>-<CODE>-v...  CODE may be compound (PRIN-COMP).
-    pat = re.compile(r"ARC-[A-Za-z0-9{}\[\]_-]*?-([A-Z][A-Z0-9]*(?:-[A-Z][A-Z0-9]*)*)-v")
+    pat = COMMAND_CODE_RE
     sources = sorted(
         glob.glob(str(ROOT / "plugins/*/commands/*.md"))
         + glob.glob(str(ROOT / "plugins/*/agents/*.md"))
