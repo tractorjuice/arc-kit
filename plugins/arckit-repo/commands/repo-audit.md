@@ -1,6 +1,6 @@
 ---
 description: Audit a codebase (local or remote GitHub/GitLab) against architecture principles and requirements, surfacing drift, risk, and missing decisions
-argument-hint: "<repo path or URL, plus optional focus, e.g. 'https://github.com/org/repo security'>"
+argument-hint: "<repo path or URL, plus optional focus and --diagram-format mermaid|plantuml, e.g. 'https://github.com/org/repo security --diagram-format plantuml'>"
 effort: max
 keep-coding-instructions: true
 handoffs:
@@ -52,7 +52,18 @@ The first token of `$ARGUMENTS` is the target. Everything after it is optional f
 
 Strip a trailing `.git` and any trailing slash before resolving. If `--check` or `--dry-run` appears anywhere in the arguments, run in Check mode (Step 7).
 
-Focus text narrows the audit, for example `security`, `dependencies and CI only`, `data protection`. With no focus text, run all dimensions.
+Focus text narrows the audit, for example `security`, `dependencies and CI only`, `data protection`. With no focus text, run all dimensions. Flags are not focus text — strip any `--*` token and its value before treating the remainder as focus.
+
+### Diagram format
+
+`--diagram-format mermaid|plantuml` selects the syntax of the as-built C4 diagram in Step 6. **Default: `mermaid`.**
+
+| Value | When to prefer it |
+|---|---|
+| `mermaid` (default) | The report will be read in the repository it audits. GitHub, GitLab and ArcKit Pages all render Mermaid inline with no toolchain. |
+| `plantuml` | Layout quality matters more than portability. C4-PlantUML lays out large container diagrams better and supports directional hints. Needs a PlantUML server, the VS Code extension, or ArcKit Pages to render. |
+
+Accept `--diagram-format=plantuml` and `--diagram-format plantuml`. Treat `puml` and `c4-plantuml` as synonyms for `plantuml`, and `mmd` as a synonym for `mermaid`. On an unrecognised value, say so, state that you are falling back to `mermaid`, and continue — never abort the audit over a diagram flag.
 
 ## Step 2: Obtain the Code
 
@@ -167,6 +178,38 @@ Run all ten unless focus text narrows the set. Record any dimension skipped, and
 
 Populate every section of the template. Specific requirements:
 
+- **As-Built Architecture** carries a C4 container diagram. The template ships the Mermaid form. Emit whichever form `--diagram-format` selected (Step 1), replacing the template's fenced block entirely rather than adding a second one. Both describe the same model, so derive them from the same component list you evidenced.
+
+  `mermaid` (default) — keep the template's block, fill in the real containers:
+
+  ````text
+  ```mermaid
+  C4Container
+      title Container diagram — {REPO_NAME} (as built)
+      Person(user, "User")
+      Container(app, "{Component}", "{Tech}", "{Responsibility}")
+      ContainerDb(db, "{Store}", "{Tech}", "{What it holds}")
+      Rel(user, app, "{Interaction}")
+  ```
+  ````
+
+  `plantuml` — replace the block with C4-PlantUML. The `!include` line is required, or every `Container()` macro fails to resolve:
+
+  ````text
+  ```plantuml
+  @startuml
+  !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+  title Container diagram — {REPO_NAME} (as built)
+  Person(user, "User")
+  Container(app, "{Component}", "{Tech}", "{Responsibility}")
+  ContainerDb(db, "{Store}", "{Tech}", "{What it holds}")
+  Rel(user, app, "{Interaction}")
+  @enduml
+  ```
+  ````
+
+  For PlantUML, consult the `plantuml-syntax` skill for directional layout hints (`Lay_D`, `Lay_R`) on diagrams above roughly ten containers — that layout control is the main reason to choose this format. State the chosen format in the summary so the reader knows why the block looks the way it does.
+
 - **Blocking Decisions** is the section that makes this more than a repo summary. Every decision the codebase implies but never records becomes a numbered entry with enough context to file directly via `/arckit:adr`. If there are none, say so; do not invent them.
 - **Findings** must sort CRITICAL first. Any finding without evidence or an explicit `Absent` marker is cut before writing.
 - **Limitations** must be honest and specific. A reader must not mistake the report for exhaustive.
@@ -175,7 +218,7 @@ Populate every section of the template. Specific requirements:
 
 ## Step 7: Check Mode
 
-With `--check` or `--dry-run`: report the resolved target, whether it is local or would be cloned, the detected project, **whether that project appears to describe this repository** (step 3b) and the mode that follows from it, which artefacts would be scored against, and which dimensions would run. Write nothing, and do not clone.
+With `--check` or `--dry-run`: report the resolved target, whether it is local or would be cloned, the detected project, **whether that project appears to describe this repository** (step 3b) and the mode that follows from it, which artefacts would be scored against, which dimensions would run, and the resolved diagram format. Write nothing, and do not clone.
 
 Check mode is the cheapest way to catch a wrong project before a full run.
 

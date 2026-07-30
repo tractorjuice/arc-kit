@@ -72,6 +72,15 @@ Facts only. No judgement in this section.
 
 [Narrative description of what the code actually builds, not what the docs claim it builds. Note any divergence between the two explicitly.]
 
+<!-- Diagram format: Mermaid C4 by default, because this report is usually read
+     in the repository it audits, where GitHub and GitLab render Mermaid inline
+     with no toolchain. Run `/arckit-repo:repo-audit <target> --diagram-format plantuml`
+     to emit C4-PlantUML instead (better layout on large diagrams, needs a
+     PlantUML server, the VS Code extension, or ArcKit Pages to render). To make
+     one format the permanent default for this project, copy this template to
+     .arckit/templates-custom/codebase-audit-template.md and edit the block below;
+     the command reads that copy first. -->
+
 ```mermaid
 C4Container
     title Container diagram — [REPO_NAME] (as built)
