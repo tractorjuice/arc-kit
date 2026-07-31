@@ -87,19 +87,23 @@ def test_every_ai_choice_has_a_required_asset_entry() -> None:
 
 
 @pytest.mark.parametrize("ai", ["copilot", "codex", "opencode"])
-def test_init_exits_nonzero_and_leaves_no_project_behind(tmp_path: Path, ai: str) -> None:
+def test_init_exits_nonzero_and_leaves_no_project_behind(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, ai: str
+) -> None:
     """The #730 end state: a hollow data root must not produce a project."""
     data_root = tmp_path / "share" / "arckit"
-    (data_root / ".arckit" / "templates").mkdir(parents=True)
-    (data_root / "scripts").mkdir(parents=True)
+    for entry in (".arckit/templates", "scripts"):
+        (data_root / entry).mkdir(parents=True)
 
-    with runner.isolated_filesystem(temp_dir=tmp_path) as cwd:
-        result = runner.invoke(
-            app,
-            ["init", "demo", "--ai", ai, "--no-git"],
-            env={"ARCKIT_DATA_DIR": str(data_root)},
-        )
+    workdir = tmp_path / "work"
+    workdir.mkdir()
+    # monkeypatch rather than CliRunner.isolated_filesystem, which Click
+    # dropped — the suite must not pin a Click version to run.
+    monkeypatch.chdir(workdir)
+    monkeypatch.setenv("ARCKIT_DATA_DIR", str(data_root))
 
-        assert result.exit_code == 1, result.output
-        assert "initialized successfully" not in result.output
-        assert not (Path(cwd) / "demo").exists()
+    result = runner.invoke(app, ["init", "demo", "--ai", ai, "--no-git"])
+
+    assert result.exit_code == 1, result.output
+    assert "initialized successfully" not in result.output
+    assert not (workdir / "demo").exists()
