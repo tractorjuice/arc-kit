@@ -120,6 +120,42 @@ After step 11, verify the umbrella GitHub Release and every standalone GitHub Re
 - `tractorjuice/arckit-vibe`
 - `tractorjuice/arckit-kimi`
 
+### PyPI (`arckit-cli`)
+
+Step 11's tag push also publishes the CLI to PyPI, via the `pypi` job in
+`.github/workflows/release.yml`. There is no manual upload step, and nothing to do
+in the local flow above.
+
+This used to be manual, which is why it stopped happening: PyPI sat at **6.4.1**
+while the repo was on 6.7.5, so `pip install arckit-cli` served a three-release-old
+CLI to anyone not using the git URL (#730).
+
+Publishing uses [PyPI Trusted Publishing](https://docs.pypi.org/trusted-publishers/),
+so there is no API credential stored in the repository. It needs a **one-time**
+configuration on PyPI, under the project's *Publishing* tab → *GitHub Actions*:
+
+| Field | Value |
+|---|---|
+| Owner | `tractorjuice` |
+| Repository | `arc-kit` |
+| Workflow name | `release.yml` |
+| Environment name | `pypi` |
+
+These must match the workflow exactly or the OIDC exchange is rejected. The
+`pypi` environment also has to exist under *Settings → Environments*; add a
+required reviewer there if you want releases to pause for approval before upload.
+
+Two guards worth knowing about:
+
+- The job **fails if the tag disagrees with the built version**, because PyPI never
+  lets a version number be reused — a wrong upload cannot be undone, only yanked.
+- The build runs through `hatch_build.py`, so a wheel whose extension trees are
+  empty cannot be published (#730). See "Adding New Package Data Files" below.
+
+To publish a version whose tag already exists (as 6.7.5 did when this was added),
+either delete and re-push the tag, or upload once by hand with
+`python -m build && python -m twine upload dist/*`.
+
 ### Note on `claude plugin tag`
 
 This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`), which would not trigger `.github/workflows/release.yml` (it matches `v[0-9]+.[0-9]+.[0-9]+`). We use `--dry-run` for its validation behaviour only — it cross-checks `plugins/arckit-claude/.claude-plugin/plugin.json` against the marketplace entry in `.claude-plugin/marketplace.json` and exits non-zero on mismatch, catching version drift before the real `git tag -a vX.Y.Z` runs.

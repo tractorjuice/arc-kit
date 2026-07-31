@@ -29,3 +29,57 @@ jobs:
           gh release create "$TAG_NAME" \
             --title "ArcKit $TAG_NAME" \
             --notes-file /tmp/release-notes.md
+
+  # Publishing the CLI was a manual step, so it stopped happening: PyPI sat at
+  # 6.4.1 while the repo was on 6.7.5, and `pip install arckit-cli` served a
+  # three-release-old CLI to anyone not using the git URL (#730).
+  #
+  # Uses PyPI Trusted Publishing (OIDC), so there is no long-lived credential
+  # to store or rotate. One-time setup on PyPI, under the project's Publishing
+  # tab -> GitHub Actions, with these exact values or the exchange is rejected:
+  #   Owner: tractorjuice   Repository: arc-kit
+  #   Workflow: release.yml   Environment: pypi
+  pypi:
+    name: Publish to PyPI
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      contents: read
+      # Required for OIDC, and must be set at job level — the workflow-level
+      # `contents: write` above does not carry it.
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build sdist and wheel
+        # hatch_build.py runs scripts/converter.py during the build, so the
+        # generated extension trees reach the wheel even though they are
+        # gitignored, and the build fails rather than shipping them empty.
+        run: |
+          python -m pip install --upgrade build
+          python -m build
+
+      - name: Check the built version matches the tag
+        # A tag disagreeing with pyproject.toml would publish under the wrong
+        # number, and PyPI never lets a version be reused.
+        env:
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          BUILT=$(ls dist/*.tar.gz | sed -E 's/.*arckit_cli-(.+)\.tar\.gz/\1/')
+          if [ "v$BUILT" != "$TAG_NAME" ]; then
+            echo "::error::Tag $TAG_NAME does not match built version $BUILT."
+            echo "Run scripts/bump-version.sh before tagging."
+            exit 1
+          fi
+          echo "Publishing arckit-cli $BUILT"
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # Makes re-running a partially failed release a no-op rather than a
+          # hard failure on "file already exists".
+          skip-existing: true

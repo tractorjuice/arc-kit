@@ -20,14 +20,19 @@ import { parseHookInput } from './hook-utils.mjs';
 // Applied only to the generic key-value rules; token-format/PEM/high-entropy
 // rules are left untouched so literal credentials are still caught.
 const REF = String.raw`(?![A-Za-z_$][\w$]*(?:\.[\w$]|\[|\()|\$\{|\$\()`;
+// Capability guard: a declared permission level is not credential material.
+// GitHub Actions spells an OIDC grant as the id-token key set to `write`, so
+// without this every workflow publishing via OIDC was blocked. Also covers the
+// literal placeholders that appear in config templates.
+const LEVEL = String.raw`(?!(?:read|write|none|true|false|null)\b\s*$)`;
 
 const SECRET_PATTERNS = [
   // Explicit key-value patterns (reference-guarded — literal values only)
-  [new RegExp(String.raw`\b(password|passwd|pwd)\s*[:=]\s*${REF}\S+`, 'gi'), 'password'],
-  [new RegExp(String.raw`\b(secret|api_?secret)\s*[:=]\s*${REF}\S+`, 'gi'), 'secret'],
-  [new RegExp(String.raw`\b(api_?key|apikey)\s*[:=]\s*${REF}\S+`, 'gi'), 'API key'],
-  [new RegExp(String.raw`\b(token|auth_?token|access_?token)\s*[:=]\s*${REF}\S+`, 'gi'), 'token'],
-  [new RegExp(String.raw`\b(private_?key)\s*[:=]\s*${REF}\S+`, 'gi'), 'private key'],
+  [new RegExp(String.raw`\b(password|passwd|pwd)\s*[:=]\s*${REF}${LEVEL}\S+`, 'gi'), 'password'],
+  [new RegExp(String.raw`\b(secret|api_?secret)\s*[:=]\s*${REF}${LEVEL}\S+`, 'gi'), 'secret'],
+  [new RegExp(String.raw`\b(api_?key|apikey)\s*[:=]\s*${REF}${LEVEL}\S+`, 'gi'), 'API key'],
+  [new RegExp(String.raw`\b(token|auth_?token|access_?token)\s*[:=]\s*${REF}${LEVEL}\S+`, 'gi'), 'token'],
+  [new RegExp(String.raw`\b(private_?key)\s*[:=]\s*${REF}${LEVEL}\S+`, 'gi'), 'private key'],
 
   // Common API key formats
   [/sk-[a-zA-Z0-9]{20,}/g, 'OpenAI API key'],
@@ -36,16 +41,16 @@ const SECRET_PATTERNS = [
   [/gho_[a-zA-Z0-9]{36}/g, 'GitHub OAuth token'],
   [/ghs_[a-zA-Z0-9]{36}/g, 'GitHub server token'],
   [/AKIA[0-9A-Z]{16}/g, 'AWS access key ID'],
-  [new RegExp(String.raw`aws_secret_access_key\s*[:=]\s*${REF}\S+`, 'gi'), 'AWS secret key'],
+  [new RegExp(String.raw`aws_secret_access_key\s*[:=]\s*${REF}${LEVEL}\S+`, 'gi'), 'AWS secret key'],
 
   // Notion tokens
   [/ntn_[a-zA-Z0-9]{40,}/g, 'Notion integration token'],
   [/secret_[a-zA-Z0-9]{40,}/g, 'potential secret token'],
 
   // Atlassian tokens
-  [new RegExp(String.raw`atlassian[-_]?token\s*[:=]\s*${REF}\S+`, 'gi'), 'Atlassian token'],
-  [new RegExp(String.raw`confluence[-_]?token\s*[:=]\s*${REF}\S+`, 'gi'), 'Confluence token'],
-  [new RegExp(String.raw`jira[-_]?token\s*[:=]\s*${REF}\S+`, 'gi'), 'Jira token'],
+  [new RegExp(String.raw`atlassian[-_]?token\s*[:=]\s*${REF}${LEVEL}\S+`, 'gi'), 'Atlassian token'],
+  [new RegExp(String.raw`confluence[-_]?token\s*[:=]\s*${REF}${LEVEL}\S+`, 'gi'), 'Confluence token'],
+  [new RegExp(String.raw`jira[-_]?token\s*[:=]\s*${REF}${LEVEL}\S+`, 'gi'), 'Jira token'],
   [/ATATT[a-zA-Z0-9]{20,}/g, 'Atlassian API token'],
 
   // Slack tokens
