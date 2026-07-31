@@ -586,7 +586,7 @@ def init(
         console.print(
             "  [cyan]gemini extensions install https://github.com/tractorjuice/arckit-gemini[/cyan]"
         )
-        console.print("\nThe extension provides all 48 commands with zero config.")
+        console.print("\nThe extension provides every ArcKit command with zero config.")
         console.print("Updates via: [cyan]gemini extensions update arckit[/cyan]")
         raise typer.Exit(0)
 

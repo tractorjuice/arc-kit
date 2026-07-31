@@ -156,6 +156,16 @@ To publish a version whose tag already exists (as 6.7.5 did when this was added)
 either delete and re-push the tag, or upload once by hand with
 `python -m build && python -m twine upload dist/*`.
 
+**Follow-up once the first automated publish lands.** Every install instruction in
+the repo currently uses the git URL, because PyPI was three releases stale and
+`pip install arckit-cli` would have served 6.4.1. Once PyPI is current, these can
+move to `pip install arckit-cli`: `README.md` (installation, upgrade, and the
+Copilot and Codex sections), `docs/getting-started.html`, `docs/index.html` (the
+FAQ answer, which is JSON-LD and feeds search engines' rich results),
+`docs/guides/upgrading.md` — then `scripts/check-guide-parity.py --sync` — and each
+`extensions/*/README.md`. Note the PyPI package is **`arckit-cli`**; `arckit` is an
+unrelated third-party ARC-AGI package, and the FAQ answer pointed at it until #731.
+
 ### Note on `claude plugin tag`
 
 This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`), which would not trigger `.github/workflows/release.yml` (it matches `v[0-9]+.[0-9]+.[0-9]+`). We use `--dry-run` for its validation behaviour only — it cross-checks `plugins/arckit-claude/.claude-plugin/plugin.json` against the marketplace entry in `.claude-plugin/marketplace.json` and exits non-zero on mismatch, catching version drift before the real `git tag -a vX.Y.Z` runs.

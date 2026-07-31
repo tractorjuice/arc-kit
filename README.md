@@ -99,7 +99,7 @@ pip install git+https://github.com/tractorjuice/arc-kit.git
 arckit init my-project --ai copilot
 ```
 
-Creates `.github/prompts/arckit-*.prompt.md` (80 prompt files), `.github/agents/arckit-*.agent.md` (10 custom agents), and `.github/copilot-instructions.md` (repo-wide context). Invoke commands in Copilot Chat as `/arckit-requirements`, `/arckit-stakeholders`, etc.
+Creates `.github/prompts/arckit-*.prompt.md` (165 prompt files — the 75 official commands plus the community overlays), `.github/agents/arckit-*.agent.md` (10 custom agents), and `.github/copilot-instructions.md` (repo-wide context). Invoke commands in Copilot Chat as `/arckit-requirements`, `/arckit-stakeholders`, etc.
 
 **Codex CLI** — install the ArcKit CLI:
 
@@ -261,7 +261,7 @@ kimi
 # Step 1: Upgrade the CLI tool
 pip install --upgrade git+https://github.com/tractorjuice/arc-kit.git
 # Or with uv:
-uv tool upgrade arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
+uv tool install --force arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
 
 # Step 2: Update your existing project (re-run init in place)
 cd /path/to/your-existing-project
