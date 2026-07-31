@@ -151,6 +151,46 @@ def init_git_repo(project_path: Path) -> bool:
         os.chdir(original_cwd)
 
 
+# Assets without which a scaffolded project cannot be used with the chosen
+# assistant. Copies not listed here stay best-effort: a missing Codex hook
+# directory degrades the project, a missing skills directory means the
+# assistant has no ArcKit commands at all. `kimi` copies nothing of its own —
+# its commands arrive via the extension installed from inside the Kimi TUI.
+COMMON_REQUIRED_ASSETS = (
+    "templates",
+    "scripts",
+    "docid_generator",
+    "doctypes_config",
+)
+
+REQUIRED_ASSETS_BY_AI = {
+    "codex": ("codex_skills",),
+    "opencode": ("opencode_commands", "opencode_agents"),
+    "copilot": ("copilot_prompts", "copilot_agents", "copilot_instructions"),
+    "kimi": (),
+}
+
+
+def missing_required_assets(data_paths, ai_assistant, all_ai=False):
+    """Return [(key, path)] for each required asset that is not on disk.
+
+    `--all-ai` installs the Codex and OpenCode trees, so both gate the run.
+    """
+    keys = list(COMMON_REQUIRED_ASSETS)
+    if all_ai:
+        keys += list(REQUIRED_ASSETS_BY_AI["codex"])
+        keys += list(REQUIRED_ASSETS_BY_AI["opencode"])
+    else:
+        keys += list(REQUIRED_ASSETS_BY_AI.get(ai_assistant, ()))
+
+    missing = []
+    for key in keys:
+        path = data_paths.get(key)
+        if path is None or not Path(path).exists():
+            missing.append((key, path))
+    return missing
+
+
 def get_data_paths():
     """Get paths to templates, scripts, and commands from installed package or source."""
 
@@ -562,19 +602,41 @@ def init(
             f"[cyan]Selected AI assistant:[/cyan] {AGENT_CONFIG[ai_assistant]['name']}"
         )
 
+    # Resolve the installed assets *before* anything is written, so a broken
+    # install fails with an error instead of leaving behind a project that
+    # announces itself as ready but has no commands in it (#730).
+    data_paths = get_data_paths()
+
+    console.print(f"[dim]Debug: Resolved data paths:[/dim]")
+    console.print(f"[dim]  templates: {data_paths['templates']}[/dim]")
+    console.print(f"[dim]  scripts: {data_paths['scripts']}[/dim]")
+
+    missing = missing_required_assets(data_paths, ai_assistant, all_ai)
+    if missing:
+        console.print(
+            f"\n[red]Error:[/red] ArcKit's installed files are incomplete, so a "
+            f"project for {AGENT_CONFIG[ai_assistant]['name']} cannot be created."
+        )
+        console.print(f"[dim]Data directory: {data_paths.get('data_root')}[/dim]")
+        console.print("\n[red]Missing:[/red]")
+        for key, path in missing:
+            console.print(f"  {key}: {path}")
+        console.print(
+            "\nReinstall ArcKit, or set ARCKIT_DATA_DIR to the directory "
+            "containing .arckit/templates. If you installed from a git "
+            "checkout, run [cyan]python scripts/converter.py[/cyan] first — the "
+            "extension formats are generated, not committed."
+        )
+        raise typer.Exit(1)
+
     # Create project structure
     create_project_structure(project_path, ai_assistant, all_ai)
 
     # Copy templates from installed package or source
     console.print("[cyan]Setting up templates...[/cyan]")
 
-    data_paths = get_data_paths()
     templates_src = data_paths["templates"]
     scripts_src = data_paths["scripts"]
-
-    console.print(f"[dim]Debug: Resolved data paths:[/dim]")
-    console.print(f"[dim]  templates: {templates_src}[/dim]")
-    console.print(f"[dim]  scripts: {scripts_src}[/dim]")
 
     templates_dst = project_path / ".arckit" / "templates"
     scripts_dst = project_path / ".arckit" / "scripts"
