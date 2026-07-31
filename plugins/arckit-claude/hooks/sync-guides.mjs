@@ -31,6 +31,7 @@ import {
   ROLE_FAMILIES,
   guideMetadataForStem,
 } from '../config/guide-groups.mjs';
+import { spawnSync } from 'node:child_process';
 import {
   isDir, isFile, mtimeMs, readText, listDir,
   findRepoRoot, parseHookInput,
@@ -305,6 +306,88 @@ function scanGlobalDocs(repoRoot) {
   }
 
   return { global, globalExternal, globalPolicies };
+}
+
+// ── Guard: never publish an index entry for a file git will not publish ─────
+//
+// update-manifest.mjs gained this rule in #690 ("a published index must not
+// reference a file that will never be published"). This hook, which rewrites
+// the WHOLE manifest rather than appending one entry, never got it -- so
+// running /arckit:pages in a repo that gitignores its projects/ published a
+// local, unpublishable scan. ArcKit gitignores its own projects/, so that is
+// exactly what happened here (#727).
+//
+// Which project directories git will never publish.
+//
+// Filtering at the SOURCE rather than pruning the finished manifest, because
+// the manifest is not one shape: projects[] and global[] are arrays of
+// {path}, but dependencyGraph.nodes is an object keyed by document ID and
+// comes from a SEPARATE scanAllArtifacts() call. A generic post-hoc walk
+// missed the graph entirely and published 7 gitignored paths plus 20 edges
+// referencing them -- the exact leak this guard exists to close. Deciding once,
+// where directories are discovered, makes every derived structure correct by
+// construction.
+//
+// Directory granularity is deliberate. The real case is a whole projects/ tree
+// being gitignored, which is ArcKit's own situation; a single artefact ignored
+// inside an otherwise tracked project is not something we have ever seen, and
+// failing to catch it costs one stale link rather than a wholesale leak.
+//
+// Fails OPEN on any error -- no git, not a repo, git unavailable all mean
+// "cannot prove it is ignored", so nothing is skipped. Note this asks about
+// IGNORED, not merely untracked: an artefact written moments ago in a repo that
+// tracks projects/ is untracked and must still be published.
+function ignoredProjectDirs(repoRoot, projectsDir, entries) {
+  const empty = new Set();
+  const candidates = ['projects', ...entries.map((e) => `projects/${e}`)];
+  try {
+    const r = spawnSync('git', ['check-ignore', '--stdin'], {
+      cwd: repoRoot,
+      input: candidates.join('\n') + '\n',
+      encoding: 'utf8',
+      timeout: 5000,
+    });
+    // 0 = some ignored, 1 = none ignored, anything else = error.
+    if (r.error || (r.status !== 0 && r.status !== 1)) return empty;
+    const ignored = new Set(
+      (r.stdout || '').split('\n').map((l) => l.trim()).filter(Boolean)
+    );
+    // The whole tree ignored implies every project under it.
+    if (ignored.has('projects') || ignored.has('projects/')) {
+      return new Set(['*', ...entries]);
+    }
+    return new Set(
+      [...ignored].map((p) => p.replace(/^projects\//, '').replace(/\/$/, ''))
+    );
+  } catch {
+    return empty;
+  }
+}
+
+// ── Preserved regions in docs/index.html ───────────────────────────────────
+//
+// The generated page is overwritten wholesale on every run, so any hand-added
+// <head> content is silently destroyed. arckit.org lost its analytics tag that
+// way (#727), and the tag cannot simply live in the template: the template
+// ships to every user, and baking one site's measurement ID into it would
+// inject that ID into everybody's generated page.
+//
+// Anything between these markers in the EXISTING docs/index.html is carried
+// across into the regenerated one.
+const PRESERVE_RE = /<!--\s*ARCKIT:PRESERVE\s*-->([\s\S]*?)<!--\s*\/ARCKIT:PRESERVE\s*-->/;
+
+function preservedRegion(existingHtml) {
+  const m = existingHtml && existingHtml.match(PRESERVE_RE);
+  return m ? m[1] : null;
+}
+
+function applyPreservedRegion(html, existingHtml) {
+  const kept = preservedRegion(existingHtml);
+  if (kept === null || !PRESERVE_RE.test(html)) return html;
+  return html.replace(
+    PRESERVE_RE,
+    () => `<!-- ARCKIT:PRESERVE -->${kept}<!-- /ARCKIT:PRESERVE -->`
+  );
 }
 
 // Manifest JSON key for a SUBDIR_MAP directory: 'wardley-maps' -> 'wardleyMaps'.
@@ -755,7 +838,16 @@ function buildLlmsTxt(manifest, repoInfo, version) {
 
 function buildManifest(repoRoot, repoInfo, guideTitles) {
   const { guides, roleGuides } = buildGuides(guideTitles);
-  const { global: globalDocs, globalExternal, globalPolicies } = scanGlobalDocs(repoRoot);
+
+  const projectsDir = join(repoRoot, 'projects');
+  const allEntries = listDir(projectsDir).filter((e) => isDir(join(projectsDir, e)));
+  const ignoredDirs = ignoredProjectDirs(repoRoot, projectsDir, allEntries);
+
+  // projects/000-global obeys the same rule as any other project directory.
+  let { global: globalDocs, globalExternal, globalPolicies } =
+    ignoredDirs.has('000-global')
+      ? { global: [], globalExternal: [], globalPolicies: [] }
+      : scanGlobalDocs(repoRoot);
 
   // Find default document (principles if exists)
   const defaultDoc = globalDocs.find(d => d.documentId && d.documentId.includes('PRIN'));
@@ -763,11 +855,10 @@ function buildManifest(repoRoot, repoInfo, guideTitles) {
 
   // Scan numbered projects (skip 000-global)
   const projects = [];
-  const projectsDir = join(repoRoot, 'projects');
-  for (const entry of listDir(projectsDir)) {
+  for (const entry of allEntries) {
     if (entry === '000-global') continue;
-    if (!isDir(join(projectsDir, entry))) continue;
     if (!/^\d{3}-/.test(entry)) continue;
+    if (ignoredDirs.has(entry)) { skippedProjectDirs++; continue; }
     projects.push(scanProject(repoRoot, entry));
   }
 
@@ -801,6 +892,18 @@ function buildManifest(repoRoot, repoInfo, guideTitles) {
     const graph = scanAllArtifacts(projectsDir, {
       withNodeMetadata: true,
     });
+    // scanAllArtifacts walks projects/ independently of the loop above, so it
+    // needs the same rule applied or the graph republishes what the manifest
+    // just dropped. Nodes carry their project directory name; edges are dropped
+    // when either endpoint goes, leaving no dangling references.
+    if (ignoredDirs.size) {
+      for (const [id, node] of Object.entries(graph.nodes)) {
+        if (ignoredDirs.has(node.project)) delete graph.nodes[id];
+      }
+      graph.edges = graph.edges.filter(
+        (e) => graph.nodes[e.from] && graph.nodes[e.to]
+      );
+    }
     if (Object.keys(graph.nodes).length > 0) {
       const baseline = new Date();
       tagNodeHealth(graph, baseline);
@@ -914,6 +1017,7 @@ const version = (readText(join(pluginRoot, 'VERSION')) || '').trim();
 
 // ── 3. Template → index.html ──
 
+let skippedProjectDirs = 0;
 let templateProcessed = false;
 let templateSource = '';
 
@@ -943,7 +1047,9 @@ if (templatePath) {
 
   const docsDir = join(repoRoot, 'docs');
   if (!isDir(docsDir)) mkdirSync(docsDir, { recursive: true });
-  writeFileSync(join(repoRoot, 'docs', 'index.html'), html, 'utf8');
+  const indexPath = join(repoRoot, 'docs', 'index.html');
+  html = applyPreservedRegion(html, readText(indexPath) || '');
+  writeFileSync(indexPath, html, 'utf8');
   templateProcessed = true;
 }
 
@@ -1012,6 +1118,9 @@ const message = [
   `### Files Written`,
   `- \`docs/index.html\` — ${templateProcessed ? `from ${templateSource}` : 'NOT written (template not found)'}`,
   `- \`docs/manifest.json\` — ${manifest.projects.length} project(s), ${guideCount} guides, ${roleCount} role guides`,
+  skippedProjectDirs > 0
+    ? `  - **${skippedProjectDirs}** gitignored project director(ies) omitted — a published index must not reference unpublishable files`
+    : '',
   `- \`docs/llms.txt\` — ${llmsTxtAction}`,
   ``,
   `### Guide Sync`,

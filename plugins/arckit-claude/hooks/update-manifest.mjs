@@ -14,13 +14,23 @@
  *     file that will never be published)
  *
  * Ownership of docs/manifest.json:
- *   - THIS hook owns project artefact entries (projects[] groups), keeping the
- *     pages dashboard current between /arckit:pages runs. That is the product
- *     behaviour in a user's repo.
- *   - scripts/generate-docs-manifest.py owns the guide/template/article/global
- *     index in the ArcKit repo itself, rebuilt from git-tracked sources.
- *   The two do not overlap once the gitignore guard is in place, because
- *   ArcKit gitignores its own projects/.
+ *   - sync-guides.mjs, driven by /arckit:pages, is the FULL generator. It
+ *     rewrites the entire file, all twelve keys, from a scan of the repo.
+ *   - THIS hook is an incremental updater. It appends/refreshes single project
+ *     artefact entries between /arckit:pages runs, so the dashboard stays
+ *     current without a full rebuild. That is the product behaviour in a
+ *     user's repo.
+ *
+ *   Both apply the same gitignore guard, so neither can publish an index entry
+ *   for a file git will never serve. sync-guides.mjs got its copy in #727;
+ *   this hook has had one since #690.
+ *
+ *   (An earlier version of this comment named scripts/generate-docs-manifest.py
+ *   as the other owner and claimed the two could not overlap "because ArcKit
+ *   gitignores its own projects/". That script was reverted in #691, and the
+ *   non-overlap never held: sync-guides.mjs rewrites projects[] wholesale and
+ *   had no guard, which is how a local scan of a gitignored projects/ reached
+ *   the published manifest.)
  *
  * Hook Type: PostToolUse
  * Matcher: Write
