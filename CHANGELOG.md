@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Optional Parallel Search MCP setup.** The MCP guide now includes a
+  project-local, keyless remote configuration for live web search and URL
+  fetching. It does not change ArcKit's bundled MCP servers or agent defaults.
+
 - **Every command now declares the doc-type it writes as data, and the registry gate asserts each recipe `output.type` matches it.** `check-doc-type-registry.py` could previously only tell whether a code *resolved*, not whether it named the *right* artefact. That blind spot was one plausible fix away from shipping: `UAE-PROC` de-prefixed to `PROC`, which **is** registered, to Canada's Federal Procurement Strategy. It would have passed every existing check while keying `.arckit/state.json` to the wrong type (#715).
 
   The declaration is a `doc-type:` field in command frontmatter: a single code, a `[A, B]` list where a command writes more than one governed artefact, or `none` where it writes no `ARC-*` artefact at all (20 commands, including `/arckit:search`, `/arckit:health`, `/arckit:impact` and `/arckit:pages`, all of which produce console output or a docs site rather than a governed artefact). It sits on the **command** even where the command delegates to an agent holding the Write call: `/arckit:framework` declares `FWRK` although `arckit-framework` writes it. The declaration describes what running the command produces, which is what a recipe target names, and it keeps the gate from having to follow delegation.

@@ -256,6 +256,30 @@ ArcKit also supports integration with third-party MCP servers that are **not bun
 | MCP | Purpose | Guide |
 |-----|---------|-------|
 | Pinecone | Vector search across architecture artifacts and Wardley Mapping knowledge base | [Pinecone MCP Guide](pinecone-mcp.md) |
+| Parallel Search | Keyless live web search and URL fetching | Setup below |
+
+### Parallel Search
+
+Parallel Search MCP is a remote server for current web search and clean
+Markdown extraction from specific URLs. The default endpoint requires no
+account, API key, or OAuth setup.
+
+Add it to your project's `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "parallel-search": {
+      "type": "http",
+      "url": "https://search.parallel.ai/mcp"
+    }
+  }
+}
+```
+
+Reload the project's MCP configuration. The server exposes `web_search` for
+live search and `web_fetch` for extracting content from a known URL. It remains
+project-local and is not bundled with ArcKit.
 
 ---
 
