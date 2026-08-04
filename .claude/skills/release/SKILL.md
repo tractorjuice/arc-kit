@@ -84,9 +84,11 @@ done
 claude plugin prune --dry-run
 
 # 9. Tag the umbrella release and push — this triggers
-#    .github/workflows/release.yml, which creates the GitHub Release:
+#    .github/workflows/release.yml, which creates the GitHub Release.
+#    Push the tag BY NAME: `git push --tags` pushes every local tag, and
+#    published a stray `pre-rebase-*` backup tag during v6.8.0.
 git tag -a vX.Y.Z -m "vX.Y.Z"
-git push && git push --tags
+git push && git push origin vX.Y.Z
 
 # 10. Create native per-plugin tags (arckit--vX.Y.Z, arckit-uae--vX.Y.Z, …).
 #    Auto-discovers plugins; idempotent (skips existing tags):

@@ -94,9 +94,11 @@ claude plugin tag plugins/arckit-claude --dry-run
 # 10. (optional) Prune orphaned plugin dependencies
 claude plugin prune --dry-run
 
-# 11. Tag, push — GitHub Release created automatically
+# 11. Tag, push — GitHub Release created automatically.
+#     Push the one tag by name. `git push --tags` pushes EVERY local tag,
+#     which published a stray `pre-rebase-*` backup tag during v6.8.0.
 git tag -a vX.Y.Z -m "vX.Y.Z"
-git push && git push --tags
+git push && git push origin vX.Y.Z
 
 # 12. Push to standalone repos (Claude, Gemini, Codex, etc.).
 #     This also publishes each standalone repo's vX.Y.Z tag and GitHub Release.
