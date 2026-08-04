@@ -301,7 +301,7 @@
 
     <div class="app-page-hero app-page-hero--contributors">
         <div class="govuk-width-container app-page-hero__content">
-            <span class="app-page-hero__stat">19 Open Source Contributors</span>
+            <span class="app-page-hero__stat">20 Open Source Contributors</span>
             <h1 class="app-page-hero__title">ArcKit Contributors</h1>
             <p class="app-page-hero__description">Meet the maintainers and community members improving ArcKit through code contributions, issues, feature requests, and feedback.</p>
         </div>
@@ -630,11 +630,27 @@
                         <li>Prompted a single-marketplace recommendation across all documentation</li>
                     </ul>
                 </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">D</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/designlabdotcx">@designlabdotcx</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--bug">Bug Reporter</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Reported that <code>arckit init --ai copilot</code> scaffolded an empty project on Homebrew Python (<a href="https://github.com/tractorjuice/arc-kit/issues/730" class="govuk-link">#730</a>). Two independent faults, both hidden behind yellow warnings under a green "initialized successfully" banner: <code>get_data_paths()</code> derived its candidates from <code>sys.prefix</code>, which on a Homebrew framework build points at a different tree from the one pip writes to, and the gitignored converter output meant a wheel built from a git checkout shipped extensions with no commands in them.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Located the exact fall-through in <code>get_data_paths()</code> and supplied a working local patch, correctly identifying that the resolution order never reached <code>/opt/homebrew/share/arckit</code></li>
+                        <li>Included both the failing and the post-patch output in full, which made the second, separate fault visible in the same report</li>
+                        <li>Asked the right closing question &mdash; whether the Copilot assets should be distributed or the CLI should stop expecting them &mdash; which named the real defect as a packaging one</li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Community Summary -->
             <h2 class="govuk-heading-l govuk-!-margin-top-8">Community Impact</h2>
-            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 10 code contributors, 2 feature requesters, 6 bug reporters, and 1 domain/spec maintainer, these 19 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Each person is counted once above, under their primary role &mdash; three of the code contributors also maintain a jurisdictional overlay (Austria, Australia, and the EU&nbsp;/&nbsp;France), so ArcKit has four domain maintainers in total. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, plugin user-config wiring, secret-scanner accuracy, Wardley Map conversion fidelity, accessibility standards alignment, EU / French / Austrian / Australian regulatory compliance coverage, TOGAF ADM support, and AI agent architecture governance.</p>
+            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 10 code contributors, 2 feature requesters, 7 bug reporters, and 1 domain/spec maintainer, these 20 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Each person is counted once above, under their primary role &mdash; three of the code contributors also maintain a jurisdictional overlay (Austria, Australia, and the EU&nbsp;/&nbsp;France), so ArcKit has four domain maintainers in total. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, plugin user-config wiring, secret-scanner accuracy, Wardley Map conversion fidelity, accessibility standards alignment, EU / French / Austrian / Australian regulatory compliance coverage, TOGAF ADM support, and AI agent architecture governance.</p>
 
             <!-- Contributing CTA -->
             <div class="govuk-inset-text govuk-!-margin-top-6">

@@ -56,6 +56,27 @@ for (const line of REFERENCES_ALLOWED) {
   });
 }
 
+// --- Declared capability levels are not secret material ---
+// GitHub Actions spells an OIDC permission as the id-token key set to the
+// value `write`, so the generic key-value rule blocked every workflow that
+// publishes without a stored credential — including this repo's own release
+// workflow. The value is a permission level, never credential material.
+const CAPABILITY_VALUES_ALLOWED = [
+  kv('id-token', 'write', ': '),
+  kv('id-token', 'none', ': '),
+  kv('token', 'read', ': '),
+  kv('password', 'none', ': '),
+];
+
+for (const line of CAPABILITY_VALUES_ALLOWED) {
+  test(`scanner allows capability level: ${line}`, () => {
+    assert.equal(scannerBlocks(line), false);
+  });
+  test(`detection allows capability level: ${line}`, () => {
+    assert.equal(detectionBlocks(line), false);
+  });
+}
+
 // --- Literal secrets must STILL be blocked (no regression) ---
 const LITERALS_BLOCKED = [
   kv('pwd', 'hunter2', '='),                            // no whitespace
