@@ -5,7 +5,7 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [6.8.0] — 2026-08-04
 
 ### Added
 
@@ -117,6 +117,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`/arckit:at-dsgvo` carried three wrong statutory citations.** `§2d DSG` does not exist — the DSB research/statistics approval is **§7 DSG** and the Art. 89(1) data-subject-rights exemption is **§2d FOG** (Forschungsorganisationsgesetz); the cookie-penalty row cited `§109 TKG 2021 / €37,000` (that is the *TKG 2003* provision) and is corrected to **§188 TKG 2021, up to €75,000** for breach of the §165 Abs 3 information duty (Fernmeldebehörde); and the employee-monitoring trigger conflated §96a with **§96 Abs 1 Z 3 ArbVG** (control measures affecting human dignity), now distinguished from §96a (Personaldatensysteme). The law-enforcement/justice data-protection regime now points to the **DSG 3. Hauptstück (§§36–61, transposing RL (EU) 2016/680)**, with StPO §§134–143b noted as lex specialis, instead of citing only the StPO.
 
 - **CODEOWNERS matched no overlay files.** The `at-*` / `eu-*` / `fr-*` / `ca-*` / `uae-*` patterns pointed at a non-existent `arckit-claude/…` root path, so the domain maintainers (@gtonic, @thomas-jardinet) were never auto-requested for review. Patterns now target the real `plugins/arckit-<x>/…`, the generated `plugins/arckit-claude/plugins/<x>/…` mirror, `.arckit/templates/…` and `docs/guides/…`.
+
+### Security
+
+- **postcss pinned to `>=8.5.18` (GHSA-r28c-9q8g-f849).** postcss `<=8.5.17` carries a regular-expression denial of service, CVSS 7.5. It reaches ArcKit transitively through the `@mermaid-js/mermaid-cli` devDependency chain, so the exposure is the local and CI diagram-rendering toolchain rather than anything shipped to users — the pin is precautionary, not a response to a live incident. Applied as an npm `overrides` entry, which raises the transitive version without adding postcss as a direct dependency of ArcKit. Contributed by @anupamme (#703).
 
 ## [6.7.5] — 2026-07-28
 
