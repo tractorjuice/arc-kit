@@ -53,8 +53,9 @@ def _load_config() -> dict:
 
 def _save_config(cfg: dict) -> Path:
     path = _get_config_path()
-    path.parent.mkdir(parents=True, exist_ok=True)
+    path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
     path.write_text(yaml.dump(cfg, default_flow_style=False))
+    path.chmod(0o600)
     return path
 
 
@@ -142,7 +143,7 @@ def setup(
     console.print("     [magenta]1[/magenta].  http://127.0.0.1:11434      — Ollama (default port)")
     console.print("     [magenta]2[/magenta].  http://127.0.0.1:8000       — SGLang / vLLM (default port)")
     console.print("     [magenta]3[/magenta].  http://127.0.0.1:8080       — SGLang custom port")
-    console.print("     [magenta]4[/magenta].  https://api.openai.com/v1  — OpenAI cloud API")
+    console.print("     [magenta]4[/magenta].  https://api.openai.com   — OpenAI cloud API")
     console.print("     [magenta]5[/magenta].  Enter a custom URL\n")
 
     choice = typer.prompt("Select a preset (1-5)", default="1")
@@ -153,7 +154,7 @@ def setup(
     elif choice in ("3",):
         base_url = "http://127.0.0.1:8080"
     elif choice in ("4",):
-        base_url = "https://api.openai.com/v1"
+        base_url = "https://api.openai.com"
     else:
         base_url = typer.prompt(
             "Custom base URL  (e.g. http://192.168.1.50:8080)",

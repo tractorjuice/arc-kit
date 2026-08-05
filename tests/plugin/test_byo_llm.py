@@ -57,7 +57,7 @@ def test_llm_config_serializable():
 
 def test_resolve_requires_base_url():
     """Missing base URL raises RuntimeError."""
-    env = {k: v for k, v in os.environ.items() if k not in ("LLM_BASE_URL", "LLM_MODEL", "OPENAI_API_KEY", "ANTHROPIC_API_KEY")}
+    env = {k: v for k, v in os.environ.items() if k not in ("LLM_BASE_URL", "LLM_MODEL", "OPENAI_API_KEY")}
     with patch.dict(os.environ, env, clear=True):
         with patch("arckit_cli.llm._load_config", return_value={}):
             with pytest.raises(RuntimeError, match="No LLM base URL"):
@@ -66,7 +66,7 @@ def test_resolve_requires_base_url():
 
 def test_resolve_requires_model():
     """Missing model raises RuntimeError."""
-    env = {k: v for k, v in os.environ.items() if k not in ("LLM_BASE_URL", "LLM_MODEL", "OPENAI_API_KEY", "ANTHROPIC_API_KEY")}
+    env = {k: v for k, v in os.environ.items() if k not in ("LLM_BASE_URL", "LLM_MODEL", "OPENAI_API_KEY")}
     with patch.dict(os.environ, env, clear=True):
         with patch("arckit_cli.llm._load_config", return_value={"llm": {"base_url": "http://localhost:8080"}}):
             with pytest.raises(RuntimeError, match="No LLM model"):
@@ -86,7 +86,7 @@ def test_resolve_cli_overrides_config():
 
 def test_resolve_env_fills_gap():
     """Env vars fill in when CLI flags are absent."""
-    env = {k: v for k, v in os.environ.items() if k not in ("LLM_BASE_URL", "LLM_MODEL", "OPENAI_API_KEY", "ANTHROPIC_API_KEY")}
+    env = {k: v for k, v in os.environ.items() if k not in ("LLM_BASE_URL", "LLM_MODEL", "OPENAI_API_KEY")}
     env["LLM_BASE_URL"] = "http://env:7000"
     env["LLM_MODEL"] = "env-model"
     with patch.dict(os.environ, env, clear=True):
@@ -98,7 +98,7 @@ def test_resolve_env_fills_gap():
 
 def test_resolve_precedence_chain():
     """CLI > env > config file for every field."""
-    env = {k: v for k, v in os.environ.items() if k not in ("LLM_BASE_URL", "LLM_MODEL", "OPENAI_API_KEY", "ANTHROPIC_API_KEY")}
+    env = {k: v for k, v in os.environ.items() if k not in ("LLM_BASE_URL", "LLM_MODEL", "OPENAI_API_KEY")}
     env["LLM_BASE_URL"] = "http://env:7000"
     env["LLM_MODEL"] = "env-model"
     with patch.dict(os.environ, env, clear=True):

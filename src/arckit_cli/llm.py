@@ -176,6 +176,11 @@ def resolve_config(
             "  2. Config:   arckit config set llm.base_url http://localhost:8080\n"
             "  3. Env var:  LLM_BASE_URL=http://localhost:8080"
         )
+    # Normalise: strip trailing /v1 and trailing slashes so callers can
+    # safely append /v1/chat/completions without double segments.
+    base_url = base_url.rstrip("/")
+    if base_url.endswith("/v1"):
+        base_url = base_url[:-3].rstrip("/")
 
     # --- Model ---
     model = cli_model or llm_cfg.get("model") or ""
@@ -193,8 +198,6 @@ def resolve_config(
     api_key = llm_cfg.get("api_key", "") or ""
     if not api_key:
         api_key = _resolve_env("OPENAI_API_KEY") or ""
-    if not api_key:
-        api_key = _resolve_env("ANTHROPIC_API_KEY") or ""
 
     # --- Optional settings ---
     max_tokens = int(llm_cfg.get("max_tokens", 128000))
