@@ -119,11 +119,11 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 Run `arckit build` against any local or remote OpenAI-compatible endpoint:
 
 ```bash
-# One-shot via flags
-arckit build my-project --base-url http://127.0.0.1:8080/v1 --model Qwen3.6-27B
+# One-shot via flags (trailing /v1 is auto-stripped)
+arckit build my-project --base-url http://127.0.0.1:8080 --model Qwen3.6-27B
 
 # Persistent config (arckit config)
-arckit config set llm.base_url http://127.0.0.1:8080/v1
+arckit config set llm.base_url http://127.0.0.1:8080
 arckit config set llm.model Qwen3.6-27B
 ```
 

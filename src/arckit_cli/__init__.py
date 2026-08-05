@@ -1149,8 +1149,15 @@ def _load_config():
 def _save_config(cfg):
     """Write config dict to YAML file (creates parent dir if needed)."""
     cfg_path = _get_config_path()
-    cfg_path.parent.mkdir(parents=True, exist_ok=True)
+    cfg_path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
     cfg_path.write_text(yaml.dump(cfg, default_flow_style=False))
+    cfg_path.chmod(0o600)
+
+
+def _is_sensitive_key(key: str) -> bool:
+    """Return True if *key* is a dotted config path for a secret value."""
+    leaf = key.split(".")[-1].lower()
+    return leaf in ("api_key", "token", "secret")
 
 
 def _get_nested(data, dotted_key):
@@ -1217,7 +1224,10 @@ def _config_set(key: str = typer.Argument(..., help="Dot-notation key (e.g. llm.
     cfg = _load_config()
     _set_nested(cfg, key, value)
     _save_config(cfg)
-    console.print(f"[green]✓[/green] Set {key} = {value}")
+    if _is_sensitive_key(key):
+        console.print(f"[green]✓[/green] Set {key} = {'*' * 8 + '...'}")
+    else:
+        console.print(f"[green]✓[/green] Set {key} = {value}")
 
 
 @config_app.command(name="get")
@@ -1228,7 +1238,10 @@ def _config_get(key: str = typer.Argument(..., help="Dot-notation key (e.g. llm.
     if val is None:
         console.print(f"[red]Error:[/red] Key '{key}' not found")
         raise typer.Exit(1)
-    console.print(val)
+    if _is_sensitive_key(key):
+        console.print("*" * 8 + "...")
+    else:
+        console.print(val)
 
 
 @config_app.command(name="list")
@@ -1253,7 +1266,8 @@ def _config_list():
     if flat:
         table_rows = []
         for k, v in flat:
-            table_rows.append((k, str(v)))
+            display_value = "*" * 8 + "..." if _is_sensitive_key(k) else str(v)
+            table_rows.append((k, display_value))
         from rich.table import Table
         t = Table(show_header=True, header_style="bold cyan")
         t.add_column("Key", style="cyan")
@@ -1272,7 +1286,23 @@ def config_show():
     if not cfg:
         console.print("[yellow]No configuration set yet. Use 'arckit config set' to add keys.[/yellow]")
         return
-    console.print(yaml.dump(cfg, default_flow_style=False))
+
+    # Flatten with masking, then rebuild YAML that way
+    def flatten(d, prefix=""):
+        items = []
+        for k, v in d.items():
+            full_key = f"{prefix}{k}" if not prefix else f"{prefix}.{k}"
+            if isinstance(v, dict):
+                items.extend(flatten(v, full_key))
+            else:
+                display_value = "***" if _is_sensitive_key(full_key) else v
+                items.append((full_key, display_value))
+        return items
+
+    lines = ["# ArcKit configuration (sensitive values masked)"]
+    for key, value in flatten(cfg):
+        lines.append(f"{key}: {value}")
+    console.print("\n".join(lines))
 
 
 @config_app.command()
@@ -1321,63 +1351,74 @@ def resolve_recipe_path(recipe_name: str, project_root: Path) -> Path:
     Precedence:
         1. project_root/.arckit/recipes/{recipe}.yaml  (project override)
         2. project_root/plugins/arckit-*/recipes/{recipe}.yaml (community plugins)
-        3a. share/arckit/scripts/{recipe}.yaml           (legacy system install)
-        3b. share/arckit/plugins/arckit-*/recipes/{recipe}.yaml (installed plugins)
-        4. project_root/scripts/recipes/{recipe}.yaml    (local scripts)
+        3. project_root/plugins/arckit-*/skills/*/recipes/{recipe}.yaml (nested skills)
+        4a. share/arckit/scripts/{recipe}.yaml           (legacy system install)
+        4b. share/arckit/plugins/arckit-*/recipes/{recipe}.yaml (installed plugins)
+        5. project_root/scripts/recipes/{recipe}.yaml    (local scripts)
     """
-    candidates: list[tuple[str, Path]] = []
+    all_searched: list[tuple[str, Path]] = []
+
+    def try_path(label: str, path: Path) -> Path | None:
+        all_searched.append((label, path))
+        if path.exists():
+            return path
+        return None
 
     # 1. Project override
     override = project_root / ".arckit" / "recipes" / f"{recipe_name}.yaml"
-    candidates.append(("project override", override))
-    if override.exists():
+    if try_path("project override", override) is not None:
         return override
 
-    # 2. Community plugins
+    # 2. Community plugins (shallow: plugins/arckit-*/recipes/)
     plugin_base = project_root / "plugins"
     if plugin_base.is_dir():
         for plugin_dir in sorted(plugin_base.glob("arckit-*/recipes")):
             plugin_file = plugin_dir / f"{recipe_name}.yaml"
-            if plugin_file.exists():
-                candidates.append((f"plugin: {plugin_dir.parent.name}", plugin_file))
+            if try_path(f"plugin: {plugin_dir.parent.name}", plugin_file) is not None:
                 return plugin_file
 
-    # 3. System share directory (for pip/uv installs)
+        # 3. Nested skills (plugins/arckit-*/skills/*/recipes/)
+        for skills_recipes in sorted(plugin_base.glob("arckit-*/skills/*/recipes")):
+            skill_file = skills_recipes / f"{recipe_name}.yaml"
+            label = f"skill: {skills_recipes.parent.name}"
+            if try_path(label, skill_file) is not None:
+                return skill_file
+
+    # 4. System share directory (for pip/uv installs)
     try:
         data_paths = get_data_paths()  # type: ignore[name-defined]
-        # 3a. Check scripts/recipes/ (legacy)
+        # 4a. Check scripts/recipes/ (legacy)
         recipes_base = data_paths.get("scripts")
         if recipes_base and recipes_base.exists():
             for yaml_file in sorted(recipes_base.glob("*.yaml")):
                 if yaml_file.stem == recipe_name:
-                    candidates.append(("system share", yaml_file))
-                    return yaml_file
-        # 3b. Check share/arckit/plugins/arckit-*/recipes/ (installed plugin recipes)
+                    if try_path("system share", yaml_file) is not None:
+                        return yaml_file
+        # 4b. Check share/arckit/plugins/arckit-*/recipes/ (installed plugin recipes)
         share_root = data_paths.get("scripts")
         if share_root:
             plugins_base = share_root.parent / "plugins"
             if plugins_base.exists():
                 for plugin_recipes in sorted(plugins_base.glob("arckit-*/recipes")):
                     plugin_file = plugin_recipes / f"{recipe_name}.yaml"
-                    if plugin_file.exists():
-                        candidates.append((f"plugin share: {plugin_recipes.parent.name}", plugin_file))
+                    label = f"plugin share: {plugin_recipes.parent.name}"
+                    if try_path(label, plugin_file) is not None:
                         return plugin_file
     except Exception:
         pass
 
-    # 4. Also check scripts/recipes/ at repo root
+    # 5. Also check scripts/recipes/ at repo root
     scripts_recipes = project_root / "scripts" / "recipes"
     if scripts_recipes.is_dir():
         for yaml_file in sorted(scripts_recipes.glob("*.yaml")):
             if yaml_file.stem == recipe_name:
-                candidates.append(("scripts/recipes", yaml_file))
-                return yaml_file
+                if try_path("scripts/recipes", yaml_file) is not None:
+                    return yaml_file
 
-    # Not found — collect all searched paths for error message
-    search_paths = [path for _, path in candidates]
+    # Not found — report all searched paths
     raise FileNotFoundError(
         f"Recipe '{recipe_name}' not found.\n"
-        f"Searched:\n" + "\n".join(f"  - {p}" for p in search_paths) + "\n"
+        f"Searched:\n" + "\n".join(f"  - {path} ({label})" for label, path in all_searched) + "\n"
         f"Tip: Place a '{recipe_name}.yaml' file in .arckit/recipes/"
     )
 

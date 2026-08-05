@@ -4,6 +4,26 @@ Recipe Parser + DAG Computation
 Handles loading recipe YAML files, validating schema, resolving optional
 targets, computing dependency DAGs, and performing topological sort into
 waves for parallel execution.
+
+Dual interpreter note
+~~~~~~~~~~~~~~~~~~~~~
+
+The ``arckit build`` CLI in this Python module and the Claude-side
+``arckit-build`` skill (``plugins/arckit-claude/skills/arckit-build/SKILL.md``)
+both read and interpret the same recipe YAML schema.  Recipes are authored once
+(under ``plugins/arckit-claude/skills/arckit-build/recipes/`` or a project's
+``.arckit/recipes/``) but processed by two independent code paths:
+
+  * Python CLI: ``recipe.py`` (schema + DAG) + ``state.py`` (persistence)
+  * Claude skill: ``arckit-build/SKILL.md`` built-in recipes table + state.json
+
+When the recipe schema changes (new fields, renamed keys, altered types),
+**both** implementations must be updated together.  A schema migration should
+include a note in its PR and ideally run a round-trip validation — the Python
+CLI can parse a recipe that the skill's reference implementation describes, and
+vice-versa.  Keeping the schema authoritative across both prevents drift that
+would silently break ``arckit build`` while ``/arckit:arckit-build`` still works
+(or the reverse).
 """
 
 import re

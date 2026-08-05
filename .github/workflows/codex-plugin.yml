@@ -36,7 +36,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install Python test dependencies
-        run: python -m pip install -e . pytest pyyaml
+        run: python -m pip install -e . pytest pytest-asyncio pyyaml
 
       # The extensions/arckit-codex/ extension is generated from plugins/arckit-claude (and
       # the community overlays) by converter.py and is no longer tracked in git
