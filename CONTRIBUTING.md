@@ -77,9 +77,15 @@ To add a new ArcKit command:
 4. **Multi-AI support**:
    - Run `python scripts/converter.py` to generate Gemini TOML and Codex Markdown from the plugin command
 
-5. **Update documentation**:
-   - Update `CHANGELOG.md`
-   - Add to `README.md` if major feature
+5. **Update documentation** — four files, not one:
+   - `CHANGELOG.md` — an entry under `## [Unreleased]`.
+   - `README.md` — a bullet in the relevant command table or overlay section. Not optional for an overlay command: those section headers carry counts (`The 21 commands below …`) that go stale the moment you add one.
+   - `docs/index.html` — the published site. Overlay commands appear both in a jurisdiction card's instrument list and in the community-overlay paragraph, each enumerating instruments by name.
+   - `docs/DEPENDENCY-MATRIX.md` — a dependency entry alongside the command's siblings, and its place in that overlay's flow block.
+
+   The last two were previously documented only in `CLAUDE.md`, which contributors do not read, so PRs kept arriving without them. That was our omission, not the contributors'.
+
+6. **Watch the counts.** A new overlay command changes a stated number in **five** places: the overlay's `README.md` (`N slash commands`), its `.claude-plugin/plugin.json` description, **both** marketplace manifests, and the root `README.md` section header. Grep for the old number before pushing — nothing checks these.
 
 ### 5. Code Improvements
 
