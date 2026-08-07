@@ -669,3 +669,181 @@ All artifacts must pass these 10 checks:
 - BVwG / LVwG review venue documented with the tiered Pauschalgebühren (Vergaberechtsgesetz 2026) reference
 - Vergabeakt structure defined for Rechnungshof / EU audit defensibility
 - Items requiring practitioner verification marked `[NEEDS VERIFICATION]`
+
+### ADMP -- TOGAF ADM Preliminary Phase
+
+- Architecture Vision stated as an outcome, not a restatement of scope
+- Scope split into explicit In Scope and Out of Scope lists, with Out of Scope non-empty
+- Drivers captured across all four categories (strategic, operational, compliance, technology)
+- Every success criterion has both a measure and a target value, not a qualitative aspiration
+- Stakeholder map records interest and influence per entry, each with an engagement strategy
+- ADM Scope table marks each of Phases A–H in or out of scope with a note
+- Constraints distinguished from risks (constraints are fixed; risks are probabilistic)
+- Traceability to REQ, STKE and PRIN artefacts where those exist
+
+### BPCM -- Business Capability Map
+
+- Capability hierarchy is three levels deep with a consistent dotted ID scheme (C1.0 → C1.1 → C1.1.1)
+- Capabilities named as abilities, not as processes, systems or organisational units
+- No capability appears in more than one branch of the hierarchy
+- Every value stream (VS-xxx) has a trigger, an outcome, and the capabilities it consumes
+- Maturity assessed on L1–L5 for both current and target, with the gap derived from the two
+- Heatmap plots strategic importance against maturity; every plotted point exists in the hierarchy
+- Requirement coverage rated Full / Partial / Gap for each mapped requirement
+- Principle alignment recorded against entries in the PRIN artefact
+
+### APP -- Application Inventory
+
+- Every application has a unique APP-xxx ID used consistently across all sections
+- Strategic fit scored on both axes (Business Value 1–5, Technical Debt 1–5) with a derived quadrant
+- Quadrant assignment consistent with the two scores
+- Lifecycle status set per application (Active / Deprecated / Planned)
+- Technology diversity counts recorded against a target, with over-target dimensions flagged
+- Vendor lock-in risk rated, with a named exit strategy for every High rating
+- Applications mapped to capabilities (C-x.x.x) where a capability map exists
+- Dependencies directional and resolvable to APP-xxx IDs in the register
+
+### APPR -- Application Rationalisation
+
+- Every application carries exactly one decision (KEEP / MERGE / REPLACE / RETIRE)
+- Summary counts reconcile with the per-application decisions
+- Every MERGE names its target application
+- Every REPLACE and RETIRE states the disposition of its data and its dependent applications
+- Rationale given per decision, traceable to the strategic fit scores in the APP inventory
+- Consolidation benefits quantified (cost, licence, headcount or risk reduction), not asserted
+- Implementation sequencing respects dependencies — nothing retired before its replacement lands
+- Decisions awaiting board approval listed separately and not presented as agreed
+
+### GAPA -- Gap Analysis
+
+- Every gap references a capability ID from the capability map (C-x.x.x)
+- Gap Size derived from the maturity delta per the classification table (Small Δ=1, Medium Δ=2, Large Δ≥3)
+- Urgency set with its timeframe (High 0–3 months, Medium 3–12 months, Low 12–24 months)
+- Severity read from the Size × Urgency matrix rather than chosen independently — every row matches the matrix
+- Capabilities already at target recorded with gap size None and severity Informational, not omitted
+- Heatmap quadrant counts reconcile with the rows of the gap matrix
+- Every gap assigned to a workstream (WS-xxx), or explicitly marked unassigned with a reason
+- Workstream dependencies acyclic and consistent with the dependency diagram
+- Severe gaps mapped to entries in the RISK artefact
+
+### TRANS -- Transition Architecture
+
+- Baseline and target architectures both defined, with intermediate states numbered sequentially
+- Every transition state is independently viable — the enterprise can operate if the programme stops there
+- Every work package has a WP-xxx ID, a duration and named resources
+- Work package dependencies acyclic and consistent with the dependency diagram
+- Each work package traces to the capability gaps (C-x.x.x / WS-xxx) it closes
+- Acceptance criteria per work package are measurable and testable
+- Migration waves sequenced so that no wave depends on a later wave
+- Investment stated per transition state and summing to a programme total
+- Contingency identified for the critical path
+
+### BORD -- Architecture Board Charter
+
+- Authority levels defined and distinguished (Advisory / Mandatory / Exception)
+- Every member has a named role and an explicit vote type (Voting or Observer)
+- Quorum stated as a rule that can be evaluated against the membership list
+- Voting model specified (consensus, majority, chair casting vote) including tie-breaking
+- Compliance scorecard criteria measurable, each with a scoring scale
+- Exception process defines who may grant a waiver, for how long, and what triggers review
+- Review cadence stated for the board itself and for the charter
+- Decision register present with a stable ID scheme for board decisions
+
+### ACHG -- Architecture Change Request
+
+- Change classified as EVOLUTIONARY, TRANSFORMATIONAL or CORRECTIVE with justification
+- Priority set (CRITICAL / HIGH / MEDIUM / LOW) and consistent with the impact assessment
+- Impact assessed across all four dimensions: capability, application, technology, governance
+- Affected artefacts listed by document ID, each with the action required
+- ADM re-entry point determined per phase (A–H) with the scope of re-entry, not just YES/NO
+- Re-entry point consistent with the change type — transformational changes re-enter at Phase A or B
+- Cost and benefit both quantified
+- Approval workflow names the approving authority for the assessed priority
+
+### REPO -- Architecture Repository
+
+- Document ID uses the global form `ARC-000-REPO-v{VERSION}`, not a project-scoped ID
+- Every standard has an STD-xxx ID, a domain, a status (Active / Deprecated) and a source artefact
+- Deprecated standards name their superseding standard
+- Every reference architecture (REF-xxx) links to a DIAG artefact rather than embedding the diagram
+- Building blocks (BB-xxx) carry a maturity rating (Prototype / Proven / Standard) and a documentation link
+- Lessons learned (LL-xxx) categorised (Technical / Process / People) with an impact rating
+- Search index covers every registered entry ID
+- No project-specific content in what is a global artefact
+
+### AAGI -- AI Agent Inventory
+
+- Every agent has a unique AGT-xxx ID used consistently across all sections
+- Model and deployment environment recorded per agent (Prod / Staging / Dev / Planned)
+- Risk level assigned (Critical / High / Medium / Low)
+- Oversight stated as human-in-the-loop, human-on-the-loop or human-out-of-loop — no other values
+- No Critical-risk agent left at human-out-of-loop without a documented justification
+- Capability matrix lists tools, memory types and output types per agent
+- Security classification records data sensitivity, access level and isolation for every agent
+- Audit requirement set per agent, and set to Yes wherever data sensitivity is High
+- Lifecycle status set (Active / In Development / Deprecating / Retired)
+- Agent dependencies resolve to AGT-xxx IDs in the register
+
+### AAGR -- AI Agent Design
+
+- Architecture pattern selected from Single Agent / Chain / Multi-Agent / Hierarchical with a rationale
+- Pattern consistent with the component diagram — a hierarchical design shows a supervisor
+- Every tool has a T-xxx ID, a type (MCP / REST / Function) and an explicit permission level
+- Input and output schemas defined for every tool contract, not described in prose
+- Tool permissions least-privilege: no Execute granted where Read suffices
+- Tool dependency graph acyclic
+- All three memory layers addressed (Session, Durable, Vector), or explicitly ruled out with a reason
+- Retention and access rules stated per memory layer
+- LLM configuration records model, temperature and context limits with rationale
+- Guardrails specified for both the input and the output path
+
+### AASE -- AI Agent Security
+
+- Attack surface enumerated before threats are assessed
+- Every threat has a severity, a frequency and a named mitigation
+- Sandboxing defined for all five boundaries: agent process, tool execution, memory access, network access, data I/O
+- Isolation layers carry an escape-risk rating
+- Tool permission matrix grants least privilege, with a mitigation for every High-risk grant
+- Data handling policy covers PII, sensitive, public and model weights, with retention per class
+- PII masked in prompts and encrypted at rest, or its absence explicitly asserted
+- Prompt injection defences cover direct prompts, indirect injection and output validation — all three
+- Indirect injection via tool output and retrieved content specifically addressed, not only user input
+- Egress controls defined for network access
+- Output validation names the schema or filter applied, not merely that validation occurs
+
+### AAIN -- AI Agent Integration
+
+- Integration pattern selected (Event-Driven / Request-Response / Message Queue / Shared State) with a rationale
+- Every inter-agent contract has a CNT-xxx ID naming source agent, target agent and protocol
+- Source and target agents resolve to AGT-xxx IDs in the agent inventory
+- SLA stated per contract as a measurable latency or throughput target
+- Message protocol defines schema, versioning and compatibility rules
+- Delivery semantics stated (at-least-once / at-most-once / exactly-once) with matching duplicate handling
+- Failure isolation defined per boundary, each with a failure mode and a recovery action
+- No shared mutable state without a documented access pattern and concurrency control
+- Observability defines a metric and an alert threshold per component
+- Cascading failure across agents explicitly addressed
+
+### AAOV -- AI Agent Governance
+
+- Three oversight tiers defined, with the human role stated for each
+- Every agent from the inventory (AGT-xxx) assigned a tier with a justification
+- Tier assignment consistent with the agent's risk level — Critical risk maps to Tier 1
+- Approval matrix names an approver and an SLA for every risk tier, plus an escalation path
+- Escalation path terminates in a named human authority, never in an agent
+- Audit requirements state frequency, scope and retention period per audit type
+- Retention periods meet the longest applicable regulatory requirement
+- Monitoring KPIs have numeric targets and a current value
+- Escalation procedures define the trigger condition, not only the route
+- Compliance mapping present where a regulatory regime applies (EU AI Act, sector rules)
+
+### AAMT -- AI Agent Maturity Assessment
+
+- All five dimensions assessed: design, governance, security, integration, operations
+- Level assigned on the L1–L5 scale using the framework's own definitions (Ad-hoc, Reactive, Defined, Managed, Optimized)
+- Each level assignment supported by named evidence rather than asserted
+- Target level set per dimension with a stated timeframe
+- Gap between current and target derived, not restated
+- No dimension scored above L3 without documented, repeatable process evidence
+- Improvement actions given per dimension where a gap exists
+- Overall maturity consistent with the dimension scores — not above the lowest scored dimension without justification
