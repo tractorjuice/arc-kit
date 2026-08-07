@@ -276,7 +276,7 @@ export const REGIME_PARTIALS = {
   UK:  'document-control-uk.md',
   MOD: 'document-control-uk.md',
   AT:  'document-control-at.md',
-  AU:  'document-control-uk.md',
+  AU:  'document-control-au.md',
   CA:  'document-control-ca.md',
   EU:  'document-control-uk.md',
   FR:  'document-control-uk.md',  // deferred
