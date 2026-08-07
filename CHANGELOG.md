@@ -5,6 +5,18 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **The Document Control classification ladder now follows the artefact's jurisdiction, not the person running the command.** A Canadian Privacy Impact Assessment carried the UK `PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET` ladder unless the operator happened to have configured a matching `classification_scheme`, which is the wrong dependency: the ladder is a property of the artefact and the regime it is written under, not of the workstation it was generated on. Each doc-type's existing `regime:` tag now selects the partial, via a new `REGIME_PARTIALS` map in `config/doc-types.mjs`, and regime beats user config — a `PIA` renders the Canadian ladder whoever runs it.
+
+  Three new partials ship with it: `document-control-ca.md` (UNCLASSIFIED / Protected A–C / CONFIDENTIAL / SECRET / TOP SECRET), `document-control-au.md` (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) and `document-control-nl.md`, which carries the VIRBI 2025 ladder ahead of the `NL` regime itself so that #739 is a registration change rather than a wording exercise. The Canadian and Australian overlays previously reached the right ladder only through a per-command instruction repeated in every `ca-*` and `au-*` command body; that inline override remains and now agrees with the routing rather than substituting for it.
+
+  **`UK`, `MOD`, `EU`, `FR` and `US` deliberately do not hard-route.** They are registered in an explicit `UK_FALLBACK_BY_DESIGN` set and fall through to the existing user-config chain exactly as before, so the 52 doc-types tagged with those regimes render identically to previous releases and a UAE- or Austrian-configured entity running `/arckit:dpia` keeps its own ladder. For `US` and `FR` this is a deferral rather than a decision: neither has authoritative ladder wording anywhere in this repository, and a wrong ladder inside a Document Control header reads more authoritative than a fallback does. Both become a two-line change once a domain maintainer supplies the wording. `MOD` and `EU` are settled — MOD artefacts use the UK Government ladder, and the EU commands assess EU instruments from a member state's perspective, which EUCI does not govern.
+
+  `scripts/tests/test-regime-registration.mjs` enforces the routing rather than merely observing it: a regime outside the fallback set must name the partial derived from its own code, and a regime inside it must name the UK partial. Pointing `CA` at the Australian partial passed CI before this; it now fails with the regime named. The guard also holds `templates/_partials/RENDERING.md` to the registry, because that file — not `config/doc-types.mjs` — is what resolves the marker at runtime. Community overlay plugins ship `templates/_partials/` but no `config/` directory, so `RENDERING.md` is now self-contained: it carries the regime index and the routing table inline, and the resolution can be completed without opening another file. The CLI's `.arckit/templates/_partials/` mirror is compared by content in `tests/plugin/test_template_consistency.py`, after a basename-only comparison let it sit a whole feature behind.
+
 ## [6.8.0] — 2026-08-04
 
 ### Added

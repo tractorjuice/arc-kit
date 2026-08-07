@@ -40,7 +40,7 @@
     },
     "default_classification": {
       "title": "Default Classification",
-      "description": "Default document classification, using the values of the active classification_scheme (UK: PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET; UAE Smart Data: Open / Shared / Confidential / Secret / Top Secret; AT InfoSiG: Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim)",
+      "description": "Default document classification, using the values of the active classification_scheme (UK: PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET; UAE Smart Data: Open / Shared / Confidential / Secret / Top Secret; AT InfoSiG: Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim). Applies to jurisdiction-agnostic artefacts only — an artefact whose doc-type declares a regime (a Canadian PIA, an Australian PSPF scorecard) uses that regime's ladder regardless of this setting.",
       "type": "string"
     },
     "governance_framework": {
@@ -50,7 +50,7 @@
     },
     "classification_scheme": {
       "title": "Classification Scheme",
-      "description": "Classification ladder used in Document Control headers: 'UK' (PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET), 'UAE Smart Data' (Open / Shared / Confidential / Secret / Top Secret), or 'AT InfoSiG' (Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim, per Informationssicherheitsgesetz). Defaults to UK when blank.",
+      "description": "Classification ladder used in Document Control headers: 'UK' (PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET), 'UAE Smart Data' (Open / Shared / Confidential / Secret / Top Secret), or 'AT InfoSiG' (Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim, per Informationssicherheitsgesetz). Defaults to UK when blank. Applies to jurisdiction-agnostic artefacts only — an artefact whose doc-type declares a regime (a Canadian PIA, an Australian PSPF scorecard) uses that regime's ladder regardless of this setting.",
       "type": "string"
     },
     "desktop_notifications": {

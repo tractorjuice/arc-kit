@@ -68,6 +68,6 @@ Output: `projects/<id>/ARC-<id>-CLAS-v1.0.md`
 
 - **Smart Data level names** `[NEEDS VERIFICATION]`: The overlay uses `Open / Shared / Confidential / Secret / Top Secret` based on the most recent TDRA guidance but these names have not been confirmed in a single authoritative source — verify against the entity's local Data Office guidance before publication. See `uae-overlay-maintenance.md` gap #2.
 - **Upstream artefact**: `uae-cloud-residency`, `uae-pdpl`, and `uae-data-sharing` all depend on this register being in place.
-- **userConfig must be set**: Without `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data`, the Document Control header will not render the UAE ladder.
+- **userConfig governs the non-UAE artefacts**: The `uae-*` commands write UAE-regime doc-types, and those render the Smart Data ladder whoever runs them — regime beats user config at the marker-resolution step. Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data` so that the jurisdiction-agnostic artefacts produced alongside them (requirements, ADRs, risk register and similar) carry the same ladder rather than the UK one. See `templates/_partials/RENDERING.md` for the full resolution order.
 - **Migration**: To switch an existing UK-classified project, run `arckit migrate-classification --root projects --apply` (see `uae-overlay.md`).
 - **Community-contributed**: Output should be reviewed by qualified DPO / federal compliance counsel before reliance.

@@ -36,10 +36,13 @@
  *              Reveal.js exports). The /arckit:pages scanner enforces the
  *              extension — `ARC-001-DECK-v1.0.md` and `ARC-001-REQ-v1.0.html`
  *              are both rejected as type/extension mismatches.
- *   regime:    Optional jurisdiction tag — 'UK' | 'MOD' | 'EU' | 'FR' | 'AT' | 'UAE'.
+ *   regime:    Optional jurisdiction tag — one of the codes in REGIMES below
+ *              ('UK' | 'MOD' | 'AT' | 'AU' | 'CA' | 'EU' | 'FR' | 'UAE' | 'US').
  *              Drives per-regime grouping in /arckit:navigator and
- *              /arckit:graph-report. Universal best-practice types (RISK, SECD,
- *              TRAC, CONF, PRIN-COMP) deliberately omit it.
+ *              /arckit:graph-report, and selects the Document Control
+ *              classification partial via REGIME_PARTIALS. Universal
+ *              best-practice types (RISK, SECD, TRAC, CONF, PRIN-COMP)
+ *              deliberately omit it.
  *   severity:  Optional governance weight — 'HIGH' marks a type that counts
  *              toward the Compliance Readiness scorecard in /arckit:graph-report.
  *              HIGH-severity coverage is computed per-regime so a UAE-only
@@ -258,6 +261,54 @@ export const REGIME_LABELS = {
   UAE: 'UAE',
   US:  'USA Federal',
 };
+
+// Document Control classification partial per regime, resolved by the command
+// that reads a template carrying the <!-- DOC-CONTROL-HEADER --> marker.
+// See templates/_partials/RENDERING.md, which carries the same routing as a
+// self-contained table — that file, not this one, is what the model reads at
+// runtime, because community overlay plugins ship templates/_partials but no
+// config/ directory.
+//
+// Every regime names a partial, so the CI guard can require one. Regimes listed
+// in UK_FALLBACK_BY_DESIGN below name the UK partial as the *default outcome*
+// of the user-config chain rather than as a hard route — see that constant.
+export const REGIME_PARTIALS = {
+  UK:  'document-control-uk.md',
+  MOD: 'document-control-uk.md',
+  AT:  'document-control-at.md',
+  AU:  'document-control-au.md',
+  CA:  'document-control-ca.md',
+  EU:  'document-control-uk.md',
+  FR:  'document-control-uk.md',  // deferred
+  UAE: 'document-control-uae.md',
+  US:  'document-control-uk.md',  // deferred
+};
+
+// Regimes that deliberately resolve to `document-control-uk.md` rather than to a
+// partial of their own — and which therefore do NOT hard-route. An artefact in
+// one of these regimes falls through to the user-config chain (step 2 of
+// RENDERING.md) exactly as it did before regime routing existed, so a UAE- or
+// AT-configured entity running a UK-regime command keeps its own ladder. Hard
+// routing these would have silently changed the rendered header for 52
+// doc-types.
+//
+// Membership is a registered decision, not an oversight, and the reason differs
+// per regime:
+//   UK       — the UK partial IS the UK ladder; nothing to defer.
+//   MOD      — MOD artefacts use the UK Government ladder.
+//   EU       — EU commands assess EU instruments from a member state's
+//              perspective; EUCI governs EU-institution material, not this.
+//   US, FR   — deferred, not decided. Neither has authoritative ladder wording
+//              anywhere in this repository, and a wrong ladder in a Document
+//              Control header reads more authoritative than a fallback. They
+//              keep today's exact behaviour until a domain maintainer supplies
+//              the wording; adding a partial is then a two-line change here.
+//
+// scripts/tests/test-regime-registration.mjs enforces both halves: a regime in
+// this set must map to the UK partial, and a regime outside it must map to
+// `document-control-<lowercased regime>.md`. Pointing CA at the Australian
+// ladder previously passed CI.
+export const UK_FALLBACK_BY_DESIGN = new Set(['UK', 'MOD', 'EU', 'FR', 'US']);
 
 // Derived: HIGH-severity type codes, grouped per regime (plus 'UNIVERSAL' for
 // types that apply regardless of jurisdiction).
