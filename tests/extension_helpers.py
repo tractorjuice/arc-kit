@@ -12,6 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 PLUGIN_COMMAND_DIRS = [
     REPO_ROOT / "plugins" / "arckit-uae" / "commands",
     REPO_ROOT / "plugins" / "arckit-fr" / "commands",
+    REPO_ROOT / "plugins" / "arckit-nl" / "commands",
     REPO_ROOT / "plugins" / "arckit-ca" / "commands",
     REPO_ROOT / "plugins" / "arckit-eu" / "commands",
     REPO_ROOT / "plugins" / "arckit-at" / "commands",

@@ -36,6 +36,7 @@ EXPECTED_CLAUDE_MARKETPLACE_SOURCES = {
     "arckit": (".", "plugins/arckit-claude", "MIT"),
     "arckit-uae": ("./plugins/uae", "plugins/arckit-uae", "MIT"),
     "arckit-fr": ("./plugins/fr", "plugins/arckit-fr", "MIT"),
+    "arckit-nl": ("./plugins/nl", "plugins/arckit-nl", "MIT"),
     "arckit-ca": ("./plugins/ca", "plugins/arckit-ca", "MIT"),
     "arckit-eu": ("./plugins/eu", "plugins/arckit-eu", "MIT"),
     "arckit-at": ("./plugins/at", "plugins/arckit-at", "MIT"),

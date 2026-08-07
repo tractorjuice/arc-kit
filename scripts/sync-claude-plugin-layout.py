@@ -14,6 +14,7 @@ CORE_PLUGIN_DIR = REPO_ROOT / "plugins" / "arckit-claude"
 PLUGIN_LAYOUT = (
     ("plugins/arckit-uae", "plugins/uae"),
     ("plugins/arckit-fr", "plugins/fr"),
+    ("plugins/arckit-nl", "plugins/nl"),
     ("plugins/arckit-ca", "plugins/ca"),
     ("plugins/arckit-eu", "plugins/eu"),
     ("plugins/arckit-at", "plugins/at"),
