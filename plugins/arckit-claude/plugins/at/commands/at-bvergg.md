@@ -121,7 +121,7 @@ Show threshold determination to the user before generating the full document. Co
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 6 months}
-   - Classification: OFFICIAL — under the AT InfoSiG scheme use **Offen** (rising to **Eingeschränkt** while in draft); procurement docs become public at publication. Emit the value from the active `classification_scheme` (UK / UAE Smart Data / AT InfoSiG).
+   - Classification: OFFICIAL — under the AT InfoSiG scheme use **Offen** (rising to **Eingeschränkt** while in draft); procurement docs become public at publication. Emit the AT InfoSiG value.
    - Auftragswert, procedure and threshold tier captured in header
 
 3. **Section 1: Contracting Authority and Procedure**
