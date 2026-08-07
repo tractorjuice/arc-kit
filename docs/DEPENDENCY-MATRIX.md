@@ -725,6 +725,7 @@ Added 18 new commands covering EU regulations and French public sector governanc
 - `/arckit:eu-cra` — Cyber Resilience Act (Reg 2024/2847) compliance. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-CRA-*.md
 - `/arckit:eu-dsa` — Digital Services Act (Reg 2022/2065) compliance. Depends on: requirements (M), risk (R). Produces ARC-*-DSA-*.md
 - `/arckit:eu-data-act` — EU Data Act (Reg 2023/2854) compliance. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-DATAACT-*.md
+- `/arckit:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework (v1.2.1) assessment. Depends on: requirements (M), risk (R), architecture (R). Produces ARC-*-EUCSF-*.md
 
 **New French commands**:
 
@@ -747,6 +748,7 @@ Added 18 new commands covering EU regulations and French public sector governanc
 - `fr-anssi-carto` → feeds `fr-pssi` (R)
 - `eu-rgpd` / `fr-rgpd` → consumed by `fr-algorithme-public` (O) and `eu-ai-act` (O)
 - `eu-nis2` → feeds `eu-dora` (O), `eu-cra` (O) when product used by NIS2 entities
+- `eu-cloud-sovereignty` → feeds `fr-secnumcloud` (O) where a French qualification is also in scope; consumes `eu-nis2` (O) security assurance rather than duplicating it
 - `risk` → feeds all compliance commands (R or M)
 
 **Typical French public sector compliance path**:
@@ -762,7 +764,7 @@ fr-dinum → fr-marche-public → fr-code-reuse
 
 ```text
 requirements → risk → data-model →
-eu-rgpd → eu-nis2 → eu-cra → eu-data-act → eu-dsa → eu-ai-act
+eu-rgpd → eu-nis2 → eu-cloud-sovereignty → eu-cra → eu-data-act → eu-dsa → eu-ai-act
 ```
 
 - **Updated**: Commands Documented count from 64 to 82 (86 total; 4 utility commands not in matrix: customize, template-builder, health, search, impact, init, start, score, fr-code-reuse, gov-reuse, gov-code-search, gov-landscape are in matrix)
