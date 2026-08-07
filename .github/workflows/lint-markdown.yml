@@ -16,6 +16,7 @@ on:
       - "package-lock.json"
       - "scripts/check-guide-site-links.py"
       - "scripts/check-contributor-credits.py"
+      - "scripts/check-quality-checklist-refs.py"
       - "docs/contributors.html"
       - "docs/guides.html"
       - "docs/roles.html"
@@ -43,6 +44,7 @@ on:
       - "package-lock.json"
       - "scripts/check-guide-site-links.py"
       - "scripts/check-contributor-credits.py"
+      - "scripts/check-quality-checklist-refs.py"
       - "docs/contributors.html"
       - "docs/guides.html"
       - "docs/roles.html"
@@ -97,6 +99,9 @@ jobs:
 
       - name: Contributor credit check (CHANGELOG credits vs contributors page)
         run: python3 scripts/check-contributor-credits.py
+
+      - name: Quality-checklist references resolve (closes #749)
+        run: python3 scripts/check-quality-checklist-refs.py
 
       - uses: actions/setup-node@v4
         with:
