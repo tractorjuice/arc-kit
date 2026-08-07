@@ -162,23 +162,71 @@ if (!existsSync(renderingPath)) {
 } else {
   const rendering = readFileSync(renderingPath, 'utf8');
 
-  function tableRows(heading) {
+  // Cells are addressed by COLUMN NAME, never by position. Reading `c[3]`
+  // means a column reorder in RENDERING.md silently changes what is asserted —
+  // the table would still parse, and the guard would still pass, while checking
+  // the wrong thing. `col()` returns null for an absent column so the caller
+  // can fail loudly instead of comparing against undefined.
+  function table(heading) {
     const section = rendering.split(`## ${heading}`)[1];
     if (section === undefined) return null;
-    return section
+    const lines = section
       .split(/\n## /)[0]
       .split('\n')
       .filter((line) => line.startsWith('|') && !/^\|[\s-]+\|/.test(line))
-      .map((line) => line.slice(1, -1).split('|').map((cell) => cell.trim()))
-      .filter((cells) => cells[0] !== 'Regime');
+      .map((line) => line.slice(1, -1).split('|').map((cell) => cell.trim()));
+    if (lines.length === 0) return null;
+    const [header, ...rows] = lines;
+    return {
+      header,
+      rows,
+      col: (name) => {
+        const i = header.indexOf(name);
+        return i === -1 ? null : i;
+      },
+    };
   }
 
-  const routingRows = tableRows('Regime routing');
-  if (!routingRows) {
+  // Report every missing column at once rather than one per run.
+  function missingColumns(t, heading, names) {
+    const absent = names.filter((n) => t.col(n) === null);
+    if (absent.length === 0) return false;
+    ok = false;
+    console.error(
+      `[FAIL] RENDERING.md "${heading}" table is missing column(s) ${absent.join(', ')} — found: ${t.header.join(' | ')}`,
+    );
+    return true;
+  }
+
+  // The documented ladder is prose and may abbreviate (CA writes
+  // "Protected A–C" where the partial spells out all three). Comparing the
+  // first and last rung catches a row describing an entirely different scheme
+  // from the partial it names, without demanding verbatim equality.
+  function ladderEnds(text) {
+    const parts = text.replace(/^\[|\]$/g, '').split('/').map((s) => s.trim()).filter(Boolean);
+    return parts.length === 0 ? null : [parts[0], parts[parts.length - 1]];
+  }
+
+  const routing = table('Regime routing');
+  if (!routing) {
     ok = false;
     console.error('[FAIL] RENDERING.md has no "## Regime routing" section');
+  } else if (
+    missingColumns(routing, 'Regime routing', ['Regime', 'Partial', 'Classification ladder', 'Routing'])
+  ) {
+    // Columns already reported; skip the row assertions rather than compare
+    // against undefined cells.
   } else {
-    const documented = new Map(routingRows.map((c) => [c[0], { partial: c[1], routing: c[3] }]));
+    const cRegime = routing.col('Regime');
+    const cPartial = routing.col('Partial');
+    const cLadder = routing.col('Classification ladder');
+    const cRouting = routing.col('Routing');
+    const documented = new Map(
+      routing.rows.map((c) => [
+        c[cRegime],
+        { partial: c[cPartial], ladder: c[cLadder], routing: c[cRouting] },
+      ]),
+    );
     for (const regime of REGIMES) {
       const row = documented.get(regime);
       if (!row) {
@@ -190,6 +238,20 @@ if (!existsSync(renderingPath)) {
         ok = false;
         console.error(
           `[FAIL] RENDERING.md routes ${regime} to ${row.partial}, REGIME_PARTIALS says \`${REGIME_PARTIALS[regime]}\``,
+        );
+      }
+      // The ladder column was previously never checked at all: a row could
+      // name the right partial while describing a completely different scheme.
+      const documentedEnds = ladderEnds(row.ladder);
+      const partialLadder = classificationRows(REGIME_PARTIALS[regime])[0];
+      const actualEnds = partialLadder === undefined ? null : ladderEnds(partialLadder);
+      if (!documentedEnds) {
+        ok = false;
+        console.error(`[FAIL] RENDERING.md "Regime routing" has an empty ladder for ${regime}`);
+      } else if (actualEnds && (documentedEnds[0] !== actualEnds[0] || documentedEnds[1] !== actualEnds[1])) {
+        ok = false;
+        console.error(
+          `[FAIL] RENDERING.md documents ${regime}'s ladder as "${documentedEnds[0]} … ${documentedEnds[1]}", but ${REGIME_PARTIALS[regime]} contains "${actualEnds[0]} … ${actualEnds[1]}"`,
         );
       }
       const documentedFallsThrough = row.routing.startsWith('falls through');
@@ -210,18 +272,25 @@ if (!existsSync(renderingPath)) {
     }
   }
 
-  const indexRows = tableRows('Regime index');
-  if (!indexRows) {
+  const index = table('Regime index');
+  if (!index) {
     ok = false;
     console.error('[FAIL] RENDERING.md has no "## Regime index" section');
+  } else if (missingColumns(index, 'Regime index', ['Regime', 'Doc-type codes'])) {
+    // Columns already reported.
   } else {
     const codesByRegime = {};
     for (const [code, info] of Object.entries(DOC_TYPES)) {
       if (!info.regime) continue;
       (codesByRegime[info.regime] ||= []).push(code);
     }
+    const iRegime = index.col('Regime');
+    const iCodes = index.col('Doc-type codes');
     const documentedCodes = new Map(
-      indexRows.map((c) => [c[0], c[3].split(',').map((s) => s.trim().replace(/`/g, '')).filter(Boolean)]),
+      index.rows.map((c) => [
+        c[iRegime],
+        c[iCodes].split(',').map((s) => s.trim().replace(/`/g, '')).filter(Boolean),
+      ]),
     );
     for (const regime of REGIMES) {
       const listed = documentedCodes.get(regime);
