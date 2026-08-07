@@ -279,7 +279,7 @@ export const REGIME_PARTIALS = {
   AU:  'document-control-au.md',
   CA:  'document-control-ca.md',
   EU:  'document-control-uk.md',
-  FR:  'document-control-uk.md',  // deferred
+  FR:  'document-control-fr.md',
   UAE: 'document-control-uae.md',
   US:  'document-control-uk.md',  // deferred
 };
@@ -298,17 +298,18 @@ export const REGIME_PARTIALS = {
 //   MOD      — MOD artefacts use the UK Government ladder.
 //   EU       — EU commands assess EU instruments from a member state's
 //              perspective; EUCI governs EU-institution material, not this.
-//   US, FR   — deferred, not decided. Neither has authoritative ladder wording
+//   US       — deferred, not decided. No authoritative ladder wording exists
 //              anywhere in this repository, and a wrong ladder in a Document
-//              Control header reads more authoritative than a fallback. They
-//              keep today's exact behaviour until a domain maintainer supplies
-//              the wording; adding a partial is then a two-line change here.
+//              Control header reads more authoritative than a fallback. Keeps
+//              today's exact behaviour until a domain maintainer supplies the
+//              wording; adding a partial is then a two-line change here — see
+//              FR's document-control-fr.md for how that resolves in practice.
 //
 // scripts/tests/test-regime-registration.mjs enforces both halves: a regime in
 // this set must map to the UK partial, and a regime outside it must map to
 // `document-control-<lowercased regime>.md`. Pointing CA at the Australian
 // ladder previously passed CI.
-export const UK_FALLBACK_BY_DESIGN = new Set(['UK', 'MOD', 'EU', 'FR', 'US']);
+export const UK_FALLBACK_BY_DESIGN = new Set(['UK', 'MOD', 'EU', 'US']);
 
 // Derived: HIGH-severity type codes, grouped per regime (plus 'UNIVERSAL' for
 // types that apply regardless of jurisdiction).
