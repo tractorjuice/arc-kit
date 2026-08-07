@@ -74,6 +74,8 @@ Read all documents from Step 0. Extract the information types, users, and existi
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-tbb-template.md`
 
+Also read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` — the template's `<!-- DOC-CONTROL-HEADER -->` marker is resolved against these rules before the artefact is written (see Step 10).
+
 ### Step 4: Kernbelangen Relevance Assessment
 
 Assess the relevance of each of the five kernbelangen to the information or process in scope: Democratische rechtsorde; Internationale betrekkingen; Veiligheid; Gevoelige beleidszaken; Betrouwbare dienstverlening. Note which are relevant and why — this frames the BIV scoring that follows.
@@ -118,22 +120,24 @@ State whether the determined TBB category triggers the clause 5.2 public-cloud p
 
 **CRITICAL**: Use the **Write tool** to create the determination document.
 
-1. **Detect version**: Check for existing `ARC-{PROJECT_ID}-TBB-v*.md` files:
-   - No existing file → VERSION="1.0"
-   - Existing file → minor increment if refreshed, major if the underlying data or system scope changed
+1. Use `node scripts/generate-document-id.mjs <PROJECT_ID> TBB --filename` for the artefact filename.
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-TBB-v{VERSION}`
+   - Document ID: the filename from step 1, without the `.md` extension
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
+
+3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. Use the VIRBI 2025 rubricering ladder (Ongerubriceerd / Departementaal VERTROUWELIJK / Stg. CONFIDENTIEEL / Stg. GEHEIM / Stg. ZEER GEHEIM) in the Document Control Classification row — replace the standard UK line in the header.
+
+4. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. VIRBI 2025 (BWBR0051482) MUST appear in the Document Register with its primary URL and the verification date.
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **TBB** per-type checks pass — including that the one-way inference warning is present and not stated in reverse anywhere in the document.
 
 Write the document to:
 
 ```text
-projects/{project_id}/ARC-{PROJECT_ID}-TBB-v{VERSION}.md
+projects/{project_id}/<filename>
 ```
 
 ### Step 11: Summary Output

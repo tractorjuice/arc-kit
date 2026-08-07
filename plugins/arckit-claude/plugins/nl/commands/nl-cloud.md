@@ -80,6 +80,8 @@ Read all documents from Step 0. Extract and note the TBB category (if determined
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-cloud-template.md`
 
+Also read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` — the template's `<!-- DOC-CONTROL-HEADER -->` marker is resolved against these rules before the artefact is written (see Step 13).
+
 ### Step 4: Materieel Cloudgebruik Determination (clause 4.1)
 
 Determine whether this is **materieel publiek cloudgebruik**:
@@ -134,22 +136,24 @@ State that an exit plan is mandatory, documented, self-tested, covers two scenar
 
 **CRITICAL**: Use the **Write tool** to create the assessment document.
 
-1. **Detect version**: Check for existing `ARC-{PROJECT_ID}-RBCLOUD-v*.md` files:
-   - No existing file → VERSION="1.0"
-   - Existing file → minor increment (1.0 → 1.1) if refreshed, major (1.0 → 2.0) if scope changed
+1. Use `node scripts/generate-document-id.mjs <PROJECT_ID> RBCLOUD --filename` for the artefact filename.
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-RBCLOUD-v{VERSION}`
+   - Document ID: the filename from step 1, without the `.md` extension
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
+
+3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. Use the VIRBI 2025 rubricering ladder (Ongerubriceerd / Departementaal VERTROUWELIJK / Stg. CONFIDENTIEEL / Stg. GEHEIM / Stg. ZEER GEHEIM) in the Document Control Classification row — replace the standard UK line in the header.
+
+4. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The Herziening rijksbreed cloudbeleid 2026 and VIRBI 2025 MUST appear in the Document Register with their primary URLs and verification dates.
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **RBCLOUD** per-type checks pass.
 
 Write the document to:
 
 ```text
-projects/{project_id}/ARC-{PROJECT_ID}-RBCLOUD-v{VERSION}.md
+projects/{project_id}/<filename>
 ```
 
 ### Step 14: Summary Output
@@ -198,7 +202,7 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| Herziening rijksbreed cloudbeleid 2026 (3 July 2026, definitief) | Ministerie van Economische Zaken en Klimaat | *(not linked — verify current text via rijksoverheid.nl before citing)* |
+| Herziening rijksbreed cloudbeleid 2026 (3 July 2026, definitief) | Ministerie van Economische Zaken en Klimaat, Staatssecretaris W.J.M. Aerdts, 3 juli 2026 | Kamerbrief: <https://www.tweedekamer.nl/kamerstukken/brieven_regering/detail?id=2026Z15738&did=2026D35294> · Policy PDF: <https://www.tweedekamer.nl/downloads/document?id=2026D35295> · Kamerstuk 26643, nr. 1541 |
 | VIRBI 2025 — Besluit voorschrift informatiebeveiliging rijksdienst bijzondere informatie 2025 (BWBR0051482) | Rijksoverheid | https://wetten.overheid.nl/BWBR0051482 |
 | Cyberbeveiligingswet (Cbw) and Wet weerbaarheid kritieke entiteiten (Wwke) | Rijksoverheid | *(not linked — approved by the Eerste Kamer 7 July 2026, in force 15 August 2026; verify current text via wetten.overheid.nl before citing)* |
 | BIO2 — Baseline Informatiebeveiliging Overheid 2 | OBDO | *(not linked — verify current text via digitaleoverheid.nl before citing)* |

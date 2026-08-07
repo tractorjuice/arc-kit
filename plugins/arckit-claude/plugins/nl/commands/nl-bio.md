@@ -76,6 +76,8 @@ Read all documents from Step 0. Extract the system's control environment, any ex
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-bio-template.md`
 
+Also read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` — the template's `<!-- DOC-CONTROL-HEADER -->` marker is resolved against these rules before the artefact is written (see Step 8).
+
 ### Step 4: Scope and Certification Posture
 
 State the system in scope, the BIV scores if available from `/arckit-nl:nl-tbb`, and the certification posture: BIO2 does not require ISO/IEC 27001 certification, but its overheidsmaatregelen are mandatory where applicable regardless of certification status. Do not present "not certified" as equivalent to "non-conformant" — they are different questions.
@@ -103,22 +105,24 @@ Note whether the organisation is in scope of the Cyberbeveiligingswet (Cbw, the 
 
 **CRITICAL**: Use the **Write tool** to create the assessment document.
 
-1. **Detect version**: Check for existing `ARC-{PROJECT_ID}-BIO2-v*.md` files:
-   - No existing file → VERSION="1.0"
-   - Existing file → minor increment if refreshed, major if scope changed
+1. Use `node scripts/generate-document-id.mjs <PROJECT_ID> BIO2 --filename` for the artefact filename.
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-BIO2-v{VERSION}`
+   - Document ID: the filename from step 1, without the `.md` extension
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
+
+3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. Use the VIRBI 2025 rubricering ladder (Ongerubriceerd / Departementaal VERTROUWELIJK / Stg. CONFIDENTIEEL / Stg. GEHEIM / Stg. ZEER GEHEIM) in the Document Control Classification row — replace the standard UK line in the header.
+
+4. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. BIO2 — Baseline Informatiebeveiliging Overheid 2 MUST appear in the Document Register with its primary URL and the verification date.
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **BIO2** per-type checks pass.
 
 Write the document to:
 
 ```text
-projects/{project_id}/ARC-{PROJECT_ID}-BIO2-v{VERSION}.md
+projects/{project_id}/<filename>
 ```
 
 ### Step 9: Summary Output

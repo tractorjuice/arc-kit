@@ -669,3 +669,42 @@ All artifacts must pass these 10 checks:
 - BVwG / LVwG review venue documented with the tiered Pauschalgebühren (Vergaberechtsgesetz 2026) reference
 - Vergabeakt structure defined for Rechnungshof / EU audit defensibility
 - Items requiring practitioner verification marked `[NEEDS VERIFICATION]`
+
+### RBCLOUD -- Rijksbreed Cloudbeleid Compliance Assessment
+
+- Materieel publiek cloudgebruik determination made with stated rationale (clause 4.1)
+- Every clause 5.2 / 4.5 / 5.4 eligibility conclusion cites the clause number it rests on, and the clause 5.2 conclusion cites the TBB category / rubricering it depends on (or explicitly flags the category as pending `/arckit-nl:nl-tbb`)
+- Clause 4.5 email/file-storage conditions assessed individually — partial satisfaction of the three cumulative conditions is not treated as eligible
+- Clause 3.1 risk assessment covers all five required aspects, with foreign-government interference explicitly assessed and mitigated as far as possible
+- Clause 4.2 cybersecurity criteria (C2000, ABRO, AIVD/MIVD advice) assessed
+- Clause 4.3 critical/essential-entity discouragement assessed where applicable, with risk-acceptance rationale recorded if proceeding regardless
+- Clause 4.6 data location and encryption posture assessed
+- The clause 3.2 exit-plan obligation and the clause 3.3 CISO Rijk notification obligation are both addressed as actions, not silently dropped
+- No specific commercial cloud provider named, shortlisted, or implied as compliant or qualified
+
+### TBB -- Te Beschermen Belangen Determination
+
+- Beschikbaarheid, Integriteit, and Vertrouwelijkheid scored independently, with no property's score allowed to influence another's
+- TBB category set from the highest of the three BIV scores, not an average and not confidentiality alone, with the derivation shown
+- The one-way inference warning is stated prominently and is not reversed anywhere in the document — a determined TBB category never implies the corresponding Stg. classification is held by every piece of information in scope
+- TBB category correctly mapped to its VIRBI 2025 rubricering
+- The determination carries an explicit classification-authority (departmental security officer) sign-off line, distinct from the generic Document Control approval fields
+- VIRBI 2013 flagged as superseded wherever referenced in source material
+
+### BIO2 -- BIO2 Conformance Assessment
+
+- Certification-vs-conformance distinction stated explicitly — "not certified" is never reported as a finding of non-conformance on its own
+- All four ISO/IEC 27002:2022 control themes (Organisational, People, Physical, Technological) addressed
+- Conformance claims reference the current BIO2 overheidsmaatregelen rather than an invented measure number, wording, or threshold — unsupplied specifics carry the `[PENDING — cite from current BIO2 text]` placeholder
+- BIV scores from `/arckit-nl:nl-tbb` used to prioritise controls where available
+- Gap summary includes priority, owner, and target date per gap
+- Cbw/Wwke sector applicability noted
+
+### NLEXIT -- Cloud Exit Plan
+
+- Both Scenario A (planned exit) and Scenario B (disruptive interruption) are covered — a plan documenting only the planned scenario does not satisfy clause 3.2
+- Scenario B does not assume provider cooperation, and states a minimum viable continuity path with RTO and RPO
+- Destruction of data at the provider after migration is addressed with a verification method, for both scenarios
+- Self-test evidence is present, or its absence is flagged explicitly rather than presented as compliant
+- Annual review cycle set with a named owner and next review date
+- Residual risks (data-format lock-in, proprietary managed-service coupling, provider non-cooperation) identified with likelihood, impact, and mitigation

@@ -740,6 +740,27 @@ Added 18 new commands covering EU regulations and French public sector governanc
 - `/arckit:fr-algorithme-public` — French Public Algorithm Transparency Notice. Depends on: requirements (M), data-model (R). Produces ARC-*-ALGO-*.md
 - `/arckit:fr-code-reuse` — French Public Code Reuse Assessment. Depends on: requirements (M), research (R). Produces ARC-*-REUSE-*.md
 
+### Netherlands Public Sector Overlay (arckit-nl) — community-contributed
+
+- `/arckit:nl-tbb` — Te Beschermen Belangen / VIRBI 2025 rubricering. Depends on: stakeholders (M), requirements (R), risk (R). Produces ARC-*-TBB-*.md
+- `/arckit:nl-cloud` — Rijksbreed cloudbeleid 2026 compliance. Depends on: requirements (M), nl-tbb (M), risk (R), eu-nis2 (O). Produces ARC-*-RBCLOUD-*.md
+- `/arckit:nl-bio` — BIO2 conformance assessment. Depends on: requirements (M), principles (R), risk (R). Produces ARC-*-BIO2-*.md
+- `/arckit:nl-exit` — Cloud exit plan (Rijksbreed cloudbeleid clause 3.2). Depends on: nl-cloud (M), requirements (R). Produces ARC-*-NLEXIT-*.md
+
+**Key inter-dependencies among NL commands**:
+
+- `nl-tbb` → feeds `nl-cloud` (M) — the rubricering / TBB category determines public-cloud eligibility under clause 5.2
+- `nl-cloud` → feeds `nl-exit` (M) — the exit plan is required for material cloud use identified by the assessment
+- `eu-nis2` → informs `nl-cloud` (O) where the entity falls under the Cbw as an essential entity
+
+**Typical Dutch central-government compliance path**:
+
+```text
+stakeholders → requirements → risk →
+nl-tbb → nl-cloud → nl-exit → nl-bio →
+eu-nis2 → eu-data-act
+```
+
 **Key inter-dependencies among EU/FR commands**:
 
 - `fr-ebios` → feeds `fr-secnumcloud` (M), `fr-pssi` (R), `fr-anssi` (R)

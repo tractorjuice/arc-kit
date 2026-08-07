@@ -71,6 +71,8 @@ Read all documents from Step 0. Extract the hosting model, actual contracted pro
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-exit-template.md`
 
+Also read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` — the template's `<!-- DOC-CONTROL-HEADER -->` marker is resolved against these rules before the artefact is written (see Step 11).
+
 ### Step 4: Establish the Trigger
 
 State why this plan is being produced: materieel publiek cloudgebruik per `/arckit-nl:nl-cloud`, and/or as one of the three cumulative conditions under clause 4.5(b) for an email or document/workplace/file-storage service. If no prior `/arckit-nl:nl-cloud` assessment exists, note this as an open item rather than inventing a trigger.
@@ -105,22 +107,24 @@ Identify residual risks — e.g. data-format lock-in, proprietary managed-servic
 
 **CRITICAL**: Use the **Write tool** to create the exit plan document.
 
-1. **Detect version**: Check for existing `ARC-{PROJECT_ID}-NLEXIT-v*.md` files:
-   - No existing file → VERSION="1.0"
-   - Existing file → minor increment if refreshed following an annual review, major if the provider or hosting model changed
+1. Use `node scripts/generate-document-id.mjs <PROJECT_ID> NLEXIT --filename` for the artefact filename.
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-NLEXIT-v{VERSION}`
+   - Document ID: the filename from step 1, without the `.md` extension
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
+
+3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. Use the VIRBI 2025 rubricering ladder (Ongerubriceerd / Departementaal VERTROUWELIJK / Stg. CONFIDENTIEEL / Stg. GEHEIM / Stg. ZEER GEHEIM) in the Document Control Classification row — replace the standard UK line in the header.
+
+4. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The Herziening rijksbreed cloudbeleid 2026, clause 3.2 MUST appear in the Document Register with its primary URL and the verification date.
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **NLEXIT** per-type checks pass.
 
 Write the document to:
 
 ```text
-projects/{project_id}/ARC-{PROJECT_ID}-NLEXIT-v{VERSION}.md
+projects/{project_id}/<filename>
 ```
 
 ### Step 12: Summary Output
@@ -164,7 +168,7 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| Herziening rijksbreed cloudbeleid 2026, clause 3.2 (Exit-plan) (3 July 2026, definitief) | Ministerie van Economische Zaken en Klimaat | *(not linked — verify current text via rijksoverheid.nl before citing)* |
+| Herziening rijksbreed cloudbeleid 2026, clause 3.2 (Exit-plan) (3 July 2026, definitief) | Ministerie van Economische Zaken en Klimaat, Staatssecretaris W.J.M. Aerdts, 3 juli 2026 | Kamerbrief: <https://www.tweedekamer.nl/kamerstukken/brieven_regering/detail?id=2026Z15738&did=2026D35294> · Policy PDF: <https://www.tweedekamer.nl/downloads/document?id=2026D35295> · Kamerstuk 26643, nr. 1541 |
 | OBDO "Cloud definities en begrippenlijst" (approved 16 April 2026) | OBDO | *(not linked — verify current text via digitaleoverheid.nl before citing)* |
 
 > **Note for reviewers**: Clause 3.2 sits alongside clause 4.5(b), which requires a tested exit plan as one of three cumulative conditions before email or document/workplace/file-storage services may be processed in public cloud. A single exit plan can satisfy both purposes if it is referenced from the `/arckit-nl:nl-cloud` assessment rather than duplicated.
