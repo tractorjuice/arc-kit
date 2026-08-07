@@ -113,3 +113,26 @@ def test_plugin_and_cli_templates_are_in_sync():
             f"{sorted(only_in_cli)}"
         )
     assert not messages, "\n".join(messages)
+
+
+def test_plugin_and_cli_partials_are_in_sync():
+    """Every _partials file in the core plugin must also exist in .arckit/templates/_partials/.
+
+    The sibling test globs templates/*.md non-recursively, so _partials/ was
+    never covered and document-control-at.md silently failed to mirror.
+    """
+    plugin_partials = {
+        os.path.basename(p)
+        for p in glob.glob(
+            os.path.join(REPO_ROOT, "plugins", "arckit-claude", "templates", "_partials", "*.md")
+        )
+    }
+    cli_partials = {
+        os.path.basename(p)
+        for p in glob.glob(os.path.join(CLI_TEMPLATES_DIR, "_partials", "*.md"))
+    }
+    missing = plugin_partials - cli_partials
+    assert not missing, (
+        "In plugins/arckit-claude/templates/_partials/ but not .arckit/templates/_partials/: "
+        f"{sorted(missing)}"
+    )
