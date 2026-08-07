@@ -259,6 +259,31 @@ export const REGIME_LABELS = {
   US:  'USA Federal',
 };
 
+// Document Control classification partial per regime, resolved by the command
+// that reads a template carrying the <!-- DOC-CONTROL-HEADER --> marker.
+// See templates/_partials/RENDERING.md.
+//
+// EU and MOD map to the UK partial deliberately rather than by falling through:
+// EU commands assess EU instruments from a member state's perspective (EUCI
+// governs EU-institution material, not this), and MOD artefacts use the UK
+// ladder. Explicit entries let the test require one for every regime.
+//
+// US and FR are deferred, not decided: neither has authoritative ladder wording
+// anywhere in this repository, and a wrong ladder in a Document Control header
+// reads more authoritative than a fallback. They keep today's exact behaviour
+// until a domain maintainer supplies the wording.
+export const REGIME_PARTIALS = {
+  UK:  'document-control-uk.md',
+  MOD: 'document-control-uk.md',
+  AT:  'document-control-at.md',
+  AU:  'document-control-uk.md',
+  CA:  'document-control-uk.md',
+  EU:  'document-control-uk.md',
+  FR:  'document-control-uk.md',  // deferred
+  UAE: 'document-control-uae.md',
+  US:  'document-control-uk.md',  // deferred
+};
+
 // Derived: HIGH-severity type codes, grouped per regime (plus 'UNIVERSAL' for
 // types that apply regardless of jurisdiction).
 export const HIGH_SEVERITY_BY_REGIME = (() => {

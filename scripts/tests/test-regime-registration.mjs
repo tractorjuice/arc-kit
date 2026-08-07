@@ -20,12 +20,13 @@
 
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
 const docTypesPath = resolve(repoRoot, 'plugins/arckit-claude/config/doc-types.mjs');
 
-const { DOC_TYPES, REGIMES, REGIME_LABELS } = await import(docTypesPath);
+const { DOC_TYPES, REGIMES, REGIME_LABELS, REGIME_PARTIALS } = await import(docTypesPath);
 
 const declaredRegimes = new Set(
   Object.values(DOC_TYPES)
@@ -54,6 +55,58 @@ if (labelledNotRegistered.length > 0) {
   ok = false;
   console.error('[FAIL] regimes in REGIME_LABELS but missing from REGIMES:');
   for (const r of labelledNotRegistered) console.error('  -', r);
+}
+
+// --- Document Control partial routing ------------------------------------
+// Every regime must name a partial that exists, and any regime not using the
+// UK partial must actually differ from it — a copy-paste that forgets to swap
+// the Classification row is otherwise invisible.
+const partialsDir = resolve(repoRoot, 'plugins/arckit-claude/templates/_partials');
+const UK_PARTIAL = 'document-control-uk.md';
+const CLASSIFICATION_RE = /^\| \*\*Classification\*\* \| (.+?) \|$/gm;
+
+function classificationRows(file) {
+  const text = readFileSync(resolve(partialsDir, file), 'utf8');
+  return [...text.matchAll(CLASSIFICATION_RE)].map((m) => m[1].trim());
+}
+
+const unmappedRegimes = [...registered].filter((r) => !REGIME_PARTIALS[r]).sort();
+if (unmappedRegimes.length > 0) {
+  ok = false;
+  console.error('[FAIL] regimes in REGIMES but missing a REGIME_PARTIALS entry:');
+  for (const r of unmappedRegimes) console.error('  -', r);
+}
+
+const mappedFiles = [...new Set(Object.values(REGIME_PARTIALS))].sort();
+const missingFiles = mappedFiles.filter((f) => !existsSync(resolve(partialsDir, f)));
+if (missingFiles.length > 0) {
+  ok = false;
+  console.error('[FAIL] REGIME_PARTIALS names partials that do not exist in _partials/:');
+  for (const f of missingFiles) console.error('  -', f);
+}
+
+for (const file of mappedFiles.filter((f) => !missingFiles.includes(f))) {
+  const rows = classificationRows(file);
+  if (rows.length !== 1) {
+    ok = false;
+    console.error(`[FAIL] ${file}: expected exactly 1 Classification row, found ${rows.length}`);
+  } else if (rows[0].length === 0) {
+    ok = false;
+    console.error(`[FAIL] ${file}: Classification row is empty`);
+  }
+}
+
+if (!missingFiles.includes(UK_PARTIAL)) {
+  const ukLadder = classificationRows(UK_PARTIAL)[0];
+  for (const [regime, file] of Object.entries(REGIME_PARTIALS)) {
+    if (file === UK_PARTIAL || missingFiles.includes(file)) continue;
+    if (classificationRows(file)[0] === ukLadder) {
+      ok = false;
+      console.error(
+        `[FAIL] regime ${regime} maps to ${file} but its Classification row is identical to ${UK_PARTIAL} — the ladder was not swapped`,
+      );
+    }
+  }
 }
 
 if (ok) {
