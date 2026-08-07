@@ -157,6 +157,7 @@ export const DOC_TYPES = {
   'CRA':       { name: 'EU Cyber Resilience Act Assessment',           category: 'Compliance',  regime: 'EU', severity: 'HIGH' },
   'DSA':       { name: 'EU Digital Services Act Assessment',           category: 'Compliance',  regime: 'EU' },
   'DATAACT':   { name: 'EU Data Act Compliance Assessment',            category: 'Compliance',  regime: 'EU' },
+  'EUCSF':     { name: 'EU Cloud Sovereignty Framework Assessment',     category: 'Compliance',  regime: 'EU', severity: 'HIGH' },
   // French Government (Community-contributed, maintained by @thomas-jardinet)
   'IRN':       { name: 'IRN — Indice de Résilience Numérique',         category: 'Governance',  regime: 'FR' },
   'CNIL':      { name: 'CNIL / French GDPR Assessment',                category: 'Compliance',  regime: 'FR', severity: 'HIGH' },

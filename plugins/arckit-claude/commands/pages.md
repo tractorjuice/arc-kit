@@ -307,6 +307,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | CRA | `ARC-*-CRA-*.md` | EU Cyber Resilience Act Assessment |
 | | DSA | `ARC-*-DSA-*.md` | EU Digital Services Act Assessment |
 | | DATAACT | `ARC-*-DATAACT-*.md` | EU Data Act Compliance Assessment |
+| | EUCSF | `ARC-*-EUCSF-*.md` | EU Cloud Sovereignty Framework Assessment |
 | **Compliance (Community-contributed — French Government)** | | | |
 | | CNIL | `ARC-*-CNIL-*.md` | CNIL / French GDPR Assessment |
 | | SECNUM | `ARC-*-SECNUM-*.md` | SecNumCloud 3.2 Assessment |

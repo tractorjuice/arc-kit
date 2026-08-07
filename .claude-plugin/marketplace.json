@@ -92,7 +92,7 @@
     {
       "name": "arckit-eu",
       "source": "./plugins/arckit-eu",
-      "description": "EU Overlay — 7 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, and CRA",
+      "description": "EU Overlay — 8 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, CRA, and the Cloud Sovereignty Framework",
       "version": "6.8.0",
       "author": {
         "name": "TractorJuice"
