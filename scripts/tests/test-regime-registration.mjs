@@ -77,6 +77,13 @@ if (unmappedRegimes.length > 0) {
   for (const r of unmappedRegimes) console.error('  -', r);
 }
 
+const partialledNotRegistered = Object.keys(REGIME_PARTIALS).filter((r) => !registered.has(r)).sort();
+if (partialledNotRegistered.length > 0) {
+  ok = false;
+  console.error('[FAIL] regimes in REGIME_PARTIALS but missing from REGIMES:');
+  for (const r of partialledNotRegistered) console.error('  -', r);
+}
+
 const mappedFiles = [...new Set(Object.values(REGIME_PARTIALS))].sort();
 const missingFiles = mappedFiles.filter((f) => !existsSync(resolve(partialsDir, f)));
 if (missingFiles.length > 0) {
