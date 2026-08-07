@@ -29,14 +29,6 @@ plugins/arckit-claude/plugins/fr/**                       @thomas-jardinet @trac
 docs/guides/fr-*.md                                       @thomas-jardinet @tractorjuice
 plugins/arckit-claude/docs/guides/fr-*.md                 @thomas-jardinet @tractorjuice
 
-# Netherlands government overlay — community-maintained by @umag
-plugins/arckit-nl/commands/nl-*.md                        @umag @tractorjuice
-plugins/arckit-nl/templates/nl-*-template.md              @umag @tractorjuice
-plugins/arckit-claude/plugins/nl/**                       @umag @tractorjuice
-.arckit/templates/nl-*-template.md                        @umag @tractorjuice
-docs/guides/nl-*.md                                       @umag @tractorjuice
-plugins/arckit-claude/docs/guides/nl-*.md                 @umag @tractorjuice
-
 # Austrian government overlay — community-maintained by @gtonic (see #304, #320, #333)
 plugins/arckit-at/commands/at-*.md                        @gtonic @tractorjuice
 plugins/arckit-at/templates/at-*-template.md              @gtonic @tractorjuice
