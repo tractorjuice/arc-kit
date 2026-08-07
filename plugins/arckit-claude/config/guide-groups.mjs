@@ -47,6 +47,7 @@ export const GUIDE_CATEGORY_ORDER = [
   'Canada Federal Overlay',
   'Community overlays - EU',
   'Community overlays - France',
+  'Community overlays - Netherlands',
   'UAE Federal Overlay',
   'UK G-Cloud Supplier Overlay',
   'UK Finance Payments Overlay',
@@ -307,6 +308,10 @@ add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - France', 'community', [
   'fr-rgpd',
   'fr-secnumcloud',
 ], 'Community overlays - France');
+
+add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - Netherlands', 'community', [
+  'nl-overlay',
+], 'Community overlays - Netherlands');
 
 add(GUIDE_SECTIONS.OVERLAY, 'UAE Federal Overlay', 'community', [
   'uae-ai-autonomy-tier',

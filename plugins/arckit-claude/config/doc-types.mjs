@@ -289,6 +289,7 @@ export const REGIME_PARTIALS = {
   CA:  'document-control-ca.md',
   EU:  'document-control-uk.md',
   FR:  'document-control-uk.md',  // deferred
+  NL:  'document-control-nl.md',
   UAE: 'document-control-uae.md',
   US:  'document-control-uk.md',  // deferred
 };
