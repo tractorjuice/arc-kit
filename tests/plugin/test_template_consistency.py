@@ -127,6 +127,11 @@ def test_plugin_and_cli_partials_are_in_sync():
             os.path.join(REPO_ROOT, "plugins", "arckit-claude", "templates", "_partials", "*.md")
         )
     }
+    assert plugin_partials, (
+        "No partials found in plugins/arckit-claude/templates/_partials/ — "
+        "the source directory is missing, empty, or has been renamed. This test "
+        "cannot verify the CLI mirror without it."
+    )
     cli_partials = {
         os.path.basename(p)
         for p in glob.glob(os.path.join(CLI_TEMPLATES_DIR, "_partials", "*.md"))
