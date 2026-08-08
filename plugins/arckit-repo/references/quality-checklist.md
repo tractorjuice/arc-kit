@@ -978,3 +978,118 @@ All artifacts must pass these 10 checks:
 - VEX production cadence, CVE disclosure policy, coordinated-disclosure contact and mean-time-to-patch targets recorded
 - Any item that cannot be attested carries an M-22-18 exception record: which items, rationale, compensating controls, agency CIO and OMB notification status, and expiry
 - Distribution plan names the CISA Repository lodging target and the access-control posture for SBOM consumers
+
+### PDPL -- UAE Personal Data Protection Law Assessment
+
+- Scope states the carve-outs: DIFC DPL and ADGM DPR free-zone regimes fall outside the federal PDPL, and ADHICS is flagged where healthcare data is in scope
+- Every processing activity cites a PDPL Article 5 lawful basis, or Article 6 where consent is relied upon
+- All five Article 21 DPIA triggers assessed (new technology, large-scale processing, profiling or automated decisions, systematic monitoring, Article 7 sensitive categories), each triggered category carrying an impact assessment, residual risk and mitigations
+- Data-subject rights procedure covers all eight rights (access, rectification, erasure, restriction, portability, object, withdraw consent, complain to the Data Office), each with channel, response SLA and operational owner
+- Every cross-border transfer assessed against Article 22 adequacy or Article 23 derogations; transfers to countries with no UAE adequacy designation record both a written agreement and an explicit derogation
+- Breach notification playbook states the Article 9 obligations to the Data Office and to data subjects, with timelines and a named owner
+- Penalties section marked informational and excluded from compliance scoring
+
+### IAS -- UAE Information Assurance Standards
+
+- Federal entity identified, with CII sector designated where applicable (energy, water, telecoms, finance, transport, government, health, food and agriculture, emergency services)
+- Statement of Applicability covers every control family: 60 management controls (M1–M6) and 128 technical controls (T1–T9)
+- Applicable and not-applicable counts reconcile against that full set of 188 — no control silently absent
+- Every SoA row carries Control ID, description, priority tier (P1–P4), applicability, implementation status (Implemented / Partial / Not Implemented / Not Applicable), owner and evidence reference
+- Every Not Applicable control carries a justification rather than a blank
+- Risk treatment plan derived from the SoA gaps, each with target state, owner and deadline
+- CII registration status with the UAE Cybersecurity Council recorded where the entity is designated, including sector regulator interactions
+
+### CRES -- UAE Cloud Residency
+
+- Every dataset assessed by its Dataset ID from the CLAS register rather than re-enumerated
+- Classification, required residency, chosen CSP, region and compliance check recorded per dataset
+- Confidential, Secret and Top Secret datasets resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2, with any exception raised rather than left implicit
+- CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS) covering certification posture (DESC for Dubai entities, CSC accreditation), regional footprint, sovereign-data scope and documented limitations
+- Shared-responsibility matrix divides responsibility across infrastructure, platform, application, data, identity and operational layers for each chosen CSP
+- Shared platform components (identity, observability, backups) assessed for residency, not only the primary services
+- Exit and portability plan covers data egress, format portability, identity migration, key custody on exit and contingency residency on regulatory change
+
+### CLAS -- UAE Smart Data Classification Register
+
+- Every dataset assigned exactly one Smart Data level (Open / Shared / Confidential / Secret / Top Secret) — no other values
+- Level definitions cited to the UAE Smart Data Classifications publication, which appears in the Document Register with its primary URL and verification date
+- Handling, storage and declassification rules stated per dataset, not per level alone
+- Each dataset cross-referenced upstream to the BR / DR requirements that drove its capture and downstream to the INT requirements that consume it
+- PDPL lawful basis referenced for every dataset containing personal data
+- Dataset IDs stable and reusable — the CRES and DSHR artefacts reference this register by ID
+- Document Control carries the UAE block (Federal Entity, Cabinet Instrument, Sovereign Cloud Region, AI Autonomy Tier)
+
+### UPASS -- UAE Pass Integration
+
+- In-scope user journeys enumerated with their user populations (citizens, residents, visitors) and the Service Provider category being onboarded
+- Authentication flow shown as an OIDC Authorization Code flow with PKCE, covering user agent, Service Provider, UAE Pass IdP, claim issuance and session establishment
+- Profile selection justified per journey — Basic for login only, Verified for KYC and e-signature — with the Emirates ID verification prerequisite stated for Verified
+- Any journey relying on e-signature uses the Verified profile; a Basic-profile journey cannot claim e-signature capability
+- Claim mapping covers the UAE Pass claims in use (`sub`, `idn`, `fullnameAR`, `fullnameEN`, `mobile`, `email`, `nationalityEN`, `nationalityAR`, `gender`, `dob`, `profileType`) against the Service Provider schema, with consent and privacy notes per claim
+- E-signature audit trail records the signed artefact, signer identity, timestamp and certificate chain for non-repudiation, citing the legal effect
+- Onboarding checklist covers the TDRA / ICP artefacts: production credentials, callback URL allow-list, branding pack, security review and go-live
+
+### ZBUR -- UAE Zero Bureaucracy
+
+- Every service mapped to its federal entity service catalogue ID where one is published, with its customer journey and current Zero Bureaucracy status
+- Baseline captures current and target values for all four metrics per service: process steps, customer-supplied fields, end-to-end time to outcome, total customer cost
+- Every metric shows a reduction trajectory — a target equal to or worse than its baseline is flagged rather than recorded silently
+- All five customer-experience KPIs defined with monthly targets: CSAT, NPS, First-Time Right rate, Digital Adoption %, Failure Demand %
+- Compliance stated against each of the five UAE Code for Government Services principles (proactive, omni-channel, personalised, simple, fast), with evidence per principle
+
+### DREC -- UAE Digital Records
+
+- Every record type designates an authoritative system, a custodian entity and a stable record identifier scheme
+- Retention schedule states period, legal or regulatory basis, disposal trigger and disposal method per record type — no retention period without a cited basis
+- Records carrying the official-source designation named explicitly, with the evidence supporting it (audit trail, integrity controls, signature)
+- Lifecycle covers capture, classification, storage, access, retention and disposal, each mapped to where it is implemented in the technology stack
+- Classification stage cross-references the CLAS register rather than restating levels
+- Audit procedure states sampling approach and integrity checks; disposal procedure names the approver and the evidence of disposal
+
+### DSHR -- UAE Data Sharing Agreement
+
+- Sharing parties identified with joint-controller status and service-level commitments
+- Every shared dataset referenced by its Dataset ID from the CLAS register, with classification level, volume, frequency and direction
+- Every share involving personal data cites its PDPL Article 5 lawful basis (or Article 6 consent) and references the PDPL artefact entry that justifies it
+- Technical mechanism stated per share (REST API, event stream, file drop, federated query) with authentication, integrity and rate-limiting controls
+- Safeguards cover encryption in transit and at rest, key management, access control, logging, and incident-response co-ordination between the parties
+- All six data-subject rights traced across the sharing boundary (access, rectification, erasure, restriction, portability, object), each with a named owning party
+- No dataset shared at a classification its residency posture forbids — cross-checked against the CRES assessment
+
+### NPRA -- UAE National Priorities Alignment
+
+- All four federal strategies assessed with their relevant pillars: We the UAE 2031, National Investment Strategy 2031, UAE Strategy for Artificial Intelligence 2031, Digital Economy Strategy
+- Every major capability (identity, payments, hosting, notifications, data exchange) tested against the federally-provided shared service (UAE Pass, FedNet, government cloud, federal payment gateway)
+- Every rejected reuse carries an explicit justification — a build decision cannot rest on silence
+- Capability reuse register records the federal provider, integration mode and cost-saving evidence per adopted capability
+- Resource-efficiency calculation compares the reuse baseline against the build alternative quantitatively, over the project lifecycle
+- Feasibility assessment and pilot or phased rollout sequence present per major capability, per the Federal Government Guide
+
+### AICH -- UAE AI Ethics Charter Assessment
+
+- Every AI capability inventoried with model family, vendor, deployment mode (on-prem / sovereign-cloud / hosted-API) and primary user population
+- All 12 Charter principles assessed: Human-Machine Ties, Safety, Bias Mitigation, Data Privacy, Transparency, Human Oversight, Governance and Accountability, Technological Excellence, Human Commitment, Peaceful Coexistence, Inclusive Access, Lawful Compliance
+- Each principle records applicability, evidence of compliance, gap and mitigation — a principle marked applicable with no evidence is a gap, not a pass
+- Bias and fairness assessment names the protected attributes, the fairness metrics measured, dataset provenance, mitigations taken and residual risk
+- Human-in-the-loop design states the reviewer role, review trigger, override mechanism and audit trail of human decisions per use case
+- AI Autonomy Tier in the Document Control header consistent with the AUTI assessment where one exists
+
+### AUTI -- UAE AI Autonomy Tier
+
+- Every AI use-case mapped to exactly one tier with rationale: Tier 1 internal productivity, Tier 2 external-facing with mandatory human approval, Tier 3 regulated or financial decisions
+- Tier assignment consistent with blast radius — a use-case driving eligibility, payment or risk-scoring decisions cannot sit below Tier 3
+- Guard-rail matrix states the technical controls per tier: input filtering, output filtering, retrieval grounding, hallucination controls, refusal policy, prompt-injection defences
+- Approval gates named per tier for both deployment and each release, including the regulator-facing approval where Tier 3 applies
+- Audit obligations per tier state logging detail (prompt, response, model version, retrieval context, human reviewer), retention, audit cadence and reporting line
+- Tier-promotion criteria stated as evidence requirements, so promotion is testable rather than discretionary
+- AI Autonomy Tier in the Document Control header matches the highest tier in the inventory
+
+### FPRO -- UAE Federal Procurement
+
+- Route to market selected (open / restricted / direct award) with justification under the Decree-Law, alongside value bracket and any framework-agreement use
+- ITT/RFP pack outline aligned to the MoF Digital Procurement Platform templates: cover page, instructions to bidders, scope of work, technical specification, mandatory and desirable requirements, ICV obligations, evaluation criteria and weights, contract terms, response forms
+- Technical specification traceable to REQ (FR / NFR / INT) rather than written afresh
+- ICV plan states scoring criteria, target score, supplier evidence requirements and the post-award reporting obligation
+- Evaluation methodology states technical and commercial weights, pass/fail thresholds, panel composition independent of the bidding pool, conflict-of-interest declarations and report structure
+- Evaluation weights sum to 100%, with the stated thresholds reachable under them
+- Contract register schema defines its columns: contract ID, supplier, value, term, ICV target and actual, performance KPIs, renewal trigger date, owner
