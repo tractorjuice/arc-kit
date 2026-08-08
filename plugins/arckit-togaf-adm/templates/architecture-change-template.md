@@ -13,18 +13,20 @@ templateVersion: "1.0"
 | **Document ID** | `ARC-[PROJECT_ID]-ACHG-[ACHG_NUM]-v[VERSION]` |
 | **Document Type** | Architecture Change Request |
 | **Project** | `[PROJECT_NAME]` |
-| **Change ID** | `ACHG-[ACHG_NUM]` |
 | **Classification** | `[CLASSIFICATION]` |
 | **Status** | DRAFT |
-| **Change Type** | `[EVOLUTIONARY / TRANSFORMATIONAL / CORRECTIVE]` |
-| **Priority** | `[CRITICAL / HIGH / MEDIUM / LOW]` |
+| **Version** | `[VERSION]` |
 | **Created Date** | `[YYYY-MM-DD]` |
 | **Last Modified** | `[YYYY-MM-DD]` |
-| **Review Date** | `[YYYY-MM-DD]` |
+| **Review Cycle** | `[Monthly / Quarterly / Annual / On-Demand]` |
+| **Next Review Date** | `[YYYY-MM-DD]` |
 | **Owner** | `[OWNER_NAME_AND_ROLE]` |
 | **Reviewed By** | `[REVIEWER_NAME]` |
 | **Approved By** | `[APPROVER_NAME]` |
 | **Distribution** | `[DISTRIBUTION_LIST]` |
+| **Change ID** | `ACHG-[ACHG_NUM]` |
+| **Change Type** | `[EVOLUTIONARY / TRANSFORMATIONAL / CORRECTIVE]` |
+| **Priority** | `[CRITICAL / HIGH / MEDIUM / LOW]` |
 
 ### Revision History
 

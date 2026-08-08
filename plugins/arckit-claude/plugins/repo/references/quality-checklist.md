@@ -762,7 +762,7 @@ All artifacts must pass these 10 checks:
 
 ### REPO -- Architecture Repository
 
-- Document ID uses the global form `ARC-000-REPO-v{VERSION}`, not a project-scoped ID
+- Document ID uses `ARC-000-REPO-v[VERSION]` for a global repository or `ARC-[PROJECT_ID]-REPO-v[VERSION]` for a project-scoped one, and the Project field agrees with the form chosen
 - Every standard has an STD-xxx ID, a domain, a status (Active / Deprecated) and a source artefact
 - Deprecated standards name their superseding standard
 - Every reference architecture (REF-xxx) links to a DIAG artefact rather than embedding the diagram

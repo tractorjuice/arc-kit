@@ -10,19 +10,20 @@ templateVersion: "1.0"
 
 | Field | Value |
 |-------|-------|
-| Standard ID | `ARC-000-REPO-v{VERSION}` |
-| Project | Global Repository |
-| Owner | `[OWNER_NAME_AND_ROLE]` |
-| Classification | `[CLASSIFICATION]` |
-| Status | DRAFT |
-| Created | `[YYYY-MM-DD]` |
-| Review Date | `[YYYY-MM-DD]` |
-| Review Cycle | Quarterly |
-| Next Review | `[YYYY-MM-DD]` |
-| Owner | `[OWNER_NAME_AND_ROLE]` |
-| Reviewed By | `[REVIEWER_NAME]` |
-| Approved By | `[APPROVER_NAME]` |
-| Distribution | `Project Team, Architecture Team` |
+| **Document ID** | `ARC-000-REPO-v[VERSION]` |
+| **Document Type** | Architecture Repository |
+| **Project** | Global Repository |
+| **Classification** | `[CLASSIFICATION]` |
+| **Status** | DRAFT |
+| **Version** | `[VERSION]` |
+| **Created Date** | `[YYYY-MM-DD]` |
+| **Last Modified** | `[YYYY-MM-DD]` |
+| **Review Cycle** | Quarterly |
+| **Next Review Date** | `[YYYY-MM-DD]` |
+| **Owner** | `[OWNER_NAME_AND_ROLE]` |
+| **Reviewed By** | `[REVIEWER_NAME]` |
+| **Approved By** | `[APPROVER_NAME]` |
+| **Distribution** | `Project Team, Architecture Team` |
 
 ### Revision History
 
