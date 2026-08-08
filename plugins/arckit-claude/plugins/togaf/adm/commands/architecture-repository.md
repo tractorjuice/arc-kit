@@ -328,7 +328,7 @@ Before completing the document, populate ALL document control fields in the head
 
 **Construct Document ID**:
 
-- **Document ID**: `ARC-000-REPO-v{VERSION}` (global) or `ARC-{PROJECT_ID}-REPO-v{VERSION}` (project-scoped)
+- **Document ID**: `ARC-000-REPO-v[VERSION]` (global) or `ARC-[PROJECT_ID]-REPO-v[VERSION]` (project-scoped)
 
 **Populate Required Fields**:
 

@@ -10,20 +10,20 @@ templateVersion: "1.0"
 
 | Field | Value |
 |-------|-------|
-| Document ID | `ARC-[PROJECT_ID]-TRANS-v[VERSION]` |
-| Document Type | Transition Architecture |
-| Project | `[PROJECT_NAME]` |
-| Classification | `[CLASSIFICATION]` |
-| Status | DRAFT |
-| Version | `[VERSION]` |
-| Created | `[YYYY-MM-DD]` |
-| Last Modified | `[YYYY-MM-DD]` |
-| Review Cycle | Monthly during active migration, quarterly after migration |
-| Next Review Date | `[YYYY-MM-DD]` |
-| Owner | `[OWNER_NAME_AND_ROLE]` |
-| Reviewed By | `[REVIEWER_NAME]` |
-| Approved By | `[APPROVER_NAME]` |
-| Distribution | `[DISTRIBUTION_LIST]` |
+| **Document ID** | `ARC-[PROJECT_ID]-TRANS-v[VERSION]` |
+| **Document Type** | Transition Architecture |
+| **Project** | `[PROJECT_NAME]` |
+| **Classification** | `[CLASSIFICATION]` |
+| **Status** | DRAFT |
+| **Version** | `[VERSION]` |
+| **Created Date** | `[YYYY-MM-DD]` |
+| **Last Modified** | `[YYYY-MM-DD]` |
+| **Review Cycle** | Monthly during active migration, quarterly after migration |
+| **Next Review Date** | `[YYYY-MM-DD]` |
+| **Owner** | `[OWNER_NAME_AND_ROLE]` |
+| **Reviewed By** | `[REVIEWER_NAME]` |
+| **Approved By** | `[APPROVER_NAME]` |
+| **Distribution** | `[DISTRIBUTION_LIST]` |
 
 ### Revision History
 

@@ -10,14 +10,21 @@ templateVersion: "1.0"
 
 | Field | Value |
 |-------|-------|
-| Document ID | `ARC-[PROJECT_ID]-GAPA-v[VERSION]` |
-| Project | `[PROJECT_NAME]` |
-| Owner | `[OWNER_NAME_AND_ROLE]` |
-| Classification | `[CLASSIFICATION]` |
-| Status | DRAFT |
-| Severity Weighting | `[BALANCED / STRATEGIC-RISK / OPERATIONAL]` |
-| Created | `[YYYY-MM-DD]` |
-| Review Date | `[YYYY-MM-DD]` |
+| **Document ID** | `ARC-[PROJECT_ID]-GAPA-v[VERSION]` |
+| **Document Type** | TOGAF Gap Analysis |
+| **Project** | `[PROJECT_NAME]` |
+| **Classification** | `[CLASSIFICATION]` |
+| **Status** | DRAFT |
+| **Version** | `[VERSION]` |
+| **Created Date** | `[YYYY-MM-DD]` |
+| **Last Modified** | `[YYYY-MM-DD]` |
+| **Review Cycle** | `[Monthly / Quarterly / Annual / On-Demand]` |
+| **Next Review Date** | `[YYYY-MM-DD]` |
+| **Owner** | `[OWNER_NAME_AND_ROLE]` |
+| **Reviewed By** | `[REVIEWER_NAME]` |
+| **Approved By** | `[APPROVER_NAME]` |
+| **Distribution** | `[DISTRIBUTION_LIST]` |
+| **Severity Weighting** | `[BALANCED / STRATEGIC-RISK / OPERATIONAL]` |
 
 ### Revision History
 

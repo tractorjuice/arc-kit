@@ -10,20 +10,20 @@ templateVersion: "1.0"
 
 | Field | Value |
 |-------|-------|
-| Document ID | `ARC-[PROJECT_ID]-APPR-v[VERSION]` |
-| Document Type | Application Rationalisation |
-| Project | `[PROJECT_NAME]` |
-| Classification | `[CLASSIFICATION]` |
-| Status | DRAFT |
-| Version | `[VERSION]` |
-| Created | `[YYYY-MM-DD]` |
-| Last Modified | `[YYYY-MM-DD]` |
-| Review Cycle | Quarterly during active rationalisation programme |
-| Next Review Date | `[YYYY-MM-DD]` |
-| Owner | `[OWNER_NAME_AND_ROLE]` |
-| Reviewed By | `[REVIEWER_NAME]` |
-| Approved By | `[APPROVER_NAME]` |
-| Distribution | `[DISTRIBUTION_LIST]` |
+| **Document ID** | `ARC-[PROJECT_ID]-APPR-v[VERSION]` |
+| **Document Type** | Application Rationalisation |
+| **Project** | `[PROJECT_NAME]` |
+| **Classification** | `[CLASSIFICATION]` |
+| **Status** | DRAFT |
+| **Version** | `[VERSION]` |
+| **Created Date** | `[YYYY-MM-DD]` |
+| **Last Modified** | `[YYYY-MM-DD]` |
+| **Review Cycle** | Quarterly during active rationalisation programme |
+| **Next Review Date** | `[YYYY-MM-DD]` |
+| **Owner** | `[OWNER_NAME_AND_ROLE]` |
+| **Reviewed By** | `[REVIEWER_NAME]` |
+| **Approved By** | `[APPROVER_NAME]` |
+| **Distribution** | `[DISTRIBUTION_LIST]` |
 
 ### Revision History
 
