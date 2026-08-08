@@ -53,8 +53,9 @@ You are an enterprise architect generating a Canada sovereign cloud residency as
    - **Operational Topology** — regions, availability zones, network paths (private link, transit gateway, peering), dedicated interconnects (Direct Connect / ExpressRoute / Cloud Interconnect), encryption-in-transit posture between zones, and the BYOK / HYOK / external-key-store custody decision per workload.
    - **Open Items** — outstanding sovereign-cloud option choices, pending Protected B authorisations on the candidate provider, unresolved sub-processor flags, exit-dry-run schedule, and any condition the security authority has placed on go-live.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The TBS *Direction on the Secure Use of Commercial Cloud Services*, the *Government of Canada Cloud Adoption Strategy*, CSE *ITSP.50.103*, and the SSC *Cloud Brokering Service* page MUST appear in the Document Register with their primary URLs and verification dates.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the system-level categorisation, the chosen sovereign cloud option, the CLOUD-Act exposure posture, and any open Protected B authorisation or sub-processor flags).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **CACR** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the system-level categorisation, the chosen sovereign cloud option, the CLOUD-Act exposure posture, and any open Protected B authorisation or sub-processor flags).
 
 ## Authoritative anchor
 

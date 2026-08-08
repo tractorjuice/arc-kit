@@ -54,8 +54,9 @@ You are an enterprise architect generating a federal Canadian procurement strate
    - **Risks** — including but not limited to: insufficient supplier pool (especially for set-aside or niche services), security-clearance bottleneck on critical path, threshold disputes with bidders, ITQ vs ITT vs RFP shape confusion, contract-award challenge under CFTA Chapter 5 / CITT, sub-processor residency conflict (cross-reference `ca-cloud-residency`), and OLA / accessibility obligations on the supplier delivery surface.
    - **Open Items** — outstanding decisions, pending instrument confirmations, deferred risk treatments, owners, and review dates.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The PSPC *Supply Manual*, the *Canadian Free Trade Agreement* (CFTA), CETA, CPTPP, the WTO Agreement on Government Procurement (WTO-AGP), the Indigenous Services Canada *Procurement Strategy for Indigenous Business*, and the Canadian International Trade Tribunal (CITT) procurement complaint regime MUST appear in the Document Register with their primary URLs and verification dates.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the recommended route, the binding trade agreements, the PSAB contribution posture, the longest clearance lead time on the critical path, and any open items that block solicitation posting).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **PROC** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the recommended route, the binding trade agreements, the PSAB contribution posture, the longest clearance lead time on the critical path, and any open items that block solicitation posting).
 
 ## Authoritative anchor
 

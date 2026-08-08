@@ -60,8 +60,9 @@ You are an enterprise architect generating a Canada Algorithmic Impact Assessmen
    - **Reassessment Triggers** — material change to data, model, decision boundary, or operating environment. Include a periodic reassessment cadence (annual default, accelerated for Level III/IV systems).
    - **Open Items** — explicit list of unresolved questionnaire scores, pending peer-review nominations, or downstream artefacts that must be produced before launch.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The TBS *Directive on Automated Decision-Making* and the *Algorithmic Impact Assessment Tool* MUST appear in the Document Register with their primary URLs and the verification date.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the computed Impact Level, the headline mitigations triggered by that level, and any open peer-review or reassessment items).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AIA** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the computed Impact Level, the headline mitigations triggered by that level, and any open peer-review or reassessment items).
 
 ## Authoritative anchor
 
