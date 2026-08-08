@@ -41,8 +41,9 @@ You are an enterprise architect generating a UAE Smart Data Classification Regis
    - Downstream INT requirements that consume it
    - The applicable PDPL lawful basis (if personal data is in scope — see `/arckit:uae-pdpl`)
 8. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The UAE Smart Data Classifications publication MUST appear in the Document Register with its primary URL and the verification date.
-9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-10. Show only a summary to the user (one paragraph plus a short list of datasets and their proposed classifications).
+9. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **CLAS** per-type checks pass. Fix any failures before proceeding.
+10. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+11. Show only a summary to the user (one paragraph plus a short list of datasets and their proposed classifications).
 
 ## Authoritative anchor
 

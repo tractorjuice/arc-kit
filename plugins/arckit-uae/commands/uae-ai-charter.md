@@ -39,8 +39,9 @@ You are an enterprise architect generating a UAE Charter for the Development and
    - **Bias & Fairness Assessment** — protected attributes, fairness metrics measured, dataset provenance, mitigation actions taken, residual risk.
    - **Human-in-the-Loop Design** — for each AI use-case, state the operator/reviewer role, the trigger for human review, the override mechanism, and the audit trail of human decisions.
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The UAE Charter for AI MUST appear in the Document Register with its primary URL and the verification date.
-8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-9. Show only a summary to the user (one paragraph plus the count of principles fully compliant, partially compliant, and non-compliant).
+8. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AICH** per-type checks pass. Fix any failures before proceeding.
+9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+10. Show only a summary to the user (one paragraph plus the count of principles fully compliant, partially compliant, and non-compliant).
 
 ## Authoritative anchor
 
