@@ -1242,3 +1242,150 @@ All artifacts must pass these 10 checks:
 - Repatriation plan covers return-or-destroy with format portability wherever data was historically taken without informed consent
 - Co-governance records Indigenous representation, decision-making authority and appeal pathway
 - Risk register covers misuse of traditional knowledge, secondary analysis without consent, breach of trust and *UNDA* / UNDRIP implications
+
+### AUE8 -- Essential Eight Maturity Assessment
+
+- All eight mitigation strategies assessed: application control, patch applications, Office macro settings, user application hardening, restrict administrative privileges, patch operating systems, multi-factor authentication, regular backups
+- Each strategy records current maturity (ML0 / ML1 / ML2 / ML3) with evidence, target maturity with its regulatory or risk-appetite rationale, gap, remediation with owner and target date, and residual risk
+- Maturity summary matrix carries one row per strategy and reconciles with the per-strategy assessments
+- Where the entity is a DISP member, any strategy below ML2 is flagged as a DISP non-compliance risk rather than reported as a neutral gap
+- Cloud-hosted systems state which controls are shared-responsibility, which are vendor-managed, and any IRAP-assessed service alignment
+- System classification recorded (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) alongside deployment model and data sovereignty position
+- Recommendations grouped by Quick Wins (<30 days), Short-Term (30–90) and Medium-Term (90–180), each naming its strategy and target ML
+
+### AUISM -- ISM Control Applicability
+
+- Applicability driven by system classification — the control set at OFFICIAL:Sensitive is a subset of that at PROTECTED, and the artefact states which classification it is assessing
+- Applicability matrix covers all 17 ISM control areas (the 15 chapter domains plus Cloud/IaaS and Working-Off-Site)
+- Each in-scope domain records applicability rationale, implementation status, evidence, gap with specific ISM control IDs, remediation with owner and date, and any compensating controls
+- Gaps name the specific ISM control IDs not met rather than describing the domain in general terms
+- ISM-to-E8 cross-reference present, showing E8 as a mitigation subset rather than an alternative
+- Compliance summary states an applicability score as controls implemented over controls applicable, reconciling with the per-domain assessments
+- IRAP position records scope, assessment date, accepted residual risks and re-assessment cadence; inherited posture noted where integrating with IRAP-assessed cloud services
+
+### AUPIA -- Australian Privacy Impact Assessment
+
+- All 13 Australian Privacy Principles assessed, each with applicability and rationale, compliance status, evidence, privacy risk where non-compliant, and mitigation with owner and date
+- Information flows shown as a diagram marking collection, storage, processing, disclosure, cross-border transfer and disposal, with each flow marked against the APP that governs it
+- Sensitive information tested against the s 6 Privacy Act definition (racial or ethnic origin, political opinions, religious beliefs, sexual orientation, criminal record, health, genetic, biometric, trade union membership); where present, the additional APP 3.3 consent requirement is addressed
+- Cross-border disclosures assessed under APP 8, with the accountability consequence stated
+- Privacy risks scored by likelihood and impact with mitigations and residual risk
+- Automated decisions affecting individuals record the December 2026 notification requirement, the human review mechanism and a fairness assessment, cross-referenced to the AI assurance artefact
+- APP 11 security posture cross-referenced to the E8 and ISM artefacts rather than asserted independently
+
+### AUNDB -- Notifiable Data Breaches Playbook
+
+- Eligibility test stated as an explicit decision tree over the three statutory limbs: unauthorised access, disclosure or loss; serious harm likely; remediable by reasonable steps
+- The eligibility conclusion follows the logic — limbs 1 and 2 satisfied with limb 3 unsatisfied yields an eligible data breach requiring notification within 30 days
+- 30-day timeline planned day by day from Day 0 awareness through Day 30 notification, with the intermediate phases named
+- RACI covers Privacy Officer, Security Officer, CISO, Legal, Communications and the accountable executive
+- Detection and containment procedures name the channels by which breaches become known, the immediate containment steps and evidence preservation
+- Serious-harm assessment criteria stated (financial loss, identity theft, emotional distress, physical safety, reputational harm), together with the reasonable-steps mitigation that can remove eligibility
+- OAIC notification content covers the statutory form fields: nature of breach, kind of information, recommendations for individuals, contact details
+- Individual notification approach chooses between direct and publication-based, with content, channel, language and accessibility considerations
+- Coordination with other obligations addressed — SOCI 12-hour and 72-hour, DISP incident reporting, and sectoral regulators — recognising that one incident can trigger several timelines
+- Post-incident review feeds control updates back into the E8, ISM and PIA artefacts
+- Annual tabletop exercise planned with evidence retention and a lessons-learned cycle
+
+### AUOT -- Operational Technology Security
+
+- OT environment context records operational function, safety impact, availability requirements, the OT/IT boundary, third-party access, classification and critical-infrastructure relevance
+- Assessment made against ASD OT principles, definitive OT architecture guidance and secure connectivity principles
+- Definitive OT architecture view records whether an authoritative asset, data-flow, trust-boundary, dependency, owner and connectivity picture exists — absence recorded as a finding
+- Architecture evidence cross-referenced to diagram, DFD and data-model artefacts per OT zone, with missing diagrams, missing DFD levels, stale entities or unowned dependencies called out explicitly as evidence gaps
+- Segmentation documents zones, conduits, boundary controls, admin pathways, jump hosts, protocol gateways, DMZs and monitoring points
+- Remote access assessed for business case, exposure, brokered and just-in-time access, privileged access workstations, vendor access, obsolete-device compensating controls and logging
+- Safety, availability and recovery constraints identify where cyber controls must be adapted for safety, uptime, legacy devices, maintenance windows and manual fallback
+- AI-in-OT assessed where AI is present; where absent, recorded as not applicable with the trigger conditions for reassessment stated rather than silently omitted
+- Findings cross-referenced to the E8 and ISM artefacts, showing where evidence is reused or qualified
+- Recommendations grouped Immediate / 30–90 days / 90–180 days / strategic, each with owner, evidence artefact and residual risk
+
+### AUSOCI -- SOCI Critical Infrastructure Risk Management Programme
+
+- Critical asset context identifies asset, sector, responsible entity, operator, direct interest holders, regulator, and whether the asset is declared or suspected in scope
+- Applicability assessment covers sector, asset class, thresholds, responsible-entity obligations, register obligations, incident reporting and government assistance, with any uncertainty flagged for legal confirmation rather than resolved by assumption
+- All five CIRMP hazard domains assessed: cyber and information security, personnel, supply chain, physical security, natural hazards — each with material risk, relevant impact, current controls, evidence, gaps and a named risk owner
+- Cyber evidence consolidated from the E8, ISM, OT, PIA and NDB artefacts rather than restated
+- Governance model records accountable owner, governing-body oversight, annual report owner, risk committee, review cadence and evidence repository
+- Incident reporting documents the 12-hour and 72-hour pathways where applicable, escalation roles, regulator contact points and record-keeping
+- Annual report and attestation readiness assessed against the required timeframe, including governing-body approval
+- Sector-specific obligations (AESCSF, AER ring-fencing, NER/NGR, AEMO) explicitly deferred to the sector recipes rather than partially duplicated here
+- Architecture and data evidence cross-referenced, with missing or stale evidence called out explicitly
+
+### AUAESCSF -- Australian Energy Sector Cyber Security Framework
+
+- AESCSF source text is not quoted verbatim — the assessment describes maturity in its own words to respect the framework's licensing
+- Energy sub-sector, asset or platform, market role, operational environment and criticality identified, with AESCSF applicability assumptions stated
+- Target maturity profile justified against business criticality, safety and market impacts, with legal or regulatory assumptions flagged for qualified review
+- Maturity assessed per AESCSF capability domain with current evidence, target state, gaps, owners and uplift actions
+- OT/IT zone and conduit diagrams required, alongside DERMS / DOE / CSIP-AUS flows where applicable, field telemetry, metering, control-room and grid-edge dependency evidence
+- Market and system-operator interfaces documented (AEMO interfaces, settlement or metering flows, telemetry, APIs, file transfers, protocol gateways)
+- Asset and interface inventory names a source-of-truth register per class, with owners, criticality and inventory gaps identified
+- Anti-pattern register calls out flat OT networks, undocumented market interfaces, unmanaged vendor remote access, stale DER integration assumptions, missing data ownership and unsupported control-room dependencies
+- Findings mapped to the federal baseline artefacts (E8, ISM, OT security, SOCI CIRMP)
+- Maturity gaps converted into risk treatments with owner, due date, evidence artefact and residual risk
+
+### AUENERGY -- Australian Energy Regulatory Compliance
+
+- Energy sub-sector, regulated services, market participant roles, asset classes and system-operator touchpoints identified
+- AER ring-fencing assessment covers the regulated and unregulated boundary, shared services, staff access, data access, branding, affiliate interactions and waivers, with items requiring qualified legal review marked as such rather than asserted
+- NER, NGR and AEMO obligations mapped at architecture level and explicitly positioned for specialist confirmation
+- SOCI applicability cross-referenced to the CIRMP artefact rather than re-derived
+- Market and system-operator interface register identifies AEMO portals, APIs, B2B/B2M, file transfers, telemetry, dispatch, outage and settlement interfaces
+- Regulated and unregulated data flows document permitted and prohibited flows with controls, approvals, logging, retention, affiliate access and evidence owners
+- Prohibited flows stated explicitly — a permitted-flow list alone does not evidence ring-fencing
+- Inventory names source-of-truth registers across regulated and unregulated services, critical assets, CMDB CIs, interfaces, telemetry, vendor access, customer and metering data, with owners, criticality and gaps
+- Architecture decision seeds proposed for ring-fencing boundaries, shared services, market interface design, DER integration, customer data sharing and SOCI escalation
+- Gaps prioritised with owner, artefact, decision, review requirement and due date
+
+### AUDSS -- Digital Service Standard Assessment
+
+- All 13 Digital Service Standard criteria assessed, each with status, evidence summary, gap description and remediation with owner and target date
+- Service phase recorded (Discovery / Alpha / Beta / Live) alongside user base and transaction volume
+- Accessibility assessed against WCAG 2.2 AA with assistive-technology testing and a published accessibility statement
+- Privacy criterion evidenced by a completed PIA and APP compliance rather than an assertion
+- Security criterion cross-referenced to the E8 posture rather than described independently
+- Open-source criterion states the strategy, repository and licence, or records the exemption
+- Performance measures name the KPIs (completion rate, user satisfaction, cost per transaction, digital take-up)
+- Non-digital experience addressed with assisted digital, phone and in-person channel design — not deferred as out of scope
+- Compliance summary table reconciles with the per-criterion assessments
+- Services approaching an assessment gate identify the top three risks to passing, with mitigations
+
+### AUPSPF -- Protective Security Policy Framework
+
+- All four PSPF outcomes assessed: security governance, information security, personnel security, physical security
+- All 16 core requirements (CR1–CR16) assessed individually, each with compliance status, supporting evidence, gap description, remediation with owner and date, and the self-assessment level achieved
+- Compliance summary carries 16 rows and reconciles with the individual core-requirement assessments
+- Entity type recorded (non-corporate Commonwealth, corporate Commonwealth, contractor, panel member, state government under flow-down) together with the applicability driver — direct or contractual flow-down
+- Chief Security Officer designated
+- Evidence cites the ISM, E8, PIA and DISP artefacts where they exist rather than restating their content
+- Non-corporate Commonwealth entities record Annual Self-Assessment status, last submission to AGD and current self-assessed maturity
+- Recommendations grouped Quick Wins / Short-Term / Medium-Term, each tagged to a specific core requirement
+
+### AUDISP -- Defence Industry Security Programme Attestation
+
+- DISP level sought stated (Level 1 / 2 / 3) with its regulatory driver and a justification for the level chosen
+- A named Chief Security Officer designated with role, authority across all four security domains, deputy, contact details and vetting status
+- All four security domains covered — governance, personnel security, physical security, information and cyber security — each with current state, evidence references, gap, remediation with target dates and an accountable-officer sign-off
+- Essential Eight evidence summarised per strategy against the ML2 minimum, citing the E8 artefact directly
+- Any strategy below ML2 surfaced as a DISP attestation risk rather than recorded as a routine gap
+- ISM applicability highlights identify gaps that materially affect the attestation, citing the ISM artefact
+- FOCI declaration discloses foreign ownership above 5%, foreign board arrangements, foreign supply-chain dependencies and foreign personnel access, with mitigation plans where Level 2 or 3 applies
+- Supply chain discloses Tier 1 suppliers and the attestations they hold (SOC 2, ISO 27001, IRAP)
+- Incident response evidences a 24-hour rapid notification capability for Defence-relevant incidents and integration with the NDB scheme
+- Annual self-audit plan states scope, methodology and evidence retention
+- Attestation statement carries CSO and Director sign-off blocks, date and re-attestation cadence
+
+### AUAIA -- Australian AI Assurance
+
+- AI capability type, deployment phase, foundation model, training and inference data sources and human-in-the-loop posture recorded, with decisions affecting individuals stated explicitly
+- All six DTA Responsible AI Policy accountabilities assessed: accountability, transparency, risk-based approach, quality data and design integrity, privacy and security, human oversight and redress
+- All eight AU AI Ethics Principles assessed with status, evidence, gap and mitigation
+- All six Essential AI Practices (AI6) assessed with status, evidence, gap and action, cross-referenced to the DTA accountabilities without conflating the two — the DTA policy is a Commonwealth mandate, AI6 is adoption guidance
+- Substantially-automated decisions significantly affecting individuals document the December 2026 notification mechanism, what individuals are told and any opt-out pathway, cross-referenced to APP 6 and APP 11
+- Fairness assessment names the bias evaluation methodology, protected attributes, fairness metrics, test results across population segments and residual fairness risks
+- Training-data classification assessed on the basis that models can memorise personal information, so the classification may exceed that of the source system
+- Prompt-injection and model-extraction defences documented, cross-referenced to the E8 posture and ISM applicability
+- Model lifecycle governance covers version control, change management for model updates, drift detection and retirement criteria
+- Third-party foundation models disclose vendor, model version, vendor policy compliance, training-data provenance, inference data residency and the IP position
+- ISO 42001 readiness assessed clause by clause where certification is pursued or anticipated

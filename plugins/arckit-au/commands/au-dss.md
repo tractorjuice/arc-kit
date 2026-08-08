@@ -110,9 +110,10 @@ The Digital Transformation Agency (DTA) Digital Service Standard sets the mandat
 
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The DTA Digital Service Standard MUST appear in the Document Register.
 
-8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+8. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AUDSS** per-type checks pass. Fix any failures before proceeding.
+9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 
-9. Show only a summary to the user (one paragraph plus the compliance summary table showing status per criterion).
+10. Show only a summary to the user (one paragraph plus the compliance summary table showing status per criterion).
 
 ## Important Notes
 

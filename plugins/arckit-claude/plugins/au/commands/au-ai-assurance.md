@@ -129,9 +129,10 @@ Australia's AI assurance landscape combines several frameworks that together gov
 
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. DTA AI Policy v2.0, AU AI Ethics Principles, AU Essential AI Practices (AI6) — Foundations + Implementation Guidance, ISO 42001 (Australian Standard), and Privacy Act 1988 MUST appear in the Document Register.
 
-8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+8. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AUAIA** per-type checks pass. Fix any failures before proceeding.
+9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 
-9. Show only a summary to the user (one paragraph plus the DTA + Ethics Principles compliance summary table).
+10. Show only a summary to the user (one paragraph plus the DTA + Ethics Principles compliance summary table).
 
 ## Important Notes
 

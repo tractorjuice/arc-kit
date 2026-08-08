@@ -95,9 +95,10 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
 
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The ASD Essential Eight Maturity Model MUST appear in the Document Register with its primary URL and verification date.
 
-8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+8. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AUE8** per-type checks pass. Fix any failures before proceeding.
+9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 
-9. Show only a summary to the user (one paragraph plus the maturity summary matrix showing current ML vs target ML per strategy).
+10. Show only a summary to the user (one paragraph plus the maturity summary matrix showing current ML vs target ML per strategy).
 
 ## Important Notes
 
