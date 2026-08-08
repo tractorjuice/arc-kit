@@ -55,8 +55,9 @@ You are an enterprise architect generating a Canada FITAA Compliance Assessment 
    - **Compliance Schedule (registrant-side)** — arrangement triggers, the 14-day clock, penalty exposures (cite specific FITAA offence sections where settled; otherwise `<TBC>`).
    - **Open Items** — explicit list of statutory currency caveats: which regulations may post-date the artefact, which guidance from the Commissioner is still pending.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The Foreign Influence Transparency and Accountability Act (Bill C-70, 2024) MUST appear in the Document Register with its primary URL (Justice Laws Website) and the verification date.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the headline Charter §2 risk findings and any open statutory-currency items).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FITAA** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the headline Charter §2 risk findings and any open statutory-currency items).
 
 ## Authoritative anchor
 

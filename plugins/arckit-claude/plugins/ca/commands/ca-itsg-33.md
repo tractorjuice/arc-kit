@@ -51,8 +51,9 @@ You are an enterprise architect generating an ITSG-33 Statement of Applicability
    - **Authorisation Chain** — System Owner → Security Authority → Authorising Official, identified by role; specify the authorisation cycle, the conditions attaching to the authorisation, and the re-authorisation triggers.
    - **Open Items** — outstanding tailoring decisions, unfinished CMVP checks, unresolved supplier flags, and any condition the authorising official has placed on go-live.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. ITSG-33, the TBS *Standard on Security Categorization*, the *Direction on Vulnerable Suppliers*, and the CMVP active modules list MUST appear in the Document Register with their primary URLs and verification dates.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the system-level categorisation, the chosen profile, the count of Compensating Controls, and any open lawful-authority or supplier-flag items).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **ITSG** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the system-level categorisation, the chosen profile, the count of Compensating Controls, and any open lawful-authority or supplier-flag items).
 
 ## Authoritative anchor
 

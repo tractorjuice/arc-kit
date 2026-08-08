@@ -1093,3 +1093,152 @@ All artifacts must pass these 10 checks:
 - Evaluation methodology states technical and commercial weights, pass/fail thresholds, panel composition independent of the bidding pool, conflict-of-interest declarations and report structure
 - Evaluation weights sum to 100%, with the stated thresholds reachable under them
 - Contract register schema defines its columns: contract ID, supplier, value, term, ICV target and actual, performance KPIs, renewal trigger date, owner
+
+### FITAA -- Foreign Influence Transparency Registry
+
+- Activity scoping states the statutory triggers (covered arrangements with foreign principals to influence government, political processes or public discourse) and the excluded categories (journalism, academic research)
+- Decision tree maps the project's own activities against those triggers rather than restating the statute
+- Provisions cited only where numbering is settled; anything pending marked `<TBC at draft time>` rather than asserted
+- Arrangement register separates public-facing transparency fields from protected national-security fields, with the 14-day material-change cadence stated
+- Registration workflow bilingual per the OLA assessment, with identity verification, acknowledgement and registration ID issuance
+- Public-register versus protected-investigative data flow shown, with severance rules cross-referenced to the ATIP assessment
+- Commissioner liaison protocol covers reporting cadence for suspected non-registration and falsification, plus RCMP and CSIS touchpoints
+- Charter risks registered against s.2(b) chilling effect and s.2(d) association, cross-referenced to the CHRT assessment
+- Open Items record which regulations may post-date the artefact and which Commissioner guidance is still pending
+
+### PIA -- Privacy Impact Assessment (Canada)
+
+- Document ID uses `PIA` — the US federal assessment is registered as `USPIA`
+- Privacy Act §4 collection authority cited to the enabling statute or regulation; unclear authority marked `<TBC>` and flagged as an OPC blocker rather than left implicit
+- Every personal information element records source, purpose, sensitivity, retention period, disclosure recipients and its Personal Information Bank entry where applicable
+- Necessity and proportionality run as the four-step Oakes-derived analysis: pressing and substantial objective, rational connection, minimal impairment, proportional effects
+- §7 use limited to the purpose of collection or a consistent use; §8 disclosures analysed per routine use, with §8(2)(a)–(m) letters treated individually rather than aggregated
+- Cross-border transfer flags cross-referenced to the cloud-residency assessment
+- Individual rights cover §12 access, §13 PIB registration with TBS InfoSource, correction and annotation, and the OPC complaint pathway
+- OPC notification trigger analysed, honouring the 30-day pre-launch requirement for new programmes and substantial modifications
+- Approval chain named through ATIP coordinator, ADM and head of institution, with TBS notification and OPC consultation at the correct gates
+- Action tracker links every open mitigation back to its privacy-risk register entry
+
+### ATIP -- Access to Information and Privacy
+
+- Information holdings inventory categorises every holding as Public, Protected or Classified, accounting for every data element in the data model rather than personal information alone
+- Each holding maps to its Personal Information Bank where applicable, with owner and lifecycle stage
+- Every claimed ATI Act exemption explained rather than merely cited (§13, §14, §15, §16 including §16.1–§16.6, §19, §21, §23, §24)
+- §19 not treated as a blanket exemption — §8(2) routine-use disclosures still assessed
+- Privacy Act register tables every collection, use and disclosure against its section authority (§4, §5 with the §5(2)/(3) exceptions, §7 and §7(a) consistent use, §8)
+- §8(2)(a)–(m) routine-use letters analysed individually; dissimilar disclosures not aggregated under a single letter
+- Severance design states field-level rules, an audit-log schema capturing reviewer, exemption claimed, justification and output, and a re-identification risk analysis against adjacent open data
+- Request workflow covers the §7 30-day clock, §9 extensions with written reasons, §27 third-party consultation and publication of refusals, with an SLA per step
+- Annual report mapping identifies what feeds TBS InfoSource, the departmental report and the OIC / OPC cycle, and on what cadence
+
+### AIA -- Algorithmic Impact Assessment
+
+- All six questionnaire dimensions scored with evidence cited: Project, System, Algorithm, Decision, Impact, Data
+- Impact Level (I–IV) computed from the questionnaire per the TBS Directive threshold matrix with the workings shown — never self-declared
+- Mitigations applied match the computed Level rather than a lower one
+- Peer review scoped to the Level (internal at II, external at III/IV) with named reviewers and lead time
+- Transparency notice bilingual per the OLA assessment, published 30 days pre-launch for Level III/IV
+- Human-in-the-loop design states override paths, escalation thresholds and reviewer training
+- Recourse mechanism provides an appeal path to a human decision-maker and explanation rights for affected individuals
+- Algorithmic risks register covers bias (selection, label, deployment), data and concept drift, proxy variables, contestability gaps and distributional fairness across protected grounds
+- Training-data provenance records source, licence and vintage per dataset, with refresh cadence, drift triggers and a named steward
+- Disclosure plan assumes publication unless a stated exemption applies, with the national-security cross-reference and any Protected B/C severance noted
+- Reassessment triggers stated for material change to data, model, decision boundary or operating environment, with cadence accelerated for Level III/IV
+
+### CHRT -- Charter of Rights and Freedoms Analysis
+
+- Engagement surface states which Charter sections are engaged with reasoning per section; "Not engaged" carries a stated justification rather than silence
+- Sections 2(b), 2(d), 7, 8 and 15 addressed as the default engaged set for FITAA-class systems
+- s.8 analysis addresses reasonable expectation of privacy, the warrant requirement and production-order interfaces against the *Hunter v Southam* and *R v Spencer* lines
+- s.15 analysis names the protected grounds and applies the substantive equality test with a differential-impact assessment
+- Oakes proportionality run through all four steps for every engaged right: pressing and substantial objective, rational connection, minimal impairment, proportional effects
+- Mitigation register records residual risk per identified Charter risk
+- DOJ counsel sign-off block present with date and conditions, escalating to the Department of Justice constitutional advisor where the risk warrants
+
+### ITSG -- ITSG-33 Security Control Profile
+
+- Every information asset scored Confidentiality, Integrity and Availability as Low / Medium / High using the TBS injury-based matrix, with the reasoning recorded
+- System-level categorisation derived as the high-water mark across the asset inventory with the working shown, mapped to UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET
+- Control profile matches that categorisation (PBMM, PBMM-Cloud, Secret-High, Top-Secret-High) with rationale and a named approver
+- Every tailoring deviation from the published profile justified rather than merely preferred
+- Statement of Applicability covers all 16 control families (AC, AU, CA, CM, CP, IA, IR, MA, MP, PE, PL, PS, RA, SA, SC, SI), each control marked Applicable / Not Applicable / Compensating with justification
+- Every compensating control names its substitute and the residual-risk acceptance rationale
+- Every cryptographic module lists its CMVP / FIPS 140-3 certificate number, validation level and algorithm scope; non-validated cryptography protecting Protected B or above recorded as a finding, not a discussion item
+- Supply chain assessed against the TBS Direction on Vulnerable Suppliers and the sanctioned-entities list, flagging vendors, sub-processors and PSPC-restricted telecommunications equipment
+- Continuous monitoring states assessment frequency per family, the evidence tooling, reporting cadence, and explicit re-categorisation triggers
+- Authorisation chain identified by role (System Owner, Security Authority, Authorising Official) with cycle, conditions and re-authorisation triggers
+
+### SOIA -- Security of Information Act Handling
+
+- SOI inventory qualifies material against the s.8 statutory definition — departmental designation cannot create or remove SOI status
+- Marking matrix records classification level, caveats (CANADIAN EYES ONLY, NOFORN, FVEY, releasability tags) and compartments per asset
+- Foreign-shared product carries originator caveats, with the Third-Party Rule applied and redistribution conditioned on originator consent
+- Handling rules tiered by classification across at rest (storage approval, CMVP / CSE-approved encryption), in transit and in use
+- Transmission channel matrix states allowed channels per categorisation, unencrypted-link prohibitions, and caveat-driven restrictions — CEO and NOFORN material is not transmissible over allied-shared infrastructure
+- Compartment register defaults to deny, with every access an explicit need-to-know determination; owner, access-list size, indoctrination requirements and audit-log rotation recorded per compartment
+- Destruction and sanitisation use approved routes (CSE / RCMP-approved shredders, degaussers, incineration) per CSE ITSP.40.006 across the media lifecycle
+- CSIS Act §16 and §19 coordination identifies the system's role and the coordinating contact and artefact for each
+- Breach response prioritises containment within minutes (revoke access, isolate the system, suspend the account) ahead of forensic completeness, with the escalation path and PCO reporting where Cabinet confidence is implicated
+- Personnel reliability treated as per-task rather than per-role, with clearance prerequisites, update cycle and compartment indoctrination stated
+- The artefact itself marked, stored and handled at its own classification
+
+### CACR -- Canadian Cloud Residency
+
+- Workload categorisation drawn from the ITSG-33 artefact where present, otherwise performed here against the TBS Standard on Security Categorization with the working shown
+- Residency requirements stated separately for data at rest, in transit and in processing, including backup and disaster-recovery locations
+- Managed-service processing routed through a foreign region treated as a residency event rather than an implementation detail
+- Sovereign cloud options matrix records per candidate the in-region offering, Protected B authorisation status with verification date, foreign-government access exposure (US CLOUD Act, EO 12333 / FISA 702), cost band and managed-services gaps
+- SSC cloud-brokering path documented without treating it as transferring the departmental ATO obligation
+- Foreign sub-processor analysis identifies any sub-processor whose primary jurisdiction sits outside Canada, with the exposure documented
+- Every cross-border transfer cites a lawful authority, and CLOUD Act exposure noted as persisting for US-incorporated CSPs even in Canadian regions
+- Exit and portability plan states bulk-export approach, format portability, an annual-minimum dry-run cadence, and a budget for egress fees and runbook rebuild
+- Operational topology records regions, zones, network paths, interconnects, in-transit encryption posture and the BYOK / HYOK / external-key-store custody decision per workload
+- Indigenous data constraints cross-referenced to the OCAP assessment where such data is in scope
+
+### DIGSTD -- GC Digital Standards Scorecard
+
+- All 10 GC Digital Standards named in the artefact so the scorecard reads without leaving it
+- Each standard assessed with evidence citing artefacts, test reports, retrospectives or user research rather than assertion
+- Each standard records gaps, remediation actions, owner, target date and maturity (Initial / Repeatable / Defined / Measured / Optimising)
+- Maturity expressed per standard, never collapsed to a single overall score
+- Cross-cutting themes addressed: accessibility against WCAG 2.1 AA / 2.2 AA and the *Accessible Canada Act*, open data and code, ethical AI cross-referenced to the AIA, and user-research practice
+- Roadmap states current versus target maturity per standard with milestones, owners and dates
+
+### OLA -- Official Languages Act Assessment
+
+- Service surface inventory covers every user-facing surface: screens, forms, notifications, error messages, public registers, accessibility statements, printed correspondence, IVR scripts and social media
+- Each surface records its language posture with justification wherever unilingual, plus audience and channel
+- Part IV obligations state the rationale per surface (significant demand, public travel, head office, designated bilingual office), active offer at first contact, and bilingual capacity at time of service
+- Part V covers internal tooling availability for designated bilingual regions, the National Capital Region and New Brunswick, including language of supervision
+- Part VI addresses staffing impact, equitable participation, and non-discrimination on language grounds
+- Equivalent quality assessed per surface across content depth, usability, response time and release cadence — no translation-lag releases
+- Translation pipeline states the Translation Bureau engagement model, lead time per content class, and a workflow that holds release until both languages are ready
+- OQLF considerations acknowledged where there is a material Quebec audience, noting it does not bind federal entities but may apply to suppliers
+- Risk register covers complaint exposure to the Commissioner of Official Languages and Part X court remedies
+
+### PROC -- Federal Procurement Strategy (Canada)
+
+- Procurement scope aggregates to a single estimated value, used consistently for threshold analysis
+- Thresholds assessed against CFTA, CETA, CPTPP and WTO-AGP, each stating the current threshold, whether the value crosses it, the coverage scope and the open-tendering obligation attaching
+- Route selection assesses every candidate with fit, risk posture and timeline (Standing Offer / Supply Arrangement, AgileIQ, bespoke RFP/RFSO/RFSA, PSAB set-aside)
+- Any Standing Offer or Supply Arrangement named is confirmed current and in scope per its scope notice
+- PSAB contribution documented explicitly so the departmental rolling 5% target can roll it up, with the set-aside type stated and the supplier pool identified through the ISC directory
+- The 5% treated as a department-level rolling target — no single procurement judged in isolation
+- Security clearance requirements stated per role with level, holder count, PSPC processing lead time, and the operational risk where clearance sits on the critical path
+- Evaluation framework sets mandatory, point-rated and financial dimensions with a weight envelope traceable to requirements, leaving the detailed rubric to the evaluation artefact
+- Bid solicitation schedule runs market notice through award including CanadaBuys posting, standstill periods and post-award PSAB reporting, each with owner and dependency
+- Risks cover supplier-pool sufficiency, clearance bottleneck on the critical path, threshold disputes, CFTA Chapter 5 / CITT challenge, sub-processor residency conflict, and supplier-side OLA and accessibility obligations
+
+### OCAP -- OCAP® Indigenous Data Governance
+
+- FNIGC pre-engagement confirmed before any substantive section is generated — the gate is structural, not advisory
+- Where engagement is absent and not in progress, the artefact is a planning scaffold only: status marked `PLANNING SCAFFOLD — INCOMPLETE`, an engagement-letter shape provided, and no self-declared OCAP register, DSA terms or co-governance arrangement generated
+- An `N/A` answer carries a written justification that no Indigenous data is in scope, cross-referenced to the data requirements and data model
+- Indigenous data inventory records First Nation(s) of origin, nature of data, current custodianship, transfer history and sensitivity tier per dataset
+- All four OCAP principles mapped per dataset: Ownership, Control, Access, Possession
+- USAI principles applied separately where Métis populations are in scope — never collapsed into OCAP
+- ITK principles applied separately where Inuit populations are in scope — never collapsed into OCAP
+- Data-sharing agreement terms include Indigenous co-signatory, purpose limitation, time bounding, revocability, audit rights and sub-processor restrictions
+- Repatriation plan covers return-or-destroy with format portability wherever data was historically taken without informed consent
+- Co-governance records Indigenous representation, decision-making authority and appeal pathway
+- Risk register covers misuse of traditional knowledge, secondary analysis without consent, breach of trust and *UNDA* / UNDRIP implications
