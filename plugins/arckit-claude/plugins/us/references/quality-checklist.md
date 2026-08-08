@@ -847,3 +847,134 @@ All artifacts must pass these 10 checks:
 - No dimension scored above L3 without documented, repeatable process evidence
 - Improvement actions given per dimension where a gap exists
 - Overall maturity consistent with the dimension scores — not above the lowest scored dimension without justification
+
+### FIPS199 -- FISMA Security Categorization
+
+- System type recorded (General Support System / Major Application / Minor Application / Subsystem)
+- Every information type carries an SP 800-60 Vol 2 reference (e.g. `C.2.8.12`), not a prose name alone
+- Confidentiality, Integrity and Availability each scored Low / Moderate / High for every information type
+- SP 800-60 provisional values recorded alongside the adjusted values, with rationale for every deviation
+- System security category derived by the high-water-mark rule with the calculation shown — each objective equals the maximum across all information types, and none falls below its highest constituent
+- Aggregation-driven upward adjustments stated explicitly; any downward adjustment justified against SP 800-60 §3.2
+- Agency-specific overlays assessed (CUI per 32 CFR Part 2002, IRS Publication 1075 FTI, agency health types) or recorded as not applicable
+- Provisional or contested classifications listed for SISO/AO review rather than silently resolved
+
+### NIST -- NIST SP 800-53 Control Tailoring
+
+- Baseline derived from the FIPS 199 water-mark and matching it, not chosen independently
+- FedRAMP baseline recorded where FedRAMP applies (Low / Moderate / High / LI-SaaS) with the Rev 5 source cited
+- Every control in the selected baseline appears in the tailoring matrix — no silent omissions
+- Each control records an implementation status (Implemented / Inherited / Hybrid / Planned / Not Applicable) and a responsible party
+- Every Inherited or Hybrid control names the CSP and links its Customer Responsibility Matrix
+- Control enhancements carried at their own IDs (e.g. `AC-2(1)`), not folded into the base control
+- Every `[Assignment:` and `[Selection:` parameter has an assigned agency value; FedRAMP-specified values honoured, with deviations called out
+- Compensating controls record rationale, residual risk and AO acceptance posture
+- Privacy control overlay (PT family, SP 800-53B) tailored wherever PII is processed, cross-referenced to the PIA
+- SP 800-171 Rev 3 layered where CUI is in scope
+- OSCAL publication status recorded, flagged as a roadmap item if not yet met
+
+### FRSSP -- FedRAMP System Security Plan
+
+- Every section of the SSP structure present, with sections lacking content marked `<TBC>` and surfaced rather than left silently incomplete
+- Categorization pulled verbatim from the FIPS 199 artefact, with the CIA water-mark matching it exactly
+- Control baseline consistent with that categorization — a Moderate system carries the Moderate baseline
+- Every control records a Control Origination from the permitted set (Service Provider Corporate / SP System Specific / Configured by Customer / Provided by Customer / Shared / Inherited)
+- Every Shared control states the customer responsibility
+- Authorization boundary describes components inside and outside, with explicit in-scope / out-of-scope justification for external services per the ABG
+- Every interconnection records name, FedRAMP package ID, agreement type (ICA / MOU / ISA), data direction, ports and protocols, and sensitivity
+- Types of Users records privilege level, clearance or citizenship requirement, and authentication mechanism per population
+- Applicable laws include FISMA, the Privacy Act and E-Gov Act §208 as a minimum, plus agency-specific statutes, with M-24-10 cited where AI is in scope
+- ConMon strategy states scan cadence by type (authenticated, unauthenticated, web application, container, database), annual assessment and POA&M cadence
+
+### FRRR -- FedRAMP Readiness Assessment
+
+- The SSP and NIST 800-53 artefacts both exist — the control delta cannot be enumerated without them
+- Capability statement says why a federal agency would use the CSO, not only what it does
+- Ready-capabilities checklist assessed item by item: FIPS 140-3 validated cryptography at rest and in transit, MFA for privileged access, audit logging, vulnerability-management cadence, incident response with US-CERT reporting, supply-chain controls, ConMon, and US-Persons staffing where required
+- Every gap records a severity per the 3PAO RAR rubric (Critical / High / Moderate / Low), an owner and a target date
+- Gap register reconciles with the Planned entries in the NIST 800-53 artefact
+- Every gap has a corresponding draft POA&M row in FedRAMP POA&M format
+- Evidence inventory identifies control claims with no supporting artefact, rather than listing only the evidence that exists
+- Customer Responsibility Matrix drafted for SaaS and PaaS offerings
+- Authorization path recommended with rationale against the JAB prioritization criteria
+- Readiness verdict consistent with the gaps — no Ready verdict while Critical or High gaps remain open
+
+### ZTA -- Zero Trust Architecture Maturity
+
+- All five pillars assessed: Identity, Devices, Networks, Applications & Workloads, Data
+- All three cross-cuts assessed: Visibility & Analytics, Automation & Orchestration, Governance
+- Every function scored Current and Target on the ZTMM v2.0 four-stage scale (Traditional / Initial / Advanced / Optimal)
+- Current-stage claims carry evidence rather than assertion
+- Heatmap cell codes (T/I/A/O) reconcile with the per-function scores, with a parallel target-state heatmap present
+- No target stage set below its own current stage
+- Every function with a gap appears in the uplift roadmap; roadmap sequencing respects the stated dependencies
+- M-22-09 alignment maps posture to all five strategic goals and names the action items still unaddressed
+- Control linkage maps each ZTMM function to specific 800-53 Rev 5 control IDs
+
+### ICAM -- Identity, Credential and Access Management
+
+- Every user population enumerated with its use cases (Federal Employees, Contractors, Citizens, Partner Agencies, Privileged Administrators, Service Accounts)
+- IAL, AAL and FAL each scored 1/2/3 per use case, with SP 800-63-3 rationale referencing the impact categories
+- AAL consistent with the FIPS 199 water-mark — a higher water-mark cannot carry a lower AAL without stated justification
+- Authenticators selected for each tier are permitted by SP 800-63B for that tier; AAL3 uses multi-factor cryptographic hardware with verifier impersonation resistance
+- Identity proofing documented for every IAL2/IAL3 use case: evidence strength (FAIR / STRONG / SUPERIOR), remote versus in-person, provider, retention and disposal
+- Federal employee and contractor pattern uses PIV as primary credential per HSPD-12 and FIPS 201-3, with Derived PIV (SP 800-157 Rev 1) for mobile
+- Public-facing citizen pattern documents login.gov per M-19-17, or justifies an alternative
+- Federation pattern specifies protocol (SAML 2.0 / OIDC), initiation direction, assertion encryption and single-logout handling
+- Privileged access covers break-glass accounts, just-in-time elevation, session recording and separation of duties
+- Credential lifecycle covers issuance, suspension, revocation, re-issuance and renewal
+- Authorization model chosen (RBAC / ABAC / ReBAC) with PDP, PIP and PEP placement identified
+- Identity-proofing PII flows cross-referenced to the PIA
+
+### USPIA -- Privacy Impact Assessment (US Federal)
+
+- Document ID uses `USPIA`, not `PIA` — `PIA` is registered to the Canadian Privacy Impact Assessment
+- Every PII element records category (sensitive / non-sensitive per SP 800-122), source, purpose, lawful authority, retention period and disposal method
+- Any PII element without a clear lawful authority flagged as a blocker rather than left blank
+- Lifecycle map covers Collection → Use → Disclosure → Retention → Disposal, each flow annotated with its authority and any Privacy Act §552a(b) exception relied upon
+- System-of-records determination made explicitly — records about individuals retrieved by personal identifier
+- SORN verdict stated as New required / Modify existing (citing the SORN number) / None required, with reasoning
+- Where a SORN is required, routine uses, retention schedule and Federal Register timeline captured, including the 30-day period before operational use
+- All eight FIPPs assessed (Transparency, Individual Participation, Purpose Specification, Data Minimisation, Use Limitation, Data Quality and Integrity, Security, Accountability and Auditing)
+- All seven M-03-22 required topics covered
+- Sector overlays assessed where applicable (HIPAA, FERPA, IRS Publication 1075, CJIS, GLBA, COPPA)
+- Privacy risks scored by likelihood and impact with mitigations and residual risk, cross-referenced to the project risk register
+- SAOP sign-off block present with reviewer, scope, publication URL and re-assessment cadence
+
+### AIRMF -- NIST AI Risk Management Framework
+
+- All four functions assessed: Govern, Map, Measure, Manage
+- Govern subcategories covered across 1.1–1.7, 2.1–2.3, 3.1–3.2, 4.1–4.3, 5.1–5.2 and 6.1–6.2, each with outcome, current state, evidence and gap action
+- Lifecycle stages in scope identified per AI RMF §3, with TEVV responsibilities named
+- Measure function selects metrics per trustworthiness characteristic (valid and reliable, safe, secure and resilient, accountable and transparent, explainable and interpretable, privacy-enhanced, fair with harmful bias managed), each with test method and frequency
+- Generative AI addendum present wherever the system uses generative AI, assessing all 12 NIST AI 600-1 risks with applicability, controls, residual risk and actions
+- Absence of the GenAI addendum justified by an explicit not-generative determination, never omitted silently
+- Residual risk register lists risks remaining after Manage actions, each with a target review date
+- Control crosswalk maps AI RMF subcategories to 800-53 Rev 5 controls and to M-24-10 minimum practices
+- Manage function cross-references the IR controls in the NIST 800-53 artefact
+
+### AIIA -- AI Impact Assessment (OMB M-24-10)
+
+- Appendix I presumed-impacting lists checked for both rights and safety, with matched items quoted verbatim and cited to their M-24-10 section, or an explicit "no Appendix I match"
+- Rights-impacting determination applies the M-24-10 principal-basis test and names both the decision and the affected population
+- Safety-impacting determination names the decision flow, not a verdict alone
+- An Appendix I match not carried through to a Yes verdict recorded as a documented rebuttal of presumption, never as a silent No
+- All eight minimum risk-management practices assessed with status (Met / Partial / Not Met / Not Applicable), evidence reference and action
+- Every practice not Met carries a waiver record with CAIO determination, waiver period and compensating measures
+- M-25-21 acquisition controls documented for vendor-supplied AI: AI RMF alignment, model provenance, training-data disclosure, bias-testing access, fairness reporting, incident reporting, exit and portability
+- AI Use Case Inventory submission confirmed or scheduled, with any law-enforcement or national-security redactions noted
+- CAIO sign-off block present with scope, conditions and next review
+
+### SBOM -- Software Bill of Materials (EO 14028 / M-22-18)
+
+- Applicability determined against the M-22-18 §2 covered-software definition, citing the post-14-September-2022 development test
+- Producer of record identified for every open-source component
+- Every CISA attestation item recorded with status (Yes / No / Partial), evidence reference and remediation plan
+- Attestation items crosswalked to SP 800-218 SSDF practices (PO, PS, PW, RV) and to 800-53 SR and SA controls
+- SBOM format stated with its version (e.g. CycloneDX 1.6, SPDX 2.3) and the tooling used to generate it
+- All seven NTIA minimum data fields present: supplier name, component name, version, other unique identifiers (PURL / CPE), dependency relationships, author of SBOM data, timestamp
+- NTIA automation and practice elements addressed: machine-readable format, frequency, depth, known unknowns, distribution and delivery, access control, accommodation of mistakes
+- SLSA level claimed with rationale, and a signing strategy stated
+- VEX production cadence, CVE disclosure policy, coordinated-disclosure contact and mean-time-to-patch targets recorded
+- Any item that cannot be attested carries an M-22-18 exception record: which items, rationale, compensating controls, agency CIO and OMB notification status, and expiry
+- Distribution plan names the CISA Repository lodging target and the access-control posture for SBOM consumers

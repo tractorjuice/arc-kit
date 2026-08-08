@@ -81,9 +81,10 @@ This US PIA is distinct from the Canadian PIA (`/arckit-ca:ca-pia`), Australian 
    - **Privacy Risk Register and Mitigations** — risks scored by likelihood and impact, with mitigations and residual risk; cross-reference the project risk register.
    - **SAOP Sign-Off Block** — agency SAOP reviewer, date, scope of approval, publication URL (post-redaction), and re-assessment cadence.
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **USPIA** per-type checks pass. Fix any failures before proceeding.
+7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-7. Emit a short summary to the user — PII element count, SORN verdict, M-03-22 checklist satisfaction, top three privacy risks, SAOP review status, and intended publication date. Do not echo the full artefact.
+8. Emit a short summary to the user — PII element count, SORN verdict, M-03-22 checklist satisfaction, top three privacy risks, SAOP review status, and intended publication date. Do not echo the full artefact.
 
 ## Handoffs
 

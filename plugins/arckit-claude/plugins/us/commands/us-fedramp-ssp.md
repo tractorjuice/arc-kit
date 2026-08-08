@@ -85,9 +85,10 @@ Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** basel
    15. **Network Architecture** — boundary diagram, internal network topology, public-facing components, management plane separation
    16. **Continuous Monitoring (ConMon) Strategy** — monthly vulnerability scans (authenticated / unauthenticated / web app / container / database), annual assessment, POA&M cadence, ATO drift management
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FRSSP** per-type checks pass. Fix any failures before proceeding.
+7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-7. Emit a short summary to the user — CSO name, baseline (Moderate / High), authorization path (Agency / JAB), boundary component count, interconnection count, and any sections marked `<TBC>`. Do not echo the full artefact.
+8. Emit a short summary to the user — CSO name, baseline (Moderate / High), authorization path (Agency / JAB), boundary component count, interconnection count, and any sections marked `<TBC>`. Do not echo the full artefact.
 
 ## Handoffs
 

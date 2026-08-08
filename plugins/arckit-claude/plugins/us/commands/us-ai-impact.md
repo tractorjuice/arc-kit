@@ -80,9 +80,10 @@ Appendix I of M-24-10 lists **presumed-impacting** use cases (those agencies mus
    - **Public Disclosure Obligations** — confirm the entry has been (or will be) submitted to the agency AI Use Case Inventory (federal.ai.gov); note any redactions required for sensitive law-enforcement or national-security carve-outs.
    - **CAIO Sign-Off Block** — agency Chief AI Officer review and approval section: reviewer, date, scope of approval, conditions, next review.
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AIIA** per-type checks pass. Fix any failures before proceeding.
+7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-7. Emit a short summary to the user — impact verdict (rights-impacting / safety-impacting / both / neither), Appendix I match (Y/N), minimum-practice satisfaction percentage, waiver count, AI Use Case Inventory ID (or "pending"), and CAIO review status. Do not echo the full artefact.
+8. Emit a short summary to the user — impact verdict (rights-impacting / safety-impacting / both / neither), Appendix I match (Y/N), minimum-practice satisfaction percentage, waiver count, AI Use Case Inventory ID (or "pending"), and CAIO review status. Do not echo the full artefact.
 
 ## Handoffs
 
