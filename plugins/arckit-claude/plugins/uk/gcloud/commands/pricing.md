@@ -252,6 +252,8 @@ History, and append the standard ArcKit Document Control footer:
 
 ### 9. Write the pricing document
 
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **PRIC** per-type checks pass. Fix any failures before proceeding.
+
 Use the **Write tool** to save the completed document to:
 
 `{path}/{filename}` — e.g. `projects/004-secure-case-mgmt/ARC-004-PRIC-v1.0.md`

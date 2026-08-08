@@ -1389,3 +1389,180 @@ All artifacts must pass these 10 checks:
 - Model lifecycle governance covers version control, change management for model updates, drift detection and retirement criteria
 - Third-party foundation models disclose vendor, model version, vendor policy compliance, training-data provenance, inference data residency and the IP position
 - ISO 42001 readiness assessed clause by clause where certification is pursued or anticipated
+
+### CMPT -- Competitor Landscape
+
+- Rival suppliers ranked by awarded-value share with award counts and key buyers
+- The mandatory awarded-value caveat present — figures are awarded contract value, not actual spend
+- On a supplier-focus run the focal supplier is pulled out of the set with its awarded value, award count and share; on a capability-focus run the head-to-head section renders explicitly not-applicable rather than being omitted
+- Concentration reported as top-1 and top-3 share with a HIGH / MEDIUM / LOW flag, and the flag consistent with the shares it is derived from
+- Every representative notice carries its `notice_url`
+- Data freshness and source health reported, or a freshness-unavailable note given rather than silence
+- Per-rival buyer relationships and recent wins present for each rival in the set
+- Government Award History enrichment only merged into pre-existing vendor profiles — no new profiles created
+- Figures traceable to the reader payload; no supplier, value or buyer introduced at render time
+
+### SUPP -- G-Cloud Supplier Profile
+
+- Company details complete: registered name, company registration number, DUNS, VAT, registered address, trading name, website, year established
+- Every certification records status, certificate number, expiry and certification body — a named certification without a number or expiry is incomplete
+- Security clearances recorded as staff counts per level (BPSS, CTC, SC, DV, eDV) with sponsoring organisation and renewal process
+- Every data centre records location, operator, UK data sovereignty position, certifications, and backup or DR location with distance from primary
+- Insurance recorded per policy with provider, coverage amount and expiry
+- Modern Slavery position states whether the £36m turnover threshold is met and, where it is, the published statement URL
+- Environmental credentials record ISO 14001 status, carbon-neutral position and net-zero target year
+- Subcontracting position stated, with policy and key subcontractors where used
+- SME status recorded (Micro / Small / Medium / Large) consistent with the stated employee count and turnover
+
+### DECL -- G-Cloud Supplier Declaration
+
+- Every mandatory exclusion ground answered explicitly and reproduced verbatim — never paraphrased or skipped
+- All seven mandatory exclusion categories addressed: conspiracy, corruption and bribery, fraud and theft, organised crime, terrorism, money laundering, tax evasion
+- All seven discretionary exclusion grounds answered: bankruptcy or insolvency, grave professional misconduct, distorting competition, conflict of interest, significant deficiencies in prior contracts, serious misrepresentation, undue influence
+- Company information complete, including contract notice contact details as distinct from the primary contact
+- Service offerings confirm day-one availability, absence of prohibited items and the subcontracting position
+- Modern Slavery, Equality Act 2010, environmental and labour law compliance each answered
+- All three insurance types declared: employers liability, professional indemnity, public liability
+- Tax compliance covers current obligations, GAAR compliance and absence of evasion convictions
+- Framework terms accepted, including the 10-working-day response commitment
+- No question left blank or answered `N/A` where a positive or negative declaration is required
+
+### SVCD -- G-Cloud Service Design
+
+- Lot selected and recorded (Lot 1 Cloud Hosting, Lot 2 Cloud Software, Lot 3 Cloud Support)
+- Lot-specific information gathered for the selected lot rather than the generic set alone
+- Service name within 100 characters and service description within 50 words for the marketplace fields
+- Features and benefits each capped at 10 items, every item within 100 characters
+- Target buyer segments named
+- Technical details cover hosting locations and data residency, backup and DR, scalability, and security controls cross-referenced to the supplier profile certifications
+- Support model states hours, channels, response targets and escalation
+- Pricing model outlined consistently with the pricing artefact where one exists
+- Differentiation states competitive advantages and target use cases rather than marketing claims
+
+### SDD -- G-Cloud Service Definition Document
+
+- Every mandatory marketplace question answered — an unanswered question causes rejection
+- Lot-specific categories completed for the document's own lot, and no other lot's categories substituted
+- Service name within 100 characters; description within 50 words and 500 characters
+- Features and benefits each within 10 items and 100 characters per item
+- Data centre details cover physical locations, tier, power redundancy, cooling, physical security and environmental certifications
+- Multi-tenancy separation described across resource, network and data isolation
+- Public sector network connectivity addressed where relevant (PSN, HSCN)
+- Support availability, channels, response times and documentation availability stated
+- Data locations, import and export formats, and the end-of-contract data-extraction process all specified
+- Content consistent with the supplier profile and service design artefacts — company name, certifications, data-centre locations, features, benefits and lot must agree
+
+### PRIC -- G-Cloud Pricing Document
+
+- Pricing model chosen and appropriate to the lot — day rates or fixed price for Lot 3, per-user, consumption, flat fee or tiered for Lots 1 and 2
+- All prices stated in GBP; no other currency present
+- Base pricing states minimum, standard and enterprise or volume price points
+- What is included at base price stated explicitly (features, support level, storage, users, transactions, training)
+- What costs extra stated explicitly, so the total cost of the service is derivable rather than implied
+- Education and charity pricing addressed
+- Free trial or free version position stated
+- SFIA rate card used for Lot 3 day rates, with remote, on-site and out-of-hours rates distinguished
+- Pricing consistent with the SDD's stated pricing model, included features and support level
+
+### SECA -- G-Cloud Security Evidence
+
+- All 14 NCSC Cloud Security Principles addressed
+- Every certification records certificate number, scope, certification body, last audit date and next recertification date
+- Cyber Essentials or Cyber Essentials Plus recorded with certificate number, certification date and expiry
+- SOC 2 Type II records report date, trust service criteria covered and any exceptions noted — exceptions are not omitted
+- Penetration testing records frequency, last test date, provider, scope coverage and remediation process
+- Vulnerability scanning records frequency, tooling and remediation SLAs
+- Data protection covered both in transit and at rest, with key management stated
+- Access management and audit capabilities described
+- Evidence register maps each claim to its supporting artefact
+- Certifications consistent with those declared in the supplier profile
+
+### GCMP -- G-Cloud Competitor Benchmark
+
+- Competitors identified from real market evidence, with the search basis recorded rather than assumed
+- Feature, pricing, certification and support comparisons each presented as a like-for-like table
+- Pricing comparison states market low, average and high alongside the service's own price
+- Certification comparison expresses the market position as a proportion rather than an assertion
+- SWOT covers all four quadrants, each grounded in the comparison tables rather than introduced fresh
+- Strengths and weaknesses stated relative to named competitors, not in the abstract
+- Recommendations follow from the comparisons — a pricing recommendation must be consistent with the pricing comparison
+- Where award evidence is available, the benchmark is anchored to it and the awarded-value caveat carried
+- Citation traceability applied, with every external claim referenced
+
+### GCRV -- G-Cloud Submission Review
+
+- Every expected document checked for existence by its ARC-ID (SUPP, DECL, SVCD, SDD, PRIC, SECA)
+- Overall status set to READY, NEEDS WORK or NOT READY, and consistent with the findings — no READY status while a mandatory field is missing
+- Mandatory field status reported per document rather than in aggregate
+- Character and word limits validated numerically and reported as actual against limit: service name against 100 characters, description against 50 words and 500 characters, each feature and benefit against 100 characters
+- Consistency checks run across every pair the review names: supplier profile against SDD, service design against SDD, SDD against pricing, SDD against security
+- Common rejection reasons checked explicitly: placeholder text, `N/A` where an answer is required, contradictory statements, unsubstantiated claims, competitor mentions, non-GBP pricing
+- Actions required listed with enough specificity to be actioned without re-reading the source documents
+- Evidence status reported per claim requiring evidence
+
+### FSSCA -- SCA-RTS Exemption Assessment
+
+- All nine in-scope exemptions assessed (Articles 10, 10A, 11, 13, 14, 15, 16, 17, 18), each with a decision of APPLY, DO_NOT_APPLY or CONDITIONAL
+- Article 12 explicitly excluded as out of scope — AISP payment account access is covered by Article 10A post-PS21/19
+- Every decision justified against the firm's actual payment channels and risk profile rather than asserted
+- Where Article 18 TRA is applied, the firm's current fraud rate per payment category is stated
+- The applicable reference fraud-rate band cited, and the targeted exemption threshold consistent with that band — a threshold cannot be claimed while the corresponding fraud-rate condition is unmet
+- The continuous nature of the TRA fraud-rate condition stated, not treated as a one-off test
+- Exemption decisions consistent with each other where they interact
+
+### FSSAFE -- Safeguarding Arrangements
+
+- Authorisation type recorded (authorised EMI, authorised API, registered SPI) with the applicable regulation cited
+- Safeguarding method stated with justification: segregation, insurance, or comparable guarantee
+- SPI safeguarding correctly characterised as voluntary — registered SPIs are not required to safeguard, and where elected the Reg 23 mechanics and insolvency priority follow
+- Designated accounts record institution name, FCA FRN, account type, sort code or IBAN, and date designated
+- Segregation trigger stated against the correct deadline for the authorisation type — end of business on the day of receipt under PSRs 2017 Reg 23(2), or within five business days of issuance for EMIs under EMR 2011 Reg 20(4)
+- Controls preventing commingling with operational funds documented, along with the controls keeping the designated account to safeguarding use only
+- Where insurance or a comparable guarantee is used, the insurer or guarantor, coverage amount, sublimits and insolvency trigger are recorded, with confirmation the cover was in place before any relevant funds were received
+- Reconciliation approach documented with frequency and break-resolution process
+
+### FSCD -- Consumer Duty Assessment
+
+- All four outcomes assessed with an evidence status, and thin evidence flagged as Amber or Red rather than presented as compliant
+- Price and Value states total cost to the consumer broken down by fee type, including FX spread and ancillary charges
+- Fair-value methodology stated, with benchmarking against at least two comparable competitors or market indices
+- Any cross-subsidisation disclosed and tested against the fair-value obligation
+- Consumer Support evidenced with service-level data across every contact channel, complaint volumes with root-cause analysis and trend direction, and escalation and FOS referral rates
+- Vulnerable customer cohorts identified from evidence rather than assumed demographics, covering all four FG22/5 drivers: health, life events, resilience, capability
+- Each cohort records estimated proportion of the customer base, identification method, and evidence that the additional support offered is effective
+- Foreseeable harms register populated, with each harm linked to the outcome it engages
+
+### FSCTP -- Critical Third Party Dependency
+
+- Every provider classified as designated CTP, material non-CTP, or non-material, with the current HMT designation status verified rather than assumed
+- Designated CTPs record the specific services consumed, mapped to the firm's Important Business Services
+- Substitution time estimate and substitution complexity stated per designated CTP
+- Last resilience test recorded as an actual date — "planned" or "TBD" is not an acceptable value
+- Nth-party sub-contractor dependencies identified, on the basis that these are often the real failure mode
+- Materiality scored across all four dimensions (IBS dependency, substitution difficulty, recovery time impact, concentration risk contribution) on the 1–5 scale
+- Concentration assessed across all three axes: geographic, vendor and functional
+- Concentration findings consistent with the materiality scores that produced them
+
+### NHSDTAC -- NHS Digital Technology Assessment Criteria
+
+- All five DTAC sections assessed, each with an explicit pass, partial or fail status and supporting evidence
+- Clinical safety records DCB0129 manufacturer and DCB0160 deployer case status, CSO name and registration, and hazard log status with open-hazard count and highest open risk level
+- Absent safety case files marked `[PENDING DCB0129/0160]` clearly rather than passed over
+- Data protection states the UK GDPR Article 6 lawful basis, and Article 9 where special-category data is processed
+- Sub-processor list records locations and the SCCs or UK addendum relied upon
+- DSPT submission status stated, marked as an organisation responsibility where external
+- Technical assurance covers cloud hosting and UK region status, Cyber Essentials, software lifecycle including SBOM, encryption in transit and at rest with key management, penetration test status, business continuity with RTO and RPO, and vulnerability management SLAs
+- Every `[PENDING]` item requiring human input surfaced in the summary rather than left in the body
+- Cross-references resolve to the DPIA, DATA and clinical-safety artefacts where they exist
+
+### NHSMDR -- UK MDR Classification
+
+- Intended purpose statement quoted verbatim — it is the load-bearing input, and paraphrase changes the classification
+- Medical device determination applies both the UK MDR 2002 regulation 2 definition test and the MHRA stand-alone software decision tree
+- A "Not a Medical Device" determination carries rationale drawn from the MHRA Borderline Manual and a responsible-person sign-off, and the remainder of the assessment is then explicitly N/A rather than partially completed
+- Borderline cases record the borderline rationale and recommend MHRA pre-submission review rather than resolving the question unilaterally
+- UK MDR 2002 class determined (I / IIa / IIb / III) with the applicable rule cited, plus sterile, measuring and reusable-surgical subclass flags
+- Self-certification eligibility stated, and consistent with the determined class — only Class I non-sterile, non-measuring qualifies
+- EU MDR 2017/745 classification determined separately with Rule 11 reasoning shown for software
+- Divergence between the UK and EU classifications flagged explicitly, on the basis that EU MDR is typically the more conservative reading
+- Marking pathway recommended across UKCA, UKNI and CE with Notified Body involvement and registration obligations stated per market

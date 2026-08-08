@@ -135,9 +135,10 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
 
 7. **Populate the External References section** per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. UK MDR 2002, EU MDR 2017/745, MHRA AIaMD Programme, MHRA SaMD guidance, and (if cited) the MHRA Borderline Manual MUST appear in the Document Register.
 
-8. **Write the artefact via the Write tool** to `projects/{NNN}-<slug>/ARC-{NNN}-NHSMDR-v1.0.md`.
+8. **Before writing the file**, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **NHSMDR** per-type checks pass. Fix any failures before proceeding.
+9. **Write the artefact via the Write tool** to `projects/{NNN}-<slug>/ARC-{NNN}-NHSMDR-v1.0.md`.
 
-9. **Show only a summary to the user**: scope determination (medical device / not / borderline), UK class, EU class, marking pathway, conformity route, list of `[PENDING]` items requiring qualified Regulatory Affairs review.
+10. **Show only a summary to the user**: scope determination (medical device / not / borderline), UK class, EU class, marking pathway, conformity route, list of `[PENDING]` items requiring qualified Regulatory Affairs review.
 
 ## Important Notes
 
