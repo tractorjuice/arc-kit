@@ -75,9 +75,10 @@ This command produces an **internal** RAR-equivalent: a self-assessment in the s
    - **3PAO Engagement Readiness** — go / no-go assessment with the top 5 blockers if no-go.
    - **POA&M Pre-Population** — gaps converted to draft POA&M rows in FedRAMP POA&M template format (Weakness, Source, Asset, Severity, Status, Original Detection Date, Scheduled Completion Date).
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FRRR** per-type checks pass. Fix any failures before proceeding.
+7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-7. Emit a short summary to the user — readiness verdict (Ready / Conditionally Ready / Not Ready), gap counts by severity, recommended authorization path, and the top 3 blockers. Do not echo the full artefact.
+8. Emit a short summary to the user — readiness verdict (Ready / Conditionally Ready / Not Ready), gap counts by severity, recommended authorization path, and the top 3 blockers. Do not echo the full artefact.
 
 ## Handoffs
 

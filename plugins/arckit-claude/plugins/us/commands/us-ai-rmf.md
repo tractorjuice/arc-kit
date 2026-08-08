@@ -81,9 +81,10 @@ The AI RMF underpins the federal policy stack: OMB M-24-10 requires agencies to 
    - **Residual Risk Register** — risks remaining after Manage actions, prioritised; each linked to a target review date.
    - **Control Crosswalk** — table mapping AI RMF subcategories to NIST 800-53 Rev 5 controls and to OMB M-24-10 minimum-practice items, so the assurance posture is traceable.
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AIRMF** per-type checks pass. Fix any failures before proceeding.
+7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-7. Emit a short summary to the user — AI system type, GenAI in scope (Y/N), top 5 residual risks, M-24-10 impact-class hint (rights-impacting / safety-impacting / neither), and CAIO review status. Do not echo the full artefact.
+8. Emit a short summary to the user — AI system type, GenAI in scope (Y/N), top 5 residual risks, M-24-10 impact-class hint (rights-impacting / safety-impacting / neither), and CAIO review status. Do not echo the full artefact.
 
 ## Handoffs
 

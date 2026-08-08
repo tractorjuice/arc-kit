@@ -73,9 +73,10 @@ The methodology decomposes the system into its constituent **information types**
    - **Agency-Specific Overlays** — note any agency-specific information-type overlays (e.g. CUI categories per 32 CFR Part 2002, HHS-specific health information types, IRS Publication 1075 FTI overlays) that apply.
    - **Rationale and Open Issues** — narrative justification for the water-mark and a register of any provisional or contested classifications requiring SISO/AO review.
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FIPS199** per-type checks pass. Fix any failures before proceeding.
+7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-7. Emit a short summary to the user — system name, derived water-mark (e.g. `MODERATE / MODERATE / LOW → MODERATE`), count of information types, and any open issues. Do not echo the full artefact.
+8. Emit a short summary to the user — system name, derived water-mark (e.g. `MODERATE / MODERATE / LOW → MODERATE`), count of information types, and any open issues. Do not echo the full artefact.
 
 ## Handoffs
 
