@@ -8,24 +8,8 @@ templateVersion: "1.0"
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| Document ID | ARC-{P}-AAIN-v{VERSION} |
-| Document Type | AAIN — Agent Integration Architecture |
-| Project | {PROJECT_NAME} ({PROJECT_ID}) |
-| Classification | {CLASSIFICATION} |
-| Status | {STATUS} |
-| Version | {VERSION} |
-| Created | {DATE} |
-| Last Modified | {DATE} |
-| Review Cycle | Monthly |
-| Next Review | {NEXT_REVIEW_DATE} |
-| Owner | {OWNER_NAME_AND_ROLE} |
-| Reviewed By | — |
-| Approved By | — |
-| Distribution | Architecture Team, AI Programme Board |
-
----
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ## 1. Integration Architecture
 
