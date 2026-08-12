@@ -96,7 +96,7 @@ Read all documents from Step 0. Identify:
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
-   - Classification: OFFICIAL-SENSITIVE (privacy assessments contain sensitive risk information)
+   - Classification: Diffusion Restreinte (privacy assessments contain sensitive risk information)
    - Add note: "This document supplements ARC-{PROJECT_ID}-RGPD-v*.md with French/CNIL-specific requirements"
 
 3. **Section 1: CNIL Regulatory Framework**
@@ -169,7 +169,7 @@ Read all documents from Step 0. Identify:
     - Consolidate gaps from all sections
     - Priority based on CNIL enforcement priority and legal obligation level
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass.
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus **CNIL** per-type checks pass.
 
 Write the document to:
 
@@ -187,7 +187,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-CNIL-v{VERSION}.md
 📄 Document: projects/{project_id}/ARC-{PROJECT_ID}-CNIL-v{VERSION}.md
 📋 Document ID: {document_id}
 📅 Assessment Date: {date}
-🔒 Classification: OFFICIAL-SENSITIVE
+🔒 Classification: Diffusion Restreinte
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 French-Specific Compliance Areas
@@ -230,7 +230,7 @@ Next steps:
 | CNIL — official website and guidance | CNIL | https://www.cnil.fr/ |
 | Délibération 2020-091 — cookies and consent (French rules) | CNIL | https://www.cnil.fr/fr/cookies-et-autres-traceurs/regles/cookies/que-dit-la-loi |
 | Loi n°78-17 Informatique et Libertés (amended) | Légifrance | https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000886460 |
-| HDS — Hébergement de Données de Santé (health data hosting) | ANS (Agence du Numérique en Santé) | https://esante.gouv.fr/secteur/hebergement-des-donnees-de-sante |
+| HDS — Hébergement de Données de Santé (health data hosting) | ANS (Agence du Numérique en Santé) | https://esante.gouv.fr/produits-services/hds |
 | DPO registration with CNIL | CNIL | https://notifications.cnil.fr/ |
 | CNIL AIPD / DPIA guidance and tool (PIA) | CNIL | https://www.cnil.fr/fr/outil-pia-telechargez-et-installez-le-logiciel-de-la-cnil |
 | GDPR full text | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2016/679/oj |
@@ -250,7 +250,7 @@ Next steps:
 - ✅ CNIL enforcement priority self-assessment completed
 - ✅ 72-hour breach notification to CNIL process assessed
 - ✅ Gap analysis with prioritised action plan generated
-- ✅ Document classified OFFICIAL-SENSITIVE
+- ✅ Document classified Diffusion Restreinte
 
 ## Example Usage
 

@@ -153,7 +153,7 @@ For each algorithm, document:
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
-   - Classification: PUBLIC — this notice must be publicly accessible
+   - Classification: Non protégé — this notice must be publicly accessible
 
 3. Write the complete transparency notice following the template.
 
@@ -175,7 +175,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-ALGO-v{VERSION}.md
 📄 Document: projects/{project_id}/ARC-{PROJECT_ID}-ALGO-v{VERSION}.md
 📋 Document ID: {document_id}
 📅 Date: {date}
-🔓 Classification: PUBLIC
+🔓 Classification: Non protégé
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Algorithms Assessed
@@ -217,7 +217,7 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| Art. L311-3-1 CRPA (algorithmic transparency obligation) | Légifrance | https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033218710/ |
+| Art. L311-3-1 CRPA (algorithmic transparency obligation) | Légifrance | https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033205535/ |
 | Loi n°2016-1321 pour une République Numérique (source legislation) | Légifrance | https://www.legifrance.gouv.fr/loda/id/JORFTEXT000033202746 |
 | algorithmes.data.gouv.fr — public algorithm register | DINUM | https://algorithmes.data.gouv.fr/ |
 | CNIL guidance on algorithms and automated decisions | CNIL | https://www.cnil.fr/fr/algorithmes |
@@ -238,7 +238,7 @@ Next steps:
 - ✅ GDPR Article 22 intersection assessed
 - ✅ AI Act intersection flagged if ML/AI used
 - ✅ Publication plan (algorithmes.data.gouv.fr + administration website) documented
-- ✅ Document classified PUBLIC
+- ✅ Document classified Non protégé
 - ✅ ALGO per-type quality checks passed
 
 ## Example Usage

@@ -190,7 +190,7 @@ Assess which code developed for this project must be published as open source:
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
-   - Classification: PUBLIC / OFFICIAL (reuse assessment is typically not sensitive)
+   - Classification: Non protégé (reuse assessment is typically not sensitive)
 
 3. Write the complete assessment following the template.
 

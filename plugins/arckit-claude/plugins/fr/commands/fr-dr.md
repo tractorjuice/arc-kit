@@ -228,9 +228,9 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| Diffusion Restreinte — guidance and governing instruction (II 901) | ANSSI / SGDSN | https://cyber.gouv.fr/la-mention-diffusion-restreinte |
+| Diffusion Restreinte — guidance and governing instruction (II 901) | ANSSI / SGDSN | https://cyber.gouv.fr/reglementation/cybersecurite-systemes-dinformation/protection-information-sensible-diffusion-restreinte/ |
 | SGDSN (Secrétariat Général de la Défense et de la Sécurité Nationale) | SGDSN | https://www.sgdsn.gouv.fr/ |
-| RGS v2.0 — IS homologation requirements | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
+| RGS v2.0 — IS homologation requirements | ANSSI | https://cyber.gouv.fr/le-referentiel-general-de-securite-rgs |
 | ANSSI-approved encryption products (list) | ANSSI | https://cyber.gouv.fr/produits-services-et-organismes-qualifies |
 | CERT-FR — security incident reporting | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
 

@@ -95,7 +95,7 @@ If no artifacts exist, include all 5 layers and note that scope confirmation is 
 
 1. **Detect version**: Check for existing `ARC-{PROJECT_ID}-IRN-v*.md` files
 2. **Document ID**: `ARC-{PROJECT_ID}-IRN-v{VERSION}`
-3. **Classification**: OFFICIAL-SENSITIVE (dependency mapping reveals strategic vulnerabilities)
+3. **Classification**: Diffusion Restreinte (dependency mapping reveals strategic vulnerabilities)
 
 For each of the **8 IRN pillars**, create a structured section:
 
@@ -119,7 +119,7 @@ For each pillar × organisational layer in scope:
 
 5. **Gap Analysis**: Based on what is observable from existing artifacts (NOT from reproduced aDRI criteria), flag obvious dependency concentrations, single-vendor risks, or regulatory exposure as preliminary observations.
 
-Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass.
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus **IRN** per-type checks pass.
 
 Write to:
 
@@ -137,7 +137,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-IRN-v{VERSION}.md
 📄 Document: projects/{project_id}/ARC-{PROJECT_ID}-IRN-v{VERSION}.md
 📋 Document ID: {document_id}
 📅 Assessment Date: {date}
-🔒 Classification: OFFICIAL-SENSITIVE
+🔒 Classification: Diffusion Restreinte
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Scope
@@ -184,7 +184,7 @@ Next steps:
 - ✅ Link to official aDRI evaluation grid clearly displayed
 - ✅ Licence incompatibility and living-repo rationale explained in document
 - ✅ Preliminary observations from artifacts noted (dependency concentrations, single vendors)
-- ✅ Classification: OFFICIAL-SENSITIVE
+- ✅ Classification: Diffusion Restreinte
 
 ## Example Usage
 

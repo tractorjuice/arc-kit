@@ -58,7 +58,7 @@ Output: `projects/<id>/ARC-<id>-CARTO-v1.0.md`
 - Network perimeter, DMZ, and external interconnections documented (Level 4).
 - Attack surface summary produced with sensitive flows highlighted.
 - VM-xx identifiers consistent with EBIOS RM feared events.
-- Assessment classified OFFICIAL-SENSITIVE.
+- Assessment classified Diffusion Restreinte.
 
 ---
 

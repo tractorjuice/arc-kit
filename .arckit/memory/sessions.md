@@ -10,6 +10,27 @@ Automated session summaries captured by the ArcKit session-learner hook.
   - chore: bump version to 4.6.1
   - fix: trim skill descriptions to fit 250-char context cap (#215) (#266)
 
+### 2026-08-07 20:00 — general
+
+- **Effort:** high
+- **Commits:** 1 | **Files changed:** 65
+- **Artifacts:** none detected
+- **Summary:**
+  - fix(fr): add FR classification ladder, correct stale IGI 1300 citation
+- **Telemetry:** 52 tool calls (p50=59ms, p95=1756ms)
+
+### 2026-08-07 19:45 — general
+
+- **Effort:** high
+- **Commits:** 4 | **Files changed:** 168
+- **Artifacts:** none detected
+- **Summary:**
+  - feat(ci): guard that every per-type quality-checklist reference resolves (#751)
+  - fix(quality-checklist): add the 15 missing per-type sections for togaf-adm and agent-architecture (#750)
+  - feat(doc-control): route the classification ladder by regime, not user config (#744)
+  - docs(contributing): name all four doc files a new command must update (#743)
+- **Telemetry:** 12 tool calls (p50=235ms, p95=958ms)
+
 ### 2026-07-29 16:02 — general
 
 - **Effort:** xhigh
@@ -268,19 +289,4 @@ Automated session summaries captured by the ArcKit session-learner hook.
 - **Effort:** xhigh
 - **Commits:** 0 | **Files changed:** 0
 - **Artifacts:** none detected
-
-### 2026-07-21 17:04 — failure (rate_limit)
-
-- **Status:** session interrupted by API error
-- **Effort:** xhigh
-- **Commits:** 0 | **Files changed:** 0
-- **Artifacts:** none detected
-
-### 2026-07-21 17:04 — failure (rate_limit)
-
-- **Status:** session interrupted by API error
-- **Effort:** max
-- **Commits:** 0 | **Files changed:** 0
-- **Artifacts:** none detected
-- **Telemetry:** 1 tool calls (p50=4032271ms, p95=4032271ms)
 

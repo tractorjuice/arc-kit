@@ -68,7 +68,7 @@ Each theme covers 5–8 measures assessed as: ✅ Compliant · ⚠️ Partial ·
 - Cloud section completed if cloud services in scope.
 - ANSSI cloud qualification matrix applied (SecNumCloud, C5, CSA STAR, EUCS).
 - Gap analysis with remediation timeline produced.
-- Assessment classified OFFICIAL-SENSITIVE (ANSSI assessment is sensitive).
+- Assessment classified Diffusion Restreinte (ANSSI assessment is sensitive).
 
 ---
 

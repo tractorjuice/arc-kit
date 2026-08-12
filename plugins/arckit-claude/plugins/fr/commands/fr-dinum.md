@@ -111,9 +111,9 @@ Show this scoping table to the user before generating the full assessment.
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
    - Review Cycle: Annual
-   - Classification: from user input or OFFICIAL as default
+   - Classification: from user input or Non protégé as default
 
-3. **Section 1: Doctrine Cloud de l'État** (Circulaire 6264/SG)
+3. **Section 1: Doctrine Cloud de l'État** (Circulaire 6282/SG du 5 juillet 2021)
    - Cloud evaluation hierarchy: internal government cloud → SecNumCloud-qualified → standard cloud
    - Assessment table for each tier
    - Data sensitivity classification driving the cloud tier requirement
@@ -160,7 +160,7 @@ Show this scoping table to the user before generating the full assessment.
     - Compliance level per referential (Full / Partial / Non-compliant + percentage where applicable)
     - Critical gap count per referential
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass.
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus **DINUM** per-type checks pass.
 
 Write the document to:
 
@@ -221,7 +221,7 @@ Next steps:
 | RGAA 4.1 — Référentiel Général d'Accessibilité pour les Administrations | DINUM | https://accessibilite.numerique.gouv.fr/ |
 | RGESN — Référentiel Général d'Écoconception de Services Numériques | DINUM / MTE | https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/ |
 | RGI 2.0 — Référentiel Général d'Interopérabilité | DINUM | https://www.numerique.gouv.fr/publications/interoperabilite/ |
-| RGS v2.0 — Référentiel Général de Sécurité | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
+| RGS v2.0 — Référentiel Général de Sécurité | ANSSI | https://cyber.gouv.fr/le-referentiel-general-de-securite-rgs |
 | DSFR — Système de Design de l'État | DINUM | https://www.systeme-de-design.gouv.fr/ |
 | FranceConnect — identity federation | DINUM | https://franceconnect.gouv.fr/ |
 | Doctrine cloud de l'État — cloud-first policy | DINUM | https://www.numerique.gouv.fr/services/cloud/doctrine/ |

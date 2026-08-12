@@ -1263,7 +1263,7 @@ Assess document and IS handling requirements under the DR administrative classif
 - II 901/SGDSN rules for DR document lifecycle
 - Electronic storage, transmission, and physical handling obligations
 - IS homologation for DR-processing systems
-- Scope explicitly bounded: DR only — IGI 1300 (Confidentiel Défense and above) is out of scope
+- Scope explicitly bounded: DR only — IGI 1300 (Secret or Très Secret) is out of scope
 
 **`/arckit:fr-algorithme-public`** → French Public Algorithm Transparency Notice
 

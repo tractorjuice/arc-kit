@@ -202,7 +202,7 @@ Read all documents from Step 0. From the artifacts, extract:
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
-   - Classification: OFFICIAL-SENSITIVE minimum (EBIOS studies contain sensitive risk information); adjust upward if system classification requires it
+   - Classification: Diffusion Restreinte minimum (EBIOS studies contain sensitive risk information); adjust upward if system classification requires it
    - Homologation Authority: from SECD or user input (the Autorité d'Homologation must be named)
 
 3. Write the complete EBIOS study following the five-workshop structure from the template, populated with the analysis conducted in Step 4.
@@ -225,7 +225,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-EBIOS-v{VERSION}.md
 📄 Document: projects/{project_id}/ARC-{PROJECT_ID}-EBIOS-v{VERSION}.md
 📋 Document ID: {document_id}
 📅 Study Date: {date}
-🔒 Classification: OFFICIAL-SENSITIVE
+🔒 Classification: Diffusion Restreinte
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Risk Analysis Summary
@@ -270,8 +270,8 @@ Next steps:
 ## Important Notes
 
 - **EBIOS requires human expertise**: This command generates a structured EBIOS Risk Manager study from available project artifacts. However, a real EBIOS study for OIV/homologation purposes requires workshops with system architects, operations teams, and security specialists. Use this output as a starting point and draft for the workshop series, not as a final regulatory submission.
-- **Classification sensitivity**: EBIOS studies contain detailed information about system vulnerabilities and attack scenarios. Always classify at OFFICIAL-SENSITIVE minimum. For OIV SIIV systems, classification may need to be higher.
-- **ANSSI EBIOS RM guide**: The official ANSSI guide (published 2018, updated 2023) is the authoritative reference. This command follows the five-workshop structure and ANSSI severity/likelihood scales.
+- **Classification sensitivity**: EBIOS studies contain detailed information about system vulnerabilities and attack scenarios. Always classify at Diffusion Restreinte minimum. For OIV SIIV systems, classification may need to be higher.
+- **ANSSI EBIOS RM guide**: The official ANSSI guide (published 2018, updated 2024) is the authoritative reference. This command follows the five-workshop structure and ANSSI severity/likelihood scales.
 - **Homologation is sequential**: The EBIOS study is one input to the homologation dossier. Other inputs include security architecture review, penetration testing, and organisational security documentation.
 - **effort: max**: EBIOS is one of ArcKit's most complex commands, spanning five workshops and requiring deep analysis of requirements, architecture, and threat landscape. This justifies the `effort: max` setting.
 - **Use Write Tool**: EBIOS studies are typically 4,000–12,000 words. Always use the Write tool.
@@ -280,11 +280,11 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| EBIOS Risk Manager — official guide (2018, updated 2023) | ANSSI | https://cyber.gouv.fr/publications/la-methode-ebios-risk-manager |
+| EBIOS Risk Manager — official guide (2018, updated 2024) | ANSSI | https://cyber.gouv.fr/securisation/analyse-des-risques/methode-ebios-rm/ |
 | EBIOS RM — club EBIOS (community and tools) | Club EBIOS | https://www.club-ebios.org/ |
 | MITRE ATT&CK framework (Workshop 4 technique mapping) | MITRE | https://attack.mitre.org/ |
-| RGS v2.0 — homologation requirements | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
-| ANSSI — OIV (Opérateurs d'Importance Vitale) obligations | ANSSI | https://cyber.gouv.fr/les-oiv-quest-ce-que-cest |
+| RGS v2.0 — homologation requirements | ANSSI | https://cyber.gouv.fr/le-referentiel-general-de-securite-rgs |
+| ANSSI — OIV (Opérateurs d'Importance Vitale) obligations | ANSSI | https://cyber.gouv.fr/le-dispositif-saiv |
 | NIS2 Directive — OSE (Opérateurs de Services Essentiels) obligations | EUR-Lex | https://eur-lex.europa.eu/eli/dir/2022/2555/oj |
 
 > **Note for reviewers**: EBIOS Risk Manager is the French government's official cybersecurity risk analysis methodology, published by ANSSI (the French national cybersecurity agency). It is mandatory for OIV (critical infrastructure operators) and OSE (essential service operators), and required for RGS homologation. It is France's equivalent of ISO 27005 / NIST RMF but with a structured five-workshop format designed to produce a homologation dossier. "Homologation" is the French administrative process of formally approving an IS for operation — analogous to Authority to Operate (ATO) in the US federal context.
@@ -299,7 +299,7 @@ Next steps:
 - ✅ Workshop 4: Operational attack sequences for high-risk scenarios; MITRE ATT&CK mapping
 - ✅ Workshop 5: Security measures (MS-xx) with type, owner, and priority; residual risk reassessment
 - ✅ Homologation recommendation (Proceed / Conditions / Do not proceed) clearly stated
-- ✅ Document classified OFFICIAL-SENSITIVE minimum
+- ✅ Document classified Diffusion Restreinte minimum
 - ✅ Homologation Authority named in Document Control
 - ✅ EBIOS per-type quality checks passed
 

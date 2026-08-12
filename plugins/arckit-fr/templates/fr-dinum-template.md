@@ -27,7 +27,7 @@
 
 ---
 
-## 1. State Cloud Doctrine (Doctrine cloud de l'État — Circular 6264/SG)
+## 1. State Cloud Doctrine (Doctrine cloud de l'État — Circular 6282/SG)
 
 The French cloud-first policy mandates evaluation in order:
 

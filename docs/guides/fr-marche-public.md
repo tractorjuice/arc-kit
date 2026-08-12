@@ -46,9 +46,9 @@ Output: `projects/<id>/ARC-<id>-MARPUB-v1.0.md`
 | Threshold | Procedure |
 |-----------|-----------|
 | < €40,000 HT | Gré à gré (direct award) |
-| €40,000 – €215,000 HT (services) | MAPA (Marché à Procédure Adaptée) |
-| > €215,000 HT (services) | Appel d'Offres Ouvert / Restreint |
-| > €5.38M HT (works) | Procédure formalisée |
+| €40,000 – €216,000 HT (services) | MAPA (Marché à Procédure Adaptée) |
+| > €216,000 HT (services) | Appel d'Offres Ouvert / Restreint |
+| > €5,404,000 HT (works) | Procédure formalisée |
 
 ---
 
