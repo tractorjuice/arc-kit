@@ -43,6 +43,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **`/arckit:nl-tbb` no longer derives a VIRBI 2025 rubricering from the TBB category — the systematiek runs the other way** (#781). The command mapped the determined TBB category to a rubricering and recorded it as an *indicatieve rubricering (voorstel)*. Reading the primary source settles that this direction is not available: *Gereedschap: Te Beschermen Belangen (TBB) systematiek*, [v1.0, 6 June 2026](https://www.digitaleoverheid.nl/wp-content/uploads/sites/8/2026/05/Gereedschap-TBB-systematiek-PDF.pdf), publishes the relation as Tabel B in §3.1 and then forecloses one half of it in the sentence immediately beneath:
+
+  > Let wel, wanneer een te beschermen belang ingedeeld is in categorie TBB 2, hoeft dit niet te betekenen dat het proces of informatiesysteem gegevens verwerkt of bevat op het niveau van STG GEHEIM. […] Andersom geldt dit echter wel. Indien een proces of informatiesysteem gegevens verwerkt of bevat op het niveau van STG GEHEIM, dan is automatisch sprake van indeling in categorie TBB 2.
+
+  Three things in the source point the same way. §2.1 lists *"het rubriceringsniveau van de informatie of van het informatiesysteem"* first among the criteria the categorisation must take into account — the rubricering is an **input**, not an output. §2.1 also notes *"(Voor het VIRBI kijken we slechts/vooral naar Vertrouwelijkheid.)"*, while the category is set by the **highest** of the three BIV scores. And the document never uses *voorstel*, *indicatief* or *advies* of a rubricering anywhere; it describes the categorisation as a *"hulpmiddel voor prioritering bij de toewijzing van middelen"*.
+
+  The practical failure was real rather than cosmetic: a process scoring Hoog on **Beschikbaarheid** alone reached TBB 2 and was then stamped **Stg. GEHEIM**, a confidentiality marking produced by an availability score, flowing into the Document Control Classification row. Labelling it a *voorstel* changed the noun, not the arrow.
+
+  Step 7 is now inverted. It records the rubricering the information **already carries**, and applies the one direction the systematiek authorises as a **floor** on the category — Stg. GEHEIM ⇒ at least TBB 2, and so on. The floor never lowers a category; where both bounds exist, both are recorded with the one that applied identified. Where the information carries no marking, none is inferred: the artefact states "None recorded" and leaves the rubricering unstated. Tabel B survives in the artefact as cited reference with the source's caveat attached, never as a lookup that yields a marking.
+
+  Step 8's one-way warning now quotes the systematiek verbatim rather than resting on our own reasoning, and the sign-off line names the **beveiligingsautoriteit / BVA** — the role §1.5 actually names, appointed by the SG under the [Besluit BVA-stelsel Rijksdienst 2021](https://wetten.overheid.nl/BWBR0044617), noting that *"de exacte rolverdeling kan per departement verschillen"*. The command previously said *rubriceringsautoriteit*, which the systematiek does not use.
+
+  The TBB systematiek also gains a citable URL in Key References, where it previously carried *"(not linked — verify current text before citing)"* — which is why the question could not be settled from the overlay itself. Four-category ladder and highest-of-three rule are confirmed verbatim and unchanged.
+
 - **Every scripted project-creation path in the overlay commands called `create-project.sh` in a form it rejects** (#775, #777). 41 files across eight plugins, in two spellings, neither of which can produce a project:
 
   ```text
