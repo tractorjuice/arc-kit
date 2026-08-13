@@ -5,6 +5,46 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.9.0] — 2026-08-13
+
+### Added
+
+- **The Document Control classification ladder now follows the artefact's jurisdiction, not the person running the command.** A Canadian Privacy Impact Assessment carried the UK `PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET` ladder unless the operator happened to have configured a matching `classification_scheme` — the wrong dependency, since the ladder is a property of the artefact and the regime it is written under, not of the workstation that generated it. Each doc-type's existing `regime:` tag now selects the partial via a new `REGIME_PARTIALS` map in `config/doc-types.mjs`, and regime beats user config.
+
+  Four new partials ship with it: `document-control-ca.md`, `document-control-au.md`, `document-control-nl.md` (VIRBI 2025) and `document-control-fr.md` (Non protégé / Diffusion Restreinte / Secret / Très Secret). `UK`, `MOD`, `EU` and `US` deliberately do **not** hard-route — they sit in an explicit `UK_FALLBACK_BY_DESIGN` set and fall through to the user-config chain exactly as before, so the 41 doc-types tagged with those regimes render identically to previous releases. For `US` that is a deferral, not a decision: no authoritative ladder wording exists in this repository, and a wrong ladder inside a Document Control header reads more authoritative than a fallback does.
+
+  `scripts/tests/test-regime-registration.mjs` enforces the routing rather than observing it, and holds `templates/_partials/RENDERING.md` to the registry cell by cell — that file, not `config/doc-types.mjs`, is what resolves the marker at runtime, because community overlays ship `templates/_partials/` but no `config/` directory. `RENDERING.md` is now self-contained.
+
+- **`/arckit:at-barrierefreiheit` (`ATBFR`) — Austrian digital accessibility across both transposition tracks** (#710). The **BaFG** binds economic actors; the **WZG** binds federal public bodies. Which applies is a question about the entity, not the technology, and a federal body running an in-scope service is subject to both — so the command determines each track independently, supports "both", and marks non-applicable sections N/A with the reason rather than omitting them. One neutrally-named doc-type carries both tracks. Conformance is assessed against EN 301 549 v3.2.1, giving WCAG 2.1 AA.
+
+- **Netherlands Public Sector Overlay (`arckit-nl`) — four commands, community-contributed** (#739). `/arckit:nl-cloud` (`RBCLOUD`) against the Herziening rijksbreed cloudbeleid 2026, `/arckit:nl-tbb` (`TBB`) for Te Beschermen Belangen categorisation, `/arckit:nl-bio` (`BIO2`) against Baseline Informatiebeveiliging Overheid 2, and `/arckit:nl-exit` (`NLEXIT`) for the exit plan clause 3.2 makes mandatory. Unlike France's SecNumCloud there is no published Dutch qualification list, so no commercial provider is named as compliant and the overlay says so where a reader would expect one.
+
+- **`/arckit:eu-cloud-sovereignty` (`EUCSF`) — EU Cloud Sovereignty Framework assessment** (#740). Assesses a cloud service against the eight Sovereignty Objectives using the framework's own weights, recording a SEAL level per objective and computing the weighted Sovereignty Score. Two points the command is loud about: minimum SEAL levels come from the tender specification, not the framework, and a supplier's self-declared SEAL is an unverified claim until the assessor records evidence. It records an assessment; it does not certify.
+
+### Fixed
+
+- **`references/quality-checklist.md` checked artefacts against ladders they no longer render** (#787). Common check 4 enumerated three schemes against the six that hard-route, so a Canadian artefact correctly classified `Protected B` failed the check every `ca-*` command gates on. It now defers to `RENDERING.md`, already CI-held to the registry, rather than carrying a fourth copy of the enumeration. Seven per-type sections named a UK classification for doc-types routing elsewhere; the six `FR` ones took the values the overlay remap settled, leaving each `fr-*` command carrying two contradictory checks for the same artefact until this landed. `ATDSG` becomes `Eingeschränkt`, rising to `Vertraulich` where criminal-law confidentiality applies, and `at-dsgvo.md`'s own checklist line moves with it.
+
+- **Fifteen doc-types told the model to verify quality checks that did not exist, and it invented them instead** (#749). Nine `arckit-togaf-adm` codes and six `arckit-agent-architecture` codes had no per-type section, so the model reached a heading that was not there and supplied its own criteria for the artefact it was about to write. Nothing errored and nothing was logged. `scripts/check-quality-checklist-refs.py` now asserts every per-type reference resolves, keyed on what files emit rather than on the doc-type registry, and covers agents as well as commands.
+
+- **`create-project.sh` handed back a project number that already existed once a repo passed seven projects** (#762). `get_next_project_number` compared the zero-padded prefix in an arithmetic context, where bash reads a leading `0` as octal — `010` and `011` were silently read as 8 and 9. The failing `((...))` sits in an `if` condition where `errexit` is suspended, so the script reported `"success": true` and exited 0. Both arithmetic sites now force base 10.
+
+- **`create_project_dir` wrote a whole project tree into an existing directory rather than refusing it** (#765). The directory is named `{freshly-allocated-number}-{slug}`, so a target that already exists means the numbering is wrong. Both helpers now refuse before anything is written, and emit `{"error": ..., "success": false}` rather than dying under `errexit` with zero bytes on stdout — roughly 59 command files read that stdout.
+
+- **Every scripted project-creation path in the overlay commands called `create-project.sh` in a form it rejects** (#775, #777). 41 files across eight plugins, in two spellings, neither of which can produce a project: the script takes `--name "NAME"` and has no positional argument. Five callers were worse than a failed call, using a create-only script as a lookup and reading keys the script never emits; they now resolve the project from the context the `arckit-context.mjs` hook already injects. `scripts/check-create-project-invocations.py` is new and wired into CI.
+
+- **`slugify` deleted accented characters from project directory names for every plugin user** (#766). The fix for this landed in `scripts/bash/common.sh` only, and marketplace users never touch that copy. All four implementations now transliterate to ASCII so the result is identical across locales and both languages. `scripts/check-common-parity.py` holds both copies of `common.sh` and `common.py` in step definition by definition, with declared divergences carrying their reason.
+
+- **23 templates had drifted between the plugin tree and the `.arckit/templates/` CLI mirror, because the test guarding them compared filenames and not contents** (#784). Commands resolve the project-root copy *before* the plugin copy, so in a CLI-scaffolded project the drifted copy is the one that renders. Sixteen still carried the frozen Document Control table that `<!-- DOC-CONTROL-HEADER -->` replaced, so regime routing never fired for them at all.
+
+- **The secret scanner's OIDC exemption only fired when the permission line was the last content in the input** (#737, reported by @johnfelipe). The guard was anchored with `$` against patterns built with `gi` and no `m`, so it matched end of input rather than end of line — meaning it never fired in the file scanner at all, where a `permissions:` block is always followed by the `jobs:` it authorises.
+
+- **`/arckit:nl-tbb` no longer derives a VIRBI 2025 rubricering from the TBB category — the systematiek runs the other way** (#781). A process scoring Hoog on Beschikbaarheid alone reached TBB 2 and was stamped Stg. GEHEIM: a confidentiality marking produced by an availability score. Step 7 is inverted to record the rubricering the information already carries and apply the one authorised direction as a floor on the category.
+
+- **Austrian overlay accuracy.** `/arckit:at-bvergg` named WCAG 2.2 AA where §107 BVergG invokes the OJ-cited EN 301 549 v3.2.1, giving 2.1 AA — a UK position carried one jurisdiction too far (#769). Every public-facing description of `/arckit:at-nisg` still named the superseded law and an authority that does not receive the report under NISG 2026 (#770).
+
+- **French overlay accuracy.** The IGI 1300 citation in `fr-dr` described the pre-2021 three-tier scheme; a follow-up audit of the whole overlay found nine more issues verified live against ANSSI/CNIL/Légifrance, including stale procurement thresholds, three wrong circular numbers, and 11 dead or redirected URLs (#745, #752).
+
 ## [6.8.0] — 2026-08-04
 
 ### Added
