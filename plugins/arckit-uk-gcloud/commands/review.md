@@ -287,6 +287,8 @@ Document Control footer:
 
 ### 6. Write the review report
 
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCRV** per-type checks pass. Fix any failures before proceeding.
+
 Use the **Write tool** to save the completed report to:
 
 `{path}/{filename}` — e.g. `projects/004-secure-case-mgmt/ARC-004-GCRV-v1.0.md`

@@ -400,6 +400,29 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ## Changelog
 
+### 2026-08-13 - Austrian Accessibility Command (Community) (#710)
+
+Added `/arckit:at-barrierefreiheit` to the `arckit-at` community overlay, taking it from 3 commands to 4. Like the other overlay commands, it is documented here via this changelog rather than as a DSM grid row (the matrix tracks the official baseline). Tier 13 compliance assessment.
+
+**Command and output doc-type**:
+
+- `/arckit:at-barrierefreiheit` → `ATBFR` (Austrian Accessibility Assessment (BaFG / WZG), regime AT, category Compliance, severity HIGH)
+
+**Dependencies**: requirements (M — NFR-UX targets and the user-facing surface inventory), stakeholders (R — assistive-technology users, consumers versus citizens), diagram / hld (R — the actual surfaces), at-bvergg (O — any accessibility clause already imposed on a supplier), risk (O), sobc (O — headcount and turnover, which drive the BaFG microenterprise exemption).
+
+**Consumed by**: `requirements` (O — conformance gaps become NFR-UX items), `at-bvergg` (O — the conformance target is carried into the Leistungsbeschreibung rather than rediscovered at acceptance), `at-dsgvo` (O — where the feedback mechanism processes personal data).
+
+**Scope boundary**: `/arckit:at-bvergg` covers accessibility as a *procurement clause* (§107 BVergG). This command covers the entity's own products, services, websites and apps. The two are complementary and share the same standard version — EN 301 549 v3.2.1, giving WCAG 2.1 AA.
+
+**Typical Austrian accessibility path**:
+
+```text
+requirements → stakeholders →
+at-barrierefreiheit (applicability: BaFG / WZG / both) →
+requirements (NFR-UX gaps) → at-bvergg (remediation procurement) →
+traceability
+```
+
 ### 2026-06-10 - UK G-Cloud Supplier Bid-Authoring Overlay Commands (Community, Proprietary)
 
 Added 11 community-overlay commands shipping in the new 13th marketplace plugin `arckit-uk-gcloud` — a **proprietary (not MIT), Claude Code only** supplier-side overlay for authoring UK G-Cloud (Digital Marketplace) framework bids. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and **requires the `arckit` core plugin**. Unlike every other overlay it is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot). Like the other overlays, these commands are documented here via this changelog rather than as DSM grid rows (the matrix tracks the official baseline). Total community-overlay command count moves to **87** (`arckit-uk-gcloud` adds 11), alongside the official baseline.
@@ -740,6 +763,27 @@ Added 18 new commands covering EU regulations and French public sector governanc
 - `/arckit:fr-dr` — Diffusion Restreinte document and IS handling. Depends on: requirements (M), fr-anssi (R). Produces ARC-*-DR-*.md
 - `/arckit:fr-algorithme-public` — French Public Algorithm Transparency Notice. Depends on: requirements (M), data-model (R). Produces ARC-*-ALGO-*.md
 - `/arckit:fr-code-reuse` — French Public Code Reuse Assessment. Depends on: requirements (M), research (R). Produces ARC-*-REUSE-*.md
+
+### Netherlands Public Sector Overlay (arckit-nl) — community-contributed
+
+- `/arckit:nl-tbb` — Te Beschermen Belangen / VIRBI 2025 rubricering. Depends on: stakeholders (M), requirements (R), risk (R). Produces ARC-*-TBB-*.md
+- `/arckit:nl-cloud` — Rijksbreed cloudbeleid 2026 compliance. Depends on: requirements (M), nl-tbb (M), risk (R), eu-nis2 (O). Produces ARC-*-RBCLOUD-*.md
+- `/arckit:nl-bio` — BIO2 conformance assessment. Depends on: requirements (M), principles (R), risk (R). Produces ARC-*-BIO2-*.md
+- `/arckit:nl-exit` — Cloud exit plan (Rijksbreed cloudbeleid clause 3.2). Depends on: nl-cloud (M), requirements (R). Produces ARC-*-NLEXIT-*.md
+
+**Key inter-dependencies among NL commands**:
+
+- `nl-tbb` → feeds `nl-cloud` (M) — the rubricering / TBB category determines public-cloud eligibility under clause 5.2
+- `nl-cloud` → feeds `nl-exit` (M) — the exit plan is required for material cloud use identified by the assessment
+- `eu-nis2` → informs `nl-cloud` (O) where the entity falls under the Cbw as an essential entity
+
+**Typical Dutch central-government compliance path**:
+
+```text
+stakeholders → requirements → risk →
+nl-tbb → nl-cloud → nl-exit → nl-bio →
+eu-nis2 → eu-data-act
+```
 
 **Key inter-dependencies among EU/FR commands**:
 

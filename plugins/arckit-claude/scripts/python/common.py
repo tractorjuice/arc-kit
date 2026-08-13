@@ -77,16 +77,79 @@ def get_next_project_number(repo_root):
     return f"{max_num + 1:03d}"
 
 
+# Accented characters are transliterated to their ASCII equivalent rather than
+# deleted. Both cases are listed so the table applies before lowercasing, which
+# is restricted to A-Z: str.lower() maps the Turkish dotted capital I to "i"
+# plus a combining dot, which would diverge from the bash implementation.
+#
+# Keep this table in step with slugify() in scripts/bash/common.sh. All four
+# copies are held equal by tests/plugin/test_slugify.py (#766).
+TRANSLITERATIONS = {
+    "À": "a", "Á": "a", "Â": "a", "Ã": "a", "Ä": "a", "Å": "a",
+    "à": "a", "á": "a", "â": "a", "ã": "a", "ä": "a", "å": "a",
+    "Æ": "ae", "æ": "ae", "Ç": "c", "ç": "c",
+    "È": "e", "É": "e", "Ê": "e", "Ë": "e",
+    "è": "e", "é": "e", "ê": "e", "ë": "e",
+    "Ì": "i", "Í": "i", "Î": "i", "Ï": "i",
+    "ì": "i", "í": "i", "î": "i", "ï": "i",
+    "Ð": "d", "ð": "d", "Ñ": "n", "ñ": "n",
+    "Ò": "o", "Ó": "o", "Ô": "o", "Õ": "o", "Ö": "o", "Ø": "o",
+    "ò": "o", "ó": "o", "ô": "o", "õ": "o", "ö": "o", "ø": "o",
+    "Ù": "u", "Ú": "u", "Û": "u", "Ü": "u",
+    "ù": "u", "ú": "u", "û": "u", "ü": "u",
+    "Ý": "y", "ý": "y", "Ÿ": "y", "ÿ": "y",
+    "Þ": "th", "þ": "th", "ß": "ss",
+    "Ā": "a", "ā": "a", "Ą": "a", "ą": "a",
+    "Ć": "c", "ć": "c", "Č": "c", "č": "c", "Ď": "d", "ď": "d",
+    "Ē": "e", "ē": "e", "Ė": "e", "ė": "e",
+    "Ę": "e", "ę": "e", "Ě": "e", "ě": "e",
+    "Ğ": "g", "ğ": "g",
+    "Ī": "i", "ī": "i", "Į": "i", "į": "i", "İ": "i", "ı": "i",
+    "Ł": "l", "ł": "l", "Ń": "n", "ń": "n", "Ň": "n", "ň": "n",
+    "Ō": "o", "ō": "o", "Ő": "o", "ő": "o", "Œ": "oe", "œ": "oe",
+    "Ř": "r", "ř": "r",
+    "Ś": "s", "ś": "s", "Š": "s", "š": "s", "Ş": "s", "ş": "s",
+    "Ť": "t", "ť": "t", "Ţ": "t", "ţ": "t",
+    "Ū": "u", "ū": "u", "Ů": "u", "ů": "u", "Ű": "u", "ű": "u",
+    "Ź": "z", "ź": "z", "Ż": "z", "ż": "z", "Ž": "z", "ž": "z",
+}
+
+ASCII_LOWER = str.maketrans(
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+    "abcdefghijklmnopqrstuvwxyz",
+)
+
+
 def slugify(text):
-    """Convert text to kebab-case slug."""
-    text = text.lower()
+    """Convert text to kebab-case slug, transliterating accents to ASCII.
+
+    "Cafe Modernisation" with an accent becomes "cafe-modernisation", not
+    "caf-modernisation". Characters outside TRANSLITERATIONS are dropped.
+    """
+    for src, dst in TRANSLITERATIONS.items():
+        text = text.replace(src, dst)
+    text = text.translate(ASCII_LOWER)
     text = re.sub(r"[^a-z0-9]+", "-", text)
     text = text.strip("-")
     return text
 
 
 def create_project_dir(project_dir):
-    """Create project directory structure with all required subdirectories."""
+    """Create project directory structure with all required subdirectories.
+
+    Refuses an existing target, returning False. `create-project.py` only ever
+    creates: the directory name carries a freshly allocated number, so a target
+    that already exists means the numbering is wrong, not that the user picked a
+    taken name. `exist_ok=True` succeeded in that case and the caller wrote a
+    README and a full set of ARC-{NNN}-* paths over the top of the existing
+    project, exiting 0 (#762, #765). Fail here instead, before anything is
+    written.
+    """
+    if Path(project_dir).is_dir():
+        log_error(f"Project directory already exists: {project_dir}")
+        log_error("This indicates a project-numbering fault, not a name collision.")
+        return False
+
     subdirs = [
         "", "vendors", "external", "final",
         "decisions", "diagrams", "wardley-maps",
@@ -95,6 +158,7 @@ def create_project_dir(project_dir):
     for sub in subdirs:
         (Path(project_dir) / sub).mkdir(parents=True, exist_ok=True)
     log_success(f"Created project directory: {project_dir}")
+    return True
 
 
 # ============================================================================

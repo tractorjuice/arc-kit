@@ -56,6 +56,7 @@ CLAUDE_PLUGIN_CORE_DIR="plugins/arckit-claude"
 CLAUDE_PLUGIN_LAYOUT=(
   "plugins/arckit-uae:plugins/uae"
   "plugins/arckit-fr:plugins/fr"
+  "plugins/arckit-nl:plugins/nl"
   "plugins/arckit-ca:plugins/ca"
   "plugins/arckit-eu:plugins/eu"
   "plugins/arckit-at:plugins/at"

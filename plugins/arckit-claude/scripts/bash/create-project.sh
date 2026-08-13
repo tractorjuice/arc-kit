@@ -123,7 +123,17 @@ PROJECT_DIR="$REPO_ROOT/projects/$PROJECT_DIR_NAME"
 log_info "Creating project: $PROJECT_DIR_NAME"
 
 # Create project directory structure
-create_project_dir "$PROJECT_DIR"
+#
+# `if !` deliberately suspends errexit: under `set -e` a bare call would kill
+# the script here, and in --json mode the caller would get a non-zero exit with
+# an empty stdout, no JSON at all. Match the error shape used for a missing
+# project name above.
+if ! create_project_dir "$PROJECT_DIR"; then
+    if [[ "$OUTPUT_JSON" == "true" ]]; then
+        echo "{\"error\": \"Project directory already exists: $PROJECT_DIR\", \"success\": false}"
+    fi
+    exit 1
+fi
 
 # Create README for external documents directory
 cat > "$PROJECT_DIR/external/README.md" <<'EXTEOF'

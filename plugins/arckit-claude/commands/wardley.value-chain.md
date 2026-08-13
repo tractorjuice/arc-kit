@@ -249,7 +249,12 @@ Before generating output, validate the value chain against these criteria.
 
 **Get or create project path**:
 
-Run `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json` to get the current project path. Extract `project_id` and `project_path` from the JSON response.
+Locate the target project from the **ArcKit Project Context** injected above, taking `Project ID` and `Path` from the matching entry.
+
+Only if no project exists, create one:
+`bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"`, then read `project_number` and `project_dir` from the JSON response.
+
+> `create-project.sh` is create-only. Run with no `--name` it exits 1 with `{"error": "Project name is required", "success": false}` and returns no path, so it cannot be used to look up an existing project. It emits `project_number` and `project_dir`; there are no `project_id` or `project_path` keys.
 
 ---
 

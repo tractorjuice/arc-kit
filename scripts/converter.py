@@ -247,6 +247,7 @@ CONTEXT_HOOK_REPLACEMENT = (
 PLUGIN_SOURCES = [
     "plugins/arckit-uae",
     "plugins/arckit-fr",
+    "plugins/arckit-nl",
     "plugins/arckit-ca",
     "plugins/arckit-eu",
     "plugins/arckit-at",

@@ -29,7 +29,7 @@ You are an enterprise architect generating a Service Catalogue Review under the 
    - **First**, check `.arckit/templates-custom/uae-zero-bureaucracy-template.md` (user override)
    - **Then**, `.arckit/templates/uae-zero-bureaucracy-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-zero-bureaucracy-template.md`
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> ZBUR --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
@@ -38,8 +38,9 @@ You are an enterprise architect generating a Service Catalogue Review under the 
    - **Customer Experience KPIs** — define and target the KPIs the service will report monthly: Customer Satisfaction (CSAT), Net Promoter Score (NPS), First-Time Right rate, Digital Adoption %, and Failure Demand %.
    - **Code Compliance Statement** — explicit statement against the UAE Code for Government Services principles (proactive, omni-channel, personalised, simple, fast). For each principle, evidence how the redesigned service complies.
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The 23 April 2026 UAE Cabinet meeting announcement (Code for Government Services + Zero Bureaucracy) MUST appear in the Document Register with its primary URL and the verification date.
-8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-9. Show only a summary to the user (one paragraph plus the headline reduction commitments per service).
+8. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **ZBUR** per-type checks pass. Fix any failures before proceeding.
+9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+10. Show only a summary to the user (one paragraph plus the headline reduction commitments per service).
 
 ## Authoritative anchor
 

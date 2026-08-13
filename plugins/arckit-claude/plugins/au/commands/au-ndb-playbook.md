@@ -69,7 +69,7 @@ A working NDB playbook is operational — it must be executable under time press
    - Then: `.arckit/templates/au-ndb-playbook-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-ndb-playbook-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUNDB --filename` for the artefact filename.
 
@@ -115,9 +115,10 @@ A working NDB playbook is operational — it must be executable under time press
 
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Privacy Act 1988 + OAIC NDB scheme guidance MUST appear in the Document Register.
 
-8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+8. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AUNDB** per-type checks pass. Fix any failures before proceeding.
+9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 
-9. Show only a summary to the user (one paragraph plus the 30-day timeline summary).
+10. Show only a summary to the user (one paragraph plus the 30-day timeline summary).
 
 ## Important Notes
 

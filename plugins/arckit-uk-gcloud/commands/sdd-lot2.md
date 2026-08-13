@@ -190,6 +190,8 @@ History, and append the standard ArcKit Document Control footer:
 
 ### 8. Write the SDD
 
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SDD** per-type checks pass. Fix any failures before proceeding.
+
 Use the **Write tool** to save the completed document to:
 
 `{path}/{filename}` — e.g. `projects/004-secure-case-mgmt/ARC-004-SDD-v1.0.md`

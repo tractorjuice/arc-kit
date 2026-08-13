@@ -50,8 +50,9 @@ You are an enterprise architect generating a Canada Privacy Impact Assessment (P
    - **PIA Approval Chain** — departmental ATIP coordinator → ADM → head of institution, with TBS notification and OPC consultation positioned at the right gates.
    - **Action Tracker** — open mitigations with owner, due date, status, and the link back to the privacy-risk register entry.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The Privacy Act and the TBS Directive on Privacy Impact Assessment MUST appear in the Document Register with their primary URLs and verification dates.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the headline privacy risks, OPC notification decision, and any open lawful-authority items).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **PIA** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the headline privacy risks, OPC notification decision, and any open lawful-authority items).
 
 ## Authoritative anchor
 

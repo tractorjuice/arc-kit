@@ -8,23 +8,16 @@ templateVersion: "1.0"
 
 ## Document Control
 
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
+
+<!-- Domain-specific fields, retained after the resolved header per the Document Control Standard. -->
+
 | Field | Value |
 |-------|-------|
-| **Document ID** | `ARC-[PROJECT_ID]-ACHG-[ACHG_NUM]-v[VERSION]` |
-| **Document Type** | Architecture Change Request |
-| **Project** | `[PROJECT_NAME]` |
 | **Change ID** | `ACHG-[ACHG_NUM]` |
-| **Classification** | `[CLASSIFICATION]` |
-| **Status** | DRAFT |
 | **Change Type** | `[EVOLUTIONARY / TRANSFORMATIONAL / CORRECTIVE]` |
 | **Priority** | `[CRITICAL / HIGH / MEDIUM / LOW]` |
-| **Created Date** | `[YYYY-MM-DD]` |
-| **Last Modified** | `[YYYY-MM-DD]` |
-| **Review Date** | `[YYYY-MM-DD]` |
-| **Owner** | `[OWNER_NAME_AND_ROLE]` |
-| **Reviewed By** | `[REVIEWER_NAME]` |
-| **Approved By** | `[APPROVER_NAME]` |
-| **Distribution** | `[DISTRIBUTION_LIST]` |
 
 ### Revision History
 

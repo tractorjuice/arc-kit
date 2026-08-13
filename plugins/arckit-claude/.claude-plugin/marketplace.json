@@ -70,6 +70,26 @@
       "category": "productivity"
     },
     {
+      "name": "arckit-nl",
+      "source": "./plugins/nl",
+      "description": "Netherlands Public Sector Overlay — 4 commands for the Rijksbreed cloudbeleid 2026, VIRBI 2025 / Te Beschermen Belangen rubricering, BIO2 conformance, and cloud exit planning",
+      "version": "6.8.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "netherlands",
+        "cloud",
+        "compliance"
+      ],
+      "category": "productivity"
+    },
+    {
       "name": "arckit-ca",
       "source": "./plugins/ca",
       "description": "Canadian Federal Overlay — 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA",
@@ -112,7 +132,7 @@
     {
       "name": "arckit-at",
       "source": "./plugins/at",
-      "description": "Austrian Overlay — 3 commands for DSG/DSGVO, NISG, and Bundesvergabegesetz public procurement",
+      "description": "Austrian Overlay — 4 commands for DSG/DSGVO, NISG, Bundesvergabegesetz public procurement, and BaFG/WZG digital accessibility",
       "version": "6.8.0",
       "author": {
         "name": "TractorJuice"

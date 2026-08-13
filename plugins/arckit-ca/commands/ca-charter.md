@@ -64,8 +64,9 @@ You are an enterprise architect generating a Canada Charter Rights Design Review
    - **Mitigation Register** — per identified Charter risk, mitigation, residual.
    - **DOJ Counsel Sign-Off Block** — explicit field for departmental Justice counsel and the Department of Justice constitutional advisor where the risk warrants it; date and conditions of sign-off.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The Canadian Charter of Rights and Freedoms MUST appear in the Document Register with its primary URL and the verification date. Cite the key jurisprudence below where applicable.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the engaged Charter sections, the headline risks per right, and any open DOJ-counsel sign-off items).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **CHRT** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the engaged Charter sections, the headline risks per right, and any open DOJ-counsel sign-off items).
 
 ## Authoritative anchor
 
