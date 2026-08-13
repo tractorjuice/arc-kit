@@ -245,6 +245,8 @@ overwriting at v1.0.
 
 ### 10. Write the benchmark report
 
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCMP** per-type checks pass. Fix any failures before proceeding.
+
 Use the **Write tool** to save the completed benchmark to:
 
 `{path}/{filename}` — e.g. `projects/004-secure-case-mgmt/ARC-004-GCMP-v1.0.md`

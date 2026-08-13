@@ -8,15 +8,8 @@ templateVersion: "1.0"
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| Document ID | `ARC-[PROJECT_ID]-APP-v[VERSION]` |
-| Project | `[PROJECT_NAME]` |
-| Owner | `[OWNER_NAME_AND_ROLE]` |
-| Classification | `[CLASSIFICATION]` |
-| Status | DRAFT |
-| Created | `[YYYY-MM-DD]` |
-| Review Date | `[YYYY-MM-DD]` |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ### Revision History
 

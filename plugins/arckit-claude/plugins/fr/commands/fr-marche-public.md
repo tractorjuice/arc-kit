@@ -84,9 +84,11 @@ Before generating the document, determine the applicable procedure:
 | Threshold | Procedure | BOAMP | JOUE | Min. Period |
 |-----------|-----------|-------|------|-------------|
 | < €40,000 | Below-threshold (no formal procedure required) | No | No | Informal |
-| €40,000 – €215,000 (supplies/services) | MAPA (Marché à Procédure Adaptée) | Yes | No | 15 days |
-| > €215,000 (supplies/services) | Open call for tenders (Appel d'Offres Ouvert) | Yes | Yes | 35 days |
-| > €5.38M (works) | Open call for tenders | Yes | Yes | 35 days |
+| €40,000 – €216,000 (supplies/services) | MAPA (Marché à Procédure Adaptée) | Yes | No | 15 days |
+| > €216,000 (supplies/services) | Open call for tenders (Appel d'Offres Ouvert) | Yes | Yes | 35 days |
+| > €5,404,000 (works) | Open call for tenders | Yes | Yes | 35 days |
+
+> **Note**: EU procurement thresholds are revised on a fixed **biennial cycle** (last revision 1 January 2026, next expected 1 January 2028). The figures above are the 2026–2027 thresholds — verify against the current `réglement délégué` before relying on them near a cycle boundary.
 
 Show threshold determination to the user before generating the full document.
 
@@ -103,14 +105,14 @@ Show threshold determination to the user before generating the full document.
    - Status: DRAFT
    - Created Date: {current_date}
    - Review Cycle: On-Demand
-   - Classification: OFFICIAL as default
+   - Classification: Non protégé as default
 
 3. **Section 1: Threshold Analysis and Recommended Procedure**
    - Estimated value (extract from user input or requirements)
    - Applicable threshold and recommended procedure from Step 4
    - BOAMP/JOUE publication requirement
    - Minimum consultation period
-   - Cloud doctrine compliance (if cloud services involved — circular 6264/SG)
+   - Cloud doctrine compliance (if cloud services involved — circular 6282/SG)
 
 4. **Section 2: Requirements Statement**
    - Subject of the contract: concise description from user input
@@ -175,7 +177,7 @@ Show threshold determination to the user before generating the full document.
     - PSSIE and RGS target level
     - Cross-reference DINUM artifact conclusions if available
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass.
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus **MARPUB** per-type checks pass.
 
 Write the document to:
 
@@ -247,7 +249,7 @@ Next steps:
 | UGAP — Union des Groupements d'Achats Publics (framework catalogue) | UGAP | https://www.ugap.fr/ |
 | BOAMP — Bulletin Officiel des Annonces des Marchés Publics | DILA | https://www.boamp.fr/ |
 | TED / JOUE — EU procurement journal (above EU thresholds) | EU Publications Office | https://ted.europa.eu/ |
-| ANSSI-qualified security providers (PASSI, PRIS, PDIS) | ANSSI | https://cyber.gouv.fr/qualification-des-prestataires-de-services |
+| ANSSI-qualified security providers (PASSI, PRIS, PDIS) | ANSSI | https://cyber.gouv.fr/offre-de-service/solutions-certifiees-et-qualifiees/comprendre-levaluation-de-securite/qualification-de-produit-et-services/referentiels-qualification/ |
 | DINUM digital doctrine — standards for public IS procurement | DINUM | https://www.numerique.gouv.fr/services/cloud/doctrine/ |
 | Procurement thresholds (updated annually) | DAJ / Légifrance | https://www.economie.gouv.fr/daj/marches-publics |
 

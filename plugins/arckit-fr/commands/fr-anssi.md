@@ -21,7 +21,7 @@ handoffs:
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
-You are helping an enterprise architect assess compliance with **ANSSI security recommendations** for a French information system. ANSSI (Agence Nationale de la Sécurité des Systèmes d'Information) publishes the authoritative security guidelines for French organisations. The primary reference is the **Guide d'hygiène informatique** (42 measures), complemented by the **ANSSI cloud security recommendations** (2021) for cloud-hosted or hybrid systems.
+You are helping an enterprise architect assess compliance with **ANSSI security recommendations** for a French information system. ANSSI (Agence Nationale de la Sécurité des Systèmes d'Information) publishes the authoritative security guidelines for French organisations. The primary reference is the **Guide d'hygiène informatique** (42 measures), complemented by the **ANSSI cloud security recommendations** (updated 2024) for cloud-hosted or hybrid systems.
 
 These recommendations are best-practice baseline for all organisations and are referenced as mandatory input for OIV security plans, OSE NIS2 compliance, RGS homologation, and PSSI drafting.
 
@@ -123,7 +123,7 @@ Assess all seven themes:
 
 #### Step 4c: Cloud Security Recommendations (if applicable)
 
-If the system uses cloud services, assess ANSSI cloud security recommendations (2021):
+If the system uses cloud services, assess ANSSI cloud security recommendations (updated 2024):
 
 1. **Cloud provider trust level**: Is the provider SecNumCloud-qualified? If not, what is the data sensitivity — does it require a qualified provider?
 2. **Data sovereignty**: Is data stored exclusively in the EU? Are there extraterritorial law exposure risks (US CLOUD Act, China MLSA)?
@@ -154,7 +154,7 @@ For each non-compliant or partial measure:
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
-   - Classification: OFFICIAL-SENSITIVE minimum (assessment reveals security gaps)
+   - Classification: Diffusion Restreinte minimum (assessment reveals security gaps)
 
 3. Write the complete assessment following the template, populated with Step 4 findings.
 
@@ -176,7 +176,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-ANSSI-v{VERSION}.md
 📄 Document: projects/{project_id}/ARC-{PROJECT_ID}-ANSSI-v{VERSION}.md
 📋 Document ID: {document_id}
 📅 Assessment Date: {date}
-🔒 Classification: OFFICIAL-SENSITIVE
+🔒 Classification: Diffusion Restreinte
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Hygiene Score (42 measures)
@@ -215,6 +215,7 @@ Next steps:
 
 - **Both public and private sector**: The ANSSI guide d'hygiène applies to all French organisations — public, private, OIV, OSE, SME. Priority and obligation level differ (OIV must apply all measures; others treat them as strongly recommended).
 - **OIV / OSE obligations**: For OIV systems (SIIV), the hygiene measures are a baseline minimum. The sectoral arrêté sectoriel may impose additional measures. For OSE under NIS2, Article 21 measures overlap significantly — run `/arckit:eu-nis2` to avoid duplication.
+- **OIV/OSE terminology is being succeeded by EE/EI**: France's NIS2 transposition ("loi Résilience") moves former OIV/OSE entities into two new categories — Entités Essentielles (EE) and Entités Importantes (EI) — with a much larger population in scope than the legacy regime. This command still uses OIV/OSE as the working vocabulary; confirm current terminology and designation with the client's legal/compliance function before relying on it, as the exact transposition timeline was not independently confirmed against a primary source at the time of writing.
 - **ANSSI cloud recommendations are separate from SecNumCloud**: The cloud recommendations assess the security of the architecture; SecNumCloud is a provider qualification programme. Both are relevant for cloud-hosted sensitive systems.
 - **CERT-FR subscription (Measure 41)**: Free subscription at cert.ssi.gouv.fr — flag this if not already done; it costs nothing and provides critical threat intelligence.
 
@@ -222,12 +223,12 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| Guide d'hygiène informatique (42 measures) | ANSSI | https://cyber.gouv.fr/publications/guide-dhygiene-informatique |
-| Cloud security recommendations (2021) | ANSSI | https://cyber.gouv.fr/publications/prestataires-de-service-informatique-en-nuage-securite-et-resilience |
+| Guide d'hygiène informatique (42 measures) | ANSSI | https://messervices.cyber.gouv.fr/guides/guide-dhygiene-informatique |
+| Cloud security recommendations (updated 8 July 2024) | ANSSI | https://cyber.gouv.fr/publications/recommandations-pour-lhebergement-des-si-sensibles-dans-le-cloud |
 | ANSSI publications catalogue | ANSSI | https://cyber.gouv.fr/publications |
 | CERT-FR security advisories (Measure 41) | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
-| ANSSI-qualified provider lists (PASSI/PRIS/PDIS) | ANSSI | https://cyber.gouv.fr/qualification-des-prestataires-de-services |
-| RGS v2.0 (Référentiel Général de Sécurité) | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
+| ANSSI-qualified provider lists (PASSI/PRIS/PDIS) | ANSSI | https://cyber.gouv.fr/offre-de-service/solutions-certifiees-et-qualifiees/comprendre-levaluation-de-securite/qualification-de-produit-et-services/referentiels-qualification/ |
+| RGS v2.0 (Référentiel Général de Sécurité) | ANSSI | https://cyber.gouv.fr/le-referentiel-general-de-securite-rgs |
 
 ## Success Criteria
 
@@ -236,7 +237,7 @@ Next steps:
 - ✅ Cloud security recommendations assessed if cloud services are used
 - ✅ Gap analysis with priority, owner, and remediation action for each gap
 - ✅ Summary score (N / 42 implemented) reported
-- ✅ Document classified OFFICIAL-SENSITIVE minimum
+- ✅ Document classified Diffusion Restreinte minimum
 - ✅ ANSSI per-type quality checks passed
 
 ## Example Usage

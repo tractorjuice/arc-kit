@@ -44,8 +44,9 @@ You are an enterprise architect generating a UAE PDPL Compliance Assessment for 
    - **Breach notification playbook** — PDPL Article 9 obligations to the Data Office and to affected data subjects, with applicable timelines and the operational owner.
    - **Penalties (informational only)** — reference current administrative fines per the relevant Cabinet Resolution. This section is informational and is not used for compliance scoring.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Federal Decree-Law No. 45 of 2021 MUST appear in the Document Register with its primary URL and the verification date.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the headline DPIA outcome and any cross-border transfers flagged).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **PDPL** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the headline DPIA outcome and any cross-border transfers flagged).
 
 ## Authoritative anchor
 

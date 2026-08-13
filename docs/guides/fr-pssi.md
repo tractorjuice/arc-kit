@@ -76,7 +76,7 @@ Output: `projects/<id>/ARC-<id>-PSSI-v1.0.md`
 - EBIOS RM study referenced for risk analysis basis.
 - 3-year review cycle defined with explicit update triggers.
 - User obligations accessible and acknowledged (awareness programme planned).
-- Document classified OFFICIAL-SENSITIVE.
+- Document classified Diffusion Restreinte.
 
 ---
 

@@ -30,7 +30,7 @@ You are an enterprise architect generating a federal procurement strategy under 
    - **First**, check `.arckit/templates-custom/uae-procurement-template.md` (user override)
    - **Then**, `.arckit/templates/uae-procurement-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-procurement-template.md`
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FPRO --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
@@ -40,8 +40,9 @@ You are an enterprise architect generating a federal procurement strategy under 
    - **Evaluation Methodology** — score model (technical / commercial weights), pass/fail thresholds, panel composition (including independence from the bidding pool), conflict-of-interest declarations, evaluation report structure.
    - **Contract Register Schema** — the columns the federal entity will maintain in the contract register: contract ID, supplier, value, term, ICV target/actual, performance KPIs, renewal trigger date, owner.
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Federal Decree-Law No. 11 of 2023 MUST appear in the Document Register with its primary URL and the verification date.
-8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-9. Show only a summary to the user (one paragraph plus the headline route to market, ICV target, and evaluation weights).
+8. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FPRO** per-type checks pass. Fix any failures before proceeding.
+9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+10. Show only a summary to the user (one paragraph plus the headline route to market, ICV target, and evaluation weights).
 
 ## Authoritative anchor
 

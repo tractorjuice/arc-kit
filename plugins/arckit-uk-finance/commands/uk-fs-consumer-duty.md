@@ -163,6 +163,8 @@ target market, and the firm's operational capability even where those harms have
 Create the output directory if it does not already exist:
 `<project_dir>/payments-compliance/`
 
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FSCD** per-type checks pass. Fix any failures before proceeding.
+
 Use the **Write tool** to save the completed document to:
 `projects/<NNN>-<slug>/payments-compliance/ARC-<NNN>-FSCD-v1.0.md`
 

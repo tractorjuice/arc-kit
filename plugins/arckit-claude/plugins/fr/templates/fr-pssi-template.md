@@ -32,7 +32,7 @@ This Information System Security Policy (PSSI) defines the security objectives, 
 This PSSI is established in accordance with:
 
 - The Référentiel Général de Sécurité (RGS v2.0), published by ANSSI
-- Circulaire du Premier Ministre n°5926/SG on information systems security
+- Circulaire du Premier Ministre n°5725/SG du 17 juillet 2014 on information systems security
 - [Any sector-specific obligations — OIV arrêté sectoriel, OSE designation, etc.]
 
 ### 1.2 Scope

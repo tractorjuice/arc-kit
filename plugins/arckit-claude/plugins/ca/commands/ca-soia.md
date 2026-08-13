@@ -58,8 +58,9 @@ You are an enterprise architect generating a Canada Security of Information Act 
    - **Personnel Reliability** — clearance prerequisites (Reliability, Secret, Top Secret, Top Secret SCI), update cycle, briefing and debriefing protocol, and indoctrination for compartments. Clearance is per-task, not per-role.
    - **Open Items** — explicit list of statutory currency caveats: which CSIS Act amendments under Bill C-26 / Bill C-70 are still settling, which Ministerial Directives are pending, which compartment MOUs with CSIS or RCMP are still in negotiation, and a reminder that the artefact itself is likely classified and must be stored, marked, and handled accordingly.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The *Security of Information Act* (R.S.C., 1985, c. O-5) and the *Canadian Security Intelligence Service Act* (R.S.C., 1985, c. C-23) MUST appear in the Document Register with their primary URLs (Justice Laws Website) and the verification date.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the headline SOI inventory count, compartment count, and any open statutory-currency or MOU items). Remind the user that the artefact may itself be classified.
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SOIA** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the headline SOI inventory count, compartment count, and any open statutory-currency or MOU items). Remind the user that the artefact may itself be classified.
 
 ## Authoritative anchor
 

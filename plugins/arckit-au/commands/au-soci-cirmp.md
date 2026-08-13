@@ -81,7 +81,7 @@ SOCI is a cross-sector Australian critical-infrastructure regime, not an energy-
    - Then: `.arckit/templates/au-soci-cirmp-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-soci-cirmp-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUSOCI --filename` for the artefact filename.
 
@@ -115,9 +115,10 @@ SOCI is a cross-sector Australian critical-infrastructure regime, not an energy-
 
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The SOCI Act, current CIRMP Rules / regulator guidance, and verification date MUST appear in the Document Register.
 
-8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+8. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AUSOCI** per-type checks pass. Fix any failures before proceeding.
+9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 
-9. Show only a summary to the user: likely SOCI applicability position, CIRMP readiness, top material risks, and immediate evidence gaps.
+10. Show only a summary to the user: likely SOCI applicability position, CIRMP readiness, top material risks, and immediate evidence gaps.
 
 ## Important Notes
 

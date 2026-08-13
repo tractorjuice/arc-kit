@@ -48,8 +48,9 @@ You are an enterprise architect generating an Official Languages Act review for 
    - **Risk and Mitigation Register** — per OLA risk: complaint exposure to the Commissioner of Official Languages, court remedies under Part X, reputational risk; mitigations.
    - **Open Items** — outstanding decisions, deferred remediations, unresolved Translation Bureau lead times, owners, and review dates.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The *Official Languages Act*, *An Act for the Substantive Equality of Canada's Official Languages* (Bill C-13, 2023), the TBS *Policy on Official Languages*, and the *Directive on the Implementation of the Official Languages (Communications with and Services to the Public) Regulations* MUST appear in the Document Register with their primary URLs and verification dates.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the headline OLA posture per Part, top three remediation actions, any "translation lag" risks identified, and any surfaces where active offer is missing).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **OLA** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the headline OLA posture per Part, top three remediation actions, any "translation lag" risks identified, and any surfaces where active offer is missing).
 
 ## Authoritative anchor
 

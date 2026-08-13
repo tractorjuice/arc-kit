@@ -63,7 +63,7 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
 2. **Read the template**:
    - `templates-custom/uk-mdr-classification-template.md` → `.arckit/templates/uk-mdr-classification-template.md` → `${CLAUDE_PLUGIN_ROOT}/templates/uk-mdr-classification-template.md`
 
-3. **Resolve the project** via `scripts/bash/create-project.sh --json`.
+3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
 
 4. **Generate the filename** via `node scripts/generate-document-id.mjs <PROJECT_ID> NHSMDR --filename`.
 
@@ -135,9 +135,10 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
 
 7. **Populate the External References section** per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. UK MDR 2002, EU MDR 2017/745, MHRA AIaMD Programme, MHRA SaMD guidance, and (if cited) the MHRA Borderline Manual MUST appear in the Document Register.
 
-8. **Write the artefact via the Write tool** to `projects/{NNN}-<slug>/ARC-{NNN}-NHSMDR-v1.0.md`.
+8. **Before writing the file**, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **NHSMDR** per-type checks pass. Fix any failures before proceeding.
+9. **Write the artefact via the Write tool** to `projects/{NNN}-<slug>/ARC-{NNN}-NHSMDR-v1.0.md`.
 
-9. **Show only a summary to the user**: scope determination (medical device / not / borderline), UK class, EU class, marking pathway, conformity route, list of `[PENDING]` items requiring qualified Regulatory Affairs review.
+10. **Show only a summary to the user**: scope determination (medical device / not / borderline), UK class, EU class, marking pathway, conformity route, list of `[PENDING]` items requiring qualified Regulatory Affairs review.
 
 ## Important Notes
 

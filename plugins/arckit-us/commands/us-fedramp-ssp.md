@@ -36,7 +36,7 @@ $ARGUMENTS
 
 The FedRAMP SSP is the central artefact of a FedRAMP authorization package. It documents the CSO at a level of detail sufficient for an Authorizing Official (AO) — agency-level for Agency ATO, or the FedRAMP PMO / JAB for Joint Authorization — to make a risk-based authorization decision. The SSP cross-references the FedRAMP SAP (Security Assessment Plan), SAR (Security Assessment Report), and POA&M, and is updated continuously through ConMon (Continuous Monitoring).
 
-Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** baselines and is progressively requiring **OSCAL** machine-readable submission. The SSP template (Word and OSCAL) is published on fedramp.gov; the structure below reflects the current 15-section layout. Authorization Boundary Guidance (ABG) defines what is in-scope; getting the boundary right is the most common cause of FedRAMP delays.
+Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** baselines and is progressively requiring **OSCAL** machine-readable submission. The SSP template (Word and OSCAL) is published on fedramp.gov. The structure below follows its layout, flattened into a single numbered list: the published template nests Types of Users and Network Architecture beneath General System Description, so the list below runs longer than the template's top-level section count. Authorization Boundary Guidance (ABG) defines what is in-scope; getting the boundary right is the most common cause of FedRAMP delays.
 
 **Authoritative anchors**:
 
@@ -62,11 +62,11 @@ Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** basel
    - **Then**, `.arckit/templates/us-fedramp-ssp-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-fedramp-ssp-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FRSSP --filename` for the artefact filename. The type code for this command is `FRSSP`.
 
-5. Generate the 15-section FedRAMP SSP structure:
+5. Generate the following FedRAMP SSP sections:
 
    1. **Information System Name and Title** — CSO name, CSP company, FedRAMP package ID (if assigned)
    2. **Information System Categorization** — pull verbatim from FIPS 199 artefact (CIA water-mark)
@@ -85,9 +85,10 @@ Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** basel
    15. **Network Architecture** — boundary diagram, internal network topology, public-facing components, management plane separation
    16. **Continuous Monitoring (ConMon) Strategy** — monthly vulnerability scans (authenticated / unauthenticated / web app / container / database), annual assessment, POA&M cadence, ATO drift management
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FRSSP** per-type checks pass. Fix any failures before proceeding.
+7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-7. Emit a short summary to the user — CSO name, baseline (Moderate / High), authorization path (Agency / JAB), boundary component count, interconnection count, and any sections marked `<TBC>`. Do not echo the full artefact.
+8. Emit a short summary to the user — CSO name, baseline (Moderate / High), authorization path (Agency / JAB), boundary component count, interconnection count, and any sections marked `<TBC>`. Do not echo the full artefact.
 
 ## Handoffs
 

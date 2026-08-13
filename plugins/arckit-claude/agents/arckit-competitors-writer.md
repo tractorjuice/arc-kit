@@ -286,10 +286,12 @@ Notes on optional groups:
    value is not actual spend …`) must always be present. Render any
    additional entries from `caveats[]` as further blockquote lines beneath it.
 
-6. **Write the CMPT artefact.** Use the `Write` tool to save the completed
+6. **Verify quality checks.** Read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **CMPT** per-type checks pass. Fix any failures before writing. Every figure you correct must come from the orchestrator payload — never introduce a supplier, value or buyer at render time.
+
+7. **Write the CMPT artefact.** Use the `Write` tool to save the completed
    document to `{project_path}/research/{document_id}.md`.
 
-7. **Spawn / enrich vendor profiles (mirror datascout-writer Step B).** For
+8. **Spawn / enrich vendor profiles (mirror datascout-writer Step B).** For
    each rival in `suppliers[]` whose award data is present (it has
    `sample_notices[]` and/or `awarded_value_total_gbp` / `award_count`):
 
@@ -339,7 +341,7 @@ Notes on optional groups:
       writer. Record this rival in the Spawned Knowledge note as "award
       history available, no profile yet".
 
-8. **Append a `## Spawned Knowledge` section to the CMPT artefact** (use
+9. **Append a `## Spawned Knowledge` section to the CMPT artefact** (use
    `Edit` on the file you wrote in step 6) listing the outcome per rival:
 
    ```markdown

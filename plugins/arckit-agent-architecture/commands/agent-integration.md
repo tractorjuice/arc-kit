@@ -70,6 +70,7 @@ $ARGUMENTS
    - **First**, check if `.arckit/templates-custom/agent-integration-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/agent-integration-template.md` (default)
+   - **Then**, read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the template's `<!-- DOC-CONTROL-HEADER -->` marker to the Document Control partial it selects, applying the `${user_config.organisation_name}` and `${user_config.default_classification}` substitutions. Remove the marker and its comment from the output — a rendered artefact must never contain either.
 
    > **Tip**: Users can customize templates with `/arckit:customize agent-integration`
 

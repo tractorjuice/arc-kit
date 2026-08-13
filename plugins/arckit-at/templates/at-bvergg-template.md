@@ -79,7 +79,9 @@
 | Performance | | NFR-P-xxx | |
 | Availability | | NFR-AV-xxx | |
 | Security | | NFR-SEC-xxx | |
-| Accessibility (§107 BVergG / EN 301 549 / WCAG 2.2) | | NFR-UX-xxx | |
+| Accessibility (§107 BVergG / EN 301 549 v3.2.1 → WCAG 2.1 AA) | | NFR-UX-xxx | |
+
+> **Accessibility baseline.** EN 301 549 **v3.2.1** is the version cited in the Official Journal, so it is the one §107 BVergG invokes and the one carrying a presumption of conformity; it normatively references **WCAG 2.1 AA**. The revision carrying WCAG 2.2 AA (v4.1.1) is expected to be OJ-cited around October 2026 `[NEEDS VERIFICATION: confirm the OJ citation date and version]` — specify 2.2 AA only where the contract runs past that date, and say so explicitly rather than silently raising the bar.
 
 ### 2.3 Integration and Data
 

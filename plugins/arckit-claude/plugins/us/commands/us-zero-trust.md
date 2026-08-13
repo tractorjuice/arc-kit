@@ -60,7 +60,7 @@ NIST SP 800-207 is the foundational Zero Trust Architecture specification (logic
    - **Then**, `.arckit/templates/us-zero-trust-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-zero-trust-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> ZTA --filename` for the artefact filename. The type code for this command is `ZTA`.
 
@@ -74,9 +74,10 @@ NIST SP 800-207 is the foundational Zero Trust Architecture specification (logic
    - **OMB M-22-09 End-State Alignment** — explicit mapping of current posture to the five M-22-09 strategic goals (Identity, Devices, Networks, Applications & Workloads, Data) and the specific action items in the memo.
    - **800-53 Control Linkage** — table mapping each ZTMM function to the NIST 800-53 Rev 5 controls that evidence it (e.g. Identity / Authentication → IA-2, IA-2(1), IA-2(2), IA-5, IA-8; Networks / Network Segmentation → SC-7, SC-7(4), SC-7(5), SC-7(8); Data / Data Encryption → SC-13, SC-28, SC-28(1)).
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **ZTA** per-type checks pass. Fix any failures before proceeding.
+7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-7. Emit a short summary to the user — overall maturity (e.g. "Initial across Identity and Networks; Traditional elsewhere"), top three gaps, target FY for Advanced posture, and the count of M-22-09 action items unaddressed. Do not echo the full artefact.
+8. Emit a short summary to the user — overall maturity (e.g. "Initial across Identity and Networks; Traditional elsewhere"), top three gaps, target FY for Advanced posture, and the count of M-22-09 action items unaddressed. Do not echo the full artefact.
 
 ## Handoffs
 

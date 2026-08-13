@@ -55,8 +55,9 @@ You are an enterprise architect generating a Government of Canada Digital Standa
    - **Maturity Roadmap** — current vs target maturity per standard, milestones, owners, and dates. Maturity must be expressed dimension-by-dimension; do not collapse to a single overall score.
    - **Open Items** — outstanding decisions, blocked remediations, and deferred standards work with owners and review dates.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The TBS *Government of Canada Digital Standards*, the *Policy on Service and Digital*, the *Directive on Service and Digital*, and the *Accessible Canada Act* MUST appear in the Document Register with their primary URLs and verification dates.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the headline conformance posture per standard, top three remediation actions, and any standards stuck at Initial maturity).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DIGSTD** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the headline conformance posture per standard, top three remediation actions, and any standards stuck at Initial maturity).
 
 ## Authoritative anchor
 
