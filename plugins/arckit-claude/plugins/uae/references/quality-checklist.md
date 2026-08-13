@@ -664,6 +664,7 @@ All artifacts must pass these 10 checks:
 - SLA terms, vertragliche Regelungen, and penalty regime (Vertragsstrafe) drafted
 - Art. 28 GDPR + DSG processor clauses included where personal data processed
 - NISG supply-chain clauses included where contracting authority is Essential/Important
+- Accessibility clause (§107 BVergG) cites EN 301 549 **v3.2.1**, the OJ-cited version, giving WCAG 2.1 AA; WCAG 2.2 AA appears only as an explicit forward-looking decision, never as the default baseline
 - ANKÖ publication plan (plus TED for Oberschwellen) set
 - Angebotsfrist per §87 BVergG respected; Stillhaltefrist modelled in timeline
 - BVwG / LVwG review venue documented with the tiered Pauschalgebühren (Vergaberechtsgesetz 2026) reference
