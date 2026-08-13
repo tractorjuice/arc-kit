@@ -56,7 +56,13 @@ get_next_project_number() {
         if [[ -d "$dir" ]]; then
             local basename="$(basename "$dir")"
             if [[ "$basename" =~ ^([0-9]{3})- ]]; then
-                local num="${BASH_REMATCH[1]}"
+                # Force base 10. Directory prefixes are zero-padded, and bash
+                # reads a leading 0 in an arithmetic context as octal: 008 and
+                # 009 are invalid (the comparison errors and is skipped) while
+                # 010 and 011 are silently read as 8 and 9. max_num then never
+                # reached the true maximum and this returned a number that
+                # already existed (#762).
+                local num=$((10#${BASH_REMATCH[1]}))
                 if ((num > max_num)); then
                     max_num=$num
                 fi
