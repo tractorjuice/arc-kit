@@ -65,7 +65,7 @@ The AI RMF underpins the federal policy stack: OMB M-24-10 requires agencies to 
    - **Then**, `.arckit/templates/us-ai-rmf-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-ai-rmf-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AIRMF --filename` for the artefact filename. The type code for this command is `AIRMF`.
 

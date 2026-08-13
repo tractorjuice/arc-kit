@@ -67,7 +67,7 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
    - Then: `.arckit/templates/au-disp-attestation-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-disp-attestation-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if needed.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if needed.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUDISP --filename` for the artefact filename.
 

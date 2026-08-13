@@ -60,7 +60,7 @@ This command produces an **internal** RAR-equivalent: a self-assessment in the s
    - **Then**, `.arckit/templates/us-fedramp-readiness-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-fedramp-readiness-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FRRR --filename` for the artefact filename. The type code for this command is `FRRR`.
 

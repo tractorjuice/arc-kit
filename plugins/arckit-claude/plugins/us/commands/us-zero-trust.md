@@ -60,7 +60,7 @@ NIST SP 800-207 is the foundational Zero Trust Architecture specification (logic
    - **Then**, `.arckit/templates/us-zero-trust-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-zero-trust-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> ZTA --filename` for the artefact filename. The type code for this command is `ZTA`.
 

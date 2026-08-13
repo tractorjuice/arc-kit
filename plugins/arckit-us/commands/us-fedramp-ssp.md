@@ -62,7 +62,7 @@ Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** basel
    - **Then**, `.arckit/templates/us-fedramp-ssp-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-fedramp-ssp-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FRSSP --filename` for the artefact filename. The type code for this command is `FRSSP`.
 

@@ -18,6 +18,7 @@ on:
       - "scripts/check-contributor-credits.py"
       - "scripts/check-quality-checklist-refs.py"
       - "scripts/check-common-parity.py"
+      - "scripts/check-create-project-invocations.py"
       - "scripts/bash/common.sh"
       - "scripts/python/common.py"
       - "plugins/arckit-claude/scripts/bash/common.sh"
@@ -51,6 +52,7 @@ on:
       - "scripts/check-contributor-credits.py"
       - "scripts/check-quality-checklist-refs.py"
       - "scripts/check-common-parity.py"
+      - "scripts/check-create-project-invocations.py"
       - "scripts/bash/common.sh"
       - "scripts/python/common.py"
       - "plugins/arckit-claude/scripts/bash/common.sh"
@@ -115,6 +117,9 @@ jobs:
 
       - name: common.sh / common.py parity (root vs plugin copies, #766)
         run: python3 scripts/check-common-parity.py --check
+
+      - name: create-project.sh invocations are ones the script accepts (#775, #777)
+        run: python3 scripts/check-create-project-invocations.py --check
 
       - uses: actions/setup-node@v4
         with:

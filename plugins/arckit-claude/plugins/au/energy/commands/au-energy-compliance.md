@@ -71,7 +71,7 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
    - Then: `.arckit/templates/au-energy-compliance-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-energy-compliance-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUENERGY --filename` for the artefact filename.
 

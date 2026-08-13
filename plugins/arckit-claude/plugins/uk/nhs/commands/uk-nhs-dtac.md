@@ -67,7 +67,7 @@ DTAC was introduced by NHSX (now part of NHS England's Transformation Directorat
 2. **Read the template**:
    - `templates-custom/uk-nhs-dtac-template.md` → `.arckit/templates/uk-nhs-dtac-template.md` → `${CLAUDE_PLUGIN_ROOT}/templates/uk-nhs-dtac-template.md`
 
-3. **Resolve the project** via `scripts/bash/create-project.sh --json`.
+3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
 
 4. **Generate the filename** via `node scripts/generate-document-id.mjs <PROJECT_ID> NHSDTAC --filename` (this is a single-instance artefact; no `--next-num`).
 

@@ -64,7 +64,7 @@ Appendix I of M-24-10 lists **presumed-impacting** use cases (those agencies mus
    - **Then**, `.arckit/templates/us-ai-impact-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-ai-impact-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AIIA --filename` for the artefact filename. The type code for this command is `AIIA`.
 

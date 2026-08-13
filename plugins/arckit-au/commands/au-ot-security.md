@@ -74,7 +74,7 @@ ASD operational technology guidance is reusable beyond any one industry sector. 
    - Then: `.arckit/templates/au-ot-security-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-ot-security-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUOT --filename` for the artefact filename.
 

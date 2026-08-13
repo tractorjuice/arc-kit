@@ -30,7 +30,7 @@ You are an enterprise architect generating a UAE Charter for the Development and
    - **First**, check `.arckit/templates-custom/uae-ai-charter-template.md` (user override)
    - **Then**, `.arckit/templates/uae-ai-charter-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-ai-charter-template.md`
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AICH --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:

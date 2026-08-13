@@ -64,7 +64,7 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
    - **Then**, `.arckit/templates/us-sbom-eo-14028-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-sbom-eo-14028-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> SBOM --filename` for the artefact filename. The type code for this command is `SBOM`.
 

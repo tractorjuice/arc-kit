@@ -56,7 +56,7 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
    - **Then**, `.arckit/templates/au-e8-posture-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/au-e8-posture-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUE8 --filename` for the artefact filename.
 
