@@ -28,6 +28,13 @@ log_error() {
 }
 
 # Find the repository root
+#
+# NOTE: this function differs between the two copies of common.sh ON PURPOSE.
+# This one keys on .arckit/, which `arckit init` scaffolds. The plugin copy keys
+# on projects/, because a marketplace user never runs `arckit init` and so has
+# projects/ but no .arckit/. The two are exactly complementary; each fails in
+# the repo shape the other handles. Declared in scripts/check-common-parity.py,
+# which enforces parity everywhere else in this file (#766).
 find_repo_root() {
     local current_dir="$PWD"
     while [[ "$current_dir" != "/" ]]; do
