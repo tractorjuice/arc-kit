@@ -43,6 +43,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **23 templates had drifted between the plugin tree and the `.arckit/templates/` CLI mirror, because the test guarding the two trees compared filenames and not contents** (#784). `test_plugin_and_cli_templates_are_in_sync` built two sets of `os.path.basename(p)` and asserted the symmetric difference was empty, so a template present in both trees passed however far the copies had diverged. `test_plugin_and_cli_partials_are_in_sync` already used `filecmp.cmp`, and its docstring records the same bug being fixed one scope down for `_partials/RENDERING.md`; the fix was applied to the partials and not to the templates beside them.
+
+  This reaches users rather than being tidy-up. `.arckit/templates/` ships as CLI package data and is scaffolded by `arckit init`, and commands resolve the project-root `.arckit/templates/<name>` **before** falling back to `${CLAUDE_PLUGIN_ROOT}/templates/`. In a CLI-scaffolded project the drifted copy is the one that renders and the plugin copy is never read.
+
+  Sixteen of the 23 still carried the frozen, fully-expanded Document Control table that `<!-- DOC-CONTROL-HEADER -->` replaced. With no marker there is nothing for `_partials/RENDERING.md` to resolve, so the regime routing added in #744 never fired for those templates at all, across `arckit-togaf-adm` (9), `arckit-uk-finance` (4) and `arckit-agent-architecture` (3). They also still used `{{DOCUMENT_ID}}` mustache placeholders against the tree's `[PLACEHOLDER]` convention.
+
+  The remaining seven were content staleness, and the sharpest was `fr-anssi-carto-template.md`: the CLI copy still numbered interconnection rows `INT-01`, which collides with the `INT-\d{1,3}` Integration Requirement pattern reserved in `hooks/hook-utils.mjs`, so every row surfaced as a missed requirement in `/arckit:traceability` and `/arckit:health` scans. The plugin copy had already renamed these to `ECX-NN`. The NHS DCB0129/DCB0160 copies were missing the Data (Use and Access) Act 2025 amendment to the Health and Social Care Act 2012 Part 9 citation, plus a re-review-triggers section and an applicable-standards register.
+
+  `test_plugin_and_cli_templates_have_identical_content` now compares contents with `filecmp.cmp`, matching the partials test. All 23 copies are resynced from the plugin tree, which stays the source of truth. Note there is still no sync script for this mirror: `sync-shared-assets.py` writes into plugin directories only, so the copy remains manual and is now merely guarded.
+
 - **Every scripted project-creation path in the overlay commands called `create-project.sh` in a form it rejects** (#775, #777). 41 files across eight plugins, in two spellings, neither of which can produce a project:
 
   ```text

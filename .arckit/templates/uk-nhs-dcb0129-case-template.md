@@ -180,6 +180,21 @@ Evidence:
 
 [CSO's overall judgment that the product, with controls in place, is acceptably safe for its intended use. One paragraph.]
 
+### Re-review triggers
+
+This safety case must be re-reviewed by the Clinical Safety Officer when a change touches any of the following. Record the change and the re-review outcome in the Revision History.
+
+- Calculation, threshold, score, rounding, unit, or clinical rule
+- Patient identity, record matching, demographics, or clinical context
+- Data model, terminology, coding, validation, migration, or persistence
+- API, integration, interoperability, cache, queue, sync, or source-of-truth behaviour
+- Alerting, notification, escalation, prioritisation, or acknowledgement
+- User workflow, UI copy, warnings, confirmations, or accessibility
+- Authentication, authorisation, legitimate relationship, audit logging, or break-glass
+- Deployment configuration, feature flags, environment, infrastructure, failover, or backups
+- Monitoring, incident response, support, downtime, or decommissioning
+- AI/ML model, prompt, training data, calibration, drift, or human oversight
+
 ---
 
 ## 6. CSO Sign-off
