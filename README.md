@@ -390,7 +390,7 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 - `/arckit:fr-pssi` — Information System Security Policy (PSSI) per ANSSI / RGS
 - `/arckit:fr-code-reuse` — Public code reuse assessment (code.gouv.fr, SILL, EUPL) — build-vs-reuse decision matrix
 
-**Dutch government** (apply on top of the EU baseline for Netherlands central-government deployments):
+**Dutch government** (apply on top of the EU baseline for Netherlands central-government deployments — domain-maintained by [@umag](https://github.com/umag)):
 
 - `/arckit:nl-cloud` — Rijksbreed cloudbeleid 2026 compliance (materieel cloudgebruik, exit plan, CISO Rijk notification, EEA residency, staatsgeheim / TBB eligibility)
 - `/arckit:nl-tbb` — Te Beschermen Belangen and VIRBI 2025 rubricering (BIV scoring across five kernbelangen, one-way TBB↔rubricering inference)
