@@ -4,6 +4,9 @@ doc-type: EUCSF
 argument-hint: "<project ID or cloud procurement description, e.g. '001', 'government-wide sovereign cloud tender for case-management SaaS'>"
 effort: high
 handoffs:
+  - command: nl-cloud
+    description: Assess the same service against Rijksbreed cloudbeleid 2026, which sets the Dutch policy obligations this framework measures sovereignty against
+    condition: "Procurement is for a Netherlands central-government entity and no RBCLOUD assessment exists"
   - command: fr-secnumcloud
     description: Cross-check French SecNumCloud qualification alongside the sovereignty score for procurements with a French dimension
     condition: "Procurement includes France or French OIV/OSE-designated entities"
@@ -47,6 +50,7 @@ $ARGUMENTS
 
 - **NIS2** (NIS2 Compliance Assessment) — Extract: entity classification and Article 21 measures overlapping with SOV-7
 - **DINUM** (DINUM Standards Assessment) — Extract: cloud doctrine evaluation already documented, for French entities
+- **RBCLOUD** (Rijksbreed Cloudbeleid Compliance Assessment) — Extract: the materieel cloudgebruik determination and the risk assessment already recorded against the Dutch cloud policy, for Netherlands central-government entities. Where it exists, treat it as the authority on the Dutch policy position and do not restate it here
 
 ### Step 0b: Read external documents and policies
 
@@ -148,6 +152,7 @@ Show this scoping summary before generating the full document.
 8. **Section 6: Member State Adoption Context**
    - Note the framework is being adopted as a national yardstick, using the Netherlands as the worked example: the Dutch "Notitie: Verkenning Overheidsbrede Soevereine Clouddiensten" (NDS Cloudprogramma, v1.0, 11 June 2026) adopts the framework as its sovereignty measure, publishes an official Dutch rendering of the SEAL levels, sets SEAL4 as the target for a government-wide sovereign cloud service, and applies SEAL on the demand side (a workplace requiring SEAL3 requires a cloud service reaching at least SEAL3)
    - Note the Dutch Herziening rijksbreed cloudbeleid 2026 cites the framework as the instrument for limiting the risk of foreign-government interference in supplier selection
+   - For a Dutch entity, do not restate the cloud-policy obligations themselves — `/arckit-nl:nl-cloud` (`RBCLOUD`) covers Rijksbreed cloudbeleid compliance directly. Reference the RBCLOUD assessment if one exists, and otherwise point the reader at that command; this section stays scoped to how the sovereignty measure applies
    - If the project is not Dutch, note this section for context/comparison only and identify the relevant national programme if the user has supplied one
 
 9. **Section 7: Gap Analysis and Remediation Plan**
@@ -160,7 +165,7 @@ Show this scoping summary before generating the full document.
     - Recommendation on next steps (e.g. legal/procurement counsel review, formal evidence collection, re-assessment cadence)
 
 11. **Section 9: External References**
-    - Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The EU Cloud Sovereignty Framework v1.2.1 MUST appear in the Document Register with its primary URL and verification date.
+    - Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The EU Cloud Sovereignty Framework v1.2.1 MUST appear in the Document Register as a `Web URL` row — its primary URL in the **Filename** column and the publishing domain in **Source Location**, per the register's column semantics — with the date the URL was verified recorded in **Description**. Do not cite a URL you have not fetched in this session; if the framework could not be retrieved, say so in the Description rather than seeding a link.
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass.
 
@@ -204,9 +209,10 @@ Sovereignty Score: {N}% (award-criterion contribution)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Next steps:
-1. {If French dimension: Run /arckit-fr:fr-secnumcloud for security qualification cross-check}
-2. {If NIS2 in scope: Run /arckit-eu:eu-nis2 to map SOV-7 onto Article 21}
-3. Run /arckit:risk to register unmet minimum SEAL levels and sovereignty gaps
+1. {If Dutch central government: Run /arckit-nl:nl-cloud for Rijksbreed cloudbeleid 2026 compliance}
+2. {If French dimension: Run /arckit-fr:fr-secnumcloud for security qualification cross-check}
+3. {If NIS2 in scope: Run /arckit-eu:eu-nis2 to map SOV-7 onto Article 21}
+4. Run /arckit:risk to register unmet minimum SEAL levels and sovereignty gaps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 

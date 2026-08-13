@@ -281,7 +281,7 @@ The EU Cloud Sovereignty Framework is being adopted as a national yardstick by m
 
 | Doc ID | Filename | Type | Source Location | Description |
 |--------|----------|------|-----------------|-------------|
-| EUCSF | EU Cloud Sovereignty Framework v1.2.1 (October 2025) | Framework | European Commission | Sovereignty objectives, weights, and SEAL scale |
+| WEB-1 | [full URL of the framework as published] | Web URL | [domain] | EU Cloud Sovereignty Framework v1.2.1 (October 2025) — sovereignty objectives, weights, and SEAL scale. Verified [YYYY-MM-DD] |
 
 ### Citations
 

@@ -400,6 +400,28 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ## Changelog
 
+### 2026-08-13 - EU Cloud Sovereignty Framework Command (Community) (#740)
+
+Added `/arckit:eu-cloud-sovereignty` to the `arckit-eu` community overlay, taking it from 7 commands to 8. Like the other overlay commands, it is documented here via this changelog rather than as a DSM grid row (the matrix tracks the official baseline). Tier 13 compliance assessment.
+
+**Command and output doc-type**:
+
+- `/arckit:eu-cloud-sovereignty` → `EUCSF` (EU Cloud Sovereignty Framework Assessment, regime EU, category Compliance, severity HIGH)
+
+**Dependencies**: requirements (M — cloud service type, data sensitivity, sovereignty NFRs, member state), risk (R — existing cloud, supply-chain and foreign-interference risks), fr-secnumcloud (R — security qualification status, which is complementary to sovereignty rather than a substitute), principles (R — cloud strategy and foreign-dependency policy from `000-global`), eu-nis2 (O — Article 21 measures overlapping SOV-7), fr-dinum (O), nl-cloud (O — the Dutch policy position, where one is already recorded).
+
+**Consumed by**: `risk` (R — unmet minimum SEAL levels and sovereignty gaps become risk entries), `nl-cloud` (O), `fr-secnumcloud` (O — where a French qualification is also in scope).
+
+**Scope boundary**: the framework supplies the eight objectives, their weights and the SEAL scale; the **contracting authority** supplies the minimum SEAL per objective in the tender specification. The command records an assessment and does not certify — no provider is named as achieving any SEAL level.
+
+**Typical EU cloud sovereignty path**:
+
+```text
+requirements → risk →
+eu-cloud-sovereignty (minimum SEAL from tender spec, then evidence per objective) →
+risk (gaps) → nl-cloud / fr-secnumcloud (national layer, where applicable)
+```
+
 ### 2026-08-13 - Austrian Accessibility Command (Community) (#710)
 
 Added `/arckit:at-barrierefreiheit` to the `arckit-at` community overlay, taking it from 3 commands to 4. Like the other overlay commands, it is documented here via this changelog rather than as a DSM grid row (the matrix tracks the official baseline). Tier 13 compliance assessment.
@@ -748,7 +770,6 @@ Added 18 new commands covering EU regulations and French public sector governanc
 - `/arckit:eu-cra` — Cyber Resilience Act (Reg 2024/2847) compliance. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-CRA-*.md
 - `/arckit:eu-dsa` — Digital Services Act (Reg 2022/2065) compliance. Depends on: requirements (M), risk (R). Produces ARC-*-DSA-*.md
 - `/arckit:eu-data-act` — EU Data Act (Reg 2023/2854) compliance. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-DATAACT-*.md
-- `/arckit:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework (v1.2.1) assessment. Depends on: requirements (M), risk (R), architecture (R). Produces ARC-*-EUCSF-*.md
 
 **New French commands**:
 
@@ -792,7 +813,6 @@ eu-nis2 → eu-data-act
 - `fr-anssi-carto` → feeds `fr-pssi` (R)
 - `eu-rgpd` / `fr-rgpd` → consumed by `fr-algorithme-public` (O) and `eu-ai-act` (O)
 - `eu-nis2` → feeds `eu-dora` (O), `eu-cra` (O) when product used by NIS2 entities
-- `eu-cloud-sovereignty` → feeds `fr-secnumcloud` (O) where a French qualification is also in scope; consumes `eu-nis2` (O) security assurance rather than duplicating it
 - `risk` → feeds all compliance commands (R or M)
 
 **Typical French public sector compliance path**:
@@ -808,7 +828,7 @@ fr-dinum → fr-marche-public → fr-code-reuse
 
 ```text
 requirements → risk → data-model →
-eu-rgpd → eu-nis2 → eu-cloud-sovereignty → eu-cra → eu-data-act → eu-dsa → eu-ai-act
+eu-rgpd → eu-nis2 → eu-cra → eu-data-act → eu-dsa → eu-ai-act
 ```
 
 - **Updated**: Commands Documented count from 64 to 82 (86 total; 4 utility commands not in matrix: customize, template-builder, health, search, impact, init, start, score, fr-code-reuse, gov-reuse, gov-code-search, gov-landscape are in matrix)

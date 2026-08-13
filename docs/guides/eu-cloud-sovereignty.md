@@ -31,7 +31,7 @@ Output: `projects/<id>/ARC-<id>-EUCSF-v1.0.md`
 
 ## The Eight Sovereignty Objectives
 
-Weights are set by the framework and sum to 100%. They are not adjustable by the contracting authority.
+Weights are set by the framework and sum to 100%. Treat them as the framework's defaults: ArcKit applies them as published, and the command does not offer a way to re-weight them. If a tender specification states its own weighting, follow the tender and record the deviation.
 
 | Objective | Weight |
 |-----------|--------|
