@@ -24,7 +24,10 @@ const REF = String.raw`(?![A-Za-z_$][\w$]*(?:\.[\w$]|\[|\()|\$\{|\$\()`;
 // GitHub Actions spells an OIDC grant as the id-token key set to `write`, so
 // without this every workflow publishing via OIDC was blocked. Also covers the
 // literal placeholders that appear in config templates.
-const LEVEL = String.raw`(?!(?:read|write|none|true|false|null)\b\s*$)`;
+// End of LINE is spelled out rather than written `$`: these rules are built
+// with `gi` and no `m`, so `$` anchors to end of input and the exemption only
+// fired when the permission line was the last content in the string (#737).
+const LEVEL = String.raw`(?!(?:read|write|none|true|false|null)\b[^\S\r\n]*(?:\r?\n|$))`;
 
 const SECRET_PATTERNS = [
   // Explicit key-value patterns (reference-guarded — literal values only)
