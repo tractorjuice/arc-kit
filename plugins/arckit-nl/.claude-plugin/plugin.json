@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "arckit-nl",
+  "version": "6.8.0",
+  "defaultEnabled": false,
+  "description": "Netherlands Public Sector Overlay for ArcKit — 4 commands for Rijksbreed cloudbeleid compliance, VIRBI 2025 Te Beschermen Belangen rubricering, BIO2 conformance, and cloud exit planning. Requires arckit core plugin.",
+  "author": {
+    "name": "TractorJuice",
+    "url": "https://github.com/tractorjuice"
+  },
+  "homepage": "https://arckit.org",
+  "repository": "https://github.com/tractorjuice/arckit-claude",
+  "license": "MIT",
+  "keywords": [
+    "architecture",
+    "governance",
+    "netherlands",
+    "bio2",
+    "compliance"
+  ],
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=6.8.0"
+    }
+  ]
+}

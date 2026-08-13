@@ -22,6 +22,7 @@ PLUGIN_SOURCES = [
     "plugins/arckit-claude",
     "plugins/arckit-uae",
     "plugins/arckit-fr",
+    "plugins/arckit-nl",
     "plugins/arckit-ca",
     "plugins/arckit-eu",
     "plugins/arckit-at",

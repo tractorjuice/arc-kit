@@ -393,6 +393,12 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | FSSAFE | `ARC-*-FSSAFE-*.md` | UK EMI / PI Safeguarding Assessment |
 | | FSCD | `ARC-*-FSCD-*.md` | UK FCA Consumer Duty Board Report |
 | | FSCTP | `ARC-*-FSCTP-*.md` | UK Critical Third Parties Dependency Assessment |
+| **Compliance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
+| | RBCLOUD | `ARC-*-RBCLOUD-*.md` | Rijksbreed Cloudbeleid Compliance Assessment |
+| | TBB | `ARC-*-TBB-*.md` | Te Beschermen Belangen / VIRBI 2025 Rubricering |
+| | BIO2 | `ARC-*-BIO2-*.md` | BIO2 Conformance Assessment |
+| **Governance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
+| | NLEXIT | `ARC-*-NLEXIT-*.md` | NL Cloud Exit Plan |
 | **Compliance (Community-contributed — UK NHS Clinical Safety Overlay)** | | | |
 | | NHSDTAC | `ARC-*-NHSDTAC-*.md` | NHS Digital Technology Assessment Criteria (DTAC v3) |
 | | NHSMDR | `ARC-*-NHSMDR-*.md` | UK MDR + EU MDR SaMD/AIaMD Classification |
