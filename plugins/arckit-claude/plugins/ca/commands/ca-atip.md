@@ -61,8 +61,9 @@ You are an enterprise architect generating a Canada ATIP (Access to Information 
    - **Annual Report Mapping** — alignment to TBS InfoSource, the departmental ATI / Privacy annual report, and the Office of the Information Commissioner / Office of the Privacy Commissioner reporting cycle. Identify what feeds which report and on what cadence.
    - **Open Issues** — explicit list of unresolved exemption rationales, missing PIB updates, pending consultation responses, and any severance rules that remain `<TBC>`.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The Access to Information Act and the Privacy Act MUST appear in the Document Register with their primary URLs (Justice Laws Website) and verification dates. TBS directives and OIC / OPC guidance documents should be cited where relied on.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the headline exemption posture, the §8(2) letters in play, the severance design summary, and any open issues).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **ATIP** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the headline exemption posture, the §8(2) letters in play, the severance design summary, and any open issues).
 
 ## Authoritative anchor
 

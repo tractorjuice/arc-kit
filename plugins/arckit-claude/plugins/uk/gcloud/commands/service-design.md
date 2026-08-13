@@ -208,6 +208,8 @@ footer at the end of the document:
 
 ### 10. Write the service-design document
 
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SVCD** per-type checks pass. Fix any failures before proceeding.
+
 Use the **Write tool** to save the completed document to:
 
 `{project_dir}/{filename}` — e.g. `projects/004-secure-case-mgmt/ARC-004-SVCD-v1.0.md`

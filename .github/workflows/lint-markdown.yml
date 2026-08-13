@@ -17,6 +17,12 @@ on:
       - "scripts/check-guide-site-links.py"
       - "scripts/check-contributor-credits.py"
       - "scripts/check-quality-checklist-refs.py"
+      - "scripts/check-common-parity.py"
+      - "scripts/check-create-project-invocations.py"
+      - "scripts/bash/common.sh"
+      - "scripts/python/common.py"
+      - "plugins/arckit-claude/scripts/bash/common.sh"
+      - "plugins/arckit-claude/scripts/python/common.py"
       - "docs/contributors.html"
       - "docs/guides.html"
       - "docs/roles.html"
@@ -45,6 +51,12 @@ on:
       - "scripts/check-guide-site-links.py"
       - "scripts/check-contributor-credits.py"
       - "scripts/check-quality-checklist-refs.py"
+      - "scripts/check-common-parity.py"
+      - "scripts/check-create-project-invocations.py"
+      - "scripts/bash/common.sh"
+      - "scripts/python/common.py"
+      - "plugins/arckit-claude/scripts/bash/common.sh"
+      - "plugins/arckit-claude/scripts/python/common.py"
       - "docs/contributors.html"
       - "docs/guides.html"
       - "docs/roles.html"
@@ -102,6 +114,12 @@ jobs:
 
       - name: Quality-checklist references resolve (closes #749)
         run: python3 scripts/check-quality-checklist-refs.py
+
+      - name: common.sh / common.py parity (root vs plugin copies, #766)
+        run: python3 scripts/check-common-parity.py --check
+
+      - name: create-project.sh invocations are ones the script accepts (#775, #777)
+        run: python3 scripts/check-create-project-invocations.py --check
 
       - uses: actions/setup-node@v4
         with:

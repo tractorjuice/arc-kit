@@ -8,16 +8,14 @@ templateVersion: "1.0"
 
 ## Document Control
 
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
+
+<!-- Domain-specific fields, retained after the resolved header per the Document Control Standard. -->
+
 | Field | Value |
 |-------|-------|
-| Document ID | `ARC-[PROJECT_ID]-GAPA-v[VERSION]` |
-| Project | `[PROJECT_NAME]` |
-| Owner | `[OWNER_NAME_AND_ROLE]` |
-| Classification | `[CLASSIFICATION]` |
-| Status | DRAFT |
-| Severity Weighting | `[BALANCED / STRATEGIC-RISK / OPERATIONAL]` |
-| Created | `[YYYY-MM-DD]` |
-| Review Date | `[YYYY-MM-DD]` |
+| **Severity Weighting** | `[BALANCED / STRATEGIC-RISK / OPERATIONAL]` |
 
 ### Revision History
 

@@ -28,6 +28,13 @@ log_error() {
 }
 
 # Find the repository root (looks for projects/ directory)
+#
+# NOTE: this function differs between the two copies of common.sh ON PURPOSE.
+# This one keys on projects/, because a marketplace user never runs `arckit
+# init` and so has projects/ but no .arckit/. The root copy (scripts/bash/) keys
+# on .arckit/ instead. The two are exactly complementary; each fails in the repo
+# shape the other handles. Declared in scripts/check-common-parity.py, which
+# enforces parity everywhere else in this file (#766).
 find_repo_root() {
     local current_dir="$PWD"
     while [[ "$current_dir" != "/" ]]; do
@@ -56,7 +63,13 @@ get_next_project_number() {
         if [[ -d "$dir" ]]; then
             local basename="$(basename "$dir")"
             if [[ "$basename" =~ ^([0-9]{3})- ]]; then
-                local num="${BASH_REMATCH[1]}"
+                # Force base 10. Directory prefixes are zero-padded, and bash
+                # reads a leading 0 in an arithmetic context as octal: 008 and
+                # 009 are invalid (the comparison errors and is skipped) while
+                # 010 and 011 are silently read as 8 and 9. max_num then never
+                # reached the true maximum and this returned a number that
+                # already existed (#762).
+                local num=$((10#${BASH_REMATCH[1]}))
                 if ((num > max_num)); then
                     max_num=$num
                 fi
@@ -68,8 +81,21 @@ get_next_project_number() {
 }
 
 # Create project directory structure
+#
+# Refuses an existing target. `create-project.sh` only ever creates: the
+# directory name carries a freshly allocated number, so a target that already
+# exists means the numbering is wrong, not that the user picked a taken name.
+# Bare `mkdir -p` succeeded in that case and the caller wrote a README and a
+# full set of ARC-{NNN}-* paths over the top of the existing project, exiting 0
+# (#762, #765). Fail here instead, before anything is written.
 create_project_dir() {
     local project_dir="$1"
+
+    if [[ -d "$project_dir" ]]; then
+        log_error "Project directory already exists: $project_dir"
+        log_error "This indicates a project-numbering fault, not a name collision."
+        return 1
+    fi
 
     mkdir -p "$project_dir"
     mkdir -p "$project_dir/vendors"
@@ -113,9 +139,59 @@ check_git() {
     return 0
 }
 
-# Slugify a string (convert to kebab-case)
+# Slugify a string (convert to kebab-case, transliterating accents to ASCII)
+#
+# Accented characters become their ASCII equivalent (café -> cafe) rather than
+# being deleted. The four copies of this function disagreed before #766: three
+# dropped the character mid-word (caf-modernisation) and the fourth kept it via
+# [:alnum:], which follows LC_CTYPE and so produced a different directory name
+# under LC_ALL=C than under a UTF-8 locale.
+#
+# Transliterating keeps the result identical in every locale and in both
+# languages, and keeps non-ASCII out of names that end up in filesystem paths,
+# git and published URLs. Characters outside the table are dropped.
+#
+# Keep this table in step with slugify() in scripts/python/common.py. All four
+# copies are held equal by tests/plugin/test_slugify.py.
 slugify() {
-    echo "$1" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]\+/-/g' | sed 's/^-\|-$//g'
+    local s="$1" pair from to
+
+    # Both cases are listed so this runs before ASCII lowercasing: bash can
+    # only lowercase A-Z without depending on the locale.
+    local -a translit=(
+        'À:a' 'Á:a' 'Â:a' 'Ã:a' 'Ä:a' 'Å:a' 'à:a' 'á:a' 'â:a' 'ã:a' 'ä:a' 'å:a'
+        'Æ:ae' 'æ:ae' 'Ç:c' 'ç:c'
+        'È:e' 'É:e' 'Ê:e' 'Ë:e' 'è:e' 'é:e' 'ê:e' 'ë:e'
+        'Ì:i' 'Í:i' 'Î:i' 'Ï:i' 'ì:i' 'í:i' 'î:i' 'ï:i'
+        'Ð:d' 'ð:d' 'Ñ:n' 'ñ:n'
+        'Ò:o' 'Ó:o' 'Ô:o' 'Õ:o' 'Ö:o' 'Ø:o' 'ò:o' 'ó:o' 'ô:o' 'õ:o' 'ö:o' 'ø:o'
+        'Ù:u' 'Ú:u' 'Û:u' 'Ü:u' 'ù:u' 'ú:u' 'û:u' 'ü:u'
+        'Ý:y' 'ý:y' 'Ÿ:y' 'ÿ:y' 'Þ:th' 'þ:th' 'ß:ss'
+        'Ā:a' 'ā:a' 'Ą:a' 'ą:a'
+        'Ć:c' 'ć:c' 'Č:c' 'č:c' 'Ď:d' 'ď:d'
+        'Ē:e' 'ē:e' 'Ė:e' 'ė:e' 'Ę:e' 'ę:e' 'Ě:e' 'ě:e'
+        'Ğ:g' 'ğ:g'
+        'Ī:i' 'ī:i' 'Į:i' 'į:i' 'İ:i' 'ı:i'
+        'Ł:l' 'ł:l' 'Ń:n' 'ń:n' 'Ň:n' 'ň:n'
+        'Ō:o' 'ō:o' 'Ő:o' 'ő:o' 'Œ:oe' 'œ:oe'
+        'Ř:r' 'ř:r'
+        'Ś:s' 'ś:s' 'Š:s' 'š:s' 'Ş:s' 'ş:s'
+        'Ť:t' 'ť:t' 'Ţ:t' 'ţ:t'
+        'Ū:u' 'ū:u' 'Ů:u' 'ů:u' 'Ű:u' 'ű:u'
+        'Ź:z' 'ź:z' 'Ż:z' 'ż:z' 'Ž:z' 'ž:z'
+    )
+
+    for pair in "${translit[@]}"; do
+        from="${pair%%:*}"
+        to="${pair#*:}"
+        s="${s//"$from"/"$to"}"
+    done
+
+    # LC_ALL=C keeps both steps byte-oriented, so the slug never depends on the
+    # caller's environment. The character classes are spelled out rather than
+    # using \+ or \|, which are GNU extensions and not portable to BSD sed.
+    s="$(printf '%s' "$s" | LC_ALL=C tr 'A-Z' 'a-z')"
+    printf '%s' "$s" | LC_ALL=C sed -e 's/[^a-z0-9][^a-z0-9]*/-/g' -e 's/^-//' -e 's/-$//'
 }
 
 # ============================================================================

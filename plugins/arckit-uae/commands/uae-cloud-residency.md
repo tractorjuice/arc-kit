@@ -41,8 +41,9 @@ You are an enterprise architect assessing UAE sovereign cloud residency under th
    - **Shared-Responsibility Matrix** — per chosen CSP, division of security responsibilities across infrastructure, platform, application, data, identity, and operational layers.
    - **Exit and Portability Plan** — data egress strategy, format portability, identity migration, key custody on exit, contingency residency on regulatory change.
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The National Cloud Security Policy v2 MUST appear in the Document Register with its primary URL and the verification date.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (paragraph plus headline counts: datasets requiring UAE residency, datasets compliant, datasets non-compliant, chosen CSPs).
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **CRES** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (paragraph plus headline counts: datasets requiring UAE residency, datasets compliant, datasets non-compliant, chosen CSPs).
 
 ## Authoritative anchor
 

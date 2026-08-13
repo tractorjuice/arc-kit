@@ -62,7 +62,7 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
    - `uk-nhs-dcb0160-deployment-hazard-template.md` (`DEPLOYMENT-HAZARD-LOG.md`)
    Apply the standard `templates-custom/` → `templates/` → `${CLAUDE_PLUGIN_ROOT}/templates/` resolution.
 
-3. **Resolve the project** via `scripts/bash/create-project.sh --json`.
+3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
 
 4. **Ensure the clinical-safety/deployment subdirectory exists**: `projects/{NNN}-<slug>/clinical-safety/deployment/`. Use `mkdir -p` via the Bash tool.
 

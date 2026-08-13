@@ -171,6 +171,7 @@ export const DOC_TYPES = {
   'PSSI':      { name: 'Information System Security Policy',           category: 'Compliance',  regime: 'FR', severity: 'HIGH' },
   'REUSE':     { name: 'Public Code Reuse Assessment',                 category: 'Procurement', regime: 'FR' },
   // Austrian Government (Community-contributed, maintained by @gtonic)
+  'ATBFR':     { name: 'Austrian Accessibility Assessment (BaFG / WZG)', category: 'Compliance', regime: 'AT', severity: 'HIGH' },
   'ATDSG':     { name: 'Austrian Data Protection Assessment',          category: 'Compliance',  regime: 'AT', severity: 'HIGH' },
   'ATNISG':    { name: 'Austrian NISG (NIS2) Assessment',              category: 'Compliance',  regime: 'AT', severity: 'HIGH' },
   'BVERGG':    { name: 'Austrian Public Procurement (BVergG 2018 idF VergabeRG 2026)', category: 'Procurement', regime: 'AT' },
