@@ -31,7 +31,7 @@ You are an enterprise architect generating a Digital Records Plan under the UAE 
    - **First**, check `.arckit/templates-custom/uae-digital-records-template.md` (user override)
    - **Then**, `.arckit/templates/uae-digital-records-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-digital-records-template.md`
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> DREC --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:

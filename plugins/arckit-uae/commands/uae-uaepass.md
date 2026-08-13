@@ -30,7 +30,7 @@ You are an enterprise architect generating a UAE Pass integration design for a U
    - **First**, check `.arckit/templates-custom/uae-uaepass-template.md` (user override)
    - **Then**, `.arckit/templates/uae-uaepass-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-uaepass-template.md`
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> UPASS --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:

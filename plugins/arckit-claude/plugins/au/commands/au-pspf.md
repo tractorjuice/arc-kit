@@ -77,7 +77,7 @@ PSPF is structured around **four security outcomes** with **16 core requirements
    - Then: `.arckit/templates/au-pspf-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-pspf-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUPSPF --filename` for the artefact filename.
 

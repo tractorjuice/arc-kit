@@ -88,7 +88,7 @@ Find the project directory in `projects/` (user may specify name/number, otherwi
 - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
   - Extract: Technology standards, approved platforms, cloud policy, reuse directives
 
-**This agent works without a project context.** If no project exists, use the user's domain description from their invocation arguments. Create a project directory using `create-project.sh --json` before writing output.
+**This agent works without a project context.** If no project exists, use the user's domain description from their invocation arguments. Create the project directory with `create-project.sh --json --force --name "<project-name>"` before writing output. Both flags matter: without `--name` the script exits 1 without returning a path, and without `--force` it refuses any repository that has no `ARC-000-PRIN-*.md` — which is exactly the no-project-context case this agent is built for. If `projects/` does not exist at all the script cannot run, so create `projects/{NNN}-<slug>/` directly with the Write tool instead, as `/arckit:repo-audit` does.
 
 ### Step 2: Read Template
 

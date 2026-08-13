@@ -63,7 +63,7 @@ For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / M
    - **Then**, `.arckit/templates/us-nist-800-53-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-nist-800-53-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> NIST --filename` for the artefact filename. The type code for this command is `NIST`.
 

@@ -66,7 +66,7 @@ Federal employees and contractors authenticate using **PIV** (Personal Identity 
    - **Then**, `.arckit/templates/us-icam-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-icam-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> ICAM --filename` for the artefact filename. The type code for this command is `ICAM`.
 

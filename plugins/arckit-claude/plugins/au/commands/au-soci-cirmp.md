@@ -81,7 +81,7 @@ SOCI is a cross-sector Australian critical-infrastructure regime, not an energy-
    - Then: `.arckit/templates/au-soci-cirmp-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-soci-cirmp-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUSOCI --filename` for the artefact filename.
 

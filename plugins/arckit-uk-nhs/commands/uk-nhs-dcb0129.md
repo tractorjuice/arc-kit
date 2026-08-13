@@ -73,7 +73,7 @@ NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of He
 
    Required template files: `uk-nhs-dcb0129-safety-template.md` (root `SAFETY.md` anchor), `uk-nhs-dcb0129-case-template.md` (`SAFETY-CASE.md`), `uk-nhs-dcb0129-hazard-template.md` (`HAZARD-LOG.md`). The wrapper template `uk-nhs-dcb0129-template.md` exists only for `/arckit:customize` listing — do not write its content.
 
-3. **Resolve the project**: use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate `projects/{NNN}-<slug>/`.
+3. **Resolve the project**: use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate `projects/{NNN}-<slug>/`.
 
 4. **Ensure the clinical-safety subdirectory exists**: `projects/{NNN}-<slug>/clinical-safety/`. Use `mkdir -p` via the Bash tool if needed. All three Marcus files land in this directory.
 

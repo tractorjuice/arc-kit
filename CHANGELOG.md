@@ -31,6 +31,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Every scripted project-creation path in the overlay commands called `create-project.sh` in a form it rejects** (#775, #777). 41 files across eight plugins, in two spellings, neither of which can produce a project:
+
+  ```text
+  create-project.sh --json <project-name>   # 32 files → [ERROR] Unknown option: <project-name>
+  create-project.sh --json                  # 9 files  → [ERROR] Project name is required in JSON mode
+  ```
+
+  The script takes its name as `--name "NAME"`; it has no positional argument. The positional spelling was the large majority — the correct `--name` form appeared in only five files repo-wide, both in `arckit-uk-finance` and `arckit-uk-gcloud` — so it was what each new overlay was copied from.
+
+  **Five of the nameless callers were worse than a failed call: they used a create-only script as a lookup.** `wardley.value-chain`, `wardley.doctrine` and the three NHS commands instructed the model to "run `create-project.sh --json` to get the current project path", then read `project_id` and `project_path` out of the response. There is no response — the call exits 1 — and neither key exists under any invocation, since the script emits `project_number` and `project_dir`. All five now resolve the project from the **ArcKit Project Context** the `arckit-context.mjs` hook already injects, which is what the other 49 core commands do, and fall back to creating one only when none exists.
+
+  **The two `gov-*` agents had a second trap underneath the first.** Both state they work without a project context, and `create-project.sh` refuses in precisely that case: it requires `ARC-000-PRIN-*.md` and exits 1 without it, whatever `--name` says. They now pass `--force`, and are told to create the directory directly when `projects/` does not exist at all, since the script cannot resolve a repo root without it. This is the trap `repo-audit.md:103` already documented for the same script; the two agents predate that note.
+
+  Because these are prompts rather than scripts, the failure degraded rather than stopped: the model got a usage dump, improvised a directory, and the command appeared to work. What it skipped is everything `create-project.sh` does beyond `mkdir` — the `external/README.md`, the `000-global/policies` and `000-global/external` scaffolding, and the project README carrying the correct `ARC-{NNN}-*` filename list. #762 is the standing evidence that a wrong project README is not something people notice.
+
+  `scripts/check-create-project-invocations.py` is new and wired into `lint-markdown.yml`. It parses invocations out of code spans and fenced blocks only, leaving prose mentions alone, and rejects a positional argument, a missing `--name`, or a flag the script does not define. Against the pre-fix tree it reports all 42 occurrences; nothing before it would have noticed a command citing a flag that does not exist.
+
 - **`create_project_dir` wrote a whole project tree into an existing directory rather than refusing it** (#765). `create-project.sh` only ever creates, and the directory it builds is named `{freshly-allocated-number}-{slug}`, so a target that already exists means the numbering is wrong — not that the user picked a taken name. Bare `mkdir -p` in bash and `exist_ok=True` in Python both succeeded in that case, and the caller went on to write a README and a full set of `ARC-{NNN}-*` paths over the top of an existing project, exiting 0. That is why #762 was silent: the octal bug allocated a used number and nothing downstream objected.
 
   The overwrite is worse than the duplicate directory the original report described. #762 happened to collide on a number while differing on the slug, so it produced a second `010-` directory alongside the first. When the slug matches too, the `cat > README.md` at `create-project.sh:229` replaces the existing project's README in place, and the run still reports `"success": true`. Both copies of the helper now refuse before anything is written.

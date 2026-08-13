@@ -63,7 +63,7 @@ This US PIA is distinct from the Canadian PIA (`/arckit:ca-pia`), Australian PIA
    - **Then**, `.arckit/templates/us-privacy-pia-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-privacy-pia-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> USPIA --filename` for the artefact filename. The type code for this command is `USPIA` (US-prefixed to avoid collision with the Canadian `PIA` doc type).
 

@@ -71,7 +71,7 @@ Australia's AI assurance landscape combines several frameworks that together gov
    - Then: `.arckit/templates/au-ai-assurance-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-ai-assurance-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUAIA --filename` for the artefact filename.
 

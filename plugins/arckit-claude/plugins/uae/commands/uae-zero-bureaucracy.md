@@ -29,7 +29,7 @@ You are an enterprise architect generating a Service Catalogue Review under the 
    - **First**, check `.arckit/templates-custom/uae-zero-bureaucracy-template.md` (user override)
    - **Then**, `.arckit/templates/uae-zero-bureaucracy-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-zero-bureaucracy-template.md`
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> ZBUR --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:

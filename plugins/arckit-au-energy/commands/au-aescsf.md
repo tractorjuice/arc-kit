@@ -72,7 +72,7 @@ The Australian Energy Sector Cyber Security Framework is an energy-sector cyber 
    - Then: `.arckit/templates/au-aescsf-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-aescsf-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUAESCSF --filename` for the artefact filename.
 

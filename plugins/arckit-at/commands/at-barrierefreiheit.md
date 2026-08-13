@@ -63,7 +63,7 @@ $ARGUMENTS
 
 ### Step 1: Identify or Create Project
 
-Identify the target project from the hook context. If the project doesn't exist, create it with `${CLAUDE_PLUGIN_ROOT}/../arckit-claude/scripts/bash/create-project.sh --json`.
+Identify the target project from the hook context. If the project doesn't exist, create it with `${CLAUDE_PLUGIN_ROOT}/../arckit-claude/scripts/bash/create-project.sh --json --name "<project-name>"` — the `--name` is required, and without it the script exits 1 rather than returning a path.
 
 ### Step 2: Read Source Artifacts
 

@@ -69,7 +69,7 @@ The Digital Transformation Agency (DTA) Digital Service Standard sets the mandat
    - **Then**, `.arckit/templates/au-dss-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/au-dss-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUDSS --filename` for the artefact filename.
 
