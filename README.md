@@ -364,7 +364,7 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 
 ## EU, French, Dutch & Austrian Regulatory Compliance (Community)
 
-> ⚠️ **Community-contributed.** EU and French commands are domain-maintained by [@thomas-jardinet](https://github.com/thomas-jardinet), Austrian commands by [@gtonic](https://github.com/gtonic). The 22 commands below cover EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act), French government standards (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, etc.), and Austrian government standards (DSG, NISG 2026, BVergG 2018, BaFG / WZG accessibility). They are not part of the officially-maintained baseline — output should be reviewed by qualified DPO / CISO / Vergabejurist / legal counsel before reliance, and citations may lag current source text. Each command surfaces with a `[COMMUNITY]` prefix in `/help` listings and renders a warning banner before generating.
+> ⚠️ **Community-contributed.** EU and French commands are domain-maintained by [@thomas-jardinet](https://github.com/thomas-jardinet), Austrian commands by [@gtonic](https://github.com/gtonic). The 27 commands below cover EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act, Cloud Sovereignty Framework), French government standards (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, etc.), Dutch government standards (Rijksbreed cloudbeleid, VIRBI 2025, BIO2, cloud exit), and Austrian government standards (DSG, NISG 2026, BVergG 2018, BaFG / WZG accessibility). They are not part of the officially-maintained baseline — output should be reviewed by qualified DPO / CISO / Vergabejurist / legal counsel before reliance, and citations may lag current source text. Each command surfaces with a `[COMMUNITY]` prefix in `/help` listings and renders a warning banner before generating.
 
 **EU regulations** (member-state-neutral baselines, applicable across EU/EEA):
 
@@ -373,6 +373,7 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 - `/arckit:eu-ai-act` — EU AI Act (Regulation 2024/1689) — risk classification (prohibited / high-risk / GPAI), conformity routes
 - `/arckit:eu-dora` — Digital Operational Resilience Act (EU 2022/2554) — financial sector ICT risk, TLPT, third-party register
 - `/arckit:eu-cra` — Cyber Resilience Act (Regulation 2024/2847) — products with digital elements, SBOM, VDP, CE marking
+- `/arckit:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework (v1.2.1) — eight weighted sovereignty objectives, SEAL-0 to SEAL-4 assurance levels, minimum-SEAL tender gate
 - `/arckit:eu-dsa` — Digital Services Act (Regulation 2022/2065) — intermediaries, platforms, VLOPs, ARCOM
 - `/arckit:eu-data-act` — Data Act (Regulation 2023/2854) — connected products, B2B FRAND, cloud switching, Article 27
 
