@@ -148,6 +148,15 @@ French government (apply on top of EU baseline):
 - [Public code reuse](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-code-reuse.md): `/arckit:fr-code-reuse` code.gouv.fr, SILL, EUPL build-vs-reuse decision matrix.
 - [Indice de Résilience Numérique](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-irn.md): `/arckit:fr-irn` IRN self-assessment following the aDRI framework — 8 resilience domains.
 
+### Netherlands public sector compliance (community-contributed)
+
+> ⚠️ Community-maintained by [@umag](https://github.com/umag) — output should be reviewed by qualified Dutch counsel, the departmental CISO, CISO Rijk, and for any rubricering determination the departmental beveiligingsautoriteit / rubriceringsambtenaar before reliance. There is no published Dutch cloud-provider qualification list, so no commercial provider is named as compliant or qualified.
+
+- [Rijksbreed cloudbeleid compliance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-cloud.md): `/arckit:nl-cloud` Herziening rijksbreed cloudbeleid 2026 — materieel publiek cloudgebruik determination, clause 5.2 / 4.5 eligibility, CISO Rijk notification, EEA residency.
+- [Te Beschermen Belangen / VIRBI 2025](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-tbb.md): `/arckit:nl-tbb` TBB category from BIV scoring across the five kernbelangen, with an indicative VIRBI 2025 rubricering (`voorstel`) awaiting the rubriceringsautoriteit.
+- [BIO2 conformance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-bio.md): `/arckit:nl-bio` Baseline Informatiebeveiliging Overheid 2 conformance on NEN-EN-ISO/IEC 27001:2023 and 27002:2022, plus the mandatory overheidsmaatregelen.
+- [Cloud exit plan](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-exit.md): `/arckit:nl-exit` mandatory clause 3.2 exit plan — planned exit and disruptive interruption, provider data destruction, annual self-test.
+
 ### Canada Federal compliance (community-contributed)
 
 > ⚠️ Community-maintained — output should be reviewed by qualified Canadian federal counsel (DOJ), Privacy Officer / ATIP coordinator, and departmental security officer before reliance. Recruiting a Canadian federal domain co-maintainer; promotion to official-baseline gated on co-maintainer commitment.
