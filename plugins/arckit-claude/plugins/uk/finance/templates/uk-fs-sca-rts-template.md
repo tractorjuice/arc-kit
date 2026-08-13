@@ -4,24 +4,13 @@
 
 ## Document Control
 
-<!-- Default: OFFICIAL. Use OFFICIAL-SENSITIVE if the document reveals proprietary fraud model parameters or detection thresholds. Driven by user_config.default_classification. -->
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
+
+<!-- Domain-specific fields, retained after the resolved header per the Document Control Standard. -->
 
 | Field | Value |
 |-------|-------|
-| **Document ID** | {{DOCUMENT_ID}} |
-| **Document Type** | UK PSD2 SCA-RTS Exemption Design |
-| **Project** | {{PROJECT_NAME}} |
-| **Classification** | {{CLASSIFICATION}} |
-| **Status** | DRAFT |
-| **Version** | 1.0 |
-| **Created Date** | {{CREATED_DATE}} |
-| **Last Modified** | {{LAST_MODIFIED}} |
-| **Review Cycle** | Quarterly |
-| **Next Review Date** | {{NEXT_REVIEW_DATE}} |
-| **Owner** | {{OWNER_ROLE}} — {{OWNER_NAME}} |
-| **Reviewed By** | PENDING |
-| **Approved By** | PENDING |
-| **Distribution** | {{DISTRIBUTION}} |
 | **Firm Authorisation Type** | {{FIRM_AUTHORISATION_TYPE}} (PSP / EMI / PI / ASPSP / TPP) |
 | **FCA Firm Reference Number** | {{FCA_FRN}} |
 

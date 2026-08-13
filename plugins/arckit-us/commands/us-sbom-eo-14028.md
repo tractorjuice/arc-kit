@@ -64,7 +64,7 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
    - **Then**, `.arckit/templates/us-sbom-eo-14028-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-sbom-eo-14028-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> SBOM --filename` for the artefact filename. The type code for this command is `SBOM`.
 
@@ -81,9 +81,10 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
    - **Exception Request** — if a self-attestation cannot be made for one or more items, document the M-22-18 exception process: which items, why, compensating controls, agency CIO + OMB notification status, expiry of the exception.
    - **Distribution Plan** — where the attestation will be lodged (CISA Repository for Software Attestations and Artifacts), where the SBOM will be distributed (agency CSO portal, supplier portal), and the access-control posture for SBOM consumers.
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SBOM** per-type checks pass. Fix any failures before proceeding.
+7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-7. Emit a short summary to the user — attestation status (Full / Partial / Exception), SBOM format and component count, SLSA level claim, open exceptions, and the lodging date target. Do not echo the full artefact.
+8. Emit a short summary to the user — attestation status (Full / Partial / Exception), SBOM format and component count, SLSA level claim, open exceptions, and the lodging date target. Do not echo the full artefact.
 
 ## Handoffs
 

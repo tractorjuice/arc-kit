@@ -30,7 +30,7 @@
 
 ### 1.1 State Cloud Doctrine (Doctrine cloud de l'État)
 
-[Complete if cloud services are involved — Circular 6264/SG of 5 July 2021]
+[Complete if cloud services are involved — Circular 6282/SG of 5 July 2021]
 
 - [ ] Internal government cloud (cloud de l'État) evaluated
 - [ ] Trusted commercial cloud (SecNumCloud-qualified offer) evaluated
@@ -156,7 +156,7 @@ gantt
 
 ### 7.1 DINUM Checklist
 
-- [ ] Cloud-first policy applied (Circular 6264/SG)
+- [ ] Cloud-first policy applied (Circular 6282/SG)
 - [ ] RGI v2.0 interoperability — open formats specified
 - [ ] RGAA 4.1 accessibility — mandatory clause included for public services
 - [ ] RGESN ecodesign — criteria included

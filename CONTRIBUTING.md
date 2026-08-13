@@ -77,13 +77,15 @@ To add a new ArcKit command:
 4. **Multi-AI support**:
    - Run `python scripts/converter.py` to generate Gemini TOML and Codex Markdown from the plugin command
 
-5. **Update documentation** — four files, not one:
+5. **Update documentation** — six files, not one:
    - `CHANGELOG.md` — an entry under `## [Unreleased]`.
    - `README.md` — a bullet in the relevant command table or overlay section. Not optional for an overlay command: those section headers carry counts (`The 21 commands below …`) that go stale the moment you add one.
    - `docs/index.html` — the published site. Overlay commands appear both in a jurisdiction card's instrument list and in the community-overlay paragraph, each enumerating instruments by name.
    - `docs/DEPENDENCY-MATRIX.md` — a dependency entry alongside the command's siblings, and its place in that overlay's flow block.
+   - `docs/commands.html` — a `<tr>` in the command table. A new **overlay** also needs an `<option>` in both the category and jurisdiction filters, or its `docs/index.html` jurisdiction card links to a filter that returns an empty table.
+   - `docs/llms.txt` — the llmstxt.org index for arckit.org, hand-curated (the generator in `sync-guides.mjs` only overwrites files carrying its marker, and this one deliberately does not). `scripts/check-llms-txt.py` fails CI if a command is missing or a link 404s.
 
-   The last two were previously documented only in `CLAUDE.md`, which contributors do not read, so PRs kept arriving without them. That was our omission, not the contributors'.
+   All but the first two were previously documented only in `CLAUDE.md`, which contributors do not read, so PRs kept arriving without them. That was our omission, not the contributors'.
 
 6. **Watch the counts.** A new overlay command changes a stated number in **five** places: the overlay's `README.md` (`N slash commands`), its `.claude-plugin/plugin.json` description, **both** marketplace manifests, and the root `README.md` section header. Grep for the old number before pushing — nothing checks these.
 

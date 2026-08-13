@@ -307,6 +307,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | CRA | `ARC-*-CRA-*.md` | EU Cyber Resilience Act Assessment |
 | | DSA | `ARC-*-DSA-*.md` | EU Digital Services Act Assessment |
 | | DATAACT | `ARC-*-DATAACT-*.md` | EU Data Act Compliance Assessment |
+| | EUCSF | `ARC-*-EUCSF-*.md` | EU Cloud Sovereignty Framework Assessment |
 | **Compliance (Community-contributed — French Government)** | | | |
 | | CNIL | `ARC-*-CNIL-*.md` | CNIL / French GDPR Assessment |
 | | SECNUM | `ARC-*-SECNUM-*.md` | SecNumCloud 3.2 Assessment |
@@ -324,6 +325,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | MARPUB | `ARC-*-MARPUB-*.md` | French Public Procurement |
 | | REUSE | `ARC-*-REUSE-*.md` | Public Code Reuse Assessment |
 | **Compliance (Community-contributed — Austrian Government)** | | | |
+| | ATBFR | `ARC-*-ATBFR-*.md` | Austrian Accessibility Assessment (BaFG / WZG) |
 | | ATDSG | `ARC-*-ATDSG-*.md` | Austrian Data Protection Assessment |
 | | ATNISG | `ARC-*-ATNISG-*.md` | Austrian NISG (NIS2) Assessment |
 | **Procurement (Community-contributed — Austrian Government)** | | | |
@@ -392,6 +394,12 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | FSSAFE | `ARC-*-FSSAFE-*.md` | UK EMI / PI Safeguarding Assessment |
 | | FSCD | `ARC-*-FSCD-*.md` | UK FCA Consumer Duty Board Report |
 | | FSCTP | `ARC-*-FSCTP-*.md` | UK Critical Third Parties Dependency Assessment |
+| **Compliance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
+| | RBCLOUD | `ARC-*-RBCLOUD-*.md` | Rijksbreed Cloudbeleid Compliance Assessment |
+| | TBB | `ARC-*-TBB-*.md` | Te Beschermen Belangen / VIRBI 2025 Rubricering |
+| | BIO2 | `ARC-*-BIO2-*.md` | BIO2 Conformance Assessment |
+| **Governance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
+| | NLEXIT | `ARC-*-NLEXIT-*.md` | NL Cloud Exit Plan |
 | **Compliance (Community-contributed — UK NHS Clinical Safety Overlay)** | | | |
 | | NHSDTAC | `ARC-*-NHSDTAC-*.md` | NHS Digital Technology Assessment Criteria (DTAC v3) |
 | | NHSMDR | `ARC-*-NHSMDR-*.md` | UK MDR + EU MDR SaMD/AIaMD Classification |

@@ -93,8 +93,9 @@ You are an enterprise architect generating a First Nations OCAP® sovereignty as
    10. **Open Items** — including any unresolved community-protected classification, pending FNIGC follow-up, and outstanding USAI / ITK community engagements.
 
 6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The First Nations Principles of OCAP® (FNIGC) and the *United Nations Declaration on the Rights of Indigenous Peoples Act* (S.C. 2021, c. 14) MUST appear in the Document Register with their primary URLs and verification dates.
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
-8. Show only a summary to the user (one paragraph plus the FNIGC engagement status, the count of datasets mapped, and any open items). If the artefact is a planning scaffold, say so plainly in the summary.
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **OCAP** per-type checks pass. Fix any failures before proceeding.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+9. Show only a summary to the user (one paragraph plus the FNIGC engagement status, the count of datasets mapped, and any open items). If the artefact is a planning scaffold, say so plainly in the summary.
 
 ## Authoritative anchor
 

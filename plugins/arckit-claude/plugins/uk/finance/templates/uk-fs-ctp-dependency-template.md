@@ -4,26 +4,13 @@
 
 ## Document Control
 
-<!-- Default: OFFICIAL. Upgrade to OFFICIAL-SENSITIVE if this document reveals specific contractual
-     exit terms, proprietary resilience-test outcomes, or provider-specific vulnerabilities that
-     could be exploited if disclosed. Driven by user_config.default_classification. -->
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
+
+<!-- Domain-specific fields, retained after the resolved header per the Document Control Standard. -->
 
 | Field | Value |
 |-------|-------|
-| **Document ID** | {{DOCUMENT_ID}} |
-| **Document Type** | UK FS CTP Dependency Assessment |
-| **Project** | {{PROJECT_NAME}} |
-| **Classification** | {{CLASSIFICATION}} |
-| **Status** | DRAFT |
-| **Version** | 1.0 |
-| **Created Date** | {{CREATED_DATE}} |
-| **Last Modified** | {{LAST_MODIFIED_DATE}} |
-| **Review Cycle** | Annual (minimum); review immediately on any new HMT designation or material change to provider relationship |
-| **Next Review Date** | {{NEXT_REVIEW_DATE}} |
-| **Owner** | {{DOCUMENT_OWNER_ROLE}} — {{DOCUMENT_OWNER_NAME}} |
-| **Reviewed By** | PENDING |
-| **Approved By** | PENDING |
-| **Distribution** | {{DISTRIBUTION}} |
 | **Firm Authorisation / Registration Type** | {{FIRM_AUTHORISATION_TYPE}} |
 | **FCA Firm Reference Number** | {{FCA_FRN}} |
 | **SMF Holder (Operational Resilience)** | {{SMF_HOLDER_NAME}} — {{SMF_HOLDER_FUNCTION}} |

@@ -161,6 +161,8 @@ question as `[PENDING]` rather than assuming a "No" — the supplier must confir
 explicitly. Record any "Yes" answers and their mitigating detail in the Mitigating Information
 section (Part 8) of the template.
 
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DECL** per-type checks pass. Fix any failures before proceeding.
+
 Use the **Write tool** to save the completed declaration to:
 
 `projects/000-global/supplier/ARC-000-DECL-v1.0.md`

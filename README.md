@@ -59,7 +59,7 @@ Then in Claude Code:
 /plugin marketplace add tractorjuice/arckit-claude
 ```
 
-Then install from the Discover tab, or via CLI. The marketplace ships **15 plugins** — install only the overlays you need:
+Then install from the Discover tab, or via CLI. The marketplace ships **17 plugins** — install only the overlays you need:
 
 ```bash
 # Core (75 commands — UK Government civilian + generic enterprise)
@@ -317,7 +317,7 @@ Costs are estimates from the Claude Code tokenizer and may differ from actual us
 ### Trimming the footprint
 
 - The five utility skills already use `paths:` globs to scope their always-on cost to relevant projects (`mermaid-syntax` only loads under `*.mmd`, `wardley-mapping` under WARD artefacts, etc.). The 73 command-skills are listed but not described in detail in the always-on context — the full prompt only loads on invocation.
-- Community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) are independent plugins — install only the jurisdictions / sectors you need. Each adds its own always-on baseline. `arckit-uk-finance`, `arckit-uk-nhs`, and `arckit-au-energy` are **sector** overlays (`arckit-au-energy` layers the energy sector on the `arckit-au` jurisdiction baseline); the rest are jurisdiction-based.
+- Community overlays (`arckit-uae`, `arckit-fr`, `arckit-nl`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) are independent plugins — install only the jurisdictions / sectors you need. Each adds its own always-on baseline. `arckit-uk-finance`, `arckit-uk-nhs`, and `arckit-au-energy` are **sector** overlays (`arckit-au-energy` layers the energy sector on the `arckit-au` jurisdiction baseline); the rest are jurisdiction-based.
 - Heavy commands (`jsp-936`, `analyze`, `diagram`, `backlog`) are on-invoke only; the always-on cost is unaffected by which heavy commands exist.
 
 To measure your own session footprint, run `/context all` (Claude Code v2.1.139+) for per-skill token estimates against your active model.
@@ -362,9 +362,9 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 
 ---
 
-## EU, French & Austrian Regulatory Compliance (Community)
+## EU, French, Dutch & Austrian Regulatory Compliance (Community)
 
-> ⚠️ **Community-contributed.** EU and French commands are domain-maintained by [@thomas-jardinet](https://github.com/thomas-jardinet); Austrian commands are a seed contribution inviting an Austrian domain maintainer. The 21 commands below cover EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act), French government standards (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, etc.), and Austrian government standards (DSG, NISG 2024, BVergG 2018). They are not part of the officially-maintained baseline — output should be reviewed by qualified DPO / CISO / Vergabejurist / legal counsel before reliance, and citations may lag current source text. Each command surfaces with a `[COMMUNITY]` prefix in `/help` listings and renders a warning banner before generating.
+> ⚠️ **Community-contributed.** EU and French commands are domain-maintained by [@thomas-jardinet](https://github.com/thomas-jardinet), Austrian commands by [@gtonic](https://github.com/gtonic). The 27 commands below cover EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act, Cloud Sovereignty Framework), French government standards (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, etc.), Dutch government standards (Rijksbreed cloudbeleid, VIRBI 2025, BIO2, cloud exit), and Austrian government standards (DSG, NISG 2026, BVergG 2018, BaFG / WZG accessibility). They are not part of the officially-maintained baseline — output should be reviewed by qualified DPO / CISO / Vergabejurist / legal counsel before reliance, and citations may lag current source text. Each command surfaces with a `[COMMUNITY]` prefix in `/help` listings and renders a warning banner before generating.
 
 **EU regulations** (member-state-neutral baselines, applicable across EU/EEA):
 
@@ -373,6 +373,7 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 - `/arckit:eu-ai-act` — EU AI Act (Regulation 2024/1689) — risk classification (prohibited / high-risk / GPAI), conformity routes
 - `/arckit:eu-dora` — Digital Operational Resilience Act (EU 2022/2554) — financial sector ICT risk, TLPT, third-party register
 - `/arckit:eu-cra` — Cyber Resilience Act (Regulation 2024/2847) — products with digital elements, SBOM, VDP, CE marking
+- `/arckit:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework (v1.2.1) — eight weighted sovereignty objectives, SEAL-0 to SEAL-4 assurance levels, minimum-SEAL tender gate
 - `/arckit:eu-dsa` — Digital Services Act (Regulation 2022/2065) — intermediaries, platforms, VLOPs, ARCOM
 - `/arckit:eu-data-act` — Data Act (Regulation 2023/2854) — connected products, B2B FRAND, cloud switching, Article 27
 
@@ -390,13 +391,21 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 - `/arckit:fr-pssi` — Information System Security Policy (PSSI) per ANSSI / RGS
 - `/arckit:fr-code-reuse` — Public code reuse assessment (code.gouv.fr, SILL, EUPL) — build-vs-reuse decision matrix
 
-**Austrian government** (apply on top of the EU baseline for Austrian deployments — seed contribution pending a domain maintainer):
+**Dutch government** (apply on top of the EU baseline for Netherlands central-government deployments — domain-maintained by [@umag](https://github.com/umag)):
+
+- `/arckit:nl-cloud` — Rijksbreed cloudbeleid 2026 compliance (materieel cloudgebruik, exit plan, CISO Rijk notification, EEA residency, staatsgeheim / TBB eligibility)
+- `/arckit:nl-tbb` — Te Beschermen Belangen and VIRBI 2025 rubricering (BIV scoring across five kernbelangen, one-way TBB↔rubricering inference)
+- `/arckit:nl-bio` — BIO2 conformance (OBDO, on NEN-EN-ISO/IEC 27001:2023 and 27002:2022)
+- `/arckit:nl-exit` — Cloud exit plan under Rijksbreed cloudbeleid clause 3.2 (planned exit and disruptive interruption, annual review)
+
+**Austrian government** (apply on top of the EU baseline for Austrian deployments — domain-maintained by [@gtonic](https://github.com/gtonic)):
 
 - `/arckit:at-dsgvo` — Austrian DSG layer on GDPR (§§12–13 image processing, ELGA/GTelG health, §96a ArbVG employee monitoring, age 14 consent, DSB enforcement)
-- `/arckit:at-nisg` — Austrian NISG 2024 (NIS2 transposition) — Essential/Important designation, GovCERT reporting, KSÖ, AT sectoral authorities
+- `/arckit:at-nisg` — Austrian NISG 2026 (NIS2 transposition, BGBl. I Nr. 94/2025, in force 1 Oct 2026) — Essential/Important designation, Cybersicherheitsbehörde registration, CSIRT reporting (CERT.at / GovCERT), KSÖ, AT sectoral authorities
 - `/arckit:at-bvergg` — Bundesvergabegesetz 2018 procurement — Oberschwellen/Unterschwellen, ANKÖ publication, Bestbieterprinzip, BVwG review
+- `/arckit:at-barrierefreiheit` — Digital accessibility across both transposition tracks — BaFG (European Accessibility Act, private sector) and WZG (public sector), EN 301 549 / WCAG 2.1 AA, Barrierefreiheitserklärung, SMS and FFG
 
-These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry extra `[NEEDS VERIFICATION]` markers reflecting their seed status — a future domain maintainer is expected to tighten the citations.
+These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry `[NEEDS VERIFICATION]` markers where a point is genuinely open rather than unreviewed — implementing ordinances not yet issued under the NISG 2026, Länder scope, current guidance versions, and recent DSB case law. `nl-cloud` and `nl-tbb` play the same role for Dutch deployments, with `nl-cloud` keying its public-cloud eligibility off the rubricering determined by `nl-tbb`.
 
 ---
 
@@ -509,7 +518,7 @@ Install: `claude plugin install arckit arckit-us`. See [`docs/guides/us-federal-
 
 ## UK Finance Payments Overlay (4 commands) — First Sector Overlay
 
-> **EXPERIMENTAL sector overlay.** The 4 commands below cover UK regulated payment system operators scaling operations under PSD2 SCA-RTS, CASS V, FCA Consumer Duty, and CREST protocols. They ship as the **arckit-uk-finance** community-contributed overlay — the first **sector-specific** overlay (distinct from the 7 jurisdictional overlays). Output requires review by qualified UK FS regulatory counsel, MLRO, and SMF holders before implementation.
+> **EXPERIMENTAL sector overlay.** The 4 commands below cover UK regulated payment system operators scaling operations under PSD2 SCA-RTS, CASS V, FCA Consumer Duty, and CREST protocols. They ship as the **arckit-uk-finance** community-contributed overlay — the first **sector-specific** overlay (distinct from the 8 jurisdictional overlays). Output requires review by qualified UK FS regulatory counsel, MLRO, and SMF holders before implementation.
 
 **Payments architecture and compliance**:
 

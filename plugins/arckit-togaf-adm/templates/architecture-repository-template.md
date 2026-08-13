@@ -8,21 +8,8 @@ templateVersion: "1.0"
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| Standard ID | `ARC-000-REPO-v{VERSION}` |
-| Project | Global Repository |
-| Owner | `[OWNER_NAME_AND_ROLE]` |
-| Classification | `[CLASSIFICATION]` |
-| Status | DRAFT |
-| Created | `[YYYY-MM-DD]` |
-| Review Date | `[YYYY-MM-DD]` |
-| Review Cycle | Quarterly |
-| Next Review | `[YYYY-MM-DD]` |
-| Owner | `[OWNER_NAME_AND_ROLE]` |
-| Reviewed By | `[REVIEWER_NAME]` |
-| Approved By | `[APPROVER_NAME]` |
-| Distribution | `Project Team, Architecture Team` |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ### Revision History
 

@@ -459,6 +459,25 @@ All artifacts must pass these 10 checks:
 - Trade secret safeguards documented (process to identify, confidentiality agreement, TOMs)
 - Gap timeline references both key dates: 12 September 2025 and 12 September 2027
 
+### EUCSF -- EU Cloud Sovereignty Framework Assessment
+
+- Assessment context stated: setting minimum SEAL levels for a tender specification, assessing a candidate service, or both
+- Minimum SEAL per objective sourced **only** from the tender specification; where no tender specification exists, every objective is marked "Not yet set by contracting authority" rather than given an invented value
+- Document nowhere states or implies a framework-mandated minimum SEAL
+- All eight objectives (SOV-1 to SOV-8) assessed, none omitted
+- Weight table reproduces the framework weights and totals exactly 100%
+- All five SEAL definitions (SEAL-0 to SEAL-4) reproduced in full, not paraphrased
+- Sovereignty Score computed from the stated formula, and the per-objective Score / Max Score basis is stated rather than assumed
+- Award criterion and rejection gate kept distinct: the weighted Sovereignty Score does not excuse a failed minimum SEAL on any single objective
+- Each objective carries an evidence column drawn from that objective's contributing factors; no invented criteria
+- SEAL claimed and SEAL evidenced recorded separately; any self-declared level is flagged unverified wherever it appears, including the executive summary
+- No commercial cloud provider named as sovereign, compliant, or achieving any SEAL level
+- No vendor-analyst market research (Gartner or similar) cited as evidence for a sovereignty claim
+- SecNumCloud / EUCS treated as complementary security assurance, never as establishing a SEAL level
+- Gap analysis flags rejection risk explicitly wherever an objective falls below a stated minimum
+- Document states it records an assessment and does not certify
+- Framework recorded in the Document Register as a Web URL row, with the verification date in the Description
+
 ### SECNUM -- SecNumCloud Assessment
 
 - Provider qualification matrix covers all six major candidates (S3NS, Outscale, OVHcloud, Bleu, NumSpot, Cloud Temple)
@@ -617,6 +636,22 @@ All artifacts must pass these 10 checks:
 - Reused components register populated (source, version, licence, integration method)
 - Circulaire PM n°6264-SG (2021) compliance — evidence that reuse was assessed before commissioning new development
 
+### ATBFR -- Austrian Accessibility Assessment (BaFG / WZG)
+
+- Both tracks determined independently with reasoning recorded: WZG (BGBl. I Nr. 59/2019, Directive (EU) 2016/2102) for federal public bodies, BaFG (BGBl. I Nr. 76/2023, Directive (EU) 2019/882) for economic actors; "both apply" supported
+- Land-level or municipal bodies routed to the applicable Landesgesetz — the federal WZG does not reach them
+- Microenterprise exemption applied to **services only**, never to products; the headcount and turnover/balance-sheet figures relied on are recorded, since the Sozialministeriumservice can require that evidence
+- Conformance assessed against EN 301 549 **v3.2.1** (the OJ-cited version) giving WCAG 2.1 AA; WCAG 2.2 AA appears only as an explicit forward-looking decision, never as the legal floor
+- Per-criterion table carries surface, evidence and test method; automated tooling alone is not presented as conformance
+- Non-web EN 301 549 clauses assessed where hardware, terminals, documents or e-books are in scope
+- Barrierefreiheitserklärung assessed against all five required elements (statutory conformance wording; non-accessible content split into incompatible / disproportionate burden / out of scope; preparation method and date; feedback mechanism; FFG enforcement pointer) where WZG applies
+- Conformity route correct per type: EU declaration of conformity and CE marking for products, published description plus retained documentation for services — no CE marking asserted for a service
+- Disproportionate burden and fundamental alteration claims backed by a documented, dated, retained assessment
+- Emergency communications (Notrufe) flagged as TKG 2021 rather than assessed under the BaFG
+- SMS and FFG exposures stated separately: BaFG administrative penalties up to EUR 80,000 tiered by severity and size; **no fine regime asserted under the WZG**
+- Gap analysis prioritised by user impact first and enforcement exposure second, with owners, target dates and NFR-UX cross-references
+- Items requiring practitioner verification marked `[NEEDS VERIFICATION]`, including the BaFG § numbers
+
 ### ATDSG -- Austrian Data Protection Assessment
 
 - DSG (BGBl. I 165/1999) and applicable sector laws (ELGA-G, GTelG 2012, ArbVG §96a) identified
@@ -664,11 +699,54 @@ All artifacts must pass these 10 checks:
 - SLA terms, vertragliche Regelungen, and penalty regime (Vertragsstrafe) drafted
 - Art. 28 GDPR + DSG processor clauses included where personal data processed
 - NISG supply-chain clauses included where contracting authority is Essential/Important
+- Accessibility clause (§107 BVergG) cites EN 301 549 **v3.2.1**, the OJ-cited version, giving WCAG 2.1 AA; WCAG 2.2 AA appears only as an explicit forward-looking decision, never as the default baseline
 - ANKÖ publication plan (plus TED for Oberschwellen) set
 - Angebotsfrist per §87 BVergG respected; Stillhaltefrist modelled in timeline
 - BVwG / LVwG review venue documented with the tiered Pauschalgebühren (Vergaberechtsgesetz 2026) reference
 - Vergabeakt structure defined for Rechnungshof / EU audit defensibility
 - Items requiring practitioner verification marked `[NEEDS VERIFICATION]`
+
+### RBCLOUD -- Rijksbreed Cloudbeleid Compliance Assessment
+
+- Materieel publiek cloudgebruik determination made with stated rationale (clause 4.1)
+- Every clause 5.2 / 4.5 / 5.4 eligibility conclusion cites the clause number it rests on, and the clause 5.2 conclusion cites the TBB category / rubricering it depends on (or explicitly flags the category as pending `/arckit-nl:nl-tbb`)
+- Clause 4.5 email/file-storage conditions assessed individually — partial satisfaction of the three cumulative conditions is not treated as eligible
+- Clause 3.1 risk assessment covers all five required aspects, with foreign-government interference explicitly assessed and mitigated as far as possible
+- Clause 4.2 cybersecurity criteria (C2000, ABRO, AIVD/MIVD advice) assessed
+- Clause 4.3 critical/essential-entity discouragement assessed where applicable, with risk-acceptance rationale recorded if proceeding regardless
+- Clause 4.6 data location and encryption posture assessed
+- The clause 3.2 exit-plan obligation and the clause 3.3 CISO Rijk notification obligation are both addressed as actions, not silently dropped
+- No specific commercial cloud provider named, shortlisted, or implied as compliant or qualified
+
+### TBB -- Te Beschermen Belangen Determination
+
+- Beschikbaarheid, Integriteit, and Vertrouwelijkheid scored independently, with no property's score allowed to influence another's
+- TBB category set from the highest of the three BIV scores, not an average and not confidentiality alone, with the derivation shown
+- The one-way inference warning is stated prominently and is not reversed anywhere in the document — a determined TBB category never implies the corresponding Stg. classification is held by every piece of information in scope
+- No VIRBI 2025 rubricering is derived from the TBB category anywhere in the document — an existing marking may be recorded and applied as a floor on the category, but the category never yields a marking
+- Where the information in scope carries no marking, "None recorded" is stated rather than a level being inferred
+- Both bounds are shown when a marking exists (BIV-derived category and the floor), with the one that applied identified
+- The final category is the **more sensitive** of the two bounds, i.e. the lower-numbered one — TBB 1 is the most sensitive and TBB 4 the least. A floor of TBB 3 against a BIV-derived TBB 4 yields TBB 3, never TBB 4
+- The determination carries an explicit sign-off line for the departmental security authority (beveiligingsautoriteit / BVA), distinct from the generic Document Control approval fields
+- VIRBI 2013 flagged as superseded wherever referenced in source material
+
+### BIO2 -- BIO2 Conformance Assessment
+
+- Certification-vs-conformance distinction stated explicitly — "not certified" is never reported as a finding of non-conformance on its own
+- All four ISO/IEC 27002:2022 control themes (Organisational, People, Physical, Technological) addressed
+- Conformance claims reference the current BIO2 overheidsmaatregelen rather than an invented measure number, wording, or threshold — unsupplied specifics carry the `[PENDING — cite from current BIO2 text]` placeholder
+- BIV scores from `/arckit-nl:nl-tbb` used to prioritise controls where available
+- Gap summary includes priority, owner, and target date per gap
+- Cbw/Wwke sector applicability noted
+
+### NLEXIT -- Cloud Exit Plan
+
+- Both Scenario A (planned exit) and Scenario B (disruptive interruption) are covered — a plan documenting only the planned scenario does not satisfy clause 3.2
+- Scenario B does not assume provider cooperation, and states a minimum viable continuity path with RTO and RPO
+- Destruction of data at the provider after migration is addressed with a verification method, for both scenarios
+- Self-test evidence is present, or its absence is flagged explicitly rather than presented as compliant
+- Annual review cycle set with a named owner and next review date
+- Residual risks (data-format lock-in, proprietary managed-service coupling, provider non-cooperation) identified with likelihood, impact, and mitigation
 
 ### ADMP -- TOGAF ADM Preliminary Phase
 
@@ -762,7 +840,7 @@ All artifacts must pass these 10 checks:
 
 ### REPO -- Architecture Repository
 
-- Document ID uses the global form `ARC-000-REPO-v{VERSION}`, not a project-scoped ID
+- Document ID uses `ARC-000-REPO-v[VERSION]` for a global repository or `ARC-[PROJECT_ID]-REPO-v[VERSION]` for a project-scoped one, and the Project field agrees with the form chosen
 - Every standard has an STD-xxx ID, a domain, a status (Active / Deprecated) and a source artefact
 - Deprecated standards name their superseding standard
 - Every reference architecture (REF-xxx) links to a DIAG artefact rather than embedding the diagram
@@ -847,3 +925,722 @@ All artifacts must pass these 10 checks:
 - No dimension scored above L3 without documented, repeatable process evidence
 - Improvement actions given per dimension where a gap exists
 - Overall maturity consistent with the dimension scores — not above the lowest scored dimension without justification
+
+### FIPS199 -- FISMA Security Categorization
+
+- System type recorded (General Support System / Major Application / Minor Application / Subsystem)
+- Every information type carries an SP 800-60 Vol 2 reference (e.g. `C.2.8.12`), not a prose name alone
+- Confidentiality, Integrity and Availability each scored Low / Moderate / High for every information type
+- SP 800-60 provisional values recorded alongside the adjusted values, with rationale for every deviation
+- System security category derived by the high-water-mark rule with the calculation shown — each objective equals the maximum across all information types, and none falls below its highest constituent
+- Aggregation-driven upward adjustments stated explicitly; any downward adjustment justified against SP 800-60 §3.2
+- Agency-specific overlays assessed (CUI per 32 CFR Part 2002, IRS Publication 1075 FTI, agency health types) or recorded as not applicable
+- Provisional or contested classifications listed for SISO/AO review rather than silently resolved
+
+### NIST -- NIST SP 800-53 Control Tailoring
+
+- Baseline derived from the FIPS 199 water-mark and matching it, not chosen independently
+- FedRAMP baseline recorded where FedRAMP applies (Low / Moderate / High / LI-SaaS) with the Rev 5 source cited
+- Every control in the selected baseline appears in the tailoring matrix — no silent omissions
+- Each control records an implementation status (Implemented / Inherited / Hybrid / Planned / Not Applicable) and a responsible party
+- Every Inherited or Hybrid control names the CSP and links its Customer Responsibility Matrix
+- Control enhancements carried at their own IDs (e.g. `AC-2(1)`), not folded into the base control
+- Every `[Assignment:` and `[Selection:` parameter has an assigned agency value; FedRAMP-specified values honoured, with deviations called out
+- Compensating controls record rationale, residual risk and AO acceptance posture
+- Privacy control overlay (PT family, SP 800-53B) tailored wherever PII is processed, cross-referenced to the PIA
+- SP 800-171 Rev 3 layered where CUI is in scope
+- OSCAL publication status recorded, flagged as a roadmap item if not yet met
+
+### FRSSP -- FedRAMP System Security Plan
+
+- Every section of the SSP structure present, with sections lacking content marked `<TBC>` and surfaced rather than left silently incomplete
+- Categorization pulled verbatim from the FIPS 199 artefact, with the CIA water-mark matching it exactly
+- Control baseline consistent with that categorization — a Moderate system carries the Moderate baseline
+- Every control records a Control Origination from the permitted set (Service Provider Corporate / SP System Specific / Configured by Customer / Provided by Customer / Shared / Inherited)
+- Every Shared control states the customer responsibility
+- Authorization boundary describes components inside and outside, with explicit in-scope / out-of-scope justification for external services per the ABG
+- Every interconnection records name, FedRAMP package ID, agreement type (ICA / MOU / ISA), data direction, ports and protocols, and sensitivity
+- Types of Users records privilege level, clearance or citizenship requirement, and authentication mechanism per population
+- Applicable laws include FISMA, the Privacy Act and E-Gov Act §208 as a minimum, plus agency-specific statutes, with M-24-10 cited where AI is in scope
+- ConMon strategy states scan cadence by type (authenticated, unauthenticated, web application, container, database), annual assessment and POA&M cadence
+
+### FRRR -- FedRAMP Readiness Assessment
+
+- The SSP and NIST 800-53 artefacts both exist — the control delta cannot be enumerated without them
+- Capability statement says why a federal agency would use the CSO, not only what it does
+- Ready-capabilities checklist assessed item by item: FIPS 140-3 validated cryptography at rest and in transit, MFA for privileged access, audit logging, vulnerability-management cadence, incident response with US-CERT reporting, supply-chain controls, ConMon, and US-Persons staffing where required
+- Every gap records a severity per the 3PAO RAR rubric (Critical / High / Moderate / Low), an owner and a target date
+- Gap register reconciles with the Planned entries in the NIST 800-53 artefact
+- Every gap has a corresponding draft POA&M row in FedRAMP POA&M format
+- Evidence inventory identifies control claims with no supporting artefact, rather than listing only the evidence that exists
+- Customer Responsibility Matrix drafted for SaaS and PaaS offerings
+- Authorization path recommended with rationale against the JAB prioritization criteria
+- Readiness verdict consistent with the gaps — no Ready verdict while Critical or High gaps remain open
+
+### ZTA -- Zero Trust Architecture Maturity
+
+- All five pillars assessed: Identity, Devices, Networks, Applications & Workloads, Data
+- All three cross-cuts assessed: Visibility & Analytics, Automation & Orchestration, Governance
+- Every function scored Current and Target on the ZTMM v2.0 four-stage scale (Traditional / Initial / Advanced / Optimal)
+- Current-stage claims carry evidence rather than assertion
+- Heatmap cell codes (T/I/A/O) reconcile with the per-function scores, with a parallel target-state heatmap present
+- No target stage set below its own current stage
+- Every function with a gap appears in the uplift roadmap; roadmap sequencing respects the stated dependencies
+- M-22-09 alignment maps posture to all five strategic goals and names the action items still unaddressed
+- Control linkage maps each ZTMM function to specific 800-53 Rev 5 control IDs
+
+### ICAM -- Identity, Credential and Access Management
+
+- Every user population enumerated with its use cases (Federal Employees, Contractors, Citizens, Partner Agencies, Privileged Administrators, Service Accounts)
+- IAL, AAL and FAL each scored 1/2/3 per use case, with SP 800-63-3 rationale referencing the impact categories
+- AAL consistent with the FIPS 199 water-mark — a higher water-mark cannot carry a lower AAL without stated justification
+- Authenticators selected for each tier are permitted by SP 800-63B for that tier; AAL3 uses multi-factor cryptographic hardware with verifier impersonation resistance
+- Identity proofing documented for every IAL2/IAL3 use case: evidence strength (FAIR / STRONG / SUPERIOR), remote versus in-person, provider, retention and disposal
+- Federal employee and contractor pattern uses PIV as primary credential per HSPD-12 and FIPS 201-3, with Derived PIV (SP 800-157 Rev 1) for mobile
+- Public-facing citizen pattern documents login.gov per M-19-17, or justifies an alternative
+- Federation pattern specifies protocol (SAML 2.0 / OIDC), initiation direction, assertion encryption and single-logout handling
+- Privileged access covers break-glass accounts, just-in-time elevation, session recording and separation of duties
+- Credential lifecycle covers issuance, suspension, revocation, re-issuance and renewal
+- Authorization model chosen (RBAC / ABAC / ReBAC) with PDP, PIP and PEP placement identified
+- Identity-proofing PII flows cross-referenced to the PIA
+
+### USPIA -- Privacy Impact Assessment (US Federal)
+
+- Document ID uses `USPIA`, not `PIA` — `PIA` is registered to the Canadian Privacy Impact Assessment
+- Every PII element records category (sensitive / non-sensitive per SP 800-122), source, purpose, lawful authority, retention period and disposal method
+- Any PII element without a clear lawful authority flagged as a blocker rather than left blank
+- Lifecycle map covers Collection → Use → Disclosure → Retention → Disposal, each flow annotated with its authority and any Privacy Act §552a(b) exception relied upon
+- System-of-records determination made explicitly — records about individuals retrieved by personal identifier
+- SORN verdict stated as New required / Modify existing (citing the SORN number) / None required, with reasoning
+- Where a SORN is required, routine uses, retention schedule and Federal Register timeline captured, including the 30-day period before operational use
+- All eight FIPPs assessed (Transparency, Individual Participation, Purpose Specification, Data Minimisation, Use Limitation, Data Quality and Integrity, Security, Accountability and Auditing)
+- All seven M-03-22 required topics covered
+- Sector overlays assessed where applicable (HIPAA, FERPA, IRS Publication 1075, CJIS, GLBA, COPPA)
+- Privacy risks scored by likelihood and impact with mitigations and residual risk, cross-referenced to the project risk register
+- SAOP sign-off block present with reviewer, scope, publication URL and re-assessment cadence
+
+### AIRMF -- NIST AI Risk Management Framework
+
+- All four functions assessed: Govern, Map, Measure, Manage
+- Govern subcategories covered across 1.1–1.7, 2.1–2.3, 3.1–3.2, 4.1–4.3, 5.1–5.2 and 6.1–6.2, each with outcome, current state, evidence and gap action
+- Lifecycle stages in scope identified per AI RMF §3, with TEVV responsibilities named
+- Measure function selects metrics per trustworthiness characteristic (valid and reliable, safe, secure and resilient, accountable and transparent, explainable and interpretable, privacy-enhanced, fair with harmful bias managed), each with test method and frequency
+- Generative AI addendum present wherever the system uses generative AI, assessing all 12 NIST AI 600-1 risks with applicability, controls, residual risk and actions
+- Absence of the GenAI addendum justified by an explicit not-generative determination, never omitted silently
+- Residual risk register lists risks remaining after Manage actions, each with a target review date
+- Control crosswalk maps AI RMF subcategories to 800-53 Rev 5 controls and to M-24-10 minimum practices
+- Manage function cross-references the IR controls in the NIST 800-53 artefact
+
+### AIIA -- AI Impact Assessment (OMB M-24-10)
+
+- Appendix I presumed-impacting lists checked for both rights and safety, with matched items quoted verbatim and cited to their M-24-10 section, or an explicit "no Appendix I match"
+- Rights-impacting determination applies the M-24-10 principal-basis test and names both the decision and the affected population
+- Safety-impacting determination names the decision flow, not a verdict alone
+- An Appendix I match not carried through to a Yes verdict recorded as a documented rebuttal of presumption, never as a silent No
+- All eight minimum risk-management practices assessed with status (Met / Partial / Not Met / Not Applicable), evidence reference and action
+- Every practice not Met carries a waiver record with CAIO determination, waiver period and compensating measures
+- M-25-21 acquisition controls documented for vendor-supplied AI: AI RMF alignment, model provenance, training-data disclosure, bias-testing access, fairness reporting, incident reporting, exit and portability
+- AI Use Case Inventory submission confirmed or scheduled, with any law-enforcement or national-security redactions noted
+- CAIO sign-off block present with scope, conditions and next review
+
+### SBOM -- Software Bill of Materials (EO 14028 / M-22-18)
+
+- Applicability determined against the M-22-18 §2 covered-software definition, citing the post-14-September-2022 development test
+- Producer of record identified for every open-source component
+- Every CISA attestation item recorded with status (Yes / No / Partial), evidence reference and remediation plan
+- Attestation items crosswalked to SP 800-218 SSDF practices (PO, PS, PW, RV) and to 800-53 SR and SA controls
+- SBOM format stated with its version (e.g. CycloneDX 1.6, SPDX 2.3) and the tooling used to generate it
+- All seven NTIA minimum data fields present: supplier name, component name, version, other unique identifiers (PURL / CPE), dependency relationships, author of SBOM data, timestamp
+- NTIA automation and practice elements addressed: machine-readable format, frequency, depth, known unknowns, distribution and delivery, access control, accommodation of mistakes
+- SLSA level claimed with rationale, and a signing strategy stated
+- VEX production cadence, CVE disclosure policy, coordinated-disclosure contact and mean-time-to-patch targets recorded
+- Any item that cannot be attested carries an M-22-18 exception record: which items, rationale, compensating controls, agency CIO and OMB notification status, and expiry
+- Distribution plan names the CISA Repository lodging target and the access-control posture for SBOM consumers
+
+### PDPL -- UAE Personal Data Protection Law Assessment
+
+- Scope states the carve-outs: DIFC DPL and ADGM DPR free-zone regimes fall outside the federal PDPL, and ADHICS is flagged where healthcare data is in scope
+- Every processing activity cites a PDPL Article 5 lawful basis, or Article 6 where consent is relied upon
+- All five Article 21 DPIA triggers assessed (new technology, large-scale processing, profiling or automated decisions, systematic monitoring, Article 7 sensitive categories), each triggered category carrying an impact assessment, residual risk and mitigations
+- Data-subject rights procedure covers all eight rights (access, rectification, erasure, restriction, portability, object, withdraw consent, complain to the Data Office), each with channel, response SLA and operational owner
+- Every cross-border transfer assessed against Article 22 adequacy or Article 23 derogations; transfers to countries with no UAE adequacy designation record both a written agreement and an explicit derogation
+- Breach notification playbook states the Article 9 obligations to the Data Office and to data subjects, with timelines and a named owner
+- Penalties section marked informational and excluded from compliance scoring
+
+### IAS -- UAE Information Assurance Standards
+
+- Federal entity identified, with CII sector designated where applicable (energy, water, telecoms, finance, transport, government, health, food and agriculture, emergency services)
+- Statement of Applicability covers every control family: 60 management controls (M1–M6) and 128 technical controls (T1–T9)
+- Applicable and not-applicable counts reconcile against that full set of 188 — no control silently absent
+- Every SoA row carries Control ID, description, priority tier (P1–P4), applicability, implementation status (Implemented / Partial / Not Implemented / Not Applicable), owner and evidence reference
+- Every Not Applicable control carries a justification rather than a blank
+- Risk treatment plan derived from the SoA gaps, each with target state, owner and deadline
+- CII registration status with the UAE Cybersecurity Council recorded where the entity is designated, including sector regulator interactions
+
+### CRES -- UAE Cloud Residency
+
+- Every dataset assessed by its Dataset ID from the CLAS register rather than re-enumerated
+- Classification, required residency, chosen CSP, region and compliance check recorded per dataset
+- Confidential, Secret and Top Secret datasets resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2, with any exception raised rather than left implicit
+- CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS) covering certification posture (DESC for Dubai entities, CSC accreditation), regional footprint, sovereign-data scope and documented limitations
+- Shared-responsibility matrix divides responsibility across infrastructure, platform, application, data, identity and operational layers for each chosen CSP
+- Shared platform components (identity, observability, backups) assessed for residency, not only the primary services
+- Exit and portability plan covers data egress, format portability, identity migration, key custody on exit and contingency residency on regulatory change
+
+### CLAS -- UAE Smart Data Classification Register
+
+- Every dataset assigned exactly one Smart Data level (Open / Shared / Confidential / Secret / Top Secret) — no other values
+- Level definitions cited to the UAE Smart Data Classifications publication, which appears in the Document Register with its primary URL and verification date
+- Handling, storage and declassification rules stated per dataset, not per level alone
+- Each dataset cross-referenced upstream to the BR / DR requirements that drove its capture and downstream to the INT requirements that consume it
+- PDPL lawful basis referenced for every dataset containing personal data
+- Dataset IDs stable and reusable — the CRES and DSHR artefacts reference this register by ID
+- Document Control carries the UAE block (Federal Entity, Cabinet Instrument, Sovereign Cloud Region, AI Autonomy Tier)
+
+### UPASS -- UAE Pass Integration
+
+- In-scope user journeys enumerated with their user populations (citizens, residents, visitors) and the Service Provider category being onboarded
+- Authentication flow shown as an OIDC Authorization Code flow with PKCE, covering user agent, Service Provider, UAE Pass IdP, claim issuance and session establishment
+- Profile selection justified per journey — Basic for login only, Verified for KYC and e-signature — with the Emirates ID verification prerequisite stated for Verified
+- Any journey relying on e-signature uses the Verified profile; a Basic-profile journey cannot claim e-signature capability
+- Claim mapping covers the UAE Pass claims in use (`sub`, `idn`, `fullnameAR`, `fullnameEN`, `mobile`, `email`, `nationalityEN`, `nationalityAR`, `gender`, `dob`, `profileType`) against the Service Provider schema, with consent and privacy notes per claim
+- E-signature audit trail records the signed artefact, signer identity, timestamp and certificate chain for non-repudiation, citing the legal effect
+- Onboarding checklist covers the TDRA / ICP artefacts: production credentials, callback URL allow-list, branding pack, security review and go-live
+
+### ZBUR -- UAE Zero Bureaucracy
+
+- Every service mapped to its federal entity service catalogue ID where one is published, with its customer journey and current Zero Bureaucracy status
+- Baseline captures current and target values for all four metrics per service: process steps, customer-supplied fields, end-to-end time to outcome, total customer cost
+- Every metric shows a reduction trajectory — a target equal to or worse than its baseline is flagged rather than recorded silently
+- All five customer-experience KPIs defined with monthly targets: CSAT, NPS, First-Time Right rate, Digital Adoption %, Failure Demand %
+- Compliance stated against each of the five UAE Code for Government Services principles (proactive, omni-channel, personalised, simple, fast), with evidence per principle
+
+### DREC -- UAE Digital Records
+
+- Every record type designates an authoritative system, a custodian entity and a stable record identifier scheme
+- Retention schedule states period, legal or regulatory basis, disposal trigger and disposal method per record type — no retention period without a cited basis
+- Records carrying the official-source designation named explicitly, with the evidence supporting it (audit trail, integrity controls, signature)
+- Lifecycle covers capture, classification, storage, access, retention and disposal, each mapped to where it is implemented in the technology stack
+- Classification stage cross-references the CLAS register rather than restating levels
+- Audit procedure states sampling approach and integrity checks; disposal procedure names the approver and the evidence of disposal
+
+### DSHR -- UAE Data Sharing Agreement
+
+- Sharing parties identified with joint-controller status and service-level commitments
+- Every shared dataset referenced by its Dataset ID from the CLAS register, with classification level, volume, frequency and direction
+- Every share involving personal data cites its PDPL Article 5 lawful basis (or Article 6 consent) and references the PDPL artefact entry that justifies it
+- Technical mechanism stated per share (REST API, event stream, file drop, federated query) with authentication, integrity and rate-limiting controls
+- Safeguards cover encryption in transit and at rest, key management, access control, logging, and incident-response co-ordination between the parties
+- All six data-subject rights traced across the sharing boundary (access, rectification, erasure, restriction, portability, object), each with a named owning party
+- No dataset shared at a classification its residency posture forbids — cross-checked against the CRES assessment
+
+### NPRA -- UAE National Priorities Alignment
+
+- All four federal strategies assessed with their relevant pillars: We the UAE 2031, National Investment Strategy 2031, UAE Strategy for Artificial Intelligence 2031, Digital Economy Strategy
+- Every major capability (identity, payments, hosting, notifications, data exchange) tested against the federally-provided shared service (UAE Pass, FedNet, government cloud, federal payment gateway)
+- Every rejected reuse carries an explicit justification — a build decision cannot rest on silence
+- Capability reuse register records the federal provider, integration mode and cost-saving evidence per adopted capability
+- Resource-efficiency calculation compares the reuse baseline against the build alternative quantitatively, over the project lifecycle
+- Feasibility assessment and pilot or phased rollout sequence present per major capability, per the Federal Government Guide
+
+### AICH -- UAE AI Ethics Charter Assessment
+
+- Every AI capability inventoried with model family, vendor, deployment mode (on-prem / sovereign-cloud / hosted-API) and primary user population
+- All 12 Charter principles assessed: Human-Machine Ties, Safety, Bias Mitigation, Data Privacy, Transparency, Human Oversight, Governance and Accountability, Technological Excellence, Human Commitment, Peaceful Coexistence, Inclusive Access, Lawful Compliance
+- Each principle records applicability, evidence of compliance, gap and mitigation — a principle marked applicable with no evidence is a gap, not a pass
+- Bias and fairness assessment names the protected attributes, the fairness metrics measured, dataset provenance, mitigations taken and residual risk
+- Human-in-the-loop design states the reviewer role, review trigger, override mechanism and audit trail of human decisions per use case
+- AI Autonomy Tier in the Document Control header consistent with the AUTI assessment where one exists
+
+### AUTI -- UAE AI Autonomy Tier
+
+- Every AI use-case mapped to exactly one tier with rationale: Tier 1 internal productivity, Tier 2 external-facing with mandatory human approval, Tier 3 regulated or financial decisions
+- Tier assignment consistent with blast radius — a use-case driving eligibility, payment or risk-scoring decisions cannot sit below Tier 3
+- Guard-rail matrix states the technical controls per tier: input filtering, output filtering, retrieval grounding, hallucination controls, refusal policy, prompt-injection defences
+- Approval gates named per tier for both deployment and each release, including the regulator-facing approval where Tier 3 applies
+- Audit obligations per tier state logging detail (prompt, response, model version, retrieval context, human reviewer), retention, audit cadence and reporting line
+- Tier-promotion criteria stated as evidence requirements, so promotion is testable rather than discretionary
+- AI Autonomy Tier in the Document Control header matches the highest tier in the inventory
+
+### FPRO -- UAE Federal Procurement
+
+- Route to market selected (open / restricted / direct award) with justification under the Decree-Law, alongside value bracket and any framework-agreement use
+- ITT/RFP pack outline aligned to the MoF Digital Procurement Platform templates: cover page, instructions to bidders, scope of work, technical specification, mandatory and desirable requirements, ICV obligations, evaluation criteria and weights, contract terms, response forms
+- Technical specification traceable to REQ (FR / NFR / INT) rather than written afresh
+- ICV plan states scoring criteria, target score, supplier evidence requirements and the post-award reporting obligation
+- Evaluation methodology states technical and commercial weights, pass/fail thresholds, panel composition independent of the bidding pool, conflict-of-interest declarations and report structure
+- Evaluation weights sum to 100%, with the stated thresholds reachable under them
+- Contract register schema defines its columns: contract ID, supplier, value, term, ICV target and actual, performance KPIs, renewal trigger date, owner
+
+### FITAA -- Foreign Influence Transparency Registry
+
+- Activity scoping states the statutory triggers (covered arrangements with foreign principals to influence government, political processes or public discourse) and the excluded categories (journalism, academic research)
+- Decision tree maps the project's own activities against those triggers rather than restating the statute
+- Provisions cited only where numbering is settled; anything pending marked `<TBC at draft time>` rather than asserted
+- Arrangement register separates public-facing transparency fields from protected national-security fields, with the 14-day material-change cadence stated
+- Registration workflow bilingual per the OLA assessment, with identity verification, acknowledgement and registration ID issuance
+- Public-register versus protected-investigative data flow shown, with severance rules cross-referenced to the ATIP assessment
+- Commissioner liaison protocol covers reporting cadence for suspected non-registration and falsification, plus RCMP and CSIS touchpoints
+- Charter risks registered against s.2(b) chilling effect and s.2(d) association, cross-referenced to the CHRT assessment
+- Open Items record which regulations may post-date the artefact and which Commissioner guidance is still pending
+
+### PIA -- Privacy Impact Assessment (Canada)
+
+- Document ID uses `PIA` — the US federal assessment is registered as `USPIA`
+- Privacy Act §4 collection authority cited to the enabling statute or regulation; unclear authority marked `<TBC>` and flagged as an OPC blocker rather than left implicit
+- Every personal information element records source, purpose, sensitivity, retention period, disclosure recipients and its Personal Information Bank entry where applicable
+- Necessity and proportionality run as the four-step Oakes-derived analysis: pressing and substantial objective, rational connection, minimal impairment, proportional effects
+- §7 use limited to the purpose of collection or a consistent use; §8 disclosures analysed per routine use, with §8(2)(a)–(m) letters treated individually rather than aggregated
+- Cross-border transfer flags cross-referenced to the cloud-residency assessment
+- Individual rights cover §12 access, §13 PIB registration with TBS InfoSource, correction and annotation, and the OPC complaint pathway
+- OPC notification trigger analysed, honouring the 30-day pre-launch requirement for new programmes and substantial modifications
+- Approval chain named through ATIP coordinator, ADM and head of institution, with TBS notification and OPC consultation at the correct gates
+- Action tracker links every open mitigation back to its privacy-risk register entry
+
+### ATIP -- Access to Information and Privacy
+
+- Information holdings inventory categorises every holding as Public, Protected or Classified, accounting for every data element in the data model rather than personal information alone
+- Each holding maps to its Personal Information Bank where applicable, with owner and lifecycle stage
+- Every claimed ATI Act exemption explained rather than merely cited (§13, §14, §15, §16 including §16.1–§16.6, §19, §21, §23, §24)
+- §19 not treated as a blanket exemption — §8(2) routine-use disclosures still assessed
+- Privacy Act register tables every collection, use and disclosure against its section authority (§4, §5 with the §5(2)/(3) exceptions, §7 and §7(a) consistent use, §8)
+- §8(2)(a)–(m) routine-use letters analysed individually; dissimilar disclosures not aggregated under a single letter
+- Severance design states field-level rules, an audit-log schema capturing reviewer, exemption claimed, justification and output, and a re-identification risk analysis against adjacent open data
+- Request workflow covers the §7 30-day clock, §9 extensions with written reasons, §27 third-party consultation and publication of refusals, with an SLA per step
+- Annual report mapping identifies what feeds TBS InfoSource, the departmental report and the OIC / OPC cycle, and on what cadence
+
+### AIA -- Algorithmic Impact Assessment
+
+- All six questionnaire dimensions scored with evidence cited: Project, System, Algorithm, Decision, Impact, Data
+- Impact Level (I–IV) computed from the questionnaire per the TBS Directive threshold matrix with the workings shown — never self-declared
+- Mitigations applied match the computed Level rather than a lower one
+- Peer review scoped to the Level (internal at II, external at III/IV) with named reviewers and lead time
+- Transparency notice bilingual per the OLA assessment, published 30 days pre-launch for Level III/IV
+- Human-in-the-loop design states override paths, escalation thresholds and reviewer training
+- Recourse mechanism provides an appeal path to a human decision-maker and explanation rights for affected individuals
+- Algorithmic risks register covers bias (selection, label, deployment), data and concept drift, proxy variables, contestability gaps and distributional fairness across protected grounds
+- Training-data provenance records source, licence and vintage per dataset, with refresh cadence, drift triggers and a named steward
+- Disclosure plan assumes publication unless a stated exemption applies, with the national-security cross-reference and any Protected B/C severance noted
+- Reassessment triggers stated for material change to data, model, decision boundary or operating environment, with cadence accelerated for Level III/IV
+
+### CHRT -- Charter of Rights and Freedoms Analysis
+
+- Engagement surface states which Charter sections are engaged with reasoning per section; "Not engaged" carries a stated justification rather than silence
+- Sections 2(b), 2(d), 7, 8 and 15 addressed as the default engaged set for FITAA-class systems
+- s.8 analysis addresses reasonable expectation of privacy, the warrant requirement and production-order interfaces against the *Hunter v Southam* and *R v Spencer* lines
+- s.15 analysis names the protected grounds and applies the substantive equality test with a differential-impact assessment
+- Oakes proportionality run through all four steps for every engaged right: pressing and substantial objective, rational connection, minimal impairment, proportional effects
+- Mitigation register records residual risk per identified Charter risk
+- DOJ counsel sign-off block present with date and conditions, escalating to the Department of Justice constitutional advisor where the risk warrants
+
+### ITSG -- ITSG-33 Security Control Profile
+
+- Every information asset scored Confidentiality, Integrity and Availability as Low / Medium / High using the TBS injury-based matrix, with the reasoning recorded
+- System-level categorisation derived as the high-water mark across the asset inventory with the working shown, mapped to UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET
+- Control profile matches that categorisation (PBMM, PBMM-Cloud, Secret-High, Top-Secret-High) with rationale and a named approver
+- Every tailoring deviation from the published profile justified rather than merely preferred
+- Statement of Applicability covers all 16 control families (AC, AU, CA, CM, CP, IA, IR, MA, MP, PE, PL, PS, RA, SA, SC, SI), each control marked Applicable / Not Applicable / Compensating with justification
+- Every compensating control names its substitute and the residual-risk acceptance rationale
+- Every cryptographic module lists its CMVP / FIPS 140-3 certificate number, validation level and algorithm scope; non-validated cryptography protecting Protected B or above recorded as a finding, not a discussion item
+- Supply chain assessed against the TBS Direction on Vulnerable Suppliers and the sanctioned-entities list, flagging vendors, sub-processors and PSPC-restricted telecommunications equipment
+- Continuous monitoring states assessment frequency per family, the evidence tooling, reporting cadence, and explicit re-categorisation triggers
+- Authorisation chain identified by role (System Owner, Security Authority, Authorising Official) with cycle, conditions and re-authorisation triggers
+
+### SOIA -- Security of Information Act Handling
+
+- SOI inventory qualifies material against the s.8 statutory definition — departmental designation cannot create or remove SOI status
+- Marking matrix records classification level, caveats (CANADIAN EYES ONLY, NOFORN, FVEY, releasability tags) and compartments per asset
+- Foreign-shared product carries originator caveats, with the Third-Party Rule applied and redistribution conditioned on originator consent
+- Handling rules tiered by classification across at rest (storage approval, CMVP / CSE-approved encryption), in transit and in use
+- Transmission channel matrix states allowed channels per categorisation, unencrypted-link prohibitions, and caveat-driven restrictions — CEO and NOFORN material is not transmissible over allied-shared infrastructure
+- Compartment register defaults to deny, with every access an explicit need-to-know determination; owner, access-list size, indoctrination requirements and audit-log rotation recorded per compartment
+- Destruction and sanitisation use approved routes (CSE / RCMP-approved shredders, degaussers, incineration) per CSE ITSP.40.006 across the media lifecycle
+- CSIS Act §16 and §19 coordination identifies the system's role and the coordinating contact and artefact for each
+- Breach response prioritises containment within minutes (revoke access, isolate the system, suspend the account) ahead of forensic completeness, with the escalation path and PCO reporting where Cabinet confidence is implicated
+- Personnel reliability treated as per-task rather than per-role, with clearance prerequisites, update cycle and compartment indoctrination stated
+- The artefact itself marked, stored and handled at its own classification
+
+### CACR -- Canadian Cloud Residency
+
+- Workload categorisation drawn from the ITSG-33 artefact where present, otherwise performed here against the TBS Standard on Security Categorization with the working shown
+- Residency requirements stated separately for data at rest, in transit and in processing, including backup and disaster-recovery locations
+- Managed-service processing routed through a foreign region treated as a residency event rather than an implementation detail
+- Sovereign cloud options matrix records per candidate the in-region offering, Protected B authorisation status with verification date, foreign-government access exposure (US CLOUD Act, EO 12333 / FISA 702), cost band and managed-services gaps
+- SSC cloud-brokering path documented without treating it as transferring the departmental ATO obligation
+- Foreign sub-processor analysis identifies any sub-processor whose primary jurisdiction sits outside Canada, with the exposure documented
+- Every cross-border transfer cites a lawful authority, and CLOUD Act exposure noted as persisting for US-incorporated CSPs even in Canadian regions
+- Exit and portability plan states bulk-export approach, format portability, an annual-minimum dry-run cadence, and a budget for egress fees and runbook rebuild
+- Operational topology records regions, zones, network paths, interconnects, in-transit encryption posture and the BYOK / HYOK / external-key-store custody decision per workload
+- Indigenous data constraints cross-referenced to the OCAP assessment where such data is in scope
+
+### DIGSTD -- GC Digital Standards Scorecard
+
+- All 10 GC Digital Standards named in the artefact so the scorecard reads without leaving it
+- Each standard assessed with evidence citing artefacts, test reports, retrospectives or user research rather than assertion
+- Each standard records gaps, remediation actions, owner, target date and maturity (Initial / Repeatable / Defined / Measured / Optimising)
+- Maturity expressed per standard, never collapsed to a single overall score
+- Cross-cutting themes addressed: accessibility against WCAG 2.1 AA / 2.2 AA and the *Accessible Canada Act*, open data and code, ethical AI cross-referenced to the AIA, and user-research practice
+- Roadmap states current versus target maturity per standard with milestones, owners and dates
+
+### OLA -- Official Languages Act Assessment
+
+- Service surface inventory covers every user-facing surface: screens, forms, notifications, error messages, public registers, accessibility statements, printed correspondence, IVR scripts and social media
+- Each surface records its language posture with justification wherever unilingual, plus audience and channel
+- Part IV obligations state the rationale per surface (significant demand, public travel, head office, designated bilingual office), active offer at first contact, and bilingual capacity at time of service
+- Part V covers internal tooling availability for designated bilingual regions, the National Capital Region and New Brunswick, including language of supervision
+- Part VI addresses staffing impact, equitable participation, and non-discrimination on language grounds
+- Equivalent quality assessed per surface across content depth, usability, response time and release cadence — no translation-lag releases
+- Translation pipeline states the Translation Bureau engagement model, lead time per content class, and a workflow that holds release until both languages are ready
+- OQLF considerations acknowledged where there is a material Quebec audience, noting it does not bind federal entities but may apply to suppliers
+- Risk register covers complaint exposure to the Commissioner of Official Languages and Part X court remedies
+
+### PROC -- Federal Procurement Strategy (Canada)
+
+- Procurement scope aggregates to a single estimated value, used consistently for threshold analysis
+- Thresholds assessed against CFTA, CETA, CPTPP and WTO-AGP, each stating the current threshold, whether the value crosses it, the coverage scope and the open-tendering obligation attaching
+- Route selection assesses every candidate with fit, risk posture and timeline (Standing Offer / Supply Arrangement, AgileIQ, bespoke RFP/RFSO/RFSA, PSAB set-aside)
+- Any Standing Offer or Supply Arrangement named is confirmed current and in scope per its scope notice
+- PSAB contribution documented explicitly so the departmental rolling 5% target can roll it up, with the set-aside type stated and the supplier pool identified through the ISC directory
+- The 5% treated as a department-level rolling target — no single procurement judged in isolation
+- Security clearance requirements stated per role with level, holder count, PSPC processing lead time, and the operational risk where clearance sits on the critical path
+- Evaluation framework sets mandatory, point-rated and financial dimensions with a weight envelope traceable to requirements, leaving the detailed rubric to the evaluation artefact
+- Bid solicitation schedule runs market notice through award including CanadaBuys posting, standstill periods and post-award PSAB reporting, each with owner and dependency
+- Risks cover supplier-pool sufficiency, clearance bottleneck on the critical path, threshold disputes, CFTA Chapter 5 / CITT challenge, sub-processor residency conflict, and supplier-side OLA and accessibility obligations
+
+### OCAP -- OCAP® Indigenous Data Governance
+
+- FNIGC pre-engagement confirmed before any substantive section is generated — the gate is structural, not advisory
+- Where engagement is absent and not in progress, the artefact is a planning scaffold only: status marked `PLANNING SCAFFOLD — INCOMPLETE`, an engagement-letter shape provided, and no self-declared OCAP register, DSA terms or co-governance arrangement generated
+- An `N/A` answer carries a written justification that no Indigenous data is in scope, cross-referenced to the data requirements and data model
+- Indigenous data inventory records First Nation(s) of origin, nature of data, current custodianship, transfer history and sensitivity tier per dataset
+- All four OCAP principles mapped per dataset: Ownership, Control, Access, Possession
+- USAI principles applied separately where Métis populations are in scope — never collapsed into OCAP
+- ITK principles applied separately where Inuit populations are in scope — never collapsed into OCAP
+- Data-sharing agreement terms include Indigenous co-signatory, purpose limitation, time bounding, revocability, audit rights and sub-processor restrictions
+- Repatriation plan covers return-or-destroy with format portability wherever data was historically taken without informed consent
+- Co-governance records Indigenous representation, decision-making authority and appeal pathway
+- Risk register covers misuse of traditional knowledge, secondary analysis without consent, breach of trust and *UNDA* / UNDRIP implications
+
+### AUE8 -- Essential Eight Maturity Assessment
+
+- All eight mitigation strategies assessed: application control, patch applications, Office macro settings, user application hardening, restrict administrative privileges, patch operating systems, multi-factor authentication, regular backups
+- Each strategy records current maturity (ML0 / ML1 / ML2 / ML3) with evidence, target maturity with its regulatory or risk-appetite rationale, gap, remediation with owner and target date, and residual risk
+- Maturity summary matrix carries one row per strategy and reconciles with the per-strategy assessments
+- Where the entity is a DISP member, any strategy below ML2 is flagged as a DISP non-compliance risk rather than reported as a neutral gap
+- Cloud-hosted systems state which controls are shared-responsibility, which are vendor-managed, and any IRAP-assessed service alignment
+- System classification recorded (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) alongside deployment model and data sovereignty position
+- Recommendations grouped by Quick Wins (<30 days), Short-Term (30–90) and Medium-Term (90–180), each naming its strategy and target ML
+
+### AUISM -- ISM Control Applicability
+
+- Applicability driven by system classification — the control set at OFFICIAL:Sensitive is a subset of that at PROTECTED, and the artefact states which classification it is assessing
+- Applicability matrix covers all 17 ISM control areas (the 15 chapter domains plus Cloud/IaaS and Working-Off-Site)
+- Each in-scope domain records applicability rationale, implementation status, evidence, gap with specific ISM control IDs, remediation with owner and date, and any compensating controls
+- Gaps name the specific ISM control IDs not met rather than describing the domain in general terms
+- ISM-to-E8 cross-reference present, showing E8 as a mitigation subset rather than an alternative
+- Compliance summary states an applicability score as controls implemented over controls applicable, reconciling with the per-domain assessments
+- IRAP position records scope, assessment date, accepted residual risks and re-assessment cadence; inherited posture noted where integrating with IRAP-assessed cloud services
+
+### AUPIA -- Australian Privacy Impact Assessment
+
+- All 13 Australian Privacy Principles assessed, each with applicability and rationale, compliance status, evidence, privacy risk where non-compliant, and mitigation with owner and date
+- Information flows shown as a diagram marking collection, storage, processing, disclosure, cross-border transfer and disposal, with each flow marked against the APP that governs it
+- Sensitive information tested against the s 6 Privacy Act definition (racial or ethnic origin, political opinions, religious beliefs, sexual orientation, criminal record, health, genetic, biometric, trade union membership); where present, the additional APP 3.3 consent requirement is addressed
+- Cross-border disclosures assessed under APP 8, with the accountability consequence stated
+- Privacy risks scored by likelihood and impact with mitigations and residual risk
+- Automated decisions affecting individuals record the December 2026 notification requirement, the human review mechanism and a fairness assessment, cross-referenced to the AI assurance artefact
+- APP 11 security posture cross-referenced to the E8 and ISM artefacts rather than asserted independently
+
+### AUNDB -- Notifiable Data Breaches Playbook
+
+- Eligibility test stated as an explicit decision tree over the three statutory limbs: unauthorised access, disclosure or loss; serious harm likely; remediable by reasonable steps
+- The eligibility conclusion follows the logic — limbs 1 and 2 satisfied with limb 3 unsatisfied yields an eligible data breach requiring notification within 30 days
+- 30-day timeline planned day by day from Day 0 awareness through Day 30 notification, with the intermediate phases named
+- RACI covers Privacy Officer, Security Officer, CISO, Legal, Communications and the accountable executive
+- Detection and containment procedures name the channels by which breaches become known, the immediate containment steps and evidence preservation
+- Serious-harm assessment criteria stated (financial loss, identity theft, emotional distress, physical safety, reputational harm), together with the reasonable-steps mitigation that can remove eligibility
+- OAIC notification content covers the statutory form fields: nature of breach, kind of information, recommendations for individuals, contact details
+- Individual notification approach chooses between direct and publication-based, with content, channel, language and accessibility considerations
+- Coordination with other obligations addressed — SOCI 12-hour and 72-hour, DISP incident reporting, and sectoral regulators — recognising that one incident can trigger several timelines
+- Post-incident review feeds control updates back into the E8, ISM and PIA artefacts
+- Annual tabletop exercise planned with evidence retention and a lessons-learned cycle
+
+### AUOT -- Operational Technology Security
+
+- OT environment context records operational function, safety impact, availability requirements, the OT/IT boundary, third-party access, classification and critical-infrastructure relevance
+- Assessment made against ASD OT principles, definitive OT architecture guidance and secure connectivity principles
+- Definitive OT architecture view records whether an authoritative asset, data-flow, trust-boundary, dependency, owner and connectivity picture exists — absence recorded as a finding
+- Architecture evidence cross-referenced to diagram, DFD and data-model artefacts per OT zone, with missing diagrams, missing DFD levels, stale entities or unowned dependencies called out explicitly as evidence gaps
+- Segmentation documents zones, conduits, boundary controls, admin pathways, jump hosts, protocol gateways, DMZs and monitoring points
+- Remote access assessed for business case, exposure, brokered and just-in-time access, privileged access workstations, vendor access, obsolete-device compensating controls and logging
+- Safety, availability and recovery constraints identify where cyber controls must be adapted for safety, uptime, legacy devices, maintenance windows and manual fallback
+- AI-in-OT assessed where AI is present; where absent, recorded as not applicable with the trigger conditions for reassessment stated rather than silently omitted
+- Findings cross-referenced to the E8 and ISM artefacts, showing where evidence is reused or qualified
+- Recommendations grouped Immediate / 30–90 days / 90–180 days / strategic, each with owner, evidence artefact and residual risk
+
+### AUSOCI -- SOCI Critical Infrastructure Risk Management Programme
+
+- Critical asset context identifies asset, sector, responsible entity, operator, direct interest holders, regulator, and whether the asset is declared or suspected in scope
+- Applicability assessment covers sector, asset class, thresholds, responsible-entity obligations, register obligations, incident reporting and government assistance, with any uncertainty flagged for legal confirmation rather than resolved by assumption
+- All five CIRMP hazard domains assessed: cyber and information security, personnel, supply chain, physical security, natural hazards — each with material risk, relevant impact, current controls, evidence, gaps and a named risk owner
+- Cyber evidence consolidated from the E8, ISM, OT, PIA and NDB artefacts rather than restated
+- Governance model records accountable owner, governing-body oversight, annual report owner, risk committee, review cadence and evidence repository
+- Incident reporting documents the 12-hour and 72-hour pathways where applicable, escalation roles, regulator contact points and record-keeping
+- Annual report and attestation readiness assessed against the required timeframe, including governing-body approval
+- Sector-specific obligations (AESCSF, AER ring-fencing, NER/NGR, AEMO) explicitly deferred to the sector recipes rather than partially duplicated here
+- Architecture and data evidence cross-referenced, with missing or stale evidence called out explicitly
+
+### AUAESCSF -- Australian Energy Sector Cyber Security Framework
+
+- AESCSF source text is not quoted verbatim — the assessment describes maturity in its own words to respect the framework's licensing
+- Energy sub-sector, asset or platform, market role, operational environment and criticality identified, with AESCSF applicability assumptions stated
+- Target maturity profile justified against business criticality, safety and market impacts, with legal or regulatory assumptions flagged for qualified review
+- Maturity assessed per AESCSF capability domain with current evidence, target state, gaps, owners and uplift actions
+- OT/IT zone and conduit diagrams required, alongside DERMS / DOE / CSIP-AUS flows where applicable, field telemetry, metering, control-room and grid-edge dependency evidence
+- Market and system-operator interfaces documented (AEMO interfaces, settlement or metering flows, telemetry, APIs, file transfers, protocol gateways)
+- Asset and interface inventory names a source-of-truth register per class, with owners, criticality and inventory gaps identified
+- Anti-pattern register calls out flat OT networks, undocumented market interfaces, unmanaged vendor remote access, stale DER integration assumptions, missing data ownership and unsupported control-room dependencies
+- Findings mapped to the federal baseline artefacts (E8, ISM, OT security, SOCI CIRMP)
+- Maturity gaps converted into risk treatments with owner, due date, evidence artefact and residual risk
+
+### AUENERGY -- Australian Energy Regulatory Compliance
+
+- Energy sub-sector, regulated services, market participant roles, asset classes and system-operator touchpoints identified
+- AER ring-fencing assessment covers the regulated and unregulated boundary, shared services, staff access, data access, branding, affiliate interactions and waivers, with items requiring qualified legal review marked as such rather than asserted
+- NER, NGR and AEMO obligations mapped at architecture level and explicitly positioned for specialist confirmation
+- SOCI applicability cross-referenced to the CIRMP artefact rather than re-derived
+- Market and system-operator interface register identifies AEMO portals, APIs, B2B/B2M, file transfers, telemetry, dispatch, outage and settlement interfaces
+- Regulated and unregulated data flows document permitted and prohibited flows with controls, approvals, logging, retention, affiliate access and evidence owners
+- Prohibited flows stated explicitly — a permitted-flow list alone does not evidence ring-fencing
+- Inventory names source-of-truth registers across regulated and unregulated services, critical assets, CMDB CIs, interfaces, telemetry, vendor access, customer and metering data, with owners, criticality and gaps
+- Architecture decision seeds proposed for ring-fencing boundaries, shared services, market interface design, DER integration, customer data sharing and SOCI escalation
+- Gaps prioritised with owner, artefact, decision, review requirement and due date
+
+### AUDSS -- Digital Service Standard Assessment
+
+- All 13 Digital Service Standard criteria assessed, each with status, evidence summary, gap description and remediation with owner and target date
+- Service phase recorded (Discovery / Alpha / Beta / Live) alongside user base and transaction volume
+- Accessibility assessed against WCAG 2.2 AA with assistive-technology testing and a published accessibility statement
+- Privacy criterion evidenced by a completed PIA and APP compliance rather than an assertion
+- Security criterion cross-referenced to the E8 posture rather than described independently
+- Open-source criterion states the strategy, repository and licence, or records the exemption
+- Performance measures name the KPIs (completion rate, user satisfaction, cost per transaction, digital take-up)
+- Non-digital experience addressed with assisted digital, phone and in-person channel design — not deferred as out of scope
+- Compliance summary table reconciles with the per-criterion assessments
+- Services approaching an assessment gate identify the top three risks to passing, with mitigations
+
+### AUPSPF -- Protective Security Policy Framework
+
+- All four PSPF outcomes assessed: security governance, information security, personnel security, physical security
+- All 16 core requirements (CR1–CR16) assessed individually, each with compliance status, supporting evidence, gap description, remediation with owner and date, and the self-assessment level achieved
+- Compliance summary carries 16 rows and reconciles with the individual core-requirement assessments
+- Entity type recorded (non-corporate Commonwealth, corporate Commonwealth, contractor, panel member, state government under flow-down) together with the applicability driver — direct or contractual flow-down
+- Chief Security Officer designated
+- Evidence cites the ISM, E8, PIA and DISP artefacts where they exist rather than restating their content
+- Non-corporate Commonwealth entities record Annual Self-Assessment status, last submission to AGD and current self-assessed maturity
+- Recommendations grouped Quick Wins / Short-Term / Medium-Term, each tagged to a specific core requirement
+
+### AUDISP -- Defence Industry Security Programme Attestation
+
+- DISP level sought stated (Level 1 / 2 / 3) with its regulatory driver and a justification for the level chosen
+- A named Chief Security Officer designated with role, authority across all four security domains, deputy, contact details and vetting status
+- All four security domains covered — governance, personnel security, physical security, information and cyber security — each with current state, evidence references, gap, remediation with target dates and an accountable-officer sign-off
+- Essential Eight evidence summarised per strategy against the ML2 minimum, citing the E8 artefact directly
+- Any strategy below ML2 surfaced as a DISP attestation risk rather than recorded as a routine gap
+- ISM applicability highlights identify gaps that materially affect the attestation, citing the ISM artefact
+- FOCI declaration discloses foreign ownership above 5%, foreign board arrangements, foreign supply-chain dependencies and foreign personnel access, with mitigation plans where Level 2 or 3 applies
+- Supply chain discloses Tier 1 suppliers and the attestations they hold (SOC 2, ISO 27001, IRAP)
+- Incident response evidences a 24-hour rapid notification capability for Defence-relevant incidents and integration with the NDB scheme
+- Annual self-audit plan states scope, methodology and evidence retention
+- Attestation statement carries CSO and Director sign-off blocks, date and re-attestation cadence
+
+### AUAIA -- Australian AI Assurance
+
+- AI capability type, deployment phase, foundation model, training and inference data sources and human-in-the-loop posture recorded, with decisions affecting individuals stated explicitly
+- All six DTA Responsible AI Policy accountabilities assessed: accountability, transparency, risk-based approach, quality data and design integrity, privacy and security, human oversight and redress
+- All eight AU AI Ethics Principles assessed with status, evidence, gap and mitigation
+- All six Essential AI Practices (AI6) assessed with status, evidence, gap and action, cross-referenced to the DTA accountabilities without conflating the two — the DTA policy is a Commonwealth mandate, AI6 is adoption guidance
+- Substantially-automated decisions significantly affecting individuals document the December 2026 notification mechanism, what individuals are told and any opt-out pathway, cross-referenced to APP 6 and APP 11
+- Fairness assessment names the bias evaluation methodology, protected attributes, fairness metrics, test results across population segments and residual fairness risks
+- Training-data classification assessed on the basis that models can memorise personal information, so the classification may exceed that of the source system
+- Prompt-injection and model-extraction defences documented, cross-referenced to the E8 posture and ISM applicability
+- Model lifecycle governance covers version control, change management for model updates, drift detection and retirement criteria
+- Third-party foundation models disclose vendor, model version, vendor policy compliance, training-data provenance, inference data residency and the IP position
+- ISO 42001 readiness assessed clause by clause where certification is pursued or anticipated
+
+### CMPT -- Competitor Landscape
+
+- Rival suppliers ranked by awarded-value share with award counts and key buyers
+- The mandatory awarded-value caveat present — figures are awarded contract value, not actual spend
+- On a supplier-focus run the focal supplier is pulled out of the set with its awarded value, award count and share; on a capability-focus run the head-to-head section renders explicitly not-applicable rather than being omitted
+- Concentration reported as top-1 and top-3 share with a HIGH / MEDIUM / LOW flag, and the flag consistent with the shares it is derived from
+- Every representative notice carries its `notice_url`
+- Data freshness and source health reported, or a freshness-unavailable note given rather than silence
+- Per-rival buyer relationships and recent wins present for each rival in the set
+- Government Award History enrichment only merged into pre-existing vendor profiles — no new profiles created
+- Figures traceable to the reader payload; no supplier, value or buyer introduced at render time
+
+### SUPP -- G-Cloud Supplier Profile
+
+- Company details complete: registered name, company registration number, DUNS, VAT, registered address, trading name, website, year established
+- Every certification records status, certificate number, expiry and certification body — a named certification without a number or expiry is incomplete
+- Security clearances recorded as staff counts per level (BPSS, CTC, SC, DV, eDV) with sponsoring organisation and renewal process
+- Every data centre records location, operator, UK data sovereignty position, certifications, and backup or DR location with distance from primary
+- Insurance recorded per policy with provider, coverage amount and expiry
+- Modern Slavery position states whether the £36m turnover threshold is met and, where it is, the published statement URL
+- Environmental credentials record ISO 14001 status, carbon-neutral position and net-zero target year
+- Subcontracting position stated, with policy and key subcontractors where used
+- SME status recorded (Micro / Small / Medium / Large) consistent with the stated employee count and turnover
+
+### DECL -- G-Cloud Supplier Declaration
+
+- Every mandatory exclusion ground answered explicitly and reproduced verbatim — never paraphrased or skipped
+- All seven mandatory exclusion categories addressed: conspiracy, corruption and bribery, fraud and theft, organised crime, terrorism, money laundering, tax evasion
+- All seven discretionary exclusion grounds answered: bankruptcy or insolvency, grave professional misconduct, distorting competition, conflict of interest, significant deficiencies in prior contracts, serious misrepresentation, undue influence
+- Company information complete, including contract notice contact details as distinct from the primary contact
+- Service offerings confirm day-one availability, absence of prohibited items and the subcontracting position
+- Modern Slavery, Equality Act 2010, environmental and labour law compliance each answered
+- All three insurance types declared: employers liability, professional indemnity, public liability
+- Tax compliance covers current obligations, GAAR compliance and absence of evasion convictions
+- Framework terms accepted, including the 10-working-day response commitment
+- No question left blank or answered `N/A` where a positive or negative declaration is required
+
+### SVCD -- G-Cloud Service Design
+
+- Lot selected and recorded (Lot 1 Cloud Hosting, Lot 2 Cloud Software, Lot 3 Cloud Support)
+- Lot-specific information gathered for the selected lot rather than the generic set alone
+- Service name within 100 characters and service description within 50 words for the marketplace fields
+- Features and benefits each capped at 10 items, every item within 100 characters
+- Target buyer segments named
+- Technical details cover hosting locations and data residency, backup and DR, scalability, and security controls cross-referenced to the supplier profile certifications
+- Support model states hours, channels, response targets and escalation
+- Pricing model outlined consistently with the pricing artefact where one exists
+- Differentiation states competitive advantages and target use cases rather than marketing claims
+
+### SDD -- G-Cloud Service Definition Document
+
+- Every mandatory marketplace question answered — an unanswered question causes rejection
+- Lot-specific categories completed for the document's own lot, and no other lot's categories substituted
+- Service name within 100 characters; description within 50 words and 500 characters
+- Features and benefits each within 10 items and 100 characters per item
+- Data centre details cover physical locations, tier, power redundancy, cooling, physical security and environmental certifications
+- Multi-tenancy separation described across resource, network and data isolation
+- Public sector network connectivity addressed where relevant (PSN, HSCN)
+- Support availability, channels, response times and documentation availability stated
+- Data locations, import and export formats, and the end-of-contract data-extraction process all specified
+- Content consistent with the supplier profile and service design artefacts — company name, certifications, data-centre locations, features, benefits and lot must agree
+
+### PRIC -- G-Cloud Pricing Document
+
+- Pricing model chosen and appropriate to the lot — day rates or fixed price for Lot 3, per-user, consumption, flat fee or tiered for Lots 1 and 2
+- All prices stated in GBP; no other currency present
+- Base pricing states minimum, standard and enterprise or volume price points
+- What is included at base price stated explicitly (features, support level, storage, users, transactions, training)
+- What costs extra stated explicitly, so the total cost of the service is derivable rather than implied
+- Education and charity pricing addressed
+- Free trial or free version position stated
+- SFIA rate card used for Lot 3 day rates, with remote, on-site and out-of-hours rates distinguished
+- Pricing consistent with the SDD's stated pricing model, included features and support level
+
+### SECA -- G-Cloud Security Evidence
+
+- All 14 NCSC Cloud Security Principles addressed
+- Every certification records certificate number, scope, certification body, last audit date and next recertification date
+- Cyber Essentials or Cyber Essentials Plus recorded with certificate number, certification date and expiry
+- SOC 2 Type II records report date, trust service criteria covered and any exceptions noted — exceptions are not omitted
+- Penetration testing records frequency, last test date, provider, scope coverage and remediation process
+- Vulnerability scanning records frequency, tooling and remediation SLAs
+- Data protection covered both in transit and at rest, with key management stated
+- Access management and audit capabilities described
+- Evidence register maps each claim to its supporting artefact
+- Certifications consistent with those declared in the supplier profile
+
+### GCMP -- G-Cloud Competitor Benchmark
+
+- Competitors identified from real market evidence, with the search basis recorded rather than assumed
+- Feature, pricing, certification and support comparisons each presented as a like-for-like table
+- Pricing comparison states market low, average and high alongside the service's own price
+- Certification comparison expresses the market position as a proportion rather than an assertion
+- SWOT covers all four quadrants, each grounded in the comparison tables rather than introduced fresh
+- Strengths and weaknesses stated relative to named competitors, not in the abstract
+- Recommendations follow from the comparisons — a pricing recommendation must be consistent with the pricing comparison
+- Where award evidence is available, the benchmark is anchored to it and the awarded-value caveat carried
+- Citation traceability applied, with every external claim referenced
+
+### GCRV -- G-Cloud Submission Review
+
+- Every expected document checked for existence by its ARC-ID (SUPP, DECL, SVCD, SDD, PRIC, SECA)
+- Overall status set to READY, NEEDS WORK or NOT READY, and consistent with the findings — no READY status while a mandatory field is missing
+- Mandatory field status reported per document rather than in aggregate
+- Character and word limits validated numerically and reported as actual against limit: service name against 100 characters, description against 50 words and 500 characters, each feature and benefit against 100 characters
+- Consistency checks run across every pair the review names: supplier profile against SDD, service design against SDD, SDD against pricing, SDD against security
+- Common rejection reasons checked explicitly: placeholder text, `N/A` where an answer is required, contradictory statements, unsubstantiated claims, competitor mentions, non-GBP pricing
+- Actions required listed with enough specificity to be actioned without re-reading the source documents
+- Evidence status reported per claim requiring evidence
+
+### FSSCA -- SCA-RTS Exemption Assessment
+
+- All nine in-scope exemptions assessed (Articles 10, 10A, 11, 13, 14, 15, 16, 17, 18), each with a decision of APPLY, DO_NOT_APPLY or CONDITIONAL
+- Article 12 explicitly excluded as out of scope — AISP payment account access is covered by Article 10A post-PS21/19
+- Every decision justified against the firm's actual payment channels and risk profile rather than asserted
+- Where Article 18 TRA is applied, the firm's current fraud rate per payment category is stated
+- The applicable reference fraud-rate band cited, and the targeted exemption threshold consistent with that band — a threshold cannot be claimed while the corresponding fraud-rate condition is unmet
+- The continuous nature of the TRA fraud-rate condition stated, not treated as a one-off test
+- Exemption decisions consistent with each other where they interact
+
+### FSSAFE -- Safeguarding Arrangements
+
+- Authorisation type recorded (authorised EMI, authorised API, registered SPI) with the applicable regulation cited
+- Safeguarding method stated with justification: segregation, insurance, or comparable guarantee
+- SPI safeguarding correctly characterised as voluntary — registered SPIs are not required to safeguard, and where elected the Reg 23 mechanics and insolvency priority follow
+- Designated accounts record institution name, FCA FRN, account type, sort code or IBAN, and date designated
+- Segregation trigger stated against the correct deadline for the authorisation type — end of business on the day of receipt under PSRs 2017 Reg 23(2), or within five business days of issuance for EMIs under EMR 2011 Reg 20(4)
+- Controls preventing commingling with operational funds documented, along with the controls keeping the designated account to safeguarding use only
+- Where insurance or a comparable guarantee is used, the insurer or guarantor, coverage amount, sublimits and insolvency trigger are recorded, with confirmation the cover was in place before any relevant funds were received
+- Reconciliation approach documented with frequency and break-resolution process
+
+### FSCD -- Consumer Duty Assessment
+
+- All four outcomes assessed with an evidence status, and thin evidence flagged as Amber or Red rather than presented as compliant
+- Price and Value states total cost to the consumer broken down by fee type, including FX spread and ancillary charges
+- Fair-value methodology stated, with benchmarking against at least two comparable competitors or market indices
+- Any cross-subsidisation disclosed and tested against the fair-value obligation
+- Consumer Support evidenced with service-level data across every contact channel, complaint volumes with root-cause analysis and trend direction, and escalation and FOS referral rates
+- Vulnerable customer cohorts identified from evidence rather than assumed demographics, covering all four FG22/5 drivers: health, life events, resilience, capability
+- Each cohort records estimated proportion of the customer base, identification method, and evidence that the additional support offered is effective
+- Foreseeable harms register populated, with each harm linked to the outcome it engages
+
+### FSCTP -- Critical Third Party Dependency
+
+- Every provider classified as designated CTP, material non-CTP, or non-material, with the current HMT designation status verified rather than assumed
+- Designated CTPs record the specific services consumed, mapped to the firm's Important Business Services
+- Substitution time estimate and substitution complexity stated per designated CTP
+- Last resilience test recorded as an actual date — "planned" or "TBD" is not an acceptable value
+- Nth-party sub-contractor dependencies identified, on the basis that these are often the real failure mode
+- Materiality scored across all four dimensions (IBS dependency, substitution difficulty, recovery time impact, concentration risk contribution) on the 1–5 scale
+- Concentration assessed across all three axes: geographic, vendor and functional
+- Concentration findings consistent with the materiality scores that produced them
+
+### NHSDTAC -- NHS Digital Technology Assessment Criteria
+
+- All five DTAC sections assessed, each with an explicit pass, partial or fail status and supporting evidence
+- Clinical safety records DCB0129 manufacturer and DCB0160 deployer case status, CSO name and registration, and hazard log status with open-hazard count and highest open risk level
+- Absent safety case files marked `[PENDING DCB0129/0160]` clearly rather than passed over
+- Data protection states the UK GDPR Article 6 lawful basis, and Article 9 where special-category data is processed
+- Sub-processor list records locations and the SCCs or UK addendum relied upon
+- DSPT submission status stated, marked as an organisation responsibility where external
+- Technical assurance covers cloud hosting and UK region status, Cyber Essentials, software lifecycle including SBOM, encryption in transit and at rest with key management, penetration test status, business continuity with RTO and RPO, and vulnerability management SLAs
+- Every `[PENDING]` item requiring human input surfaced in the summary rather than left in the body
+- Cross-references resolve to the DPIA, DATA and clinical-safety artefacts where they exist
+
+### NHSMDR -- UK MDR Classification
+
+- Intended purpose statement quoted verbatim — it is the load-bearing input, and paraphrase changes the classification
+- Medical device determination applies both the UK MDR 2002 regulation 2 definition test and the MHRA stand-alone software decision tree
+- A "Not a Medical Device" determination carries rationale drawn from the MHRA Borderline Manual and a responsible-person sign-off, and the remainder of the assessment is then explicitly N/A rather than partially completed
+- Borderline cases record the borderline rationale and recommend MHRA pre-submission review rather than resolving the question unilaterally
+- UK MDR 2002 class determined (I / IIa / IIb / III) with the applicable rule cited, plus sterile, measuring and reusable-surgical subclass flags
+- Self-certification eligibility stated, and consistent with the determined class — only Class I non-sterile, non-measuring qualifies
+- EU MDR 2017/745 classification determined separately with Rule 11 reasoning shown for software
+- Divergence between the UK and EU classifications flagged explicitly, on the basis that EU MDR is typically the more conservative reading
+- Marking pathway recommended across UKCA, UKNI and CE with Notified Body involvement and registration obligations stated per market

@@ -157,6 +157,7 @@ export const DOC_TYPES = {
   'CRA':       { name: 'EU Cyber Resilience Act Assessment',           category: 'Compliance',  regime: 'EU', severity: 'HIGH' },
   'DSA':       { name: 'EU Digital Services Act Assessment',           category: 'Compliance',  regime: 'EU' },
   'DATAACT':   { name: 'EU Data Act Compliance Assessment',            category: 'Compliance',  regime: 'EU' },
+  'EUCSF':     { name: 'EU Cloud Sovereignty Framework Assessment',    category: 'Compliance',  regime: 'EU', severity: 'HIGH' },
   // French Government (Community-contributed, maintained by @thomas-jardinet)
   'IRN':       { name: 'IRN — Indice de Résilience Numérique',         category: 'Governance',  regime: 'FR' },
   'CNIL':      { name: 'CNIL / French GDPR Assessment',                category: 'Compliance',  regime: 'FR', severity: 'HIGH' },
@@ -171,6 +172,7 @@ export const DOC_TYPES = {
   'PSSI':      { name: 'Information System Security Policy',           category: 'Compliance',  regime: 'FR', severity: 'HIGH' },
   'REUSE':     { name: 'Public Code Reuse Assessment',                 category: 'Procurement', regime: 'FR' },
   // Austrian Government (Community-contributed, maintained by @gtonic)
+  'ATBFR':     { name: 'Austrian Accessibility Assessment (BaFG / WZG)', category: 'Compliance', regime: 'AT', severity: 'HIGH' },
   'ATDSG':     { name: 'Austrian Data Protection Assessment',          category: 'Compliance',  regime: 'AT', severity: 'HIGH' },
   'ATNISG':    { name: 'Austrian NISG (NIS2) Assessment',              category: 'Compliance',  regime: 'AT', severity: 'HIGH' },
   'BVERGG':    { name: 'Austrian Public Procurement (BVergG 2018 idF VergabeRG 2026)', category: 'Procurement', regime: 'AT' },
@@ -227,6 +229,14 @@ export const DOC_TYPES = {
   'AUPSPF':    { name: 'AU Protective Security Policy Framework Scorecard', category: 'Governance', regime: 'AU', severity: 'HIGH' },
   'AUAIA':     { name: 'AU AI Assurance Baseline (DTA AI Policy v2.0)', category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   'AUDISP':    { name: 'AU DISP Member Self-Attestation Pack',         category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
+  // Netherlands Public Sector Overlay (arckit-nl) — community-contributed,
+  // EXPERIMENTAL. Outputs require review by qualified NL counsel and, for any
+  // rubricering determination, a departmental beveiligingsautoriteit or
+  // rubriceringsambtenaar before reliance.
+  'RBCLOUD':   { name: 'Rijksbreed Cloudbeleid Compliance Assessment',  category: 'Compliance',  regime: 'NL', severity: 'HIGH' },
+  'TBB':       { name: 'Te Beschermen Belangen / VIRBI 2025 Rubricering', category: 'Compliance', regime: 'NL', severity: 'HIGH' },
+  'BIO2':      { name: 'BIO2 Conformance Assessment',                   category: 'Compliance',  regime: 'NL', severity: 'HIGH' },
+  'NLEXIT':    { name: 'NL Cloud Exit Plan',                            category: 'Governance',  regime: 'NL' },
   // UK Financial Services Payments Overlay (arckit-uk-finance) — community-contributed,
   // EXPERIMENTAL. Outputs require review by qualified UK FS regulatory counsel + firm
   // MLRO / Compliance Officer before reliance.
@@ -247,7 +257,7 @@ export const DOC_TYPES = {
 // Derived: regimes in canonical order (officially-maintained first, then community alphabetical)
 // CA + AU + US added retroactively — each shipped doc-types without REGIMES registration
 // (CA since v4.15.0, AU in v5.0.0, US in v5.1.0; see #545). REGIME_LABELS ordering matches.
-export const REGIMES = ['UK', 'MOD', 'AT', 'AU', 'CA', 'EU', 'FR', 'UAE', 'US'];
+export const REGIMES = ['UK', 'MOD', 'AT', 'AU', 'CA', 'EU', 'FR', 'NL', 'UAE', 'US'];
 
 // Human-readable regime labels
 export const REGIME_LABELS = {
@@ -258,6 +268,7 @@ export const REGIME_LABELS = {
   CA:  'Canada',
   EU:  'EU',
   FR:  'France',
+  NL:  'Netherlands',
   UAE: 'UAE',
   US:  'USA Federal',
 };
@@ -280,6 +291,7 @@ export const REGIME_PARTIALS = {
   CA:  'document-control-ca.md',
   EU:  'document-control-uk.md',
   FR:  'document-control-fr.md',
+  NL:  'document-control-nl.md',
   UAE: 'document-control-uae.md',
   US:  'document-control-uk.md',  // deferred
 };

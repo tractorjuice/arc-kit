@@ -66,7 +66,7 @@ Federal employees and contractors authenticate using **PIV** (Personal Identity 
    - **Then**, `.arckit/templates/us-icam-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-icam-template.md`
 
-3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
+3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> ICAM --filename` for the artefact filename. The type code for this command is `ICAM`.
 
@@ -83,9 +83,10 @@ Federal employees and contractors authenticate using **PIV** (Personal Identity 
    - **Credential Lifecycle** — issuance, suspension, revocation, re-issuance, renewal; PIV-specific lifecycle per FIPS 201-3 §5.
    - **Authorization Model** — RBAC / ABAC / ReBAC choice with rationale; policy decision point (PDP), policy information point (PIP), policy enforcement point (PEP) placement; integration with the Zero Trust policy engine.
 
-6. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **ICAM** per-type checks pass. Fix any failures before proceeding.
+7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-7. Emit a short summary to the user — user-population count, highest IAL/AAL/FAL required, selected identity providers (login.gov, PIV, agency IdP), and any open architecture decisions. Do not echo the full artefact.
+8. Emit a short summary to the user — user-population count, highest IAL/AAL/FAL required, selected identity providers (login.gov, PIV, agency IdP), and any open architecture decisions. Do not echo the full artefact.
 
 ## Handoffs
 

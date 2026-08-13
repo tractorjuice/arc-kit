@@ -1,8 +1,9 @@
 # ArcKit — EU Overlay
 
-7 slash commands covering EU regulatory compliance:
+8 slash commands covering EU regulatory compliance:
 
 - `/arckit:eu-ai-act` — EU AI Act (Regulation 2024/1689) compliance and risk classification
+- `/arckit:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework v1.2.1 assessment (SOV-1..SOV-8, SEAL levels)
 - `/arckit:eu-cra` — Cyber Resilience Act (Regulation 2024/2847) for products with digital elements
 - `/arckit:eu-data-act` — Data Act (Regulation 2023/2854) for connected products and data holders
 - `/arckit:eu-dora` — Digital Operational Resilience Act (EU 2022/2554) for financial sector entities

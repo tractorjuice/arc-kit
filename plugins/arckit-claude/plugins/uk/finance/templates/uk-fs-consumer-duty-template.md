@@ -4,27 +4,13 @@
 
 ## Document Control
 
-<!-- Default: OFFICIAL. Upgrade to OFFICIAL-SENSITIVE if this document contains specific
-     pricing models, fraud-rate data, or vulnerable-customer cohort breakdowns that could
-     be exploited if disclosed to competitors or bad actors. Driven by
-     user_config.default_classification. -->
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
+
+<!-- Domain-specific fields, retained after the resolved header per the Document Control Standard. -->
 
 | Field | Value |
 |-------|-------|
-| **Document ID** | {{DOCUMENT_ID}} |
-| **Document Type** | FCA Consumer Duty Annual Board Report |
-| **Project** | {{PROJECT_NAME}} |
-| **Classification** | {{CLASSIFICATION}} |
-| **Status** | DRAFT |
-| **Version** | 1.0 |
-| **Created Date** | {{CREATED_DATE}} |
-| **Last Modified** | {{LAST_MODIFIED}} |
-| **Review Cycle** | Annual (Board sign-off required before each anniversary of the Duty in-force date) |
-| **Next Review Date** | {{NEXT_REVIEW_DATE}} |
-| **Owner** | {{DOCUMENT_OWNER_ROLE}} — {{DOCUMENT_OWNER_NAME}} |
-| **Reviewed By** | PENDING |
-| **Approved By** | PENDING |
-| **Distribution** | {{DISTRIBUTION}} |
 | **Reporting Period** | {{REPORTING_PERIOD_START}} to {{REPORTING_PERIOD_END}} |
 | **Firm Legal Name** | {{FIRM_LEGAL_NAME}} |
 | **FCA Firm Reference Number** | {{FCA_FRN}} |
