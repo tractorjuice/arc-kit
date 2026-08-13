@@ -95,13 +95,15 @@ Score each property independently. Do not average — the highest of the three d
 
 Where a marking is recorded, the systematiek's valid direction applies it as a floor (§3.1 — *"Andersom geldt dit echter wel. Indien een proces of informatiesysteem gegevens verwerkt of bevat op het niveau van STG GEHEIM, dan is automatisch sprake van indeling in categorie TBB 2."*):
 
-| Existing marking on the information | Category is at least |
-|-------------------------------------|----------------------|
+| Existing marking on the information | Floor: category is **at least this sensitive** |
+|-------------------------------------|-----------------------------------------------|
 | Stg. ZEER GEHEIM | TBB 1 |
 | Stg. GEHEIM | TBB 2 |
 | Stg. CONFIDENTIEEL | TBB 3 |
 | Departementaal VERTROUWELIJK / ongerubriceerd met merking | TBB 4 |
 | None recorded | no floor — the BIV-derived category stands |
+
+> **TBB 1 is the most sensitive category and TBB 4 the least** — a lower number means higher sensitivity. The final category is the **more sensitive** of the two bounds below, which is the one with the lower number. The floor can only raise sensitivity; it never lowers it.
 
 **Category from BIV scoring (§3)**: [TBB 1 / TBB 2 / TBB 3 / TBB 4]
 

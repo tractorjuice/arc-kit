@@ -707,6 +707,7 @@ All artifacts must pass these 10 checks:
 - No VIRBI 2025 rubricering is derived from the TBB category anywhere in the document — an existing marking may be recorded and applied as a floor on the category, but the category never yields a marking
 - Where the information in scope carries no marking, "None recorded" is stated rather than a level being inferred
 - Both bounds are shown when a marking exists (BIV-derived category and the floor), with the one that applied identified
+- The final category is the **more sensitive** of the two bounds, i.e. the lower-numbered one — TBB 1 is the most sensitive and TBB 4 the least. A floor of TBB 3 against a BIV-derived TBB 4 yields TBB 3, never TBB 4
 - The determination carries an explicit sign-off line for the departmental security authority (beveiligingsautoriteit / BVA), distinct from the generic Document Control approval fields
 - VIRBI 2013 flagged as superseded wherever referenced in source material
 

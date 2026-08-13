@@ -97,21 +97,33 @@ Apply the fixed mapping:
 | Midden | TBB 3 |
 | Laag | TBB 4 |
 
+**The scale runs backwards to its numbering**: **TBB 1 is the most sensitive category and TBB 4 the least**, so a *lower number means higher sensitivity*. Never treat "a higher TBB category" as meaning a larger number. Every comparison in Step 7 is a comparison of **sensitivity**, not of the digit.
+
 ### Step 7: Apply the Existing Rubricering as a Floor on the Category
 
 **This command never produces a rubricering.** The systematiek treats the rubricering as an *input* to the TBB determination, not an output of it — §2.1 lists "het rubriceringsniveau van de informatie of van het informatiesysteem" first among the criteria the categorisation must take into account.
 
 Record the rubricering the information in scope **already carries**, if any. Then apply the one direction the systematiek authorises (§3.1: *"Andersom geldt dit echter wel. Indien een proces of informatiesysteem gegevens verwerkt of bevat op het niveau van STG GEHEIM, dan is automatisch sprake van indeling in categorie TBB 2."*) as a **floor** on the category from Step 6:
 
-| Existing marking on the information | Category is at least |
-|-------------------------------------|----------------------|
+| Existing marking on the information | Floor: category is **at least this sensitive** |
+|-------------------------------------|-----------------------------------------------|
 | Stg. ZEER GEHEIM | TBB 1 |
 | Stg. GEHEIM | TBB 2 |
 | Stg. CONFIDENTIEEL | TBB 3 |
 | Departementaal VERTROUWELIJK / ongerubriceerd met merking | TBB 4 |
 | None recorded | no floor — Step 6 stands |
 
-If the floor is heavier than the BIV-derived category, the floor wins and the final category is the floor; record both and show which bound applied. If the BIV scoring already produced a heavier category, it stands — the floor never lowers a category.
+Only the `Stg. GEHEIM → TBB 2` row is stated outright in §3.1. The other three apply the same authorised direction across the pairings Tabel B sets out; they are an extension of the quoted rule, not a second quotation of it, and they run in the safe direction because a floor can only ever raise sensitivity.
+
+**Resolve the two bounds by sensitivity, not by digit.** Take the **more sensitive** of the BIV-derived category (Step 6) and the floor, which is the one with the **lower number**:
+
+| Category from BIV | Floor from marking | Final category | Bound that applied |
+|-------------------|--------------------|----------------|--------------------|
+| TBB 4 | TBB 3 | **TBB 3** | floor (more sensitive) |
+| TBB 2 | TBB 3 | **TBB 2** | highest BIV score (more sensitive) |
+| TBB 3 | none recorded | **TBB 3** | highest BIV score |
+
+Record both bounds and identify which applied. The floor can only ever make the category **more** sensitive; it never makes it less. Worked example: BIV scoring yields TBB 4 while the information carries Stg. CONFIDENTIEEL, so the floor is TBB 3 and the final category is **TBB 3** — which triggers the clause 5.2 public-cloud prohibition that TBB 4 does not. Leaving it at TBB 4 because "4 is at least 3" is the error this step exists to prevent.
 
 Where the information carries no marking, do **not** infer one. Report "None recorded" and leave the rubricering unstated.
 
