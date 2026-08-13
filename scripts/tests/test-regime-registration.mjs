@@ -93,22 +93,33 @@ if (missingFiles.length > 0) {
   for (const f of missingFiles) console.error('  -', f);
 }
 
+// Parsed once per file and kept, because the RENDERING.md ladder assertion
+// below needs the same rows: re-reading there put seven parses of
+// document-control-uk.md in a single run. A file that is missing, or whose
+// Classification row is unusable, is simply absent from the map — every later
+// check reads through `has()`/`get()` and skips it, so the failure above is
+// reported once instead of aborting the run with an ENOENT stack trace.
+const laddersByFile = new Map();
 for (const file of mappedFiles.filter((f) => !missingFiles.includes(f))) {
   const rows = classificationRows(file);
   if (rows.length !== 1) {
     ok = false;
     console.error(`[FAIL] ${file}: expected exactly 1 Classification row, found ${rows.length}`);
-  } else if (rows[0].length === 0) {
+    continue;
+  }
+  if (rows[0].length === 0) {
     ok = false;
     console.error(`[FAIL] ${file}: Classification row is empty`);
+    continue;
   }
+  laddersByFile.set(file, rows[0]);
 }
 
-if (!missingFiles.includes(UK_PARTIAL)) {
-  const ukLadder = classificationRows(UK_PARTIAL)[0];
+if (laddersByFile.has(UK_PARTIAL)) {
+  const ukLadder = laddersByFile.get(UK_PARTIAL);
   for (const [regime, file] of Object.entries(REGIME_PARTIALS)) {
-    if (file === UK_PARTIAL || missingFiles.includes(file)) continue;
-    if (classificationRows(file)[0] === ukLadder) {
+    if (file === UK_PARTIAL || !laddersByFile.has(file)) continue;
+    if (laddersByFile.get(file) === ukLadder) {
       ok = false;
       console.error(
         `[FAIL] regime ${regime} maps to ${file} but its Classification row is identical to ${UK_PARTIAL} — the ladder was not swapped`,
@@ -162,45 +173,156 @@ if (!existsSync(renderingPath)) {
 } else {
   const rendering = readFileSync(renderingPath, 'utf8');
 
-  function tableRows(heading) {
+  // A separator row may carry GFM alignment colons (`|:---|---:|`), which the
+  // old `[\s-]+` test did not match — the separator then became a data row and
+  // the run failed claiming the table listed a regime called `:---`.
+  const SEPARATOR_RE = /^\|(?:\s*:?-{3,}:?\s*\|)+$/;
+
+  function table(heading) {
     const section = rendering.split(`## ${heading}`)[1];
-    if (section === undefined) return null;
-    return section
+    if (section === undefined) return { missing: 'section' };
+    const lines = section
       .split(/\n## /)[0]
       .split('\n')
-      .filter((line) => line.startsWith('|') && !/^\|[\s-]+\|/.test(line))
-      .map((line) => line.slice(1, -1).split('|').map((cell) => cell.trim()))
-      .filter((cells) => cells[0] !== 'Regime');
+      .map((line) => line.trim())
+      .filter((line) => line.startsWith('|') && !SEPARATOR_RE.test(line))
+      .map((line) => line.slice(1, -1).split('|').map((cell) => cell.trim()));
+    if (lines.length === 0) return { missing: 'table' };
+    const [header, ...rest] = lines;
+    return {
+      header,
+      // A repeated header means a second table under the same heading; it is
+      // not data. The filter this replaced dropped it by testing cells[0].
+      rows: rest.filter((cells) => cells.join('|') !== header.join('|')),
+      col: (name) => {
+        const i = header.indexOf(name);
+        return i === -1 ? null : i;
+      },
+    };
   }
 
-  const routingRows = tableRows('Regime routing');
-  if (!routingRows) {
-    ok = false;
-    console.error('[FAIL] RENDERING.md has no "## Regime routing" section');
-  } else {
-    const documented = new Map(routingRows.map((c) => [c[0], { partial: c[1], routing: c[3] }]));
+  // Cells are addressed by COLUMN NAME, never by position. Reading `c[3]`
+  // means a column reorder in RENDERING.md silently changes what is asserted —
+  // the table would still parse, and the guard would still pass, while checking
+  // the wrong thing.
+  //
+  // Every structural failure is caught here rather than at the point of use, so
+  // a caller only ever sees rows it can safely index: an absent section, an
+  // empty one, a missing column, a row with the wrong cell count (a dropped
+  // cell is the commonest hand-edit error in a four-column table, and used to
+  // throw inside the ladder comparison), or a duplicated key (`new Map` keeps
+  // the last, so the first copy would never be validated). Returns null on
+  // failure — having reported every problem it found — or `{ rows, col, byKey }`.
+  function readTable(heading, required, keyColumn) {
+    const t = table(heading);
+    if (t.missing === 'section') {
+      ok = false;
+      console.error(`[FAIL] RENDERING.md has no "## ${heading}" section`);
+      return null;
+    }
+    if (t.missing === 'table') {
+      ok = false;
+      console.error(`[FAIL] RENDERING.md "## ${heading}" section contains no table`);
+      return null;
+    }
+    const absent = required.filter((n) => t.col(n) === null);
+    if (absent.length > 0) {
+      ok = false;
+      console.error(
+        `[FAIL] RENDERING.md "${heading}" table is missing column(s) ${absent.join(', ')} — found: ${t.header.join(' | ')}`,
+      );
+      return null;
+    }
+    const ragged = t.rows.filter((cells) => cells.length !== t.header.length);
+    for (const cells of ragged) {
+      ok = false;
+      console.error(
+        `[FAIL] RENDERING.md "${heading}" row "${cells.join(' | ')}" has ${cells.length} cell(s), header has ${t.header.length}`,
+      );
+    }
+    if (ragged.length > 0) return null;
+    const key = t.col(keyColumn);
+    const byKey = new Map();
+    const duplicated = [];
+    for (const cells of t.rows) {
+      if (byKey.has(cells[key])) duplicated.push(cells[key]);
+      byKey.set(cells[key], cells);
+    }
+    for (const k of duplicated) {
+      ok = false;
+      console.error(`[FAIL] RENDERING.md "${heading}" table has more than one row for ${k}`);
+    }
+    return duplicated.length > 0 ? null : { rows: t.rows, col: t.col, byKey };
+  }
+
+  // The documented ladder is prose and abbreviates one contiguous run of rungs:
+  // CA writes "Protected A–C" where document-control-ca.md spells out all
+  // three. That abbreviation is registered here so the comparison can stay
+  // EXACT. Comparing only the first and last rung, as this check first did,
+  // lets a row keep its ends while describing an entirely different scheme in
+  // between — AU rewritten to "UNOFFICIAL / OFFICIAL-SENSITIVE / TOP SECRET /
+  // RESTRICTED / SECRET" passed. The middle rungs are the jurisdiction-
+  // distinguishing part, so an unregistered divergence is drift, not shorthand.
+  const LADDER_ABBREVIATIONS = {
+    'Protected A–C': ['Protected A', 'Protected B', 'Protected C'],
+  };
+
+  function ladderRungs(text) {
+    if (typeof text !== 'string') return null;
+    const parts = text.replace(/^\[|\]$/g, '').split('/').map((s) => s.trim()).filter(Boolean);
+    return parts.length === 0 ? null : parts.flatMap((p) => LADDER_ABBREVIATIONS[p] ?? [p]);
+  }
+
+  // Both tables carry a Routing column, so both are held to UK_FALLBACK_BY_DESIGN
+  // — which also stops the two from contradicting each other.
+  function checkRouting(heading, regime, text) {
+    const documentedFallsThrough = text.startsWith('falls through');
+    if (documentedFallsThrough !== UK_FALLBACK_BY_DESIGN.has(regime)) {
+      ok = false;
+      console.error(
+        `[FAIL] RENDERING.md "${heading}" says ${regime} "${text}", but UK_FALLBACK_BY_DESIGN ${UK_FALLBACK_BY_DESIGN.has(regime) ? 'contains' : 'does not contain'} it`,
+      );
+    }
+  }
+
+  const routing = readTable(
+    'Regime routing',
+    ['Regime', 'Partial', 'Classification ladder', 'Routing'],
+    'Regime',
+  );
+  if (routing) {
+    const cPartial = routing.col('Partial');
+    const cLadder = routing.col('Classification ladder');
+    const cRouting = routing.col('Routing');
     for (const regime of REGIMES) {
-      const row = documented.get(regime);
+      const row = routing.byKey.get(regime);
       if (!row) {
         ok = false;
         console.error(`[FAIL] RENDERING.md "Regime routing" table has no row for regime ${regime}`);
         continue;
       }
-      if (row.partial !== `\`${REGIME_PARTIALS[regime]}\``) {
+      if (row[cPartial] !== `\`${REGIME_PARTIALS[regime]}\``) {
         ok = false;
         console.error(
-          `[FAIL] RENDERING.md routes ${regime} to ${row.partial}, REGIME_PARTIALS says \`${REGIME_PARTIALS[regime]}\``,
+          `[FAIL] RENDERING.md routes ${regime} to ${row[cPartial]}, REGIME_PARTIALS says \`${REGIME_PARTIALS[regime]}\``,
         );
       }
-      const documentedFallsThrough = row.routing.startsWith('falls through');
-      if (documentedFallsThrough !== UK_FALLBACK_BY_DESIGN.has(regime)) {
+      // The ladder column was previously never checked at all: a row could
+      // name the right partial while describing a completely different scheme.
+      const documentedLadder = ladderRungs(row[cLadder]);
+      const partialLadder = ladderRungs(laddersByFile.get(REGIME_PARTIALS[regime]));
+      if (!documentedLadder) {
+        ok = false;
+        console.error(`[FAIL] RENDERING.md "Regime routing" has an empty ladder for ${regime}`);
+      } else if (partialLadder && documentedLadder.join(' / ') !== partialLadder.join(' / ')) {
         ok = false;
         console.error(
-          `[FAIL] RENDERING.md says ${regime} "${row.routing}", but UK_FALLBACK_BY_DESIGN ${UK_FALLBACK_BY_DESIGN.has(regime) ? 'contains' : 'does not contain'} it`,
+          `[FAIL] RENDERING.md documents ${regime}'s ladder as "${documentedLadder.join(' / ')}", but ${REGIME_PARTIALS[regime]} contains "${partialLadder.join(' / ')}"`,
         );
       }
+      checkRouting('Regime routing', regime, row[cRouting]);
     }
-    for (const regime of documented.keys()) {
+    for (const regime of routing.byKey.keys()) {
       if (!registered.has(regime)) {
         ok = false;
         console.error(
@@ -210,26 +332,40 @@ if (!existsSync(renderingPath)) {
     }
   }
 
-  const indexRows = tableRows('Regime index');
-  if (!indexRows) {
-    ok = false;
-    console.error('[FAIL] RENDERING.md has no "## Regime index" section');
-  } else {
+  // Label and Routing were present in this table but asserted nowhere, which is
+  // the same "column exists, nothing verifies it" defect the ladder check was
+  // added for. Overlays read only RENDERING.md, so a row reading
+  // `| CA | Belgium | falls through to step 2 |` was a live wrong instruction
+  // to the model that exited 0.
+  const index = readTable(
+    'Regime index',
+    ['Regime', 'Label', 'Routing', 'Doc-type codes'],
+    'Regime',
+  );
+  if (index) {
     const codesByRegime = {};
     for (const [code, info] of Object.entries(DOC_TYPES)) {
       if (!info.regime) continue;
       (codesByRegime[info.regime] ||= []).push(code);
     }
-    const documentedCodes = new Map(
-      indexRows.map((c) => [c[0], c[3].split(',').map((s) => s.trim().replace(/`/g, '')).filter(Boolean)]),
-    );
+    const iLabel = index.col('Label');
+    const iRouting = index.col('Routing');
+    const iCodes = index.col('Doc-type codes');
     for (const regime of REGIMES) {
-      const listed = documentedCodes.get(regime);
-      if (!listed) {
+      const row = index.byKey.get(regime);
+      if (!row) {
         ok = false;
         console.error(`[FAIL] RENDERING.md "Regime index" table has no row for regime ${regime}`);
         continue;
       }
+      if (row[iLabel] !== REGIME_LABELS[regime]) {
+        ok = false;
+        console.error(
+          `[FAIL] RENDERING.md labels ${regime} "${row[iLabel]}", REGIME_LABELS says "${REGIME_LABELS[regime]}"`,
+        );
+      }
+      checkRouting('Regime index', regime, row[iRouting]);
+      const listed = row[iCodes].split(',').map((s) => s.trim().replace(/`/g, '')).filter(Boolean);
       const actual = (codesByRegime[regime] || []).slice().sort();
       const missingCodes = actual.filter((c) => !listed.includes(c));
       const extraCodes = [...listed].sort().filter((c) => !actual.includes(c));
@@ -243,6 +379,17 @@ if (!existsSync(renderingPath)) {
         ok = false;
         console.error(
           `[FAIL] RENDERING.md "Regime index" lists ${regime} doc-type(s) that are not registered with that regime: ${extraCodes.join(', ')}`,
+        );
+      }
+    }
+    // Mirrors the routing table's reverse check. Without it an invented row
+    // told the model that a jurisdiction-agnostic doc-type carried a regime
+    // whose partial does not exist, and the run still exited 0.
+    for (const regime of index.byKey.keys()) {
+      if (!registered.has(regime)) {
+        ok = false;
+        console.error(
+          `[FAIL] RENDERING.md "Regime index" table lists ${regime}, which is not in REGIMES`,
         );
       }
     }
