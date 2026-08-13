@@ -112,7 +112,7 @@
     {
       "name": "arckit-at",
       "source": "./plugins/arckit-at",
-      "description": "Austrian Overlay — 3 commands for DSG/DSGVO, NISG, and Bundesvergabegesetz public procurement",
+      "description": "Austrian Overlay — 4 commands for DSG/DSGVO, NISG, Bundesvergabegesetz public procurement, and BaFG/WZG digital accessibility",
       "version": "6.8.0",
       "author": {
         "name": "TractorJuice"

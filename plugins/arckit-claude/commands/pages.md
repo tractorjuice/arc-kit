@@ -324,6 +324,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | MARPUB | `ARC-*-MARPUB-*.md` | French Public Procurement |
 | | REUSE | `ARC-*-REUSE-*.md` | Public Code Reuse Assessment |
 | **Compliance (Community-contributed — Austrian Government)** | | | |
+| | ATBFR | `ARC-*-ATBFR-*.md` | Austrian Accessibility Assessment (BaFG / WZG) |
 | | ATDSG | `ARC-*-ATDSG-*.md` | Austrian Data Protection Assessment |
 | | ATNISG | `ARC-*-ATNISG-*.md` | Austrian NISG (NIS2) Assessment |
 | **Procurement (Community-contributed — Austrian Government)** | | | |

@@ -1,7 +1,8 @@
 # ArcKit — Austrian Overlay
 
-3 slash commands covering Austrian regulatory compliance:
+4 slash commands covering Austrian regulatory compliance:
 
+- `/arckit:at-barrierefreiheit` — Austrian digital accessibility across both transposition tracks (BaFG, BGBl. I Nr. 76/2023, European Accessibility Act; WZG, BGBl. I Nr. 59/2019; EN 301 549 / WCAG 2.1 AA; SMS and FFG)
 - `/arckit:at-bvergg` — Austrian public procurement (Bundesvergabegesetz 2018 as amended by the Vergaberechtsgesetz 2026, BGBl. I Nr. 8/2026; ANKÖ, BVwG)
 - `/arckit:at-dsgvo` — Austrian DSG / DSGVO obligations (Datenschutzbehörde, §§12–13 DSG)
 - `/arckit:at-nisg` — Austrian NISG 2026 obligations (BGBl. I Nr. 94/2025, in force 1 Oct 2026, Cybersicherheitsbehörde registration + CSIRT reporting)

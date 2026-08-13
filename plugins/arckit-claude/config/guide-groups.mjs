@@ -263,6 +263,7 @@ add(GUIDE_SECTIONS.OVERLAY, 'Australian Federal / Energy Overlay', 'community', 
 ], 'Australian Federal / Energy Overlay');
 
 add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - Austria', 'community', [
+  'at-barrierefreiheit',
   'at-bvergg',
   'at-dsgvo',
   'at-nisg',
