@@ -117,6 +117,41 @@ def test_plugin_and_cli_templates_are_in_sync():
     assert not messages, "\n".join(messages)
 
 
+def test_plugin_and_cli_templates_have_identical_content():
+    """Every template present in both trees must be byte-identical.
+
+    Filenames are not enough. The sibling test above compares basenames only,
+    and 23 templates had drifted in content while it passed (#784) — the same
+    bug test_plugin_and_cli_partials_are_in_sync already documents for
+    _partials/, one scope down. Sixteen of the 23 still carried the frozen
+    Document Control table that <!-- DOC-CONTROL-HEADER --> replaced, so the
+    RENDERING.md regime routing never fired for them at all.
+
+    This matters because commands resolve .arckit/templates/<name> in the
+    project root BEFORE falling back to ${CLAUDE_PLUGIN_ROOT}/templates/. In a
+    CLI-scaffolded project the mirror is the copy that actually renders, and
+    the plugin copy is never read.
+
+    The plugin tree is the source of truth; the CLI tree is its mirror. There
+    is no sync script for it (sync-shared-assets.py writes into plugin dirs
+    only), so the copy is manual.
+    """
+    drifted = []
+    for plugin in PLUGIN_SOURCES:
+        for path in sorted(glob.glob(os.path.join(REPO_ROOT, plugin, "templates", "*.md"))):
+            name = os.path.basename(path)
+            cli_path = os.path.join(CLI_TEMPLATES_DIR, name)
+            if not os.path.exists(cli_path):
+                continue  # absence is the sibling test's job, not this one
+            if not filecmp.cmp(path, cli_path, shallow=False):
+                drifted.append(f"{plugin}/templates/{name}")
+    assert not drifted, (
+        "Content differs between the plugin tree and .arckit/templates/ for "
+        f"{len(drifted)} template(s):\n  " + "\n  ".join(drifted) + "\n"
+        "Copy the plugin copy over the CLI copy — the plugin tree is the source of truth."
+    )
+
+
 def test_plugin_and_cli_partials_are_in_sync():
     """Every _partials file in the core plugin must exist in .arckit/templates/_partials/
     with identical content.

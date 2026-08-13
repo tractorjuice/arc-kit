@@ -287,6 +287,7 @@ add(GUIDE_SECTIONS.OVERLAY, 'Canada Federal Overlay', 'community', [
 
 add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - EU', 'community', [
   'eu-ai-act',
+  'eu-cloud-sovereignty',
   'eu-cra',
   'eu-data-act',
   'eu-dora',

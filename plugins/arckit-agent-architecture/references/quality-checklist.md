@@ -459,6 +459,25 @@ All artifacts must pass these 10 checks:
 - Trade secret safeguards documented (process to identify, confidentiality agreement, TOMs)
 - Gap timeline references both key dates: 12 September 2025 and 12 September 2027
 
+### EUCSF -- EU Cloud Sovereignty Framework Assessment
+
+- Assessment context stated: setting minimum SEAL levels for a tender specification, assessing a candidate service, or both
+- Minimum SEAL per objective sourced **only** from the tender specification; where no tender specification exists, every objective is marked "Not yet set by contracting authority" rather than given an invented value
+- Document nowhere states or implies a framework-mandated minimum SEAL
+- All eight objectives (SOV-1 to SOV-8) assessed, none omitted
+- Weight table reproduces the framework weights and totals exactly 100%
+- All five SEAL definitions (SEAL-0 to SEAL-4) reproduced in full, not paraphrased
+- Sovereignty Score computed from the stated formula, and the per-objective Score / Max Score basis is stated rather than assumed
+- Award criterion and rejection gate kept distinct: the weighted Sovereignty Score does not excuse a failed minimum SEAL on any single objective
+- Each objective carries an evidence column drawn from that objective's contributing factors; no invented criteria
+- SEAL claimed and SEAL evidenced recorded separately; any self-declared level is flagged unverified wherever it appears, including the executive summary
+- No commercial cloud provider named as sovereign, compliant, or achieving any SEAL level
+- No vendor-analyst market research (Gartner or similar) cited as evidence for a sovereignty claim
+- SecNumCloud / EUCS treated as complementary security assurance, never as establishing a SEAL level
+- Gap analysis flags rejection risk explicitly wherever an objective falls below a stated minimum
+- Document states it records an assessment and does not certify
+- Framework recorded in the Document Register as a Web URL row, with the verification date in the Description
+
 ### SECNUM -- SecNumCloud Assessment
 
 - Provider qualification matrix covers all six major candidates (S3NS, Outscale, OVHcloud, Bleu, NumSpot, Cloud Temple)

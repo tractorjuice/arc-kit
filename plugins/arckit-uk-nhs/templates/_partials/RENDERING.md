@@ -47,7 +47,7 @@ The doc-type codes that carry a regime. A `doc-type:` value absent from this tab
 | AT | Austria | hard-routes | `ATBFR`, `ATDSG`, `ATNISG`, `BVERGG` |
 | AU | Australia | hard-routes | `AUE8`, `AUISM`, `AUPIA`, `AUNDB`, `AUOT`, `AUSOCI`, `AUAESCSF`, `AUENERGY`, `AUDSS`, `AUPSPF`, `AUAIA`, `AUDISP` |
 | CA | Canada | hard-routes | `FITAA`, `PIA`, `ATIP`, `AIA`, `CHRT`, `ITSG`, `SOIA`, `CACR`, `DIGSTD`, `OLA`, `PROC`, `OCAP` |
-| EU | EU | falls through to step 2 | `RGPD`, `NIS2`, `AIACT`, `DORA`, `CRA`, `DSA`, `DATAACT` |
+| EU | EU | falls through to step 2 | `RGPD`, `NIS2`, `AIACT`, `DORA`, `CRA`, `DSA`, `DATAACT`, `EUCSF` |
 | FR | France | falls through to step 2 | `IRN`, `CNIL`, `SECNUM`, `MARPUB`, `DINUM`, `EBIOS`, `ANSSI`, `CARTO`, `DR`, `ALGO`, `PSSI`, `REUSE` |
 | NL | Netherlands | hard-routes | `RBCLOUD`, `TBB`, `BIO2`, `NLEXIT` |
 | UAE | UAE | hard-routes | `PDPL`, `IAS`, `CRES`, `CLAS`, `UPASS`, `ZBUR`, `DREC`, `DSHR`, `NPRA`, `AICH`, `AUTI`, `FPRO` |

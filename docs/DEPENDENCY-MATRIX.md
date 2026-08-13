@@ -400,6 +400,28 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ## Changelog
 
+### 2026-08-13 - EU Cloud Sovereignty Framework Command (Community) (#740)
+
+Added `/arckit:eu-cloud-sovereignty` to the `arckit-eu` community overlay, taking it from 7 commands to 8. Like the other overlay commands, it is documented here via this changelog rather than as a DSM grid row (the matrix tracks the official baseline). Tier 13 compliance assessment.
+
+**Command and output doc-type**:
+
+- `/arckit:eu-cloud-sovereignty` → `EUCSF` (EU Cloud Sovereignty Framework Assessment, regime EU, category Compliance, severity HIGH)
+
+**Dependencies**: requirements (M — cloud service type, data sensitivity, sovereignty NFRs, member state), risk (R — existing cloud, supply-chain and foreign-interference risks), fr-secnumcloud (R — security qualification status, which is complementary to sovereignty rather than a substitute), principles (R — cloud strategy and foreign-dependency policy from `000-global`), eu-nis2 (O — Article 21 measures overlapping SOV-7), fr-dinum (O), nl-cloud (O — the Dutch policy position, where one is already recorded).
+
+**Consumed by**: `risk` (R — unmet minimum SEAL levels and sovereignty gaps become risk entries), `nl-cloud` (O), `fr-secnumcloud` (O — where a French qualification is also in scope).
+
+**Scope boundary**: the framework supplies the eight objectives, their weights and the SEAL scale; the **contracting authority** supplies the minimum SEAL per objective in the tender specification. The command records an assessment and does not certify — no provider is named as achieving any SEAL level.
+
+**Typical EU cloud sovereignty path**:
+
+```text
+requirements → risk →
+eu-cloud-sovereignty (minimum SEAL from tender spec, then evidence per objective) →
+risk (gaps) → nl-cloud / fr-secnumcloud (national layer, where applicable)
+```
+
 ### 2026-08-13 - Austrian Accessibility Command (Community) (#710)
 
 Added `/arckit:at-barrierefreiheit` to the `arckit-at` community overlay, taking it from 3 commands to 4. Like the other overlay commands, it is documented here via this changelog rather than as a DSM grid row (the matrix tracks the official baseline). Tier 13 compliance assessment.

@@ -141,7 +141,9 @@ The network view maps physical and logical network segments and interconnections
 
 | ID | Interconnection | Remote Party | Protocol | Encryption | Authentication | Direction |
 |----|----------------|-------------|---------|-----------|----------------|-----------|
-| INT-01 | [Name] | [Partner / Provider] | [MPLS / VPN / Internet] | [Yes / No] | [Certificate / PSK] | [In / Out / Both] |
+| ECX-01 | [Name] | [Partner / Provider] | [MPLS / VPN / Internet] | [Yes / No] | [Certificate / PSK] | [In / Out / Both] |
+
+> **Note**: This template uses `ECX-NN` (External Connection) rather than `INT-NN` because the universal requirement-ID pattern in `arckit-claude/hooks/hook-utils.mjs` reserves `INT-\d{1,3}` for Integration Requirements (REQ document IDs). Using `INT-NN` here would make every interconnection row appear as a "missed requirement" in `/arckit:traceability` and `/arckit:health` scans. Same pattern as the Azure-research template renaming `BR-N` → `BCK-N` (Backup & Recovery).
 
 ### 4.3 Internet Entry Points
 
@@ -173,7 +175,7 @@ Sensitive flows are data flows that cross trust boundaries, carry classified dat
 |--------------|-------------|--------------------|--------------------|
 | External web | [URL / IP] | [WAF, CDN, firewall] | [Low / Medium / High] |
 | VPN / remote access | [VPN endpoint] | [MFA, certificate] | |
-| Third-party interconnections | [INT-xx] | [Encryption, auth] | |
+| Third-party interconnections | [ECX-xx] | [Encryption, auth] | |
 | Supply chain (SaaS) | [Service] | [Contract, access control] | |
 | Physical | [DC / Office] | [Badge, CCTV] | |
 

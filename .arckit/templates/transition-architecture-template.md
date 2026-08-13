@@ -8,22 +8,8 @@ templateVersion: "1.0"
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| Document ID | `ARC-[PROJECT_ID]-TRANS-v[VERSION]` |
-| Document Type | Transition Architecture |
-| Project | `[PROJECT_NAME]` |
-| Classification | `[CLASSIFICATION]` |
-| Status | DRAFT |
-| Version | `[VERSION]` |
-| Created | `[YYYY-MM-DD]` |
-| Last Modified | `[YYYY-MM-DD]` |
-| Review Cycle | Monthly during active migration, quarterly after migration |
-| Next Review Date | `[YYYY-MM-DD]` |
-| Owner | `[OWNER_NAME_AND_ROLE]` |
-| Reviewed By | `[REVIEWER_NAME]` |
-| Approved By | `[APPROVER_NAME]` |
-| Distribution | `[DISTRIBUTION_LIST]` |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ### Revision History
 
