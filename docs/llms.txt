@@ -1,8 +1,8 @@
 # ArcKit
 
-> ArcKit is The Enterprise Architecture Governance Harness — an open-source toolkit covering strategy, architecture, delivery, and assurance — that provides AI-assisted slash commands for Claude Code, Gemini CLI, GitHub Copilot, Codex CLI, OpenCode CLI, and Mistral Vibe, with community-contributed regulatory overlays for Australia, Austria, Canada, the EU, France, the UAE, the UK, and the USA. It transforms architecture governance from scattered documents into a systematic, template-driven workflow covering requirements, stakeholders, risk, business cases, architecture (C4, Wardley, ADRs), research, vendor procurement (G-Cloud/DOS), UK Government compliance (GDS, TCoP, Secure by Design, NCSC CAF, Orange/Green Book), EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act), French government compliance (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI), Austrian compliance (DSG/DSGVO, NISG, BVergG), Canada Federal compliance (FITAA, Privacy Act PIA, ATIP, Algorithmic Impact Assessment, Charter rights, ITSG-33, SOIA, sovereign cloud residency, GC Digital Standards, Official Languages Act, PSPC procurement, OCAP®), UAE Federal compliance (PDPL, IAS, AI Charter, sovereign cloud, UAE Pass), USA federal civilian compliance (FedRAMP, FISMA / NIST SP 800-53, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF, OMB M-24-10 / M-25-21, E-Gov §208 PIA, EO 14028 secure software self-attestation), DevOps/MLOps/FinOps, and traceability. /arckit:build is a Claude Code-only parallel build harness that orchestrates end-to-end artefact generation against a YAML recipe (uk-saas, uk-mod-sovereign, uae-federal-ai, ca-federal-fitaa, us-federal, and others).
+> ArcKit is The Enterprise Architecture Governance Harness — an open-source toolkit covering strategy, architecture, delivery, and assurance — that provides AI-assisted slash commands for Claude Code, Gemini CLI, GitHub Copilot, Codex CLI, OpenCode CLI, Mistral Vibe, Paperclip, and Kimi Code CLI, with community-contributed regulatory overlays for Australia, Austria, Canada, the EU, France, the UAE, the UK, and the USA, plus sector overlays for UK financial services payments, UK NHS clinical safety, the Australian energy sector, and UK G-Cloud suppliers, and method overlays for TOGAF ADM and AI agent architecture. It transforms architecture governance from scattered documents into a systematic, template-driven workflow covering requirements, stakeholders, risk, business cases, architecture (C4, Wardley, ADRs), research, vendor procurement (G-Cloud/DOS), UK Government compliance (GDS, TCoP, Secure by Design, NCSC CAF, Orange/Green Book), EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act), French government compliance (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI), Austrian compliance (DSG/DSGVO, NISG, BVergG), Canada Federal compliance (FITAA, Privacy Act PIA, ATIP, Algorithmic Impact Assessment, Charter rights, ITSG-33, SOIA, sovereign cloud residency, GC Digital Standards, Official Languages Act, PSPC procurement, OCAP®), UAE Federal compliance (PDPL, IAS, AI Charter, sovereign cloud, UAE Pass), USA federal civilian compliance (FedRAMP, FISMA / NIST SP 800-53, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF, OMB M-24-10 / M-25-21, E-Gov §208 PIA, EO 14028 secure software self-attestation), DevOps/MLOps/FinOps, and traceability. /arckit:build is a Claude Code-only parallel build harness that orchestrates end-to-end artefact generation against a YAML recipe (uk-saas, uk-mod-sovereign, uae-federal-ai, ca-federal-fitaa, us-federal, and others).
 
-ArcKit is distributed as a Claude Code plugin, a Gemini CLI extension, a GitHub Copilot prompt pack, a Codex CLI extension, an OpenCode CLI extension, a Mistral Vibe extension, and a Python CLI (`arckit init`). Source code and issue tracker: https://github.com/tractorjuice/arc-kit.
+ArcKit is distributed as a Claude Code plugin, a Gemini CLI extension, a GitHub Copilot prompt pack, a Codex CLI extension, an OpenCode CLI extension, a Mistral Vibe extension, a Paperclip extension, a Kimi Code CLI extension, and a Python CLI (`arckit init`). Source code and issue tracker: https://github.com/tractorjuice/arc-kit.
 
 Every command reads a template from `.arckit/templates/`, creates or reuses a numbered project directory (`projects/NNN-name/`), writes a versioned artifact (`ARC-NNN-<TYPE>-vX.Y.md`) using the Write tool to avoid token limits, and maintains traceability: Stakeholders → Goals → Requirements (BR/FR/NFR/INT/DR) → Data Model → Components → User Stories.
 
@@ -39,6 +39,10 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Stakeholders](https://arckit.org/guides/stakeholders.md): `/arckit:stakeholders` drivers, goals, outcomes.
 - [Technology research](https://arckit.org/guides/research.md): `/arckit:research` build vs buy, TCO.
 - [Data source discovery](https://arckit.org/guides/datascout.md): `/arckit:datascout` API catalogue scoring.
+- [UK government code reuse](https://arckit.org/guides/gov-reuse.md): `/arckit:gov-reuse` find reusable UK government open-source code before building from scratch.
+- [UK government code search](https://arckit.org/guides/gov-code-search.md): `/arckit:gov-code-search` natural-language search across 24,500+ UK government repositories.
+- [UK government code landscape](https://arckit.org/guides/gov-landscape.md): `/arckit:gov-landscape` who built what in a domain, common patterns, standards, maturity.
+- [Grants and funding research](https://arckit.org/guides/grants.md): `/arckit:grants` UK government grants, charitable funding, and accelerator programmes with eligibility scoring.
 
 ### Planning and strategy
 
@@ -97,6 +101,8 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Impact assessment](https://arckit.org/guides/impact.md): `/arckit:impact`.
 - [Conformance](https://arckit.org/guides/conformance.md): `/arckit:conformance`.
 - [Maturity model](https://arckit.org/guides/maturity-model.md): `/arckit:maturity-model`.
+- [Project navigator](https://arckit.org/guides/navigator.md): `/arckit:navigator` coverage against the essential baseline, DRAFT/stale/orphan artefacts, and the next command to run.
+- [Governance metrics dashboard](https://arckit.org/guides/graph-report.md): `/arckit:graph-report` coverage by category, cross-reference density, compliance readiness, cross-project comparison.
 
 ### UK Government compliance
 
@@ -119,69 +125,126 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 
 EU regulations (member-state-neutral baselines):
 
-- [GDPR (EU 2016/679)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-rgpd.md): `/arckit:eu-rgpd` legal basis, transfers, DPIA screening, breach notification.
-- [NIS2 Directive](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-nis2.md): `/arckit:eu-nis2` operators of essential / important entities, Article 21 measures.
-- [EU AI Act (Regulation 2024/1689)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-ai-act.md): `/arckit:eu-ai-act` risk classification, conformity routes, GPAI obligations.
-- [DORA (EU 2022/2554)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-dora.md): `/arckit:eu-dora` financial sector ICT resilience, TLPT, third-party register.
-- [EU Cyber Resilience Act (Regulation 2024/2847)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-cra.md): `/arckit:eu-cra` products with digital elements, SBOM, VDP, CE marking.
-- [EU Digital Services Act (Regulation 2022/2065)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-dsa.md): `/arckit:eu-dsa` intermediaries, platforms, VLOPs.
-- [EU Data Act (Regulation 2023/2854)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-data-act.md): `/arckit:eu-data-act` connected products, B2B FRAND, cloud switching.
+- [GDPR (EU 2016/679)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-rgpd.md): `/arckit:eu-rgpd` legal basis, transfers, DPIA screening, breach notification.
+- [NIS2 Directive](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-nis2.md): `/arckit:eu-nis2` operators of essential / important entities, Article 21 measures.
+- [EU AI Act (Regulation 2024/1689)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-ai-act.md): `/arckit:eu-ai-act` risk classification, conformity routes, GPAI obligations.
+- [DORA (EU 2022/2554)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-dora.md): `/arckit:eu-dora` financial sector ICT resilience, TLPT, third-party register.
+- [EU Cyber Resilience Act (Regulation 2024/2847)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-cra.md): `/arckit:eu-cra` products with digital elements, SBOM, VDP, CE marking.
+- [EU Digital Services Act (Regulation 2022/2065)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-dsa.md): `/arckit:eu-dsa` intermediaries, platforms, VLOPs.
+- [EU Data Act (Regulation 2023/2854)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-data-act.md): `/arckit:eu-data-act` connected products, B2B FRAND, cloud switching.
 
 French government (apply on top of EU baseline):
 
-- [SecNumCloud 3.2](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-secnumcloud.md): `/arckit:fr-secnumcloud` ANSSI sovereign cloud qualification, OIV/OSE.
-- [DINUM standards](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-dinum.md): `/arckit:fr-dinum` RGI, RGAA, RGESN, RGS, doctrine cloud de l'État.
-- [French public procurement](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-marche-public.md): `/arckit:fr-marche-public` code de la commande publique, UGAP, sovereignty clauses.
-- [CNIL / French GDPR](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-rgpd.md): `/arckit:fr-rgpd` cookies (Délibération 2020-091), HDS, age 15, CNIL référentiels.
-- [EBIOS Risk Manager](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-ebios.md): `/arckit:fr-ebios` 5-workshop ANSSI risk study with homologation recommendation.
-- [ANSSI hygiene measures](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-anssi.md): `/arckit:fr-anssi` Guide d'hygiène informatique (42 measures) + cloud recommendations.
-- [ANSSI cartography](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-anssi-carto.md): `/arckit:fr-anssi-carto` IS cartography across business / application / system / network levels.
-- [Diffusion Restreinte handling](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-dr.md): `/arckit:fr-dr` II 901 / SGDSN / ANSSI marking, storage, transmission, destruction.
-- [Public algorithm transparency](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-algorithme-public.md): `/arckit:fr-algorithme-public` Article L311-3-1 CRPA notice.
-- [Information System Security Policy (PSSI)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-pssi.md): `/arckit:fr-pssi` per ANSSI / RGS.
-- [Public code reuse](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-code-reuse.md): `/arckit:fr-code-reuse` code.gouv.fr, SILL, EUPL build-vs-reuse decision matrix.
+- [SecNumCloud 3.2](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-secnumcloud.md): `/arckit:fr-secnumcloud` ANSSI sovereign cloud qualification, OIV/OSE.
+- [DINUM standards](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-dinum.md): `/arckit:fr-dinum` RGI, RGAA, RGESN, RGS, doctrine cloud de l'État.
+- [French public procurement](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-marche-public.md): `/arckit:fr-marche-public` code de la commande publique, UGAP, sovereignty clauses.
+- [CNIL / French GDPR](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-rgpd.md): `/arckit:fr-rgpd` cookies (Délibération 2020-091), HDS, age 15, CNIL référentiels.
+- [EBIOS Risk Manager](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-ebios.md): `/arckit:fr-ebios` 5-workshop ANSSI risk study with homologation recommendation.
+- [ANSSI hygiene measures](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-anssi.md): `/arckit:fr-anssi` Guide d'hygiène informatique (42 measures) + cloud recommendations.
+- [ANSSI cartography](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-anssi-carto.md): `/arckit:fr-anssi-carto` IS cartography across business / application / system / network levels.
+- [Diffusion Restreinte handling](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-dr.md): `/arckit:fr-dr` II 901 / SGDSN / ANSSI marking, storage, transmission, destruction.
+- [Public algorithm transparency](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-algorithme-public.md): `/arckit:fr-algorithme-public` Article L311-3-1 CRPA notice.
+- [Information System Security Policy (PSSI)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-pssi.md): `/arckit:fr-pssi` per ANSSI / RGS.
+- [Public code reuse](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-code-reuse.md): `/arckit:fr-code-reuse` code.gouv.fr, SILL, EUPL build-vs-reuse decision matrix.
+- [Indice de Résilience Numérique](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-fr/commands/fr-irn.md): `/arckit:fr-irn` IRN self-assessment following the aDRI framework — 8 resilience domains.
 
 ### Canada Federal compliance (community-contributed)
 
 > ⚠️ Community-maintained — output should be reviewed by qualified Canadian federal counsel (DOJ), Privacy Officer / ATIP coordinator, and departmental security officer before reliance. Recruiting a Canadian federal domain co-maintainer; promotion to official-baseline gated on co-maintainer commitment.
 
-- [FITAA Compliance Assessment](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-fitaa.md): `/arckit:ca-fitaa` Foreign Influence Transparency and Accountability Act compliance assessment (Bill C-70 2024).
-- [Privacy Act PIA](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-pia.md): `/arckit:ca-pia` Privacy Act + TBS Directive on PIA — personal information inventory, OPC notification trigger, mitigation tracker.
-- [ATIP Reconciliation](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-atip.md): `/arckit:ca-atip` Access to Information / Privacy Act reconciliation, severance design for hybrid public/protected systems.
-- [Algorithmic Impact Assessment](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-aia.md): `/arckit:ca-aia` TBS Directive on Automated Decision-Making — Levels I–IV scoring, transparency notice, human-in-the-loop.
-- [Charter Rights Review](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-charter.md): `/arckit:ca-charter` Charter rights design review (s.2 / s.7 / s.8 / s.15) with Oakes proportionality and DOJ counsel sign-off.
-- [ITSG-33 Statement of Applicability](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-itsg-33.md): `/arckit:ca-itsg-33` ITSG-33 Statement of Applicability + TBS Standard on Security Categorization (Protected A/B/C, SECRET, TOP SECRET).
-- [SOIA Handling Plan](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-soia.md): `/arckit:ca-soia` Security of Information Act handling plan — SOI register, marking, transmission, compartments, breach response.
-- [Sovereign Cloud Residency](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-cloud-residency.md): `/arckit:ca-cloud-residency` GC sovereign cloud residency assessment with CLOUD-Act analysis and exit/portability plan.
-- [GC Digital Standards](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-gc-digital-standards.md): `/arckit:ca-gc-digital-standards` 10 GC Digital Standards conformance scorecard with maturity roadmap.
-- [Official Languages Act](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-ola.md): `/arckit:ca-ola` Official Languages Act review (Parts IV / V / VI) with active offer and Translation Bureau pipeline.
-- [PSPC Procurement](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-pspc.md): `/arckit:ca-pspc` Federal procurement strategy — PSPC Supply Manual, Standing Offer / AgileIQ / RFP, PSAB 5%, CFTA / CETA.
-- [OCAP® Sovereignty Assessment](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/ca-ocap.md): `/arckit:ca-ocap` First Nations OCAP® sovereignty assessment with FNIGC pre-engagement gate.
+- [FITAA Compliance Assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-fitaa.md): `/arckit:ca-fitaa` Foreign Influence Transparency and Accountability Act compliance assessment (Bill C-70 2024).
+- [Privacy Act PIA](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-pia.md): `/arckit:ca-pia` Privacy Act + TBS Directive on PIA — personal information inventory, OPC notification trigger, mitigation tracker.
+- [ATIP Reconciliation](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-atip.md): `/arckit:ca-atip` Access to Information / Privacy Act reconciliation, severance design for hybrid public/protected systems.
+- [Algorithmic Impact Assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-aia.md): `/arckit:ca-aia` TBS Directive on Automated Decision-Making — Levels I–IV scoring, transparency notice, human-in-the-loop.
+- [Charter Rights Review](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-charter.md): `/arckit:ca-charter` Charter rights design review (s.2 / s.7 / s.8 / s.15) with Oakes proportionality and DOJ counsel sign-off.
+- [ITSG-33 Statement of Applicability](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-itsg-33.md): `/arckit:ca-itsg-33` ITSG-33 Statement of Applicability + TBS Standard on Security Categorization (Protected A/B/C, SECRET, TOP SECRET).
+- [SOIA Handling Plan](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-soia.md): `/arckit:ca-soia` Security of Information Act handling plan — SOI register, marking, transmission, compartments, breach response.
+- [Sovereign Cloud Residency](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-cloud-residency.md): `/arckit:ca-cloud-residency` GC sovereign cloud residency assessment with CLOUD-Act analysis and exit/portability plan.
+- [GC Digital Standards](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-gc-digital-standards.md): `/arckit:ca-gc-digital-standards` 10 GC Digital Standards conformance scorecard with maturity roadmap.
+- [Official Languages Act](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-ola.md): `/arckit:ca-ola` Official Languages Act review (Parts IV / V / VI) with active offer and Translation Bureau pipeline.
+- [PSPC Procurement](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-pspc.md): `/arckit:ca-pspc` Federal procurement strategy — PSPC Supply Manual, Standing Offer / AgileIQ / RFP, PSAB 5%, CFTA / CETA.
+- [OCAP® Sovereignty Assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-ocap.md): `/arckit:ca-ocap` First Nations OCAP® sovereignty assessment with FNIGC pre-engagement gate.
 
 ### Austrian government compliance (community-contributed)
 
 > ⚠️ Community-maintained — output should be reviewed by qualified Austrian counsel and the Datenschutzbehörde / responsible NIS body before reliance.
 
-- [DSG / DSGVO](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/at-dsgvo.md): `/arckit:at-dsgvo` Austrian Datenschutzgesetz layer over GDPR — DSB notification, employer-context exemptions, sectoral rules.
-- [NISG (NIS2 transposition)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/at-nisg.md): `/arckit:at-nisg` Austrian NIS2 transposition — sector scoping, qualified body audits, BMI reporting timelines.
-- [Bundesvergabegesetz 2018](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/at-bvergg.md): `/arckit:at-bvergg` Austrian public procurement — federal/sub-federal scope, SME thresholds, e-procurement obligations.
+- [DSG / DSGVO](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-at/commands/at-dsgvo.md): `/arckit:at-dsgvo` Austrian Datenschutzgesetz layer over GDPR — DSB notification, employer-context exemptions, sectoral rules.
+- [NISG (NIS2 transposition)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-at/commands/at-nisg.md): `/arckit:at-nisg` Austrian NIS2 transposition — sector scoping, qualified body audits, BMI reporting timelines.
+- [Bundesvergabegesetz 2018](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-at/commands/at-bvergg.md): `/arckit:at-bvergg` Austrian public procurement — federal/sub-federal scope, SME thresholds, e-procurement obligations.
+- [Digital accessibility (BaFG / WZG)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-at/commands/at-barrierefreiheit.md): `/arckit:at-barrierefreiheit` Austrian accessibility across both transposition tracks — European Accessibility Act and public sector, EN 301 549 / WCAG 2.1 AA.
 
 ### UAE Federal compliance (community-contributed)
 
 > ⚠️ Community-maintained — output should be reviewed by qualified UAE counsel, the UAE Data Office, and departmental cybersecurity officer before reliance.
 
-- [PDPL Compliance](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-pdpl.md): `/arckit:uae-pdpl` UAE Personal Data Protection Law (Federal Decree-Law 45/2021) DPIA, lawful basis, cross-border transfers.
-- [IAS Statement of Applicability](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-ias.md): `/arckit:uae-ias` UAE Information Assurance Standard (60 management + 128 technical controls, P1–P4 priority tiers).
-- [Smart Data Classification](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-classification.md): `/arckit:uae-classification` Open / Shared / Confidential / Secret / Top Secret register with handling rules.
-- [Sovereign Cloud Residency](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-cloud-residency.md): `/arckit:uae-cloud-residency` UAE National Cloud Security Policy v2 — Core42 / G42 sovereign / Microsoft UAE North + Central, FedNet, Sovereign Launchpad.
-- [UAE Pass Integration](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-uaepass.md): `/arckit:uae-uaepass` OIDC / OAuth flow, claim mapping, Basic vs Verified profile, e-signature audit trail.
-- [Zero Bureaucracy / Service Catalogue](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-zero-bureaucracy.md): `/arckit:uae-zero-bureaucracy` UAE Code for Government Services service catalogue review and CX KPIs.
-- [Digital Records Plan](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-digital-records.md): `/arckit:uae-digital-records` UAE Government Services Digital Records Policy — source of truth register, retention.
-- [Data Sharing Agreement](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-data-sharing.md): `/arckit:uae-data-sharing` UAE Government Services Data Sharing Policy — collect-once mapping, federation/API plan.
-- [National Priorities Alignment](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-priorities-alignment.md): `/arckit:uae-priorities-alignment` Federal Government Guide alignment to NIS 2031, AI 2031, Digital Economy Strategy, We the UAE 2031.
-- [AI Charter](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-ai-charter.md): `/arckit:uae-ai-charter` UAE Charter for AI compliance against the 12 principles.
-- [AI Autonomy Tier](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-ai-autonomy-tier.md): `/arckit:uae-ai-autonomy-tier` Three-tier autonomy posture (internal-productivity / investor-facing / regulated) with promotion criteria.
-- [Federal Procurement](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/uae-procurement.md): `/arckit:uae-procurement` Federal Decree-Law 11/2023 — MoF Digital Procurement Platform ITT/RFP, In-Country Value plan.
+- [PDPL Compliance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-pdpl.md): `/arckit:uae-pdpl` UAE Personal Data Protection Law (Federal Decree-Law 45/2021) DPIA, lawful basis, cross-border transfers.
+- [IAS Statement of Applicability](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-ias.md): `/arckit:uae-ias` UAE Information Assurance Standard (60 management + 128 technical controls, P1–P4 priority tiers).
+- [Smart Data Classification](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-classification.md): `/arckit:uae-classification` Open / Shared / Confidential / Secret / Top Secret register with handling rules.
+- [Sovereign Cloud Residency](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-cloud-residency.md): `/arckit:uae-cloud-residency` UAE National Cloud Security Policy v2 — Core42 / G42 sovereign / Microsoft UAE North + Central, FedNet, Sovereign Launchpad.
+- [UAE Pass Integration](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-uaepass.md): `/arckit:uae-uaepass` OIDC / OAuth flow, claim mapping, Basic vs Verified profile, e-signature audit trail.
+- [Zero Bureaucracy / Service Catalogue](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-zero-bureaucracy.md): `/arckit:uae-zero-bureaucracy` UAE Code for Government Services service catalogue review and CX KPIs.
+- [Digital Records Plan](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-digital-records.md): `/arckit:uae-digital-records` UAE Government Services Digital Records Policy — source of truth register, retention.
+- [Data Sharing Agreement](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-data-sharing.md): `/arckit:uae-data-sharing` UAE Government Services Data Sharing Policy — collect-once mapping, federation/API plan.
+- [National Priorities Alignment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-priorities-alignment.md): `/arckit:uae-priorities-alignment` Federal Government Guide alignment to NIS 2031, AI 2031, Digital Economy Strategy, We the UAE 2031.
+- [AI Charter](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-ai-charter.md): `/arckit:uae-ai-charter` UAE Charter for AI compliance against the 12 principles.
+- [AI Autonomy Tier](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-ai-autonomy-tier.md): `/arckit:uae-ai-autonomy-tier` Three-tier autonomy posture (internal-productivity / investor-facing / regulated) with promotion criteria.
+- [Federal Procurement](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-procurement.md): `/arckit:uae-procurement` Federal Decree-Law 11/2023 — MoF Digital Procurement Platform ITT/RFP, In-Country Value plan.
+
+### Australian Federal compliance (community-contributed)
+
+> ⚠️ Community-maintained — output should be reviewed by qualified Australian counsel, the entity Privacy Officer, and the responsible security adviser (CISO / ASD-cleared assessor) before reliance.
+
+- [Essential Eight maturity](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/commands/au-e8-posture.md): `/arckit:au-e8-posture` ASD Essential Eight maturity posture across all eight mitigation strategies.
+- [ISM control applicability](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/commands/au-ism-controls.md): `/arckit:au-ism-controls` ASD Information Security Manual control applicability statement.
+- [PSPF compliance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/commands/au-pspf.md): `/arckit:au-pspf` Protective Security Policy Framework compliance assessment.
+- [Privacy Impact Assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/commands/au-pia.md): `/arckit:au-pia` PIA under Privacy Act 1988 s33D for Australian Government entities.
+- [Notifiable Data Breaches playbook](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/commands/au-ndb-playbook.md): `/arckit:au-ndb-playbook` NDB scheme response playbook under Privacy Act 1988 Part IIIC.
+- [Digital Service Standard](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/commands/au-dss.md): `/arckit:au-dss` DTA Digital Service Standard compliance assessment.
+- [SOCI CIRMP](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/commands/au-soci-cirmp.md): `/arckit:au-soci-cirmp` SOCI Act Critical Infrastructure Risk Management Program governance and evidence pack.
+- [Operational technology security](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/commands/au-ot-security.md): `/arckit:au-ot-security` ASD OT cyber security assessment for critical-infrastructure systems.
+- [AI assurance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/commands/au-ai-assurance.md): `/arckit:au-ai-assurance` AI assurance assessment covering the DTA policy for responsible AI use.
+- [DISP attestation](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/commands/au-disp-attestation.md): `/arckit:au-disp-attestation` Defence Industry Security Program member self-attestation pack.
+
+### Australian energy sector (community-contributed, sector overlay)
+
+> ⚠️ Community-maintained sector overlay — layers on the `arckit-au` jurisdiction baseline. Review by qualified Australian energy regulatory counsel before reliance.
+
+- [AESCSF maturity](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au-energy/commands/au-aescsf.md): `/arckit:au-aescsf` Australian Energy Sector Cyber Security Framework maturity assessment.
+- [Energy regulatory compliance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au-energy/commands/au-energy-compliance.md): `/arckit:au-energy-compliance` AER ring-fencing and AEMC NER/NGR compliance architecture pack.
+
+### USA Federal Civilian compliance (community-contributed)
+
+> ⚠️ Community-maintained — output should be reviewed by qualified US federal counsel, the agency Privacy Officer, and the authorizing official before reliance.
+
+- [FIPS 199 categorization](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fisma-categorization.md): `/arckit:us-fisma-categorization` FIPS 199 system categorization (Low / Moderate / High water-mark).
+- [NIST SP 800-53 tailoring](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-nist-800-53.md): `/arckit:us-nist-800-53` NIST SP 800-53 Rev 5 control tailoring against the Low / Moderate / High baseline.
+- [FedRAMP System Security Plan](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fedramp-ssp.md): `/arckit:us-fedramp-ssp` FedRAMP SSP (Moderate / High baseline) aligned to the current template.
+- [FedRAMP readiness](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fedramp-readiness.md): `/arckit:us-fedramp-readiness` 3PAO-style Readiness Assessment Report with capability statement and gap analysis.
+- [Zero Trust maturity](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-zero-trust.md): `/arckit:us-zero-trust` CISA Zero Trust Maturity Model v2.0 assessment across the five pillars.
+- [ICAM architecture](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-icam.md): `/arckit:us-icam` federal Identity, Credential and Access Management architecture per OMB M-19-17.
+- [NIST AI RMF](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-ai-rmf.md): `/arckit:us-ai-rmf` NIST AI Risk Management Framework 1.0 assessment (Govern / Map / Measure / Manage).
+- [AI impact determination](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-ai-impact.md): `/arckit:us-ai-impact` rights-impacting / safety-impacting determination under OMB M-24-10.
+- [Privacy Impact Assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-privacy-pia.md): `/arckit:us-privacy-pia` PIA under E-Government Act §208 and OMB M-03-22.
+- [EO 14028 SBOM attestation](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-sbom-eo-14028.md): `/arckit:us-sbom-eo-14028` secure-software self-attestation per OMB M-22-18 / M-23-16 with an accompanying SBOM.
+
+### UK Finance payments (community-contributed, sector overlay)
+
+> ⚠️ EXPERIMENTAL sector overlay — output requires review by qualified UK FS regulatory counsel, the firm MLRO / Compliance Officer, and relevant SMF holders before reliance.
+
+- [PSD2 SCA-RTS exemption design](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-sca-rts.md): `/arckit:uk-fs-sca-rts` exemption applicability matrix and transaction risk analysis under the PSRs 2017.
+- [EMI / PI safeguarding](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-safeguarding.md): `/arckit:uk-fs-safeguarding` safeguarding method statement (segregation vs insurance vs guarantee) under the EMRs 2011.
+- [FCA Consumer Duty board report](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-consumer-duty.md): `/arckit:uk-fs-consumer-duty` annual Board Report evidencing customer outcomes across the four outcomes.
+- [Critical Third Parties dependency](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-ctp-dependency.md): `/arckit:uk-fs-ctp-dependency` register of designated CTPs the firm relies on, under FSMA 2023.
+
+### UK NHS clinical safety (community-contributed, sector overlay)
+
+> ⚠️ EXPERIMENTAL sector overlay — clinical safety output requires sign-off by a suitably qualified Clinical Safety Officer before reliance.
+
+- [DCB0129 manufacturer safety case](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/commands/uk-nhs-dcb0129.md): `/arckit:uk-nhs-dcb0129` NHS DCB0129 Clinical Safety Case Report and Hazard Log for manufacturers.
+- [DCB0160 deployer safety case](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/commands/uk-nhs-dcb0160.md): `/arckit:uk-nhs-dcb0160` NHS DCB0160 Clinical Safety Case Report and deployment Hazard Log for NHS organisations.
+- [NHS DTAC assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/commands/uk-nhs-dtac.md): `/arckit:uk-nhs-dtac` Digital Technology Assessment Criteria (DTAC v3) assessment for a digital health product.
+- [Medical device classification](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/commands/uk-mdr-classification.md): `/arckit:uk-mdr-classification` SaMD / AIaMD classification under UK MDR 2002 and EU MDR 2017/745.
 
 ### Operations
 
@@ -220,6 +283,7 @@ French government (apply on top of EU baseline):
 ### Repository plugin
 
 - [Repository Documentation Wiki](https://arckit.org/guides/repo-docs.md): `/arckit:repo-docs` generate and maintain source-grounded, agent-readable repository documentation under `docs/repository/`.
+- [Repository audit](https://arckit.org/guides/repo-audit.md): `/arckit:repo-audit` audit a local or remote codebase against architecture principles and requirements, surfacing drift, risk, and missing decisions.
 
 ### Cloud research integrations
 
@@ -237,6 +301,8 @@ French government (apply on top of EU baseline):
 - [Presentation](https://arckit.org/guides/presentation.md): `/arckit:presentation` MARP decks.
 - [Glossary](https://arckit.org/guides/glossary.md): `/arckit:glossary` terminology.
 - [GitHub Pages](https://arckit.org/guides/pages.md): `/arckit:pages` documentation site generator.
+- [Open Knowledge Format export](https://arckit.org/guides/export-okf.md): `/arckit:export-okf` export project artefacts as an OKF bundle without changing source ARC files.
+- [Open Knowledge Format import](https://arckit.org/guides/import-okf.md): `/arckit:import-okf` import an OKF bundle as reviewable research notes.
 
 ## Articles and essays
 
