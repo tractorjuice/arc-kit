@@ -617,6 +617,22 @@ All artifacts must pass these 10 checks:
 - Reused components register populated (source, version, licence, integration method)
 - Circulaire PM n°6264-SG (2021) compliance — evidence that reuse was assessed before commissioning new development
 
+### ATBFR -- Austrian Accessibility Assessment (BaFG / WZG)
+
+- Both tracks determined independently with reasoning recorded: WZG (BGBl. I Nr. 59/2019, Directive (EU) 2016/2102) for federal public bodies, BaFG (BGBl. I Nr. 76/2023, Directive (EU) 2019/882) for economic actors; "both apply" supported
+- Land-level or municipal bodies routed to the applicable Landesgesetz — the federal WZG does not reach them
+- Microenterprise exemption applied to **services only**, never to products; the headcount and turnover/balance-sheet figures relied on are recorded, since the Sozialministeriumservice can require that evidence
+- Conformance assessed against EN 301 549 **v3.2.1** (the OJ-cited version) giving WCAG 2.1 AA; WCAG 2.2 AA appears only as an explicit forward-looking decision, never as the legal floor
+- Per-criterion table carries surface, evidence and test method; automated tooling alone is not presented as conformance
+- Non-web EN 301 549 clauses assessed where hardware, terminals, documents or e-books are in scope
+- Barrierefreiheitserklärung assessed against all five required elements (statutory conformance wording; non-accessible content split into incompatible / disproportionate burden / out of scope; preparation method and date; feedback mechanism; FFG enforcement pointer) where WZG applies
+- Conformity route correct per type: EU declaration of conformity and CE marking for products, published description plus retained documentation for services — no CE marking asserted for a service
+- Disproportionate burden and fundamental alteration claims backed by a documented, dated, retained assessment
+- Emergency communications (Notrufe) flagged as TKG 2021 rather than assessed under the BaFG
+- SMS and FFG exposures stated separately: BaFG administrative penalties up to EUR 80,000 tiered by severity and size; **no fine regime asserted under the WZG**
+- Gap analysis prioritised by user impact first and enforcement exposure second, with owners, target dates and NFR-UX cross-references
+- Items requiring practitioner verification marked `[NEEDS VERIFICATION]`, including the BaFG § numbers
+
 ### ATDSG -- Austrian Data Protection Assessment
 
 - DSG (BGBl. I 165/1999) and applicable sector laws (ELGA-G, GTelG 2012, ArbVG §96a) identified
