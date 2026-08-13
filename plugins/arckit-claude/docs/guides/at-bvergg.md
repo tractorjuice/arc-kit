@@ -74,6 +74,7 @@ Output: `projects/<id>/ARC-<id>-BVERGG-v1.0.md`
 - Award criteria pre-published with weights summing to 100%.
 - DSGVO processor clauses included where personal data is processed.
 - NISG supply-chain clauses included where contracting entity is Essential / Important.
+- Accessibility clause cites EN 301 549 **v3.2.1** (WCAG 2.1 AA), not 2.2 AA — see Key Notes.
 - Standstill period and BVwG review pathway documented in vendor pack.
 
 ---
@@ -82,6 +83,7 @@ Output: `projects/<id>/ARC-<id>-BVERGG-v1.0.md`
 
 - **Vergaberechtsgesetz 2026**: the BVergG 2018 was substantially amended (BGBl. I Nr. 8/2026, in force 1 March 2026; eForms from 1 October 2026) — permanent Direktvergabe limits (supplies/services €143K, works €200K; document ≥3 offers from €50K), harmonised Ausschlussgründe/Selbstreinigung, eForms below-threshold, and a tiered Nachprüfungs-fee system. The BVergG 2018 keeps its name and numbering.
 - **Threshold drift**: EU procurement thresholds change every two years — items marked `[NEEDS VERIFICATION]` must be confirmed against the latest regulation before external publication.
+- **Accessibility standard version**: §107 BVergG invokes EN 301 549, and the version that matters is the one cited in the Official Journal, because that is what carries a presumption of conformity. Today that is **v3.2.1**, which normatively references **WCAG 2.1 AA**. The revision carrying WCAG 2.2 AA (v4.1.1, drafted as v4.1.0 for public review in November 2025) is expected to be OJ-cited around October 2026 `[NEEDS VERIFICATION]`. Specifying 2.2 AA before that citation raises the bar above what the law requires without saying so, which is a defensible choice for a long contract but has to be a stated decision rather than a copied figure. Note this differs from the UK, where SI 2022/1097 replaced the fixed WCAG reference with a rolling one and 2.2 AA is already the monitored target — that UK position does not transfer to an EU-derived regime.
 - **Defence / utilities / concessions**: BVergGVS imposes additional rules — confirm sectoral scope before relying on the standard BVergG path.
 - **Run after pre-checks**: `/arckit:at-dsgvo` and `/arckit:at-nisg` should run first if either applies — their clauses feed the vendor pack.
 - **Community-contributed**: Output should be reviewed by qualified Vergabejurist / Rechtsabteilung before reliance.
