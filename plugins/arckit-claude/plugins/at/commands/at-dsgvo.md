@@ -240,7 +240,7 @@ Next steps:
 - ✅ Post-Schrems II TIA requirement applied
 - ✅ DSB enforcement priority self-assessment completed
 - ✅ Gap analysis with prioritised action plan generated
-- ✅ Document classified OFFICIAL-SENSITIVE
+- ✅ Document classified Eingeschränkt (or Vertraulich where criminal-law confidentiality applies)
 
 ## Example Usage
 
