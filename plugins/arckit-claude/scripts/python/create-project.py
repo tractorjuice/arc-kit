@@ -89,7 +89,17 @@ def main():
     log_info(f"Creating project: {project_dir_name}")
 
     # Create project directory structure
-    create_project_dir(project_dir)
+    #
+    # In --json mode the caller parses stdout, so a refusal has to arrive as
+    # JSON rather than as a bare non-zero exit with nothing on stdout. Match the
+    # error shape used for a missing project name above.
+    if not create_project_dir(project_dir):
+        if args.output_json:
+            print(json.dumps({
+                "error": f"Project directory already exists: {project_dir}",
+                "success": False,
+            }))
+        sys.exit(1)
 
     # Create README for external documents directory
     external_readme = os.path.join(project_dir, "external", "README.md")

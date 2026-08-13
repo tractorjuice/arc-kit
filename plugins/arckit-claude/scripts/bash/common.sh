@@ -81,8 +81,21 @@ get_next_project_number() {
 }
 
 # Create project directory structure
+#
+# Refuses an existing target. `create-project.sh` only ever creates: the
+# directory name carries a freshly allocated number, so a target that already
+# exists means the numbering is wrong, not that the user picked a taken name.
+# Bare `mkdir -p` succeeded in that case and the caller wrote a README and a
+# full set of ARC-{NNN}-* paths over the top of the existing project, exiting 0
+# (#762, #765). Fail here instead, before anything is written.
 create_project_dir() {
     local project_dir="$1"
+
+    if [[ -d "$project_dir" ]]; then
+        log_error "Project directory already exists: $project_dir"
+        log_error "This indicates a project-numbering fault, not a name collision."
+        return 1
+    fi
 
     mkdir -p "$project_dir"
     mkdir -p "$project_dir/vendors"
