@@ -1,4 +1,4 @@
-# Te Beschermen Belangen / VIRBI 2025 Rubricering Determination
+# Te Beschermen Belangen (TBB) Category Determination
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:nl-tbb`
 >
@@ -19,9 +19,13 @@
 
 > ⚠️ **The inference between Stg. classification and TBB category runs one way only.**
 >
-> Information marked at Stg. GEHEIM (or another Stg. level) implies the corresponding TBB category. A process or system determined to be **TBB 2 does NOT imply it holds Stg. GEHEIM data** — the TBB category describes the sensitivity of the belang (interest) at stake, not a classification level automatically present in the system.
+> The systematiek states both halves itself, immediately beneath Tabel B (§3.1):
 >
-> The rubricering in section 4 is therefore an **indicative proposal about the process** (derived from the highest of the three BIV scores, which may be availability or integrity rather than confidentiality), awaiting the rubriceringsautoriteit. It does not mark any document, does not retroactively classify existing information, and must never be quoted downstream as a determined classification.
+> *"Let wel, wanneer een te beschermen belang ingedeeld is in categorie TBB 2, hoeft dit niet te betekenen dat het proces of informatiesysteem gegevens verwerkt of bevat op het niveau van STG GEHEIM. […] Andersom geldt dit echter wel. Indien een proces of informatiesysteem gegevens verwerkt of bevat op het niveau van STG GEHEIM, dan is automatisch sprake van indeling in categorie TBB 2."*
+>
+> Information marked at Stg. GEHEIM (or another Stg. level) therefore implies the corresponding TBB category. A process or system determined to be **TBB 2 does NOT imply it holds Stg. GEHEIM data** — the TBB category describes the sensitivity of the belang (interest) at stake, not a classification level automatically present in the system.
+>
+> **This document therefore produces no rubricering.** Section 4 records the marking the information already carries, if any, and applies it as a floor on the category. The category is set by the highest of the three BIV scores, which may be availability or integrity rather than confidentiality — and §2.1 notes that for VIRBI purposes *"kijken we slechts/vooral naar Vertrouwelijkheid"*. Nothing here marks a document, retroactively classifies existing information, or may be quoted downstream as a determined classification.
 
 ## Scope Statement
 
@@ -85,22 +89,31 @@ Score each property independently. Do not average — the highest of the three d
 
 **TBB category**: **[TBB 1 / TBB 2 / TBB 3 / TBB 4]**
 
-## 4. Indicative VIRBI 2025 Rubricering (voorstel)
-
-| TBB category | Impact | Indicative VIRBI 2025 rubricering |
-|--------------|--------|-----------------------------------|
-| TBB 1 | Zeer hoog | Stg. ZEER GEHEIM |
-| TBB 2 | Hoog | Stg. GEHEIM |
-| TBB 3 | Midden | Stg. CONFIDENTIEEL |
-| TBB 4 | Laag | Departementaal VERTROUWELIJK or ongerubriceerd met merking |
-
-**Indicatieve rubricering (voorstel)**: [Stg. ZEER GEHEIM / Stg. GEHEIM / Stg. CONFIDENTIEEL / Departementaal VERTROUWELIJK / Ongerubriceerd met merking]
+## 4. Existing Rubricering as a Floor on the Category
 
 **Existing rubricering carried by the information in scope**: [Marking already applied, or "None recorded"]
 
-**Confirmed by rubriceringsautoriteit / BVA**: [PENDING — name, role, date]
+Where a marking is recorded, the systematiek's valid direction applies it as a floor (§3.1 — *"Andersom geldt dit echter wel. Indien een proces of informatiesysteem gegevens verwerkt of bevat op het niveau van STG GEHEIM, dan is automatisch sprake van indeling in categorie TBB 2."*):
 
-> This value is a **proposal about the process**, derived from the highest BIV score. It is not a determination, and it does not mark any document. Only the rubriceringsautoriteit can apply a rubricering. Where the information in scope already carries a marking, that marking governs and any divergence from the indicative value is referred, not overwritten.
+| Existing marking on the information | Floor: category is **at least this sensitive** |
+|-------------------------------------|-----------------------------------------------|
+| Stg. ZEER GEHEIM | TBB 1 |
+| Stg. GEHEIM | TBB 2 |
+| Stg. CONFIDENTIEEL | TBB 3 |
+| Departementaal VERTROUWELIJK / ongerubriceerd met merking | TBB 4 |
+| None recorded | no floor — the BIV-derived category stands |
+
+> **TBB 1 is the most sensitive category and TBB 4 the least** — a lower number means higher sensitivity. The final category is the **more sensitive** of the two bounds below, which is the one with the lower number. The floor can only raise sensitivity; it never lowers it.
+
+**Category from BIV scoring (§3)**: [TBB 1 / TBB 2 / TBB 3 / TBB 4]
+
+**Floor from existing marking**: [TBB 1 / TBB 2 / TBB 3 / TBB 4, or "None — no marking recorded"]
+
+**Final TBB category**: **[TBB 1 / TBB 2 / TBB 3 / TBB 4]** — bound that applied: [highest BIV score / floor from existing marking]
+
+**Reviewed by departmental security authority (beveiligingsautoriteit / BVA)**: [PENDING — name, role, date]
+
+> **This determination produces no rubricering.** The systematiek takes the rubricering as an *input* to the categorisation (§2.1) and states the reverse inference does not hold (§3.1: *"wanneer een te beschermen belang ingedeeld is in categorie TBB 2, hoeft dit niet te betekenen dat het proces of informatiesysteem gegevens verwerkt of bevat op het niveau van STG GEHEIM"*). Where the information carries no marking, none is inferred here. Marking is an act of the departmental security authority under the Besluit BVA-stelsel Rijksdienst 2021, not an output of the TBB systematiek.
 
 > VIRBI 2025 (BWBR0051482, in force 9 September 2025) replaced and repealed VIRBI 2013 on that date. Any prior assessment or source material still citing VIRBI 2013 is stale and must be re-verified.
 
