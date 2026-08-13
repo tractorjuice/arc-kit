@@ -97,20 +97,29 @@ Apply the fixed mapping:
 | Midden | TBB 3 |
 | Laag | TBB 4 |
 
-### Step 7: VIRBI 2025 Rubricering Mapping
+### Step 7: Indicative VIRBI 2025 Rubricering (voorstel)
 
-Map the TBB category to the corresponding VIRBI 2025 rubricering:
+Derive the **indicative** rubricering that corresponds to the determined TBB category. This is a proposal for the rubriceringsautoriteit, **not** a determination of the rubricering itself:
 
-| TBB category | VIRBI 2025 rubricering |
-|--------------|-------------------------|
+| TBB category | Indicative VIRBI 2025 rubricering |
+|--------------|-----------------------------------|
 | TBB 1 | Stg. ZEER GEHEIM |
 | TBB 2 | Stg. GEHEIM |
 | TBB 3 | Stg. CONFIDENTIEEL |
 | TBB 4 | Departementaal VERTROUWELIJK, or ongerubriceerd met merking |
 
+Record it as `Indicatieve rubricering (voorstel)` and state that it requires confirmation by the departmental rubriceringsautoriteit / BVA before it is applied. Where the information in scope already carries a rubricering, that existing marking governs — report it alongside the indicative value and flag any divergence for the rubriceringsautoriteit rather than overwriting it.
+
 ### Step 8: State the One-Way Inference Warning
 
-**MANDATORY — do not omit or soften this**: The inference between Stg. classification and TBB category runs **one way only**. Information already marked at Stg. GEHEIM implies TBB 2. A system or process determined to be **TBB 2 does not imply it holds Stg. GEHEIM data** — the TBB category reflects the sensitivity of the belang at stake in that process, not an automatic classification of every piece of information inside it. State this explicitly and prominently in the generated document; never state the inference in reverse.
+**MANDATORY — do not omit or soften this**: The relationship between Stg. classification and TBB category is **not symmetrical**.
+
+- **Valid**: information already marked at Stg. GEHEIM implies TBB 2.
+- **Invalid**: a process determined to be TBB 2 does **not** mean the information it holds is Stg. GEHEIM.
+
+The Step 7 value is an indicative proposal about the *process*, derived from the highest BIV score — which may be an availability or integrity score, not a confidentiality one. It never establishes that any document in scope carries that marking, never retroactively marks existing information, and never licenses handling unmarked information as though it were gerubriceerd. Only the rubriceringsautoriteit can apply a rubricering.
+
+State this explicitly and prominently in the generated document, and never present the indicative value as a determined classification.
 
 ### Step 9: Downstream Implications
 
@@ -128,7 +137,7 @@ State whether the determined TBB category triggers the clause 5.2 public-cloud p
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
 
-3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. Use the VIRBI 2025 rubricering ladder (Ongerubriceerd / Departementaal VERTROUWELIJK / Stg. CONFIDENTIEEL / Stg. GEHEIM / Stg. ZEER GEHEIM) in the Document Control Classification row — replace the standard UK line in the header.
+3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the NL regime to `_partials/document-control-nl.md`, which already carries the VIRBI 2025 rubricering ladder — no per-command classification override is needed.
 
 4. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. VIRBI 2025 (BWBR0051482) MUST appear in the Document Register with its primary URL and the verification date.
 
@@ -160,11 +169,14 @@ Integriteit:     {score}
 Vertrouwelijkheid: {score}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-✅ TBB category: {TBB 1 / 2 / 3 / 4}   →   VIRBI 2025: {rubricering}
+✅ TBB category:              {TBB 1 / 2 / 3 / 4}
+📌 Indicatieve rubricering:   {rubricering} (voorstel — needs rubriceringsautoriteit)
+🔒 Existing marking in scope: {rubricering already carried, or "none recorded"}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⚠️ Reminder: this inference runs one way. A {TBB category} process does NOT
-   imply it holds {rubricering} data.
+⚠️ Reminder: the indicative rubricering is a proposal about the process, not a
+   determination. A {TBB category} process does NOT mean the information it
+   holds is {rubricering}. Only the rubriceringsautoriteit can apply a marking.
 
 Next steps:
 1. {If cloud hosting under consideration: Run /arckit-nl:nl-cloud for the clause 5.2 eligibility check}
@@ -176,6 +188,7 @@ Next steps:
 
 - **The highest score wins**: Never average the three BIV scores. Never let Vertrouwelijkheid alone decide the category if Beschikbaarheid or Integriteit scored higher.
 - **One-way inference is not optional framing**: This is the single most important thing this command must get right. A TBB 2 process is not automatically holding Stg. GEHEIM data. Reversing the inference silently mis-classifies data downstream and can cause an eligible cloud hosting decision to be blocked, or worse, an ineligible one to look eligible.
+- **The rubricering here is indicative only**: Step 7 produces a *voorstel* for the rubriceringsautoriteit, derived from the highest BIV score — which may be Beschikbaarheid or Integriteit rather than Vertrouwelijkheid. Never write it into the document as a determined classification, and never let it override a rubricering the information already carries.
 - **VIRBI 2013 is stale**: If prior assessments or source documents cite VIRBI 2013, flag it — VIRBI 2025 replaced and repealed it on 9 September 2025.
 - **This command determines the category; it does not determine the hosting decision.** Run `/arckit-nl:nl-cloud` for the eligibility consequence.
 - **Use Write Tool**: This determination is consumed by other commands — always use the Write tool so it can be read back reliably.

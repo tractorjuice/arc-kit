@@ -95,7 +95,7 @@ If either holds, treat the use as materieel — clauses 3.1 (risk assessment), 3
 
 1. **Integral risk assessment**, required for materieel cloudgebruik, based on the BIV/TBB classification (pull from `/arckit-nl:nl-tbb` output if available; if not available, warn and proceed on user-supplied classification)
 2. Weigh the aspects the clause requires — the risk of foreign-government interference is explicitly named and must be assessed and mitigated as far as possible; note in the document that clause 3.1 requires five aspects in total and flag any not covered by current guidance for the assessor to complete against the published text
-3. **Pre-scan DPIA / DPIA** — required where personal data are processed
+3. **Pre-scan DPIA / Full DPIA** — required where personal data are processed
 4. **DTIA** — required where data transfer to a third country without an adequacy decision is in scope
 
 ### Step 6: Eligibility Determination (clauses 5.2, 4.5, 5.4)
@@ -144,7 +144,7 @@ State that an exit plan is mandatory, documented, self-tested, covers two scenar
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
 
-3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. Use the VIRBI 2025 rubricering ladder (Ongerubriceerd / Departementaal VERTROUWELIJK / Stg. CONFIDENTIEEL / Stg. GEHEIM / Stg. ZEER GEHEIM) in the Document Control Classification row — replace the standard UK line in the header.
+3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the NL regime to `_partials/document-control-nl.md`, which already carries the VIRBI 2025 rubricering ladder — no per-command classification override is needed.
 
 4. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The Herziening rijksbreed cloudbeleid 2026 and VIRBI 2025 MUST appear in the Document Register with their primary URLs and verification dates.
 

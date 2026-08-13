@@ -704,7 +704,7 @@ All artifacts must pass these 10 checks:
 - Beschikbaarheid, Integriteit, and Vertrouwelijkheid scored independently, with no property's score allowed to influence another's
 - TBB category set from the highest of the three BIV scores, not an average and not confidentiality alone, with the derivation shown
 - The one-way inference warning is stated prominently and is not reversed anywhere in the document — a determined TBB category never implies the corresponding Stg. classification is held by every piece of information in scope
-- TBB category correctly mapped to its VIRBI 2025 rubricering
+- The VIRBI 2025 rubricering is recorded as an indicative proposal (`voorstel`) awaiting the rubriceringsautoriteit, never as a determined classification, and never overriding a marking the information already carries
 - The determination carries an explicit classification-authority (departmental security officer) sign-off line, distinct from the generic Document Control approval fields
 - VIRBI 2013 flagged as superseded wherever referenced in source material
 

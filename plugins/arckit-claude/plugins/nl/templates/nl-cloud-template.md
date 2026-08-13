@@ -72,7 +72,7 @@ Required for materieel cloudgebruik, based on the application's BIV/TBB classifi
 
 > Clause 3.1 requires five aspects to be weighed. This assessment enumerates the aspect specified in current guidance (foreign-government interference); confirm the remaining four against the current published clause 3.1 text before finalising.
 
-### 2.2 Pre-scan DPIA / DPIA
+### 2.2 Pre-scan DPIA / Full DPIA
 
 | Trigger | Applies | Status |
 |---------|---------|--------|

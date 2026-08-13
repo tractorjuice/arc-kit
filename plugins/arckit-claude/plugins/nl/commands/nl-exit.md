@@ -115,7 +115,7 @@ Identify residual risks — e.g. data-format lock-in, proprietary managed-servic
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
 
-3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. Use the VIRBI 2025 rubricering ladder (Ongerubriceerd / Departementaal VERTROUWELIJK / Stg. CONFIDENTIEEL / Stg. GEHEIM / Stg. ZEER GEHEIM) in the Document Control Classification row — replace the standard UK line in the header.
+3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the NL regime to `_partials/document-control-nl.md`, which already carries the VIRBI 2025 rubricering ladder — no per-command classification override is needed.
 
 4. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The Herziening rijksbreed cloudbeleid 2026, clause 3.2 MUST appear in the Document Register with its primary URL and the verification date.
 

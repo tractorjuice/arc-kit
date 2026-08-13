@@ -59,7 +59,7 @@ Then in Claude Code:
 /plugin marketplace add tractorjuice/arckit-claude
 ```
 
-Then install from the Discover tab, or via CLI. The marketplace ships **15 plugins** — install only the overlays you need:
+Then install from the Discover tab, or via CLI. The marketplace ships **17 plugins** — install only the overlays you need:
 
 ```bash
 # Core (75 commands — UK Government civilian + generic enterprise)
@@ -517,7 +517,7 @@ Install: `claude plugin install arckit arckit-us`. See [`docs/guides/us-federal-
 
 ## UK Finance Payments Overlay (4 commands) — First Sector Overlay
 
-> **EXPERIMENTAL sector overlay.** The 4 commands below cover UK regulated payment system operators scaling operations under PSD2 SCA-RTS, CASS V, FCA Consumer Duty, and CREST protocols. They ship as the **arckit-uk-finance** community-contributed overlay — the first **sector-specific** overlay (distinct from the 7 jurisdictional overlays). Output requires review by qualified UK FS regulatory counsel, MLRO, and SMF holders before implementation.
+> **EXPERIMENTAL sector overlay.** The 4 commands below cover UK regulated payment system operators scaling operations under PSD2 SCA-RTS, CASS V, FCA Consumer Duty, and CREST protocols. They ship as the **arckit-uk-finance** community-contributed overlay — the first **sector-specific** overlay (distinct from the 8 jurisdictional overlays). Output requires review by qualified UK FS regulatory counsel, MLRO, and SMF holders before implementation.
 
 **Payments architecture and compliance**:
 
