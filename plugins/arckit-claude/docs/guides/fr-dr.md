@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:fr-dr` assesses Diffusion Restreinte (DR) document and IS handling compliance under II 901/SGDSN/ANSSI. **Scope is explicitly bounded to DR — IGI 1300 (Confidentiel Défense and above) is out of scope for ArcKit.**
+`/arckit:fr-dr` assesses Diffusion Restreinte (DR) document and IS handling compliance under II 901/SGDSN/ANSSI. **Scope is explicitly bounded to DR — IGI 1300 (Secret or Très Secret) is out of scope for ArcKit.**
 
 ---
 
@@ -50,9 +50,8 @@ Output: `projects/<id>/ARC-<id>-DR-v1.0.md`
 | Level | Governed By | ArcKit Scope |
 |-------|-------------|-------------|
 | Diffusion Restreinte (DR) | II 901 / SGDSN / ANSSI | ✅ In scope |
-| Confidentiel Défense | IGI 1300 | ❌ Out of scope |
-| Secret Défense | IGI 1300 | ❌ Out of scope |
-| Très Secret Défense | IGI 1300 | ❌ Out of scope |
+| Secret | IGI 1300 | ❌ Out of scope |
+| Très Secret | IGI 1300 | ❌ Out of scope |
 
 ---
 

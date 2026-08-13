@@ -21,11 +21,11 @@ handoffs:
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
-You are helping an enterprise architect assess **Diffusion Restreinte (DR) handling compliance** for a French information system. DR is a French administrative protection mention applied to information whose disclosure would harm the interests of the French State or third parties, without reaching the level requiring formal classification under IGI 1300 (Confidentiel Défense and above).
+You are helping an enterprise architect assess **Diffusion Restreinte (DR) handling compliance** for a French information system. DR is a French administrative protection mention applied to information whose disclosure would harm the interests of the French State or third parties, without reaching the level requiring formal classification under IGI 1300 (Secret or Très Secret).
 
 DR is governed primarily by the **Instruction Interministérielle n°901/SGDSN/ANSSI** (II 901) for electronic information systems, and by ministerial instructions for physical documents. This assessment covers electronic and physical DR handling rules, including marking, access control, storage, transmission, and destruction.
 
-> **Scope boundary**: This command covers DR only. Systems handling Confidentiel Défense or higher classification require a separate defence security framework (IGI 1300 / DGA / SGDSN) that is out of scope for ArcKit.
+> **Scope boundary**: This command covers DR only. Systems handling IGI 1300 classified information (Secret or Très Secret) require a separate defence security framework (DGA / SGDSN) that is out of scope for ArcKit.
 
 ## User Input
 
@@ -218,7 +218,7 @@ Next steps:
 
 ## Important Notes
 
-- **DR is not a classification level**: DR is an administrative protection mention, not a formal classification under IGI 1300. Confidentiel Défense and higher require a separate defence security framework. This command does not cover IGI 1300 systems.
+- **DR is not a classification level**: DR is an administrative protection mention, not a formal classification under IGI 1300. IGI 1300 classified information (Secret or Très Secret) requires a separate defence security framework. This command does not cover IGI 1300 systems.
 - **II 901 is the governing text for electronic DR**: The Instruction Interministérielle n°901/SGDSN/ANSSI governs electronic systems processing DR information. Always refer to the current version published by SGDSN/ANSSI.
 - **FSSI is the DR authority**: The Fonctionnaire de Sécurité des Systèmes d'Information (FSSI) is the authoritative contact for DR handling in each ministry. Engage the FSSI before making decisions about DR system qualification.
 - **IS homologation required**: An IS that processes DR information must be homologated by the RSSI or relevant authority. The homologation is based on an EBIOS risk analysis. Flag this if the IS is not yet homologated.
@@ -228,13 +228,13 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| Diffusion Restreinte — guidance and governing instruction (II 901) | ANSSI / SGDSN | https://cyber.gouv.fr/la-mention-diffusion-restreinte |
+| Diffusion Restreinte — guidance and governing instruction (II 901) | ANSSI / SGDSN | https://cyber.gouv.fr/reglementation/cybersecurite-systemes-dinformation/protection-information-sensible-diffusion-restreinte/ |
 | SGDSN (Secrétariat Général de la Défense et de la Sécurité Nationale) | SGDSN | https://www.sgdsn.gouv.fr/ |
-| RGS v2.0 — IS homologation requirements | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
+| RGS v2.0 — IS homologation requirements | ANSSI | https://cyber.gouv.fr/le-referentiel-general-de-securite-rgs |
 | ANSSI-approved encryption products (list) | ANSSI | https://cyber.gouv.fr/produits-services-et-organismes-qualifies |
 | CERT-FR — security incident reporting | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
 
-> **Note for reviewers**: The II 901/SGDSN/ANSSI instruction governing electronic DR systems is an interministerial instruction not publicly distributed in full. The ANSSI page above provides the publicly accessible guidance. DR is an administrative protection mention, distinct from the IGI 1300 formal classification scheme (Confidentiel Défense and above), which is managed by SGDSN and is outside the scope of this command.
+> **Note for reviewers**: The II 901/SGDSN/ANSSI instruction governing electronic DR systems is an interministerial instruction not publicly distributed in full. The ANSSI page above provides the publicly accessible guidance. DR is an administrative protection mention, distinct from the IGI 1300 formal classification scheme (Secret or Très Secret), which is managed by SGDSN and is outside the scope of this command.
 
 ## Success Criteria
 

@@ -90,7 +90,7 @@ Output: `projects/<id>/ARC-<id>-IRN-v1.0.md`
 - Licence incompatibility note and living-repo rationale included in document body.
 - Scoring summary matrix (8 × 5) present.
 - Preliminary observations from project artifacts noted.
-- Document classified OFFICIAL-SENSITIVE.
+- Document classified Diffusion Restreinte.
 
 ---
 
@@ -100,4 +100,4 @@ Output: `projects/<id>/ARC-<id>-IRN-v1.0.md`
 - **Scoring is external** — ArcKit creates the scaffold; the actual R/NR scores require the official aDRI evaluation grid. ArcKit must not attempt to reconstruct or approximate the scoring criteria.
 - **Living standard** — the IRN is under active development (current version: 0.4). Always download the current evaluation grid from the official repository before scoring.
 - **Certification available** — organisations can request independent IRN certification via the aDRI ([thedigitalresilience.org](https://thedigitalresilience.org/)).
-- **OFFICIAL-SENSITIVE** — the dependency map and gap analysis reveal strategic vulnerabilities that should not be publicly disclosed.
+- **Diffusion Restreinte** — the dependency map and gap analysis reveal strategic vulnerabilities that should not be publicly disclosed.

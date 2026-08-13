@@ -30,7 +30,7 @@
 
 | Cloud Recommendations | Status |
 |----------------------|--------|
-| ANSSI cloud security recommendations (2021) | [Applicable / Not applicable] |
+| ANSSI cloud security recommendations (updated 2024) | [Applicable / Not applicable] |
 | Cloud provider trust level | [SecNumCloud / EU-qualified / Other] |
 
 ---

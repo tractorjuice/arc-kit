@@ -27,7 +27,7 @@ handoffs:
 
 You are helping an enterprise architect generate an **Information System Security Policy (PSSI — Politique de Sécurité des Systèmes d'Information)** for a French organisation. The PSSI is the foundational security governance document that defines the organisation's security objectives, principles, organisational structure, and the framework within which all system-level security plans and measures are developed.
 
-For French public administrations, the PSSI is referenced as a mandatory document by the **Référentiel Général de Sécurité (RGS v2.0)** and the **Circulaire du Premier Ministre n°5926/SG**. For OIV systems, it is a required component of the security plan submitted to ANSSI. For OSE under NIS2, it constitutes part of the governance measures required by Article 21(2)(a).
+For French public administrations, the PSSI is referenced as a mandatory document by the **Référentiel Général de Sécurité (RGS v2.0)** and the **Circulaire du Premier Ministre n°5725/SG du 17 juillet 2014**. For OIV systems, it is a required component of the security plan submitted to ANSSI. For OSE under NIS2, it constitutes part of the governance measures required by Article 21(2)(a).
 
 ## User Input
 
@@ -188,7 +188,7 @@ Define the incident management process at the PSSI level — who declares, who q
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 36 months} (PSSI review cycle is typically 3 years or on major change)
-   - Classification: OFFICIAL-SENSITIVE minimum (PSSI reveals security objectives and weaknesses)
+   - Classification: Diffusion Restreinte minimum (PSSI reveals security objectives and weaknesses)
    - Approved By: PENDING — must be signed by the Highest Authority
 
 3. Write the complete PSSI following the template.
@@ -211,7 +211,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-PSSI-v{VERSION}.md
 📄 Document: projects/{project_id}/ARC-{PROJECT_ID}-PSSI-v{VERSION}.md
 📋 Document ID: {document_id}
 📅 Date: {date}
-🔒 Classification: OFFICIAL-SENSITIVE
+🔒 Classification: Diffusion Restreinte
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 PSSI Summary
@@ -243,8 +243,9 @@ Next steps:
 
 ## Important Notes
 
-- **PSSI is mandatory for French public administrations**: The Circulaire PM 5926/SG requires all ministries and their agencies to have a PSSI. The RGS formalises this for IS subject to RGS. This is not a best-practice recommendation — it is a legal obligation for public sector IS.
+- **PSSI is mandatory for French public administrations**: The Circulaire PM n°5725/SG du 17 juillet 2014 requires all ministries and their agencies to have a PSSI. The RGS formalises this for IS subject to RGS. This is not a best-practice recommendation — it is a legal obligation for public sector IS.
 - **Approval by the Highest Authority is essential**: A PSSI not approved and signed by the Highest Authority has no governance weight. The RSSI must secure this commitment. The PSSI generated here is DRAFT — flag the approval step prominently.
+- **OIV/OSE terminology is being succeeded by EE/EI**: France's NIS2 transposition ("loi Résilience") moves former OIV/OSE entities into two new categories — Entités Essentielles (EE) and Entités Importantes (EI) — with a much larger population in scope than the legacy regime. This command still uses OIV/OSE as the working vocabulary; confirm current terminology and designation with the client's legal/compliance function before relying on it, as the exact transposition timeline was not independently confirmed against a primary source at the time of writing.
 - **PSSI is not a technical document**: It defines objectives and principles, not implementation details. Implementation details live in system security plans (PSSI-S), the ANSSI assessment, and EBIOS studies. Keep the PSSI at governance level.
 - **3-year review cycle**: Unlike most ArcKit documents (annual review), a PSSI has a typical review cycle of 3 years or on major change. This is reflected in the Next Review Date.
 - **Relationship with EBIOS**: The PSSI and EBIOS RM are complementary. EBIOS provides the risk analysis that justifies the PSSI's security objectives. The PSSI provides the governance framework that gives EBIOS its authority. Ideally, EBIOS comes before or alongside the PSSI.
@@ -254,14 +255,14 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| Guide PSSI — methodology for drafting a security policy | ANSSI | https://cyber.gouv.fr/publications/politique-de-securite-des-systemes-dinformation |
-| RGS v2.0 (Référentiel Général de Sécurité) — mandatory for public IS | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
-| Guide d'hygiène informatique (42 measures) — PSSI baseline reference | ANSSI | https://cyber.gouv.fr/publications/guide-dhygiene-informatique |
-| EBIOS Risk Manager — risk analysis methodology referenced in PSSI | ANSSI | https://cyber.gouv.fr/publications/la-methode-ebios-risk-manager |
+| Guide PSSI — methodology for drafting a security policy | ANSSI | https://messervices.cyber.gouv.fr/guides/pssi-guide-delaboration-de-politiques-de-securite-des-systemes-dinformation |
+| RGS v2.0 (Référentiel Général de Sécurité) — mandatory for public IS | ANSSI | https://cyber.gouv.fr/le-referentiel-general-de-securite-rgs |
+| Guide d'hygiène informatique (42 measures) — PSSI baseline reference | ANSSI | https://messervices.cyber.gouv.fr/guides/guide-dhygiene-informatique |
+| EBIOS Risk Manager — risk analysis methodology referenced in PSSI | ANSSI | https://cyber.gouv.fr/securisation/analyse-des-risques/methode-ebios-rm/ |
 | CERT-FR — incident notification contact | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
 | NIS2 Directive — Article 21 security measures (for OSE) | EUR-Lex | https://eur-lex.europa.eu/eli/dir/2022/2555/oj |
 
-> **Note for reviewers**: The PSSI (Politique de Sécurité des Systèmes d'Information) is the French equivalent of an Information Security Policy. It is mandatory for French public administrations under the Circulaire du Premier Ministre n°5926/SG and the RGS. The RGS (Référentiel Général de Sécurité) is the French government's security standard framework, published by ANSSI — analogous in purpose to ISO 27001 but specific to French public IS.
+> **Note for reviewers**: The PSSI (Politique de Sécurité des Systèmes d'Information) is the French equivalent of an Information Security Policy. It is mandatory for French public administrations under the Circulaire du Premier Ministre n°5725/SG du 17 juillet 2014 and the RGS. The RGS (Référentiel Général de Sécurité) is the French government's security standard framework, published by ANSSI — analogous in purpose to ISO 27001 but specific to French public IS.
 
 ## Success Criteria
 
@@ -276,7 +277,7 @@ Next steps:
 - ✅ Incident management framework defined (roles and escalation)
 - ✅ Applicable standards and baseline documented (RGS, ANSSI hygiene, EBIOS, ISO 27001)
 - ✅ Approval by Highest Authority flagged as required
-- ✅ Document classified OFFICIAL-SENSITIVE minimum
+- ✅ Document classified Diffusion Restreinte minimum
 - ✅ PSSI per-type quality checks passed
 
 ## Example Usage

@@ -74,7 +74,7 @@ Excluded: decisions with mandatory human review at every step.
 - GDPR Art. 22 safeguards in place for automated individual decisions.
 - EU AI Act flag if ML system used (may trigger high-risk classification).
 - Publication plan: channel, format, update trigger.
-- Document classified PUBLIC (transparency notice must be publicly accessible).
+- Document classified Non protégé (transparency notice must be publicly accessible).
 
 ---
 
