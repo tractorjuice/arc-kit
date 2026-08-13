@@ -16,6 +16,8 @@ on:
       - "package-lock.json"
       - "scripts/check-guide-site-links.py"
       - "scripts/check-contributor-credits.py"
+      - "scripts/check-llms-txt.py"
+      - "docs/llms.txt"
       - "scripts/check-quality-checklist-refs.py"
       - "scripts/check-common-parity.py"
       - "scripts/check-create-project-invocations.py"
@@ -50,6 +52,8 @@ on:
       - "package-lock.json"
       - "scripts/check-guide-site-links.py"
       - "scripts/check-contributor-credits.py"
+      - "scripts/check-llms-txt.py"
+      - "docs/llms.txt"
       - "scripts/check-quality-checklist-refs.py"
       - "scripts/check-common-parity.py"
       - "scripts/check-create-project-invocations.py"
@@ -111,6 +115,9 @@ jobs:
 
       - name: Contributor credit check (CHANGELOG credits vs contributors page)
         run: python3 scripts/check-contributor-credits.py
+
+      - name: llms.txt sync check (every command indexed, no dead links)
+        run: python3 scripts/check-llms-txt.py
 
       - name: Quality-checklist references resolve (closes #749)
         run: python3 scripts/check-quality-checklist-refs.py
