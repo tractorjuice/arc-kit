@@ -135,7 +135,21 @@ def slugify(text):
 
 
 def create_project_dir(project_dir):
-    """Create project directory structure with all required subdirectories."""
+    """Create project directory structure with all required subdirectories.
+
+    Refuses an existing target, returning False. `create-project.py` only ever
+    creates: the directory name carries a freshly allocated number, so a target
+    that already exists means the numbering is wrong, not that the user picked a
+    taken name. `exist_ok=True` succeeded in that case and the caller wrote a
+    README and a full set of ARC-{NNN}-* paths over the top of the existing
+    project, exiting 0 (#762, #765). Fail here instead, before anything is
+    written.
+    """
+    if Path(project_dir).is_dir():
+        log_error(f"Project directory already exists: {project_dir}")
+        log_error("This indicates a project-numbering fault, not a name collision.")
+        return False
+
     subdirs = [
         "", "vendors", "external", "final",
         "decisions", "diagrams", "wardley-maps",
@@ -144,6 +158,7 @@ def create_project_dir(project_dir):
     for sub in subdirs:
         (Path(project_dir) / sub).mkdir(parents=True, exist_ok=True)
     log_success(f"Created project directory: {project_dir}")
+    return True
 
 
 # ============================================================================
