@@ -119,10 +119,59 @@ check_git() {
     return 0
 }
 
-# Slugify a string (convert to kebab-case, preserving accented characters)
+# Slugify a string (convert to kebab-case, transliterating accents to ASCII)
+#
+# Accented characters become their ASCII equivalent (café -> cafe) rather than
+# being deleted. The four copies of this function disagreed before #766: three
+# dropped the character mid-word (caf-modernisation) and the fourth kept it via
+# [:alnum:], which follows LC_CTYPE and so produced a different directory name
+# under LC_ALL=C than under a UTF-8 locale.
+#
+# Transliterating keeps the result identical in every locale and in both
+# languages, and keeps non-ASCII out of names that end up in filesystem paths,
+# git and published URLs. Characters outside the table are dropped.
+#
+# Keep this table in step with slugify() in scripts/python/common.py. All four
+# copies are held equal by tests/plugin/test_slugify.py.
 slugify() {
-    local lower="${1,,}"
-    echo "$lower" | sed 's/[^[:alnum:]]\+/-/g' | sed 's/^-\|-$//g'
+    local s="$1" pair from to
+
+    # Both cases are listed so this runs before ASCII lowercasing: bash can
+    # only lowercase A-Z without depending on the locale.
+    local -a translit=(
+        'À:a' 'Á:a' 'Â:a' 'Ã:a' 'Ä:a' 'Å:a' 'à:a' 'á:a' 'â:a' 'ã:a' 'ä:a' 'å:a'
+        'Æ:ae' 'æ:ae' 'Ç:c' 'ç:c'
+        'È:e' 'É:e' 'Ê:e' 'Ë:e' 'è:e' 'é:e' 'ê:e' 'ë:e'
+        'Ì:i' 'Í:i' 'Î:i' 'Ï:i' 'ì:i' 'í:i' 'î:i' 'ï:i'
+        'Ð:d' 'ð:d' 'Ñ:n' 'ñ:n'
+        'Ò:o' 'Ó:o' 'Ô:o' 'Õ:o' 'Ö:o' 'Ø:o' 'ò:o' 'ó:o' 'ô:o' 'õ:o' 'ö:o' 'ø:o'
+        'Ù:u' 'Ú:u' 'Û:u' 'Ü:u' 'ù:u' 'ú:u' 'û:u' 'ü:u'
+        'Ý:y' 'ý:y' 'Ÿ:y' 'ÿ:y' 'Þ:th' 'þ:th' 'ß:ss'
+        'Ā:a' 'ā:a' 'Ą:a' 'ą:a'
+        'Ć:c' 'ć:c' 'Č:c' 'č:c' 'Ď:d' 'ď:d'
+        'Ē:e' 'ē:e' 'Ė:e' 'ė:e' 'Ę:e' 'ę:e' 'Ě:e' 'ě:e'
+        'Ğ:g' 'ğ:g'
+        'Ī:i' 'ī:i' 'Į:i' 'į:i' 'İ:i' 'ı:i'
+        'Ł:l' 'ł:l' 'Ń:n' 'ń:n' 'Ň:n' 'ň:n'
+        'Ō:o' 'ō:o' 'Ő:o' 'ő:o' 'Œ:oe' 'œ:oe'
+        'Ř:r' 'ř:r'
+        'Ś:s' 'ś:s' 'Š:s' 'š:s' 'Ş:s' 'ş:s'
+        'Ť:t' 'ť:t' 'Ţ:t' 'ţ:t'
+        'Ū:u' 'ū:u' 'Ů:u' 'ů:u' 'Ű:u' 'ű:u'
+        'Ź:z' 'ź:z' 'Ż:z' 'ż:z' 'Ž:z' 'ž:z'
+    )
+
+    for pair in "${translit[@]}"; do
+        from="${pair%%:*}"
+        to="${pair#*:}"
+        s="${s//"$from"/"$to"}"
+    done
+
+    # LC_ALL=C keeps both steps byte-oriented, so the slug never depends on the
+    # caller's environment. The character classes are spelled out rather than
+    # using \+ or \|, which are GNU extensions and not portable to BSD sed.
+    s="$(printf '%s' "$s" | LC_ALL=C tr 'A-Z' 'a-z')"
+    printf '%s' "$s" | LC_ALL=C sed -e 's/[^a-z0-9][^a-z0-9]*/-/g' -e 's/^-//' -e 's/-$//'
 }
 
 # ============================================================================
