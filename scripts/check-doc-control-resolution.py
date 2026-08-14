@@ -77,13 +77,17 @@ INLINE_BY_DESIGN = {
 
 # Templates that ship but that no command or agent reads by name. These cannot
 # fail the resolution check because there is no reader to carry the instruction —
-# the defect is one level up: the command generates freeform output instead of
-# rendering its template, against the Template-Driven Generation rule in
-# CLAUDE.md. Separate from marker resolution, so recorded rather than fixed here.
+# the defect is one level up: each template names its owning command in its own
+# header, and that command writes the artefact from a skeleton inlined in the
+# command body instead, with no `## Document Control` and no `## Revision
+# History` at all. Against the Template-Driven Generation rule in CLAUDE.md, and
+# a behaviour change rather than a wording one, so recorded here and tracked on
+# #792. Drop the entry once the command reads its template — the stale-exemption
+# check below will catch it if anyone forgets.
 NO_READER_KNOWN = {
-    "backlog-template.md": "/arckit:backlog generates freeform; never reads the template",
-    "gcloud-clarify-template.md": "/arckit:gcloud-clarify generates freeform; never reads the template",
-    "gcloud-requirements-template.md": "no command references this template at all",
+    "backlog-template.md": "/arckit:backlog inlines its own skeleton instead (#792)",
+    "gcloud-clarify-template.md": "/arckit:gcloud-clarify inlines its own skeleton instead (#792)",
+    "gcloud-requirements-template.md": "/arckit:gcloud-search inlines its own skeleton instead (#792)",
 }
 
 
