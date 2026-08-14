@@ -5,6 +5,28 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **The EU Cloud Sovereignty Framework (EUCSF) assessment shipped three wrong objective weights** — `SOV-1 Strategic Sovereignty` **15%** (should be **20%**), `SOV-5 Supply Chain Sovereignty` **20%** (should be **10%**), `SOV-7 Security & Compliance Sovereignty` **10%** (should be **15%**) — verified against the European Commission's [Implementation guidance](https://commission.europa.eu/document/download/2ad80a48-166f-4c77-a513-80c53ca2a128_en?filename=Cloud+Sovereignty+Framework+-+Implementation+guidance.pdf) p.7 and the [Annex calculator](https://commission.europa.eu/document/download/3acb8fe8-8a4a-4339-ae74-f56138d913d1_en?filename=Annex+-+Sovereignty+assessment+calculator.xlsx) XLSX cells D4/D45/D76/D102/D133/D169/D195/D231. The other five objectives were already correct.
+
+  **The wrong set is a permutation of the correct one** — the same eight numbers, three of them assigned to the wrong objective — so it still sums to exactly 100%. That is why it survived two independent "totals 100%" checks: `quality-checklist.md`'s EUCSF item (*"Weight table reproduces the framework weights and totals exactly 100%"*) and this document's own predecessor guard both evaluate a sum, and a sum is invariant to a permutation of its addends. Neither check has ever verified a single objective's weight against its own known-correct value. `scripts/tests/test-csf-weights.mjs` closes that gap: it asserts each of the eight `SOV-N` weights individually, globbed across every canonical source and generated mirror (`plugins/arckit-eu/**`, `plugins/arckit-claude/plugins/eu/**`, `.arckit/templates/**`, `docs/guides/eu-cloud-sovereignty.md`, `plugins/arckit-claude/docs/guides/**`), and `quality-checklist.md`'s EUCSF check now lists all eight weights explicitly rather than only their total.
+
+  The guard's red run, before any data was corrected, named exactly the three wrong objectives across every file carrying the table (7 files, 48 individual weight-occurrence failures):
+
+  ```text
+  [FAIL] plugins/arckit-eu/commands/eu-cloud-sovereignty.md:198: SOV-1 weight is 15%, the framework says 20%
+  [FAIL] plugins/arckit-eu/commands/eu-cloud-sovereignty.md:202: SOV-5 weight is 20%, the framework says 10%
+  [FAIL] plugins/arckit-eu/commands/eu-cloud-sovereignty.md:204: SOV-7 weight is 10%, the framework says 15%
+  [FAIL] plugins/arckit-eu/templates/eu-cloud-sovereignty-template.md:30: SOV-1 weight is 15%, the framework says 20%
+  [FAIL] plugins/arckit-eu/templates/eu-cloud-sovereignty-template.md:34: SOV-5 weight is 20%, the framework says 10%
+  [FAIL] plugins/arckit-eu/templates/eu-cloud-sovereignty-template.md:36: SOV-7 weight is 10%, the framework says 15%
+  ... (and the same three-objective pattern repeated across three tables and eight `(Weight: ...)` subsection headers per file, and across every generated mirror in `plugins/arckit-claude/plugins/eu/`, `.arckit/templates/`, and both `docs/guides/` trees)
+  ```
+
+  Also corrected in `plugins/arckit-eu/commands/eu-cloud-sovereignty.md`: `SEAL-3` was named **"Digital Resilience"**, which does not appear anywhere in the framework's SEAL scale — renamed to **"Technological Sovereignty"** per the Implementation guidance p.2-3. `SEAL-2` and `SEAL-4`'s wording was also drifting from that same normative rendering (*"EU law applicable and enforceable"* vs. the source's *"EU jurisdictions apply"*; *"subject only to EU law"* vs. *"subject only to EU jurisdiction"*) and is now verbatim.
+
 ## [6.10.0] — 2026-08-18
 
 ### Added

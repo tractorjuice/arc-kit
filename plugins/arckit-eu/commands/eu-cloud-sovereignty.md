@@ -122,11 +122,11 @@ Show this scoping summary before generating the full document.
 
 5. **Section 3: Sovereignty Score — Methodology and Result**
    - Reproduce the five SEAL level definitions in full (do not paraphrase or abbreviate):
-     - **SEAL-0 No Sovereignty**: service, technology or operations under exclusive control of non-EU third parties, governed entirely in non-EU jurisdictions
+     - **SEAL-0 No Sovereignty**: service, technology or operations under exclusive control of non-EU third parties, governed entirely by non-EU jurisdictions
      - **SEAL-1 Jurisdictional Sovereignty**: EU law formally applies with limited practical enforceability; service, technology or operations under exclusive control of non-EU third parties
-     - **SEAL-2 Data Sovereignty**: EU law applicable and enforceable, with material non-EU dependencies remaining; under indirect control of non-EU third parties
-     - **SEAL-3 Digital Resilience**: EU law applicable and enforceable, EU actors exercising meaningful but not full influence; under marginal control of non-EU third parties
-     - **SEAL-4 Full Digital Sovereignty**: technology and operations under complete EU control, subject only to EU law, with no critical non-EU dependencies
+     - **SEAL-2 Data Sovereignty**: EU jurisdictions apply, with material dependencies remain; service, technology or operations under indirect control of non-EU third parties
+     - **SEAL-3 Technological Sovereignty**: EU jurisdictions apply, EU actors exercising meaningful but not full influence; service, technology or operations under marginal control of non-EU third parties
+     - **SEAL-4 Full Digital Sovereignty**: technology and operations under complete EU control, subject only to EU jurisdiction, with no critical non-EU dependencies
    - State the formula: Sovereignty Score = Σ over the eight objectives of (Score(SOVn) / Max.Score(SOVn)) × Weight(SOVn), expressed as a percentage
    - Weight table for all eight objectives (must sum to exactly 100%)
    - Scored table: objective, Score, Max Score, Weight, Weighted Contribution
@@ -195,13 +195,13 @@ Sovereignty Score: {N}% (award-criterion contribution)
 
 | Objective | Weight | SEAL Claimed | SEAL Evidenced | Min. SEAL (tender) | Meets Min.? |
 |-----------|--------|-------------|-----------------|--------------------|-------------|
-| SOV-1 Strategic Sovereignty            | 15% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
+| SOV-1 Strategic Sovereignty            | 20% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
 | SOV-2 Legal & Jurisdictional Sovereignty | 10% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
 | SOV-3 Data & AI Sovereignty            | 10% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
 | SOV-4 Operational Sovereignty          | 15% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
-| SOV-5 Supply Chain Sovereignty         | 20% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
+| SOV-5 Supply Chain Sovereignty         | 10% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
 | SOV-6 Technology Sovereignty           | 15% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
-| SOV-7 Security & Compliance Sovereignty | 10% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
+| SOV-7 Security & Compliance Sovereignty | 15% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
 | SOV-8 Environmental Sustainability     |  5% | {SEAL} | {SEAL} | {SEAL / not set} | {Y/N} |
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

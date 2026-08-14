@@ -162,6 +162,9 @@ jobs:
       - name: ArcKit FDE template consistency
         run: node scripts/tests/test-fde-templates.mjs
 
+      - name: EU Cloud Sovereignty Framework weight guard
+        run: node scripts/tests/test-csf-weights.mjs
+
       - name: Command-reference notation (colon namespace)
         run: python3 scripts/standardise-colon.py --check
 
