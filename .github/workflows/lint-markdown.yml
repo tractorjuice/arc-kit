@@ -40,6 +40,8 @@ on:
       - "plugins/arckit-claude/scripts/generate-document-id.mjs"
       - "scripts/bash/generate-document-id.sh"
       - "plugins/arckit-claude/scripts/bash/generate-document-id.sh"
+      - "plugins/arckit-claude/scripts/csf-score.mjs"
+      - "plugins/arckit-eu/data/**"
       - "plugins/arckit-claude/.claude-plugin/plugin.json"
       - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
@@ -82,6 +84,8 @@ on:
       - "plugins/arckit-claude/scripts/generate-document-id.mjs"
       - "scripts/bash/generate-document-id.sh"
       - "plugins/arckit-claude/scripts/bash/generate-document-id.sh"
+      - "plugins/arckit-claude/scripts/csf-score.mjs"
+      - "plugins/arckit-eu/data/**"
       - "plugins/arckit-claude/.claude-plugin/plugin.json"
       - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
@@ -161,6 +165,9 @@ jobs:
 
       - name: ArcKit FDE template consistency
         run: node scripts/tests/test-fde-templates.mjs
+
+      - name: EU Cloud Sovereignty Score/Max.Score invariants (#782)
+        run: node scripts/tests/test-csf-score.mjs
 
       - name: Command-reference notation (colon namespace)
         run: python3 scripts/standardise-colon.py --check

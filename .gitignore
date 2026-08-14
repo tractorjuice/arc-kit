@@ -49,6 +49,14 @@ htmlcov/
 .arckit-debug/
 research/
 data/
+# plugins/arckit-eu/data/ is tracked SOURCE (arc-kit#782), not the generated
+# extensions/*/data/ output the blanket rule above is for — scripts/converter.py
+# writes extensions/*/data/ from this directory, it does not go the other way.
+# Its mirror under plugins/arckit-claude/plugins/eu/data/ (written by
+# scripts/sync-claude-plugin-layout.py for the standalone arckit-claude repo)
+# needs the same exception, or the standalone publish silently loses the file.
+!plugins/arckit-eu/data/
+!plugins/arckit-claude/plugins/eu/data/
 
 # Plugin runtime caches — ephemeral, project-scoped, regenerated each session
 # (see #494 close: these belong in .gitignore, not ${CLAUDE_PLUGIN_DATA})

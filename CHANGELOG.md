@@ -5,6 +5,18 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`/arckit:eu-cloud-sovereignty` stated its Sovereignty Score formula without ever defining `Score(SOVn)` or `Max.Score(SOVn)`** (#782), so the model had to invent a scale each time and the result — published as a tender **award criterion** — could disagree across two runs over identical evidence.
+
+  Both terms are now defined from the official Annex calculator, transcribed at `plugins/arckit-eu/data/csf-criteria-calculator-2026-06-01.json`: `Score(SOVn)` is the sum of the selected answers' point values per objective; `Max.Score(SOVn)` is a shared **nominal 1000** for every objective, not each objective's own computed maximum. Because the calculator rounds answer values to 2dp, the actual per-objective maxima are 1000.03 / 1002.00 / 1000.00 / 1002.00 / 1001.00 / 1000.00 / 1001.00 / 1000.00 — so a **maximal response scores 100.0756%, not 100%**. That overshoot is the framework's own documented behaviour and is reported faithfully rather than clamped.
+
+  The command now also states explicitly that **SEAL is not an input to the Score and the Score does not determine SEAL** — both are independent readings of the same 48 answers, and Overall SEAL is the *minimum* SEAL across every answered criterion, not an average. The generated artefact carries a new **Appendix A** with per-criterion arithmetic for all 48 criteria, so the score is checkable without re-running the scorer. The Implementation guidance's narrative describes 43 questions; the published calculator scores 48 — both counts are recorded, with the discrepancy stated.
+
+  New: `plugins/arckit-claude/scripts/csf-score.mjs`, a pure-Node scorer implementing these definitions (Claude Code / Python-CLI targets only — Codex, Gemini, OpenCode, and Copilot ship the calculator data and command markdown but not the script, per the existing non-Claude script-degradation pattern; the artefact's per-criterion arithmetic requirement makes the assessment checkable either way). Guarded by `scripts/tests/test-csf-score.mjs`, wired into `lint-markdown.yml`.
+
 ## [6.10.0] — 2026-08-18
 
 ### Added

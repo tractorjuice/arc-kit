@@ -467,7 +467,10 @@ All artifacts must pass these 10 checks:
 - All eight objectives (SOV-1 to SOV-8) assessed, none omitted
 - Weight table reproduces the framework weights and totals exactly 100%
 - All five SEAL definitions (SEAL-0 to SEAL-4) reproduced in full, not paraphrased
-- Sovereignty Score computed from the stated formula, and the per-objective Score / Max Score basis is stated rather than assumed
+- `Score(SOVn)` and `Max.Score(SOVn)` are defined, not merely named: Score(SOVn) is the sum of selected answer values per the calculator catalogue, and Max.Score(SOVn) is the shared nominal 1000 for every objective, not each objective's own actual maximum
+- Sovereignty Score computed from the stated formula (Score(SOVn) / 1000) × Weight(SOVn); a maximal response is not clamped to 100% — the framework's own 2dp rounding overshoot (100.0756%) is reported faithfully if the assessment reaches it
+- Appendix A shows per-criterion arithmetic for all 48 criteria (selected answer, Score value, SEAL), sourced only from `csf-criteria-calculator-2026-06-01.json` — every Score(SOVn) in Section 3.2 traces back to a sum of its Appendix A rows
+- SEAL stated as independent of Score — neither is derived from the other — and Overall SEAL is computed as the minimum SEAL across all answered criteria, never an average
 - Award criterion and rejection gate kept distinct: the weighted Sovereignty Score does not excuse a failed minimum SEAL on any single objective
 - Each objective carries an evidence column drawn from that objective's contributing factors; no invented criteria
 - SEAL claimed and SEAL evidenced recorded separately; any self-declared level is flagged unverified wherever it appears, including the executive summary
