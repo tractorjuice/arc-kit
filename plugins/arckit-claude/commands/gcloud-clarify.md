@@ -112,30 +112,22 @@ For performance requirements (NFR-P-xxx):
 - Are there hidden costs? (setup fees, support costs, overage charges)
 - Are scaling costs predictable?
 
+### 3b. Read the Template
+
+**Read the template** (user override takes precedence):
+
+- **First**, check `.arckit/templates-custom/gcloud-clarify-template.md`
+- **Then**, `.arckit/templates/gcloud-clarify-template.md`
+- **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/gcloud-clarify-template.md`
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
+
+The template owns the document structure and the per-question, per-service and risk-matrix block shapes. The steps below decide *what* goes in them; the template decides the shape.
+
 ### 4. Generate Clarification Questions
 
 For each gap or ambiguity, generate a structured question:
 
-**Question Format**:
-
-```markdown
-#### Q[N]: [Clear, specific question title]
-**Requirement**: [REQ-ID] (MUST/SHOULD) - [requirement text]
-
-**Gap**: [Describe what is missing, ambiguous, or unclear]
-
-**Question**:
-> [Specific question to supplier]
-> - [Sub-question or specific aspect]
-> - [Sub-question or specific aspect]
-> - [Sub-question or specific aspect]
-
-**Evidence Needed**:
-- [Specific document or proof required]
-- [Additional evidence needed]
-
-**Priority**: [🔴 CRITICAL / 🟠 HIGH / 🔵 MEDIUM / 🟢 LOW]
-```
+**Question format**: use the template's `#### Q[N]:` block — requirement ID and text, the gap, the question with its sub-questions, the evidence needed, and a priority. Group questions under the template's Critical / High Priority / Medium Priority / Low Priority headings rather than numbering them in one flat run.
 
 #### Question Priority Levels
 
@@ -167,26 +159,7 @@ For each gap or ambiguity, generate a structured question:
 
 ### 5. Generate Risk Assessment
 
-Create risk matrix for each service:
-
-```markdown
-## 📊 Service Risk Assessment
-
-| Aspect | Status | Risk | Notes |
-|--------|--------|------|-------|
-| **[Requirement Category]** | [✅/⚠️/❌] | [🔴/🟠/🔵/🟢] | [Brief note] |
-| ... | ... | ... | ... |
-
-**Overall Risk**: [🔴 CRITICAL / 🟠 HIGH / 🔵 MEDIUM / 🟢 LOW]
-
-**Risk Calculation**:
-- ❌ [N] MUST requirements NOT confirmed
-- ⚠️ [N] MUST requirements AMBIGUOUS
-- 🔵 [N] SHOULD requirements missing
-
-**Recommendation**:
-- [Clear action: DO NOT PROCEED / CLARIFY FIRST / PROCEED WITH CAUTION / PROCEED TO DEMO]
-```
+Fill the template's **Service Risk Assessment** block for each service. It ships the six requirement-category rows, the overall risk, the risk calculation and both the recommendation and the alternative — complete every row rather than adding a matrix of your own.
 
 **Risk Levels**:
 
@@ -224,7 +197,7 @@ Before completing the document, populate ALL document control fields in the head
 
 *Calculated fields*:
 
-- `[YYYY-MM-DD]` for Review Date → Current date + 30 days
+- `[YYYY-MM-DD]` for Next Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
 
@@ -253,187 +226,22 @@ The footer should be populated with:
 
 ---
 
-### 6. Generate Output Document
+### 6. Write the Document
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLC** per-type checks pass. Fix any failures before proceeding.
+Populate the template read in Step 3b:
 
-Create `projects/[project]/procurement/ARC-{PROJECT_ID}-GCLC-v1.0.md`:
+- **Executive Summary** — services analysed, total questions raised by priority, and the headline recommendation.
+- **Service N** blocks — one per service, each with its Gap Summary, the four question priority groups, the Service Risk Assessment, and the Email Template for Supplier. The template ships two service blocks and says to repeat the structure; add as many as there are services.
+- **Service Comparison - Risk Summary** — the cross-service view.
+- **Next Steps** — immediate actions, what happens on receiving responses, and the decision point. Name owners and dates rather than leaving the week labels bare.
+- **Gap Detection Reference** — the gap coverage status, ambiguous-claims detection, priority levels and risk levels used in this assessment, so a reader can audit the judgements.
+- **Referenced Documents** and **External References** — every requirement artefact and supplier service page the assessment drew on. Follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`: inline citation markers next to claims taken from a supplier's page, and each source registered in the External References tables.
 
-```markdown
-# G-Cloud Service Clarification Questions
+**CRITICAL**: Use the **Write tool** to save the completed document to
+`projects/[project]/procurement/ARC-{PROJECT_ID}-GCLC-v1.0.md`. Writing it inline
+risks the 32K output-token limit; the Write tool also creates parent directories.
 
-**Project**: [PROJECT_NAME]
-**Date**: [DATE]
-**Services Analyzed**: [N]
-
----
-
-## Executive Summary
-
-**Purpose**: Validate G-Cloud services against requirements before procurement decision.
-
-**Status**:
-- Services Analyzed: [N]
-- Critical Gaps Found: [N]
-- High Priority Gaps: [N]
-- Medium Priority Gaps: [N]
-
-**Action Required**: [Send clarification questions to [N] suppliers / Eliminate [N] services due to critical gaps / Proceed with [Service Name]]
-
----
-
-## Service 1: [Service Name] by [Supplier Name]
-
-**Link**: [Service URL]
-
-### 📋 Gap Summary
-
-- ✅ **[N]** MUST requirements confirmed with evidence
-- ⚠️ **[N]** MUST requirements mentioned ambiguously
-- ❌ **[N]** MUST requirements NOT mentioned
-- 🔵 **[N]** SHOULD requirements missing
-
-**Overall Risk**: [🔴/🟠/🔵/🟢] [Risk Level]
-
----
-
-### 🚨 Critical Questions (MUST address before proceeding)
-
-[Generate Q1, Q2, Q3... for each critical gap using format above]
-
----
-
-### ⚠️ High Priority Questions (Affects evaluation scoring)
-
-[Generate Q[N]... for each high priority gap]
-
----
-
-### 🔵 Medium Priority Questions (Due diligence)
-
-[Generate Q[N]... for each medium priority gap]
-
----
-
-### 🟢 Low Priority Questions (Nice to know)
-
-[Generate Q[N]... for each low priority question]
-
----
-
-### 📊 Service Risk Assessment
-
-[Generate risk matrix table as defined above]
-
-**Recommendation**:
-[Clear recommendation based on risk level]
-
-**Alternative**: [Suggest alternative service if this one has critical gaps]
-
----
-
-### 📧 Email Template for Supplier
-
-Subject: Technical Clarification Required - [Service Name]
-
-Dear [Supplier Name] Team,
-
-We are evaluating [Service Name] (Service ID: [ID]) for procurement via the Digital Marketplace. Before proceeding, we need clarification on several technical requirements:
-
-**Critical Requirements (Blocking)**:
-[List Q-numbers for critical questions]
-
-**High Priority Requirements**:
-[List Q-numbers for high priority questions]
-
-Could you please provide:
-- Written responses to questions [Q1-QN]
-- Supporting documentation ([list evidence needed])
-- Access to demo/trial environment for technical validation
-
-We aim to make a procurement decision by [DATE + 2 weeks]. Please respond by [DATE + 1 week].
-
-Thank you,
-[User name if provided, otherwise: Your Name]
-[Organization name if available]
-
----
-
-[REPEAT FOR EACH SERVICE: Service 2, Service 3, etc.]
-
----
-
-## 📊 Service Comparison - Risk Summary
-
-| Service | Supplier | Critical Gaps | High Gaps | Medium Gaps | Overall Risk | Action |
-|---------|----------|---------------|-----------|-------------|--------------|--------|
-| [Service 1] | [Supplier 1] | [N] | [N] | [N] | [🔴/🟠/🔵/🟢] | [Action] |
-| [Service 2] | [Supplier 2] | [N] | [N] | [N] | [🔴/🟠/🔵/🟢] | [Action] |
-| [Service 3] | [Supplier 3] | [N] | [N] | [N] | [🔴/🟠/🔵/🟢] | [Action] |
-
-**Recommended Priority Order**:
-1. **[Service Name]** - [Risk Level] - [Action]
-2. **[Service Name]** - [Risk Level] - [Action]
-3. **[Service Name]** - [Risk Level] - [Action]
-
----
-
-## 📋 Next Steps
-
-### Immediate Actions (This Week)
-
-1. ✅ **Send clarification questions**:
-   - [ ] Email sent to [Supplier 1]
-   - [ ] Email sent to [Supplier 2]
-   - [ ] Email sent to [Supplier 3]
-
-2. ✅ **Set response deadline**: [DATE + 1 week]
-
-3. ✅ **Schedule follow-up**: [DATE + 1 week] to review responses
-
-### Upon Receiving Responses (Week 2)
-
-4. ✅ **Review supplier responses**:
-   - [ ] Check all critical questions answered
-   - [ ] Validate evidence provided
-   - [ ] Update risk assessment
-
-5. ✅ **Schedule technical demos**:
-   - [ ] Demo with [top-ranked service]
-   - [ ] Demo with [second-ranked service]
-
-6. ✅ **Validate critical requirements**:
-   - [ ] Test integration in demo environment
-   - [ ] Confirm performance metrics
-   - [ ] Verify compliance certificates
-
-### Decision Point (Week 3)
-
-7. ✅ **Final evaluation**:
-   - [ ] Use `/arckit:evaluate` to score suppliers
-   - [ ] Compare responses and demos
-   - [ ] Select winning service
-
-8. ✅ **Contract award**:
-   - [ ] Award via Digital Marketplace
-   - [ ] Publish on Contracts Finder
-
-**Parallel Activity**: While waiting for responses, prepare evaluation criteria with `/arckit:evaluate`.
-
----
-
-## 📎 Referenced Documents
-
-- **Requirements**: projects/[project]/ARC-*-REQ-*.md
-- **G-Cloud Search**: projects/[project]/procurement/gcloud-ARC-*-REQ-*.md
-- **Service Pages**: [list all service URLs]
-
----
-
-**Generated**: [DATE]
-**Tool**: /arckit:gcloud-clarify
-**Next Command**: `/arckit:evaluate` (after supplier responses received)
-```
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLC** per-type checks pass. Fix any failures before proceeding.
 
 ### 7. Quality Validation
 

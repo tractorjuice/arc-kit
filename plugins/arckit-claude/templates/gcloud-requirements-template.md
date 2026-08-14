@@ -218,6 +218,20 @@ The service **SHOULD** provide:
 
 **Legend**: ✅ Confirmed | ⚠️ Ambiguous | ❌ Not Mentioned
 
+### Unmet Must-Have Requirements
+
+Requirements from Section 2 that **no** shortlisted service clearly meets. A per-service gap belongs in that service's "Gaps Identified" block above; this section is for the ones nothing on the shortlist covers, because those change the procurement decision rather than the ranking.
+
+⚠️ **Requirement Gap**: [MUST requirement ID and description]
+
+- **Finding**: No shortlisted service clearly mentions this capability
+- **Action Required**:
+  - Contact shortlisted suppliers directly to confirm capability — `/arckit:gcloud-clarify` generates the questions
+  - Broaden the search, or revisit whether the requirement is genuinely a MUST
+  - Consider a hybrid approach combining two services
+
+*If every MUST requirement is met by at least one shortlisted service, write "No unmet must-have requirements." — do not omit the section.*
+
 ---
 
 ## 8. Recommendation
@@ -289,6 +303,15 @@ The service **SHOULD** provide:
 - **G-Cloud Buyers Guide**: https://www.gov.uk/guidance/g-cloud-buyers-guide
 - **General Buying Guide**: https://www.gov.uk/guidance/buying-and-selling-on-the-digital-marketplace
 - **Contracts Finder**: https://www.gov.uk/contracts-finder
+- **Browse all G-Cloud services**: https://www.digitalmarketplace.service.gov.uk/g-cloud/search
+
+### G-Cloud Framework Notes
+
+- **Framework agreement**: G-Cloud services are pre-approved — no separate tender is needed.
+- **Call-off contracts**: each service purchase creates a call-off contract under the framework.
+- **Integration testing**: confirm the service integrates per the `INT-xxx` requirements before commitment.
+- **Exit strategy**: clarify data export and service termination terms before signing.
+- **Audit trail**: record the evaluation decision and its justification — the call-off is auditable.
 
 ### Project Documents
 

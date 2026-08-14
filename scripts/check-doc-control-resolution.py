@@ -15,7 +15,7 @@ hard-routes and `document-control-fr.md` shipped in #752, but no FR command read
 `RENDERING.md`, so the French ladder was unreachable from the command that needed
 it (#760).
 
-Three things are checked.
+Four things are checked.
 
 1. **Resolution.** Every marker-carrying template has at least one reader —
    command or agent — that references `_partials/RENDERING.md`. Readers are
@@ -33,6 +33,13 @@ Three things are checked.
 3. **The converse.** A template with a `## Document Control` block and no marker
    is outside regime routing by construction and re-drifts freely, so it must be
    on `INLINE_BY_DESIGN` with a stated reason.
+
+4. **A command declaring a `doc-type:` names a template.** Checks 1-3 walk
+   TEMPLATES and ask who reads them, so a command that writes a governed artefact
+   with no template at all was invisible to them. Two were —
+   `gcloud-competitors` (GCMP) and `review` (GCRV) — and both shipped an artefact
+   with no Document Control block and no Revision History, found only by a
+   separate sweep (#792). This check closes that direction.
 
 Exit 0 when clean, 1 otherwise.
 """
@@ -75,34 +82,60 @@ INLINE_BY_DESIGN = {
     "uk-nhs-dcb0160-deployment-safety-template.md": "Marcus Baw SAFETY.md spec convention (no ARC- ID)",
 }
 
-# Templates that ship but that no command or agent reads by name. These cannot
-# fail the resolution check because there is no reader to carry the instruction —
-# the defect is one level up: each template names its owning command in its own
-# header, and that command writes the artefact from a skeleton inlined in the
-# command body instead, with no `## Document Control` and no `## Revision
-# History` at all. Against the Template-Driven Generation rule in CLAUDE.md, and
-# a behaviour change rather than a wording one, so recorded here and tracked on
-# #792. Drop the entry once the command reads its template — the stale-exemption
-# check below will catch it if anyone forgets.
+# Templates that ship but that no command or agent reads by name. Empty, and
+# meant to stay that way: a template nothing reads cannot resolve its marker.
 #
-# BLIND SPOT: these three are only visible because they HAVE a template. This
-# guard walks templates and asks who reads them, so a command that writes a
-# governed artefact with no template at all is invisible to it. Two exist —
-# arckit-uk-gcloud's gcloud-competitors (GCMP) and review (GCRV) — and needed a
-# separate sweep to find. Closing that needs a different check (a command
-# declaring a doc-type must reference a template file), which would fail on all
-# five and so has to land with its own allowlist. Also on #792.
-NO_READER_KNOWN = {
-    "backlog-template.md": "/arckit:backlog inlines its own skeleton instead (#792)",
-    "gcloud-clarify-template.md": "/arckit:gcloud-clarify inlines its own skeleton instead (#792)",
-    "gcloud-requirements-template.md": "/arckit:gcloud-search inlines its own skeleton instead (#792)",
-}
+# Three lived here between #791 and #792 — backlog, gcloud-clarify and
+# gcloud-requirements — because their commands wrote the artefact from a skeleton
+# inlined in the command body, with no `## Document Control` and no
+# `## Revision History` at all. All three now read their template.
+NO_READER_KNOWN: dict[str, str] = {}
+
+# Commands that declare a `doc-type:` but reference no template file. Also empty.
+#
+# This is the converse blind spot: the checks above walk TEMPLATES and ask who
+# reads them, so a command writing a governed artefact with no template at all is
+# invisible to them. Two were — arckit-uk-gcloud's `gcloud-competitors` (GCMP)
+# and `review` (GCRV), both of which said "there is no template for this
+# doc-type; author it inline" — and both needed a separate sweep to find rather
+# than surfacing in the #760 pass. Templates now exist for both.
+#
+# `doc-type: none` commands are out of scope: they write no governed artefact.
+NO_TEMPLATE_KNOWN: dict[str, str] = {}
+
+
+DOC_TYPE_RE = re.compile(r"^doc-type:\s*(.+?)\s*$", re.M)
+TEMPLATE_REF_RE = re.compile(r"templates/[A-Za-z0-9._-]+\.md")
 
 
 def plugin_dirs() -> list[Path]:
     return sorted(
         p for p in PLUGINS_DIR.iterdir() if p.is_dir() and (p / ".claude-plugin").is_dir()
     )
+
+
+def commands_without_a_template(plugin: Path) -> list[tuple[Path, str]]:
+    """(command, doc-type) for commands that declare a governed doc-type but name
+    no template file anywhere in their body.
+
+    Such a command necessarily builds its artefact from an inlined skeleton, which
+    is how five of them ended up shipping with no Document Control block at all.
+    """
+    found: list[tuple[Path, str]] = []
+    commands = plugin / "commands"
+    if not commands.is_dir():
+        return found
+    for path in sorted(commands.glob("*.md")):
+        if MIRROR_DIR in path.parents:
+            continue
+        text = path.read_text(encoding="utf-8")
+        m = DOC_TYPE_RE.search(text)
+        if not m or m.group(1) == "none":
+            continue
+        if TEMPLATE_REF_RE.search(text):
+            continue
+        found.append((path, m.group(1)))
+    return found
 
 
 def readers_for(plugin: Path, basename: str) -> list[Path]:
@@ -129,6 +162,7 @@ def main() -> int:
 
     unresolved: list[tuple[str, str, list[str]]] = []  # (plugin, template, readers)
     unread: list[tuple[str, str]] = []
+    no_template: list[tuple[str, str, str]] = []  # (plugin, command, doc-type)
     stale_comment: list[tuple[str, str]] = []
     undeclared_inline: list[tuple[str, str]] = []
     stale_exemption: list[str] = []
@@ -137,7 +171,15 @@ def main() -> int:
     seen_inline: set[str] = set()
     seen_unread: set[str] = set()
 
+    seen_no_template: set[str] = set()
+
     for plugin in plugin_dirs():
+        for cmd, code in commands_without_a_template(plugin):
+            if cmd.name in NO_TEMPLATE_KNOWN:
+                seen_no_template.add(cmd.name)
+            else:
+                no_template.append((plugin.name, str(cmd.relative_to(ROOT)), code))
+
         templates_dir = plugin / "templates"
         if not templates_dir.is_dir():
             continue
@@ -181,7 +223,9 @@ def main() -> int:
         return 1
 
     stale_exemption = sorted(
-        (set(INLINE_BY_DESIGN) - seen_inline) | (set(NO_READER_KNOWN) - seen_unread)
+        (set(INLINE_BY_DESIGN) - seen_inline)
+        | (set(NO_READER_KNOWN) - seen_unread)
+        | (set(NO_TEMPLATE_KNOWN) - seen_no_template)
     )
 
     failed = False
@@ -251,6 +295,21 @@ def main() -> int:
             file=sys.stderr,
         )
 
+    if no_template:
+        failed = True
+        print(
+            f"\nFAIL {len(no_template)} command(s) declare a doc-type but reference no template:",
+            file=sys.stderr,
+        )
+        for plugin, rel, code in no_template:
+            print(f"  {rel}  (doc-type: {code}, plugin {plugin})", file=sys.stderr)
+        print(
+            "\n  A command with no template builds its artefact from an inlined skeleton, which is\n"
+            "  how five of them shipped with no Document Control block at all (#792). Author a\n"
+            "  template and read it, or record the command in NO_TEMPLATE_KNOWN with a reason.",
+            file=sys.stderr,
+        )
+
     if stale_exemption:
         failed = True
         print(
@@ -270,7 +329,8 @@ def main() -> int:
 
     print(
         f"OK {marker_total} marker template(s) resolve via {RESOLVER}; "
-        f"{len(INLINE_BY_DESIGN)} inline by design, {len(NO_READER_KNOWN)} with no reader."
+        f"{len(INLINE_BY_DESIGN)} inline by design, {len(NO_READER_KNOWN)} with no reader, "
+        f"{len(NO_TEMPLATE_KNOWN)} command(s) with no template."
     )
     return 0
 

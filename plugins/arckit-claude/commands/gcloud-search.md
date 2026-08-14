@@ -108,7 +108,7 @@ Before completing the document, populate ALL document control fields in the head
 
 *Calculated fields*:
 
-- `[YYYY-MM-DD]` for Review Date → Current date + 30 days
+- `[YYYY-MM-DD]` for Next Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
 
@@ -137,124 +137,28 @@ The footer should be populated with:
 
 ---
 
-### 4. Generate G-Cloud Requirements Document
+### 4. Read the Template
+
+**Read the template** (user override takes precedence):
+
+- **First**, check `.arckit/templates-custom/gcloud-requirements-template.md`
+- **Then**, `.arckit/templates/gcloud-requirements-template.md`
+- **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/gcloud-requirements-template.md`
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
+
+The template owns the document structure. Populate it — do not invent a parallel one.
 
 Create directory: `projects/[project]/procurement/`
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLD** per-type checks pass. Fix any failures before proceeding.
+Fill **Sections 1-5** from the analysis in Step 3:
 
-Generate `projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md`:
+- **1. Service Overview** — what is needed and why, from the BR-xxx requirements; strategic alignment against `ARC-000-PRIN-*.md` where it exists; integration context from the INT-xxx requirements.
+- **2. Must-Have Requirements** — the functional, performance, security, compliance and integration requirements a service MUST satisfy, each traced to its source requirement ID.
+- **3. Desirable Requirements** — the nice-to-haves, with the weighting they carry in Section 5.
+- **4. Success Criteria** — how the buying team will know the chosen service worked.
+- **5. Evaluation Criteria** — the weighted model. The template ships 50/25/15/10; adjust the weights to the project and say why if you do.
 
-```markdown
-# UK Digital Marketplace: G-Cloud Service Procurement
-
-**Framework**: G-Cloud
-**Service Category**: [Cloud Hosting / Cloud Software / Cloud Support]
-**Generated**: [DATE]
-**Project**: [PROJECT_NAME]
-**Project ID**: [PROJECT_ID]
-**Requirements Source**: [Link to ARC-*-REQ-*.md]
-
----
-
-## 1. Service Overview
-
-### 1.1 What We Need
-
-[Describe what cloud service/software is needed - from ARC-*-REQ-*.md]
-
-### 1.2 Why We Need It
-
-[Business context from BR-xxx requirements]
-
-### 1.3 Strategic Alignment
-
-**Architecture Principles** (if exists):
-[Reference relevant principles, especially cloud strategy, security principles]
-
-### 1.4 Integration Context
-
-[Extract from INT-xxx requirements - what systems this service will integrate with]
-
----
-
-## 2. Must-Have Requirements
-
-The service **MUST** provide:
-
-[Extract MUST requirements from ARC-*-REQ-*.md]
-
-### 2.1 Functional Requirements
-- **[Requirement 1]**: [From FR-xxx or NFR-xxx]
-- **[Requirement 2]**: [From FR-xxx or NFR-xxx]
-- **[Requirement 3]**: [From FR-xxx or NFR-xxx]
-
-### 2.2 Performance Requirements
-- **[Performance Target]**: [From NFR-P-xxx with measurable metric]
-- **[Performance Target]**: [From NFR-P-xxx with measurable metric]
-
-### 2.3 Security Requirements
-- **[Security Requirement]**: [From NFR-S-xxx or ARC-000-PRIN-*.md]
-- **[Security Requirement]**: [From NFR-S-xxx or ARC-000-PRIN-*.md]
-
-### 2.4 Compliance Requirements
-- **[Compliance Standard]**: [From NFR-C-xxx]
-- **[Certification Needed]**: [e.g., ISO 27001, Cyber Essentials Plus]
-- **[Data Residency]**: [e.g., UK data centers only, GDPR compliance]
-
-### 2.5 Integration Requirements
-- **[Integration Point]**: [From INT-xxx]
-- **[Integration Method]**: [API, webhook, file transfer, etc.]
-
----
-
-## 3. Desirable Requirements
-
-The service **SHOULD** provide:
-
-[Extract SHOULD requirements from ARC-*-REQ-*.md]
-- [Desirable feature 1]
-- [Desirable feature 2]
-- [Desirable feature 3]
-
----
-
-## 4. Success Criteria
-
-[Extract measurable success criteria from ARC-*-REQ-*.md BR-xxx]
-
-- [Criterion 1 with metric]
-- [Criterion 2 with metric]
-- [Criterion 3 with metric]
-
----
-
-## 5. Evaluation Criteria
-
-### 5.1 Functional Fit (50%)
-
-- **Must-Have Coverage** (30%): Meets all MUST requirements
-- **Desirable Features** (20%): Coverage of SHOULD requirements
-
-### 5.2 Reliability & Performance (25%)
-
-- **Service Level Agreements** (10%): Uptime guarantees, support response times
-- **Performance Specifications** (10%): Meets NFR-P-xxx requirements
-- **Disaster Recovery** (5%): DR/BC capabilities
-
-### 5.3 Security & Compliance (15%)
-
-- **Security Certifications** (5%): ISO 27001, Cyber Essentials Plus, etc.
-- **Data Protection** (5%): GDPR compliance, data residency
-- **Compliance Standards** (5%): Industry-specific certifications
-
-### 5.4 Cost & Support (10%)
-
-- **Pricing Model** (5%): Transparency, predictability, value
-- **Support Availability** (3%): Support hours, escalation process
-- **Contract Flexibility** (2%): Terms, exit strategy, lock-in
-
-```
+Sections 6-9 are filled in Steps 5-7 below, once the search has run.
 
 ### 5. Search Digital Marketplace (WebSearch)
 
@@ -307,130 +211,15 @@ For each service found:
 - **Extract pricing**: If mentioned in search results
 - **Capture link**: Direct URL to service page
 
-#### 5.4 Generate Service Shortlist
+#### 5.4 Populate the Search Results Sections
 
-**Add to gcloud-ARC-*-REQ-*.md**:
+Fill **Sections 6-8** of the template from what the search returned:
 
-```markdown
+- **6. Service Search Results** — record the search strategy first (queries run, date, filters applied), then one "Service N" block per shortlisted service using the template's block structure: supplier, G-Cloud service ID, service URL, category, pricing model, must-have and desirable match counts, key features, compliance mentions, gaps identified, and a risk level. Keep 3-5 services; the template ships three blocks and says to repeat the structure.
+- **7. Service Comparison Matrix** — score every shortlisted service against the weighted criteria. Then complete **Unmet Must-Have Requirements**: any MUST from Section 2 that no shortlisted service clearly meets. Write "No unmet must-have requirements." rather than dropping the section when there are none — an empty heading and a missing heading say different things to whoever reviews the procurement.
+- **8. Recommendation** — the primary recommendation with its justification, plus at least one alternative. Say what would change the recommendation.
 
----
-
-## 6. Digital Marketplace Search Results
-
-**Search Performed**: [DATE and TIME]
-**Search Queries Used**:
-- Query 1: `[search query 1]`
-- Query 2: `[search query 2]` (if multiple searches)
-
-### 6.1 Service Category: [Category Name]
-
-#### Top Matching Services
-
-[For each of top 3-5 services found]
-
-**Service: [Service Name]**
-- **Supplier**: [Supplier Name]
-- **Service ID**: [Service ID from URL if available]
-- **Link**: [Direct URL to service page]
-- **Key Features**:
-  - [Feature 1 mentioned in description]
-  - [Feature 2 mentioned in description]
-  - [Feature 3 mentioned in description]
-- **Pricing**: [If mentioned, otherwise "See service page for pricing"]
-- **Must-Have Match**: [X/Y] requirements mentioned
-- **Desirable Features**: [X/Y] desirable features mentioned
-- **Compliance**: [Certifications mentioned]
-
----
-
-### 6.2 Service Comparison Table
-
-| Service | Supplier | Must-Have Match | Desirable Features | Compliance | Estimated Cost | Link |
-|---------|----------|----------------|-------------------|------------|---------------|------|
-| [Service 1] | [Supplier 1] | X/Y | X/Y | [Certs] | [Price] | [Link] |
-| [Service 2] | [Supplier 2] | X/Y | X/Y | [Certs] | [Price] | [Link] |
-| [Service 3] | [Supplier 3] | X/Y | X/Y | [Certs] | [Price] | [Link] |
-
----
-
-### 6.3 Detailed Comparison
-
-**[Service 1 Name]**
-- ✅ **Strengths**:
-  - [Strength 1 based on requirements match]
-  - [Strength 2 based on features]
-  - [Strength 3 based on compliance/pricing]
-- ⚠️ **Gaps/Concerns**:
-  - [Gap 1 - MUST requirement not clearly mentioned]
-  - [Gap 2 - desirable feature missing]
-- **Best For**: [Use case where this service excels]
-
-**[Service 2 Name]**
-- ✅ **Strengths**:
-  - [Strength 1]
-  - [Strength 2]
-  - [Strength 3]
-- ⚠️ **Gaps/Concerns**:
-  - [Gap 1]
-  - [Gap 2]
-- **Best For**: [Use case where this service excels]
-
-**[Service 3 Name]**
-- ✅ **Strengths**:
-  - [Strength 1]
-  - [Strength 2]
-  - [Strength 3]
-- ⚠️ **Gaps/Concerns**:
-  - [Gap 1]
-  - [Gap 2]
-- **Best For**: [Use case where this service excels]
-
----
-
-## 7. Recommendation
-
-### 7.1 Recommended Service
-
-**[Service Name]** by [Supplier Name]
-
-**Rationale**:
-- ✅ Meets [X/Y] MUST requirements ([list any gaps if exist])
-- ✅ Provides [X/Y] desirable features
-- ✅ [Compliance advantage - e.g., strongest security certification coverage]
-- ✅ [Cost advantage - e.g., best value for required features]
-- ✅ [Other advantage - e.g., UK data residency, 24/7 support]
-
-**Next Steps for This Service**:
-1. Visit service page: [Link]
-2. Verify all MUST requirements are met (contact supplier if needed)
-3. Request detailed pricing quote
-4. Schedule demo/technical discussion with supplier
-5. Validate integration capabilities (INT-xxx requirements)
-6. Check client references
-
-### 7.2 Alternative Option
-
-**[Service Name]** by [Supplier Name]
-
-**Why Consider This**:
-[Reason - e.g., "If [condition] is priority" or "If [Recommended Service] doesn't meet [specific need]"]
-
-**Link**: [URL]
-
----
-
-## 8. Important Gaps to Address
-
-[If any MUST requirements were NOT clearly met by any service]
-
-⚠️ **Requirement Gap**: [MUST requirement ID and description]
-- **Finding**: None of the top services clearly mention this capability
-- **Action Required**:
-  - Contact shortlisted suppliers directly to confirm capability
-  - May need to broaden search or adjust requirements
-  - Consider hybrid approach (e.g., combine services)
-
-```
+Search-result evidence is external content, so follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`: place inline citation markers next to claims drawn from a supplier's service page and register each source in the template's **External References** section.
 
 ### 6. Handle Search Scenarios
 
@@ -459,93 +248,21 @@ For each service found:
 - List specific search terms to try manually
 - Note: Service may exist but not indexed well - encourage direct marketplace search
 
-### 7. Final Output Section
+### 7. Complete the Closing Sections
 
-Add to end of `ARC-{PROJECT_ID}-GCLD-v1.0.md`:
+Fill the rest of the template, then write the file:
 
-```markdown
+- **9. Next Steps** — immediate actions, supplier engagement, evaluation and contract award. Give each a named owner and a date rather than leaving the template's placeholders in place.
+- **10. Resources and References** — the template ships the Digital Marketplace guidance links, the G-Cloud framework notes and the related ArcKit commands. Add the project's own documents; keep the framework notes.
+- **Appendix A: Search Methodology** — the queries, filters and exclusions actually used, so the search is reproducible.
+- **Appendix B: Glossary** — expand any G-Cloud or framework term the buying team will not already know.
+- **External References** — the document register, citations and unreferenced documents, per the citation instructions.
 
----
+**CRITICAL**: Use the **Write tool** to save the completed document to
+`projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md`. Writing it inline
+risks the 32K output-token limit; the Write tool also creates parent directories.
 
-## 9. Next Steps
-
-### 9.1 For Procurement Team
-
-1. **Review Shortlisted Services**:
-   - Visit each service page on Digital Marketplace
-   - Verify MUST requirements are met (contact suppliers for clarification)
-
-2. **Request Additional Information**:
-   - Detailed pricing quotes
-   - Technical specifications
-   - Integration capabilities
-   - Client references
-
-3. **Evaluate Services**:
-   - Use criteria from Section 5
-   - Document scoring and justification (audit trail)
-
-4. **Technical Validation**:
-   - Schedule demos with top 2-3 suppliers
-   - Validate integration requirements (INT-xxx)
-   - Proof of concept if needed for complex integrations
-
-5. **Award Contract**:
-   - Select service via Digital Marketplace
-   - Create call-off contract
-   - Publish award on Contracts Finder
-
-### 9.2 Due Diligence Checklist
-
-Before committing to a service:
-
-- ✅ **Requirements Validation**: All MUST requirements confirmed with supplier
-- ✅ **Pricing Clarity**: Full pricing model understood (no hidden costs)
-- ✅ **Contract Terms**: Exit strategy, data export, termination terms reviewed
-- ✅ **Integration Testing**: API/integration capabilities validated
-- ✅ **Security Review**: Certifications verified, security practices reviewed
-- ✅ **Data Protection**: GDPR compliance confirmed, data residency verified
-- ✅ **Support Terms**: SLA understood, support hours acceptable
-- ✅ **References**: Spoke with at least 2 existing clients
-
----
-
-## 10. Resources
-
-- **Digital Marketplace**: https://www.digitalmarketplace.service.gov.uk/
-- **G-Cloud Buyers Guide**: https://www.gov.uk/guidance/g-cloud-buyers-guide
-- **Buying Guide**: https://www.gov.uk/guidance/buying-and-selling-on-the-digital-marketplace
-- **Contracts Finder**: https://www.gov.uk/contracts-finder
-
----
-
-## 11. Service Page Links
-
-[List all direct links to services found]
-
-1. [Service 1 Name] - [Supplier]: [URL]
-2. [Service 2 Name] - [Supplier]: [URL]
-3. [Service 3 Name] - [Supplier]: [URL]
-4. [Service 4 Name] - [Supplier]: [URL]
-5. [Service 5 Name] - [Supplier]: [URL]
-
-**Browse More**: https://www.digitalmarketplace.service.gov.uk/g-cloud/search
-
----
-
-## 12. Important Notes
-
-**Framework Agreements**: G-Cloud services are pre-approved - no separate tender needed
-
-**Call-Off Contracts**: Each service purchase creates a call-off contract under the G-Cloud framework
-
-**Integration Testing**: Ensure service can integrate per INT-xxx requirements before commitment
-
-**Exit Strategy**: Always clarify data export and service termination terms before signing
-
-**Audit Trail**: Document evaluation decisions and justification for chosen service
-
-```
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLD** per-type checks pass. Fix any failures before proceeding.
 
 ### 8. Quality Validation
 

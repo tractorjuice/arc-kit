@@ -1273,97 +1273,29 @@ Every story must meet these criteria before marking "Done":
 
 #### 13.1: Primary Output - ARC-*-BKLG-*.md
 
-Create comprehensive markdown file at `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.md`:
+**Read the template** (user override takes precedence):
 
-```markdown
-# Product Backlog: {Project Name}
+- **First**, check `.arckit/templates-custom/backlog-template.md`
+- **Then**, `.arckit/templates/backlog-template.md`
+- **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/backlog-template.md`
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
 
-**Generated**: {date}
-**Project**: {project-name}
-**Phase**: Beta (Implementation)
-**Team Velocity**: {velocity} points/sprint
-**Sprint Length**: {sprint_length}
-**Total Sprints Planned**: {sprints}
+The template owns the document structure. Populate it from Steps 3-12 — do not invent a parallel one.
 
----
+| Template section | Filled from |
+|---|---|
+| **Executive Summary** | totals, priority breakdown and epic breakdown from Steps 4-7 |
+| **How to Use This Backlog** | ships complete; keep it, and set the refinement schedule to the sprint length chosen in Step 2c |
+| **Epics** | Step 5, one block per BR-xxx |
+| **Prioritized Backlog** | Steps 4 and 7, one `Story-NNN` block per story in priority order |
+| **Sprint Plan** | Step 8, one block per sprint with goals, dependencies, risks and the Definition of Done |
+| **Appendices A-F** | A from Step 9, B from Step 10, C from Step 11, D from the Step 7 points distribution, E from the Step 7 risk-based ordering, F from Step 12 |
+| **Future Sprints** | the remainder of the ordered backlog beyond the planned sprints |
+| **Backlog Maintenance** | ships complete — velocity tracking, grooming cadence, and when to re-generate |
+| **Integration with Other ArcKit Commands** | ships complete |
+| **External References** | the document register, citations and unreferenced documents, per the citation instructions read in Step 2b |
 
-## Executive Summary
-
-**Total Stories**: {N}
-**Total Epics**: {N}
-**Total Story Points**: {N}
-**Estimated Duration**: {N / velocity} sprints ({N} weeks)
-
-### Priority Breakdown
-- Must Have: {N} stories ({N} points) - {X}%
-- Should Have: {N} stories ({N} points) - {X}%
-- Could Have: {N} stories ({N} points) - {X}%
-
-### Epic Breakdown
-{List all epics with point totals}
-
----
-
-## How to Use This Backlog
-
-### For Product Owners:
-1. Review epic priorities - adjust based on business needs
-2. Refine story acceptance criteria before sprint planning
-3. Validate user stories with actual users
-4. Adjust sprint sequence based on stakeholder priorities
-
-### For Development Teams:
-1. Review stories in upcoming sprint (Sprint Planning)
-2. Break down stories into tasks if needed
-3. Estimate effort using team velocity
-4. Identify technical blockers early
-5. Update story status as work progresses
-
-### For Scrum Masters:
-1. Track velocity after each sprint
-2. Adjust future sprint loading based on actual velocity
-3. Monitor dependency chains
-4. Escalate blockers early
-5. Facilitate backlog refinement sessions
-
-### Backlog Refinement:
-- **Weekly**: Review and refine next 2 sprints
-- **Bi-weekly**: Groom backlog beyond 2 sprints
-- **Monthly**: Reassess epic priorities
-- **Per sprint**: Update based on completed work and learnings
-
----
-
-## Epics
-
-{Generate all epic sections from Step 5}
-
----
-
-## Prioritized Backlog
-
-{Generate all user stories from Step 4, sorted by priority from Step 7}
-
----
-
-## Sprint Plan
-
-{Generate all sprint plans from Step 8}
-
----
-
-## Appendices
-
-{Include all appendices from Steps 9-12}
-
----
-
-**Note**: This backlog was auto-generated from ArcKit artifacts. Review and refine with your team before sprint planning begins. Story points are estimates - re-estimate based on your team's velocity and capacity.
-
----
-
-**End of Backlog**
-```
+Write it with the **Write tool** to `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.md`. A backlog is long, so writing it inline risks the 32K output-token limit.
 
 #### 13.2: CSV Export (if requested)
 
@@ -1508,7 +1440,7 @@ Before completing the document, populate ALL document control fields in the head
 
 *Calculated fields*:
 
-- `[YYYY-MM-DD]` for Review Date → Current date + 30 days
+- `[YYYY-MM-DD]` for Next Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
 

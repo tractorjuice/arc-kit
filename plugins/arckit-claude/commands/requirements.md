@@ -193,8 +193,8 @@ Before generating the document ID, check if a previous version exists:
 
 **Calculated fields**:
 
-- `[YYYY-MM-DD]` for Review Date → Current date + 30 days (requirements, research, risks)
-- `[YYYY-MM-DD]` for Review Date → Phase gate dates (Alpha/Beta/Live for compliance docs)
+- `[YYYY-MM-DD]` for Next Review Date → Current date + 30 days (requirements, research, risks)
+- `[YYYY-MM-DD]` for Next Review Date → Phase gate dates (Alpha/Beta/Live for compliance docs)
 
 **Pending fields** (leave as [PENDING] until manually updated):
 
