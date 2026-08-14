@@ -84,6 +84,7 @@ Read all documents from Step 0. Extract key information for the procurement file
 - **First**, check if `.arckit/templates/at-bvergg-template.md` exists in the project root
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/at-bvergg-template.md`
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `BVERGG` carries the Austria regime, which hard-routes to `_partials/document-control-at.md` (Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim) whatever the operator's user config says.
 
 ### Step 4: Threshold Analysis
 

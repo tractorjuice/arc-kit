@@ -22,6 +22,7 @@ on:
       - "scripts/check-llms-txt.py"
       - "docs/llms.txt"
       - "scripts/check-quality-checklist-refs.py"
+      - "scripts/check-doc-control-resolution.py"
       - "scripts/check-common-parity.py"
       - "scripts/check-create-project-invocations.py"
       - "scripts/bash/common.sh"
@@ -61,6 +62,7 @@ on:
       - "scripts/check-llms-txt.py"
       - "docs/llms.txt"
       - "scripts/check-quality-checklist-refs.py"
+      - "scripts/check-doc-control-resolution.py"
       - "scripts/check-common-parity.py"
       - "scripts/check-create-project-invocations.py"
       - "scripts/bash/common.sh"
@@ -127,6 +129,9 @@ jobs:
 
       - name: Quality-checklist references resolve (closes #749)
         run: python3 scripts/check-quality-checklist-refs.py
+
+      - name: DOC-CONTROL-HEADER markers have a command that resolves them (#760)
+        run: python3 scripts/check-doc-control-resolution.py
 
       - name: common.sh / common.py parity (root vs plugin copies, #766)
         run: python3 scripts/check-common-parity.py --check

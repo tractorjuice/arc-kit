@@ -123,6 +123,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - **First**, check if `.arckit/templates/sobc-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/sobc-template.md` (default)
+   - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
 
    > **Tip**: Users can customize templates with `/arckit:customize sobc`
 
@@ -262,7 +263,7 @@ Before generating the document ID, check if a previous version exists:
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Strategic Outline Business Case (SOBC)"
-- `[CLASSIFICATION]` → Default to `${user_config.default_classification}`; if unavailable, use "OFFICIAL" for UK Gov, "INTERNAL" for private sector
+- **Classification** → comes from the resolved Document Control header, not from a placeholder. `_partials/RENDERING.md` fixes the ladder from the artefact's own regime; `${user_config.default_classification}` applies only where that regime falls through to user config.
 - `[STATUS]` → "DRAFT" for new documents
 
 **User-specified fields** (must be confirmed with user):

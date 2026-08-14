@@ -61,6 +61,7 @@ More artifacts = better evidence = more accurate assessment:
 - **First**, check if `.arckit/templates/principles-compliance-assessment-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/principles-compliance-assessment-template.md` (default)
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
 
 > **Tip**: Users can customize templates with `/arckit:customize principles-compliance`
 

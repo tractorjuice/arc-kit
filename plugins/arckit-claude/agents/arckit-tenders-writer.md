@@ -161,7 +161,7 @@ Process below.
 
 1. **Read the TNDR template.** Check
    `.arckit/templates-custom/tenders-template.md` first (user override);
-   if not present, use `${CLAUDE_PLUGIN_ROOT}/templates/tenders-template.md`.
+   if not present, use `${CLAUDE_PLUGIN_ROOT}/templates/tenders-template.md`. Then read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker before writing — the partial it selects is the only source of the Document Control table's 14 standard fields and of the classification ladder. Do not hand-write that table.
 
 2. **Read the project's previous artefact if one exists.** `Glob` for
    `{project_path}/research/ARC-{project_id}-TNDR-*-v*.md`. If found,
@@ -178,7 +178,7 @@ Process below.
    - `[VERSION]` ← `version`
    - `[DATE]` ← `date_iso`
    - `[DOCUMENT_ID]` ← `document_id`
-   - `[CLASSIFICATION]` ← `classification`
+   - Classification ← the resolved Document Control header (`_partials/RENDERING.md`), which already carries `classification` for the artefact's regime
    - `[AI_MODEL]` ← the current model identifier (else leave `[AI_MODEL]`)
 
    **Executive Summary**

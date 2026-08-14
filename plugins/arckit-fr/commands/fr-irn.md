@@ -88,6 +88,7 @@ If no artifacts exist, include all 5 layers and note that scope confirmation is 
 - **First**, check if `.arckit/templates/fr-irn-template.md` exists in the project root
 - **If found**: use the user's customised template
 - **If not found**: use `${CLAUDE_PLUGIN_ROOT}/templates/fr-irn-template.md`
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `IRN` carries the France regime, which hard-routes to `_partials/document-control-fr.md` (Non protégé / Diffusion Restreinte / Secret / Très Secret) whatever the operator's user config says.
 
 ### Step 4: Generate IRN Assessment Document
 

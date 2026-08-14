@@ -94,6 +94,7 @@ Read all documents from Step 0. Extract:
 - **First**, check if `.arckit/templates/fr-pssi-template.md` exists in the project root
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/fr-pssi-template.md`
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `PSSI` carries the France regime, which hard-routes to `_partials/document-control-fr.md` (Non protégé / Diffusion Restreinte / Secret / Très Secret) whatever the operator's user config says.
 
 ### Step 4: PSSI Generation
 

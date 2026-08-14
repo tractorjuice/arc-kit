@@ -272,7 +272,7 @@ Auto-populate fields:
 - `[VERSION]` = determined version from Step 9
 - `[DATE]` = current date (YYYY-MM-DD)
 - `[STATUS]` = "DRAFT"
-- `[CLASSIFICATION]` = `${user_config.default_classification}` when set; otherwise "OFFICIAL" (UK Gov) or "PUBLIC"
+- **Classification** → comes from the resolved Document Control header, not from a placeholder. `_partials/RENDERING.md` fixes the ladder from the artefact's own regime; `${user_config.default_classification}` applies only where that regime falls through to user config.
 
 Include the generation metadata footer:
 

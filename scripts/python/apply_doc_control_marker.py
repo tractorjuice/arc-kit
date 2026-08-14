@@ -5,11 +5,30 @@ Replace a template's hand-maintained `## Document Control` table with the
 partial selected by `_partials/RENDERING.md`. Idempotent — running twice leaves
 the file unchanged.
 
+Also normalises the descriptive comment on templates that already carry the
+marker, so a change to the resolution rule reaches every template rather than
+only newly-converted ones.
+
 Usage:
-  python scripts/python/apply_doc_control_marker.py <template-dir> [--check]
+  python scripts/python/apply_doc_control_marker.py <template-dir>... [--check]
 
 `--check` reports what would change and exits 1 if anything would, without
 writing. Exits 0 with a count of files modified otherwise.
+
+## Why the comment is one line
+
+The comment used to restate the routing rule: "resolved to
+_partials/document-control-uk.md or _partials/document-control-uae.md based on
+plugin userConfig classification_scheme + governance_framework". That was true
+before #744 made routing regime-first, and it named two partials when there are
+now seven. Because the constant was never updated, this script wrote the stale
+wording into all 16 templates it converted in #761, and 121 of 168 templates
+ended up carrying a comment that contradicted the rule it pointed at (#760).
+
+The model reads the template verbatim at render time, so the comment competes
+with `RENDERING.md` for authority. It now defers instead of paraphrasing:
+`RENDERING.md` is the single statement of the rule, and restating any part of it
+here is what caused the drift.
 
 ## Why this preserves rows
 
@@ -32,12 +51,34 @@ import re
 import sys
 from pathlib import Path
 
-MARKER = (
-    "<!-- DOC-CONTROL-HEADER -->\n"
-    "<!-- Resolved at command-execution time to _partials/document-control-uk.md or "
-    "_partials/document-control-uae.md based on plugin userConfig classification_scheme + "
-    "governance_framework. See _partials/RENDERING.md (when present). -->\n"
-)
+MARKER_LINE = "<!-- DOC-CONTROL-HEADER -->"
+COMMENT_LINE = "<!-- Resolved at command-execution time per _partials/RENDERING.md. -->"
+MARKER = f"{MARKER_LINE}\n{COMMENT_LINE}\n"
+
+# The marker line plus whatever descriptive comment directly follows it, current
+# or legacy. Adjacency matters: the "Domain-specific fields" comment written by
+# build() sits after a blank line, so this cannot swallow it.
+MARKER_BLOCK = re.compile(re.escape(MARKER_LINE) + r"\n(?:<!--(?:(?!-->).)*?-->\n)?", re.DOTALL)
+
+# Templates that keep a hand-maintained Document Control block on purpose, and
+# must never be converted. The DCB0129/DCB0160 safety case set follows the Marcus
+# Baw SAFETY.md spec convention, whose `Document ID` is the literal `SAFETY.md`
+# with no `ARC-` prefix; the commands document that deviation explicitly. They
+# already carry all 14 fields with a constrained ladder, so converting them would
+# impose an ARC- ID and break the convention on purpose (#760).
+#
+# Normalising a marker comment is still allowed here — the exemption is from
+# conversion, and none of these carry a marker. `uk-mdr-classification-template.md`
+# and `uk-nhs-dtac-template.md` are NOT exempt: they use the marker like any other
+# template.
+EXEMPT = {
+    "uk-nhs-dcb0129-case-template.md",
+    "uk-nhs-dcb0129-hazard-template.md",
+    "uk-nhs-dcb0129-safety-template.md",
+    "uk-nhs-dcb0160-deployment-case-template.md",
+    "uk-nhs-dcb0160-deployment-hazard-template.md",
+    "uk-nhs-dcb0160-deployment-safety-template.md",
+}
 
 # The 14 fields the partial supplies. Anything else in a Document Control block
 # is domain-specific and must survive the conversion.
@@ -91,45 +132,52 @@ def build(block: str) -> str:
     return new
 
 
-def transform(path: Path) -> tuple[bool, list[str]]:
-    text = path.read_text(encoding="utf-8")
-    if MARKER in text:
-        return False, []
+def rewrite(text: str, name: str = "") -> tuple[str, list[str], str]:
+    """Return (new text, domain-specific rows kept, what was done).
+
+    A template that already carries the marker only has its comment normalised —
+    re-running the section rebuild over it would work, but it would also churn
+    any addendum table for no reason.
+    """
+    if MARKER_LINE in text:
+        return MARKER_BLOCK.sub(MARKER, text, count=1), [], "normalised"
+    if name in EXEMPT:
+        return text, [], ""
     m = SECTION.search(text)
     if not m:
-        return False, []
+        return text, [], ""
     extras = [k for k, _ in extra_rows(m.group(0))]
-    new = text[: m.start()] + build(m.group(0)) + text[m.end():]
-    if new == text:
-        return False, []
-    path.write_text(new, encoding="utf-8")
-    return True, extras
+    return text[: m.start()] + build(m.group(0)) + text[m.end():], extras, "converted"
 
 
 def main() -> int:
     args = [a for a in sys.argv[1:] if not a.startswith("-")]
     check = "--check" in sys.argv
-    if len(args) != 1:
-        print("usage: apply_doc_control_marker.py <template-dir> [--check]", file=sys.stderr)
+    if not args:
+        print("usage: apply_doc_control_marker.py <template-dir>... [--check]", file=sys.stderr)
         return 2
-    target = Path(args[0])
-    if not target.is_dir():
-        print(f"not a directory: {target}", file=sys.stderr)
-        return 2
+    targets = [Path(a) for a in args]
+    for target in targets:
+        if not target.is_dir():
+            print(f"not a directory: {target}", file=sys.stderr)
+            return 2
 
+    # --check and the write path share rewrite(), so the two can never disagree
+    # about what would change.
     modified = 0
-    for md in sorted(target.glob("*.md")):
-        if check:
+    for target in targets:
+        for md in sorted(target.glob("*.md")):
             text = md.read_text(encoding="utf-8")
-            if MARKER not in text and SECTION.search(text):
-                print(f"would modify: {md}")
-                modified += 1
-            continue
-        changed, extras = transform(md)
-        if changed:
+            new, extras, action = rewrite(text, md.name)
+            if new == text:
+                continue
             modified += 1
             kept = f"  (kept: {', '.join(extras)})" if extras else ""
-            print(f"modified: {md}{kept}")
+            if check:
+                print(f"would {'normalise' if action == 'normalised' else 'convert'}: {md}{kept}")
+            else:
+                md.write_text(new, encoding="utf-8")
+                print(f"{action}: {md}{kept}")
 
     print(f"\nTotal {'to modify' if check else 'modified'}: {modified}")
     return 1 if (check and modified) else 0
