@@ -251,13 +251,19 @@ Use the **Write tool** to save the completed benchmark to:
 
 `{path}/{filename}` — e.g. `projects/004-secure-case-mgmt/ARC-004-GCMP-v1.0.md`
 
-There is no separate template for this doc-type; structure the report inline using the sections
-above (Award Evidence → Feature / Pricing / Certification / Support comparison tables → SWOT →
-Recommendations → Market Position quadrant → Search Keywords → External References). Start the
-document with a standard ArcKit Document Control header (Document ID = `ARC-{PROJECT_ID}-GCMP-v{VERSION}`,
-Document Type = `G-Cloud Competitor Benchmark`, Classification defaulting to
-`${user_config.default_classification}` and falling back to `OFFICIAL` for UK Gov context) and a
-Revision History table, and append the standard ArcKit Document Control footer:
+**Read the template** (user override takes precedence):
+
+- **First**, check `.arckit/templates-custom/gcloud-competitors-template.md`
+- **Then**, `.arckit/templates/gcloud-competitors-template.md`
+- **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/gcloud-competitors-template.md`
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
+
+The template owns the document structure — Benchmark Scope, Award Evidence, the Feature / Pricing /
+Certification / Support comparison tables, SWOT with the Market Position quadrant, Recommendations
+including Search Optimisation, Related Artefacts, and External References. Populate it from Steps 4-8
+rather than structuring a report of your own. Set the Document ID to
+`ARC-{PROJECT_ID}-GCMP-v{VERSION}` and the Document Type to `G-Cloud Competitor Benchmark`, and
+append the standard ArcKit footer:
 
 ```markdown
 ---

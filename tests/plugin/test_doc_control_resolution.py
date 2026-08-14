@@ -17,6 +17,8 @@ import json
 import subprocess
 from pathlib import Path
 
+import pytest
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 GUARD = REPO_ROOT / "scripts/check-doc-control-resolution.py"
 
@@ -63,6 +65,7 @@ def run_against(module, plugins_dir: Path) -> int:
     # masks whatever the test is actually asserting.
     module.INLINE_BY_DESIGN = {}
     module.NO_READER_KNOWN = {}
+    module.NO_TEMPLATE_KNOWN = {}
     return module.main()
 
 
@@ -227,3 +230,78 @@ def test_generated_mirror_is_excluded():
     # Scanning it would double-report every core finding.
     guard = load_guard()
     assert guard.MIRROR_DIR == REPO_ROOT / "plugins/arckit-claude/plugins"
+
+
+def test_guard_fails_when_a_doc_type_command_has_no_template(tmp_path, capsys):
+    # The converse blind spot: checks 1-3 walk templates, so a command writing a
+    # governed artefact with no template at all was invisible to them.
+    plugins = tmp_path / "plugins"
+    plugins.mkdir()
+    plugin = make_plugin(plugins, "arckit-fake", template=MARKED, command=RESOLVES)
+    (plugin / "commands/naked.md").write_text(
+        "---\ndoc-type: NAKED\n---\n\nWrite the artefact from the structure below.\n"
+    )
+    assert run_against(load_guard(), plugins) == 1
+    err = capsys.readouterr().err
+    assert "reference no template" in err and "NAKED" in err
+
+
+def test_doc_type_none_commands_are_out_of_scope(tmp_path):
+    # /arckit:search, /arckit:health and the rest write no governed artefact.
+    plugins = tmp_path / "plugins"
+    plugins.mkdir()
+    plugin = make_plugin(plugins, "arckit-fake", template=MARKED, command=RESOLVES)
+    (plugin / "commands/readonly.md").write_text(
+        "---\ndoc-type: none\n---\n\nSearch and report.\n"
+    )
+    assert run_against(load_guard(), plugins) == 0
+
+
+def test_exemption_lists_are_empty():
+    # Both were populated during #791/#792 and both are now cleared. An entry
+    # reappearing means a command regressed to an inlined skeleton.
+    guard = load_guard()
+    assert guard.NO_READER_KNOWN == {}, "a template lost its reader again"
+    assert guard.NO_TEMPLATE_KNOWN == {}, "a doc-type command lost its template again"
+
+
+@pytest.mark.parametrize(
+    "plugin,command,template",
+    [
+        ("arckit-claude", "backlog.md", "backlog-template.md"),
+        ("arckit-claude", "gcloud-clarify.md", "gcloud-clarify-template.md"),
+        ("arckit-claude", "gcloud-search.md", "gcloud-requirements-template.md"),
+        ("arckit-uk-gcloud", "gcloud-competitors.md", "gcloud-competitors-template.md"),
+        ("arckit-uk-gcloud", "review.md", "review-template.md"),
+    ],
+)
+def test_792_commands_read_their_template(plugin, command, template):
+    # Explicit regression for the five that shipped an ARC-* artefact with no
+    # Document Control block and no Revision History, built from an inlined
+    # skeleton instead of a template (#792).
+    cmd = REPO_ROOT / "plugins" / plugin / "commands" / command
+    tpl = REPO_ROOT / "plugins" / plugin / "templates" / template
+    assert tpl.is_file(), f"{template} missing"
+    assert MARKER in tpl.read_text(), f"{template} lost the marker"
+    body = cmd.read_text()
+    assert template in body, f"/{command} no longer reads {template}"
+    assert "_partials/RENDERING.md" in body, f"/{command} no longer resolves the marker"
+
+
+@pytest.mark.parametrize(
+    "plugin,command",
+    [
+        ("arckit-claude", "backlog.md"),
+        ("arckit-claude", "gcloud-clarify.md"),
+        ("arckit-claude", "gcloud-search.md"),
+        ("arckit-uk-gcloud", "gcloud-competitors.md"),
+        ("arckit-uk-gcloud", "review.md"),
+    ],
+)
+def test_792_commands_no_longer_inline_a_document_control_block(plugin, command):
+    # The template owns Document Control now. A `## Document Control` heading
+    # reappearing in the command body means a second, hand-maintained source.
+    body = (REPO_ROOT / "plugins" / plugin / "commands" / command).read_text()
+    assert "\n## Document Control" not in body, (
+        f"/{command} inlines a Document Control block again — the template owns it"
+    )

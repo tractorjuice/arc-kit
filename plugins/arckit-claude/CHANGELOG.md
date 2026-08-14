@@ -9,6 +9,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Five commands wrote a governed `ARC-*` artefact with no Document Control block and no Revision History** (#792). Each built its document from a skeleton inlined in the command body rather than from a template, against the Template-Driven Generation rule in `CLAUDE.md`. All five now read their template and resolve the `<!-- DOC-CONTROL-HEADER -->` marker.
+
+  Three had a template that named its own command in its header and was never read — `/arckit:backlog` (`BKLG`), `/arckit:gcloud-clarify` (`GCLC`) and `/arckit:gcloud-search` (`GCLD`). Two had **no template at all**: `arckit-uk-gcloud`'s `/arckit:gcloud-competitors` (`GCMP`) and `/arckit:review` (`GCRV`), whose command bodies said *"there is no separate template for this doc-type; structure the report inline"*. Both now ship one.
+
+  This was **fully-wired coverage aimed at impossible documents**, not a coverage gap. All five codes already had a `### <CODE>` section in `references/quality-checklist.md`, and all five commands instructed the model to verify the Common Checks — of which 1 (*Document Control complete: all 14 fields*), 4 (*Classification set*) and 6 (*Revision History present*) cannot be satisfied by a document with no Document Control block. Two commands went further and carried a **CRITICAL - Auto-Populate Document Control Fields** block for a header they never emitted.
+
+  `GCMP` and `GCRV` are registered `regime: 'UK'` and listed in `RENDERING.md`'s regime index, so the index had been claiming routing coverage for two doc-types whose artefacts structurally could not hold a Classification field.
+
+  Citation traceability was broken in the same way for the three core commands: `## External References` was in all three templates and none of the three skeletons, while `/arckit:backlog` instructed the model to *"populate the 'External References' section in the template"* — a section its own output never contained.
+
+- **`Review Date` corrected to `Next Review Date` in 33 commands and agents.** The Document Control Standard has no `Review Date` field; the calculated-fields instruction had been naming one for the whole 14-field block, which is the same 13-vs-14 drift the six worked examples carried before #791.
+
+### Added
+
+- **Two new `arckit-uk-gcloud` templates**: `gcloud-competitors-template.md` (`GCMP`) and `review-template.md` (`GCRV`), both with the marker, Revision History and External References. `arckit-uk-gcloud` is not in `PLUGIN_SOURCES`, so neither mirrors into `.arckit/templates/`.
+
+- **A fourth check in `scripts/check-doc-control-resolution.py`**: a command declaring a `doc-type:` must reference a template file. The first three checks walk *templates* and ask who reads them, so a command with no template was invisible to them — which is why `GCMP` and `GCRV` needed a separate sweep rather than surfacing in the #760 pass. `doc-type: none` commands are out of scope. Both exemption lists (`NO_READER_KNOWN`, `NO_TEMPLATE_KNOWN`) are now empty, and a test asserts they stay that way.
+
+- **`Unmet Must-Have Requirements`** in `gcloud-requirements-template.md`, plus the G-Cloud framework notes ported from the old inline skeleton. A per-service gap belongs in that service's block; a requirement *nothing* on the shortlist meets changes the procurement decision rather than the ranking, so it now has its own place and an explicit "write None rather than omitting" instruction.
+
+### Fixed
+
 - **`<!-- DOC-CONTROL-HEADER -->` templates now have a command that actually resolves them** (#760). `templates/_partials/RENDERING.md` states the rule normatively — *the command that reads the template MUST resolve the marker* — and nothing enforced it. **91 template/command pairs did not**, so those artefacts rendered a literal HTML comment and no Document Control block at all, which is strictly worse than the short hand-maintained table the marker replaced.
 
   The sharpest case was **France**. `FR` hard-routes and `document-control-fr.md` shipped in #752, but **0 of 12 `fr-*` commands read `RENDERING.md`**, so the French ladder was unreachable from the commands it was added for and `/arckit:fr-anssi` rendered a UK ladder for a hard-routed French artefact. **Austria** was 1 of 4, the three older commands predating `at-barrierefreiheit` (#773). Both regimes are now 100%.
