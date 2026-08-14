@@ -464,6 +464,11 @@ All artifacts must pass these 10 checks:
 - Assessment context stated: setting minimum SEAL levels for a tender specification, assessing a candidate service, or both
 - Minimum SEAL per objective sourced **only** from the tender specification; where no tender specification exists, every objective is marked "Not yet set by contracting authority" rather than given an invented value
 - Document nowhere states or implies a framework-mandated minimum SEAL
+- **Overall SEAL is present** in the Executive Summary and in Section 3.3, and is **derived as a minimum**: the lowest SEAL evidenced across all eight objectives (Implementation guidance p.9), with each objective's own SEAL already the minimum across its contributing factors (Annex calculator cell F2) -- a minimum-of-minimums, never computed as an average or a mode of the per-objective SEALs
+- The **governing criterion** for the Overall SEAL is named -- the specific objective (and, where identifiable, the contributing factor within it) whose evidenced SEAL set the minimum -- not left as an unattributed number
+- **No averaging or modal language appears anywhere in the SEAL derivation**: reject phrasing such as "average SEAL," "mean SEAL," "typical SEAL," "most common SEAL," or any computation that sums/divides SEAL levels across objectives or criteria instead of taking their minimum
+- A criterion whose every recorded answer is SEAL-4 is not cited as the governing criterion for the Overall SEAL (Implementation guidance p.9: such a criterion "has no impact on the SEAL calculation")
+- The p.10 prevalence statement is honoured: the Overall SEAL, not the Sovereignty Score, is presented as the framework's actual rejection gate
 - All eight objectives (SOV-1 to SOV-8) assessed, none omitted
 - Weight table reproduces the framework weights and totals exactly 100%
 - All five SEAL definitions (SEAL-0 to SEAL-4) reproduced in full, not paraphrased

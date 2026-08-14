@@ -5,6 +5,18 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`/arckit:eu-cloud-sovereignty` recorded a SEAL per objective but had no aggregate SEAL concept at all**, while already framing "minimum SEAL" as the tender's rejection gate. The framework defines that aggregation, and it is a **minimum** — never an average and never a mode. Implementation guidance p.9, quoted verbatim: *"The overall SEAL level is the lowest SEAL level achieved in any of the objectives."* The Annex calculator XLSX implements the same rule at finer granularity, cell F2: `="SEAL-"&MIN(H5:H251)`, where each row's SEAL is `=IF(E<n>,1*F<n>,"")` — the minimum over every answered criterion. The two agree only because an objective's own SEAL is already the minimum across its criteria, so the framework's Overall SEAL is a minimum-of-minimums.
+
+  The template's Executive Summary and a new Section 3.3 now carry the **Overall SEAL** alongside its **governing criterion** — the objective, and where identifiable the specific contributing factor, whose evidenced SEAL set the minimum — instead of leaving the aggregate as an unattributed number. A new Section 3.0b reproduces guidance p.10's per-objective SEAL-2/3/4 requirements table, with the note that it starts at SEAL-2 because that was the minimum set for the Commission's own competition, not a floor the framework itself imposes.
+
+  Two further properties from the same guidance pages are now stated as properties of the derivation rather than left implicit: a criterion whose every recorded answer is SEAL-4 can never bind the minimum (p.9 — *"it must be understood that the criterion has no impact on the SEAL calculation"*), and the Overall SEAL, not the Sovereignty Score, is the framework's actual rejection gate (p.10 — *"the prevalence of the SEAL criterion over the Sovereignty Score... Sovereignty score is used to compare the offers that have reached the minimum required SEAL"*). The Commission's own SEAL-4 attainability caveat (p.13, "Lessons learnt", published 1 June 2026) is carried attributed and dated, framed as a limitation it proposes to revisit rather than a permanent property of SEAL-4.
+
+  `references/quality-checklist.md`'s `EUCSF` section now asserts the Overall SEAL is present, derived as a minimum with its governing criterion named, and that no averaging or modal language appears in the derivation.
+
 ## [6.10.0] — 2026-08-18
 
 ### Added
