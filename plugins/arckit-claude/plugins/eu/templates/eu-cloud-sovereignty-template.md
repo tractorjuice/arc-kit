@@ -77,11 +77,11 @@
 
 | Level | Name | Definition |
 |-------|------|------------|
-| SEAL-0 | No Sovereignty | Service, technology or operations under exclusive control of non-EU third parties, governed entirely in non-EU jurisdictions |
+| SEAL-0 | No Sovereignty | Service, technology or operations under exclusive control of non-EU third parties, governed entirely by non-EU jurisdictions |
 | SEAL-1 | Jurisdictional Sovereignty | EU law formally applies with limited practical enforceability; service, technology or operations under exclusive control of non-EU third parties |
-| SEAL-2 | Data Sovereignty | EU law applicable and enforceable, with material non-EU dependencies remaining; under indirect control of non-EU third parties |
-| SEAL-3 | Digital Resilience | EU law applicable and enforceable, EU actors exercising meaningful but not full influence; under marginal control of non-EU third parties |
-| SEAL-4 | Full Digital Sovereignty | Technology and operations under complete EU control, subject only to EU law, with no critical non-EU dependencies |
+| SEAL-2 | Data Sovereignty | EU jurisdictions apply, with material dependencies remaining; service, technology or operations under indirect control of non-EU third parties |
+| SEAL-3 | Technological Sovereignty | EU jurisdictions apply, EU actors exercising meaningful but not full influence; service, technology or operations under marginal control of non-EU third parties |
+| SEAL-4 | Full Digital Sovereignty | Technology and operations under complete EU control, subject only to EU jurisdiction, with no critical non-EU dependencies |
 
 **Formula**: Sovereignty Score = Σ over the eight objectives of (Score(SOVn) / Max.Score(SOVn)) × Weight(SOVn), expressed as a percentage.
 
