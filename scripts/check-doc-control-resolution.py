@@ -84,6 +84,14 @@ INLINE_BY_DESIGN = {
 # a behaviour change rather than a wording one, so recorded here and tracked on
 # #792. Drop the entry once the command reads its template — the stale-exemption
 # check below will catch it if anyone forgets.
+#
+# BLIND SPOT: these three are only visible because they HAVE a template. This
+# guard walks templates and asks who reads them, so a command that writes a
+# governed artefact with no template at all is invisible to it. Two exist —
+# arckit-uk-gcloud's gcloud-competitors (GCMP) and review (GCRV) — and needed a
+# separate sweep to find. Closing that needs a different check (a command
+# declaring a doc-type must reference a template file), which would fail on all
+# five and so has to land with its own allowlist. Also on #792.
 NO_READER_KNOWN = {
     "backlog-template.md": "/arckit:backlog inlines its own skeleton instead (#792)",
     "gcloud-clarify-template.md": "/arckit:gcloud-clarify inlines its own skeleton instead (#792)",
