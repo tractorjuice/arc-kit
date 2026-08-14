@@ -121,6 +121,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 - First, check `.arckit/templates-custom/research-findings-template.md` (user override)
 - If not found, read `${CLAUDE_PLUGIN_ROOT}/templates/research-findings-template.md` (default)
+- Then read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in every template you render, including the per-vendor profiles spawned below. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
 
 ### Step 3: Extract and Categorize Requirements
 
@@ -284,7 +285,7 @@ Auto-populate fields:
 - `[VERSION]` = determined version from Step 9
 - `[DATE]` = current date (YYYY-MM-DD)
 - `[STATUS]` = "DRAFT"
-- `[CLASSIFICATION]` = `${user_config.default_classification}` when set; otherwise "OFFICIAL" (UK Gov) or "PUBLIC"
+- **Classification** → comes from the resolved Document Control header, not from a placeholder. `_partials/RENDERING.md` fixes the ladder from the artefact's own regime; `${user_config.default_classification}` applies only where that regime falls through to user config.
 
 Include the generation metadata footer:
 

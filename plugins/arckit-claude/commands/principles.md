@@ -19,6 +19,7 @@ $ARGUMENTS
    - **First**, check if `.arckit/templates/architecture-principles-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/architecture-principles-template.md` (default)
+   - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
 
    > **Tip**: Users can customize templates with `/arckit:customize architecture-principles`
 
@@ -102,7 +103,7 @@ Before completing the document, populate document information fields:
 - `[DOCUMENT_TYPE_NAME]` → Document purpose
 - `ARC-[PROJECT_ID]-PRIN-v[VERSION]` → Generated document ID
 - `[STATUS]` → "DRAFT" for new documents
-- `[CLASSIFICATION]` → Default to `${user_config.default_classification}`; if unavailable, use "OFFICIAL" (UK Gov) or "PUBLIC"
+- **Classification** → comes from the resolved Document Control header, not from a placeholder. `_partials/RENDERING.md` fixes the ladder from the artefact's own regime; `${user_config.default_classification}` applies only where that regime falls through to user config.
 
 ### User-provided fields
 

@@ -54,6 +54,7 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
    - **First**, check if `.arckit/templates/gcp-research-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/gcp-research-template.md` (default)
+   - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
    - **Tip**: Users can customize templates with `/arckit:customize gcp-research`
 3. Extract Google Cloud service needs from requirements (compute, data, integration, security, AI/ML)
 4. Use MCP tools for each category: service discovery, deep dive, architecture patterns, Architecture Framework assessment, Security Command Center mapping, code samples. If MCP tools are unavailable, use WebSearch with `site:cloud.google.com` and WebFetch on result URLs for equivalent research (STANDALONE mode)

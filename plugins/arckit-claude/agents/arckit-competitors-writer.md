@@ -202,7 +202,7 @@ Notes on optional groups:
 1. **Read the CMPT template.** Check
    `.arckit/templates-custom/competitors-template.md` first (user override);
    if not present, use
-   `${CLAUDE_PLUGIN_ROOT}/templates/competitors-template.md`.
+   `${CLAUDE_PLUGIN_ROOT}/templates/competitors-template.md`. Then read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in every template you render, including the per-item profiles and tech-notes spawned below — the partial it selects is the only source of the Document Control table's 14 standard fields and of the classification ladder. Do not hand-write that table.
 
 2. **Read the project's previous artefact if one exists.** `Glob` for
    `{project_path}/research/ARC-{project_id}-CMPT-*-v*.md`. If found, read the

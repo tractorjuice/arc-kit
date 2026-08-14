@@ -148,7 +148,7 @@ Before completing the document, populate document information fields:
 - `[DOCUMENT_TYPE_NAME]` → Document purpose
 - `ARC-[PROJECT_ID]-AAGI-v[VERSION]` → Generated document ID
 - `[STATUS]` → "DRAFT" for new documents
-- `[CLASSIFICATION]` → Default to `${user_config.default_classification}`; if unavailable, use "OFFICIAL" (UK Gov) or "PUBLIC"
+- **Classification** → comes from the resolved Document Control header, not from a placeholder. `_partials/RENDERING.md` fixes the ladder from the artefact's own regime; `${user_config.default_classification}` applies only where that regime falls through to user config.
 
 ### User-provided fields
 

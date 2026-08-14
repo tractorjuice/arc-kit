@@ -64,6 +64,7 @@ $ARGUMENTS
    - **First**, check if `.arckit/templates/requirements-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/requirements-template.md` (default)
+   - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
    - **Update Template Version**: Replace the version in the template metadata line with `{ARCKIT_VERSION}` from the session context
 
    > **Tip**: Users can customize templates with `/arckit:customize requirements`
@@ -188,7 +189,7 @@ Before generating the document ID, check if a previous version exists:
 
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
-- `[CLASSIFICATION]` → Default to `${user_config.default_classification}`; if unavailable, use "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+- **Classification** → comes from the resolved Document Control header, not from a placeholder. `_partials/RENDERING.md` fixes the ladder from the artefact's own regime; `${user_config.default_classification}` applies only where that regime falls through to user config.
 
 **Calculated fields**:
 
@@ -220,26 +221,13 @@ The footer should be populated with:
 **Generation Context**: [Brief note about source documents used]
 ```
 
-### Example Fully Populated Document Control Section
+### Example Rendered Header and Revision History
 
 ```markdown
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| **Document ID** | ARC-001-REQ-v1.0 |
-| **Document Type** | {Document purpose} |
-| **Project** | Windows 10 to Windows 11 Migration (Project 001) |
-| **Classification** | OFFICIAL-SENSITIVE |
-| **Status** | DRAFT |
-| **Version** | 1.0 |
-| **Created Date** | 2025-10-29 |
-| **Last Modified** | 2025-10-29 |
-| **Review Date** | 2025-11-30 |
-| **Owner** | John Smith (Business Analyst) |
-| **Reviewed By** | [PENDING] |
-| **Approved By** | [PENDING] |
-| **Distribution** | PM Team, Architecture Team, Dev Team |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time per _partials/RENDERING.md. -->
 
 ## Revision History
 

@@ -100,6 +100,8 @@ Now that you have the user's preferences, read 2-3 existing official templates t
 
 Create the template file at `.arckit/templates-custom/{name}-template.md` using the Write tool.
 
+**Emit the `<!-- DOC-CONTROL-HEADER -->` marker verbatim — never a Document Control table.** Earlier versions of this command emitted a hand-written 14-row table with a hardcoded UK ladder, so every user-built template was born outside regime routing and drifted from the standard from its first day (#760). The marker resolves at command-execution time to the partial `_partials/RENDERING.md` selects, which is what keeps the fields and the classification ladder correct for the artefact's own regime.
+
 **Template Structure** (mandatory elements):
 
 ```markdown
@@ -109,22 +111,8 @@ Create the template file at `.arckit/templates-custom/{name}-template.md` using 
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-[TYPE_CODE]-v[VERSION] |
-| **Document Type** | [DOCUMENT_TYPE_NAME] |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
-| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
-| **Version** | [VERSION] |
-| **Created Date** | [YYYY-MM-DD] |
-| **Last Modified** | [YYYY-MM-DD] |
-| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
-| **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
-| **Reviewed By** | [REVIEWER_NAME] on [DATE] or [PENDING] |
-| **Approved By** | [APPROVER_NAME] on [DATE] or [PENDING] |
-| **Distribution** | [DISTRIBUTION_LIST] |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time per _partials/RENDERING.md. -->
 
 ## Revision History
 

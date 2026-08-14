@@ -5,6 +5,34 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`<!-- DOC-CONTROL-HEADER -->` templates now have a command that actually resolves them** (#760). `templates/_partials/RENDERING.md` states the rule normatively — *the command that reads the template MUST resolve the marker* — and nothing enforced it. **91 template/command pairs did not**, so those artefacts rendered a literal HTML comment and no Document Control block at all, which is strictly worse than the short hand-maintained table the marker replaced.
+
+  The sharpest case was **France**. `FR` hard-routes and `document-control-fr.md` shipped in #752, but **0 of 12 `fr-*` commands read `RENDERING.md`**, so the French ladder was unreachable from the commands it was added for and `/arckit:fr-anssi` rendered a UK ladder for a hard-routed French artefact. **Austria** was 1 of 4, the three older commands predating `at-barrierefreiheit` (#773). Both regimes are now 100%.
+
+  Resolution was added to 74 commands and 6 agents in total. The **writer subagents** matter most: `arckit-tenders-writer`, `arckit-competitors-writer`, `arckit-datascout-writer`, `arckit-gov-reuse-writer` and `arckit-grants-writer` are the tier that holds the `Write` call, and **0 of 20 agents referenced `RENDERING.md`** before this. Their instruction covers spawned per-item profiles and tech-notes too, not just the main artefact.
+
+- **The marker comment contradicted the file it pointed at, on 121 of 168 templates.** It restated the routing rule as *"resolved to `document-control-uk.md` or `document-control-uae.md` based on plugin userConfig"* — true before #744 made routing regime-first, and naming two partials when there are now seven. `apply_doc_control_marker.py`'s `MARKER` constant was never updated, so the conversion in #761 wrote the stale wording into all 16 templates it converted. The comment now defers instead of paraphrasing (`<!-- Resolved at command-execution time per _partials/RENDERING.md. -->`), which is what stops it drifting again, and the script normalises existing markers rather than only converting new ones.
+
+- **The pre-#744 classification fallback was still live in 47 commands and 9 agents.** They instructed the model to substitute `[CLASSIFICATION]` from `${user_config.default_classification}` — the operator-driven path #744 replaced with regime routing — against a placeholder that survives in **exactly 1 of 168 templates** (the MARP footer in `presentation-template.md`). All 56 now defer to the resolved header. This was also the stated reason #761 deferred the guard, on the understanding that core resolved the marker by a second legitimate mechanism; it did not.
+
+- **Six core commands shipped a worked example that contradicted the partial.** `adr`, `requirements`, `secure`, `sow`, `tcop` and `traceability` each carried an "Example Fully Populated Document Control Section" — a **13-field** table using `Review Date` instead of `Next Review Date` and omitting `Review Cycle`. Being a concrete example, it outranked the 14-field partial for the model copying it. Replaced with the marker.
+
+- **`/arckit:template-builder` was a factory for the defect.** Every template it generated carried a hand-written 14-row Document Control table with a hardcoded UK ladder, so each user-built template was born outside regime routing. It now emits the marker.
+
+### Added
+
+- **`scripts/check-doc-control-resolution.py`** — the guard #760 asked for, wired into `lint-markdown.yml` beside `check-quality-checklist-refs.py`. It checks three things: every marker template has a reader (command *or* writer subagent) that references `_partials/RENDERING.md`; the marker comment is the current one-line form; and the converse, that a template hand-maintaining a Document Control block without the marker is declared deliberate with a reason.
+
+  `arckit-uk-nhs`'s six DCB0129/DCB0160 safety-case templates are recorded in `INLINE_BY_DESIGN`: they follow the Marcus Baw `SAFETY.md` spec convention, whose Document ID is the literal `SAFETY.md` with no `ARC-` prefix, and converting them would break that convention on purpose. `apply_doc_control_marker.py` carries the same exemption, having converted all six by accident during this work. `uk-nhs-dtac-template.md` and `uk-mdr-classification-template.md` are explicitly **not** exempt.
+
+  Three templates are recorded in `NO_READER_KNOWN` rather than fixed: `backlog-template.md`, `gcloud-clarify-template.md` and `gcloud-requirements-template.md` are shipped but read by no command or agent. Their commands generate freeform output against the Template-Driven Generation rule in `CLAUDE.md` — a separate defect from marker resolution, and a behaviour change rather than a wording one.
+
+  15 tests in `tests/plugin/test_doc_control_resolution.py`, weighted toward the negative cases: the guard fails on an unresolved marker, an unread template, a stale comment, an undeclared inline table, a stale exemption, and on matching nothing at all.
+
 ## [6.9.0] — 2026-08-13
 
 ### Added
