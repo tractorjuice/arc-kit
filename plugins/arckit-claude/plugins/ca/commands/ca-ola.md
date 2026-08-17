@@ -36,7 +36,7 @@ You are an enterprise architect generating an Official Languages Act review for 
    - **Then**, `.arckit/templates/ca-ola-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-ola-template.md`
 3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> OLA --filename` for the artefact filename.
-4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
+4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **Service Surface Inventory** — every user-facing surface that must be language-equivalent: screens, forms, notifications, error messages, public registers, accessibility statements, printed correspondence, IVR scripts, and social media. Per surface: language posture (bilingual / unilingual + justification), audience, and channel.
    - **Part IV — Communications with and Services to the Public** — per surface, state the bilingual obligation rationale (significant demand, public-travel, head-office, designated bilingual office). Active offer at first contact (greeting, signage, written initiation). Bilingual capacity at time of service.

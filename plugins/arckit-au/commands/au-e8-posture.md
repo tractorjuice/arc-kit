@@ -60,7 +60,7 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUE8 --filename` for the artefact filename.
 
-5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) — replace the standard UK line in the header.
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the AU regime to `_partials/document-control-au.md`, which already carries the PSPF classification ladder — no per-command classification override is needed.
 
 6. Generate the following sections:
 
