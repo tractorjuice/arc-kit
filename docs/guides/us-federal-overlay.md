@@ -79,7 +79,7 @@ The citation register above is re-verified every quarter. **Next scheduled revie
 ## Known Limitations
 
 - **Section 508 accessibility is not covered.** Deferred to ArcKit v5.2; until then, use the GSA Section 508 resources and agency-specific accessibility guidance directly.
-- **CUI / Confidential / Secret / Top Secret marking is not covered in v1.** The overlay focuses on civilian unclassified information; classified-system architecture sits with the future `arckit-us-dod` overlay.
+- **Classified-system architecture is not covered.** The overlay focuses on civilian unclassified information; classified-system architecture sits with the future `arckit-us-dod` overlay. Since #746 the artefacts themselves do carry a US marking ladder — `_partials/document-control-us.md` offers UNCLASSIFIED / CUI / CONFIDENTIAL / SECRET / TOP SECRET so a Document Control header can record how the document is marked — but the overlay produces no CUI categorisation and no category or limited-dissemination markings (`CUI//SP-PRIV`, `CUI//NOFORN`). Those follow 32 CFR Part 2002 and the NARA CUI Registry, and belong in `Distribution`.
 - **State-level regimes are not covered.** StateRAMP, TX-RAMP, AZ-RAMP, CJIS Security Policy — sibling overlays where they exist; sector-specific overlays where they don't.
 - **Sector-specific regimes are not covered.** HIPAA, GLBA, SOX, PCI-DSS layer on top; if any apply, treat them as additional artefacts, not as parts of this overlay.
 - **No live A&A test against a real FedRAMP package.** The templates are based on the published FedRAMP SSP and RAR template structures; they have not been put in front of a 3PAO or the FedRAMP PMO for a real authorization decision. Treat as a strong starting point, not a guaranteed-pass package.

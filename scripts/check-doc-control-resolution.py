@@ -15,7 +15,7 @@ hard-routes and `document-control-fr.md` shipped in #752, but no FR command read
 `RENDERING.md`, so the French ladder was unreachable from the command that needed
 it (#760).
 
-Four things are checked.
+Five things are checked.
 
 1. **Resolution.** Every marker-carrying template has at least one reader —
    command or agent — that references `_partials/RENDERING.md`. Readers are
@@ -34,7 +34,16 @@ Four things are checked.
    is outside regime routing by construction and re-drifts freely, so it must be
    on `INLINE_BY_DESIGN` with a stated reason.
 
-4. **A command declaring a `doc-type:` names a template.** Checks 1-3 walk
+4. **No ladder restatement.** The marker comment must not carry a
+   `| Classification | ... |` row. Check 2 tests that the required comment is
+   PRESENT, so extra lines under it were invisible, and 34 templates used them to
+   restate a ladder. In 10 of those — the `us-*` set — the restated ladder was the
+   UK one, mandated as a `MUST`, which is what #746 is about: it would have
+   contradicted `document-control-us.md` the moment US stopped falling through,
+   and no guard would have said so. Notes that add something the menu does not
+   (AU's SOCI caveat, CA's "frequently SECRET or higher") are not rows and stay.
+
+5. **A command declaring a `doc-type:` names a template.** Checks 1-3 walk
    TEMPLATES and ask who reads them, so a command that writes a governed artefact
    with no template at all was invisible to them. Two were —
    `gcloud-competitors` (GCMP) and `review` (GCRV) — and both shipped an artefact
@@ -60,6 +69,27 @@ MIRROR_DIR = PLUGINS_DIR / "arckit-claude/plugins"
 MARKER = "<!-- DOC-CONTROL-HEADER -->"
 COMMENT = "<!-- Resolved at command-execution time per _partials/RENDERING.md. -->"
 RESOLVER = "_partials/RENDERING.md"
+
+# A `| Classification | ... |` row commented out under the marker. Check 2 asks
+# whether COMMENT is present, so anything ADDED after it was invisible: 34
+# templates restated a ladder there, and the 10 us-* ones restated the UK one as
+# a `MUST` while RENDERING.md was routing US elsewhere (#746).
+LADDER_ROW_RE = re.compile(r"^<!--\s*\|\s*Classification\s*\|")
+
+
+def marker_comment_block(text: str) -> list[str]:
+    """The run of HTML comment lines directly under the marker."""
+    lines = text.splitlines()
+    try:
+        start = next(i for i, line in enumerate(lines) if MARKER in line)
+    except StopIteration:
+        return []
+    block: list[str] = []
+    for line in lines[start + 1 :]:
+        if not line.startswith("<!--"):
+            break
+        block.append(line)
+    return block
 
 DOC_CONTROL_RE = re.compile(r"^## Document Control\s*$", re.M)
 
@@ -164,6 +194,7 @@ def main() -> int:
     unread: list[tuple[str, str]] = []
     no_template: list[tuple[str, str, str]] = []  # (plugin, command, doc-type)
     stale_comment: list[tuple[str, str]] = []
+    ladder_restated: list[tuple[str, str, str]] = []  # (plugin, template, offending line)
     undeclared_inline: list[tuple[str, str]] = []
     stale_exemption: list[str] = []
     marker_total = 0
@@ -200,6 +231,10 @@ def main() -> int:
 
             if COMMENT not in text:
                 stale_comment.append((plugin.name, rel))
+
+            restated = [line for line in marker_comment_block(text) if LADDER_ROW_RE.match(line)]
+            if restated:
+                ladder_restated.append((plugin.name, rel, restated[0]))
 
             readers = readers_for(plugin, name)
             if not readers:
@@ -276,6 +311,23 @@ def main() -> int:
             f"\n  Expected exactly:\n    {COMMENT}\n\n"
             "  Run: python3 scripts/python/apply_doc_control_marker.py "
             "plugins/*/templates .arckit/templates",
+            file=sys.stderr,
+        )
+
+    if ladder_restated:
+        failed = True
+        print(
+            f"\nFAIL {len(ladder_restated)} template(s) restate a classification ladder "
+            "under the marker:",
+            file=sys.stderr,
+        )
+        for plugin, rel, line in ladder_restated:
+            print(f"  {rel}  (plugin {plugin})\n    {line.strip()}", file=sys.stderr)
+        print(
+            "\n  RENDERING.md is the only ladder source. A second copy in the template is\n"
+            "  a ladder the router cannot see: the us-* templates mandated the UK ladder\n"
+            "  as a MUST while RENDERING.md routed US to its own partial (#746). Delete\n"
+            "  the row — a note that adds something beyond the menu is fine to keep.",
             file=sys.stderr,
         )
 

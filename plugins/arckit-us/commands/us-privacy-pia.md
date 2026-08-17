@@ -67,7 +67,9 @@ This US PIA is distinct from the Canadian PIA (`/arckit:ca-pia`), Australian PIA
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> USPIA --filename` for the artefact filename. The type code for this command is `USPIA` (US-prefixed to avoid collision with the Canadian `PIA` doc type).
 
-5. Generate the following sections:
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the US regime to `_partials/document-control-us.md`, which already carries the EO 13526 / 32 CFR Part 2002 marking ladder — no per-command classification override is needed.
+
+6. Generate the following sections:
 
    - **System Overview** — system name, agency component owner, mission served, in-scope IT components, user populations, operational status.
    - **PII Inventory** — table of every PII element: data element name, category (sensitive vs non-sensitive per NIST SP 800-122), source (subject / third party / government records), purpose of collection, lawful authority citation, retention period, disposal method.
@@ -81,10 +83,10 @@ This US PIA is distinct from the Canadian PIA (`/arckit:ca-pia`), Australian PIA
    - **Privacy Risk Register and Mitigations** — risks scored by likelihood and impact, with mitigations and residual risk; cross-reference the project risk register.
    - **SAOP Sign-Off Block** — agency SAOP reviewer, date, scope of approval, publication URL (post-redaction), and re-assessment cadence.
 
-6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **USPIA** per-type checks pass. Fix any failures before proceeding.
-7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **USPIA** per-type checks pass. Fix any failures before proceeding.
+8. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-8. Emit a short summary to the user — PII element count, SORN verdict, M-03-22 checklist satisfaction, top three privacy risks, SAOP review status, and intended publication date. Do not echo the full artefact.
+9. Emit a short summary to the user — PII element count, SORN verdict, M-03-22 checklist satisfaction, top three privacy risks, SAOP review status, and intended publication date. Do not echo the full artefact.
 
 ## Handoffs
 

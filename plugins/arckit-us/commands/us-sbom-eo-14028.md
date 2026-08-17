@@ -68,7 +68,9 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> SBOM --filename` for the artefact filename. The type code for this command is `SBOM`.
 
-5. Generate the following sections:
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the US regime to `_partials/document-control-us.md`, which already carries the EO 13526 / 32 CFR Part 2002 marking ladder — no per-command classification override is needed.
+
+6. Generate the following sections:
 
    - **Software Product Identification** — producer name, product name, version, release date, deployment targets, whether the product is delivered as software, SaaS, IaaS/PaaS-hosted application, or hybrid.
    - **Applicability Determination** — does M-22-18 apply? Cite the M-22-18 §2 definition of covered software (software developed after 14 September 2022 used by the federal government). Note any open-source components and the producer-of-record for each.
@@ -81,10 +83,10 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
    - **Exception Request** — if a self-attestation cannot be made for one or more items, document the M-22-18 exception process: which items, why, compensating controls, agency CIO + OMB notification status, expiry of the exception.
    - **Distribution Plan** — where the attestation will be lodged (CISA Repository for Software Attestations and Artifacts), where the SBOM will be distributed (agency CSO portal, supplier portal), and the access-control posture for SBOM consumers.
 
-6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SBOM** per-type checks pass. Fix any failures before proceeding.
-7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SBOM** per-type checks pass. Fix any failures before proceeding.
+8. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-8. Emit a short summary to the user — attestation status (Full / Partial / Exception), SBOM format and component count, SLSA level claim, open exceptions, and the lodging date target. Do not echo the full artefact.
+9. Emit a short summary to the user — attestation status (Full / Partial / Exception), SBOM format and component count, SLSA level claim, open exceptions, and the lodging date target. Do not echo the full artefact.
 
 ## Handoffs
 

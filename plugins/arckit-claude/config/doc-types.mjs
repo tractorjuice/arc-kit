@@ -293,7 +293,7 @@ export const REGIME_PARTIALS = {
   FR:  'document-control-fr.md',
   NL:  'document-control-nl.md',
   UAE: 'document-control-uae.md',
-  US:  'document-control-uk.md',  // deferred
+  US:  'document-control-us.md',
 };
 
 // Regimes that deliberately resolve to `document-control-uk.md` rather than to a
@@ -310,18 +310,22 @@ export const REGIME_PARTIALS = {
 //   MOD      — MOD artefacts use the UK Government ladder.
 //   EU       — EU commands assess EU instruments from a member state's
 //              perspective; EUCI governs EU-institution material, not this.
-//   US       — deferred, not decided. No authoritative ladder wording exists
-//              anywhere in this repository, and a wrong ladder in a Document
-//              Control header reads more authoritative than a fallback. Keeps
-//              today's exact behaviour until a domain maintainer supplies the
-//              wording; adding a partial is then a two-line change here — see
-//              FR's document-control-fr.md for how that resolves in practice.
+//
+// US was the fourth member and is not one any more (#746). It sat here as a
+// deferral rather than a decision, because no ladder wording existed in this
+// repository and a wrong ladder in a Document Control header reads more
+// authoritative than a fallback does. document-control-us.md now ships, sourced
+// from the two primary instruments — EO 13526 §1.2 for the classified tiers and
+// 32 CFR 2002.20 for CUI — so all 10 federal civilian doc-types stopped
+// rendering the UK ladder. The judgement the deferral was waiting on is
+// recorded in step 7 of RENDERING.md: CUI is a control marking rather than a
+// classification level, and a FIPS 199 impact level never belongs in the field.
 //
 // scripts/tests/test-regime-registration.mjs enforces both halves: a regime in
 // this set must map to the UK partial, and a regime outside it must map to
 // `document-control-<lowercased regime>.md`. Pointing CA at the Australian
 // ladder previously passed CI.
-export const UK_FALLBACK_BY_DESIGN = new Set(['UK', 'MOD', 'EU', 'US']);
+export const UK_FALLBACK_BY_DESIGN = new Set(['UK', 'MOD', 'EU']);
 
 // Derived: HIGH-severity type codes, grouped per regime (plus 'UNIVERSAL' for
 // types that apply regardless of jurisdiction).

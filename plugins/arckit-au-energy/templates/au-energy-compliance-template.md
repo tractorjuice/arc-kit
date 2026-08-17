@@ -7,8 +7,6 @@
 <!-- DOC-CONTROL-HEADER -->
 <!-- Resolved at command-execution time per _partials/RENDERING.md. -->
 <!-- Document Type: AUENERGY -->
-<!-- Classification line, where applicable, MUST be: -->
-<!-- | Classification | UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET | -->
 
 ## Revision History
 

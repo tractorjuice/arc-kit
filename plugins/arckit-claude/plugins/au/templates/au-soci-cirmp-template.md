@@ -6,8 +6,6 @@
 
 <!-- DOC-CONTROL-HEADER -->
 <!-- Resolved at command-execution time per _partials/RENDERING.md. -->
-<!-- Classification line, where applicable, MUST be: -->
-<!-- | Classification | UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET | -->
 <!-- Note: SOCI protected information is distinct from PSPF PROTECTED classification. -->
 
 ## Revision History

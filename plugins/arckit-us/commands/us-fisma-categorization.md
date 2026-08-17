@@ -63,7 +63,9 @@ The methodology decomposes the system into its constituent **information types**
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FIPS199 --filename` for the artefact filename. The type code for this command is `FIPS199`.
 
-5. Generate the following sections:
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the US regime to `_partials/document-control-us.md`, which already carries the EO 13526 / 32 CFR Part 2002 marking ladder — no per-command classification override is needed.
+
+6. Generate the following sections:
 
    - **System Identification** — system name, agency owner, mission/business function, system boundary summary, system type (General Support System / Major Application / Minor Application / Subsystem).
    - **Information Type Inventory** — enumerate every information type processed, stored, or transmitted, mapping each to the NIST SP 800-60 Vol 2 appendix taxonomy (e.g. `C.2.8.12 Personal Identity and Authentication`, `D.3.1 Customer Services`, `C.3.5.1 Income Information`). For each type record: information type ID + name, SP 800-60 reference, brief description, source/origin.
@@ -73,10 +75,10 @@ The methodology decomposes the system into its constituent **information types**
    - **Agency-Specific Overlays** — note any agency-specific information-type overlays (e.g. CUI categories per 32 CFR Part 2002, HHS-specific health information types, IRS Publication 1075 FTI overlays) that apply.
    - **Rationale and Open Issues** — narrative justification for the water-mark and a register of any provisional or contested classifications requiring SISO/AO review.
 
-6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FIPS199** per-type checks pass. Fix any failures before proceeding.
-7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FIPS199** per-type checks pass. Fix any failures before proceeding.
+8. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-8. Emit a short summary to the user — system name, derived water-mark (e.g. `MODERATE / MODERATE / LOW → MODERATE`), count of information types, and any open issues. Do not echo the full artefact.
+9. Emit a short summary to the user — system name, derived water-mark (e.g. `MODERATE / MODERATE / LOW → MODERATE`), count of information types, and any open issues. Do not echo the full artefact.
 
 ## Handoffs
 
