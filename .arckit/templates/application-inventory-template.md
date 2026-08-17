@@ -188,12 +188,6 @@ gantt
 | REQ | `ARC-[P]-REQ-v[VERSION].md` | `[Requirement → App mapping summary]` |
 | PRIN | `ARC-000-PRIN-v[VERSION].md` | `[Principle → Technology alignment summary]` |
 
-### External References
-
-| Source | Document | Citation |
-|--------|----------|----------|
-| `[Source]` | `[Document Name]` | `[Reference]` |
-
 ## 9. Assumptions
 
 1. `[Assumption about inventory completeness]`
@@ -205,6 +199,29 @@ gantt
 | Priority | Recommendation | Affected Apps | Effort | Impact |
 |----------|---------------|---------------|--------|--------|
 | `[High/Medium/Low]` | `[Recommendation]` | `[App IDs]` | `[High/Medium/Low]` | `[High/Medium/Low]` |
+
+## 11. External References
+
+> This section provides traceability from generated content back to source documents.
+> Follow citation instructions in the project's citation reference guide.
+
+### Document Register
+
+| Doc ID | Filename | Type | Source Location | Description |
+|--------|----------|------|-----------------|-------------|
+| *None provided* | — | — | — | — |
+
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
 
 ---
 

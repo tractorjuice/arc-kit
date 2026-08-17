@@ -409,8 +409,6 @@ ISM controls are organised into 17 domains. Applicability depends on the system'
 
 ---
 
-## External References
-
 ## ArcKit Evidence Integration
 
 | Evidence Area | ArcKit Artefact | How It Supports ISM Applicability | Gap / Follow-up |
@@ -424,6 +422,8 @@ ISM controls are organised into 17 domains. Applicability depends on the system'
 | Coverage view | `/arckit:graph-report` | AUISM coverage across AU compliance, architecture, risk, and operations artefacts | [Gap / follow-up] |
 | Capability uplift | `/arckit:maturity-model` / ARC-*-MMOD-* | ISM control maturity baseline and uplift roadmap | [Gap / follow-up] |
 
+## External References
+
 ### Document Register
 
 | Doc ID | Filename | Type | Source | Description |
@@ -436,6 +436,12 @@ ISM controls are organised into 17 domains. Applicability depends on the system'
 | Citation ID | Doc ID | Section | Category | Quoted Passage |
 |-------------|--------|---------|----------|----------------|
 | — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
 
 ### Verification
 

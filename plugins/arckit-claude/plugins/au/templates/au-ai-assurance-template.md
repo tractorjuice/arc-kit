@@ -216,6 +216,18 @@ National AI Centre (NAIC) operational practices for safe and responsible AI adop
 | AUE8 | ARC-{P}-AUE8-v* | ArcKit Artefact | projects/ | E8 cross-ref |
 | AUISM | ARC-{P}-AUISM-v* | ArcKit Artefact | projects/ | ISM cross-ref |
 
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
+
 ### Verification
 
 | Standard | URL | Verification Date |

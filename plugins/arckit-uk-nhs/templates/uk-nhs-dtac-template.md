@@ -319,6 +319,8 @@ DTAC **v3** (current as at 2026-05). Verify against <https://transform.england.n
 
 ## External References
 
+### Authoritative Sources
+
 | Doc ID | Title | Source | Used in |
 |---|---|---|---|
 | DTAC-V3 | NHS Digital Technology Assessment Criteria v3 | NHS England Transformation Directorate | Throughout |
@@ -331,6 +333,24 @@ DTAC **v3** (current as at 2026-05). Verify against <https://transform.england.n
 | NHS-SVC-STD | NHS Service Standard | NHS Service Manual | §5 |
 | ATRS | Algorithmic Transparency Recording Standard | CDEI / DSIT | AI annex |
 | MHRA-AIAMD | MHRA Software and AI as a Medical Device Programme | MHRA | AI annex |
+
+### Document Register
+
+| Doc ID | Filename | Type | Source Location | Description |
+|--------|----------|------|-----------------|-------------|
+| *None provided* | — | — | — | — |
+
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
 
 ---
 

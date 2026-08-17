@@ -332,8 +332,6 @@
 
 ---
 
-## External References
-
 ## ArcKit Evidence Integration
 
 | Evidence Area | ArcKit Artefact | How It Supports PSPF Assessment | Gap / Follow-up |
@@ -346,6 +344,8 @@
 | Coverage view | `/arckit:graph-report` | AUPSPF coverage across AU compliance, risk, traceability, and operations artefacts | [Gap / follow-up] |
 | Capability uplift | `/arckit:maturity-model` / ARC-*-MMOD-* | Security governance maturity baseline and uplift roadmap | [Gap / follow-up] |
 
+## External References
+
 ### Document Register
 
 | Doc ID | Filename | Type | Source | Description |
@@ -355,6 +355,18 @@
 | AUISM | ARC-{P}-AUISM-v* | ArcKit Artefact | projects/ | ISM cross-ref (Outcome 2) |
 | AUPIA | ARC-{P}-AUPIA-v* | ArcKit Artefact | projects/ | PIA cross-ref (Outcomes 2 + 3) |
 | AUDISP | ARC-{P}-AUDISP-v* | ArcKit Artefact | projects/ | DISP cross-ref where applicable |
+
+### Citations
+
+| Citation ID | Doc ID | Section | Category | Quoted Passage |
+|-------------|--------|---------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
 
 ### Verification
 

@@ -22,6 +22,7 @@ on:
       - "scripts/check-llms-txt.py"
       - "docs/llms.txt"
       - "scripts/check-quality-checklist-refs.py"
+      - "scripts/check-citation-section-refs.py"
       - "scripts/check-quality-checklist-ladders.py"
       - "scripts/check-doc-control-resolution.py"
       - "scripts/check-common-parity.py"
@@ -63,6 +64,7 @@ on:
       - "scripts/check-llms-txt.py"
       - "docs/llms.txt"
       - "scripts/check-quality-checklist-refs.py"
+      - "scripts/check-citation-section-refs.py"
       - "scripts/check-quality-checklist-ladders.py"
       - "scripts/check-doc-control-resolution.py"
       - "scripts/check-common-parity.py"
@@ -131,6 +133,9 @@ jobs:
 
       - name: Quality-checklist references resolve (closes #749)
         run: python3 scripts/check-quality-checklist-refs.py
+
+      - name: Citation instructions resolve to real tables (closes #783)
+        run: python3 scripts/check-citation-section-refs.py
 
       - name: Quality-checklist checks match the artefact's own regime ladder (#790)
         run: python3 scripts/check-quality-checklist-ladders.py

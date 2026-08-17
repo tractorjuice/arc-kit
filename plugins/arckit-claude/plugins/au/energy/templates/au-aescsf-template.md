@@ -155,6 +155,8 @@
 
 ## External References
 
+### Authoritative Sources
+
 | Ref | Source | Version / Publication Date | Access Date | Relevance |
 |-----|--------|----------------------------|-------------|-----------|
 | AESCSF | AEMO Australian Energy Sector Cyber Security Framework | [Version / date verified] | [YYYY-MM-DD] | Authoritative AESCSF anchor |
@@ -164,9 +166,27 @@
 | ASD-E8 | ASD Essential Eight | [Version / date verified] | [YYYY-MM-DD] | Enterprise cyber baseline |
 | ASD-ISM | ASD Information Security Manual | [Edition / date verified] | [YYYY-MM-DD] | Control evidence baseline |
 
+### Document Register
+
+| Doc ID | Filename | Type | Source Location | Description |
+|--------|----------|------|-----------------|-------------|
+| *None provided* | — | — | — | — |
+
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
+
 ---
 
-## Document Register
+## Document Metadata
 
 | Item | Value |
 |------|-------|

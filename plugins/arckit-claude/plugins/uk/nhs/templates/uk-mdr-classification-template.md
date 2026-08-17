@@ -280,6 +280,8 @@ If **IS** or **IS BORDERLINE**: continue.
 
 ## External References
 
+### Authoritative Sources
+
 | Doc ID | Title | Source | Used in |
 |---|---|---|---|
 | UK-MDR-2002 | Medical Devices Regulations 2002 (as amended) | legislation.gov.uk | Throughout |
@@ -291,6 +293,24 @@ If **IS** or **IS BORDERLINE**: continue.
 | IEC-62304 | Medical-device software lifecycle | BSI | §7 |
 | ISO-13485 | Medical-device QMS | BSI | §7 |
 | IEC-62366-1 | Usability engineering for medical devices | BSI | §7 (if applicable) |
+
+### Document Register
+
+| Doc ID | Filename | Type | Source Location | Description |
+|--------|----------|------|-----------------|-------------|
+| *None provided* | — | — | — | — |
+
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
 
 ---
 
