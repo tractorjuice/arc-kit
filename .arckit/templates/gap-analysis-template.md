@@ -181,11 +181,28 @@ flowchart TD
 | G-004 | C4.1.1 (L1 → L3) | STRAT Section 5.3 | PRIN-002 | WS-001 |
 | G-005 | C5.1.1 (L3 → L5) | STRAT Section 3.8 | PRIN-009 | WS-004 |
 
-### External References
+## 7. External References
 
-| ID | Source | Relevance |
-|----|--------|-----------|
-| [GA-E1] | [External document name] | [What it contributed] |
+> This section provides traceability from generated content back to source documents.
+> Follow citation instructions in the project's citation reference guide.
+
+### Document Register
+
+| Doc ID | Filename | Type | Source Location | Description |
+|--------|----------|------|-----------------|-------------|
+| *None provided* | — | — | — | — |
+
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
 
 ---
 

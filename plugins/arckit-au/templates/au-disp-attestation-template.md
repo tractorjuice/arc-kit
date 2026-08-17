@@ -272,6 +272,18 @@ I/we attest that the information in this pack is accurate to the best of my/our 
 | ASDISM | ASD Information Security Manual | Standard | cyber.gov.au | Underlying control framework |
 | E8MM | ASD Essential Eight Maturity Model | Standard | cyber.gov.au | E8 ML2 minimum reference |
 
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
+
 ### Verification
 
 | Standard | URL | Verification Date |

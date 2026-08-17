@@ -177,6 +177,8 @@ Note any sector-specific obligations separately in the relevant sector overlay o
 
 ## External References
 
+### Authoritative Sources
+
 | Ref | Source | Version / Date Verified | Relevance |
 |-----|--------|-------------------------|-----------|
 | OT-1 | ASD / ACSC Operational Technology environments | [Date verified] | OT guidance landing page |
@@ -186,6 +188,24 @@ Note any sector-specific obligations separately in the relevant sector overlay o
 | OT-5 | Principles for the secure integration of Artificial Intelligence in Operational Technology | [Date verified / N/A] | AI-in-OT governance and safeguards |
 | AUISM | ASD Information Security Manual | [Edition / date verified] | Control evidence cross-reference |
 | AUE8 | ASD Essential Eight | [Version / date verified] | Enterprise cyber baseline |
+
+### Document Register
+
+| Doc ID | Filename | Type | Source Location | Description |
+|--------|----------|------|-----------------|-------------|
+| *None provided* | — | — | — | — |
+
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
 
 ---
 

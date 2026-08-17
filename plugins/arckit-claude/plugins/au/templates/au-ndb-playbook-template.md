@@ -264,6 +264,18 @@ Conducted within 90 days of incident closure.
 | AUE8 | ARC-{P}-AUE8-v* | ArcKit Artefact | projects/ | Security baseline |
 | AUISM | ARC-{P}-AUISM-v* | ArcKit Artefact | projects/ | Domain 2 (incidents) cross-ref |
 
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
+
 ### Verification
 
 | Standard | URL | Verification Date |
