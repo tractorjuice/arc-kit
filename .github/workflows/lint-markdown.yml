@@ -22,6 +22,7 @@ on:
       - "scripts/check-llms-txt.py"
       - "docs/llms.txt"
       - "scripts/check-quality-checklist-refs.py"
+      - "scripts/check-quality-checklist-ladders.py"
       - "scripts/check-doc-control-resolution.py"
       - "scripts/check-common-parity.py"
       - "scripts/check-create-project-invocations.py"
@@ -62,6 +63,7 @@ on:
       - "scripts/check-llms-txt.py"
       - "docs/llms.txt"
       - "scripts/check-quality-checklist-refs.py"
+      - "scripts/check-quality-checklist-ladders.py"
       - "scripts/check-doc-control-resolution.py"
       - "scripts/check-common-parity.py"
       - "scripts/check-create-project-invocations.py"
@@ -129,6 +131,9 @@ jobs:
 
       - name: Quality-checklist references resolve (closes #749)
         run: python3 scripts/check-quality-checklist-refs.py
+
+      - name: Quality-checklist checks match the artefact's own regime ladder (#790)
+        run: python3 scripts/check-quality-checklist-ladders.py
 
       - name: DOC-CONTROL-HEADER markers have a command that resolves them (#760)
         run: python3 scripts/check-doc-control-resolution.py

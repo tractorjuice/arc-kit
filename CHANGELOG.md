@@ -23,6 +23,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **A guard that per-type quality-checklist checks match the artefact's own regime ladder** (#790, follow-up to #787). `scripts/check-quality-checklist-ladders.py` asserts that a section for a doc-type whose regime hard-routes — AT, AU, CA, FR, NL, UAE — never demands a classification from a different regime's ladder. That state is invisible at runtime: the artefact renders `Diffusion Restreinte` from `document-control-fr.md`, the check demands `OFFICIAL-SENSITIVE`, and a correctly classified artefact fails the check its own command gates on. Seven sections were in it until #788, every one from copying a UK section when adding an overlay type.
+
+  Derived end to end from `config/doc-types.mjs` (`DOC_TYPES`, `REGIME_PARTIALS`, `UK_FALLBACK_BY_DESIGN`) and each partial's own `**Classification**` row, so a new regime extends the guard with no edit here. Enumerating the schemes by hand is the defect #788 fixed *in the checklist itself*, where a list of three had drifted from a registry of six, and a test asserts no ladder value is hardcoded in the guard.
+
+  Anchored on the two assertion phrasings actually in use rather than scanning for ladder tokens. A bare token scan cannot work: `OFFICIAL` and `SECRET` sit on three ladders at once, and `Open`, `Shared`, `Secret` and `Confidential` are ordinary English — the #787 detection pass false-positived on FITAA's *"Open Items"*. The four fall-through regimes (UK, MOD, EU, US) are deliberately not policed, because they resolve through user config and can legitimately render a UAE or AT ladder.
+
+  Resolution is per plugin, matching `check-quality-checklist-refs.py`: `${CLAUDE_PLUGIN_ROOT}` has no cross-plugin fallback, so each overlay is checked against its own checklist and its own partials. Run against the tree as it stood before #788 it reports all seven, in each of the 16 copies; `tests/plugin/test_quality_checklist_ladders.py` reproduces that failure against the real registry, because a guard that cannot demonstrate a failure reads as coverage.
+
 - **Two new `arckit-uk-gcloud` templates**: `gcloud-competitors-template.md` (`GCMP`) and `review-template.md` (`GCRV`), both with the marker, Revision History and External References. `arckit-uk-gcloud` is not in `PLUGIN_SOURCES`, so neither mirrors into `.arckit/templates/`.
 
 - **A fourth check in `scripts/check-doc-control-resolution.py`**: a command declaring a `doc-type:` must reference a template file. The first three checks walk *templates* and ask who reads them, so a command with no template was invisible to them — which is why `GCMP` and `GCRV` needed a separate sweep rather than surfacing in the #760 pass. `doc-type: none` commands are out of scope. Both exemption lists (`NO_READER_KNOWN`, `NO_TEMPLATE_KNOWN`) are now empty, and a test asserts they stay that way.
