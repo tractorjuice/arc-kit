@@ -8,8 +8,6 @@
 
 <!-- DOC-CONTROL-HEADER -->
 <!-- Resolved at command-execution time per _partials/RENDERING.md. -->
-<!-- Classification line MUST be: -->
-<!-- | Classification | UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET | -->
 <!-- Note: OCAP-relevant artefacts may carry community-protected information that exceeds the federal classification scheme. Mark accordingly and capture the override in Open Items. -->
 
 ## Revision History

@@ -28,8 +28,8 @@ plugin's checklist against that plugin's partials. Both are synced copies and
 not assume it has run. The doc-type registry is read from core, because core is
 the only plugin that ships `config/` at all — see `_partials/RENDERING.md`.
 
-Only the six hard-routing regimes are policed (AT, AU, CA, FR, NL, UAE). A
-fall-through regime (UK, MOD, EU, US) resolves through user config and can
+Only the hard-routing regimes are policed (AT, AU, CA, FR, NL, UAE, US). A
+fall-through regime (UK, MOD, EU) resolves through user config and can
 legitimately render a UAE or AT ladder for a UAE- or AT-configured operator, so
 asserting a UK value there is not drift.
 

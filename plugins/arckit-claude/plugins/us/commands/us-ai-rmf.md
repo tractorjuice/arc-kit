@@ -69,7 +69,9 @@ The AI RMF underpins the federal policy stack: OMB M-24-10 requires agencies to 
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AIRMF --filename` for the artefact filename. The type code for this command is `AIRMF`.
 
-5. Generate the following sections:
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the US regime to `_partials/document-control-us.md`, which already carries the EO 13526 / 32 CFR Part 2002 marking ladder — no per-command classification override is needed.
+
+6. Generate the following sections:
 
    - **AI System Description** — purpose, mission served, model type (classification / regression / generative / agentic / RL), training/fine-tuning regime, inference deployment pattern, human-in-the-loop posture, scale (users, decisions/day), and life-cycle stage (research / pilot / production / sunset).
    - **AI System Lifecycle and Actors** — which stages of the AI lifecycle (per AI RMF §3) are in scope (Plan & Design, Collect & Process Data, Build & Use Model, Verify & Validate, Deploy & Use, Operate & Monitor); identify Test, Evaluation, Verification, and Validation (TEVV) responsibilities.
@@ -81,10 +83,10 @@ The AI RMF underpins the federal policy stack: OMB M-24-10 requires agencies to 
    - **Residual Risk Register** — risks remaining after Manage actions, prioritised; each linked to a target review date.
    - **Control Crosswalk** — table mapping AI RMF subcategories to NIST 800-53 Rev 5 controls and to OMB M-24-10 minimum-practice items, so the assurance posture is traceable.
 
-6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AIRMF** per-type checks pass. Fix any failures before proceeding.
-7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AIRMF** per-type checks pass. Fix any failures before proceeding.
+8. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-8. Emit a short summary to the user — AI system type, GenAI in scope (Y/N), top 5 residual risks, M-24-10 impact-class hint (rights-impacting / safety-impacting / neither), and CAIO review status. Do not echo the full artefact.
+9. Emit a short summary to the user — AI system type, GenAI in scope (Y/N), top 5 residual risks, M-24-10 impact-class hint (rights-impacting / safety-impacting / neither), and CAIO review status. Do not echo the full artefact.
 
 ## Handoffs
 

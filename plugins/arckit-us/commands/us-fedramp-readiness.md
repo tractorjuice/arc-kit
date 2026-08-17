@@ -64,7 +64,9 @@ This command produces an **internal** RAR-equivalent: a self-assessment in the s
 
 4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FRRR --filename` for the artefact filename. The type code for this command is `FRRR`.
 
-5. Generate the following sections:
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the US regime to `_partials/document-control-us.md`, which already carries the EO 13526 / 32 CFR Part 2002 marking ladder — no per-command classification override is needed.
+
+6. Generate the following sections:
 
    - **Capability Statement** — what the CSO does, the service model (IaaS/PaaS/SaaS), the deployment model, the customer-facing capabilities, and the boundary in one diagram. This is the section a FedRAMP PMO reviewer reads first; it must clearly state why a federal agency would use the CSO.
    - **FedRAMP Ready Capabilities Checklist** — confirmation that the CSO supports the federal baseline capabilities: FIPS 140-3 validated cryptography for data-at-rest and in-transit, multi-factor authentication for privileged access, comprehensive audit logging, vulnerability-management cadence, incident-response process with US-CERT reporting, supply-chain controls, FedRAMP-conformant ConMon, and a US-Persons staffing posture if required.
@@ -75,10 +77,10 @@ This command produces an **internal** RAR-equivalent: a self-assessment in the s
    - **3PAO Engagement Readiness** — go / no-go assessment with the top 5 blockers if no-go.
    - **POA&M Pre-Population** — gaps converted to draft POA&M rows in FedRAMP POA&M template format (Weakness, Source, Asset, Severity, Status, Original Detection Date, Scheduled Completion Date).
 
-6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FRRR** per-type checks pass. Fix any failures before proceeding.
-7. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FRRR** per-type checks pass. Fix any failures before proceeding.
+8. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-8. Emit a short summary to the user — readiness verdict (Ready / Conditionally Ready / Not Ready), gap counts by severity, recommended authorization path, and the top 3 blockers. Do not echo the full artefact.
+9. Emit a short summary to the user — readiness verdict (Ready / Conditionally Ready / Not Ready), gap counts by severity, recommended authorization path, and the top 3 blockers. Do not echo the full artefact.
 
 ## Handoffs
 

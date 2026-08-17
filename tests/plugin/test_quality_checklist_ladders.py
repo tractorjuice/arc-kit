@@ -200,13 +200,15 @@ def test_ladders_are_read_from_the_partials_not_hardcoded():
         assert value not in code, f"{value!r} hardcoded — ladder values must stay derived"
 
 
-def test_registry_parses_all_six_hard_routing_regimes():
+def test_registry_parses_all_hard_routing_regimes():
     guard = load_guard()
     regime_of, partial_of, fallthrough = guard.load_registry(
         REPO_ROOT / "plugins/arckit-claude/config/doc-types.mjs"
     )
     routing = {r for r in partial_of if r not in fallthrough}
-    assert routing == {"AT", "AU", "CA", "FR", "NL", "UAE"}
+    # US joined the hard-routing set in #746, when document-control-us.md landed
+    # and the 10 federal civilian doc-types stopped rendering the UK ladder.
+    assert routing == {"AT", "AU", "CA", "FR", "NL", "UAE", "US"}
     assert regime_of["IRN"] == "FR" and regime_of["ATDSG"] == "AT"
     assert guard.primary_regime(partial_of["UK"]) == "UK"
 

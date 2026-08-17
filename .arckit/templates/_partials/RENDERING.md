@@ -3,8 +3,8 @@
 When a template contains the marker `<!-- DOC-CONTROL-HEADER -->`, the command that reads the template MUST resolve the marker to the contents of one of the partials in this directory before writing the artefact to disk:
 
 1. **Determine the artefact's regime.** Take the command's own `doc-type:` frontmatter value and find it in the **Regime index** below. This file is self-contained: everything needed to resolve the marker is in the tables here, and no other file needs to be read. In particular, do **not** try to read `config/doc-types.mjs` — it ships only with the core `arckit` plugin, and every community overlay (AT, AU, CA, UAE and the rest) has `templates/_partials/` but no `config/` directory, so the lookup would fail exactly where the regimes matter most.
-   - **If the doc-type's regime hard-routes** (AT, AU, CA, FR, NL, UAE), use the partial named for it in the **Regime routing** table and skip step 2. Regime beats user config: a Canadian PIA uses the Canadian ladder whoever runs it.
-   - **If the doc-type's regime falls through** (UK, MOD, EU, US), go to step 2. These regimes have no ladder of their own in this repository, so hard-routing them would override the user's own scheme; they behave exactly as they did before regime routing existed.
+   - **If the doc-type's regime hard-routes** (AT, AU, CA, FR, NL, UAE, US), use the partial named for it in the **Regime routing** table and skip step 2. Regime beats user config: a Canadian PIA uses the Canadian ladder whoever runs it.
+   - **If the doc-type's regime falls through** (UK, MOD, EU), go to step 2. These regimes have no ladder of their own in this repository, so hard-routing them would override the user's own scheme; they behave exactly as they did before regime routing existed.
    - **If the doc-type is not in the regime index at all** — the jurisdiction-agnostic types, REQ, ADR, RISK, DATA and similar — go to step 2.
 2. **Otherwise read the user's plugin userConfig** for `governance_framework` and `classification_scheme`:
    - `governance_framework: UAE Federal` OR `classification_scheme: UAE Smart Data` → `document-control-uae.md`
@@ -14,6 +14,7 @@ When a template contains the marker `<!-- DOC-CONTROL-HEADER -->`, the command t
 4. **Remove the `<!-- DOC-CONTROL-HEADER -->` marker line and its descriptive comment** from the final output.
 5. **Populate the UAE-specific fields** (Federal Entity, Cabinet Instrument cited, Sovereign Cloud Region, AI Autonomy Tier) from upstream artefacts where available, or leave the `[PENDING — ...]` placeholder for the architect to fill.
 6. **For the AT partial**, set the `Classification` field from the InfoSiG ladder (Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim) — not the UK ladder. If `default_classification` holds a UK value, map it (PUBLIC → Offen, OFFICIAL → Eingeschränkt, OFFICIAL-SENSITIVE → Eingeschränkt or Vertraulich, SECRET → Geheim/Streng geheim).
+7. **For the US partial**, the rungs come from two different instruments and are not one statutory scale. `CONFIDENTIAL`, `SECRET` and `TOP SECRET` are the classification levels of EO 13526 §1.2, which states that no other terms identify US classified information. `CUI` is not a classification level at all: it is the control marking of 32 CFR 2002.20, which permits either `CONTROLLED` or `CUI` as the banner word — use `CUI`, and record category or limited-dissemination markings (`CUI//SP-PRIV`, `CUI//NOFORN`) in `Distribution` rather than in this field. A federal civilian artefact is `UNCLASSIFIED` or `CUI` in almost every case. Never put a FIPS 199 impact level (`LOW` / `MODERATE` / `HIGH`) here — that is a separate axis, it categorises the system rather than marking the document, and the `FIPS199` artefact that derives it is itself commonly marked `CUI`.
 
 The marker comment is informational only; it does not appear in any rendered artefact.
 
@@ -29,10 +30,10 @@ Checked first, and taken from the artefact rather than from the user:
 | FR | `document-control-fr.md` | Non protégé / Diffusion Restreinte / Secret / Très Secret | hard-routes |
 | NL | `document-control-nl.md` | Ongerubriceerd / Departementaal VERTROUWELIJK / Stg. CONFIDENTIEEL / Stg. GEHEIM / Stg. ZEER GEHEIM | hard-routes |
 | UAE | `document-control-uae.md` | Open / Shared / Confidential / Secret / Top Secret | hard-routes |
+| US | `document-control-us.md` | UNCLASSIFIED / CUI / CONFIDENTIAL / SECRET / TOP SECRET | hard-routes |
 | UK | `document-control-uk.md` | PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET | falls through to step 2 |
 | MOD | `document-control-uk.md` | PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET | falls through to step 2 |
 | EU | `document-control-uk.md` | PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET | falls through to step 2 |
-| US | `document-control-uk.md` | PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET | falls through to step 2 — ladder deferred, no authoritative wording in-repo yet |
 
 A regime that falls through resolves through the user-config table below, which lands on `document-control-uk.md` unless the user has set a UAE or AT scheme. The Partial column above therefore records the default outcome for those regimes, not an override.
 
@@ -51,7 +52,7 @@ The doc-type codes that carry a regime. A `doc-type:` value absent from this tab
 | FR | France | hard-routes | `IRN`, `CNIL`, `SECNUM`, `MARPUB`, `DINUM`, `EBIOS`, `ANSSI`, `CARTO`, `DR`, `ALGO`, `PSSI`, `REUSE` |
 | NL | Netherlands | hard-routes | `RBCLOUD`, `TBB`, `BIO2`, `NLEXIT` |
 | UAE | UAE | hard-routes | `PDPL`, `IAS`, `CRES`, `CLAS`, `UPASS`, `ZBUR`, `DREC`, `DSHR`, `NPRA`, `AICH`, `AUTI`, `FPRO` |
-| US | USA Federal | falls through to step 2 | `FIPS199`, `NIST`, `FRSSP`, `FRRR`, `ZTA`, `ICAM`, `AIRMF`, `AIIA`, `USPIA`, `SBOM` |
+| US | USA Federal | hard-routes | `FIPS199`, `NIST`, `FRSSP`, `FRRR`, `ZTA`, `ICAM`, `AIRMF`, `AIIA`, `USPIA`, `SBOM` |
 
 ## User config fallback
 
