@@ -87,7 +87,7 @@ Read all documents from Step 0. Extract:
 - **First**, check if `.arckit/templates/fr-anssi-carto-template.md` exists in the project root
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/fr-anssi-carto-template.md`
-- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `CARTO` carries the France regime, which hard-routes to `_partials/document-control-fr.md` (Non protégé / Diffusion Restreinte / Secret / Très Secret) whatever the operator's user config says.
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `CARTO` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.
 
 ### Step 4: Four-Level Cartography
 

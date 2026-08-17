@@ -83,7 +83,7 @@ Read all documents from Step 0. Identify:
 - **First**, check if `.arckit/templates/at-dsgvo-template.md` exists in the project root
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/at-dsgvo-template.md`
-- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `ATDSG` carries the Austria regime, which hard-routes to `_partials/document-control-at.md` (Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim) whatever the operator's user config says.
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `ATDSG` carries the Austria regime, which hard-routes to `_partials/document-control-at.md` whatever the operator's user config says.
 
 ### Step 4: Generate AT Data Protection Assessment
 
@@ -98,7 +98,7 @@ Read all documents from Step 0. Identify:
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
-   - Classification: OFFICIAL-SENSITIVE — under the AT InfoSiG scheme use **Eingeschränkt** (or **Vertraulich** where criminal-law confidentiality applies); privacy assessments contain sensitive risk information. Emit the AT InfoSiG value.
+   - Classification: **Eingeschränkt** (or **Vertraulich** where criminal-law confidentiality applies); privacy assessments contain sensitive risk information.
    - Add note: "This document supplements ARC-{PROJECT_ID}-RGPD-v*.md with Austrian/DSB-specific requirements"
 
 3. **Section 1: AT DSG Regulatory Framework**
@@ -188,7 +188,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-ATDSG-v{VERSION}.md
 📄 Document: projects/{project_id}/ARC-{PROJECT_ID}-ATDSG-v{VERSION}.md
 📋 Document ID: {document_id}
 📅 Assessment Date: {date}
-🔒 Classification: OFFICIAL-SENSITIVE (AT InfoSiG: Eingeschränkt / Vertraulich)
+🔒 Classification: Eingeschränkt (Vertraulich where criminal-law confidentiality applies)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Austrian-Specific Compliance Areas

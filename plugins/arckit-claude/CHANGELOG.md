@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **One convention for per-command classification instructions across the hard-routing regimes** (#799, split out of #790's blocker 1). Since #744 made Document Control routing regime-first, the AU, CA, FR and AT commands were still carrying instructions written when the per-command line was the only thing producing the right ladder. Four shapes were live at once, and that disagreement was what blocked extending #798's guard to command files: an anchored scan flags `OFFICIAL` in `at-bvergg.md` and has no way to tell it from the drift #788 fixed.
+
+  The split turns on what each shape actually does. **`RENDERING.md` picks the ladder; the command picks the value on that ladder** — the partials ship a placeholder menu (`document-control-ca.md:6` is `[UNCLASSIFIED / Protected A / …]`), so something has to choose from it. Restating the menu is duplication; asserting a value is editorial judgement `RENDERING.md` cannot supply.
+
+  - **AU (10 commands) and CA (12)** restated the menu — *"Use the Australian classification scheme (…) — replace the standard UK line in the header"* — and now defer in NL's words instead, naming the partial and the framework without repeating the values. The three carrying an extra editorial note (`au-soci-cirmp`, `ca-ocap`, `ca-soia`) keep it.
+  - **FR (12) and AT (3)** assert a value with a reason — *"Diffusion Restreinte minimum (cartography reveals attack surface)"* — and are unchanged in substance.
+  - **AT's five dual-notation sites** across `at-bvergg.md`, `at-dsgvo.md` and `at-barrierefreiheit.md` lost the vestigial UK token. Each already ended *"Emit the AT InfoSiG value"*, so `Classification: OFFICIAL — under the AT InfoSiG scheme use **Offen**` was carrying a UK value it then told the model to discard. It also gave `OFFICIAL` a second partner: `RENDERING.md` step 6 maps `OFFICIAL` → `Eingeschränkt`, `at-bvergg.md` paired it with `Offen`.
+  - **15 `RENDERING.md` pointer sentences** (FR 12, AT 3) lost the ladder menu inlined in the parenthetical, which duplicated the Regime routing table. The sentence still names the doc-type, the regime and the partial.
+  - **`fr-irn.md`** was the one FR command using a flat `**Classification**:` list item rather than the nested `- Classification:` shape the other 11 use, so one anchor now matches all 12.
+
+  No behavioural change is intended for AU or CA: both regimes already hard-route, so the removed sentences did not affect what renders. Verified statically end to end for `/arckit:au-pia` (`AUPIA`) and `/arckit:ca-pia` (`PIA`) — doc-type declared, template referenced, marker present, `_partials/RENDERING.md` referenced, code listed in the Regime index, regime hard-routing to the right partial, and that partial carrying the right ladder. **`arckit-at` is now internally consistent too**: `at-nisg.md` already deferred and the other three no longer contradict it.
+
 ### Fixed
 
 - **Five commands wrote a governed `ARC-*` artefact with no Document Control block and no Revision History** (#792). Each built its document from a skeleton inlined in the command body rather than from a template, against the Template-Driven Generation rule in `CLAUDE.md`. All five now read their template and resolve the `<!-- DOC-CONTROL-HEADER -->` marker.

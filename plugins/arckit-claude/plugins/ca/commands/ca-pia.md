@@ -37,7 +37,7 @@ You are an enterprise architect generating a Canada Privacy Impact Assessment (P
    - **Then**, `.arckit/templates/ca-pia-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-pia-template.md`
 3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> PIA --filename` for the artefact filename.
-4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
+4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **Programme / System Description** — what the system does, who operates it, the personal information lifecycle (collect → use → disclose → retain → dispose) and the subject populations affected.
    - **Lawful Authority** — Privacy Act §4 authority to collect; cite the enabling statute or regulation that authorises the collection. Where the authority is unclear, mark as `<TBC>` and flag as a blocker for OPC notification — collection without statutory authority is not lawful.

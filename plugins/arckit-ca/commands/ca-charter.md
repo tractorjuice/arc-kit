@@ -45,7 +45,7 @@ You are an enterprise architect generating a Canada Charter Rights Design Review
    - **Then**, `.arckit/templates/ca-charter-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-charter-template.md`
 3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> CHRT --filename` for the artefact filename.
-4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
+4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **Charter Engagement Surface** — which sections of the Charter are engaged by the system, with a one-paragraph reasoning per engaged section. The default engaged sections for FITAA-class apps are s.2(b), s.2(d), s.7, s.8, and s.15; mark "Not engaged" only with a stated justification.
    - **s.2 Analysis** (per sub-section where engaged):

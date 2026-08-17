@@ -88,15 +88,16 @@ If no artifacts exist, include all 5 layers and note that scope confirmation is 
 - **First**, check if `.arckit/templates/fr-irn-template.md` exists in the project root
 - **If found**: use the user's customised template
 - **If not found**: use `${CLAUDE_PLUGIN_ROOT}/templates/fr-irn-template.md`
-- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `IRN` carries the France regime, which hard-routes to `_partials/document-control-fr.md` (Non protégé / Diffusion Restreinte / Secret / Très Secret) whatever the operator's user config says.
+- **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `IRN` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.
 
 ### Step 4: Generate IRN Assessment Document
 
 **CRITICAL**: Use the **Write tool** to create the assessment document.
 
 1. **Detect version**: Check for existing `ARC-{PROJECT_ID}-IRN-v*.md` files
-2. **Document ID**: `ARC-{PROJECT_ID}-IRN-v{VERSION}`
-3. **Classification**: Diffusion Restreinte (dependency mapping reveals strategic vulnerabilities)
+2. **Auto-populate Document Control**:
+   - Document ID: `ARC-{PROJECT_ID}-IRN-v{VERSION}`
+   - Classification: Diffusion Restreinte (dependency mapping reveals strategic vulnerabilities)
 
 For each of the **8 IRN pillars**, create a structured section:
 

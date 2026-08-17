@@ -78,7 +78,7 @@ Read `.arckit/templates-custom/at-barrierefreiheit-template.md` if it exists, ot
 1. **Detect version**: Check for existing `ARC-{PROJECT_ID}-ATBFR-v*.md` files. Increment the minor version if one exists; otherwise start at `v1.0`.
 
 2. **Auto-populate Document Control**: resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`.
-   - Classification: OFFICIAL — under the AT InfoSiG scheme use **Offen** once the accessibility statement is published, **Eingeschränkt** while non-conformances are open, since the gap list is an unremediated to-do list. Emit the AT InfoSiG value.
+   - Classification: **Offen** once the accessibility statement is published, **Eingeschränkt** while non-conformances are open, since the gap list is an unremediated to-do list.
 
 3. **Section 1: Applicability Determination** — do this first; it gates sections 3 and 4.
 
@@ -149,7 +149,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-ATBFR-v{VERSION}.md
 📄 Document: projects/{project_id}/ARC-{PROJECT_ID}-ATBFR-v{VERSION}.md
 📋 Document ID: {document_id}
 📅 Assessment Date: {date}
-🔒 Classification: OFFICIAL (AT InfoSiG: Offen / Eingeschränkt while gaps are open)
+🔒 Classification: Offen (Eingeschränkt while gaps are open)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📊 Applicability
