@@ -27,13 +27,13 @@
 
 | Objective | Weight | SEAL Claimed | SEAL Evidenced | Minimum SEAL (tender) | Meets Minimum? |
 |-----------|--------|-------------|-----------------|------------------------|-----------------|
-| SOV-1 Strategic Sovereignty | 15% | [SEAL-0 to SEAL-4] | [SEAL-0 to SEAL-4] | [SEAL / Not yet set] | ☐ |
+| SOV-1 Strategic Sovereignty | 20% | [SEAL-0 to SEAL-4] | [SEAL-0 to SEAL-4] | [SEAL / Not yet set] | ☐ |
 | SOV-2 Legal & Jurisdictional Sovereignty | 10% | [SEAL] | [SEAL] | [SEAL / Not yet set] | ☐ |
 | SOV-3 Data & AI Sovereignty | 10% | [SEAL] | [SEAL] | [SEAL / Not yet set] | ☐ |
 | SOV-4 Operational Sovereignty | 15% | [SEAL] | [SEAL] | [SEAL / Not yet set] | ☐ |
-| SOV-5 Supply Chain Sovereignty | 20% | [SEAL] | [SEAL] | [SEAL / Not yet set] | ☐ |
+| SOV-5 Supply Chain Sovereignty | 10% | [SEAL] | [SEAL] | [SEAL / Not yet set] | ☐ |
 | SOV-6 Technology Sovereignty | 15% | [SEAL] | [SEAL] | [SEAL / Not yet set] | ☐ |
-| SOV-7 Security & Compliance Sovereignty | 10% | [SEAL] | [SEAL] | [SEAL / Not yet set] | ☐ |
+| SOV-7 Security & Compliance Sovereignty | 15% | [SEAL] | [SEAL] | [SEAL / Not yet set] | ☐ |
 | SOV-8 Environmental Sustainability | 5% | [SEAL] | [SEAL] | [SEAL / Not yet set] | ☐ |
 
 > ⚠️ This document is an **assessment record**, not a certification. There is no published EU list of providers assessed against this framework — no commercial cloud provider is named as sovereign, compliant, or achieving any SEAL level in this document.
@@ -77,11 +77,11 @@
 
 | Level | Name | Definition |
 |-------|------|------------|
-| SEAL-0 | No Sovereignty | Service, technology or operations under exclusive control of non-EU third parties, governed entirely in non-EU jurisdictions |
+| SEAL-0 | No Sovereignty | Service, technology or operations under exclusive control of non-EU third parties, governed entirely by non-EU jurisdictions |
 | SEAL-1 | Jurisdictional Sovereignty | EU law formally applies with limited practical enforceability; service, technology or operations under exclusive control of non-EU third parties |
-| SEAL-2 | Data Sovereignty | EU law applicable and enforceable, with material non-EU dependencies remaining; under indirect control of non-EU third parties |
-| SEAL-3 | Digital Resilience | EU law applicable and enforceable, EU actors exercising meaningful but not full influence; under marginal control of non-EU third parties |
-| SEAL-4 | Full Digital Sovereignty | Technology and operations under complete EU control, subject only to EU law, with no critical non-EU dependencies |
+| SEAL-2 | Data Sovereignty | EU jurisdictions apply, with material dependencies remaining; service, technology or operations under indirect control of non-EU third parties |
+| SEAL-3 | Technological Sovereignty | EU jurisdictions apply, EU actors exercising meaningful but not full influence; service, technology or operations under marginal control of non-EU third parties |
+| SEAL-4 | Full Digital Sovereignty | Technology and operations under complete EU control, subject only to EU jurisdiction, with no critical non-EU dependencies |
 
 **Score(SOVn)** = the SUM of the `value` fields of the answers selected for objective n's criteria, sourced from the calculator catalogue (`csf-criteria-calculator-2026-06-01.json`; see Appendix A). An unanswered criterion contributes nothing and is recorded as a gap, not a zero-value answer.
 
@@ -97,13 +97,13 @@
 
 | Objective | Weight |
 |-----------|--------|
-| SOV-1 Strategic Sovereignty | 15% |
+| SOV-1 Strategic Sovereignty | 20% |
 | SOV-2 Legal & Jurisdictional Sovereignty | 10% |
 | SOV-3 Data & AI Sovereignty | 10% |
 | SOV-4 Operational Sovereignty | 15% |
-| SOV-5 Supply Chain Sovereignty | 20% |
+| SOV-5 Supply Chain Sovereignty | 10% |
 | SOV-6 Technology Sovereignty | 15% |
-| SOV-7 Security & Compliance Sovereignty | 10% |
+| SOV-7 Security & Compliance Sovereignty | 15% |
 | SOV-8 Environmental Sustainability | 5% |
 | **Total** | **100%** |
 
@@ -113,13 +113,13 @@
 
 | Objective | Score | Max Score | Weight | Weighted Contribution |
 |-----------|-------|-----------|--------|-------------------------|
-| SOV-1 Strategic Sovereignty | [Score] | 1000 | 15% | [%] |
+| SOV-1 Strategic Sovereignty | [Score] | 1000 | 20% | [%] |
 | SOV-2 Legal & Jurisdictional Sovereignty | [Score] | 1000 | 10% | [%] |
 | SOV-3 Data & AI Sovereignty | [Score] | 1000 | 10% | [%] |
 | SOV-4 Operational Sovereignty | [Score] | 1000 | 15% | [%] |
-| SOV-5 Supply Chain Sovereignty | [Score] | 1000 | 20% | [%] |
+| SOV-5 Supply Chain Sovereignty | [Score] | 1000 | 10% | [%] |
 | SOV-6 Technology Sovereignty | [Score] | 1000 | 15% | [%] |
-| SOV-7 Security & Compliance Sovereignty | [Score] | 1000 | 10% | [%] |
+| SOV-7 Security & Compliance Sovereignty | [Score] | 1000 | 15% | [%] |
 | SOV-8 Environmental Sustainability | [Score] | 1000 | 5% | [%] |
 | **Sovereignty Score** | | | | **[N]%** |
 
@@ -129,7 +129,7 @@
 
 ## 4. Objective-by-Objective Assessment
 
-### 4.1 SOV-1 Strategic Sovereignty (Weight: 15%)
+### 4.1 SOV-1 Strategic Sovereignty (Weight: 20%)
 
 **SEAL claimed**: [SEAL-0 to SEAL-4] | **SEAL evidenced**: [SEAL-0 to SEAL-4]
 
@@ -185,7 +185,7 @@
 
 **Gaps**: [Gap description]
 
-### 4.5 SOV-5 Supply Chain Sovereignty (Weight: 20%)
+### 4.5 SOV-5 Supply Chain Sovereignty (Weight: 10%)
 
 **SEAL claimed**: [SEAL] | **SEAL evidenced**: [SEAL]
 
@@ -213,7 +213,7 @@
 
 **Gaps**: [Gap description]
 
-### 4.7 SOV-7 Security & Compliance Sovereignty (Weight: 10%)
+### 4.7 SOV-7 Security & Compliance Sovereignty (Weight: 15%)
 
 **SEAL claimed**: [SEAL] | **SEAL evidenced**: [SEAL]
 
