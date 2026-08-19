@@ -32,11 +32,27 @@
  *     Objective Weights table, and the Scored Result table, which all place
  *     the weight in a different column position)
  *   - a subsection header of the form `SOV-<n> ... (Weight: <NN>%)`
+ *   - a PROSE pair `SOV-<n> <objective name> <NN>%`, which is how
+ *     `references/quality-checklist.md` states the eight weights. That item
+ *     is the checklist's own defence against the permutation bug, and it was
+ *     itself unguarded: it is neither a table row nor a `(Weight: ...)`
+ *     header, and its 31 copies live outside the weight-table roots, so the
+ *     two shapes above could not see it. Reverting the checklist's SOV-1 and
+ *     SOV-5 values by hand still produced a green run.
  *
- * Both shapes require the percentage to be either the entire content of its
- * own table cell or captured inside `(Weight: ...)` — so prose that merely
+ * The first two shapes require the percentage to be either the entire
+ * content of its own table cell or captured inside `(Weight: ...)`. The
+ * prose shape instead requires a literal match on the objective's OWN name
+ * from `OBJECTIVES` below. All three therefore ignore prose that merely
  * mentions "SOV-1 to SOV-8" alongside an unrelated "100%" (e.g. "weights
- * summing to 100%") is never mistaken for a per-objective weight.
+ * summing to 100%", which appears in that same checklist line) — a loose
+ * `SOV-<n>...<NN>%` scan reads that as SOV-8 being 100%.
+ *
+ * Anchoring the prose shape on the name buys a second assertion for free:
+ * a code paired with the WRONG objective name is caught too. That is the
+ * same defect class as the weights themselves — the shipped weights were a
+ * permutation, and `SEAL-3` was shipped under a name ("Digital Resilience")
+ * that appears nowhere in the framework.
  *
  * Exit 0 = every SOV-N weight occurrence found under the guarded roots
  * matches the framework, and no file carrying a weight table is missing an
@@ -50,18 +66,24 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
 
-// The eight EUCSF objective weights, per the primary sources cited above.
-const CORRECT_WEIGHTS = {
-  'SOV-1': 20, // Strategic Sovereignty
-  'SOV-2': 10, // Legal & Jurisdictional Sovereignty
-  'SOV-3': 10, // Data & AI Sovereignty
-  'SOV-4': 15, // Operational Sovereignty
-  'SOV-5': 10, // Supply Chain Sovereignty
-  'SOV-6': 15, // Technology Sovereignty
-  'SOV-7': 15, // Security & Compliance Sovereignty
-  'SOV-8': 5, // Environmental Sustainability
+// The eight EUCSF objectives — weight AND name — per the primary sources
+// cited above. The name is ground truth in its own right: it is what the
+// prose shape matches on, and a code paired with another objective's name is
+// the same permutation defect as a code paired with another's weight.
+const OBJECTIVES = {
+  'SOV-1': { weight: 20, name: 'Strategic Sovereignty' },
+  'SOV-2': { weight: 10, name: 'Legal & Jurisdictional Sovereignty' },
+  'SOV-3': { weight: 10, name: 'Data & AI Sovereignty' },
+  'SOV-4': { weight: 15, name: 'Operational Sovereignty' },
+  'SOV-5': { weight: 10, name: 'Supply Chain Sovereignty' },
+  'SOV-6': { weight: 15, name: 'Technology Sovereignty' },
+  'SOV-7': { weight: 15, name: 'Security & Compliance Sovereignty' },
+  'SOV-8': { weight: 5, name: 'Environmental Sustainability' },
 };
-const EXPECTED_KEYS = Object.keys(CORRECT_WEIGHTS);
+const EXPECTED_KEYS = Object.keys(OBJECTIVES);
+const CORRECT_WEIGHTS = Object.fromEntries(
+  Object.entries(OBJECTIVES).map(([k, v]) => [k, v.weight]),
+);
 
 // Canonical sources AND every generated mirror that can carry a copy of the
 // weight table. Neither `sync-shared-assets.py` nor `sync-claude-plugin-
@@ -75,6 +97,30 @@ const ROOTS = [
   'docs/guides/eu-cloud-sovereignty.md',
   'plugins/arckit-claude/docs/guides',
 ];
+
+// `references/quality-checklist.md` is a shared asset copied into EVERY
+// plugin, so its EUCSF weight list exists 31 times over, all but two of them
+// outside the roots above. Collected by basename rather than by listing the
+// copies, so a new plugin is covered the day it is added — the enumeration
+// drift this guard exists to catch should not be reintroduced in the guard.
+const CHECKLIST_ROOTS = ['plugins', '.arckit'];
+const CHECKLIST_BASENAME = 'quality-checklist.md';
+
+function collectByBasename(root, basename) {
+  const abs = resolve(repoRoot, root);
+  if (!existsSync(abs) || !statSync(abs).isDirectory()) return [];
+  const out = [];
+  const stack = [abs];
+  while (stack.length > 0) {
+    const dir = stack.pop();
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      const p = join(dir, entry.name);
+      if (entry.isDirectory()) stack.push(p);
+      else if (entry.isFile() && entry.name === basename) out.push(p);
+    }
+  }
+  return out;
+}
 
 function collectMarkdownFiles(root) {
   const abs = resolve(repoRoot, root);
@@ -99,6 +145,16 @@ function collectMarkdownFiles(root) {
 // not merely present anywhere on the line.
 const HEADER_RE = /SOV-(\d)\b.*\(Weight:\s*(\d{1,3})%\)/;
 
+// Matches the checklist's prose pairs, e.g. `SOV-1 Strategic Sovereignty
+// 20%`. Built from OBJECTIVES so the alternation cannot drift from the
+// ground truth, and deliberately anchored on the NAME: a bare
+// `SOV-(\d)[^,]*?(\d{1,3})%` scan matches "SOV-1 to SOV-8 ... 100%" in the
+// same checklist line and reports SOV-8 as 100%.
+const NAME_ALTERNATION = Object.values(OBJECTIVES)
+  .map((o) => o.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+  .join('|');
+const PROSE_RE = new RegExp(`SOV-(\\d)\\s+(${NAME_ALTERNATION})\\s+(\\d{1,3})%`, 'g');
+
 // Splits a markdown table row into trimmed cells, dropping the empty
 // leading/trailing cells produced by the row's outer pipes. Returns null for
 // lines that are not table rows.
@@ -119,6 +175,13 @@ const files = new Set();
 for (const root of ROOTS) {
   for (const f of collectMarkdownFiles(root)) files.add(f);
 }
+let checklistsFound = 0;
+for (const root of CHECKLIST_ROOTS) {
+  for (const f of collectByBasename(root, CHECKLIST_BASENAME)) {
+    files.add(f);
+    checklistsFound += 1;
+  }
+}
 
 for (const file of [...files].sort()) {
   const rel = relative(repoRoot, file);
@@ -127,6 +190,23 @@ for (const file of [...files].sort()) {
   const occurrences = [];
 
   lines.forEach((line, idx) => {
+    // Prose pairs are scanned first and are cumulative: one line carries all
+    // eight, so this cannot `return` after the first hit the way the two
+    // single-occurrence-per-line table shapes do.
+    PROSE_RE.lastIndex = 0;
+    let proseMatch;
+    let sawProse = false;
+    while ((proseMatch = PROSE_RE.exec(line)) !== null) {
+      sawProse = true;
+      occurrences.push({
+        lineNo: idx + 1,
+        sov: `SOV-${proseMatch[1]}`,
+        weight: Number(proseMatch[3]),
+        name: proseMatch[2],
+      });
+    }
+    if (sawProse) return;
+
     const headerMatch = line.match(HEADER_RE);
     if (headerMatch) {
       occurrences.push({
@@ -174,6 +254,15 @@ for (const file of [...files].sort()) {
         `[FAIL] ${rel}:${occ.lineNo}: ${occ.sov} weight is ${occ.weight}%, the framework says ${expected}%`,
       );
     }
+    // Only the prose shape carries a name to check. A wrong pairing here is
+    // the permutation defect wearing its other face.
+    if (occ.name !== undefined && occ.name !== OBJECTIVES[occ.sov].name) {
+      ok = false;
+      console.error(
+        `[FAIL] ${rel}:${occ.lineNo}: ${occ.sov} is named "${occ.name}", the framework says ` +
+          `"${OBJECTIVES[occ.sov].name}"`,
+      );
+    }
   }
 
   const foundKeys = new Set(occurrences.map((o) => o.sov));
@@ -194,10 +283,23 @@ if (filesChecked === 0) {
   for (const root of ROOTS) console.error('  -', root);
 }
 
+// The same self-defence for the checklist half. If the shared asset is ever
+// moved or renamed, the prose list must fail loudly rather than fall out of
+// coverage the silent way it was in until now.
+if (checklistsFound === 0) {
+  ok = false;
+  console.error(
+    `[FAIL] no ${CHECKLIST_BASENAME} found under ${CHECKLIST_ROOTS.join(', ')} — the guard\'s ` +
+      'checklist roots are broken',
+  );
+}
+
 if (ok) {
   console.log(
-    `[PASS] ${occurrencesChecked} SOV weight occurrence(s) across ${filesChecked} file(s) all match the ` +
-      'framework (SOV-1 20%, SOV-2 10%, SOV-3 10%, SOV-4 15%, SOV-5 10%, SOV-6 15%, SOV-7 15%, SOV-8 5%).',
+    `[PASS] ${occurrencesChecked} SOV weight occurrence(s) across ${filesChecked} file(s) ` +
+      `(including ${checklistsFound} ${CHECKLIST_BASENAME} copies) all match the framework ` +
+      '(SOV-1 20%, SOV-2 10%, SOV-3 10%, SOV-4 15%, SOV-5 10%, SOV-6 15%, SOV-7 15%, SOV-8 5%), ' +
+      'and every prose pair names its own objective.',
   );
   process.exit(0);
 }

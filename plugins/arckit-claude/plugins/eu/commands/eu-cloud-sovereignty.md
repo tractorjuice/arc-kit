@@ -127,6 +127,7 @@ Show this scoping summary before generating the full document.
      - **SEAL-2 Data Sovereignty**: EU jurisdictions apply, with material dependencies remain; service, technology or operations under indirect control of non-EU third parties
      - **SEAL-3 Technological Sovereignty**: EU jurisdictions apply, EU actors exercising meaningful but not full influence; service, technology or operations under marginal control of non-EU third parties
      - **SEAL-4 Full Digital Sovereignty**: technology and operations under complete EU control, subject only to EU jurisdiction, with no critical non-EU dependencies
+   - SEAL-2's *"with material dependencies remain"* is ungrammatical **in the source** (Implementation guidance p.2-3) and is reproduced verbatim on purpose. Do not correct it — "do not paraphrase" above governs, and a silent repair would put the artefact out of step with the normative text a tender is assessed against.
    - State the formula: Sovereignty Score = Σ over the eight objectives of (Score(SOVn) / Max.Score(SOVn)) × Weight(SOVn), expressed as a percentage
    - Weight table for all eight objectives (must sum to exactly 100%)
    - Scored table: objective, Score, Max Score, Weight, Weighted Contribution

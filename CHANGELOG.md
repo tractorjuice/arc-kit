@@ -25,6 +25,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ... (and the same three-objective pattern repeated across three tables and eight `(Weight: ...)` subsection headers per file, and across every generated mirror in `plugins/arckit-claude/plugins/eu/`, `.arckit/templates/`, and both `docs/guides/` trees)
   ```
 
+  **The checklist item that states the eight weights is itself guarded**, after review found it was not. Replacing the sum-only check with an explicit eight-weight list is the right fix, but that list is *prose* — not a table row, not a `(Weight: ...)` header — and its 31 copies (one per plugin) sit outside the weight-table roots, so reverting `SOV-1` and `SOV-5` in the checklist alone still produced a green run. The guard now recognises a third shape, `SOV-<n> <objective name> <NN>%`, and collects `quality-checklist.md` by basename so a new plugin is covered the day it is added. Coverage goes from 128 occurrences across 7 files to 376 across 38.
+
+  Anchoring that shape on the objective's own name, rather than on a loose `SOV-<n>...<NN>%` scan, is load-bearing twice over. It avoids a false positive the same checklist line would otherwise produce (*"weights summing to 100%"* reads as SOV-8 being 100%), and it buys a second assertion: a code paired with **another objective's name** now fails too. That is the permutation defect wearing its other face — the same one that let `SEAL-3` ship as *"Digital Resilience"*.
+
+  `SEAL-2`'s *"EU jurisdictions apply, with material dependencies remain"* is ungrammatical in the Commission's own text and is now marked in the command as verbatim-on-purpose, so a later contributor does not silently repair it and put the artefact out of step with the normative wording a tender is assessed against.
+
   Also corrected in `plugins/arckit-eu/commands/eu-cloud-sovereignty.md`: `SEAL-3` was named **"Digital Resilience"**, which does not appear anywhere in the framework's SEAL scale — renamed to **"Technological Sovereignty"** per the Implementation guidance p.2-3. `SEAL-2` and `SEAL-4`'s wording was also drifting from that same normative rendering (*"EU law applicable and enforceable"* vs. the source's *"EU jurisdictions apply"*; *"subject only to EU law"* vs. *"subject only to EU jurisdiction"*) and is now verbatim.
 
 ## [6.10.0] — 2026-08-18
