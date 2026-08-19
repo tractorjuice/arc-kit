@@ -170,6 +170,8 @@ Standard topological sort with parallelism:
 
 **Why the 20 cap is load-bearing.** Claude Code caps concurrently-running subagents at 20 by default (`CLAUDE_CODE_MAX_CONCURRENT_SUBAGENTS`, v2.1.217+) and **denies** over-cap spawns rather than queueing them — the 21st `Agent` call in a single message fails with *"Concurrent subagent limit reached … Do not retry"*. Because this harness is halt-on-fail, an over-wide wave does not run slower, it fails. No bundled recipe exceeds 16 (CI enforces this via `scripts/check_recipes.py`), but a user-authored recipe under `.arckit/recipes/` never passes through CI, so split at dispatch time rather than assuming the recipe is well-formed.
 
+There is **no longer a per-session spawn ceiling** to budget against: Claude Code v2.1.224 removed the 200-subagent-per-session cap, and `CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION` is now accepted in settings but never read. Concurrency (above) and nesting depth are the only subagent limits left. Do not reintroduce a per-session budget check here.
+
 A split wave is still one commit — commit after the whole logical wave completes, not after each chunk of 20.
 
 **Worked example** — for project 001 (UK-SaaS recipe) **starting from empty state**, the algorithm produces something like:
@@ -204,6 +206,8 @@ Wave {N}/{total}: {targets joined}
 ### 2. Single message, multiple Agent calls — all in parallel
 
 Use the **Agent tool** with `subagent_type: "general-purpose"`. One Agent call per target. **All in the same assistant message** so they run in parallel.
+
+**Pass `run_in_background: false` on every call in the wave.** Claude Code v2.1.232 made non-teammate `Agent` spawns background-by-default in interactive sessions — a backgrounded spawn returns `async_launched` and an `agentId`, *not* the worker's report. This harness needs the reports before it can validate, commit, and decide whether to halt, so a wave is exactly the case the parameter exists for. The parameter is stripped from the tool schema in some contexts; if it is unavailable, the spawns are background-only and you must **wait for every worker's completion notification before step 3** — do not proceed on `async_launched` results, and never infer a worker's outcome from the fact that it launched.
 
 Per-agent prompt template (substitute `{...}` placeholders from the resolved target):
 
@@ -268,7 +272,7 @@ Do NOT include the document content in your report. Just the summary.
 
 ### 3. Wait for all agents
 
-When all return, collect summaries.
+When all return, collect summaries. "Return" means the worker's ≤200-word report is in hand — not that its `Agent` call succeeded. A launch acknowledgement is not a result (see the `run_in_background` note in step 2).
 
 ### 4. Validate
 
