@@ -1,0 +1,207 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#07111f"/>
+      <stop offset="55%" stop-color="#0a1729"/>
+      <stop offset="100%" stop-color="#071726"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7dd3fc"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0e2138"/>
+      <stop offset="100%" stop-color="#0a1728"/>
+    </linearGradient>
+
+    <clipPath id="fc"><rect width="80" height="54" rx="4"/></clipPath>
+
+    <path id="star" d="M0,-4.6 L1.35,-1.42 L4.6,-1.42 L2.0,0.55 L2.85,3.72 L0,1.9 L-2.85,3.72 L-2.0,0.55 L-4.6,-1.42 L-1.35,-1.42 Z" fill="#FFCC00"/>
+
+    <!-- Union Jack, reused by GB and the Australian canton -->
+    <g id="unionjack">
+      <rect width="80" height="54" fill="#012169"/>
+      <path d="M0,0 L80,54 M80,0 L0,54" stroke="#ffffff" stroke-width="12"/>
+      <path d="M0,0 L80,54 M80,0 L0,54" stroke="#C8102E" stroke-width="6"/>
+      <path d="M40,0 V54 M0,27 H80" stroke="#ffffff" stroke-width="19"/>
+      <path d="M40,0 V54 M0,27 H80" stroke="#C8102E" stroke-width="11"/>
+    </g>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- title -->
+  <text x="72" y="86" fill="#f8fafc" font-family="Arial, sans-serif" font-size="54" font-weight="700">ArcKit v6.11</text>
+  <rect x="74" y="100" width="300" height="4" rx="2" fill="url(#accent)"/>
+  <text x="72" y="140" fill="#7dd3fc" font-family="Arial, sans-serif" font-size="28" font-weight="700">Four new plugins. Twenty-five new commands.</text>
+
+  <!-- jurisdiction strip -->
+  <rect x="70" y="160" width="1060" height="150" rx="18" fill="url(#panel)" stroke="#1e3a55" stroke-width="2"/>
+  <text x="94" y="192" fill="#7dd3fc" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="1.5">JURISDICTION PACKS</text>
+
+  <!-- UK -->
+  <g transform="translate(94,204)">
+    <g clip-path="url(#fc)"><use href="#unionjack"/></g>
+    <rect width="80" height="54" rx="4" fill="none" stroke="#334155"/>
+    <text x="40" y="76" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">UK</text>
+  </g>
+
+  <!-- EU (new command) -->
+  <g transform="translate(198,204)">
+    <g clip-path="url(#fc)">
+      <rect width="80" height="54" fill="#003399"/>
+      <g transform="translate(40,27)">
+        <use href="#star" transform="translate(0,-17)"/>
+        <use href="#star" transform="translate(8.5,-14.7)"/>
+        <use href="#star" transform="translate(14.7,-8.5)"/>
+        <use href="#star" transform="translate(17,0)"/>
+        <use href="#star" transform="translate(14.7,8.5)"/>
+        <use href="#star" transform="translate(8.5,14.7)"/>
+        <use href="#star" transform="translate(0,17)"/>
+        <use href="#star" transform="translate(-8.5,14.7)"/>
+        <use href="#star" transform="translate(-14.7,8.5)"/>
+        <use href="#star" transform="translate(-17,0)"/>
+        <use href="#star" transform="translate(-14.7,-8.5)"/>
+        <use href="#star" transform="translate(-8.5,-14.7)"/>
+      </g>
+    </g>
+    <rect width="80" height="54" rx="4" fill="none" stroke="#334155"/>
+    <text x="40" y="76" fill="#f8fafc" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">EU</text>
+    <rect x="16" y="84" width="48" height="20" rx="10" fill="#fbbf24"/>
+    <text x="40" y="99" fill="#0b1220" font-family="Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">NEW</text>
+  </g>
+
+  <!-- Netherlands (new pack) -->
+  <g transform="translate(302,204)">
+    <g clip-path="url(#fc)">
+      <rect width="80" height="18" fill="#AE1C28"/>
+      <rect y="18" width="80" height="18" fill="#ffffff"/>
+      <rect y="36" width="80" height="18" fill="#21468B"/>
+    </g>
+    <rect width="80" height="54" rx="4" fill="none" stroke="#334155"/>
+    <text x="40" y="76" fill="#f8fafc" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">NL</text>
+    <rect x="16" y="84" width="48" height="20" rx="10" fill="#fbbf24"/>
+    <text x="40" y="99" fill="#0b1220" font-family="Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">NEW</text>
+  </g>
+
+  <!-- Austria (new command) -->
+  <g transform="translate(406,204)">
+    <g clip-path="url(#fc)">
+      <rect width="80" height="18" fill="#ED2939"/>
+      <rect y="18" width="80" height="18" fill="#ffffff"/>
+      <rect y="36" width="80" height="18" fill="#ED2939"/>
+    </g>
+    <rect width="80" height="54" rx="4" fill="none" stroke="#334155"/>
+    <text x="40" y="76" fill="#f8fafc" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">AT</text>
+    <rect x="16" y="84" width="48" height="20" rx="10" fill="#fbbf24"/>
+    <text x="40" y="99" fill="#0b1220" font-family="Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle">NEW</text>
+  </g>
+
+  <!-- France -->
+  <g transform="translate(510,204)">
+    <g clip-path="url(#fc)">
+      <rect width="27" height="54" fill="#0055A4"/>
+      <rect x="27" width="26" height="54" fill="#ffffff"/>
+      <rect x="53" width="27" height="54" fill="#EF4135"/>
+    </g>
+    <rect width="80" height="54" rx="4" fill="none" stroke="#334155"/>
+    <text x="40" y="76" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">FR</text>
+  </g>
+
+  <!-- Canada -->
+  <g transform="translate(614,204)">
+    <g clip-path="url(#fc)">
+      <rect width="80" height="54" fill="#ffffff"/>
+      <rect width="20" height="54" fill="#D80621"/>
+      <rect x="60" width="20" height="54" fill="#D80621"/>
+      <path fill="#D80621" d="M40,11 l3.1,6.0 6.4,-1.2 -1.7,6.2 6.0,1.4 -4.5,4.1 7.2,5.4 -2.1,1.8 1.3,4.5 -7.4,-1.6 -1.0,2.9 -5.2,-5.4 1.9,10.3 -2.5,-1.2 -1.5,0 -2.5,1.2 1.9,-10.3 -5.2,5.4 -1.0,-2.9 -7.4,1.6 1.3,-4.5 -2.1,-1.8 7.2,-5.4 -4.5,-4.1 6.0,-1.4 -1.7,-6.2 6.4,1.2 Z"/>
+    </g>
+    <rect width="80" height="54" rx="4" fill="none" stroke="#334155"/>
+    <text x="40" y="76" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">CA</text>
+  </g>
+
+  <!-- USA -->
+  <g transform="translate(718,204)">
+    <g clip-path="url(#fc)">
+      <rect width="80" height="54" fill="#ffffff"/>
+      <g fill="#B22234">
+        <rect y="0" width="80" height="4.15"/><rect y="8.3" width="80" height="4.15"/>
+        <rect y="16.6" width="80" height="4.15"/><rect y="24.9" width="80" height="4.15"/>
+        <rect y="33.2" width="80" height="4.15"/><rect y="41.5" width="80" height="4.15"/>
+        <rect y="49.8" width="80" height="4.2"/>
+      </g>
+      <rect width="34" height="29" fill="#3C3B6E"/>
+      <g fill="#ffffff">
+        <circle cx="6" cy="6" r="1.7"/><circle cx="14" cy="6" r="1.7"/><circle cx="22" cy="6" r="1.7"/><circle cx="30" cy="6" r="1.7"/>
+        <circle cx="10" cy="12" r="1.7"/><circle cx="18" cy="12" r="1.7"/><circle cx="26" cy="12" r="1.7"/>
+        <circle cx="6" cy="18" r="1.7"/><circle cx="14" cy="18" r="1.7"/><circle cx="22" cy="18" r="1.7"/><circle cx="30" cy="18" r="1.7"/>
+        <circle cx="10" cy="24" r="1.7"/><circle cx="18" cy="24" r="1.7"/><circle cx="26" cy="24" r="1.7"/>
+      </g>
+    </g>
+    <rect width="80" height="54" rx="4" fill="none" stroke="#334155"/>
+    <text x="40" y="76" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">US</text>
+  </g>
+
+  <!-- Australia -->
+  <g transform="translate(822,204)">
+    <g clip-path="url(#fc)">
+      <rect width="80" height="54" fill="#00247D"/>
+      <g transform="scale(0.5)"><use href="#unionjack"/></g>
+      <g fill="#ffffff">
+        <circle cx="20" cy="42" r="3"/>
+        <circle cx="58" cy="12" r="2.4"/><circle cx="66" cy="24" r="2.4"/>
+        <circle cx="58" cy="38" r="2.4"/><circle cx="50" cy="26" r="2.0"/>
+        <circle cx="62" cy="47" r="1.6"/>
+      </g>
+    </g>
+    <rect width="80" height="54" rx="4" fill="none" stroke="#334155"/>
+    <text x="40" y="76" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">AU</text>
+  </g>
+
+  <!-- UAE -->
+  <g transform="translate(926,204)">
+    <g clip-path="url(#fc)">
+      <rect width="80" height="18" fill="#00732F"/>
+      <rect y="18" width="80" height="18" fill="#ffffff"/>
+      <rect y="36" width="80" height="18" fill="#000000"/>
+      <rect width="20" height="54" fill="#FF0000"/>
+    </g>
+    <rect width="80" height="54" rx="4" fill="none" stroke="#334155"/>
+    <text x="40" y="76" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="middle">AE</text>
+  </g>
+
+  <!-- feature panels -->
+  <g>
+    <rect x="70" y="336" width="340" height="158" rx="16" fill="url(#panel)" stroke="#1e3a55" stroke-width="2"/>
+    <rect x="70" y="336" width="6" height="158" rx="3" fill="#7dd3fc"/>
+    <text x="96" y="372" fill="#7dd3fc" font-family="Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="1.2">NETHERLANDS PACK</text>
+    <text x="96" y="404" fill="#f8fafc" font-family="Arial, sans-serif" font-size="21" font-weight="700">arckit-nl</text>
+    <text x="96" y="434" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19">BIO2, Rijksbreed cloudbeleid,</text>
+    <text x="96" y="458" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19">exit plans, TBB categories</text>
+    <text x="96" y="482" fill="#94a3b8" font-family="Arial, sans-serif" font-size="17">community contributed</text>
+  </g>
+
+  <g>
+    <rect x="430" y="336" width="340" height="158" rx="16" fill="url(#panel)" stroke="#1e3a55" stroke-width="2"/>
+    <rect x="430" y="336" width="6" height="158" rx="3" fill="#7dd3fc"/>
+    <text x="456" y="372" fill="#7dd3fc" font-family="Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="1.2">CODEBASE AUDIT</text>
+    <text x="456" y="404" fill="#f8fafc" font-family="Arial, sans-serif" font-size="21" font-weight="700">arckit-repo</text>
+    <text x="456" y="434" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19">audit the code you built</text>
+    <text x="456" y="458" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19">against the architecture</text>
+    <text x="456" y="482" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19">you intended</text>
+  </g>
+
+  <g>
+    <rect x="790" y="336" width="340" height="158" rx="16" fill="url(#panel)" stroke="#1e3a55" stroke-width="2"/>
+    <rect x="790" y="336" width="6" height="158" rx="3" fill="#7dd3fc"/>
+    <text x="816" y="372" fill="#7dd3fc" font-family="Arial, sans-serif" font-size="17" font-weight="700" letter-spacing="1.2">METHOD PACKS</text>
+    <text x="816" y="404" fill="#f8fafc" font-family="Arial, sans-serif" font-size="21" font-weight="700">TOGAF ADM</text>
+    <text x="816" y="428" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19">nine commands</text>
+    <text x="816" y="458" fill="#f8fafc" font-family="Arial, sans-serif" font-size="21" font-weight="700">AI agent architecture</text>
+    <text x="816" y="482" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="19">six commands</text>
+  </g>
+
+  <!-- footer -->
+  <text x="72" y="546" fill="#f8fafc" font-family="Arial, sans-serif" font-size="20">EU Cloud Sovereignty  ·  Austrian accessibility  ·  OKF import and export  ·  Kimi Code CLI is the ninth format</text>
+  <text x="72" y="582" fill="#94a3b8" font-family="Arial, sans-serif" font-size="20">Document Control follows the artefact: a Canadian assessment now carries Canadian markings, not British ones</text>
+</svg>
