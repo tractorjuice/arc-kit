@@ -206,6 +206,7 @@ add(GUIDE_SECTIONS.PLUGIN, 'Plugin Operations', 'live', [
 ]);
 add(GUIDE_SECTIONS.PLUGIN, 'Plugin Operations', 'beta', [
   'autoresearch',
+  'byo-llm',
   'custom-commands',
   'enterprise-scale',
   'hooks',
