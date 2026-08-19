@@ -213,6 +213,13 @@ def get_data_paths():
             "codex_agents": base_path / "extensions" / "arckit-codex" / "agents",
             "codex_hooks": base_path / "extensions" / "arckit-codex" / "hooks",
             "codex_schemas": base_path / "extensions" / "arckit-codex" / "schemas",
+            # Vendored reference data a command declares as its ONLY source of
+            # truth (e.g. the EUCSF Annex calculator catalogue). Under the plugin
+            # these resolve via ${CLAUDE_PLUGIN_ROOT}/data/; the converter rewrites
+            # that to .arckit/data/ for every CLI-scaffolded target, so the
+            # scaffold has to create it or the command reads a path that does not
+            # exist and invents the values it was told never to invent (#782).
+            "codex_data": base_path / "extensions" / "arckit-codex" / "data",
             "codex_validator": base_path / "extensions" / "arckit-codex" / "scripts" / "validate-handoff.mjs",
             # The document-ID generator and the doc-type registry it imports.
             # Sourced from the core plugin (the single copy) rather than from
@@ -704,6 +711,17 @@ def init(
         references_dst.mkdir(parents=True, exist_ok=True)
         shutil.copytree(references_src, references_dst, dirs_exist_ok=True)
         console.print(f"[green]✓[/green] References copied")
+
+    # Copy vendored reference data if it exists. Unconditional, like references
+    # above: the Codex, OpenCode and Copilot command bodies are all rewritten to
+    # read `.arckit/data/...`, so gating this on one target would leave the
+    # others pointing at a file that was never scaffolded.
+    data_src = data_paths.get("codex_data")
+    if data_src and data_src.exists():
+        data_dst = project_path / ".arckit" / "data"
+        data_dst.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(data_src, data_dst, dirs_exist_ok=True)
+        console.print(f"[green]✓[/green] Reference data copied")
 
     # Copy slash commands
     # Copy Codex prompts (all_ai and single-AI both install codex)

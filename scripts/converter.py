@@ -851,6 +851,42 @@ def copy_extension_files(plugin_sources):
             f"-> {ext_templates_dir} ({merged_template_count} files)"
         )
 
+        # Merge `data/` from every plugin source into one data/ dir, the same
+        # way `templates/` is merged above. plugins/arckit-eu/data/ (arc-kit#782,
+        # the CSF calculator catalogue) is the first plugin to use this shape;
+        # this merge is generic so any future plugin's data/ ships too. Node
+        # scripts that consume a plugin's data/ (e.g. csf-score.mjs) are
+        # deliberately NOT copied here — see core_only_copies below and its
+        # comment — so non-Claude targets get the raw data for the model to
+        # read directly, but not the script.
+        ext_data_dir = os.path.join(ext_dir, "data")
+        if os.path.isdir(ext_data_dir):
+            shutil.rmtree(ext_data_dir)
+        merged_data_count = 0
+        for src_plugin in plugin_sources:
+            src_data = os.path.join(src_plugin, "data")
+            if not os.path.isdir(src_data):
+                continue
+            os.makedirs(ext_data_dir, exist_ok=True)
+            for entry in os.listdir(src_data):
+                src_path = os.path.join(src_data, entry)
+                dst_path = os.path.join(ext_data_dir, entry)
+                if os.path.isfile(src_path):
+                    shutil.copy2(src_path, dst_path)
+                    merged_data_count += 1
+                elif os.path.isdir(src_path):
+                    if os.path.isdir(dst_path):
+                        shutil.rmtree(dst_path)
+                    shutil.copytree(src_path, dst_path)
+                    merged_data_count += sum(
+                        len(files) for _, _, files in os.walk(dst_path)
+                    )
+        if merged_data_count:
+            print(
+                f"  Merged data from {len(plugin_sources)} plugin source(s) "
+                f"-> {ext_data_dir} ({merged_data_count} files)"
+            )
+
         # Core-only categories
         for src_rel, dst_rel in core_only_copies:
             if not copy_scripts and src_rel.startswith("scripts/"):

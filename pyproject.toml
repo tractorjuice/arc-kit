@@ -80,6 +80,12 @@ path = "hatch_build.py"
 # get_data_paths() resolves them identically in source and installed mode.
 "plugins/arckit-claude/scripts/generate-document-id.mjs" = "share/arckit/plugins/arckit-claude/scripts/generate-document-id.mjs"
 "plugins/arckit-claude/config" = "share/arckit/plugins/arckit-claude/config"
+# csf-score.mjs (arc-kit#782) reads the calculator catalogue from a SIBLING
+# plugin (arckit-eu), not from arckit-claude/config like doc-types.mjs, so
+# both halves need their own entry. Both keep their repo-relative paths
+# under share/arckit for the same reason as the pair above.
+"plugins/arckit-claude/scripts/csf-score.mjs" = "share/arckit/plugins/arckit-claude/scripts/csf-score.mjs"
+"plugins/arckit-eu/data" = "share/arckit/plugins/arckit-eu/data"
 ".arckit" = "share/arckit/.arckit"
 # Distribute only the docs the CLI scaffolds (guides + the three named files),
 # NOT the whole docs/ tree — mapping the directory shipped BUSINESS-PLAN.md,

@@ -60,6 +60,23 @@ Strategic sovereignty carries the heaviest weight, and together with technology 
 
 ---
 
+## Score(SOVn) and Max.Score(SOVn), Defined
+
+The command used to state `Sovereignty Score = Σ (Score(SOVn) / Max.Score(SOVn)) × Weight(SOVn)` without ever defining `Score(SOVn)` or `Max.Score(SOVn)` — so two runs over identical evidence could land on different numbers (arc-kit#782). The command now reads the official Annex calculator, transcribed at `plugins/arckit-eu/data/csf-criteria-calculator-2026-06-01.json`, and defines both terms from it:
+
+- **Score(SOVn)** is the sum of the point values of whichever answers were selected for that objective's criteria — an unanswered criterion contributes nothing and is recorded as a gap, not a zero.
+- **Max.Score(SOVn)** is a nominal **1000** for every objective, shared across all eight — not each objective's own computed maximum. Because the workbook rounds individual answer values to two decimal places, each objective's actual maximum lands slightly above 1000 (1000.03 to 1002.00, depending on the objective). A maximal response therefore scores **100.0756%**, not 100% — that overshoot is the framework's own documented behaviour, not a bug to clamp away.
+
+The generated artefact carries an **Appendix A** with the per-criterion arithmetic for all 48 criteria (selected answer, Score value, SEAL) so the Sovereignty Score is checkable by a reader with no access to the scorer at all.
+
+**SEAL is not an input to the Score, and the Score does not determine SEAL.** The same 48 answers determine both readings independently — each answer carries its own Score value and its own SEAL level. Overall SEAL is the *minimum* SEAL across every answered criterion, not an average and not a function of the weighted Score.
+
+The Implementation guidance's narrative describes 43 sovereignty questions; the published calculator workbook scores 48 criteria across the eight objectives. The command records both counts, with the discrepancy stated, rather than silently picking one.
+
+Where the catalogue lives depends on how you installed ArcKit. Under the Claude Code plugin it resolves inside the `arckit-eu` plugin's own `data/` directory. On a project scaffolded by `arckit init` — Codex, OpenCode or Copilot — it is copied to **`.arckit/data/`**, alongside `.arckit/templates/` and `.arckit/references/`, and the command bodies are rewritten to that path.
+
+---
+
 ## Two Things This Command Is Deliberately Loud About
 
 Both change the outcome of a procurement, and both are easy to get backwards.

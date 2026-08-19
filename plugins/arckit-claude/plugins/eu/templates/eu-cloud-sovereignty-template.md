@@ -100,7 +100,15 @@
 | SOV-7 Security & Compliance Sovereignty | EAL2 level security. Local operations, transparent and immediate feedback of information, audits allowed. | ELA 3. | EAL 4-5, ENISA integration, immutable logs. |
 | SOV-8 Environmental Sustainability | Documented and transparent approach. | *(not specified in source)* | EU-certified lifecycle, EU-audited reporting. |
 
-**Formula**: Sovereignty Score = Σ over the eight objectives of (Score(SOVn) / Max.Score(SOVn)) × Weight(SOVn), expressed as a percentage.
+**Score(SOVn)** = the SUM of the `value` fields of the answers selected for objective n's criteria, sourced from the calculator catalogue (`csf-criteria-calculator-2026-06-01.json`; see Appendix A). An unanswered criterion contributes nothing and is recorded as a gap, not a zero-value answer.
+
+**Max.Score(SOVn)** = a NOMINAL **1000** for every objective (n = 1 to 8), by construction — not each objective's own computed maximum. Each objective's actual maximum (summing its criteria's highest-value answers) is 1000.03 / 1002.00 / 1000.00 / 1002.00 / 1001.00 / 1000.00 / 1001.00 / 1000.00 for SOV-1 to SOV-8 respectively — the workbook rounds individual answer values to 2 decimal places, so these do not land on exactly 1000. That is recorded for verification only: the formula below always divides by the shared nominal 1000, never by an objective's own actual maximum.
+
+**Formula**: Sovereignty Score = Σ over the eight objectives of (Score(SOVn) / 1000) × Weight(SOVn), expressed as a percentage. Because each objective's actual maximum slightly exceeds 1000, a **maximal response scores 100.0756%, not 100%** — this is the framework's own rounding behaviour, reported faithfully rather than clamped.
+
+**SEAL is not an input to the Score, and the Score does not determine SEAL.** Per the Implementation guidance (p.9), the same 48 answers determine both readings independently — each answer carries its own Score value and its own SEAL level. The Overall SEAL above is `SEAL-{N}` where N is the **minimum** SEAL level across every answered criterion in the whole assessment, not an average and not derived from the weighted Score.
+
+**Adaptability caveats**: answer values "can be adapted by contracting authorities" per the guidance; the calculator's weight column is captioned "Score (examples)," not a mandated regulatory weighting; the calculator's own worked example column holds fictitious illustrative values that must never be presented as a real provider assessment.
 
 ### 3.1 Objective Weights
 
@@ -118,19 +126,23 @@
 
 ### 3.2 Scored Result
 
+`Max Score` is the shared nominal 1000 for every objective (see above) — never an objective's own actual maximum. Each `Score` below must equal the sum of that objective's rows in Appendix A; if it does not, the arithmetic is wrong, not the appendix.
+
 | Objective | Score | Max Score | Weight | Weighted Contribution |
 |-----------|-------|-----------|--------|-------------------------|
-| SOV-1 Strategic Sovereignty | [Score] | [Max] | 20% | [%] |
-| SOV-2 Legal & Jurisdictional Sovereignty | [Score] | [Max] | 10% | [%] |
-| SOV-3 Data & AI Sovereignty | [Score] | [Max] | 10% | [%] |
-| SOV-4 Operational Sovereignty | [Score] | [Max] | 15% | [%] |
-| SOV-5 Supply Chain Sovereignty | [Score] | [Max] | 10% | [%] |
-| SOV-6 Technology Sovereignty | [Score] | [Max] | 15% | [%] |
-| SOV-7 Security & Compliance Sovereignty | [Score] | [Max] | 15% | [%] |
-| SOV-8 Environmental Sustainability | [Score] | [Max] | 5% | [%] |
+| SOV-1 Strategic Sovereignty | [Score] | 1000 | 20% | [%] |
+| SOV-2 Legal & Jurisdictional Sovereignty | [Score] | 1000 | 10% | [%] |
+| SOV-3 Data & AI Sovereignty | [Score] | 1000 | 10% | [%] |
+| SOV-4 Operational Sovereignty | [Score] | 1000 | 15% | [%] |
+| SOV-5 Supply Chain Sovereignty | [Score] | 1000 | 10% | [%] |
+| SOV-6 Technology Sovereignty | [Score] | 1000 | 15% | [%] |
+| SOV-7 Security & Compliance Sovereignty | [Score] | 1000 | 15% | [%] |
+| SOV-8 Environmental Sustainability | [Score] | 1000 | 5% | [%] |
 | **Sovereignty Score** | | | | **[N]%** |
 
 > **Context**: The Sovereignty Score contributes to the tender's quality score as an **award criterion**. This is separate from, and does not override, the minimum-SEAL rejection gate in Section 2 — a high Sovereignty Score does not excuse failing a stated minimum SEAL on any single objective.
+>
+> **Note**: a maximal response (every criterion at its highest-value answer) scores 100.0756%, not 100% — the framework's own 2dp answer-value rounding, not an error. Do not clamp a computed score to 100%.
 
 ### 3.3 Overall SEAL Determination
 
@@ -335,6 +347,108 @@ The EU Cloud Sovereignty Framework is being adopted as a national yardstick by m
 | Filename | Source Location | Reason |
 |----------|-----------------|--------|
 | — | — | — |
+
+## Appendix A: Per-Criterion Scoring Detail
+
+> This appendix is what makes the Section 3.2 Scored Result table checkable **without** re-running the scorer: every `Score(SOVn)` above must equal the sum of that objective's `Score value` column below. Every description, answer label, value, and SEAL level is sourced from `csf-criteria-calculator-2026-06-01.json` — none are invented here. A criterion with no evidence is recorded as `Unanswered / gap`, not defaulted to a zero-value answer.
+
+### A.1 SOV-1 Strategic Sovereignty (8 criteria)
+
+| # | Criterion | Selected Answer | Score Value | SEAL |
+|---|-----------|------------------|-------------|------|
+| 1 | EU/EEA legal entity control | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 2 | Change of Control Risk | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 3 | Control Over Roadmap | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 4 | Financial independence from non-EU capital | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 5 | EU economic contribution | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 6 | Participation in EU strategic programs | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 7 | Alignment with EU industrial strategies | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 8 | Resilience to Cut-off | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| | | **Score(SOV-1)** | **[Sum]** | |
+
+### A.2 SOV-2 Legal & Jurisdictional Sovereignty (6 criteria)
+
+| # | Criterion | Selected Answer | Score Value | SEAL |
+|---|-----------|------------------|-------------|------|
+| 1 | Primary Legal Jurisdiction | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 2 | Extraterritorial Laws | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 3 | Data Access Pathways | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 4 | Export Control Restrictions | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 5 | Origin of IP | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 6 | IP Holder Jurisdiction | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| | | **Score(SOV-2)** | **[Sum]** | |
+
+### A.3 SOV-3 Data & AI Sovereignty (5 criteria)
+
+| # | Criterion | Selected Answer | Score Value | SEAL |
+|---|-----------|------------------|-------------|------|
+| 1 | Customer control over encryption keys | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 2 | Transparent data flows & access logs | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 3 | Secure deletion & proof of erasure of data | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 4 | Data location strictly in EU/EEA | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 5 | AI services | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| | | **Score(SOV-3)** | **[Sum]** | |
+
+### A.4 SOV-4 Operational Sovereignty (6 criteria)
+
+| # | Criterion | Selected Answer | Score Value | SEAL |
+|---|-----------|------------------|-------------|------|
+| 1 | Portability & Interoperability | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 2 | Ability to Operate Without Foreign Dependencies | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 3 | Skill Availability | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 4 | Support Channels | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 5 | Documentation & Knowledge Transfer | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 6 | Subcontractor & Suppliers jurisdiction | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| | | **Score(SOV-4)** | **[Sum]** | |
+
+### A.5 SOV-5 Supply Chain Sovereignty (7 criteria)
+
+| # | Criterion | Selected Answer | Score Value | SEAL |
+|---|-----------|------------------|-------------|------|
+| 1 | Origin of Components | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 2 | Origin of Components: Manufacturing Location | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 3 | Origin of Components: embedded code jurisdiction | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 4 | Origin of Software | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 5 | Origin of Software: packaging/distribution/updates jurisdiction | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 6 | Single Point of Dependency | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 7 | Supply Chain Transparency | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| | | **Score(SOV-5)** | **[Sum]** | |
+
+### A.6 SOV-6 Technology Sovereignty (5 criteria)
+
+| # | Criterion | Selected Answer | Score Value | SEAL |
+|---|-----------|------------------|-------------|------|
+| 1 | Interoperability & Open interfaces | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 2 | Open Standards Compliance | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 3 | Open Source Availability | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 4 | Service Architecture Transparency | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 5 | HPC Sovereignty | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| | | **Score(SOV-6)** | **[Sum]** | |
+
+### A.7 SOV-7 Security & Compliance Sovereignty (7 criteria)
+
+| # | Criterion | Selected Answer | Score Value | SEAL |
+|---|-----------|------------------|-------------|------|
+| 1 | Security Certification | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 2 | EU Regulatory compliance | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 3 | EU-based SOC & incident handling | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 4 | Control over security monitoring/logging | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 5 | Disclosure of incidents | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 6 | Maintenance Autonomy | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 7 | Auditability | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| | | **Score(SOV-7)** | **[Sum]** | |
+
+### A.8 SOV-8 Environmental Sustainability (4 criteria)
+
+| # | Criterion | Selected Answer | Score Value | SEAL |
+|---|-----------|------------------|-------------|------|
+| 1 | Energy efficiency | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 2 | Hardware reuse & recycling | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 3 | Environmental impact reporting | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| 4 | Energy supplies | [Answer / Unanswered — gap] | [Value] | [0-4] |
+| | | **Score(SOV-8)** | **[Sum]** | |
+
+**Overall SEAL** = `SEAL-{MIN(SEAL column across every answered row above)}` — the minimum across all 48 criteria, computed here directly rather than from the per-objective SEAL-evidenced values in Section 4.
 
 ---
 
