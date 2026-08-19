@@ -74,6 +74,15 @@ let record = null;
 const ts = new Date().toISOString();
 
 if (event === 'TaskCreated' || tool === 'TaskCreate') {
+  // Two different mechanisms with confusingly similar names — do not
+  // "tidy" either branch away:
+  //   * `TaskCreated` is the HOOK EVENT fired on agent spawn (v2.1.84+).
+  //     Still present in Claude Code v2.1.235. This is the live path.
+  //   * `TaskCreate` is the retired todo/task-tracking TOOL. Claude Code
+  //     v2.1.233 removed it (with TodoWrite and friends) on Opus 4.8,
+  //     Sonnet 5, Fable 5, Opus 5 and newer, so this branch is dead on
+  //     current models and live only under CLAUDE_CODE_ENABLE_TODO_TOOLS=1
+  //     or on older models.
   // TaskCreated: the spawned agent is in tool_input.subagent_type
   const agent = data.tool_input?.subagent_type || data.tool_input?.agent || null;
   if (agent) {
@@ -94,7 +103,7 @@ if (event === 'TaskCreated' || tool === 'TaskCreate') {
   };
 } else if (typeof data.duration_ms === 'number') {
   // PostToolUse duration recording (v2.1.119+).
-  // Skip TaskCreate and govreposcrape MCP calls — those are recorded
+  // Skip TaskCreate (retired tool, see above) and govreposcrape MCP calls — those are recorded
   // under their own kinds above; we only want pure latency for everything
   // else (Write/Edit/Bash/etc.) so the duration histogram is uncluttered.
   if (tool && tool !== 'TaskCreate' && !tool.startsWith('mcp__govreposcrape__')) {
