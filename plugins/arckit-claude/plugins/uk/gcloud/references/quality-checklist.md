@@ -470,7 +470,7 @@ All artifacts must pass these 10 checks:
 - A criterion whose every recorded answer is SEAL-4 is not cited as the governing criterion for the Overall SEAL (Implementation guidance p.9: such a criterion "has no impact on the SEAL calculation")
 - The p.10 prevalence statement is honoured: the Overall SEAL, not the Sovereignty Score, is presented as the framework's actual rejection gate
 - All eight objectives (SOV-1 to SOV-8) assessed, none omitted
-- Weight table reproduces the framework weights and totals exactly 100%
+- Weight table reproduces the framework weights exactly, checked objective by objective (not only that the column totals 100%, which a permutation of the correct values would also pass): SOV-1 Strategic Sovereignty 20%, SOV-2 Legal & Jurisdictional Sovereignty 10%, SOV-3 Data & AI Sovereignty 10%, SOV-4 Operational Sovereignty 15%, SOV-5 Supply Chain Sovereignty 10%, SOV-6 Technology Sovereignty 15%, SOV-7 Security & Compliance Sovereignty 15%, SOV-8 Environmental Sustainability 5%
 - All five SEAL definitions (SEAL-0 to SEAL-4) reproduced in full, not paraphrased
 - Sovereignty Score computed from the stated formula, and the per-objective Score / Max Score basis is stated rather than assumed
 - Award criterion and rejection gate kept distinct: the weighted Sovereignty Score does not excuse a failed minimum SEAL on any single objective
