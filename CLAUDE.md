@@ -94,19 +94,21 @@ Some commands delegate to **autonomous agents** (`plugins/arckit-claude/agents/a
 | Agent | Command | Purpose |
 |-------|---------|---------|
 | `arckit-research` | `/arckit:research` | Market research, vendor evaluation, build vs buy, TCO |
-| `arckit-datascout` | `/arckit:datascout` | Data source discovery, API catalogue search |
+| `arckit-datascout` | *(non-Claude only)* | Data source discovery, API catalogue search |
 | `arckit-aws-research` | `/arckit:aws-research` | AWS via AWS Knowledge MCP |
 | `arckit-azure-research` | `/arckit:azure-research` | Azure via Microsoft Learn MCP |
 | `arckit-gcp-research` | `/arckit:gcp-research` | GCP via Google Developer Knowledge MCP |
 | `arckit-framework` | `/arckit:framework` | Transform artifacts into a structured framework |
-| `arckit-gov-reuse` | `/arckit:gov-reuse` | Government code reuse via govreposcrape |
+| `arckit-gov-reuse` | *(non-Claude only)* | Government code reuse via govreposcrape |
 | `arckit-gov-code-search` | `/arckit:gov-code-search` | Government code semantic search |
 | `arckit-gov-landscape` | `/arckit:gov-landscape` | Government code landscape analysis |
-| `arckit-grants` | `/arckit:grants` | UK government grants and funding research |
+| `arckit-grants` | *(non-Claude only)* | UK government grants and funding research |
 
-**Reader/writer subagents** (6 internal, not user-invocable): `datascout`, `grants`, and `gov-reuse` follow the three-tier orchestrator pattern (`plugins/arckit-claude/agents/READER-PATTERN.md`). Each ships a `arckit-{name}-reader.md` (web/MCP evidence gathering, returns JSON) and `arckit-{name}-writer.md` (renders validated payload into artefact, no network tools). Dispatched only by the corresponding orchestrator agent. **Total: 16 agents** (10 single-tier + 6 reader/writer subagents).
+**Reader/writer subagents** (9 internal, not user-invocable): `datascout`, `grants`, `gov-reuse` and `tenders` follow the three-tier orchestrator pattern (`plugins/arckit-claude/docs/READER-PATTERN.md`); `competitors` reuses `arckit-tenders-reader` and ships only a writer. Each ships a `arckit-{name}-reader.md` (web/MCP evidence gathering, returns JSON) and a `arckit-{name}-writer.md` (renders validated payload into artefact, no network tools). **Total: 19 agents** (10 single-tier + 9 reader/writer subagents).
 
-**Agent frontmatter**: valid fields are `name` (required), `description` (required), `model`, `effort`, `maxTurns`, `tools`, `disallowedTools`, `initialPrompt`. `tools` is an allowlist (only the listed tools are available); `disallowedTools` is a denylist applied first, then the allowlist is resolved against what remains. Heavy-research agents in this plugin use `tools` (allowlist) for prompt-injection hardening — see `plugins/arckit-claude/agents/arckit-research.md` for the canonical shape, including MCP tool naming (`mcp__<server>__<tool>`). Fields like `color` and `permissionMode` remain invalid in plugin context. Claude-only fields (`effort`, `initialPrompt`, `maxTurns`, `disallowedTools`, `tools`) are stripped by the converter.
+**The orchestrator is the slash command, not an agent file.** For every split command the dispatch, schema-validation and scoring logic lives in `commands/{name}.md` and runs in the main thread, where `Agent` is reliably available — see READER-PATTERN.md for why this is a deliberate choice rather than a platform limitation. The matching `agents/arckit-{datascout,grants,gov-reuse}.md` files are the **pre-split monoliths, retained only because `converter.py` replaces a command body wholesale with the agent prompt when generating non-Claude targets** (those runtimes cannot dispatch subagents). Do not delete them; do not treat them as the Claude execution path either. They still register as dispatchable Claude agents, so they must keep a `tools:` allowlist — PR #446 stripped it from all three and nobody noticed for three months (#466).
+
+**Agent frontmatter**: valid fields are `name` (required), `description` (required), `model`, `effort`, `maxTurns`, `tools`, `disallowedTools`, `initialPrompt`. `tools` is an allowlist (only the listed tools are available); `disallowedTools` is a denylist applied first, then the allowlist is resolved against what remains. Heavy-research agents in this plugin use `tools` (allowlist) for prompt-injection hardening — see `plugins/arckit-claude/agents/arckit-research.md` for the canonical shape, including MCP tool naming (`mcp__plugin_arckit_<server>__<tool>` — the bare `mcp__<server>__<tool>` form matches nothing in plugin context). Fields like `color` and `permissionMode` remain invalid in plugin context. Claude-only fields (`effort`, `initialPrompt`, `maxTurns`, `disallowedTools`, `tools`) are stripped by the converter. `scripts/check-agent-frontmatter.py` (CI) asserts every agent declares a `tools:` allowlist, that `agents/` holds nothing but agent files, and that no file carries the alphabetised `description, model, name` block `copy_agent_stripped()` leaves behind when it is accidentally run against the plugin source.
 
 Agents are Claude Code only — Codex/OpenCode/Gemini equivalents inline the full agent prompt.
 

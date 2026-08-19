@@ -4,6 +4,18 @@
 > with a JSON-Schema-validated handoff between reader and orchestrator.
 > First implemented for `arckit-datascout` (issue #442 item 1).
 
+> **This document lives in `docs/`, not `agents/`.** Claude Code registers
+> *every* `.md` under a plugin's `agents/` directory as a dispatchable
+> agent, including one with no frontmatter — which then resolves to an
+> unrestricted tool grant. While this file sat in `agents/` it surfaced as
+> an agent named `READER-PATTERN` with "All tools", and `claude plugin
+> details arckit` billed it as a 2–7K on-invoke skill. Keep design
+> references out of `agents/`; `scripts/check-agent-frontmatter.py`
+> enforces it. It is not in `references/` either: that tree is read at
+> runtime by 55 commands and is therefore copied into every overlay plugin
+> by `sync-shared-assets.py`, whereas this is a maintainer document no
+> command ever reads.
+
 ## Why
 
 Research-heavy agents in ArcKit (`arckit-research`, `arckit-datascout`,
@@ -65,7 +77,8 @@ arckit-claude/
 │                                         # holds Agent + Bash, dispatches reader and writer.
 ├── agents/
 │   ├── arckit-{name}-reader.md           # Reader subagent (subagent: true)
-│   ├── arckit-{name}-writer.md           # Writer subagent (subagent: true)
+│   └── arckit-{name}-writer.md           # Writer subagent (subagent: true)
+├── docs/
 │   └── READER-PATTERN.md                 # This document
 ├── schemas/
 │   ├── {name}-handoff.schema.json        # JSON Schema 2020-12
