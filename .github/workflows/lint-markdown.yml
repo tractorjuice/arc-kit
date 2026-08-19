@@ -14,6 +14,8 @@ on:
       - "scripts/check-guide-parity.py"
       - "scripts/check-doc-type-registry.py"
       - "scripts/check-agent-frontmatter.py"
+      - "scripts/check-action-pins.py"
+      - ".github/workflows/*.yml"
       - "scripts/sync-shared-assets.py"
       - "scripts/standardise-colon.py"
       - "package.json"
@@ -59,6 +61,8 @@ on:
       - "scripts/check-guide-parity.py"
       - "scripts/check-doc-type-registry.py"
       - "scripts/check-agent-frontmatter.py"
+      - "scripts/check-action-pins.py"
+      - ".github/workflows/*.yml"
       - "scripts/sync-shared-assets.py"
       - "scripts/standardise-colon.py"
       - "package.json"
@@ -97,13 +101,13 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
 
-      - uses: DavidAnson/markdownlint-cli2-action@v19
+      - uses: DavidAnson/markdownlint-cli2-action@992badcdf24e3b8eb7e87ff9287fe931bcb00c6e # v20
         with:
           globs: "**/*.md"
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
         with:
           python-version: "3.11"
 
@@ -158,7 +162,10 @@ jobs:
       - name: Agent frontmatter (tools allowlist present, no stray files in agents/) (#466)
         run: python3 scripts/check-agent-frontmatter.py
 
-      - uses: actions/setup-node@v4
+      - name: GitHub Actions are pinned to commit SHAs (#466 item 17)
+        run: python3 scripts/check-action-pins.py
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: "20"
 
