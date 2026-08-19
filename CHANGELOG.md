@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   Two further properties from the same guidance pages are now stated as properties of the derivation rather than left implicit: a criterion whose every recorded answer is SEAL-4 can never bind the minimum (p.9 — *"it must be understood that the criterion has no impact on the SEAL calculation"*), and the Overall SEAL, not the Sovereignty Score, is the framework's actual rejection gate (p.10 — *"the prevalence of the SEAL criterion over the Sovereignty Score... Sovereignty score is used to compare the offers that have reached the minimum required SEAL"*). The Commission's own SEAL-4 attainability caveat (p.13, "Lessons learnt", published 1 June 2026) is carried attributed and dated, framed as a limitation it proposes to revisit rather than a permanent property of SEAL-4.
 
+  This branch also carries #795's normative corrections (the three permuted SOV weights, and `SEAL-3` renamed from *"Digital Resilience"* to *"Technological Sovereignty"*) even though they are that PR's fix, not this one's. It predates #795, so without them its side of every shared line is the pre-fix text, and merging in the wrong order — or resolving a conflict the obvious way — silently reverts them. Nothing would catch it: markdownlint is clean with either SEAL-3 name. Because both sides now make the identical change, git resolves those lines with no conflict at all and no merge order can reintroduce the wrong values.
+
   `references/quality-checklist.md`'s `EUCSF` section now asserts the Overall SEAL is present, derived as a minimum with its governing criterion named, and that no averaging or modal language appears in the derivation.
 
 ## [6.10.0] — 2026-08-18

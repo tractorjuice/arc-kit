@@ -35,13 +35,13 @@ Weights are set by the framework and sum to 100%. Treat them as the framework's 
 
 | Objective | Weight |
 |-----------|--------|
-| SOV-1 Strategic Sovereignty | 15% |
+| SOV-1 Strategic Sovereignty | 20% |
 | SOV-2 Legal & Jurisdictional Sovereignty | 10% |
 | SOV-3 Data & AI Sovereignty | 10% |
 | SOV-4 Operational Sovereignty | 15% |
-| SOV-5 Supply Chain Sovereignty | 20% |
+| SOV-5 Supply Chain Sovereignty | 10% |
 | SOV-6 Technology Sovereignty | 15% |
-| SOV-7 Security & Compliance Sovereignty | 10% |
+| SOV-7 Security & Compliance Sovereignty | 15% |
 | SOV-8 Environmental Sustainability | 5% |
 
 Supply chain carries the heaviest weight, and technology, strategic and operational sovereignty together carry 45% — the framework treats dependency as the core sovereignty question, not data location alone.
