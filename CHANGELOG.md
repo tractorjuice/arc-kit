@@ -5,7 +5,19 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [6.11.0] — 2026-08-19
+
+### Documentation
+
+- **A Bring Your Own LLM guide** (#805). ArcKit has always been runnable against a self-hosted or non-Anthropic model and nothing in `docs/` or `README.md` said so, so the only discoverable answer was that it could not be done. `docs/guides/byo-llm.md` documents the three routes that exist today, none of which need ArcKit-specific code: Claude Code against a server that serves `/v1/messages` natively (vLLM, llama.cpp, Ollama v0.14.0+, SGLang, LM Studio), which removes the translation proxy this used to require; Codex CLI or OpenCode, which speak the OpenAI protocol natively and reach the same servers with no translation at all; and an organisational LLM gateway.
+
+  Each route records what it keeps, what it loses, and the per-server defects live at the time of writing (SGLang's `input_tokens: 0` in `message_start`, Ollama's `count_tokens` hang, vLLM's tool-parser flags and its rejection of model names containing `/`). It states plainly that Anthropic does not support routing Claude Code to non-Claude models through any gateway.
+
+  Carries a governance section, because the point of the harness is that its artefacts can be relied on: `provenance-stamp.mjs` takes the model identifier from the footer the model writes about itself, so a remapped local model may stamp a wrong or absent one; and `downgradeEffort` treats an unrecognised model ID as supporting every level, so a command declaring `effort: max` is stamped as having run at `max` regardless, making the effort row decorative on a non-Claude model.
+
+  Registered at four enumeration points, not one: `docs/guides.html`, `docs/llms.txt`, the plugin guide tree so it ships to all seven generated extensions, and `config/guide-groups.mjs`. The fourth was missed on the first commit and caught only by `tests/codex/`, which asserts no guide lands in "Other / Uncategorised" — `check-guide-parity.py` and `check-guide-site-links.py` both passed on the broken tree, so neither guard can see a missing section classification.
+
+- **Removed the broken star-history chart and the DeepWiki integration from `README.md`** (#804). Both rendered as dead images.
 
 ### Fixed
 
