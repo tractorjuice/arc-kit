@@ -1,0 +1,41 @@
+{
+  "provider": "aws",
+  "research_category": "Container orchestration",
+  "services": [
+    {
+      "service_name": "Amazon EKS",
+      "service_full_name": "Amazon Elastic Kubernetes Service",
+      "service_category": "containers",
+      "doc_url": "https://docs.aws.amazon.com/eks/",
+      "fetched_from_url": "https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html",
+      "fetched_at_iso": "2026-08-19T11:00:00Z",
+      "citation_id": "AWS-EKS-1",
+      "confidence": "high",
+      "evidence": {
+        "lifecycle_status": "ga",
+        "architecture_signals": [
+          "multi-az-supported", "auto-scaling", "encryption-at-rest", "encryption-in-transit",
+          "iam-integration", "private-networking", "audit-logging", "managed-patching",
+          "observability-integration", "infrastructure-as-code-supported", "reserved-pricing-available"
+        ],
+        "sla_uptime_pct": 99.95,
+        "sla_published": true,
+        "pricing_model": ["on-demand", "reserved", "savings-plan", "spot"],
+        "published_unit_prices": [
+          { "unit": "cluster hour", "price": 0.1, "currency": "USD", "period": "hour", "pricing_option": "on-demand", "region_code": "eu-west-2" }
+        ],
+        "compliance_programmes": ["iso-27001", "iso-27017", "soc2-type2", "pci-dss", "uk-cloud-security-principles"],
+        "iac_support": ["terraform", "cloudformation", "cdk"],
+        "sdk_languages": ["python", "javascript", "java", "dotnet", "go"],
+        "integration_protocols": ["rest", "grpc"],
+        "key_features": ["Managed Kubernetes control plane across three availability zones"],
+        "documented_limits": ["100 nodes per managed node group by default"]
+      }
+    }
+  ],
+  "regional_availability": [
+    { "service_name": "Amazon EKS", "region_code": "eu-west-2", "status": "available", "citation_id": "AWS-REG-1" },
+    { "service_name": "Amazon EKS", "region_code": "eu-west-1", "status": "available", "citation_id": "AWS-REG-2" }
+  ],
+  "errors": []
+}

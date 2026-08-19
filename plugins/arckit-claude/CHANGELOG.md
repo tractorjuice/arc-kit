@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **The three cloud-research commands now run as three-tier reader/orchestrator/writer splits** (#466, item 1 remainder). `/arckit:aws-research`, `/arckit:azure-research` and `/arckit:gcp-research` complete the item: **every research agent in ArcKit is now split**, and `arckit-framework` is the only single-tier agent left, deliberately exempt as synthesis-only over artefacts already in the repository.
+
+  **Three readers, one writer, one schema.** Each provider keeps its own reader, allowlisting only that provider's MCP server — an AWS reader must not be able to reach Microsoft Learn, and that is the whole point of the tier. They share `arckit-cloud-research-writer`, because a writer holds no network tools and there is nothing to isolate between providers; sharing it is what keeps the three artefacts structurally comparable, which is what makes them worth putting side by side in `/arckit:evaluate`.
+
+  **The star ratings stop being decorative.** All three templates carry a pillar table:
+
+  ```text
+  | Pillar                 | Rating      | Notes |
+  | Operational Excellence | ⭐⭐⭐⭐⭐ | ...   |
+  | Security               | ⭐⭐⭐⭐⭐ | ...   |
+  ```
+
+  Nothing defined what earned a fifth star, so a reader could not tell a service that scored five because its documentation states customer-managed keys, private networking and audit logging from one that scored five because the model was feeling generous. In practice the tables trended to five across every pillar, which made them useless for the one job they had: comparing two services. `cloud-research-generic.yaml` derives all six pillars from documented capabilities, and the artefact renders the numeric score and the evidence behind each star. The six pillars are AWS Well-Architected's and map cleanly onto the Azure Well-Architected Framework and the Google Cloud Architecture Framework, which is why one rubric serves all three providers.
+
+  **Region availability is a gate, not a score.** A service unavailable in a region the project requires cannot be traded off against a strong security posture, so it never enters the weighted total: it is excluded from the recommendation, rendered in the artefact with the reason, and cited. A row the reader never checked is recorded as a coverage gap rather than as unavailability — the distinction the AWS availability tool makes between `isNotAvailableIn` and `Not Found`, preserved through the schema's status enum.
+
+- **`schemas/cloud-research-handoff.schema.json` and `cloud-research-{generic,uk-gov}.yaml`.** The schema has no pillar rating, star, rank or recommendation field, and `architecture_signals` is a 21-value allowlist of capabilities the provider's *documentation states* — the readers are explicitly forbidden from inferring `multi-az-supported` from a service being a managed database, because that shortcut would score every service identically and destroy the rubric. The UK-Gov variant lifts security 25→30 and sustainability 10→15 (Greening Government ICT makes carbon reporting an obligation, not a preference), and adds two gates for UK region availability and published UK assurance.
+
+- **`tests/plugin/fixtures/cloud-research-handoff/` (3 valid + 6 reject) and `test_validate_cloud_research_handoff.mjs`, wired into `lint-markdown.yml`.** The rejects cover a reader emitting its own `well_architected` ratings and a `recommendation`, a fabricated off-allowlist `best-in-class-security` signal, an off-enum region status, and an unknown provider. One valid fixture is a **preview-lifecycle service with no SLA and no compliance evidence**, which must round-trip cleanly: it is the case the rubric most needs to score low rather than reject.
+
 - **`/arckit:gov-landscape` now runs as a three-tier reader/orchestrator/writer split** (#466, item 1 remainder). This completes the govreposcrape family and leaves only the three cloud-research agents unsplit. The reader holds both govreposcrape MCP tools and `WebFetch`; the orchestrator holds neither; the writer holds the only `Write`.
 
   **The maturity score stops being an impression.** The single-tier agent assigned five 1-5 dimension scores by eye and averaged them into a Production-Grade / Mature / Developing / Experimental label. Those dimensions had no defined inputs — "Documentation (1=no docs, 5=comprehensive README, guides, API docs, architecture docs)" left the model to decide what *comprehensive* meant, differently on each run — so the resulting label carried an authority the underlying judgement did not support. `gov-landscape-generic.yaml` derives all five from extracted evidence, and the artefact renders the dimension values and the evidence behind them alongside the band. The 1-5 scale and the four band names are preserved so existing GLND artefacts remain comparable.

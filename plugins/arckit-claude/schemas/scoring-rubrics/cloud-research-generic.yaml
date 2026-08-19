@@ -1,0 +1,169 @@
+# Well-architected rubric for arckit-{aws,azure,gcp}-research
+#
+# Consumed by all three cloud-research orchestrators. Replaces the
+# star ratings the single-tier agents wrote by hand:
+#
+#     | Pillar                 | Rating      | Notes |
+#     | Operational Excellence | ⭐⭐⭐⭐⭐ | ...   |
+#     | Security               | ⭐⭐⭐⭐⭐ | ...   |
+#
+# Nothing defined what earned a fifth star, so the tables were
+# decorative: a reader could not tell a service that scored five
+# because it genuinely has customer-managed keys, private networking
+# and audit logging from one that scored five because the model was
+# feeling generous. In practice they trended to five across the board,
+# which made them useless for comparing two services.
+#
+# The six pillars are AWS Well-Architected's, and map cleanly onto the
+# Azure Well-Architected Framework and the Google Cloud Architecture
+# Framework, which is why one rubric serves all three providers. Every
+# input is a documented capability from the provider's own docs.
+#
+# Scores are 0-100 internally and rendered as stars (round(score / 20))
+# so the existing template tables keep working.
+
+name: cloud-research-generic
+version: 1
+weights:
+  security: 25
+  reliability: 20
+  operational_excellence: 15
+  performance_efficiency: 15
+  cost_optimisation: 15
+  sustainability: 10
+
+scoring:
+  security:
+    method: signal_coverage
+    field: evidence.architecture_signals
+    expected:
+      - encryption-at-rest
+      - encryption-in-transit
+      - iam-integration
+      - private-networking
+      - audit-logging
+      - customer-managed-keys
+    scale: 100
+    # A service with no compliance programme evidence at all is capped:
+    # a public sector buyer cannot rely on an assurance that is not
+    # published, however good the architecture is.
+    compliance_floor:
+      field: evidence.compliance_programmes
+      none_found_cap: 60
+    when_missing: 30
+
+  reliability:
+    method: composite
+    components:
+      - name: resilience_signals
+        method: signal_coverage
+        field: evidence.architecture_signals
+        expected: [multi-az-supported, multi-region-supported, managed-backups, point-in-time-restore]
+        scale: 100
+        when_missing: 30
+        weight: 0.5
+      - name: sla
+        method: band
+        field: evidence.sla_uptime_pct
+        bands:
+          - { min: 99.99, max: null,  score: 100 }
+          - { min: 99.9,  max: 99.98, score: 85 }
+          - { min: 99.0,  max: 99.89, score: 60 }
+          - { min: 0,     max: 98.99, score: 30 }
+        when_missing: 30
+        weight: 0.3
+      - name: lifecycle
+        method: map
+        field: evidence.lifecycle_status
+        map:
+          ga: 100
+          preview: 30
+          beta: 25
+          alpha: 10
+          deprecated: 5
+          retired: 0
+          unknown: 40
+        when_missing: 40
+        weight: 0.2
+
+  operational_excellence:
+    method: composite
+    components:
+      - name: iac
+        method: set_non_empty
+        field: evidence.iac_support
+        excluding: [none-found]
+        match_score: 100
+        miss_score: 20
+        when_missing: 40
+        weight: 0.4
+      - name: ops_signals
+        method: signal_coverage
+        field: evidence.architecture_signals
+        expected: [observability-integration, managed-patching, infrastructure-as-code-supported]
+        scale: 100
+        when_missing: 30
+        weight: 0.4
+      - name: sdk_breadth
+        method: band
+        computed_field: sdk_language_count
+        bands:
+          - { min: 0, max: 1,    score: 25 }
+          - { min: 2, max: 4,    score: 65 }
+          - { min: 5, max: null, score: 100 }
+        when_missing: 40
+        weight: 0.2
+
+  performance_efficiency:
+    method: signal_coverage
+    field: evidence.architecture_signals
+    expected: [auto-scaling, edge-caching, global-load-balancing, multi-region-supported]
+    scale: 100
+    when_missing: 30
+
+  cost_optimisation:
+    method: composite
+    components:
+      - name: commitment_options
+        method: signal_coverage
+        field: evidence.architecture_signals
+        expected: [reserved-pricing-available, serverless-billing, free-tier-available]
+        scale: 100
+        when_missing: 30
+        weight: 0.5
+      - name: price_transparency
+        # A service with no published unit price cannot be cost-modelled
+        # without a sales conversation, and that is a real cost of its own.
+        method: band
+        computed_field: published_price_count
+        bands:
+          - { min: 0, max: 0,    score: 20 }
+          - { min: 1, max: 2,    score: 70 }
+          - { min: 3, max: null, score: 100 }
+        when_missing: 30
+        weight: 0.5
+
+  sustainability:
+    method: signal_coverage
+    field: evidence.architecture_signals
+    expected: [carbon-reporting, serverless-billing, auto-scaling]
+    scale: 100
+    when_missing: 40
+
+# Rendered star rating per pillar, so the existing template tables
+# continue to work: stars = round(pillar_score / 20), clamped to 1-5.
+rendering:
+  stars_divisor: 20
+  stars_min: 1
+  stars_max: 5
+
+# Region availability is a gate, not a score. A service unavailable in
+# a region the project requires cannot be traded off against a strong
+# security posture, so it is never averaged into the total.
+gates:
+  region_availability:
+    field: regional_availability.status
+    against: project_profile.required_regions
+    blocking_values: [not-available]
+    warning_values: [planned, unknown]
+    on_blocking: exclude_from_recommendation_and_state_reason
