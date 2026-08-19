@@ -1,0 +1,14 @@
+{
+  "bucket": "FHIR patient data",
+  "bucket_type": "query-variation",
+  "repositories": [
+    {
+      "org": "nhsdigital",
+      "repo": "fhir-client-dotnet",
+      "fetched_from_url": "https://github.com/nhsdigital/fhir-client-dotnet",
+      "citation_id": "NHSD-1",
+      "evidence": { "language": "csharp" }
+    }
+  ],
+  "errors": []
+}
