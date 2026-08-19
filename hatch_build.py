@@ -39,6 +39,9 @@ REQUIRED_ASSETS = {
         "templates",
         "references",
         "schemas",
+        # Vendored reference data a command treats as its only source of truth.
+        # A hollow build that omits it ships commands pointing at nothing.
+        "data",
         "config.toml",
     ],
     "extensions/arckit-opencode": [

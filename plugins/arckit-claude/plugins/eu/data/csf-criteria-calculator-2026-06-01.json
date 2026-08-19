@@ -6,6 +6,7 @@
     "sourceUrl": "https://commission.europa.eu/document/download/3acb8fe8-8a4a-4339-ae74-f56138d913d1_en?filename=Annex+-+Sovereignty+assessment+calculator.xlsx",
     "guidanceUrl": "https://commission.europa.eu/document/download/2ad80a48-166f-4c77-a513-80c53ca2a128_en?filename=Cloud+Sovereignty+Framework+-+Implementation+guidance.pdf",
     "publicationDate": "2026-06-01",
+    "publicationDateSource": "The Commission's download page for the artefact. Neither file's own metadata states it and the two disagree: the workbook's docProps give created 2026-05-28T09:59:55Z, and the guidance PDF's CreationDate is 2026-06-03. Recorded explicitly because this file is NAMED by publication date -- the calculator and the framework version (v1.2.1, October 2025) disagree on the question count, so the version could not serve as the identifier.",
     "retrievedDate": "2026-08-14",
     "frameworkVersion": "EU Cloud Sovereignty Framework v1.2.1 (October 2025)",
     "questionCount": {
@@ -225,7 +226,8 @@
               "value": 125,
               "seal": 4
             }
-          ]
+          ],
+          "note": "Two of this criterion's answers carry `label: null`. That is the WORKBOOK's gap, not a transcription loss: rows 31 and 33 of the published Annex calculator have blank label cells while still carrying a score value and a SEAL level. Transcribed as-published rather than back-filled with an invented label."
         },
         {
           "n": 7,

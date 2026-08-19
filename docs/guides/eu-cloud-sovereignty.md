@@ -35,13 +35,13 @@ Weights are set by the framework and sum to 100%. Treat them as the framework's 
 
 | Objective | Weight |
 |-----------|--------|
-| SOV-1 Strategic Sovereignty | 15% |
+| SOV-1 Strategic Sovereignty | 20% |
 | SOV-2 Legal & Jurisdictional Sovereignty | 10% |
 | SOV-3 Data & AI Sovereignty | 10% |
 | SOV-4 Operational Sovereignty | 15% |
-| SOV-5 Supply Chain Sovereignty | 20% |
+| SOV-5 Supply Chain Sovereignty | 10% |
 | SOV-6 Technology Sovereignty | 15% |
-| SOV-7 Security & Compliance Sovereignty | 10% |
+| SOV-7 Security & Compliance Sovereignty | 15% |
 | SOV-8 Environmental Sustainability | 5% |
 
 Supply chain carries the heaviest weight, and technology, strategic and operational sovereignty together carry 45% — the framework treats dependency as the core sovereignty question, not data location alone.
@@ -72,6 +72,8 @@ The generated artefact carries an **Appendix A** with the per-criterion arithmet
 **SEAL is not an input to the Score, and the Score does not determine SEAL.** The same 48 answers determine both readings independently — each answer carries its own Score value and its own SEAL level. Overall SEAL is the *minimum* SEAL across every answered criterion, not an average and not a function of the weighted Score.
 
 The Implementation guidance's narrative describes 43 sovereignty questions; the published calculator workbook scores 48 criteria across the eight objectives. The command records both counts, with the discrepancy stated, rather than silently picking one.
+
+Where the catalogue lives depends on how you installed ArcKit. Under the Claude Code plugin it resolves inside the `arckit-eu` plugin's own `data/` directory. On a project scaffolded by `arckit init` — Codex, OpenCode or Copilot — it is copied to **`.arckit/data/`**, alongside `.arckit/templates/` and `.arckit/references/`, and the command bodies are rewritten to that path.
 
 ---
 
