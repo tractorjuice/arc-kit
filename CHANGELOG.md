@@ -5,6 +5,28 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **Restored the `tools:` allowlist, `effort:` and `maxTurns:` on `arckit-datascout`, `arckit-grants` and `arckit-gov-reuse`** (#466). PR #445 migrated all ten research agents off a `disallowedTools` denylist onto an explicit `tools:` allowlist, so that tools added by future Claude Code versions cannot auto-grant to an existing agent. PR #446 — the three-tier reader/writer split — silently reverted it on exactly the three agents it touched, and the regression survived three months and seven minor releases. Both changes are recorded as shipped in #466's own "already done" list.
+
+  The cause was mechanical, not a hand-edit. `converter.py::copy_agent_stripped()` pops the five `CLAUDE_ONLY_AGENT_FIELDS` and rebuilds the block with `yaml.dump()`; run with its destination pointing at the source tree it strips `effort`/`maxTurns`/`tools` from the plugin itself and leaves an alphabetised `description, model, name` block with the description reflowed from a `|` literal into a single-quoted folded scalar. All three damaged files carried that signature exactly; the other sixteen agents kept their authored field order. Until now those three ran with every tool in the harness, at session effort, with no turn cap.
+
+  `arckit-gov-reuse`'s MCP entry is restored in the `mcp__plugin_arckit_govreposcrape__search_uk_gov_code` form rather than the bare `mcp__govreposcrape__…` it originally shipped with, which matches nothing in plugin context.
+
+- **`READER-PATTERN.md` is no longer registered as a dispatchable agent** (#466). Claude Code registers *every* `.md` under a plugin's `agents/` directory, including one with no frontmatter, which then resolves to an unrestricted tool grant. A design reference therefore surfaced as an agent named `READER-PATTERN` with "All tools", and `claude plugin details arckit` billed it as a 2–7K on-invoke skill — it was listed as one in README's own footprint table, captured from that command. Moved to `plugins/arckit-claude/docs/READER-PATTERN.md`, next to `DEPENDENCY-MATRIX.md`.
+
+  Not to `references/`: that tree is read at runtime by 55 commands and is consequently copied into all 15 overlay plugins by `sync-shared-assets.py`, while no command has ever read this document.
+
+### Added
+
+- **`scripts/check-agent-frontmatter.py`, wired into `lint-markdown.yml`** (#466). Asserts that every agent declares a non-empty `tools:` allowlist, that `agents/` contains nothing but `arckit-*.md` agent files, that no file carries the `copy_agent_stripped()` writeback signature, and that MCP entries use the `mcp__plugin_<package>_<server>__<tool>` prefix. Each of the four checks was verified against a deliberately reintroduced instance of the defect it guards. Fourteen `check-*.py` guards existed and not one looked at `agents/`, which is why both defects above went unobserved.
+
+### Changed
+
+- **Corrected the Agent System section of `CLAUDE.md`** (#466). It claimed 16 agents (there are 19), said the reader/writer subagents are "dispatched only by the corresponding orchestrator agent" (`READER-PATTERN.md` step 5 requires the orchestrator to be the slash command, and the command bodies say so explicitly), and listed `arckit-datascout`, `arckit-gov-reuse` and `arckit-grants` as the agents their commands delegate to, which stopped being true at #446. Those three files are now documented for what they actually are: pre-split monoliths retained solely because the converter replaces a command body wholesale with the agent prompt for non-Claude targets, which cannot dispatch subagents. The MCP tool-naming example in the same section was also wrong — it gave the bare `mcp__<server>__<tool>` form.
+
 ## [6.11.0] — 2026-08-19
 
 ### Documentation

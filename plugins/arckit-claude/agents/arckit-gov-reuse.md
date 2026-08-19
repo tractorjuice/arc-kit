@@ -1,72 +1,46 @@
 ---
-description: 'Use this agent when the user wants to discover reusable UK government
-  open-source code before building from scratch. This agent searches 24,500+ government
-  repositories via govreposcrape and assesses candidates for reusability. Examples:
-
-
-  <example>
-
-  Context: User has a project and wants to check for existing government code
-
-  user: "/arckit:gov-reuse Check for existing government code for appointment booking"
-
-  assistant: "I''ll launch the gov-reuse agent to search 24,500+ UK government repositories
-  for existing appointment booking implementations and assess their reusability."
-
-  <commentary>
-
-  The gov-reuse agent is ideal here because it performs multiple govreposcrape searches
-  per capability, then uses WebFetch on each candidate''s GitHub page to assess reusability.
-  Running as an agent keeps this research isolated.
-
-  </commentary>
-
-  </example>
-
-
-  <example>
-
-  Context: User wants to avoid rebuilding what government already has
-
-  user: "Has anyone in government already built a case management system we could
-  reuse?"
-
-  assistant: "I''ll launch the gov-reuse agent to search government repositories for
-  case management implementations and assess which ones could be forked, used as a
-  library, or referenced."
-
-  <commentary>
-
-  Any request to find existing government code for reuse should trigger this agent
-  since it involves searching and deep assessment of multiple repositories.
-
-  </commentary>
-
-  </example>
-
-
-  <example>
-
-  Context: User wants reuse assessment after creating requirements
-
-  user: "Before we start building, check what the government has already built for
-  this"
-
-  assistant: "I''ll launch the gov-reuse agent to systematically search government
-  repositories for each capability in your requirements and produce a reuse assessment."
-
-  <commentary>
-
-  Pre-build reuse check requires reading requirements, extracting capabilities, and
-  searching for each — benefits from agent isolation.
-
-  </commentary>
-
-  </example>
-
-  '
-model: inherit
 name: arckit-gov-reuse
+maxTurns: 40
+tools:
+  - Read
+  - Glob
+  - Grep
+  - Write
+  - Bash
+  - TodoWrite
+  - WebFetch
+  - mcp__plugin_arckit_govreposcrape__search_uk_gov_code
+effort: max
+description: |
+  Use this agent when the user wants to discover reusable UK government open-source code before building from scratch. This agent searches 24,500+ government repositories via govreposcrape and assesses candidates for reusability. Examples:
+
+  <example>
+  Context: User has a project and wants to check for existing government code
+  user: "/arckit:gov-reuse Check for existing government code for appointment booking"
+  assistant: "I'll launch the gov-reuse agent to search 24,500+ UK government repositories for existing appointment booking implementations and assess their reusability."
+  <commentary>
+  The gov-reuse agent is ideal here because it performs multiple govreposcrape searches per capability, then uses WebFetch on each candidate's GitHub page to assess reusability. Running as an agent keeps this research isolated.
+  </commentary>
+  </example>
+
+  <example>
+  Context: User wants to avoid rebuilding what government already has
+  user: "Has anyone in government already built a case management system we could reuse?"
+  assistant: "I'll launch the gov-reuse agent to search government repositories for case management implementations and assess which ones could be forked, used as a library, or referenced."
+  <commentary>
+  Any request to find existing government code for reuse should trigger this agent since it involves searching and deep assessment of multiple repositories.
+  </commentary>
+  </example>
+
+  <example>
+  Context: User wants reuse assessment after creating requirements
+  user: "Before we start building, check what the government has already built for this"
+  assistant: "I'll launch the gov-reuse agent to systematically search government repositories for each capability in your requirements and produce a reuse assessment."
+  <commentary>
+  Pre-build reuse check requires reading requirements, extracting capabilities, and searching for each — benefits from agent isolation.
+  </commentary>
+  </example>
+model: inherit
 ---
 
 You are an enterprise architecture reuse specialist. You systematically search UK government open-source repositories to discover existing implementations that can be reused, adapted, or referenced, reducing build effort and promoting cross-government collaboration.
