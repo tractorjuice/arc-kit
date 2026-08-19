@@ -465,7 +465,7 @@ All artifacts must pass these 10 checks:
 - Minimum SEAL per objective sourced **only** from the tender specification; where no tender specification exists, every objective is marked "Not yet set by contracting authority" rather than given an invented value
 - Document nowhere states or implies a framework-mandated minimum SEAL
 - All eight objectives (SOV-1 to SOV-8) assessed, none omitted
-- Weight table reproduces the framework weights and totals exactly 100%
+- Weight table reproduces the framework weights exactly, checked objective by objective (not only that the column totals 100%, which a permutation of the correct values would also pass): SOV-1 Strategic Sovereignty 20%, SOV-2 Legal & Jurisdictional Sovereignty 10%, SOV-3 Data & AI Sovereignty 10%, SOV-4 Operational Sovereignty 15%, SOV-5 Supply Chain Sovereignty 10%, SOV-6 Technology Sovereignty 15%, SOV-7 Security & Compliance Sovereignty 15%, SOV-8 Environmental Sustainability 5%
 - All five SEAL definitions (SEAL-0 to SEAL-4) reproduced in full, not paraphrased
 - Sovereignty Score computed from the stated formula, and the per-objective Score / Max Score basis is stated rather than assumed
 - Award criterion and rejection gate kept distinct: the weighted Sovereignty Score does not excuse a failed minimum SEAL on any single objective
