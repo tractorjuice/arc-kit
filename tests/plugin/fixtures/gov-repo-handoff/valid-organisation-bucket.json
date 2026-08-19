@@ -1,0 +1,61 @@
+{
+  "bucket": "nhsdigital",
+  "bucket_type": "organisation",
+  "index_status": { "total_hits": 214, "returned": 40 },
+  "repositories": [
+    {
+      "org": "nhsdigital",
+      "repo": "nhs-app-api",
+      "repo_url": "https://github.com/nhsdigital/nhs-app-api",
+      "fetched_from_url": "https://github.com/nhsdigital/nhs-app-api",
+      "fetched_at_iso": "2026-08-19T10:40:00Z",
+      "citation_id": "NHSD-APP-1",
+      "confidence": "high",
+      "match_rank": 2,
+      "evidence": {
+        "language": "typescript",
+        "framework_hints": ["openapi", "kubernetes-helm"],
+        "licence": "MIT",
+        "last_commit_iso": "2026-07-30T14:00:00Z",
+        "first_commit_iso": "2019-03-04T09:00:00Z",
+        "stars": 130,
+        "forks": 34,
+        "contributors": 27,
+        "has_tests": true,
+        "has_ci": true,
+        "has_docs": true,
+        "has_readme": true,
+        "archived": false,
+        "standards_signals": ["openapi-spec", "govuk-design-system"],
+        "deployment_platform": "aws"
+      }
+    }
+  ],
+  "organisations": [
+    { "org": "nhsdigital", "org_type": "nhs", "repo_count": 214, "primary_languages": ["typescript", "python"], "citation_id": "NHSD-ORG-1" }
+  ],
+  "advisories": [
+    {
+      "scope": "organisation",
+      "scope_name": "nhsdigital",
+      "advisory_id": "CVE-2024-12345",
+      "severity": "high",
+      "affected_repo_count": 4,
+      "affected_package": "some-lib",
+      "eol_dependency": false,
+      "scanned_at_iso": "2026-08-19T10:41:00Z",
+      "citation_id": "VX-1"
+    },
+    {
+      "scope": "package",
+      "scope_name": "log4j-core",
+      "advisory_id": "GHSA-jfh8-c2jp-5v3q",
+      "severity": "critical",
+      "affected_repo_count": 11,
+      "citation_id": "VX-2"
+    }
+  ],
+  "errors": [
+    { "url": "https://govreposcrape.example/vulnerability_exposure?scope=alphagov", "reason": "no indexed SBOM data for this scope" }
+  ]
+}

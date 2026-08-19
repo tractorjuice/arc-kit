@@ -1,0 +1,17 @@
+{
+  "bucket": "nhsdigital",
+  "bucket_type": "organisation",
+  "repositories": [
+    {
+      "org": "nhsdigital",
+      "repo": "nhs-app-api",
+      "repo_url": "https://github.com/nhsdigital/nhs-app-api",
+      "fetched_from_url": "https://github.com/nhsdigital/nhs-app-api",
+      "citation_id": "NHSD-1",
+      "maturity_band": "Production-Grade",
+      "maturity_score_5": 5,
+      "evidence": { "language": "typescript" }
+    }
+  ],
+  "errors": []
+}

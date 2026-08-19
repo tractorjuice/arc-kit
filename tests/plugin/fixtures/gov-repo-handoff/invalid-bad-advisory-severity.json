@@ -1,0 +1,15 @@
+{
+  "bucket": "nhsdigital",
+  "bucket_type": "organisation",
+  "repositories": [],
+  "advisories": [
+    {
+      "scope": "organisation",
+      "scope_name": "nhsdigital",
+      "advisory_id": "CVE-2024-12345",
+      "severity": "catastrophic",
+      "citation_id": "VX-1"
+    }
+  ],
+  "errors": []
+}

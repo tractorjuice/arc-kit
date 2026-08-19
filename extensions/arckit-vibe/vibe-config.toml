@@ -42,6 +42,8 @@ files = [
     "arckit-gov-code-search-reader.toml",
     "arckit-gov-code-search-writer.toml",
     "arckit-gov-code-search.toml",
+    "arckit-gov-landscape-reader.toml",
+    "arckit-gov-landscape-writer.toml",
     "arckit-gov-landscape.toml",
     "arckit-gov-reuse-reader.toml",
     "arckit-gov-reuse-writer.toml",
