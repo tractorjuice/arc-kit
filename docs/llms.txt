@@ -32,6 +32,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Template builder](https://arckit.org/guides/template-builder.md): Build new document templates.
 - [Upgrading ArcKit](https://arckit.org/guides/upgrading.md): Version upgrade procedure.
 - [Productivity tips](https://arckit.org/guides/productivity.md): Workflow optimization.
+- [Bring your own LLM](https://arckit.org/guides/byo-llm.md): Run ArcKit on a self-hosted or non-Anthropic model (Claude Code with an Anthropic Messages endpoint, Codex/OpenCode custom provider, or an LLM gateway).
 
 ### Discovery
 
