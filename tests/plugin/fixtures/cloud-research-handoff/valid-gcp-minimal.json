@@ -1,0 +1,16 @@
+{
+  "provider": "gcp",
+  "research_category": "Managed identity",
+  "services": [
+    {
+      "service_name": "Identity Platform",
+      "service_category": "identity",
+      "fetched_from_url": "https://cloud.google.com/identity-platform/docs",
+      "citation_id": "GCP-IDP-1",
+      "evidence": { "lifecycle_status": "ga" }
+    }
+  ],
+  "errors": [
+    { "url": "https://cloud.google.com/identity-platform/pricing", "reason": "pricing page did not state a europe-west2 figure" }
+  ]
+}

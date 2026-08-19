@@ -201,6 +201,9 @@ jobs:
       - name: Handoff schema validator tests (gov-repo)
         run: node tests/plugin/test_validate_gov_repo_handoff.mjs
 
+      - name: Handoff schema validator tests (cloud-research)
+        run: node tests/plugin/test_validate_cloud_research_handoff.mjs
+
       - name: Plugin hook test suites
         # Two naming conventions are in use, `*.test.mjs` and `test_*.mjs`, and
         # globbing only the first left EIGHT suites unrun -- 64 tests including

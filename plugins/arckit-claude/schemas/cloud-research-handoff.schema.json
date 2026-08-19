@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arckit.org/schemas/cloud-research-handoff/v1",
+  "title": "cloud-research reader → orchestrator handoff payload (v1)",
+  "description": "Factual, extraction-only evidence about a cloud provider's services for one research category, taken from that provider's own documentation via its official MCP server. Shared by /arckit:aws-research, /arckit:azure-research and /arckit:gcp-research: the three templates are structurally identical, so a single contract keeps the three artefacts comparable. Contains no pillar rating, star score, rank or recommendation — those are computed by the orchestrator from a YAML rubric.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["provider", "research_category", "services", "errors"],
+  "properties": {
+    "provider": { "type": "string", "enum": ["aws", "azure", "gcp"] },
+    "research_category": { "$ref": "#/$defs/SafeText" },
+    "services": { "type": "array", "maxItems": 20, "items": { "$ref": "#/$defs/ServiceRecord" } },
+    "regional_availability": {
+      "type": "array", "maxItems": 60, "items": { "$ref": "#/$defs/RegionAvailability" },
+      "description": "One row per (service, region) pair actually queried. A region the reader did not query must be absent, not recorded as unknown."
+    },
+    "unfetched_urls": { "type": "array", "maxItems": 50, "items": { "type": "string", "format": "uri", "maxLength": 512 } },
+    "errors": { "type": "array", "maxItems": 20, "items": { "$ref": "#/$defs/FetchError" } }
+  },
+  "$defs": {
+    "SafeText": { "type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[A-Za-z0-9 .,;:()/&'+%£$€-]{1,200}$" },
+    "ProperName": { "type": "string", "minLength": 1, "maxLength": 128, "pattern": "^[A-Za-z0-9][A-Za-z0-9 .,()/&'+_-]{0,127}$" },
+    "RegionCode": { "type": "string", "maxLength": 40, "pattern": "^[a-z0-9][a-z0-9-]{1,39}$" },
+    "CitationId": { "type": "string", "maxLength": 32, "pattern": "^[A-Z0-9][A-Z0-9-]{0,31}$" },
+    "FetchError": {
+      "type": "object", "additionalProperties": false, "required": ["url", "reason"],
+      "properties": {
+        "url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "reason": { "type": "string", "maxLength": 256 }
+      }
+    },
+    "RegionAvailability": {
+      "type": "object", "additionalProperties": false,
+      "required": ["service_name", "region_code", "status", "citation_id"],
+      "properties": {
+        "service_name": { "$ref": "#/$defs/ProperName" },
+        "region_code": { "$ref": "#/$defs/RegionCode" },
+        "status": { "type": "string", "enum": ["available", "not-available", "planned", "unknown"] },
+        "citation_id": { "$ref": "#/$defs/CitationId" }
+      }
+    },
+    "ServiceRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["service_name", "service_category", "fetched_from_url", "citation_id", "evidence"],
+      "properties": {
+        "service_name": { "$ref": "#/$defs/ProperName" },
+        "service_full_name": { "$ref": "#/$defs/ProperName" },
+        "service_category": {
+          "type": "string",
+          "enum": ["compute", "containers", "serverless", "storage", "database", "networking", "edge-cdn",
+                   "security", "identity", "analytics", "ai-ml", "integration", "devops", "monitoring",
+                   "backup-dr", "migration", "other"]
+        },
+        "doc_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "fetched_from_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "fetched_at_iso": { "type": "string", "format": "date-time" },
+        "citation_id": { "$ref": "#/$defs/CitationId" },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+        "evidence": { "$ref": "#/$defs/Evidence" }
+      }
+    },
+    "Evidence": {
+      "type": "object", "additionalProperties": false,
+      "description": "Every field optional and extraction-only, sourced from the provider's own documentation. Omit what you could not source; never infer from what you know about the service.",
+      "properties": {
+        "lifecycle_status": {
+          "type": "string",
+          "enum": ["ga", "preview", "beta", "alpha", "deprecated", "retired", "unknown"],
+          "description": "A documented fact with real consequences: a preview service usually carries no SLA and no production support commitment."
+        },
+        "architecture_signals": {
+          "type": "array", "maxItems": 20,
+          "description": "Documented capabilities that the rubric maps onto the provider's own well-architected framework. Each must be stated in the documentation, not inferred from the service category.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "multi-az-supported", "multi-region-supported", "auto-scaling", "managed-backups",
+              "point-in-time-restore", "encryption-at-rest", "encryption-in-transit",
+              "customer-managed-keys", "iam-integration", "private-networking", "audit-logging",
+              "managed-patching", "observability-integration", "infrastructure-as-code-supported",
+              "edge-caching", "global-load-balancing", "carbon-reporting", "serverless-billing",
+              "reserved-pricing-available", "free-tier-available", "none-found"
+            ]
+          }
+        },
+        "sla_uptime_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "sla_published": { "type": "boolean" },
+        "pricing_model": {
+          "type": "array", "maxItems": 8,
+          "items": {
+            "type": "string",
+            "enum": ["on-demand", "reserved", "savings-plan", "committed-use-discount", "spot",
+                     "provisioned", "consumption", "free-tier", "custom-quote", "unknown"]
+          }
+        },
+        "published_unit_prices": { "type": "array", "maxItems": 10, "items": { "$ref": "#/$defs/UnitPrice" } },
+        "compliance_programmes": {
+          "type": "array", "maxItems": 15,
+          "items": {
+            "type": "string",
+            "enum": ["iso-27001", "iso-27017", "iso-27018", "iso-22301", "soc2-type2", "pci-dss",
+                     "hipaa", "fedramp-moderate", "fedramp-high", "cyber-essentials-plus",
+                     "uk-cloud-security-principles", "irap", "c5", "none-found"]
+          }
+        },
+        "iac_support": {
+          "type": "array", "maxItems": 10,
+          "items": {
+            "type": "string",
+            "enum": ["terraform", "cloudformation", "cdk", "bicep", "arm-template",
+                     "deployment-manager", "pulumi", "ansible", "none-found"]
+          }
+        },
+        "sdk_languages": {
+          "type": "array", "maxItems": 12,
+          "items": {
+            "type": "string",
+            "enum": ["javascript", "typescript", "python", "java", "dotnet", "ruby", "go", "php", "rust", "none-found"]
+          }
+        },
+        "integration_protocols": {
+          "type": "array", "maxItems": 10,
+          "items": {
+            "type": "string",
+            "enum": ["rest", "graphql", "grpc", "webhooks", "event-stream", "message-queue", "jdbc", "none-found"]
+          }
+        },
+        "key_features": {
+          "type": "array", "maxItems": 10,
+          "description": "Feature statements taken from the documentation. Facts about what the service does, not assessments of how well.",
+          "items": { "$ref": "#/$defs/SafeText" }
+        },
+        "documented_limits": {
+          "type": "array", "maxItems": 8,
+          "description": "Quantified service quotas and limits the documentation states verbatim.",
+          "items": { "$ref": "#/$defs/SafeText" }
+        }
+      }
+    },
+    "UnitPrice": {
+      "type": "object", "additionalProperties": false,
+      "required": ["unit", "price", "currency"],
+      "properties": {
+        "unit": { "$ref": "#/$defs/SafeText" },
+        "price": { "type": "number", "minimum": 0, "maximum": 1000000000 },
+        "currency": { "type": "string", "enum": ["GBP", "EUR", "USD", "other"] },
+        "period": { "type": "string", "enum": ["hour", "month", "year", "per-request", "per-gb", "one-off"] },
+        "pricing_option": {
+          "type": "string",
+          "enum": ["on-demand", "reserved-1yr", "reserved-3yr", "savings-plan", "committed-use-discount", "spot", "free-tier"]
+        },
+        "region_code": { "$ref": "#/$defs/RegionCode" }
+      }
+    }
+  }
+}

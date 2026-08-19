@@ -115,16 +115,13 @@ The validator is shared across all three-tier splits. Each agent supplies its ow
 
 ## Adapting this pattern to another agent
 
-`arckit-research`, `arckit-datascout`, `arckit-grants`, `arckit-gov-reuse`,
-`arckit-gov-code-search`, `arckit-gov-landscape` and `arckit-tenders` have
-been split. Only the three cloud-research agents remain —
-`arckit-aws-research`, `arckit-azure-research`, `arckit-gcp-research` — and
-they are the lowest-priority of the set: they consume first-party vendor
-documentation over official MCP servers, a materially smaller injection
-surface than arbitrary web pages or public repositories. When you do split
-one, follow this sequence:
+**Every research agent has now been split.** `arckit-framework` is the only
+remaining single-tier agent and is deliberately exempt: it is synthesis-only
+over artefacts already in the repository, with no external input to isolate.
 
-0. **Check whether a schema already fits.** `gov-repo-handoff.schema.json` is deliberately shared: it carries a `bucket_type` of `query-variation`, `organisation` or `technology-facet`, and its language/framework/licence enums are kept identical to `gov-reuse-handoff.schema.json`. `/arckit:gov-code-search` and `/arckit:gov-landscape` both use it, which is why it also carries the org-scoped `advisories[]` array only the latter populates.
+Keep this sequence for any new research-heavy command:
+
+0. **Check whether a schema already fits.** `gov-repo-handoff.schema.json` is deliberately shared: it carries a `bucket_type` of `query-variation`, `organisation` or `technology-facet`, and its language/framework/licence enums are kept identical to `gov-reuse-handoff.schema.json`. `/arckit:gov-code-search` and `/arckit:gov-landscape` both use it, which is why it also carries the org-scoped `advisories[]` array only the latter populates. `cloud-research-handoff.schema.json` goes further and is shared by all three cloud commands, whose templates are structurally identical — they also share one **writer**, since a writer holds no network tools and there is nothing to isolate between providers. They do **not** share a reader: each provider's reader allowlists only that provider's MCP server, which is the whole point of the tier.
 
 1. **Define the handoff schema first.** Write `arckit-claude/schemas/{name}-handoff.schema.json` with allowlist enums for every domain-specific field. Drive the schema from the artefact template, not from the existing agent's prompt.
 2. **Pick or write a rubric.** Re-use `generic.yaml` if the agent's scoring criteria don't need overlay-specific tuning; otherwise write `{agent}-{rubric}.yaml`.

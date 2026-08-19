@@ -1,0 +1,23 @@
+{
+  "provider": "azure",
+  "research_category": "Vector search",
+  "services": [
+    {
+      "service_name": "Azure AI Search",
+      "service_category": "ai-ml",
+      "fetched_from_url": "https://learn.microsoft.com/azure/search/",
+      "citation_id": "AZ-SEARCH-1",
+      "confidence": "medium",
+      "evidence": {
+        "lifecycle_status": "preview",
+        "sla_published": false,
+        "architecture_signals": ["encryption-at-rest", "iam-integration"],
+        "compliance_programmes": ["none-found"]
+      }
+    }
+  ],
+  "regional_availability": [
+    { "service_name": "Azure AI Search", "region_code": "uksouth", "status": "planned", "citation_id": "AZ-REG-1" }
+  ],
+  "errors": []
+}

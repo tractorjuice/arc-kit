@@ -1,0 +1,9 @@
+{
+  "provider": "aws",
+  "research_category": "Compute",
+  "services": [],
+  "regional_availability": [
+    { "service_name": "Amazon EC2", "region_code": "eu-west-2", "status": "probably", "citation_id": "AWS-REG-1" }
+  ],
+  "errors": []
+}

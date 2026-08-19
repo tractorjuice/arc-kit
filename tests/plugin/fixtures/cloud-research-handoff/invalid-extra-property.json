@@ -1,0 +1,15 @@
+{
+  "provider": "aws",
+  "research_category": "Compute",
+  "services": [
+    {
+      "service_name": "Amazon EC2",
+      "service_category": "compute",
+      "fetched_from_url": "https://docs.aws.amazon.com/ec2/",
+      "citation_id": "AWS-EC2-1",
+      "evidence": { "lifecycle_status": "ga" },
+      "estimated_monthly_cost": 1200
+    }
+  ],
+  "errors": []
+}
