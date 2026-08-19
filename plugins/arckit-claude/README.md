@@ -6,7 +6,7 @@ The Enterprise Architecture Governance Harness — a Claude Code plugin providin
 
 ### Step 0: Make sure Claude Code is up to date
 
-ArcKit needs Claude Code **v2.1.219 or later** (see Prerequisites below). The simplest way to land on a supported version — even if you've never installed Claude Code before — is:
+ArcKit needs Claude Code **v2.1.234 or later** (see Prerequisites below). The simplest way to land on a supported version — even if you've never installed Claude Code before — is:
 
 ```bash
 claude install latest
@@ -60,13 +60,13 @@ claude --plugin-dir /path/to/arckit-claude
 
 ## Prerequisites
 
-- **Claude Code** v2.1.219 or later (recommended minimum)
+- **Claude Code** v2.1.234 or later (recommended minimum)
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.219?** v2.1.219 adds **Claude Opus 5** (`claude-opus-5`), the current default Opus model, with 1M context and fast mode support — earlier clients cannot select it. The floor also carries v2.1.200's fix for project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility for plugin agents/skills, which makes ArcKit branch and test-repo workflows reliable. It also carries the v2.1.198-v2.1.199 background-subagent reliability, parent error-propagation, and hook stderr-visibility fixes that matter to `/arckit:build`, reader/writer handoffs, and hook diagnosis. v2.1.197 makes Claude Sonnet 5 the default Claude Code model with native 1M context, while v2.1.172 fixed wildcard-domain `WebFetch` permission rules (`WebFetch(domain:*.gov.uk)`) that never matched subdomains on earlier clients. The floor also carries forward the older MCP `alwaysLoad`, provenance hook, release validation, telemetry, `/context`, Auto mode, plugin update, MCP leak, retry, and subagent working-directory fixes ArcKit relies on.
+> **Why v2.1.234?** v2.1.234 stops Claude Code's MCP diagnostics printing **resolved secrets** — ArcKit bundles two keyed MCP servers whose `${user_config.*}` API keys sit in request headers, and on a keyless session those connections fail by design, so ArcKit routinely produces exactly the diagnostics this fixed. v2.1.221 fixed `WebSearch` returning a 400 at `effort: xhigh`/`max` with thinking disabled, which silently broke ArcKit's `effort: max` commands and research agents for anyone running with thinking off. v2.1.222-v2.1.224 close PreToolUse auto-allow bypasses in background agent tasks (load-bearing since v2.1.232 made spawns background by default), Bash permission-check bypasses, and a sandbox deny-path bypass. The floor carries forward v2.1.219's **Claude Opus 5** (`claude-opus-5`), the current default Opus model with 1M context and fast mode; v2.1.200's project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility; the v2.1.198-v2.1.199 background-subagent reliability, parent error-propagation, and hook stderr-visibility fixes; v2.1.197's Claude Sonnet 5 default with native 1M context; and v2.1.172's wildcard-domain `WebFetch` fix. It also carries the older MCP `alwaysLoad`, provenance hook, release validation, telemetry, `/context`, Auto mode, plugin update, MCP leak, retry, and subagent working-directory fixes ArcKit relies on.
 
 ## Quick Start
 
