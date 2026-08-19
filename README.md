@@ -5,7 +5,6 @@
 [![License: MIT](https://img.shields.io/github/license/tractorjuice/arc-kit)](LICENSE)
 [![Latest Release](https://img.shields.io/github/v/release/tractorjuice/arc-kit)](https://github.com/tractorjuice/arc-kit/releases)
 [![GitHub Issues](https://img.shields.io/github/issues/tractorjuice/arc-kit)](https://github.com/tractorjuice/arc-kit/issues)
-[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tractorjuice/arc-kit)
 
 ![ArcKit: The Enterprise Architecture Governance Harness](docs/assets/arckit-banner-light.svg)
 
@@ -28,16 +27,6 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 - 🔧 ServiceNow service management design
 - 🔗 Maintaining requirements traceability
 - 📎 Citation traceability for external documents (inline `[DOC-CN]` markers with source quotes)
-
-## Star History
-
-<a href="https://www.star-history.com/?repos=tractorjuice%2Farc-kit&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&theme=dark&legend=top-left&v=20260420" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&legend=top-left&v=20260420" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&legend=top-left&v=20260420" />
- </picture>
-</a>
 
 ---
 
