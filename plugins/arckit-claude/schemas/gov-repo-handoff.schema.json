@@ -1,0 +1,462 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arckit.org/schemas/gov-repo-handoff/v1",
+  "title": "govreposcrape reader \u2192 orchestrator handoff payload (v1)",
+  "description": "Factual, extraction-only evidence about UK government repositories for one bucket. Shared by /arckit:gov-code-search (bucket_type: query-variation) and, when it is split, /arckit:gov-landscape (bucket_type: organisation or technology-facet). Contains no relevance grade, maturity rating, score, rank or recommendation: those are computed by the orchestrator from a YAML rubric. The language, framework and licence enums are kept identical to gov-reuse-handoff.schema.json so the two agree.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bucket",
+    "bucket_type",
+    "repositories",
+    "errors"
+  ],
+  "properties": {
+    "bucket": {
+      "$ref": "#/$defs/SafeText"
+    },
+    "bucket_type": {
+      "type": "string",
+      "enum": [
+        "query-variation",
+        "organisation",
+        "technology-facet"
+      ]
+    },
+    "repositories": {
+      "type": "array",
+      "maxItems": 40,
+      "items": {
+        "$ref": "#/$defs/RepoRecord"
+      }
+    },
+    "organisations": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "$ref": "#/$defs/OrgRecord"
+      },
+      "description": "Org-level aggregates. Populated for landscape buckets; omitted for a plain query variation."
+    },
+    "index_status": {
+      "$ref": "#/$defs/IndexStatus"
+    },
+    "unfetched_urls": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "type": "string",
+        "format": "uri",
+        "maxLength": 512
+      }
+    },
+    "errors": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/FetchError"
+      }
+    }
+  },
+  "$defs": {
+    "SafeText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9 .,;:()/&'+%-]{1,200}$"
+    },
+    "OrgName": {
+      "type": "string",
+      "maxLength": 64,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,63}$"
+    },
+    "RepoName": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "CitationId": {
+      "type": "string",
+      "maxLength": 32,
+      "pattern": "^[A-Z0-9][A-Z0-9-]{0,31}$"
+    },
+    "FetchError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "url",
+        "reason"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 512
+        },
+        "reason": {
+          "type": "string",
+          "maxLength": 256
+        }
+      }
+    },
+    "IndexStatus": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "What the index itself reported, so the orchestrator can state coverage limits honestly rather than presenting a thin result set as a finding.",
+      "properties": {
+        "total_hits": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000000
+        },
+        "returned": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "index_updated_iso": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "RepoRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "org",
+        "repo",
+        "repo_url",
+        "fetched_from_url",
+        "citation_id",
+        "evidence"
+      ],
+      "properties": {
+        "org": {
+          "$ref": "#/$defs/OrgName"
+        },
+        "repo": {
+          "$ref": "#/$defs/RepoName"
+        },
+        "repo_url": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 256
+        },
+        "fetched_from_url": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 512
+        },
+        "fetched_at_iso": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "citation_id": {
+          "$ref": "#/$defs/CitationId"
+        },
+        "confidence": {
+          "type": "string",
+          "enum": [
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "match_rank": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000,
+          "description": "Position in the index's result list for THIS bucket. An extracted fact, not a judgement. The orchestrator combines ranks across buckets to compute relevance."
+        },
+        "evidence": {
+          "$ref": "#/$defs/Evidence"
+        }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Every field optional and extraction-only. Omit what you could not source; never infer.",
+      "properties": {
+        "language": {
+          "type": "string",
+          "enum": [
+            "javascript",
+            "typescript",
+            "python",
+            "ruby",
+            "go",
+            "rust",
+            "java",
+            "kotlin",
+            "scala",
+            "csharp",
+            "fsharp",
+            "php",
+            "cpp",
+            "c",
+            "swift",
+            "elixir",
+            "clojure",
+            "haskell",
+            "shell",
+            "html",
+            "other",
+            "unknown"
+          ]
+        },
+        "framework_hints": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string",
+            "enum": [
+              "react",
+              "vue",
+              "angular",
+              "express",
+              "nextjs",
+              "rails",
+              "sinatra",
+              "django",
+              "flask",
+              "fastapi",
+              "spring",
+              "spring-boot",
+              "dropwizard",
+              "play",
+              "dotnet-core",
+              "aspnet",
+              "laravel",
+              "phoenix",
+              "actix",
+              "gin",
+              "echo",
+              "govuk-frontend",
+              "govuk-prototype-kit",
+              "openapi",
+              "graphql",
+              "kubernetes-helm",
+              "terraform",
+              "ansible",
+              "other"
+            ]
+          }
+        },
+        "licence": {
+          "type": "string",
+          "enum": [
+            "OGL-v3",
+            "OGL-v2",
+            "MIT",
+            "Apache-2.0",
+            "BSD-3-Clause",
+            "BSD-2-Clause",
+            "ISC",
+            "GPL-3.0",
+            "GPL-2.0",
+            "LGPL-3.0",
+            "LGPL-2.1",
+            "AGPL-3.0",
+            "MPL-2.0",
+            "CC-BY-4.0",
+            "CC0-1.0",
+            "Unlicense",
+            "Proprietary",
+            "Unlicensed",
+            "Unknown"
+          ]
+        },
+        "last_commit_iso": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "first_commit_iso": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "stars": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000000
+        },
+        "forks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000000
+        },
+        "contributors": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "open_issues": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "has_tests": {
+          "type": "boolean"
+        },
+        "has_ci": {
+          "type": "boolean"
+        },
+        "has_docs": {
+          "type": "boolean"
+        },
+        "has_readme": {
+          "type": "boolean"
+        },
+        "archived": {
+          "type": "boolean"
+        },
+        "topics": {
+          "type": "array",
+          "maxItems": 15,
+          "items": {
+            "$ref": "#/$defs/SafeText"
+          }
+        },
+        "standards_signals": {
+          "type": "array",
+          "maxItems": 10,
+          "description": "Standards the repository itself shows evidence of adopting, e.g. a govuk-frontend dependency or a published accessibility statement.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "govuk-design-system",
+              "govuk-frontend",
+              "gds-service-standard",
+              "technology-code-of-practice",
+              "ncsc-caf",
+              "wcag-2.1-aa",
+              "wcag-2.2-aa",
+              "open-standards-principles",
+              "openapi-spec",
+              "sbom-published",
+              "none-found"
+            ]
+          }
+        },
+        "deployment_platform": {
+          "type": "string",
+          "enum": [
+            "aws",
+            "azure",
+            "gcp",
+            "govuk-paas",
+            "kubernetes",
+            "on-premise",
+            "heroku",
+            "cloud-foundry",
+            "none-found"
+          ]
+        },
+        "vulnerability_exposure": {
+          "$ref": "#/$defs/VulnerabilityExposure"
+        },
+        "summary_one_liner": {
+          "$ref": "#/$defs/SafeText"
+        }
+      }
+    },
+    "VulnerabilityExposure": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Counts as reported by mcp__plugin_arckit_govreposcrape__vulnerability_exposure. Counts only; no severity judgement, no remediation advice.",
+      "properties": {
+        "critical_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "high_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "medium_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "eol_dependency_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "scanned_at_iso": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "OrgRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "org",
+        "citation_id"
+      ],
+      "properties": {
+        "org": {
+          "$ref": "#/$defs/OrgName"
+        },
+        "org_type": {
+          "type": "string",
+          "enum": [
+            "central-gov-department",
+            "arms-length-body",
+            "nhs",
+            "local-authority",
+            "devolved-administration",
+            "public-corporation",
+            "academic",
+            "other",
+            "unknown"
+          ]
+        },
+        "repo_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "primary_languages": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "enum": [
+              "javascript",
+              "typescript",
+              "python",
+              "ruby",
+              "go",
+              "rust",
+              "java",
+              "kotlin",
+              "scala",
+              "csharp",
+              "fsharp",
+              "php",
+              "cpp",
+              "c",
+              "swift",
+              "elixir",
+              "clojure",
+              "haskell",
+              "shell",
+              "html",
+              "other",
+              "unknown"
+            ]
+          }
+        },
+        "citation_id": {
+          "$ref": "#/$defs/CitationId"
+        }
+      }
+    }
+  }
+}

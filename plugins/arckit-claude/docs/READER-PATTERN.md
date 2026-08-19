@@ -115,11 +115,13 @@ The validator is shared across all three-tier splits. Each agent supplies its ow
 
 ## Adapting this pattern to another agent
 
-`arckit-research`, `arckit-datascout`, `arckit-grants`, `arckit-gov-reuse`
-and `arckit-tenders` have been split. When applying the pattern to one of
-the remaining research agents — `arckit-aws-research`,
-`arckit-azure-research`, `arckit-gcp-research`, `arckit-gov-code-search`,
-`arckit-gov-landscape` — follow this sequence:
+`arckit-research`, `arckit-datascout`, `arckit-grants`, `arckit-gov-reuse`,
+`arckit-gov-code-search` and `arckit-tenders` have been split. When applying
+the pattern to one of the remaining research agents — `arckit-aws-research`,
+`arckit-azure-research`, `arckit-gcp-research`, `arckit-gov-landscape` —
+follow this sequence:
+
+0. **Check whether a schema already fits.** `gov-repo-handoff.schema.json` is deliberately shared: it carries a `bucket_type` of `query-variation`, `organisation` or `technology-facet`, and its language/framework/licence enums are kept identical to `gov-reuse-handoff.schema.json`. `arckit-gov-landscape` should reuse it with `bucket_type: organisation` rather than authoring a third govreposcrape schema.
 
 1. **Define the handoff schema first.** Write `arckit-claude/schemas/{name}-handoff.schema.json` with allowlist enums for every domain-specific field. Drive the schema from the artefact template, not from the existing agent's prompt.
 2. **Pick or write a rubric.** Re-use `generic.yaml` if the agent's scoring criteria don't need overlay-specific tuning; otherwise write `{agent}-{rubric}.yaml`.

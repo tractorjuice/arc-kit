@@ -1,0 +1,140 @@
+# Relevance rubric for arckit-gov-code-search
+#
+# Consumed by the /arckit:gov-code-search orchestrator. Replaces the
+# "High relevance / Medium relevance" classification the single-tier
+# agent used to make by eye, which was neither reproducible nor
+# defensible: the same query could rank the same repository differently
+# on two runs, and nothing recorded why.
+#
+# Every input below is an extracted fact from
+# gov-repo-handoff.schema.json. Scoring is lookup, banding and counting,
+# with no LLM judgement at any point, so the same payload always
+# produces the same ranking.
+#
+# Total possible weighted score: 100.
+# Per-criterion scores are normalised to [0, 100] before weighting.
+
+name: gov-code-search-generic
+version: 1
+weights:
+  query_corroboration: 30
+  index_rank: 20
+  recency: 20
+  maintenance_signals: 15
+  organisation_weight: 10
+  documentation: 5
+
+scoring:
+  # How many DISTINCT query variations surfaced this repository. A repo
+  # found by one narrow phrasing is a weaker match than one found by
+  # broadened, narrowed and rephrased variants alike. The orchestrator
+  # counts this during deduplication across buckets; no reader sees it.
+  query_corroboration:
+    method: band
+    computed_field: distinct_buckets_hit
+    bands:
+      - { min: 1, max: 1,    score: 40 }
+      - { min: 2, max: 2,    score: 70 }
+      - { min: 3, max: 3,    score: 90 }
+      - { min: 4, max: null, score: 100 }
+    when_missing: 40
+
+  # Best (lowest) position the repository reached in any bucket's result
+  # list. The index has already done semantic matching; this reads its
+  # answer rather than re-deriving one.
+  index_rank:
+    method: band
+    computed_field: best_match_rank
+    bands:
+      - { min: 1,  max: 3,    score: 100 }
+      - { min: 4,  max: 10,   score: 80 }
+      - { min: 11, max: 20,   score: 55 }
+      - { min: 21, max: null, score: 30 }
+    when_missing: 50
+
+  # Government code goes quiet for good reasons as well as bad, so an
+  # old repository is down-weighted rather than excluded. `archived`
+  # is the one hard signal: the owner has said it is finished.
+  recency:
+    method: band
+    computed_field: months_since_last_commit
+    bands:
+      - { min: 0,  max: 3,    score: 100 }
+      - { min: 4,  max: 12,   score: 80 }
+      - { min: 13, max: 24,   score: 55 }
+      - { min: 25, max: 48,   score: 30 }
+      - { min: 49, max: null, score: 10 }
+    archived_score: 5
+    when_missing: 40
+
+  maintenance_signals:
+    method: composite
+    components:
+      - name: tests
+        method: boolean_flag
+        field: evidence.has_tests
+        true_score: 100
+        false_score: 20
+        when_missing: 40
+        weight: 0.4
+      - name: ci
+        method: boolean_flag
+        field: evidence.has_ci
+        true_score: 100
+        false_score: 20
+        when_missing: 40
+        weight: 0.3
+      - name: contributors
+        method: band
+        field: evidence.contributors
+        bands:
+          - { min: 0,  max: 1,    score: 25 }
+          - { min: 2,  max: 5,    score: 60 }
+          - { min: 6,  max: 20,   score: 85 }
+          - { min: 21, max: null, score: 100 }
+        when_missing: 40
+        weight: 0.3
+
+  # Who publishes it. A central department or ALB repository carries
+  # different reuse and support expectations from an individual's fork,
+  # and that difference is a fact about the owner, not a quality claim
+  # about the code.
+  organisation_weight:
+    method: map
+    field: organisation.org_type
+    map:
+      central-gov-department: 100
+      arms-length-body: 95
+      nhs: 95
+      devolved-administration: 90
+      local-authority: 80
+      public-corporation: 75
+      academic: 60
+      other: 50
+      unknown: 50
+    when_missing: 50
+
+  documentation:
+    method: composite
+    components:
+      - name: readme
+        method: boolean_flag
+        field: evidence.has_readme
+        true_score: 100
+        false_score: 0
+        when_missing: 40
+        weight: 0.5
+      - name: docs
+        method: boolean_flag
+        field: evidence.has_docs
+        true_score: 100
+        false_score: 30
+        when_missing: 40
+        weight: 0.5
+
+# Relevance bands the orchestrator maps the total score onto. These
+# replace the old free-hand "High / Medium relevance" grouping.
+bands:
+  - { min_score: 70, label: High }
+  - { min_score: 45, label: Medium }
+  - { min_score: 0,  label: Low }

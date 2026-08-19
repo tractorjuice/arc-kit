@@ -39,6 +39,8 @@ files = [
     "arckit-datascout.toml",
     "arckit-framework.toml",
     "arckit-gcp-research.toml",
+    "arckit-gov-code-search-reader.toml",
+    "arckit-gov-code-search-writer.toml",
     "arckit-gov-code-search.toml",
     "arckit-gov-landscape.toml",
     "arckit-gov-reuse-reader.toml",

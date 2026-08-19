@@ -1,0 +1,58 @@
+{
+  "bucket": "NHS FHIR R4 API client",
+  "bucket_type": "query-variation",
+  "index_status": { "total_hits": 41, "returned": 20, "index_updated_iso": "2026-08-18T02:00:00Z" },
+  "repositories": [
+    {
+      "org": "nhsdigital",
+      "repo": "fhir-client-dotnet",
+      "repo_url": "https://github.com/nhsdigital/fhir-client-dotnet",
+      "fetched_from_url": "https://github.com/nhsdigital/fhir-client-dotnet",
+      "fetched_at_iso": "2026-08-19T10:05:00Z",
+      "citation_id": "NHSD-FHIR-1",
+      "confidence": "high",
+      "match_rank": 1,
+      "evidence": {
+        "language": "csharp",
+        "framework_hints": ["dotnet-core", "openapi"],
+        "licence": "MIT",
+        "last_commit_iso": "2026-06-11T09:12:00Z",
+        "stars": 84,
+        "forks": 21,
+        "contributors": 12,
+        "open_issues": 7,
+        "has_tests": true,
+        "has_ci": true,
+        "has_docs": true,
+        "has_readme": true,
+        "archived": false,
+        "topics": ["fhir", "nhs", "interoperability"],
+        "standards_signals": ["openapi-spec"],
+        "deployment_platform": "azure",
+        "summary_one_liner": "NHS FHIR R4 client library for .NET"
+      }
+    },
+    {
+      "org": "alphagov",
+      "repo": "some-legacy-service",
+      "repo_url": "https://github.com/alphagov/some-legacy-service",
+      "fetched_from_url": "https://github.com/alphagov/some-legacy-service",
+      "citation_id": "AG-1",
+      "confidence": "medium",
+      "match_rank": 14,
+      "evidence": {
+        "language": "ruby",
+        "licence": "MIT",
+        "archived": true,
+        "has_readme": true,
+        "last_commit_iso": "2020-02-03T11:00:00Z"
+      }
+    }
+  ],
+  "organisations": [
+    { "org": "nhsdigital", "org_type": "nhs", "repo_count": 214, "primary_languages": ["csharp", "typescript"], "citation_id": "NHSD-1" },
+    { "org": "alphagov", "org_type": "central-gov-department", "repo_count": 1300, "citation_id": "AG-ORG-1" }
+  ],
+  "unfetched_urls": ["https://github.com/example-org/private-repo"],
+  "errors": [{ "url": "https://github.com/example-org/gone", "reason": "repository page returned 404" }]
+}
