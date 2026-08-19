@@ -10,7 +10,7 @@ This guide covers installing the ArcKit plugin, configuring MCP servers, and com
 
 ### Prerequisites
 
-- **Claude Code** v2.1.219 or later (or **Claude Cowork** desktop app)
+- **Claude Code** v2.1.234 or later (or **Claude Cowork** desktop app)
 - **Bash** shell (for helper scripts)
 
 ### Step 0: Make sure Claude Code is up to date
@@ -20,7 +20,7 @@ claude install latest
 claude --version
 ```
 
-`claude install` accepts `stable`, `latest`, or a specific version (e.g. `claude install 2.1.219`). If you don't have the `claude` CLI yet, follow the [official Claude Code install guide](https://docs.claude.com/en/docs/claude-code/quickstart) first.
+`claude install` accepts `stable`, `latest`, or a specific version (e.g. `claude install 2.1.234`). If you don't have the `claude` CLI yet, follow the [official Claude Code install guide](https://docs.claude.com/en/docs/claude-code/quickstart) first.
 
 ### Optional: Long-session prompt cache (Claude Code v2.1.108+)
 

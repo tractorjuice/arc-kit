@@ -56,7 +56,7 @@ Before installing ArcKit broadly:
 - Assign a seat type that includes Claude Code. In Anthropic's current
   Enterprise guidance, legacy seat-based plans need Premium seats; usage-based
   plans need Chat + Code or Claude Enterprise seats.
-- Install Claude Code v2.1.219 or later on pilot machines. ArcKit's
+- Install Claude Code v2.1.234 or later on pilot machines. ArcKit's
   SessionStart version hook warns below this floor; managed settings can block
   startup below it.
 - Verify each pilot user with `claude --version`, `/status`, and
@@ -69,7 +69,7 @@ users are prompted to add the ArcKit marketplace when they trust the repo:
 
 ```json
 {
-  "minimumVersion": "2.1.219",
+  "minimumVersion": "2.1.234",
   "extraKnownMarketplaces": {
     "arckit-claude": {
       "source": {
@@ -91,7 +91,7 @@ range:
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.219",
+  "requiredMinimumVersion": "2.1.234",
   "requiredMaximumVersion": "2.1.999",
   "extraKnownMarketplaces": {
     "arckit-claude": {
@@ -237,8 +237,15 @@ Use a narrow pilot before broad installation:
 
 | Version | Enterprise-relevant change | ArcKit impact |
 |---------|----------------------------|---------------|
-| v2.1.220 | Latest reviewed release as of 2026-07-27 (unitemised bug fixes) | Reviewed in the v2.1.201-v2.1.220 triage; no further floor change |
-| v2.1.219 | Claude Opus 5 (`claude-opus-5`) added as the default Opus model with 1M context and fast mode; `sandbox.network.strictAllowlist`; `DirectoryAdded` hook | **Current ArcKit floor** — earlier clients cannot select Opus 5 |
+| v2.1.235 | Latest reviewed release as of 2026-08-19 | Reviewed in the v2.1.221-v2.1.235 triage |
+| v2.1.234 | MCP diagnostics no longer print resolved secrets — scope-conflict warnings show the configured `${VAR}` form and connection-failure details show only the server origin; `strictKnownMarketplaces` no longer accepts SCP-style git sources whose host differs from the one git would use | **Current ArcKit floor** — ArcKit ships two keyed MCP servers whose `${user_config.*}` values sit in request headers, and their connections fail by design on a keyless session |
+| v2.1.233 | Todo/task tools (`TodoWrite`, `TaskCreate`) removed on Opus 4.8, Sonnet 5, Fable 5, Opus 5 and newer; `Notification` hooks fire for permission prompts under Desktop/VS Code; skill argument values no longer re-expand as template markers | Carried into the current floor: ArcKit agents lose their to-do surface (allowlist entries are inert, not errors), and `$ARGUMENTS` can no longer be re-expanded against ArcKit's `${...}` markers |
+| v2.1.232 | Non-teammate subagent spawns run in the background by default; nested git repositories each require their own trust confirmation; GitLab marketplace sources and token redaction | Carried into the current floor: `/arckit:build` waves and reader/writer handoffs dispatch with `run_in_background: false` to keep their sequencing |
+| v2.1.224 | 200-subagent-per-session spawn cap removed; `archive` plugin source (zip over HTTPS with SHA-256 pinning); sandbox `denyRead`/`denyWrite` trailing-slash bypass fixed; sandbox violation details now surfaced in Bash results | Carried into the current floor. The `archive` source is the air-gapped install route for fleets with no path to github.com |
+| v2.1.222-v2.1.223 | PreToolUse auto-allow hooks no longer bypass tool restrictions in background agent tasks; Bash permission-check bypasses closed; agent `bypassPermissions` now honours org policy; `owner/*` wildcards in `strictKnownMarketplaces` / `blockedMarketplaces` | Carried into the current floor. The auto-allow fix matters more now spawns are background by default; `tractorjuice/*` can be allowlisted in one entry |
+| v2.1.221 | WebSearch no longer returns a 400 at `effort: xhigh`/`max` when thinking is disabled | Carried into the current floor: ArcKit's 18 `effort: max` commands and three max-effort research agents were silently broken for anyone running with thinking off |
+| v2.1.220 | Reviewed release (unitemised bug fixes) | Reviewed in the v2.1.201-v2.1.220 triage |
+| v2.1.219 | Claude Opus 5 (`claude-opus-5`) added as the default Opus model with 1M context and fast mode; `sandbox.network.strictAllowlist`; `DirectoryAdded` hook | Carried into the current floor — earlier clients cannot select Opus 5 |
 | v2.1.200 | Manual permission wording, project-scoped plugin loading from git worktrees, plugin validation, background-agent reliability, Windows hook execution, and shell/edit fixes | Carried into the current floor: branch testing, hooks, background agents, and generated artifact edits are materially more reliable |
 | v2.1.198 | Server-managed settings cache hardening with proxy/API-routing/auth env vars withheld until a fresh fetch confirms the payload | Important for enterprises that deliver proxy or credential-related settings remotely |
 | v2.1.195 | Plugin trust/install is required on every plugin-loading path; plugin enable/disable handles marketplace/manifest name differences | Use seed images or clear onboarding instructions if you want low-friction install |
@@ -254,7 +261,8 @@ Use a narrow pilot before broad installation:
 | ArcKit entry | Enterprise impact |
 |--------------|-------------------|
 | Unreleased #580 | Reactive `FileChanged` context for `projects/*/external/` means newly added evidence can enter Claude Code context without restart or `/compact` |
-| Unreleased #580 | Claude Code floor raised to v2.1.219 for Claude Opus 5 support, and docs refreshed for managed model governance, OTEL response logging, MCP auth, safe-mode troubleshooting, and plugin branch testing |
+| Unreleased #580 | Claude Code floor raised to v2.1.234 so MCP connection diagnostics can no longer print resolved secrets, and so the WebSearch `xhigh`/`max`, background-agent permission, and sandbox deny-path fixes are guaranteed |
+| v6.6.0 #580 | Claude Code floor raised to v2.1.219 for Claude Opus 5 support, and docs refreshed for managed model governance, OTEL response logging, MCP auth, safe-mode troubleshooting, and plugin branch testing |
 | v6.0.0 | `tractorjuice/arckit-claude` became the preferred single Claude Code marketplace repo for the core plugin plus overlays |
 | v5.13.1 | Claude Code floor v2.1.172 made wildcard-domain `WebFetch(domain:*.gov.uk)` restrictions reliable for regulated research-agent traffic |
 | June 2026 #576/#579 | Managed fleet settings, `/plugin list --enabled`, and per-agent telemetry guidance landed in the ArcKit docs and telemetry hooks |
@@ -498,7 +506,7 @@ admin can set the native managed settings (Claude Code v2.1.163+):
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.219",
+  "requiredMinimumVersion": "2.1.234",
   "requiredMaximumVersion": "2.1.999"
 }
 ```

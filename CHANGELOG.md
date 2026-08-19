@@ -83,6 +83,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Claude Code minimum-version floor raised to v2.1.234** (#580). Set in `plugins/arckit-claude/hooks/version-check.mjs`; the SessionStart warning gains a bullet per new driver, and the repo dogfood plus the test-repo scaffold move with it.
+
+  The headline driver is a secret-exposure path that lands squarely on ArcKit's own configuration. **v2.1.234 stopped Claude Code's MCP diagnostics printing resolved secrets** — scope-conflict warnings now show the configured `${VAR}` form, and connection-failure details show only the server origin. ArcKit bundles two keyed MCP servers, `google-developer-knowledge` and `datacommons-mcp`, whose `${user_config.*}` API keys sit in request headers; on a session with no keys configured those connections fail *by design* and are documented as expected. ArcKit therefore produces exactly the diagnostics this fixed, routinely, as normal operation.
+
+  Four more fixes below the new floor affect shipped ArcKit behaviour rather than hypotheticals:
+
+  - **v2.1.221** — `WebSearch` returned a 400 at `effort: xhigh`/`max` when thinking was disabled. ArcKit runs 18 commands and three research agents at `effort: max`, so every search from `/arckit:research`, `/arckit:datascout` and `/arckit:grants` failed for anyone running with thinking off. Same shape as the v2.1.172 `WebFetch` wildcard fix that justified an earlier bump: shipped ArcKit configuration, silently inert below a specific release.
+  - **v2.1.222** — PreToolUse auto-allow hooks bypassed tool restrictions inside background agent tasks. This became load-bearing rather than theoretical when v2.1.232 made subagent spawns background by default.
+  - **v2.1.223** — Bash permission-check bypasses where a crafted command could hide part of itself from the approval dialog, and an agent definition's `bypassPermissions` ignoring org policy.
+  - **v2.1.224** — sandbox `denyRead`/`denyWrite` entries written with a trailing slash were silently bypassable, project paths over 200 characters resolved into another project's session directory, and sandbox violations now report which access was denied.
+
+  The floor carries forward every prior driver: v2.1.219 Claude Opus 5, v2.1.200 project-scoped plugin loading from git worktrees and `claude agents --plugin-dir` visibility, the v2.1.198-v2.1.199 background-subagent reliability and hook stderr fixes, v2.1.197 Claude Sonnet 5, and the v2.1.172 wildcard-domain `WebFetch` fix.
+
+  As before, this is a **soft** SessionStart warning, not a hard gate — model choice and update policy stay with the user or org. Per-feature thresholds in the warning body, the `enterprise-scale.md` changelog rows, and historical references are deliberately left at their own versions rather than swept up in the bump.
+
+- **`docs/guides/build.md` "Session limits" corrected, and subagent dispatch made explicit about background-by-default** (#580, PR #817). Claude Code v2.1.224 removed the 200-subagent-per-session spawn cap that #675 had documented, and `CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION` is now accepted in settings but never read — so setting it looks like it worked and does nothing. The same section also claimed every cap denies; the WebSearch cap never did. Over budget it returns a normal result with `searchCount: 0` telling the model to continue with what it has, so a research-heavy build keeps producing artefacts on thinner evidence instead of halting — for a governance artefact, the worse failure. It now gets its own paragraph rather than a table row that says "denies".
+
+  Separately, v2.1.232 made non-teammate `Agent` spawns background-by-default: the call returns `async_launched` and an `agentId`, not the subagent's report. `/arckit:build`'s wave barrier and every reader → validate → writer handoff are written against synchronous returns, so both now dispatch with `run_in_background: false` — and, because the parameter is stripped from the tool schema in some contexts, both also say what to do when it is unavailable.
+
 - **Every GitHub Action is pinned to a commit SHA** (#466 item 17). All 13 references across the four workflows were on floating tags, and `pypa/gh-action-pypi-publish` was on `release/v1` — a moving **branch**, which advances on every release of that action with no version boundary at all.
 
   This is not hypothetical hygiene. A tag or branch resolves to whatever it points at *when the workflow runs*, so whoever controls the action repository can repoint one and every downstream workflow picks up the new code silently. ArcKit's workflows run with `contents: write`, and the release workflow additionally holds `id-token: write` for PyPI trusted publishing, so a repointed tag is an arbitrary-code-execution path into a job holding publish credentials.
@@ -96,6 +115,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Corrected the Agent System section of `CLAUDE.md`** (#466). It claimed 16 agents (there are 19), said the reader/writer subagents are "dispatched only by the corresponding orchestrator agent" (`READER-PATTERN.md` step 5 requires the orchestrator to be the slash command, and the command bodies say so explicitly), and listed `arckit-datascout`, `arckit-gov-reuse` and `arckit-grants` as the agents their commands delegate to, which stopped being true at #446. Those three files are now documented for what they actually are: pre-split monoliths retained solely because the converter replaces a command body wholesale with the agent prompt for non-Claude targets, which cannot dispatch subagents. The MCP tool-naming example in the same section was also wrong — it gave the bare `mcp__<server>__<tool>` form.
 
 ### Fixed
+
+- **`READER-PATTERN.md` stopped prescribing a tool that no longer exists** (#580, PR #817). Claude Code v2.1.233 removed `TodoWrite` and the `TaskCreate*` tools on Opus 4.8, Sonnet 5, Fable 5, Opus 5 and newer (`CLAUDE_CODE_ENABLE_TODO_TOOLS=1` restores them). The canonical reader allowlist in the pattern document listed `TodoWrite`, so it would have propagated into every future reader. The 20 existing agent allowlists are deliberately unchanged: an allowlist entry for a tool that does not exist is inert rather than an error, and keeping it preserves the to-do surface for older models, for anyone re-enabling the tools, and for the non-Claude runtimes where `converter.py` maps `TodoWrite` to `todo`.
+
+  `telemetry.mjs` needed no behaviour change but did need a comment: its `tool === 'TaskCreate'` branch is now dead while the adjacent `event === 'TaskCreated'` branch — a different mechanism with a confusingly similar name, still live in v2.1.235 — carries all agent-spawn telemetry. Without the note the obvious cleanup deletes the hook registration.
+
+  Also corrects a miss from #674: that PR fixed the stale "subagents cannot spawn subagents" claim in the pattern document's prose but left the identical claim standing in the step-by-step checklist at the bottom, which is the copy a contributor actually follows.
 
 - **Documented why the PyPI publish job has never worked**, in the job itself (#730). The job was added at v6.8.0 and has failed on every release since — v6.8.0, v6.9.0, v6.10.0 and v6.11.0 — leaving `arckit-cli` on PyPI at 6.4.1, which is the exact problem #730 added it to solve. It is not a regression and not a defect in the workflow: the failure is
 

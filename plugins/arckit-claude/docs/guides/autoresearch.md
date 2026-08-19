@@ -66,7 +66,7 @@ claude remote-control
 
 Drive the worktree session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone pings when an iteration keeps a change above the score threshold or when the loop hits a decision point. Combined with `ENABLE_PROMPT_CACHING_1H=1` (see Tips below), you can run autoresearch overnight and check progress from anywhere.
 
-Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off, and the local `claude` process must keep running. ArcKit's minimum Claude Code floor (v2.1.219) already covers the v2.1.110 RC requirement.
+Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off, and the local `claude` process must keep running. ArcKit's minimum Claude Code floor (v2.1.234) already covers the v2.1.110 RC requirement.
 
 ---
 
