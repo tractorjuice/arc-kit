@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **A repository-level statement of what ArcKit does not do** (#466, items 9 and 21). Every community overlay already carried a "review by qualified DPO / CSO / federal counsel before reliance" banner. The officially-maintained baseline carried none, and it is the baseline that ships `/arckit:dpia`, `/arckit:secure`, `/arckit:mod-secure`, `/arckit:atrs`, `/arckit:jsp-936` and `/arckit:sobc`. A grep for disclaimer language across `README.md` and every `docs/*.md` returned nothing, so the unsupported overlays were better hedged than the supported core.
+
+  `README.md` gains a `## What ArcKit does not do` section, placed immediately before the UK Government Compliance section so a reader meets the limits before the compliance claims. It enumerates them concretely rather than generically: a generated DPIA is not a completed DPIA, because UK GDPR Article 35 places the assessment on the controller and Article 36 requires ICO consultation where high residual risk remains; Secure by Design and JSP 936 packs are input to an assurance decision made by named accountable individuals, not the decision itself; the EU overlay drafts documentation referencing the AI Act, NIS2, DORA and the CRA but performs no conformity assessment and is not a notified-body activity; DCB0129 / DCB0160 need a registered Clinical Safety Officer. It closes with who must review what, and states that it applies to all of ArcKit rather than only the community overlays.
+
+  Two cross-cutting limits are stated because neither is obvious from an artefact that looks finished: citations reflect the moment they were fetched, and generated content can be wrong — schema validation and deterministic scoring reduce the blast radius of a hostile or inaccurate source page without making its facts true.
+
+  `docs/index.html` carries a condensed version of the same statement, because a disclaimer that exists only on GitHub and not on arckit.org is half a fix.
+
 - **`/arckit:research` now runs as a three-tier reader/orchestrator/writer split** (#466, item 1 remainder). It was the largest untrusted-input surface left in the plugin and the last single-tier agent holding `Bash`, `Write` and `WebFetch` in one context: vendor sites, pricing pages, marketplaces and AI-generated comparison pages are written to persuade, and the agent that read them could also execute and write.
 
   - `arckit-research-reader` (`WebSearch`, `WebFetch`, `Read`, `Glob`, `Grep`, `TodoWrite` — no `Write`, `Edit`, `Bash` or `Agent`) fetches evidence for one research category and returns JSON.
