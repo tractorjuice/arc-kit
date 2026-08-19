@@ -1,0 +1,14 @@
+{
+  "research_category": "Payments",
+  "options": [
+    {
+      "option_type": "best-in-class-platform",
+      "vendor_name": "Example Pay Ltd",
+      "product_name": "ExamplePay",
+      "fetched_from_url": "https://examplepay.example/pricing",
+      "citation_id": "EXPAY-1",
+      "evidence": { "pricing_model": "per-transaction" }
+    }
+  ],
+  "errors": []
+}

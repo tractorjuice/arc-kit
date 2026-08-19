@@ -1,0 +1,65 @@
+{
+  "research_category": "Appointment booking",
+  "options": [
+    {
+      "option_type": "gov-platform",
+      "vendor_name": "GDS",
+      "product_name": "GOV.UK Notify",
+      "product_url": "https://www.notifications.service.gov.uk/",
+      "fetched_from_url": "https://www.notifications.service.gov.uk/pricing",
+      "fetched_at_iso": "2026-08-19T09:30:00Z",
+      "citation_id": "GOVUK-NOTIFY-1",
+      "confidence": "high",
+      "evidence": {
+        "capabilities": ["notifications-email", "notifications-sms"],
+        "vendor_hq_country": "GB",
+        "ownership": "government",
+        "pricing_model": "usage-based",
+        "pricing_currency": "GBP",
+        "uk_data_residency": true,
+        "gdpr_dpa_available": true,
+        "procurement_vehicles": ["direct-award"],
+        "deployment_models": ["saas-multi-tenant"],
+        "integration_protocols": ["rest"],
+        "sdk_languages": ["javascript", "python", "dotnet", "java", "ruby", "php"],
+        "auth_methods": ["api-key"],
+        "data_export_formats": ["csv", "api-bulk-export"],
+        "certifications": ["iso-27001", "cyber-essentials-plus"],
+        "wcag_conformance": "wcag-2.2-aa",
+        "gov_platform_owner": "gds",
+        "sla_uptime_pct": 99.95,
+        "support_tiers": ["email", "24x7"],
+        "notable_limits": ["25000 free text messages per financial year"]
+      }
+    },
+    {
+      "option_type": "open-source",
+      "vendor_name": "Cal.com Inc",
+      "product_name": "Cal.com",
+      "product_url": "https://cal.com/",
+      "fetched_from_url": "https://github.com/calcom/cal.com",
+      "fetched_at_iso": "2026-08-19T09:34:00Z",
+      "citation_id": "CALCOM-1",
+      "confidence": "high",
+      "evidence": {
+        "capabilities": ["appointment-booking", "notifications-email"],
+        "licence": "AGPL-3.0",
+        "pricing_model": "free-open-source",
+        "ownership": "private-vc-backed",
+        "founded_year": 2021,
+        "deployment_models": ["on-premise", "private-cloud", "saas-multi-tenant"],
+        "integration_protocols": ["rest", "webhooks"],
+        "auth_methods": ["oauth2", "oidc", "saml2"],
+        "data_export_formats": ["json", "sql-dump"],
+        "repo_url": "https://github.com/calcom/cal.com",
+        "repo_stars": 38000,
+        "repo_contributors": 700,
+        "repo_last_commit_iso": "2026-08-18T22:14:00Z"
+      }
+    }
+  ],
+  "unfetched_urls": ["https://www.example-vendor.com/security"],
+  "errors": [
+    { "url": "https://paywalled.example/pricing", "reason": "pricing page behind a login wall" }
+  ]
+}

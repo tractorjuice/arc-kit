@@ -288,7 +288,7 @@ Public demonstration repositories showcase complete ArcKit deliverables:
 
 Token cost of installing the `arckit` core plugin in a Claude Code session, captured from `claude plugin details arckit` on v2.1.143+:
 
-- **Always-on per session: ~10,042 tokens** — added to every session's system context, covering the 73 command-skills + 5 utility skills (`architecture-workflow`, `arckit-build`, `mermaid-syntax`, `plantuml-syntax`, `wardley-mapping`) + 19 agent descriptors. Hooks (9 events) and MCP servers (6) are harness-resolved at runtime and not counted.
+- **Always-on per session: ~10,042 tokens** — added to every session's system context, covering the 73 command-skills + 5 utility skills (`architecture-workflow`, `arckit-build`, `mermaid-syntax`, `plantuml-syntax`, `wardley-mapping`) + 21 agent descriptors. Hooks (9 events) and MCP servers (6) are harness-resolved at runtime and not counted.
 - **On-invoke: ~250 to ~60K tokens per command** — paid only when a specific skill or agent fires. Most commands are in the 5–10K range.
 
 ### On-invoke cost by command

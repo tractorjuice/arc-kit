@@ -1,0 +1,16 @@
+{
+  "research_category": "Identity and access management",
+  "options": [
+    {
+      "option_type": "saas",
+      "vendor_name": "Example Identity Ltd",
+      "product_name": "ExampleID",
+      "fetched_from_url": "https://exampleid.example/pricing",
+      "citation_id": "EXID-1",
+      "evidence": {
+        "pricing_model": "custom-quote"
+      }
+    }
+  ],
+  "errors": []
+}

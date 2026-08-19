@@ -47,6 +47,8 @@ files = [
     "arckit-grants-reader.toml",
     "arckit-grants-writer.toml",
     "arckit-grants.toml",
+    "arckit-research-reader.toml",
+    "arckit-research-writer.toml",
     "arckit-research.toml",
     "arckit-tenders-reader.toml",
     "arckit-tenders-writer.toml"
