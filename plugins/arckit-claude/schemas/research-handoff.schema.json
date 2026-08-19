@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arckit.org/schemas/research-handoff/v1",
+  "title": "research reader → orchestrator handoff payload (v1)",
+  "description": "Factual, extraction-only evidence about technology and service options for one research category. Contains no score, rank, recommendation, or build-vs-buy verdict — those are computed by the /arckit:research orchestrator from a YAML rubric. Field set is driven by templates/research-findings-template.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["research_category", "options", "errors"],
+  "properties": {
+    "research_category": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9 .,&()/'-]{0,127}$"
+    },
+    "options": {
+      "type": "array",
+      "maxItems": 25,
+      "items": { "$ref": "#/$defs/OptionRecord" }
+    },
+    "unfetched_urls": {
+      "type": "array",
+      "maxItems": 50,
+      "items": { "type": "string", "format": "uri", "maxLength": 512 }
+    },
+    "errors": {
+      "type": "array",
+      "maxItems": 20,
+      "items": { "$ref": "#/$defs/FetchError" }
+    }
+  },
+  "$defs": {
+    "SafeText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9 .,;:()/&'+%£$€-]{1,200}$"
+    },
+    "ProperName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9 .,()/&'+_-]{0,127}$"
+    },
+    "CountryCode": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "CitationId": {
+      "type": "string",
+      "maxLength": 32,
+      "pattern": "^[A-Z0-9][A-Z0-9-]{0,31}$"
+    },
+    "FetchError": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "reason"],
+      "properties": {
+        "url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "reason": { "type": "string", "maxLength": 256 }
+      }
+    },
+    "OptionRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["option_type", "vendor_name", "product_name", "fetched_from_url", "citation_id", "evidence"],
+      "properties": {
+        "option_type": {
+          "type": "string",
+          "enum": ["saas", "open-source", "managed-service", "gov-platform", "marketplace-listing", "self-hosted-commercial"]
+        },
+        "vendor_name": { "$ref": "#/$defs/ProperName" },
+        "product_name": { "$ref": "#/$defs/ProperName" },
+        "product_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "fetched_from_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "fetched_at_iso": { "type": "string", "format": "date-time" },
+        "citation_id": { "$ref": "#/$defs/CitationId" },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] },
+        "evidence": { "$ref": "#/$defs/Evidence" }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Every field is optional and extraction-only. Omit a field you could not source from a fetched page — never infer it.",
+      "properties": {
+        "capabilities": {
+          "type": "array",
+          "maxItems": 20,
+          "description": "Allowlisted capability tags the product's own documentation claims. Drives requirements_fit scoring in the orchestrator.",
+          "items": {
+            "type": "string",
+            "enum": [
+              "authentication", "authorisation", "identity-federation", "user-management",
+              "payments", "invoicing", "notifications-email", "notifications-sms",
+              "case-management", "workflow-automation", "document-management", "e-signature",
+              "form-builder", "appointment-booking", "crm", "data-integration", "etl",
+              "api-gateway", "message-queue", "search", "analytics-bi", "reporting",
+              "dashboarding", "content-management", "e-commerce", "ticketing-itsm",
+              "asset-management", "geospatial", "machine-learning", "chatbot", "translation",
+              "accessibility-tooling", "audit-logging", "consent-management",
+              "data-anonymisation", "records-retention"
+            ]
+          }
+        },
+        "vendor_hq_country": { "$ref": "#/$defs/CountryCode" },
+        "founded_year": { "type": "integer", "minimum": 1800, "maximum": 2100 },
+        "ownership": {
+          "type": "string",
+          "enum": ["public-company", "private-vc-backed", "private-independent", "foundation", "government", "community-project", "unknown"]
+        },
+        "employees": { "type": "integer", "minimum": 0, "maximum": 10000000 },
+        "funding_raised_usd": { "type": "integer", "minimum": 0, "maximum": 1000000000000 },
+        "customer_count": { "type": "integer", "minimum": 0, "maximum": 100000000 },
+        "named_customers": {
+          "type": "array",
+          "maxItems": 10,
+          "items": { "$ref": "#/$defs/ProperName" }
+        },
+        "pricing_model": {
+          "type": "string",
+          "enum": ["per-user", "per-transaction", "tiered-subscription", "usage-based", "flat-fee", "perpetual-licence", "free-open-source", "custom-quote", "unknown"]
+        },
+        "pricing_currency": { "type": "string", "enum": ["GBP", "EUR", "USD", "other"] },
+        "pricing_tiers": {
+          "type": "array",
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/PricingTier" }
+        },
+        "published_setup_fee": { "type": "number", "minimum": 0, "maximum": 1000000000 },
+        "licence": {
+          "type": "string",
+          "enum": ["MIT", "Apache-2.0", "BSD-3-Clause", "GPL-3.0", "AGPL-3.0", "LGPL-3.0", "MPL-2.0", "EPL-2.0", "OGL-3.0", "proprietary", "dual-licence", "unknown"]
+        },
+        "certifications": {
+          "type": "array",
+          "maxItems": 15,
+          "items": {
+            "type": "string",
+            "enum": ["iso-27001", "iso-27017", "iso-27018", "iso-9001", "iso-22301", "soc2-type1", "soc2-type2", "cyber-essentials", "cyber-essentials-plus", "pci-dss", "hipaa", "fedramp", "irap", "none-found"]
+          }
+        },
+        "data_residency_countries": {
+          "type": "array",
+          "maxItems": 20,
+          "items": { "$ref": "#/$defs/CountryCode" }
+        },
+        "uk_data_residency": { "type": "boolean" },
+        "gdpr_dpa_available": { "type": "boolean" },
+        "procurement_vehicles": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "enum": ["g-cloud", "digital-outcomes", "crown-commercial-other", "nhs-sbs", "fts-open", "direct-award", "none-found"]
+          }
+        },
+        "deployment_models": {
+          "type": "array",
+          "maxItems": 6,
+          "items": {
+            "type": "string",
+            "enum": ["saas-multi-tenant", "saas-single-tenant", "private-cloud", "on-premise", "hybrid"]
+          }
+        },
+        "integration_protocols": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string",
+            "enum": ["rest", "graphql", "soap", "webhooks", "grpc", "sftp", "jdbc", "event-stream", "none-found"]
+          }
+        },
+        "sdk_languages": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string",
+            "enum": ["javascript", "typescript", "python", "java", "dotnet", "ruby", "go", "php", "rust", "none-found"]
+          }
+        },
+        "auth_methods": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "enum": ["oauth2", "oidc", "saml2", "api-key", "mtls", "basic", "none-found"]
+          }
+        },
+        "data_export_formats": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "enum": ["csv", "json", "xml", "sql-dump", "api-bulk-export", "parquet", "none-found"]
+          }
+        },
+        "sla_uptime_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "support_tiers": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "enum": ["community", "email", "chat", "phone", "dedicated-csm", "24x7"]
+          }
+        },
+        "accessibility_statement_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "wcag_conformance": { "type": "string", "enum": ["wcag-2.1-a", "wcag-2.1-aa", "wcag-2.2-aa", "partial", "none-found"] },
+        "analyst_rating": { "$ref": "#/$defs/AnalystRating" },
+        "repo_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "repo_stars": { "type": "integer", "minimum": 0, "maximum": 10000000 },
+        "repo_contributors": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "repo_last_commit_iso": { "type": "string", "format": "date-time" },
+        "gov_platform_owner": {
+          "type": "string",
+          "enum": ["gds", "nhs-england", "hmrc", "dwp", "home-office", "defra", "mod", "other-uk-gov"]
+        },
+        "notable_limits": {
+          "type": "array",
+          "maxItems": 6,
+          "description": "Quantified limits the page states verbatim (e.g. '5000 API calls per day on Starter'). Facts only — not assessments.",
+          "items": { "$ref": "#/$defs/SafeText" }
+        }
+      }
+    },
+    "PricingTier": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tier_name", "price"],
+      "properties": {
+        "tier_name": { "$ref": "#/$defs/ProperName" },
+        "price": { "type": "number", "minimum": 0, "maximum": 1000000000 },
+        "period": { "type": "string", "enum": ["month", "year", "one-off"] },
+        "unit": { "type": "string", "enum": ["per-user", "per-org", "per-transaction", "per-gb", "flat"] },
+        "included_limits": { "$ref": "#/$defs/SafeText" }
+      }
+    },
+    "AnalystRating": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "position"],
+      "description": "A published third-party classification, extracted verbatim from a named analyst source. Not the reader's own judgement.",
+      "properties": {
+        "source": { "type": "string", "enum": ["gartner-mq", "forrester-wave", "g2", "idc-marketscape"] },
+        "position": {
+          "type": "string",
+          "enum": ["leader", "challenger", "visionary", "niche", "strong-performer", "contender", "high-performer", "not-rated"]
+        },
+        "year": { "type": "integer", "minimum": 2000, "maximum": 2100 }
+      }
+    }
+  }
+}

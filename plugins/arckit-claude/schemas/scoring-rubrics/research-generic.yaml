@@ -1,0 +1,201 @@
+# Generic scoring rubric for arckit-research
+#
+# Consumed by the /arckit:research orchestrator. Computes a weighted
+# option-fit score from the Evidence subtree returned by
+# arckit-research-reader, combined with a project_profile derived from
+# the project's requirements, principles and stakeholder analysis.
+#
+# The rubric is data, not prompt — scoring is deterministic and not
+# subject to prompt injection from reader-tier inputs. No LLM judgement
+# is applied at any point: every criterion below is a lookup, a set
+# overlap, or an arithmetic band.
+#
+# Total possible weighted score: 100.
+# Per-criterion scores are normalised to [0, 100] before weighting.
+
+name: research-generic
+version: 1
+weights:
+  requirements_fit: 30
+  total_cost_of_ownership: 20
+  compliance_fit: 15
+  integration_fit: 10
+  vendor_viability: 10
+  exit_risk: 10
+  procurement_readiness: 5
+
+scoring:
+  # How much of what the project needs does this option claim to do?
+  # Jaccard overlap of the reader's allowlisted capability tags against
+  # the capability tags the orchestrator derived from FR/NFR/INT/DR.
+  requirements_fit:
+    method: jaccard_overlap
+    field: evidence.capabilities
+    against: project_profile.required_capabilities
+    scale: 100
+    when_missing: 0
+
+  # Three-year TCO computed from published pricing against the project's
+  # stated budget envelope. Options with no published pricing score
+  # neutral rather than zero — "custom-quote" is normal at enterprise
+  # tier and must not be penalised as if it were expensive.
+  total_cost_of_ownership:
+    method: tco_band
+    computed_field: tco_3yr_gbp
+    against_min: project_profile.budget_gbp_min
+    against_max: project_profile.budget_gbp_max
+    bands:
+      - { max_ratio: 0.50, score: 100 }   # 3yr TCO <= 50% of budget ceiling
+      - { max_ratio: 0.75, score: 85 }
+      - { max_ratio: 1.00, score: 70 }
+      - { max_ratio: 1.50, score: 40 }
+      - { max_ratio: null, score: 15 }    # over 150% of budget ceiling
+    free_open_source_score: 95
+    custom_quote_score: 50
+    when_missing: 50
+
+  # Certifications and residency the project explicitly requires.
+  compliance_fit:
+    method: composite
+    components:
+      - name: certifications
+        method: coverage_ratio
+        field: evidence.certifications
+        against: project_profile.required_certifications
+        scale: 100
+        when_missing: 30
+        weight: 0.5
+      - name: data_residency
+        method: boolean_requirement
+        field: evidence.uk_data_residency
+        against: project_profile.uk_data_residency_required
+        match_score: 100
+        miss_score: 0
+        not_required_score: 100
+        when_missing: 50
+        weight: 0.3
+      - name: gdpr_dpa
+        method: boolean_flag
+        field: evidence.gdpr_dpa_available
+        true_score: 100
+        false_score: 20
+        when_missing: 50
+        weight: 0.2
+
+  # Can it be wired into the estate as designed?
+  integration_fit:
+    method: composite
+    components:
+      - name: protocols
+        method: coverage_ratio
+        field: evidence.integration_protocols
+        against: project_profile.required_protocols
+        scale: 100
+        when_missing: 40
+        weight: 0.5
+      - name: auth
+        method: coverage_ratio
+        field: evidence.auth_methods
+        against: project_profile.required_auth_methods
+        scale: 100
+        when_missing: 40
+        weight: 0.3
+      - name: sdk
+        method: set_intersects
+        field: evidence.sdk_languages
+        against: project_profile.stack_languages
+        match_score: 100
+        miss_score: 40
+        when_missing: 50
+        weight: 0.2
+
+  # Will the supplier still exist in three years? Extracted facts only —
+  # company age, ownership model, customer base. No analyst opinion is
+  # weighted here; analyst_rating is rendered in the artefact as evidence
+  # but deliberately does not move the score.
+  vendor_viability:
+    method: composite
+    components:
+      - name: company_age
+        method: band
+        computed_field: company_age_years
+        bands:
+          - { min: 0,  max: 2,    score: 30 }
+          - { min: 3,  max: 5,    score: 60 }
+          - { min: 6,  max: 10,   score: 85 }
+          - { min: 11, max: null, score: 100 }
+        when_missing: 50
+        weight: 0.35
+      - name: ownership
+        method: map
+        field: evidence.ownership
+        map:
+          public-company: 100
+          private-independent: 80
+          foundation: 80
+          government: 90
+          private-vc-backed: 60
+          community-project: 50
+          unknown: 50
+        when_missing: 50
+        weight: 0.3
+      - name: customer_base
+        method: band
+        field: evidence.customer_count
+        bands:
+          - { min: 0,    max: 10,    score: 30 }
+          - { min: 11,   max: 100,   score: 60 }
+          - { min: 101,  max: 1000,  score: 85 }
+          - { min: 1001, max: null,  score: 100 }
+        when_missing: 50
+        weight: 0.35
+
+  # How hard is it to leave? Higher score = easier exit.
+  # Scored from export formats, licence openness and whether the option
+  # can be run somewhere the supplier does not control.
+  exit_risk:
+    method: composite
+    components:
+      - name: data_export
+        method: set_intersects
+        field: evidence.data_export_formats
+        against_any: ["csv", "json", "sql-dump", "api-bulk-export", "parquet"]
+        match_score: 100
+        miss_score: 20
+        when_missing: 40
+        weight: 0.4
+      - name: licence_openness
+        method: map
+        field: evidence.licence
+        map:
+          MIT: 100
+          Apache-2.0: 100
+          BSD-3-Clause: 100
+          MPL-2.0: 90
+          EPL-2.0: 90
+          OGL-3.0: 90
+          LGPL-3.0: 85
+          GPL-3.0: 75
+          AGPL-3.0: 55
+          dual-licence: 70
+          proprietary: 30
+          unknown: 40
+        when_missing: 40
+        weight: 0.3
+      - name: portability
+        method: set_intersects
+        field: evidence.deployment_models
+        against_any: ["on-premise", "private-cloud", "hybrid", "saas-single-tenant"]
+        match_score: 100
+        miss_score: 40
+        when_missing: 50
+        weight: 0.3
+
+  # Can it actually be bought on a route the organisation already holds?
+  procurement_readiness:
+    method: set_intersects
+    field: evidence.procurement_vehicles
+    against: project_profile.preferred_procurement_vehicles
+    match_score: 100
+    miss_score: 40
+    when_missing: 50

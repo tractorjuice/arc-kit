@@ -1,0 +1,246 @@
+# UK-Government scoring rubric for arckit-research
+#
+# Same criteria as research-generic, reweighted for UK public sector.
+# Chosen by the /arckit:research orchestrator when the project's
+# principles, stakeholders or requirements indicate a UK government
+# context (see Step 3 of the command).
+#
+# What moves relative to research-generic, and why:
+#
+#   procurement_readiness    5 -> 15  Nothing can be bought off a route the
+#                                     department does not hold. A product with
+#                                     no G-Cloud or DOS listing is a 6-to-12
+#                                     month procurement, not a purchase.
+#   compliance_fit          15 -> 20  Cyber Essentials Plus, ISO 27001 and UK
+#                                     data residency are entry conditions under
+#                                     the Technology Code of Practice and the
+#                                     NCSC Cloud Security Principles, not
+#                                     differentiators.
+#   exit_risk               10 -> 15  TCoP point 5 (make things open) and the
+#                                     Green Book's optionality requirement both
+#                                     treat lock-in as a cost.
+#   requirements_fit        30 -> 25  Still the largest single weight.
+#   total_cost_of_ownership 20 -> 15  Green Book appraisal handles whole-life
+#                                     cost properly downstream in the Economic
+#                                     Case; this rubric only needs it to
+#                                     separate the affordable from the absurd.
+#   integration_fit         10 ->  5  Departments integrate through published
+#                                     API standards either way; a gap here is
+#                                     build effort, not a blocker.
+#   vendor_viability        10 ->  5  Departments carry supplier risk through
+#                                     contract terms and exit plans rather than
+#                                     by preferring incumbents; over-weighting
+#                                     it entrenches large suppliers against the
+#                                     SME-access duty.
+#
+# Total possible weighted score: 100.
+
+name: research-uk-gov
+version: 1
+weights:
+  requirements_fit: 25
+  compliance_fit: 20
+  total_cost_of_ownership: 15
+  exit_risk: 15
+  procurement_readiness: 15
+  integration_fit: 5
+  vendor_viability: 5
+
+scoring:
+  # How much of what the project needs does this option claim to do?
+  # Jaccard overlap of the reader's allowlisted capability tags against
+  # the capability tags the orchestrator derived from FR/NFR/INT/DR.
+  requirements_fit:
+    method: jaccard_overlap
+    field: evidence.capabilities
+    against: project_profile.required_capabilities
+    scale: 100
+    when_missing: 0
+
+  # Three-year TCO computed from published pricing against the project's
+  # stated budget envelope. Options with no published pricing score
+  # neutral rather than zero — "custom-quote" is normal at enterprise
+  # tier and must not be penalised as if it were expensive.
+  total_cost_of_ownership:
+    method: tco_band
+    computed_field: tco_3yr_gbp
+    against_min: project_profile.budget_gbp_min
+    against_max: project_profile.budget_gbp_max
+    bands:
+      - { max_ratio: 0.50, score: 100 }   # 3yr TCO <= 50% of budget ceiling
+      - { max_ratio: 0.75, score: 85 }
+      - { max_ratio: 1.00, score: 70 }
+      - { max_ratio: 1.50, score: 40 }
+      - { max_ratio: null, score: 15 }    # over 150% of budget ceiling
+    free_open_source_score: 95
+    custom_quote_score: 50
+    when_missing: 50
+
+  # Certifications and residency the project explicitly requires.
+  compliance_fit:
+    method: composite
+    components:
+      - name: certifications
+        method: coverage_ratio
+        field: evidence.certifications
+        against: project_profile.required_certifications
+        scale: 100
+        when_missing: 30
+        weight: 0.5
+      - name: data_residency
+        method: boolean_requirement
+        field: evidence.uk_data_residency
+        against: project_profile.uk_data_residency_required
+        match_score: 100
+        miss_score: 0
+        not_required_score: 100
+        when_missing: 50
+        weight: 0.3
+      - name: gdpr_dpa
+        method: boolean_flag
+        field: evidence.gdpr_dpa_available
+        true_score: 100
+        false_score: 20
+        when_missing: 50
+        weight: 0.2
+
+  # Can it be wired into the estate as designed?
+  integration_fit:
+    method: composite
+    components:
+      - name: protocols
+        method: coverage_ratio
+        field: evidence.integration_protocols
+        against: project_profile.required_protocols
+        scale: 100
+        when_missing: 40
+        weight: 0.5
+      - name: auth
+        method: coverage_ratio
+        field: evidence.auth_methods
+        against: project_profile.required_auth_methods
+        scale: 100
+        when_missing: 40
+        weight: 0.3
+      - name: sdk
+        method: set_intersects
+        field: evidence.sdk_languages
+        against: project_profile.stack_languages
+        match_score: 100
+        miss_score: 40
+        when_missing: 50
+        weight: 0.2
+
+  # Will the supplier still exist in three years? Extracted facts only —
+  # company age, ownership model, customer base. No analyst opinion is
+  # weighted here; analyst_rating is rendered in the artefact as evidence
+  # but deliberately does not move the score.
+  vendor_viability:
+    method: composite
+    components:
+      - name: company_age
+        method: band
+        computed_field: company_age_years
+        bands:
+          - { min: 0,  max: 2,    score: 30 }
+          - { min: 3,  max: 5,    score: 60 }
+          - { min: 6,  max: 10,   score: 85 }
+          - { min: 11, max: null, score: 100 }
+        when_missing: 50
+        weight: 0.35
+      - name: ownership
+        method: map
+        field: evidence.ownership
+        map:
+          public-company: 100
+          private-independent: 80
+          foundation: 80
+          government: 90
+          private-vc-backed: 60
+          community-project: 50
+          unknown: 50
+        when_missing: 50
+        weight: 0.3
+      - name: customer_base
+        method: band
+        field: evidence.customer_count
+        bands:
+          - { min: 0,    max: 10,    score: 30 }
+          - { min: 11,   max: 100,   score: 60 }
+          - { min: 101,  max: 1000,  score: 85 }
+          - { min: 1001, max: null,  score: 100 }
+        when_missing: 50
+        weight: 0.35
+
+  # How hard is it to leave? Higher score = easier exit.
+  # Scored from export formats, licence openness and whether the option
+  # can be run somewhere the supplier does not control.
+  exit_risk:
+    method: composite
+    components:
+      - name: data_export
+        method: set_intersects
+        field: evidence.data_export_formats
+        against_any: ["csv", "json", "sql-dump", "api-bulk-export", "parquet"]
+        match_score: 100
+        miss_score: 20
+        when_missing: 40
+        weight: 0.4
+      - name: licence_openness
+        method: map
+        field: evidence.licence
+        map:
+          MIT: 100
+          Apache-2.0: 100
+          BSD-3-Clause: 100
+          MPL-2.0: 90
+          EPL-2.0: 90
+          OGL-3.0: 90
+          LGPL-3.0: 85
+          GPL-3.0: 75
+          AGPL-3.0: 55
+          dual-licence: 70
+          proprietary: 30
+          unknown: 40
+        when_missing: 40
+        weight: 0.3
+      - name: portability
+        method: set_intersects
+        field: evidence.deployment_models
+        against_any: ["on-premise", "private-cloud", "hybrid", "saas-single-tenant"]
+        match_score: 100
+        miss_score: 40
+        when_missing: 50
+        weight: 0.3
+
+  # Can it actually be bought on a route the organisation already holds?
+  procurement_readiness:
+    method: set_intersects
+    field: evidence.procurement_vehicles
+    against: project_profile.preferred_procurement_vehicles
+    match_score: 100
+    miss_score: 40
+    when_missing: 50
+
+# UK-Gov overrides to the shared criterion definitions above.
+#
+# gov-platform options (GOV.UK Notify, Pay, One Login, Forms) are already
+# procured, already assured, and already accessible. Where one covers a
+# capability, TCoP point 2 (use cloud first) and the GDS Service Standard
+# point 12 (make new source code open) both point at it before a
+# commercial alternative. The orchestrator applies this as a post-scoring
+# bonus, clamped to 100 — it is a fixed rule, not a judgement.
+overrides:
+  gov_platform_bonus:
+    applies_when: option_type == "gov-platform"
+    add: 10
+    clamp_max: 100
+  accessibility_floor:
+    # A public-facing service cannot be procured below WCAG 2.2 AA under
+    # the Public Sector Bodies Accessibility Regulations 2018. An option
+    # with no evidence of conformance is capped, not excluded — the gap
+    # is surfaced for the assessor rather than silently ranked away.
+    applies_when: project_profile.public_facing == true
+    field: evidence.wcag_conformance
+    passing_values: ["wcag-2.1-aa", "wcag-2.2-aa"]
+    cap_total_score_at: 70

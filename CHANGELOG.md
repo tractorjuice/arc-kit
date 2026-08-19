@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`/arckit:research` now runs as a three-tier reader/orchestrator/writer split** (#466, item 1 remainder). It was the largest untrusted-input surface left in the plugin and the last single-tier agent holding `Bash`, `Write` and `WebFetch` in one context: vendor sites, pricing pages, marketplaces and AI-generated comparison pages are written to persuade, and the agent that read them could also execute and write.
+
+  - `arckit-research-reader` (`WebSearch`, `WebFetch`, `Read`, `Glob`, `Grep`, `TodoWrite` — no `Write`, `Edit`, `Bash` or `Agent`) fetches evidence for one research category and returns JSON.
+  - The orchestrator is the slash-command body in the main thread, per `docs/READER-PATTERN.md` step 5. It never calls `WebSearch` or `WebFetch`; it reads reader output only after `validate-handoff.mjs` has validated it.
+  - `arckit-research-writer` (`Read`, `Glob`, `Write`, `Edit` — no network, no `Agent`) holds the only `Write` tool and renders the RSCH artefact, the per-vendor profiles and the tech-notes.
+
+  `agents/arckit-research.md` stays exactly where it is: `converter.py` replaces a command body wholesale with the agent prompt when generating the seven non-Claude targets, which cannot dispatch subagents, so deleting it would break `/arckit:research` on all of them. It keeps its `tools:` allowlist for the same reason the other three monoliths do.
+
+- **`schemas/research-handoff.schema.json`** — the reader's output contract, driven from `templates/research-findings-template.md` rather than from the old agent prompt. It has no `score`, `rank`, `recommendation`, `pros` or `cons` field, so a judgement has nowhere to land even if the reader's prompt is overridden by a fetched page. Every enum is an allowlist: a vendor page cannot introduce a novel certification, licence or procurement vehicle by asserting one. Free-text is confined to `notable_limits`, capped at 200 characters and pattern-restricted to exclude angle brackets, so markup cannot cross the boundary into the artefact.
+
+- **`schemas/scoring-rubrics/research-generic.yaml` and `research-uk-gov.yaml`** — seven weighted criteria (requirements fit, 3-year TCO, compliance, integration, vendor viability, exit risk, procurement readiness) computed as set overlaps and arithmetic bands. The UK-Gov variant reweights procurement readiness 5→15 and compliance 15→20, because a product with no G-Cloud or Digital Outcomes listing is a procurement exercise rather than a purchase, and deliberately drops vendor viability 10→5 so the rubric does not entrench incumbents against the SME-access duty. It adds two fixed rules: a +10 bonus for an already-procured GOV.UK platform, and a score cap of 70 for a public-facing option with no evidence of WCAG 2.1/2.2 AA conformance.
+
+  `analyst_rating` is captured as evidence and rendered in the artefact but is deliberately given no weight in either rubric — a Gartner quadrant position is a fact about a report, not a fact about fit.
+
+- **`tests/plugin/fixtures/research-handoff/` (2 valid + 7 reject) and `test_validate_research_handoff.mjs`, wired into `lint-markdown.yml`.** The reject fixtures cover the four injection shapes this boundary exists to stop: a reader emitting `score`/`recommendation`, a fabricated off-allowlist certification, an oversized persuasive free-text field, and markup plus an instruction string smuggled through `notable_limits`.
+
+- **`scripts/check-agent-frontmatter.py`, wired into `lint-markdown.yml`** (#466). Asserts that every agent declares a non-empty `tools:` allowlist, that `agents/` contains nothing but `arckit-*.md` agent files, that no file carries the `copy_agent_stripped()` writeback signature, and that MCP entries use the `mcp__plugin_<package>_<server>__<tool>` prefix. Each of the four checks was verified against a deliberately reintroduced instance of the defect it guards. Fourteen `check-*.py` guards existed and not one looked at `agents/`, which is why both defects above went unobserved.
+
+### Changed
+
+- **`/arckit:research`'s build-vs-buy verdict is now a rule applied to computed numbers, not a judgement.** Buy when the top option scores ≥ 70 and costs less than building; build when nothing clears 50 or everything above it costs more; hybrid when the top option scores well but covers under 70% of required capabilities; and `insufficient evidence` when fewer than two options published pricing at all — that last case previously produced a confident recommendation from a single data point. The build option's cost is an orchestrator estimate and is now explicitly labelled as one, because no reader ever fetched it.
+
+- **`docs/READER-PATTERN.md`** now records which agents have been split and names the five that remain (`aws-research`, `azure-research`, `gcp-research`, `gov-code-search`, `gov-landscape`).
+
+- **Corrected the Agent System section of `CLAUDE.md`** (#466). It claimed 16 agents (there are 19), said the reader/writer subagents are "dispatched only by the corresponding orchestrator agent" (`READER-PATTERN.md` step 5 requires the orchestrator to be the slash command, and the command bodies say so explicitly), and listed `arckit-datascout`, `arckit-gov-reuse` and `arckit-grants` as the agents their commands delegate to, which stopped being true at #446. Those three files are now documented for what they actually are: pre-split monoliths retained solely because the converter replaces a command body wholesale with the agent prompt for non-Claude targets, which cannot dispatch subagents. The MCP tool-naming example in the same section was also wrong — it gave the bare `mcp__<server>__<tool>` form.
+
 ### Fixed
 
 - **Restored the `tools:` allowlist, `effort:` and `maxTurns:` on `arckit-datascout`, `arckit-grants` and `arckit-gov-reuse`** (#466). PR #445 migrated all ten research agents off a `disallowedTools` denylist onto an explicit `tools:` allowlist, so that tools added by future Claude Code versions cannot auto-grant to an existing agent. PR #446 — the three-tier reader/writer split — silently reverted it on exactly the three agents it touched, and the regression survived three months and seven minor releases. Both changes are recorded as shipped in #466's own "already done" list.
@@ -18,14 +46,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`READER-PATTERN.md` is no longer registered as a dispatchable agent** (#466). Claude Code registers *every* `.md` under a plugin's `agents/` directory, including one with no frontmatter, which then resolves to an unrestricted tool grant. A design reference therefore surfaced as an agent named `READER-PATTERN` with "All tools", and `claude plugin details arckit` billed it as a 2–7K on-invoke skill — it was listed as one in README's own footprint table, captured from that command. Moved to `plugins/arckit-claude/docs/READER-PATTERN.md`, next to `DEPENDENCY-MATRIX.md`.
 
   Not to `references/`: that tree is read at runtime by 55 commands and is consequently copied into all 15 overlay plugins by `sync-shared-assets.py`, while no command has ever read this document.
-
-### Added
-
-- **`scripts/check-agent-frontmatter.py`, wired into `lint-markdown.yml`** (#466). Asserts that every agent declares a non-empty `tools:` allowlist, that `agents/` contains nothing but `arckit-*.md` agent files, that no file carries the `copy_agent_stripped()` writeback signature, and that MCP entries use the `mcp__plugin_<package>_<server>__<tool>` prefix. Each of the four checks was verified against a deliberately reintroduced instance of the defect it guards. Fourteen `check-*.py` guards existed and not one looked at `agents/`, which is why both defects above went unobserved.
-
-### Changed
-
-- **Corrected the Agent System section of `CLAUDE.md`** (#466). It claimed 16 agents (there are 19), said the reader/writer subagents are "dispatched only by the corresponding orchestrator agent" (`READER-PATTERN.md` step 5 requires the orchestrator to be the slash command, and the command bodies say so explicitly), and listed `arckit-datascout`, `arckit-gov-reuse` and `arckit-grants` as the agents their commands delegate to, which stopped being true at #446. Those three files are now documented for what they actually are: pre-split monoliths retained solely because the converter replaces a command body wholesale with the agent prompt for non-Claude targets, which cannot dispatch subagents. The MCP tool-naming example in the same section was also wrong — it gave the bare `mcp__<server>__<tool>` form.
 
 ## [6.11.0] — 2026-08-19
 
