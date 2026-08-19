@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **`scripts/check-action-pins.py`, wired into `lint-markdown.yml`** (#466 item 17). Asserts every `uses:` reference in `.github/workflows/` is a full 40-character commit SHA carrying a `# <version>` comment. Catches three shapes: a mutable tag, a mutable branch, and a SHA with no version comment (which is pinned but unreadable, so nobody can tell when it went stale). Each was verified against a deliberately reintroduced instance.
+
 - **The three cloud-research commands now run as three-tier reader/orchestrator/writer splits** (#466, item 1 remainder). `/arckit:aws-research`, `/arckit:azure-research` and `/arckit:gcp-research` complete the item: **every research agent in ArcKit is now split**, and `arckit-framework` is the only single-tier agent left, deliberately exempt as synthesis-only over artefacts already in the repository.
 
   **Three readers, one writer, one schema.** Each provider keeps its own reader, allowlisting only that provider's MCP server — an AWS reader must not be able to reach Microsoft Learn, and that is the whole point of the tier. They share `arckit-cloud-research-writer`, because a writer holds no network tools and there is nothing to isolate between providers; sharing it is what keeps the three artefacts structurally comparable, which is what makes them worth putting side by side in `/arckit:evaluate`.
@@ -81,6 +83,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Every GitHub Action is pinned to a commit SHA** (#466 item 17). All 13 references across the four workflows were on floating tags, and `pypa/gh-action-pypi-publish` was on `release/v1` — a moving **branch**, which advances on every release of that action with no version boundary at all.
+
+  This is not hypothetical hygiene. A tag or branch resolves to whatever it points at *when the workflow runs*, so whoever controls the action repository can repoint one and every downstream workflow picks up the new code silently. ArcKit's workflows run with `contents: write`, and the release workflow additionally holds `id-token: write` for PyPI trusted publishing, so a repointed tag is an arbitrary-code-execution path into a job holding publish credentials.
+
+  Pins were taken at the **current major**, not the version in use: `actions/checkout` v4→v5, `actions/setup-python` v5→v6, `actions/setup-node` v4→v5, `markdownlint-cli2-action` v19→v20, `gh-action-pypi-publish` `release/v1`→v1.14.2 (the same commit that branch pointed at). Pinning at the old majors would have frozen a deprecation GitHub has already announced: the v6.11.0 release log carries `Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@v4, actions/setup-python@v5`.
+
 - **`/arckit:research`'s build-vs-buy verdict is now a rule applied to computed numbers, not a judgement.** Buy when the top option scores ≥ 70 and costs less than building; build when nothing clears 50 or everything above it costs more; hybrid when the top option scores well but covers under 70% of required capabilities; and `insufficient evidence` when fewer than two options published pricing at all — that last case previously produced a confident recommendation from a single data point. The build option's cost is an orchestrator estimate and is now explicitly labelled as one, because no reader ever fetched it.
 
 - **`docs/READER-PATTERN.md`** now records which agents have been split and names the five that remain (`aws-research`, `azure-research`, `gcp-research`, `gov-code-search`, `gov-landscape`).
@@ -88,6 +96,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Corrected the Agent System section of `CLAUDE.md`** (#466). It claimed 16 agents (there are 19), said the reader/writer subagents are "dispatched only by the corresponding orchestrator agent" (`READER-PATTERN.md` step 5 requires the orchestrator to be the slash command, and the command bodies say so explicitly), and listed `arckit-datascout`, `arckit-gov-reuse` and `arckit-grants` as the agents their commands delegate to, which stopped being true at #446. Those three files are now documented for what they actually are: pre-split monoliths retained solely because the converter replaces a command body wholesale with the agent prompt for non-Claude targets, which cannot dispatch subagents. The MCP tool-naming example in the same section was also wrong — it gave the bare `mcp__<server>__<tool>` form.
 
 ### Fixed
+
+- **Documented why the PyPI publish job has never worked**, in the job itself (#730). The job was added at v6.8.0 and has failed on every release since — v6.8.0, v6.9.0, v6.10.0 and v6.11.0 — leaving `arckit-cli` on PyPI at 6.4.1, which is the exact problem #730 added it to solve. It is not a regression and not a defect in the workflow: the failure is
+
+  ```text
+  Trusted publishing exchange failure:
+  * `invalid-publisher`: valid token, but no corresponding publisher
+  ```
+
+  meaning the OIDC token mints correctly and PyPI has no Trusted Publisher matching the claims. The one-time PyPI-side setup the job's own comment documents (Owner `tractorjuice`, Repository `arc-kit`, Workflow `release.yml`, Environment `pypi`) was never completed. **Nothing in this repository can fix it**, so the job now carries a dated status block recording the failure and the exact claims that must match, rather than leaving each release to rediscover it.
 
 - **Restored the `tools:` allowlist, `effort:` and `maxTurns:` on `arckit-datascout`, `arckit-grants` and `arckit-gov-reuse`** (#466). PR #445 migrated all ten research agents off a `disallowedTools` denylist onto an explicit `tools:` allowlist, so that tools added by future Claude Code versions cannot auto-grant to an existing agent. PR #446 — the three-tier reader/writer split — silently reverted it on exactly the three agents it touched, and the regression survived three months and seven minor releases. Both changes are recorded as shipped in #466's own "already done" list.
 
