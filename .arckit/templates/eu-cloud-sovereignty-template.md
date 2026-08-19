@@ -136,8 +136,8 @@
 
 The framework defines an aggregate SEAL, and it is a **minimum** — never an average and never a mode. Two levels of the derivation apply, cited separately:
 
-- **Per-objective SEAL** = the minimum SEAL across every criterion answered within that objective (see each objective's "SEAL evidenced" in Section 4). The Annex calculator XLSX implements this at cell F2: `="SEAL-"&MIN(H5:H251)`, where each row's SEAL is `=IF(E<n>,1*F<n>,"")` — the minimum over every answered criterion, each carrying its own SEAL in column F.
-- **Overall SEAL** = the minimum SEAL evidenced across all eight objectives. Implementation guidance p.9, quoted verbatim: "The overall SEAL level is **the lowest SEAL level achieved in any of the objectives**."
+- **Per-objective SEAL** = the minimum SEAL across every criterion answered within that objective (see each objective's "SEAL evidenced" in Section 4). This level is a property of the framework; the Annex calculator does not compute it, and the workbook holds no per-objective SEAL cell.
+- **Overall SEAL** = the minimum SEAL evidenced across all eight objectives. Implementation guidance p.9, quoted verbatim: "The overall SEAL level is **the lowest SEAL level achieved in any of the objectives**." The Annex calculator XLSX implements exactly this at cell F2: `="SEAL-"&MIN(H5:H251)` — the workbook's only `MIN()`, spanning every answer row across all eight objectives, where each row's SEAL is `=IF(E<n>,1*F<n>,"")`.
 
 These two levels agree only because an objective's SEAL is itself the minimum across its criteria — the Overall SEAL is a minimum-of-minimums.
 
