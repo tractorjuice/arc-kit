@@ -77,3 +77,10 @@ A large share of this period went on correctness work that does not make a featu
 It is unglamorous, and it is the reason the features above can be trusted. A governance harness that silently produces a plausible-looking artefact is worse than one that stops, because the output still looks like evidence.
 
 ArcKit is available for Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, Paperclip, Mistral Vibe, Kimi Code CLI, and as a Python CLI. Start at [arckit.org](https://arckit.org).
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** - real-time conversation, help with commands, and what people are building: [discord.gg/HsA4Y3hQ4](https://discord.gg/HsA4Y3hQ4)
+- **LinkedIn Group** - announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** - code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)
