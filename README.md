@@ -28,6 +28,8 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 - 🔗 Maintaining requirements traceability
 - 📎 Citation traceability for external documents (inline `[DOC-CN]` markers with source quotes)
 
+> ArcKit produces **DRAFT artefacts for qualified people to review**, not legal, regulatory, clinical, or security advice. See [What ArcKit does not do](#what-arckit-does-not-do).
+
 ---
 
 ## Quick Start
@@ -334,6 +336,38 @@ ArcKit provides:
 - ✅ **AI Assistance**: Let AI handle document generation, you focus on decisions
 - ✅ **Enforced Traceability**: Automatic gap detection and coverage analysis
 - ✅ **Version Control**: Git-based workflow for all architecture artifacts
+
+---
+
+## What ArcKit does not do
+
+ArcKit generates **DRAFT artefacts for qualified people to review**. It is not legal, regulatory, clinical, or security advice, and no output it produces is a submission, a certification, an accreditation, or a compliance decision. Every artefact carries `Status: DRAFT` until a named accountable person signs it off, and that is the point at which responsibility for the content transfers to your organisation.
+
+Concretely, and regardless of how complete an artefact looks:
+
+- **A `/arckit:dpia` output is not a completed DPIA.** UK GDPR Article 35 places the assessment on the controller, and Article 36 requires prior consultation with the ICO where high residual risk remains. ArcKit drafts the document. The controller and the Data Protection Officer own it, and only they can conclude it.
+- **`/arckit:secure` and `/arckit:mod-secure` do not produce an assurance decision.** NCSC CAF outcomes, Cyber Essentials certification, and MOD Secure by Design assurance are all judged by named accountable individuals and, where relevant, by certification bodies. A generated assessment is input to that judgement, never a substitute for it.
+- **`/arckit:atrs` and `/arckit:ai-playbook` do not make an algorithmic tool lawful, fair, or transparent.** An ATRS record is published by the department after its own internal clearance, and the UK Government AI Playbook principles are obligations on the deploying organisation.
+- **The EU overlay does not perform conformity assessment.** It drafts documentation referencing the AI Act, NIS2, DORA, CRA, DSA and the Data Act. It is not a notified-body activity, it does not determine your risk classification, and it does not track amendments or implementing acts as they are made.
+- **`/arckit:jsp-936` and the NHS clinical safety commands are not assurance either.** Defence AI assurance requires the accountable authority; DCB0129 and DCB0160 require a suitably registered Clinical Safety Officer.
+- **No output is a procurement decision.** Research, scoring, and evaluation commands rank options against stated criteria. The Senior Responsible Owner and the procurement officer decide, under whatever framework rules apply to them.
+
+Two limits apply to everything above:
+
+1. **Citations reflect the moment they were fetched.** Commands cite sources at fetch time and record the URL, but legislation, standards, framework agreements, and vendor pricing all change. A citation that resolved when the artefact was generated may not describe the current text.
+2. **Generated content can be wrong.** Output is produced by a language model, and research commands extract from third-party web pages that may themselves be inaccurate or written to mislead. ArcKit isolates that extraction behind schema validation and keeps scoring deterministic, which reduces the blast radius but does not make the underlying facts true.
+
+### Who must review what
+
+Before any ArcKit artefact is relied on, published, or submitted:
+
+- Data protection artefacts (DPIA, records of processing): Data Protection Officer
+- Security and assurance artefacts: CISO, or the assessing authority for the relevant regime
+- Clinical safety artefacts: a registered Clinical Safety Officer
+- Business cases and procurement artefacts: Senior Responsible Owner and procurement or commercial lead
+- Anything referencing a regulation, in any jurisdiction: qualified legal counsel for that jurisdiction
+
+The community overlays each carry their own, narrower version of this warning. This section applies to **all** of ArcKit, including the officially-maintained core commands.
 
 ---
 
