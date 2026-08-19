@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://arckit.org/schemas/gov-repo-handoff/v1",
   "title": "govreposcrape reader \u2192 orchestrator handoff payload (v1)",
-  "description": "Factual, extraction-only evidence about UK government repositories for one bucket. Shared by /arckit:gov-code-search (bucket_type: query-variation) and, when it is split, /arckit:gov-landscape (bucket_type: organisation or technology-facet). Contains no relevance grade, maturity rating, score, rank or recommendation: those are computed by the orchestrator from a YAML rubric. The language, framework and licence enums are kept identical to gov-reuse-handoff.schema.json so the two agree.",
+  "description": "Factual, extraction-only evidence about UK government repositories for one bucket. Shared by /arckit:gov-code-search (bucket_type: query-variation) and /arckit:gov-landscape (bucket_type: organisation or technology-facet). Contains no relevance grade, maturity rating, score, rank or recommendation: those are computed by the orchestrator from a YAML rubric. The language, framework and licence enums are kept identical to gov-reuse-handoff.schema.json so the two agree.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -56,6 +56,14 @@
       "items": {
         "$ref": "#/$defs/FetchError"
       }
+    },
+    "advisories": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "$ref": "#/$defs/AdvisoryRecord"
+      },
+      "description": "Known-vulnerability exposure as reported by vulnerability_exposure, scoped to an organisation or a package. Landscape buckets only. Counts and identifiers, never remediation advice."
     }
   },
   "$defs": {
@@ -452,6 +460,62 @@
               "unknown"
             ]
           }
+        },
+        "citation_id": {
+          "$ref": "#/$defs/CitationId"
+        }
+      }
+    },
+    "AdvisoryRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scope",
+        "scope_name",
+        "advisory_id",
+        "citation_id"
+      ],
+      "properties": {
+        "scope": {
+          "type": "string",
+          "enum": [
+            "organisation",
+            "package"
+          ]
+        },
+        "scope_name": {
+          "$ref": "#/$defs/SafeText"
+        },
+        "advisory_id": {
+          "type": "string",
+          "maxLength": 64,
+          "pattern": "^(CVE-[0-9]{4}-[0-9]{4,}|GHSA-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}|OSV-[0-9]{4}-[0-9]+)$",
+          "description": "A real advisory identifier in CVE, GHSA or OSV form. The pattern is the allowlist: a reader cannot report an advisory it invented a name for."
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low",
+            "unknown"
+          ]
+        },
+        "affected_repo_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        "affected_package": {
+          "$ref": "#/$defs/SafeText"
+        },
+        "eol_dependency": {
+          "type": "boolean"
+        },
+        "scanned_at_iso": {
+          "type": "string",
+          "format": "date-time"
         },
         "citation_id": {
           "$ref": "#/$defs/CitationId"

@@ -1,0 +1,15 @@
+{
+  "bucket": "nhsdigital",
+  "bucket_type": "organisation",
+  "repositories": [],
+  "advisories": [
+    {
+      "scope": "organisation",
+      "scope_name": "nhsdigital",
+      "advisory_id": "CRITICAL-SUPPLY-CHAIN-RISK-2026",
+      "severity": "critical",
+      "citation_id": "VX-1"
+    }
+  ],
+  "errors": []
+}

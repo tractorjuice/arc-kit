@@ -1,0 +1,140 @@
+# Maturity rubric for arckit-gov-landscape
+#
+# Consumed by the /arckit:gov-landscape orchestrator. Replaces the
+# five hand-assigned 1-5 dimension scores the single-tier agent used
+# to average into a "Maturity Score". Those scores had no defined
+# inputs: "Documentation (1=no docs, 5=comprehensive README, guides,
+# API docs, architecture docs)" left the model to decide what
+# "comprehensive" meant, differently each run, with the resulting
+# Production-Grade / Mature / Developing / Experimental label carrying
+# an authority the underlying judgement did not support.
+#
+# Every input below is an extracted fact from
+# gov-repo-handoff.schema.json. The five dimensions are preserved
+# because they are the right dimensions; what changes is that each now
+# derives from evidence rather than impression, and the artefact shows
+# the derivation.
+#
+# Dimensions are scored 0-100 internally and rendered on the original
+# 1-5 scale (score / 20, one decimal place) so existing GLND artefacts
+# stay comparable.
+
+name: gov-landscape-generic
+version: 1
+weights:
+  activity: 25
+  documentation: 20
+  tests: 20
+  ci_cd: 15
+  community: 20
+
+scoring:
+  activity:
+    method: band
+    computed_field: months_since_last_commit
+    bands:
+      - { min: 0,  max: 3,    score: 100 }
+      - { min: 4,  max: 12,   score: 75 }
+      - { min: 13, max: 24,   score: 50 }
+      - { min: 25, max: 48,   score: 25 }
+      - { min: 49, max: null, score: 10 }
+    archived_score: 0
+    when_missing: 40
+
+  documentation:
+    method: composite
+    components:
+      - name: readme
+        method: boolean_flag
+        field: evidence.has_readme
+        true_score: 100
+        false_score: 0
+        when_missing: 40
+        weight: 0.5
+      - name: docs_tree
+        method: boolean_flag
+        field: evidence.has_docs
+        true_score: 100
+        false_score: 20
+        when_missing: 40
+        weight: 0.5
+
+  tests:
+    method: boolean_flag
+    field: evidence.has_tests
+    true_score: 100
+    false_score: 10
+    when_missing: 40
+
+  ci_cd:
+    method: boolean_flag
+    field: evidence.has_ci
+    true_score: 100
+    false_score: 10
+    when_missing: 40
+
+  # "Multiple departments contributing" was dimension 5 in the old
+  # agent and could not be established from anything it collected.
+  # Contributor count can be, and cross-organisation contribution is
+  # inferred by the orchestrator only where the same repository is
+  # surfaced under more than one organisation bucket.
+  community:
+    method: composite
+    components:
+      - name: contributors
+        method: band
+        field: evidence.contributors
+        bands:
+          - { min: 0,  max: 1,    score: 10 }
+          - { min: 2,  max: 5,    score: 45 }
+          - { min: 6,  max: 20,   score: 75 }
+          - { min: 21, max: null, score: 100 }
+        when_missing: 40
+        weight: 0.6
+      - name: forks
+        method: band
+        field: evidence.forks
+        bands:
+          - { min: 0,  max: 0,    score: 20 }
+          - { min: 1,  max: 5,    score: 50 }
+          - { min: 6,  max: 25,   score: 80 }
+          - { min: 26, max: null, score: 100 }
+        when_missing: 40
+        weight: 0.4
+
+# Preserved from the single-tier agent so existing artefacts remain
+# comparable. Thresholds are on the 1-5 rendered scale.
+bands:
+  - { min_score: 4.0, label: Production-Grade }
+  - { min_score: 3.0, label: Mature }
+  - { min_score: 2.0, label: Developing }
+  - { min_score: 0.0, label: Experimental }
+
+# Domain-level aggregates the orchestrator computes across all buckets.
+# Counts and proportions only: the domain does not get a maturity grade
+# of its own, because averaging across repositories of wildly different
+# purpose produces a number that reads as meaningful and is not.
+domain_aggregates:
+  - name: organisations_active
+    method: count_distinct
+    field: organisations.org
+  - name: repositories_found
+    method: count_distinct
+    computed_field: org_repo_key
+  - name: median_maturity
+    method: median
+    computed_field: maturity_score_5
+  - name: archived_proportion
+    method: proportion
+    field: evidence.archived
+    value: true
+  - name: language_distribution
+    method: frequency
+    field: evidence.language
+  - name: standards_adoption
+    method: frequency
+    field: evidence.standards_signals
+  - name: exposure_breadth
+    method: sum
+    field: advisories.affected_repo_count
+    group_by: advisories.severity
