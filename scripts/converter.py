@@ -45,6 +45,12 @@ def rewrite_copilot_command_invocations(prompt):
     return prompt.replace("/arckit:", "/arckit-")
 
 
+# Commands that never reach a non-Claude target. `build` orchestrates parallel
+# `Agent` dispatch, which no other runtime has. Read by converter.py itself and
+# by scripts/check-orchestrator-leaks.py, so there is exactly one copy.
+CLAUDE_ONLY_COMMANDS = {"build.md"}
+
+
 def build_agent_map(agents_dir):
     """Build a map from command name to agent file path and content.
 
@@ -526,7 +532,7 @@ def convert(commands_dirs, agents_dir):
     # Commands that depend on Claude Code-only features (parallel Agent dispatch,
     # plugin skills, etc.). Skipped when generating non-Claude formats because
     # they would silently fail or behave incorrectly on those platforms.
-    claude_only_commands = {"build.md"}
+    claude_only_commands = CLAUDE_ONLY_COMMANDS
 
     for config in AGENT_CONFIG.values():
         os.makedirs(config["output_dir"], exist_ok=True)
@@ -1408,6 +1414,12 @@ def generate_vibe_agent_toml_files(agents_dir, output_dir, version, path_prefix=
             continue
 
         agent_path = os.path.join(agents_dir, filename)
+        # Reader/writer subagents are Claude-only — Vibe has no subagent
+        # dispatch primitive, so registering them would surface 19 agents
+        # whose own descriptions say "Not user-invocable" (#447).
+        if is_subagent_file(agent_path):
+            continue
+
         with open(agent_path, "r", encoding="utf-8") as f:
             content = f.read()
 

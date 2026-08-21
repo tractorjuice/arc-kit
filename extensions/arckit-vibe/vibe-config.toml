@@ -31,35 +31,18 @@ servers = [
 
 [extension.agents]
 files = [
-    "arckit-aws-research-reader.toml",
     "arckit-aws-research.toml",
-    "arckit-azure-research-reader.toml",
     "arckit-azure-research.toml",
-    "arckit-cloud-research-writer.toml",
-    "arckit-competitors-writer.toml",
-    "arckit-datascout-reader.toml",
-    "arckit-datascout-writer.toml",
+    "arckit-competitors.toml",
     "arckit-datascout.toml",
     "arckit-framework.toml",
-    "arckit-gcp-research-reader.toml",
     "arckit-gcp-research.toml",
-    "arckit-gov-code-search-reader.toml",
-    "arckit-gov-code-search-writer.toml",
     "arckit-gov-code-search.toml",
-    "arckit-gov-landscape-reader.toml",
-    "arckit-gov-landscape-writer.toml",
     "arckit-gov-landscape.toml",
-    "arckit-gov-reuse-reader.toml",
-    "arckit-gov-reuse-writer.toml",
     "arckit-gov-reuse.toml",
-    "arckit-grants-reader.toml",
-    "arckit-grants-writer.toml",
     "arckit-grants.toml",
-    "arckit-research-reader.toml",
-    "arckit-research-writer.toml",
     "arckit-research.toml",
-    "arckit-tenders-reader.toml",
-    "arckit-tenders-writer.toml"
+    "arckit-tenders.toml"
 ]
 
 [extension.defaults]
