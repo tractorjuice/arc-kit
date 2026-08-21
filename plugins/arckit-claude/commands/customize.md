@@ -21,7 +21,13 @@ ArcKit uses document templates to generate consistent architecture artifacts. Us
 - **Defaults**: `${CLAUDE_PLUGIN_ROOT}/templates/` (shipped with ArcKit, refreshed by `arckit init`)
 - **User overrides**: `.arckit/templates-custom/` (your customizations, preserved across updates)
 
-**Scope: this command covers the core `arckit` plugin only.** `${CLAUDE_PLUGIN_ROOT}` resolves to the plugin the command itself ships in, so the templates that community overlay plugins ship (`arckit-uae`, `arckit-ca`, `arckit-uk-nhs`, `arckit-repo` and the rest) are not in the glob. They are the larger half of the catalogue. Never present a core-only result as the complete inventory; see "Copy an overlay template" below for how to copy one.
+**Scope.** `${CLAUDE_PLUGIN_ROOT}` resolves to the core `arckit` plugin, which also bundles a copy of every community overlay (`arckit-uae`, `arckit-ca`, `arckit-uk-nhs`, `arckit-repo` and the rest) under `${CLAUDE_PLUGIN_ROOT}/plugins/`. Both halves are therefore reachable, and the overlays are the larger half of the catalogue:
+
+- **`list`** covers core **and** overlays
+- **Copying by name** covers core and overlays
+- **`all`** covers core only, deliberately, because a UK project has no use for twelve UAE templates
+
+Whichever scope an action has, **say which one you used**. Never present a core-only result as the complete inventory.
 
 ## Instructions
 
@@ -36,13 +42,18 @@ The user may request:
 
 ### 2. **List Available Templates**
 
-If user wants to see available templates, use Glob to find `${CLAUDE_PLUGIN_ROOT}/templates/*-template.md` and `${CLAUDE_PLUGIN_ROOT}/templates/*-template.html`, then extract the template name from each filename (strip the `-template.md`/`.html` suffix).
+Glob **both** template trees, then strip the `-template.md`/`.html` suffix from each filename to get the short name:
 
-**State the scope before the table**, in these words or close to them:
+1. **Core**: `${CLAUDE_PLUGIN_ROOT}/templates/*-template.md` and `${CLAUDE_PLUGIN_ROOT}/templates/*-template.html`
+2. **Overlays**: `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/*-template.md` and `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/*-template.html`
 
-> Showing the NN templates in the core `arckit` plugin. Community overlay plugins ship their own templates, which this list does not cover.
+For an overlay hit, derive the owning plugin from the path segments between `plugins/` and `templates/`: join them with `-` and prefix `arckit-`. So `plugins/uae/templates/` is `arckit-uae` and `plugins/uk/finance/templates/` is `arckit-uk-finance`. Overlay directories nest one or two levels deep, which is why the glob needs `**`.
 
-Display as a table:
+State the totals first, in these words or close to them:
+
+> NN templates available: NN in the core `arckit` plugin, NN across NN community overlay plugins.
+
+Then display the core templates as a table:
 
 | Template | Command | Description |
 |----------|---------|-------------|
@@ -112,6 +123,18 @@ Display as a table:
 | `wardley-map` | `/arckit:wardley` | Wardley Map documentation |
 | `wardley-value-chain` | `/arckit:wardley.value-chain` | Wardley value chain decomposition |
 
+Then list the overlay templates, grouped by owning plugin, ordered by descending count. Render these from the glob results, not from a hardcoded list, so a newly added overlay appears without this file changing:
+
+| Plugin | Templates |
+|--------|-----------|
+| `arckit-uae` | `uae-ai-charter`, `uae-classification`, ... |
+
+Close with the line that makes the two halves actionable:
+
+> Copy any of these by name, for example `/arckit:customize uae-ai-charter`. `/arckit:customize all` copies the core set only.
+
+If the user asked to list a single plugin's templates (e.g. "list arckit-repo"), show only that group.
+
 ### 3. **Copy Template(s)**
 
 **Copy specific template:**
@@ -136,13 +159,11 @@ Display as a table:
 
 **Copy an overlay template:**
 
-Templates belonging to a community overlay plugin cannot be reached through `${CLAUDE_PLUGIN_ROOT}/templates/`, but the core plugin bundles a copy of every overlay under its own root, so they can still be read and copied by hand:
+Templates belonging to a community overlay plugin are not in the core `templates/` glob, but the core plugin bundles a copy of every overlay under its own root, so copy one exactly as you would a core template:
 
 1. Glob `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/{name}-template.*` to locate the file (overlay directories nest one or two levels deep, e.g. `plugins/uae/`, `plugins/uk/finance/`)
 2. Read it, update the origin banner as under "Copy specific template" above, and Write it to `.arckit/templates-custom/{name}-template.{ext}`
 3. Tell the user which overlay it came from, and that the copy is the version bundled with the installed core plugin, which can lag a separately installed overlay
-
-Tracked on issue #717, which will make this path a first-class part of the command.
 
 ### 4. **Show Template Info**
 
@@ -225,7 +246,7 @@ After completing the request, show:
 
 **Action**: [Listed templates / Copied X template(s)]
 
-**Scope**: Core `arckit` plugin ([N] templates). Overlay plugin templates not included.
+**Scope**: [Core + overlays ([N] templates) for `list` and copy-by-name / Core `arckit` plugin only ([N] templates) for `all`]
 
 **Location**: `.arckit/templates-custom/`
 
