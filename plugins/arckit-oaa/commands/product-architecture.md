@@ -1,0 +1,244 @@
+---
+description: Design product-centric architecture — cross-functional teams, backlog-driven delivery, product mission and outcomes
+doc-type: [OAPR, OAAL]
+argument-hint: "<product name, e.g. 'Observability Stack', 'Loop Factory'>"
+effort: high
+handoffs:
+
+  - command: agile-strategy
+    description: Plan dual transformation for the product
+
+  - command: agile-security
+    description: Embed security into the product sprint rhythm
+---
+
+You are helping an enterprise architect create an **Agile Product Architecture** document using Open Agile Architecture (O-AA, C208) Learning Unit 7: Product Architecture. This approach is product-centric, outcome-driven, and team-led — the product is the organizing principle for the team, backlog, and architecture.
+
+## User Input
+
+```text
+$ARGUMENTS
+```text
+
+## Trigger Guidance
+
+Use this command when **any** of the following conditions are met:
+
+- Architecture work targets a **specific product** (not enterprise-wide transformation)
+
+- Client wants **product-centric** architecture with clear outcomes and ownership
+
+- Team structure needs to be **cross-functional** with permanent (not temporary project) teams
+
+- Delivery is **backlog-driven** with continuous architecture evolution
+
+- Product requires **O-AA axiom-based** design principles
+
+**Do NOT use** when:
+
+- Enterprise-wide architecture is needed (use `/arckit-togaf-adm:adm-preliminary` instead)
+
+- Multi-product portfolio rationalization (use `/arckit-togaf-adm:application-rationalization` instead)
+
+- Client requires traditional TOGAF documentation with full ADM audit trail
+
+## Prerequisites: Read Foundational Artifacts
+
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
+**RECOMMENDED** (read if available, note if missing):
+
+- **PRIN** (Architecture Principles, in 000-global) — Extract: Product architecture principles, technology standards, compliance requirements
+
+  - If missing: warn user to run `/arckit:principles` first
+
+- **OAAL** (O-AA ADM Lite) — Extract: Sprint plan, vision, scope, success criteria
+
+  - If missing: note that O-AA Lite context is not available
+
+- **BPCM** (Business Capability Map) — Extract: Product capabilities, value streams, capability ownership
+
+  - If missing: note that capability context is limited
+
+### Prerequisites 1b: Read external documents and policies
+
+- Read any **external documents** listed in the project context (`external/` files) — extract product definitions, product roadmaps, team charter documents
+
+- Read any **enterprise standards** in `projects/000-global/external/` — extract product architecture standards, team composition guidelines
+
+## Instructions
+
+### 1. Identify or Create Project
+
+Identify the target project from the hook context. If the user specifies a project that doesn't exist yet, create a new project:
+
+1. Use Glob to list `projects/*/` directories and find the highest `NNN-*` number (or start at `001` if none exist)
+2. Calculate the next number (zero-padded to 3 digits, e.g., `002`)
+3. Slugify the product name (lowercase, replace non-alphanumeric with hyphens, trim)
+4. Use the Write tool to create `projects/{NNN}-{slug}/README.md` with the project name, ID, and date
+5. Also create `projects/{NNN}-{slug}/external/README.md` with a note to place external reference documents here
+6. Set `PROJECT_ID` = the 3-digit number, `PROJECT_PATH` = the new directory path
+
+### 2. Read Template
+
+**Read the template** (with user override support):
+
+- **First**, check if `.arckit/templates-custom/product-architecture-template.md` exists in the project root
+
+- **If found**: Read the user's customized template (user override takes precedence)
+
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/product-architecture-template.md` (default)
+
+> **Tip**: Users can customise templates with `/arckit:customize product-architecture`
+
+### 3. O-AA Product Architecture Framework
+
+O-AA Learning Unit 7 (Product Architecture) establishes that:
+
+- **Product-centric**: The product is the organizing principle for the team, backlog, and architecture — not projects, not capabilities, not services
+
+- **Outcome-driven**: Architecture decisions trace to measurable product outcomes (value, adoption, experience)
+
+- **Team-led**: Permanent, cross-functional teams own the product end-to-end
+
+- **Backlog-driven**: Architecture evolves through the product backlog, not separate architecture workstreams
+
+### 4. Shared Schema Definitions
+
+Product architecture commands reuse schema definitions:
+
+- **`product-architecture.json`** — Product architecture schema (shared with `/arckit-oaa:agile-strategy`)
+
+- **`vision.yaml`** — Architecture vision from O-AA Lite or ADM Preliminary (shared with `/arckit-oaa:oaa-adm-lite`, `/arckit-togaf-adm:adm-preliminary`)
+
+- **`implementation-strategy.yaml`** — Implementation waves (shared with `/arckit-togaf-adm:transition-architecture`)
+
+### 5. Generate Product Architecture Document
+
+Create the Product Architecture document following the template structure.
+
+#### Document Control
+
+- Generate Document ID: `ARC-{P}-OAPR-v1.0` (for filename: `ARC-{P}-OAPR-v1.0.md`)
+
+- Set owner, dates, status, classification
+
+- Review cycle: Per sprint cycle
+
+#### Product Mission and Outcome
+
+- One-sentence mission capturing the product's purpose and target value
+
+- Outcome dimensions: Value, Adoption, Experience, Delivery cadence
+
+- Product principles derived from O-AA axioms
+
+#### Cross-Functional Team Composition
+
+- Team structure with roles (Product Owner, Architect, Lead Engineer, AI Safety Engineer, DevOps, QA)
+
+- Cadence: Sprint length, architecture review frequency, compliance review, demo schedule
+
+- Architect role in the team: guardrails, technical decisions, compliance
+
+#### Product Backlog Architecture
+
+- Architecture items in the backlog (not separate architecture workstreams)
+
+- Epic → Feature → Story hierarchy with architecture considerations
+
+- Architecture decision records (ADRs) linked to backlog items
+
+#### Architecture Guardrails
+
+- Non-negotiable constraints (compliance, security, performance)
+
+- Technology standards and approved building blocks
+
+- Anti-patterns and forbidden approaches
+
+#### Product Architecture Diagram
+
+- Mermaid C4 Component diagram showing product components
+
+- Integration points with other products and external systems
+
+- Data flow and API boundaries
+
+### 6. Quality Gate
+
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass. Fix any failures before proceeding.
+
+### 7. Write the Document
+
+**IMPORTANT**: The Product Architecture document will be a substantial document (typically 200-350 lines). You MUST use the Write tool to create the file, NOT output the full content in chat.
+
+Create the file at:
+
+```text
+projects/{P}/ARC-{P}-OAPR-v1.0.md
+```text
+
+### 8. Show Summary to User
+
+After writing the file, show a concise summary (NOT the full document):
+
+```markdown
+## Agile Product Architecture Created
+
+**Document**: `projects/{P}/ARC-{P}-OAPR-v1.0.md`
+**Document ID**: ARC-{P}-OAPR-v1.0
+
+### Product Profile
+- **Mission**: [One-sentence mission]
+
+- **Outcomes**: [Value, Adoption, Experience targets]
+
+- **Principles**: [N] product principles (O-AA axiom-derived)
+
+### Team Composition
+| Role | Name | Responsibility |
+|------|------|---------------|
+| [Role] | [Name] | [Responsibility] |
+
+### Architecture Guardrails
+- [N] non-negotiable constraints
+
+- [N] technology standards
+
+- [N] anti-patterns identified
+
+### Shared Schemas
+- ✅ product-architecture.json → schemas/product-architecture.json
+
+- ✅ vision.yaml → schemas/vision.json (shared with O-AA Lite)
+
+### Synthesised From
+- [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
+
+- [✅/⚠️] O-AA ADM Lite: ARC-{P}-OAAL-v[N].md
+
+- [✅/⚠️] Business Capability Map: ARC-{P}-BPCM-v[N].md
+
+### Next Steps
+1. Populate product backlog with architecture epics
+2. Embed security into sprint rhythm: `/arckit-oaa:agile-security`
+3. Plan dual transformation: `/arckit-oaa:agile-strategy`
+4. Establish governance cadence: `/arckit-oaa:agile-governance`
+
+**File location**: `projects/{P}/ARC-{P}-OAPR-v1.0.md`
+```text
+
+## Important Notes
+
+1. **Product-Centric**: O-AA mandates that the product (not the project or capability) is the organizing principle. Every architecture decision traces to the product's mission and outcomes.
+
+2. **Shared Schemas**: The `vision.yaml` and `implementation-strategy.yaml` schemas are shared between O-AA and traditional TOGAF commands. This ensures consistency regardless of which approach the client selects.
+
+3. **Use Write Tool**: The Product Architecture document is typically 200-350 lines. ALWAYS use the Write tool to create it.
+
+4. **Permanent Teams**: O-AA requires permanent, cross-functional teams — not temporary project teams assembled for a specific engagement.
+
+5. **Version Management**: If a product architecture document already exists (`ARC-*-OAPR-v*.md`), create a new version (v2.0) rather than overwriting.
+
+6. **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji.

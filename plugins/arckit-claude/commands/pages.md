@@ -230,6 +230,10 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | AAGI | `ARC-*-AAGI-*.md` | Agent Inventory |
 | | AAGR | `ARC-*-AAGR-*.md` | Agent Architecture Specification |
 | | AAIN | `ARC-*-AAIN-*.md` | Agent Integration Architecture |
+| **Architecture (Community-contributed — Open Agile Architecture Overlay)** | | | |
+| | OASTR | `ARC-*-OASTR-*.md` | Agile Strategy |
+| | OAPR | `ARC-*-OAPR-*.md` | Product Architecture |
+| | OAAL | `ARC-*-OAAL-*.md` | ADM Lite Sprint Mapping |
 | **Governance** | | | |
 | | RISK | `ARC-*-RISK-*.md` | Risk Register |
 | | TRAC | `ARC-*-TRAC-*.md` | Traceability Matrix |
@@ -248,6 +252,9 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | AAOV | `ARC-*-AAOV-*.md` | Agent Governance Framework |
 | | AASE | `ARC-*-AASE-*.md` | Agent Security Architecture |
 | | AAMT | `ARC-*-AAMT-*.md` | Agent Maturity Assessment |
+| **Governance (Community-contributed — Open Agile Architecture Overlay)** | | | |
+| | OASEC | `ARC-*-OASEC-*.md` | Agile Security |
+| | OAGOV | `ARC-*-OAGOV-*.md` | Agile Governance |
 | **Compliance** | | | |
 | | TCOP | `ARC-*-TCOP-*.md` | TCoP Assessment |
 | | SECD | `ARC-*-SECD-*.md` | Secure by Design |

@@ -379,6 +379,26 @@
         "agent-architecture"
       ],
       "category": "productivity"
+    },
+    {
+      "name": "arckit-oaa",
+      "source": "./plugins/arckit-oaa",
+      "description": "Open Agile Architecture (O-AA C208) — agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance. [COMMUNITY]",
+      "version": "6.12.0",
+      "author": {
+        "name": "ArcKit Contributors"
+      },
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "agile",
+        "oaa",
+        "enterprise-architecture"
+      ],
+      "category": "productivity"
     }
   ]
 }

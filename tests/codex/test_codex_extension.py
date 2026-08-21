@@ -2,13 +2,29 @@
 
 import json
 import os
-from pathlib import Path
 import re
 import subprocess
+from pathlib import Path
+
 import tomllib
 
-
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _load_converter():
+    """Import scripts/converter.py as a module (returns the module object)."""
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "arckit_converter", REPO_ROOT / "scripts" / "converter.py"
+    )
+    assert spec is not None, "could not locate scripts/converter.py"
+    assert spec.loader is not None, "converter spec has no loader"
+    converter = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(converter)
+    return converter
+
+
 CLAUDE_COMMANDS = REPO_ROOT / "plugins" / "arckit-claude" / "commands"
 
 # v5.0.0+: commands live across 8 plugin source directories (core + 7
@@ -28,6 +44,7 @@ PLUGIN_COMMAND_DIRS = [
     REPO_ROOT / "plugins" / "arckit-uk-finance" / "commands",
     REPO_ROOT / "plugins" / "arckit-uk-nhs" / "commands",
     REPO_ROOT / "plugins" / "arckit-togaf-adm" / "commands",
+    REPO_ROOT / "plugins" / "arckit-oaa" / "commands",
     REPO_ROOT / "plugins" / "arckit-agent-architecture" / "commands",
 ]
 CODEX_ROOT = REPO_ROOT / "extensions" / "arckit-codex"
@@ -104,7 +121,9 @@ def codex_skill_name(command_name: str) -> str:
 def expected_command_skill_names() -> set[str]:
     names = expected_command_names()
     normalized = {codex_skill_name(name) for name in names}
-    assert len(normalized) == len(names), "Codex skill name normalization caused a collision"
+    assert len(normalized) == len(names), (
+        "Codex skill name normalization caused a collision"
+    )
     return normalized
 
 
@@ -134,8 +153,12 @@ def test_codex_skill_names_are_valid_hyphen_case():
         assert match, f"{skill_dir.name} missing name frontmatter"
         frontmatter_name = match.group(1).strip().strip('"')
 
-        assert skill_name_re.fullmatch(skill_dir.name), f"invalid skill dir: {skill_dir.name}"
-        assert skill_name_re.fullmatch(frontmatter_name), f"invalid skill name: {frontmatter_name}"
+        assert skill_name_re.fullmatch(skill_dir.name), (
+            f"invalid skill dir: {skill_dir.name}"
+        )
+        assert skill_name_re.fullmatch(frontmatter_name), (
+            f"invalid skill name: {frontmatter_name}"
+        )
         assert frontmatter_name == skill_dir.name
 
 
@@ -171,7 +194,9 @@ def test_codex_agents_config_references_existing_files():
         assert toml_path.is_file(), f"{name} missing TOML config"
         assert md_path.is_file(), f"{name} missing system prompt"
 
-    extra_tomls = {path.stem for path in CODEX_AGENTS.glob("*.toml")} - set(configured_agents)
+    extra_tomls = {path.stem for path in CODEX_AGENTS.glob("*.toml")} - set(
+        configured_agents
+    )
     assert not extra_tomls
 
 
@@ -196,7 +221,9 @@ def test_codex_marketplace_entry_points_to_standalone_repo():
     assert marketplace["interface"]["displayName"] == "ArcKit Plugins"
     assert manifest["homepage"] == "https://github.com/tractorjuice/arckit-codex"
     assert manifest["repository"] == "https://github.com/tractorjuice/arckit-codex"
-    plugin = next(item for item in marketplace["plugins"] if item["name"] == "arckit-codex")
+    plugin = next(
+        item for item in marketplace["plugins"] if item["name"] == "arckit-codex"
+    )
     assert plugin["source"] == {
         "source": "url",
         "url": "https://github.com/tractorjuice/arckit-codex",
@@ -215,7 +242,9 @@ def test_codex_standalone_repo_has_local_marketplace_entry():
 
     assert marketplace["name"] == "arckit"
     assert marketplace["interface"]["displayName"] == "ArcKit Plugins"
-    plugin = next(item for item in marketplace["plugins"] if item["name"] == "arckit-codex")
+    plugin = next(
+        item for item in marketplace["plugins"] if item["name"] == "arckit-codex"
+    )
     assert plugin["source"] == {
         "source": "local",
         "path": "./",
@@ -250,7 +279,10 @@ def test_codex_plugin_mcp_config_is_codex_native():
     }
     assert "alwaysLoad" not in json.dumps(servers)
     assert "${user_config." not in json.dumps(servers)
-    assert servers["google-developer-knowledge"]["headers"]["X-Goog-Api-Key"] == "${GOOGLE_API_KEY}"
+    assert (
+        servers["google-developer-knowledge"]["headers"]["X-Goog-Api-Key"]
+        == "${GOOGLE_API_KEY}"
+    )
 
 
 def test_codex_hooks_are_configured_in_manifest_and_standalone_config():
@@ -294,8 +326,16 @@ def test_codex_plugin_hook_commands_are_not_workspace_relative():
 
 def hook_payloads(tmp_path):
     return {
-        "SessionStart": {"hook_event_name": "SessionStart", "cwd": str(tmp_path), "source": "startup"},
-        "UserPromptSubmit": {"hook_event_name": "UserPromptSubmit", "cwd": str(tmp_path), "prompt": "hello"},
+        "SessionStart": {
+            "hook_event_name": "SessionStart",
+            "cwd": str(tmp_path),
+            "source": "startup",
+        },
+        "UserPromptSubmit": {
+            "hook_event_name": "UserPromptSubmit",
+            "cwd": str(tmp_path),
+            "prompt": "hello",
+        },
         "PreToolUse": {
             "hook_event_name": "PreToolUse",
             "cwd": str(tmp_path),
@@ -319,7 +359,9 @@ def hook_payloads(tmp_path):
 
 
 def fake_plugin_cache(tmp_path):
-    cache_dir = tmp_path / "home" / ".codex" / "plugins" / "cache" / "arckit" / "arckit-codex"
+    cache_dir = (
+        tmp_path / "home" / ".codex" / "plugins" / "cache" / "arckit" / "arckit-codex"
+    )
     cache_dir.mkdir(parents=True)
     (cache_dir / "dev").symlink_to(CODEX_ROOT, target_is_directory=True)
     env = {**os.environ, "HOME": str(tmp_path / "home")}
@@ -327,7 +369,9 @@ def fake_plugin_cache(tmp_path):
     return env
 
 
-def test_codex_plugin_hooks_resolve_runner_from_plugin_cache_without_cwd_assumption(tmp_path):
+def test_codex_plugin_hooks_resolve_runner_from_plugin_cache_without_cwd_assumption(
+    tmp_path,
+):
     hooks = json.loads(CODEX_HOOKS_JSON.read_text(encoding="utf-8"))["hooks"]
     env = fake_plugin_cache(tmp_path)
 
@@ -347,7 +391,9 @@ def test_codex_plugin_hooks_resolve_runner_from_plugin_cache_without_cwd_assumpt
         assert "MODULE_NOT_FOUND" not in result.stderr
 
 
-def test_codex_standalone_config_hooks_resolve_runner_from_plugin_cache_without_cwd_assumption(tmp_path):
+def test_codex_standalone_config_hooks_resolve_runner_from_plugin_cache_without_cwd_assumption(
+    tmp_path,
+):
     config = tomllib.loads(CODEX_CONFIG.read_text(encoding="utf-8"))
     env = fake_plugin_cache(tmp_path)
 
@@ -391,7 +437,10 @@ def test_codex_pages_surfaces_delegate_generation_to_hook():
     for path in pages_surfaces:
         text = path.read_text(encoding="utf-8")
         assert "Steps 0\u20134: Handled by Hook" in text
-        assert "The `sync-guides` hook runs before this command and handles everything" in text
+        assert (
+            "The `sync-guides` hook runs before this command and handles everything"
+            in text
+        )
         assert "Do NOT call any tools" in text
         assert ".arckit/VERSION" not in text
         assert "If the template file does not exist, STOP" not in text
@@ -608,7 +657,9 @@ def test_codex_hook_runs_pages_preprocessor(tmp_path):
     assert (tmp_path / "docs" / "manifest.json").is_file()
     assert (tmp_path / "docs" / "index.html").is_file()
 
-    manifest = json.loads((tmp_path / "docs" / "manifest.json").read_text(encoding="utf-8"))
+    manifest = json.loads(
+        (tmp_path / "docs" / "manifest.json").read_text(encoding="utf-8")
+    )
     guides = {Path(guide["path"]).stem: guide for guide in manifest["guides"]}
 
     assert manifest["guideSectionOrder"] == [
@@ -655,7 +706,9 @@ def test_codex_hook_runs_pages_preprocessor(tmp_path):
     assert "doc.pack || ''" in index_html
 
     other_guides = sorted(
-        guide["path"] for guide in manifest["guides"] if guide.get("category") == "Other"
+        guide["path"]
+        for guide in manifest["guides"]
+        if guide.get("category") == "Other"
     )
     assert other_guides == []
 
@@ -697,7 +750,9 @@ def test_codex_hook_updates_manifest_and_stamps_provenance(tmp_path):
         encoding="utf-8",
     )
     manifest = docs_dir / "manifest.json"
-    manifest.write_text('{"generated": "2026-01-01T00:00:00.000Z", "projects": []}\n', encoding="utf-8")
+    manifest.write_text(
+        '{"generated": "2026-01-01T00:00:00.000Z", "projects": []}\n', encoding="utf-8"
+    )
 
     output = run_codex_hook(
         "PostToolUse",
@@ -762,14 +817,14 @@ def test_command_skills_disable_implicit_invocation():
     for skill_name in command_skill_names():
         policy_path = CODEX_SKILLS / f"arckit-{skill_name}" / "agents" / "openai.yaml"
         assert policy_path.is_file(), f"{skill_name} missing openai.yaml"
-        assert "allow_implicit_invocation: false" in policy_path.read_text(encoding="utf-8")
+        assert "allow_implicit_invocation: false" in policy_path.read_text(
+            encoding="utf-8"
+        )
 
 
 def test_template_customizations_use_templates_custom():
     checked_files = [
-        path
-        for path in CODEX_SKILLS.glob("arckit-*/SKILL.md")
-        if path.is_file()
+        path for path in CODEX_SKILLS.glob("arckit-*/SKILL.md") if path.is_file()
     ]
     checked_files.extend(CODEX_AGENTS.glob("arckit-*.md"))
     checked_files.extend(CODEX_AGENTS.glob("arckit-*.toml"))
@@ -796,7 +851,13 @@ def test_codex_agent_prompts_are_rewritten_and_filtered():
 
 
 def test_no_claude_subagent_orchestrator_leaks_into_codex_command_skills():
-    forbidden = ("subagent_type", "Agent tool", "orchestrator tier", "reader subagent", "writer subagent")
+    forbidden = (
+        "subagent_type",
+        "Agent tool",
+        "orchestrator tier",
+        "reader subagent",
+        "writer subagent",
+    )
     for skill_name in ("arckit-datascout", "arckit-gov-reuse", "arckit-grants"):
         text = (CODEX_SKILLS / skill_name / "SKILL.md").read_text(encoding="utf-8")
         for phrase in forbidden:
@@ -822,9 +883,13 @@ def test_codex_skills_do_not_expose_claude_command_syntax_or_hooks():
             if phrase in text:
                 offenders.append(f"{path.relative_to(REPO_ROOT)} contains {phrase!r}")
         if slash_command_re.search(text):
-            offenders.append(f"{path.relative_to(REPO_ROOT)} contains /arckit command syntax")
+            offenders.append(
+                f"{path.relative_to(REPO_ROOT)} contains /arckit command syntax"
+            )
         if invalid_skill_invocation_re.search(text):
-            offenders.append(f"{path.relative_to(REPO_ROOT)} contains /$arckit invocation syntax")
+            offenders.append(
+                f"{path.relative_to(REPO_ROOT)} contains /$arckit invocation syntax"
+            )
 
     assert not offenders
 
@@ -837,23 +902,13 @@ def test_codex_skill_rewrite_preserves_trailing_punctuation():
     then mapped `.`->`-`). The period is sentence punctuation, not part of the
     command name, and must survive as a literal.
     """
-    import importlib.util
-
-    spec = importlib.util.spec_from_file_location(
-        "arckit_converter", REPO_ROOT / "scripts" / "converter.py"
-    )
-    converter = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(converter)
+    converter = _load_converter()
 
     sample = (
-        "Run /arckit:stakeholders.\n"
-        "Then /arckit.adr.\n"
-        "And /arckit:wardley.climate.\n"
+        "Run /arckit:stakeholders.\nThen /arckit.adr.\nAnd /arckit:wardley.climate.\n"
     )
     expected = (
-        "Run $arckit-stakeholders.\n"
-        "Then $arckit-adr.\n"
-        "And $arckit-wardley-climate.\n"
+        "Run $arckit-stakeholders.\nThen $arckit-adr.\nAnd $arckit-wardley-climate.\n"
     )
     result = converter._rewrite_skill_content(
         sample,
@@ -872,13 +927,7 @@ def test_codex_skill_rewrite_is_stable():
     the AskUserQuestion replacement, the SessionStart hook removal, and the
     plugin-root rewrite.
     """
-    import importlib.util
-
-    spec = importlib.util.spec_from_file_location(
-        "arckit_converter", REPO_ROOT / "scripts" / "converter.py"
-    )
-    converter = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(converter)
+    converter = _load_converter()
 
     sample = (
         "Run /arckit:requirements then /arckit.stakeholders.\n"

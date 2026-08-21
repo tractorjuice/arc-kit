@@ -66,7 +66,7 @@ claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs,uk-gcloud}
 claude plugin install arckit arckit-togaf-adm arckit-agent-architecture
 ```
 
-The standalone `tractorjuice/arckit-claude` marketplace hosts all Claude Code plugins: the `arckit` core plugin, regional overlays, sector overlays, the TOGAF ADM and AI agent architecture overlays, the `arckit-fde` tooling plugin, and the public-but-proprietary `arckit-uk-gcloud` supplier overlay. The 13 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-gcloud`, `arckit-togaf-adm`, `arckit-agent-architecture`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is public for installation and inspection, but not MIT licensed and not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
+The standalone `tractorjuice/arckit-claude` marketplace hosts all Claude Code plugins: the `arckit` core plugin, regional overlays, sector overlays, the TOGAF ADM and AI agent architecture overlays, the `arckit-fde` tooling plugin, and the public-but-proprietary `arckit-uk-gcloud` supplier overlay. The 14 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-gcloud`, `arckit-togaf-adm`, `arckit-agent-architecture`, `arckit-oaa`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is public for installation and inspection, but not MIT licensed and not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
 
 The older `tractorjuice/arc-kit` marketplace remains available for compatibility, but new Claude Code installs should use `tractorjuice/arckit-claude`. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all official commands, autonomous research agents, automation hooks, bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape, uk-tenders), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
@@ -598,6 +598,51 @@ Enterprise Architecture Development Method — 9 commands covering the full ADM 
 
 **Install:** `claude plugin install arckit arckit-togaf-adm`
 **Recipe:** `togaf-adm-full` — full ADM cycle via build recipe
+
+---
+
+## O-AA Overlay (`arckit-oaa`) [COMMUNITY]
+
+Open Agile Architecture (O-AA, standard C208) — agile enterprise architecture for product-driven, sprint-based delivery. Split from the O-AA extension of `arckit-togaf-adm`; the two overlays are complementary, not competitors — see the [O-AA vs TOGAF ADM decision guide](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+
+| Command | Doc Type | Description |
+|---------|----------|-------------|
+| `/arckit-oaa:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (2–4 week engagement windows) |
+| `/arckit-oaa:product-architecture` | `OAPR` | Product-centric architecture — cross-functional teams, backlog-driven delivery |
+| `/arckit-oaa:agile-strategy` | `OASTR` | Dual transformation canvas — legacy modernization + greenfield innovation |
+| `/arckit-oaa:agile-security` | `OASEC` | Security embedded in sprint rhythm — threat modeling, compliance evidence |
+| `/arckit-oaa:agile-governance` | `OAGOV` | Lightweight governance cadence aligned to sprint cycles |
+
+Handoff chain: `agile-strategy` → `product-architecture` → `oaa-adm-lite` → `agile-security` → `agile-governance`.
+
+**Install:** `claude plugin install arckit arckit-oaa`
+**Recipe:** `oaa-full` — strategy → product → ADM Lite → security → governance
+
+---
+
+## Using TOGAF ADM and O-AA Together
+
+The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.12.0` pin) — neither depends on the other. O-AA was split out of the O-AA extension of `arckit-togaf-adm` and maps the ADM cycle to 2–4 week sprints. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+
+| Pattern | When to use | Sequence |
+|---------|-------------|----------|
+| **A — Baseline, then sprints** (recommended when both apply) | Regulatory audit trail *and* sprint delivery | TOGAF `togaf-adm-full` → O-AA `oaa-full` on the same project |
+| **B — O-AA only** | Hard deadline < 8 weeks, agile culture, product-centric; no enterprise baseline needed | O-AA `oaa-full` (foundation targets come from core) |
+| **C — TOGAF ADM only** | Full regulatory audit, 50+ stakeholder gates, quarterly architecture boards | TOGAF `togaf-adm-full` |
+
+**Install for pattern A** (one plugin per CLI invocation; community plugins install disabled):
+
+```bash
+claude plugin install arckit
+claude plugin install arckit-togaf-adm && claude plugin enable arckit-togaf-adm
+claude plugin install arckit-oaa && claude plugin enable arckit-oaa
+```
+
+**Running both in the same project:**
+
+- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.12.0` pins.
+- Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.json` (architecture-change ↔ agile-governance).
+- Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands do not read TOGAF outputs, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
 ---
 

@@ -1,0 +1,72 @@
+recipe: oaa-full
+schema_version: 1
+description: >
+  Open Agile Architecture (O-AA C208) full lifecycle: strategy canvas,
+  product-centric architecture, ADM Lite sprint mapping, security embedded
+  in sprint rhythm, and governance cadence.
+
+defaults:
+  version: "1.0"
+
+optional_targets:
+  OASEC:
+    description: Security embedded in agile sprint rhythm
+    default: false
+  OAGOV:
+    description: Lightweight governance cadence for agile architecture
+    default: false
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:traceability
+    args: ""
+
+targets:
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  - id: OASTR
+    skill: arckit:agile-strategy
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: OASTR }
+    deps: [PRIN, STKE, REQ]
+
+  - id: OAPR
+    skill: arckit:product-architecture
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: OAPR }
+    deps: [REQ, STKE]
+
+  - id: OAAL
+    skill: arckit:oaa-adm-lite
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: OAAL }
+    deps: [PRIN, STKE, REQ, OAPR]
+
+  - id: OASEC
+    skill: arckit:agile-security
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: OASEC }
+    deps: [OAAL, OAPR]
+
+  - id: OAGOV
+    skill: arckit:agile-governance
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: OAGOV }
+    deps: [OAAL, OASEC]

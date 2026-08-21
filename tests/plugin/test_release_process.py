@@ -54,6 +54,7 @@ EXPECTED_CLAUDE_MARKETPLACE_SOURCES = {
         "MIT",
     ),
     "arckit-repo": ("./plugins/repo", "plugins/arckit-repo", "MIT"),
+    "arckit-oaa": ("./plugins/oaa", "plugins/arckit-oaa", "MIT"),
 }
 
 PINNED_README_VERSION_PATTERNS = [
