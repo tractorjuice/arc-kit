@@ -12,6 +12,7 @@ on:
       - "scripts/check_recipes.py"
       - "scripts/check_doctype_collisions.py"
       - "scripts/check-guide-parity.py"
+      - "scripts/check-customize-table.py"
       - "scripts/check-doc-type-registry.py"
       - "scripts/check-agent-frontmatter.py"
       - "scripts/check-action-pins.py"
@@ -59,6 +60,7 @@ on:
       - "scripts/check_recipes.py"
       - "scripts/check_doctype_collisions.py"
       - "scripts/check-guide-parity.py"
+      - "scripts/check-customize-table.py"
       - "scripts/check-doc-type-registry.py"
       - "scripts/check-agent-frontmatter.py"
       - "scripts/check-action-pins.py"
@@ -128,6 +130,9 @@ jobs:
 
       - name: Guide-tree parity check (docs/guides vs plugin copy)
         run: python3 scripts/check-guide-parity.py --check
+
+      - name: Customize template-table check (table vs templates on disk)
+        run: python3 scripts/check-customize-table.py --check
 
       - name: Doc-type registry references (recipes, commands, pages.md)
         run: python3 scripts/check-doc-type-registry.py
