@@ -79,6 +79,12 @@ $ARGUMENTS
 6. **Load Mermaid Syntax Reference**:
    - Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/entityRelationshipDiagram.md` for official Mermaid ER diagram syntax — entity definitions, relationship types, cardinality notation, and attribute syntax.
 
+   **Mermaid ERD Rules** (apply to every `erDiagram` block you write):
+
+   - Valid key types: `PK`, `FK`, `UK` only. To put more than one key on an attribute, **comma-separate** them: `uuid tenant_id FK, UK "One assignment per tenant"`. Space-separating (`FK UK`) and concatenating (`PK_FK`) are both parse errors — Mermaid reports `Expecting 'BLOCK_STOP', 'ATTRIBUTE_WORD', ',', 'COMMENT'` and the whole block silently fails to render (#435).
+   - Attribute comments are double-quoted and go last on the line. A comment cannot itself contain a `"`, and an unclosed quote breaks the block.
+   - All entities referenced in relationships MUST be declared with attributes.
+
 7. **Generate comprehensive data model**:
 
    **A. Executive Summary**:
