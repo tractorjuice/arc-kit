@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **`/arckit:customize list` now covers the community overlays too, closing #717.** Piece 1 fixed the silent-partial-answer; this completes the reachability half. `list` globs `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/` alongside the core tree and renders the overlay templates grouped by owning plugin, derived from the path (`plugins/uk/finance/` is `arckit-uk-finance`). Copy-by-name already reached the overlays as of piece 1, so `/arckit:customize codebase-audit` worked but nothing told you the name existed. Discovery was the last gap.
+
+  Overlay templates are deliberately **not** added to the hardcoded table: `list` renders them from the glob, so a newly added overlay appears without editing the command, and 118 extra rows would bloat a command body that sits in context on every invocation.
+
+  **`all` stays core-only, on purpose**, and now says so as a documented decision rather than an unstated limitation. Expanding it to all 183 would drop twelve UAE, twelve France, twelve Canada and ten US templates into a project that uses none of them.
+
+  `check-customize-table.py` gains a section-aware check that the overlay glob is present in *both* the `list` action and the copy-by-name fallback. A global occurrence count was not enough: `list` losing the glob while the fallback kept it is exactly the regression #717 was about, and the first version of the check did not catch it.
+
 - **`/arckit:customize` no longer presents a core-only result as the full inventory** (#717, piece 1). The command globs `${CLAUDE_PLUGIN_ROOT}/templates/`, which resolves to the plugin it ships in, so the community overlays' templates are invisible to it: 118 of the 183 templates in the repo, or 64%. Nothing in the command's 130-odd lines said so, so `list` presented a core-only list as the complete catalogue and `all` reported success having copied 65 of 183. A user asking for all templates and getting a third of them had no signal that anything was missing.
 
   The reachability fix is piece 2 and is tracked separately. What changes here is that the command stops giving a wrong answer: `list` and `all` state their scope, the "not found" branch checks the overlays before dead-ending, and the command explains how to copy an overlay template by hand. That path uses `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/`, because the core plugin bundles a copy of every overlay under its own root, so no plugin-cache walking is involved.

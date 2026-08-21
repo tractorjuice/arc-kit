@@ -20,16 +20,19 @@ This script asserts three things:
   2. every table row names a template that exists on disk
   3. every table row's `/arckit:<command>` reference resolves to a real command
 
-It also checks that the command still states its scope. `/arckit:customize` can
-only reach the core plugin's templates -- `${CLAUDE_PLUGIN_ROOT}` resolves to the
-plugin the command ships in, so the overlays' templates (the larger half of the
-catalogue) are invisible to it. Saying "copied all templates" after a core-only
-pass is a wrong answer, not a terse one, so the scope wording is load-bearing and
-guarded against silent removal.
+It also guards the command's scope handling, which is the half of #717 that was
+the actual bug. `list` and copy-by-name reach the overlays through
+`${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/`, because the core plugin bundles a
+copy of every overlay under its own root; `all` stays core-only by design,
+because a UK project has no use for twelve UAE templates. Saying "copied all
+templates" after a core-only pass is a wrong answer, not a terse one, so both
+the overlay glob and the scope wording are load-bearing and guarded against
+silent removal.
 
-Scope note: this guard deliberately covers the CORE table only. Overlay
-templates are not expected to appear in it. When #717 makes overlay templates
-first-class, widen the disk-side glob rather than relaxing the assertions.
+Scope note: only the CORE table is checked against disk. Overlay templates are
+deliberately NOT tabled -- `list` renders them from the glob, so a new overlay
+appears without this file changing, and 118 extra rows would bloat a command
+body that sits in context on every invocation.
 
 Usage:
     python3 scripts/check-customize-table.py           # report drift, exit 1 if any
@@ -51,12 +54,31 @@ TEMPLATES = REPO_ROOT / "plugins" / "arckit-claude" / "templates"
 TEMPLATE_SUFFIX = re.compile(r"-template\.(md|html)$")
 ROW = re.compile(r"^\| `([^`]+)` \| `/arckit:([^`]+)` \| (.+?) \|$", re.M)
 
-# Phrases that make the partial scope explicit to the user. The command must keep
-# saying this somewhere; the exact sentence may be reworded.
+# The overlay glob is the capability; the phrases are the promise made to the
+# user about scope. Both must survive editing. Exact sentences may be reworded,
+# but these fragments are the load-bearing part.
+OVERLAY_GLOB = "${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/"
+# The glob has to appear in BOTH actions that promise overlay coverage, so a
+# global occurrence count is not enough: `list` losing it while the copy
+# fallback keeps it is exactly the silent-partial-answer regression #717 was
+# about. Sections are the numbered `### N. **Title**` headings.
+OVERLAY_GLOB_SECTIONS = ("List Available Templates", "Copy Template(s)")
+SECTION = re.compile(r"^### \d+\. \*\*(.+?)\*\*$", re.M)
 SCOPE_MARKERS = (
-    "core `arckit` plugin only",
-    "does not cover",
+    "covers core only",
+    "Never present a core-only result as the complete inventory",
 )
+
+
+def split_sections(text: str) -> dict[str, str]:
+    """Map each numbered `### N. **Title**` heading to the body beneath it."""
+    matches = list(SECTION.finditer(text))
+    return {
+        match.group(1): text[
+            match.end() : matches[i + 1].start() if i + 1 < len(matches) else len(text)
+        ]
+        for i, match in enumerate(matches)
+    }
 
 
 def core_templates() -> set[str]:
@@ -123,13 +145,30 @@ def main() -> int:
             + "".join(f"  {name} -> /arckit:{command}\n" for name, command in unresolved)
         )
 
+    sections = split_sections(text)
+    missing_glob = [
+        title
+        for title in OVERLAY_GLOB_SECTIONS
+        if OVERLAY_GLOB not in sections.get(title, "")
+    ]
+    if missing_glob:
+        failures.append(
+            "customize.md no longer reaches overlay templates. Expected the glob\n"
+            f"  {OVERLAY_GLOB}\n"
+            "  in each of these sections, and it is missing from:\n"
+            + "".join(f"  ### {title}\n" for title in missing_glob)
+            + "  Without it the action silently drops the larger half of the\n"
+            "  catalogue (arc-kit#717).\n"
+        )
+
     absent_markers = [marker for marker in SCOPE_MARKERS if marker not in text]
     if absent_markers:
         failures.append(
             "customize.md no longer states its scope. Missing wording:\n"
             + "".join(f"  {marker!r}\n" for marker in absent_markers)
-            + "  The command reaches core templates only; a core-only result must\n"
-            "  never be presented as the full inventory (arc-kit#717).\n"
+            + "  `all` is core-only while `list` and copy-by-name are not; a\n"
+            "  core-only result must never be presented as the full inventory\n"
+            "  (arc-kit#717).\n"
         )
 
     if failures:
@@ -141,7 +180,7 @@ def main() -> int:
 
     print(
         f"customize table OK: {len(tabled)} rows match {len(on_disk)} core templates, "
-        "all command references resolve, scope stated."
+        "all command references resolve, overlay glob present, scope stated."
     )
     return 0
 

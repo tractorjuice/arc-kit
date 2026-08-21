@@ -36,18 +36,22 @@ Commands automatically check for custom templates first, falling back to default
 
 ### Scope
 
-In Claude Code, `/arckit:customize` covers the **core `arckit` plugin only**. Community overlay plugins (`arckit-uae`, `arckit-ca`, `arckit-uk-nhs`, `arckit-repo` and the rest) ship their own templates, and `list` and `all` do not cover them. The command will tell you which scope it used.
+In Claude Code, `${CLAUDE_PLUGIN_ROOT}` resolves to the core `arckit` plugin, which also bundles a copy of every community overlay (`arckit-uae`, `arckit-ca`, `arckit-uk-nhs`, `arckit-repo` and the rest). Both halves are reachable, and the overlays are the larger half of the catalogue:
 
-The core plugin does bundle a copy of every overlay, so an overlay template can still be copied by hand:
+| Action | Scope |
+|--------|-------|
+| `list` | Core and overlays, grouped by plugin |
+| `/arckit:customize <name>` | Core and overlays |
+| `all` | Core only, deliberately |
+
+`all` stays core-only because a UK project has no use for twelve UAE templates. Copy overlay templates by name instead:
 
 ```bash
-# Locate it under the installed core plugin, then copy it
-find ~/.claude/plugins/cache -path '*/arckit/*/plugins/*/templates/codebase-audit-template.md' \
-  | sort -V | tail -1 \
-  | xargs -I{} cp {} .arckit/templates-custom/codebase-audit-template.md
+/arckit:customize codebase-audit     # ships in arckit-repo
+/arckit:customize uae-ai-charter     # ships in arckit-uae
 ```
 
-Ask `/arckit:customize codebase-audit` and the command will locate it for you and explain the copy. Making this a first-class path is tracked on [issue #717](https://github.com/tractorjuice/arc-kit/issues/717).
+Whichever action you use, the command states the scope it applied. The overlay copy is the version bundled with your installed core plugin, which can lag a separately installed overlay.
 
 On the CLI and the non-Claude extensions this distinction does not apply: `arckit init` writes every template into a single flat `.arckit/templates/` directory.
 
@@ -123,6 +127,6 @@ rm .arckit/templates-custom/requirements-template.md
 | `data-model-template.md` | `/arckit:data-model` |
 | `sow-template.md` | `/arckit:sow` |
 | `pages-template.html` | `/arckit:pages` |
-| ... | (run `/arckit:customize list` for the full core list) |
+| ... | (run `/arckit:customize list` for the full list) |
 
-The core plugin ships 65 templates and the overlays add well over a hundred more, so the extract above is a sample rather than a catalogue. `/arckit:customize list` is the authoritative core list.
+The core plugin ships 65 templates and the overlays add well over a hundred more, so the extract above is a sample rather than a catalogue. `/arckit:customize list` is the authoritative list and covers both.
