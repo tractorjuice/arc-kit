@@ -5,6 +5,24 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`/arckit:customize` no longer presents a core-only result as the full inventory** (#717, piece 1). The command globs `${CLAUDE_PLUGIN_ROOT}/templates/`, which resolves to the plugin it ships in, so the community overlays' templates are invisible to it: 118 of the 183 templates in the repo, or 64%. Nothing in the command's 130-odd lines said so, so `list` presented a core-only list as the complete catalogue and `all` reported success having copied 65 of 183. A user asking for all templates and getting a third of them had no signal that anything was missing.
+
+  The reachability fix is piece 2 and is tracked separately. What changes here is that the command stops giving a wrong answer: `list` and `all` state their scope, the "not found" branch checks the overlays before dead-ending, and the command explains how to copy an overlay template by hand. That path uses `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/`, because the core plugin bundles a copy of every overlay under its own root, so no plugin-cache walking is involved.
+
+- **The `customize.md` template table matches the templates on disk.** It had drifted in both directions. Twenty core templates were absent from it (`competitors`, `conformance-assessment`, `data-source-profile`, `dfd`, `framework-overview`, `gcp-research`, `glossary`, the four `gov-*` and `wardley-*` sets, `grants`, `maturity-model`, `presentation`, `tech-note`, `tenders`, `vendor-profile`), and one row named `uk-gov-tcop`, a template that has never existed, so asking for it hit the "source template does not exist" branch while the docs said it was valid. The table now carries all 65 core templates, sorted, with the phantom row removed.
+
+- **`docs/guides/customize.md` describes the plugin's template locations correctly.** It told plugin users that defaults live in `.arckit/templates/`, which is the CLI and non-Claude-extension story; under the Claude Code plugin they live in `${CLAUDE_PLUGIN_ROOT}/templates/`. The guide now covers both, states the same overlay scope as the command, and stops implying that its truncated sample table is the catalogue.
+
+### Added
+
+- **`scripts/check-customize-table.py`, wired into `lint-markdown.yml`.** Holds the table to the templates on disk: every core template has a row, every row names a template that exists, every row's `/arckit:<command>` reference resolves to a real command file, and no template is listed twice. It also asserts the scope wording is still present, so the silent-partial-answer failure mode cannot come back by deletion. All five failure modes were verified against deliberately reintroduced instances, including the exact `uk-gov-tcop` row this PR removes.
+
+  This fits the existing guard pattern (`check-doc-type-registry.py`, `check-multi-instance-parity.py`, `check-guide-parity.py`). Nothing had ever looked at this table, which is why it drifted through both halves undetected.
+
 ## [6.12.0] — 2026-08-19
 
 ### Added
