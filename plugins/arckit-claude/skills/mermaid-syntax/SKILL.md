@@ -5,6 +5,7 @@ paths:
   - "**/*.mmd"
   - "**/*.mermaid"
   - "**/ARC-*-DIAG-*.md"
+  - "**/ARC-*-DATA-*.md"
 ---
 
 # Mermaid Syntax Reference
@@ -73,7 +74,9 @@ These are the most common Mermaid syntax errors encountered when generating diag
 | Gantt task status | Invalid task status keywords | Valid: `done`, `active`, `crit`, `milestone` |
 | Parentheses in labels | Unescaped `()` breaks node parsing | Wrap in quotes: `Node["Label (with parens)"]` |
 | Special chars in IDs | Hyphens, dots, spaces in node IDs | Use camelCase or underscores: `apiGateway`, `api_gateway` |
-| Missing semicolons in ER | ER diagram attributes need specific syntax | Follow `entity { type name }` pattern |
+| ER combined keys | `FK UK` (space-separated) and `PK_FK` are parse errors, and the whole block silently fails to render | Comma-separate them: `uuid tenant_id FK, UK` |
+| ER attribute comments | An unclosed `"`, or a `"` inside the comment, breaks the block | One pair of double quotes, last on the line, no `"` inside |
+| ER cardinality tokens | Invented tokens (e.g. `\|\|--x{`) fail to parse | Left: `\|\|` `\|o` `}o` `}\|` — right: `\|\|` `o\|` `o{` `\|{` |
 | Subgraph naming | Subgraph IDs with spaces need quotes | `subgraph "My Group"` |
 
 ## ArcKit Integration

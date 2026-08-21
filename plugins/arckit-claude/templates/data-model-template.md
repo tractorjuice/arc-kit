@@ -118,6 +118,7 @@ erDiagram
 - **Primary Keys (PK)**: Uniquely identify each record
 - **Foreign Keys (FK)**: Reference other entities
 - **Unique Keys (UK)**: Must be unique but not primary identifier
+- **Combined keys**: comma-separate them (`uuid tenant_id FK, UK`). `FK UK` and `PK_FK` are invalid Mermaid and stop the whole block rendering
 
 ---
 
