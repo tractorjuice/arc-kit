@@ -82,6 +82,14 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Architecture Change Request](https://arckit.org/guides/architecture-change.md): `/arckit:architecture-change` Phase H change request, impact assessment, and ADM re-entry point.
 - [Architecture Repository](https://arckit.org/guides/architecture-repository.md): `/arckit:architecture-repository` standards register, pattern library, reference architectures, and reusable building blocks.
 
+### O-AA overlay (community-contributed)
+
+- [O-AA ADM Lite](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/oaa-adm-lite.md): `/arckit-oaa:oaa-adm-lite` TOGAF ADM cycle mapped to 2-4 week agile sprint windows.
+- [O-AA Product Architecture](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/product-architecture.md): `/arckit-oaa:product-architecture` product-centric architecture with cross-functional teams, backlog-driven delivery.
+- [O-AA Agile Strategy](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-strategy.md): `/arckit-oaa:agile-strategy` dual transformation canvas — legacy modernization plus greenfield innovation.
+- [O-AA Agile Security](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-security.md): `/arckit-oaa:agile-security` security embedded in the sprint rhythm — threat modeling, compliance evidence.
+- [O-AA Agile Governance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-governance.md): `/arckit-oaa:agile-governance` lightweight governance cadence aligned to sprint cycles.
+
 ### AI Agent Architecture overlay (community-contributed)
 
 - [AI Agent Inventory](https://arckit.org/guides/agent-inventory.md): `/arckit:agent-inventory` agent catalogue, capabilities, security classification, dependencies, and oversight level.

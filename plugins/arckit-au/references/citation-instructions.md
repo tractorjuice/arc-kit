@@ -32,6 +32,7 @@ Derive a short Source ID for each piece of source material. The same Source ID i
 | data-protection-impact-assessment.pdf | DPIA | **D**ata **P**rotection **I**mpact **A**ssessment |
 | nhs-digital-service-manual.pdf | NDSM | **N**HS **D**igital **S**ervice **M**anual |
 | cloud-hosting-strategy.pdf | CHS | **C**loud **H**osting **S**trategy |
+| oaa-standard-c208.pdf | OAS-C | **O**pen **A**gile **A**rchitecture **C**208 |
 
 ### MCP Queries
 

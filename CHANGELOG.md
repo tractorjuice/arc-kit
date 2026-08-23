@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **New community plugin `arckit-oaa` — Open Agile Architecture (O-AA, standard C208).** Five new commands (`oaa-adm-lite`, `product-architecture`, `agile-strategy`, `agile-security`, `agile-governance`) in a standalone plugin with its own `/arckit-oaa:` command namespace, five doc-type codes (`OASTR`, `OAPR`, `OAAL`, `OASEC`, `OAGOV`), the `oaa-full` build recipe, and `userConfig` placeholder support. Registered in both marketplaces, the doc-type registry, `pages.md`, `llms.txt`, and all extension formats. Complementary to `arckit-togaf-adm`, which keeps the full document-centric ADM; neither depends on the other. Core `references/quality-checklist.md` gains the five OAA per-type sections and `references/citation-instructions.md` the O-AA C208 derivation row, so every plugin keeps the shared assets byte-identical to core.
+
 ### Fixed
 
 - **Mermaid ER guard rails for `/arckit:data-model` and the `mermaid-syntax` skill (#435).** `/arckit:diagram` has carried the `PK, FK` comma rule since #78; `/arckit:data-model` never did, and it is the command that emitted the `uuid tenant_id FK UK` attribute that failed to render in #435. Adds a Mermaid ERD Rules block to `data-model.md`, a combined-key note to both copies of `data-model-template.md`, and three ER rows to the skill's gotchas table (combined keys, attribute comments, cardinality tokens) in place of a "missing semicolons in ER" row that described no real error. The skill's `paths:` now auto-activates on `ARC-*-DATA-*.md` as well as `ARC-*-DIAG-*.md`, having never fired on the artefact class that broke. Note the rule is *not* "one key per attribute" as #435 states — Mermaid accepts multiple keys comma-separated; `FK UK` fails only for the missing comma. Every claim verified against `mermaid@11.15.0`: `FK UK` and `PK_FK` are parse errors, `FK, UK` and `PK, FK` parse.
