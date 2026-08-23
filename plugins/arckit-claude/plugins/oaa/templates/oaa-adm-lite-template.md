@@ -73,6 +73,8 @@ Use this template when **any** of the following conditions are met:
 
 - **Axiom 10 (Simple Common Operating Principles)** — no gold-plating; scope constrained to the client's immediate delivery horizon
 
+- **Axiom 15 (Project to Product Shift)** — the vision organizes delivery around a product the team owns, not a one-off project
+
 ### Activities
 
 1. **Preliminary (ADM-P):** Determine strategic drivers, constraints, and existing assets
@@ -156,6 +158,8 @@ vision:
 - **Axiom 5 (Value Stream Alignment)** — capabilities measured by business value delivered along the value stream, not diagram count
 
 - **Axiom 1 (Customer Experience Focus)** — data classification and compliance controls trace to specific stakeholder concerns from Sprint 0
+
+- **Axiom 6 (Autonomous Cross-Functional Teams)** — the sprint team owns the business and data architecture decisions end-to-end, without a central architecture board
 
 ### Activities
 

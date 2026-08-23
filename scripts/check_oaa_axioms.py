@@ -24,6 +24,10 @@ This guard blocks that defect class. It checks:
      (Product Architecture), Ch. 4.6 + Axiom 16 + G216 (security),
      Ch. 8 (Agile Governance), with ADM Lite as an ArcKit convention over
      TOGAF ADM (C182), not a C208 chapter range
+  7. the ``oaa-adm-lite`` axiom set is consistent across the three places it
+     is stated: the command's Axiom Alignment list, the template's per-sprint
+     axiom blocks, and the 16-axiom table's "Applied by" column — a set that
+     is declared but never applied (or applied but never declared) is drift
 
 Scanned trees: the canonical source of truth (``plugins/arckit-oaa``), its
 arckit-claude mirror (``plugins/arckit-claude/plugins/oaa``), and the
@@ -83,6 +87,13 @@ PLAYBOOK_CONTEXT = {
     "G216": ("security", 80),
     "G226": ("agile enterprise architect", 80),
 }
+
+# `**Axiom N (...)**` bullets — the explicit citation form used by the
+# oaa-adm-lite command's alignment list and the template's sprint blocks.
+ADM_LITE_CITE_RE = re.compile(r"\*\*Axiom\s+(\d{1,2})\s*\(")
+
+# `| N | Name | applied-by cell |` rows of the 16-axiom table.
+APPLIED_BY_RE = re.compile(r"^\|\s*(\d{1,2})\s*\|[^|]*\|\s*([^|]*)\|", re.MULTILINE)
 
 # Stale C208 chapter coordinates. Each pattern is number+topic (or exact
 # table-cell form) so a legitimate citation of C208's *real* Chapter 10/12
@@ -236,6 +247,58 @@ def check_chapter_citations(path: Path, text: str) -> list[str]:
     return failures
 
 
+def _adm_lite_sets(base: Path) -> dict[str, set[int] | None]:
+    """The oaa-adm-lite axiom set as stated in each of the three places.
+
+    ``None`` marks a missing source file. Returns:
+      - declared: ``commands/oaa-adm-lite.md`` Axiom Alignment list
+      - applied:  ``templates/oaa-adm-lite-template.md`` per-sprint blocks
+      - reference: rows of the 16-axiom table whose "Applied by" cell
+        names oaa-adm-lite
+    """
+    out: dict[str, set[int] | None] = {}
+    cmd_path = base / "commands" / "oaa-adm-lite.md"
+    tpl_path = base / "templates" / "oaa-adm-lite-template.md"
+    ref_path = base / "references" / "oaa-reference.md"
+    cmd = cmd_path.read_text(encoding="utf-8") if cmd_path.is_file() else None
+    tpl = tpl_path.read_text(encoding="utf-8") if tpl_path.is_file() else None
+    ref = ref_path.read_text(encoding="utf-8") if ref_path.is_file() else None
+    out["declared"] = (
+        {int(m.group(1)) for m in ADM_LITE_CITE_RE.finditer(cmd)} if cmd is not None else None
+    )
+    out["applied"] = (
+        {int(m.group(1)) for m in ADM_LITE_CITE_RE.finditer(tpl)} if tpl is not None else None
+    )
+    refset: set[int] = set()
+    if ref is not None:
+        for m in APPLIED_BY_RE.finditer(ref):
+            if "oaa-adm-lite" in m.group(2):
+                refset.add(int(m.group(1)))
+    out["reference"] = refset if ref is not None else None
+    return out
+
+
+def check_adm_lite_set_consistency(base: Path) -> list[str]:
+    """Check 7: the three oaa-adm-lite axiom-set statements must agree."""
+    sets = _adm_lite_sets(base)
+    missing = [k for k, v in sets.items() if v is None]
+    if missing:
+        label = base.relative_to(ROOT) if base.is_relative_to(ROOT) else str(base)
+        return [f"  {label}: oaa-adm-lite set check missing file(s) for: {', '.join(missing)}"]
+    declared, applied, refset = sets["declared"], sets["applied"], sets["reference"]
+    if declared == applied == refset:
+        return []
+
+    def fmt(s: set[int]) -> str:
+        return "{" + ", ".join(str(n) for n in sorted(s)) + "}"
+
+    label = base.relative_to(ROOT) if base.is_relative_to(ROOT) else str(base)
+    return [
+        f"  {label}: oaa-adm-lite axiom set drift — command declares {fmt(declared)}, "
+        f"template applies {fmt(applied)}, reference 'Applied by' lists {fmt(refset)}"
+    ]
+
+
 def main() -> int:
     files = scan_files()
     if not files:
@@ -263,6 +326,10 @@ def main() -> int:
     else:
         failures.extend(check_axiom_table(*reference))
 
+    for base in SOURCE_ROOTS:
+        if base.is_dir():
+            failures.extend(check_adm_lite_set_consistency(base))
+
     if failures:
         print(f"FAIL: {len(failures)} O-AA C208 integrity problem(s):", file=sys.stderr)
         print("\n".join(failures), file=sys.stderr)
@@ -278,7 +345,7 @@ def main() -> int:
     print(
         f"OK: O-AA C208 axiom/chapter integrity — {checked} files checked, "
         f"{len(CANON_AXIOMS)}-axiom table consistent, no fabricated citations, "
-        f"no stale chapter coordinates."
+        f"no stale chapter coordinates, oaa-adm-lite axiom set consistent."
     )
     return 0
 

@@ -21,7 +21,7 @@ The O-AA Standard (C208) is built on **16 published axioms**. ArcKit commands ci
 | 11 | Partitioning Over Layering | — |
 | 12 | Organization Mirroring Architecture | — |
 | 13 | Organizational Leveling | — |
-| 14 | Bias for Change | — |
+| 14 | Bias for Change | `oaa-adm-lite` |
 | 15 | Project to Product Shift | `oaa-adm-lite`, `product-architecture` |
 | 16 | Secure by Design | `agile-security` |
 

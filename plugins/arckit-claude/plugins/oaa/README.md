@@ -67,7 +67,7 @@ Axioms are cited by their published C208 number (Ch. 9); chapter numbers follow 
 
 | Command | C208 Chapter | Published axioms applied |
 |---------|-------------|--------|
-| `oaa-adm-lite` | C182 ADM phases ↔ sprints; C208 Ch. 3–9 | 1, 3, 5, 6, 10, 15 |
+| `oaa-adm-lite` | C182 ADM phases ↔ sprints; C208 Ch. 3–9 | 1, 3, 5, 6, 7, 10, 14, 15 |
 | `product-architecture` | Ch. 14 | 15, 6 |
 | `agile-strategy` | Ch. 11 | 5 |
 | `agile-security` | Ch. 4.6 + Axiom 16; G216 | 16 |

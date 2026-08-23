@@ -119,7 +119,11 @@ Every O-AA deliverable must reference the relevant published O-AA axioms (C208, 
 
 - **Axiom 6 (Autonomous Cross-Functional Teams)** — the sprint team owns architecture decisions end-to-end, without a central architecture board
 
+- **Axiom 7 (Authority, Responsibility, and Accountability Distribution)** — the operational model (who monitors, who responds, who is accountable) is defined alongside the technical stack, and governance distributes decision authority instead of centralising it
+
 - **Axiom 10 (Simple Common Operating Principles)** — shared artefacts and one quality checklist keep every sprint consistent
+
+- **Axiom 14 (Bias for Change)** — the implementation plan enables rapid delivery with governance built in
 
 - **Axiom 15 (Project to Product Shift)** — the organising principle of the engagement is the product, not a one-off project
 
