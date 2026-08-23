@@ -101,7 +101,7 @@ export const DOC_TYPES = {
   'OASTR':     { name: 'Agile Strategy',                   category: 'Planning' },
   'OAPR':      { name: 'Product Architecture',             category: 'Architecture' },
   'OAAL':      { name: 'ADM Lite Sprint Mapping',          category: 'Architecture' },
-  'OASEC':     { name: 'Agile Security',                   category: 'Governance' },
+  'OASEC':     { name: 'Agile Security',                   category: 'Governance', severity: 'HIGH' },
   'OAGOV':     { name: 'Agile Governance',                 category: 'Governance' },
   // Governance — universal best-practice (no regime tag, HIGH-severity)
   'RISK':      { name: 'Risk Register',                    category: 'Governance', severity: 'HIGH' },

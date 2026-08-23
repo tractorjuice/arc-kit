@@ -12,7 +12,7 @@ handoffs:
     description: Align security strategy with dual transformation tracks
 ---
 
-You are helping an enterprise architect create an **Agile Security** document using Open Agile Architecture (O-AA, C208) Learning Unit 9: Agile Security. This approach embeds security into the product sprint rhythm rather than treating it as a separate gate or phase — security becomes a backlog item, not an afterthought.
+You are helping an enterprise architect create an **Agile Security** document using Open Agile Architecture (O-AA, C208) and its Agile Security learning unit. This approach embeds security into the product sprint rhythm rather than treating it as a separate gate or phase — security becomes a backlog item, not an afterthought.
 
 ## User Input
 
@@ -101,7 +101,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. O-AA Agile Security Framework
 
-O-AA Learning Unit 9 (Agile Security) establishes that:
+The O-AA Agile Security learning unit establishes that:
 
 - **Security as backlog items**: Security work enters the product backlog as epics/features/stories — not a separate security workstream
 
@@ -109,21 +109,21 @@ O-AA Learning Unit 9 (Agile Security) establishes that:
 
 - **Threat modeling per sprint**: Each sprint cycle includes threat model updates as a backlog item, not a one-time activity at project start
 
-- **O-AA Axiom 4**: "Architecture must be fit for purpose." — security controls proportional to product risk, not a compliance checklist
+- **O-AA Axiom 16 (Secure by Design)**: security controls are designed into the product from Sprint 0, proportional to product risk — not bolted on at a compliance checkpoint
 
 - **Shared security ownership**: Security is the team's responsibility, not a dedicated security team's gate
 
-### 4. Shared Schema Definitions
+### 4. Shared Artefact Definitions
 
-Agile security commands reuse schema definitions:
+The agile security command defines artefacts whose structure is inlined in `agile-security-template.md`:
 
-- **`security-backlog.json`** — Security backlog item schema (O-AA specific)
+- **`security-backlog.yaml`** — security epics, stories, and sprint capacity allocation
 
-- **`threat-model.yaml`** — Threat model schema (shared with traditional security workflows)
+- **`threat-model.yaml`** — per-sprint threat model (STRIDE or equivalent)
 
-- **`compliance-evidence.json`** — Sprint compliance evidence schema
+- **`compliance-evidence.yaml`** — sprint compliance evidence, always current
 
-- **`vision.yaml`** — Architecture vision security constraints (shared with `/arckit-oaa:oaa-adm-lite`)
+- **`vision.yaml`** — architecture vision security constraints (inherited from `/arckit:oaa-adm-lite`)
 
 ### 5. Generate Agile Security Document
 
@@ -131,7 +131,7 @@ Create the Agile Security document following the template structure.
 
 #### Document Control
 
-- Generate Document ID: `ARC-{P}-OASEC-v1.0` (for filename: `ARC-{P}-OASEC-v1.0.md`)
+- Generate Document ID with `node scripts/generate-document-id.mjs {P} OASEC --filename` (canonical form: `ARC-{P}-OASEC-v1.0`)
 
 - Set owner, dates, status, classification
 
@@ -165,7 +165,7 @@ Create the Agile Security document following the template structure.
 
 - **Continuous evidence**: Evidence is never accumulated for audits — it's always current
 
-- **Evidence schema**: Standardized evidence format per sprint (compliance-evidence.json)
+- **Evidence structure**: Standardized evidence format per sprint, inlined in `agile-security-template.md`
 
 #### Security Architecture Guardrails
 
@@ -236,12 +236,12 @@ After writing the file, show a concise summary (NOT the full document):
 
 - **Continuous audit trail**: [Evidence generation approach]
 
-### Shared Schemas
-- ✅ security-backlog.json → schemas/security-backlog.json
+### Sprint Artifacts
+- ✅ security-backlog.yaml
 
-- ✅ threat-model.yaml → schemas/threat-model.yaml
+- ✅ threat-model.yaml
 
-- ✅ compliance-evidence.json → schemas/compliance-evidence.json
+- ✅ compliance-evidence.yaml
 
 ### Synthesised From
 - [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
@@ -255,7 +255,7 @@ After writing the file, show a concise summary (NOT the full document):
 ### Next Steps
 1. Create security epics for Sprint 0
 2. Run initial threat model: STRIDE analysis for product architecture
-3. Establish governance cadence: `/arckit-oaa:agile-governance`
+3. Establish governance cadence: `/arckit:agile-governance`
 4. Configure CI/CD security pipeline integration
 
 **File location**: `projects/{P}/ARC-{P}-OASEC-v1.0.md`
@@ -269,7 +269,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 3. **Threat Modeling is Living**: The threat model updates each sprint. It's not a document you write once at project start. New features create new attack surfaces.
 
-4. **Shared Schemas**: The `vision.yaml` schema is shared between O-AA and traditional TOGAF commands. This ensures consistency regardless of which approach the client selects.
+4. **Sprint Artefacts**: The `security-backlog.yaml`, `threat-model.yaml`, and `compliance-evidence.yaml` structures are defined inline in `agile-security-template.md`. Validate artefacts against those structures; they stay consistent with the traditional TOGAF commands without sharing schema files.
 
 5. **Use Write Tool**: The Agile Security document is typically 180-300 lines. ALWAYS use the Write tool to create it.
 

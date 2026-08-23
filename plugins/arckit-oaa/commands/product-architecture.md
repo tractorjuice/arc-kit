@@ -1,6 +1,6 @@
 ---
 description: Design product-centric architecture — cross-functional teams, backlog-driven delivery, product mission and outcomes
-doc-type: [OAPR, OAAL]
+doc-type: OAPR
 argument-hint: "<product name, e.g. 'Observability Stack', 'Loop Factory'>"
 effort: high
 handoffs:
@@ -12,7 +12,7 @@ handoffs:
     description: Embed security into the product sprint rhythm
 ---
 
-You are helping an enterprise architect create an **Agile Product Architecture** document using Open Agile Architecture (O-AA, C208) Learning Unit 7: Product Architecture. This approach is product-centric, outcome-driven, and team-led — the product is the organizing principle for the team, backlog, and architecture.
+You are helping an enterprise architect create an **Agile Product Architecture** document using Open Agile Architecture (O-AA, C208) and its Product Architecture learning unit. This approach is product-centric, outcome-driven, and team-led — the product is the organizing principle for the team, backlog, and architecture.
 
 ## User Input
 
@@ -36,9 +36,9 @@ Use this command when **any** of the following conditions are met:
 
 **Do NOT use** when:
 
-- Enterprise-wide architecture is needed (use `/arckit-togaf-adm:adm-preliminary` instead)
+- Enterprise-wide architecture is needed (use `/arckit:adm-preliminary` instead)
 
-- Multi-product portfolio rationalization (use `/arckit-togaf-adm:application-rationalization` instead)
+- Multi-product portfolio rationalization (use `/arckit:application-rationalization` instead)
 
 - Client requires traditional TOGAF documentation with full ADM audit trail
 
@@ -97,25 +97,25 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. O-AA Product Architecture Framework
 
-O-AA Learning Unit 7 (Product Architecture) establishes that:
+The O-AA Product Architecture learning unit establishes that:
 
-- **Product-centric**: The product is the organizing principle for the team, backlog, and architecture — not projects, not capabilities, not services
+- **Product-centric**: The product is the organizing principle for the team, backlog, and architecture — not projects, not capabilities, not services (published as O-AA Axiom 15, Project to Product Shift)
 
 - **Outcome-driven**: Architecture decisions trace to measurable product outcomes (value, adoption, experience)
 
-- **Team-led**: Permanent, cross-functional teams own the product end-to-end
+- **Team-led**: Permanent, cross-functional teams own the product end-to-end (Axiom 6, Autonomous Cross-Functional Teams)
 
 - **Backlog-driven**: Architecture evolves through the product backlog, not separate architecture workstreams
 
-### 4. Shared Schema Definitions
+### 4. Shared Artefact Definitions
 
-Product architecture commands reuse schema definitions:
+The product architecture command defines artefacts whose structure is inlined in `product-architecture-template.md`:
 
-- **`product-architecture.json`** — Product architecture schema (shared with `/arckit-oaa:agile-strategy`)
+- **`product-architecture.yaml`** — product mission, outcomes, guardrails, team composition, backlog structure
 
-- **`vision.yaml`** — Architecture vision from O-AA Lite or ADM Preliminary (shared with `/arckit-oaa:oaa-adm-lite`, `/arckit-togaf-adm:adm-preliminary`)
+- **`vision.yaml`** — architecture vision inherited from O-AA Lite or ADM Preliminary (`/arckit:oaa-adm-lite`, `/arckit:adm-preliminary`)
 
-- **`implementation-strategy.yaml`** — Implementation waves (shared with `/arckit-togaf-adm:transition-architecture`)
+- **`implementation-strategy.yaml`** — implementation waves (consistent with `/arckit:transition-architecture`)
 
 ### 5. Generate Product Architecture Document
 
@@ -123,7 +123,7 @@ Create the Product Architecture document following the template structure.
 
 #### Document Control
 
-- Generate Document ID: `ARC-{P}-OAPR-v1.0` (for filename: `ARC-{P}-OAPR-v1.0.md`)
+- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAPR --filename` (canonical form: `ARC-{P}-OAPR-v1.0`)
 
 - Set owner, dates, status, classification
 
@@ -216,23 +216,21 @@ After writing the file, show a concise summary (NOT the full document):
 
 - [N] anti-patterns identified
 
-### Shared Schemas
-- ✅ product-architecture.json → schemas/product-architecture.json
+### Sprint Artifacts
+- ✅ product-architecture.yaml
 
-- ✅ vision.yaml → schemas/vision.json (shared with O-AA Lite)
+- ✅ vision.yaml (from O-AA Lite or ADM Preliminary)
 
 ### Synthesised From
 - [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
-
-- [✅/⚠️] O-AA ADM Lite: ARC-{P}-OAAL-v[N].md
 
 - [✅/⚠️] Business Capability Map: ARC-{P}-BPCM-v[N].md
 
 ### Next Steps
 1. Populate product backlog with architecture epics
-2. Embed security into sprint rhythm: `/arckit-oaa:agile-security`
-3. Plan dual transformation: `/arckit-oaa:agile-strategy`
-4. Establish governance cadence: `/arckit-oaa:agile-governance`
+2. Embed security into sprint rhythm: `/arckit:agile-security`
+3. Plan dual transformation: `/arckit:agile-strategy`
+4. Establish governance cadence: `/arckit:agile-governance`
 
 **File location**: `projects/{P}/ARC-{P}-OAPR-v1.0.md`
 ```
@@ -241,7 +239,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 1. **Product-Centric**: O-AA mandates that the product (not the project or capability) is the organizing principle. Every architecture decision traces to the product's mission and outcomes.
 
-2. **Shared Schemas**: The `vision.yaml` and `implementation-strategy.yaml` schemas are shared between O-AA and traditional TOGAF commands. This ensures consistency regardless of which approach the client selects.
+2. **Sprint Artefacts**: The `product-architecture.yaml` and `vision.yaml` structures are defined inline in `product-architecture-template.md`. Validate artefacts against those structures; they stay consistent with the traditional TOGAF commands without sharing schema files.
 
 3. **Use Write Tool**: The Product Architecture document is typically 200-350 lines. ALWAYS use the Write tool to create it.
 

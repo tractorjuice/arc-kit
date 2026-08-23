@@ -269,32 +269,6 @@ PLUGIN_SOURCES = [
 #                             Ships as a Claude Code marketplace plugin only.
 # (All still appear in marketplace.json; exclusion here is deliberate, not drift.)
 
-# The monolithic extensions merge every source plugin into a single arckit
-# namespace, so command references that carry a plugin-prefixed slash
-# namespace in the Claude source (e.g. /arckit-oaa:agile-strategy) must be
-# collapsed to the plain /arckit: form before per-format processing. Only
-# plugins actually merged into the monolith are stripped; excluded plugins
-# (arckit-fde, arckit-repo, arckit-uk-gcloud) keep their own namespaces and
-# are never converted.
-_MONOLITH_SUFFIXES = sorted(
-    (
-        p.rsplit("/", 1)[-1][len("arckit-"):] for p in PLUGIN_SOURCES
-        if p != "plugins/arckit-claude"
-    ),
-    key=len,
-    reverse=True,
-)
-
-
-def strip_plugin_namespace(content):
-    """Collapse /arckit-<plugin>:cmd -> /arckit:cmd for merged plugins."""
-    if _MONOLITH_SUFFIXES:
-        alts = "|".join(re.escape(s) for s in _MONOLITH_SUFFIXES)
-        content = re.sub(
-            r"(?<![\w/])/arckit-(?:" + alts + r"):", "/arckit:", content
-        )
-    return content
-
 
 # --- Agent configuration: adding a new AI target = adding a dictionary entry ---
 
@@ -638,13 +612,10 @@ def convert(commands_dirs, agents_dir):
             pc_config = AGENT_CONFIG["paperclip"]
             pc_prompt = rewrite_paths(prompt, pc_config)
             pc_prompt = rewrite_hook_dependencies(pc_prompt, pc_config)
-            pc_prompt = strip_plugin_namespace(pc_prompt)
             template_content = read_template_for_command(
                 base_name,
                 os.path.join(os.path.dirname(commands_dir.rstrip(os.sep)), "templates"),
             )
-            if template_content:
-                template_content = strip_plugin_namespace(template_content)
             paperclip_entries.append(
                 format_json_entry(base_name, description, pc_prompt, template_content, handoffs)
             )
@@ -671,10 +642,6 @@ def convert(commands_dirs, agents_dir):
             else:
                 rewritten = rewrite_paths(prompt, config)
                 rewritten = rewrite_hook_dependencies(rewritten, config)
-
-            # Generated formats are monolithic: strip plugin-prefixed
-            # namespaces (e.g. /arckit-oaa:x -> /arckit:x).
-            rewritten = strip_plugin_namespace(rewritten)
 
             # Determine handoff command format based on target
             if config["format"] == "prompt":
@@ -884,19 +851,6 @@ def copy_extension_files(plugin_sources):
             f"  Merged templates from {len(plugin_sources)} plugin source(s) "
             f"-> {ext_templates_dir} ({merged_template_count} files)"
         )
-
-        # Templates are merged into the monolith too: collapse any
-        # plugin-prefixed namespaces in the merged copies (e.g. the
-        # document-control "Command:" header of OAA templates).
-        for _tpl_dir, _tpl_dirs, _tpl_files in os.walk(ext_templates_dir):
-            for _tpl_fn in _tpl_files:
-                if not _tpl_fn.endswith(".md"):
-                    continue
-                _tpl_path = os.path.join(_tpl_dir, _tpl_fn)
-                with open(_tpl_path, "r", encoding="utf-8") as _tpl_f:
-                    _stripped = strip_plugin_namespace(_tpl_f.read())
-                with open(_tpl_path, "w", encoding="utf-8") as _tpl_f:
-                    _tpl_f.write(_stripped)
 
         # Merge `data/` from every plugin source into one data/ dir, the same
         # way `templates/` is merged above. plugins/arckit-eu/data/ (arc-kit#782,

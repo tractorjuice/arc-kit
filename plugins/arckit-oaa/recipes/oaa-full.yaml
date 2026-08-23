@@ -11,10 +11,10 @@ defaults:
 optional_targets:
   OASEC:
     description: Security embedded in agile sprint rhythm
-    default: false
+    default: true
   OAGOV:
     description: Lightweight governance cadence for agile architecture
-    default: false
+    default: true
 
 post_build_hooks:
   - skill: arckit:health

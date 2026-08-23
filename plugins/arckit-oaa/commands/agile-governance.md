@@ -12,7 +12,7 @@ handoffs:
     description: Update security backlog from governance review findings
 ---
 
-You are helping an enterprise architect create an **Agile Governance** document using Open Agile Architecture (O-AA, C208) Learning Unit 10: Agile Governance. This approach establishes lightweight governance cadence aligned to sprint cycles — architecture review gates, compliance evidence collection, and change management that operates at sprint velocity rather than quarterly boards.
+You are helping an enterprise architect create an **Agile Governance** document using Open Agile Architecture (O-AA, C208) — the Agile Governance learning unit. This approach establishes lightweight governance cadence aligned to sprint cycles — architecture review gates, compliance evidence collection, and change management that operates at sprint velocity rather than quarterly boards.
 
 ## User Input
 
@@ -105,7 +105,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. O-AA Agile Governance Framework
 
-O-AA Learning Unit 10 (Agile Governance) establishes that:
+The O-AA Agile Governance learning unit establishes that:
 
 - **Sprint-aligned governance**: Governance cadence matches sprint cycles — review gates occur at sprint boundaries, not quarterly
 
@@ -115,21 +115,21 @@ O-AA Learning Unit 10 (Agile Governance) establishes that:
 
 - **Change management at sprint velocity**: Architecture change requests evaluated and decided within sprint cycles
 
-- **O-AA Axiom 7**: "Architecture is the property of the whole organisation." — governance is shared ownership, not top-down control
+- **Axiom 7 (Authority, Responsibility, and Accountability Distribution)** — decision authority, responsibility, and accountability are distributed across the sprint review panel, not concentrated in a top-down board
 
 - **Governance as service**: Governance enables delivery by providing clear decision paths, not by adding friction
 
-### 4. Shared Schema Definitions
+### 4. Shared Artefact Definitions
 
-Agile governance commands reuse schema definitions:
+The agile governance command defines artefacts whose structure is inlined in `agile-governance-template.md`:
 
-- **`governance-cadence.json`** — Sprint governance cadence schema (O-AA specific)
+- **`governance-report.yaml`** — sprint governance report (cadence, panel, gates, compliance monitoring)
 
-- **`change-request.yaml`** — Architecture change request schema (shared with `/arckit-togaf-adm:architecture-change`)
+- **`change-request.yaml`** — architecture change request (one per change request)
 
-- **`compliance-evidence.json`** — Sprint compliance evidence (shared with `/arckit-oaa:agile-security`)
+- **`compliance-evidence.yaml`** — sprint compliance evidence, always current (shared with `/arckit:agile-security`)
 
-- **`vision.yaml`** — Governance constraints from architecture vision (shared with `/arckit-oaa:oaa-adm-lite`)
+- **`vision.yaml`** — governance constraints from architecture vision (inherited from `/arckit:oaa-adm-lite`)
 
 ### 5. Generate Agile Governance Document
 
@@ -137,7 +137,7 @@ Create the Agile Governance document following the template structure.
 
 #### Document Control
 
-- Generate Document ID: `ARC-{P}-OAGOV-v1.0` (for filename: `ARC-{P}-OAGOV-v1.0.md`)
+- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAGOV --filename` (canonical form: `ARC-{P}-OAGOV-v1.0`)
 
 - Set owner, dates, status, classification
 
@@ -263,12 +263,12 @@ After writing the file, show a concise summary (NOT the full document):
 
 - **Risk exposure tracking**: [Approach]
 
-### Shared Schemas
-- ✅ governance-cadence.json → schemas/governance-cadence.json
+### Sprint Artifacts
+- ✅ governance-report.yaml
 
-- ✅ change-request.yaml → schemas/change-request.yaml (shared with Architecture Change)
+- ✅ change-request.yaml
 
-- ✅ compliance-evidence.json → schemas/compliance-evidence.json (shared with Agile Security)
+- ✅ compliance-evidence.yaml
 
 ### Synthesised From
 - [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
@@ -298,7 +298,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 3. **Continuous Compliance Evidence**: Compliance is not a phase activity. Evidence is generated per sprint alongside feature development. You are always audit-ready.
 
-4. **Shared Schemas**: The `change-request.yaml` and `compliance-evidence.json` schemas are shared across O-AA commands and with traditional TOGAF commands (like `/arckit-togaf-adm:architecture-change`). This ensures consistency regardless of governance approach.
+4. **Sprint Artefacts**: The `governance-report.yaml`, `change-request.yaml`, and `compliance-evidence.yaml` structures are defined inline in `agile-governance-template.md`. Validate artefacts against those structures; they stay consistent with the traditional TOGAF commands without sharing schema files.
 
 5. **Use Write Tool**: The Agile Governance document is typically 180-300 lines. ALWAYS use the Write tool to create it.
 

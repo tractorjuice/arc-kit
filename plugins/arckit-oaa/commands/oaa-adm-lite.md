@@ -40,7 +40,7 @@ Use this command when **any** of the following conditions are met:
 
 **Do NOT use** when:
 
-- Full regulatory audit trail is required (use `/arckit-togaf-adm:adm-preliminary` with full ADM workflow instead)
+- Full regulatory audit trail is required (use `/arckit:adm-preliminary` with full ADM workflow instead)
 
 - Multi-year enterprise transformation with 50+ stakeholder review gates
 
@@ -109,37 +109,33 @@ The O-AA ADM Lite maps the TOGAF ADM cycle to agile sprints:
 
 ### 4. O-AA Axiom Alignment
 
-Every O-AA deliverable must reference the relevant O-AA axioms:
+Every O-AA deliverable must reference the relevant published O-AA axioms (C208, *Scope and axioms*). The axioms this sprint-mapped engagement applies:
 
-- **Axiom 1:** "The purpose of architecture is to improve the organisation."
+- **Axiom 1 (Customer Experience Focus)** — Sprint 0 vision is anchored on customer outcomes, not on artefacts
 
-- **Axiom 2:** "An organisation cannot have a strategy without an architecture."
+- **Axiom 3 (Rapid Feedback Loops)** — short sprint cycles with per-sprint architecture review are the O-AA feedback cadence
 
-- **Axiom 3:** "Architecture must be product-centric."
+- **Axiom 5 (Value Stream Alignment)** — each sprint maps to the ADM phase that advances value along the stream
 
-- **Axiom 4:** "Architecture must be fit for purpose."
+- **Axiom 6 (Autonomous Cross-Functional Teams)** — the sprint team owns architecture decisions end-to-end, without a central architecture board
 
-- **Axiom 5:** "Architecture is a means to an end, not an end in itself."
+- **Axiom 10 (Simple Common Operating Principles)** — shared artefacts and one quality checklist keep every sprint consistent
 
-- **Axiom 6:** "Architecture is a shared asset."
+- **Axiom 15 (Project to Product Shift)** — the organising principle of the engagement is the product, not a one-off project
 
-- **Axiom 7:** "Architecture is the property of the whole organisation."
+Cite axioms by published number and name. Do not quote axiom text you cannot verify against C208 — if a claim cannot be traced to the standard, drop the attribution.
 
-### 5. Shared Schema Definitions
+### 5. Sprint Artefact Definitions
 
-O-AA commands reuse schema definitions across TOGAF and O-AA workflows:
+O-AA ADM Lite defines YAML sprint artefacts whose structure is inlined in `oaa-adm-lite-template.md`. These artefacts are deliverables owned by this command, not shared schema files:
 
-- **`vision.yaml`** — Architecture vision, scope, drivers, constraints (shared with `/arckit-togaf-adm:adm-preliminary`)
+- **`vision.yaml`** — Architecture vision, scope, drivers, constraints (Sprint 0; consistent with the scope and vision established by `/arckit:adm-preliminary`)
 
-- **`implementation-strategy.yaml`** — Implementation waves, migration strategy (shared with `/arckit-togaf-adm:transition-architecture`)
+- **`implementation-strategy.yaml`** — Implementation waves, migration strategy (Sprint 3; consistent with `/arckit:transition-architecture`)
 
 - **`stakeholder-map.md`** — Stakeholder roles, concerns, compliance mapping
 
-Validate outputs against shared schemas:
-
-- `schemas/vision.json` — Vision document schema
-
-- `schemas/implementation-strategy.json` — Implementation strategy schema
+Validate each artefact against the inlined structure in the template before writing it, and run `/arckit:health` after the build to catch stale or orphaned artefacts.
 
 ### 6. Generate O-AA ADM Lite Document
 
@@ -147,7 +143,7 @@ Create the O-AA ADM Lite document following the template structure.
 
 #### Document Control
 
-- Generate Document ID: `ARC-{P}-OAAL-v1.0` (for filename: `ARC-{P}-OAAL-v1.0.md`)
+- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAAL --filename` (canonical form: `ARC-{P}-OAAL-v1.0`)
 
 - Set owner, dates, status, classification
 
@@ -159,7 +155,7 @@ Create the O-AA ADM Lite document following the template structure.
 
 - Map each sprint to TOGAF ADM phases
 
-- Specify deliverables per sprint with schema validation commands
+- Specify deliverables per sprint with acceptance checks
 
 - Include sprint-level acceptance criteria
 
@@ -179,7 +175,7 @@ Create the O-AA ADM Lite document following the template structure.
 
 - Technology Architecture (Sprint 2)
 
-- Each sprint produces schema-validated YAML artifacts
+- Each sprint produces YAML artefacts whose structure is defined in the template
 
 #### Sprint 3: Implementation Wave
 
@@ -195,7 +191,7 @@ Create the O-AA ADM Lite document following the template structure.
 
 - Continuous compliance evidence
 
-- Architecture change requests via `/arckit-togaf-adm:architecture-change`
+- Architecture change requests via `/arckit:architecture-change`
 
 ### 7. External References
 
@@ -234,10 +230,10 @@ After writing the file, show a concise summary (NOT the full document):
 | Sprint 3 | ADM-E + F | Implementation | 2 weeks | implementation-strategy.yaml |
 | Sprint 4+ | ADM-G + H | Governance | Ongoing | governance-report.yaml |
 
-### Shared Schemas
-- ✅ vision.yaml → schemas/vision.json
+### Sprint Artifacts
+- ✅ vision.yaml (Sprint 0)
 
-- ✅ implementation-strategy.yaml → schemas/implementation-strategy.json
+- ✅ implementation-strategy.yaml (Sprint 3)
 
 ### O-AA Axioms Applied
 - [List relevant axioms with brief rationale]
@@ -249,9 +245,9 @@ After writing the file, show a concise summary (NOT the full document):
 
 ### Next Steps
 1. Begin Sprint 0: Stakeholder workshops + vision definition
-2. Validate vision.yaml against schema: `python validate-architecture.py vision.yaml --phase vision`
-3. Continue to Sprint 1: `/arckit-oaa:product-architecture`
-4. Plan dual transformation: `/arckit-oaa:agile-strategy`
+2. Verify Sprint 0 artefacts: `/arckit:health`
+3. Continue to Sprint 1: `/arckit:product-architecture`
+4. Plan dual transformation: `/arckit:agile-strategy`
 
 **File location**: `projects/{P}/ARC-{P}-OAAL-v1.0.md`
 ```
@@ -260,9 +256,9 @@ After writing the file, show a concise summary (NOT the full document):
 
 1. **O-AA vs Traditional TOGAF**: This is a lightweight, sprint-driven approach. It preserves TOGAF ADM structure but compresses the timeline and deliverable format. Do not use for regulated engagements requiring full ADM audit trails.
 
-2. **Shared Schemas**: The `vision.yaml` and `implementation-strategy.yaml` schemas are shared between O-AA and traditional TOGAF commands. This ensures consistency regardless of which approach the client selects.
+2. **Sprint Artefacts**: The `vision.yaml` and `implementation-strategy.yaml` structures are defined inline in `oaa-adm-lite-template.md`. Validate artefacts against those structures and via `/arckit:health`; they stay consistent with the traditional TOGAF commands without sharing schema files.
 
-3. **Product-Centric**: O-AA mandates product-centric architecture (Axiom 3). The organizing principle is the product, not capabilities or services.
+3. **Product-Centric**: O-AA mandates product-centric architecture (Axiom 15, Project to Product Shift). The organizing principle is the product, not capabilities or services.
 
 4. **Use Write Tool**: The O-AA ADM Lite document is typically 150-300 lines. ALWAYS use the Write tool to create it.
 

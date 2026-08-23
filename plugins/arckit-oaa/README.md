@@ -5,15 +5,15 @@ using Open Agile Architecture (C208) — product-driven, sprint-based delivery:
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
-| `/arckit-oaa:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (2–4 week engagement windows) |
-| `/arckit-oaa:product-architecture` | `OAPR` | Product-centric architecture — cross-functional teams, backlog-driven delivery |
-| `/arckit-oaa:agile-strategy` | `OASTR` | Dual transformation canvas — legacy modernization + greenfield innovation |
-| `/arckit-oaa:agile-security` | `OASEC` | Security embedded in sprint rhythm — threat modeling, compliance evidence |
-| `/arckit-oaa:agile-governance` | `OAGOV` | Lightweight governance cadence aligned to sprint cycles |
+| `/arckit:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (2–4 week engagement windows) |
+| `/arckit:product-architecture` | `OAPR` | Product-centric architecture — cross-functional teams, backlog-driven delivery |
+| `/arckit:agile-strategy` | `OASTR` | Dual transformation canvas — legacy modernization + greenfield innovation |
+| `/arckit:agile-security` | `OASEC` | Security embedded in sprint rhythm — threat modeling, compliance evidence |
+| `/arckit:agile-governance` | `OAGOV` | Lightweight governance cadence aligned to sprint cycles |
 
-Recipe: `oaa-full` (6 phases: strategy → product → ADM Lite → security → governance + optional maturity).
+Recipe: `oaa-full` — all five O-AA commands (strategy → product → ADM Lite → security → governance) on top of the core `PRIN`/`REQ`/`STKE` foundation.
 
-**Official standard:** <https://pubs.opengroup.org/architecture/o-aa-standard/>
+**Official standard:** <https://publications.opengroup.org/c208> (full text behind Open Group sign-in)
 
 ## Requires arckit core plugin
 
@@ -57,19 +57,21 @@ Notes:
 
 ## Scope
 
-**In scope (v1)**: O-AA C208 Learning Units 7–10 plus C208 axioms 11–16 (Product Architecture, Strategy, Security, Governance, Agile Architecture). Sprint-driven engagements for rapid architecture delivery.
+**In scope (v1)**: the O-AA learning units for Product Architecture, Strategy, Security, and Governance, plus the C208 published axioms each command applies (see coverage table). Sprint-driven engagements for rapid architecture delivery.
 
 **Out of scope**: Full TOGAF ADM (deferred to `arckit-togaf-adm` overlay), traditional stage-gate architecture processes. Each O-AA command is designed to run in 2–4 week sprint windows.
 
 ## O-AA Standard (C208) Coverage
 
-| Command | C208 Chapter | Axioms |
+Axioms are cited by their published C208 number; chapter numbers follow the C208 table of contents — verify against the published standard before citing externally.
+
+| Command | C208 Chapter | Published axioms applied |
 |---------|-------------|--------|
-| `oaa-adm-lite` | Ch 1–9 (ADM mapping) | 1–10 |
-| `product-architecture` | Ch 12 | 11–12 |
-| `agile-strategy` | Ch 10 | 11 |
-| `agile-security` | Ch 17 | 15 |
-| `agile-governance` | Ch 18 | 16 |
+| `oaa-adm-lite` | Ch 1–9 (ADM mapping) | 1, 3, 5, 6, 10, 15 |
+| `product-architecture` | Ch 12 | 15, 6 |
+| `agile-strategy` | Ch 10 | 5 |
+| `agile-security` | Ch 17 | 16 |
+| `agile-governance` | Ch 18 | 7 |
 
 ## How It Works
 
@@ -100,7 +102,7 @@ Output uses the `ARC-NNN-TYPE-vN.N.md` convention:
 Commands declare explicit next-step targets. Claude Code auto-suggests subsequent commands mid-engagement:
 
 ```text
-/arckit-oaa:oaa-adm-lite "my project"
+/arckit:oaa-adm-lite "my project"
   → Handoff: product-architecture ("Design product-centric architecture")
   → Handoff: agile-strategy ("Plan dual transformation")
   → Handoff: agile-security ("Embed security into sprint rhythm")
@@ -119,7 +121,7 @@ Commands declare explicit next-step targets. Claude Code auto-suggests subsequen
 | **Sprint 3 (Transition)** | Migration waves, strangle pattern vs big-bang, dependency sequencing, rollback criteria |
 | **Sprint 4+ (Governance)** | Ongoing review gates, change velocity thresholds, compliance evidence per sprint |
 
-Gate criteria at each sprint: schema validation passes, stakeholder sign-off, regulatory baseline identified, handoff documented.
+Gate criteria at each sprint: artefact matches the inlined template structure, stakeholder sign-off, regulatory baseline identified, handoff documented.
 
 ### `product-architecture` — Product & Team Ownership
 
@@ -169,11 +171,11 @@ Gate criteria at each sprint: schema validation passes, stakeholder sign-off, re
 claude plugin install arckit arckit-oaa
 
 # Run individual commands
-/arckit-oaa:oaa-adm-lite "my project"
-/arckit-oaa:product-architecture "Observability Stack"
-/arckit-oaa:agile-strategy "enterprise AI transformation"
-/arckit-oaa:agile-security "AI platform"
-/arckit-oaa:agile-governance "enterprise AI platform"
+/arckit:oaa-adm-lite "my project"
+/arckit:product-architecture "Observability Stack"
+/arckit:agile-strategy "enterprise AI transformation"
+/arckit:agile-security "AI platform"
+/arckit:agile-governance "enterprise AI platform"
 ```
 
 ### Codex (Skills)
@@ -184,7 +186,7 @@ arckit init my-project --ai codex
 cd my-project
 
 # Skills auto-generated by converter into .codex/skills/
-$codex:oaa-adm-lite "my project"
+$arckit-oaa-adm-lite "my project"
 ```
 
 ### BYO LLM (CLI + Local Model)
