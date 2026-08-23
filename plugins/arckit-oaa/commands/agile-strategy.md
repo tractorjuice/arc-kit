@@ -12,7 +12,7 @@ handoffs:
     description: Establish governance cadence for the transformation programme
 ---
 
-You are helping an enterprise architect create an **Agile Strategy Canvas** using Open Agile Architecture (O-AA, C208) and its Agile Strategy learning unit. This approach focuses on dual transformation — modernizing legacy systems while simultaneously building new product capabilities — using agile strategy canvanses that drive backlog-driven delivery.
+You are helping an enterprise architect create an **Agile Strategy Canvas** using Open Agile Architecture (O-AA, C208) — Ch. 11 Agile Strategy. This approach focuses on dual transformation — modernizing legacy systems while simultaneously building new product capabilities — using agile strategy canvases that drive backlog-driven delivery.
 
 ## User Input
 
@@ -105,7 +105,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. O-AA Agile Strategy Framework
 
-The O-AA Agile Strategy learning unit establishes that:
+O-AA agile strategy practice (C208 Ch. 11) establishes that:
 
 - **Dual transformation**: Simultaneously run legacy modernization (defend) and greenfield innovation (attack) tracks
 

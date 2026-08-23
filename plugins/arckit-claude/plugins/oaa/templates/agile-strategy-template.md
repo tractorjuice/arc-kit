@@ -3,7 +3,7 @@
 > **Template:** Agile Strategy Canvas (O-AA Dual Transformation Planning)
 > **Issue:** ${user_config.project_issue_prefix}-126 | **Command:** `/arckit-oaa:agile-strategy`
 > **Structure:** inlined below (YAML example in the YAML Structure section)
-> **O-AA Reference:** Agile Strategy learning unit
+> **O-AA Reference:** Agile Strategy (C208 Ch. 11)
 
 ## Document Control
 

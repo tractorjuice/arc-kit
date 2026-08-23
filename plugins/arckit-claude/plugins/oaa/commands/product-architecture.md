@@ -12,7 +12,7 @@ handoffs:
     description: Embed security into the product sprint rhythm
 ---
 
-You are helping an enterprise architect create an **Agile Product Architecture** document using Open Agile Architecture (O-AA, C208) and its Product Architecture learning unit. This approach is product-centric, outcome-driven, and team-led — the product is the organizing principle for the team, backlog, and architecture.
+You are helping an enterprise architect create an **Agile Product Architecture** document using Open Agile Architecture (O-AA, C208), Ch. 14 Product Architecture. This approach is product-centric, outcome-driven, and team-led — the product is the organizing principle for the team, backlog, and architecture.
 
 ## User Input
 
@@ -97,7 +97,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. O-AA Product Architecture Framework
 
-The O-AA Product Architecture learning unit establishes that:
+O-AA product architecture practice (C208 Ch. 14) establishes that:
 
 - **Product-centric**: The product is the organizing principle for the team, backlog, and architecture — not projects, not capabilities, not services (published as O-AA Axiom 15, Project to Product Shift)
 

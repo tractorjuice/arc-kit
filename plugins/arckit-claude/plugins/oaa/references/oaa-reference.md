@@ -1,8 +1,8 @@
 # O-AA Standard (C208) Reference
 
-Open Agile Architecture (O-AA) C208 is the standard for agile enterprise architecture, providing sprint-based, product-driven architecture delivery methods. This reference summarizes the chapters relevant to ArcKit O-AA commands. Chapter numbers follow the C208 table of contents — verify against the published standard before citing externally; the topic summaries below describe how ArcKit applies each area.
+Open Agile Architecture (O-AA) C208 is The Open Group's standard for agile enterprise architecture, published as **C208** ("Open Agile Architecture Standard", **v3.0, October 2022**). It is organized in two parts — **Part 1: The O-AA Core** (Ch. 3–9) and **Part 2: The O-AA Building Blocks** (Ch. 10–22). This reference summarizes the chapters relevant to ArcKit O-AA commands; chapter numbers follow the C208 table of contents, and the topic summaries below describe how ArcKit applies each area.
 
-## Axioms and Principles
+## The 16 Axioms (C208 Ch. 9, "Axioms for the Practice of Agile Architecture")
 
 The O-AA Standard (C208) is built on **16 published axioms**. ArcKit commands cite axioms by published number and name; derivation notes live in the generated artefacts (axiom wording is published only in the standard itself, behind an Open Group sign-in — see Official Source).
 
@@ -25,7 +25,7 @@ The O-AA Standard (C208) is built on **16 published axioms**. ArcKit commands ci
 | 15 | Project to Product Shift | `oaa-adm-lite`, `product-architecture` |
 | 16 | Secure by Design | `agile-security` |
 
-## Chapter 10 — Strategy
+## C208 Ch. 11 — Agile Strategy
 
 Covers dual transformation strategy for enterprise architecture:
 
@@ -37,9 +37,9 @@ Covers dual transformation strategy for enterprise architecture:
 
 - **Portfolio Alignment**: Architecture investments mapped to business outcomes and strategic priorities
 
-Used by: `agile-strategy` command (OASTR doc type)
+Used by: `agile-strategy` command (OASTR doc type). Related C208 content: Ch. 3 (A Dual Transformation) and Axiom 12.
 
-## Chapter 12 — Product Architecture
+## C208 Ch. 14 — Product Architecture
 
 Defines product-centric architecture approach:
 
@@ -53,11 +53,11 @@ Defines product-centric architecture approach:
 
 - **Product vs System View**: Distinguishing product-centric (outcome-focused) from system-centric (component-focused) architecture
 
-Used by: `product-architecture` command (OAPR doc type)
+Used by: `product-architecture` command (OAPR doc type). Related C208 content: Axioms 6 and 15.
 
-## Chapter 17 — Security
+## Security by Design — C208 Ch. 4.6, Axiom 16, and the O-AA Security Playbook (G216)
 
-Embeds security into agile architecture delivery:
+C208 has no dedicated security chapter: security is carried by **Ch. 4.6 "Security by Design"**, **Axiom 16 (Secure by Design)**, and the companion **O-AA Security Playbook (G216)**:
 
 - **Security Backlog**: Security requirements treated as backlog items, prioritized alongside features
 
@@ -71,7 +71,7 @@ Embeds security into agile architecture delivery:
 
 Used by: `agile-security` command (OASEC doc type)
 
-## Chapter 18 — Governance
+## C208 Ch. 8 — Agile Governance
 
 Lightweight governance aligned to sprint cycles:
 
@@ -85,11 +85,11 @@ Lightweight governance aligned to sprint cycles:
 
 - **Architecture Review Gates**: Lightweight reviews embedded in sprint ceremonies
 
-Used by: `agile-governance` command (OAGOV doc type)
+Used by: `agile-governance` command (OAGOV doc type). Related C208 content: Axiom 7.
 
-## ADM Lite Mapping (Chapters 1–9)
+## ADM Lite Sprint Mapping (ArcKit convention over TOGAF ADM, C182)
 
-Maps the traditional TOGAF ADM cycle to agile sprint delivery:
+The O-AA standard does **not** define an ADM cycle. The `oaa-adm-lite` command's sprint map (Sprint 0–4+ ↔ ADM-P…H) is an ArcKit convention that maps **TOGAF ADM phases (C182)** onto agile sprints, drawing its agile-architecture substance from C208 Part 1 (Ch. 3–9, including the 16 axioms of Ch. 9):
 
 - **Sprint Windows**: 2–4 week engagement windows per ADM phase
 
@@ -103,7 +103,7 @@ Used by: `oaa-adm-lite` command (OAAL doc type)
 
 ## Official Source
 
-- O-AA Standard (C208) — https://publications.opengroup.org/c208 (full text behind Open Group sign-in)
+- O-AA Standard (C208, v3.0, October 2022) — https://pubs.opengroup.org/architecture/o-aa-standard/ (publication page: https://publications.opengroup.org/c208; full text behind Open Group sign-in)
 
 - O-AA Security Playbook (G216) — https://publications.opengroup.org/guides/agile-architecture-guides/g216
 

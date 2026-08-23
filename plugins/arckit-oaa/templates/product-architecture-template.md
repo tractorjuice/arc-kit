@@ -1,6 +1,6 @@
 # Product Architecture Template (O-AA)
 
-> **Standard:** Open Agile Architecture™ (O-AA, C208) — Product Architecture learning unit
+> **Standard:** Open Agile Architecture™ (O-AA, C208) — Ch. 14: Product Architecture
 > **Organisation:** ${user_config.organisation_name}
 > **Parent reference:** ${user_config.references_dir} — parent engagement reference, if any
 > **TOGAF Mapping:** ADM Phase B (Business) + Phase C (Information Systems) + Phase E (Opportunities)
@@ -652,7 +652,7 @@ compliance:
 
 ## References
 
-- O-AA Standard (C208): The Open Group Agile Architecture — https://publications.opengroup.org/c208 (Product Architecture learning unit)
+- O-AA Standard (C208): The Open Group Agile Architecture — https://publications.opengroup.org/c208 (Ch. 14: Product Architecture)
 
 - ${user_config.references_dir} — organisation reference documents (e.g. Executable TOGAF ADM Workflow, OAA Study Notes, Compliance Validation Pipeline, Cross-Border Regulatory Mapping Tool); list only documents that exist in the configured directory, using relative paths
 

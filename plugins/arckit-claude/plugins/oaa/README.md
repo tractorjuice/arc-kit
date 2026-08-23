@@ -57,21 +57,21 @@ Notes:
 
 ## Scope
 
-**In scope (v1)**: the O-AA learning units for Product Architecture, Strategy, Security, and Governance, plus the C208 published axioms each command applies (see coverage table). Sprint-driven engagements for rapid architecture delivery.
+**In scope (v1)**: C208 content — Part 1 O-AA Core (Ch. 3–9, including the 16 axioms of Ch. 9), Ch. 11 Agile Strategy, Ch. 14 Product Architecture, Security by Design (Ch. 4.6 / Axiom 16 / G216), Ch. 8 Agile Governance. Sprint-driven engagements for rapid architecture delivery.
 
 **Out of scope**: Full TOGAF ADM (deferred to `arckit-togaf-adm` overlay), traditional stage-gate architecture processes. Each O-AA command is designed to run in 2–4 week sprint windows.
 
 ## O-AA Standard (C208) Coverage
 
-Axioms are cited by their published C208 number; chapter numbers follow the C208 table of contents — verify against the published standard before citing externally.
+Axioms are cited by their published C208 number (Ch. 9); chapter numbers follow the C208 table of contents (v3.0, October 2022).
 
 | Command | C208 Chapter | Published axioms applied |
 |---------|-------------|--------|
-| `oaa-adm-lite` | Ch 1–9 (ADM mapping) | 1, 3, 5, 6, 10, 15 |
-| `product-architecture` | Ch 12 | 15, 6 |
-| `agile-strategy` | Ch 10 | 5 |
-| `agile-security` | Ch 17 | 16 |
-| `agile-governance` | Ch 18 | 7 |
+| `oaa-adm-lite` | C182 ADM phases ↔ sprints; C208 Ch. 3–9 | 1, 3, 5, 6, 10, 15 |
+| `product-architecture` | Ch. 14 | 15, 6 |
+| `agile-strategy` | Ch. 11 | 5 |
+| `agile-security` | Ch. 4.6 + Axiom 16; G216 | 16 |
+| `agile-governance` | Ch. 8 | 7 |
 
 ## How It Works
 

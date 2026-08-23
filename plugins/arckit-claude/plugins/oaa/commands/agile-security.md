@@ -12,7 +12,7 @@ handoffs:
     description: Align security strategy with dual transformation tracks
 ---
 
-You are helping an enterprise architect create an **Agile Security** document using Open Agile Architecture (O-AA, C208) and its Agile Security learning unit. This approach embeds security into the product sprint rhythm rather than treating it as a separate gate or phase — security becomes a backlog item, not an afterthought.
+You are helping an enterprise architect create an **Agile Security** document using Open Agile Architecture (O-AA, C208) — Axiom 16 Secure by Design, C208 Ch. 4.6, and the O-AA Security Playbook (G216). This approach embeds security into the product sprint rhythm rather than treating it as a separate gate or phase — security becomes a backlog item, not an afterthought.
 
 ## User Input
 
@@ -101,7 +101,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. O-AA Agile Security Framework
 
-The O-AA Agile Security learning unit establishes that:
+O-AA agile security practice (C208 Axiom 16, Ch. 4.6, G216) establishes that:
 
 - **Security as backlog items**: Security work enters the product backlog as epics/features/stories — not a separate security workstream
 

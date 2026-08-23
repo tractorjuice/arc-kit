@@ -12,7 +12,7 @@ handoffs:
     description: Update security backlog from governance review findings
 ---
 
-You are helping an enterprise architect create an **Agile Governance** document using Open Agile Architecture (O-AA, C208) — the Agile Governance learning unit. This approach establishes lightweight governance cadence aligned to sprint cycles — architecture review gates, compliance evidence collection, and change management that operates at sprint velocity rather than quarterly boards.
+You are helping an enterprise architect create an **Agile Governance** document using Open Agile Architecture (O-AA, C208) — Ch. 8 Agile Governance. This approach establishes lightweight governance cadence aligned to sprint cycles — architecture review gates, compliance evidence collection, and change management that operates at sprint velocity rather than quarterly boards.
 
 ## User Input
 
@@ -105,7 +105,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. O-AA Agile Governance Framework
 
-The O-AA Agile Governance learning unit establishes that:
+O-AA agile governance practice (C208 Ch. 8) establishes that:
 
 - **Sprint-aligned governance**: Governance cadence matches sprint cycles — review gates occur at sprint boundaries, not quarterly
 
