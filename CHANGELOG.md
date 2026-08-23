@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **New community plugin `arckit-oaa` — Open Agile Architecture (O-AA, standard C208).** Five commands (`oaa-adm-lite`, `product-architecture`, `agile-strategy`, `agile-security`, `agile-governance`) split out of the O-AA extension of `arckit-togaf-adm` into a standalone plugin with its own `/arckit-oaa:` command namespace, five doc-type codes (`OASTR`, `OAPR`, `OAAL`, `OASEC`, `OAGOV`), the `oaa-full` build recipe, and `userConfig` placeholder support. Registered in both marketplaces, the doc-type registry, `pages.md`, `llms.txt`, and all extension formats. `scripts/sync-shared-assets.py` gains a per-file local-override registry so the three OAA-customised shared assets are drift-checked for existence only.
+- **New community plugin `arckit-oaa` — Open Agile Architecture (O-AA, standard C208).** Five new commands (`oaa-adm-lite`, `product-architecture`, `agile-strategy`, `agile-security`, `agile-governance`) in a standalone plugin with its own `/arckit-oaa:` command namespace, five doc-type codes (`OASTR`, `OAPR`, `OAAL`, `OASEC`, `OAGOV`), the `oaa-full` build recipe, and `userConfig` placeholder support. Registered in both marketplaces, the doc-type registry, `pages.md`, `llms.txt`, and all extension formats. Complementary to `arckit-togaf-adm`, which keeps the full document-centric ADM; neither depends on the other. Core `references/quality-checklist.md` gains the five OAA per-type sections and `references/citation-instructions.md` the O-AA C208 derivation row, so every plugin keeps the shared assets byte-identical to core.
 
 ### Fixed
 

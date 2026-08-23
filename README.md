@@ -603,7 +603,7 @@ Enterprise Architecture Development Method — 9 commands covering the full ADM 
 
 ## O-AA Overlay (`arckit-oaa`) [COMMUNITY]
 
-Open Agile Architecture (O-AA, standard C208) — agile enterprise architecture for product-driven, sprint-based delivery. Split from the O-AA extension of `arckit-togaf-adm`; the two overlays are complementary, not competitors — see the [O-AA vs TOGAF ADM decision guide](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+Open Agile Architecture (O-AA, standard C208) — agile enterprise architecture for product-driven, sprint-based delivery. A standalone overlay alongside `arckit-togaf-adm`; the two are complementary, not competitors — see the [O-AA vs TOGAF ADM decision guide](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
@@ -622,7 +622,7 @@ Handoff chain: `agile-strategy` → `product-architecture` → `oaa-adm-lite` �
 
 ## Using TOGAF ADM and O-AA Together
 
-The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.12.0` pin) — neither depends on the other. O-AA was split out of the O-AA extension of `arckit-togaf-adm` and maps the ADM cycle to 2–4 week sprints. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.12.0` pin) — neither depends on the other. O-AA maps the ADM cycle to 2–4 week sprints; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Pattern | When to use | Sequence |
 |---------|-------------|----------|

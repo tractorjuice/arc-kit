@@ -24,7 +24,7 @@ You are helping an enterprise architect create an **O-AA ADM Lite** architecture
 
 ```text
 $ARGUMENTS
-```text
+```
 
 ## Trigger Guidance
 
@@ -88,6 +88,10 @@ Identify the target project from the hook context. If the user specifies a proje
 - **If found**: Read the user's customized template (user override takes precedence)
 
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/oaa-adm-lite-template.md` (default)
+
+- **Then**, read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the template's `<!-- DOC-CONTROL-HEADER -->` marker to the Document Control partial it selects, applying the `${user_config.organisation_name}` and `${user_config.default_classification}` substitutions. Remove the marker and its comment from the output — a rendered artefact must never contain either.
+
+- **Also** apply the O-AA placeholder substitutions in `${CLAUDE_PLUGIN_ROOT}/references/placeholder-substitutions.md` (`${user_config.project_issue_prefix}`, `${user_config.safety_checklist_id}`, `${user_config.references_dir}`) wherever they appear in the template.
 
 > **Tip**: Users can customise templates with `/arckit:customize oaa-adm-lite`
 
@@ -193,11 +197,15 @@ Create the O-AA ADM Lite document following the template structure.
 
 - Architecture change requests via `/arckit-togaf-adm:architecture-change`
 
-### 7. Quality Gate
+### 7. External References
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass. Fix any failures before proceeding.
+Populate the `## External References` section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Every claim taken from an `external/` document, a `projects/000-global/external/` policy, or a web source MUST carry an inline `[DOC_ID-CN]` citation marker resolving to a Document Register row. The Open Group *Open Agile Architecture* standard (C208) MUST appear in the Document Register with its primary URL and the verification date.
 
-### 8. Write the Document
+### 8. Quality Gate
+
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **OAAL** per-type checks pass. Fix any failures before proceeding.
+
+### 9. Write the Document
 
 **IMPORTANT**: The O-AA ADM Lite document will be a substantial document (typically 150-300 lines). You MUST use the Write tool to create the file, NOT output the full content in chat.
 
@@ -205,9 +213,9 @@ Create the file at:
 
 ```text
 projects/{P}/ARC-{P}-OAAL-v1.0.md
-```text
+```
 
-### 9. Show Summary to User
+### 10. Show Summary to User
 
 After writing the file, show a concise summary (NOT the full document):
 
@@ -246,7 +254,7 @@ After writing the file, show a concise summary (NOT the full document):
 4. Plan dual transformation: `/arckit-oaa:agile-strategy`
 
 **File location**: `projects/{P}/ARC-{P}-OAAL-v1.0.md`
-```text
+```
 
 ## Important Notes
 

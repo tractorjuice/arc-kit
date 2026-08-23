@@ -39,29 +39,6 @@ SHARED_DIRS = ("templates/_partials", "references")
 # set without first removing that command.
 SYNC_EXEMPT_PLUGINS = {"arckit-claude", "arckit-fde"}
 
-# Per-file overrides: shared-asset paths a specific plugin intentionally keeps
-# in a customised form. The file must still exist in that plugin's tree, but
-# its content may legitimately diverge from core, so the drift check only
-# verifies existence and sync never overwrites it.
-#
-# arckit-oaa extends the shared references with OAA-specific content instead
-# of copying core verbatim: the OAS-C208 citation row (citation-instructions),
-# the OAAL/quality checklist for OAA artefact types (quality-checklist), and
-# the userConfig placeholder substitution table (RENDERING partial). All five
-# OAA commands resolve these paths against their own plugin root, so the
-# customised copies must stay.
-LOCAL_OVERRIDES: dict[str, set[str]] = {
-    "arckit-oaa": {
-        "templates/_partials/RENDERING.md",
-        "references/citation-instructions.md",
-        "references/quality-checklist.md",
-    },
-}
-
-
-def local_overrides(plugin: Path) -> set[str]:
-    return LOCAL_OVERRIDES.get(plugin.name, set())
-
 
 def discover_community_plugins() -> list[Path]:
     """Return every arckit-*/ directory with a Claude Code plugin manifest,
@@ -92,14 +69,10 @@ def check(community_plugins: list[Path], shared: list[Path]) -> int:
     drift: list[tuple[Path, str]] = []  # (path, reason)
     for plugin in community_plugins:
         for src in shared:
-            rel = relative_to_core(src)
-            dst = plugin / rel
+            dst = plugin / relative_to_core(src)
             if not dst.exists():
                 drift.append((dst, "missing"))
-                continue
-            if rel.as_posix() in local_overrides(plugin):
-                continue  # customised on purpose; existence already verified
-            if not filecmp.cmp(src, dst, shallow=False):
+            elif not filecmp.cmp(src, dst, shallow=False):
                 drift.append((dst, "drifted from core"))
     if drift:
         print("Shared-asset drift detected:", file=sys.stderr)
@@ -121,10 +94,7 @@ def write(community_plugins: list[Path], shared: list[Path]) -> int:
     written = 0
     for plugin in community_plugins:
         for src in shared:
-            rel = relative_to_core(src)
-            dst = plugin / rel
-            if rel.as_posix() in local_overrides(plugin):
-                continue  # keep the plugin's customised version
+            dst = plugin / relative_to_core(src)
             dst.parent.mkdir(parents=True, exist_ok=True)
             if dst.exists() and filecmp.cmp(src, dst, shallow=False):
                 continue

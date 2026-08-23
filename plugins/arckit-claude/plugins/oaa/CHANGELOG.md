@@ -2,7 +2,7 @@
 
 ## 1.0.0 (2026-08-16)
 
-- **New standalone plugin**: split from `arckit-togaf-adm` as `arckit-oaa`
+- **New standalone plugin** `arckit-oaa`, complementary to `arckit-togaf-adm` (neither depends on the other)
 
 - 5 O-AA commands: `oaa-adm-lite`, `product-architecture`, `agile-strategy`, `agile-security`, `agile-governance`
 
@@ -21,6 +21,6 @@
   - `safety_checklist_id` — safety/compliance checklist ID referenced in `governance-report.yaml` (blank → `[PENDING]` placeholder)
   - `references_dir` — directory of external reference documents; empty → organisation-specific references omitted
 
-- **Rendering contract**: `templates/_partials/RENDERING.md` documents placeholder substitution for all O-AA templates, not just the doc-control partial
+- **Rendering contract**: `templates/_partials/RENDERING.md` is the shared core asset, byte-identical across every plugin, and owns Document Control resolution only. O-AA's own `${user_config.*}` substitutions are documented in the plugin-local `references/placeholder-substitutions.md`
 
 - No breaking changes; `arckit-oaa` is standalone and depends only on `arckit` core (foundation commands `principles`, `requirements`, `stakeholders` must run first)

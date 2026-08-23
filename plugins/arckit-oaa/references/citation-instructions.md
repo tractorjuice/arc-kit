@@ -5,9 +5,7 @@ When ArcKit commands gather evidence from source material — files in `external
 Three source types are covered:
 
 - **Document** — A file on disk under `external/`, `policies/`, or `vendors/`
-
 - **MCP Query** — A query sent to an MCP server (e.g., `search_uk_gov_code`, AWS Knowledge `search_documentation`)
-
 - **Web URL** — A URL fetched at runtime via WebFetch
 
 WebSearch (search-only, no fetch) is exploratory and does not produce citations. Cite a URL only once it has actually been fetched.
@@ -31,6 +29,9 @@ Derive a short Source ID for each piece of source material. The same Source ID i
 |----------|-----------|------------|
 | privacy-policy.pdf | PP | **P**rivacy **P**olicy |
 | security-framework-v2.docx | SF | **S**ecurity **F**ramework |
+| data-protection-impact-assessment.pdf | DPIA | **D**ata **P**rotection **I**mpact **A**ssessment |
+| nhs-digital-service-manual.pdf | NDSM | **N**HS **D**igital **S**ervice **M**anual |
+| cloud-hosting-strategy.pdf | CHS | **C**loud **H**osting **S**trategy |
 | oaa-standard-c208.pdf | OAS-C | **O**pen **A**gile **A**rchitecture **C**208 |
 
 ### MCP Queries
@@ -47,6 +48,14 @@ Use a fixed per-server prefix plus a sequential query index. One Source ID per *
 
 For MCP servers not listed above, derive a short uppercase prefix from the server name (e.g., `linear-mcp` → `LIN`).
 
+### UK Tenders MCP sourcing
+
+Tender figures returned by the `uk-tenders` MCP server are sourced from official UK procurement notices (Find a Tender Service, Contracts Finder, Public Contracts Scotland, Sell2Wales, eTendersNI) and re-published verbatim under the **Open Government Licence v3.0**. Every notice record carries a `notice_url` pointing back to the source portal.
+
+- Every supplier figure, benchmark value, and award count cited in a TNDR artefact **must** carry a `notice_url` citation (e.g., `[TNDR-C1]` where the Document Register entry records the `notice_url`).
+- The artefact **must** include the attribution line: `Contains public sector information licensed under the Open Government Licence v3.0.`
+- The mandatory caveat — `Awarded value is not actual spend; figures are for market context and benchmarking, not the costed Economic Case.` — must also appear verbatim; it is not a citation but a data-quality disclaimer required by the OGL sourcing.
+
 ### Web URLs
 
 Use the prefix `WEB` plus a sequential index. One Source ID per **unique URL** fetched (not per call — refetching the same URL is one citation source).
@@ -60,12 +69,10 @@ Examples: `WEB-1`, `WEB-2`, `WEB-3`.
 Each inline citation uses the format: `[{SOURCE_ID}-C{N}]`
 
 - `SOURCE_ID` — The Source ID derived above
-
 - `C` — Literal "C" for "citation"
-
 - `N` — Sequential number per source, starting at 1
 
-Examples: `[PP-C1]`, `[PP-C2]`, `[OAS-C-C1]`, `[WEB-1-C1]`.
+Examples: `[PP-C1]`, `[PP-C2]`, `[SF-C1]`, `[DPIA-C3]`, `[GRSC-Q1-C1]`, `[AWSK-Q1-C1]`, `[WEB-1-C1]`.
 
 ## Inline Marker Placement
 
@@ -74,40 +81,50 @@ Place citation markers **immediately after** the requirement, finding, risk, or 
 **Examples:**
 
 ```text
-The sprint architecture vision must align with O-AA C208 Axiom 11 [OAS-C-C1] and cover all 8 ADM phases [OAS-C-C2].
+The system must encrypt all personal data at rest using AES-256 [SF-C1] and in transit using TLS 1.3 [SF-C2].
+```
+
 ```text
+| BR-001 | The platform must support 10,000 concurrent users [RFP-C1] | Must | Scalability |
+```
+
+```text
+Risk R-005: Non-compliance with data retention policy [PP-C3] could result in ICO enforcement action.
+```
+
+```text
+East Sussex County Council have published `Escc.ActiveDirectory` [WEB-1-C1], a reusable .NET library for AD lookups, identified via govreposcrape search [GRSC-Q1-C1].
+```
+
+```text
+Amazon Bedrock Guardrails support PII redaction across input and output flows [AWSK-Q1-C1].
+```
 
 ## Category Assignment
 
 Assign each citation a usage category describing how the source material was used:
 
 - **Business Requirement** — Source defines a business need or objective
-
 - **Functional Requirement** — Source specifies system behaviour
-
 - **Non-Functional Requirement** — Source defines quality attributes (performance, security, etc.)
-
 - **Compliance Constraint** — Source imposes regulatory or policy obligations
-
 - **Security Requirement** — Source defines security controls or standards
-
-- **Architecture Decision** — Source influences an architectural or design choice
-
+- **Data Requirement** — Source specifies data handling, retention, or classification rules
+- **Risk Factor** — Source identifies or informs a risk assessment
+- **Design Decision** — Source influences an architectural or design choice
 - **Stakeholder Need** — Source captures stakeholder goals, concerns, or expectations
-
-- **O-AA Reference** — Source is the O-AA C208 standard or official documentation
-
+- **Integration Requirement** — Source defines interfaces with external systems
+- **Procurement Constraint** — Source restricts or guides procurement approach
+- **Reuse Evidence** — Source demonstrates an existing implementation that informs build vs reuse analysis
 - **Market Evidence** — Source provides vendor, pricing, or capability data informing options analysis
 
-## O-AA C208 Standard Citation
+## Quoting Rules
 
-When referencing the Open Agile Architecture standard:
+For each citation, capture the **specific evidence** from the source that informed the finding:
 
-- Source ID: `OAS-C` (O-AA Standard C208)
-
-- Always include the specific chapter or axiom number (e.g., `[OAS-C-C1]` for Chapter 10, Axiom 11)
-
-- Official source: Open Agile Architecture (openagilearchitecture.com)
+1. **Documents and Web URLs** — Quote 1-3 sentences verbatim. Use double quotes. Include page number, section number, or heading if identifiable.
+2. **MCP Queries** — Summarise the result set rather than quoting (e.g., `"3 repos returned: east-sussex-county-council/Escc.ActiveDirectory, hmrc/auth-stub, dwp/identity-verifier"`). For documentation-style MCP responses (AWS Knowledge, Microsoft Learn), quote the salient passage as for documents.
+3. **Tables, diagrams, code blocks** — Describe the relevant content rather than quoting verbatim.
 
 ## External References Section Structure
 
@@ -115,35 +132,39 @@ Populate the `## External References` section in the template with three sub-tab
 
 ### Document Register
 
+Lists every source that was consulted (documents, MCP queries, fetched URLs), whether or not it was cited.
+
 | Column | Documents | MCP Queries | Web URLs |
 |--------|-----------|-------------|----------|
-| **Doc ID** | Source ID derived from filename (e.g., `OAS-C`) | Per-server prefix + query index (e.g., `GRSC-Q1`) | `WEB-N` (e.g., `WEB-1`) |
-| **Filename** | Original filename (e.g., `oaa-standard-c208.pdf`) | MCP tool + query | Full URL |
-| **Type** | Document type (Standard / Policy / etc.) | `MCP Query` | `Web URL` |
-| **Source Location** | Directory path relative to `projects/` | MCP server name | Domain |
-| **Description** | Brief description of the document's purpose | Result count + brief summary | Page title |
+| **Doc ID** | Source ID derived from filename (e.g., `PP`) | Per-server prefix + query index (e.g., `GRSC-Q1`) | `WEB-N` (e.g., `WEB-1`) |
+| **Filename** | Original filename (e.g., `privacy-policy.pdf`) | MCP tool + query (e.g., `search_uk_gov_code("active directory C#")`) | Full URL (e.g., `https://github.com/east-sussex-county-council/Escc.ActiveDirectory`) |
+| **Type** | Document type (Policy / Standard / RFP / etc.) | `MCP Query` | `Web URL` |
+| **Source Location** | Directory path relative to `projects/` (e.g., `001-project/external/`) | MCP server name (e.g., `govreposcrape`) | Domain (e.g., `github.com`) |
+| **Description** | Brief description of the document's purpose | Result count + brief summary (e.g., `8 repos returned, top 3 relevant`) | Page title or what was being looked up |
 
 ### Citations
+
+Lists every inline citation used in the document body. Schema unchanged.
 
 | Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
 |-------------|--------|--------------|----------|----------------|
 
 - **Citation ID** — The `[SOURCE_ID-CN]` marker used inline
-
 - **Doc ID** — Cross-reference to the Document Register
-
-- **Page/Section** — Chapter/axiom number or page reference
-
+- **Page/Section** — Page number, section number, heading, or MCP result index where the evidence was found. Use "—" if not applicable.
 - **Category** — One of the categories listed above
-
-- **Quoted Passage** — The verbatim quote or result summary
+- **Quoted Passage** — The verbatim quote (documents, web pages, doc-style MCP responses) or result summary (search-style MCP responses)
 
 ### Unreferenced Documents
+
+Lists sources that were consulted but did not contribute to this artifact. Demonstrates that all retrieved material was reviewed. Now also covers MCP queries that returned nothing useful and fetched URLs that proved off-topic.
 
 | Filename | Source Location | Reason |
 |----------|-----------------|--------|
 
-- Brief explanation for sources consulted but not cited.
+- **Filename** — Filename, MCP query, or URL (mirroring the Document Register's Filename column)
+- **Source Location** — Directory path, MCP server name, or domain
+- **Reason** — Brief explanation (e.g., "No content relevant to requirements", "Returned no results", "Covers operational procedures outside scope of this artifact")
 
 ### When No Source Material Was Consulted
 
