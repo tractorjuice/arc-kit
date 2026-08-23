@@ -863,7 +863,7 @@ All artifacts must pass these 10 checks:
 - Each strategic bet states the outcome it buys and the measure that would show it worked
 - Product portfolio mapped to the transformation tracks, so no product is left unassigned
 - Funding and team-topology implications stated, not left as an exercise for delivery
-- Every O-AA axiom cited is used to justify a specific choice, not listed decoratively
+- Every O-AA axiom cited is quoted from the C208 standard by its published number and name, and is used to justify a specific choice rather than listed decoratively
 - Strategy traces to stakeholder goals and business drivers from STKE and REQ
 
 ### OAPR -- O-AA Product Architecture
@@ -871,7 +871,7 @@ All artifacts must pass these 10 checks:
 - Product boundary defined before the internal structure — what the product is and is not
 - Cross-functional team composition stated per product, with the architecture ownership named
 - Backlog-driven delivery reflected: architecture decisions map to backlog items, not to phase gates
-- Product-centric organising principle applied (O-AA Axiom 3) — decomposition is by product, not by capability or by service layer
+- Product-centric organising principle applied — decomposition is by product, not by capability or by service layer
 - Interfaces between products specified as contracts with owners
 - Dependencies on other products and platforms enumerated with their coupling type
 - Requirements traced to product scope; every FR/NFR either lands in a product or is explicitly out of scope
