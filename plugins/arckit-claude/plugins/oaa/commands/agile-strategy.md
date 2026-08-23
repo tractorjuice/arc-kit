@@ -12,7 +12,7 @@ handoffs:
     description: Establish governance cadence for the transformation programme
 ---
 
-You are helping an enterprise architect create an **Agile Strategy Canvas** using Open Agile Architecture (O-AA, C208) Learning Unit 8: Agile Strategy. This approach focuses on dual transformation — modernizing legacy systems while simultaneously building new product capabilities — using agile strategy canvanses that drive backlog-driven delivery.
+You are helping an enterprise architect create an **Agile Strategy Canvas** using Open Agile Architecture (O-AA, C208) and its Agile Strategy learning unit. This approach focuses on dual transformation — modernizing legacy systems while simultaneously building new product capabilities — using agile strategy canvanses that drive backlog-driven delivery.
 
 ## User Input
 
@@ -105,7 +105,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. O-AA Agile Strategy Framework
 
-O-AA Learning Unit 8 (Agile Strategy) establishes that:
+The O-AA Agile Strategy learning unit establishes that:
 
 - **Dual transformation**: Simultaneously run legacy modernization (defend) and greenfield innovation (attack) tracks
 
@@ -115,19 +115,17 @@ O-AA Learning Unit 8 (Agile Strategy) establishes that:
 
 - **Outcome-measured**: Strategy success measured by product outcomes (value, adoption, experience), not project milestones
 
-- **O-AA Axiom 2**: "An organisation cannot have a strategy without an architecture." — strategy and architecture are inseparable
+- **O-AA Axiom 5 (Value Stream Alignment)**: strategy maps to value streams, so strategy and architecture stay in one system rather than splitting into two artefacts
 
-### 4. Shared Schema Definitions
+### 4. Shared Artefact Definitions
 
-Agile strategy commands reuse schema definitions:
+The agile strategy canvas command defines artefacts whose structure is inlined in `agile-strategy-template.md`:
 
-- **`product-architecture.json`** — Product architecture schema (shared with `/arckit-oaa:product-architecture`)
+- **`strategy-canvas.yaml`** — the 1-2 page strategy canvas (segments, value proposition, channels, key activities, key resources, partnerships, cost)
 
-- **`vision.yaml`** — Architecture vision (shared with `/arckit-oaa:oaa-adm-lite`, `/arckit-togaf-adm:adm-preliminary`)
+- **`vision.yaml`** — architecture vision constraints inherited from O-AA Lite or ADM Preliminary (`/arckit-oaa:oaa-adm-lite`, `/arckit-togaf-adm:adm-preliminary`)
 
-- **`implementation-strategy.yaml`** — Implementation waves (shared with `/arckit-togaf-adm:transition-architecture`)
-
-- **`strategy-canvas.json`** — Agile strategy canvas schema (O-AA specific)
+- **`implementation-strategy.yaml`** — transformation waves and sequencing (consistent with `/arckit-togaf-adm:transition-architecture`)
 
 ### 5. Generate Agile Strategy Canvas Document
 
@@ -135,7 +133,7 @@ Create the Agile Strategy Canvas document following the template structure.
 
 #### Document Control
 
-- Generate Document ID: `ARC-{P}-OASTR-v1.0` (for filename: `ARC-{P}-OASTR-v1.0.md`)
+- Generate Document ID with `node scripts/generate-document-id.mjs {P} OASTR --filename` (canonical form: `ARC-{P}-OASTR-v1.0`)
 
 - Set owner, dates, status, classification
 
@@ -193,7 +191,7 @@ Create the Agile Strategy Canvas document following the template structure.
 
 - Architecture guardrails per epic
 
-- O-AA axiom compliance per feature
+- O-AA published-axiom compliance per feature (cite number + name)
 
 ### 6. External References
 
@@ -238,12 +236,10 @@ After writing the file, show a concise summary (NOT the full document):
 | Key activities | [Brief] |
 | Key resources | [Brief] |
 
-### Shared Schemas
-- ✅ strategy-canvas.json → schemas/strategy-canvas.json
+### Sprint Artifacts
+- ✅ strategy-canvas.yaml
 
-- ✅ vision.yaml → schemas/vision.json (shared with O-AA Lite)
-
-- ✅ product-architecture.json → schemas/product-architecture.json (shared with Product Architecture)
+- ✅ vision.yaml (from O-AA Lite or ADM Preliminary)
 
 ### Synthesised From
 - [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
@@ -269,7 +265,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 2. **Strategy Canvas is Living**: The strategy canvas is not a static document. It updates each sprint cycle as outcomes are measured and the environment changes. Treat it as a backlog item, not a shelf artifact.
 
-3. **Shared Schemas**: The `vision.yaml` and `product-architecture.json` schemas are shared between O-AA and traditional TOGAF commands. This ensures consistency regardless of which approach the client selects.
+3. **Sprint Artefacts**: The `strategy-canvas.yaml` and `vision.yaml` structures are defined inline in `agile-strategy-template.md`. Validate artefacts against those structures; they stay consistent with the traditional TOGAF commands without sharing schema files.
 
 4. **Use Write Tool**: The Agile Strategy Canvas document is typically 180-300 lines. ALWAYS use the Write tool to create it.
 

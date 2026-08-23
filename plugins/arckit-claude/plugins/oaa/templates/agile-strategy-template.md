@@ -2,9 +2,8 @@
 
 > **Template:** Agile Strategy Canvas (O-AA Dual Transformation Planning)
 > **Issue:** ${user_config.project_issue_prefix}-126 | **Command:** `/arckit-oaa:agile-strategy`
-> **Schema:** `agile-strategy-canvas.yaml`
-> **Validation:** `validate-agile-strategy.py`
-> **O-AA Reference:** Learning Unit 2 — Agile Strategy
+> **Structure:** inlined below (YAML example in the YAML Structure section)
+> **O-AA Reference:** Agile Strategy learning unit
 
 ## Document Control
 
@@ -37,9 +36,9 @@ Do NOT use when:
 
 - Single product feature scoping — use `product-architecture-template.md` instead
 
-- Pure security architecture — use `agile-security-architecture-template.md` instead
+- Pure security architecture — use `agile-security-template.md` instead
 
-- Traditional TOGAF documentation for regulated clients — use `adm-preliminary-template.md` with Stakeholder Drivers section
+- Traditional TOGAF documentation for regulated clients — use the `/arckit-togaf-adm:adm-preliminary` command with its Stakeholder Drivers section
 
 ---
 
@@ -251,7 +250,7 @@ Design principles derived from O-AA guiding axioms. Each principle must be trace
 | Field | Description |
 |---|---|
 | `principle` | Declarative statement of the design principle |
-| `axiom` | O-AA axiom this principle derives from |
+| `axiom` | Published O-AA axiom (C208) this principle derives from, cited by number and name |
 | `rationale` | Why this principle matters for this transformation |
 | `implications` | Architectural and organizational implications of following this principle |
 | `exceptions` | Known exceptions or trade-offs |
@@ -262,7 +261,7 @@ Design principles derived from O-AA guiding axioms. Each principle must be trace
 design_principles:
 
   - principle: "Outcome over output"
-    axiom: "Architecture is about enabling business outcomes, not producing documents"
+    axiom: "Axiom 1 — Customer Experience Focus"
     rationale: "Teams measure success by business impact, not by artifacts delivered"
     implications:
 
@@ -272,7 +271,7 @@ design_principles:
     exceptions: "Regulatory submissions require documented evidence — exception documented in compliance register"
 
   - principle: "Permanent product over temporary project"
-    axiom: "Shift from temporary organizational structures to permanent ones"
+    axiom: "Axiom 15 — Project to Product Shift"
     rationale: "Product teams maintain continuity and deep domain knowledge across iterations"
     implications:
 
@@ -282,7 +281,7 @@ design_principles:
     exceptions: "Time-bound regulatory compliance projects may use temporary teams with knowledge handoff"
 
   - principle: "Platform before feature"
-    axiom: "Platform-driven operating model enables team autonomy"
+    axiom: "Axiom 6 — Autonomous Cross-Functional Teams"
     rationale: "Teams need shared platform capabilities before building domain-specific features"
     implications:
 
@@ -404,28 +403,21 @@ transformation_waves:
 
 ---
 
-## YAML Schema Reference
+## YAML Structure
 
-The structured version of this canvas uses the `agile-strategy-canvas.yaml` schema. See schema definition in `Architecture/schemas/agile-strategy-canvas.yaml`.
-
-Validate your canvas with:
-
-```bash
-python validate-agile-strategy.py path/to/your-canvas.yaml
-
-```
+The structured version of this canvas is the `agile-strategy-canvas.yaml` artefact, defined by the YAML example above. Validate your canvas by self-checking it against that structure, and run `/arckit:health` after the build to catch stale or orphaned artefacts.
 
 ---
 
 ## O-AA Axiom Reference
 
-| Axiom | Principle Derivation |
+| Axiom | Application in the Canvas |
 |---|---|
-| Outcome-based | Design principles prioritize business outcomes over document artifacts |
-| Product-centric | Operating model shifts from project teams to permanent product organizations |
-| Team-led | Governance distributed to teams; architect embedded in delivery teams |
-| Experience-driven | Product transformation maps customer/employee experience improvements |
-| Platform-driven | Technology transformation builds shared platform capabilities first |
+| Axiom 1 (Customer Experience Focus) | Design principles prioritise customer outcomes over document artefacts |
+| Axiom 5 (Value Stream Alignment) | Transformation waves align to value streams, not calendar quarters |
+| Axiom 6 (Autonomous Cross-Functional Teams) | Governance distributed to teams; architect embedded in delivery teams |
+| Axiom 14 (Bias for Change) | Operating model shifts from temporary project structures to permanent product organizations |
+| Axiom 15 (Project to Product Shift) | Product transformation maps customer/employee experience improvements |
 
 ---
 
@@ -435,7 +427,7 @@ python validate-agile-strategy.py path/to/your-canvas.yaml
 |---|---|
 | `oaa-adm-lite-template.md` | Use ADM Lite to structure waves; use Strategy Canvas for transformation planning |
 | `product-architecture-template.md` | Strategy Canvas defines the why; Product Architecture defines the what |
-| `agile-governance-cadence-template.md` | Strategy Canvas sets direction; Governance Cadence maintains it |
+| `agile-governance-template.md` | Strategy Canvas sets direction; Governance maintains it |
 | `adm-preliminary-template.md` | Use ADM-P for formal TOGAF engagements; Strategy Canvas for agile planning |
 
 ---

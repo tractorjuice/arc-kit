@@ -77,14 +77,11 @@ Runs at sprint planning and sprint review. Lightweight — 15 minutes max.
 
 ### Automation
 
-```bash
-# Pre-sprint compliance scan
-python3 compliance-validator.py scan-sprint-backlog backlog.json --jurisdiction AU
+Example automation (illustrative — wire your own CI tooling into this shape):
 
-# Post-sprint architecture drift check
-python3 validate-architecture.py drift technology-architecture.yaml deployed-config.yaml
+- **Pre-sprint compliance scan** — scan the sprint backlog against the compliance rule set for the target jurisdiction (AU, EU, etc.)
 
-```
+- **Post-sprint architecture drift check** — diff deployed configuration against the `technology-architecture.yaml` baseline
 
 ---
 
@@ -230,16 +227,16 @@ Code/Config Change → Compliance Scan → Governance Report Update → Alert (i
 
 | Check | Frequency | Tool | Alert Threshold |
 |---|---|---|---|
-| Encryption at rest | Every deploy | `compliance-validator.py` | Any unencrypted data store |
+| Encryption at rest | Every deploy | Compliance rule engine (your tooling) | Any unencrypted data store |
 | Network egress | Continuous | Network policy monitor | Any public egress from data tier |
 | Model provenance | Model deploy | Checksum verification | Checksum mismatch |
-| API authentication | Every deploy | `validate-architecture.py` | Unauthenticated endpoint |
+| API authentication | Every deploy | Architecture drift check (your CI tooling) | Unauthenticated endpoint |
 | Data residency | Continuous | Infrastructure config scan | Data stored outside required jurisdiction |
 | Audit log coverage | Weekly | Log analysis script | Component without audit logging |
 
 ### Governance Report Integration
 
-Compliance monitoring output feeds directly into the existing `governance-report.yaml` schema:
+Compliance monitoring output feeds directly into the `governance-report.yaml` structure:
 
 ```yaml
 # governance-report.yaml (updated by compliance monitoring)
@@ -289,7 +286,7 @@ architecture_health:
 
 ### Automated Reporting
 
-Weekly automated report (scheduled via Hermes cron):
+Weekly automated report (scheduled via your CI/CD or agent runtime cron):
 
 1. Run compliance scan across all active engagements
 2. Update `governance-report.yaml` for each engagement
@@ -365,7 +362,7 @@ This cadence maps to TOGAF ADM phases G and H (continuous):
 
 - ${user_config.references_dir} — organisation reference documents (e.g. TOGAF ADM workflow, AI governance framework, compliance validation pipeline); include only documents that exist in the configured directory
 
-- `governance-report.yaml`: Governance report schema (Phase G governance)
+- `governance-report.yaml`: Governance report structure (Phase G governance)
 
 - `${user_config.safety_checklist_id}`: Safety checklist integrated into compliance monitoring
 

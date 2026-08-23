@@ -44,7 +44,7 @@ Use this template when **any** of the following conditions are met:
 
 **Do NOT use** when:
 
-- Security assessment is a standalone, one-off engagement (use ADR-005 compliance validator instead)
+- Security assessment is a standalone, one-off engagement (use the standalone compliance validation pipeline described in your ADR-005 reference document instead)
 
 - Client requires traditional waterfall security reviews with formal sign-off gates at each phase
 
@@ -54,7 +54,7 @@ Use this template when **any** of the following conditions are met:
 
 ## Core Thesis (G216)
 
-The O-AA Security Playbook (G216) states: *"Security in an Agile Architecture must enable the business to move rapidly in a world of defined and managed risk."*
+The O-AA Security Playbook (G216) frames the problem this way: security in an agile architecture must let the business move rapidly in a world of defined and managed risk.
 
 Traditional security architectures insert phase-gate checkpoints that slow delivery. This template replaces those gates with **four continuous security pillars** that operate alongside the sprint rhythm:
 
@@ -146,16 +146,15 @@ Block Merge   │  Always           │  On failure     │  Warning only  │  
 
 - **Low:** Frontend assets, static content, build scripts
 
-**Automated test pipeline:**
+**Risk-based scan pipeline (illustrative — wire your own tooling into this shape):**
 
-```bash
-# Risk-based security scan pipeline (runs per commit/PR)
-python security-scan.py --risk-level critical --block-on-failure
-python security-scan.py --risk-level high --require-review
-python security-scan.py --risk-level medium --warn-only
-python security-scan.py --risk-level low --report-only
+- **Critical paths** — every commit; block on failure
 
-```
+- **High paths** — every PR; require security review
+
+- **Medium paths** — sprint gate; warn only
+
+- **Low paths** — weekly scan; report only
 
 **Security test categories:**
 
@@ -168,7 +167,7 @@ python security-scan.py --risk-level low --report-only
 | Infrastructure as Code | Checkov (Terraform), Hadolint (Docker) | Every PR | Critical/High |
 | Container Scanning | Trivy, Grype | Every image build | Critical |
 | Model Safety | Prompt injection test suite, output filter tests | Model update | Critical |
-| Compliance Validation | ADR-005 compliance validator | Sprint gate | Critical |
+| Compliance Validation | Compliance rule engine (your tooling) | Sprint gate | Critical |
 
 ---
 
@@ -186,15 +185,15 @@ controls:
     validation:
 
       - rule: "encryption_at_rest"
-        check: "python validate-encryption.py --storage all"
+        check: "storage encryption audit (all storage tiers)"
         expected: "AES-256"
 
       - rule: "encryption_in_transit"
-        check: "python validate-tls.py --min-version 1.3"
+        check: "TLS version enforcement check (all endpoints)"
         expected: "TLS 1.3+"
 
       - rule: "network_isolation"
-        check: "python validate-network.py --egress blocked"
+        check: "network egress audit (data tier)"
         expected: "no_public_egress"
     auto_verify: true
     sprint_gate: true
@@ -231,7 +230,7 @@ security_validation:
       controls_checked: 23
       controls_passed: 18
       controls_gapped: 5
-      tool: compliance-validator.py
+      tool: "compliance rule engine"
   compliance_as_code:
 
     - control: "APP-11.1"
@@ -269,26 +268,15 @@ Traditional TOGAF ADM Phase G (Implementation Governance) runs at the end. This 
 | Security sign-off from board | Security validation report at sprint review | Sprint review notes |
 | Architecture compliance check | Architecture drift detection (auto-diff) | `technology-architecture.yaml` diff |
 
-**Continuous validation pipeline:**
+**Continuous validation pipeline (runs automatically at sprint gate, end of sprint):**
 
-```bash
-# Runs automatically at sprint gate (end of sprint)
-# 1. Security scan aggregation
-python security-aggregate.py --sprint 4 --output security-report.yaml
+1. Aggregate the sprint's security scan results into `security-report.yaml`
 
-# 2. Compliance validation
-python compliance-validator.py --sprint 4 --output compliance-results.yaml
+2. Run compliance validation against the control set → `compliance-results.yaml`
 
-# 3. Merge into governance report
-python merge-governance.py \
-  --security security-report.yaml \
-  --compliance compliance-results.yaml \
-  --output governance-report.yaml
+3. Merge both into `governance-report.yaml`
 
-# 4. Architecture drift check
-python validate-architecture.py --check-drift --baseline technology-architecture.yaml
-
-```
+4. Architecture drift check: diff deployed configuration against the `technology-architecture.yaml` baseline
 
 ---
 
@@ -297,7 +285,7 @@ python validate-architecture.py --check-drift --baseline technology-architecture
 Every sprint includes security items derived from the compliance gap analysis:
 
 ```yaml
-# security-backlog-sprint-4.yaml
+# security-backlog.yaml (sprint 4 snapshot)
 sprint: 4
 risk_classification:
 
@@ -361,7 +349,7 @@ Continuous validation produces measurable security posture indicators:
 | Critical vulnerabilities | Dependency scanner | 0 | Block merge immediately |
 | Security story velocity | Sprint backlog | ≥ 20% of total story points | Review if consistently < 15% |
 | Security debt aging | Security debt backlog | 0 items > 2 sprints old | Escalate to Team Architect |
-| Architecture drift | `validate-architecture.py` | 0 unapproved changes | Alert on detection |
+| Architecture drift | Automated drift check (your CI tooling) | 0 unapproved changes | Alert on detection |
 
 ---
 
@@ -374,8 +362,8 @@ Continuous validation produces measurable security posture indicators:
 | ADM-B (Business) | Security business objectives, risk appetite | Embedded in sprint planning |
 | ADM-C (Information Systems) | Security architecture design, data classification | `technology-architecture.yaml`, `data-architecture.yaml` |
 | ADM-D (Technology) | Security controls implementation, infrastructure hardening | Security stories in sprint backlog |
-| ADM-E (Opportunities) | Security backlog prioritization, risk-based sequencing | `security-backlog-sprint-N.yaml` |
-| ADM-F (Migration) | Security testing automation, compliance validation | CI/CD pipeline, `compliance-validator.py` |
+| ADM-E (Opportunities) | Security backlog prioritization, risk-based sequencing | `security-backlog.yaml` |
+| ADM-F (Migration) | Security testing automation, compliance validation | CI/CD pipeline compliance stage |
 | **ADM-G (Governance)** | **Continuous security validation** | **`governance-report.yaml`** |
 | ADM-H (Change Management) | Security impact assessment for all changes | `change-request.yaml` security section |
 
@@ -399,32 +387,23 @@ Security stories in sprint backlogs implement the controls defined in ADR-003's 
 
 ### With ADR-005 (Compliance Validation Pipeline)
 
-The compliance-as-code integration point uses ADR-005's `compliance-validator.py` as the execution engine. Every sprint gate runs the validator and feeds results into `governance-report.yaml`.
+The compliance-as-code integration point uses the compliance validation pipeline described in ADR-005 as the execution model. Every sprint gate runs the validation stage and feeds results into `governance-report.yaml`.
 
-### With Agile Governance Cadence Template
+### With the Agile Governance Template
 
-The sprint-level security validation report is reviewed during the Sprint Architecture Review Checklist (agile-governance-cadence-template.md §1). Security metrics feed into the quarterly Architecture Health Assessment.
+The sprint-level security validation report is reviewed during the Sprint Architecture Review Checklist (`agile-governance-template.md`, section 1). Security metrics feed into the quarterly Architecture Health Assessment.
 
 ---
 
-## Automation Scripts (Reference)
+## Example CI Checks (Illustrative)
 
-```text
-arckit-togaf-adm/
-  security/
-    security-scan.py            # Risk-based security scan orchestrator
-    security-aggregate.py       # Sprint scan result aggregation
-    test_prompt_injection.py    # Model safety: prompt injection test suite
-    test_output_filtering.py    # Model safety: output filtering test suite
-    test_input_sanitization.py  # Input validation test suite
-    test_rate_limiting.py       # Availability: rate limiting test suite
-  validations/
-    validate-encryption.py      # Encryption at rest/in transit verification
-    validate-tls.py             # TLS version enforcement check
-    validate-network.py         # Network isolation verification
-    validate-model-safety.py    # Model safety validation
+The checks below describe the pipeline shape — ArcKit does not ship these tools. Wire your own SAST/DAST/compliance tooling into the same stages:
 
-```
+- **Security scanning** — risk-level-driven scan orchestration, with per-sprint result aggregation
+
+- **Model safety** — prompt-injection suite, output-filtering suite, input-sanitization suite, and rate-limiting checks
+
+- **Infrastructure validation** — encryption at rest/in transit, TLS version enforcement, network isolation, and model safety gates
 
 ---
 
@@ -448,13 +427,13 @@ arckit-togaf-adm/
 
 - [ ] Risk-based security testing automation defined with clear classification rules
 
-- [ ] Compliance-as-code integration points documented with schema examples
+- [ ] Compliance-as-code integration points documented with YAML examples
 
 - [ ] Continuous security validation replaces phase-gate checkpoints with measurable evidence
 
-- [ ] Integration with existing `governance-report.yaml` schema is explicit
+- [ ] Integration with existing `governance-report.yaml` structure is explicit
 
-- [ ] Reference to ADR-001, ADR-003, ADR-005, and agile-governance-cadence-template.md
+- [ ] Reference to ADR-001, ADR-003, ADR-005, and `agile-governance-template.md`
 
 - [ ] Security metrics dashboard with alert thresholds
 
@@ -468,7 +447,7 @@ arckit-togaf-adm/
 
 - ADR-005: Compliance Validation Pipeline
 
-- Agile Governance Cadence Template (`${user_config.project_issue_prefix}-128`)
+- Agile Governance Template (`agile-governance-template.md`)
 
 - ${user_config.references_dir} — organisation reference documents (e.g. implementation plan); include only documents that exist in the configured directory
 

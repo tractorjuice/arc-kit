@@ -1,6 +1,6 @@
 # Product Architecture Template (O-AA)
 
-> **Standard:** Open Agile Architecture™ (O-AA, C208) — Learning Unit 7: Product Architecture
+> **Standard:** Open Agile Architecture™ (O-AA, C208) — Product Architecture learning unit
 > **Organisation:** ${user_config.organisation_name}
 > **Parent reference:** ${user_config.references_dir} — parent engagement reference, if any
 > **TOGAF Mapping:** ADM Phase B (Business) + Phase C (Information Systems) + Phase E (Opportunities)
@@ -47,7 +47,7 @@
 2. **Principle 2:** {guiding design principle}
 3. **Principle 3:** {guiding design principle}
 
-> O-AA axiom: Architecture is product-centric — the product is the organizing principle for the team, backlog, and architecture. Not projects, not capabilities, not services.
+> O-AA axioms applied: Axiom 15 (Project to Product Shift) — the product, not the project, is the organizing principle for the team, backlog, and architecture; Axiom 6 (Autonomous Cross-Functional Teams) — the owning team holds the architecture, not a central group.
 
 ---
 
@@ -652,7 +652,7 @@ compliance:
 
 ## References
 
-- O-AA Standard (C208): The Open Group Agile Architecture — Learning Unit 7
+- O-AA Standard (C208): The Open Group Agile Architecture — https://publications.opengroup.org/c208 (Product Architecture learning unit)
 
 - ${user_config.references_dir} — organisation reference documents (e.g. Executable TOGAF ADM Workflow, OAA Study Notes, Compliance Validation Pipeline, Cross-Border Regulatory Mapping Tool); list only documents that exist in the configured directory, using relative paths
 

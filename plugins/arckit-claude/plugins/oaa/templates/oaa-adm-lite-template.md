@@ -1,6 +1,6 @@
 # O-AA ADM Lite Template
 
-> Maps the TOGAF ADM cycle to agile sprints. Use when delivering AI architectures in 2-4 week engagement windows. References `schemas/vision.json` and `schemas/implementation-strategy.json`.
+> Maps the TOGAF ADM cycle to agile sprints. Use when delivering AI architectures in 2-4 week engagement windows. Sprint artefact structures are inlined in each sprint section below.
 
 ## Document Control
 
@@ -41,7 +41,7 @@ Use this template when **any** of the following conditions are met:
 
 **Do NOT use** when:
 
-- Full regulatory audit trail is required (use ADR-001 full ADM workflow instead)
+- Full regulatory audit trail is required (use `/arckit-togaf-adm:adm-preliminary` with full ADM workflow instead)
 
 - Multi-year enterprise transformation with 50+ stakeholder review gates
 
@@ -69,9 +69,9 @@ Use this template when **any** of the following conditions are met:
 
 ### O-AA Axiom Alignment
 
-- **Axiom 1:** "The purpose of architecture is to improve the organisation." — every decision traces to business outcome
+- **Axiom 1 (Customer Experience Focus)** — every decision traces to a business outcome
 
-- **Axiom 4:** "Architecture must be fit for purpose." — no gold-plating; scope constrained to client's immediate delivery horizon
+- **Axiom 10 (Simple Common Operating Principles)** — no gold-plating; scope constrained to the client's immediate delivery horizon
 
 ### Activities
 
@@ -83,12 +83,12 @@ Use this template when **any** of the following conditions are met:
 
 ### Deliverables
 
-| Artifact | Schema | Validation |
+| Artifact | Structure | Validation |
 |---|---|---|
-| `vision.yaml` | `schemas/vision.json` | `python validate-architecture.py vision.yaml --phase vision` |
+| `vision.yaml` | Inlined below | Self-check against the inlined structure; `/arckit:health` after build |
 | `stakeholder-map.md` | N/A (markdown) | Manual review against vision.yaml stakeholders array |
 
-### Vision.yaml Structure (from `schemas/vision.json`)
+### Vision.yaml Structure
 
 ```yaml
 vision:
@@ -131,7 +131,7 @@ vision:
 
 ### Sprint 0 Gate (Go/No-Go)
 
-- [ ] `vision.yaml` passes schema validation
+- [ ] `vision.yaml` matches the inlined structure
 
 - [ ] All stakeholders have signed off on scope
 
@@ -153,9 +153,9 @@ vision:
 
 ### O-AA Axiom Alignment
 
-- **Axiom 6:** "Architecture is about outcomes, not outputs." — capabilities measured by business value delivered, not diagram count
+- **Axiom 5 (Value Stream Alignment)** — capabilities measured by business value delivered along the value stream, not diagram count
 
-- **Axiom 8:** "Every stakeholder has an architecture concern." — data classification and compliance controls trace to specific stakeholder concerns from Sprint 0
+- **Axiom 1 (Customer Experience Focus)** — data classification and compliance controls trace to specific stakeholder concerns from Sprint 0
 
 ### Activities
 
@@ -167,13 +167,13 @@ vision:
 
 ### Deliverables
 
-| Artifact | Schema | Validation |
+| Artifact | Structure | Validation |
 |---|---|---|
-| `business-architecture.yaml` | `schemas/business-architecture.json` | `python validate-architecture.py business-architecture.yaml --phase business` |
-| `data-architecture.yaml` | `schemas/data-architecture.json` | `python validate-architecture.py data-architecture.yaml --phase data` |
+| `business-architecture.yaml` | Inlined below (capabilities + data) | Self-check against the inlined structure |
+| `data-architecture.yaml` | Inlined below | Self-check against the inlined structure |
 | `capability-gap-analysis.md` | N/A (markdown) | Cross-reference with vision.yaml success criteria |
 
-### Data Architecture Structure (from `schemas/data-architecture.json`)
+### Data Architecture Structure
 
 ```yaml
 data_assets:
@@ -228,9 +228,9 @@ applications:
 
 ### O-AA Axiom Alignment
 
-- **Axiom 3:** "The organization's architecture must fit its strategy." — technology choices directly enable the AI workload type declared in Sprint 0
+- **Axiom 5 (Value Stream Alignment)** — technology choices directly enable the AI workload type declared in Sprint 0
 
-- **Axiom 10:** "Architecture is not just IT." — operational model (who monitors, who responds) defined alongside technical stack
+- **Axiom 7 (Authority, Responsibility, and Accountability Distribution)** — the operational model (who monitors, who responds, who is accountable) is defined alongside the technical stack
 
 ### Activities
 
@@ -242,13 +242,13 @@ applications:
 
 ### Deliverables
 
-| Artifact | Schema | Validation |
+| Artifact | Structure | Validation |
 |---|---|---|
-| `technology-architecture.yaml` | `schemas/technology-architecture.json` | `python validate-architecture.py technology-architecture.yaml --phase technology` |
+| `technology-architecture.yaml` | Inlined below | Self-check against the inlined structure |
 | `data-flow-diagram.mmd` | Mermaid.js | Visual review |
 | `tech-stack-compliance.md` | N/A (markdown) | Cross-reference with vision.yaml regulatory controls |
 
-### Technology Architecture Structure (from `schemas/technology-architecture.json`)
+### Technology Architecture Structure
 
 ```yaml
 technology_standards:
@@ -306,9 +306,9 @@ infrastructure:
 
 ### O-AA Axiom Alignment
 
-- **Axiom 2:** "Architecture is about enabling change, not preventing it." — implementation plan enables rapid delivery with governance built in
+- **Axiom 14 (Bias for Change)** — the implementation plan enables rapid delivery with governance built in
 
-- **Axiom 5:** "The right architecture is the one that gets built." — pragmatic trade-offs over theoretical perfection
+- **Axiom 3 (Rapid Feedback Loops)** — each wave ships and feeds back; pragmatic trade-offs over theoretical perfection
 
 ### Activities
 
@@ -320,13 +320,13 @@ infrastructure:
 
 ### Deliverables
 
-| Artifact | Schema | Validation |
+| Artifact | Structure | Validation |
 |---|---|---|
-| `implementation-strategy.yaml` | `schemas/implementation-strategy.json` | `python validate-architecture.py implementation-strategy.yaml --phase strategy` |
+| `implementation-strategy.yaml` | Inlined below | Self-check against the inlined structure |
 | `migration-plan.md` | N/A (markdown) | Cross-reference with wave definitions |
 | `risk-register.md` | N/A (markdown) | All Sprint 0 risks have mitigation plans |
 
-### Implementation Strategy Structure (from `schemas/implementation-strategy.json`)
+### Implementation Strategy Structure
 
 ```yaml
 waves:
@@ -391,9 +391,9 @@ migration:
 
 ### O-AA Axiom Alignment
 
-- **Axiom 7:** "Architecture governance is not about control, it's about enablement." — governance accelerates delivery by providing guardrails, not bureaucracy
+- **Axiom 7 (Authority, Responsibility, and Accountability Distribution)** — governance distributes decision authority instead of centralising it in a quarterly board
 
-- **Axiom 9:** "Architecture is a living, breathing entity." — continuous monitoring and adaptation, not a one-time document
+- **Axiom 3 (Rapid Feedback Loops)** — continuous monitoring and adaptation, not a one-time document
 
 ### Activities
 
@@ -405,10 +405,10 @@ migration:
 
 ### Deliverables
 
-| Artifact | Schema | Validation |
+| Artifact | Structure | Validation |
 |---|---|---|
-| `governance-report.yaml` | N/A (custom schema) | `python validate-architecture.py governance-report.yaml --phase governance` |
-| `change-request.yaml` | N/A (custom schema) | Automated impact analysis script |
+| `governance-report.yaml` | Inlined below | Self-check against the inlined structure |
+| `change-request.yaml` | N/A (per change request) | Impact analysis per `/arckit-togaf-adm:architecture-change` gate criteria |
 | `performance-baseline.csv` | N/A (CSV) | Automated collection from monitoring stack |
 | `architecture-health.md` | N/A (markdown) | Quarterly manual review |
 
@@ -460,15 +460,15 @@ compliance_artifacts:
 
 ---
 
-## Sprint-to-Schema Traceability
+## Sprint Artefact Traceability
 
-| Sprint | Phase | Primary Schema | Secondary Schema |
+| Sprint | Phase | Primary Artefact | Secondary Artefact |
 |---|---|---|---|
-| 0 | ADM-P + A | `schemas/vision.json` | — |
-| 1 | ADM-B + C (data) | `schemas/business-architecture.json` | `schemas/data-architecture.json` |
-| 2 | ADM-C (tech) + D | `schemas/technology-architecture.json` | `schemas/compliance-mapping.json` |
-| 3 | ADM-E + F | `schemas/implementation-strategy.json` | — |
-| 4+ | ADM-G + H | `schemas/compliance-mapping.json` | — |
+| 0 | ADM-P + A | `vision.yaml` | `stakeholder-map.md` |
+| 1 | ADM-B + C (data) | `business-architecture.yaml` | `data-architecture.yaml` |
+| 2 | ADM-C (tech) + D | `technology-architecture.yaml` | `tech-stack-compliance.md` |
+| 3 | ADM-E + F | `implementation-strategy.yaml` | `migration-plan.md` |
+| 4+ | ADM-G + H | `governance-report.yaml` | `change-request.yaml` |
 
 ---
 
@@ -479,7 +479,7 @@ Each sprint produces Paperclip issues for traceability:
 1. **Sprint N issue** — architecture artifacts attached as comments
 2. **Work package issues** — auto-created from `implementation-strategy.yaml` waves, assigned to Founding Engineer
 3. **Compliance issues** — auto-assigned to AI Safety Architect
-4. **Phase gate issues** — block downstream work until validation passes
+4. **Phase gate issues** — block downstream work until the sprint gate criteria pass
 
 ### Issue Naming Convention
 
@@ -494,7 +494,7 @@ Example: [Sprint 3] ADM-E: WAVE-001 Foundation Infrastructure
 
 ## Comparison: Full ADM vs ADM Lite
 
-| Dimension | ADR-001 Full ADM | O-AA ADM Lite |
+| Dimension | Full ADM workflow | O-AA ADM Lite |
 |---|---|---|
 | Duration | 3-6 months | 4-8 weeks |
 | Artifacts | 12+ YAML documents | 6 core artifacts |
@@ -513,9 +513,9 @@ Example: [Sprint 3] ADM-E: WAVE-001 Foundation Infrastructure
 
 - ${user_config.references_dir} — organisation reference documents (ADR-001: Executable TOGAF ADM Workflow, ADR-002: Architecture Handoff Process, ADR-003: AI Governance Framework, O-AA Study Notes); include only documents that exist in the configured directory
 
-- Schema definitions: `schemas/vision.json`, `schemas/implementation-strategy.json`, `schemas/business-architecture.json`, `schemas/data-architecture.json`, `schemas/technology-architecture.json`
+- Sprint artefact structures: inlined in this template (see each sprint's structure section)
 
-- The Open Group: Open Agile Architecture (O-AA) Standard
+- The Open Group: Open Agile Architecture (O-AA) Standard — https://publications.opengroup.org/c208
 
 - The Agile Enterprise Architect Playbook (G226) — TOGAF + Agile integration
 

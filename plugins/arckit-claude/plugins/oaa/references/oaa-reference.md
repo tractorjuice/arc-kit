@@ -1,20 +1,29 @@
 # O-AA Standard (C208) Reference
 
-Open Agile Architecture (O-AA) C208 is the standard for agile enterprise architecture, providing sprint-based, product-driven architecture delivery methods. This reference summarizes the chapters relevant to ArcKit O-AA commands.
+Open Agile Architecture (O-AA) C208 is the standard for agile enterprise architecture, providing sprint-based, product-driven architecture delivery methods. This reference summarizes the chapters relevant to ArcKit O-AA commands. Chapter numbers follow the C208 table of contents — verify against the published standard before citing externally; the topic summaries below describe how ArcKit applies each area.
 
 ## Axioms and Principles
 
-O-AA is built on 16 axioms that define agile architecture practice. Key axioms for ArcKit:
+The O-AA Standard (C208) is built on **16 published axioms**. ArcKit commands cite axioms by published number and name; derivation notes live in the generated artefacts (axiom wording is published only in the standard itself, behind an Open Group sign-in — see Official Source).
 
-- **Axiom 1–10**: Foundation principles covering scope, stakeholders, requirements, and the ADM cycle mapping (covered by `oaa-adm-lite`)
-
-- **Axiom 11**: Agile Architecture — architecture must adapt to changing business needs through iterative, sprint-driven delivery
-
-- **Axiom 11–12**: Product Architecture — architecture is organized around product domains, not technical layers
-
-- **Axiom 15**: Security — security is embedded in every sprint, not gated at phase boundaries
-
-- **Axiom 16**: Governance — governance operates at sprint velocity with lightweight evidence collection
+| # | Axiom | Applied by |
+|---|---|---|
+| 1 | Customer Experience Focus | `oaa-adm-lite` |
+| 2 | Outside-In Thinking | — |
+| 3 | Rapid Feedback Loops | `oaa-adm-lite` |
+| 4 | Touchpoint Orchestration | — |
+| 5 | Value Stream Alignment | `oaa-adm-lite`, `agile-strategy` |
+| 6 | Autonomous Cross-Functional Teams | `oaa-adm-lite`, `product-architecture` |
+| 7 | Authority, Responsibility, and Accountability Distribution | `oaa-adm-lite`, `agile-governance` |
+| 8 | Loosely-Coupled Systems | — |
+| 9 | Modular Data Platform | — |
+| 10 | Simple Common Operating Principles | `oaa-adm-lite` |
+| 11 | Partitioning Over Layering | — |
+| 12 | Organization Mirroring Architecture | — |
+| 13 | Organizational Leveling | — |
+| 14 | Bias for Change | — |
+| 15 | Project to Product Shift | `oaa-adm-lite`, `product-architecture` |
+| 16 | Secure by Design | `agile-security` |
 
 ## Chapter 10 — Strategy
 
@@ -94,4 +103,8 @@ Used by: `oaa-adm-lite` command (OAAL doc type)
 
 ## Official Source
 
-Open Agile Architecture: https://openagilearchitecture.com
+- O-AA Standard (C208) — https://publications.opengroup.org/c208 (full text behind Open Group sign-in)
+
+- O-AA Security Playbook (G216) — https://publications.opengroup.org/guides/agile-architecture-guides/g216
+
+- The Agile Enterprise Architect Playbook (G226) — The Open Group publications catalogue
