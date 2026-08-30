@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **OrcaRouter as a first-class organisational LLM gateway in the BYO-LLM guide.** `docs/guides/byo-llm.md` Route 3 now lists [OrcaRouter](https://www.orcarouter.ai) alongside LiteLLM, Portkey and TrueFoundry, with a dedicated config block for pointing Claude Code at `https://api.orcarouter.ai` (key prefix `sk-orca-`). Model discovery picks up the same `provider/model` namespace OpenRouter uses, and the gateway-level, zero-trust agent security runs on the same endpoint with no application code changes. Synced to the plugin guide copy via `check-guide-parity.py`.
+
 ### Fixed
 
 - **Mermaid ER guard rails for `/arckit:data-model` and the `mermaid-syntax` skill (#435).** `/arckit:diagram` has carried the `PK, FK` comma rule since #78; `/arckit:data-model` never did, and it is the command that emitted the `uuid tenant_id FK UK` attribute that failed to render in #435. Adds a Mermaid ERD Rules block to `data-model.md`, a combined-key note to both copies of `data-model-template.md`, and three ER rows to the skill's gotchas table (combined keys, attribute comments, cardinality tokens) in place of a "missing semicolons in ER" row that described no real error. The skill's `paths:` now auto-activates on `ARC-*-DATA-*.md` as well as `ARC-*-DIAG-*.md`, having never fired on the artefact class that broke. Note the rule is *not* "one key per attribute" as #435 states — Mermaid accepts multiple keys comma-separated; `FK UK` fails only for the missing comma. Every claim verified against `mermaid@11.15.0`: `FK UK` and `PK_FK` are parse errors, `FK, UK` and `PK, FK` parse.

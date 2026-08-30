@@ -133,7 +133,7 @@ You lose everything that is Claude Code only: parallel `Agent` dispatch and ther
 
 ## Route 3: An organisational LLM gateway
 
-If your organisation already runs LiteLLM, Portkey, TrueFoundry, or Anthropic's own Claude apps gateway, Claude Code connects to it with the same two variables as Route 1:
+If your organisation already runs LiteLLM, Portkey, TrueFoundry, [OrcaRouter](https://www.orcarouter.ai), or Anthropic's own Claude apps gateway, Claude Code connects to it with the same two variables as Route 1:
 
 ```bash
 export ANTHROPIC_BASE_URL=https://gateway.example.internal
@@ -147,6 +147,19 @@ Two things are worth knowing:
 **Model discovery is off by default.** Set `CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1` to have Claude Code query the gateway's `/v1/models` at startup and add the results to the `/model` picker. Only IDs containing `claude` or `anthropic` survive the filter, so a gateway serving models under other aliases needs the `ANTHROPIC_DEFAULT_*_MODEL` variables instead.
 
 For rollout across a team, distribute the base URL and credential through a [managed settings file](https://code.claude.com/docs/en/settings#settings-files) rather than asking each developer to export variables.
+
+### OrcaRouter
+
+[OrcaRouter](https://www.orcarouter.ai) is an OpenAI-compatible AI gateway built for both models and agents. Like OpenRouter, it exposes a provider/model namespace across many models — but it also combines adaptive routing, automatic failover, zero-markup inference, observability, guardrails, and agent-tool governance behind the same endpoint. It runs gateway-level, zero-trust security for AI agents on the same endpoint — screening every prompt/response and governing every tool call on a default-deny basis, with no application code changes.
+
+Point Claude Code at the OrcaRouter base URL and use the API key (prefix `sk-orca-`) as the credential:
+
+```bash
+export ANTHROPIC_BASE_URL=https://api.orcarouter.ai
+export ANTHROPIC_AUTH_TOKEN=sk-orca-...
+```
+
+Model discovery (`CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1`) surfaces OrcaRouter's model catalogue under the same `provider/model` namespace OpenRouter uses (for example `orcarouter/fusion-flash`); for tiers remapped from the OrcaRouter side, set the `ANTHROPIC_DEFAULT_*_MODEL` variables instead, as above.
 
 ---
 
