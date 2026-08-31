@@ -31,21 +31,33 @@ EXPECTED_DIRS = {
 }
 
 # Expected agent files (including reader/writer subagents for multi-tier commands)
+# Single-tier agents, invoked by the user with Vibe's `--agent` flag. Vibe has
+# no orchestrator-dispatch primitive, so ArcKit's reader/writer subagents are
+# NOT shipped here — see EXCLUDED_SUBAGENTS below (#447).
 EXPECTED_AGENTS = [
     "arckit-research.toml",
     "arckit-aws-research.toml",
     "arckit-azure-research.toml",
     "arckit-gcp-research.toml",
     "arckit-datascout.toml",
-    "arckit-datascout-reader.toml",
-    "arckit-datascout-writer.toml",
     "arckit-framework.toml",
     "arckit-gov-code-search.toml",
     "arckit-gov-landscape.toml",
     "arckit-gov-reuse.toml",
+    "arckit-grants.toml",
+    "arckit-tenders.toml",
+    "arckit-competitors.toml",
+]
+
+# Reader/writer subagents carry `subagent: true` and are dispatched only by a
+# Claude Code orchestrator command. Vibe surfaces every agent file as a
+# user-invocable `--agent` target, so shipping these would offer the user 19
+# agents whose own descriptions read "Not user-invocable".
+EXCLUDED_SUBAGENTS = [
+    "arckit-datascout-reader.toml",
+    "arckit-datascout-writer.toml",
     "arckit-gov-reuse-reader.toml",
     "arckit-gov-reuse-writer.toml",
-    "arckit-grants.toml",
     "arckit-grants-reader.toml",
     "arckit-grants-writer.toml",
     "arckit-tenders-reader.toml",
@@ -422,26 +434,34 @@ class TestReferenceValidity:
 
 
 class TestSubagentCoverage:
-    """Test that skills dispatching subagents have the required agents."""
+    """Claude-only reader/writer subagents must not reach the Vibe extension."""
 
-    def test_reader_writer_agents_exist(self):
-        """Verify reader/writer agents exist for multi-tier commands."""
+    def test_reader_writer_agents_are_not_shipped(self):
+        """Verify Claude-only subagents are filtered out of Vibe (#447).
+
+        These are dispatched by a Claude Code orchestrator command via the
+        Agent tool. Vibe has no equivalent primitive and lists every agent
+        file as a user-invocable `--agent` target, so shipping them offered
+        the user agents that cannot work standalone. Every other non-Claude
+        target already filtered them; only the Vibe path did not.
+        """
         agents_dir = VIBE_ROOT / "agents"
-        required_agents = [
-            "arckit-datascout-reader.toml",
-            "arckit-datascout-writer.toml",
-            "arckit-gov-reuse-reader.toml", 
-            "arckit-gov-reuse-writer.toml",
-            "arckit-grants-reader.toml",
-            "arckit-grants-writer.toml",
-            "arckit-tenders-reader.toml",
-            "arckit-tenders-writer.toml",
-            "arckit-competitors-writer.toml",
-        ]
-        
-        for agent_file in required_agents:
-            agent_path = agents_dir / agent_file
-            assert agent_path.exists(), f"Required subagent {agent_file} not found"
+        leaked = [name for name in EXCLUDED_SUBAGENTS if (agents_dir / name).exists()]
+        assert not leaked, f"Claude-only subagents leaked into Vibe: {leaked}"
+
+    def test_split_commands_ship_their_single_agent_monolith(self):
+        """Every command whose Claude form is three-tier still works on Vibe.
+
+        The monolith is what Vibe actually receives in place of the
+        orchestrator body, so its absence is the #447 regression itself.
+        """
+        agents_dir = VIBE_ROOT / "agents"
+        for name in ("arckit-datascout", "arckit-gov-reuse", "arckit-grants",
+                     "arckit-tenders", "arckit-competitors", "arckit-research"):
+            assert (agents_dir / f"{name}.toml").exists(), (
+                f"{name} has no single-agent monolith in Vibe — its skill would "
+                f"fall back to Claude orchestrator prose Vibe cannot honour"
+            )
 
 
 # Import re at module level for version check

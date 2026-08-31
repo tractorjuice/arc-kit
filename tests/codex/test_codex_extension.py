@@ -77,18 +77,32 @@ REFERENCE_SKILLS = {
     "plantuml-syntax",
     "wardley-mapping",
 }
-AGENT_BACKED_SKILLS = {
-    "arckit-aws-research",
-    "arckit-azure-research",
-    "arckit-datascout",
-    "arckit-framework",
-    "arckit-gcp-research",
-    "arckit-gov-code-search",
-    "arckit-gov-landscape",
-    "arckit-gov-reuse",
-    "arckit-grants",
-    "arckit-research",
-}
+def _agent_backed_skills() -> set[str]:
+    """Commands whose body converter.py replaces with a pre-split monolith.
+
+    Derived from the plugin source rather than hardcoded: this set was a
+    literal until #447, and two commands added after it was written
+    (`tenders`, `competitors`) silently fell out of every test that used it.
+    A monolith is any `agents/arckit-{name}.md` WITHOUT `subagent: true`
+    whose matching `commands/{name}.md` exists — exactly what
+    converter.py::build_agent_map() keys on.
+    """
+    agents_dir = REPO_ROOT / "plugins" / "arckit-claude" / "agents"
+    commands_dir = REPO_ROOT / "plugins" / "arckit-claude" / "commands"
+    subagent_re = re.compile(r"^subagent:\s*true\s*$", re.M)
+    names = set()
+    for path in agents_dir.glob("arckit-*.md"):
+        text = path.read_text(encoding="utf-8")
+        frontmatter = text.split("---", 2)[1] if text.startswith("---") else ""
+        if subagent_re.search(frontmatter):
+            continue
+        command_name = path.stem[len("arckit-"):]
+        if (commands_dir / f"{command_name}.md").is_file():
+            names.add(path.stem)
+    return names
+
+
+AGENT_BACKED_SKILLS = _agent_backed_skills()
 CODEX_CLAUDE_PARITY_HOOK_MODULES = {
     "graph-inject.mjs",
     "graph-rollups.mjs",
@@ -850,18 +864,36 @@ def test_codex_agent_prompts_are_rewritten_and_filtered():
         assert "${CLAUDE_PLUGIN_ROOT}" not in text
 
 
+# Vocabulary that only means something to a runtime with subagent dispatch.
+# Backticks are optional: the source writes ``the `Agent` tool``, which a plain
+# substring check for "Agent tool" silently misses.
+ORCHESTRATOR_PROSE = (
+    re.compile(r"subagent_type", re.I),
+    re.compile(r"`?\bAgent`?\s+tool\b"),
+    re.compile(r"orchestrator\s+tier", re.I),
+    re.compile(r"reader\s+subagent", re.I),
+    re.compile(r"writer\s+subagent", re.I),
+    re.compile(r"subagent\s+split", re.I),
+    re.compile(r"dispatch(es|ing)?\s+the\s+(reader|writer)", re.I),
+)
+
+
 def test_no_claude_subagent_orchestrator_leaks_into_codex_command_skills():
-    forbidden = (
-        "subagent_type",
-        "Agent tool",
-        "orchestrator tier",
-        "reader subagent",
-        "writer subagent",
-    )
-    for skill_name in ("arckit-datascout", "arckit-gov-reuse", "arckit-grants"):
-        text = (CODEX_SKILLS / skill_name / "SKILL.md").read_text(encoding="utf-8")
-        for phrase in forbidden:
-            assert phrase not in text
+    """Codex cannot dispatch ArcKit's reader/writer subagents (#447).
+
+    Scoped by enumeration, not by a hardcoded skill list: the previous version
+    named three skills, so `arckit-tenders` and `arckit-competitors` — added
+    later, and shipped with no pre-split monolith — went unnoticed for eleven
+    weeks. `scripts/check-orchestrator-leaks.py` guards the source side; this
+    guards what actually reached the generated tree.
+    """
+    offenders = {}
+    for skill_md in sorted(CODEX_SKILLS.glob("*/SKILL.md")):
+        text = skill_md.read_text(encoding="utf-8")
+        hits = [p.pattern for p in ORCHESTRATOR_PROSE if p.search(text)]
+        if hits:
+            offenders[skill_md.parent.name] = hits
+    assert not offenders, f"orchestrator prose leaked into Codex skills: {offenders}"
 
 
 def test_codex_skills_do_not_expose_claude_command_syntax_or_hooks():
