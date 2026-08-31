@@ -15,6 +15,7 @@ on:
       - "scripts/check-customize-table.py"
       - "scripts/check-doc-type-registry.py"
       - "scripts/check-agent-frontmatter.py"
+      - "scripts/check-orchestrator-leaks.py"
       - "scripts/check-action-pins.py"
       - ".github/workflows/*.yml"
       - "scripts/sync-shared-assets.py"
@@ -63,6 +64,7 @@ on:
       - "scripts/check-customize-table.py"
       - "scripts/check-doc-type-registry.py"
       - "scripts/check-agent-frontmatter.py"
+      - "scripts/check-orchestrator-leaks.py"
       - "scripts/check-action-pins.py"
       - ".github/workflows/*.yml"
       - "scripts/sync-shared-assets.py"
@@ -166,6 +168,9 @@ jobs:
 
       - name: Agent frontmatter (tools allowlist present, no stray files in agents/) (#466)
         run: python3 scripts/check-agent-frontmatter.py
+
+      - name: Claude-only orchestrator prose never reaches a non-Claude target (#447)
+        run: python3 scripts/check-orchestrator-leaks.py
 
       - name: GitHub Actions are pinned to commit SHAs (#466 item 17)
         run: python3 scripts/check-action-pins.py
