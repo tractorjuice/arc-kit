@@ -5,7 +5,7 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [6.13.0] — 2026-08-31
 
 ### Fixed
 
@@ -36,6 +36,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`docs/guides/customize.md` describes the plugin's template locations correctly.** It told plugin users that defaults live in `.arckit/templates/`, which is the CLI and non-Claude-extension story; under the Claude Code plugin they live in `${CLAUDE_PLUGIN_ROOT}/templates/`. The guide now covers both, states the same overlay scope as the command, and stops implying that its truncated sample table is the catalogue.
 
 ### Added
+
+- **New community plugin `arckit-oaa` — Open Agile Architecture (O-AA, standard C208).** Five new commands (`oaa-adm-lite`, `product-architecture`, `agile-strategy`, `agile-security`, `agile-governance`) in a standalone plugin with its own `/arckit-oaa:` command namespace, five doc-type codes (`OASTR`, `OAPR`, `OAAL`, `OASEC`, `OAGOV`), the `oaa-full` build recipe, and `userConfig` placeholder support. Registered in both marketplaces, the doc-type registry, `pages.md`, `llms.txt`, and all extension formats. Complementary to `arckit-togaf-adm`, which keeps the full document-centric ADM; neither depends on the other. Core `references/quality-checklist.md` gains the five OAA per-type sections and `references/citation-instructions.md` the O-AA C208 derivation row, so every plugin keeps the shared assets byte-identical to core.
 
 - **`scripts/check-customize-table.py`, wired into `lint-markdown.yml`.** Holds the table to the templates on disk: every core template has a row, every row names a template that exists, every row's `/arckit:<command>` reference resolves to a real command file, and no template is listed twice. It also asserts the scope wording is still present, so the silent-partial-answer failure mode cannot come back by deletion. All five failure modes were verified against deliberately reintroduced instances, including the exact `uk-gov-tcop` row this PR removes.
 

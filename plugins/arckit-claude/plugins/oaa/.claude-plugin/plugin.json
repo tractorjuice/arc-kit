@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-oaa",
-  "version": "6.12.0",
-  "description": "Open Agile Architecture (O-AA C208) \u2014 Agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance.",
+  "version": "6.13.0",
+  "description": "Open Agile Architecture (O-AA C208) — Agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance.",
   "author": {
     "name": "ArcKit Contributors",
     "url": "https://github.com/tractorjuice/arckit-claude"
@@ -45,7 +45,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.12.0"
+      "version": "=6.13.0"
     }
   ]
 }
