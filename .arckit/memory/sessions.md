@@ -10,6 +10,15 @@ Automated session summaries captured by the ArcKit session-learner hook.
   - chore: bump version to 4.6.1
   - fix: trim skill descriptions to fit 250-char context cap (#215) (#266)
 
+### 2026-08-31 10:04 — general
+
+- **Effort:** max
+- **Commits:** 1 | **Files changed:** 91
+- **Artifacts:** none detected
+- **Summary:**
+  - chore: bump version to 6.13.0 (#829)
+- **Telemetry:** 100 tool calls (p50=58ms, p95=6905ms)
+
 ### 2026-08-31 08:58 — general
 
 - **Effort:** max
@@ -281,13 +290,6 @@ Automated session summaries captured by the ArcKit session-learner hook.
 - **Artifacts:** none detected
 
 ### 2026-07-21 19:23 — failure (rate_limit)
-
-- **Status:** session interrupted by API error
-- **Effort:** xhigh
-- **Commits:** 0 | **Files changed:** 0
-- **Artifacts:** none detected
-
-### 2026-07-21 19:04 — failure (rate_limit)
 
 - **Status:** session interrupted by API error
 - **Effort:** xhigh

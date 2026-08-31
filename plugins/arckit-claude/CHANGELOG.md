@@ -5,6 +5,16 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **`scripts/bump-version.sh` works on macOS.** Its four `sed -i -E` edits silently no-op'd under BSD sed — which parses `-E` as `-i`'s backup suffix and then evaluates the expression as BRE, where `+` is a literal — so a Mac-run bump left `pyproject.toml`, the README release links, and the `docs/README.md` footer at the old version and scattered `*-E` backup files; the v6.13.0 release shipped those edits by hand. The seds now write to a temp file and move it back (as the script's jq edits always did) and assert the expected literal landed, so a pattern that stops matching fails the bump loudly instead of silently. Verified end-to-end under `/bin/bash` 3.2 on macOS: full bump, idempotent same-version re-run, and a deliberate pattern-drift failure.
+
+  The landing assertion also settles the fifth sed's fate: `docs/index.html` lost its visible "Version X.Y.Z - Month Year" line long ago, so that sed had matched nothing for years while the JSON-LD `softwareVersion` — what search engines actually read — sat stale at 4.21.0. The section now updates that field, and it is brought current to 6.13.0.
+
+  The two `mapfile` calls became `while read` loops so the script runs under macOS's stock bash 3.2, with the community-plugin loop's empty-array expansion guarded (`set -u` treats expanding an empty array as unbound before bash 4.4) and an explicit error when `marketplace.json` yields no plugin names. `docs/RELEASING.md` gains a "Releasing from macOS" section covering what still differs on a Mac: `tag-plugins.sh` / `push-extensions.sh` need a brew-installed bash ≥ 4, the uv invocations for `converter.py` and the extension test suite, the `http.postBuffer` fix for `protocol error: bad line length` pushes, and sourcing `GH_TOKEN` from `gh auth token`. The `/release` skill's gotchas point at it.
+
 ## [6.13.0] — 2026-08-31
 
 ### Fixed
