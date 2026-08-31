@@ -36,21 +36,26 @@ echo ""
 # `arckit-claude` separately mirrors how the script (and marketplace.json)
 # treats it as the umbrella plugin all community overlays depend on.
 
-mapfile -t ALL_PLUGINS < <(
+# `while read` rather than mapfile so the script runs under macOS's stock
+# bash 3.2 (mapfile is bash 4+, and `/usr/bin/env bash` resolves to /bin/bash
+# 3.2 on a Mac without a brew-installed bash).
+ALL_PLUGINS=()
+while IFS= read -r p; do ALL_PLUGINS+=("$p"); done < <(
   find . -maxdepth 4 -path '*/.claude-plugin/plugin.json' -not -path '*/node_modules/*' \
     | sed -E 's|^\./||; s|/\.claude-plugin/plugin\.json$||' \
     | sort
 )
-COMMUNITY_PLUGINS=()
-for p in "${ALL_PLUGINS[@]}"; do
-  [[ "$p" == "plugins/arckit-claude" ]] && continue
-  COMMUNITY_PLUGINS+=("$p")
-done
 
 if [[ ${#ALL_PLUGINS[@]} -eq 0 ]]; then
   echo "Error: no plugins discovered on disk." >&2
   exit 1
 fi
+
+COMMUNITY_PLUGINS=()
+for p in "${ALL_PLUGINS[@]}"; do
+  [[ "$p" == "plugins/arckit-claude" ]] && continue
+  COMMUNITY_PLUGINS+=("$p")
+done
 
 # ── Drift check: every plugin on disk must be in marketplace.json ──────────
 #
@@ -58,9 +63,15 @@ fi
 # (description, keywords, etc.). Catches the v5.3.0 backfill gotcha where a
 # new plugin shipped without its marketplace entry.
 
-mapfile -t MARKETPLACE_PLUGIN_NAMES < <(
+MARKETPLACE_PLUGIN_NAMES=()
+while IFS= read -r m; do MARKETPLACE_PLUGIN_NAMES+=("$m"); done < <(
   jq -r '.plugins[].name' .claude-plugin/marketplace.json | sort
 )
+
+if [[ ${#MARKETPLACE_PLUGIN_NAMES[@]} -eq 0 ]]; then
+  echo "Error: no plugins found in .claude-plugin/marketplace.json." >&2
+  exit 1
+fi
 MISSING_FROM_MARKETPLACE=()
 for p in "${ALL_PLUGINS[@]}"; do
   plugin_name=$(jq -r '.name' "$p/.claude-plugin/plugin.json")
@@ -91,6 +102,28 @@ update_file() {
   UPDATED=$((UPDATED + 1))
 }
 
+# ── Portable in-place sed with landing check ────────────────────────────────
+#
+# BSD (macOS) sed parses `sed -i -E` as -i with backup suffix "-E": it writes
+# a `file-E` backup, evaluates the expression as BRE (where `+` is a literal),
+# and every substitution silently no-ops — which left pyproject.toml stale
+# during the v6.13.0 release until fixed by hand. Avoid -i entirely: write to
+# a temp file and move it back, exactly like the jq edits below. Then assert
+# the expected literal is present, so a pattern that stops matching the file
+# (the fate of the old docs/index.html "Version X.Y.Z - Month Year" sed)
+# fails the bump loudly instead of silently. `grep -qF` keeps a re-run with
+# the same version idempotent.
+sed_edit() {
+  local expr="$1" file="$2" expect="$3"
+  sed -E "$expr" "$file" > "${file}.tmp"
+  mv "${file}.tmp" "$file"
+  if ! grep -qF "$expect" "$file"; then
+    echo "Error: $file does not contain \"$expect\" after edit." >&2
+    echo "       The sed pattern no longer matches this file — fix the pattern or the file." >&2
+    exit 1
+  fi
+}
+
 # ── 1. VERSION (plain text) ────────────────────────────────────────────────
 
 echo "$NEW_VERSION" > VERSION
@@ -98,24 +131,32 @@ update_file "VERSION" "overwrite"
 
 # ── 2. pyproject.toml ──────────────────────────────────────────────────────
 
-sed -i -E "s/^version = \"[0-9]+\.[0-9]+\.[0-9]+\"/version = \"$NEW_VERSION\"/" pyproject.toml
+sed_edit "s/^version = \"[0-9]+\.[0-9]+\.[0-9]+\"/version = \"$NEW_VERSION\"/" pyproject.toml \
+  "version = \"$NEW_VERSION\""
 update_file "pyproject.toml" "version field"
 
 # ── 3. README.md (2 occurrences: badge-style link with version in text and URL) ──
 
-sed -i -E "s/\[v[0-9]+\.[0-9]+\.[0-9]+\]\(https:\/\/github\.com\/tractorjuice\/arc-kit\/releases\/tag\/v[0-9]+\.[0-9]+\.[0-9]+\)/[v$NEW_VERSION](https:\/\/github.com\/tractorjuice\/arc-kit\/releases\/tag\/v$NEW_VERSION)/g" README.md
+sed_edit "s/\[v[0-9]+\.[0-9]+\.[0-9]+\]\(https:\/\/github\.com\/tractorjuice\/arc-kit\/releases\/tag\/v[0-9]+\.[0-9]+\.[0-9]+\)/[v$NEW_VERSION](https:\/\/github.com\/tractorjuice\/arc-kit\/releases\/tag\/v$NEW_VERSION)/g" README.md \
+  "[v$NEW_VERSION](https://github.com/tractorjuice/arc-kit/releases/tag/v$NEW_VERSION)"
 update_file "README.md" "release links (2 occurrences)"
 
 # ── 4. docs/README.md ──────────────────────────────────────────────────────
 
-sed -i -E "s/\*\*ArcKit Version\*\*: [0-9]+\.[0-9]+\.[0-9]+/**ArcKit Version**: $NEW_VERSION/" docs/README.md
+sed_edit "s/\*\*ArcKit Version\*\*: [0-9]+\.[0-9]+\.[0-9]+/**ArcKit Version**: $NEW_VERSION/" docs/README.md \
+  "**ArcKit Version**: $NEW_VERSION"
 update_file "docs/README.md" "footer version"
 
-# ── 5. docs/index.html (version + month) ───────────────────────────────────
+# ── 5. docs/index.html (JSON-LD softwareVersion) ────────────────────────────
+#
+# The page's visible "Version X.Y.Z - Month Year" line this section once
+# targeted was removed long ago; the JSON-LD SoftwareApplication block (which
+# feeds search engines' rich results) is what still carries a version, and it
+# had sat stale at 4.21.0 while the old sed matched nothing.
 
-MONTH_YEAR=$(date +"%B %Y")
-sed -i -E "s/Version [0-9]+\.[0-9]+\.[0-9]+ - [A-Za-z]+ [0-9]{4}/Version $NEW_VERSION - $MONTH_YEAR/" docs/index.html
-update_file "docs/index.html" "version + date → $MONTH_YEAR"
+sed_edit "s/\"softwareVersion\": \"[0-9]+\.[0-9]+\.[0-9]+\"/\"softwareVersion\": \"$NEW_VERSION\"/" docs/index.html \
+  "\"softwareVersion\": \"$NEW_VERSION\""
+update_file "docs/index.html" "JSON-LD softwareVersion"
 
 # ── 6. plugins/arckit-claude/VERSION ───────────────────────────────────────
 
@@ -157,7 +198,9 @@ update_file ".claude-plugin/marketplace.json" "all .plugins[].version (metadata.
 # any arckit-*/.claude-plugin/plugin.json directory is treated as a
 # community plugin (excluding the core arckit-claude).
 
-for plugin_dir in "${COMMUNITY_PLUGINS[@]}"; do
+# ${arr[@]+…} guards the expansion: bash 3.2's `set -u` treats expanding an
+# empty array as an unbound-variable error (fixed in bash 4.4).
+for plugin_dir in ${COMMUNITY_PLUGINS[@]+"${COMMUNITY_PLUGINS[@]}"}; do
   manifest="${plugin_dir}/.claude-plugin/plugin.json"
   version_file="${plugin_dir}/VERSION"
   if [[ -f "$manifest" ]]; then

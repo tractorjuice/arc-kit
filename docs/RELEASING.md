@@ -37,6 +37,27 @@ ArcKit ships in multiple formats, each with its own version file. They are all b
 | `scripts/push-extensions.sh [name...]` | Pushes standalone distribution dirs to their separate GitHub repos (`tractorjuice/arckit-claude`, `tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.), then creates or preserves each repo's `vX.Y.Z` tag and GitHub Release. The `claude` target publishes the full Claude Code marketplace repo: core plugin at the root, with overlays under structured `plugins/...` paths. Uses `GH_TOKEN`. Skips repos that don't yet exist on GitHub. Set `ARCKIT_SKIP_EXTENSION_RELEASES=1` only for a commit-only sync |
 | `.github/workflows/release.yml` | Creates the GitHub Release automatically on `v*` tag push (tag-push triggered, does not commit back to main) |
 
+## Releasing from macOS
+
+Releases were cut on GNU/Linux until v6.13.0, and the helper scripts grew Linux assumptions. What to know on a Mac:
+
+- **`bump-version.sh` runs on a stock Mac** (BSD sed, bash 3.2) as of the fix that followed v6.13.0. It avoids `sed -i` entirely — BSD sed parses `sed -i -E` as `-i` with backup suffix `-E`, so the old in-place edits silently no-op'd on macOS and left `*-E` backup files; the v6.13.0 release shipped its `pyproject.toml`, README and `docs/README.md` bumps by hand because of this. The script now also asserts each substitution landed: an `Error: <file> does not contain "…" after edit` failure means the target file drifted from the pattern (the fate of the old `docs/index.html` sed, which matched nothing after the page's visible version line was removed) — fix the pattern or the file; it is not a sed-flavour problem.
+- **`tag-plugins.sh` and `push-extensions.sh` need bash ≥ 4** (`mapfile`, `declare -A`); macOS ships bash 3.2. `brew install bash`, then invoke explicitly — `/opt/homebrew/bin/bash scripts/push-extensions.sh` — because Homebrew's bash can be shadowed by `/bin/bash` on `PATH`.
+- **`converter.py` and the step-7 test suite need Python ≥ 3.11** (`tomllib`) plus PyYAML / pytest / jsonschema. No project venv is required with uv:
+
+  ```bash
+  uv run --no-project --python 3.12 --with pyyaml python scripts/converter.py
+  uv run --no-project --python 3.12 --with pytest --with pyyaml --with jsonschema \
+    python -m pytest tests/codex/test_codex_extension.py \
+    tests/gemini tests/opencode tests/copilot \
+    tests/vibe/test_vibe_extension.py \
+    tests/paperclip/test_commands_json.py \
+    tests/plugin/test_release_process.py
+  ```
+
+- **If `git push` fails with `protocol error: bad line length` / `unexpected disconnect while reading sideband packet`**, raise the HTTP post buffer: `git config http.postBuffer 157286400`. `push-extensions.sh` pushes from temporary clones that do not see repo-local config — inject it via the environment instead: `GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=http.postBuffer GIT_CONFIG_VALUE_0=157286400 ./scripts/push-extensions.sh`.
+- **`GH_TOKEN` for step 12** can come from an authenticated gh CLI: `GH_TOKEN=$(gh auth token) ./scripts/push-extensions.sh`.
+
 ## Development Workflow
 
 All changes go through a feature branch and are merged to `main` via PR. **Never push directly to `main`.**

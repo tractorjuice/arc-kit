@@ -119,6 +119,12 @@ The highest-signal failures — collected from real releases. Read these before 
 - **Skipping extension tests.** Run the step 4 extension suite after `converter.py`. It validates
   Codex, Gemini, OpenCode, Copilot, Vibe, Paperclip, release inventory, version alignment, and
   platform-specific command rewrites before anything is tagged.
+- **Releasing from a Mac.** `bump-version.sh` runs on stock macOS (BSD sed, bash 3.2) and asserts
+  every substitution lands — a `does not contain "…" after edit` error is pattern drift, not a
+  sed-flavour problem. `tag-plugins.sh` and `push-extensions.sh` still need bash ≥ 4:
+  `brew install bash`, then `/opt/homebrew/bin/bash scripts/…`. Full macOS notes (uv commands for
+  the converter and tests, the `http.postBuffer` fix for `protocol error: bad line length` pushes,
+  `GH_TOKEN` via `gh auth token`) live in RELEASING.md's "Releasing from macOS" section.
 - **Hardcoding the plugin list.** The Claude marketplace now ships 16 plugins (core plus
   regional, sector, method, agent-architecture, tooling, and supplier overlays) and keeps growing. Older examples listed
   only 7, silently skipping newer plugins. Discover plugins dynamically (step 7) -- this is the
