@@ -857,6 +857,55 @@ All artifacts must pass these 10 checks:
 - Search index covers every registered entry ID
 - No project-specific content in what is a global artefact
 
+### OASTR -- O-AA Agile Strategy
+
+- Dual transformation framed explicitly: both the legacy-modernisation track and the greenfield-innovation track are described, or one is ruled out with a reason
+- Each strategic bet states the outcome it buys and the measure that would show it worked
+- Product portfolio mapped to the transformation tracks, so no product is left unassigned
+- Funding and team-topology implications stated, not left as an exercise for delivery
+- Every O-AA axiom cited is quoted from the C208 standard by its published number and name, and is used to justify a specific choice rather than listed decoratively
+- Strategy traces to stakeholder goals and business drivers from STKE and REQ
+
+### OAPR -- O-AA Product Architecture
+
+- Product boundary defined before the internal structure — what the product is and is not
+- Cross-functional team composition stated per product, with the architecture ownership named
+- Backlog-driven delivery reflected: architecture decisions map to backlog items, not to phase gates
+- Product-centric organising principle applied — decomposition is by product, not by capability or by service layer
+- Interfaces between products specified as contracts with owners
+- Dependencies on other products and platforms enumerated with their coupling type
+- Requirements traced to product scope; every FR/NFR either lands in a product or is explicitly out of scope
+
+### OAAL -- O-AA ADM Lite Sprint Mapping
+
+- Sprint plan maps every TOGAF ADM phase to a named sprint, or records the phase as deliberately out of scope
+- Sprint duration and engagement window stated and internally consistent with the sprint table
+- Each sprint has a deliverable and a sprint-level acceptance criterion, not just a theme
+- Compression trade-offs acknowledged: what the lightweight cadence gives up against full ADM
+- The regulated-engagement exclusion is stated — ADM Lite is not claimed as an audit trail
+- Governance and change handling assigned to a sprint or handed to OAGOV, never left unowned
+- Traces to PRIN, and to ADMP where a preliminary ADM exists
+
+### OASEC -- O-AA Agile Security
+
+- Security activities placed inside the sprint rhythm, with the trigger for each stated
+- Threat modelling cadence defined and tied to a sprint event, not to an annual review
+- Compliance evidence identified as a per-sprint output with a named owner
+- Continuous validation replaces phase-gate checkpoints explicitly, and the residual gates are named
+- Exception path defined for a failing security check under delivery pressure, including who signs it off
+- Security requirements trace to NFR-SEC entries in REQ
+- Findings carry a severity and a resolution deadline, not just a description
+
+### OAGOV -- O-AA Agile Governance
+
+- Governance cadence defined across all stated horizons (sprint, month, quarter, continuous)
+- Each cadence event has an input, an output artefact and an owner
+- Architecture debt register defined with its states and its review rule
+- Escalation path names each tier and the decision it can take
+- Exception handling records accepted risk with sign-off and a resolution deadline
+- Distributed model justified against a traditional review board, with the conditions for reverting stated
+- Governance outputs feed the compliance evidence consumed by OASEC, so the two are not parallel universes
+
 ### AAGI -- AI Agent Inventory
 
 - Every agent has a unique AGT-xxx ID used consistently across all sections

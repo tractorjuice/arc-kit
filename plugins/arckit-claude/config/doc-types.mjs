@@ -95,6 +95,14 @@ export const DOC_TYPES = {
   'AAIN':      { name: 'Agent Integration Architecture',   category: 'Architecture' },
   'AASE':      { name: 'Agent Security Architecture',      category: 'Governance', severity: 'HIGH' },
   'AAMT':      { name: 'Agent Maturity Assessment',        category: 'Governance' },
+  // Open Agile Architecture overlay (arckit-oaa, community) — O-AA C208 agile
+  // enterprise architecture: strategy canvas, product-centric architecture,
+  // ADM Lite sprint mapping, security embedded in sprint rhythm, governance cadence.
+  'OASTR':     { name: 'Agile Strategy',                   category: 'Planning' },
+  'OAPR':      { name: 'Product Architecture',             category: 'Architecture' },
+  'OAAL':      { name: 'ADM Lite Sprint Mapping',          category: 'Architecture' },
+  'OASEC':     { name: 'Agile Security',                   category: 'Governance', severity: 'HIGH' },
+  'OAGOV':     { name: 'Agile Governance',                 category: 'Governance' },
   // Governance — universal best-practice (no regime tag, HIGH-severity)
   'RISK':      { name: 'Risk Register',                    category: 'Governance', severity: 'HIGH' },
   'TRAC':      { name: 'Traceability Matrix',              category: 'Governance', severity: 'HIGH' },

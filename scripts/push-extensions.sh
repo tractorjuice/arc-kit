@@ -68,6 +68,7 @@ CLAUDE_PLUGIN_LAYOUT=(
   "plugins/arckit-fde:plugins/fde"
   "plugins/arckit-uk-gcloud:plugins/uk/gcloud"
   "plugins/arckit-togaf-adm:plugins/togaf/adm"
+  "plugins/arckit-oaa:plugins/oaa"
   "plugins/arckit-agent-architecture:plugins/agent/architecture"
   "plugins/arckit-repo:plugins/repo"
 )

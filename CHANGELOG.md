@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **New community plugin `arckit-oaa` — Open Agile Architecture (O-AA, standard C208).** Five new commands (`oaa-adm-lite`, `product-architecture`, `agile-strategy`, `agile-security`, `agile-governance`) in a standalone plugin with its own `/arckit-oaa:` command namespace, five doc-type codes (`OASTR`, `OAPR`, `OAAL`, `OASEC`, `OAGOV`), the `oaa-full` build recipe, and `userConfig` placeholder support. Registered in both marketplaces, the doc-type registry, `pages.md`, `llms.txt`, and all extension formats. Complementary to `arckit-togaf-adm`, which keeps the full document-centric ADM; neither depends on the other. Core `references/quality-checklist.md` gains the five OAA per-type sections and `references/citation-instructions.md` the O-AA C208 derivation row, so every plugin keeps the shared assets byte-identical to core.
+
 ### Fixed
 
 - **`/arckit:tenders` and `/arckit:competitors` now work on every non-Claude runtime (#447).** Both commands were born three-tier in #558 and never got the pre-split monolith that `converter.py` swaps in for Codex, Gemini, OpenCode, Copilot, Paperclip, Vibe and Kimi. With no monolith the converter falls through to the orchestrator body, so all seven extensions have been shipping `Dispatch the reader using the Agent tool with subagent_type: "arckit-tenders-reader"` since v5.9.0 — an instruction none of those runtimes can honour. Adds `agents/arckit-tenders.md` and `agents/arckit-competitors.md`, single-agent prompts that do the MCP querying, derivation and rendering in one role, with the same guardrails, hard limits, mandatory awarded-value caveat and quality-checklist step as the split tiers. Claude Code is unaffected and keeps the three-tier path.

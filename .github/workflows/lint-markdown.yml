@@ -14,6 +14,7 @@ on:
       - "scripts/check-guide-parity.py"
       - "scripts/check-customize-table.py"
       - "scripts/check-doc-type-registry.py"
+      - "scripts/check_oaa_axioms.py"
       - "scripts/check-agent-frontmatter.py"
       - "scripts/check-orchestrator-leaks.py"
       - "scripts/check-action-pins.py"
@@ -63,6 +64,7 @@ on:
       - "scripts/check-guide-parity.py"
       - "scripts/check-customize-table.py"
       - "scripts/check-doc-type-registry.py"
+      - "scripts/check_oaa_axioms.py"
       - "scripts/check-agent-frontmatter.py"
       - "scripts/check-orchestrator-leaks.py"
       - "scripts/check-action-pins.py"
@@ -138,6 +140,9 @@ jobs:
 
       - name: Doc-type registry references (recipes, commands, pages.md)
         run: python3 scripts/check-doc-type-registry.py
+
+      - name: O-AA C208 axiom/chapter integrity guard (PR #825 content review)
+        run: python3 scripts/check_oaa_axioms.py
 
       - name: Guide site-link check (every guide reachable, no dead links)
         run: python3 scripts/check-guide-site-links.py

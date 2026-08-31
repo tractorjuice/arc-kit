@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "arckit-oaa",
+  "version": "6.12.0",
+  "description": "Open Agile Architecture (O-AA C208) \u2014 Agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance.",
+  "author": {
+    "name": "ArcKit Contributors",
+    "url": "https://github.com/tractorjuice/arckit-claude"
+  },
+  "repository": "https://github.com/tractorjuice/arckit-claude",
+  "license": "MIT",
+  "defaultEnabled": false,
+  "userConfig": {
+    "default_classification": {
+      "title": "Default Classification",
+      "type": "string",
+      "default": "PUBLIC",
+      "description": "Default document classification (e.g. PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE)"
+    },
+    "organisation_name": {
+      "title": "Organisation Name",
+      "type": "string",
+      "default": "",
+      "description": "Organisation or client name substituted into rendered artefacts (e.g. Federal Entity field)"
+    },
+    "project_issue_prefix": {
+      "title": "Project Issue Prefix",
+      "type": "string",
+      "default": "ARC",
+      "description": "Identifier prefix used for engagement/parent issue references in document control blocks and references"
+    },
+    "safety_checklist_id": {
+      "title": "Safety Checklist ID",
+      "type": "string",
+      "default": "",
+      "description": "Identifier of the safety/compliance checklist referenced in governance-report.yaml (leave blank to use [PENDING] placeholder)"
+    },
+    "references_dir": {
+      "title": "External References Directory",
+      "type": "string",
+      "default": "",
+      "description": "Directory containing external reference documents (e.g. ADRs, study notes). Leave blank to omit external references from rendered artefacts"
+    }
+  },
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=6.12.0"
+    }
+  ]
+}
