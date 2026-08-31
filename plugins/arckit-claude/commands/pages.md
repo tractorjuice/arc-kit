@@ -206,6 +206,8 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | ROAD | `ARC-*-ROAD-*.md` | Roadmap |
 | | STRAT | `ARC-*-STRAT-*.md` | Architecture Strategy |
 | | BKLG | `ARC-*-BKLG-*.md` | Product Backlog |
+| **Planning (Community-contributed — Open Agile Architecture Overlay)** | | | |
+| | OASTR | `ARC-*-OASTR-*.md` | Agile Strategy |
 | **Architecture** | | | |
 | | PRIN | `ARC-*-PRIN-*.md` | Architecture Principles |
 | | HLDR | `ARC-*-HLDR-*.md` | High-Level Design Review |
@@ -231,7 +233,6 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | AAGR | `ARC-*-AAGR-*.md` | Agent Architecture Specification |
 | | AAIN | `ARC-*-AAIN-*.md` | Agent Integration Architecture |
 | **Architecture (Community-contributed — Open Agile Architecture Overlay)** | | | |
-| | OASTR | `ARC-*-OASTR-*.md` | Agile Strategy |
 | | OAPR | `ARC-*-OAPR-*.md` | Product Architecture |
 | | OAAL | `ARC-*-OAAL-*.md` | ADM Lite Sprint Mapping |
 | **Governance** | | | |
