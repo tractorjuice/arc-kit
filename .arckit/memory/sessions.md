@@ -10,6 +10,24 @@ Automated session summaries captured by the ArcKit session-learner hook.
   - chore: bump version to 4.6.1
   - fix: trim skill descriptions to fit 250-char context cap (#215) (#266)
 
+### 2026-09-01 10:33 — general
+
+- **Effort:** max
+- **Commits:** 1 | **Files changed:** 1
+- **Artifacts:** none detected
+- **Summary:**
+  - chore: monthly traction report 2026-09 (#833)
+- **Telemetry:** 4 tool calls (p50=2133ms, p95=4353ms)
+
+### 2026-09-01 07:20 — general
+
+- **Effort:** max
+- **Commits:** 1 | **Files changed:** 4
+- **Artifacts:** none detected
+- **Summary:**
+  - docs: no tables in articles; make the release article a documented release step (#832)
+- **Telemetry:** 8 tool calls (p50=29ms, p95=7565ms)
+
 ### 2026-08-31 23:45 — general
 
 - **Effort:** max
@@ -280,23 +298,4 @@ Automated session summaries captured by the ArcKit session-learner hook.
 - **Summary:**
   - docs(site): list Atomic Task Graph article + add 1200x630 social card (#662)
 - **Telemetry:** 3 tool calls (p50=8592ms, p95=9008ms)
-
-### 2026-07-22 10:01 — general
-
-- **Effort:** xhigh
-- **Commits:** 1 | **Files changed:** 3
-- **Artifacts:** none detected
-- **Summary:**
-  - docs(site): list Atomic Task Graph article + add 1200x630 social card
-- **Telemetry:** 21 tool calls (p50=1892ms, p95=3694ms)
-
-### 2026-07-22 09:48 — general
-
-- **Effort:** xhigh
-- **Commits:** 2 | **Files changed:** 3
-- **Artifacts:** none detected
-- **Summary:**
-  - docs: replace Atomic Task Graph hero with polished design (#661)
-  - docs: add Atomic Task Graph article validating ArcKit build harness (#660)
-- **Telemetry:** 186 tool calls (p50=64ms, p95=310134ms) | by agent: arckit-deepbook:arckit-deepbook-writer(68 calls, p95=9ms), main(65 calls, p95=8758ms), arckit-deepbook:arckit-deepbook(53 calls, p95=434032ms)
 

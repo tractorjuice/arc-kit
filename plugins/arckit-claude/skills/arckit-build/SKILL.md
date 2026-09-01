@@ -106,6 +106,8 @@ The orchestrator substitutes these placeholders in `args` and `output.project` b
 
 `deps: ["ADR-*"]` matches all targets whose ID begins with `ADR-`. Exact IDs take precedence; globs expand at wave-computation time against the resolved target list (after optional-target filtering).
 
+An exact-ID dep naming an **optional target** orders the build only while that target is enabled: disabled optional-target IDs are pruned from every remaining target's `deps` at resolution time (step 4 below). A recipe may therefore declare the true ordering — `OAGOV` deps `[OAAL, OASEC]` in `oaa-full` — without `--exclude OASEC` leaving `OAGOV` waiting forever on a target that will never run. A dep naming a *non-optional* target that doesn't exist in the recipe is still an error.
+
 ## Input-hash change detection
 
 The orchestrator records the SHA-256 of every input artefact at build time and compares against the live filesystem on the next run. This catches the "user edited REQ after the build completed but never re-ran" case that pure `test -f` idempotency misses.
@@ -372,7 +374,7 @@ State written by older versions (`state_format_version: "0.3"`) is read-compatib
 1. **Parse arguments** from skill input (project, --plan, --resume, --recipe, --enable, --exclude, etc.). If project not specified, ask user.
 2. **Detect project**: resolve `<project>` arg → `projects/{P}-{slug}/`. Confirm directory exists.
 3. **Load recipe**: resolve `--recipe NAME` (default `uk-saas`) against the precedence list. Read the YAML with the Read tool. Validate top-level shape (`recipe`, `schema_version`, `targets`, `defaults.version`). Halt with a clear error if the recipe file is missing or malformed.
-4. **Resolve enabled targets**: drop `optional_targets` whose `default: false` unless `--enable ID` was passed; drop `optional_targets` named in `--exclude ID`. Apply `{P}/{NAME}/{V}/{TOPIC}` substitution to every `args` and `output.project` field.
+4. **Resolve enabled targets**: drop `optional_targets` whose `default: false` unless `--enable ID` was passed; drop `optional_targets` named in `--exclude ID`. Then prune every dropped optional-target ID from the remaining targets' `deps` lists — a dep on an optional target orders the build only when that target is enabled; without pruning, the dependent target's deps could never all be `done` and it would sit in `pending` forever. Apply `{P}/{NAME}/{V}/{TOPIC}` substitution to every `args` and `output.project` field.
 5. **Load state.json** at `projects/{P}-{NAME}/.arckit/state.json`. If absent, scan project dir for existing `ARC-{P}-*-v*.md` files and infer initial state.
 6. **Subagent capability smoke-test** (first wave only, skip on `--resume`): before dispatching the real wave, spawn one throwaway `general-purpose` Agent with this prompt:
 
