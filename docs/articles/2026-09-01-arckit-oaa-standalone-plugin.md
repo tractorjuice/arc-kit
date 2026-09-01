@@ -1,16 +1,16 @@
 # ArcKit OAA: Open Agile Architecture Becomes a Standalone Plugin
 
-**Open Agile Architecture — The Open Group's O-AA standard, C208 — now ships as its own ArcKit plugin. `arckit-oaa` carries five commands (`oaa-adm-lite`, `product-architecture`, `agile-strategy`, `agile-security`, `agile-governance`), five doc-type codes, and the `oaa-full` build recipe, all tuned to 2–4 week sprint windows rather than quarterly architecture boards. It began life inside the TOGAF ADM overlay; splitting it out was a community contribution by @terrygzhou, and it shipped in v6.13.0.**
+**Open Agile Architecture — The Open Group's O-AA standard, C208 — now ships as its own ArcKit plugin. `arckit-oaa` carries five commands (`oaa-adm-lite`, `product-architecture`, `agile-strategy`, `agile-security`, `agile-governance`), five doc-type codes, and the `oaa-full` build recipe, all tuned to 2–4 week sprint windows rather than quarterly architecture boards. It began life as an extension of the TOGAF ADM overlay and was reshaped into its own plugin before anything shipped — a community contribution by @terrygzhou that landed in v6.13.0.**
 
 *Mark Craddock · medium.com/arckit*
 
 ---
 
-## Why it left the TOGAF pack
+## Why it isn't part of the TOGAF pack
 
-O-AA first arrived in ArcKit as an extension of `arckit-togaf-adm`, and the packaging never quite fitted the content. TOGAF's ADM is a document-centric, stage-gate method: preliminary work, lettered phases, an architecture board, a repository. O-AA is a different practice — agile, product-driven, sprint-based — and bundling the two meant anyone who wanted one had to install both.
+O-AA arrived as a contribution that originally extended `arckit-togaf-adm`, and the packaging never quite fitted the content. TOGAF's ADM is a document-centric, stage-gate method: preliminary work, lettered phases, an architecture board, a repository. O-AA is a different practice — agile, product-driven, sprint-based — and bundling the two would have meant anyone who wanted one had to install both.
 
-The split gives O-AA its own plugin with its own command namespace, doc-type codes, templates, and recipe. Neither plugin depends on the other; both depend only on the `arckit` core. It takes the community plugin count from thirteen to fourteen.
+The split happened in review, before anything shipped — no released ArcKit ever bundled the two. O-AA landed as its own plugin with its own command namespace, doc-type codes, templates, and recipe. Neither plugin depends on the other; both depend only on the `arckit` core. It takes the community plugin count from thirteen to fourteen.
 
 The extraction itself came in as a pull request from @terrygzhou, who also carried every blocker and fix from review through to merge. More on that below, because what the review caught is worth being honest about.
 
