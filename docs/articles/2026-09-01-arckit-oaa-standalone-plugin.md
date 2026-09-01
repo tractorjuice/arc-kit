@@ -44,15 +44,7 @@ The `oaa-full` recipe runs all five in order on top of the foundation. One revie
 
 ## O-AA or TOGAF ADM?
 
-The two overlays answer different situations, and the decision guide ships in the plugin README. Condensed:
-
-| Dimension | `arckit-togaf-adm` | `arckit-oaa` |
-|-----------|--------------------|--------------|
-| Cadence | Quarterly architecture boards | 2–4 week sprints |
-| Artefacts | Full deliverables | 1–2 page canvases, max 2/sprint |
-| Delivery | Stage-gate | Backlog-driven, iterative |
-| Security | Dedicated gate | Backlog item per sprint |
-| Pick when | Full regulatory audit, many stakeholder gates | Hard deadline under 8 weeks, agile culture |
+The two overlays answer different situations, and the decision guide ships in the plugin README. The short version: the TOGAF overlay runs on quarterly architecture boards, produces full deliverables, moves through stage gates, and treats security as a dedicated gate — pick it when you face a full regulatory audit and dozens of stakeholder sign-offs. O-AA runs in two-to-four-week sprints, produces one-to-two-page canvases capped at two per sprint, delivers from a backlog, and puts security on that backlog every sprint — pick it when the deadline is under eight weeks and the culture is already agile.
 
 They are complementary, not competitors. A workable pattern is TOGAF ADM for the enterprise baseline, then O-AA to execute individual capabilities at sprint velocity. One core install satisfies both plugins' version pins, and the namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes never collide.
 

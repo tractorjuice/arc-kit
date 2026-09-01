@@ -143,6 +143,22 @@ After step 11, verify the umbrella GitHub Release and every standalone GitHub Re
 - `tractorjuice/arckit-vibe`
 - `tractorjuice/arckit-kimi`
 
+### Release article
+
+Every release with major features gets a write-up in `docs/articles/`
+(`YYYY-MM-DD-<slug>.md`), in the voice of the existing pieces, with a hero
+generator script in the house style (1200×630, see the `generate-hero-*.py`
+siblings). The directory is gitignored as a drafts folder — force-add the
+keepers with `git add -f`, as every published article has been.
+
+**No Markdown tables in articles.** LinkedIn and Medium do not render them —
+a comparison lands as a wall of pipes. Write it as prose instead.
+
+End with the `<!-- arckit:community-block -->` section, and credit
+contributors by @handle in the article *and* in the CHANGELOG entry — the
+handle appearing in a CHANGELOG is what makes `check-contributor-credits.py`
+enforce their card on the contributors page.
+
 ### PyPI (`arckit-cli`)
 
 Step 11's tag push also publishes the CLI to PyPI, via the `pypi` job in
