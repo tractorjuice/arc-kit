@@ -106,6 +106,12 @@ After step 11, confirm the GitHub Release was created (the `release.yml` workflo
 `vX.Y.Z` tag push). Also confirm every standalone repo has a `vX.Y.Z` tag and GitHub
 Release, then report the release URLs and which standalone repos were pushed.
 
+Then write the release article for the major features — `docs/articles/YYYY-MM-DD-<slug>.md`
+plus a hero generator script, force-added past the drafts-folder gitignore. **No Markdown
+tables** — LinkedIn and Medium do not render them; write comparisons as prose. See
+"Release article" in RELEASING.md for the full conventions (voice, hero style, community
+block, contributor credits).
+
 ## Common Gotchas
 
 The highest-signal failures — collected from real releases. Read these before running anything.
@@ -160,6 +166,9 @@ The highest-signal failures — collected from real releases. Read these before 
   including the public-but-proprietary `plugin/uk/gcloud/` overlay and its license exception. It
   now creates/preserves standalone repo `vX.Y.Z` tags and GitHub Releases; use
   `ARCKIT_SKIP_EXTENSION_RELEASES=1` only when intentionally doing a commit-only sync.
+- **Tables in release articles.** LinkedIn and Medium do not render Markdown tables — a
+  comparison pasted there lands as a wall of pipes. Write it as prose. Articles live in the
+  gitignored `docs/articles/` drafts folder; force-add the keepers (`git add -f`).
 - **Do not put release numbers in extension READMEs.** Extension release identity lives in
   `VERSION` files, manifests, Git tags, and GitHub Releases. README-pinned versions drift and
   are blocked by `tests/plugin/test_release_process.py`.

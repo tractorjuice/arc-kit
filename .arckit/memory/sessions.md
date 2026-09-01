@@ -10,6 +10,15 @@ Automated session summaries captured by the ArcKit session-learner hook.
   - chore: bump version to 4.6.1
   - fix: trim skill descriptions to fit 250-char context cap (#215) (#266)
 
+### 2026-08-31 23:45 — general
+
+- **Effort:** max
+- **Commits:** 1 | **Files changed:** 5
+- **Artifacts:** none detected
+- **Summary:**
+  - docs: add the arckit-oaa standalone plugin article (#831)
+- **Telemetry:** 25 tool calls (p50=21ms, p95=2928ms)
+
 ### 2026-08-31 16:59 — general
 
 - **Effort:** max
@@ -290,11 +299,4 @@ Automated session summaries captured by the ArcKit session-learner hook.
   - docs: replace Atomic Task Graph hero with polished design (#661)
   - docs: add Atomic Task Graph article validating ArcKit build harness (#660)
 - **Telemetry:** 186 tool calls (p50=64ms, p95=310134ms) | by agent: arckit-deepbook:arckit-deepbook-writer(68 calls, p95=9ms), main(65 calls, p95=8758ms), arckit-deepbook:arckit-deepbook(53 calls, p95=434032ms)
-
-### 2026-07-21 20:04 — failure (rate_limit)
-
-- **Status:** session interrupted by API error
-- **Effort:** xhigh
-- **Commits:** 0 | **Files changed:** 0
-- **Artifacts:** none detected
 
