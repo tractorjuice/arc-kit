@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#07111f"/>
+  <rect x="70" y="230" width="1060" height="250" rx="18" fill="#0b1f33" stroke="#facc15" stroke-width="2"/>
+  <text x="72" y="150" fill="#f8fafc" font-family="Arial, sans-serif" font-size="54" font-weight="700">Governance for Codex CLI</text>
+  <text x="74" y="192" fill="#cbd5e1" font-family="Arial, sans-serif" font-size="27">75 commands as Agent Skills | Fort Mason, San Francisco | 29 Sept 2026</text>
+  <text x="88" y="532" fill="#f8fafc" font-family="Arial, sans-serif" font-size="25" font-weight="700">codex plugin marketplace add tractorjuice/arckit-codex</text>
+</svg>
