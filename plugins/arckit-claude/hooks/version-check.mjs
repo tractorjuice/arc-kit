@@ -11,10 +11,13 @@
  *      `paths:`, plugin dependency enforcement, `defaultEnabled`, the
  *      Opus 4.8 thinking-block fix, Claude Fable 5/Sonnet 5 runtime updates,
  *      the WebFetch wildcard-domain fix, project-scoped plugin worktree
- *      fixes, Claude Opus 5 availability, the WebSearch xhigh/max fix, and
- *      MCP diagnostics no longer printing resolved secrets depend on
+ *      fixes, Claude Opus 5 availability, the WebSearch xhigh/max fix,
+ *      MCP diagnostics no longer printing resolved secrets, the plugin
+ *      skills/hook-error/cache fixes, and the file-tool symlink and
+ *      Grep/Glob deny-rule fixes depend on
  *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/
- *      v2.1.172+/v2.1.200+/v2.1.219+/v2.1.221+/v2.1.234+). Silent on
+ *      v2.1.172+/v2.1.200+/v2.1.219+/v2.1.221+/v2.1.234+/v2.1.246+/
+ *      v2.1.251+). Silent on
  *      detection failure.
  *
  * Side effect: when inside an ArcKit project, persists the detected client
@@ -33,7 +36,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDir, isFile, readText, parseHookInput, parseVersion, compareVersions } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.234';
+const MIN_CLAUDE_CODE_VERSION = '2.1.251';
 
 const data = parseHookInput(); // consume stdin (required by hook protocol)
 const cwd = data.cwd || '.';
@@ -97,7 +100,10 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- PreToolUse auto-allow hooks no longer bypass tool restrictions inside background agent tasks — load-bearing since v2.1.232 made subagent spawns background by default (needs v2.1.222)\n` +
     `- Bash permission-check bypasses closed: crafted commands could hide part of themselves from the approval dialog (needs v2.1.223)\n` +
     `- Sandbox \`denyRead\`/\`denyWrite\` entries written with a trailing slash were silently bypassable, and sandbox violations now report which access was denied (needs v2.1.224)\n` +
-    `- MCP diagnostics no longer print resolved secrets — ArcKit ships two keyed MCP servers whose \`\${user_config.*}\` values sit in request headers, and by design their connections fail on a keyless session (needs v2.1.234)\n\n` +
+    `- MCP diagnostics no longer print resolved secrets — ArcKit ships two keyed MCP servers whose \`\${user_config.*}\` values sit in request headers, and by design their connections fail on a keyless session (needs v2.1.234)\n` +
+    `- Plugin loading fixes that hit ArcKit's exact layout: \`/reload-plugins\` counted 0 skills for plugins defining skills under \`skills/*/SKILL.md\`, hook error messages showed a literal \`\${CLAUDE_PLUGIN_ROOT}\` instead of the resolved path, the plugin cache created duplicate SHA-named directories, and \`claude plugin update <bare-name>\` failed (needs v2.1.246)\n` +
+    `- File tools no longer follow a symlink swapped inside the working directory after the permission check, and Grep/Glob honour \`Read()\` deny rules through symlinked paths — the same class of bypass the v2.1.222–v2.1.224 fixes closed for Bash (needs v2.1.251)\n` +
+    `- Opus 5 at \`effort: xhigh\`/\`max\` with thinking disabled is sent as \`high\` instead of failing, so ArcKit's \`effort: max\` commands complete on thinking-off sessions rather than erroring (needs v2.1.251)\n\n` +
     `Update with: \`claude update\`\n\n` +
     `**Tip — stop drifting back below the floor:** after updating, add ` +
     `\`"minimumVersion": "${MIN_CLAUDE_CODE_VERSION}"\` to your \`.claude/settings.json\`. ` +
