@@ -41,7 +41,7 @@ Stamped fields:
 
 - **Build context** (Recipe / Wave / Target / Topic) — only present when run via `/arckit:build`, sourced from `projects/{P}/.arckit/state.json`
 - **Requested Effort** — `effort:` field from the invoking command's YAML frontmatter
-- **Effective Effort** — computed by parsing the `AI Model:` line from the existing footer and applying the silent-downgrade matrix in `provenance-model.mjs` (`MODEL_EFFORTS`, per the official model-config docs). When the model doesn't support the requested level, the value reads e.g. `high (downgraded from xhigh — model does not support that level)` — the auditable signal that issue #407 was filed for.
+- **Effective Effort** — computed by parsing the `AI Model:` line from the existing footer and applying the silent-downgrade matrix in `provenance-model.mjs` (`MODEL_EFFORTS`, per the official model-config docs). When the model doesn't support the requested level, the value reads e.g. `high (downgraded from xhigh — model does not support that level)` — the auditable signal that issue #407 was filed for. One runtime downgrade is invisible to the stamp: from Claude Code v2.1.251 an Opus 5 request at `xhigh`/`max` with **thinking disabled** is sent as `high` instead of failing. Hook input carries no thinking state, so the stamp records the model-matrix answer (`max`) for an artefact that actually ran at `high`. Keep thinking on for `effort: max` commands wherever Effective Effort is audit evidence.
 - **Stamped at** — ISO 8601 timestamp (per write)
 
 If neither effort nor build context is available (e.g. a non-ArcKit command edited the file), the hook skips stamping entirely — no empty block. Existing artefacts pre-dating the hook are stamped on the next Write/Edit.

@@ -179,7 +179,11 @@ defaults without a per-repo file to drift.
 Minimum enterprise controls for ArcKit:
 
 - Deny reads of `.env`, secret stores, credential dumps, and build outputs in
-  managed `permissions.deny`.
+  managed `permissions.deny`. On Claude Code v2.1.257+ add
+  `permissions.blockReadsOutsideWorkingDirectories` so the model cannot read
+  outside the registered working directories at all; from the same release
+  Bash `Read()` deny rules also cover `< file` redirects and reader commands
+  such as `tac` and `egrep`, which they previously missed.
 - Keep Claude Code's Manual permission mode as the default for regulated
   repositories. Use Auto mode only after your `autoMode.environment` describes
   trusted source control, artifact stores, and internal domains.
@@ -237,7 +241,14 @@ Use a narrow pilot before broad installation:
 
 | Version | Enterprise-relevant change | ArcKit impact |
 |---------|----------------------------|---------------|
-| v2.1.235 | Latest reviewed release as of 2026-08-19 | Reviewed in the v2.1.221-v2.1.235 triage |
+| v2.1.258 | Latest reviewed release as of 2026-09-02; fixes the macOS 12 launch failure introduced in the unpublished 2.1.255 | Reviewed in the v2.1.236-v2.1.258 triage. Any future floor above v2.1.252 must be v2.1.258, not v2.1.257 |
+| v2.1.257 | Claude Fable 5.1 (`claude-fable-5-1`) is the default Fable model; `CLAUDE_CODE_SUBAGENT_MODEL_FORCE`; `permissions.blockReadsOutsideWorkingDirectories`; Bash `Read()` deny rules cover redirects and reader commands; `defaultMode: "bypassPermissions"` ignored at project scope; plugin component paths that are symlinks refused; auto-mode Containment Escape rule | Fable 5.1 needs the gateway configured for it — `fable`/`best` keep resolving to Fable 5 until then. ArcKit ships no symlinked component paths and recommends no project-scope `defaultMode` |
+| v2.1.251 | `PreModelSwitch` / `PostModelSwitch` hooks; `CLAUDE_CODE_SUBAGENT_MODEL` becomes a default rather than an override; Opus 5 at `effort: xhigh`/`max` with thinking off is sent as `high` instead of failing; file tools no longer follow a symlink swapped after the permission check; Grep/Glob honour `Read()` deny rules through symlinked paths; project settings can no longer enable beta tracing or bypass a managed OTLP collector | Verify subagent routing with `/tasks` before relying on `CLAUDE_CODE_SUBAGENT_MODEL` (see model governance above). Effective Effort in ArcKit's provenance stamp cannot see the thinking-off downgrade |
+| v2.1.248 | `--restricted` / `CLAUDE_CODE_RESTRICTED=1` strips command and code tools and `WebFetch`, keeps file tools inside the working directory, refuses `bypassPermissions` and ignores user/project/local settings; `experimental.cacheTtl` agent frontmatter; hook stdout that looks like JSON but is not now errors instead of passing as text | `--restricted` removes `WebFetch` from every ArcKit reader, and its effect on plugin hooks and `alwaysLoad` MCP servers is unstated — not yet a recommended profile. All ArcKit hooks emit valid JSON |
+| v2.1.246 | `/reload-plugins` counted 0 skills for `skills/*/SKILL.md` layouts; hook errors showed a literal `${CLAUDE_PLUGIN_ROOT}`; duplicate plugin-cache directories; `claude plugin update <bare-name>`; a subagent stopping at `maxTurns` returns output marked partial; on Bedrock/Vertex/Foundry Claude is told when an MCP server failed to connect; telemetry requests no longer carry a third-party gateway's API key to Anthropic | Floor candidate: the first four hit ArcKit's exact layout. Reader/writer orchestrators treat a partial return as retry-or-halt |
+| v2.1.243 | `modelPicker` and `modelPricing` settings; `promptCacheTtl` / `subagentPromptCacheTtl`; `/tasks` shows each subagent's model and effort; keyless Console sign-in; sandbox violation details kept when the blocked command exits 0 | Model governance controls above; `/tasks` is the cheap way to confirm `effort: max` was applied |
+| v2.1.236 | `ANTHROPIC_DEFAULT_MODEL`; macOS sandbox wildcard read-deny rules (`**/.env`) win inside allowed read regions and survive renames; `Monitor` allow rules set aside in auto mode | Session-default model without overriding user picks; strengthens the `.env` deny guidance above |
+| v2.1.235 | Reviewed release | Reviewed in the v2.1.221-v2.1.235 triage |
 | v2.1.234 | MCP diagnostics no longer print resolved secrets — scope-conflict warnings show the configured `${VAR}` form and connection-failure details show only the server origin; `strictKnownMarketplaces` no longer accepts SCP-style git sources whose host differs from the one git would use | **Current ArcKit floor** — ArcKit ships two keyed MCP servers whose `${user_config.*}` values sit in request headers, and their connections fail by design on a keyless session |
 | v2.1.233 | Todo/task tools (`TodoWrite`, `TaskCreate`) removed on Opus 4.8, Sonnet 5, Fable 5, Opus 5 and newer; `Notification` hooks fire for permission prompts under Desktop/VS Code; skill argument values no longer re-expand as template markers | Carried into the current floor: ArcKit agents lose their to-do surface (allowlist entries are inert, not errors), and `$ARGUMENTS` can no longer be re-expanded against ArcKit's `${...}` markers |
 | v2.1.232 | Non-teammate subagent spawns run in the background by default; nested git repositories each require their own trust confirmation; GitLab marketplace sources and token redaction | Carried into the current floor: `/arckit:build` waves and reader/writer handoffs dispatch with `run_in_background: false` to keep their sequencing |
@@ -538,8 +549,35 @@ model overrides to stay inside the approved list.
 ArcKit does not pin a model in its commands. Commands inherit the Claude Code
 session default, so a centrally managed model policy is the right control point
 for regulated deployments. The current ArcKit guidance assumes Claude Sonnet 5
-as the normal default; allow Claude Fable 5 only where the tenant exposes it and
-the work justifies the higher tier.
+as the normal default; allow Claude Fable 5.1 (the default Fable model since
+Claude Code v2.1.257, Fable 5 before that) only where the tenant exposes it and
+the work justifies the higher tier. Behind a Claude apps gateway the `fable`
+and `best` aliases keep resolving to Fable 5 until the gateway is configured
+for 5.1, so a gateway fleet does not pick up the new default on its own —
+users select Fable 5.1 in `/model`, or you set it centrally.
+
+Three newer settings sit alongside `enforceAvailableModels`:
+
+- `ANTHROPIC_DEFAULT_MODEL` (Claude Code v2.1.236+) sets the model new
+  sessions start on while a user's `/model` pick still wins and persists —
+  unlike `ANTHROPIC_MODEL`, which overrides every session.
+- `modelPicker` (v2.1.243+) curates the `/model` list: an ordered, labelled
+  set of ids (Bedrock and Vertex spellings included) appended to or replacing
+  the built-in lineup.
+- `modelPricing` (v2.1.243+, managed) applies your contracted per-model rates
+  and discount multiplier to `/cost`, the status line and telemetry cost
+  figures instead of list price.
+
+Subagent routing changed in v2.1.251: `CLAUDE_CODE_SUBAGENT_MODEL` now sets
+the *default* subagent model, and an agent definition's `model:` or an
+explicit per-spawn model takes precedence over it; v2.1.257 added
+`CLAUDE_CODE_SUBAGENT_MODEL_FORCE` to restore the old override-everything
+behaviour. Every ArcKit agent declares `model: inherit`. Whether that
+declaration counts as an override is being verified on tractorjuice/arc-kit#580;
+until it is, a fleet that routes ArcKit's readers and writers to a cheaper
+model should set `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` rather than rely on the
+default, and can read the model each subagent actually ran on from `/tasks`
+(v2.1.243+).
 
 ### Allowlist the ArcKit marketplace
 
@@ -549,7 +587,9 @@ plugins may surface in context-aware tips. Allowlisting
 opens a directory with a `projects/` tree or `ARC-*` artefacts — useful for
 driving adoption across many teams without a manual rollout. Pair with
 `strictKnownMarketplaces` / `blockedMarketplaces` if you want to *restrict*
-installs to only the marketplaces you've vetted.
+installs to only the marketplaces you've vetted. Both accept `owner/*`
+wildcards from Claude Code v2.1.223, so `tractorjuice/*` allowlists the
+marketplace and every standalone extension repo in one entry.
 
 ### Slice usage/cost metrics by project
 

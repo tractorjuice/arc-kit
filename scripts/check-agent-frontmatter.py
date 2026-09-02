@@ -37,7 +37,7 @@ PLUGIN_ROOT = os.path.join(
 # Fields converter.py strips for non-Claude targets. If a file in the plugin
 # source is missing ALL of these while carrying exactly the keys yaml.dump
 # leaves behind, it has almost certainly been through copy_agent_stripped().
-CLAUDE_ONLY_AGENT_FIELDS = ("effort", "initialPrompt", "maxTurns", "disallowedTools", "tools")
+CLAUDE_ONLY_AGENT_FIELDS = ("effort", "initialPrompt", "maxTurns", "disallowedTools", "tools", "experimental")
 STRIPPED_SIGNATURE = {"description", "model", "name"}
 
 

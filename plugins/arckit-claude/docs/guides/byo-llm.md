@@ -177,6 +177,7 @@ ArcKit is a governance harness, so changing the model underneath it changes what
 | Fast mode reports a connectivity error | The availability check calls `api.anthropic.com` directly | Expected on restricted networks; inference is unaffected |
 | Artefacts ignore the template and read as essays | Model too small for the instruction load | Move to a 30B-class or larger model with longer usable context |
 | Codex returns a protocol error on every call | `wire_api` defaulting to `responses` | Set `wire_api = "chat"` in the provider block |
+| A research command says an MCP tool does not exist | The server failed to connect and the model was not told — Bedrock, Vertex, Foundry or telemetry-off sessions before Claude Code v2.1.246 | Update to v2.1.246+, then read the real connection error in `/mcp` |
 
 ---
 

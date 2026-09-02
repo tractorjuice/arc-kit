@@ -99,7 +99,7 @@ If you want to skip the decision tree and let ArcKit do the heavy lifting, this 
 
 - **Heavily regulated work** (UK Gov Secure by Design, MOD, EU AI Act) where each artifact needs reviewer sign-off before the next is generated.
 - **Existing projects** with artifacts already on disk — run `/arckit:navigator` first to see what is missing rather than regenerating.
-- **Token-constrained sessions** — the full chain can run dozens of commands. Use the Claude Code session default, normally Claude Sonnet 5, and move to Claude Fable 5 only where your tenant exposes it and the work justifies the higher tier.
+- **Token-constrained sessions** — the full chain can run dozens of commands. Use the Claude Code session default, normally Claude Sonnet 5, and move to Claude Fable 5.1 (the default Fable model since Claude Code v2.1.257) only where your tenant exposes it and the work justifies the higher tier.
 
 ### Tips For Vibe Start
 

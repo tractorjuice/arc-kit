@@ -59,6 +59,8 @@ claude
 
 The cap exists to stop runaway search loops, so raise it deliberately rather than as a default. `WebFetch` calls are not counted against it.
 
+`WebFetch` has a session cache instead: a URL fetched in the last 15 minutes is served from memory rather than re-fetched. `CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS` (Claude Code v2.1.233+) adjusts that window in milliseconds — raise it when a long run re-reads the same policy pages, lower it when the source is changing underneath you. Before v2.1.239 expired entries stayed in memory for the whole session; that leak is fixed.
+
 ---
 
 ## Output Highlights

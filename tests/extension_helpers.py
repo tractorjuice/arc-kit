@@ -37,6 +37,7 @@ CLAUDE_ONLY_AGENT_FIELDS = {
     "maxTurns",
     "disallowedTools",
     "tools",
+    "experimental",
 }
 
 
