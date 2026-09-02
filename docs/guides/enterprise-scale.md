@@ -56,7 +56,7 @@ Before installing ArcKit broadly:
 - Assign a seat type that includes Claude Code. In Anthropic's current
   Enterprise guidance, legacy seat-based plans need Premium seats; usage-based
   plans need Chat + Code or Claude Enterprise seats.
-- Install Claude Code v2.1.234 or later on pilot machines. ArcKit's
+- Install Claude Code v2.1.251 or later on pilot machines. ArcKit's
   SessionStart version hook warns below this floor; managed settings can block
   startup below it.
 - Verify each pilot user with `claude --version`, `/status`, and
@@ -69,7 +69,7 @@ users are prompted to add the ArcKit marketplace when they trust the repo:
 
 ```json
 {
-  "minimumVersion": "2.1.234",
+  "minimumVersion": "2.1.251",
   "extraKnownMarketplaces": {
     "arckit-claude": {
       "source": {
@@ -91,7 +91,7 @@ range:
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.234",
+  "requiredMinimumVersion": "2.1.251",
   "requiredMaximumVersion": "2.1.999",
   "extraKnownMarketplaces": {
     "arckit-claude": {
@@ -243,13 +243,13 @@ Use a narrow pilot before broad installation:
 |---------|----------------------------|---------------|
 | v2.1.258 | Latest reviewed release as of 2026-09-02; fixes the macOS 12 launch failure introduced in the unpublished 2.1.255 | Reviewed in the v2.1.236-v2.1.258 triage. Any future floor above v2.1.252 must be v2.1.258, not v2.1.257 |
 | v2.1.257 | Claude Fable 5.1 (`claude-fable-5-1`) is the default Fable model; `CLAUDE_CODE_SUBAGENT_MODEL_FORCE`; `permissions.blockReadsOutsideWorkingDirectories`; Bash `Read()` deny rules cover redirects and reader commands; `defaultMode: "bypassPermissions"` ignored at project scope; plugin component paths that are symlinks refused; auto-mode Containment Escape rule | Fable 5.1 needs the gateway configured for it — `fable`/`best` keep resolving to Fable 5 until then. ArcKit ships no symlinked component paths and recommends no project-scope `defaultMode` |
-| v2.1.251 | `PreModelSwitch` / `PostModelSwitch` hooks; `CLAUDE_CODE_SUBAGENT_MODEL` becomes a default rather than an override; Opus 5 at `effort: xhigh`/`max` with thinking off is sent as `high` instead of failing; file tools no longer follow a symlink swapped after the permission check; Grep/Glob honour `Read()` deny rules through symlinked paths; project settings can no longer enable beta tracing or bypass a managed OTLP collector | Verify subagent routing with `/tasks` before relying on `CLAUDE_CODE_SUBAGENT_MODEL` (see model governance above). Effective Effort in ArcKit's provenance stamp cannot see the thinking-off downgrade |
+| v2.1.251 | `PreModelSwitch` / `PostModelSwitch` hooks; `CLAUDE_CODE_SUBAGENT_MODEL` becomes a default rather than an override; Opus 5 at `effort: xhigh`/`max` with thinking off is sent as `high` instead of failing; file tools no longer follow a symlink swapped after the permission check; Grep/Glob honour `Read()` deny rules through symlinked paths; project settings can no longer enable beta tracing or bypass a managed OTLP collector | **Current ArcKit floor** — the symlink and deny-rule fixes are the class ArcKit's file-protection gates sit in front of, and `effort: max` commands now complete on thinking-off sessions. Verify subagent routing with `/tasks` before relying on `CLAUDE_CODE_SUBAGENT_MODEL` (see model governance above). Effective Effort in ArcKit's provenance stamp cannot see the thinking-off downgrade |
 | v2.1.248 | `--restricted` / `CLAUDE_CODE_RESTRICTED=1` strips command and code tools and `WebFetch`, keeps file tools inside the working directory, refuses `bypassPermissions` and ignores user/project/local settings; `experimental.cacheTtl` agent frontmatter; hook stdout that looks like JSON but is not now errors instead of passing as text | `--restricted` removes `WebFetch` from every ArcKit reader, and its effect on plugin hooks and `alwaysLoad` MCP servers is unstated — not yet a recommended profile. All ArcKit hooks emit valid JSON |
-| v2.1.246 | `/reload-plugins` counted 0 skills for `skills/*/SKILL.md` layouts; hook errors showed a literal `${CLAUDE_PLUGIN_ROOT}`; duplicate plugin-cache directories; `claude plugin update <bare-name>`; a subagent stopping at `maxTurns` returns output marked partial; on Bedrock/Vertex/Foundry Claude is told when an MCP server failed to connect; telemetry requests no longer carry a third-party gateway's API key to Anthropic | Floor candidate: the first four hit ArcKit's exact layout. Reader/writer orchestrators treat a partial return as retry-or-halt |
+| v2.1.246 | `/reload-plugins` counted 0 skills for `skills/*/SKILL.md` layouts; hook errors showed a literal `${CLAUDE_PLUGIN_ROOT}`; duplicate plugin-cache directories; `claude plugin update <bare-name>`; a subagent stopping at `maxTurns` returns output marked partial; on Bedrock/Vertex/Foundry Claude is told when an MCP server failed to connect; telemetry requests no longer carry a third-party gateway's API key to Anthropic | Carried into the current floor: the first four hit ArcKit's exact layout. Reader/writer orchestrators treat a partial return as retry-or-halt |
 | v2.1.243 | `modelPicker` and `modelPricing` settings; `promptCacheTtl` / `subagentPromptCacheTtl`; `/tasks` shows each subagent's model and effort; keyless Console sign-in; sandbox violation details kept when the blocked command exits 0 | Model governance controls above; `/tasks` is the cheap way to confirm `effort: max` was applied |
 | v2.1.236 | `ANTHROPIC_DEFAULT_MODEL`; macOS sandbox wildcard read-deny rules (`**/.env`) win inside allowed read regions and survive renames; `Monitor` allow rules set aside in auto mode | Session-default model without overriding user picks; strengthens the `.env` deny guidance above |
 | v2.1.235 | Reviewed release | Reviewed in the v2.1.221-v2.1.235 triage |
-| v2.1.234 | MCP diagnostics no longer print resolved secrets — scope-conflict warnings show the configured `${VAR}` form and connection-failure details show only the server origin; `strictKnownMarketplaces` no longer accepts SCP-style git sources whose host differs from the one git would use | **Current ArcKit floor** — ArcKit ships two keyed MCP servers whose `${user_config.*}` values sit in request headers, and their connections fail by design on a keyless session |
+| v2.1.234 | MCP diagnostics no longer print resolved secrets — scope-conflict warnings show the configured `${VAR}` form and connection-failure details show only the server origin; `strictKnownMarketplaces` no longer accepts SCP-style git sources whose host differs from the one git would use | Carried into the current floor — ArcKit ships two keyed MCP servers whose `${user_config.*}` values sit in request headers, and their connections fail by design on a keyless session |
 | v2.1.233 | Todo/task tools (`TodoWrite`, `TaskCreate`) removed on Opus 4.8, Sonnet 5, Fable 5, Opus 5 and newer; `Notification` hooks fire for permission prompts under Desktop/VS Code; skill argument values no longer re-expand as template markers | Carried into the current floor: ArcKit agents lose their to-do surface (allowlist entries are inert, not errors), and `$ARGUMENTS` can no longer be re-expanded against ArcKit's `${...}` markers |
 | v2.1.232 | Non-teammate subagent spawns run in the background by default; nested git repositories each require their own trust confirmation; GitLab marketplace sources and token redaction | Carried into the current floor: `/arckit:build` waves and reader/writer handoffs dispatch with `run_in_background: false` to keep their sequencing |
 | v2.1.224 | 200-subagent-per-session spawn cap removed; `archive` plugin source (zip over HTTPS with SHA-256 pinning); sandbox `denyRead`/`denyWrite` trailing-slash bypass fixed; sandbox violation details now surfaced in Bash results | Carried into the current floor. The `archive` source is the air-gapped install route for fleets with no path to github.com |
@@ -271,8 +271,9 @@ Use a narrow pilot before broad installation:
 
 | ArcKit entry | Enterprise impact |
 |--------------|-------------------|
+| Unreleased #580 | Claude Code floor raised to v2.1.251 for the file-tool symlink and Grep/Glob deny-rule fixes, the Opus 5 thinking-off effort fallback, and v2.1.246's plugin-loading fixes that hit ArcKit's exact layout |
 | Unreleased #580 | Reactive `FileChanged` context for `projects/*/external/` means newly added evidence can enter Claude Code context without restart or `/compact` |
-| Unreleased #580 | Claude Code floor raised to v2.1.234 so MCP connection diagnostics can no longer print resolved secrets, and so the WebSearch `xhigh`/`max`, background-agent permission, and sandbox deny-path fixes are guaranteed |
+| v6.12.0 #580 | Claude Code floor raised to v2.1.234 so MCP connection diagnostics can no longer print resolved secrets, and so the WebSearch `xhigh`/`max`, background-agent permission, and sandbox deny-path fixes are guaranteed |
 | v6.6.0 #580 | Claude Code floor raised to v2.1.219 for Claude Opus 5 support, and docs refreshed for managed model governance, OTEL response logging, MCP auth, safe-mode troubleshooting, and plugin branch testing |
 | v6.0.0 | `tractorjuice/arckit-claude` became the preferred single Claude Code marketplace repo for the core plugin plus overlays |
 | v5.13.1 | Claude Code floor v2.1.172 made wildcard-domain `WebFetch(domain:*.gov.uk)` restrictions reliable for regulated research-agent traffic |
@@ -517,7 +518,7 @@ admin can set the native managed settings (Claude Code v2.1.163+):
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.234",
+  "requiredMinimumVersion": "2.1.251",
   "requiredMaximumVersion": "2.1.999"
 }
 ```
