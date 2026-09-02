@@ -241,6 +241,7 @@ Invalid MCP server config for 'datacommons-mcp': Missing environment variables: 
 2. Restart Claude Code (MCP servers load at startup)
 3. Check the plugin UI — errors should disappear once the key is valid
 4. Run `claude mcp list` or `/mcp`. As of Claude Code v2.1.218 a failed server reports its **HTTP status and error text**, so an invalid key shows as a real `401` rather than a bare "failed to connect". The same release warns about config values carrying hidden leading or trailing whitespace — a common cause of a key that looks correct but is rejected.
+5. On Amazon Bedrock, Google Vertex AI and Microsoft Foundry — and in any session with telemetry disabled — Claude Code v2.1.246+ tells the model when a configured server failed to connect. Before that the model concluded the server's tools did not exist, so a keyless session on those providers made `/arckit:gcp-research` and Data Commons lookups fail with a confusing "no such tool" instead of a connection error. If you see that symptom, update the client and re-check `/mcp`.
 
 ### API key works but commands fail
 

@@ -109,19 +109,29 @@ pytest tests/codex/test_codex_extension.py \
 # 8. Commit the bump (claude plugin tag below requires a clean tree)
 git add -A && git commit -m "chore: bump version to X.Y.Z"
 
-# 9. Validate plugin/marketplace version agreement (Claude Code v2.1.118+)
+# 9. Validate the manifests and the plugin components. `--strict` fails on
+#    unrecognised fields; the components form checks every SKILL.md, agent and
+#    command frontmatter (v2.1.233+ reports a SKILL.md whose frontmatter fails
+#    to parse — the failure mode that otherwise surfaces as a silently missing skill).
+claude plugin validate --strict .claude-plugin/marketplace.json
+claude plugin validate --strict plugins/arckit-claude/.claude-plugin/plugin.json
+claude plugin validate plugins/arckit-claude/skills
+claude plugin validate plugins/arckit-claude/agents
+claude plugin validate plugins/arckit-claude/commands
+
+# 10. Validate plugin/marketplace version agreement (Claude Code v2.1.118+)
 claude plugin tag plugins/arckit-claude --dry-run
 
-# 10. (optional) Prune orphaned plugin dependencies
+# 11. (optional) Prune orphaned plugin dependencies
 claude plugin prune --dry-run
 
-# 11. Tag, push — GitHub Release created automatically.
+# 12. Tag, push — GitHub Release created automatically.
 #     Push the one tag by name. `git push --tags` pushes EVERY local tag,
 #     which published a stray `pre-rebase-*` backup tag during v6.8.0.
 git tag -a vX.Y.Z -m "vX.Y.Z"
 git push && git push origin vX.Y.Z
 
-# 12. Push to standalone repos (Claude, Gemini, Codex, etc.).
+# 13. Push to standalone repos (Claude, Gemini, Codex, etc.).
 #     This also publishes each standalone repo's vX.Y.Z tag and GitHub Release.
 ./scripts/push-extensions.sh
 ```
@@ -131,7 +141,7 @@ standalone Claude Code marketplace repo. That repo keeps the `arckit` core plugi
 repository root and copies overlay plugins into structured paths such as `plugins/uk/finance`
 and `plugins/uk/gcloud`.
 
-After step 11, verify the umbrella GitHub Release and every standalone GitHub Release exists:
+After step 12, verify the umbrella GitHub Release and every standalone GitHub Release exists:
 
 - `tractorjuice/arc-kit`
 - `tractorjuice/arckit-claude`
