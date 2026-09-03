@@ -34,6 +34,8 @@ A `PreToolUse` gate holds only while its subprocess can run: the hooks need Node
 
 These rules live in command bodies, templates and the two reference files. Every command that produces a governed artefact is told to read `references/quality-checklist.md` before writing and to fix failures first; every command that gathers external evidence is told to follow `references/citation-instructions.md`. CI asserts that every such instruction resolves to a real checklist section and to citation tables the template actually ships (`scripts/check-quality-checklist-refs.py`, `scripts/check-citation-section-refs.py`), and that the checklist's classification ladders match the templates (`scripts/check-quality-checklist-ladders.py`), so the *asking* is guarded even though the *doing* is not.
 
+The *doing* is measured by the behavioural eval suite in [`../evals/`](../evals/README.md): cases that run a command against a fixture repository and grade the artefact it wrote, the tools it called and the text it returned. The suite is where a row in this table gets a number rather than a promise.
+
 | Rule | Where it is stated | What checks it |
 |---|---|---|
 | **Document Control block is complete.** All 14 standard fields; Revision History with the six standard columns; the generation footer. | Every template; checklist common checks 1, 6, 7 | The model, against the checklist; `detect-stale-artifacts.sh` reads two of the fields |

@@ -1,0 +1,13 @@
+schema_version: "1.1"
+name: search-is-read-only
+tags: [read-only, search]
+prompt: "/arckit:search PostgreSQL --project=001"
+plugins: ["../.."]
+runs: 1
+max_turns: 8
+timeout_seconds: 300
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash]
+context:
+  add_dirs:
+    - source: ../fixtures/benefits-portal
+      dest: .
