@@ -181,10 +181,15 @@ slugify() {
         'Ź:z' 'ź:z' 'Ż:z' 'ż:z' 'Ž:z' 'ž:z'
     )
 
+    # Both sides are deliberately unquoted. bash 3.2 (stock macOS) mis-splits
+    # a *quoted* multibyte pattern or replacement in ${var//pattern/repl},
+    # turning "Café" into "caf-e"; the table holds letters only, so there is
+    # no glob or metacharacter to protect. tests/plugin/test_slugify.py runs
+    # under whatever `bash` is on PATH, so a Mac catches a regression here.
     for pair in "${translit[@]}"; do
         from="${pair%%:*}"
         to="${pair#*:}"
-        s="${s//"$from"/"$to"}"
+        s="${s//$from/$to}"
     done
 
     # LC_ALL=C keeps both steps byte-oriented, so the slug never depends on the

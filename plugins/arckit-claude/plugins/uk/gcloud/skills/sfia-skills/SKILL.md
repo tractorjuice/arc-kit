@@ -1,6 +1,6 @@
 ---
 name: SFIA Skills & Day Rates
-description: This skill should be used when the user asks about "SFIA level", "SFIA skills", "day rate", "what level is", "solution architect level", "Lot 3 roles", "DDaT roles", "AI skills framework", "cloud migration roles", "consultancy rates", "SFIA mapping", "role to SFIA", "skill level", "cloud support roles", "what SFIA level", "rate card", "SFIA 8", "junior consultant rate", "senior consultant rate", "principal consultant", "DevOps engineer level", "security engineer level", "project manager SFIA", or needs guidance on SFIA levels, role mappings, day rates, and Lot 3 service team compositions.
+description: "Answers questions about SFIA 8 levels, role-to-skill mappings, DDaT role equivalents, consultancy day-rate benchmarks and Lot 3 cloud-support team shapes for a G-Cloud submission. Not needed when the request is for the Lot 3 service definition or the pricing document; /arckit-uk-gcloud:sdd-lot3 and pricing produce those from the same data."
 ---
 
 # SFIA Skills & Day Rates
