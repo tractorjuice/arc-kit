@@ -83,6 +83,35 @@ Output: `projects/<id>/ARC-<id>-WARD-001-v1.0.md` (uses multi-instance numbering
 
 ---
 
+## Where Each Component Came From
+
+The Component Inventory carries a **Source** column, and it is checked before the map
+is written. Each cell has to name something that exists:
+
+| Source | Meaning |
+|--------|---------|
+| `ARC-nnn-WVCH-v1.0` | Decomposed from that value chain |
+| `ARC-nnn-REQ-v1.0` | Came from a requirement |
+| `[DOC_ID-C1]` | A citation declared in the map's own Citations table |
+| `VENDOR-A` | An external document listed in the map's Document Register |
+| `Assumption` | Your own judgement, with no source document behind it |
+
+A Source naming a document that is not in the project is rejected and the map is not
+written — an invented document ID is the failure this catches. `Assumption` is always
+available and always acceptable; the point is to say so rather than manufacture a
+citation.
+
+**Visibility is owned by the value chain.** Where a component's Source is the WVCH
+artefact, its visibility must be the value chain's own number. Two documents that
+disagree about how visible something is are a governance problem, not a rounding
+difference. If the value chain is wrong, correct it with `/arckit:wardley.value-chain`
+and re-run the map.
+
+Components sourced anywhere else are not joined against the value chain, so a map
+deliberately anchored on a different user need is free to position them differently.
+
+---
+
 ## Strategic Patterns
 
 | Pattern | Description | Action |
@@ -124,6 +153,8 @@ Output: `projects/<id>/ARC-<id>-WARD-001-v1.0.md` (uses multi-instance numbering
 - All components identified in value chain.
 - Dependencies shown between components.
 - Evolution stage justified for each component.
+- Source recorded for each component, and `Assumption` used where there is no source document.
+- Visibility of value-chain components matches the value chain.
 - Movement (evolution direction) indicated.
 - Strategic plays derived from map.
 - Build vs buy recommendation for each component.

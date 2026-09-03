@@ -169,9 +169,43 @@ See `hooks.json` for the full registration. Current handler files in this direct
   - **Pipeline range** — `pipeline NAME [v1, v2]` endpoints in `[0.00, 1.00]` and `v1 < v2`
   - **OWM style whitelist** — `style` must be one of `wardley`, `colour`, `plain`, `handwritten`, `dark`
   - **Mermaid `wardley-beta` bare-digit tokens** — Wardley-template-specific check; general Mermaid validation belongs to issue #435 (sibling validator)
+  - **Component provenance** — for every Component Inventory table that carries a `Source` column, the cell must resolve to something that exists: a citation ID the map declares in its own Citations table, an artefact document ID or doc-type code the project holds, an external Doc ID from the map's Document Register, or the literal `Assumption`. A Source naming a document that is not there is a fabricated provenance
+  - **Value-chain visibility join** — a row sourced to the project's WVCH artefact must name a component that value chain contains, and carry its visibility (2dp, tolerance 0.005). The value chain owns visibility; the map owns evolution
 - `version-check.mjs` — warn on Claude Code / plugin version drift; also persists the detected client version to `.arckit/memory/.cc-version` so the Stop-hook nudge can version-gate (see "End-of-Turn Nudge" above)
 - `session-nudge.mjs` — pure rule engine (`selectNudge`) for the end-of-turn nudge; no side effects, imported by `session-learner.mjs`
 - `notify-stale-artifacts.mjs` — opt-in SessionStart desktop notification when `detect-stale-artifacts.sh` reports overdue artefacts. Gated on the `desktop_notifications` userConfig field equalling `"true"`, read from the `CLAUDE_PLUGIN_OPTION_DESKTOP_NOTIFICATIONS` env var that Claude Code exports to plugin subprocesses. The env-var path degrades cleanly to `undefined` when the field is unset; the earlier `${user_config.desktop_notifications}` argv substitution raised `plugin option "desktop_notifications" isnt set` on fresh installs and aborted the hook before it could run. Emits a `terminalSequence` (Claude Code v2.1.141+) stacking OSC 9 (iTerm2 / Windows Terminal / WezTerm / ConEmu) and OSC 777 (urxvt / Ghostty / Warp) notification escapes — terminals silently ignore unsupported codes per the documented allowlist. Complements the existing `stale-artifact-scan` background monitor; the monitor still streams per-line in-session notifications.
+
+### Wardley provenance rules
+
+`wardley-provenance.mjs` holds the last two checks as pure functions —
+`parseInventoryRows`, `parseValueChainInventory`, `parseCitations`,
+`parseRegisterDocIds`, `resolveSource`, `checkProvenance` — with no `fs` and no
+`process`. `validate-wardley-math.mjs` walks the project directory, reads the
+value chain, and calls in; `tests/plugin/wardley-provenance.test.mjs` calls the
+same functions directly and then exercises the whole hook over a temporary
+project. Same split as `session-nudge.mjs` / `session-learner.mjs`, for the same
+reason: the rules are testable without a Claude Code session.
+
+Both rules are **claim-scoped**, which is what keeps them free of false
+positives and is worth preserving in any change:
+
+- A Component Inventory table with **no `Source` column** is not
+  provenance-checked. Maps written before the column existed keep working, and
+  the column's presence is a Tier 2 rule (see `../docs/ENFORCEMENT.md`).
+- Visibility is joined **only for rows that name the value chain**. A map
+  deliberately anchored on a different user need than the WVCH artefact is
+  never blocked for placing a shared component differently.
+
+Every filesystem read is best-effort: a project directory that cannot be walked
+yields an empty artefact set, which makes both checks no-ops rather than
+blockers. A hook that cannot read the project must not stop the write.
+
+The pattern is borrowed from Anthropic's `commerce-agents` example, where a cart
+write accepts only product ids a tool returned in the session
+(`shopping-agent/core/shopping_agent/gates.py`) and the model picks the product
+card while the server fills in the price
+(`commerce-common/commerce_common/presentation.py`). Here the model picks the
+components and the value chain fills in the visibility.
 
 ## Vendored Wardley tidy engine
 

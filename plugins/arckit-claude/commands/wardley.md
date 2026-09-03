@@ -503,6 +503,19 @@ The Wardley Map document must include:
 3. **Component Inventory**:
    - All components with visibility, evolution, stage classification
    - Strategic notes for each component
+   - **Source** for each component — this column is enforced, not decorative:
+     - The document ID of an artefact in this project (`ARC-nnn-WVCH-v1.0`,
+       `ARC-nnn-REQ-v1.0`, `ARC-nnn-RSCH-v1.0`), or a citation ID you have declared
+       in this map's own Citations table, or the literal `Assumption` for a component
+       that is your analytical judgement with no source document behind it.
+     - A Source naming a document that is not in the project is blocked. Do not invent
+       a document ID to fill the cell — write `Assumption` and say so in the
+       Assumptions section instead.
+     - **Where the Source is the value chain, copy its visibility verbatim.** The WVCH
+       artefact owns visibility; this map owns evolution. A component sourced to the
+       value chain but absent from it, or carrying a different visibility, is blocked.
+       If the value chain is wrong, fix it with `/arckit:wardley.value-chain` and
+       re-run — do not silently diverge here.
 
 4. **Evolution Analysis**:
    - Components by evolution stage (Genesis, Custom, Product, Commodity)
