@@ -169,6 +169,11 @@ The highest-signal failures — collected from real releases. Read these before 
 - **Tables in release articles.** LinkedIn and Medium do not render Markdown tables — a
   comparison pasted there lands as a wall of pipes. Write it as prose. Articles live in the
   gitignored `docs/articles/` drafts folder; force-add the keepers (`git add -f`).
+- **Articles are for users, not maintainers.** Lead each section with what changed for the
+  reader and why it matters; no file names, hook names, schema or regex talk in the body — say
+  what a mechanism does, not what it is called. Hero labels follow the same rule. The first draft
+  of the commerce-skills article (#845) had to be rewritten for this; the maintainer detail lives
+  in the CHANGELOG and the PR body, which the article can link to.
 - **Do not put release numbers in extension READMEs.** Extension release identity lives in
   `VERSION` files, manifests, Git tags, and GitHub Releases. README-pinned versions drift and
   are blocked by `tests/plugin/test_release_process.py`.
