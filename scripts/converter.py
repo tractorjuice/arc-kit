@@ -427,6 +427,66 @@ def rewrite_paths(prompt, config):
     return result
 
 
+# Claude Code's AskUserQuestion is a UI tool no other runtime has. Every
+# non-Claude target gets the same neutral prose, so a generated skill or
+# prompt asks the user directly instead of naming a tool it cannot call.
+# Ordered: specific phrasings first, then a catch-all so nothing leaks.
+# `_QUESTION_TOOL_RULES` entries are (pattern, replacement); a replacement
+# keeps the sentence-initial capital of what it replaces.
+_QUESTION_TOOL_RULES = [
+    # First, so the generic "to ask" rules below cannot leave a doubled "the user".
+    (r"use (?:the )?(?:\*\*)?AskUserQuestion(?:\*\*)?(?: tool)? to ask the user", "ask the user"),
+    (r"use the \*\*AskUserQuestion\*\* tool to interactively gather", "ask the user for"),
+    (r"use the \*\*AskUserQuestion\*\* tool to gather", "ask the user for"),
+    (r"use the \*\*AskUserQuestion\*\* tool to ask", "ask the user"),
+    (r"use the AskUserQuestion tool to interactively gather", "ask the user for"),
+    (r"use the AskUserQuestion tool to gather", "ask the user for"),
+    (r"use the AskUserQuestion tool to ask", "ask the user"),
+    (r"use AskUserQuestion to ask", "ask the user"),
+    # "use AskUserQuestion to clarify with the user", "... to confirm priorities
+    # with the user": keep the verb and its object, drop the tool.
+    (r"use AskUserQuestion to (\w+)((?:(?! with the user).){0,80}?) with the user", r"\1\2 with the user"),
+    (r"use AskUserQuestion to clarify", "ask the user to clarify"),
+    (r"use AskUserQuestion to confirm", "ask the user to confirm"),
+    (r"Call the \*\*AskUserQuestion\*\* tool exactly once with all (\d+) questions below in a single call\.",
+     r"Ask the user all \1 questions below at once, in one message."),
+    (r"in a \*\*single AskUserQuestion call\*\*", "**together, in one message**"),
+    (r"Ask questions one at a time using AskUserQuestion\.", "Ask questions one at a time."),
+    (r"Each uses AskUserQuestion with multiple-choice options\.", "Each offers multiple-choice options."),
+    (r"If the skill calls `AskUserQuestion`", "If the skill asks the user a question"),
+    (r"AskUserQuestion choices made", "Question choices made"),
+    (r"Skipping the AskUserQuestion triage", "Skipping the triage questions"),
+    # Catch-alls. Anything the rules above did not phrase away.
+    (r"the \*\*AskUserQuestion\*\* tool", "a question to the user"),
+    (r"\*\*AskUserQuestion\*\* tool", "question to the user"),
+    (r"the AskUserQuestion tool", "a question to the user"),
+    (r"AskUserQuestion tool", "question to the user"),
+    (r"`AskUserQuestion`", "a question to the user"),
+    (r"AskUserQuestion", "a question to the user"),
+]
+
+
+def neutralise_question_tool(content):
+    """Rewrite every mention of Claude Code's AskUserQuestion tool into plain
+    "ask the user" prose. Idempotent; safe to apply more than once."""
+
+    def _sub(pattern, replacement):
+        def repl(match):
+            out = match.expand(replacement) if "\\" in replacement else replacement
+            before = match.string[: match.start()].rstrip(" \t")
+            at_sentence_start = before == "" or before[-1] in "\n.:!?-*>"
+            if at_sentence_start and out[:1].islower():
+                out = out[:1].upper() + out[1:]
+            return out
+
+        return re.compile(pattern, re.IGNORECASE).sub(repl, content_holder[0])
+
+    content_holder = [content]
+    for pattern, replacement in _QUESTION_TOOL_RULES:
+        content_holder[0] = _sub(pattern, replacement)
+    return content_holder[0]
+
+
 def rewrite_hook_dependencies(prompt, config):
     """Replace hook-dependent content for platforms without hooks."""
     result = prompt
@@ -619,6 +679,7 @@ def convert(commands_dirs, agents_dir):
             pc_config = AGENT_CONFIG["paperclip"]
             pc_prompt = rewrite_paths(prompt, pc_config)
             pc_prompt = rewrite_hook_dependencies(pc_prompt, pc_config)
+            pc_prompt = neutralise_question_tool(pc_prompt)
             template_content = read_template_for_command(
                 base_name,
                 os.path.join(os.path.dirname(commands_dir.rstrip(os.sep)), "templates"),
@@ -649,6 +710,7 @@ def convert(commands_dirs, agents_dir):
             else:
                 rewritten = rewrite_paths(prompt, config)
                 rewritten = rewrite_hook_dependencies(rewritten, config)
+                rewritten = neutralise_question_tool(rewritten)
 
             # Determine handoff command format based on target
             if config["format"] == "prompt":
@@ -924,7 +986,10 @@ def copy_extension_files(plugin_sources):
 
 
 def strip_claude_only_skill_fields(skills_dir):
-    """Strip Claude-only frontmatter fields (e.g. paths) from SKILL.md files."""
+    """Strip Claude-only frontmatter fields (e.g. paths) from SKILL.md files,
+    and neutralise Claude Code's AskUserQuestion tool in their bodies. Both
+    skill copy paths (the core_only_copies loop and copy_reference_skills)
+    end here, so this is the one place a reference skill is made runtime-neutral."""
     if not os.path.isdir(skills_dir):
         return
     for root, _dirs, files in os.walk(skills_dir):
@@ -934,26 +999,25 @@ def strip_claude_only_skill_fields(skills_dir):
             filepath = os.path.join(root, filename)
             with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
-            if not content.startswith("---"):
-                continue
-            parts = content.split("---", 2)
-            if len(parts) <= 2:
-                continue
-            try:
-                fm = yaml.safe_load(parts[1]) or {}
-            except yaml.YAMLError:
-                continue
-            if "paths" not in fm:
-                continue
-            fm.pop("paths", None)
-            rebuilt = (
-                "---\n"
-                + yaml.dump(fm, default_flow_style=False, allow_unicode=True, sort_keys=False)
-                + "---"
-                + parts[2]
-            )
-            with open(filepath, "w", encoding="utf-8") as f:
-                f.write(rebuilt)
+            rebuilt = neutralise_question_tool(content)
+            if rebuilt.startswith("---"):
+                parts = rebuilt.split("---", 2)
+                if len(parts) > 2:
+                    try:
+                        fm = yaml.safe_load(parts[1]) or {}
+                    except yaml.YAMLError:
+                        fm = None
+                    if fm is not None and "paths" in fm:
+                        fm.pop("paths", None)
+                        rebuilt = (
+                            "---\n"
+                            + yaml.dump(fm, default_flow_style=False, allow_unicode=True, sort_keys=False)
+                            + "---"
+                            + parts[2]
+                        )
+            if rebuilt != content:
+                with open(filepath, "w", encoding="utf-8") as f:
+                    f.write(rebuilt)
 
 
 def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
@@ -1711,38 +1775,9 @@ def _rewrite_skill_content(
     content = content.replace(f"(/{inv_prefix}", f"({inv_prefix}")
     content = content.replace(f"Run `/{inv_prefix}", f"Run `{inv_prefix}")
 
-    # Generated skills should ask the user directly instead of naming
-    # Claude Code's AskUserQuestion UI tool.
-    content = re.sub(
-        r"use the \*\*AskUserQuestion\*\* tool to gather",
-        "ask the user for",
-        content,
-        flags=re.IGNORECASE,
-    )
-    content = re.sub(
-        r"use the \*\*AskUserQuestion\*\* tool to ask",
-        "ask the user",
-        content,
-        flags=re.IGNORECASE,
-    )
-    content = re.sub(
-        r"use the AskUserQuestion tool to interactively gather",
-        "ask the user for",
-        content,
-        flags=re.IGNORECASE,
-    )
-    content = re.sub(
-        r"use the AskUserQuestion tool to gather",
-        "ask the user for",
-        content,
-        flags=re.IGNORECASE,
-    )
-    content = re.sub(
-        r"use AskUserQuestion to ask",
-        "ask the user",
-        content,
-        flags=re.IGNORECASE,
-    )
+    # Generated skills ask the user directly instead of naming Claude
+    # Code's AskUserQuestion UI tool (shared with every non-Claude target).
+    content = neutralise_question_tool(content)
     content = re.sub(
         r"use AskUserQuestion to confirm",
         "ask the user to confirm",
