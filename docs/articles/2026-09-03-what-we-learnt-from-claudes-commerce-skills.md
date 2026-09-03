@@ -1,4 +1,4 @@
-# Six Things a Governance Harness Learnt from a Shopping Agent
+# What We Learnt from Claude's Commerce Skills, and What We Left on the Shelf
 
 **Anthropic published a reference implementation for commerce agents: a shopping assistant and a merchant back-office assistant, defined once and run on three platforms. ArcKit is an architecture governance harness that writes Markdown into git repositories. Almost nothing in the first is about the second. I read it anyway, and it produced six changes to ArcKit in a day, one of them a security fix. This is what transferred, what did not, and why reading outside your own domain is worth the afternoon.**
 

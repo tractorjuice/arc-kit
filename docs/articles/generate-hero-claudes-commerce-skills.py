@@ -1,10 +1,10 @@
-"""Generate the hero image for "Six Things a Governance Harness Learnt from a Shopping Agent".
+"""Generate the hero image for "What We Learnt from Claude's Commerce Skills, and What We Left on the Shelf".
 
 A shopping agent on the left, the governance harness on the right, and six
 lesson tiles carried across between them. Same house style as the sibling
 generate-hero-*.py scripts; font lookup also covers macOS.
 
-    uv run --with pillow python docs/articles/generate-hero-six-things-from-a-shopping-agent.py
+    uv run --with pillow python docs/articles/generate-hero-claudes-commerce-skills.py
 """
 
 from pathlib import Path
@@ -81,10 +81,10 @@ for x in range(W):
     d.line((x, H - 5, x, H), fill=tuple(max(0, c - 35) for c in col))
 
 # Header
-d.text((76, 66), "ARCKIT · READING OUTSIDE THE DOMAIN", font=font(26, True, True), fill=CYAN)
-d.text((76, 106), "Six things a governance harness", font=font(56, True), fill=TEXT)
-d.text((76, 170), "learnt from a shopping agent", font=font(56, True), fill=TEXT)
-d.text((76, 244), "anthropics/commerce-agents, read for what transfers to a plugin that writes governed Markdown.", font=font(23), fill=MUTED)
+d.text((76, 66), "ARCKIT · READING ANTHROPIC'S COMMERCE-AGENTS REFERENCE", font=font(26, True, True), fill=CYAN)
+d.text((76, 106), "What we learnt from Claude's commerce skills,", font=font(52, True), fill=TEXT)
+d.text((76, 166), "and what we left on the shelf", font=font(52, True), fill=TEXT)
+d.text((76, 240), "Six patterns that transferred to a governance harness, and the ones that did not.", font=font(23), fill=MUTED)
 
 # Left: the shopping agent
 lx, ly = 76, 318
@@ -145,6 +145,6 @@ for i, (num, label) in enumerate([
 # Footer
 d.text((76, H - 52), "Four of the six became a CI check or an eval case. Two of those found a defect on the first run.", font=font(17, False, True), fill=DIM)
 
-out = Path(__file__).with_name("2026-09-03-six-things-a-governance-harness-learnt-from-a-shopping-agent-hero.png")
+out = Path(__file__).with_name("2026-09-03-what-we-learnt-from-claudes-commerce-skills-hero.png")
 img.save(out, optimize=True)
 print(f"wrote {out}")
