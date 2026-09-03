@@ -67,6 +67,8 @@ docs/telemetry.json
 
 # Projects (created by arckit init, not part of the toolkit itself)
 projects/
+# ...but the eval suite's fixture repositories are source, not user artefacts
+!plugins/arckit-claude/evals/fixtures/**/projects/
 
 # Vendor proposals (may contain sensitive info)
 # Uncomment if you don't want to commit vendor documents

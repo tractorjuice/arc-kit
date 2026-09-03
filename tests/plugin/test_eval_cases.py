@@ -18,11 +18,15 @@ Rules pinned here:
      `WebSearch`) unless the case is tagged `network`.
   6. `evals/results/` is gitignored, so a recording can never be committed
      by accident.
+  7. Every fixture file is tracked by git. The repo-wide `projects/` ignore
+     rule swallowed the fixture repository on the first commit of this suite
+     and CI saw cases whose fixtures did not exist (#842).
 """
 
 from __future__ import annotations
 
 import re
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -160,3 +164,13 @@ def test_results_dir_is_gitignored():
 def test_evals_dir_is_not_shipped_by_converter():
     converter = (REPO_ROOT / "scripts" / "converter.py").read_text(encoding="utf-8")
     assert '("evals"' not in converter, "evals/ is maintainer tooling and must not be copied to extensions"
+
+
+def test_every_fixture_file_is_tracked_by_git():
+    tracked = set(subprocess.run(
+        ["git", "ls-files", "--", str(EVALS / "fixtures")],
+        cwd=REPO_ROOT, capture_output=True, text=True, check=True,
+    ).stdout.split())
+    on_disk = {str(p.relative_to(REPO_ROOT)) for p in (EVALS / "fixtures").rglob("*") if p.is_file()}
+    missing = sorted(on_disk - tracked)
+    assert not missing, f"fixture files on disk but not tracked (an ignore rule is eating them): {missing}"
