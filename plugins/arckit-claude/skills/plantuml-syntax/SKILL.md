@@ -1,6 +1,6 @@
 ---
 name: plantuml-syntax
-description: "This skill should be used when the user asks about PlantUML syntax for C4-PlantUML, sequence, class, activity, state, ER, component, deployment, or use case diagrams, rendering errors, layout conflicts, skinparams, or themes."
+description: "PlantUML syntax reference, C4-PlantUML first, for writing or fixing a diagram in an artefact: sequence, class, activity, state, ER, component, deployment and use-case diagrams, skinparams and themes, C4 layout conflicts and rendering errors. Not needed for Mermaid (mermaid-syntax), or when the request is for a governed diagram artefact with document control, which /arckit:diagram produces."
 paths:
   - "**/*.puml"
   - "**/*.plantuml"

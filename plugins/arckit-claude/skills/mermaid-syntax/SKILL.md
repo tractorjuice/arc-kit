@@ -1,6 +1,6 @@
 ---
 name: mermaid-syntax
-description: "This skill should be used when the user asks about Mermaid diagram syntax, how to write flowchart, sequence, class, state, ER, Gantt, C4, mindmap, timeline, or other diagram types, node shapes, styling, theming, or rendering errors."
+description: "Mermaid syntax reference for writing or fixing a diagram in an artefact: flowchart, sequence, class, state, ER, Gantt, C4, mindmap, timeline and the other diagram types, node shapes, styling, theming, and why a diagram fails to render. Not needed for PlantUML (plantuml-syntax), or when the request is for a governed diagram artefact with document control, which /arckit:diagram produces."
 paths:
   - "**/*.mmd"
   - "**/*.mermaid"

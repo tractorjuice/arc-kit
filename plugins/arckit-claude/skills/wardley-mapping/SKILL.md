@@ -1,6 +1,6 @@
 ---
 name: wardley-mapping
-description: "This skill should be used when the user asks about Wardley Mapping, evolution stages, strategic positioning, creating maps, value chain decomposition, gameplay patterns, doctrine assessment, climatic patterns, build vs. buy, or inertia analysis."
+description: "Wardley Mapping reference for a map, a positioning question or a strategic read: value-chain decomposition, evolution stages, OnlineWardleyMaps syntax, gameplay, doctrine and climatic patterns, build-versus-buy and inertia. Also loaded while a WARD artefact is being written. Not needed when the request is for a governed Wardley artefact with document control; the /arckit:wardley, wardley.value-chain, wardley.doctrine, wardley.gameplay and wardley.climate commands produce those."
 paths:
   - "**/ARC-*-WARD-*.md"
   - "**/*.wardley"
