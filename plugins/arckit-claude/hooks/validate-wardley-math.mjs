@@ -14,11 +14,13 @@
  *   7. Visibility join — a row sourced to the project's value chain must
  *      carry the value chain's own visibility
  *
- * Checks 6 and 7 live in the pure `wardley-provenance.mjs`; this file finds
- * the project's artefacts on disk and feeds them in. Both are claim-scoped:
- * a table with no `Source` column is not provenance-checked, and visibility
- * is joined only for rows that name the value chain, so a map deliberately
- * anchored on a different user need is never blocked for disagreeing with it.
+ * Checks 6 and 7 live in the pure `wardley-provenance.mjs`; this file indexes
+ * every artefact under the repository's `projects/` root and feeds them in.
+ * Both are claim-scoped: a table with no `Source` column is not
+ * provenance-checked, and visibility is joined only for rows that name a
+ * value chain — the one they cite — so a map deliberately anchored on a
+ * different user need is never blocked for disagreeing with it. Claude Code
+ * only: the other runtimes do not run this hook.
  *
  * Hook Type: PreToolUse
  * Matcher: Write
@@ -47,7 +49,9 @@ import {
   parseCitations,
   parseRegisterDocIds,
   checkProvenance,
+  docTypeOf,
 } from './wardley-provenance.mjs';
+import { KNOWN_TYPES } from '../config/doc-types.mjs';
 
 const VALID_OWM_STYLES = new Set(['wardley', 'colour', 'plain', 'handwritten', 'dark']);
 // OWM statement keywords that must NOT be treated as edges even if a line
@@ -391,100 +395,134 @@ for (let i = 0; i < contentLines.length; i++) {
 // --- Checks 6 & 7: Component provenance and the value-chain visibility join ---
 //
 // The math checks above prove a map is consistent with itself; they cannot
-// tell an invented component from a real one. These two read the project the
-// map sits in, so a Source cell has to name something that is actually there.
-// Every filesystem read is best-effort: a project we cannot walk yields an
-// empty artefact set, which makes both checks no-ops rather than blockers.
+// tell an invented component from a real one. These two read the repository
+// the map sits in, so a Source cell has to name something that is actually
+// there. Everything below is fail-soft and scoped:
+//   - it runs only when the map has at least one Source-bearing inventory
+//     row, so a WVCH/WGAM/WCLM write and a pre-column map do no I/O at all;
+//   - every filesystem read sits inside one try/catch, so a fault here can
+//     never take checks 1-5 down with it;
+//   - a `projects/` tree that cannot be read at all is treated as unknown,
+//     not as empty: the provenance checks are skipped rather than blocking
+//     every grounded Source (an empty index would report every real
+//     artefact as fabricated, steering the model to relabel it `Assumption`).
 
 const provenanceErrors = [];
 const visibilityErrors = [];
 
-/** Files under `dir`, at most `maxDepth` levels down. */
-function walkFiles(dir, maxDepth = 3) {
-  const found = [];
-  if (maxDepth < 0) return found;
+// Directories that hold reference material, never ARC artefacts, and may be
+// large (a vendor drop, a policy library). Skipped so the walk stays cheap.
+const NON_ARTEFACT_DIRS = new Set(['external', 'vendors', 'policies', 'node_modules']);
+
+/** `.md` files under `dir`, at most `maxDepth` levels down, into `out`.
+ *  Returns false when `dir` itself could not be read. */
+function walkFiles(dir, maxDepth, out) {
   let entries;
   try {
     entries = readdirSync(dir, { withFileTypes: true });
   } catch {
-    return found;
+    return false;
   }
   for (const entry of entries) {
     if (entry.name.startsWith('.')) continue;
     if (entry.isDirectory()) {
-      found.push(...walkFiles(join(dir, entry.name), maxDepth - 1));
+      if (maxDepth <= 0 || NON_ARTEFACT_DIRS.has(entry.name)) continue;
+      walkFiles(join(dir, entry.name), maxDepth - 1, out);
     } else if (entry.isFile() && entry.name.endsWith('.md')) {
-      found.push(join(dir, entry.name));
+      out.push(join(dir, entry.name));
     }
   }
-  return found;
+  return true;
 }
 
-// `.../projects/<id>/wardley-maps/<file>.md` — the project is the grandparent.
-const mapsDir = dirname(filePath);
-const projectDir = dirname(mapsDir);
-
-// Doc IDs and doc-type codes are read from artefact filenames, which
-// `validate-arc-filename.mjs` already holds to the ARC-<nnn>-<TYPE>-v<n>.<n>
-// shape, so a filename is a reliable index of what the project holds.
-const ARTEFACT_NAME = /^(ARC-\d{3}-([A-Z][A-Z0-9]*)(?:-\d+)?-v(\d+)\.(\d+))\.md$/;
-const projectDocIds = new Set();
-const projectDocTypes = new Set();
-let valueChainDocId = null;
-let valueChainPath = null;
-let valueChainVersion = -1;
-
-for (const file of walkFiles(projectDir)) {
-  const match = basename(file).match(ARTEFACT_NAME);
-  if (!match) continue;
-  projectDocIds.add(match[1].toUpperCase());
-  projectDocTypes.add(match[2].toUpperCase());
-  // A project should hold one current value chain; where several versions
-  // sit side by side the highest wins, compared numerically so v10.0 beats
-  // v9.0 (a filename sort would not).
-  if (match[2].toUpperCase() !== 'WVCH') continue;
-  const version = parseInt(match[3], 10) * 1000 + parseInt(match[4], 10);
-  if (version > valueChainVersion) {
-    valueChainVersion = version;
-    valueChainDocId = match[1].toUpperCase();
-    valueChainPath = file;
+/** The nearest ancestor directory named `projects`, or null. */
+function findProjectsRoot(fromDir) {
+  let dir = fromDir;
+  for (let i = 0; i < 8; i++) {
+    if (basename(dir) === 'projects') return dir;
+    const parent = dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
   }
+  return null;
 }
 
-// The map being written may be new — count its own ID as present so a
-// self-reference is never reported as a missing document.
-const selfMatch = filename.match(ARTEFACT_NAME);
-if (selfMatch) {
-  projectDocIds.add(selfMatch[1].toUpperCase());
-  projectDocTypes.add(selfMatch[2].toUpperCase());
-}
-
-let valueChain = new Map();
-if (valueChainPath) {
-  try {
-    valueChain = parseValueChainInventory(readFileSync(valueChainPath, 'utf8'));
-  } catch {
-    valueChain = new Map();
-  }
-}
-
-// A fault in the provenance rules must never block a write that the math
-// checks accept: an unreadable project or an unparseable table degrades to
-// no findings, exactly as an absent Source column does.
 try {
   const { rows } = parseInventoryRows(contentLines);
-  const result = checkProvenance({
-    rows,
-    valueChain,
-    valueChainDocId,
-    citations: parseCitations(contentLines),
-    registerDocIds: parseRegisterDocIds(contentLines),
-    projectDocIds,
-    projectDocTypes,
-  });
-  provenanceErrors.push(...result.provenanceErrors);
-  visibilityErrors.push(...result.visibilityErrors);
+  if (rows.some((r) => r.hasSource)) {
+    // `.../projects/<id>/wardley-maps/<file>.md`: the project is the grandparent,
+    // and every project under the same `projects/` root is indexed, because a
+    // map may source a component to 000-global's principles or a sibling
+    // project's requirements and a build recipe may write the map into 000-global.
+    const mapsDir = dirname(filePath);
+    const projectDir = dirname(mapsDir);
+    const projectsRoot = findProjectsRoot(mapsDir) ?? dirname(projectDir);
+
+    const files = [];
+    // projects/<project>/<subdir>/<file> is three levels below the root.
+    const readable = walkFiles(projectsRoot, 3, files);
+    if (!readable) throw new Error('projects root unreadable');
+
+    // Doc IDs and doc-type codes come from artefact filenames, which
+    // `validate-arc-filename.mjs` holds to the ARC-<nnn>-<TYPE>[-<seq>]-v<n>.<n>
+    // shape; hyphenated types (SECD-MOD, PRIN-COMP) resolve through the registry.
+    const projectDocIds = new Set();
+    const projectDocTypes = new Set();
+    const valueChainPaths = new Map(); // upper-cased WVCH Doc ID -> path
+    let defaultValueChainDocId = null;
+    let defaultRank = -1;
+
+    const indexArtefact = (name, path) => {
+      if (!/^ARC-\d{3}-.+-v\d+\.\d+\.md$/i.test(name)) return;
+      const docId = name.slice(0, -3).toUpperCase();
+      const type = docTypeOf(docId, KNOWN_TYPES);
+      if (!type) return;
+      projectDocIds.add(docId);
+      projectDocTypes.add(type);
+      if (type !== 'WVCH') return;
+      if (path) valueChainPaths.set(docId, path);
+      // A bare `WVCH` source means the project's own current value chain:
+      // highest sequence number, then highest version, within this project.
+      if (path && dirname(dirname(path)) === projectDir) {
+        const m = docId.match(/-WVCH(?:-(\d+))?-V(\d+)\.(\d+)$/);
+        const rank = (m ? parseInt(m[1] ?? '0', 10) : 0) * 1e6
+          + (m ? parseInt(m[2], 10) : 0) * 1000 + (m ? parseInt(m[3], 10) : 0);
+        if (rank > defaultRank) {
+          defaultRank = rank;
+          defaultValueChainDocId = docId;
+        }
+      }
+    };
+    for (const file of files) indexArtefact(basename(file), file);
+    // The map being written may be new — count its own ID as present so a
+    // self-reference is never reported as a missing document.
+    indexArtefact(filename, null);
+
+    const valueChains = new Map();
+    for (const [docId, path] of valueChainPaths) {
+      try {
+        valueChains.set(docId, parseValueChainInventory(readFileSync(path, 'utf8')));
+      } catch {
+        // Unreadable value chain: its rows are simply not joined.
+      }
+    }
+
+    const result = checkProvenance({
+      rows,
+      valueChains,
+      defaultValueChainDocId,
+      citations: parseCitations(contentLines),
+      registerDocIds: parseRegisterDocIds(contentLines),
+      projectDocIds,
+      projectDocTypes,
+      knownTypes: KNOWN_TYPES,
+    });
+    provenanceErrors.push(...result.provenanceErrors);
+    visibilityErrors.push(...result.visibilityErrors);
+  }
 } catch {
+  // A fault in the provenance rules must never block a write the math checks
+  // accept, nor lose those checks: degrade to no provenance findings.
   provenanceErrors.length = 0;
   visibilityErrors.length = 0;
 }

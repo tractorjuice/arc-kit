@@ -91,27 +91,30 @@ annotation {N},[visibility, evolution] "{annotation_text}"
 ## Component Inventory
 
 > **Source column**: every component records where it came from — the document ID of
-> an artefact in this project (the value chain it was decomposed from, the
-> requirements, a research artefact), a citation ID from the Citations table below, or
-> the literal `Assumption` where the component is analytical judgement with no source
-> document behind it. A Source naming a document that is not in the project is
-> blocked. Where a component is sourced to the value chain (WVCH), its **Visibility**
-> must be the value chain's own number — the value chain owns visibility; this map
-> owns evolution.
+> an artefact in this repository exactly as it is on disk (the value chain it was
+> decomposed from, `ARC-nnn-WVCH-001-v1.0`; the requirements, `ARC-nnn-REQ-v1.0`; a
+> research artefact, `ARC-nnn-RSCH-001-v1.0`), a citation ID from the Citations table
+> below, an external Doc ID from the Document Register, or the literal `Assumption`
+> where the component is analytical judgement with no source document behind it. A
+> Source naming a document that is not in the repository is a fabricated provenance:
+> the Claude Code plugin rejects the write, and every other runtime relies on you not
+> to write one. Where a component is sourced to a value chain, its **Visibility** must
+> be that value chain's own number — the value chain owns visibility; this map owns
+> evolution.
 
 ### User Needs (Top of Map - High Visibility)
 
 | Component | Visibility | Evolution | Stage | Description | Strategic Notes | Source |
 |-----------|-----------|-----------|-------|-------------|-----------------|--------|
-| {Component 1} | 0.95 | 0.65 | Product | {description} | {strategic_notes} | {ARC-nnn-WVCH-v1.0} |
-| {Component 2} | 0.92 | 0.48 | Custom | {description} | {strategic_notes} | {ARC-nnn-WVCH-v1.0} |
+| {Component 1} | 0.95 | 0.65 | Product | {description} | {strategic_notes} | {ARC-nnn-WVCH-001-v1.0} |
+| {Component 2} | 0.92 | 0.48 | Custom | {description} | {strategic_notes} | {ARC-nnn-WVCH-001-v1.0} |
 | {Component 3} | 0.88 | 0.35 | Custom | {description} | {strategic_notes} | {ARC-nnn-REQ-v1.0} |
 
 ### Supporting Capabilities (Mid-Level Visibility)
 
 | Component | Visibility | Evolution | Stage | Description | Strategic Notes | Source |
 |-----------|-----------|-----------|-------|-------------|-----------------|--------|
-| {Component 4} | 0.68 | 0.82 | Commodity | {description} | {strategic_notes} | {ARC-nnn-WVCH-v1.0} |
+| {Component 4} | 0.68 | 0.82 | Commodity | {description} | {strategic_notes} | {ARC-nnn-WVCH-001-v1.0} |
 | {Component 5} | 0.62 | 0.71 | Product | {description} | {strategic_notes} | {[DOC_ID-C1]} |
 | {Component 6} | 0.58 | 0.45 | Custom | {description} | {strategic_notes} | Assumption |
 
@@ -119,7 +122,7 @@ annotation {N},[visibility, evolution] "{annotation_text}"
 
 | Component | Visibility | Evolution | Stage | Description | Strategic Notes | Source |
 |-----------|-----------|-----------|-------|-------------|-----------------|--------|
-| {Component 7} | 0.35 | 0.95 | Commodity | {description} | {strategic_notes} | {ARC-nnn-RSCH-v1.0} |
+| {Component 7} | 0.35 | 0.95 | Commodity | {description} | {strategic_notes} | {ARC-nnn-RSCH-001-v1.0} |
 | {Component 8} | 0.28 | 0.89 | Commodity | {description} | {strategic_notes} | {[DOC_ID-C2]} |
 | {Component 9} | 0.22 | 0.78 | Product | {description} | {strategic_notes} | Assumption |
 

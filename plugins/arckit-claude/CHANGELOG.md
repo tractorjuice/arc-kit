@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Wardley Map component provenance and value-chain visibility join** (`hooks/wardley-provenance.mjs`, wired into `validate-wardley-math.mjs`). Where a Component Inventory table carries a `Source` column, every cell must resolve to something that exists: an artefact document ID (with or without its version) or doc-type code held anywhere under `projects/`, hyphenated types included; a citation ID from the map's own Citations table; an external Doc ID from its Document Register; or the literal `Assumption`. A Source naming a document that is not there is blocked with every accepted form in the reason, and a Citations or Register row naming an ARC document is held to the same test so a self-authored row cannot launder an invented ID. A row sourced to a value chain must name a component in *that* value chain (the one it cites; a project may hold several) and carry its visibility to 2dp; a value chain whose inventory is still the template blocks a row that cites it. Both rules are claim-scoped: a table without the column is not checked, and a row sourced elsewhere is not joined. The hook indexes the whole `projects/` tree three levels deep (skipping `external/`, `vendors/`, `policies/`), does no I/O for a map with no Source-bearing row, runs every read inside one fail-soft guard so the five math checks can never be lost, and treats an unreadable `projects/` root as unknown rather than empty. The template's Component Inventory gains the column with sequenced placeholders (`{ARC-nnn-WVCH-001-v1.0}`); the command, guide, skill gotchas and `ENFORCEMENT.md` describe the rule, with the non-Claude runtimes told it is theirs to hold since they do not run the hook. Ten findings from the review of the first cut (#850) are folded in, including the primed unsequenced value-chain ID that would have blocked every real run.
+
 ## [6.14.0] — 2026-09-03
 
 ### Added
