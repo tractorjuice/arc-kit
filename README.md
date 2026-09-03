@@ -127,7 +127,7 @@ Zero-config: 75 official commands as skills, 10 specialized agents, all template
 
 Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
 
-**Latest Release**: [v6.13.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.13.0)
+**Latest Release**: [v6.14.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.14.0)
 
 ### OKF Interoperability
 
@@ -622,7 +622,7 @@ Handoff chain: `agile-strategy` → `product-architecture` → `oaa-adm-lite` �
 
 ## Using TOGAF ADM and O-AA Together
 
-The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.13.0` pin) — neither depends on the other. O-AA maps the ADM cycle to 2–4 week sprints; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.14.0` pin) — neither depends on the other. O-AA maps the ADM cycle to 2–4 week sprints; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Pattern | When to use | Sequence |
 |---------|-------------|----------|
@@ -640,7 +640,7 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 
 **Running both in the same project:**
 
-- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.13.0` pins.
+- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.14.0` pins.
 - Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.json` (architecture-change ↔ agile-governance).
 - Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands do not read TOGAF outputs, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
@@ -2014,7 +2014,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v6.13.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.13.0)
+- **Latest Version**: [v6.14.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.14.0)
 
 ---
 

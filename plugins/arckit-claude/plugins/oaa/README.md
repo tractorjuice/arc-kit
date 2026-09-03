@@ -83,7 +83,7 @@ Each command is a **prompt template** — not an interactive questionnaire. The 
 PRIN → REQ/STKE → OASTR/OAPR → OAAL → OASEC → OAGOV
 ```
 
-Foundation commands (`principles`, `requirements`, `stakeholders`) must run first. Breaking core `arckit` (=6.13.0) breaks doc-type validators.
+Foundation commands (`principles`, `requirements`, `stakeholders`) must run first. Breaking core `arckit` (=6.14.0) breaks doc-type validators.
 
 ### Artefact Naming
 
