@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Duplicate-key guard on command, agent and skill frontmatter.** PyYAML's `safe_load` keeps the last value of a repeated key and says nothing, so a pasted-twice `description:` or a second `handoffs:` block would load cleanly and silently discard the first, and `test_commands_structure.py` would not notice. `tests/plugin/test_frontmatter_duplicate_keys.py` parses every plugin's `commands/`, the core `agents/` and every plugin's `skills/` with a loader that raises on the first duplicate. All 300-odd files are clean today; the guard exists because a suspected duplicate in `search.md` turned out to be a display artefact, and the cheap way to be sure next time is a test.
+
 ## [6.14.0] — 2026-09-03
 
 ### Added
