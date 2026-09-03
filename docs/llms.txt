@@ -57,6 +57,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 
 - [Architecture principles](https://arckit.org/guides/principles.md): `/arckit:principles`.
 - [C4 diagrams](https://arckit.org/guides/diagram.md): `/arckit:diagram` Mermaid visualizations.
+- [Interactive diagrams](https://arckit.org/guides/archify.md): `/arckit:archify` self-contained interactive HTML diagrams and Wardley Maps.
 - [Data model](https://arckit.org/guides/data-model.md): `/arckit:data-model` ERD, GDPR.
 - [ADRs](https://arckit.org/guides/adr.md): `/arckit:adr` Architecture Decision Records.
 - [Design reviews](https://arckit.org/guides/design-review.md): `/arckit:hld-review`, `/arckit:dld-review`.
