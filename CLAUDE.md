@@ -233,6 +233,16 @@ Nothing guarded this until #675, and the trees drifted silently **in both direct
 - `--sync` only ever writes to the plugin tree. If the plugin copy holds the correct content, port it into the root copy by hand *first*, or the sync destroys it.
 - Root-only guides are fine (community-overlay and maintainer docs deliberately don't ship to extensions); a **plugin-only** guide is an error, because it can never reach the site or the CLI package. Record intentional root-only guides in `ROOT_ONLY_BY_DESIGN` in the script.
 
+### Shared Assets (three sync layers)
+
+A file under `plugins/arckit-claude/references/` or `templates/_partials/` is a **shared asset**: every plugin and every runtime must carry the same bytes. Adding or editing one means running three scripts, in this order, before pushing — CI checks each and a missed one costs a round trip (#843 needed two):
+
+1. `python3 scripts/sync-shared-assets.py` — copies core `references/` and the partials into every community plugin (`lint-markdown.yml` runs `--check`).
+2. `python3 scripts/sync-claude-plugin-layout.py` — mirrors the community plugins into the nested `plugins/arckit-claude/plugins/` tree (`tests/plugin/test_claude_overlay_namespacing.py` and `test_release_process.py` assert it).
+3. `python3 scripts/converter.py` — ships them to the seven generated extensions (gitignored locally; pushed at release).
+
+Guides are a separate pair with their own script, see **Guide Trees** below. Reference files are copied verbatim to non-Claude runtimes, so write them tool-agnostically: name a Claude Code tool only as "Claude Code's `X`" when explaining what the runtime's equivalent is.
+
 ### Template Customization
 
 - **Defaults**: `.arckit/templates/` (shipped with ArcKit, refreshed by `arckit init`)
