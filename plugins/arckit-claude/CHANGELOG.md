@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`slugify` produces the right slug on stock macOS bash 3.2.** The accent transliteration in `scripts/bash/common.sh` (and the plugin copy) used a quoted multibyte pattern in `${var//pattern/repl}`, which bash 3.2 mis-splits, so a project named "Café Modernisation" got the directory `caf-e-modernisation` on any Mac without a Homebrew bash; bash 5 handled it, which is why CI on Ubuntu never saw it and the 27 `test_slugify.py` failures looked like a local-only quirk. Both sides of the substitution are now unquoted (the table holds letters only, so nothing needs quoting), with a comment naming the quirk. All 102 slugify cases pass on bash 3.2 and bash 5.
+
 ## [6.14.0] — 2026-09-03
 
 ### Added
