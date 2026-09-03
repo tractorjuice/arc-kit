@@ -164,6 +164,15 @@ keepers with `git add -f`, as every published article has been.
 **No Markdown tables in articles.** LinkedIn and Medium do not render them —
 a comparison lands as a wall of pipes. Write it as prose instead.
 
+**Write for the person who uses ArcKit, not the person who maintains it.**
+Lead every section with what changed for them and why it matters, then
+explain how. No file names, hook names, schema or regex talk in the body —
+say what a mechanism does for the reader ("a poisoned page can no longer
+reach the part that writes your document"), not what it is called. Name a
+technique by its effect. The hero image labels follow the same rule. The
+maintainer-level detail belongs in the CHANGELOG and the PR body, which the
+article can link to.
+
 End with the `<!-- arckit:community-block -->` section, and credit
 contributors by @handle in the article *and* in the CHANGELOG entry — the
 handle appearing in a CHANGELOG is what makes `check-contributor-credits.py`
