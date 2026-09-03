@@ -470,12 +470,28 @@ const SCRIPT = `
   var nodes = Array.prototype.slice.call(svg.querySelectorAll('.node'));
   var evolves = Array.prototype.slice.call(svg.querySelectorAll('.evolve'));
 
+  // Build the detail panel with DOM APIs and textContent only. Component names
+  // come from author-supplied OWM, so concatenating them into innerHTML let a
+  // name containing an img/onerror payload execute on click in the generated
+  // page. Note this comment lives inside a template literal: no backticks.
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined && text !== null) node.textContent = String(text);
+    return node;
+  }
+
+  function replaceChildren(parent, children) {
+    while (parent.firstChild) parent.removeChild(parent.firstChild);
+    children.forEach(function (child) { parent.appendChild(child); });
+  }
+
   function clearFocus() {
     svg.classList.remove('focused');
     nodes.forEach(function (n) { n.classList.remove('is-active', 'is-related'); });
     links.forEach(function (l) { l.classList.remove('is-active'); });
     evolves.forEach(function (e) { e.classList.remove('is-active'); });
-    detail.innerHTML = '<p class="meta">Select a component to trace its dependencies.</p>';
+    replaceChildren(detail, [el('p', 'meta', 'Select a component to trace its dependencies.')]);
   }
 
   function focusNode(node) {
@@ -507,11 +523,12 @@ const SCRIPT = `
     var sourcing = node.getAttribute('data-sourcing');
     if (sourcing) rows.push(['Sourcing', sourcing.charAt(0).toUpperCase() + sourcing.slice(1)]);
     rows.push(['Dependencies', String(related.length)]);
-    var html = '<h2>' + node.getAttribute('data-name') + '</h2><dl>';
+    var list = el('dl');
     rows.forEach(function (row) {
-      html += '<dt>' + row[0] + '</dt><dd>' + row[1] + '</dd>';
+      list.appendChild(el('dt', null, row[0]));
+      list.appendChild(el('dd', null, row[1]));
     });
-    detail.innerHTML = html + '</dl>';
+    replaceChildren(detail, [el('h2', null, node.getAttribute('data-name')), list]);
   }
 
   nodes.forEach(function (node) {

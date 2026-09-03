@@ -53,16 +53,53 @@ function unquote(name) {
 }
 
 const COMPONENT_RE = /^(component|anchor)\s+(.+?)\s*\[\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*\]\s*(.*)$/i;
+// A pipeline child declared inside a `{ … }` block carries only an evolution
+// coordinate; its visibility is the parent's. `/arckit:wardley`'s own worked
+// example uses this form (`component "Text-Based Guidance" [0.25]`), and
+// owm-to-mermaid.mjs emits it, so rejecting it desynchronised the HTML and
+// Mermaid renderings of the same map.
+const COMPONENT_EVO_ONLY_RE = /^(component|anchor)\s+(.+?)\s*\[\s*(-?[\d.]+)\s*\]\s*(.*)$/i;
 const PIPELINE_COORD_RE = /^pipeline\s+(.+?)\s*\[\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*\]\s*$/i;
 const PIPELINE_BARE_RE = /^pipeline\s+(.+?)(?:\s*\{)?\s*$/i;
 const EVOLVE_RE = /^evolve\s+(.+?)\s+(-?[\d.]+)\s*(?:label\s*\[\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*\])?\s*(?:label\s+(.+))?$/i;
 const LINK_RE = /^(.+?)\s*(->|\+>|\+<>)\s*(.+)$/;
-const ANNOTATION_RE = /^annotation\s+(\d+)\s*\[\s*(.+?)\s*\]\s*(.*)$/i;
+// `annotation 1 [v, e] text` and the comma form `annotation 1,[v, e] "text"`
+// are both current OWM; the second is what owm-to-mermaid.mjs re-emits and what
+// the worked example in commands/wardley.md uses. The coordinate group is
+// greedy so a multi-point `[[v,e],[v,e]]` list is captured whole rather than
+// truncated at the first `]`.
+const ANNOTATION_RE = /^annotation\s+(\d+)\s*,?\s*\[(.+)\]\s*(.*)$/i;
 const ANNOTATIONS_BOX_RE = /^annotations\s*\[\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*\]\s*$/i;
 const NOTE_RE = /^note\s+(.+?)\s*\[\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*\]\s*$/i;
 const SOURCING_RE = /^(build|buy|outsource)\s+(.+)$/i;
 const LABEL_RE = /\blabel\s*\[\s*(-?[\d.]+)\s*,\s*(-?[\d.]+)\s*\]/i;
 const TITLE_RE = /^title\s+(.+)$/i;
+
+/**
+ * Resolve a LINK_RE match into a link, or null when either endpoint is not a
+ * declared component.
+ *
+ * Returning null (rather than warning) lets Pass 2 use this as a test for
+ * "is this line really a dependency?" before the directive keyword skip-list
+ * runs, so a component whose name begins with a keyword still links correctly.
+ */
+function parseLink(match, byName) {
+  // A link label may follow the target: `A -> B label`.
+  let toRaw = match[3].trim();
+  let label = null;
+  if (toRaw.startsWith('"')) {
+    const close = toRaw.indexOf('"', 1);
+    if (close > 0) {
+      const after = toRaw.slice(close + 1).trim();
+      if (after) label = after;
+      toRaw = toRaw.slice(0, close + 1);
+    }
+  }
+  const from = unquote(match[1]);
+  const to = unquote(toRaw);
+  if (!byName.has(from) || !byName.has(to)) return null;
+  return { from, to, flow: match[2] !== '->', label };
+}
 
 /**
  * Parse OWM text.
@@ -108,7 +145,7 @@ export function parseOwm(source) {
     // An explicit `pipeline X` / `{` ... `}` block claims its children by name.
     if (openBlock) {
       if (line === '}') { openBlock = null; continue; }
-      const child = line.match(COMPONENT_RE);
+      const child = line.match(COMPONENT_RE) || line.match(COMPONENT_EVO_ONLY_RE);
       if (child) {
         explicitBlocks.get(openBlock).push(unquote(child[2]));
       }
@@ -162,10 +199,11 @@ export function parseOwm(source) {
     }
 
     const mComp = line.match(COMPONENT_RE);
-    if (mComp) {
-      const kind = mComp[1].toLowerCase();
-      const name = unquote(mComp[2]);
-      const rest = mComp[5] || '';
+    const mCompEvo = mComp ? null : line.match(COMPONENT_EVO_ONLY_RE);
+    if (mComp || mCompEvo) {
+      const kind = (mComp || mCompEvo)[1].toLowerCase();
+      const name = unquote((mComp || mCompEvo)[2]);
+      const rest = (mComp ? mComp[5] : mCompEvo[4]) || '';
       const mLabel = rest.match(LABEL_RE);
       const mDecorator = rest.match(/\((build|buy|outsource)\)/i);
       if (byName.has(name)) {
@@ -175,8 +213,11 @@ export function parseOwm(source) {
       const component = {
         name,
         kind: kind === 'anchor' ? 'anchor' : 'component',
-        vis: parseFloat(mComp[3]),
-        evo: parseFloat(mComp[4]),
+        // Evolution-only form: visibility is inherited from the pipeline
+        // parent in Pass 3. NaN until then so a stray one is detectable.
+        vis: mComp ? parseFloat(mComp[3]) : NaN,
+        evo: mComp ? parseFloat(mComp[4]) : parseFloat(mCompEvo[3]),
+        visInherited: !mComp,
         labelOffset: mLabel
           ? { x: parseFloat(mLabel[1]), y: parseFloat(mLabel[2]) }
           : null,
@@ -213,10 +254,24 @@ export function parseOwm(source) {
     if (line === '{') { inBlock = true; continue; }
     if (line === '}') { inBlock = false; continue; }
 
+    // A dependency line is recognised BEFORE the keyword skip-list, because a
+    // component name may legitimately begin with a directive keyword. Gating on
+    // "both endpoints are declared components" keeps this unambiguous: it
+    // matches `Market Data -> Feed` and `Title Service -> API`, and does not
+    // match `evolution Genesis -> Custom -> Product`, whose endpoints are
+    // stages rather than components. Previously the skip-list ran first, so
+    // such a link was dropped and `Title Service -> API` was parsed as a
+    // `title` statement, silently renaming the whole map.
+    const mEarlyLink = line.match(LINK_RE);
+    if (mEarlyLink) {
+      const parsed = parseLink(mEarlyLink, byName);
+      if (parsed) { links.push(parsed); continue; }
+    }
+
     const mTitle = line.match(TITLE_RE);
     if (mTitle) { title = mTitle[1].trim(); continue; }
 
-    if (COMPONENT_RE.test(line) || PIPELINE_COORD_RE.test(line)) continue;
+    if (COMPONENT_RE.test(line) || COMPONENT_EVO_ONLY_RE.test(line) || PIPELINE_COORD_RE.test(line)) continue;
     if (/^pipeline\s+/i.test(line)) continue;
     if (SOURCING_RE.test(line) && !/\[/.test(line)) continue;
     if (/^(style|size|evolution|x-axis|y-axis|market|ecosystem|submap|url|pioneer|settler|townplanner)\b/i.test(line)) continue;
@@ -238,7 +293,7 @@ export function parseOwm(source) {
       annotations.push({
         number: parseInt(mAnn[1], 10),
         points,
-        text: mAnn[3].trim(),
+        text: unquote(mAnn[3]),
       });
       continue;
     }
@@ -266,33 +321,27 @@ export function parseOwm(source) {
       continue;
     }
 
+    // Any remaining `->` line failed parseLink above, which means an endpoint
+    // was never declared. Name it rather than dropping the line in silence.
     const mLink = line.match(LINK_RE);
     if (mLink) {
-      // A link label may follow the target: `A -> B label`.
       let toRaw = mLink[3].trim();
-      let label = null;
       if (toRaw.startsWith('"')) {
         const close = toRaw.indexOf('"', 1);
-        if (close > 0) {
-          const after = toRaw.slice(close + 1).trim();
-          if (after) label = after;
-          toRaw = toRaw.slice(0, close + 1);
+        if (close > 0) toRaw = toRaw.slice(0, close + 1);
+      }
+      for (const [role, raw] of [['from', mLink[1]], ['to', toRaw]]) {
+        const name = unquote(raw);
+        if (!byName.has(name)) {
+          warnings.push(`Link ${role} references unknown component "${name}".`);
         }
       }
-      const from = unquote(mLink[1]);
-      const to = unquote(toRaw);
-      if (!byName.has(from)) {
-        warnings.push(`Link references unknown component "${from}".`);
-        continue;
-      }
-      if (!byName.has(to)) {
-        warnings.push(`Link references unknown component "${to}".`);
-        continue;
-      }
-      links.push({ from, to, flow: mLink[2] !== '->', label });
-      if (inBlock) continue;
       continue;
     }
+
+    // Nothing matched. A non-empty line that no rule claims is almost always a
+    // typo in a directive; the old parser discarded it without a trace.
+    warnings.push(`Unrecognised line ignored: "${line}".`);
   }
 
   // ── Pass 3: resolve pipeline membership.
@@ -324,7 +373,22 @@ export function parseOwm(source) {
     if (parent) parent.pipeline = pipeline;
     for (const child of pipeline.children) {
       const component = byName.get(child);
-      if (component) component.pipelineParent = name;
+      if (!component) continue;
+      component.pipelineParent = name;
+      // Evolution-only children take their visibility from the parent.
+      if (component.visInherited && parent) component.vis = parent.vis;
+    }
+  }
+
+  // An evolution-only component outside any pipeline has no visibility to
+  // inherit. Place it mid-chain and say so, rather than rendering at NaN.
+  for (const component of components) {
+    if (component.visInherited && !Number.isFinite(component.vis)) {
+      component.vis = 0.5;
+      warnings.push(
+        `"${component.name}" declares only an evolution coordinate but is not in a ` +
+        `pipeline; visibility defaulted to 0.5.`
+      );
     }
   }
 

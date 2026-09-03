@@ -266,3 +266,129 @@ test('empty input parses without throwing', () => {
   assert.equal(map.components.length, 0);
   assert.equal(map.links.length, 0);
 });
+
+// ── Regression tests for the review findings on PR #851 ────────────────────
+// Each of these parsed or rendered silently-wrong before the fix.
+
+test('#851: pipeline block children may carry only an evolution coordinate', () => {
+  // The form used by commands/wardley.md's own worked example, and emitted by
+  // owm-to-mermaid.mjs. Previously dropped as components AND as children.
+  const map = parseOwm([
+    'component Benefits Eligibility Guidance [0.62, 0.30]',
+    'pipeline Benefits Eligibility Guidance {',
+    '  component "Text-Based Guidance" [0.25]',
+    '  component Conversational AI Guidance [0.55]',
+    '}',
+  ].join('\n'));
+  assert.equal(map.components.length, 3);
+  assert.deepEqual(map.pipelines[0].children, ['Text-Based Guidance', 'Conversational AI Guidance']);
+  const child = map.components.find((c) => c.name === 'Text-Based Guidance');
+  assert.equal(child.evo, 0.25);
+  assert.equal(child.vis, 0.62, 'visibility inherited from the pipeline parent');
+  assert.deepEqual(map.warnings, []);
+});
+
+test('#851: an evolution-only component outside a pipeline warns instead of rendering at NaN', () => {
+  const map = parseOwm('component Orphan [0.25]');
+  assert.equal(map.components[0].vis, 0.5);
+  assert.ok(map.warnings.some((w) => w.includes('Orphan') && w.includes('visibility')));
+});
+
+test('#851: annotation comma form is accepted and its text unquoted', () => {
+  const map = parseOwm([
+    'component X [0.5, 0.5]',
+    'annotations [0.05, 0.05]',
+    'annotation 1,[0.48, 0.45] "Build custom - competitive advantage"',
+  ].join('\n'));
+  assert.equal(map.annotations.length, 1);
+  assert.deepEqual(map.annotations[0].points, [{ vis: 0.48, evo: 0.45 }]);
+  assert.equal(map.annotations[0].text, 'Build custom - competitive advantage');
+});
+
+test('#851: multi-point annotations keep every point and leak no coordinates into the text', () => {
+  const map = parseOwm('component X [0.5, 0.5]\nannotation 1 [[0.43, 0.08],[0.08, 0.02]] Watch this');
+  assert.deepEqual(map.annotations[0].points, [
+    { vis: 0.43, evo: 0.08 },
+    { vis: 0.08, evo: 0.02 },
+  ]);
+  assert.equal(map.annotations[0].text, 'Watch this');
+});
+
+test('#851: a component whose name begins with a directive keyword still links', () => {
+  for (const name of ['Market Data', 'Title Service', 'Build Pipeline', 'Note Store', 'Pipeline Runner']) {
+    const map = parseOwm([
+      `component ${name} [0.5, 0.5]`,
+      'component Downstream [0.3, 0.3]',
+      `${name} -> Downstream`,
+    ].join('\n'));
+    assert.equal(map.links.length, 1, `${name} should link`);
+    assert.equal(map.links[0].from, name);
+  }
+});
+
+test('#851: a link from a title-prefixed component does not hijack the map title', () => {
+  const map = parseOwm([
+    'title Real Map Title',
+    'component Title Service [0.5, 0.5]',
+    'component API [0.3, 0.3]',
+    'Title Service -> API',
+  ].join('\n'));
+  assert.equal(map.title, 'Real Map Title');
+  assert.equal(map.links.length, 1);
+});
+
+test('#851: an evolution axis declaration is not mistaken for a dependency', () => {
+  const map = parseOwm('evolution Genesis -> Custom -> Product -> Commodity\ncomponent X [0.5, 0.5]');
+  assert.equal(map.links.length, 0);
+  assert.deepEqual(map.warnings, []);
+});
+
+test('#851: an unknown link endpoint names which end is missing', () => {
+  const map = parseOwm('component X [0.5, 0.5]\nX -> Ghost');
+  assert.ok(map.warnings.some((w) => w.includes('to') && w.includes('Ghost')));
+});
+
+test('#851: an unrecognised line is reported rather than discarded silently', () => {
+  const map = parseOwm('component X [0.5, 0.5]\ncomponnet Typo [0.4, 0.4]');
+  assert.ok(map.warnings.some((w) => w.includes('Unrecognised') && w.includes('componnet')));
+});
+
+test('#851: a component name cannot inject script into the detail panel', () => {
+  // The panel is built with DOM APIs; the old innerHTML path executed on click.
+  const html = convert('component <img src=x onerror="window.x=1"> [0.5, 0.5]');
+  assert.doesNotMatch(html, /detail\.innerHTML/);
+  assert.match(html, /replaceChildren\(detail/);
+  // No innerHTML sink anywhere in the emitted page script.
+  assert.doesNotMatch(html, /\.innerHTML\s*=/);
+});
+
+test("#851: the command's own worked-example OWM parses with no warnings", () => {
+  const map = parseOwm([
+    'title UK Government Benefits Chatbot',
+    'anchor Citizen [0.95, 0.60]',
+    'component Benefits Eligibility Guidance [0.62, 0.30]',
+    'component Conversational Interface [0.70, 0.38]',
+    'component "GOV.UK Notify" [0.55, 0.90]',
+    'component Authentication [0.50, 0.88]',
+    'component "GPT-4 LLM Service" [0.40, 0.70]',
+    'component Cloud Hosting AWS [0.15, 0.92]',
+    'Citizen -> Benefits Eligibility Guidance',
+    'Conversational Interface -> "GOV.UK Notify"',
+    'Conversational Interface -> Authentication',
+    '"GPT-4 LLM Service" -> Cloud Hosting AWS',
+    'pipeline Benefits Eligibility Guidance {',
+    '  component "Text-Based Guidance" [0.25]',
+    '  component Conversational AI Guidance [0.55]',
+    '}',
+    'evolve "GPT-4 LLM Service" 0.85',
+    'note "HIGH-RISK AI - Human oversight mandatory" [0.35, 0.25]',
+    'annotations [0.05, 0.05]',
+    'annotation 1,[0.48, 0.45] "Build custom - competitive advantage"',
+    'style wardley',
+  ].join('\n'));
+  assert.deepEqual(map.warnings, [], `unexpected warnings: ${map.warnings.join('; ')}`);
+  assert.equal(map.annotations.length, 1);
+  assert.equal(map.notes.length, 1);
+  assert.equal(map.links.length, 4);
+  assert.deepEqual(map.pipelines[0].children, ['Text-Based Guidance', 'Conversational AI Guidance']);
+});

@@ -162,7 +162,12 @@ Everything here parses without error and renders wrong. Found while building
   different visibility and it silently drops out of the pipeline — so give pipeline children
   the **exact** visibility of their parent rather than a near value; the tolerance is
   floating-point-fragile at its edge. The block form (`pipeline Foo` then `{ … }`) names its
-  children explicitly and is the safer choice when positions are still moving.
+  children explicitly and is the safer choice: inside the block a child takes **only an
+  evolution coordinate** (`component "Text-Based Guidance" [0.25]`) and inherits the parent's
+  visibility, so there is no near-miss to get wrong.
+- **`annotation` accepts two spellings and you will meet both:** `annotation 1 [v, e] text`
+  and the comma form `annotation 1,[0.48, 0.45] "text"`. A multi-point annotation nests the
+  pairs: `annotation 1 [[v1, e1],[v2, e2]] text`.
 - **An annotation on a component's exact coordinate hides that component.** `annotation 1 [0.5, 0.1]`
   pointing at the component already at `[0.5, 0.1]` lands the marker on top of the dot. Offset the
   annotation by roughly 0.02–0.03, or accept that the renderer must move it for you.
