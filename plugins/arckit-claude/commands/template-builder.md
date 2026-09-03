@@ -47,7 +47,7 @@ Slugify the template name: lowercase, replace spaces/special chars with hyphens,
 
 ### Step 2: Interview the User
 
-Ask these questions BEFORE reading any templates. Call the **AskUserQuestion** tool exactly once with all 4 questions below in a single call. Do NOT proceed until the user has answered.
+Ask these questions BEFORE reading any templates. Call the **AskUserQuestion** tool exactly once with all 4 questions below in a single call. Do NOT proceed until the user has answered. Follow the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`: prefill from the arguments, and where no answer comes (a headless run, a dismissed prompt) take each question's **(Recommended)** option and list it as an assumption.
 
 **Question 1** — header: `Category`, multiSelect: false
 > "What category best describes this template?"
