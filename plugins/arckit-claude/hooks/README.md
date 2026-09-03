@@ -2,6 +2,8 @@
 
 Hook handlers live in this directory and are registered in `hooks.json`. Supported hook events include `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Stop`, `StopFailure`, `PermissionRequest`, plus the newer `PostCompact` (v2.1.76), `FileChanged`/`CwdChanged`/`TaskCreated` (v2.1.83-84), `PermissionDenied` (v2.1.89), and `PreCompact` blocking (v2.1.105).
 
+For which rules the hooks enforce in code, which rules are only asked of the model, and what the deploying organisation must supply, see [`docs/ENFORCEMENT.md`](../docs/ENFORCEMENT.md). A change to a gate described there updates that page in the same pull request.
+
 ## `args:` Exec Form (v2.1.139+)
 
 All entries use the **exec form** of the command field — `command` is the executable name and `args: string[]` is the argument list, no shell involved:

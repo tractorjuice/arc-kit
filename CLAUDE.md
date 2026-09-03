@@ -154,7 +154,7 @@ Hook handlers live in `plugins/arckit-claude/hooks/` and are registered in `plug
 
 Platform hook capabilities available but **not yet used** by ArcKit (flagged for future adoption, tracked on #522): `SessionStart` hooks can return `hookSpecificOutput.sessionTitle` to name the session and `reloadSkills: true` to re-scan skill directories (v2.1.152+); and the `MessageDisplay` event (v2.1.152+) can transform or hide assistant text as it is displayed (speculative classification-aware redaction for OFFICIAL-SENSITIVE work).
 
-Notable hooks: provenance stamping, manifest auto-update, session telemetry, secret detection, requirement-graph injection. **For full details on each hook, see [`plugins/arckit-claude/hooks/README.md`](plugins/arckit-claude/hooks/README.md).**
+Notable hooks: provenance stamping, manifest auto-update, session telemetry, secret detection, requirement-graph injection. **For full details on each hook, see [`plugins/arckit-claude/hooks/README.md`](plugins/arckit-claude/hooks/README.md).** [`plugins/arckit-claude/docs/ENFORCEMENT.md`](plugins/arckit-claude/docs/ENFORCEMENT.md) is the three-tier statement of what the hooks enforce in code, what is only asked of the model, and what the deploying organisation owns — a change to a gate, a template rule or a reference file updates it in the same PR.
 
 ### Plugin Monitors
 

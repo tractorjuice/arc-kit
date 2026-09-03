@@ -104,7 +104,7 @@ After installing the plugin:
 
 ## Hooks
 
-Automation hooks run automatically to provide context and enforce standards. See the [Hooks Guide](docs/guides/hooks.md) for full details.
+Automation hooks run automatically to provide context and enforce standards. See the [Hooks Guide](docs/guides/hooks.md) for full details. [`docs/ENFORCEMENT.md`](docs/ENFORCEMENT.md) states which rules the hooks enforce in code, which are only asked of the model, and what your organisation supplies.
 
 | Event | Hooks | Purpose |
 |-------|-------|---------|
