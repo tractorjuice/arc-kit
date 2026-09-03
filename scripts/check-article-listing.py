@@ -11,7 +11,7 @@ August until a reader noticed. This guard holds:
      ending `-medium` or `-linkedin` are channel variants and need no card
      of their own, though they may have one.
   2. Every listed article is a tracked file on disk, and the image its card
-     points at, if any, exists (older heroes use free-form filenames; newer
+     points at, if any, is tracked by git (older heroes use free-form filenames; newer
      ones are `<slug>-hero.png`; a few early cards are text-only).
   3. `docs/index.html` shows exactly eight teasers, each for an article that
      is also on `docs/articles.html`, and the newest article by date prefix
@@ -37,12 +37,16 @@ VARIANT_SUFFIXES = ("-medium", "-linkedin")
 SLUG_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})-.+$")
 
 
+def tracked_files(pattern: str) -> set[str]:
+    return set(subprocess.run(
+        ["git", "ls-files", "--", pattern],
+        cwd=REPO_ROOT, capture_output=True, text=True, check=True,
+    ).stdout.split())
+
+
 def tracked_slugs() -> tuple[list[str], list[str]]:
     """(articles that need a card, every tracked dated article incl. variants)."""
-    out = subprocess.run(
-        ["git", "ls-files", "--", "docs/articles/*.md"],
-        cwd=REPO_ROOT, capture_output=True, text=True, check=True,
-    ).stdout.split()
+    out = sorted(tracked_files("docs/articles/*.md"))
     need_card, everything = [], []
     for path in out:
         stem = Path(path).stem
@@ -69,6 +73,7 @@ def main() -> int:
     for slug in on_disk:
         if slug not in listed:
             problems.append(f"{slug}: no card on docs/articles.html")
+    tracked_images = tracked_files("docs/articles/*.png") | tracked_files("docs/articles/*.svg") | tracked_files("docs/articles/*.jpg")
     cards = re.findall(r'<article class="app-article-card">.*?</article>', listing, flags=re.S)
     for block in cards:
         found = linked_slugs(block)
@@ -80,11 +85,13 @@ def main() -> int:
             problems.append(f"{slug}: listed on docs/articles.html but not a tracked article")
             continue
         img = re.search(r'<img src="([^"]+)"', block)
-        # A card may be text-only (three from early 2026 are); an image it does carry must exist.
-        if img and not (REPO_ROOT / "docs" / img.group(1)).exists():
-            problems.append(f"{slug}: card image docs/{img.group(1)} does not exist")
+        # A card may be text-only (three from early 2026 are); an image it does carry must be
+        # tracked by git, not merely on disk: docs/articles/ is gitignored, so a hero that was
+        # generated but never force-added renders locally and 404s on the site (#846).
+        if img and f"docs/{img.group(1)}" not in tracked_images:
+            problems.append(f"{slug}: card image docs/{img.group(1)} is not tracked by git (git add -f it)")
     if not problems:
-        ok.append(f"{len(on_disk)} tracked article(s) all carded on docs/articles.html; every card image that is set exists")
+        ok.append(f"{len(on_disk)} tracked article(s) all carded on docs/articles.html; every card image that is set is tracked")
 
     teasers = re.findall(r'<article class="app-article-teaser">.*?</article>', home, flags=re.S)
     if len(teasers) != TEASER_COUNT:
