@@ -84,7 +84,7 @@ for x in range(W):
 d.text((76, 66), "ARCKIT · READING ANTHROPIC'S COMMERCE-AGENTS REFERENCE", font=font(26, True, True), fill=CYAN)
 d.text((76, 106), "What we learnt from Claude's commerce skills,", font=font(52, True), fill=TEXT)
 d.text((76, 166), "and what we left on the shelf", font=font(52, True), fill=TEXT)
-d.text((76, 240), "Six patterns that transferred to a governance harness, and the ones that did not.", font=font(23), fill=MUTED)
+d.text((76, 240), "Six ideas that transferred to an architecture governance tool, and the ones that did not.", font=font(23), fill=MUTED)
 
 # Left: the shopping agent
 lx, ly = 76, 318
@@ -92,15 +92,15 @@ rrect((lx, ly, lx + 380, ly + 420), 22, fill=PANEL, outline=GOLD, width=3)
 d.text((lx + 28, ly + 26), "COMMERCE AGENTS", font=font(19, True, True), fill=GOLD)
 d.text((lx + 28, ly + 58), "shopping + merchant", font=font(22, True), fill=TEXT)
 for i, (label, keep) in enumerate([
-    ("safety.md: enforced / asked / yours", True),
-    ("fencing.py sanitiser", True),
-    ("commerce-evals case shape", True),
-    ("skill = request class", True),
-    ("one-message interview", True),
-    ("layer table: where a rule lives", True),
-    ("cart provenance", False),
-    ("staged merchant writes", False),
-    ("presentation tools", False),
+    ("one page: guaranteed, asked, yours", True),
+    ("clean untrusted text before use", True),
+    ("test the output, twin every refusal", True),
+    ("a skill says when it is not needed", True),
+    ("ask everything once", True),
+    ("a rule lives where it applies", True),
+    ("shopping cart rules", False),
+    ("changes held for approval", False),
+    ("product cards in chat", False),
 ]):
     y = ly + 100 + i * 34
     color = GOLD if keep else DIM
@@ -111,14 +111,14 @@ for i, (label, keep) in enumerate([
 rx, ry = 1144, 318
 rrect((rx, ry, rx + 380, ry + 420), 22, fill=PANEL, outline=VIOLET, width=3)
 d.text((rx + 28, ry + 26), "ARCKIT", font=font(19, True, True), fill=(196, 181, 253))
-d.text((rx + 28, ry + 58), "governance harness", font=font(22, True), fill=TEXT)
+d.text((rx + 28, ry + 58), "what it means for you", font=font(22, True), fill=TEXT)
 for i, label in enumerate([
-    "ENFORCEMENT.md, three tiers",
-    "validate-handoff.mjs sanitises",
-    "evals/ + headless replay gate",
-    "five skills, 'not needed when'",
-    "interview-pattern.md",
-    "rules pulled up a layer",
+    "see which rules are guaranteed",
+    "poisoned pages cannot reach your doc",
+    "commands tested on what they write",
+    "skills stay out of the way",
+    "one round of questions, defaults noted",
+    "less boilerplate, clearer rules",
 ]):
     y = ry + 100 + i * 46
     rrect((rx + 26, y, rx + 354, y + 36), 9, fill=PANEL_2, outline=LINE)
@@ -127,12 +127,12 @@ for i, label in enumerate([
 # Middle: six numbered lessons carried across
 mx = 500
 for i, (num, label) in enumerate([
-    ("1", "say what is enforced, asked, yours"),
-    ("2", "shape validation is not text validation"),
-    ("3", "grade the end state; pair refusal with serve"),
-    ("4", "a description names a request, not a phrase"),
-    ("5", "ask once; record the defaults"),
-    ("6", "a rule lives where it applies most"),
+    ("1", "say what is guaranteed, asked, and yours"),
+    ("2", "clean the text, not just its shape"),
+    ("3", "judge the result; twin every refusal"),
+    ("4", "a skill names its job, and its limits"),
+    ("5", "ask once; note the defaults"),
+    ("6", "put a rule where it applies most"),
 ]):
     y = ly + 8 + i * 68
     rrect((mx, y, mx + 600, y + 52), 12, fill=(18, 22, 28), outline=CYAN, width=2)
@@ -143,7 +143,7 @@ for i, (num, label) in enumerate([
     arrow(mx + 600 + 8, y + 26, rx - 8, VIOLET)
 
 # Footer
-d.text((76, H - 52), "Four of the six became a CI check or an eval case. Two of those found a defect on the first run.", font=font(17, False, True), fill=DIM)
+d.text((76, H - 52), "Four of the six became automatic checks. Two of those found a real fault the first time they ran.", font=font(17, False, True), fill=DIM)
 
 out = Path(__file__).with_name("2026-09-03-what-we-learnt-from-claudes-commerce-skills-hero.png")
 img.save(out, optimize=True)
