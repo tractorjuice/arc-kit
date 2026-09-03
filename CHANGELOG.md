@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`arckit-uk-gcloud` skill descriptions rewritten in request-class style.** The three overlay skills (`cloud-security`, `gcloud-framework`, `sfia-skills`) were the last still describing themselves with quoted phrase lists — twenty-odd utterances each. Each now names the class of question it answers and ends with a *not needed when* clause handing off to the `/arckit-uk-gcloud:` command that writes the document, the convention the five core skills adopted in #840. Bodies unchanged; the nested mirror under `plugins/arckit-claude/plugins/uk/gcloud/` re-synced.
+
 ### Added
 
 - **Duplicate-key guard on command, agent and skill frontmatter.** PyYAML's `safe_load` keeps the last value of a repeated key and says nothing, so a pasted-twice `description:` or a second `handoffs:` block would load cleanly and silently discard the first, and `test_commands_structure.py` would not notice. `tests/plugin/test_frontmatter_duplicate_keys.py` parses every plugin's `commands/`, the core `agents/` and every plugin's `skills/` with a loader that raises on the first duplicate. All 300-odd files are clean today; the guard exists because a suspected duplicate in `search.md` turned out to be a display artefact, and the cheap way to be sure next time is a test.

@@ -1,6 +1,6 @@
 ---
 name: Cloud Security & Compliance
-description: This skill should be used when the user asks about "ISO 27001", "Cyber Essentials", "NCSC principles", "cloud security", "what certifications", "SOC 2", "data protection", "UK GDPR", "security clearance", "PCI DSS", "compliance framework", "CSA STAR", "DSPT", "Technology Code of Practice", "AI Playbook", "what evidence do I need", "security certification", "NHS data", "BPSS", "SC clearance", "DV clearance", "what security do I need", "certification cost", "ISO 22301", or needs guidance on security certifications, compliance requirements, and evidence for G-Cloud submissions.
+description: "Answers a G-Cloud supplier's questions about security certifications and compliance evidence: ISO 27001, Cyber Essentials, SOC 2, CSA STAR, PCI DSS, DSPT, the NCSC 14 cloud security principles, UK GDPR and data protection, BPSS, SC and DV clearances, and what evidence a submission needs. Not needed when the request is for a security evidence document or an SDD security section; /arckit-uk-gcloud:security and the sdd-lot commands produce those."
 ---
 
 # Cloud Security & Compliance

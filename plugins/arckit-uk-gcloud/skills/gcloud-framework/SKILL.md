@@ -1,6 +1,6 @@
 ---
 name: G-Cloud Framework Questions
-description: This skill should be used when the user asks about "character limit", "how many features", "what lots", "CCS questions", "service categories", "declaration questions", "word limit", "mandatory exclusion", "service name limit", "pricing format", "what questions does CCS ask", "lot 1 categories", "lot 2 categories", "lot 3 categories", "how many words", "features limit", "benefits limit", "service description limit", "framework questions", "marketplace questions", "G-Cloud question structure", or needs quick lookups on Digital Marketplace field constraints and lot structures.
+description: "Answers quick questions about the Digital Marketplace question structure for a G-Cloud submission: character and word limits, how many features and benefits, lot 1, 2 and 3 categories, the service and declaration questions CCS asks, pricing format and mandatory exclusion grounds. Not needed when the request is for the submission content itself; /arckit-uk-gcloud:service-design, pricing, declaration and the sdd-lot commands write that."
 ---
 
 # G-Cloud Framework Questions
