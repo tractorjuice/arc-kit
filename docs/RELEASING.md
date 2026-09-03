@@ -161,6 +161,13 @@ generator script in the house style (1200×630, see the `generate-hero-*.py`
 siblings). The directory is gitignored as a drafts folder — force-add the
 keepers with `git add -f`, as every published article has been.
 
+**List it.** Add a card to `docs/articles.html` and a teaser to the "Latest
+writing" strip on `docs/index.html` (keep eight; drop the oldest). Both are
+hand-maintained HTML; `scripts/check-article-listing.py` (run by
+`tests/plugin/test_article_listing.py` in CI) fails when a tracked article has
+no card or the newest is not on the home page — four articles shipped unlisted
+in September 2026 before it existed.
+
 **No Markdown tables in articles.** LinkedIn and Medium do not render them —
 a comparison lands as a wall of pipes. Write it as prose instead.
 
