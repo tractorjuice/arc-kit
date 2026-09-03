@@ -97,8 +97,9 @@ annotation {N},[visibility, evolution] "{annotation_text}"
 > below, an external Doc ID from the Document Register, or the literal `Assumption`
 > where the component is analytical judgement with no source document behind it. A
 > Source naming a document that is not in the repository is a fabricated provenance:
-> the Claude Code plugin rejects the write, and every other runtime relies on you not
-> to write one. Where a component is sourced to a value chain, its **Visibility** must
+> the plugin's pre-write map check rejects it where that check runs, and every other
+> runtime relies on you not to write one. Where a component is sourced to a value
+> chain, its **Visibility** must
 > be that value chain's own number — the value chain owns visibility; this map owns
 > evolution.
 

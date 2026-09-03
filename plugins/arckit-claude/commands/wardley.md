@@ -514,10 +514,11 @@ The Wardley Map document must include:
        component that is your analytical judgement with no source document behind it,
        are the other accepted forms.
      - A Source naming a document that is not in the repository is a fabricated
-       provenance. On Claude Code the plugin's map check rejects the write and tells
-       you why; on every other runtime this is a rule you hold yourself. Either way,
-       do not invent a document ID to fill the cell — write `Assumption` and say so in
-       the Assumptions section instead.
+       provenance. Where the plugin's map check runs before a write (a pre-write hook,
+       not available on every runtime) it rejects the file and tells you why; where it
+       does not, this is a rule you hold yourself. Either way, do not invent a document
+       ID to fill the cell — write `Assumption` and say so in the Assumptions section
+       instead.
      - **Where the Source is a value chain, copy its visibility verbatim.** That WVCH
        artefact owns visibility; this map owns evolution. A component sourced to a
        value chain but absent from it, or carrying a different visibility, fails the
