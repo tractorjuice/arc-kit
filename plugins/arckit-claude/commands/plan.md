@@ -60,11 +60,11 @@ Read existing project artifacts to tailor the plan:
 
 Before determining project parameters, use the **AskUserQuestion** tool to gather user preferences. **Skip any question where the user has already specified their preference in the arguments.**
 
-**Gathering rules** (apply to all questions in this section):
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
-- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
 **Question 1** — header: `Approach`, multiSelect: false
 > "What delivery approach should this project follow?"
@@ -77,7 +77,7 @@ Before determining project parameters, use the **AskUserQuestion** tool to gathe
 > "What is the expected project complexity?"
 
 - **Small (3-6 months)**: Under 30 requirements, 1-2 integrations, standard technology
-- **Medium (6-12 months)**: 30-100 requirements, 3-5 integrations, some custom development
+- **Medium (6-12 months) (Recommended)**: 30-100 requirements, 3-5 integrations, some custom development
 - **Large (12-24 months)**: 100+ requirements, 5+ integrations, significant custom development, multiple compliance regimes
 
 Apply the user's selections when calculating timeline durations and structuring the Gantt chart. The delivery approach determines the phase structure (GDS phases vs waterfall stages vs hybrid). The complexity tier determines phase durations in Step 2 below.

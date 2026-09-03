@@ -50,11 +50,11 @@ $ARGUMENTS
 
 Before generating the DPIA, use the **AskUserQuestion** tool to gather the assessment scope. **Skip if the user has already specified scope in their arguments.**
 
-**Gathering rules** (apply to all questions in this section):
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
-- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
 **Question 1** — header: `Scope`, multiSelect: false
 > "What is the scope of this Data Protection Impact Assessment?"

@@ -243,6 +243,8 @@ Steps:
 
    Document the choice you made in your final report so the orchestrator can record it.
    Never block waiting for an answer.
+   This is the non-interactive rule of `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`;
+   the table above wins where it names a header.
 
 2. Capture the actual file path the skill wrote to. Inside the Write tool call,
    the ArcKit `validate-arc-filename.mjs` PreToolUse hook normalizes the path

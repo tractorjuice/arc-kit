@@ -220,7 +220,7 @@ project/
 6. Test plugin in a test repo, test CLI via `arckit init test --ai codex --no-git`
 7. Update README.md, docs/index.html, docs/DEPENDENCY-MATRIX.md, CHANGELOG.md
 
-**Command must**: check prerequisites; use `create-project.sh --json` for project path; read its template; **use Write tool** to save output (avoids 32K output token limit); show only a summary; delegate to agent if research-heavy; declare `handoffs:` for logical next steps.
+**Command must**: check prerequisites; use `create-project.sh --json` for project path; read its template; **use Write tool** to save output (avoids 32K output token limit); show only a summary; delegate to agent if research-heavy; declare `handoffs:` for logical next steps. A command that asks the user anything follows `references/interview-pattern.md`: prefill from the arguments and the project context, ask everything in **one** call with one **(Recommended)** option per question, take the default for any unanswered question and list it as an assumption, and never block in a headless run. `tests/plugin/test_interview_pattern.py` asserts every command that names `AskUserQuestion` points at the reference and carries no multi-round boilerplate.
 
 ### Guide Trees (two copies, root is canonical)
 
