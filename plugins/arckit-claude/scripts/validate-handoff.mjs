@@ -4,8 +4,37 @@
  *
  * Usage: node validate-handoff.mjs <schema.json> <payload.json>
  *
- * Exit 0 on success: prints the validated payload as JSON on stdout.
+ * Exit 0 on success: prints the sanitised, validated payload as JSON on stdout.
  * Exit 1 on failure: prints {ok:false, errors:[{path,msg}]} on stdout.
+ *
+ * Before schema validation every string leaf (and every object key) is
+ * passed through a sanitiser, because the payload is a reader's summary
+ * of untrusted text — vendor pages, MCP results, repository READMEs —
+ * and the orchestrator and writer read the validator's stdout as data:
+ *
+ *   - NFKC-normalised, so a full-width or compatibility homoglyph cannot
+ *     slip past an enum or pattern check that its ASCII form would fail;
+ *   - invisible and format characters (zero-width joiners, bidi
+ *     overrides, soft hyphens, BOM, variation selectors) are removed and
+ *     C0/C1 control characters other than tab and newline become spaces.
+ *     These carry no meaning in a summary and are the usual carriers of
+ *     hidden instructions.
+ *
+ * Three shapes are rejected rather than repaired, because each is
+ * evidence that source text is trying to be read as conversation rather
+ * than as data, and the reader's single re-dispatch should see it named:
+ *
+ *   - Unicode tag characters (U+E0000–U+E007F), which spell invisible
+ *     ASCII;
+ *   - transcript-shaped tags — <tool_result>, <function_calls>, <system>,
+ *     <human>, <assistant>, <system-reminder>, their namespaced and
+ *     closing forms — and <|...|> special tokens;
+ *   - a forged turn marker: a role word and a colon at the start of a
+ *     string or after a blank line ("\n\nassistant:").
+ *
+ * The pattern set follows the fence sanitiser in Anthropic's
+ * commerce-agents reference (commerce_common/fencing.py); every regex is
+ * bounded so it stays linear on hostile input.
  *
  * Used by arckit-claude/agents/arckit-datascout.md (the orchestrator)
  * to validate output from arckit-datascout-reader before scoring.
@@ -35,6 +64,89 @@
 
 import { readFileSync } from 'node:fs';
 
+// ── Sanitiser ──────────────────────────────────────────────────────────
+
+// Zero-width, bidi, and format controls; removed silently. The tag block
+// (U+E0000–U+E007F) is deliberately absent — see TAG_CHARS below.
+const INVISIBLE_RANGES = [
+  [0x00ad, 0x00ad], // soft hyphen
+  [0x061c, 0x061c], // Arabic letter mark
+  [0x180e, 0x180e], // Mongolian vowel separator
+  [0x200b, 0x200f], // zero-width space/joiners, LRM/RLM
+  [0x2028, 0x2029], // line/paragraph separators
+  [0x202a, 0x202e], // bidi embedding/overrides
+  [0x2060, 0x2064], // word joiner, invisible operators
+  [0x2066, 0x2069], // bidi isolates
+  [0x206a, 0x206f], // deprecated format controls
+  [0xfe00, 0xfe0f], // variation selectors
+  [0xfeff, 0xfeff], // byte-order mark / zero-width no-break space
+  [0xfff9, 0xfffb], // interlinear annotation controls
+  [0xe0100, 0xe01ef], // variation selectors supplement
+];
+const INVISIBLE = new RegExp(
+  '[' + INVISIBLE_RANGES.map(([lo, hi]) => `\\u{${lo.toString(16)}}-\\u{${hi.toString(16)}}`).join('') + ']',
+  'gu',
+);
+
+// Tag characters spell invisible ASCII — an instruction the model can read
+// and a human cannot see. Rejected, not stripped.
+const TAG_CHARS = /[\u{E0000}-\u{E007F}]/u;
+
+// C0/C1 control characters except tab and newline; replaced with a space.
+const CONTROL = /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]/g;
+
+// Transcript and tool-call markup, optionally namespaced ("ns:invoke").
+// Only tag-shaped text matches — bare, closing, or with name="value"
+// attributes — so prose such as "<system requirements>" passes; `parameter`
+// and `result` count only when namespaced. Quantifiers are bounded and
+// non-adjacent, which keeps this linear on unclosed input.
+const TAG_ATTRS =
+  '(?:[ \\t]+[\\w:.-]{1,40}[ \\t]*=[ \\t]*(?:"[^"]{0,200}"|\'[^\']{0,200}\'|[^\\s"\'>]{1,200})){0,8}';
+const SPECIAL_TOKEN = new RegExp(
+  '<[ \\t]*/?[ \\t]*(?:' +
+    '(?:[a-z][\\w.-]{0,30}:)?(?:transcript|conversation|function_calls|function_results' +
+    '|invoke|tool_use|tool_result|system-reminder|system|human|user|assistant)' +
+    '|[a-z][\\w.-]{0,30}:(?:parameter|result)' +
+    ')\\b' + TAG_ATTRS + '[ \\t]*/?>' +
+    '|<\\|[^|<>\\r\\n]{1,64}\\|>',
+  'i',
+);
+
+// A forged turn boundary: a role word and a colon at the start of the
+// string or after a blank line. Mid-sentence role words, single-newline
+// headings, and one-letter list markers ("A:") do not match.
+const TURN_INDICATOR = /(?:^|(?:\r\n|\r|\n)[ \t]*(?:\r\n|\r|\n))[ \t]*(?:human|assistant|system|user)[ \t]*:/i;
+
+function sanitizeText(text, path, errors) {
+  if (TAG_CHARS.test(text)) {
+    errors.push({ path: pathOrRoot(path), msg: 'contains Unicode tag characters (invisible ASCII); source text must be summarised, not copied' });
+  }
+  text = text.normalize('NFKC').replace(INVISIBLE, '').replace(CONTROL, ' ');
+  const token = SPECIAL_TOKEN.exec(text);
+  if (token) {
+    errors.push({ path: pathOrRoot(path), msg: `contains transcript-shaped markup ${JSON.stringify(token[0])}; it is data, not conversation — remove it` });
+  }
+  const turn = TURN_INDICATOR.exec(text);
+  if (turn) {
+    errors.push({ path: pathOrRoot(path), msg: `contains a forged turn marker ${JSON.stringify(turn[0].trim())}; remove it` });
+  }
+  return text;
+}
+
+function sanitize(value, path, errors) {
+  if (typeof value === 'string') return sanitizeText(value, path, errors);
+  if (Array.isArray(value)) return value.map((v, i) => sanitize(v, `${path}/${i}`, errors));
+  if (value !== null && typeof value === 'object') {
+    const out = {};
+    for (const [k, v] of Object.entries(value)) {
+      const key = sanitizeText(k, `${path}/${k}`, errors);
+      out[key] = sanitize(v, `${path}/${key}`, errors);
+    }
+    return out;
+  }
+  return value;
+}
+
 const [, , schemaPath, payloadPath] = process.argv;
 
 if (!schemaPath || !payloadPath) {
@@ -58,7 +170,10 @@ try {
 }
 
 const errors = [];
-validate(payload, schema, '', schema, errors);
+payload = sanitize(payload, '', errors);
+if (errors.length === 0) {
+  validate(payload, schema, '', schema, errors);
+}
 
 if (errors.length === 0) {
   console.log(JSON.stringify(payload));
