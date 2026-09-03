@@ -867,6 +867,14 @@ def copy_extension_files(plugin_sources):
         # entry below places at the same relative depth in every extension.
         ("scripts/generate-document-id.mjs", "scripts/generate-document-id.mjs"),
         ("scripts/owm-to-mermaid.mjs", "scripts/owm-to-mermaid.mjs"),
+        # /arckit:wardley renders the interactive HTML map by default and
+        # /arckit:archify is built on it, so both the renderer and the shared
+        # OWM reader it imports must ship, at the same relative depth.
+        ("scripts/owm-parse.mjs", "scripts/owm-parse.mjs"),
+        ("scripts/owm-to-html.mjs", "scripts/owm-to-html.mjs"),
+        # /arckit:archify probes for a user-installed Archify before doing
+        # anything else; without this the command cannot even report its absence.
+        ("scripts/archify-detect.mjs", "scripts/archify-detect.mjs"),
         ("scripts/export-okf.mjs", "scripts/export-okf.mjs"),
         ("scripts/import-okf.mjs", "scripts/import-okf.mjs"),
         # owm-tidy.mjs is invoked by /arckit:wardley --tidy-owm; ship it and its

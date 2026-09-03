@@ -148,7 +148,43 @@ These produce OWM text for <https://create.wardleymaps.ai>. The renderer is stri
 - **`evolve` needs only the target X, and the component must already exist:** `evolve Foo 0.7`. Don't restate visibility; don't `evolve` a name you never declared.
 - **Names with spaces work in declarations but must match *exactly* in links** — `component Data Pipeline [..]` then `Kettle->Data Pipeline`, not `->DataPipeline`. Trailing whitespace breaks the match.
 - **Stage-boundary x-values:** Genesis `0.0–0.25`, Custom `0.25–0.50`, Product `0.50–0.75`, Commodity `0.75–1.0`. Keep positions inside the intended band so the visual reads correctly.
-- **One statement per line.** OWM is line-based; no semicolons, no inline comments after a statement.
+- **One statement per line.** OWM is line-based; no semicolons. A trailing `// comment` *is* stripped by ArcKit's
+  converters (and a `://` inside a URL is left alone), but a full-line `//` comment is the portable form.
+
+### OWM decorations and placement — the silent-failure set
+
+Everything here parses without error and renders wrong. Found while building
+`scripts/owm-parse.mjs`; the same rules govern the Mermaid and HTML converters.
+
+- **`pipeline` has two forms with different child-selection rules.** The coordinate form
+  `pipeline Foo [0.3, 0.7]` claims children by *proximity*: same visibility as the parent
+  (within about 0.05) **and** evolution inside the declared range. Give a child a slightly
+  different visibility and it silently drops out of the pipeline — so give pipeline children
+  the **exact** visibility of their parent rather than a near value; the tolerance is
+  floating-point-fragile at its edge. The block form (`pipeline Foo` then `{ … }`) names its
+  children explicitly and is the safer choice: inside the block a child takes **only an
+  evolution coordinate** (`component "Text-Based Guidance" [0.25]`) and inherits the parent's
+  visibility, so there is no near-miss to get wrong.
+- **`annotation` accepts two spellings and you will meet both:** `annotation 1 [v, e] text`
+  and the comma form `annotation 1,[0.48, 0.45] "text"`. A multi-point annotation nests the
+  pairs: `annotation 1 [[v1, e1],[v2, e2]] text`.
+- **An annotation on a component's exact coordinate hides that component.** `annotation 1 [0.5, 0.1]`
+  pointing at the component already at `[0.5, 0.1]` lands the marker on top of the dot. Offset the
+  annotation by roughly 0.02–0.03, or accept that the renderer must move it for you.
+- **`note` is placed absolutely and has no collision avoidance.** A note near a populated
+  region will overlap component labels. Put notes in visibly empty areas of the map.
+- **Component labels default to the same offset**, so two components close together get
+  overlapping labels. Set `label [x, y]` (pixel offsets, y negative is up) on the crowded ones, or
+  run `/arckit:wardley --tidy-owm` to place them automatically.
+- **Sourcing is its own directive, not part of the component line:** `build Foo` / `buy Bar` /
+  `outsource Baz` on separate lines (the inline `component Foo [v, e] (build)` decorator also
+  works). Omit them and the map shows positions but no build-versus-buy read — which is usually
+  the whole point of drawing it.
+- **`inertia` is a bare word at the end of the component line:** `component Foo [0.5, 0.4] inertia`.
+  It composes with a label offset and a sourcing decorator on the same line.
+- **A duplicate `component` declaration is not an error.** The first one wins and the second is
+  discarded silently, so a copy-pasted line with corrected coordinates has no effect. Edit the
+  original.
 
 ### Process mistakes
 

@@ -1,6 +1,6 @@
 # ArcKit Plugin for Claude Code
 
-The Enterprise Architecture Governance Harness — a Claude Code plugin providing 75 slash commands across strategy, architecture, delivery, assurance, and interoperability.
+The Enterprise Architecture Governance Harness — a Claude Code plugin providing 76 slash commands across strategy, architecture, delivery, assurance, and interoperability.
 
 ## Installation
 
