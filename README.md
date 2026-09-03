@@ -53,7 +53,7 @@ Then in Claude Code:
 Then install from the Discover tab, or via CLI. The marketplace ships **17 plugins** — install only the overlays you need:
 
 ```bash
-# Core (75 commands — UK Government civilian + generic enterprise)
+# Core (76 commands — UK Government civilian + generic enterprise)
 claude plugin install arckit@arckit-claude
 
 # Core + UAE federal
@@ -1721,6 +1721,7 @@ These commands use the [govreposcrape MCP](https://github.com/MHCLG/govreposcrap
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
+| `/arckit:archify` | Render governed artefacts as interactive, self-contained HTML diagrams via Archify, or Wardley Maps via ArcKit's built-in renderer | — | 🧪 Experimental |
 | `/arckit:diagram` | Generate architecture diagrams using Mermaid for visual documentation | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/diagrams/ARC-001-DIAG-001-v1.0.md) [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/diagrams/ARC-001-DIAG-001-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/diagrams/ARC-005-DIAG-001-v1.0.md) [v3/007](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/007-vpn-service-windows11-autopilot/diagrams/ARC-007-DIAG-001-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/diagrams/ARC-001-DIAG-001-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/diagrams/ARC-001-DIAG-001-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/diagrams/ARC-001-DIAG-001-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/diagrams/ARC-001-DIAG-001-v1.0.md) | 🟢 Live |
 | `/arckit:hld-review` | Review High-Level Design (HLD) against architecture principles and requirements | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/reviews/ARC-001-HLDR-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/reviews/ARC-001-HLDR-v1.0.md) | 🔵 Beta |
 | `/arckit:dld-review` | Review Detailed Design (DLD) for implementation readiness | — | 🔵 Beta |

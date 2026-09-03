@@ -56,6 +56,7 @@ See the [full articles index](articles.html) for all ArcKit release notes, analy
 
 - [Architecture Principles](guides/principles.md) - `/arckit:principles`
 - [Architecture Diagrams](guides/diagram.md) - `/arckit:diagram` - C4 Model visualization
+- [Interactive Diagrams](guides/archify.md) - `/arckit:archify` - Self-contained interactive HTML diagrams and Wardley Maps
 - [Data Model](guides/data-model.md) - `/arckit:data-model`
 - [ADR](guides/adr.md) - `/arckit:adr` - Architecture Decision Records
 - [Design Reviews](guides/design-review.md) - `/arckit:hld-review`, `/arckit:dld-review`
@@ -263,6 +264,7 @@ See the [full index](guides/roles/README.md) for details.
 | `/arckit:roadmap` | [roadmap.md](guides/roadmap.md) | ✅ Complete |
 | `/arckit:strategy` | [strategy.md](guides/strategy.md) | ✅ Complete |
 | `/arckit:adr` | [adr.md](guides/adr.md) | ✅ Complete |
+| `/arckit:archify` | [archify.md](guides/archify.md) | ✅ Complete |
 | `/arckit:diagram` | [diagram.md](guides/diagram.md) | ✅ Complete |
 | `/arckit:gcloud-search` | [digital-marketplace.md](guides/uk-government/digital-marketplace.md) | ✅ Complete |
 | `/arckit:gcloud-clarify` | [digital-marketplace.md](guides/uk-government/digital-marketplace.md) | ✅ Complete |
