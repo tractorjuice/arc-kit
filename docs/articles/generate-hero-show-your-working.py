@@ -4,6 +4,9 @@ An adopters board with three listing options (named, anonymous, not listed)
 and the three things adopters get back. Same house style as the sibling
 generate-hero-*.py scripts.
 
+The published hero was replaced by a hand-edited version on 23 September
+2026; running this regenerates the original, not the published image.
+
     uv run --with pillow python docs/articles/generate-hero-show-your-working.py
 """
 
