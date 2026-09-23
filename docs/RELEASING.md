@@ -168,6 +168,14 @@ hand-maintained HTML; `scripts/check-article-listing.py` (run by
 no card or the newest is not on the home page — four articles shipped unlisted
 in September 2026 before it existed.
 
+**Generate its share page.** Run `python3 scripts/generate-article-share-pages.py`
+after adding the card, and commit `docs/share/<slug>.html`. When posting to
+LinkedIn, Discord, Medium or Slack, link to `https://arckit.org/share/<slug>.html`,
+not the article viewer: the viewer renders in JavaScript, so link previews only
+ever see its generic "Article - ArcKit" card. The share page carries the
+article's own title, summary and hero, then redirects to the viewer.
+`tests/plugin/test_article_share_pages.py` fails when a page is missing or stale.
+
 **No Markdown tables in articles.** LinkedIn and Medium do not render them —
 a comparison lands as a wall of pipes. Write it as prose instead.
 
