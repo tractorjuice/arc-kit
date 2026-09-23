@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Claude Code floor raised to v2.1.280 for Claude Opus 5.5.** Opus 5.5 is now the default Opus model. It always thinks, so ArcKit's `effort: max` commands can no longer be quietly sent as `high` by a session with thinking turned off, and the Effective Effort row in each artefact's Build Provenance now matches what actually ran. Opus 5.5 defaults to `effort: medium`: 66 of the 75 core commands set their own effort, and the nine that don't are light commands. The SessionStart version check, READMEs, guides and CLAUDE.md are updated to match, including Opus 5.5 fast-mode pricing ($8/$40 per MTok).
+
 ### Fixed
 
 - **`slugify` produces the right slug on stock macOS bash 3.2.** The accent transliteration in `scripts/bash/common.sh` (and the plugin copy) used a quoted multibyte pattern in `${var//pattern/repl}`, which bash 3.2 mis-splits, so a project named "Café Modernisation" got the directory `caf-e-modernisation` on any Mac without a Homebrew bash; bash 5 handled it, which is why CI on Ubuntu never saw it and the 27 `test_slugify.py` failures looked like a local-only quirk. Both sides of the substitution are now unquoted (the table holds letters only, so nothing needs quoting), with a comment naming the quirk. All 102 slugify cases pass on bash 3.2 and bash 5.
