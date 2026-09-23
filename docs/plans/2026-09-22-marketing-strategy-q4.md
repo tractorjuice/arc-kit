@@ -1,7 +1,7 @@
 # ArcKit Marketing Strategy — Q4 2026
 
 > **Status:** draft for maintainer review. Messaging revised on 23 September after the competitive brief (`2026-09-23-competitive-brief.md`). Built with the marketing plugin's campaign-plan method, from the September traction report (`reports/traction/2026-09-01-traction.md`), `docs/INVESTOR-REPORT.md`, and the article archive.
-> **Window:** 1 October – 31 December 2026 (13 weeks), plus a prep week starting 28 September.
+> **Window:** 1 October – 31 December 2026 (13 weeks). **The launch was brought forward to 23 September**: the adopter form, `ADOPTERS.md`, the landing page and the launch article all went live that day, so the prep-week and week-1 rows below are done.
 > **Budget:** close to zero. Owned and earned channels only. The real constraint is maintainer time, budgeted at about 6 hours a week.
 
 ---
