@@ -1848,16 +1848,18 @@ Key references live in `docs/` and top-level guides:
 
 ## Comparison to Other Tools
 
+Every tool here now has AI features. Sparx has Kernaro AI and an MCP server, Ardoq relaunched as AI-first in May 2026, LeanIX ships an AI assistant and an MCP server, and Confluence has Atlassian Rovo. The difference is what the AI works on. The EA platforms apply it to the application inventory: what exists and how it connects. ArcKit applies it to the governance evidence: the documents an assessment, a design authority or a procurement asks for. They work well together, since ArcKit can read an export from your EA repository as source material.
+
 | Feature | ArcKit | Sparx EA | Ardoq | LeanIX | Confluence |
 |---------|--------|----------|-------|--------|------------|
-| **AI-Assisted** | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **AI features** | ✅ Governance documents | ✅ Models | ✅ Inventory | ✅ Inventory | ✅ Pages |
+| **UK assessment templates** (TCoP, Service Standard, Secure by Design, Green Book) | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **Citations and provenance on AI output** | ✅ | ❌ Not claimed | ❌ Not claimed | ❌ Not claimed | ❌ Not claimed |
 | **Wardley Mapping** | ✅ | ❌ | ⚠️ Limited | ❌ | ❌ |
-| **Version Control** | ✅ Git | ❌ | ❌ | ❌ | ⚠️ Limited |
-| **Vendor RFP** | ✅ | ❌ | ❌ | ❌ | ⚠️ Manual |
-| **Design Review Gates** | ✅ | ⚠️ Manual | ❌ | ❌ | ⚠️ Manual |
-| **Traceability** | ✅ Automated | ⚠️ Manual | ✅ | ⚠️ Limited | ❌ |
-| **Cost** | Free | $$$$ | $$$$ | $$$$ | $$ |
-| **Learning Curve** | Low | High | Medium | Medium | Low |
+| **Artefacts versioned in your own git repo** | ✅ | ⚠️ Via integration | ❌ | ❌ | ❌ |
+| **Vendor RFP and G-Cloud/DOS** | ✅ | ❌ | ❌ | ❌ | ⚠️ Manual |
+| **Application inventory and dependency modelling** | ❌ Use an EA tool | ✅ | ✅ | ✅ | ❌ |
+| **Cost to start** | Free (MIT) | $$$$ | $$$$ | $$$$ | $$ |
 
 ---
 
