@@ -14,10 +14,10 @@
  *      fixes, Claude Opus 5 availability, the WebSearch xhigh/max fix,
  *      MCP diagnostics no longer printing resolved secrets, the plugin
  *      skills/hook-error/cache fixes, and the file-tool symlink and
- *      Grep/Glob deny-rule fixes depend on
+ *      Grep/Glob deny-rule fixes, and Claude Opus 5.5 availability depend on
  *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/
  *      v2.1.172+/v2.1.200+/v2.1.219+/v2.1.221+/v2.1.234+/v2.1.246+/
- *      v2.1.251+). Silent on
+ *      v2.1.251+/v2.1.280+). Silent on
  *      detection failure.
  *
  * Side effect: when inside an ArcKit project, persists the detected client
@@ -36,7 +36,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDir, isFile, readText, parseHookInput, parseVersion, compareVersions } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.251';
+const MIN_CLAUDE_CODE_VERSION = '2.1.280';
 
 const data = parseHookInput(); // consume stdin (required by hook protocol)
 const cwd = data.cwd || '.';
@@ -95,7 +95,7 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Background-by-default subagent reliability and parent error propagation fixes for ArcKit's parallel build and reader/writer flows (needs v2.1.198+)\n` +
     `- SessionStart / Setup / SubagentStart hook stderr visibility on blocking exits, improving hook diagnosis (needs v2.1.199)\n` +
     `- Project-scoped plugin loading from git worktrees and \`claude agents --plugin-dir <dir>\` plugin agent/skill visibility fixes for ArcKit branch testing (needs v2.1.200)\n` +
-    `- Claude Opus 5 — 1M context and fast mode; earlier clients cannot select it (needs v2.1.219). Opus 5.5, the default Opus model from v2.1.280, is not required: ArcKit runs on Opus 5 and newer\n` +
+    `- Claude Opus 5 — 1M context and fast mode; earlier clients cannot select it (needs v2.1.219).\n` +
     `- WebSearch fix at \`effort: xhigh\`/\`max\` with thinking disabled — every search returned a 400 on earlier clients, which silently broke ArcKit's 18 \`effort: max\` commands and its three max-effort research agents for anyone running with thinking off (needs v2.1.221)\n` +
     `- PreToolUse auto-allow hooks no longer bypass tool restrictions inside background agent tasks — load-bearing since v2.1.232 made subagent spawns background by default (needs v2.1.222)\n` +
     `- Bash permission-check bypasses closed: crafted commands could hide part of themselves from the approval dialog (needs v2.1.223)\n` +
@@ -103,7 +103,8 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- MCP diagnostics no longer print resolved secrets — ArcKit ships two keyed MCP servers whose \`\${user_config.*}\` values sit in request headers, and by design their connections fail on a keyless session (needs v2.1.234)\n` +
     `- Plugin loading fixes that hit ArcKit's exact layout: \`/reload-plugins\` counted 0 skills for plugins defining skills under \`skills/*/SKILL.md\`, hook error messages showed a literal \`\${CLAUDE_PLUGIN_ROOT}\` instead of the resolved path, the plugin cache created duplicate SHA-named directories, and \`claude plugin update <bare-name>\` failed (needs v2.1.246)\n` +
     `- File tools no longer follow a symlink swapped inside the working directory after the permission check, and Grep/Glob honour \`Read()\` deny rules through symlinked paths — the same class of bypass the v2.1.222–v2.1.224 fixes closed for Bash (needs v2.1.251)\n` +
-    `- Opus 5 at \`effort: xhigh\`/\`max\` with thinking disabled is sent as \`high\` instead of failing, so ArcKit's \`effort: max\` commands complete on thinking-off sessions rather than erroring (needs v2.1.251)\n\n` +
+    `- Opus 5 at \`effort: xhigh\`/\`max\` with thinking disabled is sent as \`high\` instead of failing, so ArcKit's \`effort: max\` commands complete on thinking-off sessions rather than erroring (needs v2.1.251)\n` +
+    `- Claude Opus 5.5 — the default Opus model; it always thinks, so \`effort: max\` commands cannot be sent as \`high\` by a thinking-off session and the provenance Effective Effort row is accurate (needs v2.1.280)\n\n` +
     `Update with: \`claude update\`\n\n` +
     `**Tip — stop drifting back below the floor:** after updating, add ` +
     `\`"minimumVersion": "${MIN_CLAUDE_CODE_VERSION}"\` to your \`.claude/settings.json\`. ` +
