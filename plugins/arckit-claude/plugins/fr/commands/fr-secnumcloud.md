@@ -84,12 +84,19 @@ Before generating the assessment, determine:
    - Non-sensitive (standard government data) → Standard commercial cloud may be acceptable
    - Sensitive (personal data, health data, administrative data) → SecNumCloud recommended
    - Highly sensitive (national security, OIV SIIV data) → SecNumCloud required, possibly IGI 1300
+   - **Legally "sensitive" per the arrêté du 12 août 2026**: data whose compromise would affect public safety, health, the life of persons, or the protection of intellectual property — this is a distinct, narrower legal test from the OIV/SIIV categories above, and it is the trigger for the binding obligation in point 2
 
-2. **OIV/OSE designation**: Is the entity an OIV (Opérateur d'Importance Vitale) or OSE (Opérateur de Services Essentiels)?
+2. **Binding legal basis (since 15 August 2026)**: Determine whether the entity falls under the arrêté du 12 août 2026 (JORF, in force since 15 August 2026, taken under décret n° 2026-272 du 14 avril 2026 / loi SREN), which makes SecNumCloud 3.2 qualification (or an ANSSI-recognised equivalent European certification) a **legal requirement** — not a recommendation — for:
+   - State administrations and their operators, when processing legally-sensitive data (per point 1) in a private cloud
+   - **Designated public interest groupings (GIP)**
+   - A **private-sector supplier** is drawn into scope indirectly: providing cloud to a public body in scope, sitting in that body's sub-contracting chain, responding to a tender that requires this protection level, or processing data under a contract that mandates it
+   - This obligation applies independently of OIV/OSE status — do not treat "not OIV/OSE" as "SecNumCloud not required"
+
+3. **OIV/OSE designation**: Is the entity an OIV (Opérateur d'Importance Vitale) or OSE (Opérateur de Services Essentiels)? This is a **separate, additional** basis for requiring SecNumCloud — not a prerequisite for the obligation in point 2.
    - OIV: obligations under LPM Article 22, ANSSI sector orders (arrêtés sectoriels)
    - OSE: obligations under NIS directive transposition
 
-3. **Applicable regulatory framework**: From requirements or user input, determine if any of the following apply: HDS (health data), DORA (financial sector), IGI 1300 (classified information), RGPD (personal data)
+4. **Applicable regulatory framework**: From requirements or user input, determine if any of the following apply: HDS (health data), DORA (financial sector), IGI 1300 (classified information), RGPD (personal data)
 
 Show a brief scoping summary before generating the full document.
 
@@ -110,8 +117,8 @@ Show a brief scoping summary before generating the full document.
 
 3. **Section 1: Context and Scope**
    - Project sensitivity classification from Step 4
-   - Applicable regulatory framework table (SecNumCloud, LPM, NIS2, IGI 1300, GDPR, DORA)
-   - Data categories and OIV/OSE status
+   - Applicable regulatory framework table (Arrêté du 12 août 2026, SecNumCloud, LPM, NIS2, IGI 1300, GDPR, DORA)
+   - Data categories, OIV/OSE status, and whether the entity/contract falls under the binding obligation identified in Step 4.2
 
 4. **Section 2: SecNumCloud 3.2 Qualification Matrix**
    - Provider status table for: S3NS (PREMI3NS), Outscale, OVHcloud, Bleu, NumSpot, Cloud Temple
@@ -123,10 +130,11 @@ Show a brief scoping summary before generating the full document.
    - Provider exposure matrix: map each shortlisted provider against legislation
    - ANSSI position on FISA-702 residual risk for US-lineage providers
 
-6. **Section 4: OIV/OSE Obligation Mapping** (if applicable)
+6. **Section 4: OIV/OSE and Arrêté du 12 août 2026 Obligation Mapping**
    - OIV obligations under LPM Article 22 and sector orders
    - OSE obligations under NIS directive
-   - Leave blank with "N/A — entity is not designated OIV/OSE" if not applicable
+   - **Binding obligation under the arrêté du 12 août 2026**, assessed independently of OIV/OSE status: does the entity (or its role as a supplier/sub-contractor to a public body) fall within scope per Step 4.2? State the outcome explicitly — do not write "N/A" solely because the entity is not OIV/OSE
+   - Leave the OIV/OSE rows blank with "N/A — entity is not designated OIV/OSE" only if the entity is also outside the arrêté's scope
 
 7. **Section 5: Architecture Recommendations**
    - Match ANSSI patterns (A/B/C) to the sensitivity level determined in Step 4
@@ -198,6 +206,7 @@ Next steps:
 
 ## Important Notes
 
+- **SecNumCloud became legally binding on 15 August 2026**: Before this, SecNumCloud rested on the "Cloud au Centre" doctrine (Prime Minister's circular of 5 July 2021) — a strong recommendation, with no general binding force or sanction. The arrêté du 12 août 2026 changes this: for state administrations, their operators, and designated GIP, holding a SecNumCloud 3.2 qualification (or an ANSSI-recognised equivalent European certification) is now a **legal requirement** for legally-sensitive data, not a best practice. Do not describe the obligation as resting on doctrine alone.
 - **Qualification vs Visa**: A SecNumCloud Visa (provisional) does NOT confer the same assurance level as a full Qualification. Always distinguish in procurement documents.
 - **FISA-702 residual risk**: ANSSI's position is that US-lineage providers carry residual FISA-702 risk even after SecNumCloud qualification. This must be explicitly acknowledged and risk-accepted at the appropriate authority level.
 - **OIV/OSE terminology is being succeeded by EE/EI**: France's NIS2 transposition ("loi Résilience") moves former OIV/OSE entities into two new categories — Entités Essentielles (EE) and Entités Importantes (EI) — with a much larger population in scope than the legacy regime. This command still uses OIV/OSE as the working vocabulary; confirm current terminology and designation with the client's legal/compliance function before relying on it, as the exact transposition timeline was not independently confirmed against a primary source at the time of writing.
@@ -208,15 +217,17 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
+| Arrêté du 12 août 2026 portant approbation du référentiel d'exigences relatif aux prestataires de services d'informatique en nuage (binding legal basis, in force since 15 August 2026) | Légifrance | https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054678082 |
+| Décret n° 2026-272 du 14 avril 2026 (loi SREN — underlying statutory basis for the arrêté) | Légifrance | https://www.legifrance.gouv.fr/ |
 | SecNumCloud qualification scheme — official page | ANSSI | https://cyber.gouv.fr/secnumcloud |
 | SecNumCloud 3.2 referential (requirements document) | ANSSI | https://cyber.gouv.fr/enjeux-technologiques/cloud/ |
 | List of SecNumCloud-qualified providers | ANSSI | https://cyber.gouv.fr/offre-de-service/solutions-certifiees-et-qualifiees/services-de-securite-evalue/ |
 | UGAP catalogue — sovereign cloud framework agreements | UGAP | https://www.ugap.fr/ |
 | ANSSI — OIV obligations | ANSSI | https://cyber.gouv.fr/le-dispositif-saiv |
 | NIS2 Directive — OSE obligations | EUR-Lex | https://eur-lex.europa.eu/eli/dir/2022/2555/oj |
-| DINUM cloud doctrine for French public administration | DINUM | https://www.numerique.gouv.fr/services/cloud/doctrine/ |
+| DINUM cloud doctrine for French public administration (superseded as the *binding* basis by the arrêté du 12 août 2026; still relevant for scope not covered by the arrêté) | DINUM | https://www.numerique.gouv.fr/services/cloud/doctrine/ |
 
-> **Note for reviewers**: SecNumCloud is France's national cloud security qualification scheme, administered by ANSSI. It is the French equivalent of — and more stringent than — the EU's EUCS (European Cybersecurity Certification Scheme for Cloud Services). SecNumCloud 3.2 explicitly prohibits extraterritorial law exposure (US CLOUD Act, China MLSA), making it the required scheme for French government sensitive data and OIV systems. A key distinction: **SecNumCloud visa ≠ SecNumCloud qualification** — some providers hold a visa (provisional) rather than full qualification; only full qualification satisfies OIV/OSE and ministerial requirements.
+> **Note for reviewers**: SecNumCloud is France's national cloud security qualification scheme, administered by ANSSI. It is the French equivalent of — and more stringent than — the EU's EUCS (European Cybersecurity Certification Scheme for Cloud Services). SecNumCloud 3.2 explicitly prohibits extraterritorial law exposure (US CLOUD Act, China MLSA), making it the required scheme for French government sensitive data and OIV systems. Since the arrêté du 12 août 2026, it is also a **binding legal requirement** — not merely a recommended scheme — for state administrations, their operators, and designated GIP handling legally-sensitive data, independently of OIV/OSE status; private suppliers can be drawn into scope via public contracts or sub-contracting chains. A key distinction: **SecNumCloud visa ≠ SecNumCloud qualification** — some providers hold a visa (provisional) rather than full qualification; only full qualification (or an ANSSI-recognised equivalent European certification) satisfies OIV/OSE and the arrêté's requirements.
 
 ## Success Criteria
 
