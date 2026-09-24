@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX6P1GM31K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SX6P1GM31K');
+    </script>
+    <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="ArcKit for UK public sector architects: a free, open-source AI harness that gives your AI coding assistant the UK templates, traceability and checks to draft TCoP, Service Standard, Secure by Design, DPIA and Green Book evidence you can defend, with citations and no telemetry.">
+    <title>ArcKit for UK Public Sector Architects | Assessor-Ready Governance Evidence</title>
+    <meta name="keywords" content="UK government architecture, Technology Code of Practice, GDS Service Standard, Secure by Design, DPIA, Green Book SOBC, spend control, AI governance, ArcKit">
+    <meta name="author" content="ArcKit">
+    <meta property="og:title" content="ArcKit for UK Public Sector Architects | Assessor-Ready Governance Evidence">
+    <meta property="og:description" content="ArcKit for UK public sector architects: a free, open-source AI harness that gives your AI coding assistant the UK templates, traceability and checks to draft TCoP, Service Standard, Secure by Design, DPIA and Green Book evidence you can defend, with citations and no telemetry.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arckit.org/public-sector.html">
+    <meta property="og:site_name" content="ArcKit">
+    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ArcKit for UK Public Sector Architects | Assessor-Ready Governance Evidence">
+    <meta name="twitter:description" content="ArcKit for UK public sector architects: a free, open-source AI harness that gives your AI coding assistant the UK templates, traceability and checks to draft TCoP, Service Standard, Secure by Design, DPIA and Green Book evidence you can defend, with citations and no telemetry.">
+    <meta name="twitter:image" content="https://arckit.org/og-image.png">
+    <link rel="canonical" href="https://arckit.org/public-sector.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="assets/favicon-192.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- GOV.UK Frontend v5.13.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+    <link rel="stylesheet" href="theme.css?v=4.12.3">
+    <link rel="stylesheet" href="heroes.css?v=4.12.3">
+
+    <style>
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+
+        [class*="govuk-"] {
+            font-family: inherit;
+        }
+
+        /* Nav Bar */
+        .app-nav-bar {
+            background: #0B1F33;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #505a5f;
+        }
+
+        .app-nav-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-nav-bar__list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-nav-bar__item a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            border-top: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+        }
+
+        .app-nav-bar__item a:hover,
+        .app-nav-bar__item a:focus {
+            background: #1d1d1d;
+            border-bottom-color: #1d70b8;
+            color: #ffffff;
+        }
+
+        .app-nav-bar__item--active a {
+            border-bottom-color: #1d70b8;
+        }
+
+        .app-nav-bar__brand {
+            color: #ffffff;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            display: block;
+        }
+
+        .app-nav-bar__brand:hover,
+        .app-nav-bar__brand:focus {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .app-nav-bar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 48em) {
+            .app-nav-bar__toggle { display: block; }
+            .app-nav-bar__list { display: none; flex-direction: column; width: 100%; }
+            .app-nav-bar__list--open { display: flex; }
+            .app-nav-bar__inner { flex-wrap: wrap; }
+            .app-nav-bar__item a { padding: 0.75rem 1rem; border-bottom: none; border-left: 3px solid transparent; }
+            .app-nav-bar__item a:hover,
+            .app-nav-bar__item a:focus { border-left-color: #1d70b8; border-bottom: none; }
+            .app-nav-bar__item--active a { border-left-color: #1d70b8; border-bottom: none; }
+        }
+
+        /* Public sector page */
+        .app-ps-section { margin-bottom: 3rem; }
+        .app-ps-section__heading { border-left: 4px solid #1d70b8; padding-left: 1rem; }
+        .app-ps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+        .app-ps-card {
+            border: 2px solid #b1b4b6;
+            padding: 1.25rem;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: border-color 0.15s;
+        }
+        a.app-ps-card:hover { border-color: #1d70b8; background: #f8f8f8; }
+        .app-ps-card__title { font-weight: 700; color: #1d70b8; font-size: 1.125rem; margin-bottom: 0.5rem; }
+        .app-ps-card__badge {
+            display: inline-block;
+            background: #1d70b8;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 2px;
+            font-weight: 700;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+        .app-ps-card__desc { color: #505a5f; font-size: 0.875rem; margin-top: 0.5rem; }
+        .app-ps-cta {
+            border: 3px solid #00703c;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .app-ps-cta .govuk-button { margin-bottom: 0; margin-right: 1rem; }
+        html.dark-mode .app-ps-card { border-color: #555555; background: #2a2a2a; }
+        html.dark-mode a.app-ps-card:hover { border-color: #4da3ff; background: #333333; }
+        html.dark-mode .app-ps-card__title { color: #4da3ff; }
+        html.dark-mode .app-ps-card__desc { color: #a0a8b0; }
+        /* Footer */
+        .app-footer {
+            background: #0b0c0c;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .app-footer a { color: white; text-decoration: underline; }
+        .app-footer a:hover { color: #5694ca; }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "@id": "https://arckit.org/public-sector.html",
+                "name": "ArcKit for UK Public Sector Architects | Assessor-Ready Governance Evidence",
+                "description": "ArcKit for UK public sector architects: a free, open-source AI harness that gives your AI coding assistant the UK templates, traceability and checks to draft TCoP, Service Standard, Secure by Design, DPIA and Green Book evidence you can defend, with citations and no telemetry.",
+                "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://arckit.org/" },
+                    { "@type": "ListItem", "position": 2, "name": "UK Public Sector", "item": "https://arckit.org/public-sector.html" }
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body class="govuk-template__body">
+    <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <nav class="app-nav-bar" aria-label="Main navigation">
+        <div class="govuk-width-container app-nav-bar__inner">
+            <a href="index.html" class="app-nav-bar__brand">ArcKit</a>
+            <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
+            <ul class="app-nav-bar__list" id="nav-menu">
+                <li class="app-nav-bar__item"><a href="commands.html">AI Commands</a></li>
+                <li class="app-nav-bar__item"><a href="use-cases.html">Example Projects</a></li>
+                <li class="app-nav-bar__item"><a href="guides.html">Guides</a></li>
+                <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
+                <li class="app-nav-bar__item"><a href="articles.html">Articles</a></li>
+                <li class="app-nav-bar__item"><a href="getting-started.html">Getting Started</a></li>
+                <li class="app-nav-bar__item"><a href="contributors.html">Contributors</a></li>
+                <li class="app-nav-bar__item"><a href="https://tractorjuice.github.io/arckit-fde/">FDE</a></li>
+            </ul>
+            <div class="app-nav-bar__icons">
+                <a href="https://github.com/tractorjuice/arc-kit" class="app-icon-link" aria-label="GitHub repository" title="GitHub repository">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                </a>
+                <a href="https://discord.gg/HsA4Y3hQ4" target="_blank" rel="noopener" class="app-icon-link" aria-label="Discord community" title="Discord community">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/></svg>
+                </a>
+                <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-page-hero app-page-hero--roles">
+        <div class="govuk-width-container app-page-hero__content">
+            <span class="app-page-hero__stat">For UK public sector architects</span>
+            <h1 class="app-page-hero__title">Show your working</h1>
+            <p class="app-page-hero__description">ArcKit gives your AI coding assistant the UK templates, traceability and checks to produce governance evidence you can defend in a review, with every claim cited and every document kept in your own repository.</p>
+        </div>
+    </div>
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-width-container">
+            <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
+
+            <div class="govuk-inset-text">
+                Free, MIT licensed and open source. It runs inside AI <em>coding</em> assistants: Claude Code, GitHub Copilot, Codex CLI, Gemini CLI and four others. If your team already has one of those approved, there's nothing new to buy.
+            </div>
+
+            <!-- What it produces -->
+            <div class="app-ps-section">
+                <h2 class="govuk-heading-l app-ps-section__heading">Evidence in the shape assessors expect</h2>
+                <p class="govuk-body">Each command drafts one governance document from a template built around the standard it answers to, using what's already in your project: principles, stakeholders, requirements, risks and decisions. You review it, fix it and sign it off.</p>
+                <div class="app-ps-grid">
+                    <a href="guide-viewer.html?guide=tcop" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Technology Code of Practice</div>
+                        <span class="app-ps-card__badge">/arckit:tcop</span>
+                        <div class="app-ps-card__desc">A point-by-point TCoP review with evidence and gaps, ready for spend control.</div>
+                    </a>
+                    <a href="guide-viewer.html?guide=service-assessment" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">GDS Service Standard</div>
+                        <span class="app-ps-card__badge">/arckit:service-assessment</span>
+                        <div class="app-ps-card__desc">Readiness against all 14 points, so you know what's missing before the assessors do.</div>
+                    </a>
+                    <a href="guide-viewer.html?guide=secure" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Secure by Design</div>
+                        <span class="app-ps-card__badge">/arckit:secure</span>
+                        <div class="app-ps-card__desc">A civilian Secure by Design assessment, with a separate MOD version in <code>/arckit:mod-secure</code>.</div>
+                    </a>
+                    <a href="guide-viewer.html?guide=dpia" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Data Protection Impact Assessment</div>
+                        <span class="app-ps-card__badge">/arckit:dpia</span>
+                        <div class="app-ps-card__desc">A UK GDPR Article 35 DPIA drawn from your data model and requirements.</div>
+                    </a>
+                    <a href="guide-viewer.html?guide=sobc" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Strategic Outline Business Case</div>
+                        <span class="app-ps-card__badge">/arckit:sobc</span>
+                        <div class="app-ps-card__desc">The Green Book five-case model, with every figure traced to its source.</div>
+                    </a>
+                    <a href="guide-viewer.html?guide=risk" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Risk register</div>
+                        <span class="app-ps-card__badge">/arckit:risk</span>
+                        <div class="app-ps-card__desc">A risk register following Orange Book principles, linked to the requirements it threatens.</div>
+                    </a>
+                    <a href="guide-viewer.html?guide=ai-playbook" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">AI Playbook and ATRS</div>
+                        <span class="app-ps-card__badge">/arckit:ai-playbook</span>
+                        <div class="app-ps-card__desc">AI Playbook compliance and an Algorithmic Transparency Recording Standard record (<code>/arckit:atrs</code>).</div>
+                    </a>
+                    <a href="guide-viewer.html?guide=gcloud-search" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">G-Cloud and DOS procurement</div>
+                        <span class="app-ps-card__badge">/arckit:gcloud-search</span>
+                        <div class="app-ps-card__desc">Live Digital Marketplace search, supplier clarification questions and DOS requirement packs (<code>/arckit:dos</code>).</div>
+                    </a>
+                </div>
+                <p class="govuk-body govuk-!-margin-top-4">That's eight of 75 commands. The rest cover requirements, architecture decisions, diagrams, Wardley maps, traceability and delivery. <a href="commands.html" class="govuk-link">See all commands</a>.</p>
+            </div>
+
+            <!-- Trust -->
+            <div class="app-ps-section">
+                <h2 class="govuk-heading-l app-ps-section__heading">AI you can defend in a review</h2>
+                <p class="govuk-body">The fair question about AI-written governance documents is whether anyone can check them. ArcKit is built so that someone can.</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><strong>Claims cite their sources.</strong> When a document draws on your policies, a vendor's submission or a web page, the claim carries a marker that points to the source.</li>
+                    <li><strong>Every document records how it was made.</strong> A block at the end records the command, the AI model and the settings that produced it.</li>
+                    <li><strong>Documents start as drafts.</strong> Approval is a human act, and ArcKit doesn't pretend otherwise.</li>
+                    <li><strong>It's honest about its limits.</strong> One page lists which rules are enforced in code whatever the AI does, which depend on the AI following instructions, and which are yours to own. <a href="https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-claude/docs/ENFORCEMENT.md" class="govuk-link">Read the enforcement page</a>.</li>
+                </ul>
+            </div>
+
+            <!-- FAQ -->
+            <div class="app-ps-section">
+                <h2 class="govuk-heading-l app-ps-section__heading">The questions your security and commercial colleagues will ask</h2>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Does ArcKit send our documents anywhere?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">ArcKit itself sends nothing and collects no usage data. It's a set of commands, templates and checks that run inside your AI assistant, and every document it writes stays in your repository.</p>
+                        <p class="govuk-body">Your AI assistant does send your prompts and the files it reads to its model provider, under whatever agreement your organisation has with that provider. That's the same with or without ArcKit, so the question to settle is which assistant you're approved to use. Research commands also search the web and public sources such as AWS and Microsoft documentation, UK government code and published tenders. Don't run them against material you can't search on.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Can we use it on OFFICIAL-SENSITIVE work?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">That's your organisation's call, and it depends on which AI assistant and model provider you're approved to use at that classification. ArcKit labels every document with a classification in its control table, taken from the standard the document answers to or from a default you set. In Claude Code, automatic checks also stop keys, passwords and tokens from being sent in prompts or written into documents, and stop the AI writing to credential and key files.</p>
+                        <p class="govuk-body">What ArcKit doesn't do is control where a classified file goes afterwards. Repository visibility, publishing and how long your assistant keeps conversation history are yours to set.</p>
+                        <p class="govuk-body">If your rules are unclear, run the pilot on one of the <a href="use-cases.html" class="govuk-link">public example projects</a> first. Most teams find it answers the question for them.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Do we need to procure it?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">No. ArcKit is MIT licensed and free, with no supplier, subscription or contract. You install it as a plugin or extension in an AI coding assistant. If your team already has one approved, there's nothing new to buy. If not, that assistant is the thing to get approved, not ArcKit.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">We have Microsoft 365 Copilot or ChatGPT. Does that work?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">Not directly. ArcKit runs in AI <em>coding</em> assistants, which read and write files in a repository. Microsoft 365 Copilot and ChatGPT are chat assistants, and they don't. What you'd get from ArcKit over a plain prompt is the template, the citations, the traceability between documents, and a record of how each one was made. That's the difference between plausible prose and evidence that survives a review.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">We only have GitHub Copilot. Does that work?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">Yes. ArcKit ships as prompt files and custom agents for GitHub Copilot. Claude Code gets the most features, including the automatic checks and research agents, but the templates and commands are the same everywhere. <a href="getting-started.html" class="govuk-link">Getting started</a> covers each assistant.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">We already have Bizzdesign, Ardoq or LeanIX. Why would we need this?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">Keep it. An EA repository holds your inventory: what applications you have and how they connect. ArcKit produces the documents an assessment, design authority or procurement asks for. Put an export from your EA tool in the project and ArcKit uses it as a cited source, so the two work together rather than competing.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Who maintains it, and will it still be here next year?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">ArcKit is built in the open, with more than 100 releases since October 2025, and practitioners in several countries contribute overlays and fixes. Because everything it produces is plain Markdown in your repository, your documents don't depend on ArcKit continuing to exist.</p>
+                    </div>
+                </details>
+            </div>
+
+            <!-- CTA -->
+            <div class="app-ps-cta">
+                <h2 class="govuk-heading-m">Try it on a real project, with help</h2>
+                <p class="govuk-body">This quarter we're running free two-hour pilot workshops. We work with your team on one of your projects (or a public example project) and finish with a first set of governance documents for the assessment you have coming up. There are also monthly office hours, open to anyone.</p>
+                <p class="govuk-body">If you already use ArcKit, please tell us. You can be named, listed anonymously by sector, or not listed at all.</p>
+                <a href="https://github.com/tractorjuice/arc-kit/issues/new?template=adopter.yml" class="govuk-button" data-module="govuk-button">Tell us you use ArcKit</a>
+                <a href="getting-started.html" class="govuk-button govuk-button--secondary" data-module="govuk-button">Get started</a>
+                <p class="govuk-body-s govuk-!-margin-top-4">Can't post publicly? Send the same details on <a href="https://discord.gg/HsA4Y3hQ4" class="govuk-link">Discord</a> or through the <a href="https://www.linkedin.com/groups/17641034/" class="govuk-link">LinkedIn group</a>. See who's using it on the <a href="https://github.com/tractorjuice/arc-kit/blob/main/ADOPTERS.md" class="govuk-link">adopters page</a>.</p>
+            </div>
+        </div>
+    </main>
+    <footer class="app-footer">
+        <div class="govuk-width-container">
+            <p class="govuk-body-s"><a href="index.html" class="govuk-link">Back to ArcKit</a> | <a href="https://github.com/tractorjuice/arc-kit" class="govuk-link">GitHub</a> | MIT License</p>
+        </div>
+    </footer>
+
+    <!-- GOV.UK Frontend JavaScript -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js" integrity="sha384-DwGEYeDIkSBDH4+n4Z+tY7m0/hKLvETQmD6glhDiHn0lFo3hffImqh39zfNvHVrd" crossorigin="anonymous"></script>
+    <script type="module">
+        import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
+        initAll()
+    </script>
+<script src="theme.js"></script>
+</body>
+</html>

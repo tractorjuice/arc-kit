@@ -1,0 +1,94 @@
+name: I use ArcKit
+description: Tell us your organisation uses ArcKit, named or anonymously
+title: "[Adopter]: "
+labels: ["adopter"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ArcKit collects no usage data, so the only way to know who uses it is to ask. Thank you for telling us.
+
+        **This issue is public.** Your GitHub username is visible whichever listing you choose below. If you can't post in public, send the same details privately on [Discord](https://discord.gg/HsA4Y3hQ4) or through the [LinkedIn group](https://www.linkedin.com/groups/17641034/), and the maintainer will add you without naming you.
+
+  - type: dropdown
+    id: listing
+    attributes:
+      label: How can we list you?
+      description: You can change or remove your listing at any time by commenting on this issue.
+      options:
+        - Named, using my organisation's name in ADOPTERS.md
+        - Anonymous, by sector only (e.g. "a central government department")
+        - Don't list us, this is just for the maintainer
+    validations:
+      required: true
+
+  - type: input
+    id: organisation
+    attributes:
+      label: Organisation
+      description: Leave blank if you chose an anonymous listing or no listing.
+      placeholder: "e.g. Example Borough Council"
+
+  - type: dropdown
+    id: sector
+    attributes:
+      label: Sector
+      options:
+        - UK central government department or agency
+        - UK arm's-length body or regulator
+        - NHS or health and care
+        - Defence
+        - UK local government
+        - Devolved government (Scotland, Wales, Northern Ireland)
+        - Public sector outside the UK
+        - Supplier or consultancy delivering public sector work
+        - Private sector
+        - Education or research
+        - Individual practitioner
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: stage
+    attributes:
+      label: How are you using it?
+      options:
+        - Trying it out
+        - Used on one real project
+        - Used on several projects
+        - Part of how our team works
+    validations:
+      required: true
+
+  - type: dropdown
+    id: assistant
+    attributes:
+      label: Which AI assistants do you run it in?
+      multiple: true
+      options:
+        - Claude Code
+        - GitHub Copilot
+        - Codex CLI
+        - Gemini CLI
+        - OpenCode CLI
+        - Kimi Code CLI
+        - Mistral Vibe
+        - Paperclip
+        - Other
+
+  - type: textarea
+    id: usage
+    attributes:
+      label: What do you use it for?
+      description: Which commands or documents help most, and what problem they solved. A sentence or two is plenty.
+      placeholder: "e.g. TCoP and Secure by Design evidence before a spend-control review, Wardley maps for build-versus-buy decisions."
+
+  - type: checkboxes
+    id: follow-up
+    attributes:
+      label: Follow-up (optional)
+      options:
+        - label: We'd be happy to be quoted (we'll check the exact words with you first)
+        - label: We'd consider a short case study (a 30-minute conversation, and you approve the text before it's published)
+        - label: We'd like a free 2-hour pilot workshop on one of our projects
