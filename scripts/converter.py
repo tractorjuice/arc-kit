@@ -1235,6 +1235,7 @@ def generate_kimi_hooks():
         ("PreToolUse", "Write", "validate-arc-filename.mjs", 5, "/projects/"),
         ("PreToolUse", "Write", "score-validator.mjs", 5, "/vendors/scores.json"),
         ("PreToolUse", "Write", "validate-wardley-math.mjs", 5, "/wardley-maps/"),
+        ("PreToolUse", "Write", "validate-backlog-totals.mjs", 5, "-BKLG-"),
         ("PostToolUse", "Write|Edit", "provenance-stamp.mjs", 5, "/projects/"),
         ("PostToolUse", "Write|Edit", "tidy-wardley-labels.mjs", 10, "/wardley-maps/"),
         ("PostToolUse", "Write", "update-manifest.mjs", 5, "/projects/"),

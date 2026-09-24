@@ -300,5 +300,6 @@ def test_generate_kimi_hooks_scopes_project_hooks_with_a_guard():
     assert guarded.get("validate-arc-filename.mjs") == "/projects/"
     assert guarded.get("score-validator.mjs") == "/vendors/scores.json"
     assert guarded.get("validate-wardley-math.mjs") == "/wardley-maps/"
+    assert guarded.get("validate-backlog-totals.mjs") == "-BKLG-"
     assert guarded.get("provenance-stamp.mjs") == "/projects/"
     assert guarded.get("update-manifest.mjs") == "/projects/"
