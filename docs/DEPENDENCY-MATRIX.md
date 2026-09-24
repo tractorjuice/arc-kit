@@ -132,6 +132,8 @@ These commands can run first:
 Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 
 - **data-model** → Depends on: requirements (M), principles (R), stakeholders (R), sobc (O)
+- **archify** → Depends on: wardley (M for `wardley` renders), diagram (R), requirements (R), hld (R), dfd (O), data-model (O)
+  - Note: Renders existing artefacts as interactive HTML. Adds no new analysis, so it is a leaf: nothing consumes its output as input.
 - **dpia** → Depends on: data-model (M), requirements (M), principles (R), stakeholders (R), risk (R)
 - **research** → Depends on: requirements (M), stakeholders (R), data-model (R), platform-design (R)
   - Note: Also spawns `vendors/{slug}-profile.md` and `tech-notes/{slug}.md` for reusable knowledge (use `--no-spawn` to skip)
@@ -394,11 +396,27 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 1.6.0
 - **Matrix Date**: 2026-06-02
-- **Commands Documented**: 86
+- **Commands Documented**: 87
 - **Matrix Rows**: 58 (existing) + 18 EU/FR commands in separate section below (see Changelog 2026-04-19)
 - **Note**: `/arckit:customize`, `/arckit:template-builder`, `/arckit:health`, `/arckit:search`, `/arckit:impact`, `/arckit:navigator`, `/arckit:graph-report`, `/arckit:init`, `/arckit:start`, `/arckit:export-okf`, and `/arckit:import-okf` are utility/interoperability/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-09-03 - Interactive Diagram Rendering command (#826)
+
+Added `/arckit:archify` (76th core command), taking the core plugin from 75 to 76 commands. Documented here via this changelog rather than as a DSM grid row, following the convention used for recent additions. Tier 6 detailed design.
+
+**Command and output doc-type**:
+
+- `/arckit:archify` → `DIAG` (Architecture Diagrams, category Architecture) — the same doc-type as `/arckit:diagram`, because it renders the same class of artefact in a different format. A `wardley` render updates the existing `WARD` artefact instead of creating a `DIAG`.
+
+**Dependencies**: wardley (M for `wardley` renders — the OWM code block is the render input), diagram (R — the Mermaid/PlantUML companion for the same subject), requirements (R), hld (R — containers and technology choices for `architecture` renders), dfd (O), data-model (O), dld (O — participants and messages for `sequence` renders).
+
+**Consumed by**: nothing. The command produces a rendering of artefacts that already exist and introduces no new analysis, so it is a leaf in the matrix. `/arckit:pages` may publish its output, but does not depend on it.
+
+**Two engines**: `architecture`, `workflow`, `sequence`, `dataflow` and `lifecycle` route to [Archify](https://github.com/tt-a1i/archify) (third party, MIT), which the user installs separately and ArcKit detects at run time — it is deliberately **not vendored**. The `wardley` type routes to ArcKit's own `scripts/owm-to-html.mjs`, which ships with the plugin, because Archify has no Wardley diagram type and a continuous evolution/value-chain plane does not fit its node-graph IR.
+
+**External dependency boundary**: when Archify is absent the command says so and hands off to `/arckit:diagram`; it never fabricates an interactive artefact. Wardley rendering has no external dependency at all, and both engines emit files that make no external requests — suitable for OFFICIAL-SENSITIVE and air-gapped review.
 
 ### 2026-08-13 - EU Cloud Sovereignty Framework Command (Community) (#740)
 

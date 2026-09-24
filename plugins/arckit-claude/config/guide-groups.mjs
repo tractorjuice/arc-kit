@@ -111,6 +111,7 @@ add(GUIDE_SECTIONS.CORE, 'Architecture', 'beta', [
 ]);
 add(GUIDE_SECTIONS.CORE, 'Architecture', 'alpha', ['data-mesh-contract']);
 add(GUIDE_SECTIONS.CORE, 'Architecture', 'experimental', [
+  'archify',
   'dfd',
   'framework',
   'platform-design',
