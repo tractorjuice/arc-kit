@@ -155,6 +155,8 @@ These produce OWM text for <https://create.wardleymaps.ai>. The renderer is stri
 - **Skipping the AskUserQuestion triage.** Inventing the user need, scope, or positioning instead of asking produces a confident-but-wrong map. When positioning is ambiguous for a key component, ask (Step 3) rather than guess.
 - **Listing only technology.** A value chain includes people, practices, and data — not just systems. Maps that are all boxes-of-software miss the inertia and doctrine insights that make the exercise worthwhile.
 - **Recommendations with no rationale.** Every strategic move must tie back to a position or movement on the map ("commoditize X because it sits Product-right with three vendors"), not generic advice.
+- **Manufacturing a source to fill the Source column.** A Source must name something that exists — copy the ID from the project context (value chains are numbered: `ARC-001-WVCH-001-v1.0`) or write `Assumption`. Inventing a plausible-looking ID is the failure the map check catches.
+- **Retyping a value chain's visibility instead of copying it.** A component sourced to a value chain carries that value chain's number to 2dp. If the value chain is wrong, fix it with `/arckit:wardley.value-chain` and re-run; if the map re-anchors on a different user need, source those components elsewhere.
 
 ## Analysis Checklist
 
