@@ -7,19 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-
-- **`slugify` produces the right slug on stock macOS bash 3.2.** The accent transliteration in `scripts/bash/common.sh` (and the plugin copy) used a quoted multibyte pattern in `${var//pattern/repl}`, which bash 3.2 mis-splits, so a project named "Café Modernisation" got the directory `caf-e-modernisation` on any Mac without a Homebrew bash; bash 5 handled it, which is why CI on Ubuntu never saw it and the 27 `test_slugify.py` failures looked like a local-only quirk. Both sides of the substitution are now unquoted (the table holds letters only, so nothing needs quoting), with a comment naming the quirk. All 102 slugify cases pass on bash 3.2 and bash 5.
-
-### Changed
-
-- **`arckit-uk-gcloud` skill descriptions rewritten in request-class style.** The three overlay skills (`cloud-security`, `gcloud-framework`, `sfia-skills`) were the last still describing themselves with quoted phrase lists — twenty-odd utterances each. Each now names the class of question it answers and ends with a *not needed when* clause handing off to the `/arckit-uk-gcloud:` command that writes the document, the convention the five core skills adopted in #840. Bodies unchanged; the nested mirror under `plugins/arckit-claude/plugins/uk/gcloud/` re-synced.
-
 ### Added
 
 - **Wardley Map component provenance and value-chain visibility join** (`hooks/wardley-provenance.mjs`, wired into `validate-wardley-math.mjs`). Where a Component Inventory table carries a `Source` column, every cell must resolve to something that exists: an artefact document ID (with or without its version) or doc-type code held anywhere under `projects/`, hyphenated types included; a citation ID from the map's own Citations table; an external Doc ID from its Document Register; or the literal `Assumption`. A Source naming a document that is not there is blocked with every accepted form in the reason, and a Citations or Register row naming an ARC document is held to the same test so a self-authored row cannot launder an invented ID. A row sourced to a value chain must name a component in *that* value chain (the one it cites; a project may hold several) and carry its visibility to 2dp; a value chain whose inventory is still the template blocks a row that cites it. Both rules are claim-scoped: a table without the column is not checked, and a row sourced elsewhere is not joined. The hook indexes the whole `projects/` tree three levels deep (skipping `external/`, `vendors/`, `policies/`), does no I/O for a map with no Source-bearing row, runs every read inside one fail-soft guard so the five math checks can never be lost, and treats an unreadable `projects/` root as unknown rather than empty. The template's Component Inventory gains the column with sequenced placeholders (`{ARC-nnn-WVCH-001-v1.0}`); the command, guide, skill gotchas and `ENFORCEMENT.md` describe the rule, with the non-Claude runtimes told it is theirs to hold since they do not run the hook. Ten findings from the review of the first cut (#850) are folded in, including the primed unsequenced value-chain ID that would have blocked every real run.
 
+### Fixed
+
+- **`/arckit:fr-secnumcloud` cited only the non-binding "Cloud au Centre" doctrine as SecNumCloud's legal basis.** The command and its guide framed the requirement around the 2021 doctrine and OIV/OSE designation only, missing the arrêté du 12 août 2026 (in force since 15 August 2026, under décret n° 2026-272 / loi SREN) that makes SecNumCloud 3.2 qualification legally binding for state administrations, their operators, and designated GIP handling legally-sensitive data — independently of OIV/OSE status, and reaching private suppliers via public contracts or sub-contracting chains. Scoping (Step 4), the regulatory-framework table, the OIV/OSE mapping step, Important Notes, and Key References now reflect the binding basis; the nested `arckit-claude/plugins/fr` mirror and `docs/guides` copy re-synced.
+
+## [6.15.0] — 2026-09-23
+
+### Added
+
+- **Share pages so article links preview properly** (#861). The article viewer renders in JavaScript, so LinkedIn, Discord, Slack and Medium showed the same generic card for every article. `scripts/generate-article-share-pages.py` now writes `docs/share/<slug>.html` for each listed article with its own title, summary and hero, then redirects to the viewer with the query string and hash kept. `tests/plugin/test_article_share_pages.py` fails on a missing, stale or orphaned page.
+
+- **Show Your Working adoption campaign** (#858, #859, #860). An "I use ArcKit" issue form with named and anonymous options, an `ADOPTERS.md` that starts empty, a `docs/public-sector.html` landing page with a data-handling FAQ, and the launch article. ArcKit still collects no usage data. The campaign asks people to tell us instead.
+
 - **Duplicate-key guard on command, agent and skill frontmatter.** PyYAML's `safe_load` keeps the last value of a repeated key and says nothing, so a pasted-twice `description:` or a second `handoffs:` block would load cleanly and silently discard the first, and `test_commands_structure.py` would not notice. `tests/plugin/test_frontmatter_duplicate_keys.py` parses every plugin's `commands/`, the core `agents/` and every plugin's `skills/` with a loader that raises on the first duplicate. All 300-odd files are clean today; the guard exists because a suspected duplicate in `search.md` turned out to be a display artefact, and the cheap way to be sure next time is a test.
+
+### Changed
+
+- **Claude Code floor raised to v2.1.280 for Claude Opus 5.5.** Opus 5.5 is now the default Opus model. It always thinks, so ArcKit's `effort: max` commands can no longer be quietly sent as `high` by a session with thinking turned off, and the Effective Effort row in each artefact's Build Provenance now matches what actually ran. Opus 5.5 defaults to `effort: medium`: 66 of the 75 core commands set their own effort, and the nine that don't are light commands. The SessionStart version check, READMEs, guides and CLAUDE.md are updated to match, including Opus 5.5 fast-mode pricing ($8/$40 per MTok).
+
+- **Opus 5.5 behaviour documented** (#863). CLAUDE.md, the hooks README and the version check now record that Opus 5.5 defaults to `effort: medium`, cannot run with thinking off, and supports fast mode at $8/$40 per MTok. The stale note that `/fast` on Opus 4.7 fails silently is gone (fixed in v2.1.221).
+
+- **`arckit-uk-gcloud` skill descriptions rewritten in request-class style.** The three overlay skills (`cloud-security`, `gcloud-framework`, `sfia-skills`) were the last still describing themselves with quoted phrase lists — twenty-odd utterances each. Each now names the class of question it answers and ends with a *not needed when* clause handing off to the `/arckit-uk-gcloud:` command that writes the document, the convention the five core skills adopted in #840. Bodies unchanged; the nested mirror under `plugins/arckit-claude/plugins/uk/gcloud/` re-synced.
+
+### Fixed
+
+- **`slugify` produces the right slug on stock macOS bash 3.2.** The accent transliteration in `scripts/bash/common.sh` (and the plugin copy) used a quoted multibyte pattern in `${var//pattern/repl}`, which bash 3.2 mis-splits, so a project named "Café Modernisation" got the directory `caf-e-modernisation` on any Mac without a Homebrew bash; bash 5 handled it, which is why CI on Ubuntu never saw it and the 27 `test_slugify.py` failures looked like a local-only quirk. Both sides of the substitution are now unquoted (the table holds letters only, so nothing needs quoting), with a comment naming the quirk. All 102 slugify cases pass on bash 3.2 and bash 5.
 
 ## [6.14.0] — 2026-09-03
 
