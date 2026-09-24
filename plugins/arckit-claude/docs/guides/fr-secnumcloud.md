@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:fr-secnumcloud` assesses cloud provider and customer obligations under ANSSI's SecNumCloud 3.2 referential — the French sovereign cloud qualification scheme. Required for OIV SIIV hosting and sensitive public sector data.
+`/arckit:fr-secnumcloud` assesses cloud provider and customer obligations under ANSSI's SecNumCloud 3.2 referential — the French sovereign cloud qualification scheme. Required for OIV SIIV hosting and sensitive public sector data, and, since the **arrêté du 12 août 2026** (in force since 15 August 2026), a binding legal requirement for state administrations, their operators, and designated GIP handling legally-sensitive data — independently of OIV/OSE status.
 
 ---
 
@@ -63,7 +63,7 @@ Output: `projects/<id>/ARC-<id>-SECNUM-v1.0.md`
 
 ## Review Checklist
 
-- SecNumCloud requirement confirmed (legal basis: OIV / ministerial decree / circular).
+- SecNumCloud requirement confirmed (legal basis: arrêté du 12 août 2026 / OIV / ministerial decree / circular — cite the specific basis, not "doctrine" alone).
 - Visa vs Qualification distinction clearly stated.
 - Qualified provider and qualifying service scope confirmed on ANSSI published list.
 - IS homologation prerequisites documented.
@@ -77,4 +77,6 @@ Output: `projects/<id>/ARC-<id>-SECNUM-v1.0.md`
 
 - **Visa ≠ Qualification**: A provider with a visa is in the process — it does NOT satisfy the legal obligation for OIV SIIV hosting.
 - **More stringent than EUCS**: SecNumCloud 3.2 is stricter than the EU's EUCS high level — important for cross-border comparisons.
-- **DINUM doctrine cloud**: The Doctrine d'utilisation de l'informatique en nuage de l'État (2022) mandates SecNumCloud or equivalent for sensitive data — run `/arckit:fr-dinum` for the full doctrine assessment.
+- **DINUM doctrine cloud**: The Doctrine d'utilisation de l'informatique en nuage de l'État (2022) recommended SecNumCloud or equivalent for sensitive data — run `/arckit:fr-dinum` for the full doctrine assessment.
+- **Binding since 15 August 2026**: The arrêté du 12 août 2026 (JORF, taken under décret n° 2026-272 du 14 avril 2026 / loi SREN) turned SecNumCloud from a doctrine-level recommendation into a **legal obligation** for state administrations, their operators, and designated GIP processing data whose compromise would affect public safety, health, the life of persons, or intellectual-property protection. Compliance must be attested by an ANSSI qualification or a European certification ANSSI recognises as equivalent.
+- **Private-sector reach**: A private company is not automatically bound for all its data, but is drawn into scope when it supplies cloud to a public actor in scope, sits in that actor's sub-contracting chain, responds to a tender requiring this protection level, or processes data under a contract that mandates it.

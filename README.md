@@ -36,7 +36,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 ### Installation
 
-**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.251+**):
+**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.280+**):
 
 First, make sure Claude Code is on the latest version:
 
@@ -70,7 +70,7 @@ The standalone `tractorjuice/arckit-claude` marketplace hosts all Claude Code pl
 
 The older `tractorjuice/arc-kit` marketplace remains available for compatibility, but new Claude Code installs should use `tractorjuice/arckit-claude`. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all official commands, autonomous research agents, automation hooks, bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape, uk-tenders), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-> **Why v2.1.251?** v2.1.251 stops the file tools (Read, Write, Edit) following a symlink swapped inside the working directory *after* the permission check, and makes Grep and Glob honour `Read()` deny rules through a symlinked search path — the same class of bypass the v2.1.222–v2.1.224 fixes closed for Bash, and the class ArcKit's `file-protection` and `secret-file-scanner` gates sit in front of. The same release sends Opus 5 `effort: xhigh`/`max` as `high` when thinking is off instead of failing, so ArcKit's 18 `effort: max` commands complete on thinking-off sessions. v2.1.246 fixed four plugin-loading bugs that hit ArcKit's exact layout: `/reload-plugins` counted 0 skills for plugins that define skills under `skills/*/SKILL.md`, hook error messages showed a literal `${CLAUDE_PLUGIN_ROOT}` instead of the resolved path, the plugin cache created duplicate SHA-named directories, and `claude plugin update <bare-name>` failed. The floor carries forward v2.1.234, which stops Claude Code's MCP diagnostics printing **resolved secrets** — ArcKit bundles two keyed MCP servers whose `${user_config.*}` API keys sit in request headers, and on a session with no keys configured those connections fail *by design*, so ArcKit routinely produces exactly the diagnostics this fixed. v2.1.221 fixed `WebSearch` returning a 400 at `effort: xhigh`/`max` when thinking is disabled — silently breaking ArcKit's 18 `effort: max` commands and its three max-effort research agents for anyone running with thinking off. v2.1.222 stopped PreToolUse auto-allow hooks bypassing tool restrictions inside background agent tasks, which became load-bearing when v2.1.232 made subagent spawns background by default. v2.1.223 and v2.1.224 close Bash permission-check bypasses, a sandbox `denyRead`/`denyWrite` trailing-slash bypass, and a bug where project paths over 200 characters resolved into another project's session directory; v2.1.224 also surfaces sandbox violation details in Bash results. It also carries v2.1.219's **Claude Opus 5** (`claude-opus-5`), the current default Opus model with 1M context and fast mode, which earlier clients cannot select; v2.1.200's fix for project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility, which makes ArcKit's branch and test-repo workflows reliable; the v2.1.198-v2.1.199 background-subagent reliability, parent error-propagation, and hook stderr-visibility fixes that matter to `/arckit:build`, reader/writer handoffs, and hook diagnosis; v2.1.197's Claude Sonnet 5 default with native 1M context; and v2.1.172's fix for wildcard-domain `WebFetch` rules (`WebFetch(domain:*.gov.uk)`) that never matched subdomains on earlier clients — the exact shape ArcKit recommends for confining research-agent traffic in OFFICIAL-SENSITIVE deployments. It also carries the v2.1.156 Opus 4.8 thinking-block fix, v2.1.154 plugin `defaultEnabled: false`, v2.1.144 session-title and headless Skill tool fixes, v2.1.143 plugin dependency enforcement, v2.1.139 hook `args: string[]`, v2.1.129 monitor layout and prompt-cache fixes, v2.1.121 MCP/provenance hook unlocks, v2.1.118-v2.1.119 release/telemetry unlocks, and the earlier `/context`, Auto mode, plugin update, MCP leak, retry, and subagent working-directory fixes.
+> **Why v2.1.280?** v2.1.280 adds **Claude Opus 5.5** (`claude-opus-5-5`), the default Opus model. Opus 5.5 always thinks, so ArcKit's `effort: max` commands can no longer be quietly sent as `high` by a session with thinking off, and the Effective Effort row in each artefact's Build Provenance is accurate. The floor carries v2.1.251, which stops the file tools (Read, Write, Edit) following a symlink swapped inside the working directory *after* the permission check, and makes Grep and Glob honour `Read()` deny rules through a symlinked search path — the same class of bypass the v2.1.222–v2.1.224 fixes closed for Bash, and the class ArcKit's `file-protection` and `secret-file-scanner` gates sit in front of. The same release sends Opus 5 `effort: xhigh`/`max` as `high` when thinking is off instead of failing, so ArcKit's 18 `effort: max` commands complete on thinking-off sessions. v2.1.246 fixed four plugin-loading bugs that hit ArcKit's exact layout: `/reload-plugins` counted 0 skills for plugins that define skills under `skills/*/SKILL.md`, hook error messages showed a literal `${CLAUDE_PLUGIN_ROOT}` instead of the resolved path, the plugin cache created duplicate SHA-named directories, and `claude plugin update <bare-name>` failed. The floor carries forward v2.1.234, which stops Claude Code's MCP diagnostics printing **resolved secrets** — ArcKit bundles two keyed MCP servers whose `${user_config.*}` API keys sit in request headers, and on a session with no keys configured those connections fail *by design*, so ArcKit routinely produces exactly the diagnostics this fixed. v2.1.221 fixed `WebSearch` returning a 400 at `effort: xhigh`/`max` when thinking is disabled — silently breaking ArcKit's 18 `effort: max` commands and its three max-effort research agents for anyone running with thinking off. v2.1.222 stopped PreToolUse auto-allow hooks bypassing tool restrictions inside background agent tasks, which became load-bearing when v2.1.232 made subagent spawns background by default. v2.1.223 and v2.1.224 close Bash permission-check bypasses, a sandbox `denyRead`/`denyWrite` trailing-slash bypass, and a bug where project paths over 200 characters resolved into another project's session directory; v2.1.224 also surfaces sandbox violation details in Bash results. It also carries v2.1.219's **Claude Opus 5** (`claude-opus-5`), the current default Opus model with 1M context and fast mode, which earlier clients cannot select; v2.1.200's fix for project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility, which makes ArcKit's branch and test-repo workflows reliable; the v2.1.198-v2.1.199 background-subagent reliability, parent error-propagation, and hook stderr-visibility fixes that matter to `/arckit:build`, reader/writer handoffs, and hook diagnosis; v2.1.197's Claude Sonnet 5 default with native 1M context; and v2.1.172's fix for wildcard-domain `WebFetch` rules (`WebFetch(domain:*.gov.uk)`) that never matched subdomains on earlier clients — the exact shape ArcKit recommends for confining research-agent traffic in OFFICIAL-SENSITIVE deployments. It also carries the v2.1.156 Opus 4.8 thinking-block fix, v2.1.154 plugin `defaultEnabled: false`, v2.1.144 session-title and headless Skill tool fixes, v2.1.143 plugin dependency enforcement, v2.1.139 hook `args: string[]`, v2.1.129 monitor layout and prompt-cache fixes, v2.1.121 MCP/provenance hook unlocks, v2.1.118-v2.1.119 release/telemetry unlocks, and the earlier `/context`, Auto mode, plugin update, MCP leak, retry, and subagent working-directory fixes.
 
 **Gemini CLI** — install the ArcKit extension:
 
@@ -127,7 +127,7 @@ Zero-config: 75 official commands as skills, 10 specialized agents, all template
 
 Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
 
-**Latest Release**: [v6.14.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.14.0)
+**Latest Release**: [v6.15.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.15.0)
 
 ### OKF Interoperability
 
@@ -622,7 +622,7 @@ Handoff chain: `agile-strategy` → `product-architecture` → `oaa-adm-lite` �
 
 ## Using TOGAF ADM and O-AA Together
 
-The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.14.0` pin) — neither depends on the other. O-AA maps the ADM cycle to 2–4 week sprints; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.15.0` pin) — neither depends on the other. O-AA maps the ADM cycle to 2–4 week sprints; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Pattern | When to use | Sequence |
 |---------|-------------|----------|
@@ -640,7 +640,7 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 
 **Running both in the same project:**
 
-- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.14.0` pins.
+- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.15.0` pins.
 - Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.json` (architecture-change ↔ agile-governance).
 - Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands do not read TOGAF outputs, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
@@ -1849,16 +1849,18 @@ Key references live in `docs/` and top-level guides:
 
 ## Comparison to Other Tools
 
+Every tool here now has AI features. Sparx has Kernaro AI and an MCP server, Ardoq relaunched as AI-first in May 2026, LeanIX ships an AI assistant and an MCP server, and Confluence has Atlassian Rovo. The difference is what the AI works on. The EA platforms apply it to the application inventory: what exists and how it connects. ArcKit applies it to the governance evidence: the documents an assessment, a design authority or a procurement asks for. They work well together, since ArcKit can read an export from your EA repository as source material.
+
 | Feature | ArcKit | Sparx EA | Ardoq | LeanIX | Confluence |
 |---------|--------|----------|-------|--------|------------|
-| **AI-Assisted** | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **AI features** | ✅ Governance documents | ✅ Models | ✅ Inventory | ✅ Inventory | ✅ Pages |
+| **UK assessment templates** (TCoP, Service Standard, Secure by Design, Green Book) | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **Citations and provenance on AI output** | ✅ | ❌ Not claimed | ❌ Not claimed | ❌ Not claimed | ❌ Not claimed |
 | **Wardley Mapping** | ✅ | ❌ | ⚠️ Limited | ❌ | ❌ |
-| **Version Control** | ✅ Git | ❌ | ❌ | ❌ | ⚠️ Limited |
-| **Vendor RFP** | ✅ | ❌ | ❌ | ❌ | ⚠️ Manual |
-| **Design Review Gates** | ✅ | ⚠️ Manual | ❌ | ❌ | ⚠️ Manual |
-| **Traceability** | ✅ Automated | ⚠️ Manual | ✅ | ⚠️ Limited | ❌ |
-| **Cost** | Free | $$$$ | $$$$ | $$$$ | $$ |
-| **Learning Curve** | Low | High | Medium | Medium | Low |
+| **Artefacts versioned in your own git repo** | ✅ | ⚠️ Via integration | ❌ | ❌ | ❌ |
+| **Vendor RFP and G-Cloud/DOS** | ✅ | ❌ | ❌ | ❌ | ⚠️ Manual |
+| **Application inventory and dependency modelling** | ❌ Use an EA tool | ✅ | ✅ | ✅ | ❌ |
+| **Cost to start** | Free (MIT) | $$$$ | $$$$ | $$$$ | $$ |
 
 ---
 
@@ -1866,7 +1868,7 @@ Key references live in `docs/` and top-level guides:
 
 - **Python 3.11+**
 - **Git** (optional but recommended)
-- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.251+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
+- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.280+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---
@@ -2015,7 +2017,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v6.14.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.14.0)
+- **Latest Version**: [v6.15.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.15.0)
 
 ---
 
