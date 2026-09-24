@@ -211,6 +211,13 @@
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.mjs"],
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "if": "Write(/projects/**/ARC-*-BKLG-*.json)",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/validate-backlog-totals.mjs"],
+            "timeout": 5
           }
         ]
       },
