@@ -27,6 +27,10 @@ On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy
 
 **Out of scope**: General-purpose LLM evaluation/benchmarking (deferred to a separate overlay), hardware/infrastructure deployment (cloud, edge, on-prem), regulatory compliance frameworks (covered by sibling overlays such as `arckit-us`).
 
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## Maintainer
 
 `[COMMUNITY]` — community-contributed overlay. Recruiting domain co-maintainer for agent architecture expertise.

@@ -7,8 +7,11 @@
     "name": "ArcKit Contributors",
     "url": "https://github.com/tractorjuice/arckit-claude"
   },
+  "homepage": "https://arckit.org",
   "repository": "https://github.com/tractorjuice/arckit-claude",
   "license": "MIT",
+  "icon": "./assets/icon.svg",
+  "privacyPolicyUrl": "https://arckit.org/privacy.html",
   "defaultEnabled": false,
   "userConfig": {
     "default_classification": {

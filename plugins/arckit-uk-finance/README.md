@@ -31,6 +31,10 @@ FCA PSRs 2017 + SCA-RTS · FCA Approach to Payment Services and Electronic Money
 
 The CTP regime is **effective January 2025** upon HMT designation; the designated CTP list is still maturing — verify against the current HMT designation page before relying on any CTP dependency entry. UK SCA-RTS is in **PSRs 2017 Schedule 5** and may diverge from EU PSD3 over time. FCA Consumer Duty board-report expectations are evolving — see the April 2026 FCA observations for the current good-practice baseline.
 
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## Maintainer
 
 `[COMMUNITY]` — **EXPERIMENTAL**. Recruiting domain co-maintainer. Help wanted: if you are a UK FS practitioner with deep knowledge of PSD2 SCA-RTS, EMI safeguarding, Consumer Duty, or the Critical Third Parties regime — open an issue at <https://github.com/tractorjuice/arc-kit/issues> tagged `co-maintainer: uk-finance`. Output from these commands MUST be reviewed by qualified UK FS regulatory counsel and the firm's MLRO / Compliance Officer before reliance.

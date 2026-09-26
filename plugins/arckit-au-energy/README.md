@@ -32,3 +32,7 @@ Public **synthetic** evaluation fixtures live under `tests/fixtures/au-energy/` 
 ## Status
 
 **Community-contributed.** Output should be reviewed by a qualified energy-sector cyber security specialist, OT/ICS engineer, CISO, or regulatory affairs adviser before reliance. This plugin is **not** legal, regulatory, or safety advice. AESCSF, AER, AEMC, and AEMO guidance is periodically updated — verify the guidance version and publication date before external use.
+
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.

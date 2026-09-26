@@ -237,6 +237,10 @@ copy_distribution_files() {
     --exclude='./.npm' \
     --exclude='./.pnpm-store' \
     --exclude='./.yarn/cache' \
+    --exclude='./evals/results' \
+    --exclude='__pycache__' \
+    --exclude='*.pyc' \
+    --exclude='.DS_Store' \
     -cf - . | tar -C "$destination_path" -xf -
 }
 

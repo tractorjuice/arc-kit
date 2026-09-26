@@ -251,7 +251,7 @@ projects/
 
 ## MCP Servers
 
-The plugin includes 5 MCP (Model Context Protocol) servers for cloud and government research:
+The plugin includes 6 MCP (Model Context Protocol) servers for cloud and government research:
 
 | MCP Server | API Key Required | Used By |
 |------------|-----------------|---------|
@@ -260,6 +260,7 @@ The plugin includes 5 MCP (Model Context Protocol) servers for cloud and governm
 | Google Developer Knowledge | Yes (`GOOGLE_API_KEY`) | `/arckit:gcp-research` |
 | Data Commons | Yes (`DATA_COMMONS_API_KEY`) | Data statistics lookups |
 | govreposcrape | No | `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landscape` |
+| UK Tenders | No | `/arckit:tenders`, `/arckit:competitors` |
 
 AWS Knowledge and Microsoft Learn work out of the box with no configuration. The Google and Data Commons servers require API keys — if you don't set them, you'll see errors in the plugin UI, but **all other commands work normally**.
 
@@ -274,6 +275,21 @@ AWS Knowledge and Microsoft Learn work out of the box with no configuration. The
 
 1. Get an API key from [datacommons.org](https://datacommons.org)
 2. Set the environment variable: `export DATA_COMMONS_API_KEY="your-key-here"`
+
+## Data and Privacy
+
+ArcKit collects no usage data. It has no analytics and no account, and it runs no server of its own. Everything it writes stays in your repository: the artefacts under `projects/`, and the session log and telemetry the hooks keep under `.arckit/memory/` on your machine.
+
+The plugin sends data to other services only in these cases:
+
+| When | Where it goes | What is sent |
+|------|---------------|--------------|
+| A command queries one of the six bundled MCP servers (table above) | AWS Knowledge (`knowledge-mcp.global.api.aws`), Microsoft Learn (`learn.microsoft.com`), Google Developer Knowledge (`developerknowledge.googleapis.com`), Data Commons (`api.datacommons.org`), govreposcrape (`govreposcrape-api-1060386346356.us-central1.run.app`), UK Tenders (`tenders.run.cns.me`) | The search terms and document IDs Claude passes to that server's tools, which can include wording taken from your requirements. The Google and Data Commons servers also receive the API key you configure. Each service's own privacy policy applies |
+| Each session starts | GitHub API (`api.github.com`) | One anonymous request for the latest ArcKit release, to tell you when an update is available. No project data is sent |
+| You run `/arckit:trello` | Trello API (`api.trello.com`) | Your backlog's epics, stories and acceptance criteria, sent with the Trello key and token you provide |
+| A research command uses web search or fetch | The sites Claude searches or fetches | Search queries and URLs, through Claude's own web tools |
+
+Two hooks approve permission requests so that routine steps don't prompt every session. `allow-mcp-tools` approves calls to the six bundled MCP servers above. `allow-plugin-internals` approves reads of the plugin's own files and runs of its own bundled scripts. Neither covers your project files or any other command, and your own deny rules still take precedence. Before running ArcKit on sensitive material, see [`docs/ENFORCEMENT.md`](docs/ENFORCEMENT.md) and the privacy policy at <https://arckit.org/privacy.html>.
 
 ## Migration from CLI
 
