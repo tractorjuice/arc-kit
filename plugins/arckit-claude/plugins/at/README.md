@@ -32,6 +32,10 @@ Without it, those handoffs reference commands that are not installed.
 
 Set `classification_scheme` to `AT InfoSiG` (or `governance_framework` to `AT Gov`) to render Document Control headers with the Austrian Informationssicherheitsgesetz ladder — **Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim** — instead of the UK OFFICIAL scheme. Leaving it blank keeps the UK default; the UAE overlay's `UAE Smart Data` scheme is unaffected.
 
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## Maintainer
 
 Austrian domain maintained by @gtonic (with @tractorjuice as repo maintainer). See [CONTRIBUTING.md](https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md).

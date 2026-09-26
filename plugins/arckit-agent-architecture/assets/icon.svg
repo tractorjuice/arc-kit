@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit">
+<title>ArcKit</title>
+
+<!-- Navy rounded tile -->
+<rect width="512" height="512" rx="96" fill="#0B1F33"/>
+
+<!-- B2 mark, centred (native 120×120 mark scaled 3.6× and translated to centre at 256,256) -->
+<g transform="translate(40, 40) scale(3.6)">
+  <g fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="38,28 18,60 38,92" />
+    <polyline points="82,28 102,60 82,92" />
+  </g>
+  <polyline points="46,66 60,48 74,66"
+    fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="46" y1="84" x2="74" y2="84" stroke="#1ED3C6" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="46" cy="84" r="4.5" fill="#1ED3C6"/>
+  <circle cx="74" cy="84" r="4.5" fill="#1ED3C6"/>
+  <circle cx="60" cy="84" r="5" fill="#FFFFFF"/>
+</g>
+</svg>

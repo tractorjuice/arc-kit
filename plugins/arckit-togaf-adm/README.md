@@ -30,6 +30,10 @@ On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy
 
 **Out of scope**: TOGAF content framework (meta-model, artefact types), ADM tailoring guidance (deferred to v2). Each is a candidate extension.
 
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## Maintainer
 
 `[COMMUNITY]` — recruiting domain co-maintainer. Originally contributed in PR [pending].

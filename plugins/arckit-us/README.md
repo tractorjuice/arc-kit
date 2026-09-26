@@ -37,6 +37,10 @@ FIPS 199 / SP 800-60 Vol 2 · NIST SP 800-53 Rev 5 / SP 800-53B · FedRAMP Rev 5
 
 EO 14110 (Safe, Secure, and Trustworthy AI) was **revoked January 2025**. The active AI assurance mandates are **OMB M-24-10 + M-25-21**. FedRAMP completed the **Rev 5** transition in 2024 — Rev 4 references are deprecated throughout. Verify citations against the current Federal Register, OMB Circulars page, and FedRAMP.gov before relying on any artefact.
 
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## Maintainer
 
 `[COMMUNITY]` — recruiting domain co-maintainer. Originally contributed in PR [pending].

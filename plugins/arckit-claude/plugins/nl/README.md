@@ -22,6 +22,10 @@ On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy
 
 Unlike France's SecNumCloud, the Netherlands has no published qualification list of compliant cloud providers. `/arckit-nl:nl-cloud` deliberately does not name, shortlist, or rate specific commercial cloud providers as compliant or qualified — it assesses eligibility and obligations against the Herziening rijksbreed cloudbeleid 2026 text only.
 
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## Maintainer
 
 Currently maintained by @tractorjuice. Recruiting a Netherlands public sector domain co-maintainer — see [CONTRIBUTING.md](https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md).

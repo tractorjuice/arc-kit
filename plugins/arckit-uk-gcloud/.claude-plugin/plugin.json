@@ -11,6 +11,8 @@
   "homepage": "https://arckit.org",
   "repository": "https://github.com/tractorjuice/arckit-claude",
   "license": "Proprietary",
+  "icon": "./assets/icon.svg",
+  "privacyPolicyUrl": "https://arckit.org/privacy.html",
   "keywords": [
     "architecture",
     "governance",

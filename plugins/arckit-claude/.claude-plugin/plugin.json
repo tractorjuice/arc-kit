@@ -7,8 +7,11 @@
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
   },
+  "homepage": "https://arckit.org",
   "repository": "https://github.com/tractorjuice/arckit-claude",
   "license": "MIT",
+  "icon": "./assets/icon.svg",
+  "privacyPolicyUrl": "https://arckit.org/privacy.html",
   "mcpServers": "./.mcp.json",
   "experimental": {
     "monitors": [
