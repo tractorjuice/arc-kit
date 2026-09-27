@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/arckit:pages`: `llms.txt` and the vendor ranking are opt-in** (`LLMS=true`, `VENDOR_SCORES=true`); every run shows a CONFIDENTIALITY section naming artefacts marked above OFFICIAL.
+
+- **`/arckit:evaluate` and `/arckit:score`: supplier proposals are evidence, never instructions**; embedded instructions are reported as Integrity findings.
+
+- **Accurate update instructions** in the SessionStart update notice.
+
 ### Fixed
 
 - **`/arckit:pages`: large PlantUML diagrams render** (#648). Deflate encoding in place of hex, so URLs are several times shorter; a diagram still too large says so instead of blaming its syntax.

@@ -1,7 +1,7 @@
 ---
 description: Generate documentation site with governance dashboard, document viewer, and Mermaid diagram support
 doc-type: none
-argument-hint: "<project ID or 'all', e.g. '001', 'all'>"
+argument-hint: "[LLMS=true] [VENDOR_SCORES=true]"
 ---
 
 # ArcKit: Documentation Site Generator
@@ -19,7 +19,12 @@ The Pages Generator creates a `docs/index.html` file that:
 - **Follows** GOV.UK Design System styling
 - **Works** with any static hosting provider (GitHub Pages, Netlify, Vercel, S3, etc.)
 
-It also writes a `docs/llms.txt` index (per the [llmstxt.org](https://llmstxt.org/) standard) so LLM agents and crawlers can efficiently discover and fetch every artifact in the repository. The file is regenerated on each run, except when it exists without the ArcKit generation marker — hand-curated `docs/llms.txt` files are preserved.
+Two outputs are **off unless you ask for them**, because a governance site can hold client-confidential or live-tender material:
+
+- `LLMS=true` writes a `docs/llms.txt` index (per the [llmstxt.org](https://llmstxt.org/) standard) so AI agents and crawlers can discover and fetch every artifact. Without it, an `llms.txt` an earlier run generated is removed; a hand-curated one (no ArcKit marker) is left alone.
+- `VENDOR_SCORES=true` includes the ranked vendor summary from `vendors/scores.json` (names, weighted totals, category averages) in `docs/manifest.json`. Without it, the ranking is left out.
+
+Every run reports what went into `docs/`, names any artefact marked above OFFICIAL, and reminds you that `docs/` only goes public when you commit and push it. Nothing is committed or published by this command. Project directories that git ignores are skipped entirely.
 
 ## Your Task
 
@@ -36,10 +41,11 @@ Generate a documentation site for this ArcKit repository.
 3. Reads `.git/config` for repo name, owner, URL
 4. Reads plugin VERSION
 5. Processes `pages-template.html` → writes `docs/index.html`
-6. Scans all projects, artifacts, vendors, external files → writes `docs/manifest.json`
-7. Generates `docs/llms.txt` (llmstxt.org format) for LLM/agent discovery, unless a hand-curated version exists without the ArcKit generation marker
+6. Scans all projects, artifacts, vendors, external files → writes `docs/manifest.json` (the vendor-score ranking only with `VENDOR_SCORES=true`)
+7. Writes `docs/llms.txt` (llmstxt.org format) only with `LLMS=true`; otherwise removes one an earlier run generated, and never touches a hand-curated one
+8. Reads each indexed artefact's Document Control classification and reports the result in a CONFIDENTIALITY section
 
-**CRITICAL: The hook's hook context contains ALL document stats you need. Use ONLY those stats for the Step 5 summary. Do NOT call any tools — no Read, Write, Glob, Grep, or Bash. Do NOT read manifest.json or any other file. The hook has already written docs/index.html, docs/manifest.json, and docs/llms.txt with correct data. Go directly to Step 5 and output the summary using the stats from the hook context.**
+**CRITICAL: The hook's hook context contains ALL document stats you need. Use ONLY those stats for the Step 5 summary. Do NOT call any tools — no Read, Write, Glob, Grep, or Bash. Do NOT read manifest.json or any other file. The hook has already written docs/index.html and docs/manifest.json (and docs/llms.txt only if the user passed LLMS=true). Go directly to Step 5: output the hook's CONFIDENTIALITY section verbatim, then the summary using the stats from the hook context.**
 
 The following reference sections document the manifest structure and data tables used by the hook. They are preserved here for maintenance reference only — the command does not need to process them.
 
@@ -586,7 +592,9 @@ The hook generates `docs/manifest.json` with this structure:
 
 ## Step 5: Provide Summary
 
-Use the stats from the hook's hook context (under "Document Stats") to fill in the summary:
+**First, output the hook's `CONFIDENTIALITY` section verbatim** (it is in the hook context, above "What to do"). Do not shorten it, move it after the summary, or leave it out, even when it reports nothing marked above OFFICIAL.
+
+Then use the stats from the hook's hook context (under "Document Stats") to fill in the summary:
 
 ```text
 Documentation Site Generated
@@ -594,7 +602,7 @@ Documentation Site Generated
 Files Created:
 - docs/index.html (main page)
 - docs/manifest.json (document index)
-- docs/llms.txt (LLM/agent index, llmstxt.org format — skipped if hand-curated)
+- docs/llms.txt ({the llms.txt status from the CONFIDENTIALITY section})
 
 Repository: {repo}
 Projects Found: {count}
@@ -637,9 +645,9 @@ The site uses relative paths and can be deployed to any static hosting provider:
 - **Any static host**: Serve the entire repo directory; docs/index.html loads files via relative paths
 
 Next Steps:
-- Commit and push the docs/ folder
+- Review the CONFIDENTIALITY section above before you commit docs/
+- Commit and push the docs/ folder only if everything it lists may be published
 - Deploy to your hosting provider of choice
-- Access your documentation site
 ```
 
 ## Important Notes
@@ -656,7 +664,7 @@ Next Steps:
 - The generated `docs/index.html` is search-engine ready: a unique `<title>`, meta description, Open Graph / Twitter cards, a Schema.org `@graph` (Organization / SoftwareSourceCode / WebSite), and a `<link rel="canonical">`.
 - The `sync-guides` hook resolves the canonical and `og:url` to your **published** site URL on a best-effort basis: a `docs/CNAME` (custom domain on GitHub Pages) takes precedence, otherwise the default project Pages URL `https://<owner>.github.io/<repo>/`. Deploying elsewhere (Netlify, Vercel) without a `CNAME`? Update the `canonical` and `og:url` in the generated HTML to match your real URL.
 - Per Google's AI-search guidance no `llms.txt` or AI-specific files are required for indexing — the `docs/llms.txt` this command writes is harmless to Google and only aids non-Google agents.
-- Governance sites can hold sensitive material: enabling GitHub Pages makes them public and indexable. If you do not want the site indexed, add `<meta name="robots" content="noindex">` via a `.arckit/templates-custom/pages-template.html` override.
+- Governance sites can hold sensitive material: enabling GitHub Pages makes them public and indexable. `llms.txt` and the vendor ranking are therefore opt-in (`LLMS=true`, `VENDOR_SCORES=true`), and every run lists what went into `docs/`. To keep a project out of the site entirely, put it in a gitignored directory. If you do not want the site indexed, add `<meta name="robots" content="noindex">` via a `.arckit/templates-custom/pages-template.html` override.
 
 ---
 
