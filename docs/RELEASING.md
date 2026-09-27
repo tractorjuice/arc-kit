@@ -34,7 +34,7 @@ ArcKit ships in multiple formats, each with its own version file. They are all b
 | `scripts/bump-version.sh <version>` | Updates all version files in one pass |
 | `scripts/sync-claude-plugin-layout.py [--check]` | Mirrors the Claude overlay plugins into `plugins/arckit-claude/plugins/...`, matching the standalone `tractorjuice/arckit-claude` repository layout used by the local standalone marketplace metadata |
 | `scripts/generate-release-notes.sh [prev-tag]` | Parses `git log` between tags into Keep a Changelog markdown (Added / Fixed / Changed / Breaking Changes), filters out `chore: bump version` commits, auto-detects previous tag if omitted |
-| `scripts/push-extensions.sh [name...]` | Pushes standalone distribution dirs to their separate GitHub repos (`tractorjuice/arckit-claude`, `tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.), then creates or preserves each repo's `vX.Y.Z` tag and GitHub Release. The `claude` target publishes the full Claude Code marketplace repo: core plugin at the root, with overlays under structured `plugins/...` paths. Uses `GH_TOKEN`. Skips repos that don't yet exist on GitHub. Set `ARCKIT_SKIP_EXTENSION_RELEASES=1` only for a commit-only sync |
+| `scripts/push-extensions.sh [name...]` | Pushes standalone distribution dirs to their separate GitHub repos (`tractorjuice/arckit-claude`, `tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.), then creates or preserves each repo's `vX.Y.Z` tag and GitHub Release. The `claude` target publishes the full Claude Code marketplace repo: the core plugin at `plugins/arckit`, overlays under structured `plugins/...` paths, and only the marketplace, README and LICENSE at the root. Uses `GH_TOKEN`. Skips repos that don't yet exist on GitHub. Set `ARCKIT_SKIP_EXTENSION_RELEASES=1` only for a commit-only sync |
 | `.github/workflows/release.yml` | Creates the GitHub Release automatically on `v*` tag push (tag-push triggered, does not commit back to main) |
 
 ## Releasing from macOS
@@ -137,9 +137,14 @@ git push && git push origin vX.Y.Z
 ```
 
 Use `./scripts/push-extensions.sh claude` when you intentionally need to publish only the
-standalone Claude Code marketplace repo. That repo keeps the `arckit` core plugin at the
-repository root and copies overlay plugins into structured paths such as `plugins/uk/finance`
-and `plugins/uk/gcloud`.
+standalone Claude Code marketplace repo. That repo publishes the `arckit` core plugin at
+`plugins/arckit` and the overlay plugins beside it in structured paths such as `plugins/uk/finance`
+and `plugins/uk/gcloud`. The repo root holds only `.claude-plugin/marketplace.json`, a README and
+the LICENSE. Until 6.16.2 the core sat at the root, so its plugin folder was the whole repo: the
+Claude plugin directory's validator timed out on it, and every user installed a copy of all the
+overlays inside the core. The local marketplace file inside `plugins/arckit-claude` still lists the
+core as `.`; `push-extensions.sh` rewrites that entry to `./plugins/arckit` when it publishes, and
+`tests/plugin/test_claude_publish_layout.py` runs the staging functions to check the result.
 
 After step 12, verify the umbrella GitHub Release and every standalone GitHub Release exists:
 
@@ -245,7 +250,7 @@ This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`)
 
 ## v6.0.0+ — single Claude marketplace repo
 
-From v6.0.0 the standalone `tractorjuice/arckit-claude` repo is the preferred Claude Code marketplace. It ships 16 plugins in one repo: the `arckit` core plugin at the root plus regional, sector, method, agent-architecture, tooling, and supplier overlays under structured `plugins/...` paths. All Claude plugins share one version, bumped together. The `arckit-uk-gcloud` overlay is public for installation and inspection but remains proprietary, so the standalone repo license carries an explicit exception for `plugins/uk/gcloud/`.
+From v6.0.0 the standalone `tractorjuice/arckit-claude` repo is the preferred Claude Code marketplace. It ships 16 plugins in one repo: the `arckit` core plugin at `plugins/arckit` (at the repo root until 6.16.2) plus regional, sector, method, agent-architecture, tooling, and supplier overlays under structured `plugins/...` paths. All Claude plugins share one version, bumped together. The `arckit-uk-gcloud` overlay is public for installation and inspection but remains proprietary, so the standalone repo license carries an explicit exception for `plugins/uk/gcloud/`.
 
 The root `.claude-plugin/marketplace.json` in `tractorjuice/arc-kit` remains a compatibility marketplace for existing users who already added the old repo. Keep its `name` as `arc-kit` and its sources pointed at monorepo paths such as `./plugins/arckit-claude` and `./plugins/arckit-uae`. The standalone marketplace metadata lives at `plugins/arckit-claude/.claude-plugin/marketplace.json` and uses `.` plus `./plugins/...` sources for `tractorjuice/arckit-claude`.
 

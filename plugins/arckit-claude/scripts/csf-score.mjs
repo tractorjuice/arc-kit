@@ -56,7 +56,7 @@
  * scorer at all.
  */
 
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
@@ -67,19 +67,33 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // own actual maximum here; that is precisely the bug this script fixes.
 export const NOMINAL_MAX_SCORE = 1000;
 
-// Candidate catalogue locations, tried in order. The first two cover the two
-// checkout shapes this repo ships: the monorepo dev tree (arckit-eu is a
-// sibling plugin) and the standalone `arckit-claude` marketplace repo, where
-// `scripts/sync-claude-plugin-layout.py` mirrors arckit-eu under
-// `plugins/eu/`. Unlike `generate-document-id.mjs`'s `../config/doc-types.mjs`
-// import, this data lives in a DIFFERENT plugin, so the relative path is not
-// the same in both layouts and both must be tried.
+// Candidate catalogue locations, tried in order. The catalogue lives in a
+// DIFFERENT plugin (arckit-eu), so the relative path depends on the layout,
+// unlike `generate-document-id.mjs`'s `../config/doc-types.mjs` import.
+const CATALOGUE_FILE = 'csf-criteria-calculator-2026-06-01.json';
 const CATALOGUE_CANDIDATES = [
-  // Monorepo dev checkout: plugins/arckit-claude/scripts -> plugins/arckit-eu/data
-  resolve(__dirname, '../../arckit-eu/data/csf-criteria-calculator-2026-06-01.json'),
-  // Standalone arckit-claude repo (mirrored layout): scripts -> ../plugins/eu/data
-  resolve(__dirname, '../plugins/eu/data/csf-criteria-calculator-2026-06-01.json'),
+  // Source repo: plugins/arckit-claude/scripts -> plugins/arckit-eu/data
+  resolve(__dirname, '../../arckit-eu/data', CATALOGUE_FILE),
+  // Source repo mirror inside the core: plugins/arckit-claude/plugins/eu/data
+  resolve(__dirname, '../plugins/eu/data', CATALOGUE_FILE),
+  // Published arckit-claude repo: plugins/arckit/scripts -> plugins/eu/data
+  resolve(__dirname, '../../eu/data', CATALOGUE_FILE),
+  // Marketplace install: <marketplace>/arckit/<version>/scripts ->
+  // <marketplace>/arckit-eu/<version>/data (highest installed version)
+  ...installedOverlayCandidates(resolve(__dirname, '../../../arckit-eu')),
 ];
+
+function installedOverlayCandidates(overlayDir) {
+  try {
+    return readdirSync(overlayDir, { withFileTypes: true })
+      .filter((e) => e.isDirectory())
+      .map((e) => e.name)
+      .sort((a, b) => b.localeCompare(a, undefined, { numeric: true }))
+      .map((v) => resolve(overlayDir, v, 'data', CATALOGUE_FILE));
+  } catch {
+    return [];
+  }
+}
 
 /**
  * Resolve the catalogue path, trying each candidate location in turn.

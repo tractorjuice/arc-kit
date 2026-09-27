@@ -21,9 +21,11 @@ This script asserts three things:
   3. every table row's `/arckit:<command>` reference resolves to a real command
 
 It also guards the command's scope handling, which is the half of #717 that was
-the actual bug. `list` and copy-by-name reach the overlays through
-`${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/`, because the core plugin bundles a
-copy of every overlay under its own root; `all` stays core-only by design,
+the actual bug. `list` and copy-by-name reach the installed overlays through
+`${CLAUDE_PLUGIN_ROOT}/../../arckit-*/*/templates/`, where a marketplace install
+caches each overlay beside the core (until 6.16.2 the core bundled a copy of
+every overlay under its own plugins/ folder, and the glob pointed there); `all`
+stays core-only by design,
 because a UK project has no use for twelve UAE templates. Saying "copied all
 templates" after a core-only pass is a wrong answer, not a terse one, so both
 the overlay glob and the scope wording are load-bearing and guarded against
@@ -57,7 +59,7 @@ ROW = re.compile(r"^\| `([^`]+)` \| `/arckit:([^`]+)` \| (.+?) \|$", re.M)
 # The overlay glob is the capability; the phrases are the promise made to the
 # user about scope. Both must survive editing. Exact sentences may be reworded,
 # but these fragments are the load-bearing part.
-OVERLAY_GLOB = "${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/"
+OVERLAY_GLOB = "${CLAUDE_PLUGIN_ROOT}/../../arckit-*/*/templates/"
 # The glob has to appear in BOTH actions that promise overlay coverage, so a
 # global occurrence count is not enough: `list` losing it while the copy
 # fallback keeps it is exactly the silent-partial-answer regression #717 was
