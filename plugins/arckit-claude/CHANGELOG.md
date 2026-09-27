@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`displayName: "ArcKit"`** in `plugin.json`, so the directory listing and Claude Code show the product name, not "Arckit". Also `supportUrl`, `documentationUrl` and `termsOfServiceUrl` for the directory listing.
+
 ## [6.16.0] — 2026-09-26
 
 ### Added
