@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.16.4] — 2026-09-27
+
 ### Changed
 
 - **`/arckit:pages`: `llms.txt` and the vendor ranking are opt-in** (`LLMS=true`, `VENDOR_SCORES=true`); every run shows a CONFIDENTIALITY section naming artefacts marked above OFFICIAL.

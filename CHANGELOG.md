@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.16.4] — 2026-09-27
+
 ### Changed
 
 - **`/arckit:pages` is cautious about what it indexes.** A governance site can hold client-confidential or live-tender material, and the command used to put a ranked summary of `vendors/scores.json` into `docs/manifest.json` and write a `docs/llms.txt` index for AI crawlers on every run, with no warning. Both are now opt-in (`VENDOR_SCORES=true`, `LLMS=true`); without `LLMS=true`, an `llms.txt` an earlier run generated is removed, and a hand-curated one is left alone. The flags are read only from the user's arguments, never from the command text that documents them. Every run now ends with a CONFIDENTIALITY section the command must show: how many artefacts and vendor documents went into `docs/`, which artefacts are marked above OFFICIAL in their Document Control, whether the ranking and `llms.txt` were included, and a reminder that `docs/` only goes public when you commit and push it. `tests/plugin/pages-confidentiality.test.mjs` covers the defaults, the opt-ins, the removal of a stale index, and flags in the command body not counting.
