@@ -70,7 +70,7 @@ Companion PostToolUse hook on `Write` against `projects/**` that incrementally u
 Lightweight telemetry recorder registered for three events:
 
 - **PostToolUse** (matcher `.*`) — records `{ tool, duration_ms }` for every tool call (Claude Code v2.1.119+ `duration_ms` field). Pure-latency records exclude `TaskCreate` and `mcp__govreposcrape__*` calls so the duration histogram isn't polluted by long-running async tools.
-- **PostToolUse** (same registration, branched by tool name) — records `{ server, tool, args }` for `mcp__govreposcrape__*` calls. Args are sanitised (long strings replaced with length markers, nested objects flattened to `<object>`) so the JSONL stays small.
+- **PostToolUse** (same registration, branched by tool name) — records `{ server, tool, args }` for govreposcrape calls: `mcp__plugin_arckit_govreposcrape__*` (the plugin's own server, which is what a plugin install produces; before 6.16.3 only the next form was matched, so nothing was recorded) or `mcp__govreposcrape__*` (a server added by hand). Args are sanitised (long strings replaced with length markers, nested objects flattened to `<object>`) so the JSONL stays small.
 - **TaskCreated** (matcher `.*`, Claude Code v2.1.84+) — records `{ agent }` for every agent spawn via the Task tool.
 
 Every record also carries an **`effort`** field (Claude Code v2.1.133+) when the harness supplies one — read from hookInput `effort.level` or the `$CLAUDE_EFFORT` env var. Omitted on older clients or when no explicit effort was set. The effort tag enables comparing e.g. p95 latency at `xhigh` vs `max` for the same tool, and supports the Phase 5 audit of which `effort: max` commands could be downgraded.
@@ -144,7 +144,7 @@ it has no marker-file state. The filesystem remains the source of truth.
 
 See `hooks.json` for the full registration. Current handler files in this directory:
 
-- `allow-mcp-tools.mjs` — pre-approve specific MCP tool calls
+- `allow-mcp-tools.mjs` — pre-approve the six bundled MCP servers' tools (PermissionRequest, `hookSpecificOutput.decision.behavior: "allow"`; exits 0 with no output for anything else). Tools of a plugin's own server are named `mcp__plugin_arckit_<server>__`, which the allowlist lists alongside the bare form; `tests/plugin/allow-mcp-tools.test.mjs` pins both and the output shape
 - `arckit-context.mjs` / `arckit-session.mjs` — session context + summary
 - `external-context-watch.mjs` / `external-context-utils.mjs` — reactive
   external-document watch paths and FileChanged context injection

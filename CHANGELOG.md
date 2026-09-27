@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **The bundled MCP servers' permission hook works for the first time.** `allow-mcp-tools.mjs` was meant to approve calls to ArcKit's six read-only documentation servers without a prompt, but it never did: it looked for tools named `mcp__<server>__`, while a plugin's own servers are named `mcp__plugin_arckit_<server>__`; it answered with a top-level `{"decision":"allow"}`, which PermissionRequest ignores; and it exited 1 on every other MCP call, which Claude Code logs as a hook error. It now lists both name forms, returns `hookSpecificOutput.decision.behavior`, and exits 0 when it has no decision. `telemetry.mjs` had the same name bug, so it never recorded a govreposcrape call from a plugin install. The Claude plugin directory's validator reported both. `tests/plugin/allow-mcp-tools.test.mjs` covers every bundled server and fails on the old hook.
+
 ## [6.16.2] — 2026-09-27
 
 ### Changed

@@ -16,7 +16,9 @@
  *       client, PreToolUse-rejected calls, etc.)
  *
  *   {"ts":"...","kind":"mcp_call","server":"govreposcrape","tool":"...","args":{...},"effort":"high"}
- *     - emitted on PostToolUse for MCP calls matching `mcp__govreposcrape__.*`.
+ *     - emitted on PostToolUse for govreposcrape MCP calls: the plugin's own
+ *       server (`mcp__plugin_arckit_govreposcrape__*`, which is what a plugin
+ *       install produces) or one added by hand (`mcp__govreposcrape__*`).
  *       Records the called tool name and its arguments (sanitised — only
  *       primitive values kept, large blobs replaced with `<…>`).
  *
@@ -38,6 +40,10 @@
 import { appendFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { isDir, parseHookInput } from './hook-utils.mjs';
+
+// govreposcrape tools: mcp__plugin_arckit_govreposcrape__<tool> from the
+// plugin's own server, mcp__govreposcrape__<tool> from one added by hand.
+const GOVREPOSCRAPE_TOOL = /^mcp__(?:plugin_arckit_)?govreposcrape__/;
 
 const data = parseHookInput();
 const cwd = data.cwd || process.cwd();
@@ -88,12 +94,11 @@ if (event === 'TaskCreated' || tool === 'TaskCreate') {
   if (agent) {
     record = { ts, kind: 'agent_spawn', agent };
   }
-} else if (tool.startsWith('mcp__govreposcrape__')) {
-  // MCP call recording for govreposcrape
-  // Tool name shape: mcp__<server>__<tool>
-  const parts = tool.split('__');
-  const server = parts[1] || 'unknown';
-  const mcpTool = parts.slice(2).join('__') || 'unknown';
+} else if (GOVREPOSCRAPE_TOOL.test(tool)) {
+  // MCP call recording for govreposcrape. Tool name shape:
+  // mcp__plugin_arckit_govreposcrape__<tool> (plugin) or mcp__govreposcrape__<tool>.
+  const server = 'govreposcrape';
+  const mcpTool = tool.replace(GOVREPOSCRAPE_TOOL, '') || 'unknown';
   record = {
     ts,
     kind: 'mcp_call',
@@ -106,7 +111,7 @@ if (event === 'TaskCreated' || tool === 'TaskCreate') {
   // Skip TaskCreate (retired tool, see above) and govreposcrape MCP calls — those are recorded
   // under their own kinds above; we only want pure latency for everything
   // else (Write/Edit/Bash/etc.) so the duration histogram is uncluttered.
-  if (tool && tool !== 'TaskCreate' && !tool.startsWith('mcp__govreposcrape__')) {
+  if (tool && tool !== 'TaskCreate' && !GOVREPOSCRAPE_TOOL.test(tool)) {
     record = { ts, kind: 'hook_duration', tool, duration_ms: data.duration_ms };
   }
 }
