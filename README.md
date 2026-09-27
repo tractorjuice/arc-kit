@@ -127,7 +127,7 @@ Zero-config: 76 official commands as skills, 10 specialized agents, all template
 
 Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
 
-**Latest Release**: [v6.15.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.15.0)
+**Latest Release**: [v6.16.3](https://github.com/tractorjuice/arc-kit/releases/tag/v6.16.3)
 
 ### OKF Interoperability
 
@@ -1698,7 +1698,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 
 ### Government Code Discovery
 
-These commands use the [govreposcrape MCP](https://github.com/MHCLG/govreposcrape-mcp) server to search 24,500+ UK government repositories. The Claude Code plugin bundles the MCP server automatically. No API key required.
+These commands use the [govreposcrape MCP](https://github.com/chrisns/govreposcrape) server to search 24,500+ UK government repositories. The Claude Code plugin bundles the MCP server automatically. No API key required.
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
@@ -2017,7 +2017,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v6.15.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.15.0)
+- **Latest Version**: [v6.16.3](https://github.com/tractorjuice/arc-kit/releases/tag/v6.16.3)
 
 ---
 

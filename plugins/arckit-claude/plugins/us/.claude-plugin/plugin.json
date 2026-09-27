@@ -1,7 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-us",
-  "version": "6.15.0",
+  "displayName": "ArcKit USA Federal Civilian Overlay",
+  "version": "6.16.3",
   "defaultEnabled": false,
   "description": "USA Federal Civilian Overlay for ArcKit — 10 commands for FedRAMP (SSP, Readiness), FISMA/NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21 AI assurance, E-Gov Act §208 PIA, and EO 14028 SBOM self-attestation. Recipe: us-federal. Requires arckit core plugin.",
   "author": {
@@ -11,6 +12,11 @@
   "homepage": "https://arckit.org",
   "repository": "https://github.com/tractorjuice/arckit-claude",
   "license": "MIT",
+  "icon": "./assets/icon.svg",
+  "privacyPolicyUrl": "https://arckit.org/privacy.html",
+  "supportUrl": "https://github.com/tractorjuice/arc-kit/issues",
+  "documentationUrl": "https://github.com/tractorjuice/arckit-claude/tree/main/plugins/us#readme",
+  "termsOfServiceUrl": "https://github.com/tractorjuice/arckit-claude/blob/main/LICENSE",
   "keywords": [
     "architecture",
     "governance",
@@ -23,7 +29,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.15.0"
+      "version": "=6.16.3"
     }
   ]
 }

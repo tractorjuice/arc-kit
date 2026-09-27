@@ -1,14 +1,21 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit",
-  "version": "6.15.0",
+  "displayName": "ArcKit",
+  "version": "6.16.3",
   "description": "The Enterprise Architecture Governance Harness - 76 slash commands across strategy, architecture, delivery, and assurance",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
   },
+  "homepage": "https://arckit.org",
   "repository": "https://github.com/tractorjuice/arckit-claude",
   "license": "MIT",
+  "icon": "./assets/icon.svg",
+  "privacyPolicyUrl": "https://arckit.org/privacy.html",
+  "supportUrl": "https://github.com/tractorjuice/arc-kit/issues",
+  "documentationUrl": "https://arckit.org/guides.html",
+  "termsOfServiceUrl": "https://github.com/tractorjuice/arckit-claude/blob/main/LICENSE",
   "mcpServers": "./.mcp.json",
   "experimental": {
     "monitors": [

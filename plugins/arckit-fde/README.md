@@ -42,6 +42,10 @@ the four-artefact bootstrap pack, follow-on areas, policy frameworks, worked
 examples, public-sector benefits, the Day 0-5 cadence and the powered-by-ArcKit
 block.
 
+## Data
+
+This plugin writes website files into your repository's `docs/` folder. It sends no data anywhere, and it has no hooks and no MCP servers. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## License
 
 MIT.

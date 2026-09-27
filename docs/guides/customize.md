@@ -36,7 +36,7 @@ Commands automatically check for custom templates first, falling back to default
 
 ### Scope
 
-In Claude Code, `${CLAUDE_PLUGIN_ROOT}` resolves to the core `arckit` plugin, which also bundles a copy of every community overlay (`arckit-uae`, `arckit-ca`, `arckit-uk-nhs`, `arckit-repo` and the rest). Both halves are reachable, and the overlays are the larger half of the catalogue:
+In Claude Code, `${CLAUDE_PLUGIN_ROOT}` resolves to the core `arckit` plugin. Community overlays (`arckit-uae`, `arckit-ca`, `arckit-uk-nhs`, `arckit-repo` and the rest) are separate plugins, and the command finds the ones you have installed beside the core. Both halves are reachable, and where overlays are installed they are the larger half of the catalogue. A template from an overlay you have not installed is not on disk; the command tells you which plugin to install:
 
 | Action | Scope |
 |--------|-------|

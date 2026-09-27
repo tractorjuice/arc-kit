@@ -221,6 +221,10 @@ arckit build --recipe oaa-full --base-url http://localhost:8080 --model Qwen3.6-
 
 **They are complementary** — not competitors. Use `togaf-adm` for enterprise baselines, then `oaa` to execute capabilities at sprint velocity.
 
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## Maintainer
 
 `[COMMUNITY]` — community-contributed overlay. Recruiting domain co-maintainer for O-AA expertise.

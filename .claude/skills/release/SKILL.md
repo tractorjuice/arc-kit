@@ -97,8 +97,9 @@ git push && git push origin vX.Y.Z
 # 11. Push each distribution to its standalone GitHub repo
 #     (tractorjuice/arckit-claude, arckit-gemini, arckit-codex, …).
 #     The claude target publishes the full Claude marketplace repo: core at
-#     the repo root, overlays under plugin/... paths. This also creates or
-#     preserves each repo's vX.Y.Z tag and GitHub Release:
+#     plugins/arckit, overlays under plugins/... paths, only the marketplace,
+#     README and LICENSE at the root. This also creates or preserves each
+#     repo's vX.Y.Z tag and GitHub Release:
 ./scripts/push-extensions.sh
 ```
 
@@ -163,7 +164,7 @@ The highest-signal failures — collected from real releases. Read these before 
 - **`push-extensions.sh` needs `GH_TOKEN`** and skips repos that don't yet exist on GitHub — a
   "skipped" line is not an error for a brand-new extension, but double-check it's not skipping a
   repo that *should* exist. The `claude` target writes the full `arckit-claude` marketplace repo,
-  including the public-but-proprietary `plugin/uk/gcloud/` overlay and its license exception. It
+  including the public-but-proprietary `plugins/uk/gcloud/` overlay and its license exception. It
   now creates/preserves standalone repo `vX.Y.Z` tags and GitHub Releases; use
   `ARCKIT_SKIP_EXTENSION_RELEASES=1` only when intentionally doing a commit-only sync.
 - **Tables in release articles.** LinkedIn and Medium do not render Markdown tables — a
@@ -174,6 +175,11 @@ The highest-signal failures — collected from real releases. Read these before 
   what a mechanism does, not what it is called. Hero labels follow the same rule. The first draft
   of the commerce-skills article (#845) had to be rewritten for this; the maintainer detail lives
   in the CHANGELOG and the PR body, which the article can link to.
+- **The core plugin publishes to `plugins/arckit`, not the repo root.** Until 6.16.2 it sat at the
+  root, so its plugin folder was the whole repo: the Claude plugin directory's validator timed out
+  on it and every install carried a copy of all the overlays. Anything in the core that needs an
+  overlay's files must look beside the core (`${CLAUDE_PLUGIN_ROOT}/../../arckit-*/*/` in the
+  install cache, `${CLAUDE_PLUGIN_ROOT}/../` in a repo checkout), never inside it.
 - **Do not put release numbers in extension READMEs.** Extension release identity lives in
   `VERSION` files, manifests, Git tags, and GitHub Releases. README-pinned versions drift and
   are blocked by `tests/plugin/test_release_process.py`.

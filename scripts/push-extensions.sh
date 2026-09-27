@@ -49,10 +49,14 @@ declare -A GENERATED_EXTENSION_REQUIRED_PATHS=(
 )
 
 # Claude Code plugins are published together to the arckit-claude marketplace
-# repo. The core plugin stays at the repo root for compatibility with the
-# original standalone mirror. Overlays live under structured plugins/ paths.
+# repo. Every plugin, the core included, lives in its own folder under
+# plugins/; the repo root holds only the marketplace, a README and the LICENSE.
+# The core used to sit at the root, which made its plugin folder the whole repo
+# (every overlay beneath it): the Claude plugin directory's validator timed out
+# on it, and it broke the directory's 512-file plugin-folder limit.
 CLAUDE_PLUGIN_REPO="arckit-claude"
 CLAUDE_PLUGIN_CORE_DIR="plugins/arckit-claude"
+CLAUDE_PLUGIN_CORE_SUBDIR="plugins/arckit"
 CLAUDE_PLUGIN_LAYOUT=(
   "plugins/arckit-uae:plugins/uae"
   "plugins/arckit-fr:plugins/fr"
@@ -237,7 +241,93 @@ copy_distribution_files() {
     --exclude='./.npm' \
     --exclude='./.pnpm-store' \
     --exclude='./.yarn/cache' \
+    --exclude='./evals/results' \
+    --exclude='__pycache__' \
+    --exclude='*.pyc' \
+    --exclude='.DS_Store' \
     -cf - . | tar -C "$destination_path" -xf -
+}
+
+# The core plugin's own folder: everything in plugins/arckit-claude except the
+# nested overlay mirror (the overlays are published beside it from their own
+# sources) and the marketplace file (which belongs at the repo root).
+copy_claude_core_files() {
+  local source_path="$1"
+  local destination_path="$2"
+
+  mkdir -p "$destination_path"
+  tar -C "$source_path" \
+    --exclude='./node_modules' \
+    --exclude='./.npm' \
+    --exclude='./.pnpm-store' \
+    --exclude='./.yarn/cache' \
+    --exclude='./evals/results' \
+    --exclude='__pycache__' \
+    --exclude='*.pyc' \
+    --exclude='.DS_Store' \
+    --exclude='./plugins' \
+    --exclude='./.claude-plugin/marketplace.json' \
+    -cf - . | tar -C "$destination_path" -xf -
+}
+
+# The local marketplace file lives inside the core plugin and lists the core as
+# "." (locally the core folder is the marketplace root). Published, the core is
+# one folder down, so its source becomes ./plugins/arckit; overlays keep theirs.
+write_claude_root_marketplace() {
+  local source_marketplace="$1"
+  local destination_marketplace="$2"
+
+  mkdir -p "$(dirname "$destination_marketplace")"
+  python3 - "$source_marketplace" "$destination_marketplace" "./$CLAUDE_PLUGIN_CORE_SUBDIR" <<'PY'
+import json, sys
+src, dst, core_source = sys.argv[1:4]
+with open(src, encoding="utf-8") as f:
+    marketplace = json.load(f)
+cores = [p for p in marketplace["plugins"] if p["source"] in (".", "./")]
+if len(cores) != 1 or cores[0]["name"] != "arckit":
+    sys.exit(f"expected exactly one root-sourced plugin named arckit, found {[p['name'] for p in cores]}")
+cores[0]["source"] = core_source
+with open(dst, "w", encoding="utf-8") as f:
+    json.dump(marketplace, f, indent=2, ensure_ascii=False)
+    f.write("\n")
+PY
+}
+
+write_claude_root_readme() {
+  local readme_path="$1"
+
+  cat > "$readme_path" <<'README_EOF'
+# ArcKit for Claude
+
+The Claude Code marketplace for [ArcKit](https://arckit.org), the Enterprise Architecture Governance Harness: slash commands, agents, skills and hooks that turn architecture governance into a systematic, template-driven process.
+
+## Install
+
+```text
+/plugin marketplace add tractorjuice/arckit-claude
+/plugin install arckit@arckit-claude
+```
+
+Then add any overlays you need, for example `/plugin install arckit-uae@arckit-claude`. Every overlay needs the `arckit` core plugin.
+
+## Plugins
+
+Each plugin lives in its own folder under `plugins/`, with its own README:
+
+- [`plugins/arckit`](plugins/arckit): the core plugin
+- Jurisdiction overlays: [`uae`](plugins/uae), [`fr`](plugins/fr), [`nl`](plugins/nl), [`ca`](plugins/ca), [`eu`](plugins/eu), [`at`](plugins/at), [`au`](plugins/au), [`au/energy`](plugins/au/energy), [`us`](plugins/us)
+- Sector overlays: [`uk/finance`](plugins/uk/finance), [`uk/nhs`](plugins/uk/nhs), [`uk/gcloud`](plugins/uk/gcloud) (proprietary, see its LICENSE)
+- Method overlays: [`togaf/adm`](plugins/togaf/adm), [`oaa`](plugins/oaa), [`agent/architecture`](plugins/agent/architecture)
+- Tooling: [`repo`](plugins/repo), [`fde`](plugins/fde)
+
+## Data and privacy
+
+ArcKit collects no usage data. What each plugin sends, and when, is in its README; the core plugin's is in [`plugins/arckit/README.md`](plugins/arckit/README.md#data-and-privacy). Privacy policy: <https://arckit.org/privacy.html>.
+
+## Source
+
+This repository is generated from [tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit) at each release. Open issues and pull requests there.
+README_EOF
 }
 
 write_claude_standalone_license() {
@@ -311,8 +401,16 @@ publish_claude_plugins_repo() {
 
   find "$clone_path" -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
 
-  echo "  Syncing core plugin from $CLAUDE_PLUGIN_CORE_DIR/..."
-  copy_distribution_files "$ROOT_DIR/$CLAUDE_PLUGIN_CORE_DIR" "$clone_path"
+  echo "  Syncing core plugin from $CLAUDE_PLUGIN_CORE_DIR/ -> $CLAUDE_PLUGIN_CORE_SUBDIR/..."
+  copy_claude_core_files "$ROOT_DIR/$CLAUDE_PLUGIN_CORE_DIR" "$clone_path/$CLAUDE_PLUGIN_CORE_SUBDIR"
+  if ! write_claude_root_marketplace \
+      "$ROOT_DIR/$CLAUDE_PLUGIN_CORE_DIR/.claude-plugin/marketplace.json" \
+      "$clone_path/.claude-plugin/marketplace.json"; then
+    red "  Failed to write the root marketplace"
+    cd "$ROOT_DIR"
+    return 1
+  fi
+  write_claude_root_readme "$clone_path/README.md"
   write_claude_standalone_license "$clone_path/LICENSE"
 
   for entry in "${CLAUDE_PLUGIN_LAYOUT[@]}"; do

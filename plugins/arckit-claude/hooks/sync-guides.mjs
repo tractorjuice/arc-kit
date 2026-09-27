@@ -19,7 +19,7 @@
  * Output (stdout): JSON with additionalContext containing summary
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, unlinkSync } from 'node:fs';
 import { join, dirname, resolve, relative, basename, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
@@ -940,6 +940,24 @@ const isExpandedBody = /description:\s*Generate documentation site/i.test(userPr
   || /#\s*ArcKit:\s*Documentation Site Generator/i.test(userPrompt);
 if (!isRawCommand && !isExpandedBody) process.exit(0);
 
+// ── Options (opt-in only) ──
+//
+// Parsed from the user's own arguments: the text after `/arckit:pages` in a
+// raw prompt, or the `**User Request**:` line of the Skill-expanded body. The
+// rest of the expanded body documents these flags, so it must not be scanned.
+function userArguments(prompt) {
+  const raw = prompt.match(/^\s*\/arckit[.:]+pages\b([^\n]*)/i);
+  if (raw) return raw[1];
+  const expanded = prompt.match(/\*\*User Request\*\*:[ \t]*([^\n]*)/);
+  return expanded ? expanded[1] : '';
+}
+const pageArgs = userArguments(userPrompt);
+const optIn = (name) => new RegExp(`\\b${name}\\s*=\\s*(true|yes|on|1)\\b`, 'i').test(pageArgs);
+// Both default OFF: an llms.txt is an index built for AI crawlers, and the
+// vendor ranking is procurement-sensitive while a tender is live.
+const includeLlmsTxt = optIn('LLMS');
+const includeVendorScores = optIn('VENDOR_SCORES');
+
 // Resolve roots
 const __dirname_hook = dirname(fileURLToPath(import.meta.url));
 const pluginRoot = process.env.CLAUDE_PLUGIN_ROOT || resolve(__dirname_hook, '..');
@@ -1056,6 +1074,41 @@ if (templatePath) {
 // ── 4. Manifest ──
 
 const manifest = buildManifest(repoRoot, repoInfo, guideTitles);
+
+// Vendor scores: the ranked summary of vendors/scores.json is left out of
+// manifest.json unless the user opted in with VENDOR_SCORES=true.
+let omittedScoredVendors = 0;
+if (!includeVendorScores) {
+  for (const p of manifest.projects) {
+    if (p.vendorScores) {
+      omittedScoredVendors += p.vendorScores.vendors.length;
+      delete p.vendorScores;
+    }
+  }
+}
+
+// Classification scan: artefacts whose Document Control marks them above
+// OFFICIAL (or the equivalent in the other classification ladders). Reported
+// to the user every run; nothing is blocked, because docs/ is only published
+// when the user commits and pushes it.
+const SENSITIVE_MARKINGS = /OFFICIAL[-\s]SENSITIVE|\bTOP[-\s]SECRET\b|\bSECRET\b|\bCONFIDENTIAL\b|\bRESTRICTED\b|\bPROTECTED\b|Vertraulich|Geheim|Eingeschr[aä]nkt/i;
+function collectDocPaths(node, out) {
+  if (Array.isArray(node)) { for (const item of node) collectDocPaths(item, out); return; }
+  if (node && typeof node === 'object') {
+    if (typeof node.path === 'string' && node.path.startsWith('projects/') && node.path.endsWith('.md')) out.add(node.path);
+    for (const [key, value] of Object.entries(node)) {
+      if (key !== 'dependencyGraph') collectDocPaths(value, out);
+    }
+  }
+}
+const indexedDocPaths = new Set();
+collectDocPaths({ global: manifest.global, projects: manifest.projects }, indexedDocPaths);
+const sensitiveDocs = [];
+for (const relPath of indexedDocPaths) {
+  const head = (readText(join(repoRoot, relPath)) || '').slice(0, 6000);
+  const m = head.match(/\|\s*\**Classification\**\s*\|\s*([^|\n]+?)\s*\|/i);
+  if (m && SENSITIVE_MARKINGS.test(m[1])) sensitiveDocs.push({ path: relPath, marking: m[1].replace(/\*/g, '').trim() });
+}
 const docsDir = join(repoRoot, 'docs');
 if (!isDir(docsDir)) mkdirSync(docsDir, { recursive: true });
 writeFileSync(join(repoRoot, 'docs', 'manifest.json'), JSON.stringify(manifest, null, 2), 'utf8');
@@ -1064,14 +1117,28 @@ writeFileSync(join(repoRoot, 'docs', 'manifest.json'), JSON.stringify(manifest, 
 //
 // Generate docs/llms.txt for LLM/agent discovery. Only overwrite when the
 // generation marker is present — preserves hand-curated llms.txt files.
+//
+// Opt-in (LLMS=true). Without it, an llms.txt this command generated on an
+// earlier run is removed, so a stale crawler index does not outlive the
+// decision; a hand-curated one (no marker) is never touched.
 const llmsTxtPath = join(repoRoot, 'docs', 'llms.txt');
 const existingLlmsTxt = readText(llmsTxtPath);
-let llmsTxtAction = 'written';
+let llmsTxtAction;
 if (existingLlmsTxt && !existingLlmsTxt.includes(LLMS_TXT_MARKER)) {
-  llmsTxtAction = 'skipped (hand-curated — no ArcKit marker)';
-} else {
+  llmsTxtAction = 'left in place (hand-curated — no ArcKit marker)';
+} else if (includeLlmsTxt) {
   const llmsTxt = buildLlmsTxt(manifest, repoInfo, version);
   writeFileSync(llmsTxtPath, llmsTxt, 'utf8');
+  llmsTxtAction = 'written (LLMS=true)';
+} else if (existingLlmsTxt) {
+  try {
+    unlinkSync(llmsTxtPath);
+    llmsTxtAction = 'removed — an earlier run generated it; not written unless you pass LLMS=true';
+  } catch {
+    llmsTxtAction = 'could not remove the earlier generated file — delete docs/llms.txt by hand';
+  }
+} else {
+  llmsTxtAction = 'not written (opt in with LLMS=true)';
 }
 
 // Count stats
@@ -1155,10 +1222,25 @@ const message = [
   `| Graph Edges | ${manifest.dependencyGraph ? manifest.dependencyGraph.edges.length : 0} |`,
   `| Projects | ${manifest.projects.length} |`,
   ``,
+  `### CONFIDENTIALITY — show this section to the user verbatim, before the summary`,
+  ``,
+  `> **Before you commit docs/:** everything below is now in \`docs/\` and referenced from the site. Nothing has been published: \`docs/\` goes public only when you commit and push it and the repository is public or GitHub Pages is on. Do not publish client-confidential or live-tender material.`,
+  `>`,
+  `> - Documents indexed: **${indexedDocPaths.size}** artefacts${vendorDocCount > 0 ? `, including **${vendorDocCount}** vendor document(s)` : ''}.`,
+  sensitiveDocs.length > 0
+    ? `> - **${sensitiveDocs.length} artefact(s) are marked above OFFICIAL**, for example ${sensitiveDocs.slice(0, 5).map((d) => `\`${d.path}\` (${d.marking})`).join(', ')}${sensitiveDocs.length > 5 ? ', …' : ''}. Keep these out of a public site: move the project into a gitignored directory, which this command skips, or do not push docs/.`
+    : `> - No artefact is marked above OFFICIAL in its Document Control.`,
+  includeVendorScores
+    ? `> - Vendor scores: **included** (VENDOR_SCORES=true) — the ranked vendor summary is in manifest.json.`
+    : omittedScoredVendors > 0
+      ? `> - Vendor scores: **left out** (${omittedScoredVendors} scored vendor(s)); pass VENDOR_SCORES=true to include the ranking.`
+      : `> - Vendor scores: none found.`,
+  `> - \`docs/llms.txt\` (an index for AI crawlers): ${llmsTxtAction}.`,
+  ``,
   `### What to do`,
   ``,
   `**Do NOT call any tools. Do NOT read manifest.json.** The stats above are complete and correct.`,
-  `Output ONLY the Step 5 summary using the stats from the table above.`,
+  `Output the CONFIDENTIALITY section above verbatim, then the Step 5 summary using the stats from the table above.`,
 ].join('\n');
 
 const output = {

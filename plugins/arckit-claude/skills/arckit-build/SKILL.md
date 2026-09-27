@@ -39,9 +39,9 @@ Recipes are external YAML files. Lookup precedence for `--recipe NAME` (first hi
 
 1. **Project override**: `.arckit/recipes/{NAME}.yaml` — user customizations preserved across plugin updates.
 2. **Core plugin**: `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{NAME}.yaml` — recipes shipped with the `arckit` core plugin (`uk-saas`, `uk-mod-sovereign`).
-3. **Sibling community plugins**: `${CLAUDE_PLUGIN_ROOT}/../arckit-*/recipes/{NAME}.yaml` — recipes shipped with installed community plugins (e.g. `arckit-uae/recipes/uae-federal-ai.yaml`, `arckit-ca/recipes/ca-federal-fitaa.yaml`).
-
-Resolution: glob the parent directory of `${CLAUDE_PLUGIN_ROOT}` for `arckit-*/recipes/{NAME}.yaml` and take the first match. The glob works in both layouts — marketplace-installed plugins land as siblings under the same marketplace-source cache directory, and the dev-mode same-repo layout has them as sibling directories in the repo root.
+3. **Community overlay plugins**: recipes shipped with installed overlays (e.g. `arckit-uae`'s `recipes/uae-federal-ai.yaml`, `arckit-ca`'s `recipes/ca-federal-fitaa.yaml`). Overlays are separate plugins beside the core, so glob, in order, and take the first match:
+   - `${CLAUDE_PLUGIN_ROOT}/../../arckit-*/*/recipes/{NAME}.yaml`: a marketplace install, where Claude Code caches each plugin as `<marketplace>/<plugin>/<version>/`. If more than one version matches, use the highest
+   - `${CLAUDE_PLUGIN_ROOT}/../**/recipes/{NAME}.yaml`: a checkout of the published repo (`plugins/uae/recipes/`, `plugins/uk/finance/recipes/`) or of the source repo (`plugins/arckit-uae/recipes/`)
 
 Default recipe is `uk-saas`. To customize, copy the core default to `.arckit/recipes/uk-saas.yaml` and edit there:
 

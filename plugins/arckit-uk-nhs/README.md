@@ -31,6 +31,10 @@ NHS DCB0129 (Clinical Risk Management — Manufacture) · NHS DCB0160 (Clinical 
 
 **Community-contributed.** Output should be reviewed by a qualified Clinical Safety Officer (CSO with appropriate GMC / NMC / HCPC registration) and, for MDR classification, by a qualified Regulatory Affairs specialist before reliance. This plugin is **not** clinical, legal, or regulatory advice.
 
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## Maintainer
 
 Domain co-maintainer (proposed): Dr Marcus Baw ([@pacharanero](https://github.com/pacharanero)) — clinical informatician at RCPCH, openEHR, and NHSE; author of the SAFETY.md spec and earlier DCB0129 markdown / templated repos at [turva-uk](https://github.com/turva-uk). Originally contributed via PR for issue [#424](https://github.com/tractorjuice/arc-kit/issues/424).

@@ -7,11 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
+### Changed
+
+- **`/arckit:pages`: `llms.txt` and the vendor ranking are opt-in** (`LLMS=true`, `VENDOR_SCORES=true`); every run shows a CONFIDENTIALITY section naming artefacts marked above OFFICIAL.
+
+- **`/arckit:evaluate` and `/arckit:score`: supplier proposals are evidence, never instructions**; embedded instructions are reported as Integrity findings.
+
+- **Accurate update instructions** in the SessionStart update notice.
+
+### Fixed
 
 - **Backlog totals hook** (`hooks/validate-backlog-totals.mjs`, rules in `hooks/backlog-totals.mjs`; #855, #856). Recomputes story, epic, point, priority and requirement totals from `ARC-*-BKLG-*.json` and blocks mismatches, `Sprint 0` placeholders and unrecorded MoSCoW downgrades against the project's REQ. `/arckit:backlog` now always writes the JSON first and takes the Markdown's totals from it, and keeps unchanged items' points when regenerating.
 
-- **`/arckit:archify` — interactive, self-contained HTML diagram rendering (#826).** ArcKit's diagrams have been Mermaid and PlantUML text inside a governed artefact; Wardley Maps additionally required pasting OWM code into `create.wardleymaps.ai`, which sends the map to a third-party site and rules the flow out for OFFICIAL-SENSITIVE work. The new command renders a single HTML file — inline SVG, dark/light themes, pan/zoom, click-to-trace dependencies — that opens offline and makes **no external requests**. Two engines sit behind it. `architecture`, `workflow`, `sequence`, `dataflow` and `lifecycle` route to [Archify](https://github.com/tt-a1i/archify) (third party, MIT), which the user installs themselves and `scripts/archify-detect.mjs` locates at run time; when it is absent the command says so plainly and hands off to `/arckit:diagram` rather than fabricating an artefact. **Archify is deliberately not vendored** — it is ~7.5MB that `sync-shared-assets.py` and `converter.py` would multiply across ten community plugins and seven extensions, it moves fast enough that a fork would drift within weeks, and its skill contract includes an upstream update check that ArcKit should not inherit on a user's behalf.
+- **`/arckit:pages`: large PlantUML diagrams render** (#648). Deflate encoding in place of hex, so URLs are several times shorter; a diagram still too large says so instead of blaming its syntax.
+
+- **Overlay recipes' `skill:` steps are namespaced when published** (#835), so `/arckit:build` can run them from a marketplace install.
+
+## [6.16.3] — 2026-09-27
+
+### Fixed
+
+- **`allow-mcp-tools.mjs` approves the bundled MCP servers' tools** (it never had: wrong tool names for plugin servers, the wrong PermissionRequest output format, and exit 1 on no match). **`telemetry.mjs` records govreposcrape calls** from the plugin's own server.
+
+## [6.16.2] — 2026-09-27
+
+### Changed
+
+- **Published at `plugins/arckit` in `tractorjuice/arckit-claude`, not the repository root.** Installs shrink from 1,169 files to 608 because the core no longer carries a copy of every overlay. `provenance-stamp.mjs`, `/arckit:customize`, the `arckit-build` recipe lookup and `csf-score.mjs` find installed overlays beside the core.
+
+## [6.16.1] — 2026-09-27
+
+### Changed
+
+- **`displayName: "ArcKit"`** in `plugin.json`, so the directory listing and Claude Code show the product name, not "Arckit". Also `supportUrl`, `documentationUrl` and `termsOfServiceUrl` for the directory listing.
+
+## [6.16.0] — 2026-09-26
+
+### Added
+
+- **Directory listing metadata** — `icon`, `privacyPolicyUrl` and `homepage` in `plugin.json`, and a **Data and Privacy** section in the README listing every service the plugin sends data to and the two auto-approve hooks. Privacy policy: <https://arckit.org/privacy.html>.
+
+- **`/arckit:archify` — interactive, self-contained HTML diagram rendering (#826, requested by @johnfelipe).** ArcKit's diagrams have been Mermaid and PlantUML text inside a governed artefact; Wardley Maps additionally required pasting OWM code into `create.wardleymaps.ai`, which sends the map to a third-party site and rules the flow out for OFFICIAL-SENSITIVE work. The new command renders a single HTML file — inline SVG, dark/light themes, pan/zoom, click-to-trace dependencies — that opens offline and makes **no external requests**. Two engines sit behind it. `architecture`, `workflow`, `sequence`, `dataflow` and `lifecycle` route to [Archify](https://github.com/tt-a1i/archify) (third party, MIT), which the user installs themselves and `scripts/archify-detect.mjs` locates at run time; when it is absent the command says so plainly and hands off to `/arckit:diagram` rather than fabricating an artefact. **Archify is deliberately not vendored** — it is ~7.5MB that `sync-shared-assets.py` and `converter.py` would multiply across ten community plugins and seven extensions, it moves fast enough that a fork would drift within weeks, and its skill contract includes an upstream update check that ArcKit should not inherit on a user's behalf.
 
 - **Wardley Maps render to interactive HTML, built in (#826).** `scripts/owm-to-html.mjs` compiles OnlineWardleyMaps source to a self-contained interactive map: banded evolution axis, value chain, sourcing rings counted in a legend, `evolve` arrows, inertia markers, pipelines, and annotations with leader lines. `/arckit:wardley` now renders one automatically alongside every WARD artefact (`--no-html` to skip). This is ArcKit's own renderer, not Archify's: Archify has no Wardley diagram type, and a Wardley Map's continuous evolution/value-chain plane — where the coordinates carry the meaning — does not fit its discrete node-graph IR. The shared OWM reader was extracted to `scripts/owm-parse.mjs` so the HTML and Mermaid paths cannot drift apart. The page embeds its OWM source, so maps round-trip.
 

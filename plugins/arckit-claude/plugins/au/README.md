@@ -33,6 +33,10 @@ End-to-end validated against a real Australian SMB engagement (DISP-track, OFFIC
 
 ASD Essential Eight Maturity Model · ASD Information Security Manual · ASD operational technology cyber security guidance · Security of Critical Infrastructure Act 2018 / CIRMP · DTA Digital Service Standard · Privacy Act 1988 (Cth) including Tranche 1 reforms (Dec 2024) · Defence Industry Security Program (DISP) · Protective Security Policy Framework · Commonwealth Procurement Rules (November 2025 overhaul) · DTA AI Assurance Framework + Responsible AI Policy v2.0 · PGPA Act 2013 s16 · IRAP.
 
+## Data
+
+This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## Maintainer
 
 Domain co-maintainer: @royster70. Originally contributed via PR #441 (au-federal-recipe).

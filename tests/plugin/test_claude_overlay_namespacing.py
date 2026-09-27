@@ -132,10 +132,59 @@ def test_no_double_namespacing():
     assert not out, f"double-namespaced references: {out[:200]}"
 
 
-@pytest.mark.parametrize("suffix", [".json", ".yaml", ".yml"])
-def test_only_markdown_is_rewritten(suffix):
+@pytest.mark.parametrize("suffix", [".md", ".yaml", ".yml"])
+def test_markdown_and_recipe_yaml_are_rewritten(suffix):
     sync = load_sync()
-    assert suffix not in sync.REWRITABLE_SUFFIXES
+    assert suffix in sync.REWRITABLE_SUFFIXES
+
+
+def test_json_is_not_rewritten():
+    sync = load_sync()
+    assert ".json" not in sync.REWRITABLE_SUFFIXES
+
+
+def _module():
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "ccn", REPO_ROOT / "scripts/claude_command_namespacing.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_recipe_skill_steps_are_namespaced():
+    """arc-kit#835: build workers pass `skill:` to the Skill tool verbatim."""
+    ccn = _module()
+    namespaces = ccn.command_namespaces()
+    text = (
+        "  - skill: arckit:agile-strategy\n"
+        '  - skill: "arckit:oaa-adm-lite"\n'
+        "  - skill: arckit:adr\n"
+    )
+    got = ccn.rewrite_recipe_skills(text, namespaces)
+    assert "skill: arckit-oaa:agile-strategy" in got
+    assert 'skill: "arckit-oaa:oaa-adm-lite"' in got
+    assert "skill: arckit:adr" in got
+    assert ccn.rewrite_recipe_skills(got, namespaces) == got
+
+
+def test_every_published_recipe_skill_resolves():
+    """Each `skill:` step in the published mirror names a command that exists
+    under that namespace: core commands as `arckit:X`, overlay commands as
+    `<overlay>:X`. This is what a marketplace install's Skill tool resolves."""
+    ccn = _module()
+    namespaces = ccn.command_namespaces()
+    core = core_commands()
+    step = re.compile(r"""\bskill:[ \t]*["']?([a-z0-9-]+):([a-z0-9.-]+)""")
+    unresolved = []
+    for recipe in sorted(MIRROR.rglob("recipes/*.y*ml")):
+        for plugin, command in step.findall(recipe.read_text(encoding="utf-8")):
+            ok = (plugin == "arckit" and command in core) or namespaces.get(command) == plugin
+            if not ok:
+                unresolved.append(f"{recipe.relative_to(MIRROR)}: {plugin}:{command}")
+    assert not unresolved, "recipe steps that will not resolve:\n" + "\n".join(unresolved)
 
 
 # --- the publish path (the one users actually receive) --------------------

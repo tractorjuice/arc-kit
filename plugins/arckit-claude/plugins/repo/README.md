@@ -35,6 +35,10 @@ This plugin adapts OpenWiki-style prompt patterns for ArcKit:
 
 It does not add LangChain/deepagents dependencies, provider credential storage, or automatic edits to top-level agent instruction files.
 
+## Data
+
+`/arckit-repo:repo-audit` clones the repository you name, from its own host, into a temporary directory, and reads it there. The overlay sends nothing else of its own, and it has no hooks and no MCP servers. Its commands run alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+
 ## Maintainer
 
 `[COMMUNITY]` - recruiting domain co-maintainer.

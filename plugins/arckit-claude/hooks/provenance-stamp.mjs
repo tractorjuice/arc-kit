@@ -78,22 +78,30 @@ const PROV_END = '<!-- arckit-provenance:end -->';
 // Locate a command's source file.
 //
 // Core commands sit at <plugin-root>/commands/<name>.md. Overlay commands do
-// NOT: in the published arckit-claude layout they are nested under the core
-// root (plugins/repo/commands/…, plugins/uk/nhs/commands/…), and in the dev
-// tree they live in sibling plugin directories. Only the core path was ever
-// checked, so all 105 overlay commands failed to resolve their `effort:` and
-// their artefacts silently lost the provenance block.
+// NOT, and where they live depends on how the core was loaded. Only the core
+// path was ever checked at first, so all 105 overlay commands failed to resolve
+// their `effort:` and their artefacts silently lost the provenance block.
 function findCommandFile(commandName) {
   const core = join(PLUGIN_ROOT, 'commands', `${commandName}.md`);
   if (isFile(core)) return core;
 
-  // Published layout: overlays nested under the core plugin root.
-  const nested = join(PLUGIN_ROOT, 'plugins');
-  const fromNested = searchForCommand(nested, commandName, 4);
-  if (fromNested) return fromNested;
+  // Dev tree: plugins/arckit-claude carries a mirror of every overlay under
+  // plugins/ (scripts/sync-claude-plugin-layout.py).
+  const fromMirror = searchForCommand(join(PLUGIN_ROOT, 'plugins'), commandName, 4);
+  if (fromMirror) return fromMirror;
 
-  // Dev layout: sibling plugin directories (plugins/arckit-*/commands/).
-  return searchForCommand(dirname(PLUGIN_ROOT), commandName, 2);
+  // Sibling plugin folders: the dev tree (plugins/arckit-*/commands/) and a
+  // checkout of the published repo, where the core is plugins/arckit and the
+  // overlays sit beside it (plugins/uae/commands/, plugins/uk/nhs/commands/).
+  const fromSiblings = searchForCommand(dirname(PLUGIN_ROOT), commandName, 2);
+  if (fromSiblings) return fromSiblings;
+
+  // Marketplace install: Claude Code caches each plugin as
+  // <cache>/<marketplace>/<plugin>/<version>/, so an installed overlay's
+  // commands are two levels above the core's root. Until 6.16.2 the core
+  // shipped a copy of every overlay under its own plugins/ folder and the
+  // mirror search above found them; the core no longer carries that copy.
+  return searchForCommand(dirname(dirname(PLUGIN_ROOT)), commandName, 2);
 }
 
 // Bounded directory walk: overlay trees are shallow, and an unbounded rglob in

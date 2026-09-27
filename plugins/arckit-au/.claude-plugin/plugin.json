@@ -1,7 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-au",
-  "version": "6.15.0",
+  "displayName": "ArcKit Australian Federal Overlay",
+  "version": "6.16.3",
   "defaultEnabled": false,
   "description": "Australian Federal Overlay for ArcKit — 8 commands for ASD Essential Eight, ISM, DTA Digital Service Standard, Privacy Act 1988 PIA, OAIC Notifiable Data Breach, PSPF, DTA AI Assurance, and DISP supplier attestation. Recipe: au-federal. Requires arckit core plugin.",
   "author": {
@@ -11,6 +12,11 @@
   "homepage": "https://arckit.org",
   "repository": "https://github.com/tractorjuice/arckit-claude",
   "license": "MIT",
+  "icon": "./assets/icon.svg",
+  "privacyPolicyUrl": "https://arckit.org/privacy.html",
+  "supportUrl": "https://github.com/tractorjuice/arc-kit/issues",
+  "documentationUrl": "https://github.com/tractorjuice/arckit-claude/tree/main/plugins/au#readme",
+  "termsOfServiceUrl": "https://github.com/tractorjuice/arckit-claude/blob/main/LICENSE",
   "keywords": [
     "architecture",
     "governance",
@@ -21,7 +27,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.15.0"
+      "version": "=6.16.3"
     }
   ]
 }

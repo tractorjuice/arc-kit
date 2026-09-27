@@ -149,7 +149,9 @@ try {
       warnings.push(
         `## ArcKit Update Available\n\n` +
         `You are running **v${localVersion}**. The latest release is **v${latestVersion}**.\n\n` +
-        `To update, restart Claude Code — the plugin marketplace will pull the latest version automatically.\n\n` +
+        `To update, run \`claude plugin update arckit@arckit-claude\` (or \`/plugin\` → Marketplaces → arckit-claude → Update), then \`/reload-plugins\`. ` +
+        `Auto-update is off by default for this marketplace, so nothing changes until you update; ` +
+        `teams on a regulated engagement can pin a release with \`/plugin marketplace add tractorjuice/arckit-claude#v${latestVersion}\`.\n\n` +
         `Release notes: https://github.com/${REPO}/releases/tag/${latestTag}`
       );
       process.stderr.write(`[ArcKit] Update available: v${localVersion} → v${latestVersion}\n`);

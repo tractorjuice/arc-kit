@@ -26,8 +26,22 @@ Output:
 
 - `docs/index.html` - Main documentation site
 - `docs/manifest.json` - Document index
-- `docs/llms.txt` - LLM/agent-friendly markdown index ([llmstxt.org](https://llmstxt.org/) format) linking to every artifact, guide, and project. Hand-curated `docs/llms.txt` files (without the ArcKit generation marker) are preserved.
+- `docs/llms.txt` - only with `LLMS=true`: an index for AI agents and crawlers ([llmstxt.org](https://llmstxt.org/) format) linking to every artifact, guide, and project. Without the flag, an `llms.txt` an earlier run generated is removed. Hand-curated `docs/llms.txt` files (without the ArcKit generation marker) are never touched.
 - `docs/telemetry.json` - Session telemetry rollup (newer-first, capped at 50 sessions). Written by the `session-learner.mjs` Stop hook when `docs/` exists; powers the dashboard's Session Telemetry + Recent Sessions panels.
+
+### Confidentiality
+
+A governance site can hold client-confidential or live-tender material, so the command is cautious by default:
+
+- **Nothing is published by the command.** It writes files to `docs/` only. They go public when you commit and push them and the repository is public or GitHub Pages is on.
+- **The vendor ranking is opt-in.** The ranked summary of `vendors/scores.json` (vendor names, weighted totals, category averages) goes into `docs/manifest.json` only with `VENDOR_SCORES=true`.
+- **`llms.txt` is opt-in.** An index built for AI crawlers is written only with `LLMS=true`.
+- **Every run reports what it indexed**: how many artefacts and vendor documents went into `docs/`, which artefacts are marked above OFFICIAL in their Document Control, and whether the ranking and `llms.txt` were included.
+- **To keep a project out of the site completely**, put it in a directory git ignores. The command skips it.
+
+```bash
+/arckit:pages LLMS=true VENDOR_SCORES=true   # include both opt-in outputs
+```
 
 Guide grouping metadata is sourced from `config/guide-groups.mjs`. The
 manifest includes each guide's functional `category`, top-level `section`,
