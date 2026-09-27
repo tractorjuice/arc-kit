@@ -24,10 +24,22 @@ the mirror's rewriting is overwritten and never reaches users on its own.
 
 NEVER rewrite the sources in place: converter.py depends on `/arckit:X`.
 
+Two kinds of reference are rewritten:
+
+  /arckit:<cmd>        in .md, .yaml and .yml (prose and command bodies)
+  skill: arckit:<cmd>  in .yaml and .yml (/arckit:build recipe steps)
+
+A recipe step's `skill:` value is handed to the Skill tool verbatim by the
+build workers, so `skill: arckit:agile-strategy` fails with "Unknown skill" in
+Claude Code: the command is `arckit-oaa:agile-strategy` (arc-kit#835). Until
+6.16.4 only .md was rewritten, and every overlay recipe's overlay-owned steps
+were unrunnable from a marketplace install.
+
 CLI:
     claude_command_namespacing.py <dir> [--check]
 
-Rewrites every .md under <dir> in place, or reports what would change.
+Rewrites every .md, .yaml and .yml under <dir> in place, or reports what would
+change.
 """
 
 from __future__ import annotations
@@ -40,8 +52,11 @@ import sys
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 
-# Only markdown carries command invocations; verified no .json/.yaml refs exist.
-REWRITABLE_SUFFIXES = {".md"}
+# Markdown carries `/arckit:X` invocations; recipe YAML carries both those (in
+# comments and descriptions) and bare `skill: arckit:X` step targets. JSON
+# carries no command references.
+REWRITABLE_SUFFIXES = {".md", ".yaml", ".yml"}
+RECIPE_SUFFIXES = {".yaml", ".yml"}
 
 IGNORED_NAMES = {".git", "node_modules", ".npm", ".pnpm-store"}
 
@@ -73,6 +88,29 @@ def invocation_pattern(namespaces: dict[str, str]) -> re.Pattern[str] | None:
     return re.compile(rf"/arckit:({alternatives})\b")
 
 
+def recipe_skill_pattern(namespaces: dict[str, str]) -> re.Pattern[str] | None:
+    """`skill: arckit:<cmd>` in recipe YAML, quoted or not, for overlay commands."""
+    if not namespaces:
+        return None
+    alternatives = "|".join(
+        re.escape(name) for name in sorted(namespaces, key=len, reverse=True)
+    )
+    return re.compile(rf"""(\bskill:[ \t]*["']?)arckit:({alternatives})\b""")
+
+
+def rewrite_recipe_skills(text: str, namespaces: dict[str, str]) -> str:
+    """`skill: arckit:agile-strategy` -> `skill: arckit-oaa:agile-strategy`.
+
+    Core steps (`skill: arckit:adr`) never match. Idempotent.
+    """
+    pattern = recipe_skill_pattern(namespaces)
+    if pattern is None:
+        return text
+    return pattern.sub(
+        lambda m: f"{m.group(1)}{namespaces[m.group(2)]}:{m.group(2)}", text
+    )
+
+
 def rewrite(text: str, pattern: re.Pattern[str] | None,
             namespaces: dict[str, str]) -> str:
     """`/arckit:uae-ai-charter` -> `/arckit-uae:uae-ai-charter`.
@@ -95,12 +133,15 @@ def publish_bytes(source: Path, namespaces: dict[str, str],
         text = raw.decode("utf-8")
     except UnicodeDecodeError:
         return raw
-    return rewrite(text, pattern, namespaces).encode("utf-8")
+    text = rewrite(text, pattern, namespaces)
+    if source.suffix in RECIPE_SUFFIXES:
+        text = rewrite_recipe_skills(text, namespaces)
+    return text.encode("utf-8")
 
 
 def namespace_tree(directory: Path, repo_root: Path | None = None,
                    dry_run: bool = False) -> tuple[int, int]:
-    """Rewrite every .md under `directory` in place.
+    """Rewrite every rewritable file under `directory` in place.
 
     Returns (files_changed, references_rewritten).
     """
@@ -121,7 +162,11 @@ def namespace_tree(directory: Path, repo_root: Path | None = None,
         if updated == original:
             continue
         files_changed += 1
-        refs += len(pattern.findall(original.decode("utf-8", errors="replace")))
+        text = original.decode("utf-8", errors="replace")
+        refs += len(pattern.findall(text))
+        if path.suffix in RECIPE_SUFFIXES:
+            skill_pattern = recipe_skill_pattern(namespaces)
+            refs += len(skill_pattern.findall(text)) if skill_pattern else 0
         if not dry_run:
             path.write_bytes(updated)
     return (files_changed, refs)

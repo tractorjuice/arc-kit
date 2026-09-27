@@ -113,65 +113,65 @@ targets:
 
   # --- US wave 1: baseline (FIPS 199 + PIA in parallel) ----------------
   - id: US_FIPS199
-    skill: arckit:us-fisma-categorization
+    skill: arckit-us:us-fisma-categorization
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FIPS199 }
     deps: [REQ, STKE]
 
   - id: US_PIA
-    skill: arckit:us-privacy-pia
+    skill: arckit-us:us-privacy-pia
     args: "{P}"
     output: { project: "{P}-{NAME}", type: USPIA }
     deps: [REQ, STKE]
 
   # --- US wave 2: controls (NIST 800-53 + ICAM) ------------------------
   - id: US_NIST
-    skill: arckit:us-nist-800-53
+    skill: arckit-us:us-nist-800-53
     args: "{P}"
     output: { project: "{P}-{NAME}", type: NIST }
     deps: [REQ, US_FIPS199]
 
   - id: US_ICAM
-    skill: arckit:us-icam
+    skill: arckit-us:us-icam
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ICAM }
     deps: [REQ, US_FIPS199, US_PIA]
 
   # --- US wave 3: posture (Zero Trust + SBOM) --------------------------
   - id: US_ZTA
-    skill: arckit:us-zero-trust
+    skill: arckit-us:us-zero-trust
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ZTA }
     deps: [REQ, US_NIST]
 
   - id: US_SBOM
-    skill: arckit:us-sbom-eo-14028
+    skill: arckit-us:us-sbom-eo-14028
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SBOM }
     deps: [REQ, US_NIST]
 
   # --- US wave 4: AI assurance -----------------------------------------
   - id: US_AIRMF
-    skill: arckit:us-ai-rmf
+    skill: arckit-us:us-ai-rmf
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AIRMF }
     deps: [REQ, US_NIST, US_PIA]
 
   - id: US_AIIA
-    skill: arckit:us-ai-impact
+    skill: arckit-us:us-ai-impact
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AIIA }
     deps: [REQ, US_AIRMF]
 
   # --- US wave 5: authorization (SSP + Readiness) ----------------------
   - id: US_FRSSP
-    skill: arckit:us-fedramp-ssp
+    skill: arckit-us:us-fedramp-ssp
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FRSSP }
     deps: [REQ, US_NIST, US_ZTA, US_ICAM, US_PIA, US_SBOM]
 
   - id: US_FRRR
-    skill: arckit:us-fedramp-readiness
+    skill: arckit-us:us-fedramp-readiness
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FRRR }
     deps: [REQ, US_FRSSP]

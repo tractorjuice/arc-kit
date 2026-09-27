@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Large PlantUML diagrams render on `/arckit:pages` sites** (#648, reported by @johnfelipe). The pages template put each diagram's source into the PlantUML server URL as hex, two characters per byte, so a large diagram passed the server's URL limit and failed with "Check diagram syntax" about perfectly valid source. It now uses PlantUML's standard encoding (deflate, compressed in the browser with no extra library), which is several times shorter: a 6 KB diagram went from a 12,144-character URL the server rejected to 1,158 characters that render. A diagram still too large gets a message saying so, not a syntax warning. The stale `.arckit/templates` copy of the template is brought back in line.
+
+- **Overlay recipes run from a marketplace install** (#835). `/arckit:build` hands each recipe step's `skill:` to the Skill tool as written, and overlay recipes named their own commands in the portable form (`skill: arckit:agile-strategy`), which Claude Code rejects as an unknown skill because the command belongs to `arckit-oaa`. Publishing now rewrites overlay-owned `skill:` steps in recipe YAML to the overlay's namespace (`skill: arckit-oaa:agile-strategy`), as it already did for command references in Markdown. Core steps are untouched. A new test checks that every `skill:` step in every published recipe names a command that exists under that namespace.
+
 ## [6.16.3] — 2026-09-27
 
 ### Fixed
