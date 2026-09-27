@@ -184,7 +184,7 @@ targets:
 
   # --- Charter rights (early — informs FITAA / PIA / AIA design) ---------
   - id: CA_CHARTER
-    skill: arckit:ca-charter
+    skill: arckit-ca:ca-charter
     args: "{P}"
     output: { project: "{P}-{NAME}", type: CHRT }
     deps: [REQ, STKE]
@@ -193,19 +193,19 @@ targets:
   # Privacy Act PIA is the foundational privacy artefact — every other
   # Canadian privacy / access / AI artefact builds on it.
   - id: CA_PIA
-    skill: arckit:ca-pia
+    skill: arckit-ca:ca-pia
     args: "{P}"
     output: { project: "{P}-{NAME}", type: PIA }
     deps: [REQ, STKE]
 
   - id: CA_ATIP
-    skill: arckit:ca-atip
+    skill: arckit-ca:ca-atip
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ATIP }
     deps: [CA_PIA]
 
   - id: CA_AIA
-    skill: arckit:ca-aia
+    skill: arckit-ca:ca-aia
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AIA }
     deps: [REQ, CA_PIA]
@@ -215,7 +215,7 @@ targets:
   # the privacy and Charter outputs so the foreign-influence registration
   # design can reflect rights-engaging mitigations and PII handling.
   - id: CA_FITAA
-    skill: arckit:ca-fitaa
+    skill: arckit-ca:ca-fitaa
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FITAA }
     deps: [REQ, STKE, CA_CHARTER, CA_PIA, CA_ATIP, CA_AIA]
@@ -225,47 +225,47 @@ targets:
   # running it speculatively without FNIGC pre-engagement would produce
   # an artefact that cannot be relied on.
   - id: CA_OCAP
-    skill: arckit:ca-ocap
+    skill: arckit-ca:ca-ocap
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OCAP }
     deps: [REQ, CA_PIA]
 
   # --- Security stream (after FITAA — system shape and SOI scope known) -
   - id: CA_ITSG
-    skill: arckit:ca-itsg-33
+    skill: arckit-ca:ca-itsg-33
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ITSG }
     deps: [REQ, CA_PIA]
 
   - id: CA_SOIA
-    skill: arckit:ca-soia
+    skill: arckit-ca:ca-soia
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SOIA }
     deps: [CA_ITSG, CA_FITAA]
 
   # --- Cloud residency (after security) ---------------------------------
   - id: CA_CRES
-    skill: arckit:ca-cloud-residency
+    skill: arckit-ca:ca-cloud-residency
     args: "{P}"
     output: { project: "{P}-{NAME}", type: CACR }
     deps: [CA_ITSG, AWS_RESEARCH, AZURE_RESEARCH, GCP_RESEARCH]
 
   # --- Service-side compliance (parallel after FITAA) -------------------
   - id: CA_OLA
-    skill: arckit:ca-ola
+    skill: arckit-ca:ca-ola
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OLA }
     deps: [REQ, CA_FITAA]
 
   - id: CA_DIGSTD
-    skill: arckit:ca-gc-digital-standards
+    skill: arckit-ca:ca-gc-digital-standards
     args: "{P}"
     output: { project: "{P}-{NAME}", type: DIGSTD }
     deps: [REQ]
 
   # --- Procurement (towards the end) ------------------------------------
   - id: CA_PSPC
-    skill: arckit:ca-pspc
+    skill: arckit-ca:ca-pspc
     args: "{P}"
     output: { project: "{P}-{NAME}", type: PROC }
     deps: [REQ, CA_ITSG, CA_CRES]

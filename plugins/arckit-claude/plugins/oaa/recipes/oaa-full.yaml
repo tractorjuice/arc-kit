@@ -42,31 +42,31 @@ targets:
     deps: [PRIN]
 
   - id: OASTR
-    skill: arckit:agile-strategy
+    skill: arckit-oaa:agile-strategy
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OASTR }
     deps: [PRIN, STKE, REQ]
 
   - id: OAPR
-    skill: arckit:product-architecture
+    skill: arckit-oaa:product-architecture
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OAPR }
     deps: [REQ, STKE]
 
   - id: OAAL
-    skill: arckit:oaa-adm-lite
+    skill: arckit-oaa:oaa-adm-lite
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OAAL }
     deps: [PRIN, STKE, REQ, OAPR]
 
   - id: OASEC
-    skill: arckit:agile-security
+    skill: arckit-oaa:agile-security
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OASEC }
     deps: [OAAL, OAPR]
 
   - id: OAGOV
-    skill: arckit:agile-governance
+    skill: arckit-oaa:agile-governance
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OAGOV }
     deps: [OAAL, OASEC]

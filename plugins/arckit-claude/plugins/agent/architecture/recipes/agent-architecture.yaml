@@ -51,37 +51,37 @@ targets:
     deps: [REQ, STKE, PRIN]
 
   - id: AAGI
-    skill: arckit:agent-inventory
+    skill: arckit-agent-architecture:agent-inventory
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AAGI }
     deps: [REQ, STKE, PRIN]
 
   - id: AAGR
-    skill: arckit:agent-design
+    skill: arckit-agent-architecture:agent-design
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AAGR }
     deps: [AAGI, REQ, STKE, PRIN]
 
   - id: AAIN
-    skill: arckit:agent-integration
+    skill: arckit-agent-architecture:agent-integration
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AAIN }
     deps: [AAGR]
 
   - id: AAOV
-    skill: arckit:agent-governance
+    skill: arckit-agent-architecture:agent-governance
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AAOV }
     deps: [AAGI, AAGR, PRIN]
 
   - id: AASE
-    skill: arckit:agent-security
+    skill: arckit-agent-architecture:agent-security
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AASE }
     deps: [AAGR, RISK, AIPB]
 
   - id: AAMT
-    skill: arckit:agent-maturity
+    skill: arckit-agent-architecture:agent-maturity
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AAMT }
     deps: [AAGI, AAGR, AAOV, AASE]

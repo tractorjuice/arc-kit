@@ -49,55 +49,55 @@ targets:
     deps: [PRIN, STKE]
 
   - id: ADMP
-    skill: arckit:adm-preliminary
+    skill: arckit-togaf-adm:adm-preliminary
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ADMP }
     deps: [PRIN, STKE, STRATEGY]
 
   - id: BPCM
-    skill: arckit:business-capability-map
+    skill: arckit-togaf-adm:business-capability-map
     args: "{P}"
     output: { project: "{P}-{NAME}", type: BPCM }
     deps: [ADMP, REQ, STKE, PRIN]
 
   - id: APP
-    skill: arckit:application-inventory
+    skill: arckit-togaf-adm:application-inventory
     args: "{P}"
     output: { project: "{P}-{NAME}", type: APP }
     deps: [ADMP, BPCM]
 
   - id: APPR
-    skill: arckit:application-rationalization
+    skill: arckit-togaf-adm:application-rationalization
     args: "{P}"
     output: { project: "{P}-{NAME}", type: APPR }
     deps: [APP, BPCM]
 
   - id: GAPA
-    skill: arckit:gap-analysis
+    skill: arckit-togaf-adm:gap-analysis
     args: "{P}"
     output: { project: "{P}-{NAME}", type: GAPA }
     deps: [BPCM, APP, APPR, STRATEGY]
 
   - id: TRANS
-    skill: arckit:transition-architecture
+    skill: arckit-togaf-adm:transition-architecture
     args: "{P}"
     output: { project: "{P}-{NAME}", type: TRANS }
     deps: [GAPA]
 
   - id: BORD
-    skill: arckit:architecture-board
+    skill: arckit-togaf-adm:architecture-board
     args: "{P}"
     output: { project: "{P}-{NAME}", type: BORD }
     deps: [PRIN, ADMP]
 
   - id: ACHG
-    skill: arckit:architecture-change
+    skill: arckit-togaf-adm:architecture-change
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ACHG }
     deps: [BORD, TRANS]
 
   - id: REPO
-    skill: arckit:architecture-repository
+    skill: arckit-togaf-adm:architecture-repository
     args: "000"
     output: { project: "000-global", type: REPO }
     deps: [PRIN, STRATEGY, ADMP, BPCM, APP, APPR, GAPA, TRANS, BORD]

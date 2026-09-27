@@ -1983,9 +1983,40 @@
         // ============================================
         // PlantUML Text Encoding
         // ============================================
-        // PlantUML supports ~h (hex) prefix for hex-encoded source text.
-        // This avoids needing a deflate library while keeping URLs valid.
+        // PlantUML's standard encoding: raw deflate, then PlantUML's own base64
+        // alphabet. The browser's built-in CompressionStream does the deflate,
+        // so no library is needed. The ~h hex form used before costs two URL
+        // characters per source byte, so a large diagram's URL outgrew the
+        // PlantUML server's limit and failed with a misleading "check diagram
+        // syntax" message (arc-kit#648). Deflate is several times shorter. Hex
+        // stays as the fallback for a browser without CompressionStream.
         // See: https://plantuml.com/text-encoding
+        const PLANTUML_ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_';
+        // Past this the PlantUML server rejects the request; say so plainly.
+        const PLANTUML_MAX_URL = 8000;
+
+        function plantumlEncode64(bytes) {
+            let out = '';
+            for (let i = 0; i < bytes.length; i += 3) {
+                const b1 = bytes[i];
+                const b2 = i + 1 < bytes.length ? bytes[i + 1] : 0;
+                const b3 = i + 2 < bytes.length ? bytes[i + 2] : 0;
+                out += PLANTUML_ALPHABET[b1 >> 2]
+                    + PLANTUML_ALPHABET[((b1 & 0x3) << 4) | (b2 >> 4)]
+                    + PLANTUML_ALPHABET[((b2 & 0xF) << 2) | (b3 >> 6)]
+                    + PLANTUML_ALPHABET[b3 & 0x3F];
+            }
+            return out;
+        }
+
+        async function plantumlEncodeDeflate(text) {
+            const stream = new Blob([new TextEncoder().encode(text)])
+                .stream()
+                .pipeThrough(new CompressionStream('deflate-raw'));
+            const bytes = new Uint8Array(await new Response(stream).arrayBuffer());
+            return plantumlEncode64(bytes);
+        }
+
         function plantumlEncodeHex(text) {
             const bytes = new TextEncoder().encode(text);
             let hex = '';
@@ -1995,9 +2026,18 @@
             return '~h' + hex;
         }
 
-        function plantumlGetUrl(source, format) {
+        async function plantumlGetUrl(source, format) {
             format = format || 'svg';
-            return 'https://www.plantuml.com/plantuml/' + format + '/' + plantumlEncodeHex(source);
+            let encoded = null;
+            if (typeof CompressionStream === 'function') {
+                try {
+                    encoded = await plantumlEncodeDeflate(source);
+                } catch (e) {
+                    console.warn('PlantUML deflate failed, using hex encoding:', e);
+                }
+            }
+            if (encoded === null) encoded = plantumlEncodeHex(source);
+            return 'https://www.plantuml.com/plantuml/' + format + '/' + encoded;
         }
 
         // ============================================
@@ -2085,7 +2125,7 @@
                 manifest.guides.forEach(doc => {
                     allDocuments.push({
                         ...doc,
-                        searchText: `${doc.title} ${doc.category || ''} guide command`.toLowerCase()
+                        searchText: `${doc.title} ${doc.section || ''} ${doc.category || ''} ${doc.pack || ''} guide command`.toLowerCase()
                     });
                 });
             }
@@ -2329,32 +2369,43 @@
                 return;
             }
 
-            // Group guides by category
-            const byCategory = {};
+            // Group guides by manifest-provided section and category
+            const bySection = {};
             manifest.guides.forEach(guide => {
+                const section = guide.section || 'Other / Uncategorised';
                 const cat = guide.category || 'Other';
-                if (!byCategory[cat]) byCategory[cat] = [];
-                byCategory[cat].push(guide);
+                if (!bySection[section]) bySection[section] = {};
+                if (!bySection[section][cat]) bySection[section][cat] = [];
+                bySection[section][cat].push(guide);
             });
 
-            // Sort categories
-            const categoryOrder = ['Getting Started', 'Discovery', 'Planning', 'Architecture', 'Governance', 'Compliance', 'Operations', 'Procurement', 'Integrations', 'Reporting'];
-            const sortedCategories = Object.keys(byCategory).sort((a, b) => {
-                const aIdx = categoryOrder.indexOf(a);
-                const bIdx = categoryOrder.indexOf(b);
+            const sortByOrder = (keys, order) => keys.sort((a, b) => {
+                const aIdx = order.indexOf(a);
+                const bIdx = order.indexOf(b);
+                if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
                 return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
             });
+            const sectionOrder = manifest.guideSectionOrder || ['Core Workflows', 'Plugin and Extension Operations', 'Overlay Packs', 'Community Guides', 'Other / Uncategorised'];
+            const categoryOrder = manifest.guideCategoryOrder || ['Getting Started', 'Discovery', 'Planning', 'Architecture', 'Wardley Mapping', 'Governance', 'Compliance', 'Operations', 'Procurement', 'Interoperability', 'Integrations', 'Reporting', 'Plugin Operations', 'Community', 'Other'];
+            const sortedSections = sortByOrder(Object.keys(bySection), sectionOrder);
 
             let guidesHtml = '';
-            sortedCategories.forEach(category => {
-                guidesHtml += `<h2>${category}</h2><ul class="app-guides-list">`;
-                byCategory[category].forEach(guide => {
-                    const statusBadge = guide.status
-                        ? `<span class="guide-status ${guide.status}">${guide.status}</span>`
-                        : '';
-                    guidesHtml += `<li><a href="#${guide.path}" data-path="${guide.path}"><span>${guide.title}</span>${statusBadge}</a></li>`;
+            sortedSections.forEach(section => {
+                guidesHtml += `<h2>${escapeHtml(section)}</h2>`;
+                const sortedCategories = sortByOrder(Object.keys(bySection[section]), categoryOrder);
+                sortedCategories.forEach(category => {
+                    guidesHtml += `<h3>${escapeHtml(category)}</h3><ul class="app-guides-list">`;
+                    bySection[section][category]
+                        .sort((a, b) => (a.title || a.path).localeCompare(b.title || b.path))
+                        .forEach(guide => {
+                            const statusBadge = guide.status
+                                ? `<span class="guide-status ${escapeHtml(guide.status)}">${escapeHtml(guide.status)}</span>`
+                                : '';
+                            const path = escapeHtml(guide.path);
+                            guidesHtml += `<li><a href="#${path}" data-path="${path}"><span>${escapeHtml(guide.title)}</span>${statusBadge}</a></li>`;
+                        });
+                    guidesHtml += '</ul>';
                 });
-                guidesHtml += '</ul>';
             });
 
             content.innerHTML = `
@@ -4404,7 +4455,7 @@
                 try { await mermaid.run({ querySelector: '.mermaid' }); } catch (e) { console.warn('Mermaid render error:', e); }
 
                 // Render PlantUML diagrams (via PlantUML server)
-                renderPlantUMLDiagrams();
+                await renderPlantUMLDiagrams();
 
                 // Initialize interactive pan/zoom on rendered diagrams
                 initDiagramPanZoom();
@@ -4555,23 +4606,48 @@
         // ============================================
         // PlantUML Diagram Rendering
         // ============================================
-        function renderPlantUMLDiagrams() {
+        function showPlantUMLError(diagram, message, rawSource) {
+            while (diagram.firstChild) diagram.removeChild(diagram.firstChild);
+            const errorP = document.createElement('p');
+            errorP.style.cssText = 'color:var(--color-error);padding:1rem;';
+            errorP.textContent = message + ' ';
+            const link = document.createElement('a');
+            link.href = 'https://www.plantuml.com/plantuml/uml/';
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.textContent = 'plantuml.com';
+            errorP.appendChild(document.createTextNode('You can paste the source below into '));
+            errorP.appendChild(link);
+            errorP.appendChild(document.createTextNode(' to check it.'));
+            diagram.appendChild(errorP);
+            const pre = document.createElement('pre');
+            const code = document.createElement('code');
+            code.textContent = rawSource;
+            pre.appendChild(code);
+            diagram.appendChild(pre);
+        }
+
+        async function renderPlantUMLDiagrams() {
             const diagrams = document.querySelectorAll('.app-markdown .plantuml-diagram');
             if (!diagrams.length) return;
 
-            diagrams.forEach(diagram => {
+            for (const diagram of diagrams) {
                 // Skip if already rendered
-                if (diagram.querySelector('img')) return;
+                if (diagram.querySelector('img')) continue;
 
                 // Get base64-encoded source from data attribute
                 const encoded = diagram.dataset.plantumlSource;
-                if (!encoded) return;
+                if (!encoded) continue;
 
                 // Decode base64 back to raw text
                 const rawSource = decodeURIComponent(escape(atob(encoded)));
 
                 // Build PlantUML server URL
-                const url = plantumlGetUrl(rawSource, 'svg');
+                const url = await plantumlGetUrl(rawSource, 'svg');
+                if (url.length > PLANTUML_MAX_URL) {
+                    showPlantUMLError(diagram, 'This diagram is too large for the PlantUML server to render from a link. Split it into smaller diagrams.', rawSource);
+                    continue;
+                }
 
                 // Replace code block with rendered image
                 const img = document.createElement('img');
@@ -4581,28 +4657,12 @@
 
                 // Show fallback on error
                 img.onerror = function() {
-                    while (diagram.firstChild) diagram.removeChild(diagram.firstChild);
-                    const errorP = document.createElement('p');
-                    errorP.style.cssText = 'color:var(--color-error);padding:1rem;';
-                    errorP.textContent = 'PlantUML rendering failed. Check diagram syntax or try ';
-                    const link = document.createElement('a');
-                    link.href = 'https://www.plantuml.com/plantuml/uml/';
-                    link.target = '_blank';
-                    link.rel = 'noopener';
-                    link.textContent = 'plantuml.com';
-                    errorP.appendChild(link);
-                    errorP.appendChild(document.createTextNode('.'));
-                    diagram.appendChild(errorP);
-                    const pre = document.createElement('pre');
-                    const code = document.createElement('code');
-                    code.textContent = rawSource;
-                    pre.appendChild(code);
-                    diagram.appendChild(pre);
+                    showPlantUMLError(diagram, 'The PlantUML server could not render this diagram. It may have a syntax error, or be too large.', rawSource);
                 };
 
                 while (diagram.firstChild) diagram.removeChild(diagram.firstChild);
                 diagram.appendChild(img);
-            });
+            }
         }
 
         function initPlantUMLPanZoom() {

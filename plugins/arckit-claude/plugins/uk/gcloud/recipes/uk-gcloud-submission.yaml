@@ -30,7 +30,7 @@ defaults:
   version: "1.0"
 
 post_build_hooks:
-  - skill: arckit:submission-pack
+  - skill: arckit-uk-gcloud:submission-pack
     args: "{P}"
   - skill: arckit:health
     args: ""
@@ -49,50 +49,50 @@ targets:
 
   # --- Supplier-wide (000-global/supplier) ---------------------------------
   - id: SUPP
-    skill: arckit:supplier-profile
+    skill: arckit-uk-gcloud:supplier-profile
     args: ""
     output: { project: "000-global", type: SUPP, subfolder: supplier }
     deps: []
 
   - id: DECL
-    skill: arckit:declaration
+    skill: arckit-uk-gcloud:declaration
     args: ""
     output: { project: "000-global", type: DECL, subfolder: supplier }
     deps: [SUPP]
 
   # --- Per-service bid artefacts ({P}-{NAME}) ------------------------------
   - id: SVCD
-    skill: arckit:service-design
+    skill: arckit-uk-gcloud:service-design
     args: "{NAME}"
     output: { project: "{P}-{NAME}", type: SVCD }
     deps: [SUPP]
 
   - id: SDD
-    skill: arckit:sdd-lot2
+    skill: arckit-uk-gcloud:sdd-lot2
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SDD }
     deps: [SVCD]
 
   - id: PRIC
-    skill: arckit:pricing
+    skill: arckit-uk-gcloud:pricing
     args: "{P}"
     output: { project: "{P}-{NAME}", type: PRIC }
     deps: [SVCD]
 
   - id: SECA
-    skill: arckit:security
+    skill: arckit-uk-gcloud:security
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SECA }
     deps: [SVCD]
 
   - id: GCMP
-    skill: arckit:gcloud-competitors
+    skill: arckit-uk-gcloud:gcloud-competitors
     args: "{P}"
     output: { project: "{P}-{NAME}", type: GCMP }
     deps: [SVCD, PRIC]
 
   - id: GCRV
-    skill: arckit:review
+    skill: arckit-uk-gcloud:review
     args: "{P}"
     output: { project: "{P}-{NAME}", type: GCRV }
     deps: [SDD, PRIC, SECA, DECL]

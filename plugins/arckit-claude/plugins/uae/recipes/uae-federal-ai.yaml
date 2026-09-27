@@ -113,7 +113,7 @@ targets:
 
   # --- UAE national alignment (early — informs everything downstream) ----
   - id: UAE_PRIORITIES
-    skill: arckit:uae-priorities-alignment
+    skill: arckit-uae:uae-priorities-alignment
     args: "{P}"
     output: { project: "{P}-{NAME}", type: NPRA }
     deps: [PRIN, REQ]
@@ -160,32 +160,32 @@ targets:
 
   # --- Data classification & privacy -------------------------------------
   - id: UAE_CLASSIFICATION
-    skill: arckit:uae-classification
+    skill: arckit-uae:uae-classification
     args: "{P}"
     output: { project: "{P}-{NAME}", type: CLAS }
     deps: [REQ, UAE_PRIORITIES]
 
   - id: UAE_PDPL
-    skill: arckit:uae-pdpl
+    skill: arckit-uae:uae-pdpl
     args: "{P}"
     output: { project: "{P}-{NAME}", type: PDPL }
     deps: [REQ, UAE_CLASSIFICATION]
 
   - id: UAE_DATA_SHARING
-    skill: arckit:uae-data-sharing
+    skill: arckit-uae:uae-data-sharing
     args: "{P}"
     output: { project: "{P}-{NAME}", type: DSHR }
     deps: [UAE_CLASSIFICATION, UAE_PDPL]
 
   - id: UAE_DIGITAL_RECORDS
-    skill: arckit:uae-digital-records
+    skill: arckit-uae:uae-digital-records
     args: "{P}"
     output: { project: "{P}-{NAME}", type: DREC }
     deps: [REQ, UAE_CLASSIFICATION]
 
   # --- Cloud residency + identity ----------------------------------------
   - id: UAE_CLOUD_RESIDENCY
-    skill: arckit:uae-cloud-residency
+    skill: arckit-uae:uae-cloud-residency
     args: "{P}"
     output: { project: "{P}-{NAME}", type: CRES }
     # Cloud residency depends on the research wave (which CSP options exist)
@@ -193,7 +193,7 @@ targets:
     deps: [UAE_CLASSIFICATION, AWS_RESEARCH, AZURE_RESEARCH]
 
   - id: UAE_UAEPASS
-    skill: arckit:uae-uaepass
+    skill: arckit-uae:uae-uaepass
     args: "{P}"
     output: { project: "{P}-{NAME}", type: UPASS }
     deps: [REQ, UAE_PRIORITIES]
@@ -309,13 +309,13 @@ targets:
 
   # --- AI governance (UAE Charter + autonomy tier + UK reference frames) -
   - id: UAE_AI_CHARTER
-    skill: arckit:uae-ai-charter
+    skill: arckit-uae:uae-ai-charter
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AICH }
     deps: [REQ, "ADR-*", RISK, UAE_PRIORITIES]
 
   - id: UAE_AI_AUTONOMY
-    skill: arckit:uae-ai-autonomy-tier
+    skill: arckit-uae:uae-ai-autonomy-tier
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AUTI }
     deps: [REQ, RISK, UAE_AI_CHARTER]
@@ -334,7 +334,7 @@ targets:
 
   # --- Security: UAE IAS Statement of Applicability ----------------------
   - id: UAE_IAS
-    skill: arckit:uae-ias
+    skill: arckit-uae:uae-ias
     args: "{P}"
     output: { project: "{P}-{NAME}", type: IAS }
     deps: [REQ, "ADR-*", RISK, SBD]
@@ -394,13 +394,13 @@ targets:
 
   # --- UAE federal procurement + service catalogue ----------------------
   - id: UAE_PROCUREMENT
-    skill: arckit:uae-procurement
+    skill: arckit-uae:uae-procurement
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FPRO }
     deps: [STRATEGY, RISK, "ADR-*", UAE_PRIORITIES, ADR-007]
 
   - id: UAE_ZERO_BUREAUCRACY
-    skill: arckit:uae-zero-bureaucracy
+    skill: arckit-uae:uae-zero-bureaucracy
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ZBUR }
     deps: [REQ, STKE, OPS, UAE_UAEPASS]
