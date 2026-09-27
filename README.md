@@ -1698,7 +1698,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 
 ### Government Code Discovery
 
-These commands use the [govreposcrape MCP](https://github.com/MHCLG/govreposcrape-mcp) server to search 24,500+ UK government repositories. The Claude Code plugin bundles the MCP server automatically. No API key required.
+These commands use the [govreposcrape MCP](https://github.com/chrisns/govreposcrape) server to search 24,500+ UK government repositories. The Claude Code plugin bundles the MCP server automatically. No API key required.
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|

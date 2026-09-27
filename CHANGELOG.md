@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/arckit:pages` is cautious about what it indexes.** A governance site can hold client-confidential or live-tender material, and the command used to put a ranked summary of `vendors/scores.json` into `docs/manifest.json` and write a `docs/llms.txt` index for AI crawlers on every run, with no warning. Both are now opt-in (`VENDOR_SCORES=true`, `LLMS=true`); without `LLMS=true`, an `llms.txt` an earlier run generated is removed, and a hand-curated one is left alone. The flags are read only from the user's arguments, never from the command text that documents them. Every run now ends with a CONFIDENTIALITY section the command must show: how many artefacts and vendor documents went into `docs/`, which artefacts are marked above OFFICIAL in their Document Control, whether the ranking and `llms.txt` were included, and a reminder that `docs/` only goes public when you commit and push it. `tests/plugin/pages-confidentiality.test.mjs` covers the defaults, the opt-ins, the removal of a stale index, and flags in the command body not counting.
+
+- **`/arckit:evaluate` and `/arckit:score` treat supplier proposals as evidence, never instructions.** Both read proposals in the context that scores them. They now treat proposal text as claims, do not follow anything in it addressed to the evaluator, and list any such text under **Integrity findings**. This is a prompt-level safeguard; the reader/writer split the research commands use is tracked separately.
+
+- **The update notice tells you how to update.** It said a restart would pull the latest version automatically, which is not true for the `arckit-claude` marketplace: auto-update is off by default there. It now gives the update command and how to pin a release.
+
 ### Fixed
 
 - **Large PlantUML diagrams render on `/arckit:pages` sites** (#648, reported by @johnfelipe). The pages template put each diagram's source into the PlantUML server URL as hex, two characters per byte, so a large diagram passed the server's URL limit and failed with "Check diagram syntax" about perfectly valid source. It now uses PlantUML's standard encoding (deflate, compressed in the browser with no extra library), which is several times shorter: a 6 KB diagram went from a 12,144-character URL the server rejected to 1,158 characters that render. A diagram still too large gets a message saying so, not a syntax warning. The stale `.arckit/templates` copy of the template is brought back in line.
