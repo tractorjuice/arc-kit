@@ -1,6 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-repo",
+  "displayName": "ArcKit Repository Tooling",
   "version": "6.16.0",
   "description": "Repository tooling for ArcKit: source-grounded, agent-readable repository docs inspired by OpenWiki, plus codebase auditing against architecture principles and requirements.",
   "author": {
@@ -12,6 +13,9 @@
   "license": "MIT",
   "icon": "./assets/icon.svg",
   "privacyPolicyUrl": "https://arckit.org/privacy.html",
+  "supportUrl": "https://github.com/tractorjuice/arc-kit/issues",
+  "documentationUrl": "https://github.com/tractorjuice/arckit-claude/tree/main/plugins/repo#readme",
+  "termsOfServiceUrl": "https://github.com/tractorjuice/arckit-claude/blob/main/LICENSE",
   "defaultEnabled": false,
   "dependencies": [
     {

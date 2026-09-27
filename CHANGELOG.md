@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Every plugin has a display name.** The Claude plugin directory showed listings as their package names turned into title case ("Arckit Uae"). Each `plugin.json` now sets `displayName`, for example "ArcKit UAE Federal Overlay" and "ArcKit TOGAF ADM", and Claude Code shows the same name. Each also sets `supportUrl` (GitHub issues), `documentationUrl` (the guides page for the core plugin, the overlay's own README for the rest) and `termsOfServiceUrl` (the plugin's licence), the three links the directory listing showed as not set.
+
 ## [6.16.0] — 2026-09-26
 
 ### Added
