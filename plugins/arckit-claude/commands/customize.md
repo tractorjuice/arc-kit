@@ -21,7 +21,7 @@ ArcKit uses document templates to generate consistent architecture artifacts. Us
 - **Defaults**: `${CLAUDE_PLUGIN_ROOT}/templates/` (shipped with ArcKit, refreshed by `arckit init`)
 - **User overrides**: `.arckit/templates-custom/` (your customizations, preserved across updates)
 
-**Scope.** `${CLAUDE_PLUGIN_ROOT}` resolves to the core `arckit` plugin, which also bundles a copy of every community overlay (`arckit-uae`, `arckit-ca`, `arckit-uk-nhs`, `arckit-repo` and the rest) under `${CLAUDE_PLUGIN_ROOT}/plugins/`. Both halves are therefore reachable, and the overlays are the larger half of the catalogue:
+**Scope.** `${CLAUDE_PLUGIN_ROOT}` resolves to the core `arckit` plugin. Community overlays (`arckit-uae`, `arckit-ca`, `arckit-uk-nhs`, `arckit-repo` and the rest) are separate plugins installed beside it, and only the overlays the user has installed are on disk. Both halves are reachable, and where overlays are installed they are the larger half of the catalogue:
 
 - **`list`** covers core **and** overlays
 - **Copying by name** covers core and overlays
@@ -45,9 +45,12 @@ The user may request:
 Glob **both** template trees, then strip the `-template.md`/`.html` suffix from each filename to get the short name:
 
 1. **Core**: `${CLAUDE_PLUGIN_ROOT}/templates/*-template.md` and `${CLAUDE_PLUGIN_ROOT}/templates/*-template.html`
-2. **Overlays**: `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/*-template.md` and `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/*-template.html`
+2. **Overlays**: installed overlays sit beside the core, and where depends on how the core was loaded. Glob all three and ignore any that match nothing:
+   - Marketplace install, where each plugin is cached as `<marketplace>/<plugin>/<version>/`: `${CLAUDE_PLUGIN_ROOT}/../../arckit-*/*/templates/*-template.{md,html}`
+   - A checkout of the published repo (core at `plugins/arckit/`, overlays at `plugins/uae/`, `plugins/uk/finance/`) or of the source repo (`plugins/arckit-uae/`): `${CLAUDE_PLUGIN_ROOT}/../**/templates/*-template.{md,html}`, leaving out the core's own `templates/`
+   - The source repo's mirror inside the core: `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/*-template.{md,html}`
 
-For an overlay hit, derive the owning plugin from the path segments between `plugins/` and `templates/`: join them with `-` and prefix `arckit-`. So `plugins/uae/templates/` is `arckit-uae` and `plugins/uk/finance/templates/` is `arckit-uk-finance`. Overlay directories nest one or two levels deep, which is why the glob needs `**`.
+For an overlay hit, the owning plugin is the `name` in the `.claude-plugin/plugin.json` beside that `templates/` folder. The same template can match more than one glob (a cached older version, or the source repo's mirror): list it once, from the highest version.
 
 State the totals first, in these words or close to them:
 
@@ -145,7 +148,7 @@ If the user asked to list a single plugin's templates (e.g. "list arckit-repo"),
    - Find: ``> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.{command}` ``
    - Replace with: ``> **Template Origin**: Custom | **Based On**: `/arckit.{command}` | **ArcKit Version**: [VERSION]``
 4. Use the Write tool to save it to `.arckit/templates-custom/{name}-template.{ext}` (the directory will be created automatically)
-5. If the source template does not exist, do **not** stop at "not found". Glob `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/{name}-template.*` before answering: if it matches, the template ships in an overlay plugin, so follow "Copy an overlay template" below. Only if both globs come back empty, tell the user it does not exist and suggest `/arckit:customize list`.
+5. If the source template does not exist, do **not** stop at "not found". Glob `${CLAUDE_PLUGIN_ROOT}/../../arckit-*/*/templates/{name}-template.*`, `${CLAUDE_PLUGIN_ROOT}/../**/templates/{name}-template.*` and `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/{name}-template.*` before answering: if one matches, the template ships in an overlay plugin, so follow "Copy an overlay template" below. Only if both globs come back empty, tell the user it does not exist and suggest `/arckit:customize list`.
 
 **Copy all templates:**
 
@@ -159,11 +162,11 @@ If the user asked to list a single plugin's templates (e.g. "list arckit-repo"),
 
 **Copy an overlay template:**
 
-Templates belonging to a community overlay plugin are not in the core `templates/` glob, but the core plugin bundles a copy of every overlay under its own root, so copy one exactly as you would a core template:
+Templates belonging to a community overlay plugin are not in the core `templates/` glob. Copy one from the installed overlay exactly as you would a core template:
 
-1. Glob `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/{name}-template.*` to locate the file (overlay directories nest one or two levels deep, e.g. `plugins/uae/`, `plugins/uk/finance/`)
+1. Locate `{name}-template.*`: glob `${CLAUDE_PLUGIN_ROOT}/../../arckit-*/*/templates/` (marketplace install), then `${CLAUDE_PLUGIN_ROOT}/../**/templates/` (a repo checkout, leaving out the core's own), then `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/` (the source repo's mirror)
 2. Read it, update the origin banner as under "Copy specific template" above, and Write it to `.arckit/templates-custom/{name}-template.{ext}`
-3. Tell the user which overlay it came from, and that the copy is the version bundled with the installed core plugin, which can lag a separately installed overlay
+3. Tell the user which overlay it came from. If no glob matches, the overlay that owns the template is not installed: say which plugin to install (`/plugin install arckit-<overlay>@arckit-claude`) instead of reporting that the template does not exist
 
 ### 4. **Show Template Info**
 

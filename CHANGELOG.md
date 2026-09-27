@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **The core plugin publishes to its own folder, `plugins/arckit`**. In `tractorjuice/arckit-claude` the core used to sit at the repository root, so its plugin folder was the whole repository with every overlay beneath it. The Claude plugin directory's validator timed out on that folder, and every user who installed `arckit` also got a copy of all sixteen overlays inside it (1,169 files; the core alone is 608). `push-extensions.sh` now publishes the core to `plugins/arckit`, beside the overlays, and writes a root marketplace that points `arckit` there; the root holds only the marketplace, a README and the LICENSE. Existing installs update in place (checked by installing 6.16.1 from the old layout and updating to the new one). Four things relied on the bundled copy and now look beside the core instead: `provenance-stamp.mjs` (overlay commands' effort for the Build Provenance block), `/arckit:customize` (overlay templates), the `arckit-build` recipe lookup (whose installed-plugin glob was also one level too shallow for the install cache) and `scripts/csf-score.mjs` (the EU catalogue). `tests/plugin/test_claude_publish_layout.py` runs the script's own staging functions, and two new provenance tests run the hook from the install-cache and published-repo layouts.
+
 ## [6.16.1] — 2026-09-27
 
 ### Changed
