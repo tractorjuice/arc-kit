@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`allow-mcp-tools.mjs` approves the bundled MCP servers' tools** (it never had: wrong tool names for plugin servers, the wrong PermissionRequest output format, and exit 1 on no match). **`telemetry.mjs` records govreposcrape calls** from the plugin's own server.
+
 ## [6.16.2] — 2026-09-27
 
 ### Changed

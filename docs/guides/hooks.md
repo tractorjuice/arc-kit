@@ -133,7 +133,7 @@ window.
 
 ### allow-mcp-tools
 
-Auto-allows MCP tool calls from ArcKit's bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, DataCommons, govreposcrape, uk-tenders) so users don't need to approve each one manually.
+Auto-allows MCP tool calls from ArcKit's bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, DataCommons, govreposcrape, uk-tenders) so users don't need to approve each one manually. Every other tool gets no decision from it, and your own deny and ask rules still apply. Before 6.16.3 this hook never took effect, because it looked for the wrong tool names and answered in a format Claude Code ignores, so you were asked about each call.
 
 ## Utility Files
 
