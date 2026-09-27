@@ -38,6 +38,7 @@ $ARGUMENTS
 **FORMAT** (optional): Output formats (default: `markdown`)
 
 - Valid: `markdown`, `csv`, `json`, `all`
+- The Markdown backlog and the JSON backlog are **always** written: the JSON is the structured record every total is computed from and checked against (Step 13.1). `csv` or `all` adds the CSV export. `json` is accepted for compatibility and behaves like `markdown`.
 
 **PRIORITY** (optional): Prioritization approach (default: `multi`)
 
@@ -88,7 +89,7 @@ Scans all ArcKit artifacts and automatically:
    - Links to HLD components
    - Maps to epics and business goals
 
-**Output**: `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.md` (+ optional CSV/JSON)
+**Output**: `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.md` and `.json` (+ optional CSV)
 
 **Time Savings**: 75%+ reduction (4-6 weeks → 3-5 days)
 
@@ -122,6 +123,19 @@ Extract project metadata:
 - **REQ** (Requirements) — primary source
   - Extract: All BR/FR/NFR/INT/DR requirement IDs, descriptions, priorities, acceptance criteria
   - If missing: warn user to run `/arckit:requirements` first — backlog is derived from requirements
+
+**PREVIOUS BACKLOG** (read if one exists):
+
+- **BKLG** — an earlier `ARC-*-BKLG-*.json` (or `.md`) in this project means you are revising, not starting again. Follow **Regenerating an existing backlog** below.
+
+#### Regenerating an existing backlog
+
+When a previous backlog exists, carry it forward and apply one estimation policy to every item:
+
+- **Keep an item's existing story points** unless its acceptance criteria, its linked requirements, or the requirement text it derives from changed since the previous version. Re-estimating an unchanged item makes velocity and burn-down meaningless.
+- **Re-estimate an item whose source changed**, and list each re-estimated item with its old and new points and the reason in the Revision History `Changes` column.
+- **New items** are estimated fresh; **items whose requirement was removed** are dropped and listed the same way.
+- Every total is then recomputed from the revised items (Step 13.1). Never patch a total by hand to absorb a change.
 
 **RECOMMENDED** (read if available, note if missing):
 
@@ -173,12 +187,10 @@ Before generating the backlog, use the **AskUserQuestion** tool to gather user p
 **Question 2** — header: `Format`, multiSelect: false
 > "What output format do you need?"
 
-- **All formats (Recommended)**: Markdown report + CSV (Jira/Azure DevOps import) + JSON (API integration)
-- **Markdown only**: Standard report document
-- **CSV only**: For direct import into Jira, Azure DevOps, or GitHub Projects
-- **JSON only**: For programmatic access and custom integrations
+- **All formats (Recommended)**: Markdown report + JSON + CSV (Jira/Azure DevOps import)
+- **Markdown and JSON**: Report document plus the JSON record, no CSV
 
-Apply the user's selections to the corresponding parameters throughout this command. For example, if they chose "MoSCoW", use only MoSCoW prioritization in Step 7 instead of the full multi-factor algorithm. If they chose "CSV only", generate only the CSV output in Step 13.
+Apply the user's selections to the corresponding parameters throughout this command. For example, if they chose "MoSCoW", use only MoSCoW prioritization in Step 7 instead of the full multi-factor algorithm. The Markdown and the JSON are written whichever format is chosen; the choice only decides whether the CSV is added in Step 13.
 
 ### Step 3: Parse Requirements
 
@@ -711,6 +723,8 @@ with UK GDPR Article 30 (records of processing activities).
 ```
 
 ### Step 7: Prioritization
+
+**A requirement's MoSCoW priority is an input, not an output.** Each story or task takes the MoSCoW priority of the requirement it is derived from in the REQ document. A requirement marked MUST_HAVE there must be delivered by at least one Must Have item. If there is a real reason to deliver it at a lower priority (the product owner deferred it, a dependency moves it out of the MVP), keep the lower priority **and** record the reason on that requirement's `traceability` row in the JSON as `"priority_change": "<reason, who agreed it, date>"`, and say so in the Markdown traceability appendix. A lowered priority with no recorded reason is blocked when the JSON is written: this is how a compliance requirement ends up silently downgraded. The scoring below orders items **within** the backlog; it never changes a MoSCoW category.
 
 Apply **multi-factor prioritization algorithm**:
 
@@ -1271,7 +1285,21 @@ Every story must meet these criteria before marking "Done":
 
 ### Step 13: Generate Output Files
 
-#### 13.1: Primary Output - ARC-*-BKLG-*.md
+#### 13.1: Write the JSON first, and compute every total from it
+
+Build the complete backlog as the JSON structure shown in 13.4 **before** writing any Markdown, and write it with the **Write tool** to `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.json`.
+
+Every aggregate in the backlog is **computed from the items, never estimated or carried over**:
+
+- `stories` holds **every** backlog item: user stories and the technical tasks from Step 6. `summary.total_stories` is the length of that array.
+- `summary.total_points` is the sum of every item's `story_points`; each `*_have_points` is the same sum restricted to one MoSCoW category.
+- Each epic's `points` is the sum of its items' `story_points`, and its `stories` list names exactly the items whose `epic` is that epic.
+- Sprints are numbered from 1. An item not yet scheduled has `"sprint": null`, never `0`. A sprint's `stories` list agrees with each item's own `sprint`.
+- `summary.total_requirements` is the number of `traceability` rows.
+
+A hook recomputes all of these when the JSON is written and blocks the write with the exact differences. If it blocks, recompute from the items; do not edit the declared number to match.
+
+#### 13.2: Primary Output - ARC-*-BKLG-*.md
 
 **Read the template** (user override takes precedence):
 
@@ -1284,7 +1312,7 @@ The template owns the document structure. Populate it from Steps 3-12 — do not
 
 | Template section | Filled from |
 |---|---|
-| **Executive Summary** | totals, priority breakdown and epic breakdown from Steps 4-7 |
+| **Executive Summary** | totals, priority breakdown and epic breakdown, **copied from the JSON written in 13.1**. Every other section that restates a total (epic headers, Appendix A coverage summary, Appendix C, Appendix D) uses the same figures |
 | **How to Use This Backlog** | ships complete; keep it, and set the refinement schedule to the sprint length chosen in Step 2c |
 | **Epics** | Step 5, one block per BR-xxx |
 | **Prioritized Backlog** | Steps 4 and 7, one `Story-NNN` block per story in priority order |
@@ -1297,7 +1325,7 @@ The template owns the document structure. Populate it from Steps 3-12 — do not
 
 Write it with the **Write tool** to `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.md`. A backlog is long, so writing it inline risks the 32K output-token limit.
 
-#### 13.2: CSV Export (if requested)
+#### 13.3: CSV Export (if requested)
 
 Create `backlog.csv` for Jira/Azure DevOps import:
 
@@ -1310,9 +1338,9 @@ Task,TASK-001-B,STORY-001,"Implement registration API","POST /api/users/register
 [... all items ...]
 ```
 
-#### 13.3: JSON Export (if requested)
+#### 13.4: JSON Structure
 
-Create `backlog.json` for programmatic access:
+The JSON written in 13.1 (also read by `/arckit:trello`):
 
 ```json
 {
@@ -1327,7 +1355,9 @@ Create `backlog.json` for programmatic access:
     "total_points": 342,
     "must_have_points": 180,
     "should_have_points": 98,
-    "could_have_points": 64
+    "could_have_points": 64,
+    "wont_have_points": 0,
+    "total_requirements": 64
   },
   "epics": [
     {
@@ -1406,6 +1436,14 @@ Create `backlog.json` for programmatic access:
       "stories": ["STORY-001"],
       "sprint": 1,
       "status": "Planned"
+    },
+    {
+      "requirement": "FR-014",
+      "type": "Functional",
+      "stories": ["STORY-031"],
+      "sprint": null,
+      "status": "Deferred",
+      "priority_change": "MUST_HAVE in REQ, delivered as Should Have: deferred to phase 2 by the product owner, 2026-09-20"
     }
   ]
 }
@@ -1479,10 +1517,11 @@ Write all files to `projects/{project-dir}/`:
 
 - `ARC-{PROJECT_ID}-BKLG-v1.0.md` - Primary output
 
+- `ARC-{PROJECT_ID}-BKLG-v1.0.json` - The structured record every total is computed from (written first, Step 13.1)
+
 **Create if FORMAT includes**:
 
 - `ARC-{PROJECT_ID}-BKLG-v1.0.csv` - If FORMAT=csv or FORMAT=all
-- `ARC-{PROJECT_ID}-BKLG-v1.0.json` - If FORMAT=json or FORMAT=all
 
 **CRITICAL - Show Summary Only**:
 After writing the file(s), show ONLY the confirmation message below. Do NOT output the full backlog content in your response. The backlog document can be 1000+ lines and will exceed token limits.

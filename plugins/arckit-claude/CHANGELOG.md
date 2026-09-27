@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Backlog totals hook** (`hooks/validate-backlog-totals.mjs`, rules in `hooks/backlog-totals.mjs`; #855, #856). Recomputes story, epic, point, priority and requirement totals from `ARC-*-BKLG-*.json` and blocks mismatches, `Sprint 0` placeholders and unrecorded MoSCoW downgrades against the project's REQ. `/arckit:backlog` now always writes the JSON first and takes the Markdown's totals from it, and keeps unchanged items' points when regenerating.
+
 - **`/arckit:pages`: large PlantUML diagrams render** (#648). Deflate encoding in place of hex, so URLs are several times shorter; a diagram still too large says so instead of blaming its syntax.
 
 - **Overlay recipes' `skill:` steps are namespaced when published** (#835), so `/arckit:build` can run them from a marketplace install.

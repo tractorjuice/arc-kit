@@ -40,6 +40,8 @@ Outputs land in `projects/<id>/ARC-<id>-BKLG-v1.0.*`.
 | 4. Sprint slicing | Adjust sprint boundaries to respect change freeze / compliance windows |
 | 5. Tool import | Use CSV/JSON for Jira, Azure DevOps, or Trello |
 
+**Totals are checked.** The command always writes `ARC-*-BKLG-*.json` alongside the Markdown, and writes it first. In Claude Code a hook recomputes every total from the items when the JSON is saved (story count, points per epic and per MoSCoW category, sprint numbers) and sends any mismatch back to the model to fix. The same hook blocks a requirement delivered at a lower MoSCoW priority than the requirements document gives it, unless the reason is recorded as `priority_change` on its traceability row. When you re-run the command on an existing backlog, story points of unchanged items are kept and every re-estimate is listed in the Revision History.
+
 ---
 
 ## Sprint Planning Checklist
