@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.16.2] — 2026-09-27
+
 ### Changed
 
 - **Published at `plugins/arckit` in `tractorjuice/arckit-claude`, not the repository root.** Installs shrink from 1,169 files to 608 because the core no longer carries a copy of every overlay. `provenance-stamp.mjs`, `/arckit:customize`, the `arckit-build` recipe lookup and `csf-score.mjs` find installed overlays beside the core.
