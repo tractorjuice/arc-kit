@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.16.5] — 2026-09-28
+
 ### Changed
 
 - **Claude Code floor raised to v2.1.284 for Claude Sonnet 5.5** (#580). v2.1.284 adds Sonnet 5.5 (`claude-sonnet-5-5`), now the default Sonnet model on the Anthropic API, with 1M context. Earlier clients cannot select it. Like Opus 5.5 it always thinks and defaults to `effort: medium`, so ArcKit's `effort: max` commands run at `max` on it and the Effective Effort row in each artefact's Build Provenance is accurate. The SessionStart version check, both READMEs, CLAUDE.md, the start, MCP-servers, enterprise-scale and research-family guides, and the repo's `minimumVersion` are updated.
