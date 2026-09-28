@@ -72,6 +72,9 @@
     <!-- Marked.js for Markdown -->
     <script src="https://cdn.jsdelivr.net/npm/marked@15.0.6/marked.min.js"></script>
 
+    <!-- DOMPurify to sanitise rendered Markdown -->
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.4.15/dist/purify.min.js"></script>
+
     <!-- Mermaid.js for Diagrams -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js"></script>
 
@@ -1953,6 +1956,15 @@
             return div.innerHTML;
         }
 
+        function sanitizeHtml(html) {
+            if (typeof DOMPurify === 'undefined') return escapeHtml(html);
+            return DOMPurify.sanitize(html);
+        }
+
+        function headingId(text) {
+            return String(text).toLowerCase().replace(/[^\w]+/g, '-');
+        }
+
         function getRawUrl(path) {
             return `../${path}`;
         }
@@ -2070,7 +2082,7 @@
                 level = text.depth;
                 text = text.text;
             }
-            const id = text.toLowerCase().replace(/[^\w]+/g, '-');
+            const id = headingId(text);
             return `<h${level} id="${id}">${text}</h${level}>`;
         };
 
@@ -2305,9 +2317,9 @@
                 }
 
                 results.innerHTML = matches.map(doc => `
-                    <div class="app-search-result" data-path="${doc.path}">
-                        <div class="app-search-result-title">${doc.title}</div>
-                        <div class="app-search-result-path">${doc.project ? doc.project + ' / ' : ''}${doc.category || 'Document'}</div>
+                    <div class="app-search-result" data-path="${escapeHtml(doc.path)}">
+                        <div class="app-search-result-title">${escapeHtml(doc.title)}</div>
+                        <div class="app-search-result-path">${doc.project ? escapeHtml(doc.project) + ' / ' : ''}${escapeHtml(doc.category || 'Document')}</div>
                     </div>
                 `).join('');
 
@@ -2472,7 +2484,7 @@
                     const cmdCount = guide.commandCount
                         ? '<span class="guide-status beta">' + guide.commandCount + ' commands</span>'
                         : '';
-                    rolesHtml += '<li><a href="#' + encodeURIComponent(guide.path) + '" data-path="' + guide.path + '"><span>' + guide.title + '</span>' + cmdCount + '</a></li>';
+                    rolesHtml += '<li><a href="#' + encodeURIComponent(guide.path) + '" data-path="' + escapeHtml(guide.path) + '"><span>' + escapeHtml(guide.title) + '</span>' + cmdCount + '</a></li>';
                 });
                 rolesHtml += '</ul>';
             });
@@ -4415,15 +4427,20 @@
                 const breadcrumb = parts.slice(0, -1).join(' / ');
 
                 // Render markdown
-                const html = marked.parse(markdown);
+                const html = sanitizeHtml(marked.parse(markdown));
 
                 content.innerHTML = `
                     <div class="app-doc-header">
-                        <div class="app-doc-breadcrumb">${breadcrumb}</div>
-                        <h1 class="app-doc-title">${title}</h1>
+                        <div class="app-doc-breadcrumb">${escapeHtml(breadcrumb)}</div>
+                        <h1 class="app-doc-title">${escapeHtml(title)}</h1>
                     </div>
                     <div class="app-markdown">${html}</div>
                 `;
+
+                // DOMPurify drops ids that shadow DOM properties (e.g. "domain"); restore them for the ToC
+                content.querySelectorAll('.app-markdown h2:not([id]), .app-markdown h3:not([id])').forEach(h => {
+                    h.id = headingId(h.textContent);
+                });
 
                 // Rewrite relative .md links to SPA hash routes
                 const docDir = path.substring(0, path.lastIndexOf('/') + 1);
