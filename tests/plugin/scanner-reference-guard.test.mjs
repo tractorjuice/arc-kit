@@ -179,3 +179,29 @@ function extractGuards(file) {
 test('secret-file-scanner and secret-detection share identical guard constants', () => {
   assert.equal(extractGuards(SCANNER), extractGuards(DETECTION));
 });
+
+// --- Connection-string pattern must stay linear: `scheme://` followed by a
+// long run of `:` with no `@` used to drive O(n^2) backtracking, pushing the
+// hook past its timeout so it failed open without scanning. ---
+const CONN_STRING = J('postgres', '://', 'admin', ':', 'hunter2', '@db.example.com:5432/app');
+const REDOS_PAYLOAD = J('mongodb', '://', ':'.repeat(200000));
+
+test('scanner blocks a database connection string with credentials', () => {
+  assert.equal(scannerBlocks(CONN_STRING), true);
+});
+
+test('detection blocks a database connection string with credentials', () => {
+  assert.equal(detectionBlocks(CONN_STRING), true);
+});
+
+test('scanner stays fast and still blocks a secret behind a connection-string ReDoS payload', () => {
+  const started = Date.now();
+  assert.equal(scannerBlocks(J(REDOS_PAYLOAD, '\n', CONN_STRING)), true);
+  assert.ok(Date.now() - started < 2000, `scanner took ${Date.now() - started}ms`);
+});
+
+test('detection stays fast and still blocks a secret behind a connection-string ReDoS payload', () => {
+  const started = Date.now();
+  assert.equal(detectionBlocks(J(REDOS_PAYLOAD, '\n', CONN_STRING)), true);
+  assert.ok(Date.now() - started < 2000, `detection took ${Date.now() - started}ms`);
+});
