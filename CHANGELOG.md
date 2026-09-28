@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Claude Code floor raised to v2.1.281 so the release checklist's own validation passes.** Every one of ArcKit's 18 plugin manifests declares five listing-metadata keys — `privacyPolicyUrl`, `supportUrl`, `termsOfServiceUrl`, `documentationUrl` and `icon` — that Claude Code accepts but that `claude plugin validate` reported as unknown fields until v2.1.281. `docs/RELEASING.md` step 9 runs `claude plugin validate --strict`, which turns unknown-field warnings into failures, so on earlier clients the release checklist failed on every manifest for metadata the platform actually honours. The same release adds MCP server checks to `claude plugin validate` — entries that would be silently dropped at load, `${user_config.*}` references to options the manifest does not declare, and insecure or invalid URLs — which covers ArcKit's six bundled servers and the two keyed `${user_config.*}` headers on `google-developer-knowledge` and `datacommons-mcp`. It also disambiguates `--plugin-dir` on a directory that carries a `.claude-plugin/marketplace.json` beside its plugins, the shape of `plugins/arckit-claude`, which `docs/guides/testing-plugin-branches.md` tells contributors to point at. `MIN_CLAUDE_CODE_VERSION`, the SessionStart version-check reason list, both READMEs, `CLAUDE.md`, the start / mcp-servers / enterprise-scale / research-family guides (both trees), `RELEASING.md` step 9, the repo's `.claude/settings.json` `minimumVersion` and the `create-test-repo` scaffold are updated to match. Historical v2.1.280 and v2.1.251 references stay as release history. (#580)
+
 ## [6.16.4] — 2026-09-27
 
 ### Changed

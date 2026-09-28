@@ -113,6 +113,13 @@ git add -A && git commit -m "chore: bump version to X.Y.Z"
 #    unrecognised fields; the components form checks every SKILL.md, agent and
 #    command frontmatter (v2.1.233+ reports a SKILL.md whose frontmatter fails
 #    to parse — the failure mode that otherwise surfaces as a silently missing skill).
+#    Needs Claude Code v2.1.281+ (ArcKit's floor): earlier clients report the five
+#    `plugin.json` listing-metadata keys every ArcKit plugin carries
+#    (`privacyPolicyUrl`, `supportUrl`, `termsOfServiceUrl`, `documentationUrl`,
+#    `icon`) as unknown fields, so `--strict` fails on metadata Claude Code accepts.
+#    From v2.1.281 validate also checks the MCP entries in the `.mcp.json` that
+#    `mcpServers` names: servers dropped at load, `${user_config.*}` references to
+#    options `userConfig` does not declare, and insecure or invalid URLs.
 claude plugin validate --strict .claude-plugin/marketplace.json
 claude plugin validate --strict plugins/arckit-claude/.claude-plugin/plugin.json
 claude plugin validate plugins/arckit-claude/skills

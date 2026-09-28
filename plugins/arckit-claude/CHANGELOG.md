@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Claude Code minimum-version floor raised from v2.1.280 to v2.1.281** (#580). All 18 plugin manifests carry the `privacyPolicyUrl`, `supportUrl`, `termsOfServiceUrl`, `documentationUrl` and `icon` listing keys, which `claude plugin validate` reported as unknown fields before v2.1.281 — so the `--strict` call in the release checklist failed on every manifest. v2.1.281 also adds MCP-entry validation covering the six bundled servers and the two keyed `${user_config.*}` headers, and fixes `--plugin-dir` on a directory that also holds a `.claude-plugin/marketplace.json`, which is this plugin's own layout.
+
 ## [6.16.4] — 2026-09-27
 
 ### Changed

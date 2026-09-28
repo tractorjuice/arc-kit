@@ -56,7 +56,7 @@ Before installing ArcKit broadly:
 - Assign a seat type that includes Claude Code. In Anthropic's current
   Enterprise guidance, legacy seat-based plans need Premium seats; usage-based
   plans need Chat + Code or Claude Enterprise seats.
-- Install Claude Code v2.1.280 or later on pilot machines. ArcKit's
+- Install Claude Code v2.1.281 or later on pilot machines. ArcKit's
   SessionStart version hook warns below this floor; managed settings can block
   startup below it.
 - Verify each pilot user with `claude --version`, `/status`, and
@@ -69,7 +69,7 @@ users are prompted to add the ArcKit marketplace when they trust the repo:
 
 ```json
 {
-  "minimumVersion": "2.1.280",
+  "minimumVersion": "2.1.281",
   "extraKnownMarketplaces": {
     "arckit-claude": {
       "source": {
@@ -91,7 +91,7 @@ range:
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.280",
+  "requiredMinimumVersion": "2.1.281",
   "requiredMaximumVersion": "2.1.999",
   "extraKnownMarketplaces": {
     "arckit-claude": {
@@ -241,7 +241,8 @@ Use a narrow pilot before broad installation:
 
 | Version | Enterprise-relevant change | ArcKit impact |
 |---------|----------------------------|---------------|
-| v2.1.280 | Claude Opus 5.5 (`claude-opus-5-5`) added as the default Opus model — 1M context, defaults to `effort: medium`, thinking cannot be turned off, fast mode at $8/$40; an effort level saved before `/effort` became per-model no longer applies to newly released models | Current floor. Opus 5.5 always thinks, so ArcKit's `effort: max` commands cannot be silently sent as `high` by a thinking-off session and the provenance Effective Effort row is accurate. Commands without `effort:` run at `medium` on Opus 5.5 |
+| v2.1.281 | `claude plugin validate` no longer reports the `privacyPolicyUrl`, `supportUrl`, `termsOfServiceUrl`, `documentationUrl` and `icon` listing keys in `plugin.json` as unknown fields, and gains MCP server checks (entries dropped at load, `${user_config.*}` references to undeclared options, insecure or invalid URLs); `--plugin-dir` on a directory that also holds a `.claude-plugin/marketplace.json` loads its plugins instead of one empty plugin; `"attribution": false` hides commit and PR attribution, and older clients skip a settings file that holds it; `--setting-sources` is forwarded to spawned sessions | **Current floor.** All 18 ArcKit plugin manifests carry all five listing keys, so `claude plugin validate --strict` — which `RELEASING.md` runs — failed on every manifest below this release. The MCP checks cover ArcKit's six bundled servers and its two keyed `${user_config.*}` headers. `plugins/arckit-claude` is a `--plugin-dir` target that carries a marketplace file. The `attribution` caveat matters for mixed-version fleets: one new key voids the whole settings file on older clients |
+| v2.1.280 | Claude Opus 5.5 (`claude-opus-5-5`) added as the default Opus model — 1M context, defaults to `effort: medium`, thinking cannot be turned off, fast mode at $8/$40; an effort level saved before `/effort` became per-model no longer applies to newly released models | Carried inside the current floor. Opus 5.5 always thinks, so ArcKit's `effort: max` commands cannot be silently sent as `high` by a thinking-off session and the provenance Effective Effort row is accurate. Commands without `effort:` run at `medium` on Opus 5.5 |
 | v2.1.258 | Reviewed release as of 2026-09-02; fixes the macOS 12 launch failure introduced in the unpublished 2.1.255 | Reviewed in the v2.1.236-v2.1.258 triage. Any future floor above v2.1.252 must be v2.1.258, not v2.1.257 |
 | v2.1.257 | Claude Fable 5.1 (`claude-fable-5-1`) is the default Fable model; `CLAUDE_CODE_SUBAGENT_MODEL_FORCE`; `permissions.blockReadsOutsideWorkingDirectories`; Bash `Read()` deny rules cover redirects and reader commands; `defaultMode: "bypassPermissions"` ignored at project scope; plugin component paths that are symlinks refused; auto-mode Containment Escape rule | Fable 5.1 needs the gateway configured for it — `fable`/`best` keep resolving to Fable 5 until then. ArcKit ships no symlinked component paths and recommends no project-scope `defaultMode` |
 | v2.1.251 | `PreModelSwitch` / `PostModelSwitch` hooks; `CLAUDE_CODE_SUBAGENT_MODEL` becomes a default rather than an override; Opus 5 at `effort: xhigh`/`max` with thinking off is sent as `high` instead of failing; file tools no longer follow a symlink swapped after the permission check; Grep/Glob honour `Read()` deny rules through symlinked paths; project settings can no longer enable beta tracing or bypass a managed OTLP collector | **Current ArcKit floor** — the symlink and deny-rule fixes are the class ArcKit's file-protection gates sit in front of, and `effort: max` commands now complete on thinking-off sessions. Verify subagent routing with `/tasks` before relying on `CLAUDE_CODE_SUBAGENT_MODEL` (see model governance above). Effective Effort in ArcKit's provenance stamp cannot see the thinking-off downgrade |
@@ -272,6 +273,7 @@ Use a narrow pilot before broad installation:
 
 | ArcKit entry | Enterprise impact |
 |--------------|-------------------|
+| Unreleased #580 | Claude Code floor raised to v2.1.281 so `claude plugin validate --strict` stops failing all 18 ArcKit plugin manifests on the five `plugin.json` listing-metadata keys they carry, and so the new MCP-entry validation covers ArcKit's six servers and two `${user_config.*}` headers |
 | Unreleased #580 | Claude Code floor raised to v2.1.280 for Claude Opus 5.5, the default Opus model, which always thinks and so keeps `effort: max` and the provenance Effective Effort row honest |
 | Unreleased #580 | Claude Code floor raised to v2.1.251 for the file-tool symlink and Grep/Glob deny-rule fixes, the Opus 5 thinking-off effort fallback, and v2.1.246's plugin-loading fixes that hit ArcKit's exact layout |
 | Unreleased #580 | Reactive `FileChanged` context for `projects/*/external/` means newly added evidence can enter Claude Code context without restart or `/compact` |
@@ -520,7 +522,7 @@ admin can set the native managed settings (Claude Code v2.1.163+):
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.280",
+  "requiredMinimumVersion": "2.1.281",
   "requiredMaximumVersion": "2.1.999"
 }
 ```
