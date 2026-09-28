@@ -184,7 +184,11 @@ test('secret-file-scanner and secret-detection share identical guard constants',
 // long run of `:` with no `@` used to drive O(n^2) backtracking, pushing the
 // hook past its timeout so it failed open without scanning. ---
 const CONN_STRING = J('postgres', '://', 'admin', ':', 'hunter2', '@db.example.com:5432/app');
-const REDOS_PAYLOAD = J('mongodb', '://', ':'.repeat(200000));
+const REDOS_PAYLOADS = {
+  'colon run': J('mongodb', '://', ':'.repeat(200000)),
+  'repeated scheme': J('mongodb', '://', 'a', ':').repeat(20000),
+};
+const LONG_PASSWORD_CONN_STRING = J('postgres', '://', 'svc', ':', 'x'.repeat(1500), '@db.example.com/app');
 
 test('scanner blocks a database connection string with credentials', () => {
   assert.equal(scannerBlocks(CONN_STRING), true);
@@ -194,14 +198,20 @@ test('detection blocks a database connection string with credentials', () => {
   assert.equal(detectionBlocks(CONN_STRING), true);
 });
 
-test('scanner stays fast and still blocks a secret behind a connection-string ReDoS payload', () => {
-  const started = Date.now();
-  assert.equal(scannerBlocks(J(REDOS_PAYLOAD, '\n', CONN_STRING)), true);
-  assert.ok(Date.now() - started < 2000, `scanner took ${Date.now() - started}ms`);
+test('scanner blocks a connection string with a long password', () => {
+  assert.equal(scannerBlocks(LONG_PASSWORD_CONN_STRING), true);
 });
 
-test('detection stays fast and still blocks a secret behind a connection-string ReDoS payload', () => {
-  const started = Date.now();
-  assert.equal(detectionBlocks(J(REDOS_PAYLOAD, '\n', CONN_STRING)), true);
-  assert.ok(Date.now() - started < 2000, `detection took ${Date.now() - started}ms`);
-});
+for (const [name, payload] of Object.entries(REDOS_PAYLOADS)) {
+  test(`scanner stays fast and still blocks a secret behind a ${name} ReDoS payload`, () => {
+    const started = Date.now();
+    assert.equal(scannerBlocks(J(payload, '\n', CONN_STRING)), true);
+    assert.ok(Date.now() - started < 2000, `scanner took ${Date.now() - started}ms`);
+  });
+
+  test(`detection stays fast and still blocks a secret behind a ${name} ReDoS payload`, () => {
+    const started = Date.now();
+    assert.equal(detectionBlocks(J(payload, '\n', CONN_STRING)), true);
+    assert.ok(Date.now() - started < 2000, `detection took ${Date.now() - started}ms`);
+  });
+}
