@@ -88,3 +88,28 @@ test('FileChanged treats event paths as data and skips linked watch directories'
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test('FileChanged ignores events through symlinks but accepts removed documents', () => {
+  const { root, externalDir, nestedDir } = makeProject();
+  try {
+    const outsidePath = join(root, 'outside.md');
+    writeFileSync(outsidePath, '# Outside\n');
+    symlinkSync(root, join(externalDir, 'linked-dir'));
+    symlinkSync(outsidePath, join(externalDir, 'linked-file.md'));
+
+    for (const filePath of [
+      join(externalDir, 'linked-dir', 'outside.md'),
+      join(externalDir, 'linked-file.md'),
+    ]) {
+      const output = runExternalContextWatch({ cwd: root, file_path: filePath, event: 'change' });
+      assert.deepEqual(output.hookSpecificOutput.watchPaths, [externalDir, nestedDir]);
+      assert.equal(output.hookSpecificOutput.additionalContext, undefined);
+    }
+
+    const removedPath = join(nestedDir, 'removed.md');
+    const output = runExternalContextWatch({ cwd: root, file_path: removedPath, event: 'unlink' });
+    assert.match(output.hookSpecificOutput.additionalContext, /A project external document was removed/);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

@@ -31,7 +31,7 @@ export function runExternalContextWatch(data) {
 
   if (!repoRoot || !eventPath) return output;
 
-  const change = findExternalDocumentChange(repoRoot, eventPath);
+  const change = findExternalDocumentChange(repoRoot, eventPath, output.hookSpecificOutput.watchPaths);
   if (!change) return output;
 
   const contextText = buildProjectContext(repoRoot);

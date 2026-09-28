@@ -1,5 +1,5 @@
-import { readdirSync } from 'node:fs';
-import { isAbsolute, join, relative, resolve } from 'node:path';
+import { lstatSync, readdirSync } from 'node:fs';
+import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
 import { isDir, listDirsRecursive } from './hook-utils.mjs';
 
 export function collectExternalWatchPaths(repoRoot) {
@@ -25,9 +25,15 @@ export function resolveEventPath(filePath, cwd) {
   return isAbsolute(filePath) ? resolve(filePath) : resolve(cwd || process.cwd(), filePath);
 }
 
-export function findExternalDocumentChange(repoRoot, filePath) {
+export function findExternalDocumentChange(repoRoot, filePath, watchPaths = collectExternalWatchPaths(repoRoot)) {
   const projectsDir = join(repoRoot, 'projects');
-  if (!isDir(projectsDir) || !filePath) return null;
+  if (!isDir(projectsDir) || !filePath || !watchPaths.includes(dirname(filePath))) return null;
+
+  try {
+    if (lstatSync(filePath).isSymbolicLink()) return null;
+  } catch (error) {
+    if (error.code !== 'ENOENT') return null;
+  }
 
   for (const projectName of readdirSync(projectsDir).sort()) {
     const projectDir = join(projectsDir, projectName);
