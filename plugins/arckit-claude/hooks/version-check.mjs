@@ -14,10 +14,11 @@
  *      fixes, Claude Opus 5 availability, the WebSearch xhigh/max fix,
  *      MCP diagnostics no longer printing resolved secrets, the plugin
  *      skills/hook-error/cache fixes, and the file-tool symlink and
- *      Grep/Glob deny-rule fixes, and Claude Opus 5.5 availability depend on
+ *      Grep/Glob deny-rule fixes, Claude Opus 5.5 availability, and Claude
+ *      Sonnet 5.5 availability depend on
  *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/
  *      v2.1.172+/v2.1.200+/v2.1.219+/v2.1.221+/v2.1.234+/v2.1.246+/
- *      v2.1.251+/v2.1.280+). Silent on
+ *      v2.1.251+/v2.1.280+/v2.1.284+). Silent on
  *      detection failure.
  *
  * Side effect: when inside an ArcKit project, persists the detected client
@@ -36,7 +37,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDir, isFile, readText, parseHookInput, parseVersion, compareVersions } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.280';
+const MIN_CLAUDE_CODE_VERSION = '2.1.284';
 
 const data = parseHookInput(); // consume stdin (required by hook protocol)
 const cwd = data.cwd || '.';
@@ -104,7 +105,8 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Plugin loading fixes that hit ArcKit's exact layout: \`/reload-plugins\` counted 0 skills for plugins defining skills under \`skills/*/SKILL.md\`, hook error messages showed a literal \`\${CLAUDE_PLUGIN_ROOT}\` instead of the resolved path, the plugin cache created duplicate SHA-named directories, and \`claude plugin update <bare-name>\` failed (needs v2.1.246)\n` +
     `- File tools no longer follow a symlink swapped inside the working directory after the permission check, and Grep/Glob honour \`Read()\` deny rules through symlinked paths — the same class of bypass the v2.1.222–v2.1.224 fixes closed for Bash (needs v2.1.251)\n` +
     `- Opus 5 at \`effort: xhigh\`/\`max\` with thinking disabled is sent as \`high\` instead of failing, so ArcKit's \`effort: max\` commands complete on thinking-off sessions rather than erroring (needs v2.1.251)\n` +
-    `- Claude Opus 5.5 — the default Opus model; it always thinks, so \`effort: max\` commands cannot be sent as \`high\` by a thinking-off session and the provenance Effective Effort row is accurate (needs v2.1.280)\n\n` +
+    `- Claude Opus 5.5 — the default Opus model; it always thinks, so \`effort: max\` commands cannot be sent as \`high\` by a thinking-off session and the provenance Effective Effort row is accurate (needs v2.1.280)\n` +
+    `- Claude Sonnet 5.5 — the default Sonnet model on the Anthropic API; like Opus 5.5 it always thinks, so \`effort: max\` commands run at \`max\` on it (needs v2.1.284)\n\n` +
     `Update with: \`claude update\`\n\n` +
     `**Tip — stop drifting back below the floor:** after updating, add ` +
     `\`"minimumVersion": "${MIN_CLAUDE_CODE_VERSION}"\` to your \`.claude/settings.json\`. ` +
