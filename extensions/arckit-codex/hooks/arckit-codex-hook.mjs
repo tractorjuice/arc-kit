@@ -644,7 +644,9 @@ function handlePreToolUse(data) {
   }
 
   const secrets = detectSecrets(command);
-  if (secrets.length && /(?:write|edit|create|append|tee|cat\s*>|printf|echo)/i.test(command)) {
+  const isFreeFormShell = toolName === "Bash";
+  const looksLikeShellWrite = /(?:write|edit|create|append|tee|cat\s*>|printf|echo)/i.test(command);
+  if (secrets.length && (!isFreeFormShell || looksLikeShellWrite)) {
     denyTool(`ArcKit blocked writing apparent secret material: ${secrets.join(", ")}`);
     return;
   }

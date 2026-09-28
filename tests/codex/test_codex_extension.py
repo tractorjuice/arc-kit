@@ -505,6 +505,43 @@ def test_codex_hook_blocks_apply_patch_to_protected_file():
     assert ".env" in hook_output["permissionDecisionReason"]
 
 
+def test_codex_hook_blocks_secret_content_in_structured_write_tools():
+    secret = "OPENAI_API_KEY=sk-1234567890abcdefghijklmnopqrstuvwxyz"
+    for tool_name, tool_input in (
+        ("Write", {"file_path": "notes/config.txt", "content": secret}),
+        ("Edit", {"file_path": "notes/config.txt", "old_string": "x", "new_string": secret}),
+    ):
+        output = run_codex_hook(
+            "PreToolUse",
+            {
+                "hook_event_name": "PreToolUse",
+                "cwd": str(REPO_ROOT),
+                "tool_name": tool_name,
+                "tool_input": tool_input,
+            },
+        )
+
+        hook_output = output["hookSpecificOutput"]
+        assert hook_output["permissionDecision"] == "deny"
+        assert "OpenAI API key" in hook_output["permissionDecisionReason"]
+
+
+def test_codex_hook_allows_read_only_bash_mentioning_secret_pattern():
+    output = run_codex_hook(
+        "PreToolUse",
+        {
+            "hook_event_name": "PreToolUse",
+            "cwd": str(REPO_ROOT),
+            "tool_name": "Bash",
+            "tool_input": {
+                "command": "grep -r sk-1234567890abcdefghijklmnopqrstuvwxyz src/",
+            },
+        },
+    )
+
+    assert output == {}
+
+
 def test_codex_hook_blocks_invalid_arc_artifact_filename():
     output = run_codex_hook(
         "PreToolUse",
