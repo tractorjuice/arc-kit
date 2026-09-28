@@ -24,7 +24,8 @@ export const EFFORT_RANK = { low: 0, medium: 1, high: 2, xhigh: 3, max: 4 };
 // Effort levels each Claude model supports, for models whose support is NOT the
 // full set. Claude-only by design (see module header). A model ABSENT here is
 // treated as supporting every level (no downgrade): that covers the full-support
-// models (Opus 4.8 / 4.7 / 5, Sonnet 5, Fable 5) and any future model.
+// models (Opus 4.8 / 4.7 / 5 / 5.5, Sonnet 5 / 5.5, Fable 5 / 5.1) and any
+// future model.
 //
 // Opus 4.6 and Sonnet 4.6 support `max` but NOT `xhigh` — a non-contiguous set a
 // single cap could not express, so `xhigh` falls to `high`, not `max`. Haiku 4.5
