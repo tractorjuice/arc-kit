@@ -1,6 +1,6 @@
 import { readdirSync } from 'node:fs';
 import { isAbsolute, join, relative, resolve } from 'node:path';
-import { isDir } from './hook-utils.mjs';
+import { isDir, listDirsRecursive } from './hook-utils.mjs';
 
 export function collectExternalWatchPaths(repoRoot) {
   const projectsDir = join(repoRoot, 'projects');
@@ -14,18 +14,10 @@ export function collectExternalWatchPaths(repoRoot) {
     const externalDir = join(projectDir, 'external');
     if (!isDir(externalDir)) continue;
 
-    collectDirs(externalDir, watchPaths);
+    watchPaths.push(...listDirsRecursive(externalDir));
   }
 
   return watchPaths;
-}
-
-function collectDirs(dir, out) {
-  out.push(dir);
-  for (const entry of readdirSync(dir).sort()) {
-    const path = join(dir, entry);
-    if (isDir(path)) collectDirs(path, out);
-  }
 }
 
 export function resolveEventPath(filePath, cwd) {

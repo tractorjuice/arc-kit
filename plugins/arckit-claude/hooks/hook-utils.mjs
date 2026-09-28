@@ -9,7 +9,7 @@
  * hook-utils.mjs module as the hook count grows."
  */
 
-import { readFileSync, statSync, readdirSync, writeSync } from 'node:fs';
+import { lstatSync, readFileSync, statSync, readdirSync, writeSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { DOC_TYPES } from '../config/doc-types.mjs';
 
@@ -31,27 +31,56 @@ export function listDir(p) {
   try { return readdirSync(p).sort(); } catch { return []; }
 }
 
-export function listFilesRecursive(rootDir) {
-  const files = [];
+const MAX_WALK_DEPTH = 16;
+const MAX_WALK_ENTRIES = 2000;
 
-  function walk(dir, parts) {
+function walkEntries(rootDir, onDirectory, onFile) {
+  let rootStat;
+  try { rootStat = lstatSync(rootDir); } catch { return; }
+  if (!rootStat.isDirectory()) return;
+
+  const visited = new Set();
+  let entries = 0;
+
+  function walk(dir, parts, depth, stat) {
+    const identity = `${stat.dev}:${stat.ino}`;
+    if (visited.has(identity)) return;
+    visited.add(identity);
+    onDirectory(dir);
+
     for (const entry of listDir(dir)) {
+      if (entries >= MAX_WALK_ENTRIES) break;
+      entries++;
+
       const fullPath = join(dir, entry);
+      let entryStat;
+      try { entryStat = lstatSync(fullPath); } catch { continue; }
+      if (entryStat.isSymbolicLink()) continue;
+
       const nextParts = [...parts, entry];
-      if (isDir(fullPath)) {
-        walk(fullPath, nextParts);
-      } else if (isFile(fullPath)) {
-        files.push({
-          name: entry,
-          path: fullPath,
-          relativePath: nextParts.join('/'),
-        });
+      if (entryStat.isDirectory() && depth < MAX_WALK_DEPTH) {
+        walk(fullPath, nextParts, depth + 1, entryStat);
+      } else if (entryStat.isFile()) {
+        onFile(entry, fullPath, nextParts);
       }
     }
   }
 
-  if (isDir(rootDir)) walk(rootDir, []);
+  walk(rootDir, [], 0, rootStat);
+}
+
+export function listFilesRecursive(rootDir) {
+  const files = [];
+  walkEntries(rootDir, () => {}, (name, path, parts) => {
+    files.push({ name, path, relativePath: parts.join('/') });
+  });
   return files;
+}
+
+export function listDirsRecursive(rootDir) {
+  const dirs = [];
+  walkEntries(rootDir, dir => dirs.push(dir), () => {});
+  return dirs;
 }
 
 export function mtimeMs(p) {

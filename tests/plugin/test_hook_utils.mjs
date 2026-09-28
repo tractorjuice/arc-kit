@@ -12,17 +12,62 @@
  * Run with:  node tests/plugin/test_hook_utils.mjs
  */
 
-import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync, symlinkSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { findRepoRoot, parseVersion, compareVersions } from '../../plugins/arckit-claude/hooks/hook-utils.mjs';
+import { findRepoRoot, listDirsRecursive, listFilesRecursive, parseVersion, compareVersions } from '../../plugins/arckit-claude/hooks/hook-utils.mjs';
 
 function makeRoot() {
   return mkdtempSync(join(tmpdir(), 'arckit-hookutils-'));
 }
+
+test('recursive walkers skip symlink cycles and out-of-tree entries', () => {
+  const root = makeRoot();
+  try {
+    const external = join(root, 'external');
+    const nested = join(external, 'nested');
+    const outside = join(root, 'outside');
+    mkdirSync(nested, { recursive: true });
+    mkdirSync(outside);
+    writeFileSync(join(nested, 'inside.md'), '');
+    writeFileSync(join(outside, 'secret.md'), '');
+    symlinkSync(external, join(nested, 'cycle'));
+    symlinkSync(outside, join(external, 'outside-link'));
+    symlinkSync(join(nested, 'inside.md'), join(external, 'file-link.md'));
+
+    assert.deepEqual(listFilesRecursive(external).map(file => file.relativePath), ['nested/inside.md']);
+    assert.deepEqual(listDirsRecursive(external), [external, nested]);
+    assert.deepEqual(listFilesRecursive(join(external, 'outside-link')), []);
+    assert.deepEqual(listDirsRecursive(join(external, 'outside-link')), []);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('recursive walkers bound depth and total scanned entries', () => {
+  const root = makeRoot();
+  try {
+    let dir = root;
+    for (let depth = 0; depth < 20; depth++) {
+      dir = join(dir, 'nested');
+      mkdirSync(dir);
+      writeFileSync(join(dir, 'entry.md'), '');
+    }
+    assert.equal(listDirsRecursive(root).length, 17);
+    assert.equal(listFilesRecursive(root).length, 16);
+
+    const wide = join(root, 'wide');
+    mkdirSync(wide);
+    for (let i = 0; i < 2010; i++) writeFileSync(join(wide, `entry-${String(i).padStart(4, '0')}.md`), '');
+    assert.equal(listFilesRecursive(wide).length, 2000);
+    assert.deepEqual(listDirsRecursive(wide), [wide]);
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
 
 test('finds the repo root when projects/ holds a numbered project', () => {
   const root = makeRoot();
