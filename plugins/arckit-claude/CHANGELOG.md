@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.17.0] — 2026-09-29
+
 ### Changed
 
 - **The published plugin no longer includes the behavioural evals.** They are maintainer tooling, run from the ArcKit repository; leaving them out removes about 7 MB of fixtures and test recordings from every install.
