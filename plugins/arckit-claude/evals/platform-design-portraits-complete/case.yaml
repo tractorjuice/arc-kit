@@ -1,0 +1,17 @@
+schema_version: "1.1"
+name: platform-design-portraits-complete
+tags: [artefact, template-fields]
+prompt: "/arckit:platform-design 001 Platform design for the benefits portal as a multi-sided platform connecting claimants, the council's benefits service and partner organisations (advice charities, landlords). Do not ask questions; use sensible defaults."
+plugins: ["../.."]
+runs: 1
+max_turns: 45
+timeout_seconds: 5400
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash]
+context:
+  add_dirs:
+    - source: ../fixtures/benefits-portal
+      dest: .
+    - source: ../fixtures/benefits-portal-principles
+      dest: .
+    - source: ../fixtures/benefits-portal-stakeholders
+      dest: .
