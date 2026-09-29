@@ -25,6 +25,8 @@
 
 Output: `projects/<id>/ARC-<id>-SECD-MOD-v1.0.md`
 
+> **Security content and model fallback**: Claude Opus 5.5 and Sonnet 5.5 have cybersecurity safeguards, and a threat or attack discussion in this assessment can trip them. Claude Code then re-runs that request on an older model (Sonnet 5 from Sonnet 5.5, Opus 4.8 from Opus 5.5), tells you it has done so, and stays on that model until you switch back with `/model`. The assessment is still written; its Build Provenance names the model that wrote it.
+
 ---
 
 ## Assessment Structure

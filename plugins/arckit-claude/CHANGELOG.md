@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Eval: `/arckit:secure` on Claude Sonnet 5.5.** Sonnet 5.5 is the first Sonnet with cybersecurity safeguards, and ArcKit's security commands discuss threats and attacks. The new `secure-on-sonnet-5-5` case runs `/arckit:secure` pinned to Sonnet 5.5 with a STRIDE threat model in the request, and checks that the assessment is written with its threat model, that every response came from Sonnet 5.5, and that none was re-run on Sonnet 5 or refused. Run it with `scripts/eval-headless.py --case "secure-on-sonnet-5-5"`; it needs Claude Code v2.1.284.
+
+### Changed
+
+- **Model guidance for Sonnet 5.5.** The enterprise-scale guide no longer calls Sonnet 5 the normal default: Claude Code starts on Opus 5.5, and `sonnet` means Sonnet 5.5 from v2.1.284. It now covers the `deniedModels` and `availableModelsMatch: "exact"` managed settings, which hold a new model back until you have evaluated it, and explains what happens when a security command trips a model's cybersecurity safeguard: Claude Code re-runs it on an older model and the session stays there. The Secure by Design guides say the same where the user reads them, and CLAUDE.md notes that Sonnet 5.5 has no fast mode.
+
 ## [6.16.5] — 2026-09-28
 
 ### Changed
