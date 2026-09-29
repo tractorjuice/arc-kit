@@ -1740,7 +1740,7 @@ No surveys have been conducted. A caseworker pulse-survey baseline (confidence, 
 | Field | Value |
 |-------|-------|
 | Requested Effort | `high` |
-| Effective Effort | _unknown — model not parsed from existing footer_ |
+| Effective Effort | *unknown — model not parsed from existing footer* |
 | Stamped at | 2026-09-29T08:49:34.081Z |
 
 <!-- arckit-provenance:end -->
