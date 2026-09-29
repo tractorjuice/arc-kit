@@ -15,12 +15,13 @@ Reference for every Model Context Protocol (MCP) tool exposed by ArcKit, the ser
 |---|---|---|---|---|---|
 | `aws-knowledge` | `https://knowledge-mcp.global.api.aws` | http | none | **yes** | 6 |
 | `microsoft-learn` | `https://learn.microsoft.com/api/mcp` | http | none | **yes** | 3 |
-| `google-developer-knowledge` | `https://developerknowledge.googleapis.com/mcp` | http | `GOOGLE_API_KEY` (user_config) | no | 3 |
-| `datacommons-mcp` | `https://api.datacommons.org/mcp` | http | `DATA_COMMONS_API_KEY` (user_config) | no | 2 |
-| `govreposcrape` | `https://govreposcrape-api-1060386346356.us-central1.run.app/mcp` | http | none | no | 9 |
-| `uk-tenders` | `https://tenders.run.cns.me/mcp` | http | none | no | 11 |
+| `google-developer-knowledge` | `https://developerknowledge.googleapis.com/mcp` | http | `GOOGLE_API_KEY` (user_config) | **yes** | 3 |
+| `datacommons-mcp` | `https://api.datacommons.org/mcp` | http | `DATA_COMMONS_API_KEY` (user_config) | **yes** | 2 |
+| `govreposcrape` | `https://govreposcrape-api-1060386346356.us-central1.run.app/mcp` | http | none | **yes** | 9 |
+| `uk-tenders` | `https://tenders.run.cns.me/mcp` | http | none | **yes** | 11 |
+| `trello` | `https://mcp.trello.com/v1` | http | OAuth 2.0 (sign in through `/mcp`) | no | 9 families |
 
-Total: **6 servers, 34 tools**. ArcKit agents currently consume **24** of them — 7 `uk-tenders` tools via `arckit-tenders-reader`, `search_uk_gov_code` (discovery), `dependency_compare` (gov-reuse overlap %), and `vulnerability_exposure` (gov-landscape CVE blast-radius) from govreposcrape, plus the 14 tools on the other four servers. The remaining 6 govreposcrape dependency-intelligence tools and 4 `uk-tenders` tools (including `query_sql`) are exposed by their servers but not yet wired into any ArcKit agent (see the individual sections below).
+Total: **7 servers**: six research servers with 34 tools, and Atlassian's Trello server. Every research server sets `alwaysLoad`, because its tools are called from reader subagents, which can't reach a deferred server; `trello` is deliberately deferred, because only `/arckit:trello` uses it, from the main conversation, and the other sessions shouldn't pay for loading it. ArcKit agents currently consume **24** of them — 7 `uk-tenders` tools via `arckit-tenders-reader`, `search_uk_gov_code` (discovery), `dependency_compare` (gov-reuse overlap %), and `vulnerability_exposure` (gov-landscape CVE blast-radius) from govreposcrape, plus the 14 tools on the other four servers. The remaining 6 govreposcrape dependency-intelligence tools and 4 `uk-tenders` tools (including `query_sql`) are exposed by their servers but not yet wired into any ArcKit agent (see the individual sections below).
 
 `alwaysLoad: true` is set on `aws-knowledge` and `microsoft-learn` because the AWS and Azure research commands always reach for them; the others stay deferred to keep cold-start tool budgets lean. See `plugins/arckit-claude/.mcp.json`.
 
@@ -148,6 +149,14 @@ UK Tenders MCP server fronting ~677,000 UK contracting processes across five nat
 **Consumers** (2): `arckit-tenders-reader`, shared by both `/arckit:tenders` and `/arckit:competitors`.
 
 Triggered by `/arckit:tenders` and `/arckit:competitors`. The reader subagent calls `get_status`, then dispatches by query focus (`buyer`, `capability`, or `supplier`) using the appropriate subset of the 7 allowlisted tools, and returns a schema-validated JSON handoff to the respective orchestrator tier. The tenders orchestrator renders market-wide benchmarks and incumbency (`TNDR` artefact); the competitors orchestrator renders rival-supplier landscape and head-to-head market share (`CMPT` artefact).
+
+---
+
+## trello
+
+Atlassian's official, hosted Trello MCP server, launched on 22 July 2026 ([atlassian/trello-mcp-server](https://github.com/atlassian/trello-mcp-server)). It signs in with OAuth 2.0 (dynamic client registration and PKCE, which Claude Code's `/mcp` sign-in uses), so ArcKit holds no Trello key or token. Tools are action-dispatched families: `trelloReadMember`, `trelloReadBoard`, `trelloWriteBoard`, `trelloReadList`, `trelloWriteList`, `trelloReadCard`, `trelloWriteCard`, `trelloReadChecklist`, `trelloWriteChecklist` (plus Inbox, Planner and search, which ArcKit doesn't use). Ids are ARIs taken from read responses. Label creation and renaming are on Atlassian's roadmap; until then `/arckit:trello` attaches a new board's six default colour labels and adds a Label key card.
+
+Consumed by `/arckit:trello` (main conversation; no subagent).
 
 ---
 

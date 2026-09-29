@@ -11,15 +11,12 @@ Export your ArcKit product backlog to a Trello board with `/arckit:trello`. The 
 | Requirement | How to get it |
 |-------------|---------------|
 | Backlog JSON file (`ARC-*-BKLG-*.json`) | Run `/arckit:backlog FORMAT=json` |
-| `TRELLO_API_KEY` environment variable | [Trello Power-Ups Admin](https://trello.com/power-ups/admin) — create or select a Power-Up, copy the API key |
-| `TRELLO_TOKEN` environment variable | Visit `https://trello.com/1/authorize?expiration=30days&scope=read,write&response_type=token&key=YOUR_API_KEY` and copy the token |
+| A Trello account | Any plan works |
+| Trello connected to Claude Code | One-time sign-in: run `/mcp`, choose **trello**, select **Authenticate**, and sign in to Trello in the browser |
 
-Set credentials in your shell:
+ArcKit uses [Atlassian's official Trello MCP server](https://github.com/atlassian/trello-mcp-server), which it bundles as the `trello` MCP server. You sign in with your Trello account; Claude Code keeps the sign-in in its own credential store. You don't create an API key or token, and ArcKit never sees one. If your organisation manages Trello through Atlassian Administration, an admin may need to allow MCP access for your workspace.
 
-```bash
-export TRELLO_API_KEY="your-api-key-here"
-export TRELLO_TOKEN="your-token-here"
-```
+The first time `/arckit:trello` calls Trello in a session, Claude Code asks you to approve the Trello tools. To stop it asking, add `"mcp__plugin_arckit_trello"` to `permissions.allow` in your settings.
 
 ---
 
@@ -28,7 +25,7 @@ export TRELLO_TOKEN="your-token-here"
 ```bash
 /arckit:trello                                    # default board name from project
 /arckit:trello BOARD_NAME="Q1 Sprint Board"       # custom board name
-/arckit:trello WORKSPACE_ID="60f1a2b3c4d5e6f7"    # create in specific workspace
+/arckit:trello WORKSPACE="Digital Delivery"      # create in a named workspace
 ```
 
 ---
@@ -51,9 +48,9 @@ Board: "{Project Name} - Sprint Backlog"
 
 | Field | Example |
 |-------|---------|
-| **Name** | `STORY-001: Create user account [8pts]` |
+| **Name** | `STORY-001: Create user account [8pts] · Must Have · Story` |
 | **Description** | GDS user story format + metadata |
-| **Labels** | `Must Have` (red) + `Story` (blue) |
+| **Labels** | red (Must Have) + blue (Story) |
 | **Checklist** | Acceptance criteria as check items |
 
 **Card description example**:
@@ -65,6 +62,7 @@ Board: "{Project Name} - Sprint Backlog"
 
 **Story Points**: 8
 **Priority**: Must Have
+**Type**: Story
 **Component**: User Service
 **Requirements**: FR-001, NFR-008, NFR-012
 **Epic**: EPIC-001 - User Management
@@ -75,14 +73,16 @@ Board: "{Project Name} - Sprint Backlog"
 
 ## Labels
 
-| Label | Colour | Purpose |
-|-------|--------|---------|
-| Must Have | Red | MoSCoW priority |
-| Should Have | Orange | MoSCoW priority |
-| Could Have | Yellow | MoSCoW priority |
-| Epic | Purple | Item type |
-| Story | Blue | Item type |
-| Task | Green | Item type |
+Cards use the six colour labels every new Trello board comes with. Trello's MCP server can attach labels but can't yet create or rename them (it's on Atlassian's roadmap), so the labels have colours but no names. The board's first card, **Label key**, explains them, and each card's name and description also state its priority and type.
+
+| Colour | Meaning |
+|--------|---------|
+| Red | Must Have |
+| Orange | Should Have |
+| Yellow | Could Have |
+| Purple | Epic |
+| Blue | Story |
+| Green | Task |
 
 ---
 
@@ -91,7 +91,7 @@ Board: "{Project Name} - Sprint Backlog"
 | Stage | Action |
 |-------|--------|
 | 1. Generate backlog | `/arckit:backlog FORMAT=json` (or `FORMAT=all` for markdown + CSV + JSON) |
-| 2. Set credentials | Export `TRELLO_API_KEY` and `TRELLO_TOKEN` |
+| 2. Connect Trello (once) | `/mcp` → **trello** → **Authenticate** |
 | 3. Run export | `/arckit:trello` |
 | 4. Review board | Open the returned Trello URL |
 | 5. Invite team | Add team members to the board in Trello |
@@ -99,9 +99,9 @@ Board: "{Project Name} - Sprint Backlog"
 
 ---
 
-## Rate Limits
+## Large Backlogs
 
-Trello allows **100 requests per 10-second window** per API token. The command adds a small delay between API calls to stay within limits. For large backlogs (80+ stories), expect the export to take a couple of minutes.
+Each list, card and checklist item is one Trello tool call, so a 100-story backlog takes a few hundred calls. The command creates one list's cards at a time and reports progress as it goes.
 
 ---
 
@@ -109,11 +109,11 @@ Trello allows **100 requests per 10-second window** per API token. The command a
 
 | Issue | Solution |
 |-------|----------|
-| `unauthorized` error | Token may have expired — generate a new one with the authorize URL |
-| `invalid key` error | Check `TRELLO_API_KEY` is set correctly |
-| `board not found` after creation | Trello API may be slow — wait a moment and check your boards list |
-| Rate limit (429) errors | Re-run the command; it will create a new board for remaining items |
-| Wrong workspace | Specify `WORKSPACE_ID` to target the correct organization |
+| "Trello isn't connected" | Run `/mcp`, choose **trello**, select **Authenticate**, then re-run |
+| Trello tools missing | Check `/mcp` lists **trello**, and that no managed setting blocks it |
+| Workspace access error | Your Atlassian admin may need to allow MCP access for the workspace |
+| Labels have no names | Expected until Atlassian ships label management; see the **Label key** card |
+| Some cards failed | The summary lists them; re-run with a new `BOARD_NAME` if you need a clean board |
 
 ---
 
@@ -121,7 +121,7 @@ Trello allows **100 requests per 10-second window** per API token. The command a
 
 This command always creates a **new board**. To re-export:
 
-1. Delete or archive the old board in Trello
+1. Archive the old board in Trello
 2. Re-run `/arckit:trello`
 
 Or use a different board name:
@@ -134,6 +134,7 @@ Or use a different board name:
 
 ## Useful References
 
-- [Trello REST API documentation](https://developer.atlassian.com/cloud/trello/rest/)
+- [Atlassian's Trello MCP server](https://github.com/atlassian/trello-mcp-server)
+- [Connect Trello to AI assistants](https://support.atlassian.com/trello/docs/connect-trello-to-ai-assistants-with-trello-mcp/)
 - `/arckit:backlog` to generate the source JSON
 - `/arckit:traceability` to verify requirements coverage before export

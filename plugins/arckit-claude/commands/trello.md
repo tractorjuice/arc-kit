@@ -7,7 +7,7 @@ alwaysShow: true
 
 # Export Backlog to Trello
 
-You are exporting an ArcKit product backlog to **Trello** by creating a board with sprint lists, labelled cards, and acceptance criteria checklists via the Trello REST API.
+You are exporting an ArcKit product backlog to **Trello** by creating a board with sprint lists, labelled cards, and acceptance criteria checklists through **Atlassian's official Trello MCP server** (`https://mcp.trello.com/v1`), which ArcKit bundles as the `trello` MCP server. It signs in with OAuth: ArcKit never sees or stores a Trello key or token, and you never run a shell command or read an environment variable for Trello.
 
 ## User Input
 
@@ -21,9 +21,9 @@ $ARGUMENTS
 
 - Default: `{Project Name} - Sprint Backlog`
 
-**WORKSPACE_ID** (optional): Trello workspace/organization ID to create board in
+**WORKSPACE** (optional): the Trello workspace to create the board in, by name
 
-- If omitted, board is created in the user's personal workspace
+- If omitted, use the user's default workspace, or ask if they have several
 
 ---
 
@@ -32,7 +32,7 @@ $ARGUMENTS
 Reads the JSON backlog produced by `/arckit:backlog FORMAT=json` and pushes it to Trello:
 
 1. Creates a **board** with sprint-based lists
-2. Creates **labels** for priority (MoSCoW) and item type (Epic/Story/Task)
+2. Uses the board's six **colour labels** for priority (MoSCoW) and item type (Epic/Story/Task), with a **Label key** card that names them
 3. Creates **lists**: Product Backlog + one per sprint + In Progress + Done
 4. Creates **cards** for each story/task with name, description, labels
 5. Adds **checklists** with acceptance criteria to each card
@@ -68,33 +68,26 @@ Please generate one first:
 Then re-run /arckit:trello
 ```
 
-### Step 2: Validate Trello Credentials
+### Step 2: Connect to Trello
 
-Check that Trello API credentials are available as environment variables using Bash:
+The Trello tools come from the bundled `trello` MCP server: `trelloReadMember`, `trelloReadBoard`, `trelloWriteBoard`, `trelloReadList`, `trelloWriteList`, `trelloReadCard`, `trelloWriteCard`, `trelloReadChecklist` and `trelloWriteChecklist`. If they aren't loaded yet, find them with tool search.
 
-```bash
-python3 -c "import os; print('TRELLO_API_KEY=' + ('SET' if os.environ.get('TRELLO_API_KEY') else 'NOT SET')); print('TRELLO_TOKEN=' + ('SET' if os.environ.get('TRELLO_TOKEN') else 'NOT SET'))"
-```
-
-**If either is missing**:
+**If the tools are missing, or a call reports that authentication is needed**, stop and tell the user:
 
 ```text
-Trello API credentials not found. Set these environment variables:
-
-  # macOS/Linux:
-  export TRELLO_API_KEY="your-api-key"
-  export TRELLO_TOKEN="your-token"
-
-  # Windows PowerShell:
-  $env:TRELLO_API_KEY="your-api-key"
-  $env:TRELLO_TOKEN="your-token"
-
-To get credentials:
-  1. API Key: https://trello.com/power-ups/admin (select a Power-Up or create one, then get the API key)
-  2. Token: Visit https://trello.com/1/authorize?expiration=30days&scope=read,write&response_type=token&key=YOUR_API_KEY
-
-Then re-run /arckit:trello
+Trello isn't connected yet. Sign in to the "trello" MCP server once: run /mcp,
+choose "trello", and select Authenticate (other assistants have their own MCP
+sign-in command). Sign in to Trello in the browser, then re-run /arckit:trello.
 ```
+
+Then call `trelloReadMember` with `action: "get_me"`. It confirms the connection and tells you who is signed in.
+
+**How the Trello tools work** (from Atlassian's own usage guide; follow it exactly):
+
+- Every tool takes an `action` that selects the operation, and rejects any field the chosen action doesn't use. Read each tool's schema for the exact action names and fields.
+- Every id (`boardId`, `listId`, `cardId`, `checklistId`, `labelId`, `workspaceId`) is an **ARI** such as `ari:cloud:trello::board/workspace/<workspaceId>/<boardId>`. Take every ARI from a tool response. Never build or guess one, and never pass a Trello URL to a write tool.
+- To keep an order, give sibling items distinct sequential `pos` values (1, 2, 3, …): lists per board, cards per list, check items per checklist. With distinct values you can create them in parallel.
+- List reads are paginated. Keep reading while `hasNextPage` or `hasMore` is true.
 
 ### Step 3: Read and Parse Backlog JSON
 
@@ -105,90 +98,63 @@ Read the `ARC-*-BKLG-*.json` file. Extract:
 - `stories[]` - all stories with sprint assignments, priorities, acceptance criteria
 - `sprints[]` - sprint definitions with themes
 
-### Step 4: Create Trello Board
+### Step 4: Create the Trello Board
 
-Use Bash with curl to create the board:
+Create the board with `trelloWriteBoard`, named `{BOARD_NAME or '{Project Name} - Sprint Backlog'}`, in the chosen workspace (take the workspace ARI from `trelloReadBoard` or `trelloReadMember`). Keep the board's ARI and URL from the response.
 
-```bash
-curl -s -X POST "https://api.trello.com/1/boards/" \
-  --data-urlencode "name={BOARD_NAME or '{Project Name} - Sprint Backlog'}" \
-  -d "defaultLists=false" \
-  -d "key=$TRELLO_API_KEY" \
-  -d "token=$TRELLO_TOKEN" \
-  ${WORKSPACE_ID:+-d "idOrganization=$WORKSPACE_ID"}
-```
+**If the call fails**, show the error message and stop.
 
-Extract the `id` and `url` from the response JSON.
+### Step 5: Map the Colour Labels
 
-**If the API returns an error**, show the error message and stop.
+A new Trello board comes with six unnamed colour labels. The Trello MCP server can attach existing labels to cards but can't yet create or rename them (label management is on Atlassian's published roadmap), so ArcKit uses the colours and explains them on a card.
 
-### Step 5: Create Labels
+Call `trelloReadBoard` with `action: "list_labels"` for the new board and record each label's ARI by colour:
 
-Create 6 labels on the board:
+| Colour | Meaning |
+|--------|---------|
+| red | Must Have |
+| orange | Should Have |
+| yellow | Could Have |
+| purple | Epic |
+| blue | Story |
+| green | Task |
 
-**Priority labels**:
-
-- `Must Have` - color: `red`
-- `Should Have` - color: `orange`
-- `Could Have` - color: `yellow`
-
-**Type labels**:
-
-- `Epic` - color: `purple`
-- `Story` - color: `blue`
-- `Task` - color: `green`
-
-For each label:
-
-```bash
-curl -s -X POST "https://api.trello.com/1/boards/{boardId}/labels" \
-  --data-urlencode "name={label_name}" \
-  -d "color={color}" \
-  -d "key=$TRELLO_API_KEY" \
-  -d "token=$TRELLO_TOKEN"
-```
-
-Store each label's `id` for later card assignment.
+If a colour is missing, carry on without that label; the priority and type are also written into every card.
 
 ### Step 6: Create Lists
 
-Create lists in **reverse order** (Trello prepends new lists to the left, so create in reverse to get correct left-to-right order):
+Create the lists with `trelloWriteList`, giving each a `pos` in this left-to-right order:
 
-1. **Done**
-2. **In Progress**
-3. **Sprint N: {Theme}** (for each sprint, from last to first)
-4. **Product Backlog** (for unscheduled/overflow items)
+1. **Product Backlog** (unscheduled and overflow items), `pos: 1`
+2. **Sprint N: {Theme}** for each sprint, in sprint order, `pos: 2, 3, …`
+3. **In Progress**
+4. **Done**
 
-For each list:
-
-```bash
-curl -s -X POST "https://api.trello.com/1/lists" \
-  --data-urlencode "name={list_name}" \
-  -d "idBoard={boardId}" \
-  -d "key=$TRELLO_API_KEY" \
-  -d "token=$TRELLO_TOKEN"
-```
-
-Store each list's `id` for card placement. Map sprint numbers to list IDs.
+Keep each list's ARI and map sprint numbers to lists.
 
 ### Step 7: Create Cards
 
-For each story and task in the backlog JSON, create a card on the appropriate list.
-
-**Determine the target list**:
-
-- If story has a `sprint` number, place on the corresponding sprint list
-- If no sprint assigned, place on "Product Backlog" list
-
-**Card name format**:
+First, create a **Label key** card at the top of Product Backlog (`pos: 1`), with the description:
 
 ```text
-{id}: {title} [{story_points}pts]
+Label colours on this board (Trello's MCP server can't name labels yet):
+red = Must Have · orange = Should Have · yellow = Could Have
+purple = Epic · blue = Story · green = Task
 ```
 
-Example: `STORY-001: Create user account [8pts]`
+Then, for each story and task in the backlog JSON, create a card with `trelloWriteCard` on its list, in backlog order (`pos` 2, 3, … in Product Backlog, 1, 2, … in each sprint list):
 
-**Card description format**:
+**Target list**: the sprint list for the item's `sprint` number, or Product Backlog if it has none.
+
+**Card name**, with the priority and type in the name because the labels have no names:
+
+```text
+{id}: {title} [{story_points}pts] · {priority} · {type}
+```
+
+Example: `STORY-001: Create user account [8pts] · Must Have · Story`
+
+**Card description**:
 
 ```text
 **As a** {as_a}
@@ -197,6 +163,7 @@ Example: `STORY-001: Create user account [8pts]`
 
 **Story Points**: {story_points}
 **Priority**: {priority}
+**Type**: {type}
 **Component**: {component}
 **Requirements**: {requirements joined by ', '}
 **Epic**: {epic id} - {epic title}
@@ -205,50 +172,17 @@ Example: `STORY-001: Create user account [8pts]`
 
 For tasks (items without `as_a`/`i_want`/`so_that`), use the description field directly instead of the user story format.
 
-**Card labels**:
+**Labels**: attach the priority colour and the type colour from Step 5.
 
-- Assign the matching priority label (Must Have / Should Have / Could Have)
-- Assign the matching type label (Story or Task based on item type, Epic for epic-level items)
-
-```bash
-curl -s -X POST "https://api.trello.com/1/cards" \
-  --data-urlencode "name={card_name}" \
-  --data-urlencode "desc={card_description}" \
-  -d "idList={list_id}" \
-  -d "idLabels={label_id1},{label_id2}" \
-  -d "key=$TRELLO_API_KEY" \
-  -d "token=$TRELLO_TOKEN"
-```
-
-Store each card's `id` for checklist creation.
-
-**Rate limiting**: Trello allows 100 requests per 10-second window per token. For large backlogs (80+ stories), add `sleep 0.15` between card creation calls to stay within limits.
+Keep each card's ARI for its checklist. A large backlog takes many tool calls: create the cards for one list at a time, in parallel within that list, and report progress after each list.
 
 ### Step 8: Add Acceptance Criteria Checklists
 
-For each card that has `acceptance_criteria` in the JSON:
-
-**Create checklist**:
-
-```bash
-curl -s -X POST "https://api.trello.com/1/cards/{cardId}/checklists" \
-  --data-urlencode "name=Acceptance Criteria" \
-  -d "key=$TRELLO_API_KEY" \
-  -d "token=$TRELLO_TOKEN"
-```
-
-**Add each criterion as a check item**:
-
-```bash
-curl -s -X POST "https://api.trello.com/1/checklists/{checklistId}/checkItems" \
-  --data-urlencode "name={criterion_text}" \
-  -d "key=$TRELLO_API_KEY" \
-  -d "token=$TRELLO_TOKEN"
-```
+For each card with `acceptance_criteria` in the JSON, use `trelloWriteChecklist` to create a checklist named **Acceptance Criteria** on the card, then add each criterion as a check item, in order (`pos` 1, 2, …).
 
 ### Step 9: Show Summary
 
-After all API calls complete, display:
+After all calls complete, display:
 
 ```text
 Backlog exported to Trello successfully!
@@ -264,14 +198,13 @@ Lists created:
   - In Progress
   - Done
 
-Labels: Must Have (red), Should Have (orange), Could Have (yellow), Epic (purple), Story (blue), Task (green)
+Label colours: red Must Have, orange Should Have, yellow Could Have, purple Epic, blue Story, green Task
+(see the Label key card; Trello's MCP server can't name labels yet)
 
 Cards created: {total_cards}
   - Stories: {N}
   - Tasks: {N}
   - With acceptance criteria checklists: {N}
-
-Total API calls: {N}
 
 Next steps:
   1. Open the board: {board_url}
@@ -295,31 +228,18 @@ Please generate one first:
 Then re-run /arckit:trello
 ```
 
-**Missing credentials**:
+**Trello not connected**: see Step 2. Don't ask for an API key or token, and don't fall back to the Trello REST API.
+
+**A Trello tool returns an error** (for example, the workspace isn't allowed MCP access by its admin):
 
 ```text
-Trello API credentials not set.
+Trello returned an error: {error_message}
 
-Required environment variables:
-  TRELLO_API_KEY - Your Trello API key
-  TRELLO_TOKEN   - Your Trello auth token
-
-See: https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/
+If your organisation manages Trello through Atlassian Administration, an admin may need
+to allow MCP access for this workspace.
 ```
 
-**API error (e.g., invalid key, rate limit)**:
-
-```text
-Trello API error: {error_message}
-
-Check:
-  - API key and token are valid and not expired
-  - Workspace ID exists (if specified)
-  - You have not exceeded rate limits (100 req/10s)
-```
-
-**Partial failure (some cards failed)**:
-Continue creating remaining cards. At the end, report:
+**Partial failure (some cards failed)**: continue creating the remaining cards. At the end, report:
 
 ```text
 Warning: {N} cards failed to create. Errors:
@@ -346,25 +266,12 @@ Board URL: {board_url}
 
 ## Important Notes
 
-### Trello API Rate Limits
+### Signing in
 
-Trello enforces 100 requests per 10-second window per API token. For a typical backlog:
-
-- 1 board + 6 labels + ~10 lists + N cards + N checklists + M check items
-- A backlog with 50 stories averaging 4 acceptance criteria = ~260 API calls
-- The command adds `sleep 0.15` between card/checklist calls to stay within limits
-
-### Token Expiration
-
-Trello tokens can be created with different expiration periods (1 day, 30 days, or never). If the token has expired, the user will see an "unauthorized" error and needs to generate a new token.
+The first `/arckit:trello` in a session may ask you to approve the Trello tools, and the first ever use needs a one-time sign-in to the `trello` MCP server. Your assistant keeps the sign-in in its own credential store. ArcKit doesn't hold a Trello key or token.
 
 ### Board Cleanup
 
-If you need to re-export, either:
+The Trello MCP server can archive but not delete. To re-export, either archive the old board in Trello and re-run, or use a different BOARD_NAME to create a new board.
 
-1. Delete the old board in Trello and re-run
-2. Use a different BOARD_NAME to create a new board
-
-This command always creates a **new board** - it does not update an existing one.
-
-- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+This command always creates a **new board**; it doesn't update an existing one.

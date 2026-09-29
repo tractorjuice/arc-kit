@@ -290,6 +290,7 @@ def test_codex_plugin_mcp_config_is_codex_native():
         "datacommons-mcp",
         "govreposcrape",
         "uk-tenders",
+        "trello",
     }
     assert "alwaysLoad" not in json.dumps(servers)
     assert "${user_config." not in json.dumps(servers)

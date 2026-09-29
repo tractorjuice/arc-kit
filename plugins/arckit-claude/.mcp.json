@@ -35,6 +35,10 @@
       "type": "http",
       "url": "https://tenders.run.cns.me/mcp",
       "alwaysLoad": true
+    },
+    "trello": {
+      "type": "http",
+      "url": "https://mcp.trello.com/v1"
     }
   }
 }
