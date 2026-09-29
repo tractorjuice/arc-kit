@@ -250,7 +250,10 @@ copy_distribution_files() {
 
 # The core plugin's own folder: everything in plugins/arckit-claude except the
 # nested overlay mirror (the overlays are published beside it from their own
-# sources) and the marketplace file (which belongs at the repo root).
+# sources), the marketplace file (which belongs at the repo root), and the
+# behavioural evals. The evals are maintainer tooling run from this repository;
+# shipping them put ~7 MB of fixtures and recordings in every install, and the
+# Claude plugin directory's scan flagged a download-and-run line in their README.
 copy_claude_core_files() {
   local source_path="$1"
   local destination_path="$2"
@@ -261,7 +264,7 @@ copy_claude_core_files() {
     --exclude='./.npm' \
     --exclude='./.pnpm-store' \
     --exclude='./.yarn/cache' \
-    --exclude='./evals/results' \
+    --exclude='./evals' \
     --exclude='__pycache__' \
     --exclude='*.pyc' \
     --exclude='.DS_Store' \

@@ -16,31 +16,10 @@ This command **requires** the Google Developer Knowledge MCP server to be instal
 
 **API Key Required**: Unlike AWS Knowledge and Microsoft Learn MCPs (which are free/unauthenticated), the Google Developer Knowledge MCP requires an API key. Get one from [Google AI Studio](https://aistudio.google.com/apikey) or the [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
 
-**Installation**:
+**Setup**: the ArcKit plugin already includes this server; you only supply the key.
 
-Add to your Claude Code MCP configuration (`~/.claude/claude_desktop_config.json` or project `.mcp.json`):
-
-```json
-{
-  "mcpServers": {
-    "google-developer-knowledge": {
-      "type": "http",
-      "url": "https://developerknowledge.googleapis.com/mcp",
-      "headers": {
-        "X-Goog-Api-Key": "${GOOGLE_API_KEY}"
-      }
-    }
-  }
-}
-```
-
-Set the environment variable:
-
-```bash
-export GOOGLE_API_KEY="your-api-key-here"
-```
-
-After installation, restart Claude Code to load the MCP server.
+- **Claude Code:** the plugin asks for the Google API key when you enable it, as a sensitive setting kept in your system keychain. To add or change it later, open `/plugin`, choose **arckit**, and open its configure screen (or run `claude plugin configure arckit` on Claude Code v2.1.285+). Without a key the server shows as failed in `/mcp`, and everything else in ArcKit still works.
+- **Other assistants** (Codex CLI, Gemini CLI, OpenCode, GitHub Copilot, Kimi, Mistral Vibe) read it from the environment: `export GOOGLE_API_KEY="your-api-key-here"`, then restart the assistant.
 
 **Slow corporate network?** On TLS-inspecting proxies, VPN tunnels, or congested links, large-scope research prompts can exceed Claude Code's default per-request fetch timeout. Set `MCP_TOOL_TIMEOUT=300000` (5 minutes, in milliseconds) before launching Claude — see [MCP per-request timeout](mcp-servers.md#optional-mcp-per-request-timeout-claude-code-v21142) in the MCP setup guide. Requires Claude Code v2.1.142+.
 
