@@ -97,6 +97,11 @@ const allCategories = new Set();
 const projectCodes = new Map();
 
 for (const f of files) {
+  // Only artefacts under the repository's own top-level projects/ count. An
+  // ARC-named file elsewhere (an eval fixture, a template example, an
+  // overlay's sample) is not this repository's project work, and counting it
+  // made the end-of-turn nudge report a project that does not exist.
+  if (!f.startsWith('projects/')) continue;
   // Extract project number from ARC filename (e.g., ARC-001-REQ-v1.0.md → 001)
   const projMatch = f.match(/ARC-(\d{3})-/);
   if (!projMatch) continue;
