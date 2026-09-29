@@ -14,6 +14,12 @@ handoffs:
     description: Create Azure cost management strategy
   - command: adr
     description: Record Azure service selection decisions
+allowed-tools:
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
 ---
 
 # Azure Research
@@ -119,23 +125,17 @@ At most 6 readers in one wave. Build the input:
 }
 ```
 
-Dispatch with `subagent_type: "arckit-azure-research-reader"`.
+Dispatch with `subagent_type: "arckit:arckit-azure-research-reader"`.
 
 The Microsoft Learn server has no region-availability tool, so the reader takes region evidence from the products-by-region documentation. Expect fewer rows than you asked for, and treat an absent row as unchecked rather than unavailable.
 
-Validate each reader's final message:
+Each reader's final message is validated automatically:
 
-```bash
-TMPFILE=$(mktemp /tmp/cloud-research-handoff.XXXXXX.json)
-cat > "$TMPFILE" <<'EOF'
-<reader's output>
-EOF
-node "${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs" \
-     "${CLAUDE_PLUGIN_ROOT}/schemas/cloud-research-handoff.schema.json" \
-     "$TMPFILE"
-echo "exit=$?"
-rm -f "$TMPFILE"
-```
+The **ArcKit handoff hook** does this for you, with no Bash call: when the reader returns, it validates the reply against `schemas/cloud-research-handoff.schema.json`, strips invisible and control characters, and replaces the reply with the normalised payload, followed by a line starting `ArcKit handoff check`. Don't run the validator yourself.
+
+- `ArcKit handoff check (…): valid` means what exit 0 meant: the reply is the validator's normalised stdout.
+- `ArcKit handoff check (…): INVALID` means what a non-zero exit meant: the listed errors are the validator's `errors[]`.
+- In auto mode a reader hands back its report through `SubagentHandback`; the hook validated and normalised it at hand-back and refused an invalid one, so treat a handed-back report as valid.
 
 On exit 0, accumulate `services[]` and `regional_availability[]`. On non-zero, re-dispatch that reader **once** quoting the validator's `errors[]`; if it fails again, record the category as a gap and continue.
 
@@ -173,7 +173,7 @@ Assemble the writer input documented in `arckit-cloud-research-writer`'s Input s
 - `template_path`: `"${CLAUDE_PLUGIN_ROOT}/templates/azure-research-template.md"`
 - `framework_label`: `"Azure Well-Architected Framework"`
 
-Dispatch with `subagent_type: "arckit-cloud-research-writer"`.
+Dispatch with `subagent_type: "arckit:arckit-cloud-research-writer"`.
 
 ### Step 11: Return summary
 

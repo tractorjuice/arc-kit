@@ -108,7 +108,7 @@ MCP server fronting a semantic search index over 24,500+ UK government open-sour
 | `mcp__govreposcrape__sbom_export` | Full deps + per-ecosystem counts + SBOM URL | not yet |
 | `mcp__govreposcrape__dependency_trends` | Package usage across daily snapshots | not yet |
 
-> **Allowlist note:** `plugins/arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__govreposcrape__` prefix via `startsWith`, so all 9 tools clear the permission hook automatically. The gov agents additionally declare a `tools:` frontmatter allowlist (only listed tools are callable): `arckit-gov-reuse-reader` lists `search_uk_gov_code` + `dependency_compare`; `arckit-gov-landscape` lists `search_uk_gov_code` + `vulnerability_exposure`. The remaining 6 dependency-intelligence tools are not yet referenced by any agent's frontmatter — wiring further ones in (e.g. `dependency_landscape`, `package_popularity` for `gov-landscape`) is tracked separately.
+> **Permissions:** ArcKit doesn't auto-approve MCP tools. Claude Code asks the first time; add the server to `permissions.allow` to stop asking. The reader subagent's `tools:` allowlist still limits which of the server's tools it can call.
 
 **Consumers of `search_uk_gov_code`** (6):
 
@@ -143,7 +143,7 @@ UK Tenders MCP server fronting ~677,000 UK contracting processes across five nat
 | `mcp__uk-tenders__query_sql` | Free-form SQL against the underlying contracting dataset | **no** — documented-only; never allowlisted (see note below) |
 | *(3 additional server tools)* | Not yet documented in ArcKit | not yet |
 
-> **Allowlist note:** `plugins/arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__uk-tenders__` prefix via `startsWith`, so all 11 tools clear the permission hook automatically. However, `arckit-tenders-reader` additionally declares a `tools:` frontmatter allowlist containing only the 7 read-only tools above (rows 1–7). `query_sql` is documented here for completeness — it exposes free-form SQL against the procurement dataset and is explicitly excluded from the allowlist because free-form SQL against an untrusted endpoint is a prompt-injection surface. It must **never** be added to any agent's `tools:` allowlist.
+> **Permissions:** ArcKit doesn't auto-approve MCP tools. Claude Code asks the first time; add the server to `permissions.allow` to stop asking. The reader subagent's `tools:` allowlist still limits which of the server's tools it can call.
 
 **Consumers** (2): `arckit-tenders-reader`, shared by both `/arckit:tenders` and `/arckit:competitors`.
 

@@ -113,7 +113,6 @@ Automation hooks run automatically to provide context and enforce standards. See
 | UserPromptSubmit | arckit-context, secret-detection, + 6 command-specific | Project context, secret scanning, pre-processing |
 | PreToolUse | validate-arc-filename, score-validator, file-protection, secret-file-scanner | Filename enforcement, security, validation |
 | PostToolUse | update-manifest | Keep manifest.json in sync |
-| PermissionRequest | allow-mcp-tools | Auto-allow bundled MCP servers |
 
 ## OKF Interoperability
 
@@ -289,7 +288,7 @@ The plugin sends data to other services only in these cases:
 | You run `/arckit:trello` | Trello API (`api.trello.com`) | Your backlog's epics, stories and acceptance criteria, sent with the Trello key and token you provide |
 | A research command uses web search or fetch | The sites Claude searches or fetches | Search queries and URLs, through Claude's own web tools |
 
-Two hooks approve permission requests so that routine steps don't prompt every session. `allow-mcp-tools` approves calls to the six bundled MCP servers above. `allow-plugin-internals` approves reads of the plugin's own files and runs of its own bundled scripts. Neither covers your project files or any other command, and your own deny rules still take precedence. Before running ArcKit on sensitive material, see [`docs/ENFORCEMENT.md`](docs/ENFORCEMENT.md) and the privacy policy at <https://arckit.org/privacy.html>.
+One hook approves a permission request: `allow-plugin-internals` approves reads of the plugin's own files (templates, references, schemas), which sit outside your working directory. It covers nothing else, and your own deny rules still take precedence. The plugin's scripts are pre-approved only by each command's own `allowed-tools` rules, which Claude Code checks command by command. MCP tool calls ask the first time; to stop the prompts for a server, add it to `permissions.allow`, for example `"mcp__plugin_arckit_aws-knowledge"`. Before running ArcKit on sensitive material, see [`docs/ENFORCEMENT.md`](docs/ENFORCEMENT.md) and the privacy policy at <https://arckit.org/privacy.html>.
 
 ## Migration from CLI
 

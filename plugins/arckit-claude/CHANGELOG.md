@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **ArcKit no longer approves permissions it doesn't need.** The hook that auto-approved every call to the six bundled MCP servers is gone: Claude Code now asks the first time, and the MCP servers guide shows the one-line allow rule that stops it asking for a server you trust. The hook that approved ArcKit's own scripts is also gone, because it checked only that a plugin script was named, so a command chained to one ran without a prompt. Each command now pre-approves its own scripts through Claude Code's native `allowed-tools` rules, which Claude Code checks command by command. The one permission ArcKit still grants itself is reading its own template and reference files, which live outside your project; that check now resolves symlinks and `..` first.
+- **Research reader output is checked without a shell command.** The research commands (research, datascout, grants, the cloud and gov-* commands, tenders and competitors) used to validate each reader's JSON with a Bash block that only ran silently because of the hook above. A new hook does the same validation and sanitisation as each reader returns, replaces the reply with the cleaned JSON, and refuses an invalid auto-mode hand-back so the reader fixes it. It also keeps ArcKit's reader and writer subagents in the foreground: since Claude Code v2.1.198 a subagent runs in the background by default, and a background reader's report would skip validation. Tested live on `/arckit:gov-code-search` with no Bash permission granted: every reader report was checked, two invalid ones were re-dispatched once and came back valid, and the document was written.
+
+### Fixed
+
+- **Research commands find their reader and writer subagents first time.** They named them without the plugin prefix (`arckit-research-reader` rather than `arckit:arckit-research-reader`), which Claude Code rejects as "not found", so every run spent turns retrying.
+
 ## [6.16.6] — 2026-09-29
 
 ### Added

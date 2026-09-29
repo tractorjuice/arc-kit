@@ -242,7 +242,7 @@ KIMI_EXCLUDED_HOOKS = {
     "graph-inject.mjs",
     "sync-guides.mjs",
     "allow-plugin-internals.mjs",
-    "allow-mcp-tools.mjs",
+    "validate-reader-handoff.mjs",
     "inject-agent-context.mjs",
     "external-context-watch.mjs",
 }

@@ -12,6 +12,9 @@ handoffs:
     description: Use rival award history as Company Experience evidence
   - command: risk
     description: Record supplier-concentration / single-supplier-dependency risk
+allowed-tools:
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 # Competitor Landscape
@@ -60,8 +63,7 @@ writer agents are dispatched normally.
   recommend a route to market; the SRO and commercial lead decide. Output
   remains DRAFT.
 - **Write-tool isolation.** You do not write the artefact yourself — only
-  the writer subagent does. Use `Write` only for the tempfile passed to the
-  validator if you cannot use `mktemp` + heredoc.
+  the writer subagent does.
 - **No ad-hoc helper scripts.** Do **NOT** write `cmpt-rank.mjs`,
   `cmpt-build-writer-input.mjs`, `head-to-head.sh`, or any other helper
   file to perform scope parsing, ranking, head-to-head construction,
@@ -173,27 +175,19 @@ install is incomplete.
 ### Step 4: Dispatch reader subagent + validate
 
 1. Dispatch the reader using the `Agent` tool with
-   `subagent_type: "arckit-tenders-reader"` and the Step 2 scope JSON as the
+   `subagent_type: "arckit:arckit-tenders-reader"` and the Step 2 scope JSON as the
    prompt. (This is the **shared** reader — the same one `/arckit:tenders`
    dispatches.)
 
 2. The reader's final-message string is a single JSON payload (no markdown,
-   no code fence). Write it to a tempfile via Bash, run the validator, and
-   capture the result. The validator's stdout is the normalised JSON on
-   exit 0, or `{ok: false, errors: [{path, msg}]}` on exit non-zero, using
-   the **tenders** schema (there is no competitors-specific schema):
+   no code fence). It is validated automatically
+   against the **tenders** schema (there is no competitors-specific schema):
 
-   ```bash
-   TMPFILE=$(mktemp /tmp/tenders-handoff.XXXXXX.json)
-   cat > "$TMPFILE" <<'EOF'
-   <reader's output>
-   EOF
-   node "${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs" \
-        "${CLAUDE_PLUGIN_ROOT}/schemas/tenders-handoff.schema.json" \
-        "$TMPFILE"
-   echo "exit=$?"
-   rm -f "$TMPFILE"
-   ```
+   The **ArcKit handoff hook** does this for you, with no Bash call: when the reader returns, it validates the reply against `schemas/tenders-handoff.schema.json`, strips invisible and control characters, and replaces the reply with the normalised payload, followed by a line starting `ArcKit handoff check`. Don't run the validator yourself.
+
+   - `ArcKit handoff check (…): valid` means what exit 0 meant: the reply is the validator's normalised stdout.
+   - `ArcKit handoff check (…): INVALID` means what a non-zero exit meant: the listed errors are the validator's `errors[]`.
+   - In auto mode a reader hands back its report through `SubagentHandback`; the hook validated and normalised it at hand-back and refused an invalid one, so treat a handed-back report as valid.
 
 3. **If exit 0** — parse the validator's stdout (the normalised payload) and
    proceed to Step 5 with it.
@@ -301,8 +295,7 @@ to the project's `research/` directory. Run the bundled helper (it is
 positional-then-flags):
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
-     {P} CMPT --next-num "{project_path}/research"
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {P} CMPT --next-num "{project_path}/research"
 ```
 
 This returns the next sequenced ID, e.g. `ARC-{P}-CMPT-{NNN}-v1.0`. Use the
@@ -369,7 +362,7 @@ validated payload (the writer renders the freshness-unavailable line in that
 case). Omit `focal` and leave `head_to_head` as `[]` on a capability-focus
 run (the writer renders the not-applicable head-to-head line). Dispatch the
 writer using the `Agent` tool with
-`subagent_type: "arckit-competitors-writer"` and this JSON as the prompt. The
+`subagent_type: "arckit:arckit-competitors-writer"` and this JSON as the prompt. The
 writer renders the CMPT artefact, enriches any matching vendor profile's
 `## Government Award History`, and returns a one-line summary with the file
 path, word count, and number of vendor profiles enriched.

@@ -12,6 +12,12 @@ handoffs:
     description: Broader market research
   - command: adr
     description: Record pattern decisions
+allowed-tools:
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
 ---
 
 # Government Code Search
@@ -44,7 +50,7 @@ deliberate choice rather than a platform limitation.
 - **Relevance is arithmetic, not opinion.** The previous single-tier agent classified results as "High relevance" or "Medium relevance" by eye. That was not reproducible: the same query could rank the same repository differently on two runs and nothing recorded why. Relevance now comes from the rubric, and every artefact shows the per-criterion breakdown that produced it.
 - **Citation discipline.** Every ranked repository traces to a `citation_id` from the reader's payload, which traces to a `fetched_from_url`. Pass the chain through to the writer.
 - **Report the index, don't flatter it.** govreposcrape covers a large but incomplete slice of UK government code. A thin result set is evidence about the index, not a finding about government practice, and must be reported as such.
-- **Write-tool isolation.** You do not write the artefact yourself — only the writer subagent does. Use `Write` only for tempfiles passed to the validator if you cannot use `mktemp` + heredoc.
+- **Write-tool isolation.** You do not write the artefact yourself — only the writer subagent does.
 - **No ad-hoc helper scripts.** Do **NOT** write a scoring, ranking, deduplication or payload-assembly helper. The only executables this command needs are the bundled `validate-handoff.mjs` and the bundled `scripts/bash/*.sh` helpers. Every other data manipulation happens directly in this conversation.
 
 ## What you produce
@@ -99,23 +105,17 @@ Dispatch all variations in a single wave (3 to 5 readers, comfortably inside the
    }
    ```
 
-2. Dispatch with the `Agent` tool, `subagent_type: "arckit-gov-code-search-reader"`, the input JSON as the prompt.
+2. Dispatch with the `Agent` tool, `subagent_type: "arckit:arckit-gov-code-search-reader"`, the input JSON as the prompt.
 
    **One variation per reader.** Do not ask a reader to generate its own variations: the same repository would then be counted twice in `query_corroboration`, silently inflating its rank.
 
-3. Validate each reader's final message:
+3. Each reader's final message is validated automatically:
 
-   ```bash
-   TMPFILE=$(mktemp /tmp/gov-repo-handoff.XXXXXX.json)
-   cat > "$TMPFILE" <<'EOF'
-   <reader's output>
-   EOF
-   node "${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs" \
-        "${CLAUDE_PLUGIN_ROOT}/schemas/gov-repo-handoff.schema.json" \
-        "$TMPFILE"
-   echo "exit=$?"
-   rm -f "$TMPFILE"
-   ```
+   The **ArcKit handoff hook** does this for you, with no Bash call: when the reader returns, it validates the reply against `schemas/gov-repo-handoff.schema.json`, strips invisible and control characters, and replaces the reply with the normalised payload, followed by a line starting `ArcKit handoff check`. Don't run the validator yourself.
+
+   - `ArcKit handoff check (…): valid` means what exit 0 meant: the reply is the validator's normalised stdout.
+   - `ArcKit handoff check (…): INVALID` means what a non-zero exit meant: the listed errors are the validator's `errors[]`.
+   - In auto mode a reader hands back its report through `SubagentHandback`; the hook validated and normalised it at hand-back and refused an invalid one, so treat a handed-back report as valid.
 
 4. **If exit 0** — parse the validator's stdout and add its `repositories[]`, `organisations[]` and `index_status` to your accumulator, keyed by variation.
 
@@ -157,7 +157,7 @@ Glob `projects/{P}-{NAME}/research/ARC-{P}-GCSR-*-v*.md`. If none, the document 
 
 ### Step 10: Dispatch the writer
 
-Assemble the writer input documented in `arckit-gov-code-search-writer`'s Input section and dispatch with `subagent_type: "arckit-gov-code-search-writer"`. It returns a one-line summary.
+Assemble the writer input documented in `arckit-gov-code-search-writer`'s Input section and dispatch with `subagent_type: "arckit:arckit-gov-code-search-writer"`. It returns a one-line summary.
 
 ### Step 11: Return summary
 

