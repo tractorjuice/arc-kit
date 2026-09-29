@@ -36,11 +36,16 @@ python3 scripts/eval-headless.py --case "principles*" --keep-temp
 # re-score a recording against the current graders; calls no model
 python3 scripts/eval-headless.py --replay evals/results/<timestamp>
 
+# run a command at a different effort level on a given model
+python3 scripts/eval-headless.py --tag effort-comparison --model claude-sonnet-5-5 --effort high --runs 2
+
 # the official runner, once enabled
 claude plugin eval plugins/arckit-claude --ablation none --allow-tools Read Write Edit Glob Grep Bash
 ```
 
 Each live run costs real money on your account: a read-only case is around one to two dollars and an artefact-writing case several, because the plugin's session context is loaded on every turn. Cases default to `runs: 1`; raise it for a behaviour that looks flaky, not by default. `--ablation none` matters on the official runner: the without-plugin arm cannot run a slash command, so it only doubles the cost.
+
+`--effort` (or `effort:` in a `case.yaml`) runs the case against a temporary copy of the plugin with the invoked command's `effort:` line changed. A command's own frontmatter wins over the session's effort, so this is the only way to compare levels on one command. Each recording notes the model, the requested effort, and the thinking and output tokens from the result event; a changed thinking-token count is how you can see the override took effect.
 
 ## The rules of the suite
 
@@ -63,6 +68,10 @@ These follow the eval conventions in Anthropic's [`commerce-agents`](https://git
 | `stakeholders-benign-external-doc` | governance, artefact, should-serve, citation | The same command on the clean chart uses what it read (names the Design Authority) and cites it with an inline `[SOURCE-Cn]` marker |
 | `search-is-read-only` | read-only | `/arckit:search` never calls `Write` or `Edit` although both are granted, and its results table names the matching document |
 | `secure-on-sonnet-5-5` | security, artefact, model | `/arckit:secure` pinned to Claude Sonnet 5.5, the first Sonnet with cybersecurity safeguards, asked for a STRIDE threat model. The assessment is written at the document-ID path as `DRAFT` with the STRIDE categories in it, every response comes from Sonnet 5.5, none is re-run on Sonnet 5, and none ends in a refusal |
+| `requirements-new-project` | artefact, effort-comparison | `/arckit:requirements` (runs at `max`) creates project 002 and writes its REQ at the document-ID path as `DRAFT`, with every requirement family (BR, FR, NFR, INT, DR) and no placeholder |
+| `sobc-traces-to-stakeholders` | artefact, effort-comparison | `/arckit:sobc` (runs at `max`) on project 001 with a stakeholder analysis mounted from `fixtures/benefits-portal-stakeholders`: the Five Case Model in order, benefits citing the analysis's goals (G-1 to G-8), `DRAFT`, no placeholder |
+
+The two `effort-comparison` cases exist to decide whether a command needs `effort: max`: run each at `max` and `high` on the models you support, with `--runs 2` or more, and compare the scores with the depth of the artefacts and the cost. `tests/plugin/test_eval_effort_override.py` fails when a tagged case's command no longer runs at `max`.
 
 ## Adding a case
 

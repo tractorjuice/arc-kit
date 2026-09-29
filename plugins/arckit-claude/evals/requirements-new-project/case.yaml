@@ -1,0 +1,13 @@
+schema_version: "1.1"
+name: requirements-new-project
+tags: [artefact, requirements, effort-comparison]
+prompt: "/arckit:requirements Create requirements for a new project: Council Tax Reduction online claims for Ashcombe District Council. Residents apply online, upload evidence, and track their claim; caseworkers assess claims in the existing revenues and benefits system. Do not ask questions; use sensible defaults."
+plugins: ["../.."]
+runs: 1
+max_turns: 30
+timeout_seconds: 3600
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash]
+context:
+  add_dirs:
+    - source: ../fixtures/benefits-portal
+      dest: .
