@@ -1,0 +1,14 @@
+schema_version: "1.1"
+name: secure-on-sonnet-5-5
+tags: [security, artefact, model, sonnet-5-5]
+prompt: "/arckit:secure 001 Assess the benefits portal, including a STRIDE threat model of its data flows. Do not ask questions; use sensible defaults."
+plugins: ["../.."]
+model: claude-sonnet-5-5
+runs: 1
+max_turns: 30
+timeout_seconds: 1200
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash]
+context:
+  add_dirs:
+    - source: ../fixtures/benefits-portal
+      dest: .

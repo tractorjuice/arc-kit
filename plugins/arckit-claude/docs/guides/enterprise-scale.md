@@ -553,15 +553,28 @@ model overrides to stay inside the approved list.
 
 ArcKit does not pin a model in its commands. Commands inherit the Claude Code
 session default, so a centrally managed model policy is the right control point
-for regulated deployments. The current ArcKit guidance assumes Claude Sonnet 5
-as the normal default; allow Claude Fable 5.1 (the default Fable model since
+for regulated deployments. Claude Code starts on Claude Opus 5.5 (v2.1.280+),
+and the `sonnet` alias resolves to Claude Sonnet 5.5 on the Anthropic API from
+v2.1.284 (Sonnet 4.6 on Claude Platform on AWS, Sonnet 4.5 on Bedrock, Google
+Cloud and Foundry). ArcKit runs on either: Sonnet 5.5 costs less per token and
+suits well-scoped commands, while Opus 5.5 is the better choice for long
+research runs and `/arckit:build`. Both always think and both default to
+`effort: medium`; ArcKit's heavier commands set their own `effort:`. Allow
+Claude Fable 5.1 (the default Fable model since
 Claude Code v2.1.257, Fable 5 before that) only where the tenant exposes it and
 the work justifies the higher tier. Behind a Claude apps gateway the `fable`
 and `best` aliases keep resolving to Fable 5 until the gateway is configured
 for 5.1, so a gateway fleet does not pick up the new default on its own —
 users select Fable 5.1 in `/model`, or you set it centrally.
 
-Three newer settings sit alongside `enforceAvailableModels`:
+Five newer settings sit alongside `enforceAvailableModels`:
+
+- `deniedModels` (Claude Code v2.1.283+, managed) blocks named models even
+  when `availableModels` allows them.
+- `availableModelsMatch: "exact"` (v2.1.283+, managed) makes each
+  `availableModels` entry allow only the version it names, so a new release
+  such as Sonnet 5.5 stays blocked until you list it. Use it when a new model
+  must pass your own evaluation before users can select it.
 
 - `ANTHROPIC_DEFAULT_MODEL` (Claude Code v2.1.236+) sets the model new
   sessions start on while a user's `/model` pick still wins and persists —
@@ -572,6 +585,21 @@ Three newer settings sit alongside `enforceAvailableModels`:
 - `modelPricing` (v2.1.243+, managed) applies your contracted per-model rates
   and discount multiplier to `/cost`, the status line and telemetry cost
   figures instead of list price.
+
+**Security content and model fallback.** Opus 5.5 and Sonnet 5.5 run safety
+classifiers that most often flag cybersecurity and biology content. ArcKit's
+security commands (`/arckit:secure`, `/arckit:mod-secure`, `/arckit:jsp-936`)
+discuss threats and attacks, so they are the likeliest to be flagged. When a
+cybersecurity request is flagged, Claude Code re-runs it on an older model
+(Sonnet 5 from Sonnet 5.5, Opus 4.8 from Opus 5.5), shows a notice, and the
+session continues on that model until you switch back with `/model`. A
+biology-flagged request on Sonnet 5.5 has no fallback and ends in a refusal.
+The artefact's Build Provenance records the model that wrote it, so a fallback
+is visible in the audit trail. If `availableModels` blocks the fallback model,
+the flagged request ends in a refusal instead, so keep Sonnet 5 or Opus 4.8
+allowed where your fleet runs security assessments. See Claude Code's
+[model configuration](https://code.claude.com/docs/en/model-config#automatic-model-fallback)
+guide.
 
 Subagent routing changed in v2.1.251: `CLAUDE_CODE_SUBAGENT_MODEL` now sets
 the *default* subagent model, and an agent definition's `model:` or an
