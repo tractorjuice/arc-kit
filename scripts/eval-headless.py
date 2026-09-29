@@ -16,6 +16,14 @@ An `llm` or `baseline` grader is reported as skipped, never as passed.
     python3 scripts/eval-headless.py --case "search*"       # by name glob
     python3 scripts/eval-headless.py --tag injection        # by tag
     python3 scripts/eval-headless.py --replay <results dir> # re-score, no model
+    python3 scripts/eval-headless.py --case "sobc*" --model claude-sonnet-5-5 --effort high
+
+`--effort` (or `effort:` in a case) runs the case against a temporary copy of
+the plugin whose invoked command has that `effort:` level. A command's own
+frontmatter wins over the session's effort, so this is the only way to compare
+levels. Each run records the model, the requested effort, and the thinking and
+output tokens the result event reports, which is how you can see the override
+took effect.
 
 Exit 0 when every scored case meets --threshold (default 1.0), 1 otherwise.
 """
@@ -40,6 +48,45 @@ import yaml
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_PLUGIN = REPO_ROOT / "plugins" / "arckit-claude"
 DETERMINISTIC = {"file_exists", "regex", "tool_used", "tool_order"}
+EFFORT_LEVELS = ("low", "medium", "high", "xhigh", "max")
+# Left out of a plugin copy: the eval results tree and the nested overlay
+# mirror are large and never loaded by a core command.
+COPY_IGNORE = shutil.ignore_patterns("evals", "plugins", "node_modules", "__pycache__", ".DS_Store")
+
+
+# ── Effort override ──────────────────────────────────────────────────
+
+
+def prompt_command(prompt: str) -> str:
+    m = re.match(r"\s*/arckit:([\w.-]+)", prompt)
+    if not m:
+        raise ValueError(f"prompt does not invoke an /arckit: command: {prompt[:60]!r}")
+    return m.group(1)
+
+
+def plugin_with_effort(plugin_dir: Path, command: str, effort: str, dest: Path) -> Path:
+    """Copy the plugin to `dest` with `commands/<command>.md` set to `effort`.
+
+    The command's `effort:` line is replaced, or added to its frontmatter when
+    it has none. Nothing else in the copy changes.
+    """
+    if effort not in EFFORT_LEVELS:
+        raise ValueError(f"unknown effort level {effort!r}; expected one of {EFFORT_LEVELS}")
+    shutil.copytree(plugin_dir, dest, ignore=COPY_IGNORE, symlinks=True)
+    cmd_file = dest / "commands" / f"{command}.md"
+    if not cmd_file.is_file():
+        raise FileNotFoundError(f"no command file for /arckit:{command} in {plugin_dir}")
+    text = cmd_file.read_text(encoding="utf-8")
+    if not text.startswith("---\n"):
+        raise ValueError(f"{cmd_file.name} has no frontmatter")
+    end = text.index("\n---", 4)
+    front, body = text[:end], text[end:]
+    if re.search(r"^effort:", front, re.MULTILINE):
+        front = re.sub(r"^effort:.*$", f"effort: {effort}", front, count=1, flags=re.MULTILINE)
+    else:
+        front += f"\neffort: {effort}"
+    cmd_file.write_text(front + body, encoding="utf-8")
+    return dest
 
 
 # ── Case loading ─────────────────────────────────────────────────────
@@ -107,7 +154,8 @@ def snapshot(workspace: Path) -> set[str]:
     return out
 
 
-def run_claude(case: dict, workspace: Path, plugin_dir: Path, model: str | None) -> dict:
+def run_claude(case: dict, workspace: Path, plugin_dir: Path, model: str | None,
+               timeout: int | None = None) -> dict:
     cmd = [
         "claude", "-p", case["prompt"],
         "--plugin-dir", str(plugin_dir),
@@ -124,12 +172,24 @@ def run_claude(case: dict, workspace: Path, plugin_dir: Path, model: str | None)
     for k, v in (case.get("env") or {}).items():
         env[k] = str(v)
     started = time.time()
-    proc = subprocess.run(
-        cmd, cwd=workspace, env=env, capture_output=True, text=True,
-        stdin=subprocess.DEVNULL, timeout=case.get("timeout_seconds", 600),
-    )
+    limit = timeout or case.get("timeout_seconds", 600)
+    timed_out = False
+    try:
+        proc = subprocess.run(
+            cmd, cwd=workspace, env=env, capture_output=True, text=True,
+            stdin=subprocess.DEVNULL, timeout=limit,
+        )
+        stdout, stderr, returncode = proc.stdout, proc.stderr, proc.returncode
+    except subprocess.TimeoutExpired as exc:
+        # Keep the partial transcript and whatever the run wrote: a timeout is
+        # a result to score (it fails the file graders), not a crash that
+        # abandons every case after it.
+        timed_out = True
+        def text(v):
+            return v.decode("utf-8", "replace") if isinstance(v, bytes) else (v or "")
+        stdout, stderr, returncode = text(exc.stdout), text(exc.stderr), None
     events = []
-    for line in proc.stdout.splitlines():
+    for line in stdout.splitlines():
         line = line.strip()
         if not line:
             continue
@@ -144,15 +204,21 @@ def run_claude(case: dict, workspace: Path, plugin_dir: Path, model: str | None)
                 if block.get("type") == "tool_use":
                     tool_uses.append({"name": block.get("name"), "input": block.get("input")})
     result = next((ev for ev in reversed(events) if ev.get("type") == "result"), {})
+    model_usage = result.get("modelUsage") or {}
     return {
+        "models": sorted(model_usage),
+        "thinking_tokens": sum(int(m.get("thinkingTokens") or 0) for m in model_usage.values()),
+        "output_tokens": sum(int(m.get("outputTokens") or 0) for m in model_usage.values()),
+        "duration_ms": result.get("duration_ms"),
         "events": events,
         "tool_uses": tool_uses,
         "last_message": result.get("result") or "",
         "cost_usd": result.get("total_cost_usd"),
         "num_turns": result.get("num_turns"),
-        "subtype": result.get("subtype"),
-        "exit_code": proc.returncode,
-        "stderr": proc.stderr[-4000:],
+        "subtype": f"timeout after {limit}s" if timed_out else result.get("subtype"),
+        "timed_out": timed_out,
+        "exit_code": returncode,
+        "stderr": stderr[-4000:],
         "duration_s": round(time.time() - started, 1),
     }
 
@@ -266,6 +332,9 @@ def main() -> int:
     ap.add_argument("--tag", action="append", default=[])
     ap.add_argument("--runs", type=int, help="override per-case runs")
     ap.add_argument("--model")
+    ap.add_argument("--effort", choices=EFFORT_LEVELS,
+                    help="run the invoked command at this effort level (overrides the case's `effort:`)")
+    ap.add_argument("--timeout", type=int, help="seconds per run (overrides the case's timeout_seconds)")
     ap.add_argument("--threshold", type=float, default=1.0)
     ap.add_argument("--output-dir", type=Path)
     ap.add_argument("--replay", type=Path, help="re-score this results directory without calling the model")
@@ -303,14 +372,25 @@ def main() -> int:
                 rec = load_recording(case_out)
             else:
                 workspace = Path(tempfile.mkdtemp(prefix=f"arckit-eval-{case['name']}-"))
+                effort = args.effort or case.get("effort")
+                plugin_copy = None
                 try:
                     build_workspace(case, workspace)
                     before = snapshot(workspace)
-                    print(f"[run ] {case_key} …", flush=True)
-                    rec = run_claude(case, workspace, plugin_dir, args.model)
+                    run_plugin = plugin_dir
+                    if effort:
+                        plugin_copy = Path(tempfile.mkdtemp(prefix="arckit-eval-plugin-"))
+                        run_plugin = plugin_with_effort(
+                            plugin_dir, prompt_command(case["prompt"]), effort, plugin_copy / "arckit")
+                    print(f"[run ] {case_key}{f' (effort: {effort})' if effort else ''} …", flush=True)
+                    rec = run_claude(case, workspace, run_plugin, args.model, args.timeout)
+                    rec["requested_model"] = args.model or case.get("model")
+                    rec["requested_effort"] = effort
                     rec["created_files"] = sorted(snapshot(workspace) - before)
                     case_out = record({**case, "name": case_key}, rec, workspace, before, out_dir)
                 finally:
+                    if plugin_copy:
+                        shutil.rmtree(plugin_copy, ignore_errors=True)
                     if args.keep_temp:
                         print(f"       workspace kept at {workspace}")
                     else:
@@ -322,11 +402,18 @@ def main() -> int:
                 worst = min(worst, score)
             aggregate["cases"].append({
                 "name": case_key, "score": score, "cost_usd": rec.get("cost_usd"),
-                "num_turns": rec.get("num_turns"), "graders": scored["graders"],
+                "num_turns": rec.get("num_turns"), "models": rec.get("models"),
+                "requested_effort": rec.get("requested_effort"),
+                "thinking_tokens": rec.get("thinking_tokens"), "output_tokens": rec.get("output_tokens"),
+                "duration_ms": rec.get("duration_ms"), "graders": scored["graders"],
             })
             aggregate["total_cost_usd"] += float(rec.get("cost_usd") or 0)
             label = "pass" if score == 1.0 else ("FAIL" if score is not None else "n/a ")
-            print(f"[{label}] {case_key}: score={score} cost=${rec.get('cost_usd') or 0:.2f} turns={rec.get('num_turns')}")
+            extra = " TIMED OUT" if rec.get("timed_out") else ""
+            if rec.get("thinking_tokens") is not None:
+                extra += (f" thinking={rec.get('thinking_tokens')} output={rec.get('output_tokens')}"
+                         f" models={','.join(rec.get('models') or [])}")
+            print(f"[{label}] {case_key}: score={score} cost=${rec.get('cost_usd') or 0:.2f} turns={rec.get('num_turns')}{extra}")
             for g in scored["graders"]:
                 mark = "skip" if g.get("skipped") else ("ok  " if g["passed"] else "FAIL")
                 print(f"         {mark} {g['name']}: {g['details']}")
