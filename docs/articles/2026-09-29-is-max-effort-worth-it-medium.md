@@ -1,3 +1,5 @@
+![Is max effort worth it? Requirements on Opus 5.5 at high and max effort, with max costing more than three times as much and taking four times as long for the same 100 requirements, beside the real problem: 13 of 55 templates contradicted their own commands.](https://arckit.org/articles/2026-09-29-is-max-effort-worth-it-hero.png)
+
 # Is Max Effort Worth It? What 53 Test Runs Taught Us About ArcKit
 
 **When Claude Sonnet 5.5 arrived, Anthropic advised using the highest effort settings only where testing shows a gain. ArcKit ran 18 of its commands at the highest setting without ever having measured it. So I measured it. Across 53 test runs costing about $150, the highest setting mostly made documents longer, slower and three to four times more expensive, not better. The gaps it did close came from something much cheaper to fix: templates whose own examples contradicted the instructions they came with.**
