@@ -90,6 +90,13 @@ def test_core_folder_carries_no_overlays_or_marketplace(staged):
     assert not (core / ".claude-plugin" / "marketplace.json").exists()
 
 
+def test_core_folder_carries_no_evals(staged):
+    """The evals are maintainer tooling, run from the arc-kit repository."""
+    core = staged / "plugins" / "arckit"
+    assert (REPO_ROOT / "plugins" / "arckit-claude" / "evals").is_dir(), "the source still has evals"
+    assert not (core / "evals").exists(), "evals/ leaked into the published core plugin"
+
+
 def test_root_marketplace_points_core_at_its_folder(staged):
     published = json.loads((staged / ".claude-plugin" / "marketplace.json").read_text())
     local = json.loads((CORE_DIR / ".claude-plugin" / "marketplace.json").read_text())

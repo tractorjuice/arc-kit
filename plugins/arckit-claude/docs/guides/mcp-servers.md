@@ -188,14 +188,15 @@ Provides access to Google Cloud documentation for GCP service research.
 **Setup**:
 
 1. Get a free API key from [Google AI Studio](https://aistudio.google.com/apikey) or the [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
-2. Set the environment variable:
+2. **Claude Code:** the ArcKit plugin asks for the key when you enable it, as a sensitive setting kept in your system keychain. To add or change it later, open `/plugin`, choose **arckit**, and open its configure screen (or run `claude plugin configure arckit` on Claude Code v2.1.285+). ArcKit passes it to the server in a request header; it isn't written to any file.
+3. **Other assistants** (Codex CLI, Gemini CLI, OpenCode, GitHub Copilot, Kimi, Mistral Vibe) read it from the environment instead:
 
 ```bash
 # Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
 export GOOGLE_API_KEY="your-api-key-here"
 ```
 
-3. Restart Claude Code
+4. Restart your assistant
 
 ### Data Commons
 
@@ -208,14 +209,15 @@ Provides access to public statistical data from Data Commons (demographics, econ
 **Setup**:
 
 1. Get an API key from [Data Commons](https://datacommons.org)
-2. Set the environment variable:
+2. **Claude Code:** the ArcKit plugin asks for the key when you enable it, as a sensitive setting kept in your system keychain. To add or change it later, open `/plugin`, choose **arckit**, and open its configure screen (or run `claude plugin configure arckit` on Claude Code v2.1.285+). ArcKit passes it to the server in a request header; it isn't written to any file.
+3. **Other assistants** (Codex CLI, Gemini CLI, OpenCode, GitHub Copilot, Kimi, Mistral Vibe) read it from the environment instead:
 
 ```bash
 # Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
 export DATA_COMMONS_API_KEY="your-api-key-here"
 ```
 
-3. Restart Claude Code
+4. Restart your assistant
 
 > **Your keys stay hidden in `claude mcp` output.** Both keyed servers carry their key in an HTTP header (`X-Goog-Api-Key`, `X-API-Key`) via `${GOOGLE_API_KEY}` / `${DATA_COMMONS_API_KEY}`. As of Claude Code v2.1.161, `claude mcp list` / `get` / `add` no longer expand `${VAR}` references and redact credential headers and URL secrets — so inspecting your MCP config (or screen-sharing it) won't leak the keys. Relevant for OFFICIAL-SENSITIVE / regulated deployments. The other four bundled servers are keyless, so there's nothing to redact.
 
@@ -229,9 +231,10 @@ claude mcp login <server-name>
 claude mcp logout <server-name>
 ```
 
-ArcKit's bundled keyed servers still use environment variables, but the same
-`claude mcp` workflow is useful when you add third-party MCP servers alongside
-ArcKit. Recent Claude Code releases improved OAuth retries and headless login
+ArcKit's bundled Trello server uses this flow: sign in once through `/mcp`
+(or `claude mcp login`). The two keyed servers use plugin settings instead (see
+above), and the same `claude mcp` workflow is useful when you add third-party
+MCP servers alongside ArcKit. Recent Claude Code releases improved OAuth retries and headless login
 flows, so stale browser hand-offs are less likely to leave a server half
 configured.
 
