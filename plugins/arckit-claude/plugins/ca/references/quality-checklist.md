@@ -48,6 +48,7 @@ All artifacts must pass these 10 checks:
 - Cost-benefit analysis with quantified figures and assumptions stated
 - Green Book / Orange Book methodology referenced where applicable
 - Preferred option clearly identified with rationale
+- Every option in the options appraisal, including Do Nothing and rejected options, has its own costs, benefits, **Risks** and pros/cons
 
 ### STKE -- Stakeholder Analysis
 
