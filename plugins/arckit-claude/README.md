@@ -250,7 +250,7 @@ projects/
 
 ## MCP Servers
 
-The plugin includes 6 MCP (Model Context Protocol) servers for cloud and government research:
+The plugin includes 7 MCP (Model Context Protocol) servers: six for cloud and government research, and Trello for backlog export:
 
 | MCP Server | API Key Required | Used By |
 |------------|-----------------|---------|
@@ -260,6 +260,7 @@ The plugin includes 6 MCP (Model Context Protocol) servers for cloud and governm
 | Data Commons | Yes (`DATA_COMMONS_API_KEY`) | Data statistics lookups |
 | govreposcrape | No | `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landscape` |
 | UK Tenders | No | `/arckit:tenders`, `/arckit:competitors` |
+| Trello (Atlassian) | No; sign in once through `/mcp` | `/arckit:trello` |
 
 AWS Knowledge and Microsoft Learn work out of the box with no configuration. The Google and Data Commons servers require API keys — if you don't set them, you'll see errors in the plugin UI, but **all other commands work normally**.
 
@@ -283,7 +284,8 @@ The plugin sends data to other services only in these cases:
 
 | When | Where it goes | What is sent |
 |------|---------------|--------------|
-| A command queries one of the six bundled MCP servers (table above) | AWS Knowledge (`knowledge-mcp.global.api.aws`), Microsoft Learn (`learn.microsoft.com`), Google Developer Knowledge (`developerknowledge.googleapis.com`), Data Commons (`api.datacommons.org`), govreposcrape (`govreposcrape-api-1060386346356.us-central1.run.app`), UK Tenders (`tenders.run.cns.me`) | The search terms and document IDs Claude passes to that server's tools, which can include wording taken from your requirements. The Google and Data Commons servers also receive the API key you configure. Each service's own privacy policy applies |
+| A command queries one of the six bundled research MCP servers (table above) | AWS Knowledge (`knowledge-mcp.global.api.aws`), Microsoft Learn (`learn.microsoft.com`), Google Developer Knowledge (`developerknowledge.googleapis.com`), Data Commons (`api.datacommons.org`), govreposcrape (`govreposcrape-api-1060386346356.us-central1.run.app`), UK Tenders (`tenders.run.cns.me`) | The search terms and document IDs Claude passes to that server's tools, which can include wording taken from your requirements. The Google and Data Commons servers also receive the API key you configure. Each service's own privacy policy applies |
+| `/arckit:trello` exports a backlog | Atlassian's Trello MCP server (`mcp.trello.com`) | The backlog's stories, descriptions and acceptance criteria, written to a board in your Trello account under your own sign-in. Atlassian's privacy policy applies |
 | Each session starts | GitHub API (`api.github.com`) | One anonymous request for the latest ArcKit release, to tell you when an update is available. No project data is sent |
 | You run `/arckit:trello` | Trello API (`api.trello.com`) | Your backlog's epics, stories and acceptance criteria, sent with the Trello key and token you provide |
 | A research command uses web search or fetch | The sites Claude searches or fetches | Search queries and URLs, through Claude's own web tools |

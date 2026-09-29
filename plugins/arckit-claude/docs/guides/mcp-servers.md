@@ -130,6 +130,7 @@ ArcKit includes 4 bundled MCP (Model Context Protocol) servers for cloud researc
 | Microsoft Learn | Not required | `/arckit:azure-research` | Works out of the box |
 | Google Developer Knowledge | `GOOGLE_API_KEY` | `/arckit:gcp-research` | Requires setup |
 | Data Commons | `DATA_COMMONS_API_KEY` | Data statistics lookups | Requires setup |
+| Trello (Atlassian) | None; sign in once through `/mcp` | `/arckit:trello` | Sign-in on first use |
 
 ### Approving MCP tool calls
 
