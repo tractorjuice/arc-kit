@@ -246,6 +246,8 @@ flowchart TD
 - SSH access to servers or kubectl access to cluster
 - Deployment credentials
 
+**Detection**: Planned maintenance window, change request requiring restart, or service found stopped/unresponsive by monitoring
+
 **Start Procedure**:
 
 ```bash
@@ -284,11 +286,19 @@ curl -f https://[service]/health
 
 **Escalation**: If service won't start after 3 attempts, escalate to L3
 
+**Rollback**: If the service fails to start cleanly, return to the previous state — restore the prior replica count or last known-good deployment (`[kubectl rollout undo deployment/[service]]`) and re-enable in the load balancer; if a stop was premature, run the Start Procedure
+
 ---
 
 ### 6.2 Health Check Failures
 
 **Purpose**: Respond to health check failures
+
+**Prerequisites**:
+
+- kubectl access to cluster or SSH access to servers
+- Read access to [Logging Tool] and [Dashboard URL]
+- Dependency contact list (Section 3)
 
 **Detection**: Alert "[Service] Health Check Failed"
 
@@ -319,11 +329,19 @@ curl -f https://[cache-host]:[port]/health
 
 **Escalation**: If not resolved in 30 minutes, escalate to L3
 
+**Rollback**: If a restart makes health worse, roll back to the last known-good deployment (`[kubectl rollout undo deployment/[service]]`) and confirm health checks recover
+
 ---
 
 ### 6.3 High Error Rate
 
 **Purpose**: Diagnose and mitigate elevated error rates
+
+**Prerequisites**:
+
+- Read access to [Logging Tool] and [APM Tool]
+- Deployment history and rollback permissions
+- kubectl access to cluster (to scale or roll back)
 
 **Detection**: Alert "Error Rate > [X]%"
 
@@ -357,11 +375,19 @@ curl -f https://[cache-host]:[port]/health
 
 **Escalation**: If cause unknown after 30 minutes, escalate to L3
 
+**Rollback**: If a deployment rollback or scale-up does not reduce errors, restore the previous replica count and redeploy the prior version; record the change in the incident ticket
+
 ---
 
 ### 6.4 Performance Degradation
 
 **Purpose**: Respond to response time exceeding SLO
+
+**Prerequisites**:
+
+- Read access to [APM Tool] and [Dashboard URL]
+- kubectl access to cluster (to scale or change resource limits)
+- Read access to database performance metrics
 
 **Detection**: Alert "Latency p95 > [X]ms"
 
@@ -395,11 +421,19 @@ curl -f https://[cache-host]:[port]/health
 
 **Escalation**: If not resolved in 1 hour, escalate to L3
 
+**Rollback**: If scaling or limit changes do not improve latency (or raise cost without benefit), revert to the previous replica count and resource limits via [IaC / deployment config]
+
 ---
 
 ### 6.5 Dependency Failure
 
 **Purpose**: Handle failures in upstream dependencies
+
+**Prerequisites**:
+
+- Dependency contact list and status page URLs (Section 3)
+- Permission to change feature flags / circuit breaker config
+- Access to [Slack channel] for stakeholder comms
 
 **Detection**: Errors indicate dependency unavailable
 
@@ -429,11 +463,20 @@ curl -f https://[dependency]/health
 
 **Escalation**: If business-critical, escalate to management for comms
 
+**Rollback**: When the dependency is confirmed healthy, disable the circuit breaker / fallback ([Feature flag / config change]) and verify normal traffic flows through the dependency
+
 ---
 
 ### 6.6 Security Incident Response
 
 **Purpose**: Initial response to security events
+
+**Prerequisites**:
+
+- Security team contact and out-of-hours number (Section 3)
+- Read access to SIEM and [Logging Tool]
+- Secure evidence storage location
+- Authority to invoke containment actions (with Security team approval)
 
 **Detection**: Security alert from SIEM or manual report
 
@@ -462,7 +505,11 @@ curl -f https://[dependency]/health
 # Record all actions taken with timestamps
 ```
 
+**Verification**: Security team confirms the threat is contained, compromised credentials are rotated, and no further indicators of compromise appear in SIEM
+
 **Escalation**: ALWAYS escalate security incidents to Security team
+
+**Rollback**: If a containment action (IP block, credential revocation, isolation) disrupts legitimate users, reverse it only with Security team approval, and record the reversal in the incident timeline
 
 ---
 

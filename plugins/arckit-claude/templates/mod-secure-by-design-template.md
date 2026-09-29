@@ -39,6 +39,11 @@
 
 ### 1.1 Information Classification
 
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe how classification was determined and confirmed (e.g., by the IAO), citing source documents]
+
 **Highest Data Classification**: [OFFICIAL / OFFICIAL-SENSITIVE / SECRET / TOP SECRET]
 
 **Classification Justification**:
@@ -63,8 +68,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
@@ -91,8 +96,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 2.2 Secure by Default
 
@@ -115,8 +120,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 2.3 Least Privilege
 
@@ -138,8 +143,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 2.4 Assume Breach
 
@@ -161,14 +166,19 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
 ## 3. MOD Accreditation Requirements
 
 ### 3.1 Security Accreditation Status
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe accreditation progress to date, citing RMADS, BIA and SAL documents]
 
 **Accreditation Authority**: [JSP 440 / NCSC / Defence Digital]
 
@@ -192,10 +202,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 3.2 JSP 440 Compliance
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe the IAMM assessment basis and supporting artefacts]
 
 **JSP 440**: Defence Information Assurance Maturity Model (IAMM)
 
@@ -216,14 +231,19 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
 ## 4. Threat Modeling and Risk Assessment
 
 ### 4.1 Threat Model
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe threat model coverage and the documents it is recorded in]
 
 **Threat Modeling Method**: [STRIDE / PASTA / Attack Trees / Other]
 
@@ -247,10 +267,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 4.2 Security Risk Assessment
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe the security risk assessment and risk register sources]
 
 **Risk Assessment Method**: [HMG Information Assurance Standard No. 1 & 2 / ISO 27005 / Other]
 
@@ -267,14 +292,19 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
 ## 5. Technical Security Controls
 
 ### 5.1 Cryptography
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe encryption at rest/in transit, key management and HSM use]
 
 **Cryptographic Standards**: [CESG / NCSC approved algorithms]
 
@@ -296,10 +326,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 5.2 Authentication and Identity
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe authentication mechanisms, MFA and identity provider integration]
 
 **Authentication Method**: [Smart card / Biometric / MFA / SSO]
 
@@ -317,10 +352,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 5.3 Network Security
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe network segmentation, perimeter controls and IDS/IPS]
 
 **Network Architecture**: [Segmented / Flat / DMZ / Zero Trust]
 
@@ -345,10 +385,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 5.4 Vulnerability Management
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe scanning, penetration testing and remediation evidence]
 
 **Vulnerability Scanning**: [Frequency: Weekly / Monthly / Continuous]
 
@@ -369,10 +414,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 5.5 Security Monitoring and Logging
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe SIEM/SOC coverage, log retention and alerting]
 
 **Security Operations Center (SOC)**: [24/7 MOD SOC / 3rd party / None]
 
@@ -397,14 +447,19 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
 ## 6. Secure Development Lifecycle
 
 ### 6.1 Secure Coding Practices
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe secure coding standards, code review and SAST/DAST evidence]
 
 **Secure Coding Standards**: [OWASP / CERT / MOD Secure Coding Guidelines]
 
@@ -433,10 +488,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 6.2 DevSecOps Integration
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe security tooling integrated into CI/CD pipelines]
 
 **CI/CD Security Gates**:
 
@@ -449,14 +509,19 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
 ## 7. Supply Chain Security
 
 ### 7.1 Third-Party Risk Management
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe supplier assessments, contractual security clauses and DEFCON 658 compliance]
 
 **Vendor Security Assessment**:
 
@@ -475,10 +540,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 7.2 Open Source Software Security
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe SBOM, dependency scanning and licence compliance evidence]
 
 **Open Source Components**: [Number of OSS dependencies]
 
@@ -492,14 +562,19 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
 ## 8. Operational Security
 
 ### 8.1 Backup and Recovery
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe backup regime, test restores and RTO/RPO evidence]
 
 **Backup Strategy**: [3-2-1 rule / Continuous replication / Other]
 
@@ -517,10 +592,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 8.2 Incident Response
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe incident response plan, exercises and MOD CERT/JSOC integration]
 
 **Incident Response Plan**: [Documented / In Development / Not Started]
 
@@ -540,10 +620,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 8.3 Disaster Recovery and Business Continuity
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe DR/BCP plans and test results]
 
 **Disaster Recovery Plan**: [Documented / In Development / Not Started]
 
@@ -563,14 +648,19 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
 ## 9. Personnel Security
 
 ### 9.1 Security Clearances
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe clearance requirements and current clearance status for roles]
 
 **Clearance Levels Required**:
 
@@ -590,10 +680,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 9.2 Security Awareness
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe security awareness training completion and records]
 
 **Security Training**:
 
@@ -608,14 +703,19 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
 ## 10. Compliance and Governance
 
 ### 10.1 Regulatory Compliance
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe regulatory compliance assessments and their outcomes]
 
 **Applicable Regulations**:
 
@@ -635,10 +735,15 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ### 10.2 Security Policies and Procedures
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe the security policies and procedures in place and their review status]
 
 **Security Documentation**:
 
@@ -656,8 +761,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 

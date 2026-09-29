@@ -436,7 +436,7 @@ If YES, select condition(s):
 
 | Risk ID | Risk Description | Impact on Data Subjects | Likelihood | Severity | Risk Level | Risk Source |
 |---------|------------------|-------------------------|------------|----------|------------|-------------|
-| DPIA-001 | Unauthorised access to [data type] | [Description of harm to individuals] | [Low/Medium/High] | [Low/Medium/High/Very High] | [LOW/MEDIUM/HIGH/VERY HIGH] | Security vulnerability |
+| DPIA-001 | Unauthorised access to [data type] | [Description of harm to individuals] | [Remote/Possible/Probable] | [Minimal/Significant/Severe] | [LOW/MEDIUM/HIGH] | Security vulnerability |
 | DPIA-002 | Data breach exposing [data type] | [Description of harm] | [Likelihood] | [Severity] | [Risk Level] | [Source] |
 | DPIA-003 | Inaccurate data leading to wrong decisions | [Description of harm] | [Likelihood] | [Severity] | [Risk Level] | Data quality |
 | DPIA-004 | Excessive data retention | [Description of harm] | [Likelihood] | [Severity] | [Risk Level] | Retention policy |
@@ -447,24 +447,23 @@ If YES, select condition(s):
 
 **Likelihood Scale**:
 
-- **Low**: Unlikely to occur (0-33% chance)
-- **Medium**: May occur (34-66% chance)
-- **High**: Likely to occur (67-100% chance)
+- **Remote**: Unlikely to occur (0-33% chance)
+- **Possible**: May occur (34-66% chance)
+- **Probable**: Likely to occur (67-100% chance)
 
 **Severity Scale** (Impact on Individuals):
 
-- **Low**: Minimal or no impact; temporary inconvenience
-- **Medium**: Significant inconvenience or distress; some financial loss; minor reputational impact
-- **High**: Serious consequences; significant financial loss; significant reputational damage; psychological harm
-- **Very High**: Irreversible harm; severe financial loss; severe psychological trauma; physical safety risk
+- **Minimal**: Minimal or no impact; temporary inconvenience
+- **Significant**: Significant inconvenience or distress; some financial loss; reputational damage; psychological harm
+- **Severe**: Serious or irreversible harm; severe financial loss; severe psychological trauma; physical safety risk
 
 **Risk Level Matrix**:
 
-|            | Low Severity | Medium Severity | High Severity | Very High Severity |
-|------------|-------------|-----------------|---------------|-------------------|
-| **Low Likelihood**    | LOW  | LOW  | MEDIUM | HIGH |
-| **Medium Likelihood** | LOW  | MEDIUM | HIGH | VERY HIGH |
-| **High Likelihood**   | MEDIUM | HIGH | VERY HIGH | VERY HIGH |
+|            | Minimal Severity | Significant Severity | Severe Severity |
+|------------|------------------|----------------------|-----------------|
+| **Remote Likelihood**   | LOW    | LOW    | MEDIUM |
+| **Possible Likelihood** | LOW    | MEDIUM | HIGH   |
+| **Probable Likelihood** | MEDIUM | HIGH   | HIGH   |
 
 ### 5.3 Detailed Risk Analysis
 
@@ -482,7 +481,7 @@ If YES, select condition(s):
 
 **Likelihood Analysis**: [Why is this likely/unlikely to happen?]
 
-**Severity Analysis**: [Why would the impact be low/medium/high/very high?]
+**Severity Analysis**: [Why would the impact be minimal/significant/severe?]
 
 **Existing Controls**: [What controls are already in place, if any?]
 
@@ -577,6 +576,8 @@ If YES, select condition(s):
 | DPIA-004 | Excessive retention | Automated deletion, Retention policy, Regular reviews | Data Governance | [DATE] |
 | DPIA-005 | Third party misuse | DPAs, Vendor audits, Limited sharing, Contractual controls | Legal + Procurement | [DATE] |
 | DPIA-006 | Algorithmic bias | Bias testing, Fairness metrics, Human oversight, Diverse training data | Data Science + Ethics Board | [DATE] |
+| DPIA-007 | Re-identification | Robust anonymisation/pseudonymisation, k-anonymity testing, Separation of re-identification keys, Motivated-intruder test | Data Governance + DPO | [DATE] |
+| DPIA-008 | Function creep | Purpose limitation policy, Purpose-based access controls, DPO review of new uses, Privacy notice updates | DPO + Service Owner | [DATE] |
 
 ### 6.4 Residual Risk Assessment
 
@@ -584,20 +585,22 @@ If YES, select condition(s):
 
 | Risk ID | Risk Title | Mitigations | Residual Likelihood | Residual Severity | Residual Risk Level | Acceptable? | Justification |
 |---------|------------|-------------|---------------------|-------------------|---------------------|-------------|---------------|
-| DPIA-001 | Unauthorised access | Encryption + MFA + RBAC + Audit logs | Low | Medium | **MEDIUM** | YES | Risk reduced to tolerable level with strong controls |
-| DPIA-002 | Data breach | Encryption + DLP + Incident plan + Training | Low | High | **MEDIUM** | YES | Cannot eliminate entirely; mitigations are industry best practice |
-| DPIA-003 | Inaccurate data | Validation + Rectification + Audits | Medium | Low | **LOW** | YES | Low impact; regular audits catch issues |
-| DPIA-004 | Excessive retention | Automated deletion + Policy | Low | Low | **LOW** | YES | Technical controls ensure compliance |
-| DPIA-005 | Third party misuse | DPAs + Audits + Limited sharing | Low | Medium | **MEDIUM** | YES | Contractual and technical controls in place |
-| DPIA-006 | Algorithmic bias | Bias testing + Fairness + Oversight | Medium | Medium | **MEDIUM** | YES (with monitoring) | Ongoing monitoring and human oversight required |
+| DPIA-001 | Unauthorised access | Encryption + MFA + RBAC + Audit logs | Possible | Significant | **MEDIUM** | YES | Risk reduced to tolerable level with strong controls |
+| DPIA-002 | Data breach | Encryption + DLP + Incident plan + Training | Remote | Severe | **MEDIUM** | YES | Cannot eliminate entirely; mitigations are industry best practice |
+| DPIA-003 | Inaccurate data | Validation + Rectification + Audits | Possible | Minimal | **LOW** | YES | Low impact; regular audits catch issues |
+| DPIA-004 | Excessive retention | Automated deletion + Policy | Remote | Minimal | **LOW** | YES | Technical controls ensure compliance |
+| DPIA-005 | Third party misuse | DPAs + Audits + Limited sharing | Possible | Significant | **MEDIUM** | YES | Contractual and technical controls in place |
+| DPIA-006 | Algorithmic bias | Bias testing + Fairness + Oversight | Possible | Significant | **MEDIUM** | YES (with monitoring) | Ongoing monitoring and human oversight required |
+| DPIA-007 | Re-identification | Anonymisation + k-anonymity testing + Key separation | Remote | Significant | **LOW** | YES | Re-identification keys held separately; motivated-intruder test passed |
+| DPIA-008 | Function creep | Purpose limitation + Access controls + DPO review | Remote | Significant | **LOW** | YES | New uses require DPO approval and a DPIA update |
 
-**Overall Residual Risk Level**: [LOW/MEDIUM/HIGH/VERY HIGH]
+**Overall Residual Risk Level**: [LOW/MEDIUM/HIGH]
 
 **Acceptability Assessment**:
 
 - [ ] All residual risks are LOW or MEDIUM → ACCEPTABLE
-- [ ] Some residual risks are HIGH → ACCEPTABLE WITH CONDITIONS (describe conditions)
-- [ ] Any residual risks are VERY HIGH → NOT ACCEPTABLE (ICO consultation required)
+- [ ] Some MEDIUM residual risks depend on ongoing monitoring → ACCEPTABLE WITH CONDITIONS (describe conditions)
+- [ ] Any residual risks are HIGH → NOT ACCEPTABLE without ICO prior consultation (Section 7)
 
 **Conditions for Acceptance** (if applicable):
 
@@ -612,7 +615,7 @@ If YES, select condition(s):
 
 **Trigger**: ICO prior consultation is required if:
 
-- Residual risk remains **HIGH** or **VERY HIGH** after mitigation, AND
+- Residual risk remains **HIGH** after mitigation, AND
 - Processing will go ahead despite the high residual risk
 
 **ICO Consultation Details** (if required):

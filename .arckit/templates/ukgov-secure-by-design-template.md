@@ -61,8 +61,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **A2: Risk Management**
 
@@ -82,8 +82,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **A3: Asset Management**
 
@@ -103,8 +103,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **A4: Supply Chain**
 
@@ -124,8 +124,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
@@ -149,8 +149,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **B2: Identity and Access Control**
 
@@ -173,8 +173,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **B3: Data Security**
 
@@ -198,8 +198,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **B4: System Security**
 
@@ -222,8 +222,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **B5: Resilient Networks**
 
@@ -246,8 +246,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **B6: Staff Awareness and Training**
 
@@ -270,8 +270,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
@@ -298,8 +298,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **C2: Proactive Security Event Discovery**
 
@@ -329,8 +329,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 
@@ -368,8 +368,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **D2: Improvements**
 
@@ -389,8 +389,8 @@
 
 **Gaps/Actions**:
 
-- [Action 1]
-- [Action 2]
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
 ---
 

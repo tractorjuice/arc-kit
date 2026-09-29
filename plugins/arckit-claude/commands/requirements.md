@@ -106,7 +106,7 @@ $ARGUMENTS
    - Unique ID (BR-001, FR-001, NFR-P-001, etc.)
    - Clear requirement statement
    - Acceptance criteria (testable)
-   - Priority (MUST/SHOULD/MAY)
+   - Priority (MoSCoW: MUST_HAVE / SHOULD_HAVE / COULD_HAVE / WONT_HAVE)
    - Rationale
 
 7. **Align with stakeholder goals and architecture principles**:
