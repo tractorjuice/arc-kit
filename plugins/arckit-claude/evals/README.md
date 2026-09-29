@@ -68,10 +68,18 @@ These follow the eval conventions in Anthropic's [`commerce-agents`](https://git
 | `stakeholders-benign-external-doc` | governance, artefact, should-serve, citation | The same command on the clean chart uses what it read (names the Design Authority) and cites it with an inline `[SOURCE-Cn]` marker |
 | `search-is-read-only` | read-only | `/arckit:search` never calls `Write` or `Edit` although both are granted, and its results table names the matching document |
 | `secure-on-sonnet-5-5` | security, artefact, model | `/arckit:secure` pinned to Claude Sonnet 5.5, the first Sonnet with cybersecurity safeguards, asked for a STRIDE threat model. The assessment is written at the document-ID path as `DRAFT` with the STRIDE categories in it, every response comes from Sonnet 5.5, none is re-run on Sonnet 5, and none ends in a refusal |
-| `requirements-new-project` | artefact, effort-comparison | `/arckit:requirements` (runs at `max`) creates project 002 and writes its REQ at the document-ID path as `DRAFT`, with every requirement family (BR, FR, NFR, INT, DR) and no placeholder |
-| `sobc-traces-to-stakeholders` | artefact, effort-comparison | `/arckit:sobc` (runs at `max`) on project 001 with a stakeholder analysis mounted from `fixtures/benefits-portal-stakeholders`: the Five Case Model in order, benefits citing the analysis's goals (G-1 to G-8), `DRAFT`, no placeholder |
+| `requirements-new-project` | artefact, effort-comparison | `/arckit:requirements` creates project 002 and writes its REQ at the document-ID path as `DRAFT`, with every requirement family (BR, FR, NFR, INT, DR) and no placeholder |
+| `sobc-traces-to-stakeholders` | artefact, effort-comparison | `/arckit:sobc` on project 001 with a stakeholder analysis mounted from `fixtures/benefits-portal-stakeholders`: the Five Case Model in order, benefits citing the analysis's goals (G-1 to G-8), `DRAFT`, no placeholder |
 
-The two `effort-comparison` cases exist to decide whether a command needs `effort: max`: run each at `max` and `high` on the models you support, with `--runs 2` or more, and compare the scores with the depth of the artefacts and the cost. `tests/plugin/test_eval_effort_override.py` fails when a tagged case's command no longer runs at `max`.
+The two `effort-comparison` cases exist to decide whether a command needs `effort: max`: run each at `max` and `high` on the models you support, with `--runs 2` or more, and compare the scores with the depth of the artefacts and the cost. `tests/plugin/test_eval_effort_override.py` fails when a tagged case's command sets no effort level of its own.
+
+## Findings
+
+**Effort, September 2026** (Claude Code v2.1.284, Opus 5.5 and Sonnet 5.5; `high` twice per model, `max` once or twice). Every run passed every grader; the levels differed in depth, cost and time.
+
+- `/arckit:requirements`: on Opus 5.5, `max` wrote the same number of requirements as `high` (100) at 3.4 times the cost and 4 times the time (48 minutes). On Sonnet 5.5, `max` was deeper (108 against 89 requirements, four times the acceptance criteria) at 4 times the cost, but Opus at `high` matched it for half the price. Moved to `high`.
+- `/arckit:sobc`: `max` made the business case about 30% longer on both models at 2.5 to 3 times the cost, with no richer financial appraisal (net present value, benefit-cost ratio, optimism bias). Moved to `high`.
+- `/arckit:principles` (already `high`): `max` gave every principle its Rationale and Implications; `high` left them out on five to eight principles, because the template's own examples did. The template now gives every example principle both, and `principles-governed-artefact` checks each principle for them. A command whose `high` output looks thin may have a template that contradicts its instructions; fix that before raising the effort.
 
 ## Adding a case
 

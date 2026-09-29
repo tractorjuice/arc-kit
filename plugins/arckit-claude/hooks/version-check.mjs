@@ -97,7 +97,7 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- SessionStart / Setup / SubagentStart hook stderr visibility on blocking exits, improving hook diagnosis (needs v2.1.199)\n` +
     `- Project-scoped plugin loading from git worktrees and \`claude agents --plugin-dir <dir>\` plugin agent/skill visibility fixes for ArcKit branch testing (needs v2.1.200)\n` +
     `- Claude Opus 5 — 1M context and fast mode; earlier clients cannot select it (needs v2.1.219).\n` +
-    `- WebSearch fix at \`effort: xhigh\`/\`max\` with thinking disabled — every search returned a 400 on earlier clients, which silently broke ArcKit's 18 \`effort: max\` commands and its three max-effort research agents for anyone running with thinking off (needs v2.1.221)\n` +
+    `- WebSearch fix at \`effort: xhigh\`/\`max\` with thinking disabled — every search returned a 400 on earlier clients, which silently broke ArcKit's \`effort: max\` commands and its three max-effort research agents for anyone running with thinking off (needs v2.1.221)\n` +
     `- PreToolUse auto-allow hooks no longer bypass tool restrictions inside background agent tasks — load-bearing since v2.1.232 made subagent spawns background by default (needs v2.1.222)\n` +
     `- Bash permission-check bypasses closed: crafted commands could hide part of themselves from the approval dialog (needs v2.1.223)\n` +
     `- Sandbox \`denyRead\`/\`denyWrite\` entries written with a trailing slash were silently bypassable, and sandbox violations now report which access was denied (needs v2.1.224)\n` +

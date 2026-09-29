@@ -116,6 +116,13 @@ All architectures MUST implement defense-in-depth security with zero-trust princ
 **Rationale**:
 The threat landscape requires assuming breach, eliminating implicit trust, and continuously verifying all access requests.
 
+**Implications**:
+
+- Threat modelling happens during design, not after build
+- Every request is authenticated and authorised, including service-to-service calls
+- Security controls are traced to requirements and tested like any other requirement
+- Security debt is tracked and prioritised alongside functional work
+
 **Zero Trust Pillars**:
 
 1. **Identity-Based Access**: No network-based trust; every request authenticated
@@ -161,6 +168,13 @@ All systems MUST emit structured telemetry (logs, metrics, traces) enabling real
 **Rationale**:
 We cannot operate what we cannot observe. Instrumentation is a first-class architectural requirement, not an afterthought.
 
+**Implications**:
+
+- Telemetry is designed alongside features, not bolted on before go-live
+- Every service propagates correlation and trace identifiers across calls
+- Alerts are tied to Service Level Objectives and each has a runbook
+- Operational readiness is a release criterion
+
 **Telemetry Requirements**:
 
 - **Logging**: Structured logs with correlation IDs
@@ -198,6 +212,16 @@ We cannot operate what we cannot observe. Instrumentation is a first-class archi
 **Principle Statement**:
 Data classification, residency, retention, and access controls MUST comply with regulatory requirements and corporate data governance policies.
 
+**Rationale**:
+Regulatory breaches carry legal, financial and reputational penalties, and data held without clear ownership or retention rules becomes a liability. Governance decided up front is far cheaper than remediation after an incident or audit.
+
+**Implications**:
+
+- Every data store has a named owner and a classification before it goes live
+- Hosting and backup locations are chosen to meet residency obligations
+- Retention periods are set per data type and enforced automatically
+- Access follows least privilege and is reviewed periodically
+
 **Data Classification Tiers**:
 
 1. **Public**: No restrictions (marketing content, public documentation)
@@ -230,6 +254,16 @@ Data classification, residency, retention, and access controls MUST comply with 
 
 **Principle Statement**:
 Data pipelines MUST maintain data quality standards and provide end-to-end lineage for auditability and troubleshooting.
+
+**Rationale**:
+Decisions, reports and automated processes are only as reliable as the data behind them. Without lineage, errors cannot be traced to their source and the impact of a change cannot be assessed.
+
+**Implications**:
+
+- Quality rules are defined with data owners and checked automatically in pipelines
+- Producers and consumers agree data contracts before integration
+- Lineage metadata is captured as data moves, not reconstructed afterwards
+- Quality failures are visible to the data owner and block downstream use where material
 
 **Quality Standards**:
 
@@ -314,6 +348,13 @@ Systems SHOULD use asynchronous communication for non-real-time interactions to 
 **Rationale**:
 Asynchronous patterns reduce temporal coupling, improve fault tolerance, and enable better scalability.
 
+**Implications**:
+
+- Message and event schemas are versioned and published like APIs
+- Consumers are idempotent, because messages may be delivered more than once
+- Delivery guarantees, ordering and dead-letter handling are decided per flow
+- User journeys that span asynchronous steps show status rather than block
+
 **When to Use Async**:
 
 - Non-real-time business processes (order fulfillment, batch jobs)
@@ -343,6 +384,9 @@ Asynchronous patterns reduce temporal coupling, improve fault tolerance, and ena
 **Principle Statement**:
 All systems MUST meet defined performance targets under expected load with efficient use of computational resources.
 
+**Rationale**:
+Slow services drive users to costlier channels and erode trust, and inefficient systems waste money and energy at scale. Performance that is not specified up front is rarely achieved later.
+
 **Performance Targets** (define for each system):
 
 - **Response Time**: p50, p95, p99 latency targets
@@ -371,6 +415,16 @@ All systems MUST meet defined performance targets under expected load with effic
 
 **Principle Statement**:
 All systems MUST meet defined availability targets with automated recovery and minimal data loss.
+
+**Rationale**:
+Outages stop users completing essential tasks and push demand onto other channels. Availability targets set by business impact let investment in resilience match what each service actually needs.
+
+**Implications**:
+
+- Availability, RTO and RPO targets are agreed with the service owner per system
+- Resilience patterns are chosen to meet those targets, not maximised by default
+- Recovery procedures are automated where possible and rehearsed regularly
+- Planned maintenance is designed to avoid user-facing downtime
 
 **Availability Targets** (define for each system):
 
@@ -452,6 +506,16 @@ Manual infrastructure changes create drift, inconsistency, and undocumented stat
 **Principle Statement**:
 All code changes MUST be validated through automated testing before deployment to production.
 
+**Rationale**:
+Manual testing cannot keep pace with frequent change, and defects found in production cost far more to fix. Automated tests give the confidence to change systems safely and quickly.
+
+**Implications**:
+
+- Tests are written alongside the code they cover and run on every change
+- A failing test blocks the merge
+- Non-functional tests (performance, security, resilience) are automated, not left to release time
+- Test data is synthetic or anonymised, never live personal data
+
 **Test Pyramid**:
 
 - **Unit Tests**: Fast, isolated, high coverage (70-80% of tests)
@@ -478,6 +542,16 @@ All code changes MUST be validated through automated testing before deployment t
 
 **Principle Statement**:
 All code changes MUST go through automated build, test, and deployment pipelines with quality gates at each stage.
+
+**Rationale**:
+Automated pipelines make releases small, frequent and repeatable, which lowers the risk of each change and shortens the time to deliver value and fix defects.
+
+**Implications**:
+
+- Every change reaches production through the pipeline; there are no manual deployments
+- Quality and security gates are automated and cannot be skipped without a recorded exception
+- Deployments are reversible, with rollback or roll-forward rehearsed
+- Pipeline definitions are version-controlled with the code
 
 **Pipeline Stages**:
 

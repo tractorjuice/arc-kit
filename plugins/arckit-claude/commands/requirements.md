@@ -2,7 +2,7 @@
 description: Create comprehensive business and technical requirements
 doc-type: REQ
 argument-hint: "<project ID or feature, e.g. '001', 'authentication module'>"
-effort: max
+effort: high
 keep-coding-instructions: true
 handoffs:
   - command: data-model

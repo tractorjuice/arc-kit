@@ -15,7 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/arckit:requirements` and `/arckit:sobc` run at `effort: high`, not `max`.** An eval comparison on Claude Opus 5.5 and Sonnet 5.5 found that `max` did not make either document better enough to justify it. On Opus 5.5, the default model, `max` wrote the same number of requirements at 3.4 times the cost and 4 times the wait (48 minutes against 12). On both models it made the business case about 30% longer, at 2.5 to 3 times the cost, without a richer financial appraisal. Both commands now finish in about a quarter of the time. The results are in `plugins/arckit-claude/evals/README.md`.
+
 - **Model guidance for Sonnet 5.5.** The enterprise-scale guide no longer calls Sonnet 5 the normal default: Claude Code starts on Opus 5.5, and `sonnet` means Sonnet 5.5 from v2.1.284. It now covers the `deniedModels` and `availableModelsMatch: "exact"` managed settings, which hold a new model back until you have evaluated it, and explains what happens when a security command trips a model's cybersecurity safeguard: Claude Code re-runs it on an older model and the session stays there. The Secure by Design guides say the same where the user reads them, and CLAUDE.md notes that Sonnet 5.5 has no fast mode.
+
+### Fixed
+
+- **Every architecture principle gets its Rationale and Implications.** `/arckit:principles` requires both for every principle, but the template's own examples left Rationale out of six principles and Implications out of eight, and at normal effort the model copied the gaps: every generated set of principles had five to eight principles without them. The template now gives every example principle both, and the `principles-governed-artefact` eval checks each principle. Re-tested on Opus 5.5 and Sonnet 5.5: every principle complete in every run.
+
+- **The end-of-turn nudge no longer reports projects that do not exist.** It counted any committed file named `ARC-NNN-*`, wherever it lived, so an eval fixture or sample artefact could prompt you to run `/arckit:requirements` for a phantom "project 001". It now counts only artefacts under the repository's own `projects/` directory.
 
 ## [6.16.5] — 2026-09-28
 

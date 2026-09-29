@@ -72,8 +72,13 @@ def test_rejects_unknown_level_and_command(tmp_path):
         eval_headless.plugin_with_effort(PLUGIN, "no-such-command", "high", tmp_path / "b")
 
 
-def test_effort_comparison_cases_target_max_commands():
-    """The comparison cases only mean something against a command that runs at max."""
+def test_effort_comparison_cases_target_commands_with_explicit_effort():
+    """A comparison case targets a command that sets its own effort level.
+
+    The cases were written to test commands at `max`; after the September 2026
+    comparison `/arckit:requirements` and `/arckit:sobc` moved to `high`, and the
+    cases stay to re-test that decision when models change.
+    """
     import yaml
 
     for case_dir in (PLUGIN / "evals").iterdir():
@@ -84,8 +89,9 @@ def test_effort_comparison_cases_target_max_commands():
         if "effort-comparison" not in (case.get("tags") or []):
             continue
         command = eval_headless.prompt_command(case["prompt"])
-        assert "effort: max" in frontmatter(PLUGIN / "commands" / f"{command}.md").splitlines(), \
-            f"{case_dir.name}: /arckit:{command} no longer runs at max; retag or retire the comparison"
+        lines = frontmatter(PLUGIN / "commands" / f"{command}.md").splitlines()
+        assert any(line.startswith("effort: ") for line in lines), \
+            f"{case_dir.name}: /arckit:{command} sets no effort level; the comparison has no baseline"
 
 
 def test_timeout_is_recorded_not_raised(tmp_path, monkeypatch):
