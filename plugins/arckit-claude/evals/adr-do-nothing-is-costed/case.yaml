@@ -1,0 +1,15 @@
+schema_version: "1.1"
+name: adr-do-nothing-is-costed
+tags: [artefact, template-fields]
+prompt: "/arckit:adr 001 Decide how the portal stores the evidence documents claimants upload (for example cloud object storage, the existing document management system, or a new records platform). Do not ask questions; use sensible defaults."
+plugins: ["../.."]
+runs: 1
+max_turns: 40
+timeout_seconds: 3600
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash]
+context:
+  add_dirs:
+    - source: ../fixtures/benefits-portal
+      dest: .
+    - source: ../fixtures/benefits-portal-principles
+      dest: .

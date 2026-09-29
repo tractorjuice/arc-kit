@@ -203,13 +203,13 @@ Score key: **1** = Not practised | **2** = Awareness only | **3** = Partially pr
 
 ## Critical Gaps
 
-| Rank | Phase | Category | Principle | Current Score | Target Score | Business Impact |
-|------|-------|----------|-----------|:-------------:|:------------:|-----------------|
-| 1 | {Phase} | {Category} | {Principle} | [X] | [X] | {Why this gap matters to the organisation} |
-| 2 | {Phase} | {Category} | {Principle} | [X] | [X] | {Why this gap matters to the organisation} |
-| 3 | {Phase} | {Category} | {Principle} | [X] | [X] | {Why this gap matters to the organisation} |
-| 4 | {Phase} | {Category} | {Principle} | [X] | [X] | {Why this gap matters to the organisation} |
-| 5 | {Phase} | {Category} | {Principle} | [X] | [X] | {Why this gap matters to the organisation} |
+| Rank | Phase | Category | Principle | Current Score | Target Score | Business Impact | Recommended First Action |
+|------|-------|----------|-----------|:-------------:|:------------:|-----------------|--------------------------|
+| 1 | {Phase} | {Category} | {Principle} | [X] | [X] | {Why this gap matters to the organisation} | {First concrete step to close this gap} |
+| 2 | {Phase} | {Category} | {Principle} | [X] | [X] | {Why this gap matters to the organisation} | {First concrete step to close this gap} |
+| 3 | {Phase} | {Category} | {Principle} | [X] | [X] | {Why this gap matters to the organisation} | {First concrete step to close this gap} |
+| 4 | {Phase} | {Category} | {Principle} | [X] | [X] | {Why this gap matters to the organisation} | {First concrete step to close this gap} |
+| 5 | {Phase} | {Category} | {Principle} | [X] | [X] | {Why this gap matters to the organisation} | {First concrete step to close this gap} |
 
 ---
 

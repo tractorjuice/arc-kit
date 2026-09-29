@@ -1,0 +1,17 @@
+schema_version: "1.1"
+name: doctrine-gaps-have-first-actions
+tags: [artefact, template-fields]
+prompt: "/arckit:wardley.doctrine 001 Assess the council digital team's Wardley doctrine maturity for the benefits portal programme. Do not ask questions; use sensible defaults."
+plugins: ["../.."]
+runs: 1
+max_turns: 40
+timeout_seconds: 5400
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash]
+context:
+  add_dirs:
+    - source: ../fixtures/benefits-portal
+      dest: .
+    - source: ../fixtures/benefits-portal-principles
+      dest: .
+    - source: ../fixtures/benefits-portal-stakeholders
+      dest: .

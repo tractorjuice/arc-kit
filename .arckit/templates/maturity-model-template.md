@@ -71,14 +71,14 @@ The following table defines the five maturity levels used throughout this model.
 
 The maturity model assesses the following capability dimensions. Each dimension represents a distinct area of practice that contributes to overall maturity.
 
-| Dimension ID | Dimension | Description |
-|--------------|-----------|-------------|
-| DIM-01 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the policies, standards, and governance structures that guide practice in this domain] |
-| DIM-02 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the people, skills, training, and culture required to support capability] |
-| DIM-03 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the processes, workflows, and procedures used to deliver outcomes] |
-| DIM-04 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the tools, technologies, and platforms that enable and automate practices] |
-| DIM-05 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the metrics, monitoring, and feedback mechanisms used to measure effectiveness] |
-| DIM-06 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the integration, collaboration, and communication across teams and stakeholders] |
+| Dimension ID | Dimension | Description | Scope | Why It Matters | Alignment |
+|--------------|-----------|-------------|-------|----------------|-----------|
+| DIM-01 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the policies, standards, and governance structures that guide practice in this domain] | [What this dimension covers and explicitly does not cover] | [Business justification for measuring this dimension] | [Architecture principles, strategic themes, or requirement IDs it supports] |
+| DIM-02 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the people, skills, training, and culture required to support capability] | [What this dimension covers and explicitly does not cover] | [Business justification for measuring this dimension] | [Architecture principles, strategic themes, or requirement IDs it supports] |
+| DIM-03 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the processes, workflows, and procedures used to deliver outcomes] | [What this dimension covers and explicitly does not cover] | [Business justification for measuring this dimension] | [Architecture principles, strategic themes, or requirement IDs it supports] |
+| DIM-04 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the tools, technologies, and platforms that enable and automate practices] | [What this dimension covers and explicitly does not cover] | [Business justification for measuring this dimension] | [Architecture principles, strategic themes, or requirement IDs it supports] |
+| DIM-05 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the metrics, monitoring, and feedback mechanisms used to measure effectiveness] | [What this dimension covers and explicitly does not cover] | [Business justification for measuring this dimension] | [Architecture principles, strategic themes, or requirement IDs it supports] |
+| DIM-06 | [DIMENSION_NAME] | [Description of what this dimension covers, e.g., the integration, collaboration, and communication across teams and stakeholders] | [What this dimension covers and explicitly does not cover] | [Business justification for measuring this dimension] | [Architecture principles, strategic themes, or requirement IDs it supports] |
 
 ---
 
@@ -150,14 +150,34 @@ This section provides detailed characteristics for each maturity level within ea
 
 ## 6. Transition Criteria Between Levels
 
-The following table defines what must be true for an organisation to advance from one maturity level to the next. These criteria should be used to validate assessment results and to plan improvement initiatives.
+The following table defines, for each capability dimension, what must be true for an organisation to advance from one maturity level to the next. These criteria should be used to validate assessment results and to plan improvement initiatives.
 
-| From | To | Criteria |
-|------|----|----------|
-| Level 1 (Initial) | Level 2 (Repeatable) | [Key processes are identified and documented at project level. Basic roles and responsibilities are assigned. Successes from one project can be replicated. Management oversight exists for critical activities.] |
-| Level 2 (Repeatable) | Level 3 (Defined) | [Organisation-wide standards and processes are documented and communicated. Training programmes are established. Processes are consistently followed across teams and projects. A central governance function oversees compliance.] |
-| Level 3 (Defined) | Level 4 (Managed) | [Quantitative performance targets are defined for key processes. Metrics are collected, analysed, and reported regularly. Variation in process performance is understood and managed. Data-driven decision making is the norm.] |
-| Level 4 (Managed) | Level 5 (Optimised) | [Continuous improvement processes are embedded and funded. Innovation is systematically encouraged and evaluated. Best practices are proactively identified and adopted. The organisation benchmarks against industry leaders and adapts accordingly.] |
+| Dimension ID | Dimension | From | To | Criteria |
+|--------------|-----------|------|----|----------|
+| DIM-01 | [DIMENSION_NAME] | Level 1 (Initial) | Level 2 (Repeatable) | [Key processes are identified and documented at project level. Basic roles and responsibilities are assigned. Successes from one project can be replicated. Management oversight exists for critical activities.] |
+| DIM-01 | [DIMENSION_NAME] | Level 2 (Repeatable) | Level 3 (Defined) | [Organisation-wide standards and processes are documented and communicated. Training programmes are established. Processes are consistently followed across teams and projects. A central governance function oversees compliance.] |
+| DIM-01 | [DIMENSION_NAME] | Level 3 (Defined) | Level 4 (Managed) | [Quantitative performance targets are defined for key processes. Metrics are collected, analysed, and reported regularly. Variation in process performance is understood and managed. Data-driven decision making is the norm.] |
+| DIM-01 | [DIMENSION_NAME] | Level 4 (Managed) | Level 5 (Optimised) | [Continuous improvement processes are embedded and funded. Innovation is systematically encouraged and evaluated. Best practices are proactively identified and adopted. The organisation benchmarks against industry leaders and adapts accordingly.] |
+| DIM-02 | [DIMENSION_NAME] | Level 1 (Initial) | Level 2 (Repeatable) | [Specific, measurable criteria this dimension must demonstrate to reach Level 2, including a threshold or evidence requirement] |
+| DIM-02 | [DIMENSION_NAME] | Level 2 (Repeatable) | Level 3 (Defined) | [Specific, measurable criteria this dimension must demonstrate to reach Level 3, including a threshold or evidence requirement] |
+| DIM-02 | [DIMENSION_NAME] | Level 3 (Defined) | Level 4 (Managed) | [Specific, measurable criteria this dimension must demonstrate to reach Level 4, including a threshold or evidence requirement] |
+| DIM-02 | [DIMENSION_NAME] | Level 4 (Managed) | Level 5 (Optimised) | [Specific, measurable criteria this dimension must demonstrate to reach Level 5, including a threshold or evidence requirement] |
+| DIM-03 | [DIMENSION_NAME] | Level 1 (Initial) | Level 2 (Repeatable) | [Specific, measurable criteria this dimension must demonstrate to reach Level 2, including a threshold or evidence requirement] |
+| DIM-03 | [DIMENSION_NAME] | Level 2 (Repeatable) | Level 3 (Defined) | [Specific, measurable criteria this dimension must demonstrate to reach Level 3, including a threshold or evidence requirement] |
+| DIM-03 | [DIMENSION_NAME] | Level 3 (Defined) | Level 4 (Managed) | [Specific, measurable criteria this dimension must demonstrate to reach Level 4, including a threshold or evidence requirement] |
+| DIM-03 | [DIMENSION_NAME] | Level 4 (Managed) | Level 5 (Optimised) | [Specific, measurable criteria this dimension must demonstrate to reach Level 5, including a threshold or evidence requirement] |
+| DIM-04 | [DIMENSION_NAME] | Level 1 (Initial) | Level 2 (Repeatable) | [Specific, measurable criteria this dimension must demonstrate to reach Level 2, including a threshold or evidence requirement] |
+| DIM-04 | [DIMENSION_NAME] | Level 2 (Repeatable) | Level 3 (Defined) | [Specific, measurable criteria this dimension must demonstrate to reach Level 3, including a threshold or evidence requirement] |
+| DIM-04 | [DIMENSION_NAME] | Level 3 (Defined) | Level 4 (Managed) | [Specific, measurable criteria this dimension must demonstrate to reach Level 4, including a threshold or evidence requirement] |
+| DIM-04 | [DIMENSION_NAME] | Level 4 (Managed) | Level 5 (Optimised) | [Specific, measurable criteria this dimension must demonstrate to reach Level 5, including a threshold or evidence requirement] |
+| DIM-05 | [DIMENSION_NAME] | Level 1 (Initial) | Level 2 (Repeatable) | [Specific, measurable criteria this dimension must demonstrate to reach Level 2, including a threshold or evidence requirement] |
+| DIM-05 | [DIMENSION_NAME] | Level 2 (Repeatable) | Level 3 (Defined) | [Specific, measurable criteria this dimension must demonstrate to reach Level 3, including a threshold or evidence requirement] |
+| DIM-05 | [DIMENSION_NAME] | Level 3 (Defined) | Level 4 (Managed) | [Specific, measurable criteria this dimension must demonstrate to reach Level 4, including a threshold or evidence requirement] |
+| DIM-05 | [DIMENSION_NAME] | Level 4 (Managed) | Level 5 (Optimised) | [Specific, measurable criteria this dimension must demonstrate to reach Level 5, including a threshold or evidence requirement] |
+| DIM-06 | [DIMENSION_NAME] | Level 1 (Initial) | Level 2 (Repeatable) | [Specific, measurable criteria this dimension must demonstrate to reach Level 2, including a threshold or evidence requirement] |
+| DIM-06 | [DIMENSION_NAME] | Level 2 (Repeatable) | Level 3 (Defined) | [Specific, measurable criteria this dimension must demonstrate to reach Level 3, including a threshold or evidence requirement] |
+| DIM-06 | [DIMENSION_NAME] | Level 3 (Defined) | Level 4 (Managed) | [Specific, measurable criteria this dimension must demonstrate to reach Level 4, including a threshold or evidence requirement] |
+| DIM-06 | [DIMENSION_NAME] | Level 4 (Managed) | Level 5 (Optimised) | [Specific, measurable criteria this dimension must demonstrate to reach Level 5, including a threshold or evidence requirement] |
 
 ---
 

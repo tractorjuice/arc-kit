@@ -387,6 +387,12 @@ Before analyzing options, define what "success" looks like:
 
 **Stakeholder Goals Met**: 100%
 
+**Risks**:
+
+- [Risk 1]: Scope and budget overrun on an 18-month build → £[X]M additional cost
+- [Risk 2]: Delivery complexity (multi-region, AI components) → delayed benefits and supplier dependency
+- [Risk 3]: Affordability → funding not approved, forcing a mid-programme re-scope
+
 **Recommendation**: **Reject** - Diminishing returns, cost not justified.
 
 ---

@@ -79,10 +79,10 @@
 
 **Rationale**: [Why this is important to the business]
 
-**Success Criteria**:
+**Acceptance Criteria**:
 
-- [Measurable criterion 1]
-- [Measurable criterion 2]
+- [ ] [Measurable outcome, with target and date, e.g. "80% of claims submitted online within 12 months of launch"]
+- [ ] [Measurable outcome 2]
 
 **Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
@@ -92,7 +92,7 @@
 
 ### BR-002: [Business Requirement Name]
 
-[Repeat structure above for each business requirement]
+[Repeat structure above for each business requirement: every requirement carries its own Rationale, Acceptance Criteria and Priority]
 
 ---
 
@@ -163,6 +163,8 @@
 
 **Relates To**: [BR-001, UC-1] (link to business requirements and use cases)
 
+**Rationale**: [Why the system must do this: the user need or business requirement it serves]
+
 **Acceptance Criteria**:
 
 - [ ] Given [context], when [action], then [expected result]
@@ -187,7 +189,7 @@
 
 #### FR-002: [Functional Requirement Name]
 
-[Repeat for each functional requirement - aim for 10-30 FRs depending on project size]
+[Repeat for each functional requirement - aim for 10-30 FRs depending on project size. Every FR carries its own Rationale, Acceptance Criteria and Priority]
 
 ---
 
@@ -211,7 +213,14 @@
 - Average load: [Y] transactions per second
 - Data volume: [Z] records in primary tables
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Slow pages drive users to costlier channels and abandon transactions; response time targets make performance testable before launch.
+
+**Acceptance Criteria**:
+
+- [ ] Load test at peak load shows p95 page load under [2] seconds and p95 API response under [200] ms
+- [ ] Production monitoring reports the same percentiles on a dashboard reviewed each release
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -221,7 +230,14 @@
 
 **Scalability**: Must scale horizontally to support 3x growth over 2 years
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Peak demand (deadlines, campaigns, month-end) must be served without queuing or failure.
+
+**Acceptance Criteria**:
+
+- [ ] Sustained load test at [X] transactions per second for [1 hour] completes with error rate under [0.1%]
+- [ ] Test at 3x the launch load shows throughput scales by adding instances, with no code change
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -236,7 +252,14 @@
 
 **Maintenance Windows**: [Allowed times for planned maintenance]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Downtime stops users completing essential tasks and pushes demand onto other channels.
+
+**Acceptance Criteria**:
+
+- [ ] Monthly availability, measured by external synthetic monitoring, meets [99.9%]
+- [ ] Planned maintenance happens only inside the agreed windows and is announced in advance
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -257,7 +280,14 @@
 - Automatic failover to secondary region: [YES | NO]
 - Failover time: < [X minutes]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Recovery targets define how much data and time the organisation can afford to lose in a disaster.
+
+**Acceptance Criteria**:
+
+- [ ] A restore from backup, rehearsed at least [annually], completes within the RTO with data no older than the RPO
+- [ ] The rehearsal result is recorded and gaps have owners
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -273,7 +303,14 @@
 - [ ] Bulkhead isolation for critical resources
 - [ ] Graceful degradation with reduced functionality
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Component failures are inevitable; the service must degrade gracefully rather than fail outright.
+
+**Acceptance Criteria**:
+
+- [ ] Fault-injection test: loss of any single instance or zone causes no user-visible outage
+- [ ] Failure of a non-critical dependency degrades only the features that depend on it
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -291,7 +328,14 @@
 
 **Scaling Triggers**: Auto-scale when CPU > 70% or memory > 80%
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Demand grows and fluctuates; capacity must follow it without re-architecture.
+
+**Acceptance Criteria**:
+
+- [ ] Adding instances increases capacity near-linearly in a load test
+- [ ] Auto-scaling adds and removes capacity within [5] minutes of the threshold being crossed
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -301,7 +345,14 @@
 
 **Data Archival Strategy**: [Hot/warm/cold storage tiers, archival after X months]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Data grows every year; performance must not degrade as volumes rise.
+
+**Acceptance Criteria**:
+
+- [ ] Performance tests at the [5-year] projected data volume meet the NFR-P-001 targets
+- [ ] Archiving or partitioning approach documented and tested
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -322,7 +373,14 @@
 - Absolute session timeout: [Y hours]
 - Re-authentication required for: [sensitive operations]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Weak authentication is the most common route to account takeover and data breach.
+
+**Acceptance Criteria**:
+
+- [ ] All user and administrator access requires multi-factor authentication
+- [ ] Penetration test finds no authentication bypass; session timeout and lockout behave as specified
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -334,7 +392,14 @@
 
 **Privilege Elevation**: [Process for temporary elevated access]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Users must see and change only what their role allows, limiting the damage from any compromised account.
+
+**Acceptance Criteria**:
+
+- [ ] Access control tests show each role can perform only its permitted actions
+- [ ] Privileged access is reviewed [quarterly] and every privileged action is logged
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -353,7 +418,14 @@
 - [ ] File storage encryption
 - [ ] Application-level field encryption for PII
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Encryption protects data if storage, backups or network traffic are exposed.
+
+**Acceptance Criteria**:
+
+- [ ] All data stores and backups are encrypted at rest; all traffic uses TLS 1.2 or higher
+- [ ] Configuration scan confirms no unencrypted store or endpoint
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -365,7 +437,14 @@
 
 **Secrets Rotation**: [Automatic rotation every X days]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Credentials in code or configuration are routinely leaked and exploited.
+
+**Acceptance Criteria**:
+
+- [ ] Secret scanning in CI finds no credentials in the repositories
+- [ ] All secrets are held in the vault and rotated on the agreed schedule
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -384,7 +463,14 @@
 - High vulnerabilities: [7 days]
 - Medium vulnerabilities: [30 days]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Unpatched vulnerabilities are a leading cause of compromise.
+
+**Acceptance Criteria**:
+
+- [ ] Dependency and container scans run on every build; critical findings block release
+- [ ] Critical vulnerabilities are remediated within [14] days, tracked to closure
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -406,7 +492,14 @@
 
 **Data Retention**: [Automatic deletion after X days/months/years]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Processing personal data unlawfully risks regulatory penalties and loss of public trust.
+
+**Acceptance Criteria**:
+
+- [ ] DPIA completed and signed off before live personal data is processed
+- [ ] Subject access and erasure requests can be fulfilled within the statutory deadline
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -427,7 +520,14 @@
 
 **Log Integrity**: Tamper-evident logging (cryptographic hashing)
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Audit trails provide accountability and the evidence needed to investigate incidents and disputes.
+
+**Acceptance Criteria**:
+
+- [ ] Every create, update, delete and access to sensitive records is logged with user, time and action
+- [ ] Audit logs are tamper-evident and retained for [X years]
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -440,7 +540,14 @@
 - [Report 1]: [Frequency, recipient, format]
 - [Report 2]: [Frequency, recipient, format]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Regulatory reports must be accurate, complete and on time to avoid sanctions.
+
+**Acceptance Criteria**:
+
+- [ ] Each required report is produced from the system for a test period and reconciles with source data
+- [ ] Report generation completes within the regulatory deadline
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -459,7 +566,14 @@
 
 **User Onboarding**: [Interactive tutorial, contextual help, documentation]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: A service users cannot complete unaided generates failure demand and excludes people.
+
+**Acceptance Criteria**:
+
+- [ ] Usability testing with representative users shows at least [90%] complete the core journey unaided
+- [ ] User satisfaction measured after launch meets [target]
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -478,7 +592,14 @@
 
 **Testing**: Automated accessibility testing in CI/CD + manual testing
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Public services must be usable by everyone; accessibility is also a legal requirement.
+
+**Acceptance Criteria**:
+
+- [ ] Independent audit confirms WCAG 2.2 AA conformance
+- [ ] Testing with assistive technologies (screen reader, magnification, voice control) passes the core journeys
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -494,7 +615,14 @@
 - [ ] Number formatting
 - [ ] Right-to-left (RTL) languages if applicable
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Users who need other languages or locales must be able to use the service.
+
+**Acceptance Criteria**:
+
+- [ ] All user-facing text is externalised; the service renders correctly in each required language
+- [ ] Dates, numbers and currencies display in the user's locale
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -514,7 +642,14 @@
 
 **Log Levels**: DEBUG, INFO, WARN, ERROR, FATAL
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Problems cannot be fixed quickly if they cannot be seen.
+
+**Acceptance Criteria**:
+
+- [ ] Logs, metrics and traces are available for every component, with correlation IDs across calls
+- [ ] Alerts fire for each SLO breach and each links to a runbook
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -535,7 +670,14 @@
 
 **Documentation Currency**: Updated within [X days] of code changes
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Undocumented systems are slow and risky to change or hand over.
+
+**Acceptance Criteria**:
+
+- [ ] Architecture, API and operational documentation exists and is reviewed each release
+- [ ] A new team member can deploy the service from the documentation alone
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -552,7 +694,14 @@
 - [ ] Scaling procedures (manual if not auto-scaled)
 - [ ] Disaster recovery procedures
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Consistent runbooks shorten incidents and reduce reliance on individuals.
+
+**Acceptance Criteria**:
+
+- [ ] A runbook exists for every alert and common operational task
+- [ ] Runbooks are exercised in a game day at least [annually]
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -570,7 +719,14 @@
 - Consistent error response format
 - HATEOAS for discoverability (if applicable)
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Consistent, standard APIs make integration cheaper and safer for every consumer.
+
+**Acceptance Criteria**:
+
+- [ ] Every API has a published OpenAPI specification and follows the organisation's API standards
+- [ ] Breaking changes go through versioning with a deprecation period
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -588,7 +744,14 @@
 
 **Integration SLA**: [X% success rate, Y minute latency]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: The service must exchange data reliably with the systems around it.
+
+**Acceptance Criteria**:
+
+- [ ] Integration tests cover every interface in both success and failure cases
+- [ ] Failed exchanges are retried or queued and alerted, never lost silently
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -602,7 +765,14 @@
 
 **Import Capability**: [Support for bulk import from standard formats]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: Data must be retrievable in open formats to avoid lock-in and support exit.
+
+**Acceptance Criteria**:
+
+- [ ] A full data export in documented, open formats is tested
+- [ ] The export can be imported into a replacement system without loss
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 
@@ -631,7 +801,14 @@
 
 **Owner**: [Team/person responsible for external system]
 
-**Priority**: [CRITICAL | HIGH | MEDIUM | LOW]
+**Rationale**: [Why this integration is needed: the business process or data it supports]
+
+**Acceptance Criteria**:
+
+- [ ] End-to-end test exchanges data with [System Name] in both success and failure cases
+- [ ] Failed exchanges are retried or queued and alerted, never lost silently
+
+**Priority**: [MUST_HAVE | SHOULD_HAVE | COULD_HAVE | WONT_HAVE]
 
 ---
 

@@ -1,0 +1,15 @@
+schema_version: "1.1"
+name: operationalize-runbooks-complete
+tags: [artefact, template-fields]
+prompt: "/arckit:operationalize 001 Operational readiness pack for the Housing Benefits Portal. Do not ask questions; use sensible defaults."
+plugins: ["../.."]
+runs: 1
+max_turns: 40
+timeout_seconds: 3600
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash]
+context:
+  add_dirs:
+    - source: ../fixtures/benefits-portal
+      dest: .
+    - source: ../fixtures/benefits-portal-principles
+      dest: .
