@@ -12,10 +12,9 @@ ArcKit's Claude Code plugin includes automation hooks across 10 event types. Hoo
 | **Stop** | session-learner | Session ends normally |
 | **StopFailure** | session-learner | Session ends with error |
 | **UserPromptSubmit** | arckit-context, secret-detection, sync-guides, graph-inject | Every user message and matched ArcKit commands |
-| **PreToolUse** | allow-plugin-internals, inject-agent-context, validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner | Before selected tool calls |
+| **PreToolUse** | allow-plugin-internals (Read), validate-reader-handoff (SubagentHandback), inject-agent-context, validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner | Before selected tool calls |
 | **PostToolUse** | update-manifest, provenance-stamp, tidy-wardley-labels, telemetry | After selected tool calls |
 | **TaskCreated** | telemetry | When an agent task is created |
-| **PermissionRequest** | allow-mcp-tools | MCP tool permission prompt |
 | **FileChanged** | external-context-watch | Watched external documents change |
 | **PostCompact** | postcompact-rehydrate | After context compaction |
 
@@ -129,11 +128,13 @@ Re-injects the same project inventory used by `arckit-context` after manual or
 automatic compaction so dynamic project state is not lost from the context
 window.
 
-## PermissionRequest Hooks
+## Permissions
 
-### allow-mcp-tools
+ArcKit approves one kind of permission request itself: reading its own files. `allow-plugin-internals` (PreToolUse on `Read`) approves a Read of a file inside the plugin's install directory, because every command reads its templates from there and that directory is outside your project. Nothing else is approved by a hook.
 
-Auto-allows MCP tool calls from ArcKit's bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, DataCommons, govreposcrape, uk-tenders) so users don't need to approve each one manually. Every other tool gets no decision from it, and your own deny and ask rules still apply. Before 6.16.3 this hook never took effect, because it looked for the wrong tool names and answered in a format Claude Code ignores, so you were asked about each call.
+- **ArcKit's own scripts** (document IDs, project creation, Wardley rendering, OKF import and export) are pre-approved by each command's `allowed-tools` rules. Claude Code checks those per command, so a script call chained to anything else still asks.
+- **MCP tool calls** ask the first time. To stop the prompts for a server you trust, add it to `permissions.allow` in your settings, for example `"mcp__plugin_arckit_aws-knowledge"` or `"mcp__plugin_arckit_microsoft-learn"`.
+- **Research reader output** is checked by `validate-reader-handoff` (PostToolUse on `Agent`, and PreToolUse on `SubagentHandback` in auto mode), with no shell command and no permission.
 
 ## Utility Files
 

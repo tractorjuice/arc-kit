@@ -9,6 +9,10 @@ handoffs:
     condition: "Doctrine gaps affect component positioning or strategy"
   - command: wardley.gameplay
     description: Select gameplays that address doctrine weaknesses
+allowed-tools:
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
 ---
 
 # ArcKit: Wardley Doctrine Maturity Assessment

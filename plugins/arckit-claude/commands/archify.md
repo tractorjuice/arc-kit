@@ -13,6 +13,12 @@ handoffs:
   - command: wardley
     description: Create or update the Wardley Map this command renders
     condition: "Wardley render requested but no WARD artefact exists"
+allowed-tools:
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/owm-to-html.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/owm-to-html.mjs" *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/archify-detect.mjs *)
 ---
 
 # ArcKit: Interactive Diagram Rendering

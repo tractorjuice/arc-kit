@@ -86,7 +86,7 @@ After restart, open the plugin manager (`/plugin`) and navigate to **Installed**
 - **Commands**: ArcKit slash commands
 - **Agents**: Autonomous research agents
 - **Skills**: Reference skills (Wardley, Mermaid, PlantUML, workflow, build harness)
-- **Hooks**: SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest
+- **Hooks**: SessionStart, UserPromptSubmit, PreToolUse, PostToolUse
 
 > **Tip**: You may see 2 MCP errors about missing API keys for Google and Data Commons. These are harmless — see [Servers Requiring API Keys](#servers-requiring-api-keys) below.
 
@@ -130,6 +130,25 @@ ArcKit includes 4 bundled MCP (Model Context Protocol) servers for cloud researc
 | Microsoft Learn | Not required | `/arckit:azure-research` | Works out of the box |
 | Google Developer Knowledge | `GOOGLE_API_KEY` | `/arckit:gcp-research` | Requires setup |
 | Data Commons | `DATA_COMMONS_API_KEY` | Data statistics lookups | Requires setup |
+
+### Approving MCP tool calls
+
+ArcKit doesn't approve MCP tool calls on your behalf. The first time a research command calls a server, Claude Code asks. To stop asking for a server you trust, add it to `permissions.allow` in `.claude/settings.json` (for one project) or `~/.claude/settings.json` (for all of them):
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_arckit_aws-knowledge",
+      "mcp__plugin_arckit_microsoft-learn",
+      "mcp__plugin_arckit_google-developer-knowledge",
+      "mcp__plugin_arckit_datacommons-mcp"
+    ]
+  }
+}
+```
+
+Add `"mcp__plugin_arckit_govreposcrape"` and `"mcp__plugin_arckit_uk-tenders"` only if you're content to send queries to those community-run services without being asked. Until 6.17, a hook approved all six servers automatically.
 
 ---
 

@@ -12,6 +12,12 @@ handoffs:
     description: Incorporate patterns into architecture framework
   - command: wardley
     description: Map landscape evolution
+allowed-tools:
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
 ---
 
 # Government Code Landscape
@@ -108,21 +114,15 @@ Ensure `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` exists via `Read`. R
 
    Use `search_limit: 50` for broad domain-level facets and `20` for narrow ones.
 
-2. Dispatch with the `Agent` tool, `subagent_type: "arckit-gov-landscape-reader"`.
+2. Dispatch with the `Agent` tool, `subagent_type: "arckit:arckit-gov-landscape-reader"`.
 
-3. Validate each reader's final message:
+3. Each reader's final message is validated automatically:
 
-   ```bash
-   TMPFILE=$(mktemp /tmp/gov-repo-handoff.XXXXXX.json)
-   cat > "$TMPFILE" <<'EOF'
-   <reader's output>
-   EOF
-   node "${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs" \
-        "${CLAUDE_PLUGIN_ROOT}/schemas/gov-repo-handoff.schema.json" \
-        "$TMPFILE"
-   echo "exit=$?"
-   rm -f "$TMPFILE"
-   ```
+   The **ArcKit handoff hook** does this for you, with no Bash call: when the reader returns, it validates the reply against `schemas/gov-repo-handoff.schema.json`, strips invisible and control characters, and replaces the reply with the normalised payload, followed by a line starting `ArcKit handoff check`. Don't run the validator yourself.
+
+   - `ArcKit handoff check (…): valid` means what exit 0 meant: the reply is the validator's normalised stdout.
+   - `ArcKit handoff check (…): INVALID` means what a non-zero exit meant: the listed errors are the validator's `errors[]`.
+   - In auto mode a reader hands back its report through `SubagentHandback`; the hook validated and normalised it at hand-back and refused an invalid one, so treat a handed-back report as valid.
 
 4. **If exit 0** — accumulate `repositories[]`, `organisations[]`, `advisories[]` and `index_status`, keyed by bucket.
 
@@ -161,7 +161,7 @@ Glob `projects/{P}-{NAME}/research/ARC-{P}-GLND-*-v*.md`. If none, `v1.0`; other
 
 ### Step 12: Dispatch the writer
 
-Assemble the writer input documented in `arckit-gov-landscape-writer`'s Input section, including `vulnerability_coverage.scopes_with_no_data`, and dispatch with `subagent_type: "arckit-gov-landscape-writer"`.
+Assemble the writer input documented in `arckit-gov-landscape-writer`'s Input section, including `vulnerability_coverage.scopes_with_no_data`, and dispatch with `subagent_type: "arckit:arckit-gov-landscape-writer"`.
 
 ### Step 13: Return summary
 

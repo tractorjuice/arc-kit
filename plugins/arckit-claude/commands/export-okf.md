@@ -4,6 +4,8 @@ doc-type: none
 argument-hint: "(--all | --project <id>) [--out <path>]"
 tags: [okf, export, interoperability, knowledge, markdown]
 effort: medium
+allowed-tools:
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/export-okf.mjs *)
 ---
 
 # ArcKit: Export OKF Bundle

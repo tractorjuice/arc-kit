@@ -63,6 +63,8 @@
  */
 
 import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // ── Sanitiser ──────────────────────────────────────────────────────────
 
@@ -147,41 +149,58 @@ function sanitize(value, path, errors) {
   return value;
 }
 
-const [, , schemaPath, payloadPath] = process.argv;
+/**
+ * Sanitise then validate `payload` against `schema`. Returns
+ * `{ ok: true, payload }` with the sanitised payload, or
+ * `{ ok: false, errors: [{path, msg}] }`. Pure: no I/O, no process exit.
+ * Exported for hooks/validate-reader-handoff.mjs, which validates reader
+ * subagent output without a Bash call.
+ */
+export function checkHandoff(schema, rawPayload) {
+  const errors = [];
+  const payload = sanitize(rawPayload, '', errors);
+  if (errors.length === 0) {
+    validate(payload, schema, '', schema, errors);
+  }
+  return errors.length === 0 ? { ok: true, payload } : { ok: false, errors };
+}
 
-if (!schemaPath || !payloadPath) {
-  emitErrors([{ path: '/', msg: 'Usage: validate-handoff.mjs <schema.json> <payload.json>' }]);
+function main(argv) {
+  const [, , schemaPath, payloadPath] = argv;
+
+  if (!schemaPath || !payloadPath) {
+    emitErrors([{ path: '/', msg: 'Usage: validate-handoff.mjs <schema.json> <payload.json>' }]);
+    process.exit(1);
+  }
+
+  let schema, payload;
+  try {
+    schema = JSON.parse(readFileSync(schemaPath, 'utf8'));
+  } catch (e) {
+    emitErrors([{ path: '/', msg: `failed to read schema: ${e.message}` }]);
+    process.exit(1);
+  }
+
+  try {
+    payload = JSON.parse(readFileSync(payloadPath, 'utf8'));
+  } catch (e) {
+    emitErrors([{ path: '/', msg: `failed to parse payload: ${e.message}` }]);
+    process.exit(1);
+  }
+
+  const result = checkHandoff(schema, payload);
+  if (result.ok) {
+    console.log(JSON.stringify(result.payload));
+    process.exit(0);
+  }
+  emitErrors(result.errors);
   process.exit(1);
 }
 
-let schema, payload;
-try {
-  schema = JSON.parse(readFileSync(schemaPath, 'utf8'));
-} catch (e) {
-  emitErrors([{ path: '/', msg: `failed to read schema: ${e.message}` }]);
-  process.exit(1);
+// Run as a CLI only when executed directly, not when imported.
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main(process.argv);
 }
-
-try {
-  payload = JSON.parse(readFileSync(payloadPath, 'utf8'));
-} catch (e) {
-  emitErrors([{ path: '/', msg: `failed to parse payload: ${e.message}` }]);
-  process.exit(1);
-}
-
-const errors = [];
-payload = sanitize(payload, '', errors);
-if (errors.length === 0) {
-  validate(payload, schema, '', schema, errors);
-}
-
-if (errors.length === 0) {
-  console.log(JSON.stringify(payload));
-  process.exit(0);
-}
-
-emitErrors(errors);
-process.exit(1);
 
 // ── Validator core ────────────────────────────────────────────────────
 

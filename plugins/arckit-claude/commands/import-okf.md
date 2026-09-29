@@ -4,6 +4,8 @@ doc-type: none
 argument-hint: "--bundle <path> --project <id> [--dry-run]"
 tags: [okf, import, interoperability, research, markdown]
 effort: medium
+allowed-tools:
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/import-okf.mjs *)
 ---
 
 # ArcKit: Import OKF Bundle
