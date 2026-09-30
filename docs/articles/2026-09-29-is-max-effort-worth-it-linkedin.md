@@ -1,6 +1,6 @@
 # LinkedIn Version: Is Max Effort Worth It?
 
-Post on the ArcKit page with the article link preview. The `effort` carousel shows costs and centres on Opus, so it was left off. Warm "we" voice, framed around using Claude Sonnet 5.5 and with no costs (revised before posting); the first of the three voices under test in `docs/social/SOCIAL.md`.
+Post on the ArcKit page with the `docs/social/out/sonnet-5-5/sonnet-5-5-1080x1350.png` image (alt text in the post notes below). The `effort` carousel and the article hero both show costs, so neither is used. Warm "we" voice, framed around using Claude Sonnet 5.5 and with no costs (revised before posting); the first of the three voices under test in `docs/social/SOCIAL.md`.
 
 ## LinkedIn Post Body
 

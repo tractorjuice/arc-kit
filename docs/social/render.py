@@ -80,7 +80,8 @@ def base(series, n, total, kicker):
         col = tuple(int(a[i] + (b[i] - a[i]) * f) for i in range(3))
         d.line((x, 0, x, 8), fill=col)
     d.text((72, 72), kicker, font=font(30, True, True), fill=CYAN)
-    d.text((W - 72, 72), f"{n}/{total}", font=font(30, True, True), fill=DIM, anchor="ra")
+    if total > 1:
+        d.text((W - 72, 72), f"{n}/{total}", font=font(30, True, True), fill=DIM, anchor="ra")
     logo = Image.open(LOGO).convert("RGBA")
     lw = 260
     logo = logo.resize((lw, int(logo.height * lw / logo.width)))
@@ -235,7 +236,40 @@ def adopter_series():
     return out, slides
 
 
+# ── Single: Getting the best from Sonnet 5.5 ──────────────────────────
+
+
+def sonnet_single():
+    """One image for the Sonnet 5.5 post. No costs: the post is about using the model."""
+    out = OUT / "sonnet-5-5"
+    img, d = base("sonnet", 1, 1, "ARCKIT · CLAUDE SONNET 5.5")
+    y = headline(d, 170, "Getting the best from Sonnet 5.5", 72)
+    y = body(d, y + 10, "What 53 test runs showed us.", 36)
+    for i, (t, s) in enumerate([
+        ("Use it for security work.", "Two Secure by Design assessments: 26 and 32 threats, nothing refused."),
+        ("Max effort is rarely needed.", "Mostly it gave longer documents, not better ones."),
+        ("Check the template first.", "Where max helped, it was overruling the template's examples."),
+        ("Then high effort is enough.", "Acceptance-criteria mentions rose from 52 to 132, every requirement complete."),
+    ], 1):
+        y += 44
+        d.text((72, y), f"{i}", font=font(64, True), fill=GOLD)
+        yy = y + 6
+        for line in wrap(d, t, font(38, True), W - 144 - 90):
+            d.text((162, yy), line, font=font(38, True), fill=TEXT)
+            yy += 48
+        for line in wrap(d, s, font(30), W - 144 - 90):
+            d.text((162, yy + 4), line, font=font(30), fill=MUTED)
+            yy += 40
+        y = yy + 20
+    body(d, y + 16, "Template fixes shipped in ArcKit 6.16.6", 34, CYAN)
+    return out, [img]
+
+
 def main():
+    out, (img,) = sonnet_single()
+    out.mkdir(parents=True, exist_ok=True)
+    img.save(out / "sonnet-5-5-1080x1350.png", optimize=True)
+    print(f"wrote 1 image to {out.relative_to(HERE.parent.parent)}")
     for build in (effort_series, adopter_series):
         out, slides = build()
         out.mkdir(parents=True, exist_ok=True)
