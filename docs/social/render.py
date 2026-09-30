@@ -137,7 +137,7 @@ def effort_series():
     img, d = base("effort", 1, T, k)
     y = headline(d, 260, "We told the AI to think harder.", 84)
     y = headline(d, y + 10, "Mostly, it just wrote more.", 84, GOLD)
-    body(d, y + 60, "53 test runs of ArcKit on Claude Opus 5.5 and Sonnet 5.5, about $150 of model time. Here's what the highest effort setting actually bought.")
+    body(d, y + 60, "53 test runs of ArcKit on Claude Opus 5.5 and Sonnet 5.5, $137 of recorded model time. Here's what the highest effort setting actually bought.")
     slides.append(img)
 
     img, d = base("effort", 2, T, k)

@@ -75,7 +75,7 @@ A post is harder to correct than a web page: it is reshared and screenshotted. T
 
 - **Office hours have no date yet.** The launch article promised them "starting in October". The adopter carousel says *"An open call from October"*, which is still true; don't post a date card until the slot is booked.
 - **Four pilot workshops are offered** in the carousel, as in the launch article. If fewer than four can be run this quarter, change the slide first.
-- **The testing article went live on 29 September** (`arckit.org/share/2026-09-29-is-max-effort-worth-it.html`), and the changes it describes are merged into `main` but not yet released. Posts can say they are coming in the next release.
+- **The testing article went live on 29 September** (`arckit.org/share/2026-09-29-is-max-effort-worth-it.html`), and the changes it describes shipped in ArcKit 6.16.6. Posts say so; never "in the next release".
 - **Nobody has used the adopter form yet.** The first post in *Show your working* should say so honestly, as the launch article did: an empty list is better than a padded one.
 
 ---
@@ -103,9 +103,9 @@ Copy: `docs/articles/2026-09-29-is-max-effort-worth-it-linkedin.md`, which follo
 ### Q3. Discord — #announcements
 
 > 📊 **New article: Is Max Effort Worth It?**
-> 53 test runs, about $150. Max effort mostly bought longer, slower documents. The real gaps were templates whose examples contradicted their own instructions.
-> • 13 templates fixed, merged, in the next release
-> • `/arckit:requirements` will finish in about a quarter of the time, `/arckit:sobc` in about a third
+> 53 test runs, $137 of recorded model time. Max effort mostly bought longer, slower documents. The real gaps were templates whose examples contradicted their own instructions.
+> • 13 templates fixed, shipped in ArcKit 6.16.6
+> • `/arckit:requirements` now finishes in about a quarter of the time, `/arckit:sobc` in about a third
 > Questions or your own results: #show-your-working
 > <https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html>
 
