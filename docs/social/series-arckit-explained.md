@@ -8,15 +8,15 @@ Voice and rules: `SOCIAL.md` (warm "we", lead with what the reader can use, no c
 
 **Channels, per the plan in `SOCIAL.md`:**
 
-- **ArcKit page:** every day, with that day's card from `docs/social/out/explained/`.
-- **LinkedIn group:** twice a week, a reworded question version (days 1, 5, 9 and 12, below). Not daily: 161 members don't want 14 posts in a row.
+- **ArcKit page:** every day from 30 September to 13 October, with that day's card (`docs/social/out/explained/slide-N-1080x1350.png`). Day 1 posted on the day; days 2 to 14 scheduled in LinkedIn's scheduler for 08:30.
+- **LinkedIn group:** twice a week, a reworded question version (days 1, 5, 9 and 12: 30 September, 4, 8 and 11 October). Group posts can't be scheduled, so they go out on the day. Not daily: 161 members don't want 14 posts in a row.
 - **Discord #announcements:** once, on day 1, pointing at the series. It changes nothing for existing users, so no daily posts there.
 
 Links go to `https://arckit.org` pages with `?utm_campaign=arckit-explained&utm_source=linkedin`.
 
 ---
 
-## Day 1. What ArcKit is
+## Day 1. What ArcKit is (Wed 30 September)
 
 Most architecture work isn't the thinking. It's writing the thinking down in the shape a review board expects.
 
@@ -32,7 +32,7 @@ https://arckit.org?utm_campaign=arckit-explained&utm_source=linkedin
 
 #EnterpriseArchitecture #DigitalGovernment #OpenSource
 
-## Day 2. Getting started
+## Day 2. Getting started (Thu 1 October)
 
 Getting started takes a few minutes.
 
@@ -48,7 +48,7 @@ Tomorrow: principles, the foundation everything else checks against.
 
 #EnterpriseArchitecture #DigitalGovernment #GovTech
 
-## Day 3. Principles first
+## Day 3. Principles first (Fri 2 October)
 
 Every architecture review eventually asks the same question: does this follow our principles?
 
@@ -62,7 +62,7 @@ Tomorrow: who the project is for.
 
 #EnterpriseArchitecture #DigitalGovernment #ArchitecturePrinciples
 
-## Day 4. Stakeholders and what they need
+## Day 4. Stakeholders and what they need (Sat 3 October)
 
 A project that can't say who it's for can't say whether it worked.
 
@@ -74,7 +74,7 @@ Those goals become the thread that the rest of the work hangs from. Tomorrow, re
 
 #EnterpriseArchitecture #DigitalGovernment #UserCentredDesign
 
-## Day 5. Requirements you can trace
+## Day 5. Requirements you can trace (Sun 4 October)
 
 Requirements are where most projects either get specific or get vague.
 
@@ -88,7 +88,7 @@ Tomorrow: what could go wrong.
 
 #EnterpriseArchitecture #DigitalGovernment #Requirements
 
-## Day 6. A risk register in the Orange Book's shape
+## Day 6. A risk register in the Orange Book's shape (Mon 5 October)
 
 Every project has risks. The useful question is whether they're written down in a form your organisation recognises.
 
@@ -100,7 +100,7 @@ Tomorrow: seeing the landscape before deciding what to build.
 
 #EnterpriseArchitecture #DigitalGovernment #RiskManagement
 
-## Day 7. Wardley maps for build or buy
+## Day 7. Wardley maps for build or buy (Tue 6 October)
 
 Before deciding what to build, it helps to see what's already a commodity.
 
@@ -114,7 +114,7 @@ Tomorrow: researching what's out there.
 
 #EnterpriseArchitecture #WardleyMaps #DigitalGovernment
 
-## Day 8. Research, with sources
+## Day 8. Research, with sources (Wed 7 October)
 
 Once you know what to buy, the next question is: from whom?
 
@@ -126,7 +126,7 @@ Tomorrow: making the case.
 
 #EnterpriseArchitecture #DigitalGovernment #Procurement
 
-## Day 9. A business case in the Green Book's five cases
+## Day 9. A business case in the Green Book's five cases (Thu 8 October)
 
 A business case is where the architecture meets the money, and it has to speak the Treasury's language.
 
@@ -138,7 +138,7 @@ Tomorrow: the data, and protecting it.
 
 #EnterpriseArchitecture #DigitalGovernment #GreenBook
 
-## Day 10. Data model and DPIA
+## Day 10. Data model and DPIA (Fri 9 October)
 
 A benefits service holds some of the most sensitive data a council has, so the data needs designing as carefully as the service.
 
@@ -152,7 +152,7 @@ Tomorrow: diagrams and decisions.
 
 #EnterpriseArchitecture #DataProtection #DigitalGovernment
 
-## Day 11. Diagrams and decisions
+## Day 11. Diagrams and decisions (Sat 10 October)
 
 Two things every design review wants to see: the picture, and why you chose it.
 
@@ -166,7 +166,7 @@ Tomorrow: security and the Technology Code of Practice.
 
 #EnterpriseArchitecture #DigitalGovernment #SoftwareArchitecture
 
-## Day 12. Secure by Design and the Technology Code of Practice
+## Day 12. Secure by Design and the Technology Code of Practice (Sun 11 October)
 
 Two assessments almost every UK public sector project meets.
 
@@ -180,7 +180,7 @@ Tomorrow: joining it all up.
 
 #EnterpriseArchitecture #SecureByDesign #DigitalGovernment
 
-## Day 13. Traceability, and keeping it healthy
+## Day 13. Traceability, and keeping it healthy (Mon 12 October)
 
 By now Ashcombe's project has a dozen documents. The value is in how they connect.
 
@@ -194,7 +194,7 @@ Tomorrow: showing your working.
 
 #EnterpriseArchitecture #DigitalGovernment #ServiceStandard
 
-## Day 14. Show your working
+## Day 14. Show your working (Tue 13 October)
 
 Two weeks, one project, a full set of governance documents. The last step is making them easy to trust.
 
@@ -236,7 +236,7 @@ Question voice, no hashtags, posted the same day as the page post.
 
 ## Next run: From the Articles (outline, copy to follow)
 
-Starts the day after *ArcKit Explained* ends, one post a day on the page, same voice. Each post takes one useful idea from one article and links to its share page (`https://arckit.org/share/<slug>.html?utm_campaign=from-the-articles&utm_source=linkedin`), which carries the article's own preview image. Articles that are mainly opinion about other organisations, or about pricing, are left out; so is anything about the private G-Cloud supplier overlay.
+Starts on 14 October, the day after *ArcKit Explained* ends, one post a day on the page, same voice. Each post takes one useful idea from one article and links to its share page (`https://arckit.org/share/<slug>.html?utm_campaign=from-the-articles&utm_source=linkedin`), which carries the article's own preview image. Articles that are mainly opinion about other organisations, or about pricing, are left out; so is anything about the private G-Cloud supplier overlay.
 
 | Day | Article | The idea for users |
 |---|---|---|
