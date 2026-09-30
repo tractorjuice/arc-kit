@@ -66,7 +66,7 @@ const SECRET_PATTERNS = [
   [/bearer\s+[a-zA-Z0-9\-_.]{20,}/gi, 'Bearer token'],
 
   // Connection strings
-  [/(mongodb|postgres|mysql|redis):\/\/[^\s]+:[^\s]+@/gi, 'database connection string'],
+  [/(mongodb|postgres|mysql|redis):\/\/[^\s:@]{1,256}:[^\s@]{1,2048}@/gi, 'database connection string'],
 
   // Private keys (PEM format headers)
   [/-----BEGIN\s+(RSA\s+)?PRIVATE\s+KEY-----/g, 'private key (PEM)'],
