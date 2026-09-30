@@ -494,24 +494,20 @@
                         <li>Added the commands vs skills vs agents vs hooks decision table</li>
                     </ul>
                 </div>
-            </div>
 
-            <!-- Feature Requesters & Bug Reporters -->
-            <h2 class="govuk-heading-l govuk-!-margin-top-8">Feature Requesters &amp; Bug Reporters</h2>
-            <p class="govuk-body">These contributors identified improvements and issues that made ArcKit better. Feature requests and bug reports are vital contributions &mdash; they shape the roadmap and improve reliability.</p>
-
-            <div class="app-contributor-grid">
                 <div class="app-contributor-card">
                     <div class="app-contributor-card__header">
                         <div class="app-contributor-card__avatar">J</div>
                         <div>
                             <p class="app-contributor-card__name"><a href="https://github.com/johnfelipe">@johnfelipe</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--code">Code Contributor</span>
                             <span class="app-contributor-card__role app-contributor-card__role--feature">Feature Requester</span>
                             <span class="app-contributor-card__role app-contributor-card__role--bug">Bug Reporter</span>
                         </div>
                     </div>
-                    <p class="govuk-body-s">ArcKit's most prolific reporter: nearly 100 issues since February 2026, many from using ArcKit in Spanish and on Windows. An early request for multi-AI support helped drive ArcKit beyond Claude Code to Codex CLI, Gemini CLI and OpenCode CLI, and many of the requests and bug reports since have shipped as commands, hooks and fixes.</p>
+                    <p class="govuk-body-s">ArcKit's most prolific reporter: nearly 100 issues since February 2026, many from using ArcKit in Spanish and on Windows. An early request for multi-AI support helped drive ArcKit beyond Claude Code to Codex CLI, Gemini CLI and OpenCode CLI, and many of the requests and bug reports since have shipped as commands, hooks and fixes. In September 2026 his first merged code landed in 6.17.1: five security fixes to ArcKit's hooks, following up a client risk review.</p>
                     <ul class="app-contributor-card__highlights">
+                        <li>Security fixes to the hooks in 6.17.1: keys and <code>.env</code> files under <code>projects/</code> protected (<a href="https://github.com/tractorjuice/arc-kit/pull/878" class="govuk-link">#878</a>), a secret-scanner freeze removed (<a href="https://github.com/tractorjuice/arc-kit/pull/879" class="govuk-link">#879</a>), Codex secret scanning of plain writes (<a href="https://github.com/tractorjuice/arc-kit/pull/880" class="govuk-link">#880</a>), injected context fenced (<a href="https://github.com/tractorjuice/arc-kit/pull/876" class="govuk-link">#876</a>) and the vendor-score check no longer granting permission (<a href="https://github.com/tractorjuice/arc-kit/pull/883" class="govuk-link">#883</a>)</li>
                         <li>Requested multi-AI assistant support</li>
                         <li><code>/arckit:conformance</code> (<a href="https://github.com/tractorjuice/arc-kit/issues/55" class="govuk-link">#55</a>) and <code>/arckit:archify</code> (<a href="https://github.com/tractorjuice/arc-kit/issues/826" class="govuk-link">#826</a>)</li>
                         <li><code>/arckit:repo-audit</code> in the <code>arckit-repo</code> plugin (<a href="https://github.com/tractorjuice/arc-kit/issues/616" class="govuk-link">#616</a>)</li>
@@ -521,7 +517,13 @@
                         <li>Fixes for escaping in Spanish output (<a href="https://github.com/tractorjuice/arc-kit/issues/67" class="govuk-link">#67</a>) and the manifest and secret-detection hooks (<a href="https://github.com/tractorjuice/arc-kit/issues/601" class="govuk-link">#601</a>, <a href="https://github.com/tractorjuice/arc-kit/issues/737" class="govuk-link">#737</a>)</li>
                     </ul>
                 </div>
+            </div>
 
+            <!-- Feature Requesters & Bug Reporters -->
+            <h2 class="govuk-heading-l govuk-!-margin-top-8">Feature Requesters &amp; Bug Reporters</h2>
+            <p class="govuk-body">These contributors identified improvements and issues that made ArcKit better. Feature requests and bug reports are vital contributions &mdash; they shape the roadmap and improve reliability.</p>
+
+            <div class="app-contributor-grid">
                 <div class="app-contributor-card">
                     <div class="app-contributor-card__header">
                         <div class="app-contributor-card__avatar">B</div>
@@ -671,7 +673,7 @@
 
             <!-- Community Summary -->
             <h2 class="govuk-heading-l govuk-!-margin-top-8">Community Impact</h2>
-            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 11 code contributors, 2 feature requesters, 7 bug reporters, and 1 domain/spec maintainer, these 21 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Each person is counted once above, under their primary role &mdash; three of the code contributors also maintain a jurisdictional overlay (Austria, Australia, and the EU&nbsp;/&nbsp;France), so ArcKit has four domain maintainers in total. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, plugin user-config wiring, secret-scanner accuracy, Wardley Map conversion fidelity, accessibility standards alignment, EU / French / Austrian / Australian regulatory compliance coverage, TOGAF ADM support, and AI agent architecture governance.</p>
+            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 12 code contributors, 2 feature requesters, 7 bug reporters, and 1 domain/spec maintainer, these 21 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Each person is counted once above, under their primary role &mdash; three of the code contributors also maintain a jurisdictional overlay (Austria, Australia, and the EU&nbsp;/&nbsp;France), so ArcKit has four domain maintainers in total. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, plugin user-config wiring, secret-scanner accuracy, Wardley Map conversion fidelity, accessibility standards alignment, EU / French / Austrian / Australian regulatory compliance coverage, TOGAF ADM support, and AI agent architecture governance.</p>
 
             <!-- Contributing CTA -->
             <div class="govuk-inset-text govuk-!-margin-top-6">
