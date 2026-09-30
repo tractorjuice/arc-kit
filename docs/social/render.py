@@ -265,12 +265,56 @@ def sonnet_single():
     return out, [img]
 
 
+# ── Series 3: ArcKit Explained (14 days) ──────────────────────────────
+
+EXPLAINED = [
+    ("What ArcKit is", "76 commands", ["Drafts governance documents from templates", "Works in GitHub Copilot, Claude Code, Gemini CLI and more", "Drafts for qualified people to review"]),
+    ("Getting started", "/arckit:init  /arckit:start", ["Installs as a plugin, or with the arckit tool", "Creates a projects/ folder in your repository", "Suggests which commands to run, in order"]),
+    ("Principles first", "/arckit:principles", ["Each principle with its rationale and implications", "Every later document checks back against them", "Departures are flagged, not hidden"]),
+    ("Stakeholders", "/arckit:stakeholders", ["Who has a stake, and what drives them", "Goals with measurable outcomes", "Where they agree, and where they differ"]),
+    ("Requirements you can trace", "/arckit:requirements", ["Business, functional, non-functional, integration, data", "Priority, rationale and acceptance criteria on each", "Traced back to stakeholder goals"]),
+    ("A risk register", "/arckit:risk", ["In the Orange Book's structure", "Likelihood and impact, before and after controls", "An owner and a response for every risk"]),
+    ("Wardley maps", "/arckit:wardley", ["Components, dependencies and maturity", "Buy or reuse the mature, build the novel", "Open and edit at create.wardleymaps.ai"]),
+    ("Research, with sources", "/arckit:research", ["Products, open source and government platforms", "A build-or-buy view for each capability", "Every claim cited to its source"]),
+    ("The business case", "/arckit:sobc", ["The Green Book's five cases", "Options include doing nothing", "Built on the work already done"]),
+    ("Data model and DPIA", "/arckit:data-model  /arckit:dpia", ["Entities, relationships and a diagram", "UK GDPR considerations for each", "A DPIA draft for your DPO to review"]),
+    ("Diagrams and decisions", "/arckit:diagram  /arckit:adr", ["Mermaid or C4 diagrams, as text in git", "Each decision with the options considered", "Traced to the requirements it serves"]),
+    ("Security and the TCoP", "/arckit:secure  /arckit:tcop", ["Secure by Design, with an owner for each action", "All 13 Technology Code of Practice points", "A structured start for your assessors"]),
+    ("Joining it up", "/arckit:traceability  /arckit:health", ["Requirements traced to design and tests", "Stale research and open decisions found", "Service Standard readiness, all 14 points"]),
+    ("Show your working", "/arckit:pages", ["Sources cited inline", "How each document was made, recorded", "A documentation site for the whole team"]),
+]
+
+
+def explained_series():
+    T, out = len(EXPLAINED), OUT / "explained"
+    slides = []
+    for n, (title, cmd, points) in enumerate(EXPLAINED, 1):
+        img, d = base("explained", n, T, "ARCKIT EXPLAINED")
+        y = headline(d, 240, title, 92)
+        y += 16
+        for line in wrap(d, cmd, font(44, True, True), W - 144):
+            d.text((72, y), line, font=font(44, True, True), fill=GOLD)
+            y += 60
+        y += 70
+        for point in points:
+            d.rounded_rectangle((72, y + 14, 88, y + 30), 4, fill=CYAN)
+            for line in wrap(d, point, font(46), W - 144 - 50):
+                d.text((122, y), line, font=font(46), fill=TEXT)
+                y += 60
+            y += 54
+        note = "Everything ArcKit writes is a draft for qualified people to review." if n in (1, T) else "Example: Ashcombe District Council (fictional)"
+        if n != 2:
+            body(d, H - 250, note, 28, DIM)
+        slides.append(img)
+    return out, slides
+
+
 def main():
     out, (img,) = sonnet_single()
     out.mkdir(parents=True, exist_ok=True)
     img.save(out / "sonnet-5-5-1080x1350.png", optimize=True)
     print(f"wrote 1 image to {out.relative_to(HERE.parent.parent)}")
-    for build in (effort_series, adopter_series):
+    for build in (effort_series, adopter_series, explained_series):
         out, slides = build()
         out.mkdir(parents=True, exist_ok=True)
         for i, img in enumerate(slides, 1):
