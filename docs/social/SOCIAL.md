@@ -10,13 +10,23 @@ It serves the Q4 campaign, *Show Your Working* (`docs/plans/2026-09-22-marketing
 
 ## Where ArcKit posts
 
-| Channel | Address | Use it for |
-|---|---|---|
-| LinkedIn page | linkedin.com/company/**arckit-org** | Carousels, article links, release notes. **Not** linkedin.com/company/arckit, which is an unrelated education firm in Dublin |
-| LinkedIn group | linkedin.com/groups/17641034 | The same posts, shorter, as a question to members. Posts appear under the maintainer's name |
-| Discord | ArcKit server, #announcements (read-only) and #show-your-working | Announcements; the private route for adopters who can't post a public GitHub issue |
-| Medium | medium.com/arckit | Article mirrors |
-| Maintainer's own LinkedIn | — | Reshares only. Anything beyond that needs the maintainer's say-so |
+One job per channel, and never the same text in two places. Decided 30 September 2026, when the page had 1 follower and the group 161 members (663 active, 1,093 post views in 15 days), so the group is where the reach is for now.
+
+| Channel | Address | Its job | What goes there | Voice |
+|---|---|---|---|---|
+| LinkedIn group | linkedin.com/groups/17641034 | **Main place to reach people** | Findings framed as a question, asks for feedback, the adopter ask, office hours. Posts appear under the maintainer's name | Question, "we" |
+| LinkedIn page | linkedin.com/company/**arckit-org** | The official record | Releases and articles, with one image or carousel each. **Not** linkedin.com/company/arckit, which is an unrelated education firm in Dublin | Warm "we" |
+| Maintainer's own LinkedIn | — | Reach | A reshare of the page post with a line of the maintainer's own. The maintainer's call each time, and theirs to post | Theirs |
+| Discord #announcements | ArcKit server (read-only) | For existing users | Releases and "what changed for you", short, linked | Short "we" |
+| Discord #show-your-working | ArcKit server (open) | Conversation | Results, adopter chat, help; the private route for adopters who can't post a public GitHub issue | Informal |
+| Medium | medium.com/arckit | Article mirrors | The article, unchanged | Article |
+
+**Order for each new piece:**
+
+1. Post it on the ArcKit page.
+2. The same day, post the group's question version, worded differently.
+3. The maintainer reshares it on their own profile, if they choose to.
+4. Post in Discord #announcements only if it changes something for people who already use ArcKit, such as a release or template fixes.
 
 The primary audience (UK public sector architects) is on LinkedIn and in the cross-government architecture community, not on TikTok or Instagram. The chef kit needed seven platforms because diners are everywhere; ArcKit needs two done well. **YouTube Shorts is the one addition worth trying**, for the 30-second video below, because a Short can be embedded in the landing page and linked from LinkedIn.
 
