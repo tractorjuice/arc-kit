@@ -1,30 +1,29 @@
 # LinkedIn Version: Is Max Effort Worth It?
 
-Post on the ArcKit page with the `effort` carousel (`docs/social/out/effort/carousel.pdf`). Warm, first-person-plural voice (revised before posting from the practitioner draft); the first of the three voices under test in `docs/social/SOCIAL.md`.
+Post on the ArcKit page with the `effort` carousel (`docs/social/out/effort/carousel.pdf`). Warm "we" voice, framed around using Claude Sonnet 5.5 and with no costs (revised before posting); the first of the three voices under test in `docs/social/SOCIAL.md`.
 
 ## LinkedIn Post Body
 
-Does turning an AI's effort setting up to maximum give you a better architecture document? We'd assumed so. Eighteen ArcKit commands ran at Claude's highest setting, and we had never checked. So we measured it.
+Claude Sonnet 5.5 arrived with some useful advice: effort levels have been recalibrated, and the highest settings should be used only where your own testing shows a gain. We hadn't tested ours, so over 53 runs we did.
 
-53 test runs across Claude Opus 5.5 and Sonnet 5.5, $137 of recorded model time.
+Here's what we learned about getting the best from Sonnet 5.5 with ArcKit.
 
-For one requirements document on Opus 5.5:
+→ It's good at security work. Sonnet 5.5 is the first Sonnet with Anthropic's cybersecurity safeguards, so we checked it wouldn't get in the way. We asked for two full Secure by Design assessments with STRIDE threat models. Nothing was refused, and each came back with 26 to 32 specific threats.
 
-→ High effort: $2.90, 12 minutes, about 100 requirements
-→ Max effort: $9.82, 48 minutes, about 100 requirements
+→ Max effort is rarely needed. Across most commands, the highest setting gave longer, slower documents rather than better ones.
 
-The same document, with four times the wait.
+→ The one exception taught us the most. On requirements, Sonnet at max did go deeper, because it was overruling our own template. That template asked for acceptance criteria on every requirement, but only 1 of its 30 examples had them. We found the same kind of mismatch in 13 of our 55 templates.
 
-Where max did help, on Sonnet 5.5, the reason surprised us. The model was working around our own templates. 13 of the 55 we checked had examples that didn't follow their own instructions. The requirements template asked for acceptance criteria on every requirement, yet only 1 of its 30 examples had them. Quite reasonably, the AI followed the examples.
+→ Fix the template, and high effort is enough. With the templates corrected, Sonnet 5.5 at high went from 52 acceptance-criteria mentions to 132, most of the way to what max produced, with every requirement complete.
 
-So we fixed the templates. At high effort, all four test runs now produce complete requirements, for about a third of what max costs. The fixes are in ArcKit 6.16.6, so if you've updated, you already have them.
+The fixes are in ArcKit 6.16.6, so if you've updated, you're ready to use Sonnet 5.5 with ArcKit's standard settings.
 
-If an AI-drafted document comes back thinner than you hoped, the template is a good first place to look, before reaching for a bigger setting.
+A good habit with any new model: check your templates before you turn the effort up.
 
-The full write-up covers the method, every cost, and the tests we got wrong along the way:
+The full write-up covers the method, the results, and the tests we got wrong along the way:
 https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html?utm_campaign=show-your-working&utm_source=linkedin
 
-What have you found makes the biggest difference to the quality of AI-drafted documents?
+Have you started using Sonnet 5.5 for architecture work? We'd like to hear what you're finding.
 
 #EnterpriseArchitecture #AIGovernance #DigitalGovernment #OpenSource
 
