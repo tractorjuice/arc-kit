@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-agent-architecture",
   "displayName": "ArcKit AI Agent Architecture",
-  "version": "6.17.0",
+  "version": "6.17.1",
   "description": "AI Agent Architecture — Governance, design, and security for autonomous AI agent programs. 6 commands covering agent inventory, design, governance, integration, security, and maturity.",
   "author": {
     "name": "ArcKit Contributors",
@@ -28,7 +28,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.17.0"
+      "version": "=6.17.1"
     }
   ]
 }

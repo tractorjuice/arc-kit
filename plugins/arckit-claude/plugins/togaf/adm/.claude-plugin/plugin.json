@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-togaf-adm",
   "displayName": "ArcKit TOGAF ADM",
-  "version": "6.17.0",
+  "version": "6.17.1",
   "description": "TOGAF ADM — Enterprise Architecture Development Method for AI-assisted governance. 9 commands covering all ADM phases (Preliminary through H) plus Architecture Repository.",
   "author": {
     "name": "ArcKit Contributors",
@@ -28,7 +28,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.17.0"
+      "version": "=6.17.1"
     }
   ]
 }

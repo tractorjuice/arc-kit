@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.17.1] — 2026-09-30
+
 ### Fixed
 
 These five come from @johnfelipe, following up the client risk review that shaped 6.16.4.
