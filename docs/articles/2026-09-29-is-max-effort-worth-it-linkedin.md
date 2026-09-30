@@ -1,10 +1,10 @@
 # LinkedIn Version: Is Max Effort Worth It?
 
-Post on the ArcKit page with the `effort` carousel (`docs/social/out/effort/carousel.pdf`). Warm "we" voice, framed around using Claude Sonnet 5.5 and with no costs (revised before posting); the first of the three voices under test in `docs/social/SOCIAL.md`.
+Post on the ArcKit page with the article link preview. The `effort` carousel shows costs and centres on Opus, so it was left off. Warm "we" voice, framed around using Claude Sonnet 5.5 and with no costs (revised before posting); the first of the three voices under test in `docs/social/SOCIAL.md`.
 
 ## LinkedIn Post Body
 
-Claude Sonnet 5.5 arrived with some useful advice: effort levels have been recalibrated, and the highest settings should be used only where your own testing shows a gain. We test ArcKit regularly, but not yet on Sonnet 5.5, so we ran 53 tests to find out what the new model needs.
+Claude Sonnet 5.5 arrived with some useful advice: effort levels have been recalibrated, and the highest settings should be used only where your own testing shows a gain. We test ArcKit regularly, but not yet on Sonnet 5.5, so we ran 53 tests, on Sonnet 5.5 and Opus 5.5, to find out what the new model needs.
 
 Here's what we learned about getting the best from Sonnet 5.5 with ArcKit.
 
