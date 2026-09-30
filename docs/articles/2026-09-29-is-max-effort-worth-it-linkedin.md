@@ -23,8 +23,6 @@ Method, results and every cost, including the tests I got wrong: https://arckit.
 
 Have you measured what your AI settings buy you on formal documents?
 
-— Mark Craddock, ArcKit maintainer
-
 #EnterpriseArchitecture #AIGovernance #DigitalGovernment #OpenSource
 
 <!-- arckit:related-articles -->
