@@ -20,7 +20,7 @@ The fixes are in ArcKit 6.16.6, so if you've updated, you're ready to use Sonnet
 
 A good habit with any new model: check your templates before you turn the effort up.
 
-The full write-up covers the method, the results, and the tests we got wrong along the way:
+The full write-up covers the method and the results:
 https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html?utm_campaign=show-your-working&utm_source=linkedin
 
 Have you started using Sonnet 5.5 for architecture work? We'd like to hear what you're finding.
