@@ -98,7 +98,7 @@ Copy is ready to paste. Links carry UTM tags. Post each only on the maintainer's
 
 Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7511127330174541824/>. Copy: `docs/articles/2026-09-29-is-max-effort-worth-it-linkedin.md`, which follows the archive's convention for channel versions (`<slug>-linkedin.md`, `<slug>-medium.md`). It went out with `docs/social/out/sonnet-5-5/sonnet-5-5-1080x1350.png` and the alt text recorded in that file. The `effort` carousel and the article's link preview were left off because both show costs. The Medium mirror is `docs/articles/2026-09-29-is-max-effort-worth-it-medium.md`.
 
-### Q2. Getting the best from Sonnet 5.5 — LinkedIn group (Question voice)
+### Q2. Getting the best from Sonnet 5.5 — LinkedIn group (Question voice) — posted 30 September, with the `sonnet-5-5` image
 
 > Has anyone moved their architecture work onto Claude Sonnet 5.5 yet?
 >
@@ -108,7 +108,7 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:activity:751112733017454182
 >
 > Full write-up: https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html?utm_campaign=show-your-working&utm_source=linkedin-group
 
-### Q3. Getting the best from Sonnet 5.5 — Discord #announcements
+### Q3. Getting the best from Sonnet 5.5 — Discord #announcements — posted 30 September, with the `sonnet-5-5` image
 
 > 📝 **Getting the best from Claude Sonnet 5.5**
 > We ran 53 tests with ArcKit on Sonnet 5.5 and Opus 5.5. Here's what we found:
