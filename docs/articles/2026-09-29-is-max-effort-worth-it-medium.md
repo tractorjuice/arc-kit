@@ -2,7 +2,7 @@
 
 # Is Max Effort Worth It? What 53 Test Runs Taught Us About ArcKit
 
-**When Claude Sonnet 5.5 arrived, Anthropic advised using the highest effort settings only where testing shows a gain. ArcKit ran 18 of its commands at the highest setting without ever having measured it. So I measured it. Across 53 test runs costing about $150, the highest setting mostly made documents longer, slower and three to four times more expensive, not better. The gaps it did close came from something much cheaper to fix: templates whose own examples contradicted the instructions they came with.**
+**When Claude Sonnet 5.5 arrived, Anthropic advised using the highest effort settings only where testing shows a gain. ArcKit ran 18 of its commands at the highest setting without ever having measured it. So I measured it. Across 53 test runs costing $137 in recorded model time, the highest setting mostly made documents longer, slower and three to four times more expensive, not better. The gaps it did close came from something much cheaper to fix: templates whose own examples contradicted the instructions they came with.**
 
 *Mark Craddock · medium.com/arckit*
 
@@ -68,7 +68,7 @@ Six of my automatic checks were wrong the first time they ran. None of the docum
 
 ## What's changing
 
-These changes are in review now and will arrive in the next release.
+These changes shipped in ArcKit 6.16.6.
 
 `/arckit:requirements` and `/arckit:sobc` move from max to high. Requirements finish in about a quarter of the time, and business cases in about a third. You shouldn't lose depth, because the templates now show the depth the commands always asked for.
 

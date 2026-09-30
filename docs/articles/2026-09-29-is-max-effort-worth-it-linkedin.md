@@ -1,29 +1,35 @@
 # LinkedIn Version: Is Max Effort Worth It?
 
-Post on the ArcKit page with the `effort` carousel (`docs/social/out/effort/carousel.pdf`). Practitioner voice, the first of the three voices under test in `docs/social/SOCIAL.md`.
+Post on the ArcKit page with the `docs/social/out/sonnet-5-5/sonnet-5-5-1080x1350.png` image (alt text below the post). The `effort` carousel and the article hero both show costs, so neither is used. Warm "we" voice, framed around using Claude Sonnet 5.5 and with no costs (revised before posting); the first of the three voices under test in `docs/social/SOCIAL.md`.
 
 ## LinkedIn Post Body
 
-I made the AI think four times as long. It wrote the same requirements.
+Claude Sonnet 5.5 arrived with some useful advice: effort levels have been recalibrated, and the highest settings should be used only where your own testing shows a gain. We test ArcKit regularly, but not yet on Sonnet 5.5, so we ran 53 tests, on Sonnet 5.5 and Opus 5.5, to find out what the new model needs.
 
-ArcKit ran 18 of its commands at Claude's highest effort setting, and I had never measured whether that helped. This week I did: 53 test runs on Claude Opus 5.5 and Sonnet 5.5, about $150 of model time.
+Here's what we learned about getting the best from Sonnet 5.5 with ArcKit.
 
-One requirements document on Opus 5.5:
+→ It's good at security work. Sonnet 5.5 is the first Sonnet with Anthropic's cybersecurity safeguards, so we checked it wouldn't get in the way. We asked for two full Secure by Design assessments with STRIDE threat models. Nothing was refused, and each came back with 26 to 32 specific threats.
 
-→ Normal effort: $2.90, 12 minutes, about 100 requirements
-→ Max effort: $9.82, 48 minutes, about 100 requirements
+→ Max effort is rarely needed. Across most commands, the highest setting gave longer, slower documents rather than better ones.
 
-What max did fix came from somewhere cheaper. 13 of the 55 command templates I audited had examples that contradicted their own instructions. The requirements template asked for acceptance criteria on every requirement, and its examples had them on 1 in 30. The AI copied the examples.
+→ The one exception taught us the most. On requirements, Sonnet at max did go deeper, because it was overruling our own template. That template asked for acceptance criteria on every requirement, but only 1 of its 30 examples had them. We found the same kind of mismatch in 13 of our 55 templates.
 
-With the examples fixed, normal effort wrote complete requirements in 4 runs out of 4. The fixes are merged and ship in the next release.
+→ Fix the template, and high effort is enough. With the templates corrected, Sonnet 5.5 at high went from 52 acceptance-criteria mentions to 132, most of the way to what max produced, with every requirement complete.
 
-If an AI-drafted document looks thin, check the template before you turn the effort up.
+The fixes are in ArcKit 6.16.6, so if you've updated, you're ready to use Sonnet 5.5 with ArcKit's standard settings.
 
-Method, results and every cost, including the tests I got wrong: https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html?utm_campaign=show-your-working&utm_source=linkedin
+A good habit with any new model: check your templates before you turn the effort up.
 
-Have you measured what your AI settings buy you on formal documents?
+The full write-up covers the method and the results:
+https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html?utm_campaign=show-your-working&utm_source=linkedin
+
+Have you started using Sonnet 5.5 for architecture work? We'd like to hear what you're finding.
 
 #EnterpriseArchitecture #AIGovernance #DigitalGovernment #OpenSource
+
+## Image Alt Text
+
+Getting the best from Claude Sonnet 5.5: what 53 ArcKit test runs showed. 1. Use it for security work: two Secure by Design assessments found 26 and 32 threats, nothing refused. 2. Max effort is rarely needed: mostly it gave longer documents, not better ones. 3. Check the template first: where max helped, it was overruling the template's examples. 4. Then high effort is enough: acceptance-criteria mentions rose from 52 to 132, every requirement complete. Template fixes shipped in ArcKit 6.16.6.
 
 <!-- arckit:related-articles -->
 ## Related Articles

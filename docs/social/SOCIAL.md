@@ -10,13 +10,23 @@ It serves the Q4 campaign, *Show Your Working* (`docs/plans/2026-09-22-marketing
 
 ## Where ArcKit posts
 
-| Channel | Address | Use it for |
-|---|---|---|
-| LinkedIn page | linkedin.com/company/**arckit-org** | Carousels, article links, release notes. **Not** linkedin.com/company/arckit, which is an unrelated education firm in Dublin |
-| LinkedIn group | linkedin.com/groups/17641034 | The same posts, shorter, as a question to members. Posts appear under the maintainer's name |
-| Discord | ArcKit server, #announcements (read-only) and #show-your-working | Announcements; the private route for adopters who can't post a public GitHub issue |
-| Medium | medium.com/arckit | Article mirrors |
-| Maintainer's own LinkedIn | — | Reshares only. Anything beyond that needs the maintainer's say-so |
+One job per channel, and never the same text in two places. Decided 30 September 2026, when the page had 1 follower and the group 161 members (663 active, 1,093 post views in 15 days), so the group is where the reach is for now.
+
+| Channel | Address | Its job | What goes there | Voice |
+|---|---|---|---|---|
+| LinkedIn group | linkedin.com/groups/17641034 | **Main place to reach people** | Findings framed as a question, asks for feedback, the adopter ask, office hours. Posts appear under the maintainer's name | Question, "we" |
+| LinkedIn page | linkedin.com/company/**arckit-org** | The official record | Releases and articles, with one image or carousel each. **Not** linkedin.com/company/arckit, which is an unrelated education firm in Dublin | Warm "we" |
+| Maintainer's own LinkedIn | — | Reach | A reshare of the page post with a line of the maintainer's own. The maintainer's call each time, and theirs to post | Theirs |
+| Discord #announcements | ArcKit server (read-only) | For existing users | Releases and "what changed for you", short, linked | Short "we" |
+| Discord #show-your-working | ArcKit server (open) | Conversation | Results, adopter chat, help; the private route for adopters who can't post a public GitHub issue | Informal |
+| Medium | medium.com/arckit | Article mirrors | The article, unchanged | Article |
+
+**Order for each new piece:**
+
+1. Post it on the ArcKit page.
+2. The same day, post the group's question version, worded differently.
+3. The maintainer reshares it on their own profile, if they choose to.
+4. Post in Discord #announcements only if it changes something for people who already use ArcKit, such as a release or template fixes.
 
 The primary audience (UK public sector architects) is on LinkedIn and in the cross-government architecture community, not on TikTok or Instagram. The chef kit needed seven platforms because diners are everywhere; ArcKit needs two done well. **YouTube Shorts is the one addition worth trying**, for the 30-second video below, because a Short can be embedded in the landing page and linked from LinkedIn.
 
@@ -54,11 +64,11 @@ About two posts a week on the LinkedIn page, as the campaign plan budgets, with 
 
 **To be tested, the way the chef kit tests its voices.** Three voices on the same content, one post each, a week apart, judged on LinkedIn's own analytics seven days after each goes up (impressions, reactions, comments, clicks to the share page, and the one that matters: adopter-form submissions that week). Nothing changes the articles' voice; this is for posts only.
 
-- **Practitioner, first.** First person, practical, led by one artefact or one number: *"I made the AI think four times as long. It wrote the same 100 requirements."*
+- **Warm "we", first.** The ArcKit page speaking, warm and competent, led by what the reader can use: *"Here's what we learned about getting the best from Sonnet 5.5 with ArcKit."* This replaced the first-person practitioner voice before the first post went out (30 September), because "I" on a company page leaves readers asking who "I" is.
 - **Plain evidence, second.** No first person. The finding, the number, the cost, the link. Reads like a good briefing note.
 - **Question, third.** Opens on the reader's own situation: *"How long does your next spend-control pack take to draft?"* Then the evidence.
 
-Whatever the voice: plain words, short sentences, no hype words ("revolutionary", "game-changing", "10x"), no emoji beyond the occasional one in Discord, and "GitHub Copilot" always in full. LinkedIn page posts end with three or four hashtags (#EnterpriseArchitecture first); group posts and Discord carry none. Every post ends with one clear next step, or a question for the group.
+Whatever the voice: lead with what the reader can use (a model, a practice, a template), not with costs or with what we got wrong. Costs and the full method belong in the article, where there is room to explain them. Plain words, short sentences, no hype words ("revolutionary", "game-changing", "10x"), no emoji beyond the occasional one in Discord, and "GitHub Copilot" always in full. LinkedIn page posts end with three or four hashtags (#EnterpriseArchitecture first); group posts and Discord carry none. Every post ends with one clear next step, or a question for the group.
 
 ## What never goes on one of these
 
@@ -75,7 +85,7 @@ A post is harder to correct than a web page: it is reshared and screenshotted. T
 
 - **Office hours have no date yet.** The launch article promised them "starting in October". The adopter carousel says *"An open call from October"*, which is still true; don't post a date card until the slot is booked.
 - **Four pilot workshops are offered** in the carousel, as in the launch article. If fewer than four can be run this quarter, change the slide first.
-- **The testing article went live on 29 September** (`arckit.org/share/2026-09-29-is-max-effort-worth-it.html`), and the changes it describes are merged into `main` but not yet released. Posts can say they are coming in the next release.
+- **The testing article went live on 29 September** (`arckit.org/share/2026-09-29-is-max-effort-worth-it.html`), and the changes it describes shipped in ArcKit 6.16.6. Posts say so; never "in the next release".
 - **Nobody has used the adopter form yet.** The first post in *Show your working* should say so honestly, as the launch article did: an empty list is better than a padded one.
 
 ---
@@ -84,30 +94,29 @@ A post is harder to correct than a web page: it is reshared and screenshotted. T
 
 Copy is ready to paste. Links carry UTM tags. Post each only on the maintainer's go-ahead. Page posts live beside their article as `<slug>-linkedin.md`, so the copy sits with what it promotes; shorter posts for the group and Discord live here. Drafted with the marketing plugin's `draft-content` skill and checked with its `brand-review` skill against the rules above.
 
-### Q1. Testing results — LinkedIn page, with the `effort` carousel (Practitioner voice)
+### Q1. Getting the best from Sonnet 5.5 — LinkedIn page, with the `sonnet-5-5` image (Warm "we" voice) — posted 30 September
 
-Copy: `docs/articles/2026-09-29-is-max-effort-worth-it-linkedin.md`, which follows the archive's convention for channel versions (`<slug>-linkedin.md`, `<slug>-medium.md`). Attach `docs/social/out/effort/carousel.pdf` as a document. The Medium mirror is `docs/articles/2026-09-29-is-max-effort-worth-it-medium.md`.
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7511127330174541824/>. Copy: `docs/articles/2026-09-29-is-max-effort-worth-it-linkedin.md`, which follows the archive's convention for channel versions (`<slug>-linkedin.md`, `<slug>-medium.md`). It went out with `docs/social/out/sonnet-5-5/sonnet-5-5-1080x1350.png` and the alt text recorded in that file. The `effort` carousel and the article's link preview were left off because both show costs. The Medium mirror is `docs/articles/2026-09-29-is-max-effort-worth-it-medium.md`.
 
-### Q2. The same finding — LinkedIn group (Question voice)
+### Q2. Getting the best from Sonnet 5.5 — LinkedIn group (Question voice) — posted 30 September, with the `sonnet-5-5` image
 
-> How hard should an AI think when it drafts a requirements document?
+> Has anyone moved their architecture work onto Claude Sonnet 5.5 yet?
 >
-> I measured it for ArcKit. At max effort, requirements took four times as long and cost three times as much, for about the same 100 requirements.
+> We've been testing it with ArcKit, and a few things stood out. It handled full Secure by Design threat models without any trouble. The highest effort setting rarely made documents better, only longer. And where max effort did help, it was because the model was overruling the examples in our own templates. Once we brought the templates into line, high effort was enough.
 >
-> What actually improved the documents was fixing template examples that contradicted their own instructions. The AI follows the example, and only overrules it when you pay for more thinking.
->
-> Has anyone else found the examples mattering more than the settings? I'd like to hear what you've seen.
+> We'd like to compare notes. What have you noticed with the new model, and have you found your templates shaping the output more than the settings do?
 >
 > Full write-up: https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html?utm_campaign=show-your-working&utm_source=linkedin-group
 
-### Q3. Discord — #announcements
+### Q3. Getting the best from Sonnet 5.5 — Discord #announcements — posted 30 September, with the `sonnet-5-5` image
 
-> 📊 **New article: Is Max Effort Worth It?**
-> 53 test runs, about $150. Max effort mostly bought longer, slower documents. The real gaps were templates whose examples contradicted their own instructions.
-> • 13 templates fixed, merged, in the next release
-> • `/arckit:requirements` will finish in about a quarter of the time, `/arckit:sobc` in about a third
-> Questions or your own results: #show-your-working
-> <https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html>
+> 📝 **Getting the best from Claude Sonnet 5.5**
+> We ran 53 tests with ArcKit on Sonnet 5.5 and Opus 5.5. Here's what we found:
+> • Security work runs cleanly: full Secure by Design threat models, nothing refused
+> • Max effort is rarely needed: once the template is right, high is enough
+> • 13 templates now have examples that match their instructions, shipped in ArcKit 6.16.6
+> Tried Sonnet 5.5 with ArcKit? Tell us what you're seeing in #show-your-working
+> <https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html?utm_campaign=show-your-working&utm_source=discord>
 
 ### Q4. Adopter ask — LinkedIn page, with the `show-your-working` carousel (Plain evidence voice)
 
@@ -115,13 +124,13 @@ Copy: `docs/articles/2026-09-23-show-your-working-linkedin.md`. Attach `docs/soc
 
 ### Q5. 30-second vertical video — script (for YouTube Shorts, LinkedIn)
 
-The chef kit's template: 30 seconds, 1080 × 1920, six cards of about five seconds, a music bed and no voice. Use only music ArcKit holds a licence for, or royalty-free music, and keep the licence on file. Here the cards are the `effort` carousel's content, re-set vertically; render them from `render.py` before cutting.
+The chef kit's template: 30 seconds, 1080 × 1920, six cards of about five seconds, a music bed and no voice. Use only music ArcKit holds a licence for, or royalty-free music, and keep the licence on file. Here the cards are the `sonnet-5-5` image's four points, one per card, re-set vertically; render them from `render.py` before cutting.
 
-1. *We told the AI to think harder.*
-2. *Same 100 requirements. Four times the wait.* (the two cost bars)
-3. *The real problem: the examples.* (1 in 30)
-4. *Fix the example.* (4 of 4 runs complete)
-5. *Check the template before the setting.*
+1. *Getting the best from Sonnet 5.5.*
+2. *Use it for security work.* (26 and 32 threats, nothing refused)
+3. *Max effort is rarely needed.*
+4. *Check the template first.*
+5. *Then high effort is enough.* (every requirement complete)
 6. *arckit.org* — ArcKit logo, and the share link as a QR code.
 
 No stock footage of offices or people typing, and no screen recording of anyone's real project: rule 2.
