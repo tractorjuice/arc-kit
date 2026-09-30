@@ -1,6 +1,6 @@
 # LinkedIn Version: Is Max Effort Worth It?
 
-Post on the ArcKit page with the `docs/social/out/sonnet-5-5/sonnet-5-5-1080x1350.png` image (alt text in the post notes below). The `effort` carousel and the article hero both show costs, so neither is used. Warm "we" voice, framed around using Claude Sonnet 5.5 and with no costs (revised before posting); the first of the three voices under test in `docs/social/SOCIAL.md`.
+Post on the ArcKit page with the `docs/social/out/sonnet-5-5/sonnet-5-5-1080x1350.png` image (alt text below the post). The `effort` carousel and the article hero both show costs, so neither is used. Warm "we" voice, framed around using Claude Sonnet 5.5 and with no costs (revised before posting); the first of the three voices under test in `docs/social/SOCIAL.md`.
 
 ## LinkedIn Post Body
 
@@ -26,6 +26,10 @@ https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html?utm_campaign=sho
 Have you started using Sonnet 5.5 for architecture work? We'd like to hear what you're finding.
 
 #EnterpriseArchitecture #AIGovernance #DigitalGovernment #OpenSource
+
+## Image Alt Text
+
+Getting the best from Claude Sonnet 5.5: what 53 ArcKit test runs showed. 1. Use it for security work: two Secure by Design assessments found 26 and 32 threats, nothing refused. 2. Max effort is rarely needed: mostly it gave longer documents, not better ones. 3. Check the template first: where max helped, it was overruling the template's examples. 4. Then high effort is enough: acceptance-criteria mentions rose from 52 to 132, every requirement complete. Template fixes shipped in ArcKit 6.16.6.
 
 <!-- arckit:related-articles -->
 ## Related Articles
