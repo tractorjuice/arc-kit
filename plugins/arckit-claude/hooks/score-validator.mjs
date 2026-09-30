@@ -13,7 +13,8 @@
  * Hook Type: PreToolUse
  * Matcher: Write
  * Input (stdin):  JSON { tool_name, tool_input: { file_path, content }, ... }
- * Output (stdout): JSON with decision (allow/block)
+ * Output (stdout): JSON with decision 'block' (invalid JSON) or
+ *                  hookSpecificOutput.additionalContext (non-blocking warnings)
  */
 
 import { basename } from 'node:path';
@@ -96,10 +97,12 @@ if (scores.vendors && typeof scores.vendors === 'object') {
 
 // --- Output ---
 if (warnings.length > 0) {
-  // Allow but warn — don't block data writes
+  // Warn without a permission decision — normal permission flow still applies
   console.log(JSON.stringify({
-    decision: 'allow',
-    reason: `Score validation warnings:\n${warnings.map(w => `- ${w}`).join('\n')}`,
+    hookSpecificOutput: {
+      hookEventName: 'PreToolUse',
+      additionalContext: `Score validation warnings:\n${warnings.map(w => `- ${w}`).join('\n')}`,
+    },
   }));
 } else {
   // Clean pass
