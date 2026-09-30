@@ -4,7 +4,7 @@ Post on the ArcKit page with the `effort` carousel (`docs/social/out/effort/caro
 
 ## LinkedIn Post Body
 
-Claude Sonnet 5.5 arrived with some useful advice: effort levels have been recalibrated, and the highest settings should be used only where your own testing shows a gain. We hadn't tested ours, so over 53 runs we did.
+Claude Sonnet 5.5 arrived with some useful advice: effort levels have been recalibrated, and the highest settings should be used only where your own testing shows a gain. We test ArcKit regularly, but not yet on Sonnet 5.5, so we ran 53 tests to find out what the new model needs.
 
 Here's what we learned about getting the best from Sonnet 5.5 with ArcKit.
 
