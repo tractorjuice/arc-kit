@@ -14,6 +14,7 @@ Exit codes: 0 = allow, 2 = block
 """
 
 import os
+import posixpath
 import re
 import sys
 
@@ -92,7 +93,8 @@ ALLOWED_EXCEPTIONS = [
     "secret-file-scanner.mjs",
 ]
 
-# Directories where sensitive keywords in filenames are allowed
+# Directories where sensitive keywords in filenames are allowed.
+# Matched on path segment boundaries; never exempts PROTECTED_PATHS.
 ALLOWED_DIRECTORIES = [
     "arckit-gemini/commands/",
     "arckit-gemini/templates/",
@@ -104,36 +106,45 @@ ALLOWED_DIRECTORIES = [
 ]
 
 
+def normalize_path(file_path):
+    """Normalize separators and collapse '.'/'..' segments."""
+    normalized = posixpath.normpath(file_path.replace("\\", "/"))
+    return "" if normalized == "." else normalized
+
+
+def is_in_allowed_directory(normalized_path):
+    """Match allowed directories on path segment boundaries."""
+    anchored = "/" + normalized_path.lstrip("/")
+    return any("/" + d in anchored for d in ALLOWED_DIRECTORIES)
+
+
 def is_protected(file_path):
     """Check if a file path is protected. Returns (blocked, reason)."""
-    parts = file_path.replace("\\", "/").split("/")
-    file_name = os.path.basename(file_path)
+    normalized_path = normalize_path(file_path)
+    parts_lower = normalized_path.lower().split("/")
+    file_name = posixpath.basename(normalized_path)
     file_name_lower = file_name.lower()
 
-    # Check for allowed exceptions first
+    # Protected paths are always enforced, regardless of directory or exceptions
+    for protected in PROTECTED_PATHS:
+        protected_lower = protected.lower()
+        if protected_lower.startswith("*"):
+            # Wildcard suffix match (e.g., *.pem)
+            if file_name_lower.endswith(protected_lower[1:]):
+                return True, f"Protected file type: {protected}"
+        elif protected_lower.endswith("/"):
+            # Directory match - check if directory appears as a path segment
+            if protected_lower[:-1] in parts_lower:
+                return True, f"Protected directory: {protected}"
+        elif file_name_lower == protected_lower:
+            # Exact filename match (not substring)
+            return True, f"Protected file: {protected}"
+
+    # Exceptions and allowed directories only relax the sensitive-keyword heuristic
     if file_name in ALLOWED_EXCEPTIONS:
         return False, ""
-
-    # Check if file is in an allowed directory
-    for allowed_dir in ALLOWED_DIRECTORIES:
-        if allowed_dir in file_path:
-            return False, ""
-
-    # Check protected paths
-    for protected in PROTECTED_PATHS:
-        if protected.startswith("*"):
-            # Wildcard suffix match (e.g., *.pem)
-            if file_path.endswith(protected[1:]):
-                return True, f"Protected file type: {protected}"
-        elif protected.endswith("/"):
-            # Directory match - check if directory appears as a path segment
-            dir_name = protected[:-1]
-            if dir_name in parts:
-                return True, f"Protected directory: {protected}"
-        else:
-            # Exact filename match (not substring)
-            if file_name == protected or file_path.endswith("/" + protected):
-                return True, f"Protected file: {protected}"
+    if is_in_allowed_directory(normalized_path):
+        return False, ""
 
     # Check for sensitive keywords in filename (case-insensitive substring match)
     for keyword in SENSITIVE_FILENAME_KEYWORDS:

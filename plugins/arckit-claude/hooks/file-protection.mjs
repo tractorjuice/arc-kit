@@ -9,7 +9,7 @@
  * Exit code is always 0.
  */
 
-import { basename } from 'node:path';
+import { basename, posix } from 'node:path';
 import { parseHookInput } from './hook-utils.mjs';
 
 // Files and paths to protect
@@ -95,7 +95,8 @@ const ALLOWED_EXCEPTIONS = [
 ];
 
 // Directories where sensitive keywords in filenames are allowed
-// (documentation/skill files that discuss secrets, not actual secrets)
+// (documentation/skill files that discuss secrets, not actual secrets).
+// Matched on path segment boundaries; never exempts PROTECTED_PATHS.
 const ALLOWED_DIRECTORIES = [
   'arckit-claude/commands/',  // Command documentation may reference secret management
   'arckit-claude/templates/', // Templates may reference credential patterns
@@ -106,43 +107,48 @@ const ALLOWED_DIRECTORIES = [
   'projects/',                // ArcKit governance artifacts may discuss security topics
 ];
 
+function normalizePath(filePath) {
+  const normalized = posix.normalize(filePath.replace(/\\/g, '/'));
+  return normalized === '.' ? '' : normalized;
+}
+
+function isInAllowedDirectory(normalizedPath) {
+  const anchored = '/' + normalizedPath.replace(/^\/+/, '');
+  return ALLOWED_DIRECTORIES.some(dir => anchored.includes('/' + dir));
+}
+
 function isProtected(filePath) {
-  // Split path into parts for directory matching
-  const parts = filePath.replace(/\\/g, '/').split('/');
-  const fileName = basename(filePath);
+  const normalizedPath = normalizePath(filePath);
+  const normalizedLower = normalizedPath.toLowerCase();
+  const partsLower = normalizedLower.split('/');
+  const fileName = basename(normalizedPath);
   const fileNameLower = fileName.toLowerCase();
 
-  // Check for allowed exceptions first
+  // Protected paths are always enforced, regardless of directory or exceptions
+  for (const protected_ of PROTECTED_PATHS) {
+    const protectedLower = protected_.toLowerCase();
+    if (protectedLower.startsWith('*')) {
+      // Wildcard suffix match (e.g., *.pem)
+      if (fileNameLower.endsWith(protectedLower.slice(1))) {
+        return [true, `Protected file type: ${protected_}`];
+      }
+    } else if (protectedLower.endsWith('/')) {
+      // Directory match - check if directory appears as a path segment
+      if (partsLower.includes(protectedLower.slice(0, -1))) {
+        return [true, `Protected directory: ${protected_}`];
+      }
+    } else if (fileNameLower === protectedLower) {
+      // Exact filename match (not substring)
+      return [true, `Protected file: ${protected_}`];
+    }
+  }
+
+  // Exceptions and allowed directories only relax the sensitive-keyword heuristic
   if (ALLOWED_EXCEPTIONS.includes(fileName)) {
     return [false, ''];
   }
-
-  // Check if file is in an allowed directory
-  for (const allowedDir of ALLOWED_DIRECTORIES) {
-    if (filePath.includes(allowedDir)) {
-      return [false, ''];
-    }
-  }
-
-  // Check protected paths
-  for (const protected_ of PROTECTED_PATHS) {
-    if (protected_.startsWith('*')) {
-      // Wildcard suffix match (e.g., *.pem)
-      if (filePath.endsWith(protected_.slice(1))) {
-        return [true, `Protected file type: ${protected_}`];
-      }
-    } else if (protected_.endsWith('/')) {
-      // Directory match - check if directory appears as a path segment
-      const dirName = protected_.slice(0, -1);
-      if (parts.includes(dirName)) {
-        return [true, `Protected directory: ${protected_}`];
-      }
-    } else {
-      // Exact filename match (not substring)
-      if (fileName === protected_ || filePath.endsWith('/' + protected_)) {
-        return [true, `Protected file: ${protected_}`];
-      }
-    }
+  if (isInAllowedDirectory(normalizedPath)) {
+    return [false, ''];
   }
 
   // Check for sensitive keywords in filename (case-insensitive substring match)
