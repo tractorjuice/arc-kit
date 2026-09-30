@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+These five come from @johnfelipe, following up the client risk review that shaped 6.16.4.
+
+- **Secrets and keys under `projects/` can no longer be written** (#878). `file-protection` checked its allowed folders before its protected paths, so `projects/*/.env`, private keys and `.git/config` under `projects/` got through. The Gemini copy of the hook is fixed too.
+- **A crafted connection string can't freeze the secret scanners** (#879). A long run of `mongodb://a:` made the pattern backtrack for minutes, past the hook's time limit, so the content was let through. The bounded pattern takes milliseconds.
+- **The Codex hook catches secrets in a plain Write or Edit** (#880). It only blocked a secret when the text also contained a word such as `write` or `echo`.
+- **Artefact text that hooks add to Claude's context is fenced and escaped** (#876). Requirement, risk and owner text went into context unfenced, and a `|` could add table columns.
+- **The vendor-score check no longer approves the file it checks** (#883). When it found a warning it answered with an allow, which skipped the permission prompt for the Write; it now reports the warning and grants nothing. The Claude plugin directory's scan counts a hook like that as granting permission.
+
 ## [6.17.0] — 2026-09-29
 
 ### Changed
