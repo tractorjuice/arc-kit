@@ -8,9 +8,9 @@ Voice and rules: `SOCIAL.md` (warm "we", lead with what the reader can use, no c
 
 **Channels, per the plan in `SOCIAL.md`:**
 
-- **ArcKit page:** every day from 30 September to 13 October, with that day's card (`docs/social/out/explained/slide-N-1080x1350.png`). Day 1 posted on the day; days 2 to 14 scheduled in LinkedIn's scheduler for 08:30.
-- **LinkedIn group:** twice a week, a reworded question version (days 1, 5, 9 and 12: 30 September, 4, 8 and 11 October). Group posts can't be scheduled, so they go out on the day. Not daily: 161 members don't want 14 posts in a row.
-- **Discord #announcements:** once, on day 1, pointing at the series. It changes nothing for existing users, so no daily posts there.
+- **ArcKit page:** every day from 30 September to 13 October, with that day's card (`docs/social/out/explained/slide-N-1080x1350.png`). Day 1 posted on 30 September at about 20:00; days 2 to 14 are scheduled in LinkedIn's scheduler for 08:30 each day (all 13 confirmed in the scheduled list). Post bodies are plain text: no backticks, which LinkedIn shows literally.
+- **LinkedIn group:** twice a week, a reworded question version (1, 4, 8 and 11 October). Group posts can't be scheduled, so they go out by hand on the day. The day 1 group post moved to 1 October because the group had the Sonnet 5.5 post on 30 September. Not daily: 161 members don't want 14 posts in a row.
+- **Discord #announcements:** once, on 1 October, pointing at the series. It changes nothing for existing users, so no daily posts there.
 
 Links go to `https://arckit.org` pages with `?utm_campaign=arckit-explained&utm_source=linkedin`.
 
@@ -36,11 +36,11 @@ https://arckit.org?utm_campaign=arckit-explained&utm_source=linkedin
 
 Getting started takes a few minutes.
 
-In Claude Code, ArcKit installs as a plugin from its marketplace. For GitHub Copilot, Codex CLI, OpenCode and the others, the `arckit` command-line tool sets up your project.
+In Claude Code, ArcKit installs as a plugin from its marketplace. For GitHub Copilot, Codex CLI, OpenCode and the others, the arckit command-line tool sets up your project.
 
-Then run `/arckit:init`. It creates a `projects/` folder in your repository, with a global area for things every project shares, such as your architecture principles.
+Then run /arckit:init. It creates a projects/ folder in your repository, with a global area for things every project shares, such as your architecture principles.
 
-Not sure where to begin? `/arckit:start` asks a few questions about your project and suggests which commands to run, and in what order.
+Not sure where to begin? /arckit:start asks a few questions about your project and suggests which commands to run, and in what order.
 
 Every document ArcKit writes is a Markdown file in your repository, versioned in git alongside everything else. Nothing is sent to us.
 
@@ -52,7 +52,7 @@ Tomorrow: principles, the foundation everything else checks against.
 
 Every architecture review eventually asks the same question: does this follow our principles?
 
-So that's where ArcKit starts. `/arckit:principles` drafts your organisation's architecture principles, each with a rationale and its implications, and saves them where every later command can read them.
+So that's where ArcKit starts. /arckit:principles drafts your organisation's architecture principles, each with a rationale and its implications, and saves them where every later command can read them.
 
 From then on, the requirements, the design reviews and the assessments all check back against them. When a later document departs from a principle, it says so, rather than leaving it for the review board to spot.
 
@@ -66,7 +66,7 @@ Tomorrow: who the project is for.
 
 A project that can't say who it's for can't say whether it worked.
 
-`/arckit:stakeholders` maps the people with a stake in the project, what drives each of them, their goals, and the measurable outcomes that would show success.
+/arckit:stakeholders maps the people with a stake in the project, what drives each of them, their goals, and the measurable outcomes that would show success.
 
 For Ashcombe's housing benefits service, that means claimants, the caseworkers who process claims, and the Director of Resources, who has a savings target to meet. They agree on the what, faster and complete online claims, and differ on the how, which is exactly what this step is for surfacing.
 
@@ -78,7 +78,7 @@ Those goals become the thread that the rest of the work hangs from. Tomorrow, re
 
 Requirements are where most projects either get specific or get vague.
 
-`/arckit:requirements` drafts them in five kinds: business (BR), functional (FR), non-functional (NFR), integration (INT) and data (DR). Every requirement gets a priority, a rationale and acceptance criteria, so a tester knows what "done" means.
+/arckit:requirements drafts them in five kinds: business (BR), functional (FR), non-functional (NFR), integration (INT) and data (DR). Every requirement gets a priority, a rationale and acceptance criteria, so a tester knows what "done" means.
 
 Each one traces back to a stakeholder goal from yesterday, so when someone asks "why do we need this?", the answer is already written down.
 
@@ -92,7 +92,7 @@ Tomorrow: what could go wrong.
 
 Every project has risks. The useful question is whether they're written down in a form your organisation recognises.
 
-`/arckit:risk` drafts a risk register following HM Treasury's Orange Book principles: each risk scored for likelihood and impact before and after controls, with an owner and a response, and measured against your organisation's risk appetite if you've recorded one.
+/arckit:risk drafts a risk register following HM Treasury's Orange Book principles: each risk scored for likelihood and impact before and after controls, with an owner and a response, and measured against your organisation's risk appetite if you've recorded one.
 
 It reads your requirements and stakeholders first, so the risks are about this project, not a generic list.
 
@@ -104,7 +104,7 @@ Tomorrow: seeing the landscape before deciding what to build.
 
 Before deciding what to build, it helps to see what's already a commodity.
 
-`/arckit:wardley` drafts a Wardley map of your project: the components users need, how they depend on each other, and how mature each one is. Mature components are candidates to buy or reuse. The novel ones are where your own effort belongs.
+/arckit:wardley drafts a Wardley map of your project: the components users need, how they depend on each other, and how mature each one is. Mature components are candidates to buy or reuse. The novel ones are where your own effort belongs.
 
 The map is written in a text format you can open and adjust at create.wardleymaps.ai. Follow-on commands add the climate, doctrine and gameplay views.
 
@@ -118,7 +118,7 @@ Tomorrow: researching what's out there.
 
 Once you know what to buy, the next question is: from whom?
 
-`/arckit:research` looks at the market for each capability your requirements need: products, open-source options and UK government platforms, with a build-or-buy view for each. Where it matters, it notes G-Cloud and Digital Outcomes routes, and `/arckit:gcloud-search` searches the Digital Marketplace directly.
+/arckit:research looks at the market for each capability your requirements need: products, open-source options and UK government platforms, with a build-or-buy view for each. Where it matters, it notes G-Cloud and Digital Outcomes routes, and /arckit:gcloud-search searches the Digital Marketplace directly.
 
 Every claim it makes is cited to its source, so you can check it before it goes anywhere near a decision.
 
@@ -130,7 +130,7 @@ Tomorrow: making the case.
 
 A business case is where the architecture meets the money, and it has to speak the Treasury's language.
 
-`/arckit:sobc` drafts a Strategic Outline Business Case using the Green Book's five-case model: strategic, economic, commercial, financial and management. The options include doing nothing, and each option carries its own risks.
+/arckit:sobc drafts a Strategic Outline Business Case using the Green Book's five-case model: strategic, economic, commercial, financial and management. The options include doing nothing, and each option carries its own risks.
 
 It builds on what you've already written, the stakeholder goals, the requirements and the research, so the case and the architecture tell the same story.
 
@@ -142,9 +142,9 @@ Tomorrow: the data, and protecting it.
 
 A benefits service holds some of the most sensitive data a council has, so the data needs designing as carefully as the service.
 
-`/arckit:data-model` drafts the entities, their relationships and a diagram, with UK GDPR considerations and data governance for each.
+/arckit:data-model drafts the entities, their relationships and a diagram, with UK GDPR considerations and data governance for each.
 
-`/arckit:dpia` then drafts the Data Protection Impact Assessment that UK GDPR Article 35 requires for high-risk processing, drawing on that model.
+/arckit:dpia then drafts the Data Protection Impact Assessment that UK GDPR Article 35 requires for high-risk processing, drawing on that model.
 
 Both are drafts for your data protection officer to review. They give that review a head start.
 
@@ -156,9 +156,9 @@ Tomorrow: diagrams and decisions.
 
 Two things every design review wants to see: the picture, and why you chose it.
 
-`/arckit:diagram` draws architecture diagrams in Mermaid or PlantUML C4, as text in your repository, so they change alongside the design instead of drifting away from it.
+/arckit:diagram draws architecture diagrams in Mermaid or PlantUML C4, as text in your repository, so they change alongside the design instead of drifting away from it.
 
-`/arckit:adr` records each significant decision as an Architecture Decision Record: the options considered, the one chosen, and the reasoning, traced to the requirements it serves.
+/arckit:adr records each significant decision as an Architecture Decision Record: the options considered, the one chosen, and the reasoning, traced to the requirements it serves.
 
 Six months later, when someone asks why the service uses a particular integration pattern, the answer is still there.
 
@@ -170,9 +170,9 @@ Tomorrow: security and the Technology Code of Practice.
 
 Two assessments almost every UK public sector project meets.
 
-`/arckit:secure` drafts a Secure by Design assessment for your project, with the security actions it needs and an owner for each.
+/arckit:secure drafts a Secure by Design assessment for your project, with the security actions it needs and an owner for each.
 
-`/arckit:tcop` reviews the project against all 13 points of the Technology Code of Practice, drawing on the documents you've already produced.
+/arckit:tcop reviews the project against all 13 points of the Technology Code of Practice, drawing on the documents you've already produced.
 
 Neither replaces your security team or your assessors. Both mean they start from a structured draft, not a blank page.
 
@@ -184,11 +184,11 @@ Tomorrow: joining it all up.
 
 By now Ashcombe's project has a dozen documents. The value is in how they connect.
 
-`/arckit:traceability` builds a matrix from requirements through to design and tests, and shows any requirement with nothing behind it.
+/arckit:traceability builds a matrix from requirements through to design and tests, and shows any requirement with nothing behind it.
 
-`/arckit:health` scans your projects for research that has gone stale, decisions left open, review conditions not yet closed, and gaps in traceability.
+/arckit:health scans your projects for research that has gone stale, decisions left open, review conditions not yet closed, and gaps in traceability.
 
-And when the service assessment approaches, `/arckit:service-assessment` checks your evidence against all 14 points of the GDS Service Standard and lists the gaps.
+And when the service assessment approaches, /arckit:service-assessment checks your evidence against all 14 points of the GDS Service Standard and lists the gaps.
 
 Tomorrow: showing your working.
 
@@ -200,7 +200,7 @@ Two weeks, one project, a full set of governance documents. The last step is mak
 
 Every ArcKit document cites its sources inline, so a reviewer can follow any claim back to where it came from. Each one also records how it was made: which command, which model and when.
 
-`/arckit:pages` then turns the project into a documentation site with a governance dashboard, so the whole team can read the work without opening a repository.
+/arckit:pages then turns the project into a documentation site with a governance dashboard, so the whole team can read the work without opening a repository.
 
 ArcKit is free and open source. If you'd like to try it on your own project, start here:
 https://arckit.org?utm_campaign=arckit-explained&utm_source=linkedin
