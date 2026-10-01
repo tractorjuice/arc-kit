@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Claude Code floor raised to v2.1.287 for Claude mods** (#580). v2.1.287 lets a plugin ship a mod, which ArcKit uses for the status line above. It also fixes plugin SessionStart hooks not running in new cloud sessions, so ArcKit's session set-up and version check now run there. The SessionStart version check, both READMEs, CLAUDE.md, the start, MCP-servers, enterprise-scale and research-family guides, and the repo's `minimumVersion` are updated.
 
+### Fixed
+
+- **Hook project inventories treat filesystem names as data.** UserPromptSubmit, agent dispatch, PostCompact and external-document updates now replace control characters and backticks in discovered names and enclose them in data blocks. External directory walks follow a symlinked `external/` root but no links below it, and stop after bounded depth and entry counts, preventing cycles and out-of-tree enumeration. The Codex extension's copies of the inventory builder and walker get the same change.
+
 ## [6.17.2] — 2026-10-01
 
 ### Fixed
@@ -97,8 +101,6 @@ These five come from @johnfelipe, following up the client risk review that shape
 ### Fixed
 
 - **`/arckit:backlog` totals are computed and checked, not stated** (#855, #856). The backlog stated its totals rather than calculating them, so the story count, epic subtotals and coverage summary could disagree with the items, and a revision updated some sections and not others. The command now always writes the backlog JSON, writes it first, and copies the Markdown's totals from it. A new PreToolUse hook, `validate-backlog-totals.mjs`, recomputes every total from the JSON's items and blocks the write on any mismatch, a `Sprint 0` placeholder, or an epic whose story list disagrees with its items. It also blocks a requirement delivered at a lower MoSCoW priority than the REQ document gives it unless the reason is recorded as `priority_change`, which is how a compliance requirement was silently downgraded. Regenerating a backlog now keeps the points of unchanged items and lists every re-estimate.
-
-- **Hook project inventories treat filesystem names as data.** UserPromptSubmit, agent dispatch, PostCompact and external-document updates now replace control characters and backticks in discovered names and enclose them in data blocks. External directory walks skip symlinks and stop after bounded depth and entry counts, preventing cycles and out-of-tree enumeration.
 
 - **Large PlantUML diagrams render on `/arckit:pages` sites** (#648, reported by @johnfelipe). The pages template put each diagram's source into the PlantUML server URL as hex, two characters per byte, so a large diagram passed the server's URL limit and failed with "Check diagram syntax" about perfectly valid source. It now uses PlantUML's standard encoding (deflate, compressed in the browser with no extra library), which is several times shorter: a 6 KB diagram went from a 12,144-character URL the server rejected to 1,158 characters that render. A diagram still too large gets a message saying so, not a syntax warning. The stale `.arckit/templates` copy of the template is brought back in line.
 

@@ -35,8 +35,10 @@ const MAX_WALK_DEPTH = 16;
 const MAX_WALK_ENTRIES = 2000;
 
 function walkEntries(rootDir, onDirectory, onFile) {
+  // The root itself may be a symlink (a project's external/ pointing at a
+  // shared folder); follow it. Entries below it are not followed.
   let rootStat;
-  try { rootStat = lstatSync(rootDir); } catch { return; }
+  try { rootStat = statSync(rootDir); } catch { return; }
   if (!rootStat.isDirectory()) return;
 
   const visited = new Set();

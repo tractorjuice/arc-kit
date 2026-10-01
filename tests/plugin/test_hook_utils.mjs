@@ -40,8 +40,10 @@ test('recursive walkers skip symlink cycles and out-of-tree entries', () => {
 
     assert.deepEqual(listFilesRecursive(external).map(file => file.relativePath), ['nested/inside.md']);
     assert.deepEqual(listDirsRecursive(external), [external, nested]);
-    assert.deepEqual(listFilesRecursive(join(external, 'outside-link')), []);
-    assert.deepEqual(listDirsRecursive(join(external, 'outside-link')), []);
+    // A symlinked root is followed; only entries below it are not.
+    const linkedRoot = join(external, 'outside-link');
+    assert.deepEqual(listFilesRecursive(linkedRoot).map(file => file.relativePath), ['secret.md']);
+    assert.deepEqual(listDirsRecursive(linkedRoot), [linkedRoot]);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
