@@ -360,12 +360,85 @@ def from_articles_series():
                         lambda n, T: "Read the full article at arckit.org/articles")
 
 
+# ── Campaigns: Regulation week, directory launch, bring your own template ──
+
+REGULATION_WEEK = [
+    (
+        "NIS2: who you are first",
+        "/arckit-eu:eu-nis2",
+        [
+            "Essential, Important or out of scope",
+            "Ten Article 21 measures with gaps",
+            "24h, 72h and one-month reporting stages",
+        ],
+    ),
+    (
+        "CRA: the product itself",
+        "/arckit-eu:eu-cra",
+        [
+            "Default, Class I or Class II",
+            "Twelve Annex I security requirements",
+            "SBOM in SPDX or CycloneDX, 24h reporting",
+        ],
+    ),
+    (
+        "Data Act: who gets the data",
+        "/arckit-eu:eu-data-act",
+        [
+            "Roles first: manufacturer, data holder",
+            "User access: free, machine-readable",
+            "Fair B2B terms and trade secret safeguards",
+        ],
+    ),
+    (
+        "GDPR: screen first",
+        "/arckit-eu:eu-rgpd",
+        [
+            "Nine EDPB criteria; two or more needs a DPIA",
+            "Lawful basis and rights for each activity",
+            "Transfers and 72-hour breach notification",
+        ],
+    ),
+    (
+        "AI Act: prohibited first",
+        "/arckit-eu:eu-ai-act",
+        [
+            "Is it an AI system? Provider or deployer?",
+            "Article 5 prohibited practices checked first",
+            "High, limited or minimal risk, then the work",
+        ],
+    ),
+]
+
+CAMPAIGN_SINGLES = {
+    "directory-launch": ('Now in the plugin directory', 'Find ArcKit and install it inside Claude', ['The core plugin joins the overlays already listed', 'Nothing in ArcKit approves an action for you', 'Marketplace install still works as before']),
+    "bring-your-own-template": ("Bring your own template", "/arckit:customize  /arckit:template-builder", ["Share a house template, public or cleared", "We draft in it on a fictional project", "Published side by side, credited your way"]),
+}
+
+
+def regulation_week_series():
+    return cards_series(REGULATION_WEEK, "ARCKIT · REGULATION WEEK", OUT / "regulation-week",
+                        lambda n, T: "Community EU overlay. Drafts for qualified review.")
+
+
+def campaign_singles():
+    """One card per campaign, saved under its own name (no 1/N counter)."""
+    out = OUT / "campaigns"
+    out.mkdir(parents=True, exist_ok=True)
+    for name, item in CAMPAIGN_SINGLES.items():
+        _, (img,) = cards_series([item], "ARCKIT", out, lambda n, T: None)
+        img.save(out / f"{name}-1080x1350.png", optimize=True)
+    return out, []
+
+
 def main():
     out, (img,) = sonnet_single()
     out.mkdir(parents=True, exist_ok=True)
     img.save(out / "sonnet-5-5-1080x1350.png", optimize=True)
     print(f"wrote 1 image to {out.relative_to(HERE.parent.parent)}")
-    for build in (effort_series, adopter_series, explained_series, from_articles_series):
+    campaign_singles()
+    print("wrote campaign cards to docs/social/out/campaigns")
+    for build in (effort_series, adopter_series, explained_series, from_articles_series, regulation_week_series):
         out, slides = build()
         out.mkdir(parents=True, exist_ok=True)
         for i, img in enumerate(slides, 1):
