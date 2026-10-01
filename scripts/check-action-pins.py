@@ -4,12 +4,10 @@
 A `uses: owner/repo@v4` reference resolves whatever that tag points at *when the
 workflow runs*. Tags are mutable: whoever controls the action repository can
 repoint one at new code, and every downstream workflow picks it up silently on
-the next run. Actions here run with `contents: write` and, in the release
-workflow, with `id-token: write` for PyPI trusted publishing, so a repointed tag
-is an arbitrary-code-execution path into a job holding publish credentials.
-
-`pypa/gh-action-pypi-publish@release/v1` was worse still: a moving *branch*,
-which advances on every release of that action with no version boundary at all.
+the next run. Actions here run with `contents: write`, so a repointed tag is an
+arbitrary-code-execution path into a job that can publish releases. A reference
+to a *branch* is worse still: it advances on every release of that action with
+no version boundary at all.
 
 A 40-hex SHA is immutable. The trailing `# vN` comment records the human-readable
 version the SHA corresponds to, so a reader can tell at a glance what is pinned
