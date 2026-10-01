@@ -1,0 +1,57 @@
+name: Share a template
+description: Send us your organisation's document template, and we'll show ArcKit drafting in your format
+title: "[Template]: "
+labels: ["template-share"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Many teams already have a house format for requirements, business cases or design reviews. Share one, and we'll show how ArcKit drafts in it, using `/arckit:customize` (edit a copy of a built-in template) or `/arckit:template-builder` (build a new one). We'll run it on a fictional project and publish the result, crediting you the way you choose below.
+
+        **This issue is public, and so is anything you attach.** Only share a template that is already public, or that your organisation has cleared for release. Remove internal names, contact details, classification markings above OFFICIAL, and anything else you wouldn't publish. If you'd rather not post in public, send it privately on [Discord](https://discord.gg/HsA4Y3hQ4) or through the [LinkedIn group](https://www.linkedin.com/groups/17641034/).
+
+  - type: input
+    id: document
+    attributes:
+      label: What document is it for?
+      placeholder: "e.g. architecture decision record, outline business case, design authority submission"
+    validations:
+      required: true
+
+  - type: textarea
+    id: template
+    attributes:
+      label: The template
+      description: Paste it here, or attach a Markdown, Word or PDF file. Headings and the guidance under each are what matter most.
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: What does your format do that a standard one doesn't?
+      description: Optional. A sentence or two helps us show the right thing.
+
+  - type: dropdown
+    id: credit
+    attributes:
+      label: How should we credit you?
+      options:
+        - Name me and my organisation
+        - Name me only
+        - By sector only (e.g. "a central government department")
+        - Don't credit me
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before you submit
+      options:
+        - label: This template is public, or my organisation has cleared it for release.
+          required: true
+        - label: I've removed internal names, personal data and any marking above OFFICIAL.
+          required: true
+        - label: ArcKit may publish the template and a fictional example drafted in it.
+          required: true
