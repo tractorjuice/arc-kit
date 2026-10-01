@@ -101,6 +101,8 @@ Always write "GitHub Copilot" in full. Never write "Copilot" alone.
 
 **Deliberately not used this quarter:** paid ads (no budget, and a poor fit for public-sector buyers); star-chasing launches on Hacker News or Product Hunt (they don't serve the adoption goal, but keep one in reserve for the v7 release).
 
+**Later option, not this quarter: ArcKit reference for ChatGPT Enterprise workspaces** (noted 1 October 2026). OpenAI's [Hosting a plugin with ChatGPT Sites](https://help.openai.com/en/articles/20001547-hosting-a-plugin-with-chatgpt-sites) lets a workspace host MCP tools on a ChatGPT Site and use them as a plugin in ChatGPT and Codex. It reaches the departments that have ChatGPT Enterprise rather than a coding assistant (MoJ's 2,500 seats). It would carry reference material only: find the right template, what the Technology Code of Practice or Service Standard expects, the quality checklist for a document type. It can't generate governed documents, because there is no repository, no hooks and no provenance. Constraints: sharing stays inside one Business or Enterprise workspace (personal and Pro accounts can't share at all), admins must turn on "Create plugins with MCPs" and "Upload plugins" (off by default in Enterprise), and content on a Site is held by OpenAI, so it suits public templates and guidance, not project documents. So each organisation would host its own copy; ArcKit's part would be a short guide and a ready-made prompt for their admin. Revisit once Sites is generally available, ideally with a ChatGPT Enterprise adopter as part of a pilot workshop. The Codex extension does not change: it is already a Codex plugin with skills, hooks and templates, which a Site-hosted plugin can't carry.
+
 ---
 
 ## 5. Content Calendar
