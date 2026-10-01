@@ -1,0 +1,17 @@
+schema_version: "1.1"
+name: wardley-map-complete
+tags: [artefact, effort]
+prompt: "/arckit:wardley 001 Map the Housing Benefits Portal from its stakeholders and requirements. Do not ask questions; use sensible defaults."
+plugins: ["../.."]
+runs: 1
+max_turns: 45
+timeout_seconds: 5400
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash]
+context:
+  add_dirs:
+    - source: ../fixtures/benefits-portal
+      dest: .
+    - source: ../fixtures/benefits-portal-principles
+      dest: .
+    - source: ../fixtures/benefits-portal-stakeholders
+      dest: .

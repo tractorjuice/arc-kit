@@ -47,6 +47,8 @@ Each live run costs real money on your account: a read-only case is around one t
 
 `--effort` (or `effort:` in a `case.yaml`) runs the case against a temporary copy of the plugin with the invoked command's `effort:` line changed. A command's own frontmatter wins over the session's effort, so this is the only way to compare levels on one command. Each recording notes the model, the requested effort, and the thinking and output tokens from the result event; a changed thinking-token count is how you can see the override took effect.
 
+A run that finishes normally but never writes the document its `file_exists` grader expects is reported as `EARLY STOP`, with the run's last words, and recorded as `early_stop` in `aggregate.json`. Opus 5.5 can end a turn with a progress report ("next I'll write the file…") instead of a tool call, and `claude -p` treats that as the end of the run, so an early stop says the command or agent needs its *Finish in this turn* rule, not that the document was wrong.
+
 ## The rules of the suite
 
 These follow the eval conventions in Anthropic's [`commerce-agents`](https://github.com/anthropics/commerce-agents) reference.

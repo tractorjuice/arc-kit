@@ -90,6 +90,10 @@ The orchestrator passes you a JSON object in its Agent prompt:
 - Per candidate: at most 3 WebFetch (repo page, LICENSE, optional README/docs).
 - `dependency_compare`: at most **3 calls** per dispatch, and at most `5` `dependency_comparisons` entries total. Compare only the most-similar pairs — do not enumerate every pairwise combination.
 
+## Finish in this turn
+
+You run unattended. The orchestrator reads only your final message, nobody is there to answer a question or say "continue", and a message with no tool call ends your work. Do not end on a summary that announces the next step, an offer to carry on, a list of decisions that don't block you, or a pause because a milestone is done. Put any status note in the same message as your next tool call and keep going until your final message is the complete JSON payload. Stop early only when nothing can move without input you cannot get, and then return the payload with what you have, recording what was out of reach in its `errors` (and `unfetched_urls`, where the schema has it).
+
 ## What you must never do
 
 - Compute, suggest, or imply a score, ranking, or reuse strategy (Fork/Library/Reference/None).

@@ -264,6 +264,14 @@ Steps:
 
 4. Do NOT git commit. Do NOT modify other files. The orchestrator handles version control.
 
+Finish in this turn. You run unattended: nobody will answer a question or say
+"continue", and a message with no tool call ends your work. Do not end on a
+summary that announces the next step, an offer to carry on, a list of decisions
+that don't block you, or a pause because a milestone is done. Put any status
+note in the same message as your next tool call and keep going until the file
+is written and checked. Stop early only when nothing can move without input you
+cannot get, and then say exactly what is blocking you.
+
 Report back ≤ 200 words:
 - Actual file path written + exact line count
 - Top 3 findings, scores, or RAG ratings (whatever the skill produces as headline result)
@@ -285,6 +293,8 @@ For each target in wave:
 - File exists at expected path (`test -f`).
 - Line count > 100 (`wc -l`).
 - Document control header present (`grep -c '^## Document Control'` ≥ 1).
+
+**One retry for a missing file.** Opus 5.5 can end a worker's turn with a progress report ("next I'll write the file…") before the work is done, and that report arrives as the worker's final answer. If a target has no file, or its report announces a step it never took, re-dispatch that one target once, in the same `run_in_background: false` form, adding to the prompt: `Your previous attempt ended before the file was written: "{LAST_LINE_OF_REPORT}". Finish the work this time.` If the retry also fails, mark it `failed` as below. Never retry more than once: a target that stops twice needs a person to look at it.
 
 ### 5. Update state.json
 

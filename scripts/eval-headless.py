@@ -282,6 +282,24 @@ def grade(grader: dict, rec: dict, files_dir: Path) -> dict:
             "details": f"pattern {'found' if found else 'not found'} in {where}; match={mode}"}
 
 
+def early_stop(rec: dict, scored: dict) -> str | None:
+    """The run ended normally but never wrote the document it was asked for.
+
+    Opus 5.5 can end a turn with a progress report ("next I'll write the
+    file...") instead of a tool call, and `claude -p` treats that as the end of
+    the run. That is a different failure from a wrong document or a timeout, so
+    it is reported separately with the run's last words.
+    """
+    if rec.get("timed_out") or rec.get("subtype") not in (None, "success"):
+        return None
+    missing = [g for g in scored["graders"]
+               if g.get("type") == "file_exists" and not g.get("skipped") and not g.get("passed")]
+    if not missing:
+        return None
+    tail = " ".join((rec.get("last_message") or "").split())
+    return tail[-200:] or "(no final message)"
+
+
 def score_case(case: dict, rec: dict, files_dir: Path) -> dict:
     results = [grade(g, rec, files_dir) for g in case["_graders"]]
     scored = [r for r in results if not r.get("skipped")]
@@ -398,6 +416,7 @@ def main() -> int:
             scored = score_case(case, rec, case_out / "files")
             (case_out / "scores.json").write_text(json.dumps(scored, indent=2), encoding="utf-8")
             score = scored["score"]
+            stopped = early_stop(rec, scored)
             if score is not None:
                 worst = min(worst, score)
             aggregate["cases"].append({
@@ -406,10 +425,13 @@ def main() -> int:
                 "requested_effort": rec.get("requested_effort"),
                 "thinking_tokens": rec.get("thinking_tokens"), "output_tokens": rec.get("output_tokens"),
                 "duration_ms": rec.get("duration_ms"), "graders": scored["graders"],
+                "early_stop": stopped,
             })
             aggregate["total_cost_usd"] += float(rec.get("cost_usd") or 0)
             label = "pass" if score == 1.0 else ("FAIL" if score is not None else "n/a ")
             extra = " TIMED OUT" if rec.get("timed_out") else ""
+            if stopped:
+                extra += " EARLY STOP"
             if rec.get("thinking_tokens") is not None:
                 extra += (f" thinking={rec.get('thinking_tokens')} output={rec.get('output_tokens')}"
                          f" models={','.join(rec.get('models') or [])}")
@@ -417,6 +439,8 @@ def main() -> int:
             for g in scored["graders"]:
                 mark = "skip" if g.get("skipped") else ("ok  " if g["passed"] else "FAIL")
                 print(f"         {mark} {g['name']}: {g['details']}")
+            if stopped:
+                print(f"         ended without writing the document; last words: {stopped!r}")
 
     (out_dir / "aggregate.json").write_text(json.dumps(aggregate, indent=2), encoding="utf-8")
     if args.json:
