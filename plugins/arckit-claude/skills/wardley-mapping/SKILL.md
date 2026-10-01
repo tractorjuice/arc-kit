@@ -4,6 +4,8 @@ description: "Wardley Mapping reference for a map, a positioning question or a s
 paths:
   - "**/ARC-*-WARD-*.md"
   - "**/*.wardley"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Wardley Mapping

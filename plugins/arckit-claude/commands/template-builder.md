@@ -6,6 +6,8 @@ handoffs:
   - command: customize
     description: Copy and modify existing official templates instead of creating new ones
     condition: "User wants to customize an existing template rather than build a new one"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a brand-new document template tailored to their organization's specific needs. Unlike `/arckit:customize` (which copies existing templates for editing), this command creates entirely new templates from scratch through an interactive interview process.

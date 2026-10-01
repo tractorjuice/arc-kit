@@ -3,6 +3,8 @@ description: Create FinOps strategy with cloud cost management, optimization, go
 doc-type: FINOPS
 argument-hint: "<project ID or cloud provider, e.g. '001', 'AWS multi-account'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # /arckit:finops - FinOps Strategy Command

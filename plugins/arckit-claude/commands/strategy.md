@@ -10,6 +10,8 @@ handoffs:
     description: Expand strategic timeline into detailed roadmap
   - command: diagram
     description: Create architecture vision diagrams
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create an **Architecture Strategy** document. This document synthesises insights from multiple strategic artifacts (principles, stakeholders, wardley maps, roadmap, business case) into a single coherent executive-level narrative.

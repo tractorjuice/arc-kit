@@ -5,6 +5,8 @@ argument-hint: "<project ID or scope, e.g. '001', 'all projects'>"
 handoffs:
   - command: data-model
     description: Review data model for entity/attribute terminology
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a **Project Glossary** document. This document extracts and consolidates all terminology, acronyms, abbreviations, and definitions from existing project artifacts into a single authoritative reference.

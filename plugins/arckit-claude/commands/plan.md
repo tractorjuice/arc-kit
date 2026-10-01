@@ -3,6 +3,8 @@ description: Create project plan with timeline, phases, gates, and Mermaid diagr
 doc-type: PLAN
 argument-hint: "<project ID or initiative, e.g. '001', 'Alpha phase'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # ArcKit: Project Plan Generation

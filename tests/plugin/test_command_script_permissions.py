@@ -17,6 +17,7 @@ Tested on Claude Code v2.1.285:
 
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
@@ -107,10 +108,47 @@ def test_no_quoted_script_path_split_over_lines(path):
     assert not bad, f"{path.name}: a quoted script path followed by a line continuation isn't matched by allowed-tools; put the call on one line: {bad}"
 
 
-def test_rules_only_name_plugin_scripts():
-    """allowed-tools must not pre-approve anything beyond the plugin's own scripts."""
-    for path in COMMANDS:
+READ_OWN_FILES = "Read(/${CLAUDE_PLUGIN_ROOT}/**)"
+SKILLS = sorted((PLUGIN / "skills").glob("*/SKILL.md"))
+# A path under the plugin root other than its scripts (those have Bash rules).
+READS_PLUGIN_FILE = re.compile(r"\$\{CLAUDE_PLUGIN_ROOT\}/(?!scripts/)[A-Za-z]")
+
+
+def test_rules_only_name_plugin_files():
+    """allowed-tools pre-approves the plugin's own scripts and files, nothing else."""
+    for path in COMMANDS + SKILLS:
         for rule in frontmatter(path).get("allowed-tools") or []:
-            assert re.fullmatch(r'Bash\((?:(?:node|bash|sh) )?"?\$\{CLAUDE_PLUGIN_ROOT\}/scripts/[A-Za-z0-9_./-]+"? \*\)', rule), (
-                f"{path.name}: unexpected allowed-tools rule {rule!r}"
-            )
+            assert rule == READ_OWN_FILES or re.fullmatch(
+                r'Bash\((?:(?:node|bash|sh) )?"?\$\{CLAUDE_PLUGIN_ROOT\}/scripts/[A-Za-z0-9_./-]+"? \*\)', rule
+            ), f"{path}: unexpected allowed-tools rule {rule!r}"
+
+
+@pytest.mark.parametrize("path", COMMANDS + SKILLS, ids=lambda p: p.parent.name if p.name == "SKILL.md" else p.stem)
+def test_reading_plugin_files_is_pre_approved_natively(path):
+    """A command or skill that reads plugin files declares the Read rule.
+
+    The plugin directory does not list a plugin whose hook approves its own
+    tool calls, so 6.17.2 removed allow-plugin-internals.mjs. Commands read
+    their templates from the plugin's install directory, outside the project,
+    which prompts unless pre-approved. Tested on Claude Code v2.1.285: the rule
+    needs the leading slash (`/${CLAUDE_PLUGIN_ROOT}` expands to `//abs/path`,
+    an absolute path in rule syntax), applies to subagents the command
+    dispatches, and works in skill frontmatter too.
+    """
+    text = path.read_text(encoding="utf-8")
+    if path.name != "SKILL.md" and not READS_PLUGIN_FILE.search(text):
+        return
+    rules = frontmatter(path).get("allowed-tools") or []
+    assert READ_OWN_FILES in rules, f"{path}: add `{READ_OWN_FILES}` to allowed-tools"
+
+
+def test_no_hook_approves_a_permission():
+    """No hook may return permissionDecision "allow" or register for PermissionRequest."""
+    hooks_dir = PLUGIN / "hooks"
+    hooks = json.loads((hooks_dir / "hooks.json").read_text(encoding="utf-8"))["hooks"]
+    assert "PermissionRequest" not in hooks, "a PermissionRequest hook approves prompts on the user's behalf"
+    for f in sorted(hooks_dir.glob("*.mjs")):
+        src = f.read_text(encoding="utf-8")
+        assert not re.search(r"""permissionDecision["']?\s*:\s*["']allow["']""", src), (
+            f"{f.name} approves a tool call; the plugin directory does not list plugins that do"
+        )

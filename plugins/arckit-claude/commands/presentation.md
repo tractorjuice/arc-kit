@@ -3,6 +3,8 @@ description: Generate MARP presentation slides from existing project artifacts f
 doc-type: PRES
 argument-hint: "<project ID and audience, e.g. '001 executive board'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect **generate a MARP-format presentation** from existing ArcKit project artifacts. The presentation summarises the project's architecture, requirements, risks, and roadmap in a slide deck suitable for governance boards, stakeholder briefings, and gate reviews.

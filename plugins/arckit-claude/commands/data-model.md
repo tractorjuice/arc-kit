@@ -12,6 +12,8 @@ handoffs:
     description: Include data migration and governance in RFP
   - command: traceability
     description: Map DR-xxx to entities and attributes
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a comprehensive data model for a project that will guide database design, API specifications, and compliance requirements.

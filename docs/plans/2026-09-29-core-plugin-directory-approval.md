@@ -145,3 +145,17 @@ The command has the model run Python that reads `TRELLO_API_KEY` and `TRELLO_TOK
 > - **Files the validator couldn't inspect.** The remote MCP servers in `.mcp.json` (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, Data Commons, govreposcrape, UK Tenders, Trello) and the `stale-artifact-scan` monitor script, which is in the plugin as readable shell.
 > - **Download-and-run command.** It was in `evals/README.md`; the evals are maintainer tooling and are no longer published with the plugin.
 > - **Unrecognised `plugin.json` fields.** `privacyPolicyUrl`, `supportUrl`, `documentationUrl`, `termsOfServiceUrl` and `icon` are the directory listing fields.
+
+## Round 2: v6.17.1 not approved (1 October 2026)
+
+The reviewer's note on v6.17.1: *"This plugin grants itself permissions: a hook or setting auto-approves its own tool calls or turns on bypassPermissions. Plugins in the directory may not approve their own actions or weaken the user's permission prompts. Remove that hook or setting and resubmit."* The hardened Read-only `allow-plugin-internals` was the only hook still returning `allow`.
+
+Tested on Claude Code v2.1.285 before changing anything:
+
+- Without the hook, a Read of a plugin template prompts, both for a `--plugin-dir` plugin and for one installed from a marketplace.
+- `allowed-tools: Read(${CLAUDE_PLUGIN_ROOT}/**)` does not match (the expanded `/abs/path` is read as relative), but **`Read(/${CLAUDE_PLUGIN_ROOT}/**)`** does: the extra slash makes it `//abs/path`, an absolute path in rule syntax.
+- The rule also covers subagents the command dispatches, and works in skill frontmatter.
+
+**Fix (6.17.2):** delete `allow-plugin-internals.mjs`; add the Read rule to the 64 commands and 5 skills that read plugin files; `tests/plugin/test_command_script_permissions.py` now requires the rule wherever plugin files are read and fails if any hook returns `allow` or registers for `PermissionRequest`. The converter strips `allowed-tools` from skills for the other runtimes.
+
+The remaining PreToolUse hooks rewrite tool arguments (`updatedInput`) without a permission decision, so Claude Code's normal prompt still applies: `validate-arc-filename` (corrects the document path), `inject-agent-context` (adds project context to a subagent prompt) and `validate-reader-handoff` (keeps reader dispatches in the foreground; denies an invalid hand-back). If the rescan still lists "Hook grants permission" against these, that is the explanation to give.

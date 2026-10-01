@@ -3,6 +3,8 @@ name: architecture-workflow
 description: "Recommends which /arckit:* commands to run, and in what order, for a new or in-flight architecture project, from a short triage of sector, project type, current stage and timeline. Backs /arckit:start. Not needed when the user has already named the command they want, or is asking about the content of an artefact rather than the sequence."
 paths:
   - "projects/**"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Architecture Workflow

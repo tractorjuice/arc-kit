@@ -3,6 +3,8 @@ description: Create MLOps strategy with model lifecycle, training pipelines, ser
 doc-type: MLOPS
 argument-hint: "<project ID or ML platform, e.g. '001', 'SageMaker'>"
 effort: max
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # /arckit:mlops - MLOps Strategy Command

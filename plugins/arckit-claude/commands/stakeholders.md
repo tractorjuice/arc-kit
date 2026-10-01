@@ -10,6 +10,8 @@ handoffs:
     description: Create risk register with stakeholder risk owners
   - command: sobc
     description: Build business case from stakeholder drivers
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect or project manager understand stakeholder drivers, how they manifest into goals, and what measurable outcomes will satisfy each stakeholder.

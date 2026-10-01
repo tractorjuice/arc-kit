@@ -3,6 +3,8 @@ description: Create comprehensive ServiceNow service design with CMDB, SLAs, inc
 doc-type: SNOW
 argument-hint: "<project ID or service, e.g. '001', 'IT Asset Management'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # /arckit:servicenow - ServiceNow Service Design Command

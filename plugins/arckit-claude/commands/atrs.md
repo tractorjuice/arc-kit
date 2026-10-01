@@ -3,6 +3,8 @@ description: Generate Algorithmic Transparency Recording Standard (ATRS) record 
 doc-type: ATRS
 argument-hint: "<AI tool name, e.g. 'Benefit Eligibility Scoring Model'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping a UK government organization create an Algorithmic Transparency Recording Standard (ATRS) record for an AI or algorithmic tool.

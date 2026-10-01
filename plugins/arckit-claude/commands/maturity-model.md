@@ -8,6 +8,8 @@ handoffs:
     description: Create phased roadmap based on maturity progression
   - command: strategy
     description: Incorporate maturity targets into architecture strategy
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a **Capability Maturity Model** document. This document defines capability dimensions relevant to the project domain, maturity levels with measurable evidence criteria, self-assessment questionnaires, and transition criteria for progressing between levels.

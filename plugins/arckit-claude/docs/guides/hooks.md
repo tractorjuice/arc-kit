@@ -12,7 +12,7 @@ ArcKit's Claude Code plugin includes automation hooks across 10 event types. Hoo
 | **Stop** | session-learner | Session ends normally |
 | **StopFailure** | session-learner | Session ends with error |
 | **UserPromptSubmit** | arckit-context, secret-detection, sync-guides, graph-inject | Every user message and matched ArcKit commands |
-| **PreToolUse** | allow-plugin-internals (Read), validate-reader-handoff (SubagentHandback), inject-agent-context, validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner | Before selected tool calls |
+| **PreToolUse** | validate-reader-handoff (SubagentHandback), inject-agent-context, validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner | Before selected tool calls |
 | **PostToolUse** | update-manifest, provenance-stamp, tidy-wardley-labels, telemetry | After selected tool calls |
 | **TaskCreated** | telemetry | When an agent task is created |
 | **FileChanged** | external-context-watch | Watched external documents change |
@@ -130,7 +130,9 @@ window.
 
 ## Permissions
 
-ArcKit approves one kind of permission request itself: reading its own files. `allow-plugin-internals` (PreToolUse on `Read`) approves a Read of a file inside the plugin's install directory, because every command reads its templates from there and that directory is outside your project. Nothing else is approved by a hook.
+No ArcKit hook approves a permission request. Each command and skill declares what it needs in its own `allowed-tools` frontmatter, and Claude Code applies those rules only while it runs.
+
+- **ArcKit's own files** (templates, references, schemas) are pre-approved for reading by `Read(/${CLAUDE_PLUGIN_ROOT}/**)`, because every command reads its templates from the plugin's install directory, outside your project.
 
 - **ArcKit's own scripts** (document IDs, project creation, Wardley rendering, OKF import and export) are pre-approved by each command's `allowed-tools` rules. Claude Code checks those per command, so a script call chained to anything else still asks.
 - **MCP tool calls** ask the first time. To stop the prompts for a server you trust, add it to `permissions.allow` in your settings, for example `"mcp__plugin_arckit_aws-knowledge"` or `"mcp__plugin_arckit_microsoft-learn"`.

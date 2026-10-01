@@ -6,6 +6,8 @@ paths:
   - "**/*.mermaid"
   - "**/ARC-*-DIAG-*.md"
   - "**/ARC-*-DATA-*.md"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Mermaid Syntax Reference

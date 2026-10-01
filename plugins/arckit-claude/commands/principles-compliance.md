@@ -3,6 +3,8 @@ description: Assess compliance with architecture principles and generate scoreca
 doc-type: PRIN-COMP
 argument-hint: "<project ID or scope, e.g. '001', 'security principles'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 ## User Input

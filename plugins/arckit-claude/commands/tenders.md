@@ -13,6 +13,7 @@ handoffs:
   - command: research
     description: Build-vs-buy market context
 allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
   - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---

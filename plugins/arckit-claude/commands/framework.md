@@ -9,6 +9,8 @@ handoffs:
     description: Generate glossary of framework terminology
   - command: maturity-model
     description: Create maturity model for framework adoption
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Framework Generation

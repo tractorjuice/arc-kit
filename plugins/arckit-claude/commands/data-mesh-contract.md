@@ -3,6 +3,8 @@ description: Create federated data product contracts for mesh architectures with
 doc-type: DMC
 argument-hint: "<data product name, e.g. 'Customer Orders — Sales Domain'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect **create a data mesh contract** for a data product in a federated mesh architecture.

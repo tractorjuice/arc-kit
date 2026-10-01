@@ -3,6 +3,8 @@ description: Create or update enterprise architecture principles
 doc-type: PRIN
 argument-hint: "<domain or focus, e.g. 'cloud-first', 'data governance'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect define architecture principles that will govern all technology decisions in the organisation.

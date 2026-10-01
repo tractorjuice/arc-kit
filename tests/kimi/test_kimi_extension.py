@@ -241,7 +241,6 @@ KIMI_EXCLUDED_HOOKS = {
     "v5-migration-banner.mjs",
     "graph-inject.mjs",
     "sync-guides.mjs",
-    "allow-plugin-internals.mjs",
     "validate-reader-handoff.mjs",
     "inject-agent-context.mjs",
     "external-context-watch.mjs",

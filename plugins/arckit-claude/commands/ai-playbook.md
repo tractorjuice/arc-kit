@@ -3,6 +3,8 @@ description: Assess UK Government AI Playbook compliance for responsible AI depl
 doc-type: AIPB
 argument-hint: "<project or AI system, e.g. 'Fraud Detection ML Service'>"
 effort: max
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping a UK government organization assess compliance with the UK Government AI Playbook for responsible AI deployment.

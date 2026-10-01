@@ -3,6 +3,8 @@ description: Generate Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured 
 doc-type: DFD
 argument-hint: "<system or process, e.g. 'user registration', 'claims processing'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # ArcKit: Yourdon-DeMarco Data Flow Diagram

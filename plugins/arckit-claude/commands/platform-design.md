@@ -3,6 +3,8 @@ description: Create platform strategy using Platform Design Toolkit (8 canvases 
 doc-type: PLAT
 argument-hint: "<platform name, e.g. 'NHS API marketplace'>"
 effort: max
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect design a **platform strategy** for a multi-sided ecosystem using the **Platform Design Toolkit (PDT)** from Boundaryless.io.

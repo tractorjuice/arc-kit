@@ -14,6 +14,7 @@ handoffs:
     description: Create or update the Wardley Map this command renders
     condition: "Wardley render requested but no WARD artefact exists"
 allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
   - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/owm-to-html.mjs *)

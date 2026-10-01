@@ -3,6 +3,8 @@ description: Generate architecture diagrams using Mermaid or PlantUML C4 for vis
 doc-type: DIAG
 argument-hint: "<diagram type and subject, e.g. 'C4 context booking system', 'sequence login'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # ArcKit: Architecture Diagram Generation

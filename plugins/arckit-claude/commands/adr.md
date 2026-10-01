@@ -10,6 +10,8 @@ handoffs:
     description: Update architecture diagrams
   - command: traceability
     description: Update traceability matrix with decision links
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create an Architecture Decision Record (ADR) following MADR v4.0 format enhanced with UK Government requirements.

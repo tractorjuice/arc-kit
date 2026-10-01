@@ -10,6 +10,7 @@ handoffs:
   - command: wardley.gameplay
     description: Select gameplays that address doctrine weaknesses
 allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
   - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
   - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)

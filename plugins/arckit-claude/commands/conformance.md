@@ -3,6 +3,8 @@ description: Assess architecture conformance — ADR decision implementation, cr
 doc-type: CONF
 argument-hint: "<project ID or scope, e.g. '001', 'all projects'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 ## User Input

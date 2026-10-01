@@ -8,6 +8,8 @@ handoffs:
     description: Create vendor evaluation framework
   - command: dos
     description: Generate Digital Marketplace DOS opportunity
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect generate a comprehensive Statement of Work (SOW) that will be used as an RFP document for vendor procurement.

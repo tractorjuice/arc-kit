@@ -994,7 +994,8 @@ def copy_extension_files(plugin_sources):
 
 
 def strip_claude_only_skill_fields(skills_dir):
-    """Strip Claude-only frontmatter fields (e.g. paths) from SKILL.md files,
+    """Strip Claude-only frontmatter fields (paths, allowed-tools, disallowed-tools)
+    from SKILL.md files,
     and neutralise Claude Code's AskUserQuestion tool in their bodies. Both
     skill copy paths (the core_only_copies loop and copy_reference_skills)
     end here, so this is the one place a reference skill is made runtime-neutral."""
@@ -1015,8 +1016,13 @@ def strip_claude_only_skill_fields(skills_dir):
                         fm = yaml.safe_load(parts[1]) or {}
                     except yaml.YAMLError:
                         fm = None
-                    if fm is not None and "paths" in fm:
-                        fm.pop("paths", None)
+                    # allowed-tools carries Claude Code permission rules such as
+                    # Read(/${CLAUDE_PLUGIN_ROOT}/**); other runtimes neither
+                    # expand the variable nor share the rule syntax.
+                    claude_only = [k for k in ("paths", "allowed-tools", "disallowed-tools") if k in (fm or {})]
+                    if fm is not None and claude_only:
+                        for k in claude_only:
+                            fm.pop(k, None)
                         rebuilt = (
                             "---\n"
                             + yaml.dump(fm, default_flow_style=False, allow_unicode=True, sort_keys=False)
@@ -1211,9 +1217,8 @@ def generate_kimi_hooks():
 
     Deliberately excluded: version-check / v5-migration-banner (Claude Code
     version specific), graph-inject and sync-guides (they match Claude
-    ``/arckit:`` slash commands that do not exist in Kimi), allow-plugin-internals
-    / validate-reader-handoff / inject-agent-context (a Read auto-allow and
-    Agent-tool hooks with no effect under Kimi), and external-context-watch (FileChanged has no
+    ``/arckit:`` slash commands that do not exist in Kimi), validate-reader-handoff /
+    inject-agent-context (Agent-tool hooks with no effect under Kimi), and external-context-watch (FileChanged has no
     Kimi event).
 
     NOTE: not yet smoke-tested against a live Kimi runtime — see the Kimi

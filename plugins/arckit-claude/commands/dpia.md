@@ -3,6 +3,8 @@ description: Generate Data Protection Impact Assessment (DPIA) for UK GDPR Artic
 doc-type: DPIA
 argument-hint: "<project ID or processing activity, e.g. '001', 'biometric tracking'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect generate a **Data Protection Impact Assessment (DPIA)** following UK GDPR Article 35 requirements and ICO guidance.

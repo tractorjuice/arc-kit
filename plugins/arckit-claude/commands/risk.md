@@ -13,6 +13,8 @@ handoffs:
   - command: tenders
     description: Ground supplier-concentration risk in real UK procurement award data
     condition: UK government procurement context
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a comprehensive risk register following the UK Government Orange Book (2023) risk management framework.

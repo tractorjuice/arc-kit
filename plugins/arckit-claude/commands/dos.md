@@ -3,6 +3,8 @@ description: Generate Digital Outcomes and Specialists (DOS) procurement documen
 doc-type: DOS
 argument-hint: "<project ID or title, e.g. '001', 'Data Engineering Specialist'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect prepare Digital Outcomes and Specialists (DOS) procurement documentation for the UK Digital Marketplace.
