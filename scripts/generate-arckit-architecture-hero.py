@@ -288,8 +288,8 @@ draw.text((EX1 + 8, (EY0 + EY1) / 2 - 24), "feeds", font=f_flow, fill=TEXT_TERTI
 hook_row(EY1 + 16, "PreToolUse  GATES", RED_T,
          ["file-protection", "secret-file-scanner", "validate-arc-filename",
           "score-validator", "validate-wardley-math"], RED)
-hook_row(EY1 + 50, "Permission & Access", ORANGE_T,
-         ["allow-mcp-tools", "allow-plugin-internals", "inject-agent-context"], ORANGE)
+hook_row(EY1 + 50, "Agent dispatch", ORANGE_T,
+         ["inject-agent-context", "validate-reader-handoff"], ORANGE)
 hook_row(EY1 + 84, "UserPromptSubmit", CYAN_T,
          ["arckit-context", "secret-detection", "graph-inject", "sync-guides"], CYAN)
 hook_row(EY1 + 118, "SessionStart", CYAN_T,

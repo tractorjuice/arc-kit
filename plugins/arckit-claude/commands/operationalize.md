@@ -3,6 +3,8 @@ description: Create operational readiness pack with support model, runbooks, DR/
 doc-type: OPS
 argument-hint: "<project ID or service, e.g. '001', 'Payments API'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # /arckit:operationalize - Operational Readiness Command

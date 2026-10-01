@@ -9,6 +9,8 @@ handoffs:
     description: Export backlog to Trello board
   - command: traceability
     description: Map user stories back to requirements
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Generate Product Backlog

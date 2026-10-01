@@ -2,6 +2,8 @@
 description: Copy plugin templates to project for customization
 doc-type: none
 argument-hint: "<template name or 'list', e.g. 'requirements', 'risk', 'list'>"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping a user customize ArcKit document templates for their project or organization.

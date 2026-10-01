@@ -12,6 +12,8 @@ handoffs:
   - command: tenders
     description: Anchor the Economic Case market view with real UK award-value benchmarks
     condition: UK government procurement context
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a Strategic Outline Business Case (SOBC) to justify investment in a technology project.

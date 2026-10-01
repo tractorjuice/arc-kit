@@ -3,6 +3,8 @@ description: Perform comprehensive governance quality analysis across architectu
 doc-type: ANAL
 argument-hint: "<project ID or scope, e.g. '001', 'all projects'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 ## User Input

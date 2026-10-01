@@ -3,6 +3,8 @@ description: Create DevOps strategy with CI/CD pipelines, IaC, container orchest
 doc-type: DEVOPS
 argument-hint: "<project ID or platform, e.g. '001', 'GitHub Actions on AWS'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # /arckit:devops - DevOps Strategy Command

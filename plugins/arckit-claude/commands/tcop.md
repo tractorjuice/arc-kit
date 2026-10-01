@@ -4,6 +4,8 @@ doc-type: TCOP
 argument-hint: "<project ID or name, e.g. '001', 'Land Registry Digital Gateway'>"
 tags: [governance, compliance, uk-government, tcop, digital-spend-control]
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Technology Code of Practice Review

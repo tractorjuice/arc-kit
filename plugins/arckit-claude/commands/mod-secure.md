@@ -4,6 +4,8 @@ doc-type: SECD-MOD
 argument-hint: "<project name, e.g. 'Logistics Management System OFFICIAL'>"
 tags: [security, mod, defence, jsp-440, jsp-453, secure-by-design, continuous-assurance, caat, continuous-risk-management, isn-2023-09, isn-2023-10]
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # MOD Secure by Design Assessment

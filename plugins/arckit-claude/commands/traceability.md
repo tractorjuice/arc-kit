@@ -3,6 +3,8 @@ description: Generate requirements traceability matrix from requirements to desi
 doc-type: TRAC
 argument-hint: "<project ID or scope, e.g. '001', 'FR-xxx only'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a comprehensive traceability matrix that traces requirements through design to implementation and testing.

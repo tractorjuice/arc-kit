@@ -3,6 +3,8 @@ description: Analyze G-Cloud service gaps and generate supplier clarification qu
 doc-type: GCLC
 argument-hint: "<service name, e.g. 'Salesforce CRM Lot 2'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect validate G-Cloud services and generate clarification questions for suppliers.

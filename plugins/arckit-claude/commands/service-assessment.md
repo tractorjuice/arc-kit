@@ -4,6 +4,8 @@ doc-type: SVCASS
 argument-hint: "<project ID and stage, e.g. '001 Alpha', '001 Beta'>"
 alwaysShow: true
 effort: max
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # GDS Service Assessment Preparation

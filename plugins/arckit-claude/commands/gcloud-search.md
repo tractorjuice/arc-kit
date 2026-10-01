@@ -3,6 +3,8 @@ description: Find G-Cloud services on UK Digital Marketplace with live search an
 doc-type: GCLD
 argument-hint: "<search query, e.g. 'cloud hosting NHS', 'SOC Lot 1'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect find and compare G-Cloud services on the UK Digital Marketplace.

@@ -11,6 +11,8 @@ handoffs:
   - command: wardley.climate
     description: Validate plays against climatic patterns
     condition: "Climate assessment not yet performed"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # ArcKit: Wardley Gameplay Analysis

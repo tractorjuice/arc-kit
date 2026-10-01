@@ -24,6 +24,7 @@ hooks:
           command: "node ${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.mjs"
           timeout: 10
 allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/owm-to-html.mjs *)
   - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/owm-to-html.mjs" *)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/owm-to-mermaid.mjs *)

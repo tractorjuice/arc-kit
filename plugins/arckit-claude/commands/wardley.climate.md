@@ -9,6 +9,8 @@ handoffs:
   - command: wardley
     description: Update map with climate-driven evolution predictions
     condition: "Climate analysis reveals evolution velocity changes"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # ArcKit: Wardley Climate Assessment

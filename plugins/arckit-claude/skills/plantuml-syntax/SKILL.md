@@ -5,6 +5,8 @@ paths:
   - "**/*.puml"
   - "**/*.plantuml"
   - "**/ARC-*-DIAG-*.md"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # PlantUML Syntax Reference

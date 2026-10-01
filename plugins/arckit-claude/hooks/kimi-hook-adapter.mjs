@@ -73,7 +73,7 @@ export function translate(childStdout, childStatus, childStderr) {
   const reason = out.reason || hso.permissionDecisionReason;
 
   // 1) Hard block (secret-detection, secret-file-scanner, validate-arc-filename
-  //    unknown-type, allow-plugin-internals deny, ...).
+  //    unknown-type, file-protection deny, ...).
   if (decision === 'block' || decision === 'deny') {
     return { stderr: String(reason || 'Blocked by ArcKit hook.'), exitCode: 2 };
   }
@@ -99,7 +99,7 @@ export function translate(childStdout, childStatus, childStderr) {
     return { stdout: String(reason), exitCode: 0 };
   }
 
-  // 5) permissionDecision:'allow', updatedToolOutput, {} -> nothing to inject.
+  // 5) an allow decision, updatedToolOutput, {} -> nothing to inject.
   //    The hook's file-system side effects (provenance stamp, manifest, tidy)
   //    already ran inside the child; just allow.
   return { exitCode: 0 };

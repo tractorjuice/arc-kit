@@ -4,6 +4,8 @@ doc-type: none
 argument-hint: "<project ID e.g. '001' or '001-arckit-saas'> [--plan] [--resume] [--target NAME] [--refresh NAME] [--no-commit] [--recipe NAME] [--enable ID] [--exclude ID]"
 effort: low
 tags: [build, orchestration, harness, recipe, parallel, governance, automation]
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # Bulk-Build ArcKit Artefacts

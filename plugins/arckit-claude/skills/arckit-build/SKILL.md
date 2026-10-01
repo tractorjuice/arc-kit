@@ -2,6 +2,8 @@
 name: arckit-build
 description: "Bulk-builds a project's ArcKit artefacts in parallel from a YAML recipe: computes the artefact dependency DAG, dispatches one subagent per target per wave, validates each output, commits the wave and persists progress to .arckit/state.json so a build can resume. Manual only: run /arckit:arckit-build with --plan, --resume, --target, --refresh or --recipe. Not needed for a single artefact; run that /arckit:* command directly."
 disable-model-invocation: true
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 # ArcKit Build Harness (v0.4)

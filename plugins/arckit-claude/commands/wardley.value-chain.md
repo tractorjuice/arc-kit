@@ -16,6 +16,7 @@ hooks:
           command: "node ${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.mjs"
           timeout: 10
 allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
   - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
   - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)

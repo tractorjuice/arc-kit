@@ -3,6 +3,8 @@ description: Review Detailed Design (DLD) for implementation readiness
 doc-type: DLDR
 argument-hint: "<project ID or DLD path, e.g. '001'>"
 effort: high
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect review a Detailed Design (DLD) document to ensure the design is ready for implementation with all technical details properly specified.

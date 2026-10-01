@@ -8,6 +8,8 @@ handoffs:
     description: Generate product backlog from roadmap
   - command: plan
     description: Create detailed project plan for Phase 1
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a **strategic architecture roadmap** for a multi-year initiative. The roadmap shows the evolution from current state to future state across multiple themes, timelines, and governance cycles.
