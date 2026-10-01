@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.17.2] — 2026-10-01
+
+### Fixed
+
+- **ArcKit no longer approves any of its own actions** (#903). The Claude plugin directory turned down 6.17.1 because a hook approved reads of ArcKit's own templates without asking. That hook is gone. Each command and skill now declares, in its own settings, that it may read ArcKit's files while it runs, using Claude Code's built-in permission rules, so you still see no prompt for templates and nothing else is pre-approved. A test now fails if any ArcKit hook approves anything.
+
+### Changed
+
+- **Research agents and bulk builds finish what they start** (#899). Opus 5.5 can end an unattended step with a progress note ("next I'll write the file…") instead of doing the work. The research readers and writers and the build harness's workers are now told to keep going until the job is done, and a bulk build retries a document once if it comes back missing.
+- **Effort settings were tested before changing, and left as they are** (#899). Anthropic advises keeping the highest effort for work where testing shows a gain. On six analysis commands (Wardley, its climate, gameplay and doctrine companions, platform design and service assessment) the highest setting found clearly more, so they stay at max.
+
 ## [6.17.1] — 2026-09-30
 
 ### Fixed
