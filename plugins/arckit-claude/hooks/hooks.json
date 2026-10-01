@@ -1,5 +1,8 @@
 {
-  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection (UserPromptSubmit + PostCompact rehydrate + FileChanged external documents), filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns). All entries use the `args: string[]` exec form (Claude Code v2.1.139+) to avoid shell-string parsing. PostToolUse entries set `continueOnBlock: true` (v2.1.139+) so a stamping / telemetry / manifest hook can never derail the user's turn \u2014 they are observational and must fail soft.",
+  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection (UserPromptSubmit + PostCompact rehydrate + FileChanged external documents), filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns). All entries use the `args: string[]` exec form (Claude Code v2.1.139+) to avoid shell-string parsing. PostToolUse entries set `continueOnBlock: true` (v2.1.139+) so a stamping / telemetry / manifest hook can never derail the user's turn \u2014 they are observational and must fail soft. Also names one Claude Code mod (hooks module, v2.1.287+): `mod/register.mjs`, the ArcKit status band above the prompt (project, artefact, DRAFT and overdue-review counts); observe-only, ignored by older clients, off with ARCKIT_NO_STATUS_BAND.",
+  "modules": [
+    "./mod/register.mjs"
+  ],
   "hooks": {
     "Stop": [
       {
