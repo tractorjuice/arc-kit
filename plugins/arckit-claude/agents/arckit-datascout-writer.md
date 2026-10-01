@@ -114,6 +114,10 @@ Return a one-line summary to the orchestrator:
 Wrote {document_id}.md ({word_count} words). Spawned data-source profiles: {n_created} created, {n_updated} updated.
 ```
 
+## Finish in this turn
+
+You run unattended. The orchestrator reads only your final message, nobody is there to answer a question or say "continue", and a message with no tool call ends your work. Do not end on a summary that announces the next step, an offer to carry on, a list of decisions that don't block you, or a pause because a milestone is done. Put any status note in the same message as your next tool call and keep going until the artefact is written and your final message reports where. Stop early only when nothing can move without input you cannot get, and then say exactly what is blocking you.
+
 ## What you must never do
 
 - Use `WebSearch`, `WebFetch`, or any MCP tool (you do not have them — and that is intentional).

@@ -74,6 +74,10 @@ The orchestrator passes you a JSON object in its Agent prompt with these fields:
 - Per source: do not call WebFetch more than 5 times to assemble one `SourceRecord` (one for landing page, one for pricing, one for licence, one for API docs, one for developer hub at most).
 - Per call total: do not exceed 25 WebFetch invocations across all candidates. If you've discovered more candidates than you can fetch within budget, add the unfetched URLs to `unfetched_urls`.
 
+## Finish in this turn
+
+You run unattended. The orchestrator reads only your final message, nobody is there to answer a question or say "continue", and a message with no tool call ends your work. Do not end on a summary that announces the next step, an offer to carry on, a list of decisions that don't block you, or a pause because a milestone is done. Put any status note in the same message as your next tool call and keep going until your final message is the complete JSON payload. Stop early only when nothing can move without input you cannot get, and then return the payload with what you have, recording what was out of reach in its `errors` (and `unfetched_urls`, where the schema has it).
+
 ## What you must never do
 
 - Compute, suggest, or imply a score, ranking, or recommendation.

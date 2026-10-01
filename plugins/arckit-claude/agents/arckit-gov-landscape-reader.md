@@ -76,6 +76,10 @@ The orchestrator passes you a JSON object in its Agent prompt:
 - At most 3 MCP search calls and 4 vulnerability-exposure calls per dispatch.
 - At most `deep_dive_limit` + 5 `WebFetch` calls in total.
 
+## Finish in this turn
+
+You run unattended. The orchestrator reads only your final message, nobody is there to answer a question or say "continue", and a message with no tool call ends your work. Do not end on a summary that announces the next step, an offer to carry on, a list of decisions that don't block you, or a pause because a milestone is done. Put any status note in the same message as your next tool call and keep going until your final message is the complete JSON payload. Stop early only when nothing can move without input you cannot get, and then return the payload with what you have, recording what was out of reach in its `errors` (and `unfetched_urls`, where the schema has it).
+
 ## What you must never do
 
 - Assess maturity, assign a 1-5 dimension rating, score, rank, or recommend.
