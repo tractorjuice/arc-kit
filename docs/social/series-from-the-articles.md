@@ -303,7 +303,7 @@ There's a two-minute form on GitHub. It asks your sector, how far you've got, wh
 
 The form is a public GitHub issue, so your username shows whichever you pick. If that's a problem, send the same details through Discord or the LinkedIn group and we'll add you without naming you.
 
-Everyone who replies goes onto the adopters page in the repository. To be honest, that list is still empty. We'd rather show an empty list than a padded one.
+Named and anonymous replies go onto the adopters page in the repository. To be honest, that list is still empty. We'd rather show an empty list than a padded one.
 
 Thank you for following this series. The full article:
 
