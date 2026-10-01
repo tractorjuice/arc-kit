@@ -1956,9 +1956,13 @@
             return div.innerHTML;
         }
 
-        function sanitizeHtml(html) {
-            if (typeof DOMPurify === 'undefined') return escapeHtml(html);
-            return DOMPurify.sanitize(html);
+        // Render Markdown to sanitised HTML. If DOMPurify failed to load, the
+        // document is shown as escaped source rather than un-sanitised HTML.
+        function renderMarkdown(markdown) {
+            if (typeof DOMPurify === 'undefined') {
+                return `<p class="app-markdown-unsanitised">Rendering disabled: the HTML sanitiser (DOMPurify) did not load, so this document is shown as source.</p><pre><code>${escapeHtml(markdown)}</code></pre>`;
+            }
+            return DOMPurify.sanitize(marked.parse(markdown));
         }
 
         function headingId(text) {
@@ -2098,7 +2102,7 @@
         mermaid.initialize({
             startOnLoad: false,
             theme: isDarkMode() ? 'dark' : 'default',
-            securityLevel: 'loose',
+            securityLevel: 'strict',
             flowchart: { useMaxWidth: true },
             sequence: { useMaxWidth: true }
         });
@@ -2114,7 +2118,7 @@
             mermaid.initialize({
                 startOnLoad: false,
                 theme: next === 'dark' ? 'dark' : 'default',
-                securityLevel: 'loose',
+                securityLevel: 'strict',
                 flowchart: { useMaxWidth: true },
                 sequence: { useMaxWidth: true }
             });
@@ -4190,22 +4194,22 @@
             order.forEach(key => {
                 const group = groups[key];
                 const latest = group[group.length - 1]; // highest version
-                const title = latest.title || latest.documentId || 'Untitled';
+                const title = escapeHtml(latest.title || latest.documentId || 'Untitled');
 
                 if (group.length === 1) {
                     // Single version: static badge
                     const ver = extractVersion(latest.documentId);
                     const badge = ver ? ` <span class="app-nav-version">v${ver}</span>` : '';
-                    html += `<li><a href="#${latest.path}" data-path="${latest.path}">${title}${badge}</a></li>`;
+                    html += `<li><a href="#${escapeHtml(latest.path)}" data-path="${escapeHtml(latest.path)}">${title}${badge}</a></li>`;
                 } else {
                     // Multiple versions: link + sibling select (select outside <a> for valid HTML)
                     let options = '';
                     group.forEach(doc => {
                         const ver = extractVersion(doc.documentId) || '?';
                         const sel = doc === latest ? ' selected' : '';
-                        options += `<option value="${doc.path}"${sel}>v${ver}</option>`;
+                        options += `<option value="${escapeHtml(doc.path)}"${sel}>v${escapeHtml(ver)}</option>`;
                     });
-                    html += `<li class="app-nav-versioned"><a href="#${latest.path}" data-path="${latest.path}">${title}</a><select class="app-nav-version-select">${options}</select></li>`;
+                    html += `<li class="app-nav-versioned"><a href="#${escapeHtml(latest.path)}" data-path="${escapeHtml(latest.path)}">${title}</a><select class="app-nav-version-select">${options}</select></li>`;
                 }
             });
 
@@ -4244,12 +4248,12 @@
             if (!files || files.length === 0) return '';
             let listHtml = '';
             files.forEach(doc => {
-                listHtml += `<li class="app-nav-external">${doc.title} <span class="app-nav-file-type">${doc.type || ''}</span></li>`;
+                listHtml += `<li class="app-nav-external">${escapeHtml(doc.title)} <span class="app-nav-file-type">${escapeHtml(doc.type || '')}</span></li>`;
             });
             return `
                 <div class="app-nav-section">
                     <button class="app-nav-section-header">
-                        ${title}
+                        ${escapeHtml(title)}
                         <span class="chevron">&#9660;</span>
                     </button>
                     <ul class="app-nav-list">${listHtml}</ul>
@@ -4319,7 +4323,7 @@
                         vendor.documents.forEach(doc => {
                             const ver = extractVersion(doc.documentId);
                             const badge = ver ? ` <span class="app-nav-version">v${ver}</span>` : '';
-                            listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${vendor.name}: ${doc.title}${badge}</a></li>`;
+                            listHtml += `<li><a href="#${escapeHtml(doc.path)}" data-path="${escapeHtml(doc.path)}">${escapeHtml(vendor.name)}: ${escapeHtml(doc.title)}${badge}</a></li>`;
                         });
                     }
                 });
@@ -4347,11 +4351,11 @@
             if (project.external && project.external.length > 0) {
                 listHtml += `<li class="app-nav-category">External Documents</li>`;
                 project.external.forEach(doc => {
-                    listHtml += `<li class="app-nav-external">${doc.title} <span class="app-nav-file-type">${doc.type || ''}</span></li>`;
+                    listHtml += `<li class="app-nav-external">${escapeHtml(doc.title)} <span class="app-nav-file-type">${escapeHtml(doc.type || '')}</span></li>`;
                 });
             }
 
-            const displayName = project.name || project.id;
+            const displayName = escapeHtml(project.name || project.id);
             return `
                 <div class="app-nav-section">
                     <button class="app-nav-section-header">
@@ -4427,7 +4431,7 @@
                 const breadcrumb = parts.slice(0, -1).join(' / ');
 
                 // Render markdown
-                const html = sanitizeHtml(marked.parse(markdown));
+                const html = renderMarkdown(markdown);
 
                 content.innerHTML = `
                     <div class="app-doc-header">
@@ -5009,7 +5013,7 @@
                     mermaid.initialize({
                         startOnLoad: false,
                         theme: e.matches ? 'dark' : 'default',
-                        securityLevel: 'loose',
+                        securityLevel: 'strict',
                         flowchart: { useMaxWidth: true },
                         sequence: { useMaxWidth: true }
                     });

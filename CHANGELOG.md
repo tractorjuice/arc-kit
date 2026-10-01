@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Claude Code floor raised to v2.1.287 for Claude mods** (#580). v2.1.287 lets a plugin ship a mod, which ArcKit uses for the status line above. It also fixes plugin SessionStart hooks not running in new cloud sessions, so ArcKit's session set-up and version check now run there. The SessionStart version check, both READMEs, CLAUDE.md, the start, MCP-servers, enterprise-scale and research-family guides, and the repo's `minimumVersion` are updated.
 
+### Fixed
+
+- **`/arckit:pages` sites no longer run HTML from documents or filenames.** The generated site rendered Markdown with marked and inserted the result, and built the sidebar, search results and document header from manifest titles and paths, without escaping. A document (including an `external/` file whose filename becomes its title) could therefore run script in the reader's browser, and a Mermaid block could do the same through `securityLevel: 'loose'`. Rendered Markdown is now passed through DOMPurify (if the library fails to load, the document is shown as escaped source instead of unsanitised HTML), every title and path in the sidebar, search and headers is escaped, and Mermaid runs at its default `strict` level (HTML in labels is encoded; `<br/>` line breaks still work, `click` callbacks are disabled).
+
 ## [6.17.2] — 2026-10-01
 
 ### Fixed
