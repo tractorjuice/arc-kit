@@ -355,31 +355,151 @@ function isArcKitTempfile(filePath) {
     && /^\/tmp\/(?:arckit-)?[a-z][a-z0-9-]*-handoff(?:-[a-z][a-z0-9-]*)?[A-Za-z0-9.-]*\.json$/.test(filePath);
 }
 
-function escapeRegex(text) {
-  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const PLUGIN_SCRIPT_INTERPRETERS = {
+  node: /\.mjs$/,
+  bash: /\.sh$/,
+  sh: /\.sh$/,
+};
+
+// True only when `command` is a single, bare invocation of an allowlisted
+// plugin helper script (optionally prefixed by its interpreter) with plain
+// arguments. Shell operators, redirections, substitutions, globs, comments,
+// extra statements, secret material and protected-path arguments disqualify it.
+function commandTouchesPluginScripts(command) {
+  const argv = tokenizeSimpleCommand(command);
+  if (!argv || argv.length === 0) {
+    return false;
+  }
+
+  const interpreter = Object.hasOwn(PLUGIN_SCRIPT_INTERPRETERS, argv[0]) ? argv[0] : null;
+  const scriptIndex = interpreter ? 1 : 0;
+  const script = allowlistedPluginScript(argv[scriptIndex]);
+  if (!script) {
+    return false;
+  }
+  if (interpreter && !PLUGIN_SCRIPT_INTERPRETERS[interpreter].test(script)) {
+    return false;
+  }
+
+  if (detectSecrets(command).length) {
+    return false;
+  }
+  return !argv.slice(scriptIndex + 1).some(pathLooksProtected);
 }
 
-function commandTouchesPluginScripts(command) {
-  if (!command || typeof command !== "string") {
-    return false;
+function allowlistedPluginScript(token) {
+  if (typeof token !== "string") {
+    return null;
   }
   const scriptsDir = resolve(PLUGIN_ROOT, "scripts").replaceAll("\\", "/");
   const prefixes = [
     `${scriptsDir}/`,
     "${CODEX_PLUGIN_ROOT}/scripts/",
+    "$CODEX_PLUGIN_ROOT/scripts/",
     "${CLAUDE_PLUGIN_ROOT}/scripts/",
+    "$CLAUDE_PLUGIN_ROOT/scripts/",
   ];
-  const refs = [];
   for (const prefix of prefixes) {
-    if (!command.includes(prefix)) {
-      continue;
-    }
-    const re = new RegExp(`${escapeRegex(prefix)}([A-Za-z0-9_./-]+)`, "g");
-    for (const match of command.matchAll(re)) {
-      refs.push(match[1]);
+    if (token.startsWith(prefix)) {
+      const tail = token.slice(prefix.length);
+      return PLUGIN_SCRIPT_ALLOWLIST.has(tail) ? tail : null;
     }
   }
-  return refs.length > 0 && refs.every((ref) => PLUGIN_SCRIPT_ALLOWLIST.has(ref));
+  return null;
+}
+
+// Split a command into argv words, or return null if it contains anything
+// beyond plain words: [A-Za-z0-9_./:=,@%+-] unquoted, single-quoted literals,
+// double-quoted text without backticks/backslashes/`!`, and $NAME / ${NAME}
+// expansions. Backslash-newline continuations count as whitespace.
+function tokenizeSimpleCommand(command) {
+  if (!command || typeof command !== "string") {
+    return null;
+  }
+  const text = command.replace(/\\\r?\n/g, " ").trim();
+  if (!text) {
+    return null;
+  }
+
+  const tokens = [];
+  let current = "";
+  let inWord = false;
+  let i = 0;
+  while (i < text.length) {
+    const ch = text[i];
+    if (ch === " " || ch === "\t") {
+      if (inWord) {
+        tokens.push(current);
+      }
+      current = "";
+      inWord = false;
+      i += 1;
+      continue;
+    }
+    inWord = true;
+    if (ch === "'") {
+      const end = text.indexOf("'", i + 1);
+      if (end < 0) {
+        return null;
+      }
+      const literal = text.slice(i + 1, end);
+      if (/[\r\n]/.test(literal)) {
+        return null;
+      }
+      current += literal;
+      i = end + 1;
+      continue;
+    }
+    if (ch === '"') {
+      i += 1;
+      while (i < text.length && text[i] !== '"') {
+        const c = text[i];
+        if (c === "$") {
+          const variable = matchShellVariable(text, i);
+          if (!variable) {
+            return null;
+          }
+          current += variable;
+          i += variable.length;
+          continue;
+        }
+        if (c === "`" || c === "\\" || c === "!" || c === "\n" || c === "\r") {
+          return null;
+        }
+        current += c;
+        i += 1;
+      }
+      if (i >= text.length) {
+        return null;
+      }
+      i += 1;
+      continue;
+    }
+    if (ch === "$") {
+      const variable = matchShellVariable(text, i);
+      if (!variable) {
+        return null;
+      }
+      current += variable;
+      i += variable.length;
+      continue;
+    }
+    if (/[A-Za-z0-9_./:=,@%+-]/.test(ch)) {
+      current += ch;
+      i += 1;
+      continue;
+    }
+    return null;
+  }
+  if (inWord) {
+    tokens.push(current);
+  }
+  return tokens;
+}
+
+function matchShellVariable(text, index) {
+  const match = /^\$(?:\{[A-Za-z_][A-Za-z0-9_]*\}|[A-Za-z_][A-Za-z0-9_]*)/.exec(text.slice(index));
+  return match ? match[0] : null;
 }
 
 function extractPatchDetails(command) {
@@ -577,11 +697,6 @@ function handlePreToolUse(data) {
     return;
   }
 
-  if (toolName === "Bash" && commandTouchesPluginScripts(command)) {
-    allowTool("ArcKit: auto-allowed Bash invocation of plugin-internal helper script");
-    return;
-  }
-
   if (toolName === "apply_patch" || command.includes("*** Begin Patch")) {
     const patch = extractPatchDetails(command);
     const invalidArcFilename = [...explicitPaths, ...patch.paths]
@@ -653,6 +768,11 @@ function handlePreToolUse(data) {
 
   if (toolName === "Bash" && commandWritesProtectedPath(command)) {
     denyTool("ArcKit blocked a shell command that appears to modify protected credential files.");
+    return;
+  }
+
+  if (toolName === "Bash" && commandTouchesPluginScripts(command)) {
+    allowTool("ArcKit: auto-allowed Bash invocation of plugin-internal helper script");
   }
 }
 
