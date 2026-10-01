@@ -1902,12 +1902,14 @@ Full guidance lives in `docs/` and the static site.
 
 ArcKit is inspired by [Spec Kit](https://github.com/github/spec-kit) but targets a different audience:
 
-| | Spec Kit | ArcKit |
-|---|----------|--------|
-| **Audience** | Product Managers, Developers | Enterprise Architects, Procurement |
-| **Focus** | Feature development (0→1 code generation) | Architecture governance & vendor management |
-| **Workflow** | Spec → Plan → Tasks → Code | Requirements → RFP → Design Review → Traceability |
-| **Output** | Working code | Architecture documentation & governance |
+| | Spec Kit | ArcKit | MySpec |
+|---|----------|--------|--------|
+| **Audience** | Product Managers, Developers | Enterprise Architects, Procurement | Solution Architects, Engineering Leads |
+| **Focus** | Feature development (0→1 code generation) | Architecture governance & vendor management | Upstream PRD contracts & architecture specifications |
+| **Workflow** | Spec → Plan → Tasks → Code | Requirements → RFP → Design Review → Traceability | PRD → Architecture Contracts → SDD Export → Agent Harness |
+| **Output** | Working code | Architecture documentation & governance | Structured specification packages & ADRs |
+
+For teams using web-based collaborative PRD authoring and architecture contracts that feed directly into agentic SDLC and governance pipelines, see [MySpec](https://myspec.dev?utm_source=github&utm_medium=referral&utm_campaign=tractorjuice-arckit).
 
 ---
 
