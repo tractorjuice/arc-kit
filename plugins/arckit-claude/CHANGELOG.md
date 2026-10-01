@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Claude Code floor raised to v2.1.287 for Claude mods** (#580). v2.1.287 lets a plugin ship a mod, which ArcKit uses for the status line above. It also fixes plugin SessionStart hooks not running in new cloud sessions, so ArcKit's session set-up and version check now run there. The SessionStart version check, both READMEs, CLAUDE.md, the start, MCP-servers, enterprise-scale and research-family guides, and the repo's `minimumVersion` are updated.
 
+### Fixed
+
+- **Secret file scanner no longer skips arbitrary docs, README and CHANGELOG files.** Skip patterns are anchored to ArcKit's own plugin (and source repo) files, so a Write to `projects/x/docs/*.md`, `mydocs/*.md` or `EVIL-README.md` is scanned.
+
 ## [6.17.2] — 2026-10-01
 
 ### Fixed

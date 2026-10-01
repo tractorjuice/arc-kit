@@ -9,6 +9,9 @@
  * Exit code is always 0.
  */
 
+import { realpathSync } from 'node:fs';
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { parseHookInput } from './hook-utils.mjs';
 
 // Secret patterns - synced with secret-detection.mjs
@@ -76,22 +79,52 @@ const SECRET_PATTERNS = [
   [/(api[_-]?key|secret|token|password)\s*[:=]\s*['"]?[A-Za-z0-9+/=]{32,}['"]?/gi, 'high-entropy credential'],
 ];
 
-// Files to skip scanning (legitimate security tool files, documentation, etc.)
-const SKIP_PATTERNS = [
-  /\.pre-commit-config\.yaml$/,
-  /secret-detection\.mjs$/,
-  /secret-file-scanner\.mjs$/,
-  /file-protection\.mjs$/,
-  /\.secrets\.baseline$/,
-  /arckit-claude\/commands\/.*\.md$/,
-  /arckit-claude\/templates\/.*\.md$/,
-  /docs\/.*\.md$/,
-  /CHANGELOG\.md$/,
-  /README\.md$/,
+// Files to skip scanning: only ArcKit's own security tooling and documentation
+// (which legitimately discuss secret formats). Paths are resolved and matched
+// relative to the plugin root — and, when the plugin runs from an ArcKit source
+// checkout (<repo>/plugins/arckit-claude), the repo root — so user project files
+// such as projects/x/docs/*.md or a README.md elsewhere are always scanned.
+const PLUGIN_ROOT = canonicalPath(resolve(dirname(fileURLToPath(import.meta.url)), '..'));
+const SOURCE_REPO_ROOT = basename(dirname(PLUGIN_ROOT)) === 'plugins'
+  ? dirname(dirname(PLUGIN_ROOT))
+  : null;
+
+const PLUGIN_SKIP_PATTERNS = [
+  /^hooks\/(?:secret-detection|secret-file-scanner|file-protection)\.mjs$/,
+  /^commands\/[^/]+\.md$/,
+  /^templates\/[^/]+\.md$/,
+  /^docs\/(?:[^/]+\/)*[^/]+\.md$/,
+  /^(?:README|CHANGELOG)\.md$/,
 ];
 
-function shouldSkipFile(filePath) {
-  return SKIP_PATTERNS.some(pattern => pattern.test(filePath));
+const SOURCE_REPO_SKIP_PATTERNS = [
+  /^\.pre-commit-config\.yaml$/,
+  /^\.secrets\.baseline$/,
+  /^docs\/(?:[^/]+\/)*[^/]+\.md$/,
+  /^(?:README|CHANGELOG)\.md$/,
+];
+
+function canonicalPath(p) {
+  try { return realpathSync(p); } catch { /* not on disk yet */ }
+  try { return join(realpathSync(dirname(p)), basename(p)); } catch { return p; }
+}
+
+function relativeWithin(root, absPath) {
+  const rel = relative(root, absPath);
+  if (!rel || rel.startsWith('..') || isAbsolute(rel)) return null;
+  return rel.split(sep).join('/');
+}
+
+function shouldSkipFile(filePath, cwd) {
+  if (!filePath) return false;
+  const absPath = canonicalPath(resolve(cwd, filePath));
+  const inPlugin = relativeWithin(PLUGIN_ROOT, absPath);
+  if (inPlugin !== null && PLUGIN_SKIP_PATTERNS.some(p => p.test(inPlugin))) return true;
+  if (SOURCE_REPO_ROOT) {
+    const inRepo = relativeWithin(SOURCE_REPO_ROOT, absPath);
+    if (inRepo !== null && SOURCE_REPO_SKIP_PATTERNS.some(p => p.test(inRepo))) return true;
+  }
+  return false;
 }
 
 function checkContentForSecrets(content) {
@@ -119,7 +152,7 @@ if (toolName !== 'Edit' && toolName !== 'Write') process.exit(0);
 const filePath = toolInput.file_path || '';
 
 // Skip certain files (documentation, security tools themselves)
-if (shouldSkipFile(filePath)) process.exit(0);
+if (shouldSkipFile(filePath, inputData.cwd || process.cwd())) process.exit(0);
 
 // Get the content being written
 let content = '';
