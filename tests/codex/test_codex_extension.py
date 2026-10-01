@@ -642,6 +642,41 @@ def test_codex_hook_allows_plugin_internal_reads():
     assert "plugin-internal file" in hook_output["permissionDecisionReason"]
 
 
+def run_codex_read_pre_tool_use(file_path: str) -> dict:
+    return run_codex_hook(
+        "PreToolUse",
+        {
+            "hook_event_name": "PreToolUse",
+            "cwd": str(REPO_ROOT),
+            "tool_name": "Read",
+            "tool_input": {"file_path": file_path},
+        },
+    )
+
+
+def test_codex_hook_does_not_auto_allow_handoff_tempfile_reads(tmp_path):
+    # Nothing in ArcKit writes /tmp handoff tempfiles since 6.17 (reader
+    # validation moved into a hook), and /tmp is shared, so a handoff-looking
+    # name must never be enough to skip the permission prompt.
+    tag = f"{os.getpid()}-{tmp_path.name.replace('_', '-')}"
+    regular = Path(f"/tmp/arckit-research-handoff-{tag}.json")
+    regular.write_text("{}")
+    secret = tmp_path / "secret.txt"
+    secret.write_text("secret")
+    symlink = Path(f"/tmp/arckit-grants-handoff-symlink-{tag}.json")
+    symlink.symlink_to(secret)
+    hardlink = Path(f"/tmp/arckit-tenders-handoff-hardlink-{tag}.json")
+    os.link(secret, hardlink)
+    try:
+        for candidate in (regular, symlink, hardlink, Path(f"/tmp/arckit-missing-handoff-{tag}.json")):
+            output = run_codex_read_pre_tool_use(str(candidate))
+            decision = output.get("hookSpecificOutput", {}).get("permissionDecision")
+            assert decision != "allow", candidate
+    finally:
+        for candidate in (regular, symlink, hardlink):
+            candidate.unlink(missing_ok=True)
+
+
 def test_codex_hook_injects_arckit_context_on_session_start():
     output = run_codex_hook(
         "SessionStart",

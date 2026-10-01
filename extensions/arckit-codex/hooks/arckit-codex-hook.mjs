@@ -350,11 +350,6 @@ function isUnderPluginRoot(filePath) {
   return absolute === root || absolute.startsWith(`${root}/`);
 }
 
-function isArcKitTempfile(filePath) {
-  return typeof filePath === "string"
-    && /^\/tmp\/(?:arckit-)?[a-z][a-z0-9-]*-handoff(?:-[a-z][a-z0-9-]*)?[A-Za-z0-9.-]*\.json$/.test(filePath);
-}
-
 function escapeRegex(text) {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -568,10 +563,6 @@ function handlePreToolUse(data) {
     const filePath = explicitPaths[0] || "";
     if (isUnderPluginRoot(filePath)) {
       allowTool(`ArcKit: auto-allowed Read of plugin-internal file (${relative(PLUGIN_ROOT, resolve(filePath))})`);
-      return;
-    }
-    if (isArcKitTempfile(filePath)) {
-      allowTool("ArcKit: auto-allowed Read of ArcKit-managed tempfile");
       return;
     }
     return;
