@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Claude Code floor raised to v2.1.287 for Claude mods** (#580). v2.1.287 lets a plugin ship a mod, which ArcKit uses for the status line above. It also fixes plugin SessionStart hooks not running in new cloud sessions, so ArcKit's session set-up and version check now run there. The SessionStart version check, both READMEs, CLAUDE.md, the start, MCP-servers, enterprise-scale and research-family guides, and the repo's `minimumVersion` are updated.
 
+### Fixed
+
+- **Codex hook no longer pre-approves reads of `/tmp` handoff files**. The Codex PreToolUse hook still auto-allowed any `Read` whose path merely looked like an ArcKit handoff tempfile (`/tmp/*-handoff*.json`). Nothing in ArcKit writes those files since 6.17 (reader validation moved into a hook), and `/tmp` is shared, so a symlink or hard link with that name pointed at any file could be read without a prompt. The allowance is removed; a test now checks such reads are not auto-allowed.
+
 ## [6.17.2] — 2026-10-01
 
 ### Fixed
