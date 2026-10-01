@@ -52,13 +52,13 @@ uv run --no-project --with pillow python docs/social/render.py
 
 A series is a recurring shape of post, so each one is quick to make and readers learn what to expect.
 
-1. **Measured.** One finding from ArcKit's own tests, with the number and what it cost. The first is this week's effort testing (carousel `effort`). Runs whenever the evals produce a result worth telling. It carries the campaign's first message, *same AI, with its working shown*, better than any claim.
+1. **Measured.** One finding from ArcKit's own tests, with the number it rests on and what it means for the reader. Costs stay in the article, where there is room to explain them (see Voice). The first was the effort testing, posted on 30 September as *Getting the best from Sonnet 5.5*. Runs whenever the evals produce a result worth telling. It carries the campaign's first message, *same AI, with its working shown*, better than any claim.
 2. **Show your working.** The adopter ask (carousel `show-your-working`). Once a fortnight, rotating the three routes: named, anonymous, not listed. Each time a real adopter joins, a spotlight post with their permission replaces one ask.
-3. **One artefact, 20 minutes.** From the campaign plan: one governance document made on a public test repository, with a screenshot and a plain list of what still needed fixing by hand. The honesty about the fixes is the point.
+3. **One artefact.** From the campaign plan: one governance document made on a public test repository, with a screenshot and what it shows the reader. Lead with what the document gives them, not with what had to be fixed by hand; no timed claims until the pilot workshops produce one honest number (rule 3).
 4. **Office hours.** A date card and a one-line agenda, a week before and on the day. **Only once a date is booked**; see *Before any of this goes up*.
 5. **Release notes.** Only releases that change something for the user, written the way the articles are: what changed for you, then why.
 
-About two posts a week on the LinkedIn page, as the campaign plan budgets, with one slot in five kept free for anything reactive.
+From 30 September the page posts daily: *ArcKit Explained* (`series-arckit-explained.md`, 30 September to 13 October), then *From the Articles* (`series-from-the-articles.md`, 14 to 27 October), both scheduled in LinkedIn's scheduler. Keep one slot a week free for anything reactive, such as a release that changes something for users.
 
 ## Voice
 

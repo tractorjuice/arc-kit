@@ -309,12 +309,63 @@ def explained_series():
     return out, slides
 
 
+# ── Series 4: From the Articles (14 days) ─────────────────────────────
+
+FROM_ARTICLES = [
+    ("ArcKit drafts, you judge", "The toolkit drafts, the architect judges", ["ArcKit takes the drafting and cross-references", "You judge completeness, targets and evidence", "Trust the draft enough to skip the rewrite"]),
+    ("Check before you build", "/arckit:gov-reuse", ["Search 24,500+ UK government repositories", "Score candidates: fork, library, reference", "Gaps become genuine build items"]),
+    ("The five Wardley commands", "/arckit:wardley and four companions", ["Start with the value chain, not a blank canvas", "Each command reads the others' output", "Feed gameplay back into a revised map"]),
+    ("Wardley maps belong in git", "/arckit:wardley", ["Mermaid maps render in any GitHub Markdown file", "Review a moved component in a pull request", "Editor text and Mermaid kept in step"]),
+    ("Ground it in award data", "/arckit:tenders and /arckit:competitors", ["Notices from all five UK publication portals", "Every figure links to its official notice", "An award is not the same as spend"]),
+    ("Find UK funding", "/arckit:grants", ["Seven kinds of UK funder researched", "Each scored High, Medium or Low, with reasons", "Check deadlines with each funder before applying"]),
+    ("One recipe, a full set", "/arckit:build", ["Parallel waves, one git commit per wave", "Resumes where an interrupted build stopped", "Run --plan first to see the waves"]),
+    ("Enforce, ask, measure", "One page, three tiers", ["Rules enforced in code, whatever the model does", "Rules asked of the model, now tested", "What your organisation supplies"]),
+    ("NHS clinical safety", "Community overlay: arckit-uk-nhs", ["DCB0129 and DCB0160 safety case drafts", "Follows the open SAFETY.md specification", "For review by a Clinical Safety Officer"]),
+    ("UK payments", "Community overlay: arckit-uk-finance", ["SCA-RTS, safeguarding, Consumer Duty, CTPs", "Adds a layer on top of the core baseline", "Sign-off stays with the firm's accountable people"]),
+    ("Install only what you need", "Core plugin plus overlays", ["Core holds the foundations and the checks", "Overlays add a jurisdiction or a sector", "Installing an overlay brings the core with it"]),
+    ("TOGAF's ADM, governed", "Community overlay: arckit-togaf-adm", ["Nine ADM steps as versioned documents", "Linked to requirements, principles and decisions", "togaf-adm-full recipe builds the sequence"]),
+    ("Governed AI agents", "Community overlay: agent architecture", ["Inventory first: which agents, what they reach", "Design, integration, governance, security", "The toolkit drafts, the architect judges"]),
+    ("Show your working", "Using ArcKit on real work? Tell us.", ["Named, anonymous by sector, or not listed", "Nothing is sent to us, so we have to ask", "The adopters list is still empty"]),
+]
+
+
+def cards_series(items, kicker, out, note_for):
+    """Numbered single-idea cards: title, a gold line (a command or key phrase), three points."""
+    T, slides = len(items), []
+    for n, (title, line2, points) in enumerate(items, 1):
+        img, d = base(out.name, n, T, kicker)
+        y = headline(d, 240, title, 92)
+        y += 16
+        mono = line2.startswith("/")
+        f2 = font(44, True, mono) if mono else font(44, True)
+        for line in wrap(d, line2, f2, W - 144):
+            d.text((72, y), line, font=f2, fill=GOLD)
+            y += 60
+        y += 70
+        for point in points:
+            d.rounded_rectangle((72, y + 14, 88, y + 30), 4, fill=CYAN)
+            for line in wrap(d, point, font(46), W - 144 - 50):
+                d.text((122, y), line, font=font(46), fill=TEXT)
+                y += 60
+            y += 54
+        note = note_for(n, T)
+        if note:
+            body(d, H - 250, note, 28, DIM)
+        slides.append(img)
+    return out, slides
+
+
+def from_articles_series():
+    return cards_series(FROM_ARTICLES, "ARCKIT · FROM THE ARTICLES", OUT / "from-the-articles",
+                        lambda n, T: "Read the full article at arckit.org/articles")
+
+
 def main():
     out, (img,) = sonnet_single()
     out.mkdir(parents=True, exist_ok=True)
     img.save(out / "sonnet-5-5-1080x1350.png", optimize=True)
     print(f"wrote 1 image to {out.relative_to(HERE.parent.parent)}")
-    for build in (effort_series, adopter_series, explained_series):
+    for build in (effort_series, adopter_series, explained_series, from_articles_series):
         out, slides = build()
         out.mkdir(parents=True, exist_ok=True)
         for i, img in enumerate(slides, 1):
