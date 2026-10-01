@@ -314,7 +314,7 @@ rm -rf .arckit/scripts/
 This plugin is for Claude Code. For other AI assistants:
 
 - **Gemini CLI**: Install the [ArcKit Gemini extension](https://github.com/tractorjuice/arckit-gemini) (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`)
-- **Codex CLI**: Install the ArcKit CLI (`pip install arckit-cli && arckit init --ai codex`)
+- **Codex CLI**: Install the ArcKit CLI (`uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git`, then `arckit init --ai codex`)
 
 ## Links
 
