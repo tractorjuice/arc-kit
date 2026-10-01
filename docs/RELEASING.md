@@ -200,49 +200,19 @@ enforce their card on the contributors page.
 
 ### PyPI (`arckit-cli`)
 
-Step 11's tag push also publishes the CLI to PyPI, via the `pypi` job in
-`.github/workflows/release.yml`. There is no manual upload step, and nothing to do
-in the local flow above.
+The CLI is **not published to PyPI**. Install it from the git URL, as every
+install instruction in the repo does:
 
-This used to be manual, which is why it stopped happening: PyPI sat at **6.4.1**
-while the repo was on 6.7.5, so `pip install arckit-cli` served a three-release-old
-CLI to anyone not using the git URL (#730).
+```bash
+uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
+```
 
-Publishing uses [PyPI Trusted Publishing](https://docs.pypi.org/trusted-publishers/),
-so there is no API credential stored in the repository. It needs a **one-time**
-configuration on PyPI, under the project's *Publishing* tab → *GitHub Actions*:
-
-| Field | Value |
-|---|---|
-| Owner | `tractorjuice` |
-| Repository | `arc-kit` |
-| Workflow name | `release.yml` |
-| Environment name | `pypi` |
-
-These must match the workflow exactly or the OIDC exchange is rejected. The
-`pypi` environment also has to exist under *Settings → Environments*; add a
-required reviewer there if you want releases to pause for approval before upload.
-
-Two guards worth knowing about:
-
-- The job **fails if the tag disagrees with the built version**, because PyPI never
-  lets a version number be reused — a wrong upload cannot be undone, only yanked.
-- The build runs through `hatch_build.py`, so a wheel whose extension trees are
-  empty cannot be published (#730). See "Adding New Package Data Files" below.
-
-To publish a version whose tag already exists (as 6.7.5 did when this was added),
-either delete and re-push the tag, or upload once by hand with
-`python -m build && python -m twine upload dist/*`.
-
-**Follow-up once the first automated publish lands.** Every install instruction in
-the repo currently uses the git URL, because PyPI was three releases stale and
-`pip install arckit-cli` would have served 6.4.1. Once PyPI is current, these can
-move to `pip install arckit-cli`: `README.md` (installation, upgrade, and the
-Copilot and Codex sections), `docs/getting-started.html`, `docs/index.html` (the
-FAQ answer, which is JSON-LD and feeds search engines' rich results),
-`docs/guides/upgrading.md` — then `scripts/check-guide-parity.py --sync` — and each
-`extensions/*/README.md`. Note the PyPI package is **`arckit-cli`**; `arckit` is an
-unrelated third-party ARC-AGI package, and the FAQ answer pointed at it until #731.
+A `pypi` job in `release.yml` tried from v6.8.0 (#730), but PyPI's one-time
+Trusted Publisher setup was never completed, so it failed on every release and
+was removed in October 2026. `arckit-cli` on PyPI is frozen at **6.4.1**; don't
+point anyone at `pip install arckit-cli`. If PyPI publishing is wanted again,
+restore the job from git history and complete the setup on pypi.org first. The
+PyPI name is **`arckit-cli`**; `arckit` is an unrelated third-party package.
 
 ### Note on `claude plugin tag`
 
