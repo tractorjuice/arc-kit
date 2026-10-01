@@ -198,22 +198,6 @@ contributors by @handle in the article *and* in the CHANGELOG entry — the
 handle appearing in a CHANGELOG is what makes `check-contributor-credits.py`
 enforce their card on the contributors page.
 
-### PyPI (`arckit-cli`)
-
-The CLI is **not published to PyPI**. Install it from the git URL, as every
-install instruction in the repo does:
-
-```bash
-uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
-```
-
-A `pypi` job in `release.yml` tried from v6.8.0 (#730), but PyPI's one-time
-Trusted Publisher setup was never completed, so it failed on every release and
-was removed in October 2026. `arckit-cli` on PyPI is frozen at **6.4.1**; don't
-point anyone at `pip install arckit-cli`. If PyPI publishing is wanted again,
-restore the job from git history and complete the setup on pypi.org first. The
-PyPI name is **`arckit-cli`**; `arckit` is an unrelated third-party package.
-
 ### Note on `claude plugin tag`
 
 This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`), which would not trigger `.github/workflows/release.yml` (it matches `v[0-9]+.[0-9]+.[0-9]+`). We use `--dry-run` for its validation behaviour only — it cross-checks `plugins/arckit-claude/.claude-plugin/plugin.json` against the marketplace entry in `.claude-plugin/marketplace.json` and exits non-zero on mismatch, catching version drift before the real `git tag -a vX.Y.Z` runs.

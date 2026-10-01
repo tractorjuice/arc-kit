@@ -40,7 +40,6 @@
       "WebFetch(domain:www.darkreading.com)",
       "WebFetch(domain:christian-schneider.net)",
       "WebFetch(domain:vizro.readthedocs.io)",
-      "WebFetch(domain:pypi.org)",
       "WebFetch(domain:plotly.com)",
       "WebFetch(domain:www.npmjs.com)",
       "Bash(gh search:*)",
