@@ -119,6 +119,16 @@ Companion to `keep-coding-instructions: true` (v2.1.94): that flag preserves the
 
 Reuses `buildProjectContext` from `project-context-builder.mjs` (same builder as `arckit-context.mjs` and `inject-agent-context.mjs`). No new marker-file convention — the filesystem (`projects/`, ARC artefact files, `external/`, `policies/`) is the source of truth, so the post-compact view is always consistent with the live repo state. Exits silently with `{}` when no `projects/` directory exists.
 
+## Status Band Mod (`mod/register.mjs` + `mod/status-model.mjs`, v2.1.287+)
+
+ArcKit's one Claude Code mod: a hooks module named by the `modules` key in `hooks.json`, loaded once per session and run in Claude Code's mods sandbox (no Node; files, clock and UI through `$`). In an interactive terminal session in a repository with `projects/`, it draws one line above the prompt: project and artefact counts, how many artefacts are DRAFT and how many of those are stale, and how many reviews are overdue. When something needs attention the line turns yellow and points at `/arckit:health`.
+
+- **Same rules as `/arckit:health`.** `status-model.mjs` applies the REVIEW-OVERDUE and 30-day STALE-DRAFT rules from `detect-stale-artifacts.sh` and `graph-inject.mjs`, so the band and the command agree. The model has no imports, so the mod and `tests/plugin/status-band.test.mjs` load the same file.
+- **Observe-only.** Its `tool.call` hooks on Write, Edit and Bash pass every call on unchanged and only mark the counts for a rescan when the turn completes. It enforces nothing; every gate stays a classic hook, so `docs/ENFORCEMENT.md` is unchanged.
+- **Claude Code only.** It lives in `hooks/mod/`, a subdirectory, so the converter's copy of `hooks/*.mjs` into the Kimi extension never ships it. A client below v2.1.287 accepts the `modules` key (`claude plugin validate` passes on v2.1.284) and simply does not load it.
+- **Off switch.** Set `ARCKIT_NO_STATUS_BAND` to any value. It also stays off in `-p` and SDK runs, and it gives way to Claude Code's own surveys.
+- **Validate after editing.** `claude plugin validate plugins/arckit-claude/.claude-plugin/plugin.json` checks the module the way the engine loads it. The engine only accepts hooks that are top-level functions, so keep them declared at the top of `register.mjs`.
+
 ## Reactive External Context (`external-context-watch.mjs`)
 
 SessionStart and FileChanged now cooperate to keep external document context

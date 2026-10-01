@@ -56,7 +56,7 @@ Before installing ArcKit broadly:
 - Assign a seat type that includes Claude Code. In Anthropic's current
   Enterprise guidance, legacy seat-based plans need Premium seats; usage-based
   plans need Chat + Code or Claude Enterprise seats.
-- Install Claude Code v2.1.284 or later on pilot machines. ArcKit's
+- Install Claude Code v2.1.287 or later on pilot machines. ArcKit's
   SessionStart version hook warns below this floor; managed settings can block
   startup below it.
 - Verify each pilot user with `claude --version`, `/status`, and
@@ -69,7 +69,7 @@ users are prompted to add the ArcKit marketplace when they trust the repo:
 
 ```json
 {
-  "minimumVersion": "2.1.284",
+  "minimumVersion": "2.1.287",
   "extraKnownMarketplaces": {
     "arckit-claude": {
       "source": {
@@ -91,7 +91,7 @@ range:
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.284",
+  "requiredMinimumVersion": "2.1.287",
   "requiredMaximumVersion": "2.1.999",
   "extraKnownMarketplaces": {
     "arckit-claude": {
@@ -241,7 +241,8 @@ Use a narrow pilot before broad installation:
 
 | Version | Enterprise-relevant change | ArcKit impact |
 |---------|----------------------------|---------------|
-| v2.1.284 | Claude Sonnet 5.5 (`claude-sonnet-5-5`) added as the default Sonnet model on the Anthropic API — 1M context, $2/$10 per MTok, defaults to `effort: medium`, thinking cannot be turned off; biology-flagged requests end in a refusal (no fallback model); plugins from marketplaces no longer pre-approve their own tools via `allowed-tools` under managed `allowManagedPermissionRulesOnly`; MCP tool calls in a resumed session wait for a still-connecting server instead of failing | Current floor. Sonnet 5.5 always thinks, so ArcKit's `effort: max` commands run at `max` on it and the provenance Effective Effort row is accurate. Commands without `effort:` run at `medium` on Sonnet 5.5, as on Opus 5.5 |
+| v2.1.287 | Claude mods: a plugin can name a hooks module that observes, rewrites or answers tool calls, prompts and turns, and draws its own interface; plugin SessionStart hooks now run in new cloud sessions; a dangerous `rm` keeps its always-ask safeguard when it also redirects to a `~` or wildcard path; a shell write through a committed symlink onto a sensitive file or out of the working tree now waits for a person | Current floor. ArcKit ships one mod, the status band above the prompt (`hooks/mod/register.mjs`). It only reads `projects/` and passes every tool call on unchanged, so no ArcKit gate depends on it; the classic hooks still enforce everything. Set `ARCKIT_NO_STATUS_BAND` to switch it off. Organisations with managed settings get Anthropic's built-in `sec-default` mod, which keeps their own hooks and deny rules out of reach of installed plugins |
+| v2.1.284 | Claude Sonnet 5.5 (`claude-sonnet-5-5`) added as the default Sonnet model on the Anthropic API — 1M context, $2/$10 per MTok, defaults to `effort: medium`, thinking cannot be turned off; biology-flagged requests end in a refusal (no fallback model); plugins from marketplaces no longer pre-approve their own tools via `allowed-tools` under managed `allowManagedPermissionRulesOnly`; MCP tool calls in a resumed session wait for a still-connecting server instead of failing | Carried into the current floor. Sonnet 5.5 always thinks, so ArcKit's `effort: max` commands run at `max` on it and the provenance Effective Effort row is accurate. Commands without `effort:` run at `medium` on Sonnet 5.5, as on Opus 5.5 |
 | v2.1.280 | Claude Opus 5.5 (`claude-opus-5-5`) added as the default Opus model — 1M context, defaults to `effort: medium`, thinking cannot be turned off, fast mode at $8/$40; an effort level saved before `/effort` became per-model no longer applies to newly released models | Opus 5.5 always thinks, so ArcKit's `effort: max` commands cannot be silently sent as `high` by a thinking-off session and the provenance Effective Effort row is accurate. Commands without `effort:` run at `medium` on Opus 5.5. Carried into the current floor |
 | v2.1.258 | Reviewed release as of 2026-09-02; fixes the macOS 12 launch failure introduced in the unpublished 2.1.255 | Reviewed in the v2.1.236-v2.1.258 triage. Any future floor above v2.1.252 must be v2.1.258, not v2.1.257 |
 | v2.1.257 | Claude Fable 5.1 (`claude-fable-5-1`) is the default Fable model; `CLAUDE_CODE_SUBAGENT_MODEL_FORCE`; `permissions.blockReadsOutsideWorkingDirectories`; Bash `Read()` deny rules cover redirects and reader commands; `defaultMode: "bypassPermissions"` ignored at project scope; plugin component paths that are symlinks refused; auto-mode Containment Escape rule | Fable 5.1 needs the gateway configured for it — `fable`/`best` keep resolving to Fable 5 until then. ArcKit ships no symlinked component paths and recommends no project-scope `defaultMode` |
@@ -273,7 +274,8 @@ Use a narrow pilot before broad installation:
 
 | ArcKit entry | Enterprise impact |
 |--------------|-------------------|
-| Unreleased #580 | Claude Code floor raised to v2.1.284 for Claude Sonnet 5.5, the default Sonnet model on the Anthropic API, which like Opus 5.5 always thinks |
+| Unreleased #580 | Claude Code floor raised to v2.1.287 for Claude mods, which ArcKit uses for an observe-only status band above the prompt; classic hooks still carry every gate |
+| v6.16.5 #580 | Claude Code floor raised to v2.1.284 for Claude Sonnet 5.5, the default Sonnet model on the Anthropic API, which like Opus 5.5 always thinks |
 | v6.15.0 #580 | Claude Code floor raised to v2.1.280 for Claude Opus 5.5, the default Opus model, which always thinks and so keeps `effort: max` and the provenance Effective Effort row honest |
 | Unreleased #580 | Claude Code floor raised to v2.1.251 for the file-tool symlink and Grep/Glob deny-rule fixes, the Opus 5 thinking-off effort fallback, and v2.1.246's plugin-loading fixes that hit ArcKit's exact layout |
 | Unreleased #580 | Reactive `FileChanged` context for `projects/*/external/` means newly added evidence can enter Claude Code context without restart or `/compact` |
@@ -522,7 +524,7 @@ admin can set the native managed settings (Claude Code v2.1.163+):
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.284",
+  "requiredMinimumVersion": "2.1.287",
   "requiredMaximumVersion": "2.1.999"
 }
 ```
