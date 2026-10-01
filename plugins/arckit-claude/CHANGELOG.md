@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Claude Code floor raised to v2.1.287 for Claude mods** (#580). v2.1.287 lets a plugin ship a mod, which ArcKit uses for the status line above. It also fixes plugin SessionStart hooks not running in new cloud sessions, so ArcKit's session set-up and version check now run there. The SessionStart version check, both READMEs, CLAUDE.md, the start, MCP-servers, enterprise-scale and research-family guides, and the repo's `minimumVersion` are updated.
 
+### Fixed
+
+- **Secret file scanner no longer skips arbitrary docs, README and CHANGELOG files.** Skip patterns are anchored to ArcKit's own plugin (and source repo) files, so a Write to `projects/x/docs/*.md`, `mydocs/*.md` or `EVIL-README.md` is scanned.
+
 ## [6.17.2] — 2026-10-01
 
 ### Fixed
@@ -97,8 +101,6 @@ These five come from @johnfelipe, following up the client risk review that shape
 ### Fixed
 
 - **Backlog totals hook** (`hooks/validate-backlog-totals.mjs`, rules in `hooks/backlog-totals.mjs`; #855, #856). Recomputes story, epic, point, priority and requirement totals from `ARC-*-BKLG-*.json` and blocks mismatches, `Sprint 0` placeholders and unrecorded MoSCoW downgrades against the project's REQ. `/arckit:backlog` now always writes the JSON first and takes the Markdown's totals from it, and keeps unchanged items' points when regenerating.
-
-- **Secret file scanner no longer skips arbitrary docs, README and CHANGELOG files.** Skip patterns are anchored to ArcKit's own plugin (and source repo) files, so a Write to `projects/x/docs/*.md`, `mydocs/*.md` or `EVIL-README.md` is scanned.
 
 - **`/arckit:pages`: large PlantUML diagrams render** (#648). Deflate encoding in place of hex, so URLs are several times shorter; a diagram still too large says so instead of blaming its syntax.
 
