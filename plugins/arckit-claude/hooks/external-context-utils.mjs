@@ -1,6 +1,6 @@
-import { readdirSync } from 'node:fs';
-import { isAbsolute, join, relative, resolve } from 'node:path';
-import { isDir } from './hook-utils.mjs';
+import { lstatSync, readdirSync } from 'node:fs';
+import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
+import { isDir, listDirsRecursive } from './hook-utils.mjs';
 
 export function collectExternalWatchPaths(repoRoot) {
   const projectsDir = join(repoRoot, 'projects');
@@ -14,18 +14,10 @@ export function collectExternalWatchPaths(repoRoot) {
     const externalDir = join(projectDir, 'external');
     if (!isDir(externalDir)) continue;
 
-    collectDirs(externalDir, watchPaths);
+    watchPaths.push(...listDirsRecursive(externalDir));
   }
 
   return watchPaths;
-}
-
-function collectDirs(dir, out) {
-  out.push(dir);
-  for (const entry of readdirSync(dir).sort()) {
-    const path = join(dir, entry);
-    if (isDir(path)) collectDirs(path, out);
-  }
 }
 
 export function resolveEventPath(filePath, cwd) {
@@ -33,9 +25,15 @@ export function resolveEventPath(filePath, cwd) {
   return isAbsolute(filePath) ? resolve(filePath) : resolve(cwd || process.cwd(), filePath);
 }
 
-export function findExternalDocumentChange(repoRoot, filePath) {
+export function findExternalDocumentChange(repoRoot, filePath, watchPaths = collectExternalWatchPaths(repoRoot)) {
   const projectsDir = join(repoRoot, 'projects');
-  if (!isDir(projectsDir) || !filePath) return null;
+  if (!isDir(projectsDir) || !filePath || !watchPaths.includes(dirname(filePath))) return null;
+
+  try {
+    if (lstatSync(filePath).isSymbolicLink()) return null;
+  } catch (error) {
+    if (error.code !== 'ENOENT') return null;
+  }
 
   for (const projectName of readdirSync(projectsDir).sort()) {
     const projectDir = join(projectsDir, projectName);
