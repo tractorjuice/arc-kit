@@ -106,7 +106,7 @@ Dispatch all variations in a single wave (3 to 5 readers, comfortably inside the
    }
    ```
 
-2. Dispatch with the `Agent` tool, `subagent_type: "arckit:arckit-gov-code-search-reader"`, the input JSON as the prompt.
+2. Dispatch with the `Agent` tool, `subagent_type: "arckit:arckit-gov-code-search-reader"`, `run_in_background: false`, the input JSON as the prompt.
 
    **One variation per reader.** Do not ask a reader to generate its own variations: the same repository would then be counted twice in `query_corroboration`, silently inflating its rank.
 
@@ -158,7 +158,7 @@ Glob `projects/{P}-{NAME}/research/ARC-{P}-GCSR-*-v*.md`. If none, the document 
 
 ### Step 10: Dispatch the writer
 
-Assemble the writer input documented in `arckit-gov-code-search-writer`'s Input section and dispatch with `subagent_type: "arckit:arckit-gov-code-search-writer"`. It returns a one-line summary.
+Assemble the writer input documented in `arckit-gov-code-search-writer`'s Input section and dispatch with `subagent_type: "arckit:arckit-gov-code-search-writer"`, `run_in_background: false`. It returns a one-line summary.
 
 ### Step 11: Return summary
 

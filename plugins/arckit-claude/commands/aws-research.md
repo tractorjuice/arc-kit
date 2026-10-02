@@ -126,7 +126,7 @@ At most 6 readers in one wave. Build the input:
 }
 ```
 
-Dispatch with `subagent_type: "arckit:arckit-aws-research-reader"`.
+Dispatch with `subagent_type: "arckit:arckit-aws-research-reader"`, `run_in_background: false`.
 
 The AWS reader has a dedicated availability tool, so region evidence is authoritative. Pass `required_regions` and it will map `isAvailableIn` / `isNotAvailableIn` / `isPlannedIn` / `Not Found` onto the schema's status enum.
 
@@ -174,7 +174,7 @@ Assemble the writer input documented in `arckit-cloud-research-writer`'s Input s
 - `template_path`: `"${CLAUDE_PLUGIN_ROOT}/templates/aws-research-template.md"`
 - `framework_label`: `"AWS Well-Architected Framework"`
 
-Dispatch with `subagent_type: "arckit:arckit-cloud-research-writer"`.
+Dispatch with `subagent_type: "arckit:arckit-cloud-research-writer"`, `run_in_background: false`.
 
 ### Step 11: Return summary
 

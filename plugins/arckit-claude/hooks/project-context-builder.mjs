@@ -8,8 +8,8 @@
  * Used by:
  *   - arckit-context.mjs        (UserPromptSubmit hook — fires on direct
  *                                user `/arckit:foo ...` prompts)
- *   - inject-agent-context.mjs  (PreToolUse hook on the Agent tool —
- *                                injects context when the LLM dispatches
+ *   - inject-agent-context.mjs  (SubagentStart hook — adds context to
+ *                                the subagent's conversation when the LLM dispatches
  *                                an arckit-* subagent that wasn't
  *                                triggered by a user prompt, since
  *                                UserPromptSubmit hooks do NOT fire on

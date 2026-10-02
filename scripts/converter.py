@@ -1218,7 +1218,7 @@ def generate_kimi_hooks():
     Deliberately excluded: version-check / v5-migration-banner (Claude Code
     version specific), graph-inject and sync-guides (they match Claude
     ``/arckit:`` slash commands that do not exist in Kimi), validate-reader-handoff /
-    inject-agent-context (Agent-tool hooks with no effect under Kimi), and external-context-watch (FileChanged has no
+    inject-agent-context (subagent hooks with no effect under Kimi), and external-context-watch (FileChanged has no
     Kimi event).
 
     NOTE: not yet smoke-tested against a live Kimi runtime — see the Kimi

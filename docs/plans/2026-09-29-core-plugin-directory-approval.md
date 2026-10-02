@@ -159,3 +159,23 @@ Tested on Claude Code v2.1.285 before changing anything:
 **Fix (6.17.2):** delete `allow-plugin-internals.mjs`; add the Read rule to the 64 commands and 5 skills that read plugin files; `tests/plugin/test_command_script_permissions.py` now requires the rule wherever plugin files are read and fails if any hook returns `allow` or registers for `PermissionRequest`. The converter strips `allowed-tools` from skills for the other runtimes.
 
 The remaining PreToolUse hooks rewrite tool arguments (`updatedInput`) without a permission decision, so Claude Code's normal prompt still applies: `validate-arc-filename` (corrects the document path), `inject-agent-context` (adds project context to a subagent prompt) and `validate-reader-handoff` (keeps reader dispatches in the foreground; denies an invalid hand-back). If the rescan still lists "Hook grants permission" against these, that is the explanation to give.
+
+## Round 3: v6.17.2 not approved (2 October 2026)
+
+Same reviewer note as round 2. The scan of v6.17.2 still listed **Hook grants permission** three times, each `hooks/hooks.json · PreToolUse`, although no hook returned `allow` any more. The three PreToolUse hooks left that changed a tool call were the ones returning `updatedInput`: `inject-agent-context` (prepended project context to an Agent prompt), `validate-arc-filename` (moved a misnamed Write) and `validate-reader-handoff` (forced reader/writer dispatches into the foreground with qualified names, and swapped a valid hand-back for its sanitised form). The scanner cannot tell an input rewrite from an approval, so all three now gate or add context instead:
+
+- `inject-agent-context` is a **SubagentStart** hook returning `additionalContext`, which Claude Code puts in the subagent's own conversation. Tested live on v2.1.284: the framework agent listed the scratch repo's projects. The matcher must be a regex (`^arckit`): a plain `arckit-` is read as an exact agent name and never fired. The old PreToolUse version also skipped plugin-scoped names (`arckit:arckit-framework`), so ArcKit subagents had not been getting the context at all.
+- `validate-arc-filename` blocks and names the corrected path.
+- `validate-reader-handoff` drops the Agent rewrite (the 11 split commands now ask for `run_in_background: false`; Claude Code rejects bare names itself) and passes a hand-back only when it already is the bare sanitised JSON, denying anything else.
+
+`tests/plugin/no-input-rewrite.test.mjs` fails if any PreToolUse hook source mentions `updatedInput` or returns `allow`/`approve`.
+
+### Resubmission note for 6.17.3
+
+> ArcKit v6.17.3 removes every hook that changed a tool call. No hook returns `allow` or `approve`, and no PreToolUse hook rewrites a tool's input (`updatedInput`):
+>
+> - Project context for ArcKit's own subagents is added at `SubagentStart` as `additionalContext`, instead of being written into the Agent call's prompt.
+> - A misnamed artefact is blocked, and the reason names the correct path. It is no longer moved silently.
+> - A research reader's hand-back passes unchanged or is denied with the reason. The Agent dispatch rewrite is gone: the commands ask for foreground dispatch themselves.
+>
+> The remaining PreToolUse hooks only block (`decision: "block"` or `permissionDecision: "deny"`) or add context. Every command pre-approves its own needs in `allowed-tools`.
