@@ -73,6 +73,21 @@
         ]
       }
     ],
+    "SubagentStart": [
+      {
+        "matcher": "^arckit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/inject-agent-context.mjs"
+            ],
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "matcher": ".*",
@@ -202,19 +217,6 @@
     ],
     "PreToolUse": [
       {
-        "matcher": "Agent",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "${CLAUDE_PLUGIN_ROOT}/hooks/inject-agent-context.mjs"
-            ],
-            "timeout": 10
-          }
-        ]
-      },
-      {
         "matcher": "Write",
         "hooks": [
           {
@@ -278,19 +280,6 @@
       },
       {
         "matcher": "SubagentHandback",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node",
-            "args": [
-              "${CLAUDE_PLUGIN_ROOT}/hooks/validate-reader-handoff.mjs"
-            ],
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "matcher": "Agent|Task",
         "hooks": [
           {
             "type": "command",

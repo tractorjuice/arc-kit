@@ -2,10 +2,15 @@
 /**
  * ArcKit PreToolUse (Write) Hook - ARC Filename Convention Enforcement
  *
- * Intercepts Write tool calls targeting ARC-* files under projects/ and auto-corrects
- * filenames to match the ArcKit naming convention (ARC-{PID}-{TYPE}[-{SEQ}]-v{VER}.md).
+ * Intercepts Write tool calls targeting ARC-* files under projects/ and, when the
+ * filename breaks the ArcKit naming convention (ARC-{PID}-{TYPE}[-{SEQ}]-v{VER}.md),
+ * blocks the write and names the correct path, so Claude writes there instead.
  *
- * Corrections applied:
+ * It never rewrites the tool call itself: the Claude plugin directory treats a
+ * PreToolUse hook that changes a tool's input as the plugin acting on its own
+ * behalf, and declined the core plugin for it. A block is a gate, not a grant.
+ *
+ * Corrections named in the block reason:
  *   - Zero-pads project ID to 3 digits (1 -> 001)
  *   - Normalizes version format (v1 -> v1.0)
  *   - Corrects project ID to match directory number (ARC-999 in 001-foo/ -> ARC-001)
@@ -16,9 +21,9 @@
  * Hook Type: PreToolUse
  * Matcher: Write
  * Input (stdin):  JSON { tool_name, tool_input: { file_path, content }, ... }
- * Output (stdout): JSON with updatedInput for corrected path, {decision: 'block', reason}
- *                  for invalid type code (model-visible so it can self-correct), or empty
- *                  for pass-through.
+ * Output (stdout): JSON {decision: 'block', reason} naming the corrected path, or the
+ *                  valid type codes for an unknown one (model-visible so it can
+ *                  self-correct), or empty for pass-through.
  * Exit code:       0 in all cases. The block path emits JSON with decision='block' so the
  *                  rejection reason is fed back to the model rather than failing as a hard
  *                  permission error (which only the user would see).
@@ -181,8 +186,10 @@ if (MULTI_INSTANCE_TYPES.has(docType)) {
 // --- Compare and output ---
 if (correctedPath === filePath) process.exit(0);
 
-// Return updatedInput with corrected file_path (preserves original content)
-const toolInput = { ...(data.tool_input || {}) };
-toolInput.file_path = correctedPath;
-console.log(JSON.stringify({ updatedInput: toolInput }));
+// Block and name the corrected path; the directories above already exist, so the
+// retried Write lands first time.
+console.log(JSON.stringify({
+  decision: 'block',
+  reason: `ArcKit: '${basename(filePath)}' does not follow the ARC naming convention for this project. Write the same content to ${correctedPath} instead.`,
+}));
 process.exit(0);

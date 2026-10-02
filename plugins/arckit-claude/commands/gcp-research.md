@@ -126,7 +126,7 @@ At most 6 readers in one wave. Build the input:
 }
 ```
 
-Dispatch with `subagent_type: "arckit:arckit-gcp-research-reader"`.
+Dispatch with `subagent_type: "arckit:arckit-gcp-research-reader"`, `run_in_background: false`.
 
 The Google Developer Knowledge server has no region-availability tool, so the reader takes region evidence from the Cloud locations documentation. Expect fewer rows than you asked for, and treat an absent row as unchecked rather than unavailable.
 
@@ -174,7 +174,7 @@ Assemble the writer input documented in `arckit-cloud-research-writer`'s Input s
 - `template_path`: `"${CLAUDE_PLUGIN_ROOT}/templates/gcp-research-template.md"`
 - `framework_label`: `"Google Cloud Architecture Framework"`
 
-Dispatch with `subagent_type: "arckit:arckit-cloud-research-writer"`.
+Dispatch with `subagent_type: "arckit:arckit-cloud-research-writer"`, `run_in_background: false`.
 
 ### Step 11: Return summary
 

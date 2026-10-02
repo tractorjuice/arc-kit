@@ -81,7 +81,7 @@ The concurrency cap is lifted in ultracode mode (which runs at `xhigh` effort an
 
 ## Path allocation — trust the hook
 
-Workers don't construct filenames or call `generate-document-id.mjs` themselves. The plugin's `validate-arc-filename.mjs` PreToolUse hook normalizes paths at write time: allocates the next sequence number for ADR/DIAG, applies `decisions/` and `diagrams/` subfolders, pads project IDs. Workers read the corrected `ACTUAL_PATH` from the Skill tool result and report it back.
+Workers don't construct filenames or call `generate-document-id.mjs` themselves. The plugin's `validate-arc-filename.mjs` PreToolUse hook checks paths at write time. If a path is wrong, it blocks the write and names the corrected one: the next sequence number for ADR/DIAG, the `decisions/` or `diagrams/` subfolder, a padded project ID. The worker writes there instead, then reports the path it actually wrote as `ACTUAL_PATH`.
 
 ## Customizing recipes
 

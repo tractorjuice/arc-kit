@@ -152,7 +152,7 @@ For each (category, source_type) pair where the project has at least one require
    }
    ```
 
-2. Dispatch the reader using the `Agent` tool with `subagent_type: "arckit:arckit-datascout-reader"` and the input JSON as the prompt.
+2. Dispatch the reader using the `Agent` tool with `subagent_type: "arckit:arckit-datascout-reader"`, `run_in_background: false` and the input JSON as the prompt.
 
 3. The reader's final-message string is a JSON payload. It is validated automatically:
 
@@ -237,7 +237,7 @@ Build the writer's input. Each entry in `scored_sources` carries the full `sourc
 }
 ```
 
-Dispatch the writer using the `Agent` tool with `subagent_type: "arckit:arckit-datascout-writer"` and the input JSON as the prompt. The writer creates the DSCT artefact AND one `data-sources/{provider-slug}-profile.md` per scored source (Created if new, Updated with merge rules if a profile already exists). It returns a one-line summary with file path, word count, and profile counts.
+Dispatch the writer using the `Agent` tool with `subagent_type: "arckit:arckit-datascout-writer"`, `run_in_background: false` and the input JSON as the prompt. The writer creates the DSCT artefact AND one `data-sources/{provider-slug}-profile.md` per scored source (Created if new, Updated with merge rules if a profile already exists). It returns a one-line summary with file path, word count, and profile counts.
 
 ### Step 10: Return summary
 
