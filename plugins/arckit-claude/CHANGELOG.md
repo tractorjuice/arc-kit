@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.17.3] — 2026-10-02
+
 ### Added
 
 - **A status line above the prompt** (#580). In a repository with `projects/`, Claude Code now shows one line above where you type: how many projects and artefacts you have, how many are DRAFT, and how many reviews are overdue. When something needs attention, the line turns yellow and points you at `/arckit:health`. It counts the same way `/arckit:health` does, updates after any turn that changed files, and never blocks or changes anything Claude does. Set `ARCKIT_NO_STATUS_BAND` to turn it off. It needs Claude Code v2.1.287, the release that adds mods.
