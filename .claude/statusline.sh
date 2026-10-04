@@ -19,7 +19,7 @@ FILLED=$((PCT / 10)); EMPTY=$((10 - FILLED))
 BAR=$(printf "%${FILLED}s" | tr ' ' '█')$(printf "%${EMPTY}s" | tr ' ' '░')
 
 BRANCH=""
-git -C "$DIR" rev-parse --git-dir > /dev/null 2>&1 && BRANCH=" | 🌿 $(git -C "$DIR" branch --show-current 2>/dev/null)"
+git --no-optional-locks -C "$DIR" rev-parse --git-dir > /dev/null 2>&1 && BRANCH=" | 🌿 $(git --no-optional-locks -C "$DIR" branch --show-current 2>/dev/null)"
 
 echo -e "${CYAN}[$MODEL]${RESET} 📁 ${DIR##*/}$BRANCH | ${BLUE}v${VERSION}${RESET}"
 CONTEXT_K=$((CONTEXT_SIZE / 1000))
