@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.17.4] — 2026-10-04
+
 ### Fixed
 
 - **The status line above the prompt now appears when you start Claude Code inside your projects folder.** It used to look for `projects/` only in the folder where Claude Code started, so starting inside `projects/` or a project folder showed nothing. It now searches the parent folders too, the way the rest of ArcKit finds your projects. It also now shows in the Claude desktop app's Code tab, which Claude Code 2.1.289 supports, as well as in the terminal.
