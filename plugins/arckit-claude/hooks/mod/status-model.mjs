@@ -23,6 +23,39 @@ export function isProjectDir(name) {
   return /^\d{3}-/.test(name);
 }
 
+/**
+ * Whether a directory listing is an ArcKit projects/ folder: it holds at
+ * least one numbered project directory. Matches findRepoRoot in
+ * hook-utils.mjs, so the band finds the same folder the other hooks do.
+ */
+export function isProjectsListing(entries) {
+  return entries.some((e) => e.kind === 'dir' && /^\d{3}(?:-|$)/.test(e.name));
+}
+
+/**
+ * The folders to try for projects/, from the session's folder up to the
+ * filesystem root, so a session started inside projects/ or a project still
+ * finds it. Handles both / and \ separators.
+ */
+export function candidateDirs(cwd, limit = 32) {
+  const out = [];
+  let dir = String(cwd).replace(/[\\/]+$/, '');
+  for (let i = 0; i < limit && dir; i += 1) {
+    out.push(`${dir}/projects`);
+    const cut = Math.max(dir.lastIndexOf('/'), dir.lastIndexOf('\\'));
+    if (cut <= 0) {
+      if (cut === 0 && dir.length > 1) out.push('/projects');
+      break;
+    }
+    dir = dir.slice(0, cut);
+    if (/^[A-Za-z]:$/.test(dir)) {
+      out.push(`${dir}/projects`);
+      break;
+    }
+  }
+  return out;
+}
+
 function dateOnRow(lines, label) {
   const row = lines.find((line) => label.test(line));
   const match = row && row.match(ISO_DATE);
