@@ -1,7 +1,9 @@
 /**
  * ArcKit status band: a Claude Code mod (hooks module).
  *
- * Draws one line above the prompt in an ArcKit repository: how many projects
+ * Draws one line above the prompt in an ArcKit repository (found by walking up
+ * from the session's folder, as findRepoRoot does, so a session started inside
+ * projects/ or a project still sees it): how many projects
  * and artefacts there are, how many are DRAFT, and how many reviews are
  * overdue, with a pointer to /arckit:health when something needs attention.
  *
@@ -17,7 +19,7 @@
  * tests/plugin/status-band.test.mjs).
  */
 
-import { bandText, isArtefactName, isProjectDir, needsAttention, summarise } from './status-model.mjs';
+import { bandText, candidateDirs, isArtefactName, isProjectDir, isProjectsListing, needsAttention, summarise } from './status-model.mjs';
 
 const MAX_DEPTH = 4;
 const MAX_FILES = 2000;
@@ -71,15 +73,21 @@ function rescan($) {
     });
 }
 
+async function findProjectsDir($, cwd) {
+  for (const candidate of candidateDirs(cwd)) {
+    const entries = await $.fs.list(candidate).catch(() => null);
+    if (entries && isProjectsListing(entries)) return candidate;
+  }
+  return null;
+}
+
 async function onSessionStart($, e, next) {
   const result = await next(e);
   const isOff = (await $.env.get('ARCKIT_NO_STATUS_BAND')) !== undefined;
-  if (!isOff && e.isInteractive && e.surface === 'terminal') {
-    const candidate = `${e.cwd}/projects`;
-    if (await $.fs.exists(candidate).catch(() => false)) {
-      projectsDir = candidate;
-      rescan($);
-    }
+  const isDrawn = e.surface === 'terminal' || e.surface === 'desktop';
+  if (!isOff && e.isInteractive && isDrawn) {
+    projectsDir = await findProjectsDir($, e.cwd);
+    if (projectsDir) rescan($);
   }
   return result;
 }

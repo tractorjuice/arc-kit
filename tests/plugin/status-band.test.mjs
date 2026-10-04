@@ -6,10 +6,12 @@ import { fileURLToPath } from 'node:url';
 
 import {
   bandText,
+  candidateDirs,
   daysBefore,
   documentFacts,
   isArtefactName,
   isProjectDir,
+  isProjectsListing,
   needsAttention,
   summarise,
 } from '../../plugins/arckit-claude/hooks/mod/status-model.mjs';
@@ -74,6 +76,22 @@ test('bandText is quiet when nothing needs attention and points at /arckit:healt
   assert.equal(needsAttention(calm), false);
   const busy = { projects: 3, artefacts: 42, draft: 7, staleDraft: 2, overdue: 1 };
   assert.equal(bandText(busy), 'ArcKit · 3 projects · 42 artefacts · 7 draft (2 stale) · 1 review overdue — run /arckit:health');
+});
+
+test('candidateDirs walks up from the session folder, so starting inside projects/ still finds it', () => {
+  assert.deepEqual(candidateDirs('/repo/projects/001-x'), ['/repo/projects/001-x/projects', '/repo/projects/projects', '/repo/projects', '/projects']);
+  assert.deepEqual(candidateDirs('/repo/'), ['/repo/projects', '/projects']);
+  assert.ok(candidateDirs('/repo/projects').includes('/repo/projects'), 'started inside projects/');
+  assert.deepEqual(candidateDirs('C:\\work\\repo'), ['C:\\work\\repo/projects', 'C:\\work/projects', 'C:/projects']);
+  assert.equal(candidateDirs('/a/b/c/d/e', 3).length, 3, 'bounded');
+});
+
+test('isProjectsListing matches findRepoRoot: a numbered project directory', () => {
+  assert.equal(isProjectsListing([{ name: '001-housing', kind: 'dir' }]), true);
+  assert.equal(isProjectsListing([{ name: '000', kind: 'dir' }]), true);
+  assert.equal(isProjectsListing([{ name: '001-notes.md', kind: 'file' }]), false);
+  assert.equal(isProjectsListing([{ name: 'src', kind: 'dir' }]), false);
+  assert.equal(isProjectsListing([]), false);
 });
 
 test('the status model stays loadable in the mods sandbox: no imports at all', () => {
