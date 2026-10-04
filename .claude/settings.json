@@ -50,7 +50,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/statusline.sh\""
+    "command": "sh -c 'r=$(git rev-parse --show-toplevel 2>/dev/null) || r=.; exec bash \"$r/.claude/statusline.sh\"'"
   },
   "extraKnownMarketplaces": {
     "arckit-claude": {
