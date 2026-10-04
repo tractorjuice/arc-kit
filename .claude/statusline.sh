@@ -58,4 +58,5 @@ if [ -n "$WEEK_PCT" ]; then
   RATE_LINE="${RATE_LINE}${MAGENTA}7d:${RESET}${WEEK_COLOR}${WEEK_INT}%${RESET}${WEEK_RESET_FMT}"
 fi
 
-[ -n "$RATE_LINE" ] && echo -e "Rate limits: ${RATE_LINE}"
+if [ -n "$RATE_LINE" ]; then echo -e "Rate limits: ${RATE_LINE}"; fi
+exit 0
