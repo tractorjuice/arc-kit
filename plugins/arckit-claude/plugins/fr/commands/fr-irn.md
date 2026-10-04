@@ -1,5 +1,5 @@
 ---
-description: "[COMMUNITY] Structure an IRN (Indice de Résilience Numérique) self-assessment following the aDRI framework — 8 resilience pillars × 5 organisational layers, with scoring scaffold and handoff to official aDRI methodology"
+description: "[COMMUNITY] Structure an IRN (Indice de Résilience Numérique) self-assessment following the aDRI framework — 8 resilience pillars, criteria assessed per digital asset or organisation-wide, with maturity scaffold and handoff to official aDRI methodology"
 doc-type: IRN
 argument-hint: "<project ID or organisation description, e.g. '001', 'SaaS fintech with AWS infrastructure and US sub-processors'>"
 effort: high
@@ -30,7 +30,7 @@ handoffs:
 >
 > 2. **Licence incompatibility** — the IRN is published under CC BY-NC-ND 4.0 (non-commercial, no derivatives). ArcKit is MIT (commercial use permitted). These two licences are incompatible for any derived content.
 >
-> **To score your assessment**: consult the official aDRI repository, download the evaluation grid (`Questionnaire_IRN_v0.4.xlsx`), apply R/NR criteria per pillar and layer, then report your scores in the generated document.
+> **To score your assessment**: consult the official aDRI repository, download the evaluation workbook (`Référentiel_IRN_v1.2.xlsx` at the time of writing — check the repository for a newer version), fill its grid for each digital asset, then report the maturity level of each criterion in the generated document.
 
 You are helping an enterprise architect structure an **IRN (Indice de Résilience Numérique)** self-assessment following the aDRI framework. The IRN is a strategic resilience index — not a compliance checklist — designed to give executive committees an objective view of their technological dependencies.
 
@@ -71,17 +71,15 @@ Identify the target project from the hook context. If the project doesn't exist,
 
 ### Step 2: Determine scope
 
-From the artifacts, determine which of the 5 IRN organisational layers are relevant:
+The official grid is filled once per **digital asset** (actif numérique). Each criterion has a scope: **Organisation** (assessed once) or **Actif numérique** (assessed for every asset in scope).
 
-| Layer | In Scope? | Justification |
-|-------|-----------|---------------|
-| Applicative | ? | Based on identified SaaS/software dependencies |
-| Data | ? | Based on data assets, AI/analytics usage |
-| Platform | ? | Based on dev/deploy/orchestration tooling |
-| Infrastructure | ? | Based on cloud, compute, storage, network |
-| Compétences | ? | Based on internal skill assessment, outsourcing level |
+From the artifacts, list the critical digital assets to assess:
 
-If no artifacts exist, include all 5 layers and note that scope confirmation is required.
+| # | Asset name | Type | Supplier | Operator | Importance | Business use |
+|---|------------|------|----------|----------|------------|--------------|
+| A1 | ? | SaaS, PaaS, IaaS, software, infrastructure… | ? | Internal / external | Standard / Essentiel / Vital | ? |
+
+Start with the assets that carry vital business functions. If no artifacts exist, leave one placeholder asset row and note that scope confirmation is required.
 
 ### Step 3: Read Template
 
@@ -107,17 +105,18 @@ For each of the **8 IRN pillars**, create a structured section:
 **RES-4 — Résilience Opérationnelle** (Business continuity, incident management, recovery plans)
 **RES-5 — Résilience Supply-Chain** (Critical suppliers, diversification, contracts & SLAs)
 **RES-6 — Résilience Technologique** (Infrastructure & cloud, applications & SaaS, open source)
-**RES-7 — Résilience Sécurité** (Cybersecurity, data protection, risk management)
-**RES-8 — Résilience Environnementale** (Carbon footprint, green IT, digital sustainability)
+**RES-7 — Sécurité & Résilience** (Cybersecurity, data protection, risk management)
+**RES-8 — Résilience Environnementale et Énergétique** (Energy dependency, environmental hazards, carbon footprint, green IT)
 
-For each pillar × organisational layer in scope:
+For each pillar:
 
 - Summarise what is known from project artifacts (pre-populate where possible)
-- Leave a scoring placeholder (R / NR / ? — to be filled using the official aDRI grid)
+- Keep the scoring grid as a placeholder: one row per criterion ID (`RES-N.n`), with its scope, the asset concerned, a maturity level left as `?` and an evidence column. The assessor adds the rows from the official grid — the list of criteria changes between versions, and some may be marked optional or pending validation
+- Refer to criteria by ID only — do not reproduce their titles, descriptions or recommendations (CC BY-NC-ND)
 - Flag any obvious dependencies or risks identified from existing artifacts
-- **Do NOT attempt to score R/NR yourself** — the official criteria are in the aDRI evaluation grid
+- **Do NOT attempt to set the maturity level yourself** — the official criteria and scale are in the aDRI evaluation grid
 
-4. **Scoring Summary table**: Create a placeholder table showing the 8 pillars × 5 layers with R/NR cells to be filled by the assessor after consulting the official methodology.
+4. **Scoring Summary table**: Create a placeholder table with the 8 pillars as rows and one column for Organisation plus one per asset in scope, to be filled by the assessor after consulting the official methodology. Do not state a 0–100 score unless the assessor supplies one derived with the aDRI methodology.
 
 5. **Gap Analysis**: Based on what is observable from existing artifacts (NOT from reproduced aDRI criteria), flag obvious dependency concentrations, single-vendor risks, or regulatory exposure as preliminary observations.
 
@@ -145,9 +144,9 @@ projects/{project_id}/ARC-{PROJECT_ID}-IRN-v{VERSION}.md
 📊 Scope
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Layers in scope: {N}/5
+Digital assets in scope: {N}
 Pre-populated from artifacts: {list}
-Cells requiring official aDRI scoring: {N}
+Criteria requiring official aDRI assessment: all (maturity levels left as ?)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⚡ Preliminary observations from existing artifacts
@@ -157,10 +156,10 @@ Cells requiring official aDRI scoring: {N}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
-1. Download the official aDRI evaluation grid:
+1. Download the official aDRI evaluation workbook (Référentiel_IRN_v1.2.xlsx or newer):
    https://gitlab.com/digitalresilienceinitiative/adri-irn
-2. Score each pillar × layer cell (R/NR) using the official methodology
-3. Report scores in the generated document and re-run for gap analysis
+2. Fill the grid for each digital asset: maturity level, comments and evidence per criterion
+3. Report the levels in the generated document and re-run for gap analysis
 {If cloud gaps: 4. Run /arckit-fr:fr-secnumcloud for sovereign hosting assessment}
 {If GDPR gaps: 5. Run /arckit-eu:eu-rgpd for full data compliance assessment}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -170,7 +169,7 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| IRN official repository (evaluation grid v0.4) | aDRI | https://gitlab.com/digitalresilienceinitiative/adri-irn |
+| IRN official repository (`Référentiel_IRN_v1.2.xlsx`; English `DRI_Referential_v_1.1.xlsx`) | aDRI | https://gitlab.com/digitalresilienceinitiative/adri-irn |
 | aDRI official website | aDRI | https://thedigitalresilience.org/ |
 | IRN licence (CC BY-NC-ND 4.0) | Creative Commons | https://creativecommons.org/licenses/by-nc-nd/4.0/ |
 
@@ -180,9 +179,9 @@ Next steps:
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-IRN-v{VERSION}.md`
 - ✅ All 8 IRN pillars present as document sections
-- ✅ 5 organisational layers scoped (in/out of scope justified)
+- ✅ Digital assets in scope listed (type, supplier, operator, importance)
 - ✅ Existing project artifacts used to pre-populate observable context
-- ✅ R/NR scoring placeholders created — NOT pre-filled by AI
+- ✅ Maturity-level placeholders created per criterion ID — NOT pre-filled by AI, criterion text not reproduced
 - ✅ Link to official aDRI evaluation grid clearly displayed
 - ✅ Licence incompatibility and living-repo rationale explained in document
 - ✅ Preliminary observations from artifacts noted (dependency concentrations, single vendors)
