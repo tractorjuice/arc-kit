@@ -6,6 +6,8 @@
  * projects/ or a project still sees it): how many projects
  * and artefacts there are, how many are DRAFT, and how many reviews are
  * overdue, with a pointer to /arckit:health when something needs attention.
+ * In the terminal it starts counting when the session starts; the desktop
+ * app's Code tab joins its session later, so there it starts on session.attach.
  *
  * Claude Code only, and additive. It needs Claude Code v2.1.287+ (mods on by
  * default); an older client never loads it, and the classic hooks in
@@ -24,6 +26,8 @@ import { bandText, candidateDirs, isArtefactName, isProjectDir, isProjectsListin
 const MAX_DEPTH = 4;
 const MAX_FILES = 2000;
 const MAX_BYTES = 4 * 1024 * 1024;
+// The surfaces Claude Code raises the AbovePrompt band on.
+const BAND_SURFACES = new Set(['terminal', 'desktop']);
 
 function localDate(ms) {
   const at = new Date(ms);
@@ -81,14 +85,23 @@ async function findProjectsDir($, cwd) {
   return null;
 }
 
+async function start($, cwd) {
+  if ((await $.env.get('ARCKIT_NO_STATUS_BAND')) !== undefined) return;
+  if (!projectsDir) projectsDir = await findProjectsDir($, cwd);
+  if (projectsDir) rescan($);
+}
+
 async function onSessionStart($, e, next) {
   const result = await next(e);
-  const isOff = (await $.env.get('ARCKIT_NO_STATUS_BAND')) !== undefined;
-  const isDrawn = e.surface === 'terminal' || e.surface === 'desktop';
-  if (!isOff && e.isInteractive && isDrawn) {
-    projectsDir = await findProjectsDir($, e.cwd);
-    if (projectsDir) rescan($);
-  }
+  if (e.isInteractive && e.surface === 'terminal') await start($, e.cwd);
+  return result;
+}
+
+// The desktop app runs the session headless and joins it afterwards, so its
+// session.start says no surface; it arrives here instead, before it first draws.
+async function onSessionAttach($, e, next) {
+  const result = await next(e);
+  if (BAND_SURFACES.has(e.surface)) await start($, await $.session.cwd());
   return result;
 }
 
@@ -121,6 +134,7 @@ async function drawBand($, e, next) {
 /** @type {import('claude-code').Register} */
 export function register(on) {
   on('session.start', onSessionStart);
+  on('session.attach', onSessionAttach);
   on('tool.call', { tool: 'Write' }, markDirty);
   on('tool.call', { tool: 'Edit' }, markDirty);
   on('tool.call', { tool: 'Bash' }, markDirty);

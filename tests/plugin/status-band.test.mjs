@@ -105,3 +105,12 @@ test('the mod imports nothing from Node and is named in hooks.json', () => {
   const hooks = JSON.parse(readFileSync(join(HOOKS_DIR, 'hooks.json'), 'utf8'));
   assert.deepEqual(hooks.modules, ['./mod/register.mjs']);
 });
+
+test('the band also starts when the desktop app attaches, because its session.start names no surface', () => {
+  // The engine-level check is hooks/mod/status-band.test.ts, run with
+  // `claude plugin test plugins/arckit-claude`; CI has no Claude Code, so this
+  // keeps the desktop path from being dropped without anyone noticing.
+  const source = readFileSync(join(HOOKS_DIR, 'mod', 'register.mjs'), 'utf8');
+  assert.match(source, /on\('session\.attach', onSessionAttach\)/);
+  assert.match(source, /new Set\(\['terminal', 'desktop'\]\)/);
+});
