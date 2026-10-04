@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **The status line above the prompt now shows in the Claude desktop app's Code tab.** 6.17.4 said it would, but it stayed empty there. The desktop app connects to its session a moment after the session starts, and ArcKit only looked for your projects at the start, when no app was connected yet. It now also looks when the desktop app connects. The terminal is unchanged.
+
 ## [6.17.4] — 2026-10-04
 
 ### Fixed
