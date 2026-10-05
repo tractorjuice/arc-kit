@@ -140,3 +140,17 @@ The chef kit's template: 30 seconds, 1080 × 1920, six cards of about five secon
 6. *arckit.org* — ArcKit logo, and the share link as a QR code.
 
 No stock footage of offices or people typing, and no screen recording of anyone's real project: rule 2.
+
+### Q6. Status line above the prompt — Discord #announcements — posted 5 October
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/1556496369064345601>. The status line shipped in ArcKit 6.17.3, and 6.17.5 made it show in the Claude desktop app's Code tab, so existing users will see it. Discord only: the page had *ArcKit Explained* scheduled every day that week.
+
+> 📊 **New: your projects at a glance, above the prompt**
+> We've added a status line to ArcKit. In Claude Code, one line above where you type now shows:
+> • how many projects and documents you have
+> • how many are still DRAFT
+> • how many reviews are overdue
+> When something needs attention, the line turns yellow and points you to /arckit:health. It works in the terminal and in the Claude desktop app's Code tab, and it never changes anything Claude does.
+> Update to ArcKit 6.17.5 to get it (needs Claude Code v2.1.287 or later). To switch it off, set the ARCKIT_NO_STATUS_BAND environment variable.
+> Tell us how it reads on your projects in #show-your-working
+> <https://github.com/tractorjuice/arc-kit/releases/tag/v6.17.5>
