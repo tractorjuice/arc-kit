@@ -150,6 +150,9 @@ jobs:
       - name: Contributor credit check (CHANGELOG credits vs contributors page)
         run: python3 scripts/check-contributor-credits.py
 
+      - name: Plugin CHANGELOG stays small enough for the plugin directory to inspect
+        run: python3 scripts/trim-plugin-changelog.py --check
+
       - name: llms.txt sync check (every command indexed, no dead links)
         run: python3 scripts/check-llms-txt.py
 

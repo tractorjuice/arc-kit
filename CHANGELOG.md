@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **`/arckit:fr-irn` follows the IRN v1.2 grid.** The aDRI replaced the v0.4 questionnaire with `Référentiel_IRN_v1.2.xlsx`, and the way the grid is filled changed with it. The assessment is now built around the digital assets in scope instead of five organisational layers: each pillar lists its criteria by ID, with the criterion's scope (organisation or asset) and a maturity level to report from the official grid, where the old scaffold had R/NR cells per layer. The summary matrix is pillars by asset, and the document no longer promises a 0–100 score the workbook does not compute. RES-7 and RES-8 carry their v1.2 names. The command, template, guide and quality checklist are updated; criterion text is still not reproduced (CC BY-NC-ND).
+- **The plugin's changelog now lists only recent releases.** `plugins/arckit-claude/CHANGELOG.md` had grown to 319 KB, too large for the Claude plugin directory's validator to read, which kept the core plugin on a policy hold. It now holds the releases since 6.13.0 (49 KB), with a link at the top to `docs/changelog/arckit-plugin-archive.md`, where every older entry is kept word for word. `bump-version.sh` moves each minor series to the archive as it ages out, keeping the file under 64 KB, and CI fails if it passes 128 KB.
 
 ## [6.17.5] — 2026-10-04
 

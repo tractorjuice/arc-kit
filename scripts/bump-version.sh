@@ -315,6 +315,13 @@ echo "  metadata.version:   $(jq -r '.metadata.version' plugins/arckit-claude/.c
 jq -r '.plugins[] | "  \(.name): \(.version)"' plugins/arckit-claude/.claude-plugin/marketplace.json | sed 's/^/  /'
 echo ""
 
+# Keep the shipped plugin CHANGELOG small: the plugin directory could not
+# inspect it at 319 KB. Older releases move to docs/changelog/.
+echo "── Plugin CHANGELOG ──"
+echo ""
+python3 scripts/trim-plugin-changelog.py | sed 's/^/  /'
+echo ""
+
 # Lint check
 echo "── Lint ──"
 echo ""

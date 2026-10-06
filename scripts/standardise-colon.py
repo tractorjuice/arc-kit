@@ -57,6 +57,7 @@ INCLUDE_FILES = ["README.md", "CLAUDE.md"]
 EXCLUDE_PREFIXES = [
     "CHANGELOG.md",
     "plugins/arckit-claude/CHANGELOG.md",
+    "docs/changelog/",             # older plugin releases moved out of the plugin CHANGELOG
     "docs/articles/",
     "docs/plans/",                 # planning artefacts; may quote the dot form verbatim
     "docs/proposals/",
