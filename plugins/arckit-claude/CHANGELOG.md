@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.17.5] — 2026-10-04
+
+### Fixed
+
+- **The status line above the prompt now shows in the Claude desktop app's Code tab.** 6.17.4 said it would, but it stayed empty there. The desktop app connects to its session a moment after the session starts, and ArcKit only looked for your projects at the start, when no app was connected yet. It now also looks when the desktop app connects. The terminal is unchanged.
+
+## [6.17.4] — 2026-10-04
+
+### Fixed
+
+- **The status line above the prompt now appears when you start Claude Code inside your projects folder.** It used to look for `projects/` only in the folder where Claude Code started, so starting inside `projects/` or a project folder showed nothing. It now searches the parent folders too, the way the rest of ArcKit finds your projects. It also now shows in the Claude desktop app's Code tab, which Claude Code 2.1.289 supports, as well as in the terminal.
+
 ## [6.17.3] — 2026-10-02
 
 ### Added

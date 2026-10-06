@@ -6,10 +6,12 @@ import { fileURLToPath } from 'node:url';
 
 import {
   bandText,
+  candidateDirs,
   daysBefore,
   documentFacts,
   isArtefactName,
   isProjectDir,
+  isProjectsListing,
   needsAttention,
   summarise,
 } from '../../plugins/arckit-claude/hooks/mod/status-model.mjs';
@@ -76,6 +78,22 @@ test('bandText is quiet when nothing needs attention and points at /arckit:healt
   assert.equal(bandText(busy), 'ArcKit · 3 projects · 42 artefacts · 7 draft (2 stale) · 1 review overdue — run /arckit:health');
 });
 
+test('candidateDirs walks up from the session folder, so starting inside projects/ still finds it', () => {
+  assert.deepEqual(candidateDirs('/repo/projects/001-x'), ['/repo/projects/001-x/projects', '/repo/projects/projects', '/repo/projects', '/projects']);
+  assert.deepEqual(candidateDirs('/repo/'), ['/repo/projects', '/projects']);
+  assert.ok(candidateDirs('/repo/projects').includes('/repo/projects'), 'started inside projects/');
+  assert.deepEqual(candidateDirs('C:\\work\\repo'), ['C:\\work\\repo/projects', 'C:\\work/projects', 'C:/projects']);
+  assert.equal(candidateDirs('/a/b/c/d/e', 3).length, 3, 'bounded');
+});
+
+test('isProjectsListing matches findRepoRoot: a numbered project directory', () => {
+  assert.equal(isProjectsListing([{ name: '001-housing', kind: 'dir' }]), true);
+  assert.equal(isProjectsListing([{ name: '000', kind: 'dir' }]), true);
+  assert.equal(isProjectsListing([{ name: '001-notes.md', kind: 'file' }]), false);
+  assert.equal(isProjectsListing([{ name: 'src', kind: 'dir' }]), false);
+  assert.equal(isProjectsListing([]), false);
+});
+
 test('the status model stays loadable in the mods sandbox: no imports at all', () => {
   const source = readFileSync(join(HOOKS_DIR, 'mod', 'status-model.mjs'), 'utf8');
   assert.doesNotMatch(source, /^\s*import\s/m);
@@ -86,4 +104,13 @@ test('the mod imports nothing from Node and is named in hooks.json', () => {
   assert.doesNotMatch(source, /from\s+['"]node:/);
   const hooks = JSON.parse(readFileSync(join(HOOKS_DIR, 'hooks.json'), 'utf8'));
   assert.deepEqual(hooks.modules, ['./mod/register.mjs']);
+});
+
+test('the band also starts when the desktop app attaches, because its session.start names no surface', () => {
+  // The engine-level check is hooks/mod/status-band.test.ts, run with
+  // `claude plugin test plugins/arckit-claude`; CI has no Claude Code, so this
+  // keeps the desktop path from being dropped without anyone noticing.
+  const source = readFileSync(join(HOOKS_DIR, 'mod', 'register.mjs'), 'utf8');
+  assert.match(source, /on\('session\.attach', onSessionAttach\)/);
+  assert.match(source, /new Set\(\['terminal', 'desktop'\]\)/);
 });
