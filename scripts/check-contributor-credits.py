@@ -27,7 +27,12 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CHANGELOGS = (ROOT / "CHANGELOG.md", ROOT / "plugins/arckit-claude/CHANGELOG.md")
+CHANGELOGS = (
+    ROOT / "CHANGELOG.md",
+    ROOT / "plugins/arckit-claude/CHANGELOG.md",
+    # Older plugin releases, moved out by scripts/trim-plugin-changelog.py.
+    ROOT / "docs/changelog/arckit-plugin-archive.md",
+)
 CONTRIBUTORS = ROOT / "docs/contributors.html"
 
 # A handle mention must not be preceded by a word character, or every
