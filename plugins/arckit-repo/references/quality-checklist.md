@@ -1639,7 +1639,7 @@ All artifacts must pass these 10 checks:
 ### GCRV -- G-Cloud Submission Review
 
 - Every expected document checked for existence by its ARC-ID: supplier-wide SUPP, SOCV, LOTQ (with the Part for the service's lot group) and DECL; per-service SVCD, SDD, PRIC and SECA
-- Overall status set to READY, NEEDS WORK or NOT READY, and consistent with the findings — no READY status while any `[PENDING]` or mandatory field remains
+- Overall status set to READY, NEEDS WORK or NOT READY, and consistent with the findings — no READY status while a mandatory field remains or the placeholder scan reports an unfinished answer (`[PENDING]` in any form, an older marker such as `[TODO]` or `[TBC]`, or a template field never filled in) outside the Document Control approval rows and Revision History
 - Mandatory field status reported per document rather than in aggregate
 - Character and word limits validated numerically and reported as actual against limit: service name against 100 characters, description against 500 characters, each feature and benefit against 10 words, the scored Lot 1a/1b quality answers against 250 words per part
 - The lot agrees across the service design, SDD, pricing and lot questions, and each document follows that lot's G-Cloud 15 rules

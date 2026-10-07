@@ -91,6 +91,67 @@ Review whatever exists. Don't stop because a document is missing. For each docum
 it **exists** and its highest version. A missing document — or a LOTQ document without the Part for
 this lot group — is a blocking finding; note the command that produces it.
 
+**Find every unfinished answer** in the documents under review with the overlay's placeholder scan.
+It is the one definition of unfinished that `/arckit:review` and `/arckit:submission-pack` share:
+`[PENDING]` in every form the commands write (`[PENDING: …]`, `[PENDING — …]`), the markers older or
+hand-edited documents use (`[TODO]`, `[TBD]`, `[TBC]`, `[CONFIRM]`, `[TO BE CONFIRMED]`,
+`*[TO BE ADDED]*`, `[INSERT …]` and the like), and template fields never filled in (`[ANSWER]`,
+`[SERVICE_NAME]`, `[X]`), which it learns from the overlay's templates. It skips code spans, links,
+ticks, HTML comments, fenced code, the Revision History and the Document Control **Reviewed By** and
+**Approved By** rows, which stay `[PENDING]` until the document is approved and are not bid answers:
+
+```bash
+PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
+latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
+# placeholder scan: keep identical in review.md and submission-pack.md
+{
+    find "${CLAUDE_PLUGIN_ROOT}/templates" .arckit/templates-custom -maxdepth 1 -name '*-template.md' 2>/dev/null
+    echo phase=2
+    for t in SUPP SOCV LOTQ DECL; do latest projects/000-global/supplier "ARC-000-$t-v*.md"; done
+    for t in SVCD SDD PRIC SECA; do latest "$PROJECT_PATH" "ARC-*-$t-v*.md"; done
+} | tr '\n' '\0' | xargs -0 awk '
+    FNR == 1 { inc = 0; fence = 0; sect = "" }
+    phase != 2 {
+        s = $0
+        while (match(s, /\[[^][]*\]/)) {
+            tok = substr(s, RSTART, RLENGTH); s = substr(s, RSTART + RLENGTH)
+            if (substr(s, 1, 1) != "(" && tok != "[ ]" && tok != "[x]" && tok !~ /-C[0-9]+\]$/) field[tok] = 1
+        }
+        next
+    }
+    /^```/ { fence = !fence; next }
+    fence { next }
+    {
+        s = $0; t = ""
+        while (s != "") {
+            if (inc) { p = index(s, "-->"); if (!p) s = ""; else { s = substr(s, p + 3); inc = 0 } }
+            else { p = index(s, "<!--"); if (!p) { t = t s; s = "" } else { t = t substr(s, 1, p - 1); s = substr(s, p + 4); inc = 1 } }
+        }
+        gsub(/`[^`]*\[[^`]*`/, "", t)
+    }
+    /^## / { sect = $0 }
+    sect ~ /Revision History/ || $0 ~ /^\| *\*\*(Reviewed By|Approved By)\*\* *\|/ { next }
+    {
+        while (match(t, /\[[^][]*\]/)) {
+            tok = substr(t, RSTART, RLENGTH); txt = substr(tok, 2, RLENGTH - 2)
+            pre = substr(t, 1, RSTART - 1); t = substr(t, RSTART + RLENGTH)
+            if (substr(t, 1, 1) == "(") continue
+            k = ""
+            if (txt ~ /^(PENDING|TODO|TBD|TBC|CONFIRM|TO BE [A-Z]+|PLACEHOLDER|INSERT|ENTER|YOUR|CHANGE THIS|UPDATE|REQUIRED)([^A-Za-z0-9].*)?$/) k = "pending"
+            else if ((tok in field) || txt ~ /^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$/) {
+                if (txt ~ /^[Xx]$/ && (pre ~ /^[ \t]*([-*+]|[0-9]+\.)[ \t]*$/ || (pre ~ /\|[ \t]*$/ && t ~ /^[ \t]*\|/))) continue
+                k = "template"
+            }
+            if (k != "") { printf "%s:%d: %s %s\n", FILENAME, FNR, k, tok; n++ }
+        }
+    }
+    END { printf "placeholders: %d\n", n + 0 }'
+```
+
+It prints one line per placeholder, `file:line: kind [TEXT]`, then the total. Every line, `pending`
+or `template`, is a blocking finding (section 3e): report each with its `ARC-` ID, line and what the
+supplier must supply.
+
 **Find the lot.** The service design records it on its `**G-Cloud Lot**: Lot <code> — <name>`
 line. It must be `1a`, `1b`, `2a`, `2b` or `3`. A service design from the previous framework (a
 "1.3 Target Lot" checkbox with Lot 1 Cloud Hosting / Lot 2 Cloud Software / Lot 3 Cloud Support), or
@@ -246,8 +307,9 @@ full 10%.
 - [ ] Every certification answered is held and in date; a Technical Ability Certificate is ready (all
   lots)
 
-**Declaration** (`ARC-000-DECL`): every declaration question answered by the supplier (none
-`[PENDING]`), and the third-party agents or bid writers question decided by the supplier.
+**Declaration** (`ARC-000-DECL`): every declaration question answered by the supplier (the
+placeholder scan reports none in it), and the third-party agents or bid writers question decided by
+the supplier.
 
 #### 3b. Consistency checks
 
@@ -316,8 +378,9 @@ These are the same reasons listed in section 8 of the review template:
   Carbon Reduction Plan for 1a/1b (plus ISO 27018 with public cloud); Cyber Essentials for 2a/2b and 3
 - [ ] A mandatory declaration question unanswered
 - [ ] A claimed certification that is not held or has expired
-- [ ] `[PENDING]` or placeholder text remaining (e.g. `[TO BE COMPLETED]`). Every `[PENDING]` value
-  in any document is a blocking finding
+- [ ] A placeholder remaining. Every line the placeholder scan in Step 2 printed, `pending` or
+  `template`, is a blocking finding: report each with its `ARC-` ID, line and what the supplier must
+  supply
 - [ ] `N/A` where an answer is actually required
 - [ ] Contradictory statements, unsubstantiated claims or marketing hyperbole
 - [ ] Competitor mentions
@@ -411,7 +474,7 @@ Report what the review actually found:
 | Security | ARC-[PROJECT_ID]-SECA | [✅/🟡/❌] |
 
 ### Counts
-- Mandatory fields complete: [X]/[Y]; incomplete (including `[PENDING]`): [X]
+- Mandatory fields complete: [X]/[Y]; unfinished answers found by the placeholder scan: [X]
 - Entries over limit: [X]
 - Consistency issues: [X]
 - Evidence missing: [X]

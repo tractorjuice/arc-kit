@@ -30,7 +30,8 @@ projects/<NNN>-<service-name>/submission/evidence/
 ## When to Use
 
 - After `/arckit:review` shows the service is ready or close to ready. The pack is still built
-  without a 🟢 READY review, but it warns prominently and lists every `[PENDING]` answer.
+  without a 🟢 READY review, but it warns prominently and lists every unfinished answer, found with
+  the same placeholder scan `/arckit:review` runs.
 - When supplier-wide and per-service documents need to be assembled for GCA's Digital Platform.
 
 ---

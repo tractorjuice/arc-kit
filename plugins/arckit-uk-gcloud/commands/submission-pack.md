@@ -114,8 +114,60 @@ Use the **Read tool** on the highest version of `{path}/ARC-{PROJECT_ID}-GCRV-v*
   or modification date): say it may be stale and recommend re-running the review.
 
 These are warnings, not blocks. Build the pack anyway so the user can see the whole submission, and
-carry the warning into the summary. Also scan every document in the pack for `[PENDING]` values and
-list any you find: each is an answer that has to be supplied before submission.
+carry the warning into the summary. Also list the unfinished answers still in the documents: each is
+an answer that has to be supplied before submission. Use the placeholder scan `/arckit:review` runs,
+so the two agree on what is unfinished: `[PENDING]` in every form (`[PENDING: …]`,
+`[PENDING — …]`), older markers (`[TODO]`, `[TBC]`, `[CONFIRM]`, `*[TO BE ADDED]*`) and template
+fields never filled in. It leaves out the Revision History and the Document Control **Reviewed By**
+and **Approved By** rows, which are not bid answers:
+
+```bash
+PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
+latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
+# placeholder scan: keep identical in review.md and submission-pack.md
+{
+    find "${CLAUDE_PLUGIN_ROOT}/templates" .arckit/templates-custom -maxdepth 1 -name '*-template.md' 2>/dev/null
+    echo phase=2
+    for t in SUPP SOCV LOTQ DECL; do latest projects/000-global/supplier "ARC-000-$t-v*.md"; done
+    for t in SVCD SDD PRIC SECA; do latest "$PROJECT_PATH" "ARC-*-$t-v*.md"; done
+} | tr '\n' '\0' | xargs -0 awk '
+    FNR == 1 { inc = 0; fence = 0; sect = "" }
+    phase != 2 {
+        s = $0
+        while (match(s, /\[[^][]*\]/)) {
+            tok = substr(s, RSTART, RLENGTH); s = substr(s, RSTART + RLENGTH)
+            if (substr(s, 1, 1) != "(" && tok != "[ ]" && tok != "[x]" && tok !~ /-C[0-9]+\]$/) field[tok] = 1
+        }
+        next
+    }
+    /^```/ { fence = !fence; next }
+    fence { next }
+    {
+        s = $0; t = ""
+        while (s != "") {
+            if (inc) { p = index(s, "-->"); if (!p) s = ""; else { s = substr(s, p + 3); inc = 0 } }
+            else { p = index(s, "<!--"); if (!p) { t = t s; s = "" } else { t = t substr(s, 1, p - 1); s = substr(s, p + 4); inc = 1 } }
+        }
+        gsub(/`[^`]*\[[^`]*`/, "", t)
+    }
+    /^## / { sect = $0 }
+    sect ~ /Revision History/ || $0 ~ /^\| *\*\*(Reviewed By|Approved By)\*\* *\|/ { next }
+    {
+        while (match(t, /\[[^][]*\]/)) {
+            tok = substr(t, RSTART, RLENGTH); txt = substr(tok, 2, RLENGTH - 2)
+            pre = substr(t, 1, RSTART - 1); t = substr(t, RSTART + RLENGTH)
+            if (substr(t, 1, 1) == "(") continue
+            k = ""
+            if (txt ~ /^(PENDING|TODO|TBD|TBC|CONFIRM|TO BE [A-Z]+|PLACEHOLDER|INSERT|ENTER|YOUR|CHANGE THIS|UPDATE|REQUIRED)([^A-Za-z0-9].*)?$/) k = "pending"
+            else if ((tok in field) || txt ~ /^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$/) {
+                if (txt ~ /^[Xx]$/ && (pre ~ /^[ \t]*([-*+]|[0-9]+\.)[ \t]*$/ || (pre ~ /\|[ \t]*$/ && t ~ /^[ \t]*\|/))) continue
+                k = "template"
+            }
+            if (k != "") { printf "%s:%d: %s %s\n", FILENAME, FNR, k, tok; n++ }
+        }
+    }
+    END { printf "placeholders: %d\n", n + 0 }'
+```
 
 ### 4. Assemble the submission folder
 
@@ -187,7 +239,7 @@ to the service's lot. Structure:
 **Framework:** G-Cloud 15 (RM1557.15), Government Commercial Agency (GCA, formerly CCS)
 **Assembled:** [DATE]
 **Review status:** [🟢 READY / 🟡 NEEDS WORK / 🔴 NOT READY / ⚠️ Not reviewed]
-**Pending answers:** [count of `[PENDING]` values, or "None"]
+**Unfinished answers:** [the count the placeholder scan printed, by document, or "None"]
 
 ## Pack Contents
 
@@ -301,7 +353,7 @@ Print only a short summary (not the manifest contents):
 **Lot:** [1a / 1b / 2a / 2b / 3]
 **Location:** `{path}/submission/`
 **Review status:** [🟢 READY / 🟡 NEEDS WORK / 🔴 NOT READY / ⚠️ Not reviewed — run `/arckit:review`]
-**Pending answers:** [count of `[PENDING]` values, or "None"]
+**Unfinished answers:** [the count the placeholder scan printed, by document, or "None"]
 
 ### Pack Contents
 - [N] documents copied (supplier profile, social value, lot questions, declaration, SVCD, SDD, pricing, security, review)

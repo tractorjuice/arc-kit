@@ -64,7 +64,11 @@ projects/<NNN>-<service-name>/ARC-<NNN>-GCRV-v1.0.md
 - Pricing rules by lot, and no forbidden pricing ("price on application", "from £x", unexplained
   ranges).
 - Cross-document consistency, naming both `ARC-` IDs in every conflict.
-- Every `[PENDING]` value is a blocking finding.
+- Every unfinished answer is a blocking finding: `[PENDING]` in any form (`[PENDING: …]`,
+  `[PENDING — …]`), older markers such as `[TODO]`, `[TBC]` or `*[TO BE ADDED]*`, and template fields
+  never filled in. The command finds them with the same placeholder scan `/arckit:submission-pack`
+  runs; the Document Control approval rows and the Revision History are not bid answers and are left
+  out.
 - An action plan naming the `ARC-` ID and the command to re-run.
 
 ---
