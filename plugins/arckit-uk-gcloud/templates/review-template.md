@@ -107,6 +107,16 @@ Conflicts between two documents in the pack. Name both `ARC-` IDs — a conflict
 |---|-------|-----------------------|------------|
 | 1 | [What disagrees] | `ARC-...` vs `ARC-...` | [Which is correct and why] |
 
+**SDD ↔ pricing cross-checks:**
+
+| Check | Result |
+|-------|--------|
+| Education discount: SDD answer = `ARC-[PROJECT_ID]-PRIC` §5.1 | [✅ / ❌ / Not asked] |
+| Free trial (1a/1b, 2a/2b): SDD answer, description and link = `ARC-[PROJECT_ID]-PRIC` §5.2 | [✅ / ❌ / Not asked on Lot 3] |
+| 1a/1b: deployment models priced (`ARC-[PROJECT_ID]-PRIC` §2.1) = models ticked in the SDD | [✅ / ❌ / Not this lot] |
+| Lot 3: every SDD role level on `ARC-000-RATE`; no rates in the SDD; PRIC §4 names the card's current version | [✅ / ❌ / Not this lot] |
+| Lot-wide figures the same across the supplier's services in this lot | [✅ / ❌ / Only service in the lot] |
+
 *If nothing conflicts, write "No consistency issues found." rather than omitting the section.*
 
 ---

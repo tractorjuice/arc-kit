@@ -1645,7 +1645,7 @@ All artifacts must pass these 10 checks:
 - Every document written for the previous framework reported as blocking, by its structure (a title or Framework row naming an earlier G-Cloud, a three-lot Lot value, an SFIA rate card, the old minimum/maximum price fields, a supplier profile with no Central Digital Platform or PPON section, a Public Contracts Regulations declaration), not by a passing mention
 - Character and word limits validated numerically and reported as actual against limit: service name against 100 characters, description against 500 characters, each feature and benefit against 10 words, every SDD free-text answer recounted against the limit on its `**Words:**` line, the scored Lot 1a/1b quality answers against 250 words per part
 - The lot agrees across the service design, SDD, pricing and lot questions, and each document follows that lot's G-Cloud 15 rules
-- Consistency checks run across every pair the review names, each conflict naming both documents
+- Consistency checks run across every pair the review names, each conflict naming both documents; the SDD checked against the pricing document for the education discount, free trial, Lot 1a/1b deployment models priced, Lot 3 role levels on the rate card and lot-wide figures
 - Common rejection reasons checked explicitly: placeholder text, `N/A` where an answer is required, contradictory statements, unsubstantiated claims, competitor mentions, prices in the SDD, forbidden pricing ("price on application", "from £x", unexplained ranges), non-GBP pricing
 - Actions required listed with enough specificity to be actioned without re-reading the source documents, each naming the command to re-run
 - Evidence status reported per claim requiring evidence

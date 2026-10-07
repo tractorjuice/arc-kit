@@ -391,9 +391,26 @@ Cross-reference documents for contradictions:
   availability matches the SDD; 2a/2b: data storage and processing locations and penetration testing
   frequency match the SDD and SECA; 3: staff screening and clearance level match the SDD's staff
   security answers; 1a/1b: reseller or sole control matches the SDD
-- **`ARC-{PROJECT_ID}-SDD` ↔ `ARC-{PROJECT_ID}-PRIC`** — pricing model follows the lot's pricing
-  rules, included features and support levels align; 1a/1b: onboarding costs and framework discount
-  match any figures in Part 1 of `ARC-000-LOTQ`
+- **`ARC-{PROJECT_ID}-SDD` ↔ `ARC-{PROJECT_ID}-PRIC`** (the checks `/arckit:pricing` relies on
+  review for) — pricing model follows the lot's pricing rules; included features match; support
+  levels align, including any support level costs the SDD gives:
+  - **Education discount:** the SDD's "Discount for educational organisations" answer (Yes or No) is
+    the same as PRIC §5.1, and a "Yes" says in the pricing document what the discount is and who
+    qualifies
+  - **Free trial** (1a/1b, 2a/2b): the SDD's "Free trial available" answer is the same as PRIC §5.2;
+    if Yes, the description (at most 50 words) and the link match, and the link works
+  - **1a/1b:** the deployment models priced in PRIC §2.1 are exactly those ticked in the SDD's
+    "Cloud deployment model"; onboarding costs and framework discount match any figures in Part 1 of
+    `ARC-000-LOTQ`
+  - **2a/2b:** the SDD holds no unit prices or discounts; PRIC §3 has them
+  - **Lot 3 rate card:** every role level in the SDD's section 11 is on `ARC-000-RATE`; the SDD
+    copies no rates; PRIC §4 names the card's current version and its average day rate matches the
+    card's
+  - **Lot-wide figures** (1a/1b onboarding table and minimum discount, 2a/2b discount matrix) are
+    the same in this PRIC as in the supplier's other services in the same lot
+
+  Report each mismatch as a consistency issue naming both `ARC-` IDs and which one to change (the
+  SDD for listing answers, the PRIC or the rate card for prices).
 - **`ARC-{PROJECT_ID}-SDD` ↔ `ARC-{PROJECT_ID}-SECA`** — certifications, security controls and
   clearances align
 - **`ARC-000-SOCV` ↔ `ARC-000-DECL`** — the declaration's social value summary gives the same

@@ -72,7 +72,10 @@ projects/<NNN>-<service-name>/ARC-<NNN>-GCRV-v1.0.md
 - Pricing rules by lot, and no forbidden pricing ("price on application", "from £x", unexplained
   ranges). Lot 3 is priced on the supplier's one rate card (`ARC-000-RATE`), which must cover every
   role level the SDD lists; the SDD holds no rates.
-- Cross-document consistency, naming both `ARC-` IDs in every conflict.
+- Cross-document consistency, naming both `ARC-` IDs in every conflict. The SDD is checked against
+  the pricing document as `/arckit:pricing` relies on it to be: the education discount, the free
+  trial (answer, description and link), the Lot 1a/1b deployment models priced, the Lot 3 role
+  levels against the supplier's rate card, and the lot-wide figures across the supplier's services.
 - Documents left over from the previous framework, found by their structure: a title or Framework
   row naming an earlier G-Cloud, a three-lot Lot value or a "1.3 Target Lot" checkbox, an SFIA rate
   card, the old minimum and maximum price fields, a supplier profile with no Central Digital
