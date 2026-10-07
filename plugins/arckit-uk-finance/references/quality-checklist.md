@@ -1587,12 +1587,12 @@ All artifacts must pass these 10 checks:
 ### SDD -- G-Cloud Service Definition Document
 
 - Every G-Cloud 15 service question for the document's lot answered, ticked, `Not applicable` (follow-up not triggered) or `[PENDING]` — an unanswered question causes rejection
-- Each choose-one question has exactly one tick, and every ticked option uses GCA's exact wording
+- Each choose-one question has exactly one tick, and every ticked option is worded exactly as the template words it: the live listings' wording, with the Digital Platform's wording in a comment where it differs
 - Categories taken from the document's own lot tree as full paths, and no other lot's categories substituted; every category under the one root and group on the Category group line, since no live G-Cloud 15 listing has categories in two groups
 - Service name within 100 characters; description within 500 characters
 - Features and benefits each within 10 items and 10 words per item; system requirements and backed-up items within 10 words each
 - Every free-text answer within the 50, 100 or 200-word limit on its `**Words:**` line, with the count filled in rather than left as `[X]` (limits inferred from the live listings and tabulated in the overlay's `framework-questions.md`)
-- Supplier type recorded with GCA's option wording, consistent with the reseller or sole control answer in the lot questions for Lots 1a/1b
+- Supplier type recorded with the listing wording of one of GCA's four options ("Not a reseller", "Reseller providing extra features and support", "Reseller providing extra support", "Reseller (no extras)"), consistent with the reseller or sole control answer in the lot questions for Lots 1a/1b
 - Lot 1b staff security offers SC or DV only
 - Lot 3: section 11 lists the role levels that deliver the service, named exactly as GCA's Lot 3 rate card names them, each marked on or not on the supplier's one rate card (RATE); the SDD copies no rates
 - No prices in the service definition beyond what GCA's questions ask for; the uploaded document is ODF or PDF/A, at most 5 MB and accessible

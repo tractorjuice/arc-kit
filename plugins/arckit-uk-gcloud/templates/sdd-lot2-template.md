@@ -35,7 +35,7 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 - Tick the options that apply (`- [x]`) and leave the others unticked. A *choose one* question takes exactly one tick.
 - A question marked ↳ is asked only when its trigger answer is ticked. When it isn't, write `Not applicable` under it.
-- Option wording is GCA's own and is what buyers filter on, so never reword it.
+- Options are worded as the live G-Cloud 15 listings show them (scraped 7 October 2026), which is what buyers see. Where GCA's Digital Platform words an option differently (the question export), the platform's wording follows in a comment: tick that option when you enter the answer. Never reword an option.
 - Write anything the supplier hasn't confirmed as `[PENDING]`. `/arckit:review` treats every `[PENDING]` as blocking.
 - `<!-- GCA guidance -->` comments repeat GCA's help text and can stay in the working copy.
 - **Limits:** service name 100 characters (name only, no extra keywords); description 500 characters; features, benefits and system requirements at most 10 each, 10 words each; and a word limit on each free-text answer, shown on its `**Words:**` line. GCA's export states none of those, but every live listing keeps within them; `framework-questions.md` in the overlay's `gcloud-framework` skill gives the evidence. Write the count in place of `[X]`.
@@ -170,10 +170,10 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 **6.1 Supplier type** — Are you reselling another organisation’s services? *(choose one)*
 
-- [ ] I’m not a reseller
-- [ ] I’m a reseller providing extra features and support not available from the original supplier
-- [ ] I’m a reseller providing extra support
-- [ ] I’m a reseller not providing extra features or support
+- [ ] Not a reseller <!-- Digital Platform: “I’m not a reseller” -->
+- [ ] Reseller providing extra features and support <!-- Digital Platform: “I’m a reseller providing extra features and support not available from the original supplier” -->
+- [ ] Reseller providing extra support <!-- Digital Platform: “I’m a reseller providing extra support” -->
+- [ ] Reseller (no extras) <!-- Digital Platform: “I’m a reseller not providing extra features or support” -->
 
 **6.2 Organisation whose services are being resold** — Which organisation’s services do you resell? ↳ *Asked if 6.1 is ‘I’m a reseller providing extra features and support not available from the original supplier’, ‘I’m a reseller providing extra support’ or ‘I’m a reseller not providing extra features or support’.*
 
@@ -316,9 +316,9 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 **8.4 Compatible operating systems** — Which operating systems does your service work with? *(tick all that apply)* ↳ *Asked if 8.3 is ‘Yes’.*
 
 - [ ] Android
-- [ ] iOS
+- [ ] IOS <!-- Digital Platform: “iOS” -->
 - [ ] Linux or Unix
-- [ ] macOS
+- [ ] MacOS <!-- Digital Platform: “macOS” -->
 - [ ] Windows
 - [ ] ChromeOS
 - [ ] Other
@@ -535,7 +535,7 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 **11.3 Reporting types** — How do you provide service metrics? *(tick all that apply)* ↳ *Asked if 11.1 is ‘Yes’.*
 
-- [ ] Through an API
+- [ ] API access <!-- Digital Platform: “Through an API” -->
 - [ ] Real-time dashboards
 - [ ] Regular reports
 - [ ] Reports on request
@@ -592,9 +592,9 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 <!-- GCA guidance: NCSC cloud security principle 1: Data-in-transit protection. -->
 
 - [ ] Private network or public sector network
-- [ ] TLS (Version 1.2 or above)
+- [ ] TLS (version 1.2 or above) <!-- Digital Platform: “TLS (Version 1.2 or above)” -->
 - [ ] IPsec or TLS VPN gateway
-- [ ] Legacy SSL and TLS (under 1.2)
+- [ ] Legacy SSL and TLS (under version 1.2) <!-- Digital Platform: “Legacy SSL and TLS (under 1.2)” -->
 - [ ] Other
 
 **14.2 Other protection between networks** — Describe how else you protect data between the buyer’s network and your network. ↳ *Asked if 14.1 is ‘Other’.*
@@ -608,9 +608,9 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 **14.3 Data protection within supplier network** — How do you protect data within your network? *(tick all that apply)*
 <!-- GCA guidance: NCSC cloud security principle 1: Data-in-transit protection. -->
 
-- [ ] TLS (Version 1.2 or above)
+- [ ] TLS (version 1.2 or above) <!-- Digital Platform: “TLS (Version 1.2 or above)” -->
 - [ ] IPsec or TLS VPN gateway
-- [ ] Legacy SSL and TLS (under 1.2)
+- [ ] Legacy SSL and TLS (under version 1.2) <!-- Digital Platform: “Legacy SSL and TLS (under 1.2)” -->
 - [ ] Other
 
 **14.4 Other protection within supplier network** — Describe how else you protect data within your network. ↳ *Asked if 14.3 is ‘Other’.*
@@ -646,7 +646,7 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 **15.4 Datacentre security standards** — With which standards does your datacentre security setup comply? *(choose one)*
 <!-- GCA guidance: NCSC cloud security principle 2: Asset protection and resilience. -->
 
-- [ ] Complies with a recognised standard, for example CSA CCM v4.0 or SSAE-18 / ISAE 3402
+- [ ] Complies with a recognised standard (for example CSA CCM version 4.0) <!-- Digital Platform: “Complies with a recognised standard, for example CSA CCM v4.0 or SSAE-18 / ISAE 3402” -->
 - [ ] Supplier-defined controls
 - [ ] Managed by a third party
 
@@ -757,7 +757,7 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 **17.4 Security governance standards** — What security governance standards do you comply with? *(tick all that apply)* ↳ *Asked if 17.3 is ‘Yes’.*
 
-- [ ] Physical access control, complying with CSA CCM v4.0
+- [ ] CSA CSM version 4.0 <!-- Digital Platform: “Physical access control, complying with CSA CCM v4.0” -->
 - [ ] ISO/IEC 27001
 - [ ] Other
 
@@ -851,15 +851,15 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 **19.1 Staff security clearance** — How do you manage staff security clearance checks? *(choose one)*
 <!-- GCA guidance: NCSC cloud security principle 6: Personnel security. -->
 
-- [ ] Staff screening performed which conforms to BS7858:2019
-- [ ] Staff screening performed but doesn’t conform with BS7858:2019
+- [ ] Conforms to BS7858:2019 <!-- Digital Platform: “Staff screening performed which conforms to BS7858:2019” -->
+- [ ] Other security clearance <!-- Digital Platform: “Staff screening performed but doesn’t conform with BS7858:2019” -->
 - [ ] Staff screening not performed
 
 **19.2 Government security clearance** — If the role requires it, what level of security clearance are you prepared to make sure your staff have? *(choose one)*
 
-- [ ] Up to Developed Vetting (DV)
-- [ ] Up to Security Clearance (SC)
-- [ ] Up to Baseline Personnel Security Standard (BPSS)
+- [ ] Developed Vetting (DV) <!-- Digital Platform: “Up to Developed Vetting (DV)” -->
+- [ ] Security Clearance (SC) <!-- Digital Platform: “Up to Security Clearance (SC)” -->
+- [ ] Baseline Personnel Security Standard (BPSS) <!-- Digital Platform: “Up to Baseline Personnel Security Standard (BPSS)” -->
 - [ ] None
 
 ---
@@ -889,9 +889,9 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 - [ ] Multi-Factor Authentication (MFA)
 - [ ] Public key authentication (including by TLS client certificate)
-- [ ] Identity federation with existing provider (for example Google apps)
-- [ ] Limited access over government network (for example PSN)
-- [ ] Dedicated link (for example VPN or bonded fibre)
+- [ ] Identity federation with existing provider (for example Google Apps) <!-- Digital Platform: “Identity federation with existing provider (for example Google apps)” -->
+- [ ] Limited access network (for example PSN) <!-- Digital Platform: “Limited access over government network (for example PSN)” -->
+- [ ] Dedicated link (for example VPN) <!-- Digital Platform: “Dedicated link (for example VPN or bonded fibre)” -->
 - [ ] Username or password
 - [ ] Other
 
@@ -920,9 +920,9 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 - [ ] Multi-Factor Authentication (MFA)
 - [ ] Public key authentication (including by TLS client certificate)
-- [ ] Identity federation with existing provider (for example Google apps)
-- [ ] Limited access over government network (for example PSN)
-- [ ] Dedicated link (for example VPN or bonded fibre)
+- [ ] Identity federation with existing provider (for example Google Apps) <!-- Digital Platform: “Identity federation with existing provider (for example Google apps)” -->
+- [ ] Limited access network (for example PSN) <!-- Digital Platform: “Limited access over government network (for example PSN)” -->
+- [ ] Dedicated link (for example VPN) <!-- Digital Platform: “Dedicated link (for example VPN or bonded fibre)” -->
 - [ ] Username or password
 - [ ] Other
 

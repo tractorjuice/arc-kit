@@ -236,7 +236,9 @@ Anything else unconfirmed is written as `[PENDING]`.
 ("real-time reporting", "remote access"); benefits are active phrases about how users' work improves
 ("publish content from multiple devices").
 
-**Supplier type**, asked per service with GCA's exact options:
+**Supplier type**, asked per service. Listings show these options as "Not a reseller", "Reseller
+providing extra features and support", "Reseller providing extra support" and "Reseller (no
+extras)"; the Digital Platform words them:
 
 - I’m not a reseller
 - I’m a reseller providing extra features and support not available from the original supplier
@@ -257,7 +259,7 @@ Sole Control of the Infrastructure.
   energy-efficient datacentres; whether an ISO 27018 certificate is held (required on Lots 1a and 1b
   for a service that includes public cloud, unless you resell and rely on the provider's
   accreditations). **Lot 1b also:** the highest classification handled and the staff clearance
-  offered (Lot 1b allows only Up to SC or Up to DV).
+  offered (Lot 1b allows only Security Clearance (SC) or Developed Vetting (DV)).
 - **Lots 2a/2b:** whether it is an add-on to other software; NIST deployment model; multi cloud
   support; browser, installed application (which operating systems) and mobile access; API, API
   sandbox, customisation; data import and export formats; public sector networks (PSN, PNN, JANET,

@@ -5,8 +5,8 @@
 `/arckit:sdd-lot1a` generates the Service Definition Document (SDD) for a G-Cloud 15 (RM1557.15)
 Lot 1a service: Infrastructure as a Service (IaaS) and Platform as a Service (PaaS). It answers every
 Lot 1a service question in the question export of GCA (the Government Commercial Agency, formerly
-CCS), in the export's order, ticking GCA's options in GCA's exact wording, which is what buyers filter
-on.
+CCS), in the export's order. Options are worded as the live G-Cloud 15 listings show them, which is
+what buyers see, with the Digital Platform's wording beside any option it words differently.
 
 ---
 

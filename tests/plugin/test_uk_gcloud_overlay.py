@@ -434,3 +434,52 @@ def test_previous_framework_check_passes_the_overlay_templates():
     templates = sorted(str(p) for p in TEMPLATES.glob("*-template.md"))
     out = _run_awk(_previous_framework_check("submission-pack.md"), *templates, cwd=REPO_ROOT)
     assert out.strip() == "previous-framework documents: 0", out
+
+
+# ── Options are worded as the listings show them ─────────────────────────────
+# Live G-Cloud 15 listings (42,893 scraped on 7 October 2026) word some options
+# differently from GCA's question export. The SDD, service design and security
+# templates use the listing wording, with the export's in a comment, because
+# that is what buyers see. None of the export-only wordings may come back as an
+# option line.
+EXPORT_ONLY = {
+    "Supplier type": [
+        "I’m not a reseller",
+        "I’m a reseller providing extra features and support not available from the original supplier",
+        "I’m a reseller providing extra support",
+        "I’m a reseller not providing extra features or support",
+    ],
+    "Staff security clearance": [
+        "Staff screening performed which conforms to BS7858:2019",
+        "Staff screening performed but doesn’t conform with BS7858:2019",
+    ],
+    "Government security clearance": [
+        "Up to Developed Vetting (DV)",
+        "Up to Security Clearance (SC)",
+        "Up to Baseline Personnel Security Standard (BPSS)",
+    ],
+    "Reporting types": ["Through an API"],
+    "Data protection between buyer and supplier networks": ["TLS (Version 1.2 or above)", "Legacy SSL and TLS (under 1.2)"],
+    "Data protection within supplier network": ["TLS (Version 1.2 or above)", "Legacy SSL and TLS (under 1.2)"],
+    "Datacentre security standards": ["Complies with a recognised standard, for example CSA CCM v4.0 or SSAE-18 / ISAE 3402"],
+}
+
+
+def test_templates_word_options_as_the_listings_show_them():
+    found = []
+    for template in ("sdd-lot1-template.md", "sdd-lot2-template.md", "sdd-lot3-template.md",
+                     "service-design-template.md", "security-template.md"):
+        question = None
+        for line in (TEMPLATES / template).read_text(encoding="utf-8").splitlines():
+            heading = re.match(r"^\*\*\d+\.\d+ (.+?)\*\*", line) or re.match(r"^## \d+\. (.+)$", line)
+            if heading:
+                question = heading.group(1)
+            option = re.match(r"^- \[ \] (.+?)(?: <!--.*)?$", line)
+            if option and option.group(1) in EXPORT_ONLY.get(question, []):
+                found.append(f"{template}: {question}: {option.group(1)}")
+    assert not found, found
+
+
+def test_supplier_type_lists_the_listing_wording():
+    text = (TEMPLATES / "sdd-lot2-template.md").read_text(encoding="utf-8")
+    assert "- [ ] Not a reseller <!-- Digital Platform: “I’m not a reseller” -->" in text

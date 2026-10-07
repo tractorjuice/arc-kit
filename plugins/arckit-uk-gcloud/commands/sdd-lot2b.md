@@ -165,10 +165,12 @@ Fill in the template for Lot 2b:
   the G-Cloud Details table set the Lot row to `2b — Software as a Service (SaaS)` and the SDD command
   to `/arckit:sdd-lot2b`.
 - **1.1 Service type:** `Lot 2b: Software as a Service (SaaS)`.
-- **Every question:** answer each one under its number, ticking GCA's options exactly as worded. A
-  follow-up marked ↳ gets an answer only when its trigger is ticked; otherwise write `Not applicable`.
-  If `lot-2b-services.md` has a question the template lacks (a customised template, or a reissued
-  export), add it in its section and say so in the summary.
+- **Every question:** answer each one under its number, ticking the template's options exactly as
+  worded: the live listings' wording, with the Digital Platform's in a comment where it differs
+  (tick that one when entering the answer). A follow-up marked ↳ gets an answer only when its
+  trigger is ticked; otherwise write `Not applicable`. If `lot-2b-services.md` has a question the
+  template lacks (a customised template, or a reissued export), add it in its section and say so in
+  the summary.
 - **3.2 Service categories:** only categories from the Lot 2b tree, written as full paths, and
   only ones the service really delivers. Start from the service design's first pass. A category that
   exists only in the Lot 2a tree means the service may belong in Lot 2a: say so in the summary
@@ -231,7 +233,8 @@ Populate the Document Control header (Document ID = `ARC-{PROJECT_ID}-SDD-v{VERS
 Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SDD** per-type checks pass. Then check:
 
 - [ ] Every question is answered, ticked, `Not applicable` or `[PENDING]`
-- [ ] Each *choose one* question has exactly one tick, and every ticked option is GCA's wording
+- [ ] Each *choose one* question has exactly one tick, and every ticked option is worded
+  exactly as the template words it
 - [ ] Every category comes from the Lot 2b tree, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features, benefits and system requirements, each ≤ 10 words
@@ -326,8 +329,8 @@ Report what the document contains, counted from what you wrote:
 ## Important Notes
 
 - Every assertion must be evidenceable: GCA and buyers can ask for proof.
-- Buyers filter on the ticked options, so a wrong tick either hides the service or promises something
-  it can't deliver.
+- The ticked options appear on the listing, so a wrong tick either misleads buyers or promises
+  something the service can't deliver.
 - The uploaded service definition document is ODF or PDF/A, at most 5 MB, accessible, and contains no
   prices.
 - Four SDD answers are scored again as mandatory award criteria, so they must say the same thing in

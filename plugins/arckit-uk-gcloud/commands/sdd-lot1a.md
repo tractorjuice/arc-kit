@@ -159,10 +159,12 @@ Fill in the template for Lot 1a:
   `Not applicable (Lot 1a)` and the SDD command to `/arckit:sdd-lot1a`. Remove the "Lot 1b differs"
   subsection and the Lot 1b note at 19.2: they don't apply.
 - **1.1 Service type:** `Lot 1a: Infrastructure as a Service (IaaS) and Platform as a Service (PaaS)`.
-- **Every question:** answer each one under its number, ticking GCA's options exactly as worded. A
-  follow-up marked ↳ gets an answer only when its trigger is ticked; otherwise write `Not applicable`.
-  If `lot-1a-services.md` has a question the template lacks (a customised template, or a reissued
-  export), add it in its section and say so in the summary.
+- **Every question:** answer each one under its number, ticking the template's options exactly as
+  worded: the live listings' wording, with the Digital Platform's in a comment where it differs
+  (tick that one when entering the answer). A follow-up marked ↳ gets an answer only when its
+  trigger is ticked; otherwise write `Not applicable`. If `lot-1a-services.md` has a question the
+  template lacks (a customised template, or a reissued export), add it in its section and say so in
+  the summary.
 - **3.2 Service categories:** only categories from the Lot 1a tree, written as full paths, and
   only ones the service really delivers. Start from the service design's first pass. All of them
   must sit under one root and one group, the first two levels of the path, recorded on the
@@ -224,7 +226,8 @@ Populate the Document Control header (Document ID = `ARC-{PROJECT_ID}-SDD-v{VERS
 Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SDD** per-type checks pass. Then check:
 
 - [ ] Every question is answered, ticked, `Not applicable` or `[PENDING]`
-- [ ] Each *choose one* question has exactly one tick, and every ticked option is GCA's wording
+- [ ] Each *choose one* question has exactly one tick, and every ticked option is worded
+  exactly as the template words it
 - [ ] Every category comes from the Lot 1a tree, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features, benefits, system requirements and backed-up items, each ≤ 10 words
@@ -325,8 +328,8 @@ Report what the document contains, counted from what you wrote:
   it. It is asked in the lot questions, not the service questions, so check it whenever 4.1 ticks
   Public cloud.
 - Every assertion must be evidenceable: GCA and buyers can ask for proof.
-- Buyers filter on the ticked options, so a wrong tick either hides the service or promises something
-  it can't deliver.
+- The ticked options appear on the listing, so a wrong tick either misleads buyers or promises
+  something the service can't deliver.
 - The uploaded service definition document is ODF or PDF/A, at most 5 MB, accessible, and contains no
   prices.
 - Lot 1a/1b bids are scored on the lot questions (Quality Cloud Services 40%, Maximising Buyer Value

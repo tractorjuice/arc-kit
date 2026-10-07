@@ -98,8 +98,9 @@ ask with **AskUserQuestion** (SECRET, TOP SECRET, or "Only OFFICIAL"); in a non-
 write the classification as `[PENDING]` and report it as a blocker rather than assuming one. If the
 answer is only OFFICIAL, stop: the service belongs in Lot 1a, so point to `/arckit:sdd-lot1a`.
 
-**Check staff clearance.** Lot 1b lets a supplier offer only "Up to Developed Vetting (DV)" or "Up to
-Security Clearance (SC)". If the supplier profile or service design offers only BPSS, or no
+**Check staff clearance.** Lot 1b lets a supplier offer only "Developed Vetting (DV)" or "Security
+Clearance (SC)" (on the Digital Platform, "Up to Developed Vetting (DV)" and "Up to Security
+Clearance (SC)"). If the supplier profile or service design offers only BPSS, or no
 clearance, the service can't answer question 19.2: write `[PENDING]` there and report it as a
 blocker for a Lot 1b bid.
 
@@ -172,10 +173,12 @@ Fill in the template for Lot 1b:
   row to the highest classification handled, and the SDD command to `/arckit:sdd-lot1b`. Keep the
   "Lot 1b differs" subsection.
 - **1.1 Service type:** `Lot 1b: IaaS and PaaS above OFFICIAL`.
-- **Every question:** answer each one under its number, ticking GCA's options exactly as worded. A
-  follow-up marked ↳ gets an answer only when its trigger is ticked; otherwise write `Not applicable`.
-  If `lot-1b-services.md` has a question the template lacks (a customised template, or a reissued
-  export), add it in its section and say so in the summary.
+- **Every question:** answer each one under its number, ticking the template's options exactly as
+  worded: the live listings' wording, with the Digital Platform's in a comment where it differs
+  (tick that one when entering the answer). A follow-up marked ↳ gets an answer only when its
+  trigger is ticked; otherwise write `Not applicable`. If `lot-1b-services.md` has a question the
+  template lacks (a customised template, or a reissued export), add it in its section and say so in
+  the summary.
 - **3.2 Service categories:** only categories from the Lot 1a tree, which Lot 1b shares, written
   as full paths, and only ones the service really delivers. All of them must sit under one root and
   one group, the first two levels of the path, recorded on the template's **Category group** line:
@@ -192,8 +195,9 @@ Fill in the template for Lot 1b:
   option. If Part 1 of the lot questions document exists, check it agrees: a service you resell here
   means the lot answer is "Reseller", not "Sole Control of the Infrastructure". Report a mismatch;
   don't edit the lot questions.
-- **19.2 Government security clearance:** list only the two Lot 1b options, "Up to Developed Vetting
-  (DV)" and "Up to Security Clearance (SC)", and delete the BPSS and None lines.
+- **19.2 Government security clearance:** list only the two Lot 1b options, "Developed Vetting (DV)"
+  and "Security Clearance (SC)" (on the Digital Platform, "Up to Developed Vetting (DV)" and "Up to
+  Security Clearance (SC)"), and delete the BPSS and None lines.
 - **24. Pricing:** only the education discount and free trial questions. Lot 1b prices go on GCA's
   separate, non-public platform and are prepared with `/arckit:pricing`.
 - **25. Documents:** record the file names if they are known, otherwise `[PENDING]`.
@@ -237,7 +241,8 @@ Populate the Document Control header (Document ID = `ARC-{PROJECT_ID}-SDD-v{VERS
 Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SDD** per-type checks pass. Then check:
 
 - [ ] Every question is answered, ticked, `Not applicable` or `[PENDING]`
-- [ ] Each *choose one* question has exactly one tick, and every ticked option is GCA's wording
+- [ ] Each *choose one* question has exactly one tick, and every ticked option is worded
+  exactly as the template words it
 - [ ] 19.2 is SC or DV, or `[PENDING]` with the blocker reported
 - [ ] Every category comes from the Lot 1a/1b tree, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
@@ -293,7 +298,7 @@ Report what the document contains, counted from what you wrote:
 **Saved to:** `{path}/ARC-{PROJECT_ID}-SDD-v[X.Y].md` ([new / updated from vX.Y])
 
 ### Lot 1b Readiness
-- Staff clearance offered (19.2): [Up to DV / Up to SC / PENDING — blocker]
+- Staff clearance offered (19.2): [Developed Vetting (DV) / Security Clearance (SC) / PENDING — blocker]
 - ISO 27018 certificate: [Held, per supplier profile / Not needed: private cloud only / Not needed: reselling and relying on the provider's accreditations / Not recorded — needed in the lot questions because the service includes public cloud]
 
 ### Questions
@@ -345,8 +350,8 @@ Report what the document contains, counted from what you wrote:
 - Lot 1b services are not in the public Digital Marketplace search, and their prices go on GCA's
   separate, non-public platform.
 - Every assertion must be evidenceable: GCA and buyers can ask for proof.
-- Buyers filter on the ticked options, so a wrong tick either hides the service or promises something
-  it can't deliver.
+- The ticked options appear on the listing, so a wrong tick either misleads buyers or promises
+  something the service can't deliver.
 - The uploaded service definition document is ODF or PDF/A, at most 5 MB, accessible, and contains no
   prices.
 - Lot 1a/1b bids are scored on the lot questions (Quality Cloud Services 40%, Maximising Buyer Value

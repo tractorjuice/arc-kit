@@ -36,7 +36,7 @@ This document holds the answers to every Lot 3 service question, ready to enter 
 
 - Tick the options that apply (`- [x]`) and leave the others unticked. A *choose one* question takes exactly one tick.
 - A question marked ↳ is asked only when its trigger answer is ticked. When it isn't, write `Not applicable` under it.
-- Option wording is GCA's own and is what buyers filter on, so never reword it.
+- Options are worded as the live G-Cloud 15 listings show them (scraped 7 October 2026), which is what buyers see. Where GCA's Digital Platform words an option differently (the question export), the platform's wording follows in a comment: tick that option when you enter the answer. Never reword an option.
 - Write anything the supplier hasn't confirmed as `[PENDING]`. `/arckit:review` treats every `[PENDING]` as blocking.
 - `<!-- GCA guidance -->` comments repeat GCA's help text and can stay in the working copy.
 - **Limits:** service name 100 characters (name only, no extra keywords); description 500 characters; features and benefits at most 10 each, 10 words each; and a word limit on each free-text answer, shown on its `**Words:**` line. GCA's export states none of those, but every live listing keeps within them; `framework-questions.md` in the overlay's `gcloud-framework` skill gives the evidence. Write the count in place of `[X]`.
@@ -135,10 +135,10 @@ This document holds the answers to every Lot 3 service question, ready to enter 
 
 **6.1 Supplier type** — Are you reselling another organisation’s services? *(choose one)*
 
-- [ ] I’m not a reseller
-- [ ] I’m a reseller providing extra features and support not available from the original supplier
-- [ ] I’m a reseller providing extra support
-- [ ] I’m a reseller not providing extra features or support
+- [ ] Not a reseller <!-- Digital Platform: “I’m not a reseller” -->
+- [ ] Reseller providing extra features and support <!-- Digital Platform: “I’m a reseller providing extra features and support not available from the original supplier” -->
+- [ ] Reseller providing extra support <!-- Digital Platform: “I’m a reseller providing extra support” -->
+- [ ] Reseller (no extras) <!-- Digital Platform: “I’m a reseller not providing extra features or support” -->
 
 **6.2 Organisation whose services are being resold** — Which organisation’s services do you resell? ↳ *Asked if 6.1 is ‘I’m a reseller providing extra features and support not available from the original supplier’, ‘I’m a reseller providing extra support’ or ‘I’m a reseller not providing extra features or support’.*
 
@@ -249,15 +249,15 @@ This document holds the answers to every Lot 3 service question, ready to enter 
 **8.1 Staff security clearance** — How do you manage staff security clearance checks? *(choose one)*
 <!-- GCA guidance: NCSC cloud security principle 6: Personnel security. -->
 
-- [ ] Staff screening performed which conforms to BS7858:2019
-- [ ] Staff screening performed but doesn’t conform with BS7858:2019
+- [ ] Conforms to BS7858:2019 <!-- Digital Platform: “Staff screening performed which conforms to BS7858:2019” -->
+- [ ] Other security clearance <!-- Digital Platform: “Staff screening performed but doesn’t conform with BS7858:2019” -->
 - [ ] Staff screening not performed
 
 **8.2 Government security clearance** — If the role requires it, what level of security clearance are you prepared to make sure your staff have? *(choose one)*
 
-- [ ] Up to Developed Vetting (DV)
-- [ ] Up to Security Clearance (SC)
-- [ ] Up to Baseline Personnel Security Standard (BPSS)
+- [ ] Developed Vetting (DV) <!-- Digital Platform: “Up to Developed Vetting (DV)” -->
+- [ ] Security Clearance (SC) <!-- Digital Platform: “Up to Security Clearance (SC)” -->
+- [ ] Baseline Personnel Security Standard (BPSS) <!-- Digital Platform: “Up to Baseline Personnel Security Standard (BPSS)” -->
 - [ ] None
 
 ---

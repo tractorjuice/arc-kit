@@ -166,10 +166,12 @@ Fill in the template:
 
 - **`**G-Cloud Lot**` line:** `Lot 3 — Cloud Support`.
 - **1.1 Service type:** `Lot 3: Cloud Support Service`.
-- **Every question:** answer each one under its number, ticking GCA's options exactly as worded. A
-  follow-up marked ↳ gets an answer only when its trigger is ticked; otherwise write
-  `Not applicable`. If `lot-3-services.md` has a question the template lacks (a customised template,
-  or a reissued export), add it in its section and say so in the summary.
+- **Every question:** answer each one under its number, ticking the template's options exactly as
+  worded: the live listings' wording, with the Digital Platform's in a comment where it differs
+  (tick that one when entering the answer). A follow-up marked ↳ gets an answer only when its
+  trigger is ticked; otherwise write `Not applicable`. If `lot-3-services.md` has a question the
+  template lacks (a customised template, or a reissued export), add it in its section and say so in
+  the summary.
 - **3.2 Service categories:** only categories from the Lot 3 tree, written as full paths, and only
   ones the service really delivers. Several leaves share a name ("Other", "Application management"),
   so the full path matters. All of them must sit under one root and one group, the first two levels
@@ -254,7 +256,8 @@ History, and append the standard ArcKit Document Control footer:
 Before writing, check:
 
 - [ ] Every question is answered, ticked, `Not applicable` or `[PENDING]`
-- [ ] Each *choose one* question has exactly one tick, and every ticked option is GCA's wording
+- [ ] Each *choose one* question has exactly one tick, and every ticked option is worded
+  exactly as the template words it
 - [ ] Every category comes from the Lot 3 tree, as a full path, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features and benefits, each ≤ 10 words

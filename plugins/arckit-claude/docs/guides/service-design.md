@@ -72,7 +72,7 @@ The design records the lot on a `**G-Cloud Lot**: Lot <code> — <name>` line. A
 | Service overview | Name (≤ 100 characters, name only), description (≤ 500 characters), lot and justification, the one category group (`Root > Group`) and first-pass categories under it, target buyers |
 | Value proposition | Problem, solution, differentiators, competitive advantages |
 | Features and benefits | ≤ 10 of each, ≤ 10 words each, with word counts |
-| Supplier type | GCA's four reseller options |
+| Supplier type | GCA's four reseller options, worded as listings show them ("Not a reseller", "Reseller (no extras)" and so on) with the Digital Platform's wording beside them |
 | Lot-specific design | 1a/1b deployment, backups, separation, energy efficiency (1b: classification and SC/DV); 2a/2b add-on, interfaces, data formats, public sector networks; 3 category group, delivery, staff security and DDaT role levels |
 | Technical architecture, support model | Data location, integrations, support channels and hours, AI chatbot |
 | Pricing approach | The lot's pricing model (1a/1b price formula, 2a/2b discount bands, Lot 3 day rates) |

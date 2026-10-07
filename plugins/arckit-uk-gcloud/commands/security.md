@@ -136,8 +136,10 @@ Also use the **Read tool** on
 `${CLAUDE_PLUGIN_ROOT}/skills/cloud-security/references/compliance-frameworks.md` for certification
 detail, evidence guidance and clearances.
 
-Answer every question with the export's own options, exactly as worded, because the listing shows
-them. Where a question says "Then: ..." it opens a follow-up only for the answers named.
+Answer every question with the options as the template words them: the live listings' wording, which
+buyers see. Where the Digital Platform words an option differently, the SDD template gives its
+wording in a comment, so the supplier ticks the right option when entering it. Where a question says
+"Then: ..." it opens a follow-up only for the answers named.
 
 **Citation traceability**: When you fetch a supplier page or a G-Cloud listing, or read any document
 the user has placed under the project's `external/`, `policies/`, or `vendors/` directories, follow
@@ -176,8 +178,8 @@ What is new or different on G-Cloud 15:
   the SDD records them. Where the lot commits to the FinOps FOCUS standard (1a/1b, 2a/2b), record the
   commitment in §4.1.
 - **Staff security**: screening to BS7858:2019 or not, and the government clearance level you're
-  prepared to provide. **Lot 1b offers only "Up to Developed Vetting (DV)" or "Up to Security
-  Clearance (SC)"**.
+  prepared to provide. **Lot 1b offers only "Developed Vetting (DV)" or "Security Clearance (SC)"**
+  (on the Digital Platform, "Up to …").
 - **Separation between users** (virtualisation) and **Devices users manage the service through** are
   asked on Lots 1a/1b only.
 - **Lot 3** asks no security sections except Staff security. Its document is short: staff security,
