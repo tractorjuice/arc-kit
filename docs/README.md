@@ -142,10 +142,16 @@ See the [full articles index](articles.html) for all ArcKit release notes, analy
 
 ### UK G-Cloud Supplier Overlay
 
+G-Cloud 15 (RM1557.15). Proprietary, Claude Code only.
+
 - [G-Cloud Supplier Profile](guides/supplier-profile.md) - `/arckit:supplier-profile`
+- [G-Cloud Social Value](guides/social-value.md) - `/arckit:social-value`
+- [G-Cloud Lot Questions](guides/lot-questions.md) - `/arckit:lot-questions`
 - [G-Cloud Service Design](guides/service-design.md) - `/arckit:service-design`
-- [G-Cloud Lot 1 Service Definition](guides/sdd-lot1.md) - `/arckit:sdd-lot1`
-- [G-Cloud Lot 2 Service Definition](guides/sdd-lot2.md) - `/arckit:sdd-lot2`
+- [G-Cloud Lot 1a Service Definition](guides/sdd-lot1a.md) - `/arckit:sdd-lot1a`
+- [G-Cloud Lot 1b Service Definition](guides/sdd-lot1b.md) - `/arckit:sdd-lot1b`
+- [G-Cloud Lot 2a Service Definition](guides/sdd-lot2a.md) - `/arckit:sdd-lot2a`
+- [G-Cloud Lot 2b Service Definition](guides/sdd-lot2b.md) - `/arckit:sdd-lot2b`
 - [G-Cloud Lot 3 Service Definition](guides/sdd-lot3.md) - `/arckit:sdd-lot3`
 - [G-Cloud Supplier Declaration](guides/declaration.md) - `/arckit:declaration`
 - [G-Cloud Pricing](guides/pricing.md) - `/arckit:pricing`

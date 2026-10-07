@@ -7,9 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`/arckit:social-value`** (`arckit-uk-gcloud`) writes the supplier's G-Cloud 15 social value commitments to `projects/000-global/supplier/ARC-000-SOCV-v1.0.md`: the declaration's social value sections A to C, the missions, policy outcomes and measures committed to (worded exactly as GCA lists them), a delivery plan for each, a named Social Value Contact and operational readiness. Social value is 10% of the score on every lot, marked pass/fail.
+- **`/arckit:lot-questions`** (`arckit-uk-gcloud`) writes the G-Cloud 15 lot questions to `projects/000-global/supplier/ARC-000-LOTQ-v1.0.md`, one Part per lot group bid for: the Lot 1a/1b conditions of participation and the five scored quality answers, each drafted within its 250-word limit and word-counted, and the Lot 2 and Lot 3 mandatory award criteria and certifications.
+- **Two doc-type codes**, `SOCV` (Social Value Commitments) and `LOTQ` (G-Cloud Lot Questions), registered in `doc-types.mjs` and `/arckit:pages`, both HIGH severity, with quality-checklist sections. The G-Cloud sections of the checklist (SUPP, DECL, SVCD, SDD, PRIC, SECA, GCMP, GCRV) now check G-Cloud 15 rules.
+
 ### Changed
 
 - **`/arckit:fr-irn` follows the IRN v1.2 grid.** The aDRI replaced the v0.4 questionnaire with `Référentiel_IRN_v1.2.xlsx`, and the way the grid is filled changed with it. The assessment is now built around the digital assets in scope instead of five organisational layers: each pillar lists its criteria by ID, with the criterion's scope (organisation or asset) and a maturity level to report from the official grid, where the old scaffold had R/NR cells per layer. The summary matrix is pillars by asset, and the document no longer promises a 0–100 score the workbook does not compute. RES-7 and RES-8 carry their v1.2 names. The command, template, guide and quality checklist are updated; criterion text is still not reproduced (CC BY-NC-ND).
+
+- **The `arckit-uk-gcloud` overlay now writes G-Cloud 15 bids.** G-Cloud 15 (RM1557.15) went live on 6 August 2026 under the Procurement Act 2023, run by the Government Commercial Agency (GCA, formerly Crown Commercial Service), and the Digital Marketplace now lists only G-Cloud 15 services. The overlay was a port of G-Cloud Kit's G-Cloud 14 commands; it now carries G-Cloud Kit's G-Cloud 15 rewrite (v0.8.0), adapted to ArcKit's projects and document IDs. G-Cloud 14 is no longer supported. Every question, limit, scoring rule and pricing rule comes from GCA's question export and tender documents.
+  - **Five lots instead of three.** `/arckit:service-design` chooses between Lots 1a (IaaS and PaaS), 1b (above OFFICIAL), 2a (iSaaS), 2b (SaaS) and 3 (Cloud Support), records the lot on the service design, and names the matching SDD command.
+  - **One SDD command per lot.** `/arckit:sdd-lot1` is replaced by `/arckit:sdd-lot1a` and `/arckit:sdd-lot1b`, and `/arckit:sdd-lot2` by `/arckit:sdd-lot2a` and `/arckit:sdd-lot2b`; `/arckit:sdd-lot3` is rewritten. Lots that ask the same service questions share a template (1a/1b, 2a/2b), and each template is rebuilt from GCA's question export, section by section.
+  - **Lot 3 is priced on the DDaT rate card**: a maximum UK and offshore day rate for each job family, role and role level offered, in place of the SFIA rate card. The service sections G-Cloud 15 dropped from Lot 3 are gone.
+  - **`/arckit:pricing` follows each lot's rules and scoring**: the 1a/1b price formula with its onboarding table and minimum discount, the 2a/2b discount bands (scored on their total), and Lot 3's average day rate. Price on application, "from £x" and unexplained ranges are flagged; the G-Cloud 14 minimum/maximum price, unit and interval fields are gone.
+  - **`/arckit:declaration` follows the Procurement Act 2023**: Central Digital Platform registration and PPON, exclusion grounds declared on the CDP, connected and associated persons, the debarment list, payments in contracts over £5m a year, modern slavery, and the question about third-party agents or bid writers, which the command shows but never answers for you. It also fixes the G-Cloud 14 declaration's exclusion grounds, which listed tax evasion as mandatory and only 7 of the discretionary grounds.
+  - **Security and certifications by lot** in `/arckit:security`: Cyber Essentials Plus and ISO 9001, 20000-1 and 27001 for Lots 1a/1b; Cyber Essentials for 2a, 2b and 3; the new post-quantum cryptography, Software Security Code of Practice, AI chatbot and FOCUS questions. NCSC principles 3 and 13 use their current names.
+  - **`/arckit:review`, `/arckit:submission-pack`, `/arckit:supplier-profile` and `/arckit:gcloud-competitors`** check, bundle and compare the new documents and lots, with the G-Cloud 15 limits (service name 100 characters, description 500 characters, features and benefits 10 words each).
+  - **The `sfia-skills` skill is now `ddat-rate-card`**, with GCA's Lot 3 rate card (9 job families, 58 roles, 222 role levels) and what suppliers charge for common role levels. `gcloud-framework` carries the G-Cloud 15 question references by lot, the declaration, the social value model and every lot's category tree, in place of the old G-Cloud 13 question list. `cloud-security` adds the G-Cloud 15 certification requirements.
+  - The `uk-gcloud-submission` recipe builds the two new supplier-wide documents and defaults to `/arckit:sdd-lot2b`.
+
+### Removed
+
+- **`/arckit:sdd-lot1` and `/arckit:sdd-lot2`** (`arckit-uk-gcloud`). Use `/arckit:sdd-lot1a` or `/arckit:sdd-lot1b`, and `/arckit:sdd-lot2a` or `/arckit:sdd-lot2b`. Their guides are removed with them.
+- **The `sfia-skills` skill** (`arckit-uk-gcloud`), replaced by `ddat-rate-card`. G-Cloud 15 prices Lot 3 by DDaT role level; the SFIA reference stays inside the new skill for describing a team's skills, not for pricing.
 
 ## [6.17.5] — 2026-10-04
 

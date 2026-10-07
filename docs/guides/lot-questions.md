@@ -1,0 +1,87 @@
+# G-Cloud Lot Questions Guide
+
+> **Guide Origin**: Community | **ArcKit Version**: [VERSION]
+
+`/arckit:lot-questions` answers the G-Cloud 15 (RM1557.15) lot questions for each lot group the
+supplier bids for. G-Cloud 15 scores bids, and most of the quality score comes from these questions.
+They are answered once per supplier for each lot group, not per service, so they live in one
+supplier-wide document with one Part per lot group bid for.
+
+---
+
+## Command
+
+```bash
+/arckit:lot-questions [1a | 1b | 2a | 2b | 3 | all]
+```
+
+Output:
+
+```text
+projects/000-global/supplier/ARC-000-LOTQ-v1.0.md
+```
+
+Without arguments, the command asks, suggesting the lots your service designs record. A re-run for
+another lot group adds its Part and bumps the version.
+
+---
+
+## When to Use
+
+- After `/arckit:supplier-profile` and, ideally, after the service designs, SDDs and security
+  documents for the services in the lot group, which supply the evidence for the answers.
+- When a service is added to a lot group or an SDD changes, so the lot answers stay true for every
+  service.
+
+---
+
+## Inputs
+
+| Input | Purpose |
+|-------|---------|
+| Supplier profile (`SUPP`) | Certificates, clearances, Carbon Reduction Plan |
+| Service documents (`SVCD`, `SDD`, `SECA`, `PRIC`) | Evidence for the written answers and award criteria, for every service in the group |
+| Social value (`SOCV`) | Reported in the quality score tables |
+| GCA lot questions | `skills/gcloud-framework/references/g-cloud-15/lot-{1,2,3}-lot-questions.md` |
+
+---
+
+## Output Sections
+
+| Part | What it covers | Weight |
+|------|----------------|--------|
+| Part 1: Lots 1a and 1b (IaaS and PaaS) | Conditions of participation (reseller or sole control, ISO certificates including ISO 27018 where services include public cloud, Carbon Reduction Plan, Cyber Essentials Plus); two written quality questions; non-scored mandatory questions; standards | Quality Cloud Services 40%, Maximising Buyer Value 40% |
+| Part 2: Lots 2a and 2b (iSaaS and SaaS) | User support, asset protection (data location), penetration testing frequency, data sanitisation; Cyber Essentials (mandatory); other standards | 2.5% each |
+| Part 3: Lot 3 (Cloud Support) | User support, staff security clearance checks, clearance level, Cyber Essentials if a buyer requires it; Cyber Essentials (mandatory); other standards | 2.5% each |
+
+Each Part also lists the evidence used and the items requiring attention. Social value (10% on every
+lot) is handled by `/arckit:social-value`, and price by `/arckit:pricing`.
+
+---
+
+## G-Cloud 15 Notes
+
+- **Lots 1a and 1b written answers.** Each part is marked only on whether it fully addresses what it
+  asks: Quality Cloud Services has two parts worth 20% of the total score each, Maximising Buyer
+  Value three parts worth about 13.3% each. Each part is limited to 250 words (500 and 750 for the
+  two questions). The command drafts each part from your evidence with a checklist and counts the
+  words. A mark of zero on either question disqualifies the tender for Lots 1a and 1b.
+- **Lots 2a, 2b and 3 award criteria.** Each criterion is marked by the option chosen. The answer
+  covers all your services in the lot, so the command checks it against every service's SDD and flags
+  any service that disagrees.
+- **Where GCA's later documents win.** ISO 27018 is mandatory for Lots 1a and 1b whenever services
+  include public cloud, and Cyber Essentials is mandatory for call-offs under Lots 2a, 2b and 3.
+- Conditions of participation and declarations such as NCSC adherence are never answered for you;
+  anything the evidence doesn't support is `[PENDING]`.
+
+---
+
+## Related Commands
+
+- `/arckit:supplier-profile` - Must be created first; supplies certificates and clearances.
+- `/arckit:social-value` - The social value answers, worth 10% on every lot.
+- `/arckit:service-design` - Records each service's lot.
+- `/arckit:security` - Security evidence the written answers draw on.
+- `/arckit:pricing` - The price questions.
+- `/arckit:declaration` - The supplier declaration.
+- `/arckit:review` - Checks word limits and consistency before submission.
