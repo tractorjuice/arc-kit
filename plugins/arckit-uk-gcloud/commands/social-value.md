@@ -76,16 +76,17 @@ cited.
 Use the **Read tool** on:
 
 - `${CLAUDE_PLUGIN_ROOT}/skills/gcloud-framework/references/g-cloud-15/social-value-model.md` —
-  every mission, policy outcome and measure, worded exactly as the declaration's checkboxes.
+  every mission, policy outcome and measure, worded as the live listings show them, which is what
+  buyers see. It is built from the 42,893 listings scraped on 7 October 2026.
 - The declaration's social value questions in
   `${CLAUDE_PLUGIN_ROOT}/skills/gcloud-framework/references/g-cloud-15/declaration.md` — only the
-  sections from `### Social Value: Section A` to `### Social Value: Section B`, and from
-  `### Social Value: Section C` to `### Visibility of third party agents or bid writers` (Section B's
-  checkbox list is in the model above):
+  sections from `### Social Value: Section A` to `### Social Value: Section C` (Section B's row holds
+  every checkbox in the question export's full wording, which the Digital Platform shows), and from
+  `### Social Value: Section C` to `### Visibility of third party agents or bid writers`:
 
 ```bash
 REF="${CLAUDE_PLUGIN_ROOT}/skills/gcloud-framework/references/g-cloud-15/declaration.md"
-sed -n '/^### Social Value: Section A/,/^### Social Value: Section B/p' "$REF"
+sed -n '/^### Social Value: Section A/,/^### Social Value: Section C/p' "$REF"
 sed -n '/^### Social Value: Section C/,/^### Visibility of third party/p' "$REF"
 ```
 
@@ -185,8 +186,18 @@ with the numbers they commit to.
 - At least one measure in total is required.
 - Some measures appear under two outcomes with the same wording (for example "Support for educational
   attainment…" under Outcomes 1 and 2). Record the one the user chose, under its outcome.
-- Copy each measure exactly as written in the reference. Never shorten or reword it: the declaration
-  checkbox and the listing use that text.
+- Copy each measure exactly as `social-value-model.md` writes it: that is the wording the listing
+  shows buyers. Never shorten or reword it.
+- **The checkbox you tick on the Digital Platform can be longer.** The model is built from the live
+  listings, and GCA's question export (Section B in `declaration.md`) words 59 of its 76 measures
+  the same way. For the other 17, the checkbox adds illustrative examples or a trailing clause that
+  listings cut off, and one Outcome 6 checkbox ("Collection of the views and expertise of disabled
+  people…") adds a whole second measure. Match each chosen measure to its checkbox by its opening
+  words, and tell the user which checkboxes carry extra text.
+- Three checkboxes share one listing text, "Advertising, promotional and outreach activities
+  designed to raise awareness of the offer to reach the target cohort", under Outcomes 6, 7 and 8;
+  record the outcome the user means. Three export checkboxes under Outcome 4 ("Illustrative examples
+  include:", "Illustrative examples:") are fragments, not measures: never offer them.
 
 ### 7. Evidence and a delivery plan for each measure
 

@@ -1664,7 +1664,7 @@ All artifacts must pass these 10 checks:
 ### SOCV -- Social Value Commitments
 
 - Section A's five understanding questions each answered by the supplier, or `[PENDING]`; any "No" flagged as making the bid non-compliant
-- At least one Model Award Criteria measure selected, each worded exactly as GCA's social value model and listings give it, grouped by mission and policy outcome (outcomes 1–4 and 6–8; outcome 5 is not used)
+- At least one Model Award Criteria measure selected, each worded exactly as the social value model gives it (the live listings' wording, which buyers see), grouped by mission and policy outcome (outcomes 1–4 and 6–8; outcome 5 is not used); where GCA's checkbox is longer, the measure matched to the checkbox with the same opening words, and none of the Outcome 4 export fragments ("Illustrative examples include:") offered as a measure
 - A delivery plan for every selected measure: evidence today, what will be delivered on a call-off, how it is measured, owner and status
 - A named Social Value Contact (name, job title, email) committed in Section C
 - The six operational readiness questions each answered by the supplier, or `[PENDING]`; any "No" flagged as disqualifying

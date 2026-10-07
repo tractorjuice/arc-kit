@@ -40,7 +40,7 @@ projects/000-global/supplier/ARC-000-SOCV-v1.0.md
 |-------|---------|
 | Supplier profile (`SUPP`) | Social value evidence and the Social Value Contact |
 | Optional URL | Social value, ESG, careers or sustainability pages read for evidence |
-| Social value model | `skills/gcloud-framework/references/g-cloud-15/social-value-model.md`: every mission, policy outcome and measure, worded as the declaration's checkboxes |
+| Social value model | `skills/gcloud-framework/references/g-cloud-15/social-value-model.md`: every mission, policy outcome and measure, worded as the live listings show them. The declaration's Section B checkboxes, in the question export's wording, are longer for 17 of the 76 measures |
 
 ---
 
@@ -54,8 +54,11 @@ projects/000-global/supplier/ARC-000-SOCV-v1.0.md
 | Operational Readiness | A commitment to report, and five organisational processes | Any answer is "No" |
 
 Commitments are grouped Mission → Policy Outcome → measure, as listings show them, and each measure
-is copied word for word. Each delivery plan records the evidence today, what you will deliver on a
-call-off, how it is measured, the owner and the status.
+is copied word for word from the social value model, which is built from the live listings. GCA's
+checkbox on the Digital Platform is longer for 17 of the 76 measures (it adds illustrative examples
+or a trailing clause), so the command tells you which checkbox to tick by its opening words. Each
+delivery plan records the evidence today, what you will deliver on a call-off, how it is measured,
+the owner and the status.
 
 ---
 
