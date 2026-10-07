@@ -86,6 +86,8 @@ resolved project directory; the supplier-wide documents live under `projects/000
   the Part for this service's lot group matters here: Part 1 (Lots 1a/1b), Part 2 (Lots 2a/2b) or
   Part 3 (Lot 3)
 - Supplier declaration — `projects/000-global/supplier/ARC-000-DECL-v*.md` (`/arckit-uk-gcloud:declaration`)
+- **Lot 3 only:** the supplier's one rate card, shared by every Lot 3 service —
+  `projects/000-global/supplier/ARC-000-RATE-v*.md` (`/arckit-uk-gcloud:pricing`)
 
 Review whatever exists. Don't stop because a document is missing. For each document, record whether
 it **exists** and its highest version. A missing document — or a LOTQ document without the Part for
@@ -96,6 +98,120 @@ line. It must be `1a`, `1b`, `2a`, `2b` or `3`. A service design from the previo
 "1.3 Target Lot" checkbox with Lot 1 Cloud Hosting / Lot 2 Cloud Software / Lot 3 Cloud Support), or
 no lot at all, is a blocking finding: re-run `/arckit-uk-gcloud:service-design` to choose a G-Cloud 15 lot.
 Without a valid lot, the lot-specific checks below cannot run.
+
+**Find every unfinished answer** in the documents under review with the overlay's placeholder scan.
+It is the one definition of unfinished that `/arckit-uk-gcloud:review` and `/arckit-uk-gcloud:submission-pack` share:
+`[PENDING]` in every form the commands write (`[PENDING: …]`, `[PENDING — …]`), the markers older or
+hand-edited documents use (`[TODO]`, `[TBD]`, `[TBC]`, `[CONFIRM]`, `[TO BE CONFIRMED]`,
+`*[TO BE ADDED]*`, `[INSERT …]` and the like), and template fields never filled in (`[ANSWER]`,
+`[SERVICE_NAME]`, `[X]`), which it learns from the overlay's templates. It skips code spans, links,
+ticks, HTML comments, fenced code, the Revision History and the Document Control **Reviewed By** and
+**Approved By** rows, which stay `[PENDING]` until the document is approved and are not bid answers:
+
+```bash
+PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
+LOT="{lot}"             # this service's lot: 1a, 1b, 2a, 2b or 3
+latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
+# placeholder scan: keep identical in review.md and submission-pack.md
+{
+    find "${CLAUDE_PLUGIN_ROOT}/templates" .arckit/templates-custom -maxdepth 1 -name '*-template.md' 2>/dev/null
+    echo phase=2
+    for t in SUPP SOCV LOTQ DECL; do latest projects/000-global/supplier "ARC-000-$t-v*.md"; done
+    [ "$LOT" = 3 ] && latest projects/000-global/supplier 'ARC-000-RATE-v*.md'
+    for t in SVCD SDD PRIC SECA; do latest "$PROJECT_PATH" "ARC-*-$t-v*.md"; done
+} | tr '\n' '\0' | xargs -0 awk '
+    FNR == 1 { inc = 0; fence = 0; sect = "" }
+    phase != 2 {
+        s = $0
+        while (match(s, /\[[^][]*\]/)) {
+            tok = substr(s, RSTART, RLENGTH); s = substr(s, RSTART + RLENGTH)
+            if (substr(s, 1, 1) != "(" && tok != "[ ]" && tok != "[x]" && tok !~ /-C[0-9]+\]$/) field[tok] = 1
+        }
+        next
+    }
+    /^```/ { fence = !fence; next }
+    fence { next }
+    {
+        s = $0; t = ""
+        while (s != "") {
+            if (inc) { p = index(s, "-->"); if (!p) s = ""; else { s = substr(s, p + 3); inc = 0 } }
+            else { p = index(s, "<!--"); if (!p) { t = t s; s = "" } else { t = t substr(s, 1, p - 1); s = substr(s, p + 4); inc = 1 } }
+        }
+        gsub(/`[^`]*\[[^`]*`/, "", t)
+    }
+    /^## / { sect = $0 }
+    sect ~ /Revision History/ || $0 ~ /^\| *\*\*(Reviewed By|Approved By)\*\* *\|/ { next }
+    {
+        while (match(t, /\[[^][]*\]/)) {
+            tok = substr(t, RSTART, RLENGTH); txt = substr(tok, 2, RLENGTH - 2)
+            pre = substr(t, 1, RSTART - 1); t = substr(t, RSTART + RLENGTH)
+            if (substr(t, 1, 1) == "(") continue
+            k = ""
+            if (txt ~ /^(PENDING|TODO|TBD|TBC|CONFIRM|TO BE [A-Z]+|PLACEHOLDER|INSERT|ENTER|YOUR|CHANGE THIS|UPDATE|REQUIRED)([^A-Za-z0-9].*)?$/) k = "pending"
+            else if ((tok in field) || txt ~ /^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$/) {
+                if (txt ~ /^[Xx]$/ && (pre ~ /^[ \t]*([-*+]|[0-9]+\.)[ \t]*$/ || (pre ~ /\|[ \t]*$/ && t ~ /^[ \t]*\|/))) continue
+                k = "template"
+            }
+            if (k != "") { printf "%s:%d: %s %s\n", FILENAME, FNR, k, tok; n++ }
+        }
+    }
+    END { printf "placeholders: %d\n", n + 0 }'
+```
+
+It prints one line per placeholder, `file:line: kind [TEXT]`, then the total. Every line, `pending`
+or `template`, is a blocking finding (section 3e): report each with its `ARC-` ID, line and what the
+supplier must supply.
+
+**Find documents left over from the previous framework.** A document that exists isn't necessarily a
+G-Cloud 15 document: a security document or supplier profile left over from G-Cloud 14 passes every
+existence check. The overlay's previous-framework check recognises one by its structure, not by a
+passing mention, so a G-Cloud 15 document that explains what changed isn't reported. The markers: a
+title or opening quote naming an earlier G-Cloud as its framework, a Framework row or an agreement
+number from an earlier G-Cloud (RM1557.14 or below), a lot from the three-lot framework (`Lot 1`,
+`Lot 2`, Cloud Hosting, Cloud Software) or a "1.3 Target Lot" checkbox, an SFIA rate card, the old
+minimum or maximum price, pricing unit and billing interval fields, a supplier profile with no
+Central Digital Platform or PPON section, or a Public Contracts Regulations declaration.
+
+```bash
+PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
+LOT="{lot}"             # this service's lot: 1a, 1b, 2a, 2b or 3
+latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
+# previous-framework check: keep identical in review.md and submission-pack.md
+{
+    for t in SUPP SOCV LOTQ DECL; do latest projects/000-global/supplier "ARC-000-$t-v*.md"; done
+    [ "$LOT" = 3 ] && latest projects/000-global/supplier 'ARC-000-RATE-v*.md'
+    for t in SVCD SDD PRIC SECA; do latest "$PROJECT_PATH" "ARC-*-$t-v*.md"; done
+} | tr '\n' '\0' | xargs -0 awk '
+    function flush(   i) {
+        if (prev == "") return
+        if (prev ~ /-SUPP-v[^\/]*\.md$/ && !cdp) r[++nr] = "no Central Digital Platform or PPON section, which every G-Cloud 15 bid needs"
+        if (prev ~ /-DECL-v[^\/]*\.md$/ && pcr && !pa) r[++nr] = "a Public Contracts Regulations declaration; G-Cloud 15 runs under the Procurement Act 2023"
+        if (nr) { found++; printf "%s: written for the previous framework\n", prev; for (i = 1; i <= nr && i <= 5; i++) printf "    %s\n", r[i] }
+    }
+    FNR == 1 { flush(); prev = FILENAME; nr = 0; cdp = 0; pa = 0; pcr = 0 }
+    {
+        l = tolower($0)
+        if (l ~ /ppon|central digital platform/) cdp = 1
+        if (l ~ /procurement act 2023/) pa = 1
+        if (l ~ /public contracts regulations|pcr ?2015/) pcr = 1
+        if (FNR <= 60 && l ~ /^(#+|>)[ \t]/ && l ~ /g-cloud ?(1[0-4]|[1-9])([^0-9]|$)/ && l !~ /g-cloud ?15/) r[++nr] = "line " FNR ": its title names an earlier framework"
+        if (l ~ /^\| *\**framework\** *\|/ && l ~ /g-cloud ?(1[0-4]|[1-9])([^0-9]|$)|rm1557\.(1[0-4]|[1-9])([^0-9]|$)/) r[++nr] = "line " FNR ": its Framework row names an earlier framework"
+        else if (l ~ /rm1557\.(1[0-4]|[1-9])([^0-9]|$)/) r[++nr] = "line " FNR ": names an earlier agreement"
+        v = ""
+        if (l ~ /^\*\*g-cloud lot\*\*:/) { v = l; sub(/^\*\*g-cloud lot\*\*:[ \t]*/, "", v) }
+        else if (l ~ /^\| *\**(target )?lot\** *\|/) { v = l; sub(/^\| *\**(target )?lot\** *\|[ \t]*/, "", v); sub(/\|.*/, "", v) }
+        if (v ~ /^(lot ?)?[12]([^0-9ab]|$)|cloud hosting|cloud software/) r[++nr] = "line " FNR ": a lot from the previous three-lot framework"
+        if (l ~ /1\.3 target lot/) r[++nr] = "line " FNR ": a Target Lot checkbox from the previous framework"
+        if ((l ~ /^#+ / && l ~ /sfia/ && l ~ /rate|pric|card/) || l ~ /^\|.*sfia.*\|.*(rate|£|price)/) r[++nr] = "line " FNR ": an SFIA rate card (G-Cloud 15 prices Lot 3 on the DDaT rate card)"
+        if (l ~ /^\| *\**(minimum price|maximum price|pricing unit|billing interval)\** *\|/) r[++nr] = "line " FNR ": a pricing field G-Cloud 15 no longer has"
+    }
+    END { flush(); printf "previous-framework documents: %d\n", found + 0 }'
+```
+
+Every document it reports is a **blocking** finding, even if it has no placeholders: name its `ARC-`
+ID, the markers found and the command that regenerates it (`/arckit-uk-gcloud:supplier-profile`,
+`/arckit-uk-gcloud:declaration`, `/arckit-uk-gcloud:service-design`, the lot's SDD command, `/arckit-uk-gcloud:pricing` or
+`/arckit-uk-gcloud:security`).
 
 **Read the framework reference.** Use the **Read tool** on:
 
@@ -137,7 +253,9 @@ the relevant `ARC-` document ID so the user can locate it.
 
 **Document existence** (reference each by its ARC-ID):
 
-- [ ] Supplier profile — `ARC-000-SUPP`
+- [ ] Supplier profile — `ARC-000-SUPP`, with a Central Digital Platform and PPON section
+- [ ] No document written for the previous framework (the previous-framework check in Step 2
+  reports none)
 - [ ] Social value commitments — `ARC-000-SOCV`
 - [ ] Lot questions — `ARC-000-LOTQ`, with the Part for this service's lot group
 - [ ] Supplier declaration — `ARC-000-DECL`
@@ -145,6 +263,7 @@ the relevant `ARC-` document ID so the user can locate it.
 - [ ] Service Definition Document — `ARC-{PROJECT_ID}-SDD`
 - [ ] Pricing — `ARC-{PROJECT_ID}-PRIC`
 - [ ] Security evidence — `ARC-{PROJECT_ID}-SECA`
+- [ ] Lot 3 only: the supplier rate card — `ARC-000-RATE`
 
 **Lot:**
 
@@ -155,6 +274,11 @@ the relevant `ARC-` document ID so the user can locate it.
 - [ ] Service categories come from the lot's category roots: 1a/1b IaaS, PaaS; 2a Systems
   Infrastructure Software, Application Development and Deployment; 2b Applications, Application
   Development and Deployment; 3 Cloud Support Services
+- [ ] Every category sits under **one root and one group**: the first two levels of each full path
+  (`Root > Group`) are the same, and match the SDD's **Category group** line. None of the 42,893
+  live G-Cloud 15 listings scraped on 7 October 2026 has categories in two groups. A service whose
+  categories span groups is a blocking finding: choose the group for this listing and design the
+  others as separate services with `/arckit-uk-gcloud:service-design`
 
 **SDD mandatory fields** (`ARC-{PROJECT_ID}-SDD`): every question in the lot's
 `g-cloud-15/lot-{LOT}-services.md` has an answer. In particular:
@@ -178,9 +302,11 @@ the relevant `ARC-` document ID so the user can locate it.
 - [ ] **2a/2b:** unit prices in the pricing document, and a discount % for each of the six annual
   call-off value bands (under £250,000; £250,000–£500,000; £500,001–£1m; £1,000,001–£2.5m;
   £2,500,001–£5m; over £5m)
-- [ ] **3:** a DDaT rate card: a maximum UK day rate (and offshore, if offered) for every role level
-  offered, each role and level present in `lot-3-rate-card.md`, every rate at least £50, for a
-  7.5-hour day with travel and subsistence inside the M25 included
+- [ ] **3:** the supplier's one DDaT rate card, `ARC-000-RATE` (not a card per service): a maximum
+  UK day rate (and offshore, if offered) for every role level offered, each role and level present
+  in `lot-3-rate-card.md`, every rate at least £50, for a 7.5-hour day with travel and subsistence
+  inside the M25 included. Every role level the SDD's section 11 says delivers this service is on
+  the card, and the SDD holds no rates of its own
 - [ ] Education pricing addressed; free trial addressed (1a/1b, 2a/2b)
 - [ ] Prices in GBP; no forbidden pricing: no "price on application" or POA, no "from £x", no
   unexplained ranges
@@ -231,12 +357,14 @@ full 10%.
   in all); no attachments
 - [ ] **1a/1b, non-scored mandatory:** NCSC guidance, sanctions policies and controls, customer
   contractual exit procedure (≤ 250 words), engaging customers in a change of service (≤ 250 words)
-- [ ] **1a/1b, certification conditions:** Cyber Essentials Plus (mandatory) awarded in the last 12
-  months with its certificate number (or working towards it by framework award, or an IASME-certified
-  equivalent); ISO 9001, ISO 27001 and ISO 20000-1; ISO 27018 if the service includes public cloud
-  (Lots 1a and 1b; not needed for private cloud only); ISO 14001 and 27017 where the reseller answers
-  require them; a Carbon Reduction Plan with its emissions figures
-- [ ] **2a/2b and 3:** Cyber Essentials, which is mandatory for call-offs on these lots
+- [ ] **1a/1b, certification conditions:** ISO 9001, ISO 27001 and ISO 20000-1; ISO 27018 if the
+  service includes public cloud (Lots 1a and 1b; not needed for private cloud only); ISO 14001 and
+  27017 where the reseller answers require them; a Carbon Reduction Plan with its emissions figures
+- [ ] **Cyber Essentials:** Cyber Essentials Plus (1a/1b) or Cyber Essentials (2a/2b, 3) with its
+  certificate number, or the alternative chosen in the option's exact wording. Both are mandatory
+  for call-off contracts (Framework Schedule 1 v2.1) but not for the bid: 769 Lot 2b and 1,977 Lot 3
+  listings are live with "Cyber essentials: No" and "None of the criteria". A missing certificate is
+  a **call-off warning** (Should Fix), not a blocking finding
 - [ ] **2a/2b, mandatory award criteria:** user support (and when it is available), where user data
   is stored and processed, penetration testing frequency, an industry-standard data sanitisation
   process
@@ -246,8 +374,9 @@ full 10%.
 - [ ] Every certification answered is held and in date; a Technical Ability Certificate is ready (all
   lots)
 
-**Declaration** (`ARC-000-DECL`): every declaration question answered by the supplier (none
-`[PENDING]`), and the third-party agents or bid writers question decided by the supplier.
+**Declaration** (`ARC-000-DECL`): every declaration question answered by the supplier (the
+placeholder scan reports none in it), and the third-party agents or bid writers question decided by
+the supplier.
 
 #### 3b. Consistency checks
 
@@ -262,9 +391,26 @@ Cross-reference documents for contradictions:
   availability matches the SDD; 2a/2b: data storage and processing locations and penetration testing
   frequency match the SDD and SECA; 3: staff screening and clearance level match the SDD's staff
   security answers; 1a/1b: reseller or sole control matches the SDD
-- **`ARC-{PROJECT_ID}-SDD` ↔ `ARC-{PROJECT_ID}-PRIC`** — pricing model follows the lot's pricing
-  rules, included features and support levels align; 1a/1b: onboarding costs and framework discount
-  match any figures in Part 1 of `ARC-000-LOTQ`
+- **`ARC-{PROJECT_ID}-SDD` ↔ `ARC-{PROJECT_ID}-PRIC`** (the checks `/arckit-uk-gcloud:pricing` relies on
+  review for) — pricing model follows the lot's pricing rules; included features match; support
+  levels align, including any support level costs the SDD gives:
+  - **Education discount:** the SDD's "Discount for educational organisations" answer (Yes or No) is
+    the same as PRIC §5.1, and a "Yes" says in the pricing document what the discount is and who
+    qualifies
+  - **Free trial** (1a/1b, 2a/2b): the SDD's "Free trial available" answer is the same as PRIC §5.2;
+    if Yes, the description (at most 50 words) and the link match, and the link works
+  - **1a/1b:** the deployment models priced in PRIC §2.1 are exactly those ticked in the SDD's
+    "Cloud deployment model"; onboarding costs and framework discount match any figures in Part 1 of
+    `ARC-000-LOTQ`
+  - **2a/2b:** the SDD holds no unit prices or discounts; PRIC §3 has them
+  - **Lot 3 rate card:** every role level in the SDD's section 11 is on `ARC-000-RATE`; the SDD
+    copies no rates; PRIC §4 names the card's current version and its average day rate matches the
+    card's
+  - **Lot-wide figures** (1a/1b onboarding table and minimum discount, 2a/2b discount matrix) are
+    the same in this PRIC as in the supplier's other services in the same lot
+
+  Report each mismatch as a consistency issue naming both `ARC-` IDs and which one to change (the
+  SDD for listing answers, the PRIC or the rate card for prices).
 - **`ARC-{PROJECT_ID}-SDD` ↔ `ARC-{PROJECT_ID}-SECA`** — certifications, security controls and
   clearances align
 - **`ARC-000-SOCV` ↔ `ARC-000-DECL`** — the declaration's social value summary gives the same
@@ -272,7 +418,42 @@ Cross-reference documents for contradictions:
 
 #### 3c. Character / word-limit validation
 
-Count and validate the limits numerically, reporting actual against limit:
+Recount every free-text answer in the SDD against the word limit on its `**Words:**` line. GCA's
+export states no limit for these answers, but every live listing keeps within 50, 100 or 200 words
+depending on the question; `framework-questions.md` tabulates them by lot with the evidence. Each
+line the count marks `OVER` is a blocking finding, and a counter that disagrees with the recount is
+a finding to correct:
+
+```bash
+SDD=$(find "{path}" -maxdepth 1 -name 'ARC-*-SDD-v*.md' 2>/dev/null | sort -V | tail -1)
+# word count: keep identical in review.md and the five sdd-lot commands
+awk '
+    FNR == 1 { if (prev != "" && !found) printf "%s: no word counters\n", prev; prev = FILENAME; found = 0; q = ""; inc = 0 }
+    inc { if (index($0, "-->")) inc = 0; next }
+    /^[ \t]*<!--/ { if (!index($0, "-->")) inc = 1; next }
+    /^\*\*[0-9]+\.[0-9]+ / { q = $0; sub(/^\*\*/, "", q); sub(/\*\*.*$/, "", q); n = 0; next }
+    /^\*\*Words:\*\*/ {
+        if (q != "") {
+            found++; s = $0; sub(/^\*\*Words:\*\*[ \t]*/, "", s)
+            split(s, a, "/"); c = a[1]; gsub(/[ \t]/, "", c); lim = a[2] + 0; note = ""
+            if (n > lim) { note = ", OVER by " (n - lim); over++ }
+            else if (c ~ /^[0-9]+$/ && c + 0 != n) note = " (the counter says " c ")"
+            printf "%s:%s: %d/%d words%s\n", FILENAME, q, n, lim, note
+        }
+        q = ""; next
+    }
+    /^(#|---)/ { q = ""; next }
+    q != "" && $0 !~ /^[ \t]*(>|```)/ { n += NF }
+    END { if (prev != "" && !found) printf "%s: no word counters\n", prev; printf "answers over their limit: %d\n", over + 0 }' "$SDD"
+```
+
+An SDD written before the counters existed has no `**Words:**` lines, and the count reports "no word
+counters" for it. Count those answers yourself against the table in `framework-questions.md`, and
+recommend re-running the SDD command so the counters appear. In `ARC-000-LOTQ`, check each "What the
+… doesn't cover" answer against its 200-word limit, and in `ARC-{PROJECT_ID}-PRIC` the free trial
+description against 50 words.
+
+Then count and validate the other limits numerically, reporting actual against limit:
 
 ```text
 Service name: [X]/100 characters
@@ -287,6 +468,9 @@ Quality Cloud Services a), b): [X]/250 words each       (1a/1b, ARC-000-LOTQ Par
 Maximising Buyer Value a), b), c): [X]/250 words each   (1a/1b, ARC-000-LOTQ Part 1)
 Customer contractual exit procedure: [X]/250 words      (1a/1b)
 Change of service: [X]/250 words                        (1a/1b)
+Free-text answers in the SDD: [N] within their limits, [N] over (the recount above)
+"What the … doesn't cover" answers: [X]/200 words each  (ARC-000-LOTQ)
+Description of free trial: [X]/50 words                 (1a/1b, 2a/2b; ARC-{PROJECT_ID}-PRIC)
 ```
 
 #### 3d. Evidence verification
@@ -312,22 +496,27 @@ These are the same reasons listed in section 8 of the review template:
 - [ ] Lot missing or not one of 1a, 1b, 2a, 2b, 3; service does not fit the lot definition
 - [ ] Social value missing or incomplete (it is pass/fail, and a fail loses the whole 10%)
 - [ ] Lot questions for the service's lot missing, unanswered or over their word limits
-- [ ] A mandatory certification not held: Cyber Essentials Plus, ISO 9001, 27001, 20000-1 and a
-  Carbon Reduction Plan for 1a/1b (plus ISO 27018 with public cloud); Cyber Essentials for 2a/2b and 3
+- [ ] A certificate the bid needs not held: ISO 9001, 27001, 20000-1 and a Carbon Reduction Plan for
+  1a/1b (plus ISO 27018 with public cloud)
+- [ ] Call-off warning, not a rejection: Cyber Essentials Plus (1a/1b) or Cyber Essentials (2a/2b,
+  3) not held. The bid can go in, but no call-off can be awarded until the certificate is held
 - [ ] A mandatory declaration question unanswered
 - [ ] A claimed certification that is not held or has expired
-- [ ] `[PENDING]` or placeholder text remaining (e.g. `[TO BE COMPLETED]`). Every `[PENDING]` value
-  in any document is a blocking finding
+- [ ] A placeholder remaining. Every line the placeholder scan in Step 2 printed, `pending` or
+  `template`, is a blocking finding: report each with its `ARC-` ID, line and what the supplier must
+  supply
 - [ ] `N/A` where an answer is actually required
 - [ ] Contradictory statements, unsubstantiated claims or marketing hyperbole
 - [ ] Competitor mentions
 - [ ] Extra keywords in the service name
 - [ ] Forbidden pricing ("price on application", "from £x", unexplained ranges), prices in the
   service definition document, or pricing not in GBP
-- [ ] Lot 3: rate card missing, or a rate below £50
+- [ ] Lot 3: the supplier rate card (`ARC-000-RATE`) missing, a rate below £50, or a role level
+  this service needs not on it
 - [ ] Documents not planned as ODF or PDF/A, at most 5 MB and accessible; more than one terms and
   conditions document per service
-- [ ] Invalid URLs or contact details
+- [ ] Invalid URLs or contact details: the listing contact (name, email and phone, which every live
+  listing shows) is in the supplier profile's Listing Contact and the SDD's G-Cloud Details
 
 ### 4. Determine the output filename
 
@@ -409,9 +598,10 @@ Report what the review actually found:
 | SDD | ARC-[PROJECT_ID]-SDD | [✅/🟡/❌] |
 | Pricing | ARC-[PROJECT_ID]-PRIC | [✅/🟡/❌] |
 | Security | ARC-[PROJECT_ID]-SECA | [✅/🟡/❌] |
+| Lot 3 Rate Card (Lot 3 only) | ARC-000-RATE | [✅/🟡/❌ / Not this lot] |
 
 ### Counts
-- Mandatory fields complete: [X]/[Y]; incomplete (including `[PENDING]`): [X]
+- Mandatory fields complete: [X]/[Y]; unfinished answers found by the placeholder scan: [X]
 - Entries over limit: [X]
 - Consistency issues: [X]
 - Evidence missing: [X]

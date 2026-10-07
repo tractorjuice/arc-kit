@@ -38,11 +38,13 @@ Activate when users ask about:
 |-------|-------|
 | Service name | 100 characters, name only |
 | Service description | 500 characters |
+| Service categories | One root and one group (`Root > Group`) per service; split a service that spans groups |
 | Features / benefits | 10 each, 10 words each |
 | System requirements | 10 words each |
 | Quality Cloud Services (1a/1b) | 500 words (2 parts, 250 each) |
 | Maximising Buyer Value (1a/1b) | 750 words (3 parts, 250 each) |
 | Exit procedure, change of service (1a/1b) | 250 words each |
+| Other free-text answers | 50, 100 or 200 words by question (for example support levels 200, service constraints 100, free trial 50). Not in GCA's export: inferred from the live listings, tabulated by lot in `references/framework-questions.md` |
 | Documents | ODF or PDF/A, 5 MB, accessible, no pricing in the service definition |
 
 ## Quick Reference: Evaluation
@@ -53,7 +55,7 @@ Activate when users ask about:
 | 2a/2b | Social value 10%, four mandatory award criteria 10%, price 80%: the six band discounts are totalled and the highest total scores 80% |
 | 3 | Social value 10%, four mandatory award criteria 10%, price 80%: the lowest average day rate (every rate entered, UK and offshore) scores 80% |
 
-Mandatory certificates: Cyber Essentials Plus, ISO 9001, 20000-1 and 27001 for Lots 1a/1b (plus ISO 14001, 27017 and, with public cloud, 27018 unless relying on a provider's accreditations); Cyber Essentials for Lots 2a, 2b and 3.
+Mandatory certificates for the bid: ISO 9001, 20000-1 and 27001 for Lots 1a/1b (plus ISO 14001, 27017 and, with public cloud, 27018 unless relying on a provider's accreditations). Mandatory for call-off contracts, not for the bid: Cyber Essentials Plus on Lots 1a/1b and Cyber Essentials on Lots 2a, 2b and 3.
 
 ## Quick Reference: Declaration
 

@@ -141,14 +141,14 @@ If **No**:
 
 #### 1.7 Cyber Essentials Plus
 
-*Framework Schedule 1 v2.1 makes Cyber Essentials Plus a mandatory requirement for call-off contracts under Lots 1a and 1b.*
+*Framework Schedule 1 v2.1 makes Cyber Essentials Plus a mandatory requirement for call-off contracts under Lots 1a and 1b. Attachment 2 v5.0 lists it among the Lot 1a/1b standards without marking it mandatory for the tender, as it does the ISO certificates, so a missing certificate is a **call-off warning**, not a reason the bid fails. Of the 1,829 live Lot 1a listings, 105 answer "No" and every one of them chose one of the first two alternatives. The alternatives below are worded as the export and the live Lot 1a listings both word them.*
 
 **Do you have a Cyber Essentials Plus certificate?** — **In relation to the services do you have a current and valid Cyber Essentials Plus certificate which has been awarded by one of the government-approved Cyber Essentials accreditation bodies (IASME) within the most recent 12 months.**
 
 - [ ] Yes. **Cyber Essentials Plus certificate Number** (format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`): [NUMBER]
 - [ ] No. **Alternative** (please select an option):
-  - [ ] Working towards it, and will be able to confirm a current and valid Cyber Essentials Plus certificate from a government-approved accreditation body by the date of framework award
-  - [ ] No current and valid Cyber Essentials Plus certificate, and won't have one by framework award, but an IASME certified equivalent
+  - [ ] In relation to the services you do not have a current and valid Cyber Essentials Plus certificate which has been awarded by one of the government approved Cyber Essentials accreditation bodies but you are working towards gaining it, and will be in a position to confirm that you have been awarded a current and valid Cyber Essentials Plus certificate by one of the government approved accreditation bodies, by the date of framework award.
+  - [ ] You do not have a current and valid Cyber Essentials Plus certificate, or will not have in place by the date of framework award but have an IASME certified equivalent.
   - [ ] None of the criteria
 
 **Answer:** [ANSWER] **Award date:** [DATE] **Source:** [SOURCE]
@@ -324,11 +324,11 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | **CSA STAR certification** — Do you have a current CSA Security, Trust & Assurance Registry (STAR) certification that covers the security of your services? | Yes / No / [PENDING] | [SOURCE] |
 | **CSA STAR accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
 | **CSA STAR certification level** — What level is the certification? | Level 1: CSA STAR Self-Assessment / Level 2: CSA STAR Attestation | |
-| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? | [TEXT] | |
+| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? *(at most 200 words)* | [TEXT] | |
 | **PCI certification** — Do you have a current Payment Card Industry Data Security Standard (PCI DSS) certification? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the PCI DSS certification** — Who accredited you? | [BODY] | |
 | **PCI DSS accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? | [TEXT] | |
+| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? *(at most 200 words)* | [TEXT] | |
 | **Other security certifications** — Do you have any other security certifications that cover this service? | Yes / No / [PENDING] | [SOURCE] |
 | **Any other security certifications** — What other security certifications do you have? | [LIST] | |
 
@@ -357,9 +357,9 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Penetration testing | 2.5% | 100/66/33/0 |
 | Data sanitisation | 2.5% | 100/0 |
 | Price | 80% | Price assessment (each service's PRIC document (`/arckit-uk-gcloud:pricing`)) |
-| Cyber Essentials | — | Mandatory for call-off contracts (Section 2) |
+| Cyber Essentials | — | Mandatory for call-off contracts, not for the bid (Section 2) |
 
-*Attachment 2 disqualifies a tender with a mark of zero on any scored quality question, so a "No" to any criterion below fails the bid. These answers cover all your Lot 2a and 2b services, and must agree with the User Support and Asset Protection answers on each listing.*
+*Attachment 2d v4.0 and Attachment 2 v5.0 disqualify a tender that marks under 33 on all four criteria below. A single "No" scores 0 and loses its 2.5% without disqualifying on its own (Attachment 2's general paragraph says a zero on any scored question disqualifies, but the lot-specific rule is the one both documents repeat). Avoid any zero. These answers cover all your Lot 2a and 2b services, and must agree with the User Support and Asset Protection answers on each listing.*
 
 ### 1. Mandatory Award Criteria
 
@@ -418,7 +418,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 
 #### 1.4 How You Will Provide Data Sanitisation
 
-**Do you have an industry standard data sanitisation process?** — Do you have an industry standard data sanitisation process, such as explicit overwriting of storage before reallocation / Secure Erase, degaussing, or physical destruction / hardware containing data is completely destroyed?**
+**Do you have an industry standard data sanitisation process?** — Do you have an industry standard data sanitisation process, such as explicit overwriting of storage before reallocation / Secure Erase, degaussing, or physical destruction / hardware containing data is completely destroyed?
 
 | Option | Mark | Selected |
 |--------|------|----------|
@@ -440,20 +440,32 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Data sanitisation | [ANSWER] | [MARK] | [MARK × 2.5%] |
 | **Quality score** | | | **[N]% of a possible 20%** |
 
-### 2. Cyber Essentials (Mandatory)
+### 2. Cyber Essentials (Mandatory for Call-Offs)
 
-*The export lists Cyber Essentials among its "Non-mandatory Standards and certifications", but GCA's Updates to Tender Documents and Framework Schedule 1 v2.1 make Cyber Essentials certification **a mandatory requirement for call-off contracts under Lots 2a and 2b**. Hold it, or be working towards it with a certificate by framework award. Cyber Essentials Plus is optional here.*
+*The export lists Cyber Essentials among its "Non-mandatory Standards and certifications". GCA's Updates to Tender Documents and Framework Schedule 1 v2.1 make Cyber Essentials certification **a mandatory requirement for call-off contracts under Lots 2a and 2b**, not a condition of the bid. Attachment 2 v5.0 lists no mandatory certificate for Lots 2a, 2b and 3, and Framework Schedule 1 v2.1 makes Cyber Essentials mandatory for call-off contracts. The live listings scraped on 7 October 2026 confirm it doesn't fail the bid: 769 Lot 2b and 1,977 Lot 3 listings show "Cyber essentials: No" with "None of the criteria". Cyber Essentials Plus is optional here.*
 
 | Question | Answer | Source |
 |----------|--------|--------|
 | **Cyber essentials** — Do you have a current Cyber Essentials certification? | Yes / No / [PENDING] | [SOURCE] |
 | Please provide your Cyber Essentials Certificate Number *(if "Yes"; format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`)* | [NUMBER] | |
-| **Cyber Essentials Alternative** — Please select an option below *(if "No")* | Working towards it, certified by a government-approved accreditation body by the date of framework award / An IASME certified equivalent / None of the criteria | |
 | **Cyber essentials plus** — Do you have a current Cyber Essentials Plus certification? | Yes / No / [PENDING] | [SOURCE] |
 | Please provide your Cyber Essentials Plus Certificate Number *(if "Yes")* | [NUMBER] | |
-| **Cyber Essentials Alternative** — Please select an option below *(if "No")* | Working towards it, certified by framework award / An IASME certified equivalent / None of the criteria | |
 
-*For Cyber Essentials, "None of the criteria" does not meet the mandatory requirement.*
+**Cyber Essentials Alternative** — Please select an option below *(if Cyber essentials is "No")*:
+
+- [ ] In relation to the services you do not have a current and valid Cyber Essentials certificate which has been awarded by one of the government approved Cyber Essentials accreditation bodies but you are working towards gaining it, and will be in a position to confirm that you have been awarded a current and valid Cyber Essentials certificate by one of the government approved accreditation bodies within 12 months of the date of award.
+- [ ] You do not have a current and valid Cyber Essentials certificate, or will not have in place within 12 months of the date of award but have an IASME certified equivalent.
+- [ ] None of the criteria
+
+**Cyber Essentials Alternative** — Please select an option below *(if Cyber essentials plus is "No")*:
+
+- [ ] In relation to the services you do not have a current and valid Cyber Essentials Plus certificate which has been awarded by one of the government approved Cyber Essentials accreditation bodies but you are working towards gaining it, and will be in a position to confirm that you have been awarded a current and valid Cyber Essentials Plus certificate by one of the government approved accreditation bodies within 12 months of the date of award.
+- [ ] You do not have a current and valid Cyber Essentials Plus certificate, or will not have in place within 12 months of the date of award but have an IASME certified equivalent.
+- [ ] None of the criteria
+
+*Options are worded as the live Lot 2a and 2b listings show them. GCA's question export words the first two "by the date of framework award"; the listings say "within 12 months of the date of award". Tick the option on the Digital Platform that means the same.*
+
+*A missing Cyber Essentials certificate, even with "None of the criteria", doesn't fail the bid, but it is a **call-off warning**: you can't be awarded a call-off contract under this lot until you hold one.*
 
 ### 3. Non-mandatory Standards and Certifications
 
@@ -462,7 +474,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | **ISO/IEC 27001 certification** — Do you have a current ISO/IEC 27001 certification (2013 or 2022) that covers the security of your service? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO/IEC 27001** — Who accredited the ISO/IEC 27001 certification? | [BODY] | |
 | **ISO/IEC 27001 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the ISO/IEC 27001 doesn't cover** — What is not covered by your ISO/IEC 27001 certification? | [TEXT] | |
+| **What the ISO/IEC 27001 doesn't cover** — What is not covered by your ISO/IEC 27001 certification? *(at most 200 words)* | [TEXT] | |
 | **ISO 28000:2022 certification** — Do you have a current ISO 28000:2022 certification that covers the security of your supply chain? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO 28000:2022** — Who accredited the ISO 28000:2022 certification? | [BODY] | |
 | **ISO 28000:2022 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
@@ -470,16 +482,16 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | **ISO 9001 certification** — Do you have a current ISO 9001 certification (2015 or later)? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO 9001 certification** — Who accredited the ISO 9001 certification? | [BODY] | |
 | **ISO 9001 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the ISO 9001 doesn't cover** — What is not covered by your ISO 9001 certification? | [TEXT] | |
+| **What the ISO 9001 doesn't cover** — What is not covered by your ISO 9001 certification? *(at most 200 words)* | [TEXT] | |
 | **Quality management systems (QMS)** — Do you have a quality management system? | Yes / No / [PENDING] | [SOURCE] |
 | **CSA STAR certification** — Do you have a current CSA Security, Trust & Assurance Registry (STAR) certification that covers the security of your services? | Yes / No / [PENDING] | [SOURCE] |
 | **CSA STAR accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
 | **CSA STAR certification level** — What level is the certification? | Level 1: CSA STAR Self-Assessment / Level 2: CSA STAR Attestation | |
-| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? | [TEXT] | |
+| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? *(at most 200 words)* | [TEXT] | |
 | **PCI certification** — Do you have a current Payment Card Industry Data Security Standard (PCI DSS) certification? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the PCI DSS certification** — Who accredited you? | [BODY] | |
 | **PCI DSS accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? | [TEXT] | |
+| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? *(at most 200 words)* | [TEXT] | |
 | **Other security certifications** — Do you have any other security certifications that cover this service? | Yes / No / [PENDING] | [SOURCE] |
 | **Any other security certifications** — What other security certifications do you have? | [LIST] | |
 
@@ -507,10 +519,10 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Staff security clearance checks | 2.5% | 100/50/0 |
 | Security clearance level | 2.5% | 100/66/33/0 |
 | Cyber Essentials if a buyer requires it | 2.5% | 100/0 |
-| Price (average day rate) | 80% | Price assessment (each service's PRIC document (`/arckit-uk-gcloud:pricing`)) |
-| Cyber Essentials | — | Mandatory for call-off contracts (Section 2) |
+| Price (average day rate) | 80% | Price assessment (the supplier's one Lot 3 rate card, `ARC-000-RATE` (`/arckit-uk-gcloud:pricing`)) |
+| Cyber Essentials | — | Mandatory for call-off contracts, not for the bid (Section 2) |
 
-*Attachment 2 disqualifies a tender with a mark of zero on any scored quality question, so a "No" to any criterion below fails the bid. These answers cover all your Lot 3 services, and must agree with the User Support, Staff Security and Standards answers on each listing.*
+*Attachment 2d v4.0 and Attachment 2 v5.0 disqualify a tender that marks under 33 on all four criteria below. A single "No" scores 0 and loses its 2.5% without disqualifying on its own (Attachment 2's general paragraph says a zero on any scored question disqualifies, but the lot-specific rule is the one both documents repeat). Avoid any zero. These answers cover all your Lot 3 services, and must agree with the User Support, Staff Security and Standards answers on each listing.*
 
 ### 1. Mandatory Award Criteria
 
@@ -564,7 +576,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 
 **Are you prepared to have in place Cyber Essentials certification?** — Are you prepared to have in place Cyber Essentials (or equivalent or higher) certification should a Buyer require it?
 
-*Cyber Essentials is mandatory for Lot 3 call-off contracts in any case (Framework Schedule 1 v2.1; see Section 2), so answer consistently with that.*
+*Cyber Essentials is mandatory for Lot 3 call-off contracts in any case (Framework Schedule 1 v2.1; see Section 2), so answer consistently with that. This criterion asks whether you are prepared to hold it, not whether you hold it now.*
 
 | Option | Mark | Selected |
 |--------|------|----------|
@@ -582,20 +594,32 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Cyber Essentials if required | [ANSWER] | [MARK] | [MARK × 2.5%] |
 | **Quality score** | | | **[N]% of a possible 20%** |
 
-### 2. Cyber Essentials (Mandatory)
+### 2. Cyber Essentials (Mandatory for Call-Offs)
 
-*The export lists Cyber Essentials among its "Non-mandatory Standards and certifications", but GCA's Updates to Tender Documents and Framework Schedule 1 v2.1 make Cyber Essentials certification **a mandatory requirement for call-off contracts under Lot 3**. Hold it, or be working towards it with a certificate by framework award. Cyber Essentials Plus is optional here.*
+*The export lists Cyber Essentials among its "Non-mandatory Standards and certifications". GCA's Updates to Tender Documents and Framework Schedule 1 v2.1 make Cyber Essentials certification **a mandatory requirement for call-off contracts under Lot 3**, not a condition of the bid. Attachment 2 v5.0 lists no mandatory certificate for Lots 2a, 2b and 3, and Framework Schedule 1 v2.1 makes Cyber Essentials mandatory for call-off contracts. The live listings scraped on 7 October 2026 confirm it doesn't fail the bid: 769 Lot 2b and 1,977 Lot 3 listings show "Cyber essentials: No" with "None of the criteria". Cyber Essentials Plus is optional here.*
 
 | Question | Answer | Source |
 |----------|--------|--------|
 | **Cyber essentials** — Do you have a current Cyber Essentials certification? | Yes / No / [PENDING] | [SOURCE] |
 | Please provide your Cyber Essentials Certificate Number *(if "Yes"; format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`)* | [NUMBER] | |
-| **Cyber Essentials Alternative** — Please select an option below *(if "No")* | Working towards it, certified by a government-approved accreditation body by the date of framework award / An IASME certified equivalent / None of the criteria | |
 | **Cyber essentials plus** — Do you have a current Cyber Essentials Plus certification? | Yes / No / [PENDING] | [SOURCE] |
 | Please provide your Cyber Essentials Plus Certificate Number *(if "Yes")* | [NUMBER] | |
-| **Cyber Essentials Alternative** — Please select an option below *(if "No")* | Working towards it, certified by framework award / An IASME certified equivalent / None of the criteria | |
 
-*For Cyber Essentials, "None of the criteria" does not meet the mandatory requirement.*
+**Cyber Essentials Alternative** — Please select an option below *(if Cyber essentials is "No")*:
+
+- [ ] In relation to the services you do not have a current and valid Cyber Essentials certificate which has been awarded by one of the government approved Cyber Essentials accreditation bodies but you are working towards gaining it, and will be in a position to confirm that you have been awarded a current and valid Cyber Essentials certificate by one of the government approved accreditation bodies within 12 months of the date of award.
+- [ ] You do not have a current and valid Cyber Essentials certificate, or will not have in place within 12 months of the date of award but have an IASME certified equivalent.
+- [ ] None of the criteria
+
+**Cyber Essentials Alternative** — Please select an option below *(if Cyber essentials plus is "No")*:
+
+- [ ] In relation to the services you do not have a current and valid Cyber Essentials Plus certificate which has been awarded by one of the government approved Cyber Essentials accreditation bodies but you are working towards gaining it, and will be in a position to confirm that you have been awarded a current and valid Cyber Essentials Plus certificate by one of the government approved accreditation bodies within 12 months of the date of award.
+- [ ] You do not have a current and valid Cyber Essentials Plus certificate, or will not have in place within 12 months of the date of award but have an IASME certified equivalent.
+- [ ] None of the criteria
+
+*Options are worded as the live Lot 3 listings show them. GCA's question export words the first two "by the date of framework award"; the listings say "within 12 months of the date of award". Tick the option on the Digital Platform that means the same.*
+
+*A missing Cyber Essentials certificate, even with "None of the criteria", doesn't fail the bid, but it is a **call-off warning**: you can't be awarded a call-off contract under this lot until you hold one.*
 
 ### 3. Non-mandatory Standards and Certifications
 
@@ -604,7 +628,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | **ISO/IEC 27001 certification** — Do you have a current ISO/IEC 27001 certification (2013 or 2022) that covers the security of your service? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO/IEC 27001** — Who accredited the ISO/IEC 27001 certification? | [BODY] | |
 | **ISO/IEC 27001 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the ISO/IEC 27001 doesn't cover** — What is not covered by your ISO/IEC 27001 certification? | [TEXT] | |
+| **What the ISO/IEC 27001 doesn't cover** — What is not covered by your ISO/IEC 27001 certification? *(at most 200 words)* | [TEXT] | |
 | **ISO 28000:2022 certification** — Do you have a current ISO 28000:2022 certification that covers the security of your supply chain? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO 28000:2022** — Who accredited the ISO 28000:2022 certification? | [BODY] | |
 | **ISO 28000:2022 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
@@ -612,16 +636,16 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | **ISO 9001 certification** — Do you have a current ISO 9001 certification (2015 or later)? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO 9001 certification** — Who accredited the ISO 9001 certification? | [BODY] | |
 | **ISO 9001 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the ISO 9001 doesn't cover** — What is not covered by your ISO 9001 certification? | [TEXT] | |
+| **What the ISO 9001 doesn't cover** — What is not covered by your ISO 9001 certification? *(at most 200 words)* | [TEXT] | |
 | **Quality management systems (QMS)** — Do you have a quality management system? | Yes / No / [PENDING] | [SOURCE] |
 | **CSA STAR certification** — Do you have a current CSA Security, Trust & Assurance Registry (STAR) certification that covers the security of your services? | Yes / No / [PENDING] | [SOURCE] |
 | **CSA STAR accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
 | **CSA STAR certification level** — What level is the certification? | Level 1: CSA STAR Self-Assessment / Level 2: CSA STAR Attestation | |
-| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? | [TEXT] | |
+| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? *(at most 200 words)* | [TEXT] | |
 | **PCI certification** — Do you have a current Payment Card Industry Data Security Standard (PCI DSS) certification? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the PCI DSS certification** — Who accredited you? | [BODY] | |
 | **PCI DSS accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? | [TEXT] | |
+| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? *(at most 200 words)* | [TEXT] | |
 | **Other security certifications** — Do you have any other security certifications that cover this service? | Yes / No / [PENDING] | [SOURCE] |
 | **Any other security certifications** — What other security certifications do you have? | [LIST] | |
 
@@ -633,7 +657,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 |-------------|--------|-------|
 | Technical Ability Certificate, signed electronically by your customer in the Digital Platform (Attachment 2b) | [STATUS] | Digital Platform |
 | Bronze financial viability risk assessment (Attachment 5b), only if GCA asks after the enhanced sift | [STATUS] | Digital Platform |
-| Maximum day rates for each role level offered; the average day rate is the price score (80%) | [STATUS] | `/arckit-uk-gcloud:pricing` |
+| Maximum day rates for each role level offered, on one rate card for all your Lot 3 services; the average day rate is the price score (80%) | [STATUS] | `/arckit-uk-gcloud:pricing` (`ARC-000-RATE`) |
 | Social value (10%) | [STATUS] | `/arckit-uk-gcloud:social-value` |
 
 ---

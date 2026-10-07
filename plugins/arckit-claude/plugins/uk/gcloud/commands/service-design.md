@@ -16,7 +16,7 @@ handoffs:
     description: Generate the Service Definition Document for the service
     condition: "Lot 2b (SaaS) selected"
   - command: /arckit-uk-gcloud:sdd-lot3
-    description: Generate the Service Definition Document and rate card for the service
+    description: Generate the Service Definition Document and the role levels that deliver the service
     condition: "Lot 3 (Cloud Support) selected"
   - command: /arckit-uk-gcloud:pricing
     description: Produce the G-Cloud 15 pricing document for this service
@@ -48,7 +48,7 @@ $ARGUMENTS
 The supplier profile is supplier-wide and feeds every service design. Find the latest version:
 
 ```bash
-ls projects/000-global/supplier/ARC-000-SUPP-v*.md 2>/dev/null
+find projects/000-global/supplier -maxdepth 1 -name 'ARC-000-SUPP-v*.md' 2>/dev/null | sort -V
 ```
 
 - **If it exists**, use the **Read tool** on the highest version for company details,
@@ -92,14 +92,37 @@ citation markers (e.g. `[WEB-1-C1]`) next to each fact informed by a source, and
 WebSearch alone (search without fetch) is exploratory and is not cited — only cite a URL once it has
 actually been fetched.
 
-### 3. Create (or locate) the service project
+### 3. Find or create the service project
 
-Settle on a short service name first: take it from `$ARGUMENTS`, or from the research above if the
-input was a URL or a description. If there is still no name, ask for one (Step 5's question call).
-Never create a project from an empty name.
+**Look for an existing service first.** A re-run often uses a different name from the first run
+("Case Management Platform" after "Case Mgmt"), and the project helper always allocates a new
+number, so creating straight away would leave two projects for one service. List the projects as
+JSON:
 
-Each service is its own numbered project. Run the ArcKit project helper, passing the service name,
-and request JSON output:
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" --json
+```
+
+From the `projects[]` array (each entry has `name`, `number` and `path`), check whether `$ARGUMENTS`
+names a service project by number (`004`), by name or name fragment, or by path
+(`projects/004-secure-case-mgmt`):
+
+- **One project matches:** this is a re-run. Use that project, even if the service now has another
+  name (change the name inside the document, not the directory). If the input was only part of a
+  name and could be a new service ("case" when `004-secure-case-mgmt` exists), confirm with
+  **AskUserQuestion** first.
+- **Several match:** ask the user which one they mean.
+- **None match:** if a listed project looks like this offer under another name, ask with
+  **AskUserQuestion** whether to update that project or create a new one. Otherwise create a new one.
+
+On a re-run, set `PROJECT_ID` to the project's `number` and use its `path` as the destination. Read
+its existing `ARC-{PROJECT_ID}-SVCD-v*.md` and update it rather than starting over: keep confirmed
+answers, increment the version and add a Revision History row saying what changed.
+
+**To create one,** settle on a short service name: take it from `$ARGUMENTS`, or from the research
+above if the input was a URL or a description. If there is still no name, ask for one (Step 5's
+question call). Never create a project from an empty name. Each service is its own numbered project.
+Run the ArcKit project helper, passing the service name, and request JSON output:
 
 ```bash
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" --name "<service name>" --json
@@ -110,10 +133,7 @@ From the JSON response, extract:
 - `project_dir` — the service project directory (e.g. `projects/004-secure-case-mgmt`)
 - `project_number` — the zero-padded project number (e.g. `004`)
 
-Use `project_number` as `PROJECT_ID` and `project_dir` as the destination. If the user is re-running
-for a service that already has a project, use that existing project directory instead of creating a
-duplicate, read its existing `ARC-{PROJECT_ID}-SVCD-v*.md`, and update it rather than starting over:
-keep confirmed answers, increment the version and add a Revision History row saying what changed.
+Use `project_number` as `PROJECT_ID` and `project_dir` as the destination.
 
 ### 4. Select the lot
 
@@ -196,7 +216,12 @@ Anything else unconfirmed is written as `[PENDING]`.
 - Service description: at most 500 characters, a summary of what the service is for
 - Target buyer segments (central government, local government, NHS, education, police, defence,
   devolved administrations)
-- A first pass at categories from the lot's tree. Read only the lot's section of
+- A first pass at categories from the lot's tree, **all under one root and one group** (the first
+  two levels of the path, such as `Cloud Support Services > Managed Cloud`). None of the 42,893 live
+  G-Cloud 15 listings scraped on 7 October 2026 has categories in two groups, although GCA's
+  question export states no rule. If the offer spans groups, ask the user with **AskUserQuestion**
+  which group this service is listed under, and design each other group as its own service (run this
+  command again for each). Read only the lot's section of
   `${CLAUDE_PLUGIN_ROOT}/skills/gcloud-framework/references/g-cloud-15/categories.md`:
 
   ```bash
@@ -211,7 +236,9 @@ Anything else unconfirmed is written as `[PENDING]`.
 ("real-time reporting", "remote access"); benefits are active phrases about how users' work improves
 ("publish content from multiple devices").
 
-**Supplier type**, asked per service with GCA's exact options:
+**Supplier type**, asked per service. Listings show these options as "Not a reseller", "Reseller
+providing extra features and support", "Reseller providing extra support" and "Reseller (no
+extras)"; the Digital Platform words them:
 
 - I’m not a reseller
 - I’m a reseller providing extra features and support not available from the original supplier
@@ -232,17 +259,20 @@ Sole Control of the Infrastructure.
   energy-efficient datacentres; whether an ISO 27018 certificate is held (required on Lots 1a and 1b
   for a service that includes public cloud, unless you resell and rely on the provider's
   accreditations). **Lot 1b also:** the highest classification handled and the staff clearance
-  offered (Lot 1b allows only Up to SC or Up to DV).
+  offered (Lot 1b allows only Security Clearance (SC) or Developed Vetting (DV)).
 - **Lots 2a/2b:** whether it is an add-on to other software; NIST deployment model; multi cloud
   support; browser, installed application (which operating systems) and mobile access; API, API
   sandbox, customisation; data import and export formats; public sector networks (PSN, PNN, JANET,
   SWAN, HSCN); Software Security Code of Practice compliance; usage metrics and FOCUS resource
   tagging.
-- **Lot 3:** which category groups the service covers; remote or on-site delivery; platforms
+- **Lot 3:** the one category group the service sits in; remote or on-site delivery; platforms
   supported; staff screening (to BS7858:2019 or not) and the highest clearance offered; the **role
-  levels** the service needs, named exactly as in
-  `${CLAUDE_PLUGIN_ROOT}/skills/ddat-rate-card/references/lot-3-rate-card.md` (rates are set later
-  with `/arckit-uk-gcloud:pricing`).
+  levels** that deliver it, named exactly as in
+  `${CLAUDE_PLUGIN_ROOT}/skills/ddat-rate-card/references/lot-3-rate-card.md`. Rates are not set per
+  service: `/arckit-uk-gcloud:pricing` keeps one rate card for all the supplier's Lot 3 services
+  (`ARC-000-RATE`), and every Lot 3 listing shows it in full, so these levels only have to be on it.
+  A role the rate card doesn't name (procurement or commercial adviser, trainer) goes in at the
+  nearest DDaT role and level by its work and seniority, with its own name beside it.
 
 **Technical details:** architecture, where data is stored and processed (United Kingdom, EEA,
 other), whether users can choose, integrations.
@@ -256,12 +286,12 @@ onsite support (not asked for Lot 3), support levels.
 - **1a/1b:** the price formula: baseline price, fixed onboarding costs, framework discount, any
   supplier-specific schemes and time-limited discounts
 - **2a/2b:** unit prices and the intended discount for each annual call-off value band
-- **3:** day rates for the chosen role levels
+- **3:** the supplier's one rate card (`ARC-000-RATE`), which must cover this service's role levels
 - **All:** education discount; free trial (Lots 1a/1b, 2a/2b)
 
 **Certifications:** current status for the ones this lot's lot questions cover (see the template's
 section 10). Call-offs need Cyber Essentials Plus under Lots 1a/1b and Cyber Essentials under Lots 2a,
-2b and 3.
+2b and 3; neither is a condition of the bid, so a missing certificate is a call-off warning.
 
 ### 6. Read the service-design template
 
@@ -298,6 +328,8 @@ Fill it in:
   Details to the matching SDD command: `/arckit-uk-gcloud:sdd-lot1a`, `/arckit-uk-gcloud:sdd-lot1b`, `/arckit-uk-gcloud:sdd-lot2a`, `/arckit-uk-gcloud:sdd-lot2b` or `/arckit-uk-gcloud:sdd-lot3`.
 - **1.3 Lot:** tick the lot and write the justification, including why the nearest alternative lot
   doesn't fit.
+- **1.4 Service categories:** the one category group on its **Category group** line, and only
+  categories under it.
 - **Section 6:** keep only the lot's subsection.
 - **Counters:** fill in the name and description character counts and each feature's and benefit's
   word count.
@@ -338,7 +370,7 @@ Check which supplier-wide documents exist, so the next steps list only what is m
 
 ```bash
 for t in SOCV LOTQ DECL; do
-    ls projects/000-global/supplier/ARC-000-$t-v*.md 2>/dev/null || echo "MISSING: $t"
+    find projects/000-global/supplier -maxdepth 1 -name "ARC-000-$t-v*.md" 2>/dev/null | grep . || echo "MISSING: $t"
 done
 ```
 
@@ -369,7 +401,8 @@ Print only a short summary, reporting what the document contains:
 
 ### Lot and Categories
 - Why this lot: [one line]
-- Categories (first pass): [full paths]
+- Category group: [Root > Group]; categories (first pass): [full paths]
+- Other groups the offer spans, to design as separate services: [groups, or "None"]
 - Supplier type: [option]
 
 ### Target Buyers
@@ -390,9 +423,9 @@ Print only a short summary, reporting what the document contains:
 1. **Generate the Service Definition Document:** the lot's SDD command, `/arckit-uk-gcloud:sdd-lot1a`, `/arckit-uk-gcloud:sdd-lot1b`, `/arckit-uk-gcloud:sdd-lot2a`, `/arckit-uk-gcloud:sdd-lot2b` or `/arckit-uk-gcloud:sdd-lot3`, with `[service]`
 2. **Price the service:** `/arckit-uk-gcloud:pricing [service]`
 3. **Security evidence:** `/arckit-uk-gcloud:security [service]`
-4. [Only if missing] **Lot questions for Lots [group]:** `/arckit-uk-gcloud:lot-questions` (once per lot group bid for, as a Part of `projects/000-global/supplier/ARC-000-LOTQ-v*.md`)
-5. [Only if missing] **Social value:** `/arckit-uk-gcloud:social-value` (once per supplier; 10% of every lot's score)
-6. [Only if missing] **Supplier declaration:** `/arckit-uk-gcloud:declaration`
+4. [Only if missing] **Social value:** `/arckit-uk-gcloud:social-value` (once per supplier; 10% of every lot's score)
+5. [Only if missing] **Lot questions for Lots [group]:** `/arckit-uk-gcloud:lot-questions`, once this service has its SDD, pricing and security evidence (once per lot group bid for, as a Part of `projects/000-global/supplier/ARC-000-LOTQ-v*.md`; its award criteria repeat the SDD's answers)
+6. [Only if missing] **Supplier declaration:** `/arckit-uk-gcloud:declaration`, after the lot questions
 ```
 
 Show only the SDD command for this service's lot.

@@ -19,8 +19,9 @@ pre-submission checklist for the service's lot, and the order of work for submit
 In this overlay **each G-Cloud service is its own ArcKit project** — `projects/{NNN}-service-name/`.
 This command does **not** create a new project and **does not** create an ArcKit document. It is an
 **export action**: it copies existing artefacts into a `submission/` folder inside the service
-project and writes `submission/manifest.md` and `submission/answers-export.md`. The bundle output
-itself gets **no ArcKit doc-type and no `ARC-…-` ID**.
+project and writes `submission/manifest.md` and `submission/answers-export.md`, plus the
+supplier-level answers once per bid in `projects/000-global/supplier/submission/bid-answers.md`. The
+bundle output itself gets **no ArcKit doc-type and no `ARC-…-` ID**.
 
 ## User Input
 
@@ -65,17 +66,25 @@ bid documents live under `projects/000-global/supplier/`:
 ```bash
 PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
 SUPPLIER=projects/000-global/supplier
+# Latest version of a document, or nothing. find never aborts when nothing matches, as a bare
+# glob does under zsh ("no matches found")
+latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
 echo "=== Supplier-wide (once per bid, shared by every service) ==="
-ls "$SUPPLIER"/ARC-000-SUPP-v*.md 2>/dev/null && echo "✅ Supplier Profile"     || echo "❌ Supplier Profile MISSING"
-ls "$SUPPLIER"/ARC-000-SOCV-v*.md 2>/dev/null && echo "✅ Social Value"         || echo "❌ Social Value MISSING"
-ls "$SUPPLIER"/ARC-000-LOTQ-v*.md 2>/dev/null && echo "✅ Lot Questions"        || echo "❌ Lot Questions MISSING"
-ls "$SUPPLIER"/ARC-000-DECL-v*.md 2>/dev/null && echo "✅ Supplier Declaration" || echo "❌ Supplier Declaration MISSING"
+[ -n "$(latest "$SUPPLIER" 'ARC-000-SUPP-v*.md')" ] && echo "✅ Supplier Profile"     || echo "❌ Supplier Profile MISSING"
+[ -n "$(latest "$SUPPLIER" 'ARC-000-SOCV-v*.md')" ] && echo "✅ Social Value"         || echo "❌ Social Value MISSING"
+[ -n "$(latest "$SUPPLIER" 'ARC-000-LOTQ-v*.md')" ] && echo "✅ Lot Questions"        || echo "❌ Lot Questions MISSING"
+[ -n "$(latest "$SUPPLIER" 'ARC-000-DECL-v*.md')" ] && echo "✅ Supplier Declaration" || echo "❌ Supplier Declaration MISSING"
 echo "=== Per-service ==="
-ls "$PROJECT_PATH"/ARC-*-SVCD-v*.md 2>/dev/null && echo "✅ Service Design" || echo "❌ Service Design MISSING"
-ls "$PROJECT_PATH"/ARC-*-SDD-v*.md  2>/dev/null && echo "✅ SDD"            || echo "❌ SDD MISSING"
-ls "$PROJECT_PATH"/ARC-*-PRIC-v*.md 2>/dev/null && echo "✅ Pricing"        || echo "❌ Pricing MISSING"
-ls "$PROJECT_PATH"/ARC-*-SECA-v*.md 2>/dev/null && echo "✅ Security"       || echo "❌ Security MISSING"
-grep -h -m1 '^\*\*G-Cloud Lot\*\*' "$PROJECT_PATH"/ARC-*-SVCD-v*.md 2>/dev/null || echo "❌ Lot not recorded in the service design"
+[ -n "$(latest "$PROJECT_PATH" 'ARC-*-SVCD-v*.md')" ] && echo "✅ Service Design" || echo "❌ Service Design MISSING"
+[ -n "$(latest "$PROJECT_PATH" 'ARC-*-SDD-v*.md')" ]  && echo "✅ SDD"            || echo "❌ SDD MISSING"
+[ -n "$(latest "$PROJECT_PATH" 'ARC-*-PRIC-v*.md')" ] && echo "✅ Pricing"        || echo "❌ Pricing MISSING"
+[ -n "$(latest "$PROJECT_PATH" 'ARC-*-SECA-v*.md')" ] && echo "✅ Security"       || echo "❌ Security MISSING"
+SVCD=$(latest "$PROJECT_PATH" 'ARC-*-SVCD-v*.md')
+{ [ -n "$SVCD" ] && grep -m1 '^\*\*G-Cloud Lot\*\*' "$SVCD"; } || echo "❌ Lot not recorded in the service design"
+# Lot 3: the supplier's one rate card, shared by every Lot 3 service
+if [ -n "$SVCD" ] && grep -qE '^\*\*G-Cloud Lot\*\*:[[:space:]]*(Lot[[:space:]]*)?3([^0-9ab]|$)' "$SVCD"; then
+  [ -n "$(latest "$SUPPLIER" 'ARC-000-RATE-v*.md')" ] && echo "✅ Lot 3 Rate Card (supplier-wide)" || echo "❌ Lot 3 Rate Card MISSING (ARC-000-RATE)"
+fi
 ```
 
 **Find the lot** from the service design's `**G-Cloud Lot**: Lot <code> — <name>` line: `1a`, `1b`,
@@ -94,7 +103,7 @@ document lacks the Part for this lot group, **stop** and advise the user to crea
 | Declaration | `/arckit-uk-gcloud:declaration` |
 | Service design, or a lot that isn't 1a/1b/2a/2b/3 | `/arckit-uk-gcloud:service-design` |
 | SDD | `/arckit-uk-gcloud:sdd-lot1a`, `sdd-lot1b`, `sdd-lot2a`, `sdd-lot2b` or `sdd-lot3`, matching the lot |
-| Pricing | `/arckit-uk-gcloud:pricing` |
+| Pricing, or the Lot 3 rate card (`ARC-000-RATE`) | `/arckit-uk-gcloud:pricing` |
 | Security evidence | `/arckit-uk-gcloud:security` |
 
 ### 3. Check the review report
@@ -110,8 +119,109 @@ Use the **Read tool** on the highest version of `{path}/ARC-{PROJECT_ID}-GCRV-v*
   or modification date): say it may be stale and recommend re-running the review.
 
 These are warnings, not blocks. Build the pack anyway so the user can see the whole submission, and
-carry the warning into the summary. Also scan every document in the pack for `[PENDING]` values and
-list any you find: each is an answer that has to be supplied before submission.
+carry the warning into the summary. Also list the unfinished answers still in the documents: each is
+an answer that has to be supplied before submission. Use the placeholder scan `/arckit-uk-gcloud:review` runs,
+so the two agree on what is unfinished: `[PENDING]` in every form (`[PENDING: …]`,
+`[PENDING — …]`), older markers (`[TODO]`, `[TBC]`, `[CONFIRM]`, `*[TO BE ADDED]*`) and template
+fields never filled in. It leaves out the Revision History and the Document Control **Reviewed By**
+and **Approved By** rows, which are not bid answers:
+
+```bash
+PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
+LOT="{lot}"             # this service's lot: 1a, 1b, 2a, 2b or 3
+latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
+# placeholder scan: keep identical in review.md and submission-pack.md
+{
+    find "${CLAUDE_PLUGIN_ROOT}/templates" .arckit/templates-custom -maxdepth 1 -name '*-template.md' 2>/dev/null
+    echo phase=2
+    for t in SUPP SOCV LOTQ DECL; do latest projects/000-global/supplier "ARC-000-$t-v*.md"; done
+    [ "$LOT" = 3 ] && latest projects/000-global/supplier 'ARC-000-RATE-v*.md'
+    for t in SVCD SDD PRIC SECA; do latest "$PROJECT_PATH" "ARC-*-$t-v*.md"; done
+} | tr '\n' '\0' | xargs -0 awk '
+    FNR == 1 { inc = 0; fence = 0; sect = "" }
+    phase != 2 {
+        s = $0
+        while (match(s, /\[[^][]*\]/)) {
+            tok = substr(s, RSTART, RLENGTH); s = substr(s, RSTART + RLENGTH)
+            if (substr(s, 1, 1) != "(" && tok != "[ ]" && tok != "[x]" && tok !~ /-C[0-9]+\]$/) field[tok] = 1
+        }
+        next
+    }
+    /^```/ { fence = !fence; next }
+    fence { next }
+    {
+        s = $0; t = ""
+        while (s != "") {
+            if (inc) { p = index(s, "-->"); if (!p) s = ""; else { s = substr(s, p + 3); inc = 0 } }
+            else { p = index(s, "<!--"); if (!p) { t = t s; s = "" } else { t = t substr(s, 1, p - 1); s = substr(s, p + 4); inc = 1 } }
+        }
+        gsub(/`[^`]*\[[^`]*`/, "", t)
+    }
+    /^## / { sect = $0 }
+    sect ~ /Revision History/ || $0 ~ /^\| *\*\*(Reviewed By|Approved By)\*\* *\|/ { next }
+    {
+        while (match(t, /\[[^][]*\]/)) {
+            tok = substr(t, RSTART, RLENGTH); txt = substr(tok, 2, RLENGTH - 2)
+            pre = substr(t, 1, RSTART - 1); t = substr(t, RSTART + RLENGTH)
+            if (substr(t, 1, 1) == "(") continue
+            k = ""
+            if (txt ~ /^(PENDING|TODO|TBD|TBC|CONFIRM|TO BE [A-Z]+|PLACEHOLDER|INSERT|ENTER|YOUR|CHANGE THIS|UPDATE|REQUIRED)([^A-Za-z0-9].*)?$/) k = "pending"
+            else if ((tok in field) || txt ~ /^[A-Z][A-Z0-9]*(_[A-Z0-9]+)+$/) {
+                if (txt ~ /^[Xx]$/ && (pre ~ /^[ \t]*([-*+]|[0-9]+\.)[ \t]*$/ || (pre ~ /\|[ \t]*$/ && t ~ /^[ \t]*\|/))) continue
+                k = "template"
+            }
+            if (k != "") { printf "%s:%d: %s %s\n", FILENAME, FNR, k, tok; n++ }
+        }
+    }
+    END { printf "placeholders: %d\n", n + 0 }'
+```
+
+Then check that no document was written for the previous framework, with the same check
+`/arckit-uk-gcloud:review` runs. The markers: a title or opening quote naming an earlier G-Cloud as its
+framework, a Framework row or an agreement number from an earlier G-Cloud (RM1557.14 or below), a
+lot from the three-lot framework (`Lot 1`, `Lot 2`, Cloud Hosting, Cloud Software) or a "1.3 Target
+Lot" checkbox, an SFIA rate card, the old minimum or maximum price, pricing unit and billing
+interval fields, a supplier profile with no Central Digital Platform or PPON section, or a Public
+Contracts Regulations declaration.
+
+```bash
+PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
+LOT="{lot}"             # this service's lot: 1a, 1b, 2a, 2b or 3
+latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
+# previous-framework check: keep identical in review.md and submission-pack.md
+{
+    for t in SUPP SOCV LOTQ DECL; do latest projects/000-global/supplier "ARC-000-$t-v*.md"; done
+    [ "$LOT" = 3 ] && latest projects/000-global/supplier 'ARC-000-RATE-v*.md'
+    for t in SVCD SDD PRIC SECA; do latest "$PROJECT_PATH" "ARC-*-$t-v*.md"; done
+} | tr '\n' '\0' | xargs -0 awk '
+    function flush(   i) {
+        if (prev == "") return
+        if (prev ~ /-SUPP-v[^\/]*\.md$/ && !cdp) r[++nr] = "no Central Digital Platform or PPON section, which every G-Cloud 15 bid needs"
+        if (prev ~ /-DECL-v[^\/]*\.md$/ && pcr && !pa) r[++nr] = "a Public Contracts Regulations declaration; G-Cloud 15 runs under the Procurement Act 2023"
+        if (nr) { found++; printf "%s: written for the previous framework\n", prev; for (i = 1; i <= nr && i <= 5; i++) printf "    %s\n", r[i] }
+    }
+    FNR == 1 { flush(); prev = FILENAME; nr = 0; cdp = 0; pa = 0; pcr = 0 }
+    {
+        l = tolower($0)
+        if (l ~ /ppon|central digital platform/) cdp = 1
+        if (l ~ /procurement act 2023/) pa = 1
+        if (l ~ /public contracts regulations|pcr ?2015/) pcr = 1
+        if (FNR <= 60 && l ~ /^(#+|>)[ \t]/ && l ~ /g-cloud ?(1[0-4]|[1-9])([^0-9]|$)/ && l !~ /g-cloud ?15/) r[++nr] = "line " FNR ": its title names an earlier framework"
+        if (l ~ /^\| *\**framework\** *\|/ && l ~ /g-cloud ?(1[0-4]|[1-9])([^0-9]|$)|rm1557\.(1[0-4]|[1-9])([^0-9]|$)/) r[++nr] = "line " FNR ": its Framework row names an earlier framework"
+        else if (l ~ /rm1557\.(1[0-4]|[1-9])([^0-9]|$)/) r[++nr] = "line " FNR ": names an earlier agreement"
+        v = ""
+        if (l ~ /^\*\*g-cloud lot\*\*:/) { v = l; sub(/^\*\*g-cloud lot\*\*:[ \t]*/, "", v) }
+        else if (l ~ /^\| *\**(target )?lot\** *\|/) { v = l; sub(/^\| *\**(target )?lot\** *\|[ \t]*/, "", v); sub(/\|.*/, "", v) }
+        if (v ~ /^(lot ?)?[12]([^0-9ab]|$)|cloud hosting|cloud software/) r[++nr] = "line " FNR ": a lot from the previous three-lot framework"
+        if (l ~ /1\.3 target lot/) r[++nr] = "line " FNR ": a Target Lot checkbox from the previous framework"
+        if ((l ~ /^#+ / && l ~ /sfia/ && l ~ /rate|pric|card/) || l ~ /^\|.*sfia.*\|.*(rate|£|price)/) r[++nr] = "line " FNR ": an SFIA rate card (G-Cloud 15 prices Lot 3 on the DDaT rate card)"
+        if (l ~ /^\| *\**(minimum price|maximum price|pricing unit|billing interval)\** *\|/) r[++nr] = "line " FNR ": a pricing field G-Cloud 15 no longer has"
+    }
+    END { flush(); printf "previous-framework documents: %d\n", found + 0 }'
+```
+
+Warn prominently about every document it reports: it was written for the previous framework and has
+to be regenerated with its command before submission, whatever the review report says.
 
 ### 4. Assemble the submission folder
 
@@ -121,18 +231,20 @@ straight export of the approved files):
 
 ```bash
 PROJECT_PATH="{path}"
+LOT="{lot}"   # this service's lot: 1a, 1b, 2a, 2b or 3
 SUBMISSION_DIR="$PROJECT_PATH/submission"
 mkdir -p "$SUBMISSION_DIR/evidence"
 
 # Per-service artefacts (latest version of each)
 for type in SVCD SDD PRIC SECA GCRV; do
-  f=$(ls "$PROJECT_PATH"/ARC-*-"$type"-v*.md 2>/dev/null | sort -V | tail -1)
+  f=$(find "$PROJECT_PATH" -maxdepth 1 -name "ARC-*-$type-v*.md" 2>/dev/null | sort -V | tail -1)
   [ -n "$f" ] && cp "$f" "$SUBMISSION_DIR/"
 done
 
-# Supplier-wide bid documents (latest version of each)
-for type in SUPP SOCV LOTQ DECL; do
-  f=$(ls projects/000-global/supplier/ARC-000-"$type"-v*.md 2>/dev/null | sort -V | tail -1)
+# Supplier-wide bid documents (latest version of each), and the rate card for a Lot 3 service
+for type in SUPP SOCV LOTQ DECL RATE; do
+  [ "$type" = RATE ] && [ "$LOT" != 3 ] && continue
+  f=$(find projects/000-global/supplier -maxdepth 1 -name "ARC-000-$type-v*.md" 2>/dev/null | sort -V | tail -1)
   [ -n "$f" ] && cp "$f" "$SUBMISSION_DIR/"
 done
 
@@ -144,28 +256,52 @@ Certificate) under the project's `external/`, `vendors/`, or `evidence/` directo
 security document or lot questions reference, copy them into `submission/evidence/` and list them in
 the manifest.
 
-### 5. Write the answers export
+### 5. Write the answers
 
-Use the **Write tool** to write `{path}/submission/answers-export.md`: every answer ready to copy
-into GCA's Digital Platform, in the order GCA asks them. Copy answers verbatim from the documents;
-never rewrite or invent one. Keep every `[PENDING]` visible.
+The supplier declaration, social value and lot questions are entered once per bid, not per service,
+so they go in one supplier-level file, never in each service's export.
 
-1. **Supplier declaration** (once per bid) from `ARC-000-DECL`, with the social value sections (A
-   understanding, B commitment, C organisational readiness, operational readiness, the Social Value
-   Contact) taken from `ARC-000-SOCV`.
-2. **Lot questions** (once per lot group) from the LOTQ Part for this lot group. For Lots 1a/1b, give
+**Bid answers (supplier level, once per bid).** Check whether they are current:
+
+```bash
+BID=projects/000-global/supplier/submission/bid-answers.md
+mkdir -p projects/000-global/supplier/submission
+# Rewrite bid-answers.md if any supplier-level document is newer than it
+if [ -f "$BID" ]; then
+    find projects/000-global/supplier -maxdepth 1 -name 'ARC-000-*.md' -newer "$BID" 2>/dev/null | sort
+else
+    echo "NO BID ANSWERS YET: $BID"
+fi
+```
+
+Write `bid-answers.md` with the **Write tool** if it doesn't exist; rewrite it if a supplier-level
+document is newer than it, or this service's lot group has no section in it yet. Otherwise leave it
+and say it is current. It holds, in the order GCA asks them, copied verbatim with every `[PENDING]`
+kept visible:
+
+1. **Supplier declaration** from `ARC-000-DECL`, with the social value sections (A understanding, B
+   commitment, C organisational readiness, operational readiness, the Social Value Contact) taken
+   from `ARC-000-SOCV`.
+2. **Lot questions** from each LOTQ Part bid for, one section per lot group. For Lots 1a/1b, give
    each scored answer with its word count against its limit (250 words for each part of Quality
    Cloud Services and Maximising Buyer Value, and for the exit procedure and change of service), as
    plain text with no attachments.
-3. **Service questions** from `ARC-{PROJECT_ID}-SDD`, in the order of the lot's service questions,
-   organised by question section.
-4. **Pricing** from `ARC-{PROJECT_ID}-PRIC`, by the lot's pricing model: the 1a/1b price formula
-   components and baseline pricing link (1b prices go on the separate non-public platform), the
-   2a/2b discount % for each annual call-off value band, or the Lot 3 maximum day rate, UK and
-   offshore, for each role level.
+3. **Lot 3 rate card**, if the supplier bids for Lot 3: the maximum day rate, UK and offshore, for
+   each role level on `ARC-000-RATE`. It is entered once and shows on every Lot 3 listing.
 
-If the supplier is bidding with several services in the same lot group, say that the declaration,
-social value and lot questions are shared and only need entering once.
+**Service answers.** Use the **Write tool** to write `{path}/submission/answers-export.md`: this
+service's answers, ready to copy into GCA's Digital Platform in the order GCA asks them. It starts
+with one line pointing to `projects/000-global/supplier/submission/bid-answers.md` for the
+supplier-level answers, and holds only:
+
+1. **Service questions** from `ARC-{PROJECT_ID}-SDD`, in the order of the lot's service questions,
+   organised by question section.
+2. **Pricing** from `ARC-{PROJECT_ID}-PRIC`, by the lot's pricing model: the 1a/1b price formula
+   components and baseline pricing link (1b prices go on the separate non-public platform) or the
+   2a/2b discount % for each annual call-off value band. For Lot 3, a line pointing to the rate card
+   in the bid answers.
+
+Copy answers verbatim from the documents; never rewrite or invent one.
 
 ### 6. Write the submission manifest
 
@@ -183,7 +319,7 @@ to the service's lot. Structure:
 **Framework:** G-Cloud 15 (RM1557.15), Government Commercial Agency (GCA, formerly CCS)
 **Assembled:** [DATE]
 **Review status:** [🟢 READY / 🟡 NEEDS WORK / 🔴 NOT READY / ⚠️ Not reviewed]
-**Pending answers:** [count of `[PENDING]` values, or "None"]
+**Unfinished answers:** [the count the placeholder scan printed, by document, or "None"]
 
 ## Pack Contents
 
@@ -193,18 +329,20 @@ to the service's lot. Structure:
 | ARC-000-SOCV-v[X.Y].md | ARC-000-SOCV | Social value commitments |
 | ARC-000-LOTQ-v[X.Y].md | ARC-000-LOTQ | Lot questions (Part [N] applies to this service) |
 | ARC-000-DECL-v[X.Y].md | ARC-000-DECL | Supplier declaration |
+| ARC-000-RATE-v[X.Y].md | ARC-000-RATE | Lot 3 rate card, shared by every Lot 3 service (Lot 3 only) |
 | ARC-[PROJECT_ID]-SVCD-v[X.Y].md | ARC-[PROJECT_ID]-SVCD | Service design |
 | ARC-[PROJECT_ID]-SDD-v[X.Y].md | ARC-[PROJECT_ID]-SDD | Service Definition Document |
 | ARC-[PROJECT_ID]-PRIC-v[X.Y].md | ARC-[PROJECT_ID]-PRIC | Pricing |
 | ARC-[PROJECT_ID]-SECA-v[X.Y].md | ARC-[PROJECT_ID]-SECA | Security evidence |
 | ARC-[PROJECT_ID]-GCRV-v[X.Y].md | ARC-[PROJECT_ID]-GCRV | Submission review |
-| answers-export.md | — | Every answer, ready to copy, in GCA's order |
+| answers-export.md | — | This service's answers, ready to copy, in GCA's order |
+| `projects/000-global/supplier/submission/bid-answers.md` (not copied) | — | The supplier-level answers, shared by every service: declaration, social value, lot questions and the Lot 3 rate card |
 
 ## Documents to Upload
 Every document must be ODF or PDF/A, at most 5 MB, and accessible.
 - [ ] Service definition document (no prices in it)
 - [ ] Terms and conditions (one document per service)
-- [ ] Pricing document
+- [ ] Pricing document (Lots 1a/1b and 2a/2b; optional on Lot 3, where the rate card carries the prices and 71% of the 27,496 live Lot 3 listings have one)
 - [ ] Technical Ability Certificate (all lots)
 - [ ] Certificates claimed (Lots 1a/1b: Cyber Essentials Plus, ISO 9001, 27001, 20000-1, Carbon Reduction Plan, ISO 27018 with public cloud; Lots 2a/2b and 3: Cyber Essentials)
 - [ ] Penetration test executive summary (on request)
@@ -238,10 +376,10 @@ Every document must be ODF or PDF/A, at most 5 MB, and accessible.
 - [ ] 1a/1b: conditions of participation (reseller or sole control, accreditation reliance, ISO 27018 if the service includes public cloud, trading under 12 months)
 - [ ] 1a/1b: each part of Quality Cloud Services (a–b) and Maximising Buyer Value (a–c) ≤ 250 words, parts in order
 - [ ] 1a/1b: NCSC guidance, sanctions policies, exit procedure (≤ 250 words), change of service (≤ 250 words)
-- [ ] 1a/1b: Cyber Essentials Plus (within 12 months), ISO 9001, 27001, 20000-1, Carbon Reduction Plan; ISO 27018 if the service includes public cloud
+- [ ] 1a/1b: ISO 9001, 27001, 20000-1, Carbon Reduction Plan; ISO 27018 if the service includes public cloud
 - [ ] 2a/2b: user support, data location, penetration testing frequency, data sanitisation
 - [ ] 3: user support, staff security clearance checks, clearance level, Cyber Essentials if a buyer requires it
-- [ ] 2a/2b and 3: Cyber Essentials certificate held (mandatory for call-offs)
+- [ ] Cyber Essentials Plus (1a/1b) or Cyber Essentials (2a/2b, 3) held, or the alternative chosen: mandatory for call-offs, not for the bid. Without it the bid can go in, but no call-off can be awarded
 
 ### Service Information
 - [ ] Correct lot selected: [1a / 1b / 2a / 2b / 3]
@@ -256,7 +394,7 @@ Every document must be ODF or PDF/A, at most 5 MB, and accessible.
 ### Pricing
 - [ ] 1a/1b: baseline price and link, fixed onboarding costs, framework discount, supplier-specific schemes, time-limited discounts (1b: on the separate non-public platform)
 - [ ] 2a/2b: unit prices in the pricing document and a discount % for each of the six annual call-off value bands
-- [ ] 3: maximum day rates, UK and offshore, for each role level offered (at least £50)
+- [ ] 3: the supplier's one rate card from `ARC-000-RATE`: maximum day rates, UK and offshore, for each role level offered (at least £50), entered once for all Lot 3 services
 - [ ] No "price on application", "from £x" or unexplained ranges; prices in GBP
 - [ ] Education pricing and free trial answered (where the lot asks)
 
@@ -273,11 +411,11 @@ The order of work, not a screen-by-screen script. GCA's Attachment 2 (How to ten
 
 1. **Register on the Central Digital Platform:** create or update your organisation, note your 12-character PPON, complete your core supplier information including the exclusion grounds, and get share codes for any consortium members and associated persons.
 2. **Start the G-Cloud 15 application:** sign in to your Digital Marketplace supplier account and start the RM1557.15 application while G-Cloud 15 is open to new suppliers (framework details: <https://www.gca.gov.uk/agreements/RM1557.15>).
-3. **Complete the supplier declaration:** copy the supplier-level answers from `answers-export.md`. Answer the third-party agent or bid writer question yourself.
-4. **Answer the lot questions:** for each lot group you bid for, copy the answers into GCA's Digital Platform. For Lots 1a/1b, paste the scored answers as plain text within their word limits; attachments are not accepted.
+3. **Complete the supplier declaration:** copy the supplier-level answers from `projects/000-global/supplier/submission/bid-answers.md`, once for the whole bid. Answer the third-party agent or bid writer question yourself.
+4. **Answer the lot questions:** for each lot group you bid for, copy the answers from `bid-answers.md` into GCA's Digital Platform, once per lot group. For Lots 1a/1b, paste the scored answers as plain text within their word limits; attachments are not accepted.
 5. **Add the service:** select Lot [code] and enter the exact service name from the SDD.
 6. **Complete the service questions:** copy each answer from `answers-export.md`, section by section.
-7. **Enter pricing:** [Lot 1a/1b: the price formula components and baseline pricing link; 1b prices go on the separate non-public platform / Lot 2a/2b: the discount % for each annual call-off value band / Lot 3: the maximum day rate for each role level, UK and offshore].
+7. **Enter pricing:** [Lot 1a/1b: the price formula components and baseline pricing link; 1b prices go on the separate non-public platform / Lot 2a/2b: the discount % for each annual call-off value band / Lot 3: the maximum day rate for each role level, UK and offshore, from `ARC-000-RATE`; the card is entered once and shows on every Lot 3 listing].
 8. **Upload documents:** the list above.
 9. **Preview and submit** before GCA's deadline for this application window, and note the submission reference.
 10. **After submission:** monitor GCA communications and respond to clarification requests by the deadline GCA gives in each request.
@@ -297,11 +435,12 @@ Print only a short summary (not the manifest contents):
 **Lot:** [1a / 1b / 2a / 2b / 3]
 **Location:** `{path}/submission/`
 **Review status:** [🟢 READY / 🟡 NEEDS WORK / 🔴 NOT READY / ⚠️ Not reviewed — run `/arckit-uk-gcloud:review`]
-**Pending answers:** [count of `[PENDING]` values, or "None"]
+**Unfinished answers:** [the count the placeholder scan printed, by document, or "None"]
 
 ### Pack Contents
 - [N] documents copied (supplier profile, social value, lot questions, declaration, SVCD, SDD, pricing, security, review)
-- `answers-export.md` — every answer, ready to copy, in GCA's order
+- `answers-export.md` — this service's answers, ready to copy, in GCA's order
+- `projects/000-global/supplier/submission/bid-answers.md` — the supplier-level answers, shared by every service: [written / refreshed / already current]
 - `manifest.md` — index, documents to upload, pre-submission checklist, submission steps
 
 ### Documents Still to Upload
@@ -315,7 +454,7 @@ Print only a short summary (not the manifest contents):
 
 ## Important Notes
 
-- This is an **export action** — it copies artefacts and writes an index and an answers export; it
+- This is an **export action** — it copies artefacts and writes an index and the answers exports; it
   creates **no** ArcKit doc-type and **no** `ARC-…-` ID for the bundle.
 - Run `/arckit-uk-gcloud:review` first; a pack built without a 🟢 READY review carries the warning.
 - This command never creates a project — if none is found, direct the user to

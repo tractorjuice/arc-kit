@@ -172,8 +172,9 @@ The template (Step 10) holds the tables. Fill them on these rules:
   - This overlay bundles no benchmark data: every other market figure comes from the listings you
     fetched, stated with how many listings it rests on. Never invent a market percentile or average.
 - **Certifications:** count only the competitors you actually analysed ("[X] of [N]"), and don't
-  quote industry-wide percentages without a source. Cyber Essentials Plus is mandatory for Lots
-  1a/1b and Cyber Essentials for Lots 2a/2b and 3.
+  quote industry-wide percentages without a source. Cyber Essentials Plus is mandatory for Lot 1a/1b
+  call-offs and Cyber Essentials for Lot 2a/2b and Lot 3 call-offs; neither is a condition of the
+  bid.
 - **Support:** compare with what is most common among the competitors analysed, not an assumed
   market standard.
 - **G-Cloud 15 listing comparison:** supplier type, social value outcomes, staff security, data

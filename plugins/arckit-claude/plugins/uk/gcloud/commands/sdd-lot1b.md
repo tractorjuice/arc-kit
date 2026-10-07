@@ -98,8 +98,9 @@ ask with **AskUserQuestion** (SECRET, TOP SECRET, or "Only OFFICIAL"); in a non-
 write the classification as `[PENDING]` and report it as a blocker rather than assuming one. If the
 answer is only OFFICIAL, stop: the service belongs in Lot 1a, so point to `/arckit-uk-gcloud:sdd-lot1a`.
 
-**Check staff clearance.** Lot 1b lets a supplier offer only "Up to Developed Vetting (DV)" or "Up to
-Security Clearance (SC)". If the supplier profile or service design offers only BPSS, or no
+**Check staff clearance.** Lot 1b lets a supplier offer only "Developed Vetting (DV)" or "Security
+Clearance (SC)" (on the Digital Platform, "Up to Developed Vetting (DV)" and "Up to Security
+Clearance (SC)"). If the supplier profile or service design offers only BPSS, or no
 clearance, the service can't answer question 19.2: write `[PENDING]` there and report it as a
 blocker for a Lot 1b bid.
 
@@ -168,25 +169,36 @@ The template is shared by Lots 1a and 1b.
 Fill in the template for Lot 1b:
 
 - **Header and G-Cloud Details:** set `**G-Cloud Lot**: Lot 1b — IaaS and PaaS above OFFICIAL`; in
-  the G-Cloud Details table set the Lot row to `1b — IaaS and PaaS above OFFICIAL`, the classification
-  row to the highest classification handled, and the SDD command to `/arckit-uk-gcloud:sdd-lot1b`. Keep the
-  "Lot 1b differs" subsection.
+  the G-Cloud Details table set the Lot row to `1b — IaaS and PaaS above OFFICIAL`, the
+  classification row to the highest classification handled, the SDD command to `/arckit-uk-gcloud:sdd-lot1b`,
+  and the Listing contact row to the supplier profile's Listing Contact (name, email and phone), or
+  `[PENDING]`. Keep the "Lot 1b differs" subsection.
 - **1.1 Service type:** `Lot 1b: IaaS and PaaS above OFFICIAL`.
-- **Every question:** answer each one under its number, ticking GCA's options exactly as worded. A
-  follow-up marked ↳ gets an answer only when its trigger is ticked; otherwise write `Not applicable`.
-  If `lot-1b-services.md` has a question the template lacks (a customised template, or a reissued
-  export), add it in its section and say so in the summary.
-- **3.2 Service categories:** only categories from the Lot 1a tree, which Lot 1b shares, written as
-  full paths, and only ones the service really delivers.
+- **Every question:** answer each one under its number, ticking the template's options exactly as
+  worded: the live listings' wording, with the Digital Platform's in a comment where it differs
+  (tick that one when entering the answer). A follow-up marked ↳ gets an answer only when its
+  trigger is ticked; otherwise write `Not applicable`. If `lot-1b-services.md` has a question the
+  template lacks (a customised template, or a reissued export), add it in its section and say so in
+  the summary.
+- **3.2 Service categories:** only categories from the Lot 1a tree, which Lot 1b shares, written
+  as full paths, and only ones the service really delivers. All of them must sit under one root and
+  one group, the first two levels of the path, recorded on the template's **Category group** line:
+  none of the 42,893 live G-Cloud 15 listings (scraped 7 October 2026) has categories in two groups.
+  If the service design's categories span groups, ask the user with **AskUserQuestion** which group
+  this listing covers, and suggest `/arckit-uk-gcloud:service-design` for a separate service for the others.
 - **Limits:** count the characters in the service name (100) and description (500), and the words in
-  every feature, benefit, system requirement and backed-up item (10 each, at most 10 items). Rewrite
-  anything over a limit rather than cutting it off, and fill in the template's counters.
+  every feature, benefit, system requirement and backed-up item (10 each, at most 10 items). Every
+  free-text answer has a word limit on its `**Words:**` line (50, 100 or 200 words, inferred from
+  the live listings because GCA's export states none): write each answer within it and fill in the
+  count. Rewrite anything over a limit rather than cutting it off, and fill in the template's
+  counters.
 - **6.1 Supplier type:** from the service design, with the organisation resold for any reseller
   option. If Part 1 of the lot questions document exists, check it agrees: a service you resell here
   means the lot answer is "Reseller", not "Sole Control of the Infrastructure". Report a mismatch;
   don't edit the lot questions.
-- **19.2 Government security clearance:** list only the two Lot 1b options, "Up to Developed Vetting
-  (DV)" and "Up to Security Clearance (SC)", and delete the BPSS and None lines.
+- **19.2 Government security clearance:** list only the two Lot 1b options, "Developed Vetting (DV)"
+  and "Security Clearance (SC)" (on the Digital Platform, "Up to Developed Vetting (DV)" and "Up to
+  Security Clearance (SC)"), and delete the BPSS and None lines.
 - **24. Pricing:** only the education discount and free trial questions. Lot 1b prices go on GCA's
   separate, non-public platform and are prepared with `/arckit-uk-gcloud:pricing`.
 - **25. Documents:** record the file names if they are known, otherwise `[PENDING]`.
@@ -230,11 +242,13 @@ Populate the Document Control header (Document ID = `ARC-{PROJECT_ID}-SDD-v{VERS
 Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SDD** per-type checks pass. Then check:
 
 - [ ] Every question is answered, ticked, `Not applicable` or `[PENDING]`
-- [ ] Each *choose one* question has exactly one tick, and every ticked option is GCA's wording
+- [ ] Each *choose one* question has exactly one tick, and every ticked option is worded
+  exactly as the template words it
 - [ ] 19.2 is SC or DV, or `[PENDING]` with the blocker reported
-- [ ] Every category comes from the Lot 1a/1b tree
+- [ ] Every category comes from the Lot 1a/1b tree, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features, benefits, system requirements and backed-up items, each ≤ 10 words
+- [ ] Every free-text answer within the limit on its `**Words:**` line
 - [ ] Consistent with the supplier profile (certifications, locations, clearances), the service
   design and, if present, Part 1 of the lot questions document
 - [ ] No prices, except the support level costs GCA asks for at 7.14
@@ -243,6 +257,34 @@ Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and
 Fix any failures, then use the **Write tool** to save the completed document to `{path}/{filename}` —
 e.g. `projects/005-secure-compute-above-official/ARC-005-SDD-v1.0.md`. Do **not** echo the full document into your
 response — it is large and only the summary below should be printed.
+
+Then recount every free-text answer against the limit on its `**Words:**` line, correct any counter
+the recount disagrees with, and rewrite any answer it marks OVER (then count again). Words are
+counted by splitting on spaces, which can differ by a word or two from the Digital Platform's
+counter, so leave a small margin:
+
+```bash
+SDD="{path}/{filename}"   # the SDD just written
+# word count: keep identical in review.md and the five sdd-lot commands
+awk '
+    FNR == 1 { if (prev != "" && !found) printf "%s: no word counters\n", prev; prev = FILENAME; found = 0; q = ""; inc = 0 }
+    inc { if (index($0, "-->")) inc = 0; next }
+    /^[ \t]*<!--/ { if (!index($0, "-->")) inc = 1; next }
+    /^\*\*[0-9]+\.[0-9]+ / { q = $0; sub(/^\*\*/, "", q); sub(/\*\*.*$/, "", q); n = 0; next }
+    /^\*\*Words:\*\*/ {
+        if (q != "") {
+            found++; s = $0; sub(/^\*\*Words:\*\*[ \t]*/, "", s)
+            split(s, a, "/"); c = a[1]; gsub(/[ \t]/, "", c); lim = a[2] + 0; note = ""
+            if (n > lim) { note = ", OVER by " (n - lim); over++ }
+            else if (c ~ /^[0-9]+$/ && c + 0 != n) note = " (the counter says " c ")"
+            printf "%s:%s: %d/%d words%s\n", FILENAME, q, n, lim, note
+        }
+        q = ""; next
+    }
+    /^(#|---)/ { q = ""; next }
+    q != "" && $0 !~ /^[ \t]*(>|```)/ { n += NF }
+    END { if (prev != "" && !found) printf "%s: no word counters\n", prev; printf "answers over their limit: %d\n", over + 0 }' "$SDD"
+```
 
 ### 9. Show the summary
 
@@ -257,7 +299,7 @@ Report what the document contains, counted from what you wrote:
 **Saved to:** `{path}/ARC-{PROJECT_ID}-SDD-v[X.Y].md` ([new / updated from vX.Y])
 
 ### Lot 1b Readiness
-- Staff clearance offered (19.2): [Up to DV / Up to SC / PENDING — blocker]
+- Staff clearance offered (19.2): [Developed Vetting (DV) / Security Clearance (SC) / PENDING — blocker]
 - ISO 27018 certificate: [Held, per supplier profile / Not needed: private cloud only / Not needed: reselling and relying on the provider's accreditations / Not recorded — needed in the lot questions because the service includes public cloud]
 
 ### Questions
@@ -274,6 +316,7 @@ Report what the document contains, counted from what you wrote:
 | Benefits | [N] items, longest [X] words | 10 items, 10 words |
 | System requirements | [N] items, longest [X] words | 10 items, 10 words |
 | What's backed up | [N] items, longest [X] words | 10 items, 10 words |
+| Free-text answers | [N] counted, [N] over their limit | 50, 100 or 200 words each (`**Words:**` lines) |
 
 ### Key Answers (as recorded)
 - Categories: [full paths]
@@ -308,8 +351,8 @@ Report what the document contains, counted from what you wrote:
 - Lot 1b services are not in the public Digital Marketplace search, and their prices go on GCA's
   separate, non-public platform.
 - Every assertion must be evidenceable: GCA and buyers can ask for proof.
-- Buyers filter on the ticked options, so a wrong tick either hides the service or promises something
-  it can't deliver.
+- The ticked options appear on the listing, so a wrong tick either misleads buyers or promises
+  something the service can't deliver.
 - The uploaded service definition document is ODF or PDF/A, at most 5 MB, accessible, and contains no
   prices.
 - Lot 1a/1b bids are scored on the lot questions (Quality Cloud Services 40%, Maximising Buyer Value

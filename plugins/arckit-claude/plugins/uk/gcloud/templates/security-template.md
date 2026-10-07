@@ -16,7 +16,7 @@
 | [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.[COMMAND]` command | [PENDING] | [PENDING] |
 
 > G-Cloud 15 (RM1557.15) security answers and evidence for one service: the security sections of the lot's service questions, mapped to the NCSC cloud security principles, with the lot's certification requirements and an evidence register.
-> Question wording and answer options are from GCA's (the Government Commercial Agency, formerly CCS) question export; certification rules from Framework Schedule 1 (Specification) v2.1, Attachment 2 (How to tender) v5.0 and GCA's Updates to Tender Documents.
+> Question wording is from GCA's (the Government Commercial Agency, formerly CCS) question export, and answer options are worded as the live G-Cloud 15 listings show them (scraped 7 October 2026); certification rules from Framework Schedule 1 (Specification) v2.1, Attachment 2 (How to tender) v5.0 and GCA's Updates to Tender Documents.
 > Keep only the sections §1 marks for this lot. Delete the rest rather than marking them N/A.
 
 ## G-Cloud Details
@@ -55,16 +55,16 @@ These answers are published on the listing and must match the service's SDD (`AR
 
 ## 2. Service Security Answers
 
-*Answer with the export's own options, shown in brackets and separated by semicolons where an option itself contains "/". Every answer needs evidence in the register (§7), or `[PENDING]`.*
+*Answer with the options shown in brackets (separated by semicolons where an option itself contains "/"), worded as listings show them. Where the Digital Platform words one differently, `sdd.md` gives its wording in a comment beside the option. Every answer needs evidence in the register (§7), or `[PENDING]`.*
 
 ### 2.1 Data-in-Transit Protection
 <!-- Lots 1a/1b and 2a/2b. NCSC principle 1. -->
 
 | Question | Answer | Evidence |
 |----------|--------|----------|
-| **Data protection between buyer and supplier networks** | [Private network or public sector network / TLS (Version 1.2 or above) / IPsec or TLS VPN gateway / Legacy SSL and TLS (under 1.2) / Other] | [EVIDENCE] |
+| **Data protection between buyer and supplier networks** | [Private network or public sector network / TLS (version 1.2 or above) / IPsec or TLS VPN gateway / Legacy SSL and TLS (under version 1.2) / Other] | [EVIDENCE] |
 | **Other protection between networks** (if Other) | [DESCRIPTION] | |
-| **Data protection within supplier network** | [TLS (Version 1.2 or above) / IPsec or TLS VPN gateway / Legacy SSL and TLS (under 1.2) / Other] | [EVIDENCE] |
+| **Data protection within supplier network** | [TLS (version 1.2 or above) / IPsec or TLS VPN gateway / Legacy SSL and TLS (under version 1.2) / Other] | [EVIDENCE] |
 | **Other protection within supplier network** (if Other) | [DESCRIPTION] | |
 
 ### 2.2 Asset Protection
@@ -75,7 +75,7 @@ These answers are published on the listing and must match the service's SDD (`AR
 | **Knowledge of data storage and processing locations** | Yes / No | |
 | **Data storage and processing locations** | [United Kingdom / European Economic Area (EEA) / Other locations] | [EVIDENCE] |
 | **User control over data storage and processing locations** | Yes / No | |
-| **Datacentre security standards** | [Complies with a recognised standard, for example CSA CCM v4.0 or SSAE-18 / ISAE 3402; Supplier-defined controls; Managed by a third party] | [EVIDENCE] |
+| **Datacentre security standards** | [Complies with a recognised standard (for example CSA CCM version 4.0); Supplier-defined controls; Managed by a third party] | [EVIDENCE] |
 | **Penetration testing frequency** | [At least every 6 months / At least once a year / Less than once a year / Never] | [EVIDENCE] |
 | **Penetration testing approach** | [‘IT Health Check’ performed by a CHECK service provider / NCSC approved service provider / ‘IT Health Check’ performed by a CREST-approved service provider / Another external penetration testing organisation / In-house] | [EVIDENCE] |
 | **Protecting data at rest** | [Physical access control, complying with CSA CCM v4.0; Physical access control, complying with SSAE-18 / ISAE 3402; Physical access control, complying with another standard; Encryption of all physical media; Scale, obfuscating techniques, or data storage sharding; Other] | [EVIDENCE] |
@@ -130,7 +130,7 @@ These answers are published on the listing and must match the service's SDD (`AR
 | **Named board-level person responsible for service security** | Yes / No | [Name and role, internal] |
 | **Software Security Code of Practice** (Lots 2a/2b only): does your organisation comply with its recommendations? | Yes / No | [Self-assessment against the code, dated] |
 | **Security governance certified** | Yes / No | |
-| **Security governance standards** (if certified) | [Physical access control, complying with CSA CCM v4.0 / ISO/IEC 27001 / Other] | [Certificate] |
+| **Security governance standards** (if certified) | [CSA CSM version 4.0 / ISO/IEC 27001 / Other] | [Certificate] |
 | **Other security governance standards** (if Other) | [STANDARDS] | |
 | **Security governance approach** (if not certified) | [DESCRIPTION] | |
 
@@ -180,8 +180,8 @@ These answers are published on the listing and must match the service's SDD (`AR
 
 | Question | Answer | Evidence |
 |----------|--------|----------|
-| **Staff security clearance**: how do you manage staff security clearance checks? | [Staff screening performed which conforms to BS7858:2019 / Staff screening performed but doesn’t conform with BS7858:2019 / Staff screening not performed] | [Screening policy; BS7858:2019 conformance evidence] |
-| **Government security clearance**: if the role requires it, what level are you prepared to make sure your staff have? | [Up to Developed Vetting (DV) / Up to Security Clearance (SC) / Up to Baseline Personnel Security Standard (BPSS) / None]. Lot 1b: DV or SC only | [Clearance register, internal] |
+| **Staff security clearance**: how do you manage staff security clearance checks? | [Conforms to BS7858:2019 / Other security clearance / Staff screening not performed] | [Screening policy; BS7858:2019 conformance evidence] |
+| **Government security clearance**: if the role requires it, what level are you prepared to make sure your staff have? | [Developed Vetting (DV) / Security Clearance (SC) / Baseline Personnel Security Standard (BPSS) / None]. Lot 1b: DV or SC only | [Clearance register, internal] |
 
 Clearances held now:
 
@@ -206,7 +206,7 @@ Clearances held now:
 | Question | Answer | Evidence |
 |----------|--------|----------|
 | **User authentication needed** | Yes / No | |
-| **User authentication** | [Multi-Factor Authentication (MFA) / Public key authentication (including by TLS client certificate) / Identity federation with existing provider (for example Google apps) / Limited access over government network (for example PSN) / Dedicated link (for example VPN or bonded fibre) / Username or password / Other] | [EVIDENCE] |
+| **User authentication** | [Multi-Factor Authentication (MFA) / Public key authentication (including by TLS client certificate) / Identity federation with existing provider (for example Google Apps) / Limited access network (for example PSN) / Dedicated link (for example VPN) / Username or password / Other] | [EVIDENCE] |
 | **Other user authentication** (if Other) | [DESCRIPTION] | |
 | **Access restriction testing frequency** | [At least every 6 months / At least once a year / Less than once a year / Never] | [EVIDENCE] |
 | **Management access authentication** | [Same options as user authentication] | [EVIDENCE] |
@@ -269,7 +269,7 @@ Principles not asked as service questions still matter: on Lots 1a/1b the lot qu
 |----------|------------------|------|--------------------|--------------------|---------------------|--------|---------|
 | [STANDARD] | [RULE AND SOURCE] | Yes / No / Working towards | [NUMBER] | [BODY] | Yes / No / Partly | [DATE] | [DATE] |
 
-<!-- Lots 1a/1b: Cyber Essentials Plus (awarded in the last 12 months, or held by framework award, or an IASME-certified equivalent); ISO 9001, ISO/IEC 20000-1 and ISO/IEC 27001; and ISO 14001, ISO/IEC 27017 and, if the service is offered on public cloud, ISO/IEC 27018, unless you resell and rely on the cloud provider's accreditations. Lots 2a/2b and 3: Cyber Essentials, mandatory for every call-off. -->
+<!-- Lots 1a/1b: ISO 9001, ISO/IEC 20000-1 and ISO/IEC 27001; and ISO 14001, ISO/IEC 27017 and, if the service is offered on public cloud, ISO/IEC 27018, unless you resell and rely on the cloud provider's accreditations; plus Cyber Essentials Plus (awarded in the last 12 months, or certified by the date of framework award, or an IASME-certified equivalent), mandatory for every call-off. Lots 2a/2b and 3: Cyber Essentials, mandatory for every call-off. Cyber Essentials and Cyber Essentials Plus are call-off requirements, not conditions of the bid: report a missing one as a call-off warning. -->
 
 **Lot-specific commitments**
 

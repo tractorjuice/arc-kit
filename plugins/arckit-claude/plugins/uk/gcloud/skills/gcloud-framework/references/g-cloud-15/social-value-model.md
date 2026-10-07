@@ -1,6 +1,6 @@
 # Social value model
 
-Built by `tools/framework_questions.py --social-value` from the listings in `run_20261007_005156`. Measures are worded exactly as suppliers select them (the declaration's Section B).
+Built by `tools/framework_questions.py --social-value` from the listings in `run_20261007_005156`. Measures are worded as live listings show them, which is what buyers see. GCA's question export (the declaration's Section B) words some checkboxes differently, usually adding examples or a trailing clause: tick the checkbox with the same opening words.
 
 ## Mission: Kick start economic growth
 

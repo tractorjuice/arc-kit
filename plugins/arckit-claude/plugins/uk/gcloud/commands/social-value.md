@@ -3,8 +3,10 @@ description: Create or update the supplier's G-Cloud 15 social value commitments
 doc-type: SOCV
 effort: high
 handoffs:
+  - command: /arckit-uk-gcloud:service-design
+    description: Design each service and choose its lot
   - command: /arckit-uk-gcloud:lot-questions
-    description: Answer the lot questions for the lots you are bidding for
+    description: Answer the lot questions once the services have their SDDs
   - command: /arckit-uk-gcloud:declaration
     description: The declaration's social value section summarises this document
 ---
@@ -47,6 +49,20 @@ Use the **Read tool** on the highest version of:
   measures under each mission, the Social Value Contact and the Operational Readiness answers. Ask
   what they want to change, and keep everything else as it is.
 
+```bash
+# A supplier profile written for the previous framework has no Central Digital Platform or PPON section
+SUPP=$(find projects/000-global/supplier -maxdepth 1 -name 'ARC-000-SUPP-v*.md' 2>/dev/null | sort -V | tail -1)
+if [ -n "$SUPP" ] && ! grep -qiE 'PPON|Central Digital Platform' "$SUPP"; then
+    echo "PREVIOUS FRAMEWORK: $SUPP has no Central Digital Platform or PPON section"
+fi
+```
+
+If it reports the profile as written for the previous framework, warn the user before going on:
+G-Cloud 15 needs the PPON, the Central Digital Platform record and the certificates as they stand
+now, and an older profile lacks them. Recommend re-running `/arckit-uk-gcloud:supplier-profile` to update it,
+and ask whether to continue meanwhile; mark anything taken from the outdated parts as
+`[PENDING: confirm for G-Cloud 15]`.
+
 **Citation traceability**: When you fetch a supplier web page (social value, ESG, careers or
 sustainability), or read a document the user has placed under `projects/000-global/supplier/` or an
 `external/` directory, follow the citation instructions in
@@ -60,16 +76,17 @@ cited.
 Use the **Read tool** on:
 
 - `${CLAUDE_PLUGIN_ROOT}/skills/gcloud-framework/references/g-cloud-15/social-value-model.md` —
-  every mission, policy outcome and measure, worded exactly as the declaration's checkboxes.
+  every mission, policy outcome and measure, worded as the live listings show them, which is what
+  buyers see. It is built from the 42,893 listings scraped on 7 October 2026.
 - The declaration's social value questions in
   `${CLAUDE_PLUGIN_ROOT}/skills/gcloud-framework/references/g-cloud-15/declaration.md` — only the
-  sections from `### Social Value: Section A` to `### Social Value: Section B`, and from
-  `### Social Value: Section C` to `### Visibility of third party agents or bid writers` (Section B's
-  checkbox list is in the model above):
+  sections from `### Social Value: Section A` to `### Social Value: Section C` (Section B's row holds
+  every checkbox in the question export's full wording, which the Digital Platform shows), and from
+  `### Social Value: Section C` to `### Visibility of third party agents or bid writers`:
 
 ```bash
 REF="${CLAUDE_PLUGIN_ROOT}/skills/gcloud-framework/references/g-cloud-15/declaration.md"
-sed -n '/^### Social Value: Section A/,/^### Social Value: Section B/p' "$REF"
+sed -n '/^### Social Value: Section A/,/^### Social Value: Section C/p' "$REF"
 sed -n '/^### Social Value: Section C/,/^### Visibility of third party/p' "$REF"
 ```
 
@@ -169,8 +186,18 @@ with the numbers they commit to.
 - At least one measure in total is required.
 - Some measures appear under two outcomes with the same wording (for example "Support for educational
   attainment…" under Outcomes 1 and 2). Record the one the user chose, under its outcome.
-- Copy each measure exactly as written in the reference. Never shorten or reword it: the declaration
-  checkbox and the listing use that text.
+- Copy each measure exactly as `social-value-model.md` writes it: that is the wording the listing
+  shows buyers. Never shorten or reword it.
+- **The checkbox you tick on the Digital Platform can be longer.** The model is built from the live
+  listings, and GCA's question export (Section B in `declaration.md`) words 59 of its 76 measures
+  the same way. For the other 17, the checkbox adds illustrative examples or a trailing clause that
+  listings cut off, and one Outcome 6 checkbox ("Collection of the views and expertise of disabled
+  people…") adds a whole second measure. Match each chosen measure to its checkbox by its opening
+  words, and tell the user which checkboxes carry extra text.
+- Three checkboxes share one listing text, "Advertising, promotional and outreach activities
+  designed to raise awareness of the offer to reach the target cohort", under Outcomes 6, 7 and 8;
+  record the outcome the user means. Three export checkboxes under Outcome 4 ("Illustrative examples
+  include:", "Illustrative examples:") are fragments, not measures: never offer them.
 
 ### 7. Evidence and a delivery plan for each measure
 
@@ -293,9 +320,10 @@ Report what the document actually contains:
 - [Each `[PENDING]` item, or "None"]
 
 ### Next Steps
-1. `/arckit-uk-gcloud:lot-questions` — answer the lot questions for the lots you are bidding for
-2. `/arckit-uk-gcloud:declaration` — the declaration's social value section points to this document
-3. `/arckit-uk-gcloud:review` — checks this document before submission
+1. `/arckit-uk-gcloud:service-design` — design each service and choose its lot, then its SDD, pricing and security
+2. `/arckit-uk-gcloud:lot-questions` — once the services have their SDDs: the award criteria repeat their answers
+3. `/arckit-uk-gcloud:declaration` — the declaration's social value section points to this document
+4. `/arckit-uk-gcloud:review` — checks this document before submission
 ```
 
 ## Important Notes

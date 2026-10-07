@@ -23,8 +23,8 @@ most of the quality score:
 | Lot group | Part of the LOTQ document | What the lot questions decide |
 |-----------|---------------------------|-------------------------------|
 | Lots 1a and 1b (IaaS and PaaS) | Part 1 | Conditions of participation (pass/fail), two written quality questions worth 40% each, non-scored mandatory questions, standards |
-| Lots 2a and 2b (iSaaS and SaaS) | Part 2 | Four mandatory award criteria worth 2.5% each, Cyber Essentials (mandatory), other standards |
-| Lot 3 (Cloud Support) | Part 3 | Four mandatory award criteria worth 2.5% each, Cyber Essentials (mandatory), other standards |
+| Lots 2a and 2b (iSaaS and SaaS) | Part 2 | Four mandatory award criteria worth 2.5% each, Cyber Essentials (mandatory for call-offs), other standards |
+| Lot 3 (Cloud Support) | Part 3 | Four mandatory award criteria worth 2.5% each, Cyber Essentials (mandatory for call-offs), other standards |
 
 The lot questions are a **supplier-wide** artefact: one document,
 `projects/000-global/supplier/ARC-000-LOTQ-v{VERSION}.md`, holding one Part per lot group the
@@ -33,7 +33,9 @@ supplier bids for. A re-run for another lot group adds its Part and bumps the ve
 Where GCA's later tender documents (Updates to Tender Documents, Framework Schedule 1 v2.1,
 Attachment 2 v5.0) differ from the question export, they win. Two changes matter here: ISO 27018 is
 required for Lots 1a and 1b whenever the services include public cloud, and Cyber Essentials is
-mandatory for Lots 2a, 2b and 3.
+mandatory for call-off contracts under Lots 2a, 2b and 3. Cyber Essentials and Cyber Essentials Plus
+are call-off requirements, not conditions of the bid: a missing certificate is a call-off warning,
+never "would fail".
 
 Social value (10% on every lot) is answered by `/arckit-uk-gcloud:social-value`, and price by `/arckit-uk-gcloud:pricing`.
 
@@ -51,8 +53,22 @@ $ARGUMENTS
 mkdir -p projects/000-global/supplier
 ls projects/000-global/supplier/ 2>/dev/null
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" --json
-# Each service and the lot its design records
-grep -H -m1 '^\*\*G-Cloud Lot\*\*' projects/[0-9][0-9][0-9]-*/ARC-*-SVCD-v*.md 2>/dev/null
+# service lots: keep identical in lot-questions.md and declaration.md
+# Each service project, the G-Cloud 15 lot its latest service design records, and whether its
+# SDD and security evidence exist. find, not a bare glob: zsh aborts a glob that matches nothing
+find projects -mindepth 1 -maxdepth 1 -type d -name '[0-9][0-9][0-9]-*' ! -name '000-*' 2>/dev/null | sort | while IFS= read -r d; do
+    svcd=$(find "$d" -maxdepth 1 -name 'ARC-*-SVCD-v*.md' 2>/dev/null | sort -V | tail -1)
+    [ -n "$svcd" ] || continue
+    line=$(grep -m1 '^\*\*G-Cloud Lot\*\*' "$svcd")
+    lot=$(printf '%s' "$line" | sed 's/^\*\*G-Cloud Lot\*\*:[[:space:]]*//' | grep -oE '^(Lot[[:space:]]*)?[123][ab]?' | grep -oE '[123][ab]?$')
+    case "$lot" in
+        1a|1b|2a|2b|3) ;;
+        *) lot="NOT A G-CLOUD 15 LOT (${line:-no G-Cloud Lot line}): re-run /arckit-uk-gcloud:service-design" ;;
+    esac
+    sdd=$(find "$d" -maxdepth 1 -name 'ARC-*-SDD-v*.md' 2>/dev/null | grep -q . && echo yes || echo MISSING)
+    seca=$(find "$d" -maxdepth 1 -name 'ARC-*-SECA-v*.md' 2>/dev/null | grep -q . && echo yes || echo MISSING)
+    printf '%s\t%s\tSDD=%s\tSECA=%s\n' "$d" "$lot" "$sdd" "$seca"
+done
 ```
 
 Use the **Read tool** on the highest version of:
@@ -64,9 +80,33 @@ Use the **Read tool** on the highest version of:
 - `projects/000-global/supplier/ARC-000-SOCV-v*.md` — only to report social value status in the
   quality score tables; never duplicate its answers here. If missing, note it.
 
-A legacy G-Cloud 14 service design has no `**G-Cloud Lot**` line, only a "1.3 Target Lot" checkbox
-(Lot 1 Cloud Hosting / Lot 2 Cloud Software / Lot 3 Cloud Support). Treat old Lot 3 as Lot 3, and ask
-which G-Cloud 15 lot an old Lot 1 (1a or 1b) or Lot 2 (2a or 2b) service is now.
+**Designs from the previous framework.** A design marked `NOT A G-CLOUD 15 LOT` records no lot this
+command can place: a G-Cloud 14 design has no `**G-Cloud Lot**` line, only a "1.3 Target Lot"
+checkbox, and an old "Lot 2" (or "Lot 1", "Cloud Software", "Cloud Hosting") could be 2a or 2b, or
+1a or 1b. Don't guess. List each one, tell the user to re-run `/arckit-uk-gcloud:service-design` for it so the
+design records a G-Cloud 15 lot, and leave it out of every lot group until then.
+
+**Write the lot questions after the SDDs.** The Lot 2a/2b and Lot 3 award criteria repeat each
+service's user support, data location, penetration testing, data sanitisation and staff security
+answers, and must agree with every service in the lot group; the Lot 1a/1b quality answers draw on
+the same SDDs and security documents. If a service in a group shows `SDD=MISSING` (or
+`SECA=MISSING`), say so and recommend running its SDD command (and `/arckit-uk-gcloud:security`) first. Go on
+only if the user wants a first draft now, and mark every answer that rests on a design alone as
+`[PENDING: check against the SDD]`.
+
+```bash
+# A supplier profile written for the previous framework has no Central Digital Platform or PPON section
+SUPP=$(find projects/000-global/supplier -maxdepth 1 -name 'ARC-000-SUPP-v*.md' 2>/dev/null | sort -V | tail -1)
+if [ -n "$SUPP" ] && ! grep -qiE 'PPON|Central Digital Platform' "$SUPP"; then
+    echo "PREVIOUS FRAMEWORK: $SUPP has no Central Digital Platform or PPON section"
+fi
+```
+
+If it reports the profile as written for the previous framework, warn the user before going on:
+G-Cloud 15 needs the PPON, the Central Digital Platform record and the certificates as they stand
+now, and an older profile lacks them. Recommend re-running `/arckit-uk-gcloud:supplier-profile` to update it,
+and ask whether to continue meanwhile; mark anything taken from the outdated parts as
+`[PENDING: confirm for G-Cloud 15]`.
 
 **Citation traceability**: When you fetch a URL (for example a published Carbon Reduction Plan), or
 read a document the user has placed under `projects/000-global/supplier/` or an `external/`
@@ -128,7 +168,8 @@ Then read the evidence for every service in the group: for each service project 
 (highest versions, where present).
 
 If no service matches, ask the user which services belong to the group. A lot group can be answered
-before any service exists, but the answers then rest on the supplier profile and the user alone.
+before any service exists, but the answers then rest on the supplier profile and the user alone, and
+must be checked again once the SDDs exist.
 
 Every answer must come from the supplier profile, these documents, a URL the user gives, or the user.
 Record each fact you use in the "Evidence Used" table with its file and section. **Never invent a
@@ -149,7 +190,11 @@ default: an unanswered one is `[PENDING]`, including in a headless run. Ask four
    (Offering both proprietary and resold services as your core IaaS/PaaS → Reseller. Reselling only ancillary services → Sole Control.)
 2. Have you been trading for less than 12 months?  [Yes / No]
 3. Do you have a current Cyber Essentials Plus certificate for the services, awarded by IASME within the last 12 months?
-   [Yes / Working towards it, certified by framework award / An IASME certified equivalent / None of these]
+   [Yes / No]
+   If No, the alternative, worded as the export and the live Lot 1a listings word it:
+   [In relation to the services you do not have a current and valid Cyber Essentials Plus certificate … but you are working towards gaining it, and will be in a position to confirm … by the date of framework award.
+    / You do not have a current and valid Cyber Essentials Plus certificate, or will not have in place by the date of framework award but have an IASME certified equivalent.
+    / None of the criteria]
 4. Are you bidding for Lot 1b (alone or with 1a)?  [Yes / No]
 ```
 
@@ -181,8 +226,12 @@ Then follow the export's branches:
   published plan (use **WebFetch** on its URL). Never estimate them; the export accepts 0 where data
   is unavailable, with an explanation.
 - **Cyber Essentials Plus:** mandatory for call-off contracts under Lots 1a and 1b (Framework
-  Schedule 1 v2.1). Record the certificate number (format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`) or
-  the alternative chosen. "None of these" means none of the accepted routes applies.
+  Schedule 1 v2.1), not a condition of the bid: Attachment 2 v5.0 doesn't mark it mandatory for the
+  tender, as it does the ISO certificates. Record the certificate number (format
+  `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`) or the alternative chosen, with the template's exact
+  option text. If it isn't held, list it under "Call-off Warnings": the supplier can't take a Lot
+  1a/1b call-off until certified. Of the 1,829 live Lot 1a listings, the 105 without it all chose
+  one of the first two alternatives.
 
 #### 4b. Scored quality questions
 
@@ -234,10 +283,16 @@ published accounts, and the pricing and social value documents.
 
 ### 5. Lots 2a and 2b (Part 2), and Lot 3 (Part 3): mandatory award criteria
 
-Each criterion is worth 2.5%, marked by the option chosen (Attachment 2d). A "No" scores 0, and
-Attachment 2 disqualifies a tender with a zero on any scored quality question. The answer covers
-**all** the supplier's services in the lot group, and has to agree with the User Support, Asset
-Protection, Staff Security and Standards answers on each listing.
+Each criterion is worth 2.5%, marked by the option chosen (Attachment 2d). GCA's rule for these
+lots, in Attachment 2d (Quality questionnaire) v4.0 and in Attachment 2 (How to tender) v5.0,
+disqualifies a tender that marks under 33 on **all four** criteria, that is a weighted quality score
+of zero. A single "No" scores 0 and loses that criterion's 2.5%, but doesn't on its own disqualify.
+Attachment 2's general quality-threshold paragraph says a zero on any scored question disqualifies;
+the lot-specific rule is the one both documents repeat, and the live listings fit it (1,159 Lot 2b
+services from 207 suppliers answer "Data sanitisation process: No"). Avoid any zero all the same: it
+costs marks, and buyers can test every claim. The answer covers **all** the supplier's services in
+the lot group, and has to agree with the User Support, Asset Protection, Staff Security and
+Standards answers on each listing.
 
 1. For each service in the group, read what its SDD and SECA document say for each criterion, and
    fill the per-service tables.
@@ -286,12 +341,16 @@ well as scoring 0.
    table: social value 10% (from the SOCV document: Pass only if every pass/fail answer there is
    "Yes" and at least one measure is selected, otherwise `[PENDING]` or Fail) plus 2.5% × mark for
    each criterion.
-5. **Cyber Essentials is mandatory** for call-off contracts under Lots 2a, 2b and 3 (GCA's Updates to
-   Tender Documents and Framework Schedule 1 v2.1), even though the export lists it among
-   "Non-mandatory Standards and certifications". Record the certificate number, or the alternative
-   chosen, from the supplier profile. Flag it under "Would Fail as Written" if it isn't held and the
-   supplier isn't working towards it by framework award. Cyber Essentials Plus is optional for these
-   lots.
+5. **Cyber Essentials is mandatory for call-off contracts** under Lots 2a, 2b and 3 (GCA's Updates
+   to Tender Documents and Framework Schedule 1 v2.1), though the export lists it among
+   "Non-mandatory Standards and certifications". It is not a condition of the bid: Attachment 2 v5.0
+   lists no mandatory certificate for these lots, and 769 Lot 2b and 1,977 Lot 3 listings are live
+   with "Cyber essentials: No" and "None of the criteria". Record the certificate number from the
+   supplier profile, or the alternative chosen, using the template's option text: the live listings
+   word the alternatives "within 12 months of the date of award", where the export says "by the date
+   of framework award". If it isn't held, list it under "Call-off Warnings", never "Would Fail as
+   Written": the supplier can't be awarded a call-off until it holds the certificate. Cyber
+   Essentials Plus is optional for these lots.
 6. Fill the non-mandatory standards (ISO/IEC 27001, ISO 28000:2022, ISO 9001, QMS, CSA STAR, PCI DSS,
    others) from the supplier profile, and the requirements outside the lot questions.
 
@@ -299,7 +358,8 @@ well as scoring 0.
 
 Fill the **G-Cloud Details** table (supplier, lot groups, lots bid for, services in those groups).
 List every `[PENDING]` item, every pass/fail answer that would fail, every required certificate not
-held, and every service that disagrees with a lot answer under "Items Requiring Attention".
+held, every call-off warning, and every service that disagrees with a lot answer under "Items
+Requiring Attention".
 
 Generate the document ID with the ArcKit helper (LOTQ is single-instance — one document for all the
 supplier's lot groups):
@@ -369,16 +429,19 @@ Report what the document actually contains, for each Part written:
 - Non-scored: NCSC [answer], sanctions [answer], exit [N]/250 words, change of service [N]/250 words
 
 ### Part 2: Lots 2a and 2b
-- User support [answer, mark]; asset protection [answer, mark]; penetration testing [answer, mark]; data sanitisation [answer, mark]
+- User support [answer, mark]; asset protection [answer, mark]; penetration testing [answer, mark]; data sanitisation [answer, mark]. Any criterion marked 0 costs its 2.5%; all four under 33 disqualifies
 - Quality score: [N]% of a possible 20%
-- Cyber Essentials (mandatory): [certificate number / working towards it / PENDING / not held]
+- Cyber Essentials (mandatory for call-offs): [certificate number / alternative chosen / PENDING]
 - Services that disagree with a lot answer: [list or "none"]
 
 ### Part 3: Lot 3
 - [As Lots 2a and 2b, for its four criteria]
 
 ### Would Fail as Written
-- [Each failing pass/fail answer, zero mark, missing required certificate (including ISO 27018 for public cloud and Cyber Essentials for Lots 2a/2b/3) or part over 250 words, or "Nothing found"]
+- [Each failing pass/fail answer, zero mark on a Lot 1a/1b quality question, all four Lot 2a/2b or Lot 3 criteria marked under 33, missing required certificate (the Lot 1a/1b ISO certificates, including ISO 27018 for public cloud, and the Carbon Reduction Plan) or part over 250 words, or "Nothing found"]
+
+### Call-off Warnings
+- [Cyber Essentials Plus (Lots 1a/1b) or Cyber Essentials (Lots 2a/2b, 3) not held: the alternative chosen, and that no call-off can be awarded under the lot until the certificate is held, or "None"]
 
 ### Items Requiring Attention
 - [Each `[PENDING]` item, or "None"]
@@ -388,8 +451,9 @@ Report what the document actually contains, for each Part written:
 
 ### Next Steps
 1. `/arckit-uk-gcloud:social-value` — if the SOCV document is missing or has pending answers
-2. `/arckit-uk-gcloud:pricing [service]` — price is 80% on Lots 2a/2b and 3, and 10% on Lots 1a/1b
-3. `/arckit-uk-gcloud:declaration` — the supplier declaration
+2. The SDD, `/arckit-uk-gcloud:pricing` and `/arckit-uk-gcloud:security` for any service in the group that lacks them —
+   the award criteria repeat their answers
+3. `/arckit-uk-gcloud:declaration` — the supplier declaration, which records the lots bid for
 4. `/arckit-uk-gcloud:review [service]` — checks limits and consistency before submission
 ```
 

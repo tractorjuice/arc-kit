@@ -162,20 +162,29 @@ The template is shared by Lots 2a and 2b.
 Fill in the template for Lot 2b:
 
 - **Header and G-Cloud Details:** set `**G-Cloud Lot**: Lot 2b — Software as a Service (SaaS)`; in
-  the G-Cloud Details table set the Lot row to `2b — Software as a Service (SaaS)` and the SDD command
-  to `/arckit-uk-gcloud:sdd-lot2b`.
+  the G-Cloud Details table set the Lot row to `2b — Software as a Service (SaaS)`, the SDD command
+  to `/arckit-uk-gcloud:sdd-lot2b` and the Listing contact row to the supplier profile's Listing Contact
+  (name, email and phone), or `[PENDING]`.
 - **1.1 Service type:** `Lot 2b: Software as a Service (SaaS)`.
-- **Every question:** answer each one under its number, ticking GCA's options exactly as worded. A
-  follow-up marked ↳ gets an answer only when its trigger is ticked; otherwise write `Not applicable`.
-  If `lot-2b-services.md` has a question the template lacks (a customised template, or a reissued
-  export), add it in its section and say so in the summary.
-- **3.2 Service categories:** only categories from the Lot 2b tree, written as full paths, and only
-  ones the service really delivers. Start from the service design's first pass. A category that
-  exists only in the Lot 2a tree means the service may belong in Lot 2a: say so in the summary rather
-  than using it.
+- **Every question:** answer each one under its number, ticking the template's options exactly as
+  worded: the live listings' wording, with the Digital Platform's in a comment where it differs
+  (tick that one when entering the answer). A follow-up marked ↳ gets an answer only when its
+  trigger is ticked; otherwise write `Not applicable`. If `lot-2b-services.md` has a question the
+  template lacks (a customised template, or a reissued export), add it in its section and say so in
+  the summary.
+- **3.2 Service categories:** only categories from the Lot 2b tree, written as full paths, and
+  only ones the service really delivers. Start from the service design's first pass. A category that
+  exists only in the Lot 2a tree means the service may belong in Lot 2a: say so in the summary
+  rather than using it. All of them must sit under one root and one group, the first two levels of
+  the path, recorded on the template's **Category group** line: none of the 42,893 live G-Cloud 15
+  listings (scraped 7 October 2026) has categories in two groups. If the service design's categories
+  span groups, ask the user with **AskUserQuestion** which group this listing covers, and suggest
+  `/arckit-uk-gcloud:service-design` for a separate service for the others.
 - **Limits:** count the characters in the service name (100) and description (500), and the words in
-  every feature, benefit and system requirement (10 each, at most 10 items). Rewrite anything over a
-  limit rather than cutting it off, and fill in the template's counters.
+  every feature, benefit and system requirement (10 each, at most 10 items). Every free-text answer
+  has a word limit on its `**Words:**` line (50, 100 or 200 words, inferred from the live listings
+  because GCA's export states none): write each answer within it and fill in the count. Rewrite
+  anything over a limit rather than cutting it off, and fill in the template's counters.
 - **6.1 Supplier type:** from the service design, with the organisation resold for any reseller
   option.
 - **Mandatory award criteria:** user support (section 7), data storage and processing locations,
@@ -225,10 +234,12 @@ Populate the Document Control header (Document ID = `ARC-{PROJECT_ID}-SDD-v{VERS
 Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SDD** per-type checks pass. Then check:
 
 - [ ] Every question is answered, ticked, `Not applicable` or `[PENDING]`
-- [ ] Each *choose one* question has exactly one tick, and every ticked option is GCA's wording
-- [ ] Every category comes from the Lot 2b tree
+- [ ] Each *choose one* question has exactly one tick, and every ticked option is worded
+  exactly as the template words it
+- [ ] Every category comes from the Lot 2b tree, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features, benefits and system requirements, each ≤ 10 words
+- [ ] Every free-text answer within the limit on its `**Words:**` line
 - [ ] Consistent with the supplier profile (certifications, locations, clearances), the service
   design and, if present, Part 2 of the lot questions document
 - [ ] No prices, except the support level costs GCA asks for at 7.14
@@ -237,6 +248,34 @@ Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and
 Fix any failures, then use the **Write tool** to save the completed document to `{path}/{filename}` —
 e.g. `projects/004-secure-case-mgmt/ARC-004-SDD-v1.0.md`. Do **not** echo the full document into your
 response — it is large and only the summary below should be printed.
+
+Then recount every free-text answer against the limit on its `**Words:**` line, correct any counter
+the recount disagrees with, and rewrite any answer it marks OVER (then count again). Words are
+counted by splitting on spaces, which can differ by a word or two from the Digital Platform's
+counter, so leave a small margin:
+
+```bash
+SDD="{path}/{filename}"   # the SDD just written
+# word count: keep identical in review.md and the five sdd-lot commands
+awk '
+    FNR == 1 { if (prev != "" && !found) printf "%s: no word counters\n", prev; prev = FILENAME; found = 0; q = ""; inc = 0 }
+    inc { if (index($0, "-->")) inc = 0; next }
+    /^[ \t]*<!--/ { if (!index($0, "-->")) inc = 1; next }
+    /^\*\*[0-9]+\.[0-9]+ / { q = $0; sub(/^\*\*/, "", q); sub(/\*\*.*$/, "", q); n = 0; next }
+    /^\*\*Words:\*\*/ {
+        if (q != "") {
+            found++; s = $0; sub(/^\*\*Words:\*\*[ \t]*/, "", s)
+            split(s, a, "/"); c = a[1]; gsub(/[ \t]/, "", c); lim = a[2] + 0; note = ""
+            if (n > lim) { note = ", OVER by " (n - lim); over++ }
+            else if (c ~ /^[0-9]+$/ && c + 0 != n) note = " (the counter says " c ")"
+            printf "%s:%s: %d/%d words%s\n", FILENAME, q, n, lim, note
+        }
+        q = ""; next
+    }
+    /^(#|---)/ { q = ""; next }
+    q != "" && $0 !~ /^[ \t]*(>|```)/ { n += NF }
+    END { if (prev != "" && !found) printf "%s: no word counters\n", prev; printf "answers over their limit: %d\n", over + 0 }' "$SDD"
+```
 
 ### 9. Show the summary
 
@@ -262,6 +301,7 @@ Report what the document contains, counted from what you wrote:
 | Features | [N] items, longest [X] words | 10 items, 10 words |
 | Benefits | [N] items, longest [X] words | 10 items, 10 words |
 | System requirements | [N] items, longest [X] words | 10 items, 10 words |
+| Free-text answers | [N] counted, [N] over their limit | 50, 100 or 200 words each (`**Words:**` lines) |
 
 ### Key Answers (as recorded)
 - Categories: [full paths]
@@ -290,8 +330,8 @@ Report what the document contains, counted from what you wrote:
 ## Important Notes
 
 - Every assertion must be evidenceable: GCA and buyers can ask for proof.
-- Buyers filter on the ticked options, so a wrong tick either hides the service or promises something
-  it can't deliver.
+- The ticked options appear on the listing, so a wrong tick either misleads buyers or promises
+  something the service can't deliver.
 - The uploaded service definition document is ODF or PDF/A, at most 5 MB, accessible, and contains no
   prices.
 - Four SDD answers are scored again as mandatory award criteria, so they must say the same thing in

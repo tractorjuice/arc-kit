@@ -58,7 +58,7 @@ Sources: GCA question export (Supplier Declaration sheet) and Attachment 2d (Qua
 
 ## Section B: Commitment for Future: Delivery
 
-*Measures are copied word for word from `social-value-model.md`, which matches the declaration's checkboxes and the listings. Never paraphrase a measure.*
+*Measures are copied word for word from `social-value-model.md`, which is built from the live listings, so this is what buyers see. GCA's question export, which the Digital Platform's checkboxes follow, words 17 of the 76 measures longer: it adds illustrative examples or a trailing clause, and one Outcome 6 checkbox adds a second measure. Tick the checkbox whose opening words match. Never paraphrase a measure.*
 
 ### Commitments as They Will Appear on Listings
 

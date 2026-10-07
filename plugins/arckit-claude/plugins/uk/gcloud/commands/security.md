@@ -136,8 +136,10 @@ Also use the **Read tool** on
 `${CLAUDE_PLUGIN_ROOT}/skills/cloud-security/references/compliance-frameworks.md` for certification
 detail, evidence guidance and clearances.
 
-Answer every question with the export's own options, exactly as worded, because the listing shows
-them. Where a question says "Then: ..." it opens a follow-up only for the answers named.
+Answer every question with the options as the template words them: the live listings' wording, which
+buyers see. Where the Digital Platform words an option differently, the SDD template gives its
+wording in a comment, so the supplier ticks the right option when entering it. Where a question says
+"Then: ..." it opens a follow-up only for the answers named.
 
 **Citation traceability**: When you fetch a supplier page or a G-Cloud listing, or read any document
 the user has placed under the project's `external/`, `policies/`, or `vendors/` directories, follow
@@ -176,8 +178,8 @@ What is new or different on G-Cloud 15:
   the SDD records them. Where the lot commits to the FinOps FOCUS standard (1a/1b, 2a/2b), record the
   commitment in §4.1.
 - **Staff security**: screening to BS7858:2019 or not, and the government clearance level you're
-  prepared to provide. **Lot 1b offers only "Up to Developed Vetting (DV)" or "Up to Security
-  Clearance (SC)"**.
+  prepared to provide. **Lot 1b offers only "Developed Vetting (DV)" or "Security Clearance (SC)"**
+  (on the Digital Platform, "Up to …").
 - **Separation between users** (virtualisation) and **Devices users manage the service through** are
   asked on Lots 1a/1b only.
 - **Lot 3** asks no security sections except Staff security. Its document is short: staff security,
@@ -197,7 +199,7 @@ Documents) and Framework Schedule 1:
 
 | Requirement | Detail |
 |-------------|--------|
-| Cyber Essentials Plus | Awarded by an IASME-approved body in the last 12 months. Alternatives: working towards it and holding it by framework award, or an IASME-certified equivalent. Mandatory for every 1a/1b call-off |
+| Cyber Essentials Plus | Awarded by an IASME-approved body in the last 12 months, or one of the export's alternatives: working towards it and certified by the date of framework award, or an IASME-certified equivalent. Mandatory for every 1a/1b call-off contract (Framework Schedule 1 v2.1), not a condition of the bid: Attachment 2 doesn't mark it mandatory for the tender. If it isn't held, it is a call-off warning |
 | ISO 9001, ISO/IEC 20000-1, ISO/IEC 27001 | Mandatory |
 | ISO 14001, ISO/IEC 27017 | Mandatory unless you resell and rely on the cloud service provider's accreditations |
 | ISO/IEC 27018 | Mandatory on Lots 1a **and** 1b if the service is offered on the public cloud deployment model, unless you rely on the provider's. Not needed for private-cloud-only services. The question export still words this as a Lot 1b requirement; GCA's Updates to Tender Documents changed it |
@@ -210,10 +212,14 @@ months of the framework start. It also needs enough staff security cleared to an
 acceptance of Security Aspects Letters, compliance with UK embargo policies, and NCSC supply chain
 security principles applied.
 
-**Lots 2a, 2b and 3**: **Cyber Essentials is mandatory** for every call-off. Framework Schedule 1 and
-GCA's Updates to Tender Documents say so, and Call-Off Schedule 27 is used on every call-off. At the
-bid, the lot questions ask for it among the "non-mandatory standards", with the same alternatives as
-above. Record it as required regardless. Lots 2a/2b also commit to adopting the FOCUS standard.
+**Lots 2a, 2b and 3**: **Cyber Essentials is mandatory** for every call-off. Framework Schedule 1
+and GCA's Updates to Tender Documents say so, and Call-Off Schedule 27 is used on every call-off. At
+the bid it is not a condition: the lot questions ask for it among the "non-mandatory standards",
+Attachment 2 v5.0 lists no mandatory certificate for these lots, and 769 Lot 2b and 1,977 Lot 3
+listings are live with "Cyber essentials: No" and "None of the criteria". The live listings word the
+alternatives "within 12 months of the date of award" (the export says "by the date of framework
+award"). Record it as required for call-offs, and report a missing certificate as a call-off
+warning, not a bid failure. Lots 2a/2b also commit to adopting the FOCUS standard.
 
 **Other standards the lot questions ask** (none of them mandatory):
 
@@ -244,8 +250,10 @@ must agree. Show the mark each answer earns:
 | 3 | Clearance level prepared to provide if a buyer requires it | DV 100, SC 66, BPSS 33, none 0 |
 | 3 | Prepared to hold Cyber Essentials (or equivalent or higher) if a buyer requires it | Yes 100, No 0 |
 
-The fourth criterion on each lot is user support, which the SDD covers. A tender scoring under 33 on
-all four is disqualified. Never raise an answer to earn a mark the supplier can't evidence: the mark
+The fourth criterion on each lot is user support, which the SDD covers. A tender marking under 33 on
+all four is disqualified (Attachment 2d v4.0 and Attachment 2 v5.0); a single zero loses that
+criterion's 2.5%. `/arckit-uk-gcloud:lot-questions` states the same rule. Never raise an answer to earn a mark
+the supplier can't evidence: the mark
 comes from the claim, but buyers can test the claim.
 
 ### 7. Evidence
@@ -366,7 +374,8 @@ Report what the document actually contains:
 - Every answer is published on the listing and every assertion must be evidenceable. GCA (formerly
   CCS) and buyers can ask for proof.
 - Cyber Essentials Plus is mandatory for every Lot 1a/1b call-off, and Cyber Essentials for every
-  Lot 2a/2b and Lot 3 call-off. A lapsed certificate puts call-offs at risk.
+  Lot 2a/2b and Lot 3 call-off. Neither is a condition of the bid, but without a current certificate
+  the supplier can't be awarded a call-off, and a lapsed one puts call-offs at risk.
 - Lot 1b offers only SC or DV clearance, needs an accredited secure facility within 6 months of the
   framework start, and publishes nothing publicly.
 - Certificates must cover the service being offered. Check the scope statement, not just the

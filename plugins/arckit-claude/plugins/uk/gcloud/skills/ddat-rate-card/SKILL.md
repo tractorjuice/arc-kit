@@ -9,7 +9,7 @@ Conversational knowledge about the G-Cloud 15 Lot 3 rate card: its job families,
 
 ## Purpose
 
-On G-Cloud 15, every Lot 3 (Cloud Support) service carries a rate card. Suppliers give a **maximum day rate, UK and offshore, for each role level they offer**, chosen from a fixed list of 9 job families, 58 roles and 222 role levels. The list follows the government's Digital, Data and Technology (DDaT) profession capability framework. SFIA rate cards, used on G-Cloud 14, are no longer part of the framework.
+On G-Cloud 15, every Lot 3 (Cloud Support) supplier has one rate card, shown in full on each of its Lot 3 services. Suppliers give a **maximum day rate, UK and offshore, for each role level they offer**, chosen from a fixed list of 9 job families, 58 roles and 222 role levels. The list follows the government's Digital, Data and Technology (DDaT) profession capability framework. SFIA rate cards, used on G-Cloud 14, are no longer part of the framework.
 
 ## When to Use
 
@@ -28,6 +28,7 @@ These come from the G-Cloud 15 pricing schedule (Framework Schedule 3) and How t
 | Rule | Detail |
 |------|--------|
 | What you price | A maximum day rate per role level, UK (onshore) and optionally offshore |
+| Scope | One card per supplier for all its Lot 3 services; every Lot 3 listing shows the whole card. The overlay keeps it in the supplier-wide `ARC-000-RATE` document, written by `/arckit-uk-gcloud:pricing` |
 | Day length | 7.5 hours |
 | Minimum rate | £50 a day |
 | Travel and subsistence | Included in the rate within the M25 |
@@ -35,7 +36,7 @@ These come from the G-Cloud 15 pricing schedule (Framework Schedule 3) and How t
 | Risk | No uplift for risk or contingency may be built into a rate |
 | Levels you can't provide | Leave them blank |
 | Evaluation | Lot 3 price is 80% of the score. Your **average day rate** is every rate you enter, UK and offshore, added up and divided by how many there are (ignoring any under £50 or over £10,000). The lowest average in the tender scores the full 80%; others score in proportion |
-| Where rates go | GCA's Digital Platform; the rate card then shows on your listing |
+| Where rates go | GCA's Digital Platform; the rate card then shows on every Lot 3 listing you have |
 
 ## Quick Reference: Job Families
 
@@ -78,8 +79,9 @@ These are **maximum** rates; call-off prices are often lower. This overlay doesn
 
 1. **Name roles and levels exactly as the rate card does**: buyers filter on them, and only the listed levels can be priced.
 2. **Quote benchmarks as a range with their date and supplier count**, and say they are maximum rates from live listings, not contract prices.
-3. **Remember the evaluation:** Lot 3 price is scored on the average of every rate entered, UK and offshore alike, so senior levels and offshore rates both move the score. Offer the levels the service really needs.
-4. **Use SFIA only to describe skills**, not to price: `references/sfia-skills.md` maps roles to SFIA skill codes and suggests team compositions.
+3. **One card per supplier:** every Lot 3 listing shows the supplier's whole card, and only 2 of the 1,135 suppliers with more than one live Lot 3 service show different cards on different services. Price is scored on the average of every rate on it, UK and offshore alike, so senior levels and offshore rates both move the score. Offer the levels the supplier can staff at that rate across all its Lot 3 services.
+4. **Roles outside DDaT** (procurement and commercial advisers, trainers): price them at the nearest DDaT role and level by the work and seniority, and say so in the service definition document. Live Lot 3 procurement listings price such people mostly as architects, IT service managers, delivery managers and business analysts.
+5. **Use SFIA only to describe skills**, not to price: `references/sfia-skills.md` maps roles to SFIA skill codes and suggests team compositions.
 
 ## Related Commands
 
@@ -87,8 +89,8 @@ These ArcKit commands use the rate card:
 
 | Command | Use |
 |---------|-----|
-| `/arckit-uk-gcloud:sdd-lot3` | Builds the service's rate card from these families, roles and levels |
-| `/arckit-uk-gcloud:pricing` | Sets day rates against the pricing rules and the market |
+| `/arckit-uk-gcloud:sdd-lot3` | Lists the role levels that deliver a service, named from these families, roles and levels |
+| `/arckit-uk-gcloud:pricing` | Owns the supplier's one Lot 3 rate card (`projects/000-global/supplier/ARC-000-RATE-v*.md`): sets day rates against the pricing rules and the market |
 | `/arckit-uk-gcloud:lot-questions` | Lot 3 mandatory award criteria |
 
 ## Additional Resources

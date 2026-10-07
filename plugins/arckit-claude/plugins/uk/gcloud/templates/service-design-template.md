@@ -58,10 +58,13 @@
 
 **Justification:** [WHY THIS LOT, AND WHY NOT THE NEAREST ALTERNATIVE]
 
-<!-- A service sits in one lot. Something sold both as software and as support (for example a SaaS product plus implementation days) becomes two services, each with its own design. -->
+<!-- A service sits in one lot, and in one category group within it (1.4). Something sold both as software and as support (for example a SaaS product plus implementation days) becomes two services, each with its own design; so does a support offer that spans two groups, such as migration and managed cloud. -->
 
 ### 1.4 Service Categories (first pass)
-<!-- From this lot's tree in the overlay's skills/gcloud-framework/references/g-cloud-15/categories.md, written as full paths. The SDD command confirms them. -->
+<!-- From this lot's tree in the overlay's skills/gcloud-framework/references/g-cloud-15/categories.md, written as full paths. The SDD command confirms them.
+     One root and one group per service: every category shares the same first two levels of its path (`Root > Group`). None of the 42,893 live G-Cloud 15 listings scraped on 7 October 2026 has categories in more than one group, although GCA's question export states no rule. If the offer spans groups, choose the group this service is listed under and design the rest as separate services. -->
+
+**Category group (one per service):** [ROOT > GROUP]
 
 | # | Category (full path) | Why it fits |
 |---|----------------------|-------------|
@@ -142,12 +145,12 @@
 ---
 
 ## 5. Supplier Type
-<!-- Asked per service on every lot, with GCA's exact options. -->
+<!-- Asked per service on every lot. Options are worded as listings show them; the Digital Platform's wording is in each comment. -->
 
-- [ ] I’m not a reseller
-- [ ] I’m a reseller providing extra features and support not available from the original supplier
-- [ ] I’m a reseller providing extra support
-- [ ] I’m a reseller not providing extra features or support
+- [ ] Not a reseller <!-- Digital Platform: “I’m not a reseller” -->
+- [ ] Reseller providing extra features and support <!-- Digital Platform: “I’m a reseller providing extra features and support not available from the original supplier” -->
+- [ ] Reseller providing extra support <!-- Digital Platform: “I’m a reseller providing extra support” -->
+- [ ] Reseller (no extras) <!-- Digital Platform: “I’m a reseller not providing extra features or support” -->
 
 **Organisation whose services are being resold:** [ORGANISATION / Not applicable]
 
@@ -179,7 +182,7 @@
 | Question | Answer |
 |----------|--------|
 | Highest classification the service handles (above OFFICIAL) | [SECRET / TOP SECRET] |
-| Staff clearance offered (Lot 1b allows only Up to SC or Up to DV) | [SC / DV] |
+| Staff clearance offered (Lot 1b allows only Security Clearance (SC) or Developed Vetting (DV)) | [SC / DV] |
 
 ### 6B. Lots 2a and 2b (iSaaS and SaaS)
 
@@ -201,17 +204,19 @@
 
 | Question | Answer |
 |----------|--------|
-| Category groups (Cloud Migration Planning, Set Up and Migration, Managed Cloud, Cloud Financial Management Services, Security Services, Quality Assurance and Performance Testing, Training, Ongoing Support) | [GROUPS] |
+| Category group, one per service (Cloud Migration Planning, Set Up and Migration, Managed Cloud, Cloud Financial Management Services, Security Services, Quality Assurance and Performance Testing, Training, Ongoing Support); the same group as 1.4 | [GROUP] |
 | Delivery: remote, on site, or both (a constraint buyers should know about) | [DETAIL] |
 | Platforms and technologies supported | [DETAIL] |
-| Staff screening (to BS7858:2019 / not to BS7858:2019 / not performed) | [ANSWER] |
-| Highest clearance you will provide if a role requires it (DV / SC / BPSS / None) | [ANSWER] |
+| Staff screening (Conforms to BS7858:2019 / Other security clearance / Staff screening not performed) | [ANSWER] |
+| Highest clearance you will provide if a role requires it (Developed Vetting (DV) / Security Clearance (SC) / Baseline Personnel Security Standard (BPSS) / None) | [ANSWER] |
 
-**Role levels the service needs** (exact names from the overlay's `skills/ddat-rate-card/references/lot-3-rate-card.md`; rates are set later with `/arckit-uk-gcloud:pricing`):
+**Role levels that deliver the service** (exact names from the overlay's `skills/ddat-rate-card/references/lot-3-rate-card.md`). Lot 3 is priced on one rate card for all your Lot 3 services, which every Lot 3 listing shows in full; `/arckit-uk-gcloud:pricing` sets it in the supplier-wide `ARC-000-RATE` document. This list makes sure the card covers this service; it doesn't limit the card to these levels.
 
-| Job family | Role | Role level | Why the service needs it |
-|------------|------|------------|--------------------------|
-| [JOB FAMILY] | [ROLE] | [ROLE LEVEL] | [REASON] |
+| Job family | Role | Role level | Your role, if it isn't a DDaT role | Why the service needs it |
+|------------|------|------------|------------------------------------|--------------------------|
+| [JOB FAMILY] | [ROLE] | [ROLE LEVEL] | [YOUR ROLE / —] | [REASON] |
+
+<!-- A role the DDaT rate card doesn't name (procurement or commercial adviser, trainer, bid or contract manager) goes in at the nearest DDaT role and level, judged by the work and seniority, with its own name in the fourth column. The service definition document then says so, for example "Our procurement consultants are priced at the DDaT Senior delivery manager level". Live Lot 3 procurement listings price such people mostly as architects, IT service managers, delivery managers and business analysts, and none says which level they are priced at. -->
 
 ---
 
@@ -252,7 +257,7 @@
 ## 8. Support Model
 <!-- These match GCA's user support questions. Onsite support is not asked for Lot 3. -->
 
-| Channel | Offered (Yes / Yes, at extra cost / No) | Hours (24 hours, 7 days a week / 9 to 5 (UK time), 7 days a week / 9 to 5 (UK time), Monday to Friday) |
+| Channel | Offered (Yes / Yes, at extra cost / No; web chat's option is "Yes, at an extra cost") | Hours (24 hours, 7 days a week / 9 to 5 (UK time), 7 days a week / 9 to 5 (UK time), Monday to Friday) |
 |---------|------------------------------------------|------------------------------------------|
 | Email or online ticketing | [ANSWER] | Response times: [DETAIL] |
 | Phone | [YES/NO] | [HOURS] |
@@ -275,7 +280,7 @@
 
 **Lots 2a/2b:** unit prices (reduce-only during the framework) and a discount for each annual call-off value band: under £250,000; £250,000–£500,000; £500,001–£1m; £1,000,001–£2.5m; £2,500,001–£5m; over £5m. Price is 80% of the score.
 
-**Lot 3:** a maximum UK (and optional offshore) day rate for each role level in section 6C, with no uplift for risk or contingency. Price is 80% of the score: GCA averages every rate entered, UK and offshore, and the lowest average in the tender scores the full 80%.
+**Lot 3:** one rate card for all your Lot 3 services (the supplier-wide `ARC-000-RATE` document), with a maximum UK (and optional offshore) day rate for each role level offered and no uplift for risk or contingency. It must include every role level in section 6C. Price is 80% of the score: GCA averages every rate on the card, UK and offshore, and the lowest average in the tender scores the full 80%.
 
 | Item | Answer |
 |------|--------|

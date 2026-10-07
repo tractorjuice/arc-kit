@@ -47,7 +47,7 @@
 | Lot is valid (1a, 1b, 2a, 2b or 3) and the same in every document | [✅/❌] |
 | All mandatory fields complete (no `[PENDING]` or placeholder text) | [✅/❌] |
 | Social value complete: contact named, at least one activity, evidence for each | [✅/❌] |
-| Lot questions answered; the lot's mandatory certifications held | [✅/❌] |
+| Lot questions answered; the certificates the bid needs held (Lots 1a/1b: ISO 9001, 27001, 20000-1, ISO 27018 with public cloud, Carbon Reduction Plan) | [✅/❌] |
 | Pricing follows the lot's rules, with no forbidden pricing | [✅/❌] |
 | No blocking consistency conflicts | [✅/❌] |
 | All entries within character and word limits, including scored answers | [✅/❌] |
@@ -56,7 +56,9 @@
 - 🟢 READY: every gate passes. "Should Fix" items may remain.
 - 🟡 NEEDS WORK: every mandatory document exists, but at least one gate fails.
 - 🔴 NOT READY: a mandatory document is missing, the lot is invalid, social value is incomplete, a
-  mandatory certification for the lot is not held, or a mandatory declaration question is unanswered.
+  certificate the bid needs is not held, or a mandatory declaration question is unanswered. A missing
+  Cyber Essentials or Cyber Essentials Plus certificate is a call-off warning, not a gate: it is
+  mandatory for call-off contracts, not for the bid.
 
 Every ❌ gate produces at least one "Must Fix" action.
 
@@ -73,6 +75,7 @@ Every ❌ gate produces at least one "Must Fix" action.
 | Service Design | `ARC-[PROJECT_ID]-SVCD` | [✅/🟡/❌] | [-] |
 | Service Definition (SDD) | `ARC-[PROJECT_ID]-SDD` | [✅/🟡/❌] | [-] |
 | Pricing | `ARC-[PROJECT_ID]-PRIC` | [✅/🟡/❌] | [-] |
+| Lot 3 Rate Card (supplier-wide; Lot 3 only) | `ARC-000-RATE` | [✅/🟡/❌ / Not this lot] | [-] |
 | Security Evidence | `ARC-[PROJECT_ID]-SECA` | [✅/🟡/❌] | [-] |
 
 **Missing documents**: [list each with the command that creates it, or "None". The SDD comes from
@@ -104,6 +107,16 @@ Conflicts between two documents in the pack. Name both `ARC-` IDs — a conflict
 |---|-------|-----------------------|------------|
 | 1 | [What disagrees] | `ARC-...` vs `ARC-...` | [Which is correct and why] |
 
+**SDD ↔ pricing cross-checks:**
+
+| Check | Result |
+|-------|--------|
+| Education discount: SDD answer = `ARC-[PROJECT_ID]-PRIC` §5.1 | [✅ / ❌ / Not asked] |
+| Free trial (1a/1b, 2a/2b): SDD answer, description and link = `ARC-[PROJECT_ID]-PRIC` §5.2 | [✅ / ❌ / Not asked on Lot 3] |
+| 1a/1b: deployment models priced (`ARC-[PROJECT_ID]-PRIC` §2.1) = models ticked in the SDD | [✅ / ❌ / Not this lot] |
+| Lot 3: every SDD role level on `ARC-000-RATE`; no rates in the SDD; PRIC §4 names the card's current version | [✅ / ❌ / Not this lot] |
+| Lot-wide figures the same across the supplier's services in this lot | [✅ / ❌ / Only service in the lot] |
+
 *If nothing conflicts, write "No consistency issues found." rather than omitting the section.*
 
 ---
@@ -114,7 +127,10 @@ Limits: service name ≤ 100 characters; description ≤ 500 characters; feature
 items each, each ≤ 10 words; system requirements (1a/1b, 2a/2b) and what's backed up (1a/1b) ≤ 10
 words each. Lots 1a/1b scored answers: ≤ 250 words for each part (Quality Cloud Services parts a–b,
 500 words in all; Maximising Buyer Value parts a–c, 750 words in all); customer contractual exit
-procedure and change of service ≤ 250 words each.
+procedure and change of service ≤ 250 words each. Every other free-text answer has the 50, 100 or
+200-word limit on its `**Words:**` line in the SDD (inferred from the live listings; tabulated in
+`framework-questions.md`), recounted by the review; "What the … doesn't cover" answers in the lot
+questions ≤ 200 words; free trial description ≤ 50 words.
 
 | Measure | Count |
 |---------|-------|
@@ -125,7 +141,9 @@ procedure and change of service ≤ 250 words each.
 
 | ARC-ID | Field | Limit | Actual | Over by |
 |--------|-------|-------|--------|---------|
+| `ARC-[PROJECT_ID]-SVCD` | [Field] | [N chars / N words] | [N] | [N] |
 | `ARC-[PROJECT_ID]-SDD` | [Field] | [N chars / N words] | [N] | [N] |
+| `ARC-[PROJECT_ID]-SDD` | [N.N Question] | [50 / 100 / 200 words] | [N] | [N] |
 | `ARC-000-LOTQ` | [Scored answer part] | [250 words] | [N] | [N] |
 
 *If every entry is within its limit, write "All entries within limits."*
@@ -157,10 +175,11 @@ Claims in the pack that a buyer or GCA (formerly CCS) could ask you to substanti
 | Service does not meet the lot definition | [✅ Clear / ⚠️ Risk] | [-] |
 | Social value missing or incomplete (pass/fail; a fail loses the whole 10%) | [✅ Clear / ⚠️ Risk] | [-] |
 | Lot questions for the service's lot missing, unanswered or over their word limits | [✅ Clear / ⚠️ Risk] | [-] |
-| Mandatory certification not held (1a/1b: Cyber Essentials Plus, ISO 9001, 27001, 20000-1, Carbon Reduction Plan, ISO 27018 with public cloud; 2a/2b and 3: Cyber Essentials) | [✅ Clear / ⚠️ Risk] | [-] |
-| Pricing document missing or unpublished | [✅ Clear / ⚠️ Risk] | [-] |
+| Certificate the bid needs not held (1a/1b: ISO 9001, 27001, 20000-1, Carbon Reduction Plan, ISO 27018 with public cloud) | [✅ Clear / ⚠️ Risk] | [-] |
+| Call-off warning: Cyber Essentials Plus (1a/1b) or Cyber Essentials (2a/2b, 3) not held. Mandatory for call-off contracts, not for the bid | [✅ Clear / ⚠️ Warning] | [Alternative chosen] |
+| Pricing document missing (Lots 1a/1b and 2a/2b; optional on Lot 3, where the rate card carries the prices and 71% of the 27,496 live listings have one) | [✅ Clear / ⚠️ Risk] | [-] |
 | Forbidden pricing ("price on application", "from £x", unexplained ranges) or prices in the service definition document | [✅ Clear / ⚠️ Risk] | [-] |
-| Lot 3: rate card missing, or a rate below £50 | [✅ Clear / ⚠️ Risk] | [-] |
+| Lot 3: the supplier rate card (`ARC-000-RATE`) missing, a rate below £50, or a role level this service needs not on it | [✅ Clear / ⚠️ Risk] | [-] |
 | Mandatory declaration question unanswered or `[PENDING]` | [✅ Clear / ⚠️ Risk] | [-] |
 | Service name, description or features/benefits exceed limits, or the name carries extra keywords | [✅ Clear / ⚠️ Risk] | [-] |
 | Claimed certification not held or expired | [✅ Clear / ⚠️ Risk] | [-] |

@@ -62,11 +62,12 @@ targets:
     output: { project: "000-global", type: SOCV, subfolder: supplier }
     deps: [SUPP]
 
+  # After the SDD, pricing and security: the Lot 2a/2b award criteria repeat the SDD's answers
   - id: LOTQ
     skill: arckit-uk-gcloud:lot-questions
     args: "2b"
     output: { project: "000-global", type: LOTQ, subfolder: supplier }
-    deps: [SUPP, SOCV, SVCD]
+    deps: [SUPP, SOCV, SVCD, SDD, PRIC, SECA]
 
   - id: DECL
     skill: arckit-uk-gcloud:declaration
@@ -91,13 +92,13 @@ targets:
     skill: arckit-uk-gcloud:pricing
     args: "{P}"
     output: { project: "{P}-{NAME}", type: PRIC }
-    deps: [SVCD]
+    deps: [SVCD, SDD]
 
   - id: SECA
     skill: arckit-uk-gcloud:security
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SECA }
-    deps: [SVCD]
+    deps: [SVCD, SDD]
 
   - id: GCMP
     skill: arckit-uk-gcloud:gcloud-competitors

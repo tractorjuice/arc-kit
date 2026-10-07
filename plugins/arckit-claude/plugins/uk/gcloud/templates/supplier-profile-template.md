@@ -109,6 +109,16 @@
 | Email | [EMAIL] |
 | Phone | [PHONE] |
 
+### Listing Contact
+
+*Shown on every service listing as the contact for buyers. All 42,893 live G-Cloud 15 listings (scraped 7 October 2026) show a contact name and email, and all but 21 a phone number; 2,690 of the 2,693 suppliers show the same contact on every service. It is set on your Digital Marketplace supplier account, not asked per service.*
+
+| Field | Value |
+|-------|-------|
+| Name | [NAME] |
+| Email | [EMAIL] |
+| Phone | [PHONE] |
+
 ### Contract Notice Contact
 
 | Field | Value |
