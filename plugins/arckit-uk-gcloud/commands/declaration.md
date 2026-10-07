@@ -80,11 +80,25 @@ find projects -mindepth 1 -maxdepth 1 -type d -name '[0-9][0-9][0-9]-*' ! -name 
 done
 ```
 
-The lots bid for come from the LOTQ document's Parts and the service designs. A design marked `NOT A
-G-CLOUD 15 LOT` (for example a G-Cloud 14 design with no `**G-Cloud Lot**` line, or one saying `Lot
-2`) belongs to no G-Cloud 15 lot: don't guess one. List it under "Items Requiring Attention" and
-tell the user to re-run `/arckit:service-design` for it. The declaration is best written after
-`/arckit:lot-questions`, which settles the lots bid for.
+```bash
+# A supplier profile written for the previous framework has no Central Digital Platform or PPON section
+SUPP=$(find projects/000-global/supplier -maxdepth 1 -name 'ARC-000-SUPP-v*.md' 2>/dev/null | sort -V | tail -1)
+if [ -n "$SUPP" ] && ! grep -qiE 'PPON|Central Digital Platform' "$SUPP"; then
+    echo "PREVIOUS FRAMEWORK: $SUPP has no Central Digital Platform or PPON section"
+fi
+```
+
+If it reports the profile as written for the previous framework, warn the user before going on:
+G-Cloud 15 needs the PPON, the Central Digital Platform record and the certificates as they stand
+now, and an older profile lacks them. Recommend re-running `/arckit:supplier-profile` to update it,
+and ask whether to continue meanwhile; mark anything taken from the outdated parts as
+`[PENDING: confirm for G-Cloud 15]`.
+
+The lots bid for come from the LOTQ document's Parts and the service designs. A design marked
+`NOT A G-CLOUD 15 LOT` (for example a G-Cloud 14 design with no `**G-Cloud Lot**` line, or one
+saying `Lot 2`) belongs to no G-Cloud 15 lot: don't guess one. List it under "Items Requiring
+Attention" and tell the user to re-run `/arckit:service-design` for it. The declaration is best
+written after `/arckit:lot-questions`, which settles the lots bid for.
 
 **Citation traceability**: When you draw facts from the supplier profile, from documents the user
 has placed under `projects/000-global/supplier/` or an `external/` directory, or from any URL you

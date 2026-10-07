@@ -73,6 +73,11 @@ projects/<NNN>-<service-name>/ARC-<NNN>-GCRV-v1.0.md
   ranges). Lot 3 is priced on the supplier's one rate card (`ARC-000-RATE`), which must cover every
   role level the SDD lists; the SDD holds no rates.
 - Cross-document consistency, naming both `ARC-` IDs in every conflict.
+- Documents left over from the previous framework, found by their structure: a title or Framework
+  row naming an earlier G-Cloud, a three-lot Lot value or a "1.3 Target Lot" checkbox, an SFIA rate
+  card, the old minimum and maximum price fields, a supplier profile with no Central Digital
+  Platform or PPON section. Each is blocking, even though the file exists; a G-Cloud 15 document
+  that only mentions what changed isn't reported.
 - Every unfinished answer is a blocking finding: `[PENDING]` in any form (`[PENDING: …]`,
   `[PENDING — …]`), older markers such as `[TODO]`, `[TBC]` or `*[TO BE ADDED]*`, and template fields
   never filled in. The command finds them with the same placeholder scan `/arckit:submission-pack`

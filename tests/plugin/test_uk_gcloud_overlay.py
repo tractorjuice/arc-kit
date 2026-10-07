@@ -385,3 +385,52 @@ def test_lot_listing_flags_designs_from_the_previous_framework(tmp_path):
     assert rows[2][1].startswith("NOT A G-CLOUD 15 LOT (no G-Cloud Lot line)")
     assert rows[3] == ["projects/004-support", "3", "SDD=MISSING", "SECA=yes"]
     assert len(rows) == 4
+
+
+# ── Documents left over from the previous framework ──────────────────────────
+# review checked only that each document existed, so a security document or a
+# supplier profile left over from G-Cloud 14 passed. review and submission-pack
+# now run one check that recognises such a document by its structure.
+PREVIOUS_FRAMEWORK = re.compile(r"# previous-framework check: keep identical[^\n]*\n\{.*?\| xargs -0 awk '\n(.*?)'\n```", re.S)
+
+
+def _previous_framework_check(command: str) -> str:
+    match = PREVIOUS_FRAMEWORK.search((COMMANDS / command).read_text(encoding="utf-8"))
+    assert match, f"{command}: no previous-framework check"
+    return match.group(1)
+
+
+def test_review_and_submission_pack_share_one_previous_framework_check():
+    assert _previous_framework_check("review.md") == _previous_framework_check("submission-pack.md")
+
+
+G14_DOCUMENTS = {
+    "ARC-000-SUPP-v1.0.md": "# Supplier Profile\n\n## Company Details\n\n| Registered name | Acme Ltd |\n",
+    "ARC-000-DECL-v1.0.md": "# Supplier Declaration\n\n> G-Cloud 14 Framework - Supplier Declaration\n",
+    "ARC-004-SVCD-v1.0.md": "# Service Design\n\n### 1.3 Target Lot\n\n- [x] Lot 2 - Cloud Software\n",
+    "ARC-004-SDD-v1.0.md": "# SDD\n\n**G-Cloud Lot**: Lot 2 — Cloud Software\n\n| Minimum price | £10 |\n",
+    "ARC-005-PRIC-v1.0.md": "# Pricing\n\n## SFIA Rate Card\n\n| SFIA level | Day rate |\n|---|---|\n| 5 | £900 |\n",
+}
+G15_DOCUMENTS = {
+    "ARC-000-SUPP-v2.0.md": "# Supplier Profile\n\n## Central Digital Platform\n\n| PPON | ABCD-1234-EFGH |\n",
+    "ARC-006-SDD-v1.0.md": (
+        "# SDD\n\n**G-Cloud Lot**: Lot 2b — Software as a Service (SaaS)\n\n"
+        "> G-Cloud 15 (RM1557.15) replaces G-Cloud 14.\n\n| Lot | 2b — Software as a Service (SaaS) |\n\n"
+        "- **Changed from G-Cloud 14:** the SFIA rate card is replaced by a DDaT rate card.\n"
+    ),
+}
+
+
+def test_previous_framework_check_finds_g14_documents_and_passes_g15(tmp_path):
+    for name, text in {**G14_DOCUMENTS, **G15_DOCUMENTS}.items():
+        (tmp_path / name).write_text(text, encoding="utf-8")
+    out = _run_awk(_previous_framework_check("review.md"), *sorted(G14_DOCUMENTS), *sorted(G15_DOCUMENTS), cwd=tmp_path)
+    flagged = {line.split(":", 1)[0] for line in out.splitlines() if line.endswith("written for the previous framework")}
+    assert flagged == set(G14_DOCUMENTS), out
+    assert out.rstrip().endswith(f"previous-framework documents: {len(G14_DOCUMENTS)}"), out
+
+
+def test_previous_framework_check_passes_the_overlay_templates():
+    templates = sorted(str(p) for p in TEMPLATES.glob("*-template.md"))
+    out = _run_awk(_previous_framework_check("submission-pack.md"), *templates, cwd=REPO_ROOT)
+    assert out.strip() == "previous-framework documents: 0", out

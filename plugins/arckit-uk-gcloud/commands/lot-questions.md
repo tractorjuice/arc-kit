@@ -94,6 +94,20 @@ the same SDDs and security documents. If a service in a group shows `SDD=MISSING
 only if the user wants a first draft now, and mark every answer that rests on a design alone as
 `[PENDING: check against the SDD]`.
 
+```bash
+# A supplier profile written for the previous framework has no Central Digital Platform or PPON section
+SUPP=$(find projects/000-global/supplier -maxdepth 1 -name 'ARC-000-SUPP-v*.md' 2>/dev/null | sort -V | tail -1)
+if [ -n "$SUPP" ] && ! grep -qiE 'PPON|Central Digital Platform' "$SUPP"; then
+    echo "PREVIOUS FRAMEWORK: $SUPP has no Central Digital Platform or PPON section"
+fi
+```
+
+If it reports the profile as written for the previous framework, warn the user before going on:
+G-Cloud 15 needs the PPON, the Central Digital Platform record and the certificates as they stand
+now, and an older profile lacks them. Recommend re-running `/arckit:supplier-profile` to update it,
+and ask whether to continue meanwhile; mark anything taken from the outdated parts as
+`[PENDING: confirm for G-Cloud 15]`.
+
 **Citation traceability**: When you fetch a URL (for example a published Carbon Reduction Plan), or
 read a document the user has placed under `projects/000-global/supplier/` or an `external/`
 directory, follow the citation instructions in

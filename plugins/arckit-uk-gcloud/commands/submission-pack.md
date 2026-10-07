@@ -175,6 +175,53 @@ latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
     END { printf "placeholders: %d\n", n + 0 }'
 ```
 
+Then check that no document was written for the previous framework, with the same check
+`/arckit:review` runs. The markers: a title or opening quote naming an earlier G-Cloud as its
+framework, a Framework row or an agreement number from an earlier G-Cloud (RM1557.14 or below), a
+lot from the three-lot framework (`Lot 1`, `Lot 2`, Cloud Hosting, Cloud Software) or a "1.3 Target
+Lot" checkbox, an SFIA rate card, the old minimum or maximum price, pricing unit and billing
+interval fields, a supplier profile with no Central Digital Platform or PPON section, or a Public
+Contracts Regulations declaration.
+
+```bash
+PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
+LOT="{lot}"             # this service's lot: 1a, 1b, 2a, 2b or 3
+latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
+# previous-framework check: keep identical in review.md and submission-pack.md
+{
+    for t in SUPP SOCV LOTQ DECL; do latest projects/000-global/supplier "ARC-000-$t-v*.md"; done
+    [ "$LOT" = 3 ] && latest projects/000-global/supplier 'ARC-000-RATE-v*.md'
+    for t in SVCD SDD PRIC SECA; do latest "$PROJECT_PATH" "ARC-*-$t-v*.md"; done
+} | tr '\n' '\0' | xargs -0 awk '
+    function flush(   i) {
+        if (prev == "") return
+        if (prev ~ /-SUPP-v[^\/]*\.md$/ && !cdp) r[++nr] = "no Central Digital Platform or PPON section, which every G-Cloud 15 bid needs"
+        if (prev ~ /-DECL-v[^\/]*\.md$/ && pcr && !pa) r[++nr] = "a Public Contracts Regulations declaration; G-Cloud 15 runs under the Procurement Act 2023"
+        if (nr) { found++; printf "%s: written for the previous framework\n", prev; for (i = 1; i <= nr && i <= 5; i++) printf "    %s\n", r[i] }
+    }
+    FNR == 1 { flush(); prev = FILENAME; nr = 0; cdp = 0; pa = 0; pcr = 0 }
+    {
+        l = tolower($0)
+        if (l ~ /ppon|central digital platform/) cdp = 1
+        if (l ~ /procurement act 2023/) pa = 1
+        if (l ~ /public contracts regulations|pcr ?2015/) pcr = 1
+        if (FNR <= 60 && l ~ /^(#+|>)[ \t]/ && l ~ /g-cloud ?(1[0-4]|[1-9])([^0-9]|$)/ && l !~ /g-cloud ?15/) r[++nr] = "line " FNR ": its title names an earlier framework"
+        if (l ~ /^\| *\**framework\** *\|/ && l ~ /g-cloud ?(1[0-4]|[1-9])([^0-9]|$)|rm1557\.(1[0-4]|[1-9])([^0-9]|$)/) r[++nr] = "line " FNR ": its Framework row names an earlier framework"
+        else if (l ~ /rm1557\.(1[0-4]|[1-9])([^0-9]|$)/) r[++nr] = "line " FNR ": names an earlier agreement"
+        v = ""
+        if (l ~ /^\*\*g-cloud lot\*\*:/) { v = l; sub(/^\*\*g-cloud lot\*\*:[ \t]*/, "", v) }
+        else if (l ~ /^\| *\**(target )?lot\** *\|/) { v = l; sub(/^\| *\**(target )?lot\** *\|[ \t]*/, "", v); sub(/\|.*/, "", v) }
+        if (v ~ /^(lot ?)?[12]([^0-9ab]|$)|cloud hosting|cloud software/) r[++nr] = "line " FNR ": a lot from the previous three-lot framework"
+        if (l ~ /1\.3 target lot/) r[++nr] = "line " FNR ": a Target Lot checkbox from the previous framework"
+        if ((l ~ /^#+ / && l ~ /sfia/ && l ~ /rate|pric|card/) || l ~ /^\|.*sfia.*\|.*(rate|£|price)/) r[++nr] = "line " FNR ": an SFIA rate card (G-Cloud 15 prices Lot 3 on the DDaT rate card)"
+        if (l ~ /^\| *\**(minimum price|maximum price|pricing unit|billing interval)\** *\|/) r[++nr] = "line " FNR ": a pricing field G-Cloud 15 no longer has"
+    }
+    END { flush(); printf "previous-framework documents: %d\n", found + 0 }'
+```
+
+Warn prominently about every document it reports: it was written for the previous framework and has
+to be regenerated with its command before submission, whatever the review report says.
+
 ### 4. Assemble the submission folder
 
 Create the `submission/` folder inside the service project and copy the latest version of each

@@ -31,8 +31,8 @@ another lot group adds its Part and bumps the version.
 - After the SDDs: run it once the services in the lot group have their service designs, SDDs,
   pricing and security documents. They supply the evidence, and the Lot 2a/2b and Lot 3 award
   criteria repeat their answers, so the lot answers must agree with every service. Without them the
-  command drafts only what the profile supports and marks the rest `[PENDING: check against the
-  SDD]`.
+  command drafts only what the profile supports and marks the rest
+  `[PENDING: check against the SDD]`.
 - A design that records no G-Cloud 15 lot (a G-Cloud 14 design, or one saying `Lot 2`) is left out
   of every lot group, and you are told to re-run `/arckit:service-design` for it.
 - When a service is added to a lot group or an SDD changes, so the lot answers stay true for every
