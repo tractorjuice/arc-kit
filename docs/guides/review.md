@@ -45,6 +45,7 @@ projects/<NNN>-<service-name>/ARC-<NNN>-GCRV-v1.0.md
 | `ARC-<NNN>-SVCD` (records the lot) | `/arckit:service-design` |
 | `ARC-<NNN>-SDD` | `/arckit:sdd-lot1a`, `/arckit:sdd-lot1b`, `/arckit:sdd-lot2a`, `/arckit:sdd-lot2b`, or `/arckit:sdd-lot3` |
 | `ARC-<NNN>-PRIC` | `/arckit:pricing` |
+| `ARC-000-RATE` (Lot 3 only: the supplier's one rate card) | `/arckit:pricing` |
 | `ARC-<NNN>-SECA` | `/arckit:security` |
 
 ---
@@ -67,7 +68,8 @@ projects/<NNN>-<service-name>/ARC-<NNN>-GCRV-v1.0.md
   An SDD written before the counters existed is reported, and its answers counted against
   `framework-questions.md`.
 - Pricing rules by lot, and no forbidden pricing ("price on application", "from £x", unexplained
-  ranges).
+  ranges). Lot 3 is priced on the supplier's one rate card (`ARC-000-RATE`), which must cover every
+  role level the SDD lists; the SDD holds no rates.
 - Cross-document consistency, naming both `ARC-` IDs in every conflict.
 - Every unfinished answer is a blocking finding: `[PENDING]` in any form (`[PENDING: …]`,
   `[PENDING — …]`), older markers such as `[TODO]`, `[TBC]` or `*[TO BE ADDED]*`, and template fields

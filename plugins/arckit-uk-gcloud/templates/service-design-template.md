@@ -210,11 +210,13 @@
 | Staff screening (to BS7858:2019 / not to BS7858:2019 / not performed) | [ANSWER] |
 | Highest clearance you will provide if a role requires it (DV / SC / BPSS / None) | [ANSWER] |
 
-**Role levels the service needs** (exact names from the overlay's `skills/ddat-rate-card/references/lot-3-rate-card.md`; rates are set later with `/arckit:pricing`):
+**Role levels that deliver the service** (exact names from the overlay's `skills/ddat-rate-card/references/lot-3-rate-card.md`). Lot 3 is priced on one rate card for all your Lot 3 services, which every Lot 3 listing shows in full; `/arckit:pricing` sets it in the supplier-wide `ARC-000-RATE` document. This list makes sure the card covers this service; it doesn't limit the card to these levels.
 
-| Job family | Role | Role level | Why the service needs it |
-|------------|------|------------|--------------------------|
-| [JOB FAMILY] | [ROLE] | [ROLE LEVEL] | [REASON] |
+| Job family | Role | Role level | Your role, if it isn't a DDaT role | Why the service needs it |
+|------------|------|------------|------------------------------------|--------------------------|
+| [JOB FAMILY] | [ROLE] | [ROLE LEVEL] | [YOUR ROLE / —] | [REASON] |
+
+<!-- A role the DDaT rate card doesn't name (procurement or commercial adviser, trainer, bid or contract manager) goes in at the nearest DDaT role and level, judged by the work and seniority, with its own name in the fourth column. The service definition document then says so, for example "Our procurement consultants are priced at the DDaT Senior delivery manager level". Live Lot 3 procurement listings price such people mostly as architects, IT service managers, delivery managers and business analysts, and none says which level they are priced at. -->
 
 ---
 
@@ -278,7 +280,7 @@
 
 **Lots 2a/2b:** unit prices (reduce-only during the framework) and a discount for each annual call-off value band: under £250,000; £250,000–£500,000; £500,001–£1m; £1,000,001–£2.5m; £2,500,001–£5m; over £5m. Price is 80% of the score.
 
-**Lot 3:** a maximum UK (and optional offshore) day rate for each role level in section 6C, with no uplift for risk or contingency. Price is 80% of the score: GCA averages every rate entered, UK and offshore, and the lowest average in the tender scores the full 80%.
+**Lot 3:** one rate card for all your Lot 3 services (the supplier-wide `ARC-000-RATE` document), with a maximum UK (and optional offshore) day rate for each role level offered and no uplift for risk or contingency. It must include every role level in section 6C. Price is 80% of the score: GCA averages every rate on the card, UK and offshore, and the lowest average in the tender scores the full 80%.
 
 | Item | Answer |
 |------|--------|

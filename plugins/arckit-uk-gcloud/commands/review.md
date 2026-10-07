@@ -86,10 +86,18 @@ resolved project directory; the supplier-wide documents live under `projects/000
   the Part for this service's lot group matters here: Part 1 (Lots 1a/1b), Part 2 (Lots 2a/2b) or
   Part 3 (Lot 3)
 - Supplier declaration — `projects/000-global/supplier/ARC-000-DECL-v*.md` (`/arckit:declaration`)
+- **Lot 3 only:** the supplier's one rate card, shared by every Lot 3 service —
+  `projects/000-global/supplier/ARC-000-RATE-v*.md` (`/arckit:pricing`)
 
 Review whatever exists. Don't stop because a document is missing. For each document, record whether
 it **exists** and its highest version. A missing document — or a LOTQ document without the Part for
 this lot group — is a blocking finding; note the command that produces it.
+
+**Find the lot.** The service design records it on its `**G-Cloud Lot**: Lot <code> — <name>`
+line. It must be `1a`, `1b`, `2a`, `2b` or `3`. A service design from the previous framework (a
+"1.3 Target Lot" checkbox with Lot 1 Cloud Hosting / Lot 2 Cloud Software / Lot 3 Cloud Support), or
+no lot at all, is a blocking finding: re-run `/arckit:service-design` to choose a G-Cloud 15 lot.
+Without a valid lot, the lot-specific checks below cannot run.
 
 **Find every unfinished answer** in the documents under review with the overlay's placeholder scan.
 It is the one definition of unfinished that `/arckit:review` and `/arckit:submission-pack` share:
@@ -102,12 +110,14 @@ ticks, HTML comments, fenced code, the Revision History and the Document Control
 
 ```bash
 PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
+LOT="{lot}"             # this service's lot: 1a, 1b, 2a, 2b or 3
 latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
 # placeholder scan: keep identical in review.md and submission-pack.md
 {
     find "${CLAUDE_PLUGIN_ROOT}/templates" .arckit/templates-custom -maxdepth 1 -name '*-template.md' 2>/dev/null
     echo phase=2
     for t in SUPP SOCV LOTQ DECL; do latest projects/000-global/supplier "ARC-000-$t-v*.md"; done
+    [ "$LOT" = 3 ] && latest projects/000-global/supplier 'ARC-000-RATE-v*.md'
     for t in SVCD SDD PRIC SECA; do latest "$PROJECT_PATH" "ARC-*-$t-v*.md"; done
 } | tr '\n' '\0' | xargs -0 awk '
     FNR == 1 { inc = 0; fence = 0; sect = "" }
@@ -151,12 +161,6 @@ latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
 It prints one line per placeholder, `file:line: kind [TEXT]`, then the total. Every line, `pending`
 or `template`, is a blocking finding (section 3e): report each with its `ARC-` ID, line and what the
 supplier must supply.
-
-**Find the lot.** The service design records it on its `**G-Cloud Lot**: Lot <code> — <name>`
-line. It must be `1a`, `1b`, `2a`, `2b` or `3`. A service design from the previous framework (a
-"1.3 Target Lot" checkbox with Lot 1 Cloud Hosting / Lot 2 Cloud Software / Lot 3 Cloud Support), or
-no lot at all, is a blocking finding: re-run `/arckit:service-design` to choose a G-Cloud 15 lot.
-Without a valid lot, the lot-specific checks below cannot run.
 
 **Read the framework reference.** Use the **Read tool** on:
 
@@ -206,6 +210,7 @@ the relevant `ARC-` document ID so the user can locate it.
 - [ ] Service Definition Document — `ARC-{PROJECT_ID}-SDD`
 - [ ] Pricing — `ARC-{PROJECT_ID}-PRIC`
 - [ ] Security evidence — `ARC-{PROJECT_ID}-SECA`
+- [ ] Lot 3 only: the supplier rate card — `ARC-000-RATE`
 
 **Lot:**
 
@@ -244,9 +249,11 @@ the relevant `ARC-` document ID so the user can locate it.
 - [ ] **2a/2b:** unit prices in the pricing document, and a discount % for each of the six annual
   call-off value bands (under £250,000; £250,000–£500,000; £500,001–£1m; £1,000,001–£2.5m;
   £2,500,001–£5m; over £5m)
-- [ ] **3:** a DDaT rate card: a maximum UK day rate (and offshore, if offered) for every role level
-  offered, each role and level present in `lot-3-rate-card.md`, every rate at least £50, for a
-  7.5-hour day with travel and subsistence inside the M25 included
+- [ ] **3:** the supplier's one DDaT rate card, `ARC-000-RATE` (not a card per service): a maximum
+  UK day rate (and offshore, if offered) for every role level offered, each role and level present
+  in `lot-3-rate-card.md`, every rate at least £50, for a 7.5-hour day with travel and subsistence
+  inside the M25 included. Every role level the SDD's section 11 says delivers this service is on
+  the card, and the SDD holds no rates of its own
 - [ ] Education pricing addressed; free trial addressed (1a/1b, 2a/2b)
 - [ ] Prices in GBP; no forbidden pricing: no "price on application" or POA, no "from £x", no
   unexplained ranges
@@ -430,7 +437,8 @@ These are the same reasons listed in section 8 of the review template:
 - [ ] Extra keywords in the service name
 - [ ] Forbidden pricing ("price on application", "from £x", unexplained ranges), prices in the
   service definition document, or pricing not in GBP
-- [ ] Lot 3: rate card missing, or a rate below £50
+- [ ] Lot 3: the supplier rate card (`ARC-000-RATE`) missing, a rate below £50, or a role level
+  this service needs not on it
 - [ ] Documents not planned as ODF or PDF/A, at most 5 MB and accessible; more than one terms and
   conditions document per service
 - [ ] Invalid URLs or contact details
@@ -515,6 +523,7 @@ Report what the review actually found:
 | SDD | ARC-[PROJECT_ID]-SDD | [✅/🟡/❌] |
 | Pricing | ARC-[PROJECT_ID]-PRIC | [✅/🟡/❌] |
 | Security | ARC-[PROJECT_ID]-SECA | [✅/🟡/❌] |
+| Lot 3 Rate Card (Lot 3 only) | ARC-000-RATE | [✅/🟡/❌ / Not this lot] |
 
 ### Counts
 - Mandatory fields complete: [X]/[Y]; unfinished answers found by the placeholder scan: [X]

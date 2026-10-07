@@ -73,6 +73,7 @@ Every ❌ gate produces at least one "Must Fix" action.
 | Service Design | `ARC-[PROJECT_ID]-SVCD` | [✅/🟡/❌] | [-] |
 | Service Definition (SDD) | `ARC-[PROJECT_ID]-SDD` | [✅/🟡/❌] | [-] |
 | Pricing | `ARC-[PROJECT_ID]-PRIC` | [✅/🟡/❌] | [-] |
+| Lot 3 Rate Card (supplier-wide; Lot 3 only) | `ARC-000-RATE` | [✅/🟡/❌ / Not this lot] | [-] |
 | Security Evidence | `ARC-[PROJECT_ID]-SECA` | [✅/🟡/❌] | [-] |
 
 **Missing documents**: [list each with the command that creates it, or "None". The SDD comes from
@@ -165,7 +166,7 @@ Claims in the pack that a buyer or GCA (formerly CCS) could ask you to substanti
 | Mandatory certification not held (1a/1b: Cyber Essentials Plus, ISO 9001, 27001, 20000-1, Carbon Reduction Plan, ISO 27018 with public cloud; 2a/2b and 3: Cyber Essentials) | [✅ Clear / ⚠️ Risk] | [-] |
 | Pricing document missing or unpublished | [✅ Clear / ⚠️ Risk] | [-] |
 | Forbidden pricing ("price on application", "from £x", unexplained ranges) or prices in the service definition document | [✅ Clear / ⚠️ Risk] | [-] |
-| Lot 3: rate card missing, or a rate below £50 | [✅ Clear / ⚠️ Risk] | [-] |
+| Lot 3: the supplier rate card (`ARC-000-RATE`) missing, a rate below £50, or a role level this service needs not on it | [✅ Clear / ⚠️ Risk] | [-] |
 | Mandatory declaration question unanswered or `[PENDING]` | [✅ Clear / ⚠️ Risk] | [-] |
 | Service name, description or features/benefits exceed limits, or the name carries extra keywords | [✅ Clear / ⚠️ Risk] | [-] |
 | Claimed certification not held or expired | [✅ Clear / ⚠️ Risk] | [-] |

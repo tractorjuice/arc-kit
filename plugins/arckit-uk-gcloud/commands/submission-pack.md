@@ -80,6 +80,10 @@ echo "=== Per-service ==="
 [ -n "$(latest "$PROJECT_PATH" 'ARC-*-SECA-v*.md')" ] && echo "✅ Security"       || echo "❌ Security MISSING"
 SVCD=$(latest "$PROJECT_PATH" 'ARC-*-SVCD-v*.md')
 { [ -n "$SVCD" ] && grep -m1 '^\*\*G-Cloud Lot\*\*' "$SVCD"; } || echo "❌ Lot not recorded in the service design"
+# Lot 3: the supplier's one rate card, shared by every Lot 3 service
+if [ -n "$SVCD" ] && grep -qE '^\*\*G-Cloud Lot\*\*:[[:space:]]*(Lot[[:space:]]*)?3([^0-9ab]|$)' "$SVCD"; then
+  [ -n "$(latest "$SUPPLIER" 'ARC-000-RATE-v*.md')" ] && echo "✅ Lot 3 Rate Card (supplier-wide)" || echo "❌ Lot 3 Rate Card MISSING (ARC-000-RATE)"
+fi
 ```
 
 **Find the lot** from the service design's `**G-Cloud Lot**: Lot <code> — <name>` line: `1a`, `1b`,
@@ -98,7 +102,7 @@ document lacks the Part for this lot group, **stop** and advise the user to crea
 | Declaration | `/arckit:declaration` |
 | Service design, or a lot that isn't 1a/1b/2a/2b/3 | `/arckit:service-design` |
 | SDD | `/arckit:sdd-lot1a`, `sdd-lot1b`, `sdd-lot2a`, `sdd-lot2b` or `sdd-lot3`, matching the lot |
-| Pricing | `/arckit:pricing` |
+| Pricing, or the Lot 3 rate card (`ARC-000-RATE`) | `/arckit:pricing` |
 | Security evidence | `/arckit:security` |
 
 ### 3. Check the review report
@@ -123,12 +127,14 @@ and **Approved By** rows, which are not bid answers:
 
 ```bash
 PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
+LOT="{lot}"             # this service's lot: 1a, 1b, 2a, 2b or 3
 latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
 # placeholder scan: keep identical in review.md and submission-pack.md
 {
     find "${CLAUDE_PLUGIN_ROOT}/templates" .arckit/templates-custom -maxdepth 1 -name '*-template.md' 2>/dev/null
     echo phase=2
     for t in SUPP SOCV LOTQ DECL; do latest projects/000-global/supplier "ARC-000-$t-v*.md"; done
+    [ "$LOT" = 3 ] && latest projects/000-global/supplier 'ARC-000-RATE-v*.md'
     for t in SVCD SDD PRIC SECA; do latest "$PROJECT_PATH" "ARC-*-$t-v*.md"; done
 } | tr '\n' '\0' | xargs -0 awk '
     FNR == 1 { inc = 0; fence = 0; sect = "" }
@@ -177,6 +183,7 @@ straight export of the approved files):
 
 ```bash
 PROJECT_PATH="{path}"
+LOT="{lot}"   # this service's lot: 1a, 1b, 2a, 2b or 3
 SUBMISSION_DIR="$PROJECT_PATH/submission"
 mkdir -p "$SUBMISSION_DIR/evidence"
 
@@ -186,8 +193,9 @@ for type in SVCD SDD PRIC SECA GCRV; do
   [ -n "$f" ] && cp "$f" "$SUBMISSION_DIR/"
 done
 
-# Supplier-wide bid documents (latest version of each)
-for type in SUPP SOCV LOTQ DECL; do
+# Supplier-wide bid documents (latest version of each), and the rate card for a Lot 3 service
+for type in SUPP SOCV LOTQ DECL RATE; do
+  [ "$type" = RATE ] && [ "$LOT" != 3 ] && continue
   f=$(find projects/000-global/supplier -maxdepth 1 -name "ARC-000-$type-v*.md" 2>/dev/null | sort -V | tail -1)
   [ -n "$f" ] && cp "$f" "$SUBMISSION_DIR/"
 done
@@ -216,9 +224,10 @@ never rewrite or invent one. Keep every `[PENDING]` visible.
 3. **Service questions** from `ARC-{PROJECT_ID}-SDD`, in the order of the lot's service questions,
    organised by question section.
 4. **Pricing** from `ARC-{PROJECT_ID}-PRIC`, by the lot's pricing model: the 1a/1b price formula
-   components and baseline pricing link (1b prices go on the separate non-public platform), the
-   2a/2b discount % for each annual call-off value band, or the Lot 3 maximum day rate, UK and
-   offshore, for each role level.
+   components and baseline pricing link (1b prices go on the separate non-public platform) or the
+   2a/2b discount % for each annual call-off value band. For Lot 3, the maximum day rate, UK and
+   offshore, for each role level comes from the supplier's one rate card, `ARC-000-RATE`: it is
+   entered once and shows on every Lot 3 listing.
 
 If the supplier is bidding with several services in the same lot group, say that the declaration,
 social value and lot questions are shared and only need entering once.
@@ -249,6 +258,7 @@ to the service's lot. Structure:
 | ARC-000-SOCV-v[X.Y].md | ARC-000-SOCV | Social value commitments |
 | ARC-000-LOTQ-v[X.Y].md | ARC-000-LOTQ | Lot questions (Part [N] applies to this service) |
 | ARC-000-DECL-v[X.Y].md | ARC-000-DECL | Supplier declaration |
+| ARC-000-RATE-v[X.Y].md | ARC-000-RATE | Lot 3 rate card, shared by every Lot 3 service (Lot 3 only) |
 | ARC-[PROJECT_ID]-SVCD-v[X.Y].md | ARC-[PROJECT_ID]-SVCD | Service design |
 | ARC-[PROJECT_ID]-SDD-v[X.Y].md | ARC-[PROJECT_ID]-SDD | Service Definition Document |
 | ARC-[PROJECT_ID]-PRIC-v[X.Y].md | ARC-[PROJECT_ID]-PRIC | Pricing |
@@ -312,7 +322,7 @@ Every document must be ODF or PDF/A, at most 5 MB, and accessible.
 ### Pricing
 - [ ] 1a/1b: baseline price and link, fixed onboarding costs, framework discount, supplier-specific schemes, time-limited discounts (1b: on the separate non-public platform)
 - [ ] 2a/2b: unit prices in the pricing document and a discount % for each of the six annual call-off value bands
-- [ ] 3: maximum day rates, UK and offshore, for each role level offered (at least £50)
+- [ ] 3: the supplier's one rate card from `ARC-000-RATE`: maximum day rates, UK and offshore, for each role level offered (at least £50), entered once for all Lot 3 services
 - [ ] No "price on application", "from £x" or unexplained ranges; prices in GBP
 - [ ] Education pricing and free trial answered (where the lot asks)
 
@@ -333,7 +343,7 @@ The order of work, not a screen-by-screen script. GCA's Attachment 2 (How to ten
 4. **Answer the lot questions:** for each lot group you bid for, copy the answers into GCA's Digital Platform. For Lots 1a/1b, paste the scored answers as plain text within their word limits; attachments are not accepted.
 5. **Add the service:** select Lot [code] and enter the exact service name from the SDD.
 6. **Complete the service questions:** copy each answer from `answers-export.md`, section by section.
-7. **Enter pricing:** [Lot 1a/1b: the price formula components and baseline pricing link; 1b prices go on the separate non-public platform / Lot 2a/2b: the discount % for each annual call-off value band / Lot 3: the maximum day rate for each role level, UK and offshore].
+7. **Enter pricing:** [Lot 1a/1b: the price formula components and baseline pricing link; 1b prices go on the separate non-public platform / Lot 2a/2b: the discount % for each annual call-off value band / Lot 3: the maximum day rate for each role level, UK and offshore, from `ARC-000-RATE`; the card is entered once and shows on every Lot 3 listing].
 8. **Upload documents:** the list above.
 9. **Preview and submit** before GCA's deadline for this application window, and note the submission reference.
 10. **After submission:** monitor GCA communications and respond to clarification requests by the deadline GCA gives in each request.

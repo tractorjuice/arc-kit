@@ -507,7 +507,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Staff security clearance checks | 2.5% | 100/50/0 |
 | Security clearance level | 2.5% | 100/66/33/0 |
 | Cyber Essentials if a buyer requires it | 2.5% | 100/0 |
-| Price (average day rate) | 80% | Price assessment (each service's PRIC document (`/arckit:pricing`)) |
+| Price (average day rate) | 80% | Price assessment (the supplier's one Lot 3 rate card, `ARC-000-RATE` (`/arckit:pricing`)) |
 | Cyber Essentials | — | Mandatory for call-off contracts (Section 2) |
 
 *Attachment 2 disqualifies a tender with a mark of zero on any scored quality question, so a "No" to any criterion below fails the bid. These answers cover all your Lot 3 services, and must agree with the User Support, Staff Security and Standards answers on each listing.*
@@ -633,7 +633,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 |-------------|--------|-------|
 | Technical Ability Certificate, signed electronically by your customer in the Digital Platform (Attachment 2b) | [STATUS] | Digital Platform |
 | Bronze financial viability risk assessment (Attachment 5b), only if GCA asks after the enhanced sift | [STATUS] | Digital Platform |
-| Maximum day rates for each role level offered; the average day rate is the price score (80%) | [STATUS] | `/arckit:pricing` |
+| Maximum day rates for each role level offered, on one rate card for all your Lot 3 services; the average day rate is the price score (80%) | [STATUS] | `/arckit:pricing` (`ARC-000-RATE`) |
 | Social value (10%) | [STATUS] | `/arckit:social-value` |
 
 ---

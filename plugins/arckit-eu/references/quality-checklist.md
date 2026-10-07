@@ -1581,7 +1581,7 @@ All artifacts must pass these 10 checks:
 - Target buyer segments named
 - Technical details cover hosting locations and data residency, backup and DR, scalability, and security controls cross-referenced to the supplier profile certifications
 - Support model states hours, channels, response targets and escalation
-- Pricing approach outlined in the lot's G-Cloud 15 terms (price formula, discount bands or DDaT rate card) and consistent with the pricing artefact where one exists
+- Pricing approach outlined in the lot's G-Cloud 15 terms (price formula, discount bands or the supplier's one DDaT rate card) and consistent with the pricing artefact where one exists; for Lot 3, the role levels that deliver the service named exactly as GCA's rate card names them, with any role outside DDaT mapped to the nearest DDaT role and level
 - Differentiation states competitive advantages and target use cases rather than marketing claims
 
 ### SDD -- G-Cloud Service Definition Document
@@ -1594,23 +1594,23 @@ All artifacts must pass these 10 checks:
 - Every free-text answer within the 50, 100 or 200-word limit on its `**Words:**` line, with the count filled in rather than left as `[X]` (limits inferred from the live listings and tabulated in the overlay's `framework-questions.md`)
 - Supplier type recorded with GCA's option wording, consistent with the reseller or sole control answer in the lot questions for Lots 1a/1b
 - Lot 1b staff security offers SC or DV only
-- Lot 3 rate card uses only role levels named in GCA's Lot 3 rate card, every rate £50 or more, and agrees with the pricing artefact where one exists
+- Lot 3: section 11 lists the role levels that deliver the service, named exactly as GCA's Lot 3 rate card names them, each marked on or not on the supplier's one rate card (RATE); the SDD copies no rates
 - No prices in the service definition beyond what GCA's questions ask for; the uploaded document is ODF or PDF/A, at most 5 MB and accessible
 - Content consistent with the supplier profile and service design artefacts — company name, certifications, clearances, data locations, features, benefits and lot must agree
 
 ### PRIC -- G-Cloud Pricing Document
 
-- Pricing follows the document's own lot: the 1a/1b price formula (baseline price with web link, fixed onboarding costs, framework discount, supplier-specific schemes, time-limited discounts); the 2a/2b unit prices plus a discount for each of the six annual call-off bands; or the Lot 3 DDaT rate card at maximum UK and offshore day rates
+- Pricing follows the document's own lot: the 1a/1b price formula (baseline price with web link, fixed onboarding costs, framework discount, supplier-specific schemes, time-limited discounts); the 2a/2b unit prices plus a discount for each of the six annual call-off bands; or, for Lot 3, a summary of the supplier's one rate card (RATE) naming its version and average day rate, with the rates themselves left on the card
 - All prices stated in GBP; no other currency present
 - No "price on application", "from £x" or unexplained price ranges
 - The evaluated elements identified with their weights: onboarding price (5%) and minimum discount (5%) for Lots 1a/1b; the total of the band discounts (80%) for Lots 2a/2b; the average of every UK and offshore day rate entered (80%) for Lot 3
-- Lot 3 rates use GCA's role level names, are at least £50, assume a 7.5-hour day with travel and subsistence inside the M25 included, and carry no uplift for risk or contingency
+- Lot 3: every role level that delivers the service is on the supplier rate card, and the summary agrees with the card's current version
 - The reduce-only rule stated for the lot (Lot 3 rates and 2a/2b unit prices can be reduced, never increased; the 2a/2b discount matrix is fixed for each term)
 - Free trial and education pricing addressed where the lot asks for them; a free trial description within 50 words
 - The 0.75% management charge acknowledged
 - No SFIA rate card or G-Cloud 14 minimum/maximum price, unit and interval fields
 - Market comparisons, where given, name their source and the number of listings they rest on; no invented market figures
-- Pricing consistent with the SDD, including the Lot 3 rate card
+- Pricing consistent with the SDD: education discount, free trial and, for Lots 1a/1b, the deployment models priced
 
 ### SECA -- G-Cloud Security Evidence
 
@@ -1639,7 +1639,7 @@ All artifacts must pass these 10 checks:
 
 ### GCRV -- G-Cloud Submission Review
 
-- Every expected document checked for existence by its ARC-ID: supplier-wide SUPP, SOCV, LOTQ (with the Part for the service's lot group) and DECL; per-service SVCD, SDD, PRIC and SECA
+- Every expected document checked for existence by its ARC-ID: supplier-wide SUPP, SOCV, LOTQ (with the Part for the service's lot group), DECL and, for a Lot 3 service, RATE; per-service SVCD, SDD, PRIC and SECA
 - Overall status set to READY, NEEDS WORK or NOT READY, and consistent with the findings — no READY status while a mandatory field remains or the placeholder scan reports an unfinished answer (`[PENDING]` in any form, an older marker such as `[TODO]` or `[TBC]`, or a template field never filled in) outside the Document Control approval rows and Revision History
 - Mandatory field status reported per document rather than in aggregate
 - Character and word limits validated numerically and reported as actual against limit: service name against 100 characters, description against 500 characters, each feature and benefit against 10 words, every SDD free-text answer recounted against the limit on its `**Words:**` line, the scored Lot 1a/1b quality answers against 250 words per part
@@ -1648,6 +1648,17 @@ All artifacts must pass these 10 checks:
 - Common rejection reasons checked explicitly: placeholder text, `N/A` where an answer is required, contradictory statements, unsubstantiated claims, competitor mentions, prices in the SDD, forbidden pricing ("price on application", "from £x", unexplained ranges), non-GBP pricing
 - Actions required listed with enough specificity to be actioned without re-reading the source documents, each naming the command to re-run
 - Evidence status reported per claim requiring evidence
+
+### RATE -- G-Cloud Lot 3 Rate Card
+
+- One card for all the supplier's Lot 3 services, supplier-wide in `projects/000-global/supplier/`, written only by `/arckit:pricing`; it lists the Lot 3 services it covers
+- Every role level named exactly as GCA's Lot 3 rate card names it (9 job families, 58 roles, 222 role levels); levels the supplier can't provide left blank, not priced
+- A maximum UK day rate, and an offshore rate or "Not offered", for every level offered; every rate at least £50, for a 7.5-hour day with travel and subsistence inside the M25 included and no risk or contingency uplift; no SFIA levels or SFIA rates
+- The average day rate computed as GCA scores it: every UK and offshore rate entered, added up and divided by their number, leaving out any under £50 or over £10,000
+- Every role level any Lot 3 service's design or SDD needs is on the card, with the services and their levels tabled
+- Roles outside DDaT (procurement and commercial advisers, trainers) mapped to the nearest DDaT role and level, with the reason and where buyers are told
+- Market comparisons name their source and the number of listings they rest on; no invented percentile or median, and no market figure written in as the supplier's rate
+- Rates the supplier hasn't confirmed are `[PENDING]`, never a market figure
 
 ### SOCV -- Social Value Commitments
 

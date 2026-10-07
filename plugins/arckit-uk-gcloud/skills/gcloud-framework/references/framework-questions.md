@@ -205,7 +205,7 @@ All lots need a Technical Ability Certificate. Weights are from Attachment 2d (Q
 |-----|---------------|-------|
 | 1a/1b | Baseline Price + Fixed Onboarding Costs − Framework Discount ± Further Supplier-Specific Schemes − Time Limited Discounts, per deployment model; a baseline pricing web link | Baseline prices can move; the framework (minimum) discount is fixed. 1b prices go on the non-public platform |
 | 2a/2b | Unit prices in a pricing document, plus a discount % for each annual call-off value band: under £250,000; £250,000–£500,000; £500,001–£1m; £1,000,001–£2.5m; £2,500,001–£5m; over £5m | Prices can be reduced, not increased; the discount matrix is fixed for each term |
-| 3 | A maximum day rate, UK and offshore, for each role level offered (DDaT job families); leave levels you can't provide blank | Minimum £50; 7.5-hour day; travel and subsistence inside the M25 included; no uplift for risk or contingency; reduce only |
+| 3 | A maximum day rate, UK and offshore, for each role level offered (DDaT job families); leave levels you can't provide blank. One card per supplier: every Lot 3 listing shows the whole card (only 2 of the 1,135 suppliers with several live Lot 3 services show different cards) | Minimum £50; 7.5-hour day; travel and subsistence inside the M25 included; no uplift for risk or contingency; reduce only |
 | All | — | No "price on application", "from £x" or unexplained ranges |
 
 ---

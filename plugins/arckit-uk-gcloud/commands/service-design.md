@@ -16,7 +16,7 @@ handoffs:
     description: Generate the Service Definition Document for the service
     condition: "Lot 2b (SaaS) selected"
   - command: /arckit:sdd-lot3
-    description: Generate the Service Definition Document and rate card for the service
+    description: Generate the Service Definition Document and the role levels that deliver the service
     condition: "Lot 3 (Cloud Support) selected"
   - command: /arckit:pricing
     description: Produce the G-Cloud 15 pricing document for this service
@@ -265,9 +265,12 @@ Sole Control of the Infrastructure.
   tagging.
 - **Lot 3:** the one category group the service sits in; remote or on-site delivery; platforms
   supported; staff screening (to BS7858:2019 or not) and the highest clearance offered; the **role
-  levels** the service needs, named exactly as in
-  `${CLAUDE_PLUGIN_ROOT}/skills/ddat-rate-card/references/lot-3-rate-card.md` (rates are set later
-  with `/arckit:pricing`).
+  levels** that deliver it, named exactly as in
+  `${CLAUDE_PLUGIN_ROOT}/skills/ddat-rate-card/references/lot-3-rate-card.md`. Rates are not set per
+  service: `/arckit:pricing` keeps one rate card for all the supplier's Lot 3 services
+  (`ARC-000-RATE`), and every Lot 3 listing shows it in full, so these levels only have to be on it.
+  A role the rate card doesn't name (procurement or commercial adviser, trainer) goes in at the
+  nearest DDaT role and level by its work and seniority, with its own name beside it.
 
 **Technical details:** architecture, where data is stored and processed (United Kingdom, EEA,
 other), whether users can choose, integrations.
@@ -281,7 +284,7 @@ onsite support (not asked for Lot 3), support levels.
 - **1a/1b:** the price formula: baseline price, fixed onboarding costs, framework discount, any
   supplier-specific schemes and time-limited discounts
 - **2a/2b:** unit prices and the intended discount for each annual call-off value band
-- **3:** day rates for the chosen role levels
+- **3:** the supplier's one rate card (`ARC-000-RATE`), which must cover this service's role levels
 - **All:** education discount; free trial (Lots 1a/1b, 2a/2b)
 
 **Certifications:** current status for the ones this lot's lot questions cover (see the template's

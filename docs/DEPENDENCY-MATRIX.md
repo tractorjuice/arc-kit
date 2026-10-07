@@ -411,6 +411,7 @@ The `arckit-uk-gcloud` overlay now targets G-Cloud 15 (RM1557.15), run by the Go
 - `/arckit:social-value` → `SOCV` (Social Value Commitments), supplier-wide in `projects/000-global/supplier/`
 - `/arckit:lot-questions` → `LOTQ` (G-Cloud Lot Questions), supplier-wide, one Part per lot group bid for
 - `/arckit:sdd-lot1a`, `/arckit:sdd-lot1b`, `/arckit:sdd-lot2a`, `/arckit:sdd-lot2b` → `SDD` (one per G-Cloud 15 lot; `sdd-lot3` unchanged in name)
+- `/arckit:pricing` → `PRIC`, and for Lot 3 also `RATE` (G-Cloud Lot 3 Rate Card; regime UK, category Procurement), the supplier's one rate card in `projects/000-global/supplier/`, shared by every Lot 3 service. The Lot 3 SDD lists the role levels that deliver the service and copies no rates
 
 **Dependencies**: supplier-profile (SUPP) → social-value (SOCV, M) → lot-questions (LOTQ, M; reads the service designs for the lots bid for, R) → declaration (DECL, M; summarises SOCV) → service-design (SVCD) → sdd-lot1a / 1b / 2a / 2b / 3 (SDD, M) → pricing (PRIC, R; reads the SDD so the two agree) and security (SECA, R) → review (GCRV; checks SUPP, SOCV, LOTQ, DECL, SVCD, SDD, PRIC and SECA) → submission-pack.
 

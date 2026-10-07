@@ -294,6 +294,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | GCRV | `ARC-*-GCRV-*.md` | G-Cloud Submission Review |
 | | SOCV | `ARC-*-SOCV-*.md` | Social Value Commitments |
 | | LOTQ | `ARC-*-LOTQ-*.md` | G-Cloud Lot Questions |
+| | RATE | `ARC-*-RATE-*.md` | G-Cloud Lot 3 Rate Card |
 | | DMC | `ARC-*-DMC-*.md` | Data Mesh Contract |
 | | VEND | `ARC-*-VEND-*.md` | Vendor Evaluation |
 | | | `vendors/*/*.md` | Vendor Documents |

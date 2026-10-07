@@ -22,6 +22,15 @@ QUOTED = re.compile(r"'[^']*'|\"(?:[^\"\\]|\\.)*\"")
 PATH_GLOB = re.compile(r"(?:\*|\?|\[(?![\s\]]))")
 
 
+def _strip_comment(line: str) -> str:
+    """Drop a trailing ` # comment` that sits outside any quotes (it may hold an apostrophe)."""
+    for match in re.finditer(r" #", line):
+        before = line[: match.start()]
+        if before.count("'") % 2 == 0 and before.count('"') % 2 == 0:
+            return before
+    return line
+
+
 def _unquoted_path_globs(markdown: str) -> list[str]:
     """Lines of a shell block holding a path glob the shell itself would expand.
 
@@ -31,9 +40,9 @@ def _unquoted_path_globs(markdown: str) -> list[str]:
     """
     found = []
     for block in SHELL_BLOCK.findall(markdown):
-        code = "\n".join(line for line in block.splitlines() if not line.lstrip().startswith("#"))
+        code = "\n".join(_strip_comment(line) for line in block.splitlines() if not line.lstrip().startswith("#"))
         for line in QUOTED.sub("''", code).splitlines():
-            for word in re.split(r"[\s;|&()<>]+", line.split(" #", 1)[0]):
+            for word in re.split(r"[\s;|&()<>]+", line):
                 if "/" in word and PATH_GLOB.search(word):
                     found.append(line.strip())
                     break
@@ -289,3 +298,32 @@ def test_word_count_reads_every_template_counter(tmp_path):
         counters = path.read_text(encoding="utf-8").count("**Words:** [X]/")
         out = _run_awk(_word_count("sdd-lot3.md"), str(path), cwd=tmp_path)
         assert counters > 0 and len(out.splitlines()) == counters + 1, (template, counters, out)
+
+
+# ── One Lot 3 rate card per supplier ─────────────────────────────────────────
+# Every Lot 3 listing shows the supplier's whole card, so the card is one
+# supplier-wide RATE document that pricing owns. The Lot 3 SDD lists the role
+# levels that deliver the service and copies no rates, which also breaks the
+# circle in which sdd-lot3 copied rates from pricing while pricing took its
+# levels from the SDD.
+def _section(text: str, heading: str) -> str:
+    start = text.index(heading)
+    end = text.find("\n## ", start + len(heading))
+    return text[start:] if end == -1 else text[start:end]
+
+
+def test_lot3_sdd_lists_role_levels_without_rates():
+    section = _section((TEMPLATES / "sdd-lot3-template.md").read_text(encoding="utf-8"), "## 11. ")
+    assert "ARC-000-RATE" in section
+    header = next(line for line in section.splitlines() if line.startswith("| # | Job family"))
+    assert "rate |" not in header.lower().replace("on the rate card |", ""), header
+
+
+def test_pricing_owns_the_supplier_rate_card():
+    pricing = (COMMANDS / "pricing.md").read_text(encoding="utf-8")
+    assert "generate-document-id.mjs\" 000 RATE --filename" in pricing
+    assert "rate-card-template.md" in pricing
+    assert (TEMPLATES / "rate-card-template.md").is_file()
+    sdd3 = (COMMANDS / "sdd-lot3.md").read_text(encoding="utf-8")
+    assert "never copy its rates" in sdd3
+    assert "copy its rates: `/arckit:pricing`" not in sdd3

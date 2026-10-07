@@ -35,9 +35,9 @@
 
 | Field | Value |
 |-------|-------|
-| **What is priced** | [Lots 1a/1b: the price formula for each deployment model / Lots 2a/2b: unit prices and the six-band discount matrix / Lot 3: maximum day rates for each role level offered] |
+| **What is priced** | [Lots 1a/1b: the price formula for each deployment model / Lots 2a/2b: unit prices and the six-band discount matrix / Lot 3: nothing per service; the supplier's one rate card (`ARC-000-RATE`) gives a maximum day rate for each role level offered] |
 | **What the bid scores on price** | [Lots 1a/1b: onboarding price 5% and minimum discount 5% / Lots 2a/2b: the total of the six band discounts, 80% / Lot 3: the average day rate, 80%] |
-| **Lot-wide figures** | [Lots 1a/1b: onboarding table and minimum discount / Lots 2a/2b: discount matrix / Lot 3: the whole rate card]: the same on every service you list in this lot |
+| **Lot-wide figures** | [Lots 1a/1b: onboarding table and minimum discount / Lots 2a/2b: discount matrix / Lot 3: the whole rate card, kept once in `ARC-000-RATE`]: the same on every service you list in this lot |
 | **Currency and tax** | GBP, excluding VAT |
 | **Discount for educational organisations** | Yes / No |
 | **Free trial available** (Lots 1a/1b, 2a/2b) | Yes / No |
@@ -164,47 +164,16 @@ How it scores: each bidder's six discounts are added up. The highest total acros
 ## 4. Lot 3: Rate Card
 <!-- Lot 3 only. -->
 
-### 4.1 Rules
-
-| Rule | Detail |
-|------|--------|
-| What you price | A **maximum** day rate for each role level offered: UK (onshore) and, optionally, offshore |
-| Role levels | Only the 222 levels of GCA's rate card (9 job families, 58 roles); leave blank any you can't provide |
-| Day | 7.5 working hours |
-| Minimum | £50 a day |
-| Travel and subsistence | Included within the M25. Elsewhere only if the rate card states it, at the buyer's standard rates |
-| No uplift | No risk or contingency uplift inside a day rate |
-| Changes | Rates can be reduced at any time, never increased |
-| Scope | One rate card for all your Lot 3 services: every Lot 3 listing shows the same card |
-| Onshore / offshore | Onshore staff must be available in the UK for the contract; offshore staff may work outside the UK |
-
-### 4.2 UK (Onshore) Maximum Day Rates
-
-| Job family | Role | Role level | Your maximum (£/day) | Market comparison | Position |
-|------------|------|------------|----------------------|-------------------|----------|
-| [FAMILY] | [ROLE] | [ROLE_LEVEL] | £[RATE] / [PENDING] | [Median £X, p25–p75 £X–£X, N suppliers (DDaT Rate Card skill) / Rivals £X–£X, N listings (GCMP) / No comparison] | [Below p25 / p25–p75 / Above p75 / —] |
-
-### 4.3 Offshore Maximum Day Rates
-
-| Job family | Role | Role level | Your maximum (£/day) | Market comparison | Position |
-|------------|------|------------|----------------------|-------------------|----------|
-| [FAMILY] | [ROLE] | [ROLE_LEVEL] | £[RATE] / Not offered | [Offshore median £X (DDaT Rate Card skill) / Rivals £X–£X, N listings (GCMP) / No comparison] | [POSITION / —] |
-
-### 4.4 Projected Average Day Rate (price score 80%)
+Lot 3 is priced on **one rate card for all your Lot 3 services**, kept at supplier level in `projects/000-global/supplier/ARC-000-RATE-v*.md` and shown in full on every Lot 3 listing. `/arckit:pricing` writes it from `rate-card-template.md`; this section only records how this service relates to it. Rates, the market comparison and the average day rate stay on the card.
 
 | Field | Value |
 |-------|-------|
-| Rates entered (UK + offshore) | [N] ([N_UK] UK, [N_OFFSHORE] offshore) |
-| Rates left out of the average (under £50 or over £10,000) | [N / None] |
-| **Your average day rate** | **£[AVERAGE]** |
-| Average of the market medians for the same rates | £[MARKET_AVERAGE] / Not available for every level offered |
-| Difference | [+/-]£[DIFF] ([+/-][X]%) / — |
-
-How it scores: the average is every rate entered, added up and divided by the number of rates. The lowest average across all bidders scores 80, and every other bidder scores (lowest average ÷ their average) × 80. Each level offered counts equally, so a card heavy with senior levels raises the average and one that includes junior and offshore levels lowers it. Offer only levels you can staff at that rate for the whole framework.
-
-### 4.5 Expenses Outside the M25
-
-[None claimed: all travel and subsistence is absorbed / Recoverable outside the M25 at the buyer's standard rates, as stated on the rate card]
+| Rate card | `ARC-000-RATE-v[VERSION]` of [DATE] |
+| Role levels on the card | [N] of 222 ([N_UK] UK rates, [N_OFFSHORE] offshore) |
+| Average day rate, as GCA scores it (price 80%) | £[AVERAGE] |
+| Role levels that deliver this service | [ROLE_LEVEL, ...] (from the service design and SDD) |
+| All of them on the card | Yes / No: [MISSING LEVELS, added to the card on this run] |
+| Roles priced at the nearest DDaT level | [YOUR ROLE → ROLE_LEVEL, ... / None] |
 
 ---
 
@@ -244,7 +213,7 @@ How it scores: the average is every rate entered, added up and divided by the nu
 | Education discount and free trial answers match the SDD | Pass / Fail / No SDD yet |
 | **Lots 1a/1b:** all 9 onboarding cells completed; public cloud prices publicly linked; pay as you go available | Pass / Fail |
 | **Lots 2a/2b:** all six bands completed, each 0–100%; unit prices never raised | Pass / Fail |
-| **Lot 3:** every rate at least £50 and based on a 7.5-hour day; no risk or contingency uplift; role levels named exactly as GCA's rate card; rates match the SDD | Pass / Fail |
+| **Lot 3:** the supplier rate card (`ARC-000-RATE`) exists and passes its own compliance check; every role level this service needs is on it | Pass / Fail |
 
 ---
 

@@ -1799,6 +1799,7 @@
     "GCRV": "Procurement",
     "SOCV": "Procurement",
     "LOTQ": "Procurement",
+    "RATE": "Procurement",
     "DMC": "Procurement",
     "VEND": "Procurement",
     "AWRS": "Research",

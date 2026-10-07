@@ -47,6 +47,7 @@ projects/<NNN>-<service-name>/submission/evidence/
 | `ARC-<NNN>-SVCD` | `/arckit:service-design` |
 | `ARC-<NNN>-SDD` | `/arckit:sdd-lot1a`, `/arckit:sdd-lot1b`, `/arckit:sdd-lot2a`, `/arckit:sdd-lot2b`, or `/arckit:sdd-lot3` |
 | `ARC-<NNN>-PRIC` | `/arckit:pricing` |
+| `ARC-000-RATE` (Lot 3 only: the supplier's one rate card) | `/arckit:pricing` |
 | `ARC-<NNN>-SECA` | `/arckit:security` |
 
 ---

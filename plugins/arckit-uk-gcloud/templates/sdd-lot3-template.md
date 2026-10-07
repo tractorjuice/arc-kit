@@ -16,7 +16,7 @@
 | [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.[COMMAND]` command | [PENDING] | [PENDING] |
 
 > G-Cloud 15 (RM1557.15) Service Definition Document for a Lot 3 (Cloud Support) service, run by the Government Commercial Agency (GCA, formerly CCS).
-> Sections 1–10 follow GCA's Lot 3 service questions, in the export's order. Section 11 is the service's rate card, which GCA collects on the Digital Platform rather than as a service question.
+> Sections 1–10 follow GCA's Lot 3 service questions, in the export's order. Section 11 lists the role levels that deliver the service. The rates are on the supplier's one Lot 3 rate card (`ARC-000-RATE`, set with `/arckit:pricing`), which GCA collects on the Digital Platform rather than as a service question.
 
 ## G-Cloud Details
 
@@ -32,7 +32,7 @@
 
 ## How to Use This Document
 
-This document holds the answers to every Lot 3 service question and the service's rate card, ready to enter on GCA's Digital Platform. It is also the source for the service definition document you upload at 10.1.
+This document holds the answers to every Lot 3 service question, ready to enter on GCA's Digital Platform, and the role levels that deliver the service. It is also the source for the service definition document you upload at 10.1.
 
 - Tick the options that apply (`- [x]`) and leave the others unticked. A *choose one* question takes exactly one tick.
 - A question marked ↳ is asked only when its trigger answer is ticked. When it isn't, write `Not applicable` under it.
@@ -40,9 +40,9 @@ This document holds the answers to every Lot 3 service question and the service'
 - Write anything the supplier hasn't confirmed as `[PENDING]`. `/arckit:review` treats every `[PENDING]` as blocking.
 - `<!-- GCA guidance -->` comments repeat GCA's help text and can stay in the working copy.
 - **Limits:** service name 100 characters (name only, no extra keywords); description 500 characters; features and benefits at most 10 each, 10 words each; and a word limit on each free-text answer, shown on its `**Words:**` line. GCA's export states none of those, but every live listing keeps within them; `framework-questions.md` in the overlay's `gcloud-framework` skill gives the evidence. Write the count in place of `[X]`.
-- **Uploaded service definition document:** ODF or PDF/A, at most 5 MB, accessible, and **no prices**. Leave out the rate card (section 11), the support level costs (7.13), Document Control, Revision History, G-Cloud Details, the appendix and External References when you produce it.
+- **Uploaded service definition document:** ODF or PDF/A, at most 5 MB, accessible, and **no prices**. Leave out section 11, the support level costs (7.13), Document Control, Revision History, G-Cloud Details, the appendix and External References when you produce it.
 - **Scored answers:** three of the four Lot 3 mandatory award criteria (2.5% each, answered with `/arckit:lot-questions`) repeat answers given here: user support availability, staff security clearance checks and clearance level. The sections they mirror are marked.
-- **Changed from G-Cloud 14:** the planning, set-up and migration, QA and testing, security testing, training and ongoing support question sections are gone (those areas are now service categories), and the SFIA rate card is replaced by the role levels in section 11.
+- **Changed from G-Cloud 14:** the planning, set-up and migration, QA and testing, security testing, training and ongoing support question sections are gone (those areas are now service categories), and the SFIA rate card is replaced by a DDaT rate card: one per supplier, covering all its Lot 3 services.
 
 ---
 
@@ -264,7 +264,7 @@ This document holds the answers to every Lot 3 service question and the service'
 
 ## 9. Pricing
 
-> Day rates are not answered here: they go in the rate card (section 11) and are set with `/arckit:pricing`.
+> Day rates are not answered here: they go on the supplier's one Lot 3 rate card, `ARC-000-RATE`, set with `/arckit:pricing` (section 11).
 
 **9.1 Discount for educational organisations** — Do you offer special pricing for educational organisations? *(choose one)*
 
@@ -294,24 +294,21 @@ This document holds the answers to every Lot 3 service question and the service'
 
 ---
 
-## 11. Rate Card
+## 11. Role Levels and the Rate Card
 
-> Not a service question in GCA's export: Lot 3 day rates are entered on GCA's Digital Platform and appear on the listing as the service's rate card. List every role level this service offers, using the exact job family, role and role level names from the overlay's `skills/ddat-rate-card/references/lot-3-rate-card.md` (9 job families, 58 roles, 222 role levels). Only listed role levels can be priced.
+> Not a service question in GCA's export. Lot 3 is priced on **one rate card per supplier**: the maximum UK and offshore day rate for each DDaT role level the supplier offers, entered once on GCA's Digital Platform and shown in full on every one of its Lot 3 listings. On the live listings scraped on 7 October 2026 only 2 of the 1,135 suppliers with more than one Lot 3 service show different cards on different services.
 >
-> Rates are finalised with `/arckit:pricing`, which records them in the service's pricing document (PRIC); this section copies them from there. **Lot 3 price is 80% of the score.** GCA averages every rate you enter, UK and offshore (the sum of the rates divided by how many there are, ignoring any under £50 or over £10,000). The lowest average in the tender scores the full 80% and the others score in proportion, so offer the role levels the service really needs rather than every level.
->
-> Rules: a **maximum** day rate per role level, UK and (optionally) offshore; a 7.5-hour day; minimum £50 a day; travel and subsistence inside the M25 included; no uplift for risk or contingency; rates can be reduced during the framework but never increased. Leave this section out of the uploaded service definition document.
+> The card is the supplier-wide `projects/000-global/supplier/ARC-000-RATE-v*.md`, and only `/arckit:pricing` writes it. This section names it and lists the role levels that deliver this service, so the card can be checked to cover them. **Copy no rates here.** Use the exact job family, role and role level names from the overlay's `skills/ddat-rate-card/references/lot-3-rate-card.md` (9 job families, 58 roles, 222 role levels). Leave this section out of the uploaded service definition document.
 
-| # | Job family | Role | Role level | Maximum UK day rate | Maximum offshore day rate |
-|---|------------|------|------------|---------------------|---------------------------|
-| 1 | [JOB FAMILY] | [ROLE] | [ROLE LEVEL] | £[RATE] | £[RATE] / Not offered |
+**Rate card:** `ARC-000-RATE-v[VERSION]` / No rate card yet: run `/arckit:pricing`
 
-**Role levels offered:** [N] of 222 | **Rates entered:** [N] (UK and offshore) | **Average day rate, as GCA scores it:** £[X]
-**Rates agree with the pricing document (PRIC):** [Yes / No pricing document yet — run `/arckit:pricing`]
+| # | Job family | Role | Role level | Your role, if it isn't a DDaT role | On the rate card |
+|---|------------|------|------------|------------------------------------|------------------|
+| 1 | [JOB FAMILY] | [ROLE] | [ROLE LEVEL] | [YOUR ROLE / —] | Yes / No: add with `/arckit:pricing` |
 
-### 11.1 Why Each Role Level Is Needed
+<!-- Roles outside DDaT (procurement and commercial advisers, trainers, bid and contract managers): list them at the nearest DDaT role and level by the work they do and their seniority, mark the mapping as proposed until the supplier confirms it, and say so in the uploaded service definition document, for example "Our procurement consultants are priced at the DDaT Senior delivery manager level". -->
 
-<!-- One line per role level: what that level does on this service. This keeps the rate card to the levels the service needs, which matters because the average day rate is scored. -->
+### 11.1 What Each Role Level Does on This Service
 
 | Role level | What they do on this service |
 |------------|------------------------------|

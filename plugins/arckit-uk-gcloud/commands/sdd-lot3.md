@@ -1,10 +1,10 @@
 ---
-description: Generate the Service Definition Document and rate card for a G-Cloud 15 Lot 3 (Cloud Support) service
+description: Generate the Service Definition Document for a G-Cloud 15 Lot 3 (Cloud Support) service, with the role levels that deliver it
 doc-type: SDD
 effort: max
 handoffs:
   - command: /arckit:pricing
-    description: Set the maximum UK and offshore day rates for the rate card
+    description: Build or update the supplier's one Lot 3 rate card so it covers this service's role levels
   - command: /arckit:security
     description: Generate NCSC Cloud Security Principles assertions
   - command: /arckit:lot-questions
@@ -17,14 +17,15 @@ handoffs:
 > Marketplace; it is **not** legal or procurement advice. Every assertion in a G-Cloud SDD must be
 > evidenceable — GCA (the Government Commercial Agency, formerly CCS) may request proof — so verify
 > every claim against the underlying evidence (supplier profile, staff screening and clearances,
-> role levels, day rates) before entering it on GCA's Digital Platform.
+> role levels) before entering it on GCA's Digital Platform.
 
 You are helping a cloud service supplier write the **Service Definition Document (SDD)** for a
 **G-Cloud 15 (RM1557.15) Lot 3: Cloud Support** service: managed services, FinOps, migration
 planning, set-up and migration, security, QA and testing, training or ongoing support. The SDD
 answers every Lot 3 service question that GCA asks, in the order of GCA's question export, and
-records the service's **rate card**: the DDaT role levels it offers, each with a maximum UK and
-offshore day rate.
+lists the **DDaT role levels that deliver the service**. It sets no rates: Lot 3 is priced on the
+supplier's **one rate card**, `projects/000-global/supplier/ARC-000-RATE-v*.md`, which
+`/arckit:pricing` owns and every Lot 3 listing shows in full.
 
 In this overlay **each G-Cloud service is its own ArcKit project** — `projects/{NNN}-service-name/`.
 This command does **not** create a new project: the service project was created earlier by
@@ -75,8 +76,8 @@ Use the **Read tool** on each of these that exists (when several versions exist,
 - Service design (this project): `{path}/ARC-{PROJECT_ID}-SVCD-v*.md`. If it is missing, tell the
   user to run `/arckit:service-design` first and stop.
 - The existing SDD, on a re-run: `{path}/ARC-{PROJECT_ID}-SDD-v*.md`.
-- The pricing document: `{path}/ARC-{PROJECT_ID}-PRIC-v*.md`. Set by `/arckit:pricing`; when present,
-  its day rates are the ones to use.
+- The supplier's one Lot 3 rate card: `projects/000-global/supplier/ARC-000-RATE-v*.md`, owned by
+  `/arckit:pricing`. Read it to check this service's role levels are on it; never copy its rates.
 - The lot questions: `projects/000-global/supplier/ARC-000-LOTQ-v*.md`. When it has a **Part 3
   (Lot 3)**, its mandatory award criteria repeat answers given in this SDD.
 
@@ -100,9 +101,10 @@ An SDD written for G-Cloud 14 (its intro names G-Cloud 14, or it has an SFIA rat
 skills mapping, or planning, set-up and migration, QA and testing, security testing, training and
 ongoing support sections) has a different structure. Carry over each confirmed answer that still
 matches a G-Cloud 15 question. Those old service sections have no G-Cloud 15 question; use them only
-to choose categories. **Never carry SFIA levels or SFIA day rates into the rate card**: map each old
-role to the nearest DDaT role level, mark the mapping as proposed, and ask the supplier to confirm
-it. List in the summary what didn't carry over.
+to choose categories. **Never carry SFIA levels or SFIA day rates over**: map each old role to the
+nearest DDaT role level as a role that delivers the service (section 11), mark the mapping as
+proposed, and ask the supplier to confirm it. Rates belong on the supplier rate card, set with
+`/arckit:pricing`. List in the summary what didn't carry over.
 
 ### 3. Read the Lot 3 questions, categories and rate card
 
@@ -118,7 +120,7 @@ Use the **Read tool** on:
   ```
 
 - `${CLAUDE_PLUGIN_ROOT}/skills/ddat-rate-card/references/lot-3-rate-card.md` — the 9 job families,
-  58 roles and 222 role levels: the only names the rate card can use.
+  58 roles and 222 role levels: the only names a rate card can use.
 
 Read only these. The other lots' question files are large and ask different questions.
 
@@ -187,34 +189,34 @@ Fill in the template:
   LOTQ document has a Part 3, check the answers agree and report any mismatch; don't edit the lot
   questions.
 
-#### Rate card (section 11)
+#### Role levels and the rate card (section 11)
 
-1. **Choose the role levels.** Take them from the service design. Otherwise propose the role levels
-   the service's categories and features need, mark them as proposed, and ask the supplier to
-   confirm them. Use the job family, role and role level names exactly as `lot-3-rate-card.md`
-   writes them; a level that isn't in that file can't be priced. Fill in 11.1 with what each level
-   does on this service.
-2. **Fill in the rates.** When the PRIC document exists, copy its rates: `/arckit:pricing` sets them
-   and is the source of truth. Otherwise use rates the supplier has given in the service design,
-   marked as provisional. Where there is no rate, write `[PENDING]`. Never invent a rate.
-3. **Check the rules.** Every rate is at least £50 a day, for a 7.5-hour day, with travel and
-   subsistence inside the M25 included and no uplift for risk or contingency. An offshore rate is
-   optional: write "Not offered" when there isn't one.
-4. **Work out the average day rate as GCA scores it:** the sum of every rate entered, UK and
-   offshore, divided by the number of rates, ignoring any under £50 or over £10,000. The lowest
-   average in the tender scores the full 80% and the others score in proportion, so every role level
-   and every offshore rate offered moves the score. Fill in the template's counters.
-5. **Compare with the market (summary only).** This overlay bundles no day-rate benchmark data. For
-   each role level with a rate, if it appears in the "What Suppliers Charge" table of the DDaT Rate
-   Card skill (`${CLAUDE_PLUGIN_ROOT}/skills/ddat-rate-card/SKILL.md`: maximum UK rates on 42,893
-   G-Cloud 15 listings scraped 7 October 2026, each supplier counted once), show its median and
-   middle half. For any other level, use the rival rate cards in this service's GCMP artefact
-   (`{path}/ARC-{PROJECT_ID}-GCMP-v*.md`, from `/arckit:gcloud-competitors`) if one exists, and say
-   how many listings the comparison rests on. Otherwise write "no comparison". Never invent a
-   percentile or a market figure. Benchmarks don't belong in the SDD.
+Lot 3 has **one rate card per supplier**. Every Lot 3 listing shows the whole card, and on the live
+listings scraped on 7 October 2026 only 2 of the 1,135 suppliers with more than one Lot 3 service
+show different cards on different services. `/arckit:pricing` owns it, in the supplier-wide
+`ARC-000-RATE` document. This SDD never holds rates: it records which role levels deliver the
+service, so the card can be checked to cover them.
 
-Answer only from the supplier profile, the service design, the existing SDD, the PRIC document and
-what research confirms. Where none of these establishes an answer, write `[PENDING]` rather than
+1. **List the role levels that deliver the service.** Take them from the service design (section
+   6C). Otherwise propose the role levels the service's categories and features need, mark them as
+   proposed, and ask the supplier to confirm them. Use the job family, role and role level names
+   exactly as `lot-3-rate-card.md` writes them. Fill in 11.1 with what each level does on this
+   service.
+2. **Roles outside DDaT.** A procurement or commercial adviser, a trainer, or any other role the
+   rate card doesn't name is listed at the nearest DDaT role and level by the work they do and their
+   seniority, marked as proposed, with the role's own name beside it. Add one sentence to the
+   service definition document saying so (for example "Our procurement consultants are priced at the
+   DDaT Senior delivery manager level"); live procurement listings don't, and buyers can't otherwise
+   tell what the level buys. The card's section 5 records the mapping for every service.
+3. **Check them against the card.** If the RATE document exists, mark each level "On the card" or
+   "Not on the card". A level that isn't on the card can't be called off: list it in the summary for
+   `/arckit:pricing` to add. If there is no card yet, write "No rate card yet" and point to
+   `/arckit:pricing`.
+4. **Copy no rates.** Section 11 names the card and its version; rates, the average day rate and the
+   market comparison stay on the card, so they can never disagree with it.
+
+Answer only from the supplier profile, the service design, the existing SDD, the rate card and what
+research confirms. Where none of these establishes an answer, write `[PENDING]` rather than
 assuming one. Never default a Yes/No question to "No", and never mark a certification or clearance as
 held without evidence. `/arckit:review` treats every remaining `[PENDING]` as blocking, so the
 supplier sees exactly what's left to confirm. Where a fact came from a fetched source, attach the
@@ -257,12 +259,12 @@ Before writing, check:
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features and benefits, each ≤ 10 words
 - [ ] Every free-text answer within the limit on its `**Words:**` line
-- [ ] Every rate card row uses exact names from `lot-3-rate-card.md`, and every rate is £50 or more
-- [ ] The average day rate counts every UK and offshore rate entered
-- [ ] Rates match the PRIC document where it exists
+- [ ] Every role level in section 11 uses exact names from `lot-3-rate-card.md`, and each is marked
+      on or not on the supplier rate card
+- [ ] Section 11 holds no rates: it names the `ARC-000-RATE` document and its version
 - [ ] Consistent with the supplier profile (clearances, screening), the service design and, if
       present, Part 3 of the LOTQ document
-- [ ] No prices outside the rate card, except the support level costs GCA asks for at 7.13
+- [ ] No prices anywhere, except the support level costs GCA asks for at 7.13
 - [ ] No template placeholders (`[SERVICE NAME]`, `[ANSWER]`, `[X]`) left
 
 Then read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SDD** per-type checks pass. Fix any failures before proceeding.
@@ -334,29 +336,23 @@ Print only this summary. Report what the document contains, counted from what yo
 - Support: [channels and hours as ticked]
 - Staff security: [screening]; clearance [level]
 
-### Rate Card
-Rates from: [PRIC document / service design (provisional) / not yet set]
-
-| Role level | Max UK rate | Max offshore rate | Market comparison | Note |
-|------------|-------------|-------------------|-------------------|------|
-| [ROLE LEVEL] | £[X] / PENDING | £[X] / Not offered | [Skill table: median £X (£X–£X), N suppliers / N rival listings in GCMP: £X–£X / no comparison] | [Above the middle half / Below it / —] |
-
-- Role levels offered: [N]
-- Rates entered (UK and offshore): [N]; average day rate as GCA scores it: £[X]. Lot 3 price is
-  80% of the score; the lowest average in the tender scores the full 80%, others in proportion.
-- Market figures are maximum rates on live listings (DDaT Rate Card skill, scraped 7 October 2026,
-  or the GCMP artefact's listings), not contract prices
+### Role Levels and the Rate Card
+- Role levels that deliver this service: [N] ([N] proposed, awaiting confirmation)
+- Rate card: [ARC-000-RATE-vX.Y, [N] levels, average day rate £X / no rate card yet: run `/arckit:pricing`]
+- Not on the card: [levels, for `/arckit:pricing` to add / none]
+- Roles priced at the nearest DDaT level: [role → level / none]
 
 ### Items Requiring Attention
 - [Each `[PENDING]` item, with its question number and what the supplier needs to confirm — or "None"]
-- [Each proposed role level awaiting confirmation, and each disagreement with the PRIC document, the
-  supplier profile, service design or lot questions — or omit]
+- [Each proposed role level awaiting confirmation, each level not on the rate card, and each
+  disagreement with the supplier profile, service design or lot questions — or omit]
 - [What didn't carry over from a G-Cloud 14 SDD — or omit]
 
 ### Next Steps
 1. **Review for accuracy:** check every ticked option and role level against what the service
    really delivers
-2. **Set the rates:** `/arckit:pricing` — the average day rate is 80% of the Lot 3 score
+2. **Set or update the rate card:** `/arckit:pricing` — builds the supplier's one Lot 3 rate card (or
+   adds this service's missing levels to it); the card's average day rate is 80% of the Lot 3 score
 3. **Security evidence:** `/arckit:security`
 4. **Lot questions:** `/arckit:lot-questions` — the four Lot 3 mandatory award criteria and
    certifications (once per Lot 3 bid, not per service)
@@ -367,10 +363,9 @@ Rates from: [PRIC document / service design (provisional) / not yet set]
 
 - Lot 3 is people-based: staff screening and clearance answers are scored again as mandatory award
   criteria, so keep them identical in both places.
-- Offer the role levels the service needs. Lot 3 price, 80% of the score, is the average of every
-  rate entered (UK and offshore), so senior levels the service doesn't use can only raise it.
-- Rates may not include any uplift for risk or contingency.
-- Rates are maximums: they can be reduced during the framework, never increased.
+- The rate card belongs to the supplier, not the service: one card, shown on every Lot 3 listing and
+  set with `/arckit:pricing`. Lot 3 price, 80% of the score, is the average of every rate on it (UK
+  and offshore).
 - The rate card is entered on GCA's Digital Platform. The uploaded service definition document is ODF
   or PDF/A, at most 5 MB, accessible, and contains no prices.
 - SFIA is not part of G-Cloud 15. `${CLAUDE_PLUGIN_ROOT}/skills/ddat-rate-card/references/sfia-skills.md`
