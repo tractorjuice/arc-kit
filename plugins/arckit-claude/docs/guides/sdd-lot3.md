@@ -75,6 +75,9 @@ projects/<NNN>-<service-name>/ARC-<NNN>-SDD-v1.0.md
 - **Market comparison:** the summary compares rates with the DDaT Rate Card skill's market table for
   common role levels, or with rival listings from `/arckit:gcloud-competitors`. The overlay bundles
   no benchmark data, and market figures never go into the SDD.
+- **Word limits:** 50, 100 or 200 words on each free-text answer, shown on its `**Words:**` line,
+  counted by the command after writing and recounted by `/arckit:review`. GCA's export doesn't state
+  them; they are inferred from the 42,893 live listings.
 - **Uploaded document:** ODF or PDF/A, at most 5 MB, accessible, with no prices.
 - **Changed from G-Cloud 14:** the planning, set-up and migration, QA and testing, security testing,
   training and ongoing support question sections are gone (those areas are now categories), and the

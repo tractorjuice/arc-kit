@@ -44,6 +44,7 @@ Activate when users ask about:
 | Quality Cloud Services (1a/1b) | 500 words (2 parts, 250 each) |
 | Maximising Buyer Value (1a/1b) | 750 words (3 parts, 250 each) |
 | Exit procedure, change of service (1a/1b) | 250 words each |
+| Other free-text answers | 50, 100 or 200 words by question (for example support levels 200, service constraints 100, free trial 50). Not in GCA's export: inferred from the live listings, tabulated by lot in `references/framework-questions.md` |
 | Documents | ODF or PDF/A, 5 MB, accessible, no pricing in the service definition |
 
 ## Quick Reference: Evaluation

@@ -114,7 +114,10 @@ Limits: service name ≤ 100 characters; description ≤ 500 characters; feature
 items each, each ≤ 10 words; system requirements (1a/1b, 2a/2b) and what's backed up (1a/1b) ≤ 10
 words each. Lots 1a/1b scored answers: ≤ 250 words for each part (Quality Cloud Services parts a–b,
 500 words in all; Maximising Buyer Value parts a–c, 750 words in all); customer contractual exit
-procedure and change of service ≤ 250 words each.
+procedure and change of service ≤ 250 words each. Every other free-text answer has the 50, 100 or
+200-word limit on its `**Words:**` line in the SDD (inferred from the live listings; tabulated in
+`framework-questions.md`), recounted by the review; "What the … doesn't cover" answers in the lot
+questions ≤ 200 words; free trial description ≤ 50 words.
 
 | Measure | Count |
 |---------|-------|
@@ -125,7 +128,9 @@ procedure and change of service ≤ 250 words each.
 
 | ARC-ID | Field | Limit | Actual | Over by |
 |--------|-------|-------|--------|---------|
+| `ARC-[PROJECT_ID]-SVCD` | [Field] | [N chars / N words] | [N] | [N] |
 | `ARC-[PROJECT_ID]-SDD` | [Field] | [N chars / N words] | [N] | [N] |
+| `ARC-[PROJECT_ID]-SDD` | [N.N Question] | [50 / 100 / 200 words] | [N] | [N] |
 | `ARC-000-LOTQ` | [Scored answer part] | [250 words] | [N] | [N] |
 
 *If every entry is within its limit, write "All entries within limits."*

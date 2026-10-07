@@ -324,11 +324,11 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | **CSA STAR certification** — Do you have a current CSA Security, Trust & Assurance Registry (STAR) certification that covers the security of your services? | Yes / No / [PENDING] | [SOURCE] |
 | **CSA STAR accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
 | **CSA STAR certification level** — What level is the certification? | Level 1: CSA STAR Self-Assessment / Level 2: CSA STAR Attestation | |
-| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? | [TEXT] | |
+| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? *(at most 200 words)* | [TEXT] | |
 | **PCI certification** — Do you have a current Payment Card Industry Data Security Standard (PCI DSS) certification? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the PCI DSS certification** — Who accredited you? | [BODY] | |
 | **PCI DSS accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? | [TEXT] | |
+| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? *(at most 200 words)* | [TEXT] | |
 | **Other security certifications** — Do you have any other security certifications that cover this service? | Yes / No / [PENDING] | [SOURCE] |
 | **Any other security certifications** — What other security certifications do you have? | [LIST] | |
 
@@ -462,7 +462,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | **ISO/IEC 27001 certification** — Do you have a current ISO/IEC 27001 certification (2013 or 2022) that covers the security of your service? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO/IEC 27001** — Who accredited the ISO/IEC 27001 certification? | [BODY] | |
 | **ISO/IEC 27001 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the ISO/IEC 27001 doesn't cover** — What is not covered by your ISO/IEC 27001 certification? | [TEXT] | |
+| **What the ISO/IEC 27001 doesn't cover** — What is not covered by your ISO/IEC 27001 certification? *(at most 200 words)* | [TEXT] | |
 | **ISO 28000:2022 certification** — Do you have a current ISO 28000:2022 certification that covers the security of your supply chain? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO 28000:2022** — Who accredited the ISO 28000:2022 certification? | [BODY] | |
 | **ISO 28000:2022 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
@@ -470,16 +470,16 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | **ISO 9001 certification** — Do you have a current ISO 9001 certification (2015 or later)? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO 9001 certification** — Who accredited the ISO 9001 certification? | [BODY] | |
 | **ISO 9001 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the ISO 9001 doesn't cover** — What is not covered by your ISO 9001 certification? | [TEXT] | |
+| **What the ISO 9001 doesn't cover** — What is not covered by your ISO 9001 certification? *(at most 200 words)* | [TEXT] | |
 | **Quality management systems (QMS)** — Do you have a quality management system? | Yes / No / [PENDING] | [SOURCE] |
 | **CSA STAR certification** — Do you have a current CSA Security, Trust & Assurance Registry (STAR) certification that covers the security of your services? | Yes / No / [PENDING] | [SOURCE] |
 | **CSA STAR accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
 | **CSA STAR certification level** — What level is the certification? | Level 1: CSA STAR Self-Assessment / Level 2: CSA STAR Attestation | |
-| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? | [TEXT] | |
+| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? *(at most 200 words)* | [TEXT] | |
 | **PCI certification** — Do you have a current Payment Card Industry Data Security Standard (PCI DSS) certification? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the PCI DSS certification** — Who accredited you? | [BODY] | |
 | **PCI DSS accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? | [TEXT] | |
+| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? *(at most 200 words)* | [TEXT] | |
 | **Other security certifications** — Do you have any other security certifications that cover this service? | Yes / No / [PENDING] | [SOURCE] |
 | **Any other security certifications** — What other security certifications do you have? | [LIST] | |
 
@@ -604,7 +604,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | **ISO/IEC 27001 certification** — Do you have a current ISO/IEC 27001 certification (2013 or 2022) that covers the security of your service? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO/IEC 27001** — Who accredited the ISO/IEC 27001 certification? | [BODY] | |
 | **ISO/IEC 27001 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the ISO/IEC 27001 doesn't cover** — What is not covered by your ISO/IEC 27001 certification? | [TEXT] | |
+| **What the ISO/IEC 27001 doesn't cover** — What is not covered by your ISO/IEC 27001 certification? *(at most 200 words)* | [TEXT] | |
 | **ISO 28000:2022 certification** — Do you have a current ISO 28000:2022 certification that covers the security of your supply chain? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO 28000:2022** — Who accredited the ISO 28000:2022 certification? | [BODY] | |
 | **ISO 28000:2022 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
@@ -612,16 +612,16 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | **ISO 9001 certification** — Do you have a current ISO 9001 certification (2015 or later)? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the ISO 9001 certification** — Who accredited the ISO 9001 certification? | [BODY] | |
 | **ISO 9001 accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the ISO 9001 doesn't cover** — What is not covered by your ISO 9001 certification? | [TEXT] | |
+| **What the ISO 9001 doesn't cover** — What is not covered by your ISO 9001 certification? *(at most 200 words)* | [TEXT] | |
 | **Quality management systems (QMS)** — Do you have a quality management system? | Yes / No / [PENDING] | [SOURCE] |
 | **CSA STAR certification** — Do you have a current CSA Security, Trust & Assurance Registry (STAR) certification that covers the security of your services? | Yes / No / [PENDING] | [SOURCE] |
 | **CSA STAR accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
 | **CSA STAR certification level** — What level is the certification? | Level 1: CSA STAR Self-Assessment / Level 2: CSA STAR Attestation | |
-| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? | [TEXT] | |
+| **What the CSA STAR doesn't cover** — What parts of your service are not covered by your CSA STAR certification? *(at most 200 words)* | [TEXT] | |
 | **PCI certification** — Do you have a current Payment Card Industry Data Security Standard (PCI DSS) certification? | Yes / No / [PENDING] | [SOURCE] |
 | **Who accredited the PCI DSS certification** — Who accredited you? | [BODY] | |
 | **PCI DSS accreditation date** — When was the certification accredited? | [DD/MM/YYYY] | |
-| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? | [TEXT] | |
+| **What the PCI DSS doesn't cover** — What is not covered by your PCI DSS certification? *(at most 200 words)* | [TEXT] | |
 | **Other security certifications** — Do you have any other security certifications that cover this service? | Yes / No / [PENDING] | [SOURCE] |
 | **Any other security certifications** — What other security certifications do you have? | [LIST] | |
 

@@ -62,7 +62,10 @@ projects/<NNN>-<service-name>/ARC-<NNN>-GCRV-v1.0.md
 - The lot's mandatory certifications: Cyber Essentials Plus for 1a/1b, Cyber Essentials for 2a/2b
   and 3.
 - Limits, numerically: name 100 characters, description 500 characters, features and benefits 10
-  items of 10 words.
+  items of 10 words, and every free-text answer recounted against the 50, 100 or 200-word limit on
+  its `**Words:**` line (inferred from the live listings, because GCA's export doesn't state them).
+  An SDD written before the counters existed is reported, and its answers counted against
+  `framework-questions.md`.
 - Pricing rules by lot, and no forbidden pricing ("price on application", "from £x", unexplained
   ranges).
 - Cross-document consistency, naming both `ARC-` IDs in every conflict.

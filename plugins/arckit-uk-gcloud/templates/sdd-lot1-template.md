@@ -41,7 +41,7 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 - Option wording is GCA's own and is what buyers filter on, so never reword it.
 - Write anything the supplier hasn't confirmed as `[PENDING]`. `/arckit:review` treats every `[PENDING]` as blocking.
 - `<!-- GCA guidance -->` comments repeat GCA's help text and can stay in the working copy.
-- **Limits:** service name 100 characters (name only, no extra keywords); description 500 characters; features, benefits, system requirements and backed-up items at most 10 each, 10 words each.
+- **Limits:** service name 100 characters (name only, no extra keywords); description 500 characters; features, benefits, system requirements and backed-up items at most 10 each, 10 words each; and a word limit on each free-text answer, shown on its `**Words:**` line. GCA's export states none of those, but every live listing keeps within them; `framework-questions.md` in the overlay's `gcloud-framework` skill gives the evidence. Write the count in place of `[X]`.
 - **Uploaded service definition document:** ODF or PDF/A, at most 5 MB, accessible, and **no prices**. Leave out the support level costs (7.14), Document Control, Revision History, G-Cloud Details, the appendices and External References when you produce it.
 - **ISO 27018 (Lots 1a and 1b):** required for any service that includes public cloud (4.1), unless you resell and rely on the cloud provider's accreditations; a private-cloud-only service doesn't need it. It is asked in the lot questions (`/arckit:lot-questions`, Part 1 of `projects/000-global/supplier/ARC-000-LOTQ-v*.md`), not here. GCA's later tender updates superseded the export's wording, which ties it to Lot 1b.
 
@@ -138,6 +138,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 **5.3 System requirements** — What system requirements does your service have?
 <!-- GCA guidance: Examples of system requirements might be whether buyers have specific software licences or anti-virus technology for virtual machines. 10 words for each requirement, 10 requirements maximum. -->
 
@@ -184,6 +186,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 <!-- GCA guidance: Say if response times are different at weekends. -->
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **7.3 User can manage status and priority of support tickets** — Can users manage the status and priority of their support tickets? *(choose one)* ↳ *Asked if 7.1 is ‘Yes’ or ‘Yes, at extra cost’.*
 
@@ -245,9 +249,13 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **7.12 Web chat accessibility testing** — Describe any web chat testing that you’ve done with assistive technology users. ↳ *Asked if 7.7 is ‘Yes’ or ‘Yes, at an extra cost’.*
 
 [ANSWER]
+
+**Words:** [X]/200
 
 **7.13 Onsite support** — Do you provide onsite support? *(choose one)*
 
@@ -259,6 +267,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 <!-- GCA guidance: Describe: the support levels you provide; how much the different support levels cost; whether you provide a technical account manager or cloud support engineer. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 **7.15 Support available to third parties** — Can third parties engaged by the buyer access the support features of your service? *(choose one)*
 
@@ -281,6 +291,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **8.3 Web interface accessibility standard** — What accessibility standards does your web interface meet? *(choose one)* ↳ *Asked if 8.1 is ‘Yes’.*
 
 - [ ] WCAG 2.2 AAA
@@ -294,9 +306,13 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **8.5 Web interface accessibility testing** — Describe any web interface testing you’ve done with assistive technology users. ↳ *Asked if 8.1 is ‘Yes’.*
 
 [ANSWER]
+
+**Words:** [X]/100
 
 <!-- GCA question group: API -->
 
@@ -309,6 +325,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 <!-- GCA guidance: Include: how users can set up the service through the API; how users can make changes through the API; any limitations to how users can set up or make changes through the API. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 **8.8 API automation tools** — Which standard automation tools work with your service’s API? *(tick all that apply)* ↳ *Asked if 8.6 is ‘Yes’.*
 
@@ -356,6 +374,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 ---
 
 ## 9. Onboarding and offboarding
@@ -364,6 +384,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 <!-- GCA guidance: Include, for example, whether you provide onsite training, online training, or user documentation. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 <!-- GCA question group: Documentation -->
 
@@ -395,14 +417,20 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **9.7 End-of-contract data extraction** — How do users extract their data when the contract ends?
 
 [ANSWER]
+
+**Words:** [X]/200
 
 **9.8 End-of-contract process** — Describe what happens at the end of the contract.
 <!-- GCA guidance: Describe what’s included in the price of the contract and what’s an additional cost. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 ---
 
@@ -430,6 +458,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 <!-- GCA guidance: Include, for example, whether users can back up different things on a different schedule. -->
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **10.4 Datacentre setup** — What’s your datacentre setup? *(tick all that apply)* ↳ *Asked if 10.1 is ‘Yes’.*
 
@@ -504,6 +534,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 <!-- GCA question group: Usage notifications -->
 
 **12.2 Usage notifications** — Do you notify users if usage nears service limits? *(choose one)*
@@ -521,6 +553,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 **12.4 Other usage reporting** — Describe the other ways users are notified if usage nears service limits ↳ *Asked if 12.3 is ‘Other’.*
 
 [ANSWER]
+
+**Words:** [X]/200
 
 **12.5 Optimising consumption** — Does your solution provide information to help users optimise their consumption? *(choose one)* ↳ *Asked if 12.2 is ‘Yes’.*
 
@@ -551,6 +585,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 <!-- GCA question group: Protection within your network -->
 
 **13.3 Data protection within supplier network** — How do you protect data within your network? *(tick all that apply)*
@@ -564,6 +600,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 **13.4 Other protection within supplier network** — Describe how else you protect data within your network. ↳ *Asked if 13.3 is ‘Other’.*
 
 [ANSWER]
+
+**Words:** [X]/100
 
 ---
 
@@ -627,6 +665,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 <!-- GCA question group: Data sanitisation process -->
 
 **14.9 Data sanitisation process** — Do you have a data sanitisation process? *(choose one)*
@@ -659,15 +699,21 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **15.2 Approach to resilience** — Describe how your service is designed to be resilient.
 <!-- GCA guidance: Include how your datacentre setup is resilient. If you don’t want to make this information public, you can say that it’s available on request. NCSC cloud security principle 2: Asset protection and resilience. -->
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **15.3 Outage reporting** — How does your service report any outages?
 <!-- GCA guidance: Include if there’s: a public dashboard; an API; email alerts. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 ---
 
@@ -700,6 +746,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 **16.5 Third-party virtualisation provider** — Which third-party service provider are you using for virtualisation? ↳ *Asked if 16.2 is ‘Third-party’.*
 
 [ANSWER]
@@ -707,6 +755,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 **16.6 How shared infrastructure is kept separate** — Describe how different organisations sharing the same infrastructure are kept apart. ↳ *Asked if 16.1 is ‘Yes’.*
 
 [ANSWER]
+
+**Words:** [X]/100
 
 ---
 
@@ -735,14 +785,20 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/50
+
 **17.5 Security governance approach** — Describe how you approach security governance. ↳ *Asked if 17.2 is ‘No’.*
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **17.6 Information security policies and processes** — What information security policies and processes do you follow?
 <!-- GCA guidance: Include your reporting structure and how you ensure policies are followed. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 ---
 
@@ -759,6 +815,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 **18.3 Vulnerability management type** — Which vulnerability management processes does your organisation comply with? *(choose one)*
 <!-- GCA guidance: NCSC cloud security principle 5: Operational security. -->
 
@@ -771,6 +829,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 **18.5 Protective monitoring type** — Which protective monitoring processes does your organisation comply with? *(choose one)*
 <!-- GCA guidance: NCSC cloud security principle 5: Operational security. -->
 
@@ -782,6 +842,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 <!-- GCA guidance: Include: how you identify potential compromises; how you respond when you find a potential compromise; how quickly you respond to incidents. -->
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **18.7 Incident management type** — Which incident management processes does your organisation comply with? *(choose one)*
 <!-- GCA guidance: NCSC cloud security principle 5: Operational security. -->
@@ -799,6 +861,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 <!-- GCA guidance: Include: whether you have pre-defined processes for common events; how users report incidents; how you provide incident reports. -->
 
 [ANSWER]
+
+**Words:** [X]/100
 
 ---
 
@@ -857,9 +921,13 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 **21.4 Access restrictions in management interfaces and support channels** — Describe how you restrict access in management interfaces and support channels.
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **21.5 Access restriction testing frequency** — How often do you test your access controls? *(choose one)*
 
@@ -883,6 +951,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 **21.7 Description of management access authentication** — Describe how you authenticate management access to your service. ↳ *Asked if 21.6 is ‘Other’.*
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **21.8 Devices users manage the service through** — Which devices can be used to manage the service? *(tick all that apply)*
 
@@ -955,6 +1025,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 ---
 
 ## 24. Pricing
@@ -977,6 +1049,8 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 <!-- GCA guidance: Include: what’s included; what isn’t included; if there’s a limited time period. -->
 
 [ANSWER]
+
+**Words:** [X]/50
 
 **24.4 Link to free trial** — Provide a link to the free version of your service ↳ *Asked if 24.2 is ‘Yes’.*
 

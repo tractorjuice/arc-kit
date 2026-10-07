@@ -176,8 +176,10 @@ Fill in the template:
   categories span groups, ask the user with **AskUserQuestion** which group this listing covers, and
   suggest `/arckit:service-design` for a separate service for the others.
 - **Limits:** count the characters in the service name (100) and description (500), and the words in
-  every feature and benefit (10 each, at most 10 items). Rewrite anything over a limit rather than
-  cutting it off, and fill in the template's counters.
+  every feature and benefit (10 each, at most 10 items). Every free-text answer has a word limit on
+  its `**Words:**` line (50, 100 or 200 words, inferred from the live listings because GCA's export
+  states none): write each answer within it and fill in the count. Rewrite anything over a limit
+  rather than cutting it off, and fill in the template's counters.
 - **6.1 Supplier type:** from the service design, with the organisation resold for any reseller
   option.
 - **Mandatory award criteria:** user support (section 7), staff security clearance checks and
@@ -254,6 +256,7 @@ Before writing, check:
 - [ ] Every category comes from the Lot 3 tree, as a full path, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features and benefits, each ≤ 10 words
+- [ ] Every free-text answer within the limit on its `**Words:**` line
 - [ ] Every rate card row uses exact names from `lot-3-rate-card.md`, and every rate is £50 or more
 - [ ] The average day rate counts every UK and offshore rate entered
 - [ ] Rates match the PRIC document where it exists
@@ -270,6 +273,34 @@ Use the **Write tool** to save the completed document to:
 
 (The Write tool creates parent directories automatically and avoids the 32K output-token limit.) Do
 **not** echo the full document into your response — it is large and only a summary should be printed.
+
+Then recount every free-text answer against the limit on its `**Words:**` line, correct any counter
+the recount disagrees with, and rewrite any answer it marks OVER (then count again). Words are
+counted by splitting on spaces, which can differ by a word or two from the Digital Platform's
+counter, so leave a small margin:
+
+```bash
+SDD="{path}/{filename}"   # the SDD just written
+# word count: keep identical in review.md and the five sdd-lot commands
+awk '
+    FNR == 1 { if (prev != "" && !found) printf "%s: no word counters\n", prev; prev = FILENAME; found = 0; q = ""; inc = 0 }
+    inc { if (index($0, "-->")) inc = 0; next }
+    /^[ \t]*<!--/ { if (!index($0, "-->")) inc = 1; next }
+    /^\*\*[0-9]+\.[0-9]+ / { q = $0; sub(/^\*\*/, "", q); sub(/\*\*.*$/, "", q); n = 0; next }
+    /^\*\*Words:\*\*/ {
+        if (q != "") {
+            found++; s = $0; sub(/^\*\*Words:\*\*[ \t]*/, "", s)
+            split(s, a, "/"); c = a[1]; gsub(/[ \t]/, "", c); lim = a[2] + 0; note = ""
+            if (n > lim) { note = ", OVER by " (n - lim); over++ }
+            else if (c ~ /^[0-9]+$/ && c + 0 != n) note = " (the counter says " c ")"
+            printf "%s:%s: %d/%d words%s\n", FILENAME, q, n, lim, note
+        }
+        q = ""; next
+    }
+    /^(#|---)/ { q = ""; next }
+    q != "" && $0 !~ /^[ \t]*(>|```)/ { n += NF }
+    END { if (prev != "" && !found) printf "%s: no word counters\n", prev; printf "answers over their limit: %d\n", over + 0 }' "$SDD"
+```
 
 ### 9. Output summary
 
@@ -295,6 +326,7 @@ Print only this summary. Report what the document contains, counted from what yo
 | Description | [X] characters | 500 |
 | Features | [N] items, longest [X] words | 10 items, 10 words |
 | Benefits | [N] items, longest [X] words | 10 items, 10 words |
+| Free-text answers | [N] counted, [N] over their limit | 50, 100 or 200 words each (`**Words:**` lines) |
 
 ### Key Answers (as recorded)
 - Categories: [full paths]

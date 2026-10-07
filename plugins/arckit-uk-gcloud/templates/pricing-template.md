@@ -223,7 +223,7 @@ How it scores: the average is every rate entered, added up and divided by the nu
 | Field | Value |
 |-------|-------|
 | **Free trial available** | Yes / No |
-| **Description of free trial** | [What's included, what isn't, any time limit] |
+| **Description of free trial** (at most 50 words: the listings' limit) | [What's included, what isn't, any time limit] |
 | **Link to free trial** | [URL] |
 
 ---

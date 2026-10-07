@@ -70,6 +70,10 @@ For applications (SaaS) use `/arckit:sdd-lot2b`.
 
 - Service name ≤ 100 characters (the name only); description ≤ 500 characters.
 - Features, benefits and system requirements: at most 10 each, 10 words each.
+- Free-text answers: 50, 100 or 200 words depending on the question, shown on each answer's
+  `**Words:**` line, counted by the command after writing and recounted by `/arckit:review`. GCA's
+  export doesn't state them; they are inferred from the 42,893 live listings (see the
+  `gcloud-framework` skill's `framework-questions.md`).
 - User support, data storage and processing locations, penetration testing frequency and data
   sanitisation are scored again (2.5% each) as mandatory award criteria in the lot questions, so the
   answers must match.

@@ -70,6 +70,76 @@ G-Cloud 15 replaces G-Cloud 14 Lots 1–3, G-Cloud 14 Lot 4 and Cloud Compute 2.
 | Customer contractual exit procedure (1a/1b) | 250 words | Export |
 | Engaging customers in a change of service (1a/1b) | 250 words | Export |
 | Documents | ODF or PDF/A, at most 5 MB, accessible; no pricing in the service definition document; one terms and conditions document per service | Export and supplier guide |
+| Free-text answers | 50, 100 or 200 words, depending on the question: see the tables below | Inferred from listings |
+
+### Free-text word limits
+
+GCA's question export states a word limit only for the fields in the table above. For every other free-text ("Textarea") question it gives none, yet live answers stop at exactly 50, 100 or 200 words, so the Digital Platform enforces a limit there too.
+
+**Method.** From the full scrape of 42,893 live G-Cloud 15 listings on 7 October 2026, the longest answer to each question, counted in words (split on spaces), sets the limit: the smallest standard cap of 50, 75, 100 or 200 words at or above it. Lots that share a template are pooled (2a with 2b), and a question asked on several lots takes the limit its fullest evidence shows. Most limits are firm: hundreds of answers sit within 2 words of them (580 Lot 2b answers to "Information security policies and processes" are within 2 words of 200). Rows marked *inferred* have no answers at the limit, so the true cap could be higher; treat them as limits all the same. Questions whose longest answer is under 50 words were left out, because those values are mostly the text of a ticked option, not a limit.
+
+The SDD templates show each limit on the answer's `**Words:**` line, the SDD commands fill in the count, and `/arckit:review` recounts every answer against it. The evidence column gives the longest live answer, with the number of answers within 2 words of the limit in brackets.
+
+**Service questions** (the SDD templates):
+
+| Question | Lots 1a/1b | Lots 2a/2b | Lot 3 | Evidence: longest live answer (answers near the limit) |
+|---|---|---|---|---|
+| Service constraints | 100 | 100 | 100 | 1a 100 (37); 2a/2b 100 (411); 3 100 (597) |
+| What software services is the service an extension to | — | 50 | — | 2a/2b 50 (714) |
+| Support response times | 100 | 100 | 100 | 1a 100 (262); 2a/2b 100 (819); 3 100 (673) |
+| How the web chat support is accessible | 200 | 200 | 200 | *Inferred:* 2a/2b 198 (1); 3 195 (0); too few long answers on 1a |
+| Web chat accessibility testing | 200 | 200 | 200 | 1a 183 (0); 2a/2b 200 (25); 3 200 (20) |
+| Support levels | 200 | 200 | 200 | 1a 200 (3); 2a/2b 200 (407); 3 200 (695) |
+| Using the web interface | 200 | — | — | 1a 200 (7) |
+| How the web interface is accessible | 200 | — | — | 1a 200 (4) |
+| Web interface accessibility testing | 100 | — | — | 1a 100 (288) |
+| What users can and can't do using the API | 200 | 200 | — | 1a 200 (2); 2a/2b 200 (211) |
+| Using the command line interface | 200 | — | — | 1a 200 (6) |
+| Differences between the mobile and desktop service | — | 100 | — | 2a/2b 100 (229) |
+| Description of service interface | — | 100 | — | 2a/2b 100 (448) |
+| Description of accessibility | — | 100 | — | 2a/2b 100 (196) |
+| Accessibility testing | — | 200 | — | 2a/2b 200 (70) |
+| Description of customisation | — | 200 | — | 2a/2b 200 (175) |
+| Getting started | 200 | 200 | — | 1a 199 (10); 2a/2b 200 (333) |
+| How the documentation is accessible | 200 | 200 | — | 1a 177 (0); 2a/2b 200 (6) |
+| End-of-contract data extraction | 200 | 200 | — | 1a 197 (0); 2a/2b 200 (278) |
+| End-of-contract process | 200 | 200 | — | 1a 200 (127); 2a/2b 200 (224) |
+| Backup controls | 100 | — | — | 1a 100 (19) |
+| Data export approach | — | 100 | — | 2a/2b 100 (591) |
+| Metrics types | — | 100 | — | 2a/2b 100 (561) |
+| Independence of resources | 100 | 100 | — | 1a 100 (21); 2a/2b 100 (1,007) |
+| Other usage reporting | 200 | — | — | *Inferred:* 1a 187 (0) |
+| Other protection between networks | 100 | 100 | — | 1a 100 (304); 2a/2b 100 (378) |
+| Other protection within supplier network | 100 | 100 | — | 1a 100 (2); 2a/2b 100 (98) |
+| Other data at rest protection approach | 100 | 100 | — | 1a 100 (515); 2a/2b 100 (415) |
+| Guaranteed availability | 200 | 200 | — | 1a 200 (20); 2a/2b 200 (118) |
+| Approach to resilience | 200 | 200 | — | 1a 200 (337); 2a/2b 200 (652) |
+| Outage reporting | 200 | 200 | — | 1a 194 (0); 2a/2b 200 (97) |
+| Other virtualisation technology used | 100 | — | — | *Inferred:* 1a 85 (0) |
+| How shared infrastructure is kept separate | 100 | — | — | 1a 100 (20) |
+| Other security governance standards | 50 | 50 | — | 1a 50 (301); 2a/2b 50 (405) |
+| Security governance approach | 100 | 100 | — | 2a/2b 100 (55); too few long answers on 1a |
+| Information security policies and processes | 200 | 200 | — | 1a 200 (28); 2a/2b 200 (672) |
+| Configuration and change management approach | 100 | 100 | — | 1a 100 (416); 2a/2b 100 (2,704) |
+| Vulnerability management approach | 100 | 100 | — | 1a 100 (72); 2a/2b 100 (2,130) |
+| Protective monitoring approach | 100 | 100 | — | 1a 100 (597); 2a/2b 100 (1,990) |
+| Incident management approach | 100 | 100 | — | 1a 100 (100); 2a/2b 100 (2,270) |
+| Other user authentication | 100 | 100 | — | 1a 99 (16); 2a/2b 100 (436) |
+| Access restrictions in management interfaces and support channels | 100 | 100 | — | 1a 100 (248); 2a/2b 100 (852) |
+| Description of management access authentication | 100 | 100 | — | 1a 99 (2); 2a/2b 100 (420) |
+| Description of energy efficient datacentres | 200 | — | — | 1a 199 (8) |
+| Description of free trial | 50 | 50 | — | 1a 50 (71); 2a/2b 50 (1,061) |
+
+**Lot questions** (the lot questions template; listings show these answers under "Standards and certifications"):
+
+| Question | Lots 1a/1b | Lots 2a/2b | Lot 3 | Evidence: longest live answer (answers near the limit) |
+|---|---|---|---|---|
+| What the ISO/IEC 27001 doesn't cover | — | 200 | 200 | 2a/2b 200 (5); 3 183 (0) |
+| What the ISO 9001 doesn't cover | — | 200 | 200 | 2a/2b 199 (32); 3 199 (26) |
+| What the PCI DSS doesn't cover | 200 | 200 | 200 | 1a 200 (13); 2a/2b 199 (33); 3 200 (26) |
+| What the CSA STAR doesn't cover | 200 | 200 | 200 | *Inferred:* 2a/2b 190 (0); 3 114 (0); 1a 56 (0) |
+
+Not established: "What the ISO 28000:2022 doesn't cover" (longest live answer 62 words, from only 223 answers on Lots 2a/2b and 558 on Lot 3, none near a cap), and short list items such as "Other data export formats", which the export gives no limit for. Lot 1b isn't publicly listed; its questions are Lot 1a's, so it takes Lot 1a's limits.
 
 ---
 

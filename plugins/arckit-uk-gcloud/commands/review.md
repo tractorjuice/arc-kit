@@ -339,7 +339,42 @@ Cross-reference documents for contradictions:
 
 #### 3c. Character / word-limit validation
 
-Count and validate the limits numerically, reporting actual against limit:
+Recount every free-text answer in the SDD against the word limit on its `**Words:**` line. GCA's
+export states no limit for these answers, but every live listing keeps within 50, 100 or 200 words
+depending on the question; `framework-questions.md` tabulates them by lot with the evidence. Each
+line the count marks `OVER` is a blocking finding, and a counter that disagrees with the recount is
+a finding to correct:
+
+```bash
+SDD=$(find "{path}" -maxdepth 1 -name 'ARC-*-SDD-v*.md' 2>/dev/null | sort -V | tail -1)
+# word count: keep identical in review.md and the five sdd-lot commands
+awk '
+    FNR == 1 { if (prev != "" && !found) printf "%s: no word counters\n", prev; prev = FILENAME; found = 0; q = ""; inc = 0 }
+    inc { if (index($0, "-->")) inc = 0; next }
+    /^[ \t]*<!--/ { if (!index($0, "-->")) inc = 1; next }
+    /^\*\*[0-9]+\.[0-9]+ / { q = $0; sub(/^\*\*/, "", q); sub(/\*\*.*$/, "", q); n = 0; next }
+    /^\*\*Words:\*\*/ {
+        if (q != "") {
+            found++; s = $0; sub(/^\*\*Words:\*\*[ \t]*/, "", s)
+            split(s, a, "/"); c = a[1]; gsub(/[ \t]/, "", c); lim = a[2] + 0; note = ""
+            if (n > lim) { note = ", OVER by " (n - lim); over++ }
+            else if (c ~ /^[0-9]+$/ && c + 0 != n) note = " (the counter says " c ")"
+            printf "%s:%s: %d/%d words%s\n", FILENAME, q, n, lim, note
+        }
+        q = ""; next
+    }
+    /^(#|---)/ { q = ""; next }
+    q != "" && $0 !~ /^[ \t]*(>|```)/ { n += NF }
+    END { if (prev != "" && !found) printf "%s: no word counters\n", prev; printf "answers over their limit: %d\n", over + 0 }' "$SDD"
+```
+
+An SDD written before the counters existed has no `**Words:**` lines, and the count reports "no word
+counters" for it. Count those answers yourself against the table in `framework-questions.md`, and
+recommend re-running the SDD command so the counters appear. In `ARC-000-LOTQ`, check each "What the
+… doesn't cover" answer against its 200-word limit, and in `ARC-{PROJECT_ID}-PRIC` the free trial
+description against 50 words.
+
+Then count and validate the other limits numerically, reporting actual against limit:
 
 ```text
 Service name: [X]/100 characters
@@ -354,6 +389,9 @@ Quality Cloud Services a), b): [X]/250 words each       (1a/1b, ARC-000-LOTQ Par
 Maximising Buyer Value a), b), c): [X]/250 words each   (1a/1b, ARC-000-LOTQ Part 1)
 Customer contractual exit procedure: [X]/250 words      (1a/1b)
 Change of service: [X]/250 words                        (1a/1b)
+Free-text answers in the SDD: [N] within their limits, [N] over (the recount above)
+"What the … doesn't cover" answers: [X]/200 words each  (ARC-000-LOTQ)
+Description of free trial: [X]/50 words                 (1a/1b, 2a/2b; ARC-{PROJECT_ID}-PRIC)
 ```
 
 #### 3d. Evidence verification

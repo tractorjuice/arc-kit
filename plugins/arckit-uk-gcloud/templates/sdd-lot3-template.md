@@ -39,7 +39,7 @@ This document holds the answers to every Lot 3 service question and the service'
 - Option wording is GCA's own and is what buyers filter on, so never reword it.
 - Write anything the supplier hasn't confirmed as `[PENDING]`. `/arckit:review` treats every `[PENDING]` as blocking.
 - `<!-- GCA guidance -->` comments repeat GCA's help text and can stay in the working copy.
-- **Limits:** service name 100 characters (name only, no extra keywords); description 500 characters; features and benefits at most 10 each, 10 words each.
+- **Limits:** service name 100 characters (name only, no extra keywords); description 500 characters; features and benefits at most 10 each, 10 words each; and a word limit on each free-text answer, shown on its `**Words:**` line. GCA's export states none of those, but every live listing keeps within them; `framework-questions.md` in the overlay's `gcloud-framework` skill gives the evidence. Write the count in place of `[X]`.
 - **Uploaded service definition document:** ODF or PDF/A, at most 5 MB, accessible, and **no prices**. Leave out the rate card (section 11), the support level costs (7.13), Document Control, Revision History, G-Cloud Details, the appendix and External References when you produce it.
 - **Scored answers:** three of the four Lot 3 mandatory award criteria (2.5% each, answered with `/arckit:lot-questions`) repeat answers given here: user support availability, staff security clearance checks and clearance level. The sections they mirror are marked.
 - **Changed from G-Cloud 14:** the planning, set-up and migration, QA and testing, security testing, training and ongoing support question sections are gone (those areas are now service categories), and the SFIA rate card is replaced by the role levels in section 11.
@@ -125,6 +125,8 @@ This document holds the answers to every Lot 3 service question and the service'
 
 [ANSWER]
 
+**Words:** [X]/100
+
 ---
 
 ## 6. Reselling
@@ -160,6 +162,8 @@ This document holds the answers to every Lot 3 service question and the service'
 <!-- GCA guidance: Say if response times are different at weekends. -->
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **7.3 User can manage status and priority of support tickets** — Can users manage the status and priority of their support tickets? *(choose one)* ↳ *Asked if 7.1 is ‘Yes’ or ‘Yes, at extra cost’.*
 
@@ -221,14 +225,20 @@ This document holds the answers to every Lot 3 service question and the service'
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **7.12 Web chat accessibility testing** — Describe any web chat testing that you’ve done with assistive technology users. ↳ *Asked if 7.7 is ‘Yes’ or ‘Yes, at an extra cost’.*
 
 [ANSWER]
+
+**Words:** [X]/200
 
 **7.13 Support levels** — Describe your support levels
 <!-- GCA guidance: Describe: the support levels you provide; how much the different support levels cost; whether you provide a technical account manager or cloud support engineer. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 ---
 

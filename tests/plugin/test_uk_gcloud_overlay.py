@@ -169,3 +169,123 @@ def test_placeholder_scan_passes_a_finished_document(tmp_path):
     templates = sorted(str(p) for p in TEMPLATES.glob("*-template.md"))
     out = _run_awk(_placeholder_scan("submission-pack.md"), *templates, "phase=2", document.name, cwd=tmp_path)
     assert out.strip() == "placeholders: 0", out
+
+
+# ── Word limits on every free-text answer ────────────────────────────────────
+# GCA's question export gives no word limit for most free-text answers, but
+# every live listing keeps within 50, 100 or 200 words. framework-questions.md
+# tabulates them by lot; each must reach its template, and the SDD commands and
+# review recount the answers with the same inline awk.
+FRAMEWORK = OVERLAY / "skills" / "gcloud-framework" / "references" / "framework-questions.md"
+LIMIT_ROW = re.compile(r"^\| (?!Question \||---)(.+?) \| (\S+) \| (\S+) \| (\S+) \|", re.M)
+WORD_COUNT_COMMANDS = ("review.md", "sdd-lot1a.md", "sdd-lot1b.md", "sdd-lot2a.md", "sdd-lot2b.md", "sdd-lot3.md")
+WORD_COUNT = re.compile(r"# word count: keep identical[^\n]*\nawk '\n(.*?)' \"\$SDD\"\n```", re.S)
+
+
+def _plain(text: str) -> str:
+    text = text.replace("’", "'").replace("‘", "'").replace("“", '"').replace("”", '"')
+    return re.sub(r"\s+", " ", text).strip().lower()
+
+
+def _limit_tables() -> tuple[list[tuple[str, ...]], list[tuple[str, ...]]]:
+    text = FRAMEWORK.read_text(encoding="utf-8")
+    service = text.split("**Service questions** (the SDD templates):", 1)[1].split("**Lot questions**", 1)[0]
+    lot = text.split("**Lot questions** (the lot questions template", 1)[1].split("\n\n", 2)[1]
+    return LIMIT_ROW.findall(service), LIMIT_ROW.findall(lot)
+
+
+def test_framework_questions_tabulates_the_word_limits():
+    service, lot = _limit_tables()
+    assert len(service) >= 40 and lot
+
+
+def test_every_sdd_template_shows_each_word_limit():
+    service, _ = _limit_tables()
+    missing = []
+    for label, *by_lot in service:
+        for template, limit in zip(("sdd-lot1-template.md", "sdd-lot2-template.md", "sdd-lot3-template.md"), by_lot):
+            if limit == "—":
+                continue
+            text = (TEMPLATES / template).read_text(encoding="utf-8")
+            block = re.search(rf"^\*\*\d+\.\d+ {re.escape(label)}\*\*(.*?)(?=^\*\*\d+\.\d+ |^---|^## )", text, re.M | re.S)
+            if block is None or f"**Words:** [X]/{limit}" not in block.group(1):
+                missing.append(f"{template}: {label} ({limit} words)")
+    assert not missing, missing
+
+
+def test_lot_questions_template_states_each_word_limit():
+    _, lot = _limit_tables()
+    text = (TEMPLATES / "lot-questions-template.md").read_text(encoding="utf-8")
+    for label, *by_lot in lot:
+        limit = max(int(x) for x in by_lot if x.isdigit())
+        rows = [line for line in text.splitlines() if _plain(f"**{label}**") in _plain(line)]
+        assert rows and all(f"{limit} words" in row for row in rows), (label, len(rows))
+
+
+def _word_count(command: str) -> str:
+    match = WORD_COUNT.search((COMMANDS / command).read_text(encoding="utf-8"))
+    assert match, f"{command}: no word count found"
+    return match.group(1)
+
+
+def test_review_and_the_sdd_commands_share_one_word_count():
+    counts = {name: _word_count(name) for name in WORD_COUNT_COMMANDS}
+    assert len(set(counts.values())) == 1, "the word counts differ"
+
+
+SDD_SAMPLE = """## 7. User support
+
+**7.2 Support response times** — How quickly do you respond to questions?
+<!-- GCA guidance: Say if response times are different
+     at weekends. -->
+
+We respond within four working hours.
+
+**Words:** 6/100
+
+**7.13 Support levels** — Describe your support levels
+> A note from the template that isn't part of the answer.
+
+{long}
+
+**Words:** {long_count}/200
+
+**7.14 Onsite support** — Do you provide onsite support? *(choose one)*
+
+- [x] No
+
+**9.1 Getting started** — How do you help users start using your service?
+
+Online training and user guides.
+
+**Words:** 2/200
+
+---
+"""
+
+
+def test_word_count_flags_answers_over_their_limit(tmp_path):
+    sdd = tmp_path / "ARC-004-SDD-v1.0.md"
+    sdd.write_text(SDD_SAMPLE.format(long="word " * 214, long_count=214), encoding="utf-8")
+    out = _run_awk(_word_count("review.md"), sdd.name, cwd=tmp_path)
+    assert out.splitlines() == [
+        "ARC-004-SDD-v1.0.md:7.2 Support response times: 6/100 words",
+        "ARC-004-SDD-v1.0.md:7.13 Support levels: 214/200 words, OVER by 14",
+        "ARC-004-SDD-v1.0.md:9.1 Getting started: 5/200 words (the counter says 2)",
+        "answers over their limit: 1",
+    ], out
+
+
+def test_word_count_reports_an_sdd_without_counters(tmp_path):
+    sdd = tmp_path / "ARC-004-SDD-v1.0.md"
+    sdd.write_text("# SDD\n\n**7.2 Support response times**\n\nWithin a day.\n", encoding="utf-8")
+    out = _run_awk(_word_count("sdd-lot2b.md"), sdd.name, cwd=tmp_path)
+    assert out.splitlines() == ["ARC-004-SDD-v1.0.md: no word counters", "answers over their limit: 0"], out
+
+
+def test_word_count_reads_every_template_counter(tmp_path):
+    for template in ("sdd-lot1-template.md", "sdd-lot2-template.md", "sdd-lot3-template.md"):
+        path = TEMPLATES / template
+        counters = path.read_text(encoding="utf-8").count("**Words:** [X]/")
+        out = _run_awk(_word_count("sdd-lot3.md"), str(path), cwd=tmp_path)
+        assert counters > 0 and len(out.splitlines()) == counters + 1, (template, counters, out)

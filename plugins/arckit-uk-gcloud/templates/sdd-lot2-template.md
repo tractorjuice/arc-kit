@@ -38,7 +38,7 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 - Option wording is GCA's own and is what buyers filter on, so never reword it.
 - Write anything the supplier hasn't confirmed as `[PENDING]`. `/arckit:review` treats every `[PENDING]` as blocking.
 - `<!-- GCA guidance -->` comments repeat GCA's help text and can stay in the working copy.
-- **Limits:** service name 100 characters (name only, no extra keywords); description 500 characters; features, benefits and system requirements at most 10 each, 10 words each.
+- **Limits:** service name 100 characters (name only, no extra keywords); description 500 characters; features, benefits and system requirements at most 10 each, 10 words each; and a word limit on each free-text answer, shown on its `**Words:**` line. GCA's export states none of those, but every live listing keeps within them; `framework-questions.md` in the overlay's `gcloud-framework` skill gives the evidence. Write the count in place of `[X]`.
 - **Uploaded service definition document:** ODF or PDF/A, at most 5 MB, accessible, and **no prices**. Leave out the support level costs (7.14), Document Control, Revision History, G-Cloud Details, the appendices and External References when you produce it.
 - **Scored answers:** four mandatory award criteria (2.5% each, answered with `/arckit:lot-questions`) repeat answers given here: user support availability, data storage and processing locations, penetration testing frequency and data sanitisation. The sections they mirror are marked.
 
@@ -135,6 +135,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/50
+
 **5.3 Cloud deployment model** — Is the service a public, private, community or hybrid cloud service? *(tick all that apply)*
 
 - [ ] Public cloud
@@ -146,6 +148,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 <!-- GCA guidance: Constraints might include planned maintenance arrangements or support being limited to specific hardware configurations. -->
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **5.5 System requirements** — What system requirements does your service have?
 <!-- GCA guidance: Examples of system requirements might be whether buyers have specific software licences or anti-virus technology for virtual machines. 10 words for each requirement, 10 requirements maximum. -->
@@ -193,6 +197,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 <!-- GCA guidance: Say if response times are different at weekends. -->
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **7.3 User can manage status and priority of support tickets** — Can users manage the status and priority of their support tickets? *(choose one)* ↳ *Asked if 7.1 is ‘Yes’ or ‘Yes, at extra cost’.*
 
@@ -254,9 +260,13 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **7.12 Web chat accessibility testing** — Describe any web chat testing that you’ve done with assistive technology users. ↳ *Asked if 7.7 is ‘Yes’ or ‘Yes, at an extra cost’.*
 
 [ANSWER]
+
+**Words:** [X]/200
 
 **7.13 Onsite support** — Do you provide onsite support? *(choose one)*
 
@@ -268,6 +278,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 <!-- GCA guidance: Describe: the support levels you provide; how much the different support levels cost; whether you provide a technical account manager or cloud support engineer. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 **7.15 Support available to third parties** — Can third parties engaged by the buyer access the support features of your service? *(choose one)*
 
@@ -322,6 +334,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 <!-- GCA question group: Service interface -->
 
 **8.7 Service interface** — Is there a service interface? *(choose one)*
@@ -332,6 +346,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 **8.8 Description of service interface** — Describe the service interface ↳ *Asked if 8.7 is ‘Yes’.*
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **8.9 Accessibility standards** — What accessibility standards does your service interface meet? *(choose one)* ↳ *Asked if 8.7 is ‘Yes’.*
 
@@ -346,9 +362,13 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 **8.11 Accessibility testing** — Describe any interface testing you’ve done with users of assistive technology. ↳ *Asked if 8.7 is ‘Yes’.*
 
 [ANSWER]
+
+**Words:** [X]/200
 
 <!-- GCA question group: User support -->
 
@@ -371,6 +391,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 <!-- GCA guidance: Include: how users can set up the service through the API; how users can make changes through the API; any limitations to how users can set up or make changes through the API. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 **8.15 API documentation** — Do you provide API documentation for your service? *(choose one)* ↳ *Asked if 8.13 is ‘Yes’.*
 
@@ -402,6 +424,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 ---
 
 ## 9. Onboarding and offboarding
@@ -410,6 +434,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 <!-- GCA guidance: Include, for example, whether you provide onsite training, online training, or user documentation. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 <!-- GCA question group: Documentation -->
 
@@ -441,14 +467,20 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **9.7 End-of-contract data extraction** — How do users extract their data when the contract ends?
 
 [ANSWER]
+
+**Words:** [X]/200
 
 **9.8 End-of-contract process** — Describe what happens at the end of the contract.
 <!-- GCA guidance: Describe what’s included in the price of the contract and what’s an additional cost. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 ---
 
@@ -457,6 +489,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 **10.1 Data export approach** — How do users export their data?
 
 [ANSWER]
+
+**Words:** [X]/100
 
 <!-- GCA question group: Data export formats -->
 
@@ -497,6 +531,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 **11.3 Reporting types** — How do you provide service metrics? *(tick all that apply)* ↳ *Asked if 11.1 is ‘Yes’.*
 
 - [ ] Through an API
@@ -521,6 +557,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 **12.1 Independence of resources** — How do you guarantee users aren’t affected by the demand other users are placing on your service?
 
 [ANSWER]
+
+**Words:** [X]/100
 
 ---
 
@@ -563,6 +601,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 <!-- GCA question group: Protection within your network -->
 
 **14.3 Data protection within supplier network** — How do you protect data within your network? *(tick all that apply)*
@@ -576,6 +616,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 **14.4 Other protection within supplier network** — Describe how else you protect data within your network. ↳ *Asked if 14.3 is ‘Other’.*
 
 [ANSWER]
+
+**Words:** [X]/100
 
 ---
 
@@ -641,6 +683,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 <!-- GCA question group: Data sanitisation process -->
 
 **15.9 Data sanitisation process** — Do you have a data sanitisation process? *(choose one)*
@@ -673,15 +717,21 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **16.2 Approach to resilience** — Describe how your service is designed to be resilient.
 <!-- GCA guidance: Include how your datacentre setup is resilient. If you don’t want to make this information public, you can say that it’s available on request. NCSC cloud security principle 2: Asset protection and resilience. -->
 
 [ANSWER]
 
+**Words:** [X]/200
+
 **16.3 Outage reporting** — How does your service report any outages?
 <!-- GCA guidance: Include if there’s: a public dashboard; an API; email alerts. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 ---
 
@@ -715,14 +765,20 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/50
+
 **17.6 Security governance approach** — Describe how you approach security governance. ↳ *Asked if 17.3 is ‘No’.*
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **17.7 Information security policies and processes** — What information security policies and processes do you follow?
 <!-- GCA guidance: Include your reporting structure and how you ensure policies are followed. -->
 
 [ANSWER]
+
+**Words:** [X]/200
 
 ---
 
@@ -739,6 +795,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 **18.3 Vulnerability management type** — Which vulnerability management processes does your organisation comply with? *(choose one)*
 <!-- GCA guidance: NCSC cloud security principle 5: Operational security. -->
 
@@ -751,6 +809,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 **18.5 Protective monitoring type** — Which protective monitoring processes does your organisation comply with? *(choose one)*
 <!-- GCA guidance: NCSC cloud security principle 5: Operational security. -->
 
@@ -762,6 +822,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 <!-- GCA guidance: Include: how you identify potential compromises; how you respond when you find a potential compromise; how quickly you respond to incidents. -->
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **18.7 Incident management type** — Which incident management processes does your organisation comply with? *(choose one)*
 <!-- GCA guidance: NCSC cloud security principle 5: Operational security. -->
@@ -779,6 +841,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 <!-- GCA guidance: Include: whether you have pre-defined processes for common events; how users report incidents; how you provide incident reports. -->
 
 [ANSWER]
+
+**Words:** [X]/100
 
 ---
 
@@ -835,9 +899,13 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 [ANSWER]
 
+**Words:** [X]/100
+
 **21.4 Access restrictions in management interfaces and support channels** — Describe how you restrict access in management interfaces and support channels.
 
 [ANSWER]
+
+**Words:** [X]/100
 
 **21.5 Access restriction testing frequency** — How often do you test your access controls? *(choose one)*
 
@@ -861,6 +929,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 **21.7 Description of management access authentication** — Describe how you authenticate management access to your service. ↳ *Asked if 21.6 is ‘Other’.*
 
 [ANSWER]
+
+**Words:** [X]/100
 
 ---
 
@@ -934,6 +1004,8 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 <!-- GCA guidance: Include: what’s included; what isn’t included; if there’s a limited time period. -->
 
 [ANSWER]
+
+**Words:** [X]/50
 
 **23.4 Link to free trial** — Provide a link to the free version of your service ↳ *Asked if 23.2 is ‘Yes’.*
 

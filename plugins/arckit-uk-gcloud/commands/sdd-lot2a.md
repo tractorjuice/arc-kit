@@ -177,8 +177,10 @@ Fill in the template for Lot 2a:
   span groups, ask the user with **AskUserQuestion** which group this listing covers, and suggest
   `/arckit:service-design` for a separate service for the others.
 - **Limits:** count the characters in the service name (100) and description (500), and the words in
-  every feature, benefit and system requirement (10 each, at most 10 items). Rewrite anything over a
-  limit rather than cutting it off, and fill in the template's counters.
+  every feature, benefit and system requirement (10 each, at most 10 items). Every free-text answer
+  has a word limit on its `**Words:**` line (50, 100 or 200 words, inferred from the live listings
+  because GCA's export states none): write each answer within it and fill in the count. Rewrite
+  anything over a limit rather than cutting it off, and fill in the template's counters.
 - **6.1 Supplier type:** from the service design, with the organisation resold for any reseller
   option.
 - **Mandatory award criteria:** user support (section 7), data storage and processing locations,
@@ -232,6 +234,7 @@ Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and
 - [ ] Every category comes from the Lot 2a tree, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features, benefits and system requirements, each ≤ 10 words
+- [ ] Every free-text answer within the limit on its `**Words:**` line
 - [ ] Consistent with the supplier profile (certifications, locations, clearances), the service
   design and, if present, Part 2 of the lot questions document
 - [ ] No prices, except the support level costs GCA asks for at 7.14
@@ -240,6 +243,34 @@ Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and
 Fix any failures, then use the **Write tool** to save the completed document to `{path}/{filename}` —
 e.g. `projects/004-secure-case-mgmt/ARC-004-SDD-v1.0.md`. Do **not** echo the full document into your
 response — it is large and only the summary below should be printed.
+
+Then recount every free-text answer against the limit on its `**Words:**` line, correct any counter
+the recount disagrees with, and rewrite any answer it marks OVER (then count again). Words are
+counted by splitting on spaces, which can differ by a word or two from the Digital Platform's
+counter, so leave a small margin:
+
+```bash
+SDD="{path}/{filename}"   # the SDD just written
+# word count: keep identical in review.md and the five sdd-lot commands
+awk '
+    FNR == 1 { if (prev != "" && !found) printf "%s: no word counters\n", prev; prev = FILENAME; found = 0; q = ""; inc = 0 }
+    inc { if (index($0, "-->")) inc = 0; next }
+    /^[ \t]*<!--/ { if (!index($0, "-->")) inc = 1; next }
+    /^\*\*[0-9]+\.[0-9]+ / { q = $0; sub(/^\*\*/, "", q); sub(/\*\*.*$/, "", q); n = 0; next }
+    /^\*\*Words:\*\*/ {
+        if (q != "") {
+            found++; s = $0; sub(/^\*\*Words:\*\*[ \t]*/, "", s)
+            split(s, a, "/"); c = a[1]; gsub(/[ \t]/, "", c); lim = a[2] + 0; note = ""
+            if (n > lim) { note = ", OVER by " (n - lim); over++ }
+            else if (c ~ /^[0-9]+$/ && c + 0 != n) note = " (the counter says " c ")"
+            printf "%s:%s: %d/%d words%s\n", FILENAME, q, n, lim, note
+        }
+        q = ""; next
+    }
+    /^(#|---)/ { q = ""; next }
+    q != "" && $0 !~ /^[ \t]*(>|```)/ { n += NF }
+    END { if (prev != "" && !found) printf "%s: no word counters\n", prev; printf "answers over their limit: %d\n", over + 0 }' "$SDD"
+```
 
 ### 9. Show the summary
 
@@ -265,6 +296,7 @@ Report what the document contains, counted from what you wrote:
 | Features | [N] items, longest [X] words | 10 items, 10 words |
 | Benefits | [N] items, longest [X] words | 10 items, 10 words |
 | System requirements | [N] items, longest [X] words | 10 items, 10 words |
+| Free-text answers | [N] counted, [N] over their limit | 50, 100 or 200 words each (`**Words:**` lines) |
 
 ### Key Answers (as recorded)
 - Categories: [full paths]

@@ -1591,6 +1591,7 @@ All artifacts must pass these 10 checks:
 - Categories taken from the document's own lot tree as full paths, and no other lot's categories substituted; every category under the one root and group on the Category group line, since no live G-Cloud 15 listing has categories in two groups
 - Service name within 100 characters; description within 500 characters
 - Features and benefits each within 10 items and 10 words per item; system requirements and backed-up items within 10 words each
+- Every free-text answer within the 50, 100 or 200-word limit on its `**Words:**` line, with the count filled in rather than left as `[X]` (limits inferred from the live listings and tabulated in the overlay's `framework-questions.md`)
 - Supplier type recorded with GCA's option wording, consistent with the reseller or sole control answer in the lot questions for Lots 1a/1b
 - Lot 1b staff security offers SC or DV only
 - Lot 3 rate card uses only role levels named in GCA's Lot 3 rate card, every rate £50 or more, and agrees with the pricing artefact where one exists
@@ -1605,7 +1606,7 @@ All artifacts must pass these 10 checks:
 - The evaluated elements identified with their weights: onboarding price (5%) and minimum discount (5%) for Lots 1a/1b; the total of the band discounts (80%) for Lots 2a/2b; the average of every UK and offshore day rate entered (80%) for Lot 3
 - Lot 3 rates use GCA's role level names, are at least £50, assume a 7.5-hour day with travel and subsistence inside the M25 included, and carry no uplift for risk or contingency
 - The reduce-only rule stated for the lot (Lot 3 rates and 2a/2b unit prices can be reduced, never increased; the 2a/2b discount matrix is fixed for each term)
-- Free trial and education pricing addressed where the lot asks for them
+- Free trial and education pricing addressed where the lot asks for them; a free trial description within 50 words
 - The 0.75% management charge acknowledged
 - No SFIA rate card or G-Cloud 14 minimum/maximum price, unit and interval fields
 - Market comparisons, where given, name their source and the number of listings they rest on; no invented market figures
@@ -1641,7 +1642,7 @@ All artifacts must pass these 10 checks:
 - Every expected document checked for existence by its ARC-ID: supplier-wide SUPP, SOCV, LOTQ (with the Part for the service's lot group) and DECL; per-service SVCD, SDD, PRIC and SECA
 - Overall status set to READY, NEEDS WORK or NOT READY, and consistent with the findings — no READY status while a mandatory field remains or the placeholder scan reports an unfinished answer (`[PENDING]` in any form, an older marker such as `[TODO]` or `[TBC]`, or a template field never filled in) outside the Document Control approval rows and Revision History
 - Mandatory field status reported per document rather than in aggregate
-- Character and word limits validated numerically and reported as actual against limit: service name against 100 characters, description against 500 characters, each feature and benefit against 10 words, the scored Lot 1a/1b quality answers against 250 words per part
+- Character and word limits validated numerically and reported as actual against limit: service name against 100 characters, description against 500 characters, each feature and benefit against 10 words, every SDD free-text answer recounted against the limit on its `**Words:**` line, the scored Lot 1a/1b quality answers against 250 words per part
 - The lot agrees across the service design, SDD, pricing and lot questions, and each document follows that lot's G-Cloud 15 rules
 - Consistency checks run across every pair the review names, each conflict naming both documents
 - Common rejection reasons checked explicitly: placeholder text, `N/A` where an answer is required, contradictory statements, unsubstantiated claims, competitor mentions, prices in the SDD, forbidden pricing ("price on application", "from £x", unexplained ranges), non-GBP pricing
@@ -1666,6 +1667,7 @@ All artifacts must pass these 10 checks:
 - Lots 1a/1b: each of the five scored sub-criteria drafted within 250 words, its word count shown, and its weight and marking scheme stated (Quality Cloud Services 40%, Maximising Buyer Value 40%); the non-scored mandatory items answered
 - Lots 2a/2b and 3: the four mandatory award criteria answered (2.5% each), and Cyber Essentials recorded as mandatory
 - Scored answers are evidence-based and specific to the supplier — no generic claims, competitor names or unverifiable statistics
+- Each "What the … doesn't cover" answer within 200 words, the limit the live listings show
 - Pass/fail answers and certificates held are the supplier's own, or `[PENDING]`; none defaulted
 - Answers consistent with the supplier profile, the SDDs for the services in each lot group, and the security evidence
 

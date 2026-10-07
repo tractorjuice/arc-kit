@@ -82,7 +82,8 @@ Lot 1b isn't in the public marketplace search, so research uses comparable Lot 1
 - **Prices:** go on GCA's separate, non-public platform; prepare them with `/arckit:pricing`.
 - **Listings:** Lot 1b services are not in the public Digital Marketplace search.
 - **Limits** are the same as Lot 1a: name ≤ 100 characters, description ≤ 500 characters, at most 10
-  features and benefits of 10 words each, and no prices in the uploaded service definition document.
+  features and benefits of 10 words each, the 50, 100 or 200-word limit on each free-text answer's
+  `**Words:**` line, and no prices in the uploaded service definition document.
 
 ---
 

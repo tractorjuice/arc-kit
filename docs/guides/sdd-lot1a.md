@@ -70,6 +70,10 @@ own command.
 
 - Service name ≤ 100 characters (the name only); description ≤ 500 characters.
 - Features, benefits, system requirements and backed-up items: at most 10 each, 10 words each.
+- Free-text answers: 50, 100 or 200 words depending on the question, shown on each answer's
+  `**Words:**` line, counted by the command after writing and recounted by `/arckit:review`. GCA's
+  export doesn't state them; they are inferred from the 42,893 live listings (see the
+  `gcloud-framework` skill's `framework-questions.md`).
 - The uploaded service definition document is ODF or PDF/A, at most 5 MB, accessible, and contains no
   prices.
 - Anything unconfirmed is written as `[PENDING]`; `/arckit:review` treats it as blocking.
