@@ -1,120 +1,99 @@
 ---
-name: SFIA Skills & Day Rates
-description: "Answers questions about SFIA 8 levels, role-to-skill mappings, DDaT role equivalents, consultancy day-rate benchmarks and Lot 3 cloud-support team shapes for a G-Cloud submission. Not needed when the request is for the Lot 3 service definition or the pricing document; /arckit-uk-gcloud:sdd-lot3 and pricing produce those from the same data."
+name: DDaT Rate Card & Day Rates
+description: "Answers questions about the G-Cloud 15 Lot 3 (Cloud Support) rate card: its DDaT job families, roles and role levels, the pricing rules (maximum UK and offshore day rates, £50 minimum, 7.5-hour day, reduce-only), how the average day rate is scored, what suppliers charge for common role levels, and mapping roles to SFIA skills to describe a team. Not needed when the request is for the Lot 3 service definition or the pricing document; /arckit-uk-gcloud:sdd-lot3 and pricing produce those from the same data."
 ---
 
-# SFIA Skills & Day Rates
+# DDaT Rate Card & Day Rates
 
-Conversational knowledge about the SFIA 8 framework, skill levels, day rate benchmarks, role mappings, and Lot 3 (Cloud Support) service team compositions for G-Cloud submissions.
+Conversational knowledge about the G-Cloud 15 Lot 3 rate card: its job families, roles and role levels, the rules for pricing them, and what suppliers actually charge.
 
 ## Purpose
 
-Provide instant answers to common questions about SFIA levels, typical day rates, role-to-skill mappings, and team compositions without requiring document generation. This covers the Skills Framework for the Information Age (SFIA) version 8 as used in G-Cloud Lot 3 submissions.
+On G-Cloud 15, every Lot 3 (Cloud Support) service carries a rate card. Suppliers give a **maximum day rate, UK and offshore, for each role level they offer**, chosen from a fixed list of 9 job families, 58 roles and 222 role levels. The list follows the government's Digital, Data and Technology (DDaT) profession capability framework. SFIA rate cards, used on G-Cloud 14, are no longer part of the framework.
 
 ## When to Use
 
 Activate when users ask about:
 
-- What SFIA level a specific role maps to
-- Day rate ranges for a given SFIA level or role
-- How to map DDaT (Digital, Data and Technology) roles to SFIA skills
-- Team compositions for common Lot 3 service types
-- AI skills framework and how it maps to SFIA
-- What skills/roles are needed for a specific type of cloud support service
+- Which roles and levels the Lot 3 rate card offers
+- What day rate to set for a role level, or what the market charges
+- UK versus offshore rates
+- The pricing rules for Lot 3
+- How a role maps to SFIA skills (still useful for describing a team)
 
-## Quick Reference: SFIA Levels
+## Quick Reference: Rate Card Rules
 
-| Level | Title | Autonomy | Typical Role | Day Rate Range |
-|-------|-------|----------|--------------|----------------|
-| 1 | Follow | Under supervision | — | — |
-| 2 | Assist | Routine direction | — | — |
-| 3 | Apply | General direction | Junior Consultant | £300–£450 |
-| 4 | Enable | Autonomous | Consultant | £450–£600 |
-| 5 | Ensure/Advise | Broad autonomy | Senior Consultant | £600–£850 |
-| 6 | Initiate/Influence | Full autonomy | Principal Consultant | £850–£1,200 |
-| 7 | Set Strategy/Inspire | Accountable | Director/Partner | £1,200–£2,000+ |
+These come from the G-Cloud 15 pricing schedule (Framework Schedule 3) and How to tender (Attachment 2):
 
-*Rates vary by skill scarcity, location, and clearance requirements.*
+| Rule | Detail |
+|------|--------|
+| What you price | A maximum day rate per role level, UK (onshore) and optionally offshore |
+| Day length | 7.5 hours |
+| Minimum rate | £50 a day |
+| Travel and subsistence | Included in the rate within the M25 |
+| Changing rates | Rates can be reduced during the framework, never increased |
+| Risk | No uplift for risk or contingency may be built into a rate |
+| Levels you can't provide | Leave them blank |
+| Evaluation | Lot 3 price is 80% of the score. Your **average day rate** is every rate you enter, UK and offshore, added up and divided by how many there are (ignoring any under £50 or over £10,000). The lowest average in the tender scores the full 80%; others score in proportion |
+| Where rates go | GCA's Digital Platform; the rate card then shows on your listing |
 
-## Quick Reference: Common Role Mappings
+## Quick Reference: Job Families
 
-| Role | SFIA Skills | Typical Level |
-|------|-------------|---------------|
-| Solution Architect | ARCH, TECH | 5–6 |
-| Cloud Consultant | CNSL, ARCH | 5–6 |
-| DevOps Engineer | CFMG, RELM, DLMG | 4–5 |
-| Security Engineer | SCTY, SCAD, PENT | 4–5 |
-| Project Manager | PRMG | 5 |
-| Business Analyst | BUAN | 4–5 |
-| Data Engineer | DENG, DBDS, DBAD | 4–5 |
-| Service Manager | CSMG, SLMO, ITOP | 4–5 |
+| Job family | Roles |
+|-----------|-------|
+| Architecture roles | 7 (business, data, enterprise, network, security, solution, technical architect) |
+| Chief digital and data roles | 3 (chief data officer, CISO, CTO) |
+| Cyber security roles | 8 (audit and assurance, digital forensics, governance and risk, incident response, monitoring, secure design, testing, vulnerability management) |
+| Data roles | 8 (analytics engineer, data analyst, data engineer, data ethicist, data governance manager, data scientist, ML engineer, performance analyst) |
+| IT operations roles | 12 (application operations, change and release, incident, problem, service desk, IT service manager, infrastructure and more) |
+| Product and delivery roles | 6 (business analyst, delivery manager, digital portfolio manager, product manager, programme delivery manager, service owner) |
+| Quality assurance testing (QAT) roles | 3 (QAT analyst, test engineer, test manager) |
+| Software development roles | 3 (DevOps engineer, frontend developer, software developer) |
+| User-centred design roles | 8 (accessibility specialist, content designer, content strategist, graphic designer, interaction designer, service designer, technical writer, user researcher) |
 
-## Quick Reference: DDaT to SFIA
+Levels run from Apprentice, Trainee or Junior through Associate, the role itself, Senior and Lead, to Principal or Head. Each role has its own set; see `references/lot-3-rate-card.md`.
 
-| DDaT Role | SFIA Skills |
-|-----------|-------------|
-| Software Developer | PROG, SWDN, TEST |
-| DevOps Engineer | CFMG, RELM, DLMG |
-| Data Engineer | DENG, DBDS, DBAD |
-| Security Engineer | SCTY, SCAD, PENT |
-| Technical Architect | ARCH, TECH |
-| Service Manager | CSMG, SLMO, ITOP |
-| Business Analyst | BUAN |
-| Product Manager | PROD |
-| Delivery Manager | PRMG |
+## Quick Reference: What Suppliers Charge
 
-## Quick Reference: AI Role Day Rates
+Maximum UK day rates on live G-Cloud 15 listings, across suppliers (each supplier counted once). Snapshot of 42,893 services scraped on 7 October 2026.
 
-| Role | SFIA Level | Day Rate Range |
-|------|------------|----------------|
-| AI Support Analyst | 3 | £350–£500 |
-| AI/ML Engineer | 4–5 | £550–£800 |
-| AI Solution Architect | 5–6 | £800–£1,200 |
-| AI Strategy Consultant | 6 | £1,000–£1,500 |
-| AI Ethics/Governance Lead | 5–6 | £800–£1,200 |
-| AI Director/Partner | 7 | £1,500–£2,500+ |
+| Role level | Suppliers | Middle half (p25–p75) | Median | Offshore median |
+|-----------|-----------|----------------------|--------|-----------------|
+| Junior developer | 719 | £500–£800 | £650 | £500 |
+| Developer | 828 | £654–£990 | £800 | £600 |
+| Senior developer | 814 | £800–£1,200 | £950 | £745 |
+| Lead developer | 776 | £900–£1,360 | £1,100 | £850 |
+| DevOps engineer | 786 | £690–£998 | £800 | £600 |
+| Data engineer | 825 | £650–£995 | £800 | £600 |
+| Lead data engineer | 794 | £925–£1,374 | £1,100 | £850 |
+| Solution architect | 1,029 | £800–£1,170 | £950 | £750 |
+| Principal solution architect | 955 | £1,150–£1,680 | £1,400 | £1,100 |
+| Business analyst | 965 | £660–£1,000 | £800 | £650 |
+| Delivery manager | 1,016 | £750–£1,080 | £900 | £700 |
+| User researcher | 664 | £650–£950 | £800 | £600 |
 
-*AI-specific skills command 10–25% premium over equivalent non-AI roles.*
-
-## Common Lot 3 Service Archetypes
-
-### Cloud Migration Service
-
-Architect (ARCH 5–6) + Migration Engineer (DLMG 4–5) + DevOps (CFMG 4–5) + Test Engineer (TEST 4) + PM (PRMG 5)
-
-### Managed Cloud Service
-
-Cloud Ops (ITOP 3–5) + Monitoring (SLMO 3–4) + Problem Manager (PBMG 4–5) + Security (SCTY 4–5) + Service Manager (CSMG 4–5)
-
-### Cloud Consultancy
-
-Consultant (CNSL 5–6) + Architect (ARCH 5–6) + Strategy (STPL 5–6) + BA (BUAN 4–5) + Change Manager (CHMG 4–5)
-
-### Cloud Security Service
-
-Security Consultant (SCTY 5–6) + Assessor (INAS 5–6) + Pen Tester (PENT 4–5) + Security Engineer (SCAD 4–5) + BC/DR (BURM 5)
+These are **maximum** rates; call-off prices are often lower. This overlay doesn't bundle the full benchmark table for all 222 role levels. For a role level not listed here, compare the rate cards on rival Lot 3 listings (`/arckit:gcloud-competitors`), and say how many listings the comparison rests on.
 
 ## Answering Questions
 
-When answering SFIA and day rate questions:
-
-1. **Check the quick reference tables above first** for common lookups
-2. **Consult `references/sfia-skills.md`** for the full skill catalogue (30+ skills across 6 categories), detailed team compositions, the UK Government AI Skills Framework (3 domains, 3 levels, adoption pathway), and AI-enabled service combinations
-3. **Always note that rates are indicative** — actual rates vary by skill scarcity, geographic location, security clearance requirements, and market conditions
-4. **Map roles to specific SFIA skill codes** when possible (e.g., ARCH for Solution Architecture, not just "architecture")
-5. **For AI roles**, reference both the SFIA level and the AI Skills Framework level (Entry/Mid/Managerial)
+1. **Name roles and levels exactly as the rate card does**: buyers filter on them, and only the listed levels can be priced.
+2. **Quote benchmarks as a range with their date and supplier count**, and say they are maximum rates from live listings, not contract prices.
+3. **Remember the evaluation:** Lot 3 price is scored on the average of every rate entered, UK and offshore alike, so senior levels and offshore rates both move the score. Offer the levels the service really needs.
+4. **Use SFIA only to describe skills**, not to price: `references/sfia-skills.md` maps roles to SFIA skill codes and suggests team compositions.
 
 ## Related Commands
 
-These ArcKit commands use SFIA data:
+These ArcKit commands use the rate card:
 
-| Command | SFIA Usage |
-|---------|-----------|
-| `/arckit:sdd-lot3` | Maps service roles to SFIA skills and levels (reads `sfia-skills.md` reference) |
-| `/arckit:pricing` | Day rates informed by SFIA level benchmarks |
+| Command | Use |
+|---------|-----|
+| `/arckit:sdd-lot3` | Builds the service's rate card from these families, roles and levels |
+| `/arckit:pricing` | Sets day rates against the pricing rules and the market |
+| `/arckit:lot-questions` | Lot 3 mandatory award criteria |
 
 ## Additional Resources
 
 ### Reference Files
 
-- **`references/sfia-skills.md`** — Complete SFIA 8 reference with all cloud-relevant skills across 6 categories (Strategy & Architecture, Change & Transformation, Development & Implementation, Delivery & Operation, Security & Privacy, Data & Analytics, Infrastructure), full team composition tables for 4 service archetypes plus 4 AI-enabled service types, DDaT role mappings, the UK Government AI Skills Framework, AI skills adoption pathway, and SFIA skills enhanced by AI. Consult for any skill code, team composition, or AI framework detail not covered by the quick reference tables above.
+- **`references/lot-3-rate-card.md`** — Every job family, role and role level, in GCA's order, generated from GCA's Lot 3 rate card document (RM1557.15).
+- **`references/sfia-skills.md`** — SFIA 8 skill codes, levels, DDaT-to-SFIA mappings, team compositions for common Lot 3 service types, and the UK Government AI Skills Framework. Use it to describe what a team does, not to price it.

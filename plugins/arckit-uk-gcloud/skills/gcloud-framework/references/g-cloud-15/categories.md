@@ -1,0 +1,492 @@
+# Service categories by lot
+
+Built by `tools/framework_questions.py --categories` from the listings in `run_20261007_005156`. The question export lists the same categories without their groups.
+
+## Lot 1a: Infrastructure as a Service (IaaS) and Platform as a Service (PaaS)
+
+- PaaS
+  - Application Development
+    - Business rules management
+      - Business rules management
+    - Software construction components
+      - Software construction components
+    - Modelling and architecture
+      - Modelling and architecture
+    - Development languages, environments, and tools
+      - Development languages, environments, and tools
+  - Analytics and Business Intelligence
+    - Advanced Predictive Analytics
+      - Advanced Predictive Analytics
+    - Business Intelligence
+      - Business Intelligence
+    - Location and Geospatial data management and analytics
+      - Location and Geospatial data management and analytics
+  - Integration and Orchestration
+    - Integration software
+      - Integration software
+    - Event stream processing
+      - Event stream processing
+    - Business to business middleware
+      - Business to business middleware
+  - Software Quality and Life Cycle
+    - Software change, configuration, and process management
+      - Software change, configuration, and process management
+    - Automated software quality
+      - Automated software quality
+  - Application Platforms
+    - Deployment-centric application platforms
+      - Deployment-centric application platforms
+    - Robotic process automation
+      - Robotic process automation
+    - Model-driven application platforms
+      - Model-driven application platforms
+  - AI Platforms
+    - AI software services
+      - AI software services
+    - AI life cycle
+      - AI life cycle
+    - Search and knowledge discovery
+      - Search and knowledge discovery
+  - Data Management
+    - Data integration and intelligence
+      - Data integration and intelligence
+    - Databases
+      - Databases
+    - Database management systems
+      - Database management systems
+    - Database administration and development
+      - Database administration and development
+- IaaS
+  - IaaS Compute
+    - Virtualised x86
+      - General purpose
+      - Memory optimised
+      - Compute optimised
+    - Container and serverless engine compute
+      - Container and serverless engine compute
+    - Accelerated
+      - GPUs
+      - APUs
+    - Bare metal
+      - Bare metal
+    - Arm-based instances
+      - Arm-based instances
+    - Other non-x86 instances
+      - Other non-x86 instances
+  - IaaS Storage
+    - Object or Bucket
+      - Object or Bucket
+    - Block
+      - Block
+    - File
+      - File
+  - Quantum Infrastructure
+    - Any Quantum Infrastructure
+      - Any Quantum Infrastructure
+
+## Lot 2a: Infrastructure Software as a Service (iSaaS)
+
+- Systems Infrastructure Software
+  - Security
+    - Cloud native application protection platform
+      - Cloud native application protection platform
+    - Identity and access management
+      - Access
+      - Privilege
+    - Network security
+      - Trusted network access and protection
+      - Active application security
+    - Security analytics
+      - Security analytics
+    - Governance, risk and compliance
+      - Governance, risk and compliance
+    - Endpoint security
+      - Endpoint security
+    - Data security
+      - Information protection
+      - Digital trust
+  - System and service management
+    - IT operations management
+      - IT operations management
+    - IT automation and configuration management
+      - Workload management
+      - Datacentre system and application control
+    - IT service management
+      - IT service management
+  - Endpoint management
+    - Output management
+      - Device Management
+      - Print Management
+      - Enterprise Output Management
+    - Client endpoint management
+      - Unified Endpoint Management
+      - PC Life-Cycle Management
+      - IoT Device Management Software
+  - Physical and virtual computing
+    - Operating system environments
+      - Core Operating Systems
+      - Client Operating Systems
+      - Embedded/Industrial Operating Systems
+    - Software defined compute
+      - Virtual Machine Software
+      - Cloud System Software
+      - Container Infrastructure Software
+    - Virtual client computing
+      - Virtual client computing
+    - Other computing and storage software
+      - Remote Desktop Control Software
+      - Container Data and Infrastructure Management Software
+  - Network
+    - Network infrastructure software
+      - Network application delivery
+      - Software-defined networking (SDN)
+    - Network management
+      - Network performance management (NPM)
+      - Network operations management (NOM)
+  - Storage
+    - Data replication and protection
+      - Data Protection Software
+      - Backup and Recovery Reporting Software
+      - Replication Management Software
+      - Storage Replication Software
+      - Host or Hypervisor-Based Replication Software
+      - Systems and Data Migration Software
+      - Array-Based Replication Software
+      - Fabric and Appliance-Based Replication Software
+    - Archiving
+      - File and Other Archiving Software
+      - Email Archiving Software
+    - Storage infrastructure and device management
+      - Other Storage Management and Infrastructure Software
+      - Storage Access and Path Management Software
+      - Storage Resource Management and Heterogeneous SAN Management Software
+      - Storage Device Management Software
+      - Virtualization and Federation Software
+      - Host-Based File Systems and Volume Management Software
+      - Automated Storage Tiering Software
+      - Storage Acceleration Software
+    - Software defined storage controller
+      - Object-Based Software-Defined Storage Controller Software
+      - Block-Based Software-Defined Storage Controller Software
+      - File-Based Software-Defined Storage Controller Software
+      - Hyperconverged Software–Defined Storage Controller Software
+  - Cloud Financial Management
+    - Cloud Financial Management (FinOps)
+      - Cloud Financial Management (FinOps)
+    - Cloud Financial Management (GreenOps)
+      - Cloud Financial Management (GreenOps)
+- Application Development and Deployment
+  - Application platforms
+    - Deployment centric application platforms
+      - Application Server Software Platforms
+      - Cloud Deployment-Centric Application Platforms
+      - Transaction Processing Monitors
+  - Integration and orchestration
+    - Business to business middleware
+      - B2B Gateway Middleware
+      - B2B Collaboration Networks and B2B Managed Services
+      - Managed File Transfer
+    - Integration software
+      - Integration Platforms
+      - API Management Software
+      - API Gateway Software
+      - Connectivity Adapters and Plug-In Software
+    - Event stream processing
+      - Messaging Middleware
+      - Stream Processing Software
+      - Functions Software
+      - IoT Application Platforms
+      - Process Mining and Insights Software
+
+## Lot 2b: Software as a Service (SaaS)
+
+- Application Development and Deployment
+  - Analytics and business intelligence
+    - Business Intelligence
+      - Business Intelligence
+    - Advanced and predictive analytics
+      - Advanced and predictive analytics
+    - Location and geospatial data management and analytics
+      - Location and geospatial data management and analytics
+  - Application development
+    - Development languages, environments and tools
+      - Development languages, environments and tools
+    - Software construction components
+      - Software construction components
+    - Business rules management
+      - Business rules management
+    - Modelling and architecture
+      - Object Modelling Tools
+      - Business Process Modelling Tools
+      - Enterprise Architecture Tools
+  - AI platforms
+    - AI software services
+      - Conversational AI Software Services
+      - Generative AI Software Services
+      - Personalize AI Software Services
+      - Document AI Software Services
+      - Computer Vision AI Software Services
+      - Anomaly Detection AI Software Services
+      - Forecast AI Software Services
+    - Search and knowledge discovery
+      - Search and knowledge discovery
+    - AI life cycle
+      - Data Labeling Software
+      - Trustworthy AI Software
+      - AI Build Software
+      - MLOps and Foundation Model Ops Software
+  - Data management
+    - Database management systems
+      - Relational Database Management Systems
+      - Low-Code Database Management Systems
+      - Data Lake Management Systems
+      - Navigational Database Management Systems
+      - Fixed Record Database Management Systems
+      - Object-Oriented Database Management Systems
+      - Multivalue Database Management Systems
+      - Non-Schematic Database Management Systems
+      - Document-Oriented Database Systems
+      - Key-Accessible Database Systems
+      - Graph Database Management Systems
+      - In-Memory Shared Data Managers
+    - Database administration and development
+      - Data Modelling
+      - Database Development and Optimization
+      - Database Administration
+      - Database Replication
+    - Data integration and intelligence
+      - Data Ingestion and Transformation Software
+      - Dynamic Data Movement Software
+      - Data Quality Software
+      - Data Access Infrastructure Software
+      - Composite Data Framework Software
+      - Master Data Intelligence Software
+      - Metadata Management Software
+      - Data Archiving and Information LifD-Cycle Management
+  - Software quality and life cycle
+    - Automated software quality
+      - Automated software quality
+    - Software change, configuration and process management
+      - Software change, configuration and process management
+  - Application platforms
+    - Model driven application platforms
+      - Model driven application platforms
+    - Robotic process automation
+      - Robotic process automation
+- Applications
+  - Collaborative
+    - Conferencing and virtual event
+      - Web Conferencing Applications
+      - Virtual Event Applications
+    - Email
+      - Email
+    - Enterprise community
+      - Enterprise community
+    - Team collaboration
+      - Team collaboration
+  - Enterprise resource management
+    - Financial
+      - Financial and Accounting Applications
+      - Treasury and Risk Management Applications
+      - Accounts Payable Applications
+      - Accounts Receivable Applications
+      - Travel and Expense Management Applications
+      - Corporate Tax Management Applications
+    - Enterprise performance management
+      - Enterprise performance management
+    - Procurement
+      - Procurement
+    - Project and portfolio management
+      - Project and portfolio management
+    - Asset life-cycle management
+      - Asset life-cycle management
+    - Order management and orchestration
+      - Order management and orchestration
+    - Human capital management
+      - Core Human Resources Applications
+      - Talent Management Applications
+    - Payroll management
+      - Payroll management
+  - Production and operations
+    - Service industry and public sector operations
+      - Public Order and Safety
+      - Police
+      - Other
+      - Healthcare
+      - Education
+      - Defence
+      - Social Security Administration
+      - Adult Social Care
+      - Children's Social Care
+    - Other operations
+      - Other operations
+    - Production and grid management
+      - Production and grid management
+  - Customer relationship management
+    - Marketing campaign management
+      - Marketing campaign management
+    - Customer service
+      - Customer service
+    - Sales force productivity and management
+      - Sales force productivity and management
+    - Contact centre
+      - Contact centre
+    - Digital commerce
+      - Digital commerce
+    - Advertising
+      - Advertising Placement
+      - Advertising Measurement
+  - Content workflow and management
+    - Capture
+      - Capture
+    - Document
+      - Document
+    - Media Services
+      - Media Services
+    - Enterprise portals and digital workspaces
+      - Multi-Audience Portals
+      - Integrated Employee Workspaces
+    - Content services
+      - Enterprise Content Management Applications
+      - Content Sharing and Collaboration Applications
+    - Persuasive content management
+      - Website Software
+      - Digital Asset Management Applications
+      - Product Content Management Applications
+      - Content Marketing Applications
+      - Video Platforms
+      - Digital Adoption Platform
+    - Creative
+      - Creative
+    - EDiscovery and forensics
+      - EDiscovery and forensics
+  - Engineering
+    - Computer-Aided Design Applications
+      - Computer-Aided Design Applications
+    - Computer-Aided Engineering Applications
+      - Computer-Aided Engineering Applications
+    - Computer-Aided Manufacturing Applications
+      - Computer-Aided Manufacturing Applications
+    - Collaborative product data management
+      - Collaborative product data management
+    - Other engineering
+      - Building Information Modelling Applications
+      - Electronic Design Automation Applications
+      - Engineering Support Applications
+  - Supply chain management
+    - Logistics and transportation management
+      - Logistics and transportation management
+    - Supply chain planning
+      - Supply chain planning
+    - Warehousing and inventory management
+      - Warehousing and inventory management
+
+## Lot 3: Cloud Support Service
+
+- Cloud Support Services
+  - Quality Assurance and Performance Testing
+    - Test automation
+      - Development
+      - Implementation
+    - Assurance/testing design
+      - Assurance/testing design
+    - Infrastructure performance testing
+      - Infrastructure performance testing
+    - Other
+      - Other
+    - Performance testing
+      - Load Testing
+      - Stress Testing
+      - Volume Testing
+      - Scalability Testing
+      - Capacity Planning
+      - Soak Testing
+    - Operational readiness testing
+      - Accessibility testing
+  - Security Services
+    - Security risk management
+      - Security risk management
+    - Security design
+      - Security design
+    - Security strategy
+      - Security strategy
+    - Security incident management
+      - Security incident management
+    - Security audit services
+      - Security audit services
+    - Security quality assurance (QA) and testing
+      - Security quality assurance (QA) and testing
+    - Other
+      - Other
+  - Cloud Migration Planning
+    - Capability analysis
+      - Capability analysis
+    - Enterprise architecture
+      - Enterprise architecture
+    - Cloud gap assessment
+      - Cloud gap assessment
+    - Architecture options analysis
+      - Architecture options analysis
+    - Delivery Road-mapping
+      - Delivery Road-mapping
+    - Other
+      - Other
+  - Managed Cloud
+    - Managed Private Cloud
+      - Managed Private IaaS
+      - Managed Private SaaS/PaaS
+      - Application management
+    - Managed Public cloud
+      - Managed Public IaaS
+      - Managed Public SaaS/PaaS
+      - Application management
+    - Managed Hybrid Cloud
+      - Managed Hybrid IaaS
+      - Managed Hybrid SaaS/PaaS
+      - Application management
+  - Set Up and Migration
+    - Data auditing and organising
+      - Data auditing and organising
+    - Engagement and communication planning
+      - Engagement and communication planning
+    - Project management and governance
+      - Project management and governance
+    - Service optimisation/right sizing
+      - Service optimisation/right sizing
+    - Other
+      - Other
+    - Data/information structure design
+      - Data/information structure design
+    - Mobilisation coordination
+      - Mobilisation coordination
+  - Cloud Financial Management Services
+    - FinOps Services
+      - FinOps Services
+    - GreenOps Services
+      - GreenOps Services
+  - Ongoing Support
+    - Product support capabilities
+      - Product support capabilities
+    - Logging and management of incidents
+      - Logging and management of incidents
+    - Reporting and proactive results analysis
+      - Reporting and proactive results analysis
+    - Dispatch of service technicians and/or parts
+      - Dispatch of service technicians and/or parts
+    - End user training coordination
+      - End user training coordination
+    - Other
+      - Other
+  - Training
+    - Basic troubleshooting skills
+      - Basic troubleshooting skills
+    - Function/service optimisation skills
+      - Function/service optimisation skills
+    - Other
+      - Other
+    - Basic user - cloud based services
+      - Basic user - cloud based services
+    - Super user - Cloud Based Services
+      - Super user - Cloud Based Services
+    - Advanced troubleshooting skills
+      - Advanced troubleshooting skills
