@@ -415,7 +415,7 @@ The `arckit-uk-gcloud` overlay now targets G-Cloud 15 (RM1557.15), run by the Go
 
 **Dependencies**: supplier-profile (SUPP) → social-value (SOCV, M) → service-design (SVCD) → sdd-lot1a / 1b / 2a / 2b / 3 (SDD, M) → pricing (PRIC, R; reads the SDD so the two agree; for Lot 3 also writes RATE) and security (SECA, R) → lot-questions (LOTQ, M; after the SDDs, because the Lot 2a/2b and Lot 3 award criteria repeat each service's SDD and security answers, R) → declaration (DECL, M; summarises SOCV, records the lots bid for) → review (GCRV; checks SUPP, SOCV, LOTQ, DECL, SVCD, SDD, PRIC, SECA and, for Lot 3, RATE) → submission-pack.
 
-**Skills**: `gcloud-framework` (now with the G-Cloud 15 question references), `cloud-security`, `ddat-rate-card` (replaces `sfia-skills`). **Recipe**: `uk-gcloud-submission` adds the SOCV and LOTQ targets and defaults to `sdd-lot2b`.
+**Skills**: `gcloud-framework` (now with the G-Cloud 15 question references), `cloud-security`, `ddat-rate-card` (replaces `sfia-skills`). **Recipe**: `uk-gcloud-submission` adds the SOCV and LOTQ targets, runs LOTQ after the SDD, pricing and security, and defaults to `sdd-lot2b`.
 
 **Typical G-Cloud 15 supplier path**:
 
