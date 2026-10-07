@@ -304,10 +304,10 @@ Every document must be ODF or PDF/A, at most 5 MB, and accessible.
 - [ ] 1a/1b: conditions of participation (reseller or sole control, accreditation reliance, ISO 27018 if the service includes public cloud, trading under 12 months)
 - [ ] 1a/1b: each part of Quality Cloud Services (a–b) and Maximising Buyer Value (a–c) ≤ 250 words, parts in order
 - [ ] 1a/1b: NCSC guidance, sanctions policies, exit procedure (≤ 250 words), change of service (≤ 250 words)
-- [ ] 1a/1b: Cyber Essentials Plus (within 12 months), ISO 9001, 27001, 20000-1, Carbon Reduction Plan; ISO 27018 if the service includes public cloud
+- [ ] 1a/1b: ISO 9001, 27001, 20000-1, Carbon Reduction Plan; ISO 27018 if the service includes public cloud
 - [ ] 2a/2b: user support, data location, penetration testing frequency, data sanitisation
 - [ ] 3: user support, staff security clearance checks, clearance level, Cyber Essentials if a buyer requires it
-- [ ] 2a/2b and 3: Cyber Essentials certificate held (mandatory for call-offs)
+- [ ] Cyber Essentials Plus (1a/1b) or Cyber Essentials (2a/2b, 3) held, or the alternative chosen: mandatory for call-offs, not for the bid. Without it the bid can go in, but no call-off can be awarded
 
 ### Service Information
 - [ ] Correct lot selected: [1a / 1b / 2a / 2b / 3]

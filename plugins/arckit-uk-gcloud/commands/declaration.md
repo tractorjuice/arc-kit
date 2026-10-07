@@ -271,10 +271,11 @@ framework contract:
 | Public liability | £1,000,000 minimum | £20,000,000 |
 | Professional indemnity | £1,000,000 | £50,000,000 |
 
-- **Certificates:** for Lots 1a/1b, Cyber Essentials Plus, ISO 9001, 20000-1 and 27001, plus ISO
-  14001 and 27017 (and ISO 27018 where the services include public cloud) unless the supplier resells
-  and relies on its provider's accreditations. For Lots 2a, 2b and 3, Cyber Essentials. The details
-  are in `/arckit:lot-questions`.
+- **Certificates:** for Lots 1a/1b, ISO 9001, 20000-1 and 27001, plus ISO 14001 and 27017 (and ISO
+  27018 where the services include public cloud) unless the supplier resells and relies on its
+  provider's accreditations. Cyber Essentials Plus (Lots 1a/1b) and Cyber Essentials (Lots 2a, 2b
+  and 3) are mandatory for call-off contracts, not for the bid. The details are in
+  `/arckit:lot-questions`.
 - Compare the supplier profile's insurance with the levels for the lots bid for, and list any
   shortfall or expiry before award under "Items Requiring Attention". Never assume cover the profile
   doesn't record.

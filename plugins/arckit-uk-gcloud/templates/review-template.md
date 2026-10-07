@@ -47,7 +47,7 @@
 | Lot is valid (1a, 1b, 2a, 2b or 3) and the same in every document | [✅/❌] |
 | All mandatory fields complete (no `[PENDING]` or placeholder text) | [✅/❌] |
 | Social value complete: contact named, at least one activity, evidence for each | [✅/❌] |
-| Lot questions answered; the lot's mandatory certifications held | [✅/❌] |
+| Lot questions answered; the certificates the bid needs held (Lots 1a/1b: ISO 9001, 27001, 20000-1, ISO 27018 with public cloud, Carbon Reduction Plan) | [✅/❌] |
 | Pricing follows the lot's rules, with no forbidden pricing | [✅/❌] |
 | No blocking consistency conflicts | [✅/❌] |
 | All entries within character and word limits, including scored answers | [✅/❌] |
@@ -56,7 +56,9 @@
 - 🟢 READY: every gate passes. "Should Fix" items may remain.
 - 🟡 NEEDS WORK: every mandatory document exists, but at least one gate fails.
 - 🔴 NOT READY: a mandatory document is missing, the lot is invalid, social value is incomplete, a
-  mandatory certification for the lot is not held, or a mandatory declaration question is unanswered.
+  certificate the bid needs is not held, or a mandatory declaration question is unanswered. A missing
+  Cyber Essentials or Cyber Essentials Plus certificate is a call-off warning, not a gate: it is
+  mandatory for call-off contracts, not for the bid.
 
 Every ❌ gate produces at least one "Must Fix" action.
 
@@ -163,7 +165,8 @@ Claims in the pack that a buyer or GCA (formerly CCS) could ask you to substanti
 | Service does not meet the lot definition | [✅ Clear / ⚠️ Risk] | [-] |
 | Social value missing or incomplete (pass/fail; a fail loses the whole 10%) | [✅ Clear / ⚠️ Risk] | [-] |
 | Lot questions for the service's lot missing, unanswered or over their word limits | [✅ Clear / ⚠️ Risk] | [-] |
-| Mandatory certification not held (1a/1b: Cyber Essentials Plus, ISO 9001, 27001, 20000-1, Carbon Reduction Plan, ISO 27018 with public cloud; 2a/2b and 3: Cyber Essentials) | [✅ Clear / ⚠️ Risk] | [-] |
+| Certificate the bid needs not held (1a/1b: ISO 9001, 27001, 20000-1, Carbon Reduction Plan, ISO 27018 with public cloud) | [✅ Clear / ⚠️ Risk] | [-] |
+| Call-off warning: Cyber Essentials Plus (1a/1b) or Cyber Essentials (2a/2b, 3) not held. Mandatory for call-off contracts, not for the bid | [✅ Clear / ⚠️ Warning] | [Alternative chosen] |
 | Pricing document missing or unpublished | [✅ Clear / ⚠️ Risk] | [-] |
 | Forbidden pricing ("price on application", "from £x", unexplained ranges) or prices in the service definition document | [✅ Clear / ⚠️ Risk] | [-] |
 | Lot 3: the supplier rate card (`ARC-000-RATE`) missing, a rate below £50, or a role level this service needs not on it | [✅ Clear / ⚠️ Risk] | [-] |

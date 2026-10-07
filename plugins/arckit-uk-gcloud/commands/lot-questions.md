@@ -23,8 +23,8 @@ most of the quality score:
 | Lot group | Part of the LOTQ document | What the lot questions decide |
 |-----------|---------------------------|-------------------------------|
 | Lots 1a and 1b (IaaS and PaaS) | Part 1 | Conditions of participation (pass/fail), two written quality questions worth 40% each, non-scored mandatory questions, standards |
-| Lots 2a and 2b (iSaaS and SaaS) | Part 2 | Four mandatory award criteria worth 2.5% each, Cyber Essentials (mandatory), other standards |
-| Lot 3 (Cloud Support) | Part 3 | Four mandatory award criteria worth 2.5% each, Cyber Essentials (mandatory), other standards |
+| Lots 2a and 2b (iSaaS and SaaS) | Part 2 | Four mandatory award criteria worth 2.5% each, Cyber Essentials (mandatory for call-offs), other standards |
+| Lot 3 (Cloud Support) | Part 3 | Four mandatory award criteria worth 2.5% each, Cyber Essentials (mandatory for call-offs), other standards |
 
 The lot questions are a **supplier-wide** artefact: one document,
 `projects/000-global/supplier/ARC-000-LOTQ-v{VERSION}.md`, holding one Part per lot group the
@@ -33,7 +33,9 @@ supplier bids for. A re-run for another lot group adds its Part and bumps the ve
 Where GCA's later tender documents (Updates to Tender Documents, Framework Schedule 1 v2.1,
 Attachment 2 v5.0) differ from the question export, they win. Two changes matter here: ISO 27018 is
 required for Lots 1a and 1b whenever the services include public cloud, and Cyber Essentials is
-mandatory for Lots 2a, 2b and 3.
+mandatory for call-off contracts under Lots 2a, 2b and 3. Cyber Essentials and Cyber Essentials Plus
+are call-off requirements, not conditions of the bid: a missing certificate is a call-off warning,
+never "would fail".
 
 Social value (10% on every lot) is answered by `/arckit:social-value`, and price by `/arckit:pricing`.
 
@@ -151,7 +153,11 @@ default: an unanswered one is `[PENDING]`, including in a headless run. Ask four
    (Offering both proprietary and resold services as your core IaaS/PaaS → Reseller. Reselling only ancillary services → Sole Control.)
 2. Have you been trading for less than 12 months?  [Yes / No]
 3. Do you have a current Cyber Essentials Plus certificate for the services, awarded by IASME within the last 12 months?
-   [Yes / Working towards it, certified by framework award / An IASME certified equivalent / None of these]
+   [Yes / No]
+   If No, the alternative, worded as the export and the live Lot 1a listings word it:
+   [In relation to the services you do not have a current and valid Cyber Essentials Plus certificate … but you are working towards gaining it, and will be in a position to confirm … by the date of framework award.
+    / You do not have a current and valid Cyber Essentials Plus certificate, or will not have in place by the date of framework award but have an IASME certified equivalent.
+    / None of the criteria]
 4. Are you bidding for Lot 1b (alone or with 1a)?  [Yes / No]
 ```
 
@@ -183,8 +189,12 @@ Then follow the export's branches:
   published plan (use **WebFetch** on its URL). Never estimate them; the export accepts 0 where data
   is unavailable, with an explanation.
 - **Cyber Essentials Plus:** mandatory for call-off contracts under Lots 1a and 1b (Framework
-  Schedule 1 v2.1). Record the certificate number (format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`) or
-  the alternative chosen. "None of these" means none of the accepted routes applies.
+  Schedule 1 v2.1), not a condition of the bid: Attachment 2 v5.0 doesn't mark it mandatory for the
+  tender, as it does the ISO certificates. Record the certificate number (format
+  `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`) or the alternative chosen, with the template's exact
+  option text. If it isn't held, list it under "Call-off Warnings": the supplier can't take a Lot
+  1a/1b call-off until certified. Of the 1,829 live Lot 1a listings, the 105 without it all chose
+  one of the first two alternatives.
 
 #### 4b. Scored quality questions
 
@@ -288,12 +298,16 @@ well as scoring 0.
    table: social value 10% (from the SOCV document: Pass only if every pass/fail answer there is
    "Yes" and at least one measure is selected, otherwise `[PENDING]` or Fail) plus 2.5% × mark for
    each criterion.
-5. **Cyber Essentials is mandatory** for call-off contracts under Lots 2a, 2b and 3 (GCA's Updates to
-   Tender Documents and Framework Schedule 1 v2.1), even though the export lists it among
-   "Non-mandatory Standards and certifications". Record the certificate number, or the alternative
-   chosen, from the supplier profile. Flag it under "Would Fail as Written" if it isn't held and the
-   supplier isn't working towards it by framework award. Cyber Essentials Plus is optional for these
-   lots.
+5. **Cyber Essentials is mandatory for call-off contracts** under Lots 2a, 2b and 3 (GCA's Updates
+   to Tender Documents and Framework Schedule 1 v2.1), though the export lists it among
+   "Non-mandatory Standards and certifications". It is not a condition of the bid: Attachment 2 v5.0
+   lists no mandatory certificate for these lots, and 769 Lot 2b and 1,977 Lot 3 listings are live
+   with "Cyber essentials: No" and "None of the criteria". Record the certificate number from the
+   supplier profile, or the alternative chosen, using the template's option text: the live listings
+   word the alternatives "within 12 months of the date of award", where the export says "by the date
+   of framework award". If it isn't held, list it under "Call-off Warnings", never "Would Fail as
+   Written": the supplier can't be awarded a call-off until it holds the certificate. Cyber
+   Essentials Plus is optional for these lots.
 6. Fill the non-mandatory standards (ISO/IEC 27001, ISO 28000:2022, ISO 9001, QMS, CSA STAR, PCI DSS,
    others) from the supplier profile, and the requirements outside the lot questions.
 
@@ -301,7 +315,8 @@ well as scoring 0.
 
 Fill the **G-Cloud Details** table (supplier, lot groups, lots bid for, services in those groups).
 List every `[PENDING]` item, every pass/fail answer that would fail, every required certificate not
-held, and every service that disagrees with a lot answer under "Items Requiring Attention".
+held, every call-off warning, and every service that disagrees with a lot answer under "Items
+Requiring Attention".
 
 Generate the document ID with the ArcKit helper (LOTQ is single-instance — one document for all the
 supplier's lot groups):
@@ -373,14 +388,17 @@ Report what the document actually contains, for each Part written:
 ### Part 2: Lots 2a and 2b
 - User support [answer, mark]; asset protection [answer, mark]; penetration testing [answer, mark]; data sanitisation [answer, mark]
 - Quality score: [N]% of a possible 20%
-- Cyber Essentials (mandatory): [certificate number / working towards it / PENDING / not held]
+- Cyber Essentials (mandatory for call-offs): [certificate number / alternative chosen / PENDING]
 - Services that disagree with a lot answer: [list or "none"]
 
 ### Part 3: Lot 3
 - [As Lots 2a and 2b, for its four criteria]
 
 ### Would Fail as Written
-- [Each failing pass/fail answer, zero mark, missing required certificate (including ISO 27018 for public cloud and Cyber Essentials for Lots 2a/2b/3) or part over 250 words, or "Nothing found"]
+- [Each failing pass/fail answer, zero mark, missing required certificate (the Lot 1a/1b ISO certificates, including ISO 27018 for public cloud, and the Carbon Reduction Plan) or part over 250 words, or "Nothing found"]
+
+### Call-off Warnings
+- [Cyber Essentials Plus (Lots 1a/1b) or Cyber Essentials (Lots 2a/2b, 3) not held: the alternative chosen, and that no call-off can be awarded under the lot until the certificate is held, or "None"]
 
 ### Items Requiring Attention
 - [Each `[PENDING]` item, or "None"]

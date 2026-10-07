@@ -269,7 +269,7 @@ Principles not asked as service questions still matter: on Lots 1a/1b the lot qu
 |----------|------------------|------|--------------------|--------------------|---------------------|--------|---------|
 | [STANDARD] | [RULE AND SOURCE] | Yes / No / Working towards | [NUMBER] | [BODY] | Yes / No / Partly | [DATE] | [DATE] |
 
-<!-- Lots 1a/1b: Cyber Essentials Plus (awarded in the last 12 months, or held by framework award, or an IASME-certified equivalent); ISO 9001, ISO/IEC 20000-1 and ISO/IEC 27001; and ISO 14001, ISO/IEC 27017 and, if the service is offered on public cloud, ISO/IEC 27018, unless you resell and rely on the cloud provider's accreditations. Lots 2a/2b and 3: Cyber Essentials, mandatory for every call-off. -->
+<!-- Lots 1a/1b: ISO 9001, ISO/IEC 20000-1 and ISO/IEC 27001; and ISO 14001, ISO/IEC 27017 and, if the service is offered on public cloud, ISO/IEC 27018, unless you resell and rely on the cloud provider's accreditations; plus Cyber Essentials Plus (awarded in the last 12 months, or certified by the date of framework award, or an IASME-certified equivalent), mandatory for every call-off. Lots 2a/2b and 3: Cyber Essentials, mandatory for every call-off. Cyber Essentials and Cyber Essentials Plus are call-off requirements, not conditions of the bid: report a missing one as a call-off warning. -->
 
 **Lot-specific commitments**
 

@@ -1545,7 +1545,7 @@ All artifacts must pass these 10 checks:
 - Ultimate and immediate parent companies recorded, or their absence stated
 - Contacts include the contract notice contact (generic email and address, no named individual), the five framework award form contacts and a Social Value Contact
 - Every certification records status, certificate number, expiry and certification body — a named certification without a number or expiry is incomplete
-- The certifications each G-Cloud 15 lot bid for requires are identifiable: Cyber Essentials Plus, ISO 9001, 20000-1 and 27001 (plus 14001, 27017 and 27018 where applicable) for Lots 1a/1b; Cyber Essentials for Lots 2a, 2b and 3
+- The certifications each G-Cloud 15 lot bid for requires are identifiable: ISO 9001, 20000-1 and 27001 (plus 14001, 27017 and 27018 where applicable) for Lot 1a/1b bids; Cyber Essentials Plus for Lot 1a/1b call-offs and Cyber Essentials for Lot 2a, 2b and 3 call-offs
 - Security clearances recorded as staff counts per level (BPSS, CTC, SC, DV, eDV) with screening standard and clearance management process; BPSS not described as renewed annually
 - Every data centre records location, operator, UK data sovereignty position, certifications, and backup or DR location with distance from primary
 - Insurance recorded per policy with provider, coverage amount and expiry, so it can be compared with the levels GCA asks for at framework award
@@ -1614,7 +1614,7 @@ All artifacts must pass these 10 checks:
 
 ### SECA -- G-Cloud Security Evidence
 
-- The certifications the service's lot requires are addressed: Cyber Essentials Plus, ISO 9001, 20000-1 and 27001 (plus 14001, 27017 and, with public cloud, 27018 unless relying on a provider's accreditations) for Lots 1a/1b; Cyber Essentials for Lots 2a, 2b and 3
+- The certifications the service's lot requires are addressed: ISO 9001, 20000-1 and 27001 (plus 14001, 27017 and, with public cloud, 27018 unless relying on a provider's accreditations) for Lot 1a/1b bids; Cyber Essentials Plus (1a/1b) and Cyber Essentials (2a, 2b and 3) as call-off requirements, a missing one reported as a call-off warning rather than a bid failure
 - Lots 1a/1b and 2a/2b address all 14 NCSC Cloud Security Principles under their current names (including "Separation between customers" and "Audit information and alerting for customers"); Lot 3 covers staff security and standards
 - G-Cloud 15 questions answered where the lot asks them: post-quantum cryptography, the Software Security Code of Practice (2a/2b), the AI chatbot and FOCUS resource tagging
 - Every certification records certificate number, scope, certification body, last audit date and next recertification date
@@ -1676,7 +1676,7 @@ All artifacts must pass these 10 checks:
 - Every lot question for each Part asked in GCA's wording, with answers ticked using GCA's options
 - Lots 1a/1b: every condition of participation answered (reseller or sole control, reliance on the cloud provider's accreditations, Lot 1b and ISO 27018, trading history), with the certificates and Carbon Reduction Plan each requires
 - Lots 1a/1b: each of the five scored sub-criteria drafted within 250 words, its word count shown, and its weight and marking scheme stated (Quality Cloud Services 40%, Maximising Buyer Value 40%); the non-scored mandatory items answered
-- Lots 2a/2b and 3: the four mandatory award criteria answered (2.5% each), and Cyber Essentials recorded as mandatory
+- Lots 2a/2b and 3: the four mandatory award criteria answered (2.5% each), and Cyber Essentials recorded as mandatory for call-offs; a missing certificate listed as a call-off warning, not under "Would Fail as Written", with the alternative in the live listings' wording
 - Scored answers are evidence-based and specific to the supplier — no generic claims, competitor names or unverifiable statistics
 - Each "What the … doesn't cover" answer within 200 words, the limit the live listings show
 - Pass/fail answers and certificates held are the supplier's own, or `[PENDING]`; none defaulted

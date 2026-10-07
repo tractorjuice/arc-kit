@@ -71,8 +71,8 @@ you confirm it.
 - Registered company name, registration number, address, and contact details are correct.
 - PPON and share code match the CDP, and published CDP contact details are generic.
 - Certifications include certificate numbers, expiry dates, and certification bodies, and cover what
-  each lot requires (Cyber Essentials Plus and ISO 9001/20000-1/27001 for Lots 1a/1b; Cyber
-  Essentials for 2a, 2b and 3).
+  each lot requires (ISO 9001/20000-1/27001 for Lot 1a/1b bids; Cyber Essentials Plus for Lot 1a/1b
+  call-offs and Cyber Essentials for Lot 2a, 2b and 3 call-offs).
 - Insurance meets the levels for the lots you bid for (Lot 1b's are higher).
 - Emissions figures come from the published Carbon Reduction Plan.
 - Every sourced fact has a citation where web or document evidence was used.

@@ -289,7 +289,7 @@ onsite support (not asked for Lot 3), support levels.
 
 **Certifications:** current status for the ones this lot's lot questions cover (see the template's
 section 10). Call-offs need Cyber Essentials Plus under Lots 1a/1b and Cyber Essentials under Lots 2a,
-2b and 3.
+2b and 3; neither is a condition of the bid, so a missing certificate is a call-off warning.
 
 ### 6. Read the service-design template
 

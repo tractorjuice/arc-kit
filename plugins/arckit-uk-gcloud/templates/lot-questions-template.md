@@ -141,14 +141,14 @@ If **No**:
 
 #### 1.7 Cyber Essentials Plus
 
-*Framework Schedule 1 v2.1 makes Cyber Essentials Plus a mandatory requirement for call-off contracts under Lots 1a and 1b.*
+*Framework Schedule 1 v2.1 makes Cyber Essentials Plus a mandatory requirement for call-off contracts under Lots 1a and 1b. Attachment 2 v5.0 lists it among the Lot 1a/1b standards without marking it mandatory for the tender, as it does the ISO certificates, so a missing certificate is a **call-off warning**, not a reason the bid fails. Of the 1,829 live Lot 1a listings, 105 answer "No" and every one of them chose one of the first two alternatives. The alternatives below are worded as the export and the live Lot 1a listings both word them.*
 
 **Do you have a Cyber Essentials Plus certificate?** — **In relation to the services do you have a current and valid Cyber Essentials Plus certificate which has been awarded by one of the government-approved Cyber Essentials accreditation bodies (IASME) within the most recent 12 months.**
 
 - [ ] Yes. **Cyber Essentials Plus certificate Number** (format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`): [NUMBER]
 - [ ] No. **Alternative** (please select an option):
-  - [ ] Working towards it, and will be able to confirm a current and valid Cyber Essentials Plus certificate from a government-approved accreditation body by the date of framework award
-  - [ ] No current and valid Cyber Essentials Plus certificate, and won't have one by framework award, but an IASME certified equivalent
+  - [ ] In relation to the services you do not have a current and valid Cyber Essentials Plus certificate which has been awarded by one of the government approved Cyber Essentials accreditation bodies but you are working towards gaining it, and will be in a position to confirm that you have been awarded a current and valid Cyber Essentials Plus certificate by one of the government approved accreditation bodies, by the date of framework award.
+  - [ ] You do not have a current and valid Cyber Essentials Plus certificate, or will not have in place by the date of framework award but have an IASME certified equivalent.
   - [ ] None of the criteria
 
 **Answer:** [ANSWER] **Award date:** [DATE] **Source:** [SOURCE]
@@ -357,7 +357,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Penetration testing | 2.5% | 100/66/33/0 |
 | Data sanitisation | 2.5% | 100/0 |
 | Price | 80% | Price assessment (each service's PRIC document (`/arckit:pricing`)) |
-| Cyber Essentials | — | Mandatory for call-off contracts (Section 2) |
+| Cyber Essentials | — | Mandatory for call-off contracts, not for the bid (Section 2) |
 
 *Attachment 2 disqualifies a tender with a mark of zero on any scored quality question, so a "No" to any criterion below fails the bid. These answers cover all your Lot 2a and 2b services, and must agree with the User Support and Asset Protection answers on each listing.*
 
@@ -440,20 +440,32 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Data sanitisation | [ANSWER] | [MARK] | [MARK × 2.5%] |
 | **Quality score** | | | **[N]% of a possible 20%** |
 
-### 2. Cyber Essentials (Mandatory)
+### 2. Cyber Essentials (Mandatory for Call-Offs)
 
-*The export lists Cyber Essentials among its "Non-mandatory Standards and certifications", but GCA's Updates to Tender Documents and Framework Schedule 1 v2.1 make Cyber Essentials certification **a mandatory requirement for call-off contracts under Lots 2a and 2b**. Hold it, or be working towards it with a certificate by framework award. Cyber Essentials Plus is optional here.*
+*The export lists Cyber Essentials among its "Non-mandatory Standards and certifications". GCA's Updates to Tender Documents and Framework Schedule 1 v2.1 make Cyber Essentials certification **a mandatory requirement for call-off contracts under Lots 2a and 2b**, not a condition of the bid. Attachment 2 v5.0 lists no mandatory certificate for Lots 2a, 2b and 3, and Framework Schedule 1 v2.1 makes Cyber Essentials mandatory for call-off contracts. The live listings scraped on 7 October 2026 confirm it doesn't fail the bid: 769 Lot 2b and 1,977 Lot 3 listings show "Cyber essentials: No" with "None of the criteria". Cyber Essentials Plus is optional here.*
 
 | Question | Answer | Source |
 |----------|--------|--------|
 | **Cyber essentials** — Do you have a current Cyber Essentials certification? | Yes / No / [PENDING] | [SOURCE] |
 | Please provide your Cyber Essentials Certificate Number *(if "Yes"; format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`)* | [NUMBER] | |
-| **Cyber Essentials Alternative** — Please select an option below *(if "No")* | Working towards it, certified by a government-approved accreditation body by the date of framework award / An IASME certified equivalent / None of the criteria | |
 | **Cyber essentials plus** — Do you have a current Cyber Essentials Plus certification? | Yes / No / [PENDING] | [SOURCE] |
 | Please provide your Cyber Essentials Plus Certificate Number *(if "Yes")* | [NUMBER] | |
-| **Cyber Essentials Alternative** — Please select an option below *(if "No")* | Working towards it, certified by framework award / An IASME certified equivalent / None of the criteria | |
 
-*For Cyber Essentials, "None of the criteria" does not meet the mandatory requirement.*
+**Cyber Essentials Alternative** — Please select an option below *(if Cyber essentials is "No")*:
+
+- [ ] In relation to the services you do not have a current and valid Cyber Essentials certificate which has been awarded by one of the government approved Cyber Essentials accreditation bodies but you are working towards gaining it, and will be in a position to confirm that you have been awarded a current and valid Cyber Essentials certificate by one of the government approved accreditation bodies within 12 months of the date of award.
+- [ ] You do not have a current and valid Cyber Essentials certificate, or will not have in place within 12 months of the date of award but have an IASME certified equivalent.
+- [ ] None of the criteria
+
+**Cyber Essentials Alternative** — Please select an option below *(if Cyber essentials plus is "No")*:
+
+- [ ] In relation to the services you do not have a current and valid Cyber Essentials Plus certificate which has been awarded by one of the government approved Cyber Essentials accreditation bodies but you are working towards gaining it, and will be in a position to confirm that you have been awarded a current and valid Cyber Essentials Plus certificate by one of the government approved accreditation bodies within 12 months of the date of award.
+- [ ] You do not have a current and valid Cyber Essentials Plus certificate, or will not have in place within 12 months of the date of award but have an IASME certified equivalent.
+- [ ] None of the criteria
+
+*Options are worded as the live Lot 2a and 2b listings show them. GCA's question export words the first two "by the date of framework award"; the listings say "within 12 months of the date of award". Tick the option on the Digital Platform that means the same.*
+
+*A missing Cyber Essentials certificate, even with "None of the criteria", doesn't fail the bid, but it is a **call-off warning**: you can't be awarded a call-off contract under this lot until you hold one.*
 
 ### 3. Non-mandatory Standards and Certifications
 
@@ -508,7 +520,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Security clearance level | 2.5% | 100/66/33/0 |
 | Cyber Essentials if a buyer requires it | 2.5% | 100/0 |
 | Price (average day rate) | 80% | Price assessment (the supplier's one Lot 3 rate card, `ARC-000-RATE` (`/arckit:pricing`)) |
-| Cyber Essentials | — | Mandatory for call-off contracts (Section 2) |
+| Cyber Essentials | — | Mandatory for call-off contracts, not for the bid (Section 2) |
 
 *Attachment 2 disqualifies a tender with a mark of zero on any scored quality question, so a "No" to any criterion below fails the bid. These answers cover all your Lot 3 services, and must agree with the User Support, Staff Security and Standards answers on each listing.*
 
@@ -564,7 +576,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 
 **Are you prepared to have in place Cyber Essentials certification?** — Are you prepared to have in place Cyber Essentials (or equivalent or higher) certification should a Buyer require it?
 
-*Cyber Essentials is mandatory for Lot 3 call-off contracts in any case (Framework Schedule 1 v2.1; see Section 2), so answer consistently with that.*
+*Cyber Essentials is mandatory for Lot 3 call-off contracts in any case (Framework Schedule 1 v2.1; see Section 2), so answer consistently with that. This criterion asks whether you are prepared to hold it, not whether you hold it now.*
 
 | Option | Mark | Selected |
 |--------|------|----------|
@@ -582,20 +594,32 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Cyber Essentials if required | [ANSWER] | [MARK] | [MARK × 2.5%] |
 | **Quality score** | | | **[N]% of a possible 20%** |
 
-### 2. Cyber Essentials (Mandatory)
+### 2. Cyber Essentials (Mandatory for Call-Offs)
 
-*The export lists Cyber Essentials among its "Non-mandatory Standards and certifications", but GCA's Updates to Tender Documents and Framework Schedule 1 v2.1 make Cyber Essentials certification **a mandatory requirement for call-off contracts under Lot 3**. Hold it, or be working towards it with a certificate by framework award. Cyber Essentials Plus is optional here.*
+*The export lists Cyber Essentials among its "Non-mandatory Standards and certifications". GCA's Updates to Tender Documents and Framework Schedule 1 v2.1 make Cyber Essentials certification **a mandatory requirement for call-off contracts under Lot 3**, not a condition of the bid. Attachment 2 v5.0 lists no mandatory certificate for Lots 2a, 2b and 3, and Framework Schedule 1 v2.1 makes Cyber Essentials mandatory for call-off contracts. The live listings scraped on 7 October 2026 confirm it doesn't fail the bid: 769 Lot 2b and 1,977 Lot 3 listings show "Cyber essentials: No" with "None of the criteria". Cyber Essentials Plus is optional here.*
 
 | Question | Answer | Source |
 |----------|--------|--------|
 | **Cyber essentials** — Do you have a current Cyber Essentials certification? | Yes / No / [PENDING] | [SOURCE] |
 | Please provide your Cyber Essentials Certificate Number *(if "Yes"; format `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`)* | [NUMBER] | |
-| **Cyber Essentials Alternative** — Please select an option below *(if "No")* | Working towards it, certified by a government-approved accreditation body by the date of framework award / An IASME certified equivalent / None of the criteria | |
 | **Cyber essentials plus** — Do you have a current Cyber Essentials Plus certification? | Yes / No / [PENDING] | [SOURCE] |
 | Please provide your Cyber Essentials Plus Certificate Number *(if "Yes")* | [NUMBER] | |
-| **Cyber Essentials Alternative** — Please select an option below *(if "No")* | Working towards it, certified by framework award / An IASME certified equivalent / None of the criteria | |
 
-*For Cyber Essentials, "None of the criteria" does not meet the mandatory requirement.*
+**Cyber Essentials Alternative** — Please select an option below *(if Cyber essentials is "No")*:
+
+- [ ] In relation to the services you do not have a current and valid Cyber Essentials certificate which has been awarded by one of the government approved Cyber Essentials accreditation bodies but you are working towards gaining it, and will be in a position to confirm that you have been awarded a current and valid Cyber Essentials certificate by one of the government approved accreditation bodies within 12 months of the date of award.
+- [ ] You do not have a current and valid Cyber Essentials certificate, or will not have in place within 12 months of the date of award but have an IASME certified equivalent.
+- [ ] None of the criteria
+
+**Cyber Essentials Alternative** — Please select an option below *(if Cyber essentials plus is "No")*:
+
+- [ ] In relation to the services you do not have a current and valid Cyber Essentials Plus certificate which has been awarded by one of the government approved Cyber Essentials accreditation bodies but you are working towards gaining it, and will be in a position to confirm that you have been awarded a current and valid Cyber Essentials Plus certificate by one of the government approved accreditation bodies within 12 months of the date of award.
+- [ ] You do not have a current and valid Cyber Essentials Plus certificate, or will not have in place within 12 months of the date of award but have an IASME certified equivalent.
+- [ ] None of the criteria
+
+*Options are worded as the live Lot 3 listings show them. GCA's question export words the first two "by the date of framework award"; the listings say "within 12 months of the date of award". Tick the option on the Digital Platform that means the same.*
+
+*A missing Cyber Essentials certificate, even with "None of the criteria", doesn't fail the bid, but it is a **call-off warning**: you can't be awarded a call-off contract under this lot until you hold one.*
 
 ### 3. Non-mandatory Standards and Certifications
 

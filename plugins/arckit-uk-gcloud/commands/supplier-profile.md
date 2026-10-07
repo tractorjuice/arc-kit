@@ -145,9 +145,11 @@ body, accreditation date, expiry date, and what it doesn't cover):
 - Industry specific: PCI DSS (level), NHS DSPT (status), others
 - For any certificate not yet held, whether accreditation has started
 
-G-Cloud 15 requires Cyber Essentials Plus, ISO 9001, ISO 20000-1 and ISO 27001 for Lots 1a/1b, plus
-ISO 14001 and ISO 27017 (and ISO 27018 where services include public cloud) unless the supplier
-resells and relies on its provider's accreditations. Lots 2a, 2b and 3 require Cyber Essentials.
+G-Cloud 15 bids for Lots 1a/1b need ISO 9001, ISO 20000-1 and ISO 27001, plus ISO 14001 and ISO
+27017 (and ISO 27018 where services include public cloud) unless the supplier resells and relies on
+its provider's accreditations. Cyber Essentials Plus (Lots 1a/1b) and Cyber Essentials (Lots 2a, 2b
+and 3) are mandatory for call-off contracts, not for the bid: without one, the bid can go in but no
+call-off can be awarded under the lot.
 
 **Security Clearances and Screening:**
 
@@ -299,7 +301,7 @@ Print only a short summary of what the profile actually records (not the full do
 
 ### G-Cloud 15 Requirements
 - Lots 1a/1b: [which required certificates are held or missing]
-- Lots 2a/2b/3 (Cyber Essentials): [held / missing / PENDING]
+- Cyber Essentials Plus (Lot 1a/1b call-offs) and Cyber Essentials (Lot 2a/2b and 3 call-offs): [held / missing: a call-off warning, not a bid failure / PENDING]
 - Insurance: [meets the levels for Lots 1a, 2a, 2b and 3 / meets Lot 1b's / shortfall: details / PENDING]
 - Carbon Reduction Plan: [published URL / not published / PENDING]
 

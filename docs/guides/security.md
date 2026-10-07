@@ -70,10 +70,10 @@ customers" and "Audit information and alerting for customers".
 
 | Lot | Required | Also asked |
 |-----|----------|------------|
-| 1a / 1b | Cyber Essentials Plus; ISO 9001, ISO/IEC 20000-1, ISO/IEC 27001; ISO 14001 and ISO/IEC 27017 unless you resell and rely on the provider's accreditations; ISO/IEC 27018 if offered on public cloud; post-quantum and FOCUS commitments | ISO 28000:2022, QMS, CSA STAR, PCI DSS |
+| 1a / 1b | ISO 9001, ISO/IEC 20000-1, ISO/IEC 27001; ISO 14001 and ISO/IEC 27017 unless you resell and rely on the provider's accreditations; ISO/IEC 27018 if offered on public cloud; post-quantum and FOCUS commitments; Cyber Essentials Plus for every call-off (a call-off warning if missing, not a bid failure) | ISO 28000:2022, QMS, CSA STAR, PCI DSS |
 | 1b extra | An accredited secure facility within 6 months of the framework start, security-cleared staff, Security Aspects Letters | |
-| 2a / 2b | Cyber Essentials, mandatory for every call-off; FOCUS commitment | ISO/IEC 27001, ISO 28000:2022, ISO 9001, QMS, CSA STAR, PCI DSS, Cyber Essentials Plus |
-| 3 | Cyber Essentials, mandatory for every call-off | As 2a/2b |
+| 2a / 2b | Cyber Essentials, mandatory for every call-off but not for the bid; FOCUS commitment | ISO/IEC 27001, ISO 28000:2022, ISO 9001, QMS, CSA STAR, PCI DSS, Cyber Essentials Plus |
+| 3 | Cyber Essentials, mandatory for every call-off but not for the bid | As 2a/2b |
 
 ---
 

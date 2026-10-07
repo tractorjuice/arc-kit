@@ -304,12 +304,14 @@ full 10%.
   in all); no attachments
 - [ ] **1a/1b, non-scored mandatory:** NCSC guidance, sanctions policies and controls, customer
   contractual exit procedure (≤ 250 words), engaging customers in a change of service (≤ 250 words)
-- [ ] **1a/1b, certification conditions:** Cyber Essentials Plus (mandatory) awarded in the last 12
-  months with its certificate number (or working towards it by framework award, or an IASME-certified
-  equivalent); ISO 9001, ISO 27001 and ISO 20000-1; ISO 27018 if the service includes public cloud
-  (Lots 1a and 1b; not needed for private cloud only); ISO 14001 and 27017 where the reseller answers
-  require them; a Carbon Reduction Plan with its emissions figures
-- [ ] **2a/2b and 3:** Cyber Essentials, which is mandatory for call-offs on these lots
+- [ ] **1a/1b, certification conditions:** ISO 9001, ISO 27001 and ISO 20000-1; ISO 27018 if the
+  service includes public cloud (Lots 1a and 1b; not needed for private cloud only); ISO 14001 and
+  27017 where the reseller answers require them; a Carbon Reduction Plan with its emissions figures
+- [ ] **Cyber Essentials:** Cyber Essentials Plus (1a/1b) or Cyber Essentials (2a/2b, 3) with its
+  certificate number, or the alternative chosen in the option's exact wording. Both are mandatory
+  for call-off contracts (Framework Schedule 1 v2.1) but not for the bid: 769 Lot 2b and 1,977 Lot 3
+  listings are live with "Cyber essentials: No" and "None of the criteria". A missing certificate is
+  a **call-off warning** (Should Fix), not a blocking finding
 - [ ] **2a/2b, mandatory award criteria:** user support (and when it is available), where user data
   is stored and processed, penetration testing frequency, an industry-standard data sanitisation
   process
@@ -424,8 +426,10 @@ These are the same reasons listed in section 8 of the review template:
 - [ ] Lot missing or not one of 1a, 1b, 2a, 2b, 3; service does not fit the lot definition
 - [ ] Social value missing or incomplete (it is pass/fail, and a fail loses the whole 10%)
 - [ ] Lot questions for the service's lot missing, unanswered or over their word limits
-- [ ] A mandatory certification not held: Cyber Essentials Plus, ISO 9001, 27001, 20000-1 and a
-  Carbon Reduction Plan for 1a/1b (plus ISO 27018 with public cloud); Cyber Essentials for 2a/2b and 3
+- [ ] A certificate the bid needs not held: ISO 9001, 27001, 20000-1 and a Carbon Reduction Plan for
+  1a/1b (plus ISO 27018 with public cloud)
+- [ ] Call-off warning, not a rejection: Cyber Essentials Plus (1a/1b) or Cyber Essentials (2a/2b,
+  3) not held. The bid can go in, but no call-off can be awarded until the certificate is held
 - [ ] A mandatory declaration question unanswered
 - [ ] A claimed certification that is not held or has expired
 - [ ] A placeholder remaining. Every line the placeholder scan in Step 2 printed, `pending` or

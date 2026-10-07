@@ -183,11 +183,11 @@ G-Cloud 15 scores bids; G-Cloud 14 did not.
 |-----|--------|--------|---------------------|
 | 1a/1b | Social value | 10% | Conditions of participation: reseller or sole control, reliance on the cloud provider's accreditations, bidding for Lot 1b, trading under 12 months |
 | | Quality Cloud Services: a) cloud service performance; b) operational continuity and evergreen maintenance | 40% | Non-scored mandatory: NCSC guidance, policies and controls, contractual exit procedure, change of service |
-| | Maximising Buyer Value: a) account management and billing transparency; b) technology support and user enablement; c) access to innovation | 40% | Mandatory certificates: Cyber Essentials Plus, ISO 9001, ISO 20000-1 and ISO 27001; plus ISO 14001, ISO 27017 and (if public cloud is offered) ISO 27018 unless you resell and rely on your cloud provider's accreditations. A Carbon Reduction Plan |
+| | Maximising Buyer Value: a) account management and billing transparency; b) technology support and user enablement; c) access to innovation | 40% | Mandatory certificates: ISO 9001, ISO 20000-1 and ISO 27001; plus ISO 14001, ISO 27017 and (if public cloud is offered) ISO 27018 unless you resell and rely on your cloud provider's accreditations. A Carbon Reduction Plan. Cyber Essentials Plus is mandatory for call-off contracts, not for the bid |
 | | Onboarding price (average of the onboarding table) | 5% | Two further pricing questions are not scored |
 | | Minimum discount (the highest scores 5%, others in proportion) | 5% | |
 | 2a/2b | Social value | 10% | Mandatory award criteria: user support, asset protection (data location), penetration testing frequency, data sanitisation |
-| | Four mandatory award criteria (2.5% each) | 10% | **Cyber Essentials is mandatory** for call-offs (Framework Schedule 1 v2.1). Other standards asked: ISO 27001, ISO 9001, ISO 28000:2022, QMS, CSA STAR, PCI |
+| | Four mandatory award criteria (2.5% each) | 10% | **Cyber Essentials is mandatory** for call-offs (Framework Schedule 1 v2.1), not for the bid: 769 Lot 2b listings are live with "Cyber essentials: No" and "None of the criteria". Other standards asked: ISO 27001, ISO 9001, ISO 28000:2022, QMS, CSA STAR, PCI |
 | | Price: the six band discounts are totalled; the highest total scores 80%, others in proportion. Unit prices are not scored | 80% | |
 | 3 | Social value | 10% | Mandatory award criteria: user support, staff security clearance checks, clearance level, Cyber Essentials |
 | | Four mandatory award criteria (2.5% each) | 10% | **Cyber Essentials is mandatory** for call-offs; other standards as Lots 2a/2b |

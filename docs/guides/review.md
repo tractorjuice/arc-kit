@@ -60,8 +60,10 @@ projects/<NNN>-<service-name>/ARC-<NNN>-GCRV-v1.0.md
   commitment.
 - Lot questions: 1a/1b conditions of participation, scored answers (250 words per part) and
   certification conditions; 2a/2b and Lot 3 mandatory award criteria.
-- The lot's mandatory certifications: Cyber Essentials Plus for 1a/1b, Cyber Essentials for 2a/2b
-  and 3.
+- The certificates the bid needs (Lots 1a/1b: ISO 9001, 27001, 20000-1, ISO 27018 with public cloud,
+  and a Carbon Reduction Plan). A missing Cyber Essentials Plus (1a/1b) or Cyber Essentials (2a/2b,
+  3) is reported as a call-off warning, not a blocking finding: both are mandatory for call-offs,
+  not for the bid.
 - Limits, numerically: name 100 characters, description 500 characters, features and benefits 10
   items of 10 words, and every free-text answer recounted against the 50, 100 or 200-word limit on
   its `**Words:**` line (inferred from the live listings, because GCA's export doesn't state them).

@@ -55,7 +55,7 @@ Activate when users ask about:
 | 2a/2b | Social value 10%, four mandatory award criteria 10%, price 80%: the six band discounts are totalled and the highest total scores 80% |
 | 3 | Social value 10%, four mandatory award criteria 10%, price 80%: the lowest average day rate (every rate entered, UK and offshore) scores 80% |
 
-Mandatory certificates: Cyber Essentials Plus, ISO 9001, 20000-1 and 27001 for Lots 1a/1b (plus ISO 14001, 27017 and, with public cloud, 27018 unless relying on a provider's accreditations); Cyber Essentials for Lots 2a, 2b and 3.
+Mandatory certificates for the bid: ISO 9001, 20000-1 and 27001 for Lots 1a/1b (plus ISO 14001, 27017 and, with public cloud, 27018 unless relying on a provider's accreditations). Mandatory for call-off contracts, not for the bid: Cyber Essentials Plus on Lots 1a/1b and Cyber Essentials on Lots 2a, 2b and 3.
 
 ## Quick Reference: Declaration
 

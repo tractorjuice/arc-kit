@@ -51,8 +51,8 @@ another lot group adds its Part and bumps the version.
 | Part | What it covers | Weight |
 |------|----------------|--------|
 | Part 1: Lots 1a and 1b (IaaS and PaaS) | Conditions of participation (reseller or sole control, ISO certificates including ISO 27018 where services include public cloud, Carbon Reduction Plan, Cyber Essentials Plus); two written quality questions; non-scored mandatory questions; standards | Quality Cloud Services 40%, Maximising Buyer Value 40% |
-| Part 2: Lots 2a and 2b (iSaaS and SaaS) | User support, asset protection (data location), penetration testing frequency, data sanitisation; Cyber Essentials (mandatory); other standards | 2.5% each |
-| Part 3: Lot 3 (Cloud Support) | User support, staff security clearance checks, clearance level, Cyber Essentials if a buyer requires it; Cyber Essentials (mandatory); other standards | 2.5% each |
+| Part 2: Lots 2a and 2b (iSaaS and SaaS) | User support, asset protection (data location), penetration testing frequency, data sanitisation; Cyber Essentials (mandatory for call-offs); other standards | 2.5% each |
+| Part 3: Lot 3 (Cloud Support) | User support, staff security clearance checks, clearance level, Cyber Essentials if a buyer requires it; Cyber Essentials (mandatory for call-offs); other standards | 2.5% each |
 
 Each Part also lists the evidence used and the items requiring attention. Social value (10% on every
 lot) is handled by `/arckit:social-value`, and price by `/arckit:pricing`.
@@ -71,6 +71,13 @@ lot) is handled by `/arckit:social-value`, and price by `/arckit:pricing`.
   any service that disagrees.
 - **Where GCA's later documents win.** ISO 27018 is mandatory for Lots 1a and 1b whenever services
   include public cloud, and Cyber Essentials is mandatory for call-offs under Lots 2a, 2b and 3.
+- **Cyber Essentials is a call-off condition, not a bid condition.** Cyber Essentials Plus (Lots
+  1a/1b) and Cyber Essentials (2a, 2b and 3) are mandatory for call-off contracts (Framework
+  Schedule 1 v2.1), but Attachment 2 v5.0 doesn't make them conditions of the tender, and 769 Lot 2b
+  and 1,977 Lot 3 listings are live with "Cyber essentials: No" and "None of the criteria". A
+  missing certificate is reported under Call-off Warnings, not Would Fail as Written. The
+  alternatives use the live listings' wording: "within 12 months of the date of award" on Lots 2a,
+  2b and 3, the export's "by the date of framework award" on Lots 1a/1b.
 - Conditions of participation and declarations such as NCSC adherence are never answered for you;
   anything the evidence doesn't support is `[PENDING]`.
 
