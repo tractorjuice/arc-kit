@@ -1576,7 +1576,7 @@ All artifacts must pass these 10 checks:
 - Lot-specific design completed for the selected lot rather than the generic set alone
 - Service name within 100 characters (the name only, no extra keywords) and service description within 500 characters
 - Features and benefits each capped at 10 items, every item within 10 words
-- First-pass categories taken from the selected lot's G-Cloud 15 category tree
+- First-pass categories taken from the selected lot's G-Cloud 15 category tree, all under one root and one group (`Root > Group`) recorded on the Category group line; an offer spanning groups is designed as one service per group
 - Supplier type chosen from GCA's four options, naming the organisation resold where the supplier is a reseller
 - Target buyer segments named
 - Technical details cover hosting locations and data residency, backup and DR, scalability, and security controls cross-referenced to the supplier profile certifications
@@ -1588,7 +1588,7 @@ All artifacts must pass these 10 checks:
 
 - Every G-Cloud 15 service question for the document's lot answered, ticked, `Not applicable` (follow-up not triggered) or `[PENDING]` — an unanswered question causes rejection
 - Each choose-one question has exactly one tick, and every ticked option uses GCA's exact wording
-- Categories taken from the document's own lot tree as full paths, and no other lot's categories substituted
+- Categories taken from the document's own lot tree as full paths, and no other lot's categories substituted; every category under the one root and group on the Category group line, since no live G-Cloud 15 listing has categories in two groups
 - Service name within 100 characters; description within 500 characters
 - Features and benefits each within 10 items and 10 words per item; system requirements and backed-up items within 10 words each
 - Supplier type recorded with GCA's option wording, consistent with the reseller or sole control answer in the lot questions for Lots 1a/1b

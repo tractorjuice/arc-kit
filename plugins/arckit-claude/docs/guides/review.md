@@ -53,6 +53,8 @@ projects/<NNN>-<service-name>/ARC-<NNN>-GCRV-v1.0.md
 
 - A valid G-Cloud 15 lot (`1a`, `1b`, `2a`, `2b` or `3`), the same in every document.
 - Every question in the lot's service questions answered; supplier type given on every lot.
+- Every category under one root and one group (`Root > Group`); a service whose categories span
+  groups is blocking.
 - Social value: contact named, at least one Model Award Criteria activity, evidence for each
   commitment.
 - Lot questions: 1a/1b conditions of participation, scored answers (250 words per part) and

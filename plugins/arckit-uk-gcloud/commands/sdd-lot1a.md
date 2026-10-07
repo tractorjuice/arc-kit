@@ -163,8 +163,13 @@ Fill in the template for Lot 1a:
   follow-up marked ↳ gets an answer only when its trigger is ticked; otherwise write `Not applicable`.
   If `lot-1a-services.md` has a question the template lacks (a customised template, or a reissued
   export), add it in its section and say so in the summary.
-- **3.2 Service categories:** only categories from the Lot 1a tree, written as full paths, and only
-  ones the service really delivers. Start from the service design's first pass.
+- **3.2 Service categories:** only categories from the Lot 1a tree, written as full paths, and
+  only ones the service really delivers. Start from the service design's first pass. All of them
+  must sit under one root and one group, the first two levels of the path, recorded on the
+  template's **Category group** line: none of the 42,893 live G-Cloud 15 listings (scraped 7 October
+  2026) has categories in two groups. If the service design's categories span groups, ask the user
+  with **AskUserQuestion** which group this listing covers, and suggest `/arckit:service-design` for
+  a separate service for the others.
 - **Limits:** count the characters in the service name (100) and description (500), and the words in
   every feature, benefit, system requirement and backed-up item (10 each, at most 10 items). Rewrite
   anything over a limit rather than cutting it off, and fill in the template's counters.
@@ -217,7 +222,7 @@ Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and
 
 - [ ] Every question is answered, ticked, `Not applicable` or `[PENDING]`
 - [ ] Each *choose one* question has exactly one tick, and every ticked option is GCA's wording
-- [ ] Every category comes from the Lot 1a tree
+- [ ] Every category comes from the Lot 1a tree, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features, benefits, system requirements and backed-up items, each ≤ 10 words
 - [ ] Consistent with the supplier profile (certifications, locations, clearances), the service

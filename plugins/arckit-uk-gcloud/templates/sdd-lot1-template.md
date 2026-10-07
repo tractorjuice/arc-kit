@@ -87,7 +87,10 @@ This document holds the answers to every Lot 1a/1b service question, ready to en
 
 **3.2 Service categories** — Which categories does your service fit under? *(tick all that apply)*
 
-<!-- Choose only from the Lot 1a tree in `g-cloud-15/categories.md` (Lot 1b uses the same tree). Roots: IaaS, PaaS. Write each category as its full path, for example `IaaS > IaaS Compute > Virtualised x86 > General purpose`. -->
+<!-- Choose only from the Lot 1a tree in `g-cloud-15/categories.md` (Lot 1b uses the same tree). Roots: IaaS, PaaS. Write each category as its full path, for example `IaaS > IaaS Compute > Virtualised x86 > General purpose`.
+     One root and one group per service: every category ticked shares the same first two levels of its path (`Root > Group`, for example `IaaS > IaaS Compute`). None of the 42,893 live G-Cloud 15 listings scraped on 7 October 2026 has categories in more than one group, although GCA's question export states no rule. A service that spans two groups is listed as two services. -->
+
+**Category group (one per service):** [ROOT > GROUP]
 
 | # | Category (full path, as in the lot's tree) |
 |---|---|

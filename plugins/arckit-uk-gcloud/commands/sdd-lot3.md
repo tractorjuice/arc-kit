@@ -169,8 +169,12 @@ Fill in the template:
   `Not applicable`. If `lot-3-services.md` has a question the template lacks (a customised template,
   or a reissued export), add it in its section and say so in the summary.
 - **3.2 Service categories:** only categories from the Lot 3 tree, written as full paths, and only
-  ones the service really delivers. Several leaves share a name ("Other", "Application
-  management"), so the full path matters.
+  ones the service really delivers. Several leaves share a name ("Other", "Application management"),
+  so the full path matters. All of them must sit under one root and one group, the first two levels
+  of the path, recorded on the template's **Category group** line: none of the 42,893 live G-Cloud
+  15 listings (scraped 7 October 2026) has categories in two groups. If the service design's
+  categories span groups, ask the user with **AskUserQuestion** which group this listing covers, and
+  suggest `/arckit:service-design` for a separate service for the others.
 - **Limits:** count the characters in the service name (100) and description (500), and the words in
   every feature and benefit (10 each, at most 10 items). Rewrite anything over a limit rather than
   cutting it off, and fill in the template's counters.
@@ -247,7 +251,7 @@ Before writing, check:
 
 - [ ] Every question is answered, ticked, `Not applicable` or `[PENDING]`
 - [ ] Each *choose one* question has exactly one tick, and every ticked option is GCA's wording
-- [ ] Every category comes from the Lot 3 tree, as a full path
+- [ ] Every category comes from the Lot 3 tree, as a full path, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features and benefits, each ≤ 10 words
 - [ ] Every rate card row uses exact names from `lot-3-rate-card.md`, and every rate is £50 or more

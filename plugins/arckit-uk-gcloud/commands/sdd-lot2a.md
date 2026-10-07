@@ -168,10 +168,14 @@ Fill in the template for Lot 2a:
   follow-up marked ↳ gets an answer only when its trigger is ticked; otherwise write `Not applicable`.
   If `lot-2a-services.md` has a question the template lacks (a customised template, or a reissued
   export), add it in its section and say so in the summary.
-- **3.2 Service categories:** only categories from the Lot 2a tree, written as full paths, and only
-  ones the service really delivers. Start from the service design's first pass. A category that
-  exists only in the Lot 2b tree means the service may belong in Lot 2b: say so in the summary rather
-  than using it.
+- **3.2 Service categories:** only categories from the Lot 2a tree, written as full paths, and
+  only ones the service really delivers. Start from the service design's first pass. A category that
+  exists only in the Lot 2b tree means the service may belong in Lot 2b: say so in the summary
+  rather than using it. All of them must sit under one root and one group, the first two levels of
+  the path, recorded on the template's **Category group** line: none of the 42,893 live G-Cloud 15
+  listings (scraped 7 October 2026) has categories in two groups. If the service design's categories
+  span groups, ask the user with **AskUserQuestion** which group this listing covers, and suggest
+  `/arckit:service-design` for a separate service for the others.
 - **Limits:** count the characters in the service name (100) and description (500), and the words in
   every feature, benefit and system requirement (10 each, at most 10 items). Rewrite anything over a
   limit rather than cutting it off, and fill in the template's counters.
@@ -225,7 +229,7 @@ Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and
 
 - [ ] Every question is answered, ticked, `Not applicable` or `[PENDING]`
 - [ ] Each *choose one* question has exactly one tick, and every ticked option is GCA's wording
-- [ ] Every category comes from the Lot 2a tree
+- [ ] Every category comes from the Lot 2a tree, all under one root and one group
 - [ ] Service name ≤ 100 characters; description ≤ 500 characters
 - [ ] At most 10 features, benefits and system requirements, each ≤ 10 words
 - [ ] Consistent with the supplier profile (certifications, locations, clearances), the service

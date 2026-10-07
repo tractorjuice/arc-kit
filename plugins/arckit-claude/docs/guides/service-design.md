@@ -69,11 +69,11 @@ The design records the lot on a `**G-Cloud Lot**: Lot <code> — <name>` line. A
 
 | Section | Purpose |
 |---------|---------|
-| Service overview | Name (≤ 100 characters, name only), description (≤ 500 characters), lot and justification, first-pass categories, target buyers |
+| Service overview | Name (≤ 100 characters, name only), description (≤ 500 characters), lot and justification, the one category group (`Root > Group`) and first-pass categories under it, target buyers |
 | Value proposition | Problem, solution, differentiators, competitive advantages |
 | Features and benefits | ≤ 10 of each, ≤ 10 words each, with word counts |
 | Supplier type | GCA's four reseller options |
-| Lot-specific design | 1a/1b deployment, backups, separation, energy efficiency (1b: classification and SC/DV); 2a/2b add-on, interfaces, data formats, public sector networks; 3 categories, delivery, staff security and DDaT role levels |
+| Lot-specific design | 1a/1b deployment, backups, separation, energy efficiency (1b: classification and SC/DV); 2a/2b add-on, interfaces, data formats, public sector networks; 3 category group, delivery, staff security and DDaT role levels |
 | Technical architecture, support model | Data location, integrations, support channels and hours, AI chatbot |
 | Pricing approach | The lot's pricing model (1a/1b price formula, 2a/2b discount bands, Lot 3 day rates) |
 | Compliance, go-to-market, risks, action plan | Certifications by lot, search keywords, competitor search, pre-submission tasks |
@@ -86,6 +86,9 @@ The design records the lot on a `**G-Cloud Lot**: Lot <code> — <name>` line. A
 - Features and benefits are buyer-focused, evidence-backed and within 10 words each.
 - The selected lot matches the service model; anything sold both as software and as support is two
   services.
+- Every category sits under one category group (`Root > Group`): no live G-Cloud 15 listing has
+  categories in two groups, so an offer that spans groups (migration and managed cloud, say) is one
+  service per group.
 - Anything unconfirmed is `[PENDING]`, not invented: every later document reuses this one.
 
 ---

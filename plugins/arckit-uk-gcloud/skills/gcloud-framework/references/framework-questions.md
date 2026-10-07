@@ -60,6 +60,7 @@ G-Cloud 15 replaces G-Cloud 14 Lots 1–3, G-Cloud 14 Lot 4 and Cloud Compute 2.
 |-------|-------|--------|
 | Service name | 100 characters; the name only, no extra keywords | Character limit seen on listings (none longer than 100); keyword rule in the export |
 | Service description | 500 characters | Seen on listings (none longer than 500) |
+| Service categories | One root and one group per service: every category shares the first two levels of its path (`Root > Group`). A service spanning two groups is listed as two services | Seen on listings: none of the 42,893 has categories in more than one group. The export lists the categories with no rule |
 | Features | 10 maximum, 10 words each | Export |
 | Benefits | 10 maximum, 10 words each | Export |
 | System requirements (1a/1b, 2a/2b) | 10 words each | Export |

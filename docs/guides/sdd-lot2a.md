@@ -55,7 +55,7 @@ For applications (SaaS) use `/arckit:sdd-lot2b`.
 
 | Section | Purpose |
 |---------|---------|
-| Service attributes, name, about, categories | Lot label, name, description, full-path categories from the Lot 2a tree, and multi cloud support |
+| Service attributes, name, about, categories | Lot label, name, description, full-path categories from the Lot 2a tree, all in one category group (`Root > Group`), and multi cloud support |
 | Features and benefits, scope, reselling | Features, benefits, whether it is an add-on, deployment model, constraints, system requirements and supplier type |
 | User support, interfaces, onboarding | Support channels and levels (including AI chatbot), browsers, apps, API, accessibility |
 | Data import and export, analytics, scaling | Data formats, metrics, FOCUS resource tagging, scaling |

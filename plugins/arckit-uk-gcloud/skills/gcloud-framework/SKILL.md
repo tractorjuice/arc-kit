@@ -38,6 +38,7 @@ Activate when users ask about:
 |-------|-------|
 | Service name | 100 characters, name only |
 | Service description | 500 characters |
+| Service categories | One root and one group (`Root > Group`) per service; split a service that spans groups |
 | Features / benefits | 10 each, 10 words each |
 | System requirements | 10 words each |
 | Quality Cloud Services (1a/1b) | 500 words (2 parts, 250 each) |

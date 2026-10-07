@@ -56,7 +56,7 @@ own command.
 
 | Section | Purpose |
 |---------|---------|
-| Service attributes, name, about, categories | Lot label, name, description and full-path categories from the Lot 1a tree |
+| Service attributes, name, about, categories | Lot label, name, description and full-path categories from the Lot 1a tree, all in one category group (`Root > Group`) |
 | Features and benefits, scope, reselling | Features, benefits, deployment model, constraints, system requirements and supplier type |
 | User support, interfaces, onboarding | Support channels and levels (including AI chatbot), web interface, API, CLI, accessibility |
 | Backups, analytics, scaling | Backup and recovery, metrics, FOCUS resource tagging, scaling |

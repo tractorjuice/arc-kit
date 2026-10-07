@@ -216,6 +216,11 @@ the relevant `ARC-` document ID so the user can locate it.
 - [ ] Service categories come from the lot's category roots: 1a/1b IaaS, PaaS; 2a Systems
   Infrastructure Software, Application Development and Deployment; 2b Applications, Application
   Development and Deployment; 3 Cloud Support Services
+- [ ] Every category sits under **one root and one group**: the first two levels of each full path
+  (`Root > Group`) are the same, and match the SDD's **Category group** line. None of the 42,893
+  live G-Cloud 15 listings scraped on 7 October 2026 has categories in two groups. A service whose
+  categories span groups is a blocking finding: choose the group for this listing and design the
+  others as separate services with `/arckit:service-design`
 
 **SDD mandatory fields** (`ARC-{PROJECT_ID}-SDD`): every question in the lot's
 `g-cloud-15/lot-{LOT}-services.md` has an answer. In particular:

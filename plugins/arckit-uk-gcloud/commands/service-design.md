@@ -216,7 +216,12 @@ Anything else unconfirmed is written as `[PENDING]`.
 - Service description: at most 500 characters, a summary of what the service is for
 - Target buyer segments (central government, local government, NHS, education, police, defence,
   devolved administrations)
-- A first pass at categories from the lot's tree. Read only the lot's section of
+- A first pass at categories from the lot's tree, **all under one root and one group** (the first
+  two levels of the path, such as `Cloud Support Services > Managed Cloud`). None of the 42,893 live
+  G-Cloud 15 listings scraped on 7 October 2026 has categories in two groups, although GCA's
+  question export states no rule. If the offer spans groups, ask the user with **AskUserQuestion**
+  which group this service is listed under, and design each other group as its own service (run this
+  command again for each). Read only the lot's section of
   `${CLAUDE_PLUGIN_ROOT}/skills/gcloud-framework/references/g-cloud-15/categories.md`:
 
   ```bash
@@ -258,7 +263,7 @@ Sole Control of the Infrastructure.
   sandbox, customisation; data import and export formats; public sector networks (PSN, PNN, JANET,
   SWAN, HSCN); Software Security Code of Practice compliance; usage metrics and FOCUS resource
   tagging.
-- **Lot 3:** which category groups the service covers; remote or on-site delivery; platforms
+- **Lot 3:** the one category group the service sits in; remote or on-site delivery; platforms
   supported; staff screening (to BS7858:2019 or not) and the highest clearance offered; the **role
   levels** the service needs, named exactly as in
   `${CLAUDE_PLUGIN_ROOT}/skills/ddat-rate-card/references/lot-3-rate-card.md` (rates are set later
@@ -318,6 +323,8 @@ Fill it in:
   Details to the matching SDD command: `/arckit:sdd-lot1a`, `/arckit:sdd-lot1b`, `/arckit:sdd-lot2a`, `/arckit:sdd-lot2b` or `/arckit:sdd-lot3`.
 - **1.3 Lot:** tick the lot and write the justification, including why the nearest alternative lot
   doesn't fit.
+- **1.4 Service categories:** the one category group on its **Category group** line, and only
+  categories under it.
 - **Section 6:** keep only the lot's subsection.
 - **Counters:** fill in the name and description character counts and each feature's and benefit's
   word count.
@@ -389,7 +396,8 @@ Print only a short summary, reporting what the document contains:
 
 ### Lot and Categories
 - Why this lot: [one line]
-- Categories (first pass): [full paths]
+- Category group: [Root > Group]; categories (first pass): [full paths]
+- Other groups the offer spans, to design as separate services: [groups, or "None"]
 - Supplier type: [option]
 
 ### Target Buyers

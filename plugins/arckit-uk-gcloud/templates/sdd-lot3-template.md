@@ -81,7 +81,10 @@ This document holds the answers to every Lot 3 service question and the service'
 
 **3.2 Service categories** — Which categories does your service fit under? *(tick all that apply)*
 
-<!-- Choose only from the Lot 3 tree in `g-cloud-15/categories.md`. Root: Cloud Support Services, with groups Cloud Migration Planning, Set Up and Migration, Managed Cloud, Cloud Financial Management Services, Security Services, Quality Assurance and Performance Testing, Training and Ongoing Support. Several categories share a name (‘Other’, ‘Application management’), so write each as its full path, for example `Cloud Support Services > Managed Cloud > Managed Public cloud > Managed Public IaaS`. -->
+<!-- Choose only from the Lot 3 tree in `g-cloud-15/categories.md`. Root: Cloud Support Services, with groups Cloud Migration Planning, Set Up and Migration, Managed Cloud, Cloud Financial Management Services, Security Services, Quality Assurance and Performance Testing, Training and Ongoing Support. Several categories share a name (‘Other’, ‘Application management’), so write each as its full path, for example `Cloud Support Services > Managed Cloud > Managed Public cloud > Managed Public IaaS`.
+     One group per service: every category ticked sits under the same group (`Cloud Support Services > Managed Cloud`, for example). None of the 42,893 live G-Cloud 15 listings scraped on 7 October 2026 has categories in more than one group, although GCA's question export states no rule. A service that spans two groups, such as migration followed by managed cloud, is listed as two services. -->
+
+**Category group (one per service):** [ROOT > GROUP]
 
 | # | Category (full path, as in the lot's tree) |
 |---|---|

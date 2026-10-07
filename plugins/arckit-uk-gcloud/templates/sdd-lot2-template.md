@@ -79,7 +79,10 @@ This document holds the answers to every Lot 2a/2b service question, ready to en
 
 **3.2 Service categories** — Which categories does your service fit under? *(tick all that apply)*
 
-<!-- Choose only from your lot's tree in `g-cloud-15/categories.md`. Lot 2a (iSaaS) roots: Systems Infrastructure Software, Application Development and Deployment. Lot 2b (SaaS) roots: Applications, Application Development and Deployment. The two lots' trees differ even under the shared root, so never take a category from the other lot. Write each category as its full path, for example `Applications > Collaborative > Team collaboration > Team collaboration`. -->
+<!-- Choose only from your lot's tree in `g-cloud-15/categories.md`. Lot 2a (iSaaS) roots: Systems Infrastructure Software, Application Development and Deployment. Lot 2b (SaaS) roots: Applications, Application Development and Deployment. The two lots' trees differ even under the shared root, so never take a category from the other lot. Write each category as its full path, for example `Applications > Collaborative > Team collaboration > Team collaboration`.
+     One root and one group per service: every category ticked shares the same first two levels of its path (`Root > Group`, for example `Applications > Collaborative`). None of the 42,893 live G-Cloud 15 listings scraped on 7 October 2026 has categories in more than one group, although GCA's question export states no rule. A service that spans two groups is listed as two services. -->
+
+**Category group (one per service):** [ROOT > GROUP]
 
 | # | Category (full path, as in the lot's tree) |
 |---|---|

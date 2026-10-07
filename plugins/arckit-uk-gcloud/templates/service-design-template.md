@@ -58,10 +58,13 @@
 
 **Justification:** [WHY THIS LOT, AND WHY NOT THE NEAREST ALTERNATIVE]
 
-<!-- A service sits in one lot. Something sold both as software and as support (for example a SaaS product plus implementation days) becomes two services, each with its own design. -->
+<!-- A service sits in one lot, and in one category group within it (1.4). Something sold both as software and as support (for example a SaaS product plus implementation days) becomes two services, each with its own design; so does a support offer that spans two groups, such as migration and managed cloud. -->
 
 ### 1.4 Service Categories (first pass)
-<!-- From this lot's tree in the overlay's skills/gcloud-framework/references/g-cloud-15/categories.md, written as full paths. The SDD command confirms them. -->
+<!-- From this lot's tree in the overlay's skills/gcloud-framework/references/g-cloud-15/categories.md, written as full paths. The SDD command confirms them.
+     One root and one group per service: every category shares the same first two levels of its path (`Root > Group`). None of the 42,893 live G-Cloud 15 listings scraped on 7 October 2026 has categories in more than one group, although GCA's question export states no rule. If the offer spans groups, choose the group this service is listed under and design the rest as separate services. -->
+
+**Category group (one per service):** [ROOT > GROUP]
 
 | # | Category (full path) | Why it fits |
 |---|----------------------|-------------|
@@ -201,7 +204,7 @@
 
 | Question | Answer |
 |----------|--------|
-| Category groups (Cloud Migration Planning, Set Up and Migration, Managed Cloud, Cloud Financial Management Services, Security Services, Quality Assurance and Performance Testing, Training, Ongoing Support) | [GROUPS] |
+| Category group, one per service (Cloud Migration Planning, Set Up and Migration, Managed Cloud, Cloud Financial Management Services, Security Services, Quality Assurance and Performance Testing, Training, Ongoing Support); the same group as 1.4 | [GROUP] |
 | Delivery: remote, on site, or both (a constraint buyers should know about) | [DETAIL] |
 | Platforms and technologies supported | [DETAIL] |
 | Staff screening (to BS7858:2019 / not to BS7858:2019 / not performed) | [ANSWER] |
