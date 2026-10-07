@@ -48,7 +48,7 @@ $ARGUMENTS
 The supplier profile is supplier-wide and feeds every service design. Find the latest version:
 
 ```bash
-ls projects/000-global/supplier/ARC-000-SUPP-v*.md 2>/dev/null
+find projects/000-global/supplier -maxdepth 1 -name 'ARC-000-SUPP-v*.md' 2>/dev/null | sort -V
 ```
 
 - **If it exists**, use the **Read tool** on the highest version for company details,
@@ -92,14 +92,37 @@ citation markers (e.g. `[WEB-1-C1]`) next to each fact informed by a source, and
 WebSearch alone (search without fetch) is exploratory and is not cited — only cite a URL once it has
 actually been fetched.
 
-### 3. Create (or locate) the service project
+### 3. Find or create the service project
 
-Settle on a short service name first: take it from `$ARGUMENTS`, or from the research above if the
-input was a URL or a description. If there is still no name, ask for one (Step 5's question call).
-Never create a project from an empty name.
+**Look for an existing service first.** A re-run often uses a different name from the first run
+("Case Management Platform" after "Case Mgmt"), and the project helper always allocates a new
+number, so creating straight away would leave two projects for one service. List the projects as
+JSON:
 
-Each service is its own numbered project. Run the ArcKit project helper, passing the service name,
-and request JSON output:
+```bash
+bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" --json
+```
+
+From the `projects[]` array (each entry has `name`, `number` and `path`), check whether `$ARGUMENTS`
+names a service project by number (`004`), by name or name fragment, or by path
+(`projects/004-secure-case-mgmt`):
+
+- **One project matches:** this is a re-run. Use that project, even if the service now has another
+  name (change the name inside the document, not the directory). If the input was only part of a
+  name and could be a new service ("case" when `004-secure-case-mgmt` exists), confirm with
+  **AskUserQuestion** first.
+- **Several match:** ask the user which one they mean.
+- **None match:** if a listed project looks like this offer under another name, ask with
+  **AskUserQuestion** whether to update that project or create a new one. Otherwise create a new one.
+
+On a re-run, set `PROJECT_ID` to the project's `number` and use its `path` as the destination. Read
+its existing `ARC-{PROJECT_ID}-SVCD-v*.md` and update it rather than starting over: keep confirmed
+answers, increment the version and add a Revision History row saying what changed.
+
+**To create one,** settle on a short service name: take it from `$ARGUMENTS`, or from the research
+above if the input was a URL or a description. If there is still no name, ask for one (Step 5's
+question call). Never create a project from an empty name. Each service is its own numbered project.
+Run the ArcKit project helper, passing the service name, and request JSON output:
 
 ```bash
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" --name "<service name>" --json
@@ -110,10 +133,7 @@ From the JSON response, extract:
 - `project_dir` — the service project directory (e.g. `projects/004-secure-case-mgmt`)
 - `project_number` — the zero-padded project number (e.g. `004`)
 
-Use `project_number` as `PROJECT_ID` and `project_dir` as the destination. If the user is re-running
-for a service that already has a project, use that existing project directory instead of creating a
-duplicate, read its existing `ARC-{PROJECT_ID}-SVCD-v*.md`, and update it rather than starting over:
-keep confirmed answers, increment the version and add a Revision History row saying what changed.
+Use `project_number` as `PROJECT_ID` and `project_dir` as the destination.
 
 ### 4. Select the lot
 
@@ -338,7 +358,7 @@ Check which supplier-wide documents exist, so the next steps list only what is m
 
 ```bash
 for t in SOCV LOTQ DECL; do
-    ls projects/000-global/supplier/ARC-000-$t-v*.md 2>/dev/null || echo "MISSING: $t"
+    find projects/000-global/supplier -maxdepth 1 -name "ARC-000-$t-v*.md" 2>/dev/null | grep . || echo "MISSING: $t"
 done
 ```
 

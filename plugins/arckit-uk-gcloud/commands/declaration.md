@@ -62,7 +62,10 @@ Find the lots bid for from the service designs too: list the service projects an
 
 ```bash
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" --json
-grep -H -m1 '^\*\*G-Cloud Lot\*\*' projects/[0-9][0-9][0-9]-*/ARC-*-SVCD-v*.md 2>/dev/null
+# Each service design and its lot line. find, not a bare glob: zsh aborts a glob that matches nothing
+find projects -mindepth 2 -maxdepth 2 -name 'ARC-*-SVCD-v*.md' 2>/dev/null | sort -V | while IFS= read -r f; do
+    printf '%s\t%s\n' "$f" "$(grep -m1 '^\*\*G-Cloud Lot\*\*' "$f")"
+done
 ```
 
 **Citation traceability**: When you draw facts from the supplier profile, from documents the user

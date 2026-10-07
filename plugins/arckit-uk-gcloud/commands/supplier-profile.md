@@ -40,7 +40,7 @@ directory if it does not already exist:
 
 ```bash
 mkdir -p projects/000-global/supplier
-ls projects/000-global/supplier/ARC-000-SUPP-v*.md 2>/dev/null
+find projects/000-global/supplier -maxdepth 1 -name 'ARC-000-SUPP-v*.md' 2>/dev/null | sort -V
 ```
 
 ### 2. Check for an existing profile

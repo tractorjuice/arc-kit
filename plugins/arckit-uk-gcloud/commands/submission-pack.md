@@ -65,17 +65,21 @@ bid documents live under `projects/000-global/supplier/`:
 ```bash
 PROJECT_PATH="{path}"   # e.g. projects/004-secure-case-mgmt
 SUPPLIER=projects/000-global/supplier
+# Latest version of a document, or nothing. find never aborts when nothing matches, as a bare
+# glob does under zsh ("no matches found")
+latest() { find "$1" -maxdepth 1 -name "$2" 2>/dev/null | sort -V | tail -1; }
 echo "=== Supplier-wide (once per bid, shared by every service) ==="
-ls "$SUPPLIER"/ARC-000-SUPP-v*.md 2>/dev/null && echo "✅ Supplier Profile"     || echo "❌ Supplier Profile MISSING"
-ls "$SUPPLIER"/ARC-000-SOCV-v*.md 2>/dev/null && echo "✅ Social Value"         || echo "❌ Social Value MISSING"
-ls "$SUPPLIER"/ARC-000-LOTQ-v*.md 2>/dev/null && echo "✅ Lot Questions"        || echo "❌ Lot Questions MISSING"
-ls "$SUPPLIER"/ARC-000-DECL-v*.md 2>/dev/null && echo "✅ Supplier Declaration" || echo "❌ Supplier Declaration MISSING"
+[ -n "$(latest "$SUPPLIER" 'ARC-000-SUPP-v*.md')" ] && echo "✅ Supplier Profile"     || echo "❌ Supplier Profile MISSING"
+[ -n "$(latest "$SUPPLIER" 'ARC-000-SOCV-v*.md')" ] && echo "✅ Social Value"         || echo "❌ Social Value MISSING"
+[ -n "$(latest "$SUPPLIER" 'ARC-000-LOTQ-v*.md')" ] && echo "✅ Lot Questions"        || echo "❌ Lot Questions MISSING"
+[ -n "$(latest "$SUPPLIER" 'ARC-000-DECL-v*.md')" ] && echo "✅ Supplier Declaration" || echo "❌ Supplier Declaration MISSING"
 echo "=== Per-service ==="
-ls "$PROJECT_PATH"/ARC-*-SVCD-v*.md 2>/dev/null && echo "✅ Service Design" || echo "❌ Service Design MISSING"
-ls "$PROJECT_PATH"/ARC-*-SDD-v*.md  2>/dev/null && echo "✅ SDD"            || echo "❌ SDD MISSING"
-ls "$PROJECT_PATH"/ARC-*-PRIC-v*.md 2>/dev/null && echo "✅ Pricing"        || echo "❌ Pricing MISSING"
-ls "$PROJECT_PATH"/ARC-*-SECA-v*.md 2>/dev/null && echo "✅ Security"       || echo "❌ Security MISSING"
-grep -h -m1 '^\*\*G-Cloud Lot\*\*' "$PROJECT_PATH"/ARC-*-SVCD-v*.md 2>/dev/null || echo "❌ Lot not recorded in the service design"
+[ -n "$(latest "$PROJECT_PATH" 'ARC-*-SVCD-v*.md')" ] && echo "✅ Service Design" || echo "❌ Service Design MISSING"
+[ -n "$(latest "$PROJECT_PATH" 'ARC-*-SDD-v*.md')" ]  && echo "✅ SDD"            || echo "❌ SDD MISSING"
+[ -n "$(latest "$PROJECT_PATH" 'ARC-*-PRIC-v*.md')" ] && echo "✅ Pricing"        || echo "❌ Pricing MISSING"
+[ -n "$(latest "$PROJECT_PATH" 'ARC-*-SECA-v*.md')" ] && echo "✅ Security"       || echo "❌ Security MISSING"
+SVCD=$(latest "$PROJECT_PATH" 'ARC-*-SVCD-v*.md')
+{ [ -n "$SVCD" ] && grep -m1 '^\*\*G-Cloud Lot\*\*' "$SVCD"; } || echo "❌ Lot not recorded in the service design"
 ```
 
 **Find the lot** from the service design's `**G-Cloud Lot**: Lot <code> — <name>` line: `1a`, `1b`,
@@ -126,13 +130,13 @@ mkdir -p "$SUBMISSION_DIR/evidence"
 
 # Per-service artefacts (latest version of each)
 for type in SVCD SDD PRIC SECA GCRV; do
-  f=$(ls "$PROJECT_PATH"/ARC-*-"$type"-v*.md 2>/dev/null | sort -V | tail -1)
+  f=$(find "$PROJECT_PATH" -maxdepth 1 -name "ARC-*-$type-v*.md" 2>/dev/null | sort -V | tail -1)
   [ -n "$f" ] && cp "$f" "$SUBMISSION_DIR/"
 done
 
 # Supplier-wide bid documents (latest version of each)
 for type in SUPP SOCV LOTQ DECL; do
-  f=$(ls projects/000-global/supplier/ARC-000-"$type"-v*.md 2>/dev/null | sort -V | tail -1)
+  f=$(find projects/000-global/supplier -maxdepth 1 -name "ARC-000-$type-v*.md" 2>/dev/null | sort -V | tail -1)
   [ -n "$f" ] && cp "$f" "$SUBMISSION_DIR/"
 done
 

@@ -24,6 +24,10 @@ projects/<NNN>-<service-name>/ARC-<NNN>-SVCD-v1.0.md
 
 Naming the lot in the arguments (for example `2b` or `SaaS`) skips the lot question.
 
+A re-run updates the existing service project rather than creating a second one. The command looks
+the service up by project number, name or path (`projects/004-secure-case-mgmt`) before it creates
+anything, and asks when an existing project looks like the same offer under another name.
+
 ---
 
 ## When to Use
