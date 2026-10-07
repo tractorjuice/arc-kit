@@ -169,9 +169,10 @@ The template is shared by Lots 1a and 1b.
 Fill in the template for Lot 1b:
 
 - **Header and G-Cloud Details:** set `**G-Cloud Lot**: Lot 1b — IaaS and PaaS above OFFICIAL`; in
-  the G-Cloud Details table set the Lot row to `1b — IaaS and PaaS above OFFICIAL`, the classification
-  row to the highest classification handled, and the SDD command to `/arckit:sdd-lot1b`. Keep the
-  "Lot 1b differs" subsection.
+  the G-Cloud Details table set the Lot row to `1b — IaaS and PaaS above OFFICIAL`, the
+  classification row to the highest classification handled, the SDD command to `/arckit:sdd-lot1b`,
+  and the Listing contact row to the supplier profile's Listing Contact (name, email and phone), or
+  `[PENDING]`. Keep the "Lot 1b differs" subsection.
 - **1.1 Service type:** `Lot 1b: IaaS and PaaS above OFFICIAL`.
 - **Every question:** answer each one under its number, ticking the template's options exactly as
   worded: the live listings' wording, with the Digital Platform's in a comment where it differs

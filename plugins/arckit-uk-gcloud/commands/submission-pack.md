@@ -19,8 +19,9 @@ pre-submission checklist for the service's lot, and the order of work for submit
 In this overlay **each G-Cloud service is its own ArcKit project** — `projects/{NNN}-service-name/`.
 This command does **not** create a new project and **does not** create an ArcKit document. It is an
 **export action**: it copies existing artefacts into a `submission/` folder inside the service
-project and writes `submission/manifest.md` and `submission/answers-export.md`. The bundle output
-itself gets **no ArcKit doc-type and no `ARC-…-` ID**.
+project and writes `submission/manifest.md` and `submission/answers-export.md`, plus the
+supplier-level answers once per bid in `projects/000-global/supplier/submission/bid-answers.md`. The
+bundle output itself gets **no ArcKit doc-type and no `ARC-…-` ID**.
 
 ## User Input
 
@@ -255,29 +256,52 @@ Certificate) under the project's `external/`, `vendors/`, or `evidence/` directo
 security document or lot questions reference, copy them into `submission/evidence/` and list them in
 the manifest.
 
-### 5. Write the answers export
+### 5. Write the answers
 
-Use the **Write tool** to write `{path}/submission/answers-export.md`: every answer ready to copy
-into GCA's Digital Platform, in the order GCA asks them. Copy answers verbatim from the documents;
-never rewrite or invent one. Keep every `[PENDING]` visible.
+The supplier declaration, social value and lot questions are entered once per bid, not per service,
+so they go in one supplier-level file, never in each service's export.
 
-1. **Supplier declaration** (once per bid) from `ARC-000-DECL`, with the social value sections (A
-   understanding, B commitment, C organisational readiness, operational readiness, the Social Value
-   Contact) taken from `ARC-000-SOCV`.
-2. **Lot questions** (once per lot group) from the LOTQ Part for this lot group. For Lots 1a/1b, give
+**Bid answers (supplier level, once per bid).** Check whether they are current:
+
+```bash
+BID=projects/000-global/supplier/submission/bid-answers.md
+mkdir -p projects/000-global/supplier/submission
+# Rewrite bid-answers.md if any supplier-level document is newer than it
+if [ -f "$BID" ]; then
+    find projects/000-global/supplier -maxdepth 1 -name 'ARC-000-*.md' -newer "$BID" 2>/dev/null | sort
+else
+    echo "NO BID ANSWERS YET: $BID"
+fi
+```
+
+Write `bid-answers.md` with the **Write tool** if it doesn't exist; rewrite it if a supplier-level
+document is newer than it, or this service's lot group has no section in it yet. Otherwise leave it
+and say it is current. It holds, in the order GCA asks them, copied verbatim with every `[PENDING]`
+kept visible:
+
+1. **Supplier declaration** from `ARC-000-DECL`, with the social value sections (A understanding, B
+   commitment, C organisational readiness, operational readiness, the Social Value Contact) taken
+   from `ARC-000-SOCV`.
+2. **Lot questions** from each LOTQ Part bid for, one section per lot group. For Lots 1a/1b, give
    each scored answer with its word count against its limit (250 words for each part of Quality
    Cloud Services and Maximising Buyer Value, and for the exit procedure and change of service), as
    plain text with no attachments.
-3. **Service questions** from `ARC-{PROJECT_ID}-SDD`, in the order of the lot's service questions,
-   organised by question section.
-4. **Pricing** from `ARC-{PROJECT_ID}-PRIC`, by the lot's pricing model: the 1a/1b price formula
-   components and baseline pricing link (1b prices go on the separate non-public platform) or the
-   2a/2b discount % for each annual call-off value band. For Lot 3, the maximum day rate, UK and
-   offshore, for each role level comes from the supplier's one rate card, `ARC-000-RATE`: it is
-   entered once and shows on every Lot 3 listing.
+3. **Lot 3 rate card**, if the supplier bids for Lot 3: the maximum day rate, UK and offshore, for
+   each role level on `ARC-000-RATE`. It is entered once and shows on every Lot 3 listing.
 
-If the supplier is bidding with several services in the same lot group, say that the declaration,
-social value and lot questions are shared and only need entering once.
+**Service answers.** Use the **Write tool** to write `{path}/submission/answers-export.md`: this
+service's answers, ready to copy into GCA's Digital Platform in the order GCA asks them. It starts
+with one line pointing to `projects/000-global/supplier/submission/bid-answers.md` for the
+supplier-level answers, and holds only:
+
+1. **Service questions** from `ARC-{PROJECT_ID}-SDD`, in the order of the lot's service questions,
+   organised by question section.
+2. **Pricing** from `ARC-{PROJECT_ID}-PRIC`, by the lot's pricing model: the 1a/1b price formula
+   components and baseline pricing link (1b prices go on the separate non-public platform) or the
+   2a/2b discount % for each annual call-off value band. For Lot 3, a line pointing to the rate card
+   in the bid answers.
+
+Copy answers verbatim from the documents; never rewrite or invent one.
 
 ### 6. Write the submission manifest
 
@@ -311,13 +335,14 @@ to the service's lot. Structure:
 | ARC-[PROJECT_ID]-PRIC-v[X.Y].md | ARC-[PROJECT_ID]-PRIC | Pricing |
 | ARC-[PROJECT_ID]-SECA-v[X.Y].md | ARC-[PROJECT_ID]-SECA | Security evidence |
 | ARC-[PROJECT_ID]-GCRV-v[X.Y].md | ARC-[PROJECT_ID]-GCRV | Submission review |
-| answers-export.md | — | Every answer, ready to copy, in GCA's order |
+| answers-export.md | — | This service's answers, ready to copy, in GCA's order |
+| `projects/000-global/supplier/submission/bid-answers.md` (not copied) | — | The supplier-level answers, shared by every service: declaration, social value, lot questions and the Lot 3 rate card |
 
 ## Documents to Upload
 Every document must be ODF or PDF/A, at most 5 MB, and accessible.
 - [ ] Service definition document (no prices in it)
 - [ ] Terms and conditions (one document per service)
-- [ ] Pricing document
+- [ ] Pricing document (Lots 1a/1b and 2a/2b; optional on Lot 3, where the rate card carries the prices and 71% of the 27,496 live Lot 3 listings have one)
 - [ ] Technical Ability Certificate (all lots)
 - [ ] Certificates claimed (Lots 1a/1b: Cyber Essentials Plus, ISO 9001, 27001, 20000-1, Carbon Reduction Plan, ISO 27018 with public cloud; Lots 2a/2b and 3: Cyber Essentials)
 - [ ] Penetration test executive summary (on request)
@@ -386,8 +411,8 @@ The order of work, not a screen-by-screen script. GCA's Attachment 2 (How to ten
 
 1. **Register on the Central Digital Platform:** create or update your organisation, note your 12-character PPON, complete your core supplier information including the exclusion grounds, and get share codes for any consortium members and associated persons.
 2. **Start the G-Cloud 15 application:** sign in to your Digital Marketplace supplier account and start the RM1557.15 application while G-Cloud 15 is open to new suppliers (framework details: <https://www.gca.gov.uk/agreements/RM1557.15>).
-3. **Complete the supplier declaration:** copy the supplier-level answers from `answers-export.md`. Answer the third-party agent or bid writer question yourself.
-4. **Answer the lot questions:** for each lot group you bid for, copy the answers into GCA's Digital Platform. For Lots 1a/1b, paste the scored answers as plain text within their word limits; attachments are not accepted.
+3. **Complete the supplier declaration:** copy the supplier-level answers from `projects/000-global/supplier/submission/bid-answers.md`, once for the whole bid. Answer the third-party agent or bid writer question yourself.
+4. **Answer the lot questions:** for each lot group you bid for, copy the answers from `bid-answers.md` into GCA's Digital Platform, once per lot group. For Lots 1a/1b, paste the scored answers as plain text within their word limits; attachments are not accepted.
 5. **Add the service:** select Lot [code] and enter the exact service name from the SDD.
 6. **Complete the service questions:** copy each answer from `answers-export.md`, section by section.
 7. **Enter pricing:** [Lot 1a/1b: the price formula components and baseline pricing link; 1b prices go on the separate non-public platform / Lot 2a/2b: the discount % for each annual call-off value band / Lot 3: the maximum day rate for each role level, UK and offshore, from `ARC-000-RATE`; the card is entered once and shows on every Lot 3 listing].
@@ -414,7 +439,8 @@ Print only a short summary (not the manifest contents):
 
 ### Pack Contents
 - [N] documents copied (supplier profile, social value, lot questions, declaration, SVCD, SDD, pricing, security, review)
-- `answers-export.md` — every answer, ready to copy, in GCA's order
+- `answers-export.md` — this service's answers, ready to copy, in GCA's order
+- `projects/000-global/supplier/submission/bid-answers.md` — the supplier-level answers, shared by every service: [written / refreshed / already current]
 - `manifest.md` — index, documents to upload, pre-submission checklist, submission steps
 
 ### Documents Still to Upload
@@ -428,7 +454,7 @@ Print only a short summary (not the manifest contents):
 
 ## Important Notes
 
-- This is an **export action** — it copies artefacts and writes an index and an answers export; it
+- This is an **export action** — it copies artefacts and writes an index and the answers exports; it
   creates **no** ArcKit doc-type and **no** `ARC-…-` ID for the bundle.
 - Run `/arckit:review` first; a pack built without a 🟢 READY review carries the warning.
 - This command never creates a project — if none is found, direct the user to

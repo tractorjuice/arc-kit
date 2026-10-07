@@ -23,6 +23,7 @@ projects/<NNN>-<service-name>/submission/
 projects/<NNN>-<service-name>/submission/manifest.md
 projects/<NNN>-<service-name>/submission/answers-export.md
 projects/<NNN>-<service-name>/submission/evidence/
+projects/000-global/supplier/submission/bid-answers.md   (once per bid, shared by every service)
 ```
 
 ---
@@ -55,13 +56,17 @@ projects/<NNN>-<service-name>/submission/evidence/
 
 ## Pack Contents
 
-- **`answers-export.md`:** the supplier declaration (with the social value sections), the lot
-  questions (1a/1b scored answers with word counts) and the service questions and pricing, in GCA's
-  order, ready to copy.
+- **`answers-export.md`:** this service's questions and pricing, in GCA's order, ready to copy, with
+  a pointer to the bid answers.
+- **`bid-answers.md`** (in `projects/000-global/supplier/submission/`, once per bid): the supplier
+  declaration (with the social value sections), the lot questions (1a/1b scored answers with word
+  counts) and the Lot 3 rate card. It is written once and refreshed only when a supplier-level
+  document changes, so the same answers aren't copied into every service's export.
 - **`manifest.md`:** the copied file list with source ARC IDs, the documents to upload (ODF or
   PDF/A, at most 5 MB, accessible; no prices in the service definition document; a Technical Ability
-  Certificate for every lot), a pre-submission checklist for the lot, and the order of work, starting
-  with Central Digital Platform registration and the PPON.
+  Certificate for every lot; a pricing document on Lots 1a/1b and 2a/2b, optional on Lot 3), a
+  pre-submission checklist for the lot, and the order of work, starting with Central Digital
+  Platform registration and the PPON.
 
 ---
 

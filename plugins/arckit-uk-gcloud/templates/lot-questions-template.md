@@ -418,7 +418,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 
 #### 1.4 How You Will Provide Data Sanitisation
 
-**Do you have an industry standard data sanitisation process?** — Do you have an industry standard data sanitisation process, such as explicit overwriting of storage before reallocation / Secure Erase, degaussing, or physical destruction / hardware containing data is completely destroyed?**
+**Do you have an industry standard data sanitisation process?** — Do you have an industry standard data sanitisation process, such as explicit overwriting of storage before reallocation / Secure Erase, degaussing, or physical destruction / hardware containing data is completely destroyed?
 
 | Option | Mark | Selected |
 |--------|------|----------|

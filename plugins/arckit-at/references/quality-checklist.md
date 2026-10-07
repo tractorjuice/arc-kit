@@ -1543,7 +1543,7 @@ All artifacts must pass these 10 checks:
 - Company details complete: registered name, company registration number, DUNS, VAT, registered address, trading name, website, year established
 - Central Digital Platform registration recorded: status, 12-character PPON in `XXXX-XXXX-XXXX` form and current share code, or `[PENDING]`
 - Ultimate and immediate parent companies recorded, or their absence stated
-- Contacts include the contract notice contact (generic email and address, no named individual), the five framework award form contacts and a Social Value Contact
+- Contacts include the listing contact shown on every service listing (name, email and phone), the contract notice contact (generic email and address, no named individual), the five framework award form contacts and a Social Value Contact
 - Every certification records status, certificate number, expiry and certification body — a named certification without a number or expiry is incomplete
 - The certifications each G-Cloud 15 lot bid for requires are identifiable: ISO 9001, 20000-1 and 27001 (plus 14001, 27017 and 27018 where applicable) for Lot 1a/1b bids; Cyber Essentials Plus for Lot 1a/1b call-offs and Cyber Essentials for Lot 2a, 2b and 3 call-offs
 - Security clearances recorded as staff counts per level (BPSS, CTC, SC, DV, eDV) with screening standard and clearance management process; BPSS not described as renewed annually

@@ -70,11 +70,11 @@ New G-Cloud 15 service questions: **post-quantum cryptography** ("Are you compli
 
 | Level | Typical Use | Timeline |
 |-------|-------------|----------|
-| BPSS | Standard government access | 1–2 weeks |
+| BPSS | Standard government access, including OFFICIAL-SENSITIVE (a handling caveat within OFFICIAL, not a higher classification) | 1–2 weeks |
 | CTC | Airport, defence | 6–8 weeks |
-| SC | OFFICIAL-SENSITIVE data | 6–8 weeks |
-| DV | SECRET classification | 6–12 months |
-| eDV | TOP SECRET classification | 12+ months |
+| SC | Regular access to SECRET, occasional TOP SECRET | 6–8 weeks |
+| DV | Regular access to TOP SECRET | 6–12 months |
+| eDV | TOP SECRET, enhanced | 12+ months |
 
 ## Quick Reference: Evidence to Provide
 

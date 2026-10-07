@@ -29,6 +29,7 @@
 | Lot | [1a — Infrastructure as a Service (IaaS) and Platform as a Service (PaaS) / 1b — IaaS and PaaS above OFFICIAL] |
 | Highest classification handled (Lot 1b only) | [SECRET / TOP SECRET / Not applicable (Lot 1a)] |
 | SDD command | [`/arckit:sdd-lot1a` / `/arckit:sdd-lot1b`] |
+| Listing contact (from the supplier profile; shown on the listing) | [NAME], [EMAIL], [PHONE] |
 
 <!-- The classification row is not a GCA question. It records why a Lot 1b service is in Lot 1b; leave it out of the uploaded document. -->
 

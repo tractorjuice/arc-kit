@@ -165,6 +165,8 @@ Default the Classification field to `${user_config.default_classification}` (fal
 Fill in the template:
 
 - **`**G-Cloud Lot**` line:** `Lot 3 — Cloud Support`.
+- **G-Cloud Details:** the Listing contact row from the supplier profile's Listing Contact (name, email
+  and phone), or `[PENDING]`.
 - **1.1 Service type:** `Lot 3: Cloud Support Service`.
 - **Every question:** answer each one under its number, ticking the template's options exactly as
   worded: the live listings' wording, with the Digital Platform's in a comment where it differs

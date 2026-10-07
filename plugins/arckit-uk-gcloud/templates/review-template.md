@@ -177,7 +177,7 @@ Claims in the pack that a buyer or GCA (formerly CCS) could ask you to substanti
 | Lot questions for the service's lot missing, unanswered or over their word limits | [✅ Clear / ⚠️ Risk] | [-] |
 | Certificate the bid needs not held (1a/1b: ISO 9001, 27001, 20000-1, Carbon Reduction Plan, ISO 27018 with public cloud) | [✅ Clear / ⚠️ Risk] | [-] |
 | Call-off warning: Cyber Essentials Plus (1a/1b) or Cyber Essentials (2a/2b, 3) not held. Mandatory for call-off contracts, not for the bid | [✅ Clear / ⚠️ Warning] | [Alternative chosen] |
-| Pricing document missing or unpublished | [✅ Clear / ⚠️ Risk] | [-] |
+| Pricing document missing (Lots 1a/1b and 2a/2b; optional on Lot 3, where the rate card carries the prices and 71% of the 27,496 live listings have one) | [✅ Clear / ⚠️ Risk] | [-] |
 | Forbidden pricing ("price on application", "from £x", unexplained ranges) or prices in the service definition document | [✅ Clear / ⚠️ Risk] | [-] |
 | Lot 3: the supplier rate card (`ARC-000-RATE`) missing, a rate below £50, or a role level this service needs not on it | [✅ Clear / ⚠️ Risk] | [-] |
 | Mandatory declaration question unanswered or `[PENDING]` | [✅ Clear / ⚠️ Risk] | [-] |

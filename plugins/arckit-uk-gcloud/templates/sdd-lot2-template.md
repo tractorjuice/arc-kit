@@ -28,6 +28,7 @@
 | Framework | G-Cloud 15 (RM1557.15) |
 | Lot | [2a — Infrastructure Software as a Service (iSaaS) / 2b — Software as a Service (SaaS)] |
 | SDD command | [`/arckit:sdd-lot2a` / `/arckit:sdd-lot2b`] |
+| Listing contact (from the supplier profile; shown on the listing) | [NAME], [EMAIL], [PHONE] |
 
 ## How to Use This Document
 

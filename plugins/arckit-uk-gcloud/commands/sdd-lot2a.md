@@ -160,9 +160,11 @@ The template is shared by Lots 2a and 2b.
 
 Fill in the template for Lot 2a:
 
-- **Header and G-Cloud Details:** set `**G-Cloud Lot**: Lot 2a — Infrastructure Software as a
-  Service (iSaaS)`; in the G-Cloud Details table set the Lot row to
-  `2a — Infrastructure Software as a Service (iSaaS)` and the SDD command to `/arckit:sdd-lot2a`.
+- **Header and G-Cloud Details:** set
+  `**G-Cloud Lot**: Lot 2a — Infrastructure Software as a Service (iSaaS)`; in the G-Cloud Details
+  table set the Lot row to `2a — Infrastructure Software as a Service (iSaaS)`, the SDD command to
+  `/arckit:sdd-lot2a` and the Listing contact row to the supplier profile's Listing Contact (name,
+  email and phone), or `[PENDING]`.
 - **1.1 Service type:** `Lot 2a: Infrastructure Software as a Service (iSaaS)`.
 - **Every question:** answer each one under its number, ticking the template's options exactly as
   worded: the live listings' wording, with the Digital Platform's in a comment where it differs

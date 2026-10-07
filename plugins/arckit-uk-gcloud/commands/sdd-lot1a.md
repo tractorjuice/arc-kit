@@ -153,11 +153,13 @@ The template is shared by Lots 1a and 1b.
 
 Fill in the template for Lot 1a:
 
-- **Header and G-Cloud Details:** set `**G-Cloud Lot**: Lot 1a — Infrastructure as a Service (IaaS)
-  and Platform as a Service (PaaS)`; in the G-Cloud Details table set the Lot row to
-  `1a — Infrastructure as a Service (IaaS) and Platform as a Service (PaaS)`, the classification row to
-  `Not applicable (Lot 1a)` and the SDD command to `/arckit:sdd-lot1a`. Remove the "Lot 1b differs"
-  subsection and the Lot 1b note at 19.2: they don't apply.
+- **Header and G-Cloud Details:** set
+  `**G-Cloud Lot**: Lot 1a — Infrastructure as a Service (IaaS) and Platform as a Service (PaaS)`;
+  in the G-Cloud Details table set the Lot row to
+  `1a — Infrastructure as a Service (IaaS) and Platform as a Service (PaaS)`, the classification row
+  to `Not applicable (Lot 1a)`, the SDD command to `/arckit:sdd-lot1a`, and the Listing contact row
+  to the supplier profile's Listing Contact (name, email and phone), or `[PENDING]`. Remove the "Lot
+  1b differs" subsection and the Lot 1b note at 19.2: they don't apply.
 - **1.1 Service type:** `Lot 1a: Infrastructure as a Service (IaaS) and Platform as a Service (PaaS)`.
 - **Every question:** answer each one under its number, ticking the template's options exactly as
   worded: the live listings' wording, with the Digital Platform's in a comment where it differs

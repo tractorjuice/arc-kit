@@ -27,6 +27,7 @@
 | Framework | G-Cloud 15 (RM1557.15) |
 | Lot | 3 — Cloud Support |
 | Question source | GCA question export `RM1557.15-G-Cloud-question-export.xlsx`, sheet ‘Services cloud support’ |
+| Listing contact (from the supplier profile; shown on the listing) | [NAME], [EMAIL], [PHONE] |
 
 ---
 
@@ -287,7 +288,7 @@ This document holds the answers to every Lot 3 service question, ready to enter 
 
 **File:** [FILE NAME] — ODF or PDF/A, [X] MB of 5 MB, accessibility checked: [YES/PENDING]
 
-**10.3 Pricing document** — Add your pricing document
+**10.3 Pricing document** — Add your pricing document *(optional on Lot 3: the rate card carries the prices, and 71% of the 27,496 live Lot 3 listings have one)*
 <!-- GCA guidance: This document will not be indexed by search on the Digital Marketplace. Your document should: be an Open Document Format (ODF) or PDF/A; have a maximum file size of 5MB; meet accessibility standards. -->
 
 **File:** [FILE NAME] — ODF or PDF/A, [X] MB of 5 MB, accessibility checked: [YES/PENDING]

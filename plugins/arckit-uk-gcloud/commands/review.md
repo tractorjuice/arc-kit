@@ -515,7 +515,8 @@ These are the same reasons listed in section 8 of the review template:
   this service needs not on it
 - [ ] Documents not planned as ODF or PDF/A, at most 5 MB and accessible; more than one terms and
   conditions document per service
-- [ ] Invalid URLs or contact details
+- [ ] Invalid URLs or contact details: the listing contact (name, email and phone, which every live
+  listing shows) is in the supplier profile's Listing Contact and the SDD's G-Cloud Details
 
 ### 4. Determine the output filename
 

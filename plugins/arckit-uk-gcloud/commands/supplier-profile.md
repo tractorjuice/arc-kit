@@ -118,6 +118,10 @@ name, registered or head office address, registration number, DUNS number and VA
 
 **Primary Contact:** name, email, phone, role / title.
 
+**Listing Contact** (shown on every service listing): name, email and phone. Every live G-Cloud 15
+listing shows a contact name and email, and almost all a phone number; suppliers keep one contact
+across their services. It may be the primary contact.
+
 **Contract Notice Contact** (for public contract notices): name, email.
 
 **Secondary Contact** (optional): name, role, email, phone.

@@ -301,14 +301,15 @@ All lots need a **Technical Ability Certificate**.
 |-------|-------|-------------|------|
 | BPSS | Baseline Personnel Security Standard | Standard access | 1-2 weeks |
 | CTC | Counter-Terrorist Check | Airport, defence | 6-8 weeks |
-| SC | Security Check | OFFICIAL-SENSITIVE | 6-8 weeks |
-| DV | Developed Vetting | SECRET | 6-12 months |
+| SC | Security Check | Regular access to SECRET, occasional TOP SECRET | 6-8 weeks |
+| DV | Developed Vetting | Regular access to TOP SECRET | 6-12 months |
 | eDV | Enhanced DV | TOP SECRET | 12+ months |
 
 **G-Cloud Relevance:**
 
 - BPSS minimum for most government work. BPSS has no fixed expiry: it holds while the person stays with the employer that ran it, and a new employer re-runs it
-- SC required for OFFICIAL-SENSITIVE data
+- OFFICIAL-SENSITIVE is a handling caveat within OFFICIAL, not a higher classification: BPSS covers it, and it doesn't call for SC. A buyer can still ask for SC in a call-off, and the G-Cloud 15 staff security questions record the level you are prepared to provide
+- SC for SECRET; Lot 1b (above OFFICIAL) allows only SC or DV
 - DV/eDV for classified systems
 
 ---

@@ -52,7 +52,8 @@ projects/000-global/supplier/ARC-000-SUPP-v1.0.md
 - Company registration (Companies House number, legal form, DUNS, VAT, trading start date)
 - Central Digital Platform: registration, PPON, share code, supplier information status
 - Ultimate and immediate parent companies
-- Contacts, the five framework award form contacts and the Social Value Contact
+- Contacts, including the listing contact every service listing shows (name, email and phone), the
+  five framework award form contacts and the Social Value Contact
 - Certifications (ISO 27001/27017/27018, Cyber Essentials and Plus, ISO 28000:2022, CSA STAR, SOC 2,
   ISO 9001/20000-1/14001/22301, QMS, PCI DSS, NHS DSPT)
 - Security clearances (BPSS, CTC, SC, DV, eDV), BS7858:2019 screening and sponsoring organisation

@@ -41,7 +41,7 @@
 | **Currency and tax** | GBP, excluding VAT |
 | **Discount for educational organisations** | Yes / No |
 | **Free trial available** (Lots 1a/1b, 2a/2b) | Yes / No |
-| **Pricing document** | [FILE_NAME] (ODF or PDF/A, at most 5 MB, accessible) |
+| **Pricing document** | [FILE_NAME] (ODF or PDF/A, at most 5 MB, accessible) / Lot 3: optional, [FILE_NAME / None] |
 | **Market comparison used** | [DDaT Rate Card skill table (maximum UK rates, listings scraped 7 October 2026) / rival listings in the GCMP artefact ([N] listings) / none] |
 
 ---
@@ -219,7 +219,7 @@ Lot 3 is priced on **one rate card for all your Lot 3 services**, kept at suppli
 
 ## 7. Pricing Document (upload)
 
-The "Pricing document" uploaded with the listing. It is not indexed by marketplace search.
+The "Pricing document" uploaded with the listing. It is not indexed by marketplace search. Every live Lot 1a, 2a and 2b listing has one; on Lot 3 it is optional (71% of the 27,496 live Lot 3 listings have one), because the rate card carries the prices.
 
 | Content | Detail |
 |---------|--------|
