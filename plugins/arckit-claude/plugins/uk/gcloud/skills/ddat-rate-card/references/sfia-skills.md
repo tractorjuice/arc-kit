@@ -1,11 +1,11 @@
 # SFIA 8 Skills Reference
 
 > Skills Framework for the Information Age (SFIA) - Version 8
-> Reference for G-Cloud Lot 3 (Cloud Support) submissions
+> Supporting reference for describing G-Cloud Lot 3 (Cloud Support) teams
 
 ## Overview
 
-SFIA provides a common language for describing skills in IT and digital. G-Cloud Lot 3 (Cloud Support) services should map capabilities to SFIA skills.
+SFIA provides a common language for describing skills in IT and digital. On G-Cloud 15, Lot 3 services are **priced** on the DDaT rate card (job families, roles and role levels; see `lot-3-rate-card.md`), not by SFIA level. Use SFIA to describe what a team does and to map roles to skills.
 
 ## Skill Levels
 
@@ -95,17 +95,9 @@ SFIA provides a common language for describing skills in IT and digital. G-Cloud
 
 ---
 
-## Mapping to Day Rates
+## Day Rates
 
-| SFIA Level | Typical Role | Indicative Day Rate Range |
-|------------|--------------|---------------------------|
-| 3 | Junior Consultant | £300 - £450 |
-| 4 | Consultant | £450 - £600 |
-| 5 | Senior Consultant | £600 - £850 |
-| 6 | Principal Consultant | £850 - £1,200 |
-| 7 | Director/Partner | £1,200 - £2,000+ |
-
-*Note: Rates vary by skill scarcity, location, and clearance requirements*
+G-Cloud 15 day rates are set per DDaT role level, not per SFIA level. For what suppliers charge for a role level, see the market rates in the DDaT Rate Card skill, which come from live G-Cloud 15 listings.
 
 ---
 
@@ -286,16 +278,7 @@ The UK Government AI Skills Framework defines competencies across **3 domains** 
 
 ### AI Role Day Rates
 
-| Role | SFIA Level | AI Level | Day Rate Range |
-|------|------------|----------|----------------|
-| AI Support Analyst | 3 | Entry | £350 - £500 |
-| AI/ML Engineer | 4-5 | Mid | £550 - £800 |
-| AI Solution Architect | 5-6 | Mid-Manager | £800 - £1,200 |
-| AI Strategy Consultant | 6 | Manager | £1,000 - £1,500 |
-| AI Ethics/Governance Lead | 5-6 | Manager | £800 - £1,200 |
-| AI Director/Partner | 7 | Manager | £1,500 - £2,500+ |
-
-*Note: AI-specific skills command 10-25% premium over equivalent non-AI roles due to scarcity*
+The G-Cloud 15 rate card has no separate AI roles. Price AI work with the closest role levels, usually in the data family (machine learning engineer, data scientist, data ethicist) or architecture family, and check them against the bundled benchmarks.
 
 ---
 
