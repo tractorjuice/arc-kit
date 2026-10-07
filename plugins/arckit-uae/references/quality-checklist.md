@@ -1677,7 +1677,7 @@ All artifacts must pass these 10 checks:
 - Every lot question for each Part asked in GCA's wording, with answers ticked using GCA's options
 - Lots 1a/1b: every condition of participation answered (reseller or sole control, reliance on the cloud provider's accreditations, Lot 1b and ISO 27018, trading history), with the certificates and Carbon Reduction Plan each requires
 - Lots 1a/1b: each of the five scored sub-criteria drafted within 250 words, its word count shown, and its weight and marking scheme stated (Quality Cloud Services 40%, Maximising Buyer Value 40%); the non-scored mandatory items answered
-- Lots 2a/2b and 3: the four mandatory award criteria answered (2.5% each), and Cyber Essentials recorded as mandatory for call-offs; a missing certificate listed as a call-off warning, not under "Would Fail as Written", with the alternative in the live listings' wording
+- Lots 2a/2b and 3: the four mandatory award criteria answered (2.5% each), with the disqualification rule stated as GCA's lot-specific one (under 33 on all four criteria disqualifies; a single zero loses that criterion's 2.5%), and Cyber Essentials recorded as mandatory for call-offs; a missing certificate listed as a call-off warning, not under "Would Fail as Written", with the alternative in the live listings' wording
 - Scored answers are evidence-based and specific to the supplier — no generic claims, competitor names or unverifiable statistics
 - Each "What the … doesn't cover" answer within 200 words, the limit the live listings show
 - Pass/fail answers and certificates held are the supplier's own, or `[PENDING]`; none defaulted

@@ -193,7 +193,7 @@ G-Cloud 15 scores bids; G-Cloud 14 did not.
 | | Four mandatory award criteria (2.5% each) | 10% | **Cyber Essentials is mandatory** for call-offs; other standards as Lots 2a/2b |
 | | Price: the average of every rate entered (UK and offshore, ignoring any under £50 or over £10,000); the lowest average scores 80%, others in proportion | 80% | |
 
-All lots need a Technical Ability Certificate. Weights are from Attachment 2d (Quality questionnaire) and Attachment 2 (How to tender). A zero mark on a scored question can exclude the bid.
+All lots need a Technical Ability Certificate. Weights are from Attachment 2d (Quality questionnaire) and Attachment 2 (How to tender). Disqualification: on Lots 1a/1b, a zero on either quality question; on Lots 2a/2b and 3, under 33 on all four award criteria (Attachment 2d v4.0 and Attachment 2 v5.0's rule for those lots; Attachment 2's general paragraph says any zero, but the listings fit the lot-specific rule). A single zero on Lots 2a/2b or 3 loses that criterion's 2.5%.
 
 **Evidence at award.** Certificates are sent after evaluation. Insurance: employer's liability £5m, public liability £1m and professional indemnity £1m for every lot except 1b; Lot 1b needs professional indemnity £50m, public liability £20m and employer's liability £5m.
 

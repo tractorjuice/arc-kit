@@ -71,9 +71,11 @@ lot) is handled by `/arckit:social-value`, and price by `/arckit:pricing`.
   Value three parts worth about 13.3% each. Each part is limited to 250 words (500 and 750 for the
   two questions). The command drafts each part from your evidence with a checklist and counts the
   words. A mark of zero on either question disqualifies the tender for Lots 1a and 1b.
-- **Lots 2a, 2b and 3 award criteria.** Each criterion is marked by the option chosen. The answer
-  covers all your services in the lot, so the command checks it against every service's SDD and flags
-  any service that disagrees.
+- **Lots 2a, 2b and 3 award criteria.** Each criterion is marked by the option chosen. A "No" scores
+  zero and loses that criterion's 2.5%; a tender marking under 33 on all four criteria is
+  disqualified (Attachment 2d and Attachment 2's rule for these lots). The answer covers all your
+  services in the lot, so the command checks it against every service's SDD and flags any service
+  that disagrees.
 - **Where GCA's later documents win.** ISO 27018 is mandatory for Lots 1a and 1b whenever services
   include public cloud, and Cyber Essentials is mandatory for call-offs under Lots 2a, 2b and 3.
 - **Cyber Essentials is a call-off condition, not a bid condition.** Cyber Essentials Plus (Lots

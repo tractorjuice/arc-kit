@@ -283,10 +283,16 @@ published accounts, and the pricing and social value documents.
 
 ### 5. Lots 2a and 2b (Part 2), and Lot 3 (Part 3): mandatory award criteria
 
-Each criterion is worth 2.5%, marked by the option chosen (Attachment 2d). A "No" scores 0, and
-Attachment 2 disqualifies a tender with a zero on any scored quality question. The answer covers
-**all** the supplier's services in the lot group, and has to agree with the User Support, Asset
-Protection, Staff Security and Standards answers on each listing.
+Each criterion is worth 2.5%, marked by the option chosen (Attachment 2d). GCA's rule for these
+lots, in Attachment 2d (Quality questionnaire) v4.0 and in Attachment 2 (How to tender) v5.0,
+disqualifies a tender that marks under 33 on **all four** criteria, that is a weighted quality score
+of zero. A single "No" scores 0 and loses that criterion's 2.5%, but doesn't on its own disqualify.
+Attachment 2's general quality-threshold paragraph says a zero on any scored question disqualifies;
+the lot-specific rule is the one both documents repeat, and the live listings fit it (1,159 Lot 2b
+services from 207 suppliers answer "Data sanitisation process: No"). Avoid any zero all the same: it
+costs marks, and buyers can test every claim. The answer covers **all** the supplier's services in
+the lot group, and has to agree with the User Support, Asset Protection, Staff Security and
+Standards answers on each listing.
 
 1. For each service in the group, read what its SDD and SECA document say for each criterion, and
    fill the per-service tables.
@@ -423,7 +429,7 @@ Report what the document actually contains, for each Part written:
 - Non-scored: NCSC [answer], sanctions [answer], exit [N]/250 words, change of service [N]/250 words
 
 ### Part 2: Lots 2a and 2b
-- User support [answer, mark]; asset protection [answer, mark]; penetration testing [answer, mark]; data sanitisation [answer, mark]
+- User support [answer, mark]; asset protection [answer, mark]; penetration testing [answer, mark]; data sanitisation [answer, mark]. Any criterion marked 0 costs its 2.5%; all four under 33 disqualifies
 - Quality score: [N]% of a possible 20%
 - Cyber Essentials (mandatory for call-offs): [certificate number / alternative chosen / PENDING]
 - Services that disagree with a lot answer: [list or "none"]
@@ -432,7 +438,7 @@ Report what the document actually contains, for each Part written:
 - [As Lots 2a and 2b, for its four criteria]
 
 ### Would Fail as Written
-- [Each failing pass/fail answer, zero mark, missing required certificate (the Lot 1a/1b ISO certificates, including ISO 27018 for public cloud, and the Carbon Reduction Plan) or part over 250 words, or "Nothing found"]
+- [Each failing pass/fail answer, zero mark on a Lot 1a/1b quality question, all four Lot 2a/2b or Lot 3 criteria marked under 33, missing required certificate (the Lot 1a/1b ISO certificates, including ISO 27018 for public cloud, and the Carbon Reduction Plan) or part over 250 words, or "Nothing found"]
 
 ### Call-off Warnings
 - [Cyber Essentials Plus (Lots 1a/1b) or Cyber Essentials (Lots 2a/2b, 3) not held: the alternative chosen, and that no call-off can be awarded under the lot until the certificate is held, or "None"]

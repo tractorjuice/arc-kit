@@ -248,8 +248,10 @@ must agree. Show the mark each answer earns:
 | 3 | Clearance level prepared to provide if a buyer requires it | DV 100, SC 66, BPSS 33, none 0 |
 | 3 | Prepared to hold Cyber Essentials (or equivalent or higher) if a buyer requires it | Yes 100, No 0 |
 
-The fourth criterion on each lot is user support, which the SDD covers. A tender scoring under 33 on
-all four is disqualified. Never raise an answer to earn a mark the supplier can't evidence: the mark
+The fourth criterion on each lot is user support, which the SDD covers. A tender marking under 33 on
+all four is disqualified (Attachment 2d v4.0 and Attachment 2 v5.0); a single zero loses that
+criterion's 2.5%. `/arckit:lot-questions` states the same rule. Never raise an answer to earn a mark
+the supplier can't evidence: the mark
 comes from the claim, but buyers can test the claim.
 
 ### 7. Evidence

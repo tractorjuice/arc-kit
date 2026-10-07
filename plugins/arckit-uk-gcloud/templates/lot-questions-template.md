@@ -359,7 +359,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Price | 80% | Price assessment (each service's PRIC document (`/arckit:pricing`)) |
 | Cyber Essentials | — | Mandatory for call-off contracts, not for the bid (Section 2) |
 
-*Attachment 2 disqualifies a tender with a mark of zero on any scored quality question, so a "No" to any criterion below fails the bid. These answers cover all your Lot 2a and 2b services, and must agree with the User Support and Asset Protection answers on each listing.*
+*Attachment 2d v4.0 and Attachment 2 v5.0 disqualify a tender that marks under 33 on all four criteria below. A single "No" scores 0 and loses its 2.5% without disqualifying on its own (Attachment 2's general paragraph says a zero on any scored question disqualifies, but the lot-specific rule is the one both documents repeat). Avoid any zero. These answers cover all your Lot 2a and 2b services, and must agree with the User Support and Asset Protection answers on each listing.*
 
 ### 1. Mandatory Award Criteria
 
@@ -522,7 +522,7 @@ c) Access to Innovation and Technical Advancement: [DRAFT]
 | Price (average day rate) | 80% | Price assessment (the supplier's one Lot 3 rate card, `ARC-000-RATE` (`/arckit:pricing`)) |
 | Cyber Essentials | — | Mandatory for call-off contracts, not for the bid (Section 2) |
 
-*Attachment 2 disqualifies a tender with a mark of zero on any scored quality question, so a "No" to any criterion below fails the bid. These answers cover all your Lot 3 services, and must agree with the User Support, Staff Security and Standards answers on each listing.*
+*Attachment 2d v4.0 and Attachment 2 v5.0 disqualify a tender that marks under 33 on all four criteria below. A single "No" scores 0 and loses its 2.5% without disqualifying on its own (Attachment 2's general paragraph says a zero on any scored question disqualifies, but the lot-specific rule is the one both documents repeat). Avoid any zero. These answers cover all your Lot 3 services, and must agree with the User Support, Staff Security and Standards answers on each listing.*
 
 ### 1. Mandatory Award Criteria
 
