@@ -327,3 +327,61 @@ def test_pricing_owns_the_supplier_rate_card():
     sdd3 = (COMMANDS / "sdd-lot3.md").read_text(encoding="utf-8")
     assert "never copy its rates" in sdd3
     assert "copy its rates: `/arckit:pricing`" not in sdd3
+
+
+# ── Lots from the service designs ────────────────────────────────────────────
+# lot-questions and declaration listed only the designs that had a G-Cloud Lot
+# line, so a G-Cloud 14 design (no such line, or "Lot 2") was skipped without a
+# word. Both now list every service project with its lot, flag one that records
+# no G-Cloud 15 lot, and show whether its SDD and security evidence exist,
+# because the lot questions come after the SDDs.
+LOTS_BLOCK = re.compile(r"(# service lots: keep identical[^\n]*\n.*?\ndone\n)", re.S)
+
+
+def _lots_block(command: str) -> str:
+    match = LOTS_BLOCK.search((COMMANDS / command).read_text(encoding="utf-8"))
+    assert match, f"{command}: no service-lots block"
+    return match.group(1)
+
+
+def test_lot_questions_and_declaration_share_one_lot_listing():
+    assert _lots_block("lot-questions.md") == _lots_block("declaration.md")
+
+
+def test_every_lot_lookup_reads_the_g_cloud_lot_line():
+    for command in sorted(COMMANDS.glob("*.md")):
+        for line in command.read_text(encoding="utf-8").splitlines():
+            for lookup in re.findall(r"grep [^|]*G-Cloud Lot[^|]*", line):
+                assert "'^\\*\\*G-Cloud Lot\\*\\*" in lookup, f"{command.name}: {line.strip()}"
+
+
+def test_lot_listing_flags_designs_from_the_previous_framework(tmp_path):
+    import shutil
+    import subprocess
+
+    bash = shutil.which("bash")
+    if bash is None:  # pragma: no cover
+        import pytest
+
+        pytest.skip("bash not installed")
+    designs = {
+        "001-case-mgmt": ("**G-Cloud Lot**: Lot 2b — Software as a Service (SaaS)\n", ["SDD"]),
+        "002-old-saas": ("**G-Cloud Lot**: Lot 2 — Cloud Software\n", []),
+        "003-g14": ("# Service design\n\n1.3 Target Lot: Lot 3 - Cloud Support\n", []),
+        "004-support": ("**G-Cloud Lot**: Lot 3 — Cloud Support\n", ["SECA"]),
+    }
+    for name, (svcd, others) in designs.items():
+        project = tmp_path / "projects" / name
+        project.mkdir(parents=True)
+        number = name[:3]
+        (project / f"ARC-{number}-SVCD-v1.0.md").write_text(svcd, encoding="utf-8")
+        for doc in others:
+            (project / f"ARC-{number}-{doc}-v1.0.md").write_text("# doc\n", encoding="utf-8")
+    (tmp_path / "projects" / "000-global").mkdir()
+    result = subprocess.run([bash, "-c", _lots_block("lot-questions.md")], capture_output=True, text=True, cwd=tmp_path, check=True)
+    rows = [line.split("\t") for line in result.stdout.splitlines()]
+    assert rows[0] == ["projects/001-case-mgmt", "2b", "SDD=yes", "SECA=MISSING"]
+    assert rows[1][1].startswith("NOT A G-CLOUD 15 LOT (**G-Cloud Lot**: Lot 2 — Cloud Software)")
+    assert rows[2][1].startswith("NOT A G-CLOUD 15 LOT (no G-Cloud Lot line)")
+    assert rows[3] == ["projects/004-support", "3", "SDD=MISSING", "SECA=yes"]
+    assert len(rows) == 4

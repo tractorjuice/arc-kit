@@ -3,8 +3,10 @@ description: Create or update the supplier's G-Cloud 15 social value commitments
 doc-type: SOCV
 effort: high
 handoffs:
+  - command: /arckit:service-design
+    description: Design each service and choose its lot
   - command: /arckit:lot-questions
-    description: Answer the lot questions for the lots you are bidding for
+    description: Answer the lot questions once the services have their SDDs
   - command: /arckit:declaration
     description: The declaration's social value section summarises this document
 ---
@@ -293,9 +295,10 @@ Report what the document actually contains:
 - [Each `[PENDING]` item, or "None"]
 
 ### Next Steps
-1. `/arckit:lot-questions` — answer the lot questions for the lots you are bidding for
-2. `/arckit:declaration` — the declaration's social value section points to this document
-3. `/arckit:review` — checks this document before submission
+1. `/arckit:service-design` — design each service and choose its lot, then its SDD, pricing and security
+2. `/arckit:lot-questions` — once the services have their SDDs: the award criteria repeat their answers
+3. `/arckit:declaration` — the declaration's social value section points to this document
+4. `/arckit:review` — checks this document before submission
 ```
 
 ## Important Notes

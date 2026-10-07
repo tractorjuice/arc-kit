@@ -57,16 +57,34 @@ Use the **Read tool** on the highest version of each of these, where present:
 - `projects/000-global/supplier/ARC-000-LOTQ-v*.md` — the lot questions document, whose Parts show
   the lot groups bid for.
 
-Find the lots bid for from the service designs too: list the service projects and read the
-`**G-Cloud Lot**` line of each one's SVCD.
+Find the lots bid for from the service designs too: list the service projects and the lot each
+one's latest SVCD records.
 
 ```bash
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" --json
-# Each service design and its lot line. find, not a bare glob: zsh aborts a glob that matches nothing
-find projects -mindepth 2 -maxdepth 2 -name 'ARC-*-SVCD-v*.md' 2>/dev/null | sort -V | while IFS= read -r f; do
-    printf '%s\t%s\n' "$f" "$(grep -m1 '^\*\*G-Cloud Lot\*\*' "$f")"
+# service lots: keep identical in lot-questions.md and declaration.md
+# Each service project, the G-Cloud 15 lot its latest service design records, and whether its
+# SDD and security evidence exist. find, not a bare glob: zsh aborts a glob that matches nothing
+find projects -mindepth 1 -maxdepth 1 -type d -name '[0-9][0-9][0-9]-*' ! -name '000-*' 2>/dev/null | sort | while IFS= read -r d; do
+    svcd=$(find "$d" -maxdepth 1 -name 'ARC-*-SVCD-v*.md' 2>/dev/null | sort -V | tail -1)
+    [ -n "$svcd" ] || continue
+    line=$(grep -m1 '^\*\*G-Cloud Lot\*\*' "$svcd")
+    lot=$(printf '%s' "$line" | sed 's/^\*\*G-Cloud Lot\*\*:[[:space:]]*//' | grep -oE '^(Lot[[:space:]]*)?[123][ab]?' | grep -oE '[123][ab]?$')
+    case "$lot" in
+        1a|1b|2a|2b|3) ;;
+        *) lot="NOT A G-CLOUD 15 LOT (${line:-no G-Cloud Lot line}): re-run /arckit:service-design" ;;
+    esac
+    sdd=$(find "$d" -maxdepth 1 -name 'ARC-*-SDD-v*.md' 2>/dev/null | grep -q . && echo yes || echo MISSING)
+    seca=$(find "$d" -maxdepth 1 -name 'ARC-*-SECA-v*.md' 2>/dev/null | grep -q . && echo yes || echo MISSING)
+    printf '%s\t%s\tSDD=%s\tSECA=%s\n' "$d" "$lot" "$sdd" "$seca"
 done
 ```
+
+The lots bid for come from the LOTQ document's Parts and the service designs. A design marked `NOT A
+G-CLOUD 15 LOT` (for example a G-Cloud 14 design with no `**G-Cloud Lot**` line, or one saying `Lot
+2`) belongs to no G-Cloud 15 lot: don't guess one. List it under "Items Requiring Attention" and
+tell the user to re-run `/arckit:service-design` for it. The declaration is best written after
+`/arckit:lot-questions`, which settles the lots bid for.
 
 **Citation traceability**: When you draw facts from the supplier profile, from documents the user
 has placed under `projects/000-global/supplier/` or an `external/` directory, or from any URL you

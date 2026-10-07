@@ -294,9 +294,9 @@ G-Cloud 15 (RM1557.15), run by the Government Commercial Agency (GCA, formerly C
 - [G-Cloud Lot 1b Service Definition](https://arckit.org/guides/sdd-lot1b.md): `/arckit:sdd-lot1b` IaaS and PaaS above OFFICIAL, with SC or DV staff clearance.
 - [G-Cloud Lot 2a Service Definition](https://arckit.org/guides/sdd-lot2a.md): `/arckit:sdd-lot2a` Infrastructure Software as a Service (iSaaS) service questions.
 - [G-Cloud Lot 2b Service Definition](https://arckit.org/guides/sdd-lot2b.md): `/arckit:sdd-lot2b` Software as a Service (SaaS) service questions.
-- [G-Cloud Lot 3 Service Definition](https://arckit.org/guides/sdd-lot3.md): `/arckit:sdd-lot3` Cloud Support service questions and the DDaT rate card.
+- [G-Cloud Lot 3 Service Definition](https://arckit.org/guides/sdd-lot3.md): `/arckit:sdd-lot3` Cloud Support service questions and the DDaT role levels that deliver the service.
 - [G-Cloud Supplier Declaration](https://arckit.org/guides/declaration.md): `/arckit:declaration` Procurement Act 2023 declaration: CDP, PPON, exclusion grounds, debarment list, supply chain payments, modern slavery, and sign-off.
-- [G-Cloud Pricing](https://arckit.org/guides/pricing.md): `/arckit:pricing` the 1a/1b price formula, 2a/2b discount bands, Lot 3 DDaT rate card, and forbidden-pricing checks.
+- [G-Cloud Pricing](https://arckit.org/guides/pricing.md): `/arckit:pricing` the 1a/1b price formula, 2a/2b discount bands, the supplier's one Lot 3 DDaT rate card, and forbidden-pricing checks.
 - [G-Cloud Security Assertions](https://arckit.org/guides/security.md): `/arckit:security` certifications by lot, NCSC Cloud Security Principles, post-quantum cryptography, and buyer-facing security statements.
 - [G-Cloud Competitor Benchmark](https://arckit.org/guides/gcloud-competitors.md): `/arckit:gcloud-competitors` marketplace rival comparison across features, pricing, rate cards, discounts, differentiation, and improvement actions.
 - [G-Cloud Submission Review](https://arckit.org/guides/review.md): `/arckit:review` completeness, lot consistency, G-Cloud 15 limits, pending items, evidence gaps, and readiness actions.

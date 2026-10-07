@@ -53,9 +53,21 @@ $ARGUMENTS
 mkdir -p projects/000-global/supplier
 ls projects/000-global/supplier/ 2>/dev/null
 bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" --json
-# Each service design and its lot line. find, not a bare glob: zsh aborts a glob that matches nothing
-find projects -mindepth 2 -maxdepth 2 -name 'ARC-*-SVCD-v*.md' 2>/dev/null | sort -V | while IFS= read -r f; do
-    printf '%s\t%s\n' "$f" "$(grep -m1 '^\*\*G-Cloud Lot\*\*' "$f")"
+# service lots: keep identical in lot-questions.md and declaration.md
+# Each service project, the G-Cloud 15 lot its latest service design records, and whether its
+# SDD and security evidence exist. find, not a bare glob: zsh aborts a glob that matches nothing
+find projects -mindepth 1 -maxdepth 1 -type d -name '[0-9][0-9][0-9]-*' ! -name '000-*' 2>/dev/null | sort | while IFS= read -r d; do
+    svcd=$(find "$d" -maxdepth 1 -name 'ARC-*-SVCD-v*.md' 2>/dev/null | sort -V | tail -1)
+    [ -n "$svcd" ] || continue
+    line=$(grep -m1 '^\*\*G-Cloud Lot\*\*' "$svcd")
+    lot=$(printf '%s' "$line" | sed 's/^\*\*G-Cloud Lot\*\*:[[:space:]]*//' | grep -oE '^(Lot[[:space:]]*)?[123][ab]?' | grep -oE '[123][ab]?$')
+    case "$lot" in
+        1a|1b|2a|2b|3) ;;
+        *) lot="NOT A G-CLOUD 15 LOT (${line:-no G-Cloud Lot line}): re-run /arckit:service-design" ;;
+    esac
+    sdd=$(find "$d" -maxdepth 1 -name 'ARC-*-SDD-v*.md' 2>/dev/null | grep -q . && echo yes || echo MISSING)
+    seca=$(find "$d" -maxdepth 1 -name 'ARC-*-SECA-v*.md' 2>/dev/null | grep -q . && echo yes || echo MISSING)
+    printf '%s\t%s\tSDD=%s\tSECA=%s\n' "$d" "$lot" "$sdd" "$seca"
 done
 ```
 
@@ -68,9 +80,19 @@ Use the **Read tool** on the highest version of:
 - `projects/000-global/supplier/ARC-000-SOCV-v*.md` — only to report social value status in the
   quality score tables; never duplicate its answers here. If missing, note it.
 
-A legacy G-Cloud 14 service design has no `**G-Cloud Lot**` line, only a "1.3 Target Lot" checkbox
-(Lot 1 Cloud Hosting / Lot 2 Cloud Software / Lot 3 Cloud Support). Treat old Lot 3 as Lot 3, and ask
-which G-Cloud 15 lot an old Lot 1 (1a or 1b) or Lot 2 (2a or 2b) service is now.
+**Designs from the previous framework.** A design marked `NOT A G-CLOUD 15 LOT` records no lot this
+command can place: a G-Cloud 14 design has no `**G-Cloud Lot**` line, only a "1.3 Target Lot"
+checkbox, and an old "Lot 2" (or "Lot 1", "Cloud Software", "Cloud Hosting") could be 2a or 2b, or
+1a or 1b. Don't guess. List each one, tell the user to re-run `/arckit:service-design` for it so the
+design records a G-Cloud 15 lot, and leave it out of every lot group until then.
+
+**Write the lot questions after the SDDs.** The Lot 2a/2b and Lot 3 award criteria repeat each
+service's user support, data location, penetration testing, data sanitisation and staff security
+answers, and must agree with every service in the lot group; the Lot 1a/1b quality answers draw on
+the same SDDs and security documents. If a service in a group shows `SDD=MISSING` (or
+`SECA=MISSING`), say so and recommend running its SDD command (and `/arckit:security`) first. Go on
+only if the user wants a first draft now, and mark every answer that rests on a design alone as
+`[PENDING: check against the SDD]`.
 
 **Citation traceability**: When you fetch a URL (for example a published Carbon Reduction Plan), or
 read a document the user has placed under `projects/000-global/supplier/` or an `external/`
@@ -132,7 +154,8 @@ Then read the evidence for every service in the group: for each service project 
 (highest versions, where present).
 
 If no service matches, ask the user which services belong to the group. A lot group can be answered
-before any service exists, but the answers then rest on the supplier profile and the user alone.
+before any service exists, but the answers then rest on the supplier profile and the user alone, and
+must be checked again once the SDDs exist.
 
 Every answer must come from the supplier profile, these documents, a URL the user gives, or the user.
 Record each fact you use in the "Evidence Used" table with its file and section. **Never invent a
@@ -408,8 +431,9 @@ Report what the document actually contains, for each Part written:
 
 ### Next Steps
 1. `/arckit:social-value` — if the SOCV document is missing or has pending answers
-2. `/arckit:pricing [service]` — price is 80% on Lots 2a/2b and 3, and 10% on Lots 1a/1b
-3. `/arckit:declaration` — the supplier declaration
+2. The SDD, `/arckit:pricing` and `/arckit:security` for any service in the group that lacks them —
+   the award criteria repeat their answers
+3. `/arckit:declaration` — the supplier declaration, which records the lots bid for
 4. `/arckit:review [service]` — checks limits and consistency before submission
 ```
 

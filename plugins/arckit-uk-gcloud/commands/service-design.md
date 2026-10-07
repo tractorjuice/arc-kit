@@ -421,9 +421,9 @@ Print only a short summary, reporting what the document contains:
 1. **Generate the Service Definition Document:** the lot's SDD command, `/arckit:sdd-lot1a`, `/arckit:sdd-lot1b`, `/arckit:sdd-lot2a`, `/arckit:sdd-lot2b` or `/arckit:sdd-lot3`, with `[service]`
 2. **Price the service:** `/arckit:pricing [service]`
 3. **Security evidence:** `/arckit:security [service]`
-4. [Only if missing] **Lot questions for Lots [group]:** `/arckit:lot-questions` (once per lot group bid for, as a Part of `projects/000-global/supplier/ARC-000-LOTQ-v*.md`)
-5. [Only if missing] **Social value:** `/arckit:social-value` (once per supplier; 10% of every lot's score)
-6. [Only if missing] **Supplier declaration:** `/arckit:declaration`
+4. [Only if missing] **Social value:** `/arckit:social-value` (once per supplier; 10% of every lot's score)
+5. [Only if missing] **Lot questions for Lots [group]:** `/arckit:lot-questions`, once this service has its SDD, pricing and security evidence (once per lot group bid for, as a Part of `projects/000-global/supplier/ARC-000-LOTQ-v*.md`; its award criteria repeat the SDD's answers)
+6. [Only if missing] **Supplier declaration:** `/arckit:declaration`, after the lot questions
 ```
 
 Show only the SDD command for this service's lot.

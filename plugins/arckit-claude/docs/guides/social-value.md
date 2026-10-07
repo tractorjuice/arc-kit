@@ -27,7 +27,8 @@ projects/000-global/supplier/ARC-000-SOCV-v1.0.md
 
 ## When to Use
 
-- After `/arckit:supplier-profile`, and before `/arckit:declaration`, which summarises it.
+- After `/arckit:supplier-profile`, before the service designs, and before `/arckit:declaration`,
+  which summarises it.
 - When social value policies or the Social Value Contact change; a re-run shows what is recorded and
   updates only what you change.
 

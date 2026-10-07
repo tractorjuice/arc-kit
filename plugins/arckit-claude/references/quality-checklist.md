@@ -1680,7 +1680,7 @@ All artifacts must pass these 10 checks:
 - Scored answers are evidence-based and specific to the supplier — no generic claims, competitor names or unverifiable statistics
 - Each "What the … doesn't cover" answer within 200 words, the limit the live listings show
 - Pass/fail answers and certificates held are the supplier's own, or `[PENDING]`; none defaulted
-- Answers consistent with the supplier profile, the SDDs for the services in each lot group, and the security evidence
+- Answers consistent with the supplier profile, the SDDs for the services in each lot group, and the security evidence; written after those SDDs, with any answer that rests on a service design alone marked `[PENDING: check against the SDD]`, and no service whose design records no G-Cloud 15 lot counted in a lot group
 
 ### FSSCA -- SCA-RTS Exemption Assessment
 

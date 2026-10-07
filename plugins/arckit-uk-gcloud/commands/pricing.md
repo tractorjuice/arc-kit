@@ -254,13 +254,14 @@ Time-limited discounts also apply to Lots 2a/2b and must be published on the Dig
 **Build or update the card, not a per-service list.** Write the supplier-wide
 `projects/000-global/supplier/ARC-000-RATE-v*.md` from the rate card template, and give this
 service's pricing document only its §4 summary. Find the role levels each Lot 3 service needs: list
-the service projects whose service design records Lot 3, and read each one's SVCD section 6C and SDD
-section 11 with the **Read tool**:
+the service projects whose latest service design records Lot 3, and read each one's SVCD section 6C
+and SDD section 11 with the **Read tool**:
 
 ```bash
-# Lot 3 service projects: the SVCD's lot line names Lot 3
-find projects -mindepth 2 -maxdepth 2 -name 'ARC-*-SVCD-v*.md' 2>/dev/null | sort -V | while IFS= read -r f; do
-    grep -qE '^\*\*G-Cloud Lot\*\*:[[:space:]]*(Lot[[:space:]]*)?3([^0-9ab]|$)' "$f" && echo "$f"
+# Lot 3 service projects: the latest service design's lot line names Lot 3
+find projects -mindepth 1 -maxdepth 1 -type d -name '[0-9][0-9][0-9]-*' ! -name '000-*' 2>/dev/null | sort | while IFS= read -r d; do
+    svcd=$(find "$d" -maxdepth 1 -name 'ARC-*-SVCD-v*.md' 2>/dev/null | sort -V | tail -1)
+    if [ -n "$svcd" ] && grep -qE '^\*\*G-Cloud Lot\*\*:[[:space:]]*(Lot[[:space:]]*)?3([^0-9ab]|$)' "$svcd"; then echo "$svcd"; fi
 done
 ```
 

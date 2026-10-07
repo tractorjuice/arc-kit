@@ -413,16 +413,17 @@ The `arckit-uk-gcloud` overlay now targets G-Cloud 15 (RM1557.15), run by the Go
 - `/arckit:sdd-lot1a`, `/arckit:sdd-lot1b`, `/arckit:sdd-lot2a`, `/arckit:sdd-lot2b` → `SDD` (one per G-Cloud 15 lot; `sdd-lot3` unchanged in name)
 - `/arckit:pricing` → `PRIC`, and for Lot 3 also `RATE` (G-Cloud Lot 3 Rate Card; regime UK, category Procurement), the supplier's one rate card in `projects/000-global/supplier/`, shared by every Lot 3 service. The Lot 3 SDD lists the role levels that deliver the service and copies no rates
 
-**Dependencies**: supplier-profile (SUPP) → social-value (SOCV, M) → lot-questions (LOTQ, M; reads the service designs for the lots bid for, R) → declaration (DECL, M; summarises SOCV) → service-design (SVCD) → sdd-lot1a / 1b / 2a / 2b / 3 (SDD, M) → pricing (PRIC, R; reads the SDD so the two agree) and security (SECA, R) → review (GCRV; checks SUPP, SOCV, LOTQ, DECL, SVCD, SDD, PRIC and SECA) → submission-pack.
+**Dependencies**: supplier-profile (SUPP) → social-value (SOCV, M) → service-design (SVCD) → sdd-lot1a / 1b / 2a / 2b / 3 (SDD, M) → pricing (PRIC, R; reads the SDD so the two agree; for Lot 3 also writes RATE) and security (SECA, R) → lot-questions (LOTQ, M; after the SDDs, because the Lot 2a/2b and Lot 3 award criteria repeat each service's SDD and security answers, R) → declaration (DECL, M; summarises SOCV, records the lots bid for) → review (GCRV; checks SUPP, SOCV, LOTQ, DECL, SVCD, SDD, PRIC, SECA and, for Lot 3, RATE) → submission-pack.
 
 **Skills**: `gcloud-framework` (now with the G-Cloud 15 question references), `cloud-security`, `ddat-rate-card` (replaces `sfia-skills`). **Recipe**: `uk-gcloud-submission` adds the SOCV and LOTQ targets and defaults to `sdd-lot2b`.
 
 **Typical G-Cloud 15 supplier path**:
 
 ```text
-supplier-profile → social-value → lot-questions → declaration →
+supplier-profile → social-value →
 service-design → sdd-lot1a | sdd-lot1b | sdd-lot2a | sdd-lot2b | sdd-lot3 →
-pricing / security → gcloud-competitors (optional) → review → submission-pack
+pricing / security → lot-questions → declaration →
+gcloud-competitors (optional) → review → submission-pack
 ```
 
 ### 2026-09-03 - Interactive Diagram Rendering command (#826)
