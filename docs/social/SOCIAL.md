@@ -154,3 +154,17 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/15
 > Update to ArcKit 6.17.5 to get it (needs Claude Code v2.1.287 or later). To switch it off, set the ARCKIT_NO_STATUS_BAND environment variable.
 > Tell us how it reads on your projects in #show-your-working
 > <https://github.com/tractorjuice/arc-kit/releases/tag/v6.17.5>
+
+### Q7. Decision documents lead with the decision — LinkedIn group (Question voice) — posted 8 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-7514025369092517888>. The change is PR #921, merged to main on 8 October but not released, because of the release freeze while core ArcKit is in the plugin directory review. Group only, with no image: the page and Discord #announcements are for released changes. The post promises a follow-up, so when the release ships, post it on the page, reply in this group thread, and post in #announcements.
+
+> How far into a business case does a board member get before they reach the recommendation?
+>
+> ArcKit's decision documents now lead with the decision. A Strategic Outline Business Case opens with the Go/No-Go recommendation and the preferred option. The reasons come next, then the context, costs and risks. Research findings open with the build-or-buy recommendation, and design reviews put their verdict in section 1. A risk that could change the decision sits beside the verdict, not at the bottom of a list.
+>
+> It's Barbara Minto's Pyramid Principle applied to the Green Book's five cases: the answer first, then the reasons, then the evidence.
+>
+> The change isn't in a release yet; we'll post here when it is.
+>
+> What does your board want to see in the first line?
