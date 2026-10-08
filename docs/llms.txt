@@ -284,16 +284,22 @@ French government (apply on top of EU baseline):
 
 ### UK G-Cloud supplier overlay
 
-- [G-Cloud Supplier Profile](https://arckit.org/guides/supplier-profile.md): `/arckit:supplier-profile` supplier-wide company, contact, certification, insurance, security, and evidence profile.
-- [G-Cloud Service Design](https://arckit.org/guides/service-design.md): `/arckit:service-design` per-service offer design, project setup, lot selection, features, benefits, and support model.
-- [G-Cloud Lot 1 Service Definition](https://arckit.org/guides/sdd-lot1.md): `/arckit:sdd-lot1` cloud hosting, IaaS, PaaS, regions, tenancy, resilience, support, and security.
-- [G-Cloud Lot 2 Service Definition](https://arckit.org/guides/sdd-lot2.md): `/arckit:sdd-lot2` cloud software and SaaS capability, integrations, data, onboarding, support, and buyer claims.
-- [G-Cloud Lot 3 Service Definition](https://arckit.org/guides/sdd-lot3.md): `/arckit:sdd-lot3` cloud support, migration, consulting, delivery method, roles, outcomes, and handover.
-- [G-Cloud Supplier Declaration](https://arckit.org/guides/declaration.md): `/arckit:declaration` supplier declaration evidence pack for exclusions, insurance, modern slavery, tax, and sign-off.
-- [G-Cloud Pricing](https://arckit.org/guides/pricing.md): `/arckit:pricing` pricing model, tiers, units, discounts, trials, assumptions, and benchmark rationale.
-- [G-Cloud Security Assertions](https://arckit.org/guides/security.md): `/arckit:security` NCSC Cloud Security Principles assertions, evidence, residual risks, and buyer-facing security statements.
-- [G-Cloud Competitor Benchmark](https://arckit.org/guides/gcloud-competitors.md): `/arckit:gcloud-competitors` marketplace rival comparison across features, pricing, differentiation, and improvement actions.
-- [G-Cloud Submission Review](https://arckit.org/guides/review.md): `/arckit:review` completeness, cross-document consistency, marketplace limits, evidence gaps, and readiness actions.
+G-Cloud 15 (RM1557.15), run by the Government Commercial Agency (GCA, formerly CCS). Proprietary, Claude Code only.
+
+- [G-Cloud Supplier Profile](https://arckit.org/guides/supplier-profile.md): `/arckit:supplier-profile` supplier-wide company, CDP and PPON, contacts, certifications by lot, insurance, clearances, and evidence profile.
+- [G-Cloud Social Value](https://arckit.org/guides/social-value.md): `/arckit:social-value` social value sections A–C, missions, policy outcomes and measures, Social Value Contact, and operational readiness.
+- [G-Cloud Lot Questions](https://arckit.org/guides/lot-questions.md): `/arckit:lot-questions` conditions of participation, scored Lot 1a/1b quality answers, Lot 2 and Lot 3 mandatory award criteria, and certifications.
+- [G-Cloud Service Design](https://arckit.org/guides/service-design.md): `/arckit:service-design` per-service offer design, project setup, five-lot choice, features, benefits, supplier type, and support model.
+- [G-Cloud Lot 1a Service Definition](https://arckit.org/guides/sdd-lot1a.md): `/arckit:sdd-lot1a` IaaS and PaaS service questions, categories, scope, support, backups, analytics, scaling, and security.
+- [G-Cloud Lot 1b Service Definition](https://arckit.org/guides/sdd-lot1b.md): `/arckit:sdd-lot1b` IaaS and PaaS above OFFICIAL, with SC or DV staff clearance.
+- [G-Cloud Lot 2a Service Definition](https://arckit.org/guides/sdd-lot2a.md): `/arckit:sdd-lot2a` Infrastructure Software as a Service (iSaaS) service questions.
+- [G-Cloud Lot 2b Service Definition](https://arckit.org/guides/sdd-lot2b.md): `/arckit:sdd-lot2b` Software as a Service (SaaS) service questions.
+- [G-Cloud Lot 3 Service Definition](https://arckit.org/guides/sdd-lot3.md): `/arckit:sdd-lot3` Cloud Support service questions and the DDaT role levels that deliver the service.
+- [G-Cloud Supplier Declaration](https://arckit.org/guides/declaration.md): `/arckit:declaration` Procurement Act 2023 declaration: CDP, PPON, exclusion grounds, debarment list, supply chain payments, modern slavery, and sign-off.
+- [G-Cloud Pricing](https://arckit.org/guides/pricing.md): `/arckit:pricing` the 1a/1b price formula, 2a/2b discount bands, the supplier's one Lot 3 DDaT rate card, and forbidden-pricing checks.
+- [G-Cloud Security Assertions](https://arckit.org/guides/security.md): `/arckit:security` certifications by lot, NCSC Cloud Security Principles, post-quantum cryptography, and buyer-facing security statements.
+- [G-Cloud Competitor Benchmark](https://arckit.org/guides/gcloud-competitors.md): `/arckit:gcloud-competitors` marketplace rival comparison across features, pricing, rate cards, discounts, differentiation, and improvement actions.
+- [G-Cloud Submission Review](https://arckit.org/guides/review.md): `/arckit:review` completeness, lot consistency, G-Cloud 15 limits, pending items, evidence gaps, and readiness actions.
 - [G-Cloud Submission Pack](https://arckit.org/guides/submission-pack.md): `/arckit:submission-pack` export approved supplier and service artefacts into a submission folder with manifest and checklist.
 
 ### FDE site generator

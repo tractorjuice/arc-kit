@@ -545,7 +545,7 @@
                 <li><strong>Tier = Community + Jurisdiction = USA</strong> → <code>arckit-us</code></li>
                 <li><strong>Tier = Community + Sector = UK Finance</strong> → <code>arckit-uk-finance</code> — payments slice (v1)</li>
                 <li><strong>Tier = Community + Sector = UK NHS</strong> → <code>arckit-uk-nhs</code> — clinical safety + medical-device classification</li>
-                <li><strong>Tier = Community + Category = UK G-Cloud Supplier</strong> → <code>arckit-uk-gcloud</code> — supplier-side bid authoring and submission pack</li>
+                <li><strong>Tier = Community + Category = UK G-Cloud Supplier</strong> → <code>arckit-uk-gcloud</code> — supplier-side G-Cloud 15 bid authoring and submission pack</li>
                 <li><strong>Tier = Community + Category = FDE Site Generator</strong> → <code>arckit-fde</code> — Forward Deploy Engineering website generator</li>
                 <li><strong>Tier = Community + Category = TOGAF ADM</strong> → <code>arckit-togaf-adm</code> — ADM lifecycle and architecture repository</li>
                 <li><strong>Tier = Community + Category = AI Agent Architecture</strong> → <code>arckit-agent-architecture</code> — agent inventory, design, governance, integration, security, and maturity</li>
@@ -2391,7 +2391,25 @@
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
                         <td><code>/arckit:supplier-profile</code></td>
-                        <td class="description">[COMMUNITY] Create or update the reusable supplier profile for G-Cloud submissions, including company details, contacts, certifications, insurance, and evidence.</td>
+                        <td class="description">[COMMUNITY] Create or update the reusable supplier profile for G-Cloud 15 submissions, including company details, Central Digital Platform registration and PPON, contacts, certifications by lot, insurance, and evidence.</td>
+                        <td>UK G-Cloud Supplier Overlay</td>
+                        <td>UK</td>
+                        <td>Community</td>
+                        <td class="examples">&mdash;</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
+                        <td><code>/arckit:social-value</code></td>
+                        <td class="description">[COMMUNITY] Record the G-Cloud 15 social value commitments: declaration sections A to C, the missions, policy outcomes and measures committed to, a named Social Value Contact, and operational readiness (10% pass/fail on every lot).</td>
+                        <td>UK G-Cloud Supplier Overlay</td>
+                        <td>UK</td>
+                        <td>Community</td>
+                        <td class="examples">&mdash;</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
+                        <td><code>/arckit:lot-questions</code></td>
+                        <td class="description">[COMMUNITY] Answer the G-Cloud 15 lot questions once per lot group bid for: conditions of participation, the scored Lot 1a/1b quality answers within their word limits, the Lot 2 and Lot 3 mandatory award criteria, and certifications.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>
@@ -2400,7 +2418,7 @@
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
                         <td><code>/arckit:service-design</code></td>
-                        <td class="description">[COMMUNITY] Design a cloud service offering for the G-Cloud marketplace and create the per-service ArcKit project and service design artefact.</td>
+                        <td class="description">[COMMUNITY] Design a cloud service offering for G-Cloud 15, choose its lot (1a, 1b, 2a, 2b or 3), and create the per-service ArcKit project and service design artefact.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>
@@ -2408,8 +2426,8 @@
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
-                        <td><code>/arckit:sdd-lot1</code></td>
-                        <td class="description">[COMMUNITY] Generate the Service Definition Document for a Lot 1 cloud hosting, IaaS, or PaaS service.</td>
+                        <td><code>/arckit:sdd-lot1a</code></td>
+                        <td class="description">[COMMUNITY] Generate the Service Definition Document for a G-Cloud 15 Lot 1a IaaS or PaaS service, answering every Lot 1a service question in GCA order.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>
@@ -2417,8 +2435,26 @@
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
-                        <td><code>/arckit:sdd-lot2</code></td>
-                        <td class="description">[COMMUNITY] Generate the Service Definition Document for a Lot 2 cloud software or SaaS service.</td>
+                        <td><code>/arckit:sdd-lot1b</code></td>
+                        <td class="description">[COMMUNITY] Generate the Service Definition Document for a G-Cloud 15 Lot 1b IaaS or PaaS service above OFFICIAL (SC or DV staff clearance only).</td>
+                        <td>UK G-Cloud Supplier Overlay</td>
+                        <td>UK</td>
+                        <td>Community</td>
+                        <td class="examples">&mdash;</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
+                        <td><code>/arckit:sdd-lot2a</code></td>
+                        <td class="description">[COMMUNITY] Generate the Service Definition Document for a G-Cloud 15 Lot 2a Infrastructure Software as a Service (iSaaS) service.</td>
+                        <td>UK G-Cloud Supplier Overlay</td>
+                        <td>UK</td>
+                        <td>Community</td>
+                        <td class="examples">&mdash;</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
+                        <td><code>/arckit:sdd-lot2b</code></td>
+                        <td class="description">[COMMUNITY] Generate the Service Definition Document for a G-Cloud 15 Lot 2b Software as a Service (SaaS) service.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>
@@ -2427,7 +2463,7 @@
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
                         <td><code>/arckit:sdd-lot3</code></td>
-                        <td class="description">[COMMUNITY] Generate the Service Definition Document for a Lot 3 cloud support, migration, consulting, training, or managed service.</td>
+                        <td class="description">[COMMUNITY] Generate the Service Definition Document for a G-Cloud 15 Lot 3 Cloud Support service, with the DDaT role levels that deliver it; the rates are on the supplier's one rate card.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>
@@ -2436,7 +2472,7 @@
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
                         <td><code>/arckit:declaration</code></td>
-                        <td class="description">[COMMUNITY] Generate the supplier declaration evidence pack for a G-Cloud framework submission.</td>
+                        <td class="description">[COMMUNITY] Prepare the G-Cloud 15 supplier declaration under the Procurement Act 2023 (CDP, PPON, exclusion grounds, debarment list, supply chain payments) for the supplier to confirm and sign.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>
@@ -2445,7 +2481,7 @@
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
                         <td><code>/arckit:pricing</code></td>
-                        <td class="description">[COMMUNITY] Generate a G-Cloud pricing document aligned to the service design, SDD, support model, and market evidence.</td>
+                        <td class="description">[COMMUNITY] Generate a G-Cloud 15 pricing document for the service's lot: the 1a/1b price formula or the 2a/2b discount bands, aligned to the SDD. For Lot 3 it keeps the supplier's one DDaT rate card, shared by every Lot 3 service.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>
@@ -2454,7 +2490,7 @@
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
                         <td><code>/arckit:security</code></td>
-                        <td class="description">[COMMUNITY] Generate NCSC Cloud Security Principles assertions and evidence for a G-Cloud service.</td>
+                        <td class="description">[COMMUNITY] Generate security evidence for a G-Cloud 15 service: the certifications its lot requires and the NCSC Cloud Security Principles assertions.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>
@@ -2463,7 +2499,7 @@
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
                         <td><code>/arckit:gcloud-competitors</code></td>
-                        <td class="description">[COMMUNITY] Benchmark a G-Cloud service against Digital Marketplace rivals with feature, price, and positioning analysis.</td>
+                        <td class="description">[COMMUNITY] Benchmark a G-Cloud service against Digital Marketplace rivals in its G-Cloud 15 lot with feature, price, rate card, discount, and positioning analysis.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>
@@ -2472,7 +2508,7 @@
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
                         <td><code>/arckit:review</code></td>
-                        <td class="description">[COMMUNITY] Review a G-Cloud service submission for completeness, consistency, evidence gaps, marketplace limits, and readiness before CCS submission.</td>
+                        <td class="description">[COMMUNITY] Review a G-Cloud service submission for completeness, lot consistency, G-Cloud 15 limits, pending items, evidence gaps, and readiness before submission to GCA.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>
@@ -2481,7 +2517,7 @@
                     </tr>
                     <tr data-status="experimental" data-category="uk-gcloud-overlay" data-jurisdiction="uk" data-tier="community">
                         <td><code>/arckit:submission-pack</code></td>
-                        <td class="description">[COMMUNITY] Bundle approved supplier and service documents into a G-Cloud submission folder with a manifest and pre-submission checklist.</td>
+                        <td class="description">[COMMUNITY] Bundle approved supplier and service documents into a G-Cloud submission folder for GCA's Digital Platform with a manifest and pre-submission checklist.</td>
                         <td>UK G-Cloud Supplier Overlay</td>
                         <td>UK</td>
                         <td>Community</td>

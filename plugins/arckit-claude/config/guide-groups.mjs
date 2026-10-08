@@ -334,9 +334,13 @@ add(GUIDE_SECTIONS.OVERLAY, 'UAE Federal Overlay', 'community', [
 
 add(GUIDE_SECTIONS.OVERLAY, 'UK G-Cloud Supplier Overlay', 'community', [
   'supplier-profile',
+  'social-value',
+  'lot-questions',
   'service-design',
-  'sdd-lot1',
-  'sdd-lot2',
+  'sdd-lot1a',
+  'sdd-lot1b',
+  'sdd-lot2a',
+  'sdd-lot2b',
   'sdd-lot3',
   'declaration',
   'pricing',

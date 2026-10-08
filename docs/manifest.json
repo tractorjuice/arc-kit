@@ -867,6 +867,14 @@
       "section": "Core Workflows"
     },
     {
+      "path": "docs/guides/lot-questions.md",
+      "title": "G-Cloud Lot Questions Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
       "path": "docs/guides/maturity-model.md",
       "title": "Maturity Model Guide",
       "category": "Governance",
@@ -1067,16 +1075,32 @@
       "section": "Core Workflows"
     },
     {
-      "path": "docs/guides/sdd-lot1.md",
-      "title": "G-Cloud Lot 1 Service Definition Guide",
+      "path": "docs/guides/sdd-lot1a.md",
+      "title": "G-Cloud Lot 1a Service Definition Guide",
       "category": "UK G-Cloud Supplier Overlay",
       "status": "community",
       "section": "Overlay Packs",
       "pack": "UK G-Cloud Supplier Overlay"
     },
     {
-      "path": "docs/guides/sdd-lot2.md",
-      "title": "G-Cloud Lot 2 Service Definition Guide",
+      "path": "docs/guides/sdd-lot1b.md",
+      "title": "G-Cloud Lot 1b Service Definition Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/sdd-lot2a.md",
+      "title": "G-Cloud Lot 2a Service Definition Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
+    },
+    {
+      "path": "docs/guides/sdd-lot2b.md",
+      "title": "G-Cloud Lot 2b Service Definition Guide",
       "category": "UK G-Cloud Supplier Overlay",
       "status": "community",
       "section": "Overlay Packs",
@@ -1154,6 +1178,14 @@
       "category": "Planning",
       "status": "live",
       "section": "Core Workflows"
+    },
+    {
+      "path": "docs/guides/social-value.md",
+      "title": "G-Cloud Social Value Guide",
+      "category": "UK G-Cloud Supplier Overlay",
+      "status": "community",
+      "section": "Overlay Packs",
+      "pack": "UK G-Cloud Supplier Overlay"
     },
     {
       "path": "docs/guides/sow.md",
@@ -1765,6 +1797,9 @@
     "SECA": "Procurement",
     "GCMP": "Procurement",
     "GCRV": "Procurement",
+    "SOCV": "Procurement",
+    "LOTQ": "Procurement",
+    "RATE": "Procurement",
     "DMC": "Procurement",
     "VEND": "Procurement",
     "AWRS": "Research",

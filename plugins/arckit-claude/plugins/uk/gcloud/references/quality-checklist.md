@@ -1541,83 +1541,95 @@ All artifacts must pass these 10 checks:
 ### SUPP -- G-Cloud Supplier Profile
 
 - Company details complete: registered name, company registration number, DUNS, VAT, registered address, trading name, website, year established
+- Central Digital Platform registration recorded: status, 12-character PPON in `XXXX-XXXX-XXXX` form and current share code, or `[PENDING]`
+- Ultimate and immediate parent companies recorded, or their absence stated
+- Contacts include the listing contact shown on every service listing (name, email and phone), the contract notice contact (generic email and address, no named individual), the five framework award form contacts and a Social Value Contact
 - Every certification records status, certificate number, expiry and certification body — a named certification without a number or expiry is incomplete
-- Security clearances recorded as staff counts per level (BPSS, CTC, SC, DV, eDV) with sponsoring organisation and renewal process
+- The certifications each G-Cloud 15 lot bid for requires are identifiable: ISO 9001, 20000-1 and 27001 (plus 14001, 27017 and 27018 where applicable) for Lot 1a/1b bids; Cyber Essentials Plus for Lot 1a/1b call-offs and Cyber Essentials for Lot 2a, 2b and 3 call-offs
+- Security clearances recorded as staff counts per level (BPSS, CTC, SC, DV, eDV) with screening standard and clearance management process; BPSS not described as renewed annually
 - Every data centre records location, operator, UK data sovereignty position, certifications, and backup or DR location with distance from primary
-- Insurance recorded per policy with provider, coverage amount and expiry
+- Insurance recorded per policy with provider, coverage amount and expiry, so it can be compared with the levels GCA asks for at framework award
+- Carbon Reduction Plan status recorded (required for Lots 1a/1b), with publication URL and Net Zero commitment where it exists
 - Modern Slavery position states whether the £36m turnover threshold is met and, where it is, the published statement URL
-- Environmental credentials record ISO 14001 status, carbon-neutral position and net-zero target year
-- Subcontracting position stated, with policy and key subcontractors where used
+- Supply chain payment performance recorded for the two most recent reporting periods where the supplier uses a supply chain
+- Subcontracting position stated, with key subcontractors and associated persons where used
 - SME status recorded (Micro / Small / Medium / Large) consistent with the stated employee count and turnover
+- Nothing unconfirmed is presented as fact: unknowns are `[PENDING]`
 
 ### DECL -- G-Cloud Supplier Declaration
 
-- Every mandatory exclusion ground answered explicitly and reproduced verbatim — never paraphrased or skipped
-- All seven mandatory exclusion categories addressed: conspiracy, corruption and bribery, fraud and theft, organised crime, terrorism, money laundering, tax evasion
-- All seven discretionary exclusion grounds answered: bankruptcy or insolvency, grave professional misconduct, distorting competition, conflict of interest, significant deficiencies in prior contracts, serious misrepresentation, undue influence
-- Company information complete, including contract notice contact details as distinct from the primary contact
-- Service offerings confirm day-one availability, absence of prohibited items and the subcontracting position
-- Modern Slavery, Equality Act 2010, environmental and labour law compliance each answered
-- All three insurance types declared: employers liability, professional indemnity, public liability
-- Tax compliance covers current obligations, GAAR compliance and absence of evasion convictions
-- Framework terms accepted, including the 10-working-day response commitment
-- No question left blank or answered `N/A` where a positive or negative declaration is required
+- Sections follow GCA's G-Cloud 15 declaration order: parent companies, tender information, exclusion grounds, subcontractors, legal capacity, payments in contracts above £5m a year, modern slavery, social value, third-party agents or bid writers, framework award form, connected persons, confirmation, mandatory award question
+- Every declaration question reproduced in GCA's wording; none paraphrased or skipped
+- PPON and current share code recorded, or the Central Digital Platform dependency flagged as `[PENDING]`
+- The exclusion grounds question asks about offences declared in the core supplier information on the Central Digital Platform (Procurement Act 2023 Schedules 6 and 7); no Public Contracts Regulations 2015 grounds listed
+- No declaration, exclusion, debarment or pass/fail answer that the supplier has not given: each is the supplier's recorded answer or `[PENDING]`, never a default
+- The third-party agents or bid writers question shown verbatim and answered only by the supplier, or `[PENDING — the supplier decides and answers this]`
+- Supply chain payment figures, where given, have percentages totalling 100 per period and name the pass route they meet or the fail condition they fall into
+- Social value summarised from the SOCV artefact, or recorded as missing
+- The confirmation is not ticked; the signatory confirms and signs on GCA's Digital Platform
+- Evidence at framework award states the insurance levels for the lots bid for (Lot 1b's are higher) and the certificates each lot requires, with any shortfall listed
+- Every answer that would fail a pass/fail question is listed with its consequence
 
 ### SVCD -- G-Cloud Service Design
 
-- Lot selected and recorded (Lot 1 Cloud Hosting, Lot 2 Cloud Software, Lot 3 Cloud Support)
-- Lot-specific information gathered for the selected lot rather than the generic set alone
-- Service name within 100 characters and service description within 50 words for the marketplace fields
-- Features and benefits each capped at 10 items, every item within 100 characters
+- Lot recorded on the `**G-Cloud Lot**` line as one of Lot 1a, 1b, 2a, 2b or 3 with GCA's lot name, and the matching SDD command named (`sdd-lot1a`, `sdd-lot1b`, `sdd-lot2a`, `sdd-lot2b` or `sdd-lot3`)
+- Lot-specific design completed for the selected lot rather than the generic set alone
+- Service name within 100 characters (the name only, no extra keywords) and service description within 500 characters
+- Features and benefits each capped at 10 items, every item within 10 words
+- First-pass categories taken from the selected lot's G-Cloud 15 category tree, all under one root and one group (`Root > Group`) recorded on the Category group line; an offer spanning groups is designed as one service per group
+- Supplier type chosen from GCA's four options, naming the organisation resold where the supplier is a reseller
 - Target buyer segments named
 - Technical details cover hosting locations and data residency, backup and DR, scalability, and security controls cross-referenced to the supplier profile certifications
 - Support model states hours, channels, response targets and escalation
-- Pricing model outlined consistently with the pricing artefact where one exists
+- Pricing approach outlined in the lot's G-Cloud 15 terms (price formula, discount bands or the supplier's one DDaT rate card) and consistent with the pricing artefact where one exists; for Lot 3, the role levels that deliver the service named exactly as GCA's rate card names them, with any role outside DDaT mapped to the nearest DDaT role and level
 - Differentiation states competitive advantages and target use cases rather than marketing claims
 
 ### SDD -- G-Cloud Service Definition Document
 
-- Every mandatory marketplace question answered — an unanswered question causes rejection
-- Lot-specific categories completed for the document's own lot, and no other lot's categories substituted
-- Service name within 100 characters; description within 50 words and 500 characters
-- Features and benefits each within 10 items and 100 characters per item
-- Data centre details cover physical locations, tier, power redundancy, cooling, physical security and environmental certifications
-- Multi-tenancy separation described across resource, network and data isolation
-- Public sector network connectivity addressed where relevant (PSN, HSCN)
-- Support availability, channels, response times and documentation availability stated
-- Data locations, import and export formats, and the end-of-contract data-extraction process all specified
-- Content consistent with the supplier profile and service design artefacts — company name, certifications, data-centre locations, features, benefits and lot must agree
+- Every G-Cloud 15 service question for the document's lot answered, ticked, `Not applicable` (follow-up not triggered) or `[PENDING]` — an unanswered question causes rejection
+- Each choose-one question has exactly one tick, and every ticked option is worded exactly as the template words it: the live listings' wording, with the Digital Platform's wording in a comment where it differs
+- Categories taken from the document's own lot tree as full paths, and no other lot's categories substituted; every category under the one root and group on the Category group line, since no live G-Cloud 15 listing has categories in two groups
+- Service name within 100 characters; description within 500 characters
+- Features and benefits each within 10 items and 10 words per item; system requirements and backed-up items within 10 words each
+- Every free-text answer within the 50, 100 or 200-word limit on its `**Words:**` line, with the count filled in rather than left as `[X]` (limits inferred from the live listings and tabulated in the overlay's `framework-questions.md`)
+- Supplier type recorded with the listing wording of one of GCA's four options ("Not a reseller", "Reseller providing extra features and support", "Reseller providing extra support", "Reseller (no extras)"), consistent with the reseller or sole control answer in the lot questions for Lots 1a/1b
+- Lot 1b staff security offers SC or DV only
+- Lot 3: section 11 lists the role levels that deliver the service, named exactly as GCA's Lot 3 rate card names them, each marked on or not on the supplier's one rate card (RATE); the SDD copies no rates
+- No prices in the service definition beyond what GCA's questions ask for; the uploaded document is ODF or PDF/A, at most 5 MB and accessible
+- Content consistent with the supplier profile and service design artefacts — company name, certifications, clearances, data locations, features, benefits and lot must agree
 
 ### PRIC -- G-Cloud Pricing Document
 
-- Pricing model chosen and appropriate to the lot — day rates or fixed price for Lot 3, per-user, consumption, flat fee or tiered for Lots 1 and 2
+- Pricing follows the document's own lot: the 1a/1b price formula (baseline price with web link, fixed onboarding costs, framework discount, supplier-specific schemes, time-limited discounts); the 2a/2b unit prices plus a discount for each of the six annual call-off bands; or, for Lot 3, a summary of the supplier's one rate card (RATE) naming its version and average day rate, with the rates themselves left on the card
 - All prices stated in GBP; no other currency present
-- Base pricing states minimum, standard and enterprise or volume price points
-- What is included at base price stated explicitly (features, support level, storage, users, transactions, training)
-- What costs extra stated explicitly, so the total cost of the service is derivable rather than implied
-- Education and charity pricing addressed
-- Free trial or free version position stated
-- SFIA rate card used for Lot 3 day rates, with remote, on-site and out-of-hours rates distinguished
-- Pricing consistent with the SDD's stated pricing model, included features and support level
+- No "price on application", "from £x" or unexplained price ranges
+- The evaluated elements identified with their weights: onboarding price (5%) and minimum discount (5%) for Lots 1a/1b; the total of the band discounts (80%) for Lots 2a/2b; the average of every UK and offshore day rate entered (80%) for Lot 3
+- Lot 3: every role level that delivers the service is on the supplier rate card, and the summary agrees with the card's current version
+- The reduce-only rule stated for the lot (Lot 3 rates and 2a/2b unit prices can be reduced, never increased; the 2a/2b discount matrix is fixed for each term)
+- Free trial and education pricing addressed where the lot asks for them; a free trial description within 50 words
+- The 0.75% management charge acknowledged
+- No SFIA rate card or G-Cloud 14 minimum/maximum price, unit and interval fields
+- Market comparisons, where given, name their source and the number of listings they rest on; no invented market figures
+- Pricing consistent with the SDD: education discount, free trial and, for Lots 1a/1b, the deployment models priced
 
 ### SECA -- G-Cloud Security Evidence
 
-- All 14 NCSC Cloud Security Principles addressed
+- The certifications the service's lot requires are addressed: ISO 9001, 20000-1 and 27001 (plus 14001, 27017 and, with public cloud, 27018 unless relying on a provider's accreditations) for Lot 1a/1b bids; Cyber Essentials Plus (1a/1b) and Cyber Essentials (2a, 2b and 3) as call-off requirements, a missing one reported as a call-off warning rather than a bid failure
+- Lots 1a/1b and 2a/2b address all 14 NCSC Cloud Security Principles under their current names (including "Separation between customers" and "Audit information and alerting for customers"); Lot 3 covers staff security and standards
+- G-Cloud 15 questions answered where the lot asks them: post-quantum cryptography, the Software Security Code of Practice (2a/2b), the AI chatbot and FOCUS resource tagging
 - Every certification records certificate number, scope, certification body, last audit date and next recertification date
-- Cyber Essentials or Cyber Essentials Plus recorded with certificate number, certification date and expiry
-- SOC 2 Type II records report date, trust service criteria covered and any exceptions noted — exceptions are not omitted
+- Cyber Essentials or Cyber Essentials Plus recorded with certificate number, certification date and expiry, or the alternative route GCA allows
+- SOC 2 Type II, where held, records report date, trust service criteria covered and any exceptions noted — exceptions are not omitted
 - Penetration testing records frequency, last test date, provider, scope coverage and remediation process
-- Vulnerability scanning records frequency, tooling and remediation SLAs
 - Data protection covered both in transit and at rest, with key management stated
-- Access management and audit capabilities described
 - Evidence register maps each claim to its supporting artefact
-- Certifications consistent with those declared in the supplier profile
+- Certifications consistent with those declared in the supplier profile and the lot questions
 
 ### GCMP -- G-Cloud Competitor Benchmark
 
-- Competitors identified from real market evidence, with the search basis recorded rather than assumed
+- Competitors identified from real market evidence on G-Cloud 15 listings in the service's own lot (1a, 2a, 2b or 3), with the search basis recorded rather than assumed
 - Feature, pricing, certification and support comparisons each presented as a like-for-like table
-- Pricing comparison states market low, average and high alongside the service's own price
+- Pricing compared in the lot's own terms (1a/1b price formula and minimum discount, 2a/2b discount bands, Lot 3 maximum day rates by DDaT role level) alongside the service's own figures, with the number of listings the comparison rests on
 - Certification comparison expresses the market position as a proportion rather than an assertion
 - SWOT covers all four quadrants, each grounded in the comparison tables rather than introduced fresh
 - Strengths and weaknesses stated relative to named competitors, not in the abstract
@@ -1627,14 +1639,49 @@ All artifacts must pass these 10 checks:
 
 ### GCRV -- G-Cloud Submission Review
 
-- Every expected document checked for existence by its ARC-ID (SUPP, DECL, SVCD, SDD, PRIC, SECA)
-- Overall status set to READY, NEEDS WORK or NOT READY, and consistent with the findings — no READY status while a mandatory field is missing
+- Every expected document checked for existence by its ARC-ID: supplier-wide SUPP, SOCV, LOTQ (with the Part for the service's lot group), DECL and, for a Lot 3 service, RATE; per-service SVCD, SDD, PRIC and SECA
+- Overall status set to READY, NEEDS WORK or NOT READY, and consistent with the findings — no READY status while a mandatory field remains or the placeholder scan reports an unfinished answer (`[PENDING]` in any form, an older marker such as `[TODO]` or `[TBC]`, or a template field never filled in) outside the Document Control approval rows and Revision History
 - Mandatory field status reported per document rather than in aggregate
-- Character and word limits validated numerically and reported as actual against limit: service name against 100 characters, description against 50 words and 500 characters, each feature and benefit against 100 characters
-- Consistency checks run across every pair the review names: supplier profile against SDD, service design against SDD, SDD against pricing, SDD against security
-- Common rejection reasons checked explicitly: placeholder text, `N/A` where an answer is required, contradictory statements, unsubstantiated claims, competitor mentions, non-GBP pricing
-- Actions required listed with enough specificity to be actioned without re-reading the source documents
+- Every document written for the previous framework reported as blocking, by its structure (a title or Framework row naming an earlier G-Cloud, a three-lot Lot value, an SFIA rate card, the old minimum/maximum price fields, a supplier profile with no Central Digital Platform or PPON section, a Public Contracts Regulations declaration), not by a passing mention
+- Character and word limits validated numerically and reported as actual against limit: service name against 100 characters, description against 500 characters, each feature and benefit against 10 words, every SDD free-text answer recounted against the limit on its `**Words:**` line, the scored Lot 1a/1b quality answers against 250 words per part
+- The lot agrees across the service design, SDD, pricing and lot questions, and each document follows that lot's G-Cloud 15 rules
+- Consistency checks run across every pair the review names, each conflict naming both documents; the SDD checked against the pricing document for the education discount, free trial, Lot 1a/1b deployment models priced, Lot 3 role levels on the rate card and lot-wide figures
+- Common rejection reasons checked explicitly: placeholder text, `N/A` where an answer is required, contradictory statements, unsubstantiated claims, competitor mentions, prices in the SDD, forbidden pricing ("price on application", "from £x", unexplained ranges), non-GBP pricing
+- Actions required listed with enough specificity to be actioned without re-reading the source documents, each naming the command to re-run
 - Evidence status reported per claim requiring evidence
+
+### RATE -- G-Cloud Lot 3 Rate Card
+
+- One card for all the supplier's Lot 3 services, supplier-wide in `projects/000-global/supplier/`, written only by `/arckit-uk-gcloud:pricing`; it lists the Lot 3 services it covers
+- Every role level named exactly as GCA's Lot 3 rate card names it (9 job families, 58 roles, 222 role levels); levels the supplier can't provide left blank, not priced
+- A maximum UK day rate, and an offshore rate or "Not offered", for every level offered; every rate at least £50, for a 7.5-hour day with travel and subsistence inside the M25 included and no risk or contingency uplift; no SFIA levels or SFIA rates
+- The average day rate computed as GCA scores it: every UK and offshore rate entered, added up and divided by their number, leaving out any under £50 or over £10,000
+- Every role level any Lot 3 service's design or SDD needs is on the card, with the services and their levels tabled
+- Roles outside DDaT (procurement and commercial advisers, trainers) mapped to the nearest DDaT role and level, with the reason and where buyers are told
+- Market comparisons name their source and the number of listings they rest on; no invented percentile or median, and no market figure written in as the supplier's rate
+- Rates the supplier hasn't confirmed are `[PENDING]`, never a market figure
+
+### SOCV -- Social Value Commitments
+
+- Section A's five understanding questions each answered by the supplier, or `[PENDING]`; any "No" flagged as making the bid non-compliant
+- At least one Model Award Criteria measure selected, each worded exactly as the social value model gives it (the live listings' wording, which buyers see), grouped by mission and policy outcome (outcomes 1–4 and 6–8; outcome 5 is not used); where GCA's checkbox is longer, the measure matched to the checkbox with the same opening words, and none of the Outcome 4 export fragments ("Illustrative examples include:") offered as a measure
+- A delivery plan for every selected measure: evidence today, what will be delivered on a call-off, how it is measured, owner and status
+- A named Social Value Contact (name, job title, email) committed in Section C
+- The six operational readiness questions each answered by the supplier, or `[PENDING]`; any "No" flagged as disqualifying
+- The assessment stated correctly: pass/fail, a pass scoring the full 10% on every lot
+- No commitment presented without evidence or a plan the supplier can deliver
+
+### LOTQ -- G-Cloud Lot Questions
+
+- One Part for each lot group bid for (Part 1 Lots 1a and 1b, Part 2 Lots 2a and 2b, Part 3 Lot 3), and no Part for a lot group not bid for
+- Every lot question for each Part asked in GCA's wording, with answers ticked using GCA's options
+- Lots 1a/1b: every condition of participation answered (reseller or sole control, reliance on the cloud provider's accreditations, Lot 1b and ISO 27018, trading history), with the certificates and Carbon Reduction Plan each requires
+- Lots 1a/1b: each of the five scored sub-criteria drafted within 250 words, its word count shown, and its weight and marking scheme stated (Quality Cloud Services 40%, Maximising Buyer Value 40%); the non-scored mandatory items answered
+- Lots 2a/2b and 3: the four mandatory award criteria answered (2.5% each), with the disqualification rule stated as GCA's lot-specific one (under 33 on all four criteria disqualifies; a single zero loses that criterion's 2.5%), and Cyber Essentials recorded as mandatory for call-offs; a missing certificate listed as a call-off warning, not under "Would Fail as Written", with the alternative in the live listings' wording
+- Scored answers are evidence-based and specific to the supplier — no generic claims, competitor names or unverifiable statistics
+- Each "What the … doesn't cover" answer within 200 words, the limit the live listings show
+- Pass/fail answers and certificates held are the supplier's own, or `[PENDING]`; none defaulted
+- Answers consistent with the supplier profile, the SDDs for the services in each lot group, and the security evidence; written after those SDDs, with any answer that rests on a service design alone marked `[PENDING: check against the SDD]`, and no service whose design records no G-Cloud 15 lot counted in a lot group
 
 ### FSSCA -- SCA-RTS Exemption Assessment
 

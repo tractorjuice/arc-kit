@@ -43,7 +43,7 @@ The doc-type codes that carry a regime. A `doc-type:` value absent from this tab
 
 | Regime | Label | Routing | Doc-type codes |
 |---|---|---|---|
-| UK | UK Gov | falls through to step 2 | `TNDR`, `CMPT`, `TCOP`, `AIPB`, `ATRS`, `DPIA`, `SVCASS`, `SUPP`, `SVCD`, `SDD`, `DECL`, `PRIC`, `SECA`, `GCMP`, `GCRV`, `FSSCA`, `FSSAFE`, `FSCD`, `FSCTP`, `NHSDTAC`, `NHSMDR` |
+| UK | UK Gov | falls through to step 2 | `TNDR`, `CMPT`, `TCOP`, `AIPB`, `ATRS`, `DPIA`, `SVCASS`, `SUPP`, `SVCD`, `SDD`, `DECL`, `PRIC`, `SECA`, `GCMP`, `GCRV`, `SOCV`, `LOTQ`, `RATE`, `FSSCA`, `FSSAFE`, `FSCD`, `FSCTP`, `NHSDTAC`, `NHSMDR` |
 | MOD | MOD | falls through to step 2 | `SECD-MOD`, `JSP936` |
 | AT | Austria | hard-routes | `ATBFR`, `ATDSG`, `ATNISG`, `BVERGG` |
 | AU | Australia | hard-routes | `AUE8`, `AUISM`, `AUPIA`, `AUNDB`, `AUOT`, `AUSOCI`, `AUAESCSF`, `AUENERGY`, `AUDSS`, `AUPSPF`, `AUAIA`, `AUDISP` |
