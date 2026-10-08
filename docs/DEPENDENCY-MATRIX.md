@@ -402,6 +402,30 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ## Changelog
 
+### 2026-10-07 - UK G-Cloud Supplier Overlay moves to G-Cloud 15 (Community, Proprietary)
+
+The `arckit-uk-gcloud` overlay now targets G-Cloud 15 (RM1557.15), run by the Government Commercial Agency (GCA, formerly CCS), and drops G-Cloud 14. It goes from 11 commands to 15: `/arckit:sdd-lot1` is replaced by `/arckit:sdd-lot1a` and `/arckit:sdd-lot1b`, `/arckit:sdd-lot2` by `/arckit:sdd-lot2a` and `/arckit:sdd-lot2b`, and `/arckit:social-value` and `/arckit:lot-questions` are new. Total community-overlay command count moves up by 4. As before, overlay commands are documented here rather than as DSM grid rows.
+
+**New commands and output doc-types** (regime UK, category Procurement, HIGH severity):
+
+- `/arckit:social-value` → `SOCV` (Social Value Commitments), supplier-wide in `projects/000-global/supplier/`
+- `/arckit:lot-questions` → `LOTQ` (G-Cloud Lot Questions), supplier-wide, one Part per lot group bid for
+- `/arckit:sdd-lot1a`, `/arckit:sdd-lot1b`, `/arckit:sdd-lot2a`, `/arckit:sdd-lot2b` → `SDD` (one per G-Cloud 15 lot; `sdd-lot3` unchanged in name)
+- `/arckit:pricing` → `PRIC`, and for Lot 3 also `RATE` (G-Cloud Lot 3 Rate Card; regime UK, category Procurement), the supplier's one rate card in `projects/000-global/supplier/`, shared by every Lot 3 service. The Lot 3 SDD lists the role levels that deliver the service and copies no rates
+
+**Dependencies**: supplier-profile (SUPP) → social-value (SOCV, M) → service-design (SVCD) → sdd-lot1a / 1b / 2a / 2b / 3 (SDD, M) → pricing (PRIC, R; reads the SDD so the two agree; for Lot 3 also writes RATE) and security (SECA, R) → lot-questions (LOTQ, M; after the SDDs, because the Lot 2a/2b and Lot 3 award criteria repeat each service's SDD and security answers, R) → declaration (DECL, M; summarises SOCV, records the lots bid for) → review (GCRV; checks SUPP, SOCV, LOTQ, DECL, SVCD, SDD, PRIC, SECA and, for Lot 3, RATE) → submission-pack.
+
+**Skills**: `gcloud-framework` (now with the G-Cloud 15 question references), `cloud-security`, `ddat-rate-card` (replaces `sfia-skills`). **Recipe**: `uk-gcloud-submission` adds the SOCV and LOTQ targets, runs LOTQ after the SDD, pricing and security, and defaults to `sdd-lot2b`.
+
+**Typical G-Cloud 15 supplier path**:
+
+```text
+supplier-profile → social-value →
+service-design → sdd-lot1a | sdd-lot1b | sdd-lot2a | sdd-lot2b | sdd-lot3 →
+pricing / security → lot-questions → declaration →
+gcloud-competitors (optional) → review → submission-pack
+```
+
 ### 2026-09-03 - Interactive Diagram Rendering command (#826)
 
 Added `/arckit:archify` (76th core command), taking the core plugin from 75 to 76 commands. Documented here via this changelog rather than as a DSM grid row, following the convention used for recent additions. Tier 6 detailed design.

@@ -10,7 +10,7 @@
 >
 > 2. **Licence incompatibility** — the IRN is published under CC BY-NC-ND 4.0 (non-commercial, no derivatives). ArcKit is MIT (commercial use permitted). These licences are incompatible for derived content.
 >
-> **To score this document**: download the official aDRI evaluation grid at [gitlab.com/digitalresilienceinitiative/adri-irn](https://gitlab.com/digitalresilienceinitiative/adri-irn), apply R/NR criteria per pillar and layer, then report your scores below.
+> **To score this document**: download the official aDRI evaluation grid at [gitlab.com/digitalresilienceinitiative/adri-irn](https://gitlab.com/digitalresilienceinitiative/adri-irn), open `Référentiel_IRN_v1.2.xlsx` (or the current version), fill the evaluation grid for each digital asset, then report the maturity level of each criterion below.
 
 ## Document Control
 
@@ -25,33 +25,30 @@
 
 ## Executive Summary
 
-| Pillar | Score (0–100) | Trend | Priority Actions |
-|--------|--------------|-------|-----------------|
-| RES-1 Résilience Stratégique | [Score or TBD] | [↑ / → / ↓] | [Key actions] |
-| RES-2 Résilience Économique et Juridique | [Score or TBD] | | |
-| RES-3 Résilience Data & IA | [Score or TBD] | | |
-| RES-4 Résilience Opérationnelle | [Score or TBD] | | |
-| RES-5 Résilience Supply-Chain | [Score or TBD] | | |
-| RES-6 Résilience Technologique | [Score or TBD] | | |
-| RES-7 Résilience Sécurité | [Score or TBD] | | |
-| RES-8 Résilience Environnementale | [Score or TBD] | | |
-| **IRN Global Score** | **[Score or TBD]** | | |
+| Pillar | Criteria assessed | Non résilient | Trend | Priority Actions |
+|--------|-------------------|---------------|-------|------------------|
+| RES-1 Résilience Stratégique | [n / total or TBD] | [n or TBD] | [↑ / → / ↓] | [Key actions] |
+| RES-2 Résilience Économique et Juridique | [n / total or TBD] | | | |
+| RES-3 Résilience Data & IA | [n / total or TBD] | | | |
+| RES-4 Résilience Opérationnelle | [n / total or TBD] | | | |
+| RES-5 Résilience Supply-Chain | [n / total or TBD] | | | |
+| RES-6 Résilience Technologique | [n / total or TBD] | | | |
+| RES-7 Sécurité & Résilience | [n / total or TBD] | | | |
+| RES-8 Résilience Environnementale et Énergétique | [n / total or TBD] | | | |
 
-> **Scoring**: Apply the official aDRI R/NR criteria (available at the official repository) per pillar and organisational layer to derive the 0–100 score for each pillar. The global IRN score is a weighted aggregate — weights and thresholds are defined in the official evaluation grid.
+> **Scoring**: the official aDRI evaluation grid records a maturity level per criterion — or marks it non-resilient or not applicable — with comments and evidence. Report those levels here as recorded in the grid. The v1.2 workbook does not compute a weighted 0–100 score; state a global IRN score only if it was derived with the aDRI methodology or by an accredited assessor, and say which.
 
 ---
 
 ## Scope
 
-### Organisational Layers in Scope
+### Digital Assets in Scope
 
-| Layer | In Scope | Justification |
-|-------|----------|---------------|
-| **Applicative** — Applications, SaaS, business logic, AI models | ☐ | [Justification] |
-| **Data** — Data collection, quality, traceability, AI datasets | ☐ | [Justification] |
-| **Platform** — Dev/deploy/orchestration environments | ☐ | [Justification] |
-| **Infrastructure** — Cloud, compute, storage, network | ☐ | [Justification] |
-| **Compétences** — Human expertise, outsourcing level, change management | ☐ | [Justification] |
+The official grid is filled once per digital asset. Organisation-scope criteria are assessed once for the whole organisation; asset-scope criteria are assessed for each asset below.
+
+| # | Asset name | Type | Supplier | Operator | Importance | Business use |
+|---|------------|------|----------|----------|------------|--------------|
+| A1 | [Asset name] | [e.g. SaaS, PaaS, IaaS, software, infrastructure] | [Supplier] | [Internal / external operator] | [Standard / Essentiel / Vital] | [Business use] |
 
 ---
 
@@ -59,7 +56,7 @@
 
 *Thematic areas: strategic technology vision & roadmap, independence strategy, IT governance*
 
-> **Scoring**: consult the official aDRI evaluation grid for the R/NR criteria for this pillar.
+> **Scoring**: one row per criterion of this pillar listed in the official aDRI evaluation grid — the criterion's scope (Organisation or Actif numérique) and maturity scale are defined there.
 
 ### Observable context (from project artifacts)
 
@@ -67,13 +64,9 @@
 
 ### Scoring grid
 
-| Layer | Pre-populated observations | R / NR | Source |
-|-------|--------------------------|--------|--------|
-| Applicative | [Context from artifacts] | ? | [Artifact reference or "To assess via aDRI grid"] |
-| Data | [Context from artifacts] | ? | |
-| Platform | [Context from artifacts] | ? | |
-| Infrastructure | [Context from artifacts] | ? | |
-| Compétences | [Context from artifacts] | ? | |
+| Criterion ID | Scope | Asset | Pre-populated observations | Maturity level | Evidence |
+|--------------|-------|-------|---------------------------|----------------|----------|
+| RES-1.[n] | [Organisation / Actif numérique] | [Asset name or —] | [Context from artifacts] | ? | [Artifact reference or "To assess via aDRI grid"] |
 
 ### Preliminary risk observations
 
@@ -85,7 +78,7 @@
 
 *Thematic areas: regulatory compliance (RGPD, AI Act, DORA, NIS2…), legal sovereignty, audit & certification*
 
-> **Scoring**: consult the official aDRI evaluation grid for the R/NR criteria for this pillar.
+> **Scoring**: one row per criterion of this pillar listed in the official aDRI evaluation grid — the criterion's scope (Organisation or Actif numérique) and maturity scale are defined there.
 > **Linked assessments**: `/arckit:eu-rgpd`, `/arckit:eu-nis2`, `/arckit:eu-ai-act`, `/arckit:eu-dora`
 
 ### Observable context (from project artifacts)
@@ -94,13 +87,9 @@
 
 ### Scoring grid
 
-| Layer | Pre-populated observations | R / NR | Source |
-|-------|--------------------------|--------|--------|
-| Applicative | | ? | |
-| Data | | ? | |
-| Platform | | ? | |
-| Infrastructure | | ? | |
-| Compétences | | ? | |
+| Criterion ID | Scope | Asset | Pre-populated observations | Maturity level | Evidence |
+|--------------|-------|-------|---------------------------|----------------|----------|
+| RES-2.[n] | [Organisation / Actif numérique] | [Asset name or —] | [Context from artifacts] | ? | [Artifact reference or "To assess via aDRI grid"] |
 
 ### Preliminary risk observations
 
@@ -112,7 +101,7 @@
 
 *Thematic areas: data control, AI infrastructure, ethics & transparency*
 
-> **Scoring**: consult the official aDRI evaluation grid for the R/NR criteria for this pillar.
+> **Scoring**: one row per criterion of this pillar listed in the official aDRI evaluation grid — the criterion's scope (Organisation or Actif numérique) and maturity scale are defined there.
 
 ### Observable context (from project artifacts)
 
@@ -120,13 +109,9 @@
 
 ### Scoring grid
 
-| Layer | Pre-populated observations | R / NR | Source |
-|-------|--------------------------|--------|--------|
-| Applicative | | ? | |
-| Data | | ? | |
-| Platform | | ? | |
-| Infrastructure | | ? | |
-| Compétences | | ? | |
+| Criterion ID | Scope | Asset | Pre-populated observations | Maturity level | Evidence |
+|--------------|-------|-------|---------------------------|----------------|----------|
+| RES-3.[n] | [Organisation / Actif numérique] | [Asset name or —] | [Context from artifacts] | ? | [Artifact reference or "To assess via aDRI grid"] |
 
 ### Preliminary risk observations
 
@@ -138,7 +123,7 @@
 
 *Thematic areas: business continuity, incident management, recovery plans*
 
-> **Scoring**: consult the official aDRI evaluation grid for the R/NR criteria for this pillar.
+> **Scoring**: one row per criterion of this pillar listed in the official aDRI evaluation grid — the criterion's scope (Organisation or Actif numérique) and maturity scale are defined there.
 > **Linked assessments**: `/arckit:fr-ebios`
 
 ### Observable context (from project artifacts)
@@ -147,13 +132,9 @@
 
 ### Scoring grid
 
-| Layer | Pre-populated observations | R / NR | Source |
-|-------|--------------------------|--------|--------|
-| Applicative | | ? | |
-| Data | | ? | |
-| Platform | | ? | |
-| Infrastructure | | ? | |
-| Compétences | | ? | |
+| Criterion ID | Scope | Asset | Pre-populated observations | Maturity level | Evidence |
+|--------------|-------|-------|---------------------------|----------------|----------|
+| RES-4.[n] | [Organisation / Actif numérique] | [Asset name or —] | [Context from artifacts] | ? | [Artifact reference or "To assess via aDRI grid"] |
 
 ### Preliminary risk observations
 
@@ -165,7 +146,7 @@
 
 *Thematic areas: critical suppliers, diversification, contracts & SLAs*
 
-> **Scoring**: consult the official aDRI evaluation grid for the R/NR criteria for this pillar.
+> **Scoring**: one row per criterion of this pillar listed in the official aDRI evaluation grid — the criterion's scope (Organisation or Actif numérique) and maturity scale are defined there.
 
 ### Observable context (from project artifacts)
 
@@ -173,13 +154,9 @@
 
 ### Scoring grid
 
-| Layer | Pre-populated observations | R / NR | Source |
-|-------|--------------------------|--------|--------|
-| Applicative | | ? | |
-| Data | | ? | |
-| Platform | | ? | |
-| Infrastructure | | ? | |
-| Compétences | | ? | |
+| Criterion ID | Scope | Asset | Pre-populated observations | Maturity level | Evidence |
+|--------------|-------|-------|---------------------------|----------------|----------|
+| RES-5.[n] | [Organisation / Actif numérique] | [Asset name or —] | [Context from artifacts] | ? | [Artifact reference or "To assess via aDRI grid"] |
 
 ### Preliminary risk observations
 
@@ -191,7 +168,7 @@
 
 *Thematic areas: infrastructure & cloud, applications & SaaS, open source*
 
-> **Scoring**: consult the official aDRI evaluation grid for the R/NR criteria for this pillar.
+> **Scoring**: one row per criterion of this pillar listed in the official aDRI evaluation grid — the criterion's scope (Organisation or Actif numérique) and maturity scale are defined there.
 > **Linked assessments**: `/arckit:fr-secnumcloud`
 
 ### Observable context (from project artifacts)
@@ -200,13 +177,9 @@
 
 ### Scoring grid
 
-| Layer | Pre-populated observations | R / NR | Source |
-|-------|--------------------------|--------|--------|
-| Applicative | | ? | |
-| Data | | ? | |
-| Platform | | ? | |
-| Infrastructure | | ? | |
-| Compétences | | ? | |
+| Criterion ID | Scope | Asset | Pre-populated observations | Maturity level | Evidence |
+|--------------|-------|-------|---------------------------|----------------|----------|
+| RES-6.[n] | [Organisation / Actif numérique] | [Asset name or —] | [Context from artifacts] | ? | [Artifact reference or "To assess via aDRI grid"] |
 
 ### Preliminary risk observations
 
@@ -214,11 +187,11 @@
 
 ---
 
-## RES-7 — Résilience Sécurité
+## RES-7 — Sécurité & Résilience
 
 *Thematic areas: cybersecurity, data protection, risk management*
 
-> **Scoring**: consult the official aDRI evaluation grid for the R/NR criteria for this pillar.
+> **Scoring**: one row per criterion of this pillar listed in the official aDRI evaluation grid — the criterion's scope (Organisation or Actif numérique) and maturity scale are defined there.
 > **Linked assessments**: `/arckit:fr-anssi`, `/arckit:fr-ebios`, `/arckit:eu-nis2`
 
 ### Observable context (from project artifacts)
@@ -227,13 +200,9 @@
 
 ### Scoring grid
 
-| Layer | Pre-populated observations | R / NR | Source |
-|-------|--------------------------|--------|--------|
-| Applicative | | ? | |
-| Data | | ? | |
-| Platform | | ? | |
-| Infrastructure | | ? | |
-| Compétences | | ? | |
+| Criterion ID | Scope | Asset | Pre-populated observations | Maturity level | Evidence |
+|--------------|-------|-------|---------------------------|----------------|----------|
+| RES-7.[n] | [Organisation / Actif numérique] | [Asset name or —] | [Context from artifacts] | ? | [Artifact reference or "To assess via aDRI grid"] |
 
 ### Preliminary risk observations
 
@@ -241,11 +210,11 @@
 
 ---
 
-## RES-8 — Résilience Environnementale
+## RES-8 — Résilience Environnementale et Énergétique
 
 *Thematic areas: carbon footprint, green IT, digital sustainability*
 
-> **Scoring**: consult the official aDRI evaluation grid for the R/NR criteria for this pillar.
+> **Scoring**: one row per criterion of this pillar listed in the official aDRI evaluation grid — the criterion's scope (Organisation or Actif numérique) and maturity scale are defined there.
 > **Linked assessments**: `/arckit:fr-dinum` (RGESN — Référentiel Général d'Écoconception des Services Numériques)
 
 ### Observable context (from project artifacts)
@@ -254,13 +223,9 @@
 
 ### Scoring grid
 
-| Layer | Pre-populated observations | R / NR | Source |
-|-------|--------------------------|--------|--------|
-| Applicative | | ? | |
-| Data | | ? | |
-| Platform | | ? | |
-| Infrastructure | | ? | |
-| Compétences | | ? | |
+| Criterion ID | Scope | Asset | Pre-populated observations | Maturity level | Evidence |
+|--------------|-------|-------|---------------------------|----------------|----------|
+| RES-8.[n] | [Organisation / Actif numérique] | [Asset name or —] | [Context from artifacts] | ? | [Artifact reference or "To assess via aDRI grid"] |
 
 ### Preliminary risk observations
 
@@ -270,27 +235,26 @@
 
 ## Scoring Summary Matrix
 
-> Fill in after applying the official aDRI evaluation grid. R = Résilient | NR = Non Résilient | ? = Not yet assessed.
+> Fill in after applying the official aDRI evaluation grid. Each cell summarises the maturity levels recorded for that pillar's criteria — for example the number of criteria marked non-resilient. ? = not yet assessed. Add one column per asset in scope; leave a cell as — where the pillar has no criteria of that scope.
 
-| | Applicative | Data | Plateforme | Infrastructure | Compétences | Pillar Score |
-|---|------------|------|------------|---------------|------------|-------------|
-| **RES-1** Stratégique | ? | ? | ? | ? | ? | TBD |
-| **RES-2** Éco. & Juridique | ? | ? | ? | ? | ? | TBD |
-| **RES-3** Data & IA | ? | ? | ? | ? | ? | TBD |
-| **RES-4** Opérationnelle | ? | ? | ? | ? | ? | TBD |
-| **RES-5** Supply-Chain | ? | ? | ? | ? | ? | TBD |
-| **RES-6** Technologique | ? | ? | ? | ? | ? | TBD |
-| **RES-7** Sécurité | ? | ? | ? | ? | ? | TBD |
-| **RES-8** Environnementale | ? | ? | ? | ? | ? | TBD |
-| **IRN Global** | | | | | | **TBD / 100** |
+| | Organisation | A1 [Asset name] | A2 [Asset name] |
+|---|--------------|-----------------|-----------------|
+| **RES-1** Stratégique | ? | ? | ? |
+| **RES-2** Éco. & Juridique | ? | ? | ? |
+| **RES-3** Data & IA | ? | ? | ? |
+| **RES-4** Opérationnelle | ? | ? | ? |
+| **RES-5** Supply-Chain | ? | ? | ? |
+| **RES-6** Technologique | ? | ? | ? |
+| **RES-7** Sécurité | ? | ? | ? |
+| **RES-8** Environnementale & Énergétique | ? | ? | ? |
 
 ---
 
 ## Gap Analysis and Action Plan
 
-| # | Gap | Pillar | Layer | Priority | Owner | Deadline |
-|---|-----|--------|-------|---------|-------|---------|
-| G-01 | [Gap description] | RES-[N] | [Layer] | 🔴 High | [Role] | [Date] |
+| # | Gap | Criterion | Asset | Priority | Owner | Deadline |
+|---|-----|-----------|-------|---------|-------|---------|
+| G-01 | [Gap description] | RES-[N].[n] | [Asset or Organisation] | 🔴 High | [Role] | [Date] |
 
 ---
 
@@ -308,4 +272,4 @@ The aDRI offers independent IRN labelling and certification for organisations wi
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-**IRN Framework**: aDRI IRN v0.4 — [gitlab.com/digitalresilienceinitiative/adri-irn](https://gitlab.com/digitalresilienceinitiative/adri-irn) — CC BY-NC-ND 4.0
+**IRN Framework**: aDRI IRN v1.2 — [gitlab.com/digitalresilienceinitiative/adri-irn](https://gitlab.com/digitalresilienceinitiative/adri-irn) — CC BY-NC-ND 4.0

@@ -15,16 +15,18 @@
 recipe: uk-gcloud-submission
 schema_version: 1
 description: >
-  UK G-Cloud supplier submission overlay — drives a single G-Cloud service
-  from supplier profile to a review-ready CCS submission pack. Composes the
-  supplier-side bid artefacts: supplier profile and declaration (supplier-wide),
-  service design, Service Definition Document (default Lot 2 / Cloud Software),
-  pricing, NCSC Cloud Security Principles assertions, competitor benchmark, and
-  submission review. Default lot is Lot 2 (SaaS) — override the SDD target with
-  arckit:sdd-lot1 (Cloud Hosting) or arckit:sdd-lot3 (Cloud Support) via a
+  UK G-Cloud supplier submission overlay — drives a single G-Cloud 15
+  (RM1557.15) service from supplier profile to a review-ready submission pack
+  for GCA (the Government Commercial Agency, formerly CCS). Composes the
+  supplier-side bid artefacts: supplier profile, social value commitments, lot
+  questions and declaration (supplier-wide), service design, Service Definition
+  Document (default Lot 2b / SaaS), pricing, security evidence, competitor
+  benchmark, and submission review. Default lot is Lot 2b (SaaS) — override the
+  SDD target with arckit:sdd-lot1a (IaaS and PaaS), arckit:sdd-lot1b (above
+  OFFICIAL), arckit:sdd-lot2a (iSaaS) or arckit:sdd-lot3 (Cloud Support) via a
   project-level .arckit/recipes/uk-gcloud-submission.yaml. PROPRIETARY,
   EXPERIMENTAL — every output requires review by the supplier's bid/compliance
-  team before submission to Crown Commercial Service.
+  team before submission to GCA.
 
 defaults:
   version: "1.0"
@@ -38,7 +40,7 @@ post_build_hooks:
 # ---------------------------------------------------------------------------
 # Targets
 #   id              Unique target identifier (used in deps lists and state.json)
-#   skill           ArcKit skill to invoke (e.g. arckit:sdd-lot2)
+#   skill           ArcKit skill to invoke (e.g. arckit:sdd-lot2b)
 #   args            Args passed to the skill, after {P}/{NAME}/{V} substitution
 #   output.project  Project directory ("000-global" or "{P}-{NAME}")
 #   output.type     ArcKit doc-type code
@@ -54,11 +56,24 @@ targets:
     output: { project: "000-global", type: SUPP, subfolder: supplier }
     deps: []
 
+  - id: SOCV
+    skill: arckit-uk-gcloud:social-value
+    args: ""
+    output: { project: "000-global", type: SOCV, subfolder: supplier }
+    deps: [SUPP]
+
+  # After the SDD, pricing and security: the Lot 2a/2b award criteria repeat the SDD's answers
+  - id: LOTQ
+    skill: arckit-uk-gcloud:lot-questions
+    args: "2b"
+    output: { project: "000-global", type: LOTQ, subfolder: supplier }
+    deps: [SUPP, SOCV, SVCD, SDD, PRIC, SECA]
+
   - id: DECL
     skill: arckit-uk-gcloud:declaration
     args: ""
     output: { project: "000-global", type: DECL, subfolder: supplier }
-    deps: [SUPP]
+    deps: [SUPP, SOCV, LOTQ]
 
   # --- Per-service bid artefacts ({P}-{NAME}) ------------------------------
   - id: SVCD
@@ -68,7 +83,7 @@ targets:
     deps: [SUPP]
 
   - id: SDD
-    skill: arckit-uk-gcloud:sdd-lot2
+    skill: arckit-uk-gcloud:sdd-lot2b
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SDD }
     deps: [SVCD]
@@ -77,13 +92,13 @@ targets:
     skill: arckit-uk-gcloud:pricing
     args: "{P}"
     output: { project: "{P}-{NAME}", type: PRIC }
-    deps: [SVCD]
+    deps: [SVCD, SDD]
 
   - id: SECA
     skill: arckit-uk-gcloud:security
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SECA }
-    deps: [SVCD]
+    deps: [SVCD, SDD]
 
   - id: GCMP
     skill: arckit-uk-gcloud:gcloud-competitors
@@ -95,4 +110,4 @@ targets:
     skill: arckit-uk-gcloud:review
     args: "{P}"
     output: { project: "{P}-{NAME}", type: GCRV }
-    deps: [SDD, PRIC, SECA, DECL]
+    deps: [SDD, PRIC, SECA, SOCV, LOTQ, DECL]

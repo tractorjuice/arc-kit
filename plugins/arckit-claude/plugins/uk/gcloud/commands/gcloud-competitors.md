@@ -1,5 +1,5 @@
 ---
-description: Benchmark a G-Cloud service against Digital Marketplace rivals (supplier-side)
+description: Benchmark a G-Cloud 15 service against Digital Marketplace rivals (supplier-side)
 doc-type: GCMP
 effort: high
 handoffs:
@@ -11,14 +11,15 @@ handoffs:
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the
 > officially-maintained ArcKit baseline. This is the **supplier-side** competitor benchmark: it
-> compares **your own listed G-Cloud service** against rival services on the UK Digital Marketplace.
-> It is deliberately distinct from ArcKit core's buyer-side `/arckit:competitors` (which profiles the
-> wider supplier market from awarded-contract data). The analysis produced here is an internal
-> planning aid and is **not** legal, financial, or procurement advice. All G-Cloud prices are
-> **published and visible to every buyer**, so treat marketplace pricing data as public.
+> compares **your own G-Cloud 15 (RM1557.15) service** against rival services on the UK Digital
+> Marketplace. It is deliberately distinct from ArcKit core's buyer-side `/arckit:competitors` (which
+> profiles the wider supplier market from awarded-contract data). The analysis produced here is an
+> internal planning aid and is **not** legal, financial, or procurement advice. G-Cloud prices are
+> **published and visible to every buyer** (except Lot 1b, whose prices are on GCA's separate,
+> non-public platform), so treat marketplace pricing data as public.
 
-You are helping a cloud service supplier **benchmark their own G-Cloud service against competitors**
-on the Digital Marketplace.
+You are helping a cloud service supplier **benchmark their own G-Cloud 15 service against
+competitors** on the Digital Marketplace, which lists only G-Cloud 15 services.
 
 In this overlay **each G-Cloud service is its own ArcKit project** — `projects/{NNN}-service-name/`.
 This command does **not** create a new project: the service project was created earlier by
@@ -60,45 +61,74 @@ From the matched project record extract:
 - `number` — the zero-padded project number (e.g. `004`) — use as `PROJECT_ID`
 - `name` — the project / service name
 
-### 2. Read the service's own artefacts
+### 2. Read the service's own artefacts and find the lot
 
 Read the service's existing documents so the benchmark reflects what you are actually offering — do
-not re-ask for information already captured upstream. Use the **Read tool** on the resolved project's
-files:
+not re-ask for information already captured upstream. Use the **Read tool** on the highest version of
+the resolved project's files:
 
-- Service design (this project): `ARC-{PROJECT_ID}-SVCD-v*.md` (the SVCD doc written by
-  `/arckit-uk-gcloud:service-design`) — your service's features, lot, support model, certifications.
-- Service Definition Document (this project): `ARC-{PROJECT_ID}-SDD-v*.md` if it exists.
-- Pricing (this project): `ARC-{PROJECT_ID}-PRIC-v*.md` if it exists — your published price points,
-  used to position against the market.
+- Service design: `ARC-{PROJECT_ID}-SVCD-v*.md` (written by `/arckit-uk-gcloud:service-design`) — features,
+  lot, supplier type, support model, certifications.
+- Service Definition Document: `ARC-{PROJECT_ID}-SDD-v*.md` if it exists.
+- Pricing: `ARC-{PROJECT_ID}-PRIC-v*.md` if it exists — your price formula, band discounts or rate
+  card, used to position against the market.
+- Social value (supplier-wide): `projects/000-global/supplier/ARC-000-SOCV-v*.md` if it exists — the
+  policy outcomes you commit to.
+
+**Find the lot** from the service design's `**G-Cloud Lot**: Lot <code> — <name>` line: `1a`, `1b`,
+`2a`, `2b` or `3`. A service design from the previous framework has a "1.3 Target Lot" checkbox
+instead: old Lot 3 (Cloud Support) is Lot 3; for old Lot 1 (Cloud Hosting) or Lot 2 (Cloud Software),
+ask with **AskUserQuestion** whether it is 1a or 1b, or 2a or 2b, and suggest re-running
+`/arckit-uk-gcloud:service-design`.
 
 If the service-design document is missing, warn the user that running `/arckit-uk-gcloud:service-design` first
 produces a richer, consistent benchmark, then continue with what is available.
 
 ### 3. Gather competitor data (WebSearch — primary path)
 
-**WebSearch is the primary data path** for this command. Use it to discover comparable services on
-the Digital Marketplace, then **WebFetch** the rival service listing pages to extract their details.
+**WebSearch is the primary data path** for this command. Use it to discover comparable G-Cloud 15
+services on the Digital Marketplace, then **WebFetch** the rival service listing pages to extract
+their details.
+
+Search the lot's own listings. The Digital Marketplace search slug for each lot:
+
+| Lot | Slug |
+|-----|------|
+| 1a IaaS and PaaS | `iaas-and-paas` |
+| 1b IaaS and PaaS above OFFICIAL | `iaas-and-paas` (Lot 1b services are not publicly listed, so compare a 1b service with 1a listings and say so) |
+| 2a Infrastructure Software as a Service | `isaas` |
+| 2b Software as a Service | `saas` |
+| 3 Cloud Support | `cloud-support` |
+
+Older lot names such as `cloud-software` no longer filter the search. For a service on the boundary
+between 2a and 2b, look at both `isaas` and `saas` listings.
 
 **Search queries to run:**
 
 - `site:applytosupply.digitalmarketplace.service.gov.uk [service category]`
-- `G-Cloud 14 [service type] suppliers`
+- `site:applytosupply.digitalmarketplace.service.gov.uk G-Cloud 15 [service type]`
 - `Digital Marketplace [specific feature]`
 
-Then use **WebFetch** on each competitor service URL to extract details.
+Then use **WebFetch** on each competitor service URL to extract details. Record the search terms,
+lot slug and category used, and how many listings you analysed: the benchmark rests on them.
 
 **Key competitor information to gather (per rival service):**
 
-- Service name and supplier
-- Pricing model and price points
-- Key features highlighted
-- Support levels offered
-- Certifications claimed
-- Number of framework sales (if visible)
+- Service name, supplier and lot
+- Key features and benefits highlighted
+- Pricing, by the lot's G-Cloud 15 model: the **price formula** (Lot 1a: baseline price, fixed
+  onboarding costs, framework discount, supplier-specific schemes, time-limited discounts), the
+  **discount tiers** (Lots 2a/2b: discount % for each annual call-off value band) or the **rate card**
+  (Lot 3: maximum UK and offshore day rate per DDaT role level)
+- **Supplier type** (not a reseller, or one of the three reseller options, and the organisation
+  resold)
+- **Social value** shown on the listing (the policy outcomes and measures committed to)
+- Support levels and channels, including whether an AI chatbot is offered
+- Staff security (screening, clearance) and certifications claimed
+- Data storage and processing locations
 
 > Structured marketplace extraction via a `marketplace` MCP is a future enhancement (ships with the
-> ArcKit market-intelligence overlay); this command uses WebSearch.
+> ArcKit market-intelligence overlay); this command uses WebSearch and WebFetch.
 
 ### 4. Anchor the benchmark to real award evidence (if available)
 
@@ -117,46 +147,38 @@ complete competitive picture.
 > re-derive or invent them — and carry the artefact's **awarded value ≠ actual spend** caveat. Do not
 > invent figures.
 
-#### Award Evidence (from TNDR/CMPT artefacts, if available)
-
-| Competitor | Comparable awards | Total awarded value | Notice URLs |
-|------------|-------------------|---------------------|-------------|
-| [Competitor A] | X | £X | [link] |
+If there is no TNDR or CMPT artefact, write "No award evidence available — benchmark is based on
+Digital Marketplace listings only." in the template's Award Evidence section and suggest
+`/arckit:tenders`. Don't drop the section silently.
 
 ### 5. Competitive analysis framework
 
-#### Feature Comparison
+The template (Step 10) holds the tables. Fill them on these rules:
 
-| Feature | Your Service | Competitor A | Competitor B | Competitor C |
-|---------|--------------|--------------|--------------|--------------|
-| [Feature 1] | ✅ | ✅ | ❌ | ✅ |
-| [Feature 2] | ✅ | ❌ | ✅ | ❌ |
-| ... | | | | |
-
-#### Pricing Comparison
-
-| Tier | Your Price | Market Low | Market Average | Market High |
-|------|------------|------------|----------------|-------------|
-| Entry | £X | £X | £X | £X |
-| Standard | £X | £X | £X | £X |
-| Premium | £X | £X | £X | £X |
-
-#### Certification Comparison
-
-| Certification | Your Service | Industry % |
-|---------------|--------------|------------|
-| ISO 27001 | ✅/❌ | ~80% |
-| Cyber Essentials Plus | ✅/❌ | ~60% |
-| SOC 2 | ✅/❌ | ~40% |
-| UK Data Centres | ✅/❌ | ~70% |
-
-#### Support Comparison
-
-| Aspect | Your Service | Market Standard |
-|--------|--------------|-----------------|
-| Hours | X | 9-5 M-F |
-| Channels | X | Email + Phone |
-| Response SLA | X | 4-8 hours |
+- **Features:** mark features most competitors offer as **table stakes** and those few or none offer
+  as **differentiators**. Only differentiators belong under Key Differentiators.
+- **Pricing — compare what the lot is evaluated on.** Price is 80% of the score on Lots 2a/2b and 3,
+  and 10% on Lots 1a/1b:
+  - **Lot 3:** compare your maximum day rates by role level with the competitors' rate cards. For the
+    role levels listed in the "What Suppliers Charge" table of the overlay's ddat-rate-card skill
+    (`${CLAUDE_PLUGIN_ROOT}/skills/ddat-rate-card/SKILL.md`: maximum UK rates from 42,893 G-Cloud 15
+    listings scraped on 7 October 2026), also quote that median and middle half. The average day
+    rate is scored, and the lowest average scores the full 80%.
+  - **Lots 2a/2b:** compare your discount % in each annual call-off value band with the competitors'
+    discount tiers. The six band discounts are totalled and the highest total scores the full 80%;
+    unit prices are not scored, but buyers still compare them.
+  - **Lots 1a/1b:** compare onboarding costs and the minimum (framework) discount, which are scored
+    at 5% each.
+  - This overlay bundles no benchmark data: every other market figure comes from the listings you
+    fetched, stated with how many listings it rests on. Never invent a market percentile or average.
+- **Certifications:** count only the competitors you actually analysed ("[X] of [N]"), and don't
+  quote industry-wide percentages without a source. Cyber Essentials Plus is mandatory for Lot 1a/1b
+  call-offs and Cyber Essentials for Lot 2a/2b and Lot 3 call-offs; neither is a condition of the
+  bid.
+- **Support:** compare with what is most common among the competitors analysed, not an assumed
+  market standard.
+- **G-Cloud 15 listing comparison:** supplier type, social value outcomes, staff security, data
+  locations and FOCUS resource tagging (1a/1b, 2a/2b), as counts across the competitors analysed.
 
 ### 6. Competitive positioning analysis (SWOT)
 
@@ -186,8 +208,10 @@ complete competitive picture.
 
 - Strong competitors
 - Price pressure
-- Feature commoditization
+- Feature commoditisation
 - New entrants
+
+Ground every SWOT point in the comparison tables rather than introducing it fresh.
 
 ### 7. Recommendations
 
@@ -195,9 +219,9 @@ Based on the analysis, provide recommendations:
 
 **Pricing Recommendations:**
 
-- Is current pricing competitive?
-- Should tiers be adjusted?
-- Are discounts appropriate?
+- Is current pricing competitive on what the lot is scored on?
+- Should rates, band discounts or onboarding costs change? G-Cloud 15 prices can be reduced but
+  never increased during the framework, so a price cut after listing is permanent.
 
 **Feature Recommendations:**
 
@@ -213,20 +237,21 @@ Based on the analysis, provide recommendations:
 
 **Search Optimisation:**
 
-- Keywords competitors use
-- Features to emphasize in description
+- Keywords competitors use (the marketplace search uses light stemming and no synonyms, so use the
+  words buyers type)
+- Features to emphasise in the description (the service name carries no extra keywords)
 - Benefits that resonate with buyers
 
 ### 8. Citation traceability
 
-When you fetch a competitor page or a G-Cloud listing, query an MCP server, or read any document the
-user has placed under the project's `external/`, `policies/`, or `vendors/` directories, follow the
-citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline
-citation markers (e.g. `[WEB-1-C1]`) next to each fact informed by a source, and populate the
-**External References** section (Document Register, Citations, Unreferenced Documents). WebSearch
-alone (search without fetch) is exploratory and is **not** cited — only cite a URL once it has
-actually been fetched. When you carry award figures from a TNDR/CMPT artefact, quote that artefact's
-**existing** citations rather than minting new ones.
+When you fetch a competitor page or a G-Cloud listing, or read any document the user has placed under
+the project's `external/`, `policies/`, or `vendors/` directories, follow the citation instructions in
+`${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g.
+`[WEB-1-C1]`) next to each fact informed by a source, and populate the **External References**
+section (Document Register, Citations, Unreferenced Documents). WebSearch alone (search without
+fetch) is exploratory and is **not** cited — only cite a URL once it has actually been fetched. When
+you carry award figures from a TNDR/CMPT artefact, quote that artefact's **existing** citations
+rather than minting new ones.
 
 ### 9. Determine the output filename
 
@@ -239,17 +264,10 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
 ```
 
 This returns `ARC-{NNN}-GCMP-v1.0.md` (using the zero-padded project number from Step 1). Use the
-returned filename for the output document and take the version (`1.0`) from it. If the service
-already has a competitor benchmark, increment the version and add a Revision History row instead of
-overwriting at v1.0.
+returned filename and take the version from it. If the service already has a competitor benchmark,
+increment the version instead and add a Revision History row.
 
 ### 10. Write the benchmark report
-
-Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCMP** per-type checks pass. Fix any failures before proceeding.
-
-Use the **Write tool** to save the completed benchmark to:
-
-`{path}/{filename}` — e.g. `projects/004-secure-case-mgmt/ARC-004-GCMP-v1.0.md`
 
 **Read the template** (user override takes precedence):
 
@@ -258,12 +276,21 @@ Use the **Write tool** to save the completed benchmark to:
 - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/gcloud-competitors-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
 
-The template owns the document structure — Benchmark Scope, Award Evidence, the Feature / Pricing /
-Certification / Support comparison tables, SWOT with the Market Position quadrant, Recommendations
-including Search Optimisation, Related Artefacts, and External References. Populate it from Steps 4-8
-rather than structuring a report of your own. Set the Document ID to
-`ARC-{PROJECT_ID}-GCMP-v{VERSION}` and the Document Type to `G-Cloud Competitor Benchmark`, and
-append the standard ArcKit footer:
+The template owns the document structure — Benchmark Scope, Award Evidence, the Feature / Pricing
+(including what the lot is scored on) / Certification / Support comparison tables, the G-Cloud 15
+Listing Comparison, SWOT with the Market Position, Recommendations including Search Optimisation,
+Related Artefacts, and External References. Populate it from Steps 3–8 rather than structuring a
+report of your own; keep only the pricing table for this service's lot. Set the Document ID to
+`ARC-{PROJECT_ID}-GCMP-v{VERSION}`, the Document Type to `G-Cloud Competitor Benchmark`, and the
+`**G-Cloud Lot**` line to the service's lot. Leave genuinely-unknown values as `[PENDING]`.
+
+Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCMP** per-type checks pass. Fix any failures before proceeding.
+
+Use the **Write tool** to save the completed benchmark to:
+
+`{path}/{filename}` — e.g. `projects/004-secure-case-mgmt/ARC-004-GCMP-v1.0.md`
+
+The template carries the standard ArcKit footer; populate it rather than appending a second one:
 
 ```markdown
 ---
@@ -276,18 +303,20 @@ append the standard ArcKit footer:
 ```
 
 (The Write tool creates parent directories automatically and avoids the 32K output-token limit.) Do
-**not** echo the full document into your response — it is large and only a summary should be printed.
+**not** echo the full document into your response — print only the summary below.
 
 ### 11. Output summary
 
-Print only a short summary (not the full document):
+Print only a short summary, reporting what the benchmark actually found:
 
-```markdown
+````markdown
 ## Competitor Benchmark Complete
 
 **Service:** [Name]
-**Saved to:** `{path}/ARC-{PROJECT_ID}-GCMP-v1.0.md`
+**Lot:** [1a / 1b / 2a / 2b / 3]
+**Saved to:** `{path}/ARC-{PROJECT_ID}-GCMP-v[X.Y].md`
 **Competitors Analysed:** [X]
+**Selection basis:** [Search terms, lot slug and category used]
 
 ### Market Position
 
@@ -296,76 +325,60 @@ quadrantChart
     title Market Position
     x-axis Basic Features --> Advanced Features
     y-axis Budget --> Premium
-    quadrant-1 Feature Leaders
-    quadrant-2 Market Leaders
+    quadrant-1 Premium Leaders
+    quadrant-2 Overpriced
     quadrant-3 Budget Options
     quadrant-4 Value Players
     Your Service: [0.6, 0.6]
     Competitor A: [0.8, 0.8]
     Competitor B: [0.4, 0.3]
     Competitor C: [0.7, 0.4]
-```text
+```
 
 ### Competitive Summary
 
 | Dimension | Position | Action Needed |
 |-----------|----------|---------------|
-| Pricing | Mid-market | None |
-| Features | Above average | Add [X] |
-| Support | Below average | Extend hours |
-| Security | Industry leading | Maintain |
+| Pricing (what the lot is scored on) | [Position] | [Action] |
+| Features | [Position] | [Action] |
+| Support | [Position] | [Action] |
+| Security and certifications | [Position] | [Action] |
 
 ### Key Differentiators
 
 1. [Unique strength 1]
 2. [Unique strength 2]
-3. [Unique strength 3]
 
 ### Gaps to Address
 
-1. [Gap 1] - Priority: High
-2. [Gap 2] - Priority: Medium
+1. [Gap 1] - Priority: [High / Medium / Low]
 
-### Recommended Actions
-
-**Before Submission:**
-
-1. [Action 1]
-2. [Action 2]
-
-**Post-Submission:**
-
-1. [Action 1]
-2. [Action 2]
-
----
-
-## Search Keywords to Include
-
-Based on the competitor analysis, ensure these appear in your service description:
+### Search Keywords to Include
 
 - [Keyword 1]
 - [Keyword 2]
-- [Keyword 3]
 
 ### Next Steps
 
 - Adjust pricing based on this benchmark: `/arckit-uk-gcloud:pricing`
 - Fold competitive positioning into the submission review: `/arckit-uk-gcloud:review`
-
-```
+````
 
 ## Important Notes
 
 - This is the **supplier-side** benchmark of your own listing — distinct from core buyer-side
   `/arckit:competitors`.
-- Digital Marketplace pricing is public — competitors can see your prices too.
+- Digital Marketplace pricing is public — competitors can see your prices too (Lot 1b prices are on
+  a separate, non-public platform).
+- G-Cloud 15 prices can be reduced but not increased during the framework, so a price cut after
+  listing is permanent.
 - Market changes during the framework period — periodic re-analysis is recommended.
 - Buyer feedback on previous iterations is valuable competitive intelligence.
-- Consider what makes buyers choose competitors over similar services.
-- Features alone don't win — positioning and clarity matter.
-- Never invent award figures: carry only what the TNDR/CMPT artefacts record, with their existing
-  citations and the **awarded value ≠ actual spend** caveat.
+- Features alone don't win — positioning, clarity and, on Lots 2a/2b and 3, price (80% of the score)
+  matter.
+- Never invent award or market figures: carry only what the TNDR/CMPT artefacts record, with their
+  existing citations and the **awarded value ≠ actual spend** caveat, and only what the listings you
+  fetched show.
 - This command never creates a project — if none is found, direct the user to `/arckit-uk-gcloud:service-design`.
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space
   after `<` or `>` (e.g. `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from

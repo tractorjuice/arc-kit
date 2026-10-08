@@ -145,6 +145,9 @@ export const DOC_TYPES = {
   'SECA':      { name: 'Security Assertions',              category: 'Procurement', regime: 'UK', severity: 'HIGH' },
   'GCMP':      { name: 'G-Cloud Competitor Benchmark',     category: 'Procurement', regime: 'UK' },
   'GCRV':      { name: 'G-Cloud Submission Review',        category: 'Procurement', regime: 'UK' },
+  'SOCV':      { name: 'Social Value Commitments',         category: 'Procurement', regime: 'UK', severity: 'HIGH' },
+  'LOTQ':      { name: 'G-Cloud Lot Questions',            category: 'Procurement', regime: 'UK', severity: 'HIGH' },
+  'RATE':      { name: 'G-Cloud Lot 3 Rate Card',          category: 'Procurement', regime: 'UK' },
   'DMC':       { name: 'Data Mesh Contract',               category: 'Procurement' },
   'VEND':      { name: 'Vendor Evaluation',                category: 'Procurement' },
   // Research

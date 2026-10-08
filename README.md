@@ -556,25 +556,34 @@ Install: `claude plugin install arckit arckit-uk-finance`. Help wanted: recruiti
 
 ---
 
-## UK G-Cloud Supplier Bid-Authoring Overlay (11 commands) — Proprietary
+## UK G-Cloud Supplier Bid-Authoring Overlay (15 commands) — Proprietary
 
-> **PROPRIETARY, Claude Code only.** The 11 commands below are a supplier-side overlay for authoring UK G-Cloud (Digital Marketplace) framework bids: supplier profile, service design, the three Service Definition Document lots, the supplier declaration, pricing, security assertions, competitor benchmarking, submission review, and a final submission pack. Unlike every other ArcKit plugin, `arckit-uk-gcloud` ships under a **proprietary licence (not MIT)** and is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot) — it runs on Claude Code only. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and requires the `arckit` core plugin.
+> **PROPRIETARY, Claude Code only.** The 15 commands below are a supplier-side overlay for authoring UK G-Cloud 15 (RM1557.15) Digital Marketplace bids, run by the Government Commercial Agency (GCA, formerly CCS): supplier profile, social value, lot questions, the Procurement Act 2023 supplier declaration, service design, a Service Definition Document for each of the five lots (1a, 1b, 2a, 2b, 3), pricing, security evidence, competitor benchmarking, submission review, and a final submission pack. Unlike every other ArcKit plugin, `arckit-uk-gcloud` ships under a **proprietary licence (not MIT)** and is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot) — it runs on Claude Code only. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and requires the `arckit` core plugin.
 
-**G-Cloud bid authoring**:
+**Supplier-wide (once per bid)**:
 
-- `/arckit:supplier-profile` — Supplier profile and company capability statement (SUPP)
-- `/arckit:service-design` — Service design and value proposition (SVCD)
-- `/arckit:sdd-lot1` — Service Definition Document, Lot 1 Cloud Hosting (SDD)
-- `/arckit:sdd-lot2` — Service Definition Document, Lot 2 Cloud Software (SDD)
-- `/arckit:sdd-lot3` — Service Definition Document, Lot 3 Cloud Support (SDD)
-- `/arckit:declaration` — Supplier declaration and framework attestations (DECL)
-- `/arckit:pricing` — Pricing document and SFIA rate card (PRIC)
-- `/arckit:security` — Security assertions and cloud security assessment (SECA)
+- `/arckit:supplier-profile` — Supplier profile: company, CDP and PPON, contacts, certifications, insurance (SUPP)
+- `/arckit:social-value` — Social value commitments, Social Value Contact and operational readiness, 10% pass/fail on every lot (SOCV)
+- `/arckit:lot-questions` — Lot questions per lot group: conditions of participation, scored Lot 1a/1b quality answers, Lot 2 and Lot 3 mandatory award criteria (LOTQ)
+- `/arckit:declaration` — Procurement Act 2023 supplier declaration (DECL)
+
+**Per service**:
+
+- `/arckit:service-design` — Service design, lot choice and value proposition (SVCD)
+- `/arckit:sdd-lot1a` — Service Definition Document, Lot 1a IaaS and PaaS (SDD)
+- `/arckit:sdd-lot1b` — Service Definition Document, Lot 1b IaaS and PaaS above OFFICIAL (SDD)
+- `/arckit:sdd-lot2a` — Service Definition Document, Lot 2a Infrastructure Software as a Service (SDD)
+- `/arckit:sdd-lot2b` — Service Definition Document, Lot 2b Software as a Service (SDD)
+- `/arckit:sdd-lot3` — Service Definition Document, Lot 3 Cloud Support, with the DDaT role levels that deliver it (SDD)
+- `/arckit:pricing` — Pricing by lot: 1a/1b price formula, 2a/2b discount bands; for Lot 3, the supplier's one DDaT rate card, shared by every Lot 3 service (PRIC, RATE)
+- `/arckit:security` — Security evidence: certifications by lot and the NCSC Cloud Security Principles (SECA)
 - `/arckit:gcloud-competitors` — G-Cloud competitor benchmark (GCMP)
 - `/arckit:review` — G-Cloud submission review and gap analysis (GCRV)
 - `/arckit:submission-pack` — Assemble the final G-Cloud submission pack
 
-Skills: `gcloud-framework`, `cloud-security`, `sfia-skills`. Recipe: `uk-gcloud-submission` (end-to-end bid assembly).
+Recommended order: supplier-profile → social-value → service-design → the lot's SDD command → pricing and security → lot-questions → declaration → review → submission-pack. The lot questions come after the SDDs because their award criteria repeat each service's answers.
+
+Skills: `gcloud-framework` (G-Cloud 15 question set, limits and evaluation), `cloud-security`, `ddat-rate-card` (Lot 3 job families, roles and levels; replaces `sfia-skills`). Recipe: `uk-gcloud-submission` (end-to-end bid assembly). G-Cloud 14 is no longer supported: `/arckit:sdd-lot1` is replaced by `sdd-lot1a` and `sdd-lot1b`, and `/arckit:sdd-lot2` by `sdd-lot2a` and `sdd-lot2b`.
 
 Install: `claude plugin install arckit arckit-uk-gcloud`. Proprietary — see the licence-exception note at the foot of this README. Ported from the standalone gcloud-kit plugin.
 

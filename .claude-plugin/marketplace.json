@@ -316,7 +316,7 @@
     {
       "name": "arckit-uk-gcloud",
       "source": "./plugins/arckit-uk-gcloud",
-      "description": "UK G-Cloud Supplier Bid-Authoring Overlay — 11 supplier-side commands driving a G-Cloud 14 Digital Marketplace submission end to end: supplier profile, service design, Service Definition Documents (Lots 1/2/3), supplier declaration, pricing, NCSC Cloud Security Principles assertions, competitor benchmark, submission review, and CCS submission packaging. Recipe: uk-gcloud-submission. Requires arckit core. Proprietary, experimental.",
+      "description": "UK G-Cloud Supplier Bid-Authoring Overlay — 15 supplier-side commands driving a G-Cloud 15 (RM1557.15) Digital Marketplace submission end to end: supplier profile, social value, lot questions, Procurement Act 2023 declaration, service design, Service Definition Documents (Lots 1a/1b/2a/2b/3), pricing, security evidence, competitor benchmark, submission review, and GCA submission packaging. Recipe: uk-gcloud-submission. Requires arckit core. Proprietary, experimental.",
       "version": "6.17.5",
       "author": {
         "name": "TractorJuice"
@@ -331,8 +331,12 @@
         "gcloud",
         "g-cloud",
         "digital-marketplace",
+        "g-cloud-15",
+        "gca",
+        "government-commercial-agency",
         "ccs",
-        "crown-commercial-service",
+        "social-value",
+        "procurement-act-2023",
         "procurement",
         "supplier",
         "sdd",
