@@ -146,9 +146,9 @@ $ARGUMENTS
 
    Create a comprehensive review document with:
 
-   **Executive Summary**:
-   - Overall status: APPROVED / APPROVED WITH CONDITIONS / REJECTED
-   - Key findings (top 3-5 issues)
+   **Executive Summary** (section 1, verdict first, as `${CLAUDE_PLUGIN_ROOT}/references/executive-summary-pattern.md` sets out):
+   - Overall status: APPROVED / APPROVED WITH CONDITIONS / REJECTED, stated in the summary's first sentence
+   - Key findings, most decisive first, as many as the review found
    - Recommendation
 
    **Detailed Findings**:

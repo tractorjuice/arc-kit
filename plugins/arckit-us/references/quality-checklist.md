@@ -41,6 +41,7 @@ All artifacts must pass these 10 checks:
 - Build vs buy analysis includes 3-year TCO projection
 - All claims supported by source citations with URLs
 - Clear recommendation with justification
+- Executive Summary opens with the overall recommendation; Research Scope comes after the findings
 
 ### SOBC -- Strategic Outline Business Case
 
@@ -48,6 +49,7 @@ All artifacts must pass these 10 checks:
 - Cost-benefit analysis with quantified figures and assumptions stated
 - Green Book / Orange Book methodology referenced where applicable
 - Preferred option clearly identified with rationale
+- Executive Summary opens with the Go/No-Go recommendation and the recommended option, and every figure in it appears in the five cases
 - Every option in the options appraisal, including Do Nothing and rejected options, has its own costs, benefits, **Risks** and pros/cons
 
 ### STKE -- Stakeholder Analysis
@@ -359,12 +361,14 @@ All artifacts must pass these 10 checks:
 - Architecture patterns assessed against requirements
 - Non-functional requirements coverage evaluated
 - Technical risks and technical debt identified
+- Executive Summary is section 1 and its first sentence states the verdict
 
 ### DLDR -- Detailed-Level Design Review
 
 - Detailed design validated against HLD
 - Interface specifications reviewed for completeness
 - Performance and scalability implications assessed
+- Executive Summary is section 1 and its first sentence states the verdict
 
 ### PRIN -- Architecture Principles
 

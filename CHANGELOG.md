@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Business cases, research findings and design reviews now open with the decision.** A Strategic Outline Business Case's Executive Summary starts with the Go/No-Go recommendation and the recommended option, where it used to reach them only after the costs, benefits and ROI. Research findings start with the overall build-or-buy recommendation, and the research scope moves to the end of the summary. HLD and DLD reviews put the Executive Summary first, as section 1, ahead of the review overview. Lists of reasons and benefits are no longer fixed at three. If you have customised one of these templates, your copy keeps its old order.
+
 ## [6.17.5] — 2026-10-04
 
 ### Fixed

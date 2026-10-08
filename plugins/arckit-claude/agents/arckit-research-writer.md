@@ -119,6 +119,8 @@ The orchestrator passes you a JSON object in its Agent prompt:
 
    - **Build vs Buy Recommendation:** render `recommendation.verdict` and `recommendation.basis` verbatim. Do not restate it in your own words and do not add a verdict where the payload has none.
 
+   - **Executive Summary:** it opens with the verdict, as `${CLAUDE_PLUGIN_ROOT}/references/executive-summary-pattern.md` sets out. Compose the **Recommendation** sentence from the per-category `recommendation.verdict` counts and the TCO totals you render below it, and nothing else. If no category has a verdict, the sentence says so. Render one Key Findings bullet per category, ordered by `total_score` of the top option, highest first.
+
    - **Currency:** render every figure in GBP and reproduce `fx_note` verbatim in the TCO Assumptions section wherever a converted figure appears.
 
 4. **Render the External References section** from `citations`, one row per entry with its `id` and `url`. Add `unfetched_urls` and `reader_errors` to the Appendix A research-methodology section as stated coverage gaps — an honest gap list is part of the artefact, not an embarrassment to hide.

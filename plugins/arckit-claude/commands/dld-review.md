@@ -154,8 +154,8 @@ $ARGUMENTS
 
 8. **Generate Review Report**:
 
-   **Executive Summary**:
-   - Status: APPROVED / APPROVED WITH CONDITIONS / REJECTED / NEEDS HLD RE-REVIEW
+   **Executive Summary** (section 1, verdict first, as `${CLAUDE_PLUGIN_ROOT}/references/executive-summary-pattern.md` sets out):
+   - Status: APPROVED / APPROVED WITH CONDITIONS / REJECTED / NEEDS HLD RE-REVIEW, stated in the summary's first sentence
    - Implementation readiness score (0-100)
    - Top risks or gaps
 
