@@ -21,6 +21,12 @@
 
 ## Executive Summary
 
+**Go/No-Go Recommendation**: **PROCEED** | **DO NOT PROCEED** | **DEFER** — [One sentence naming the recommended option and the headline reason, e.g. "Option 2: Balanced Approach is the only option that meets all five critical success factors within the £[X]M budget."]
+
+**Recommended Option**: Option [X]: [Name]
+
+**Rationale**: [The reasons the recommendation rests on, most decisive first, each with the figure behind it from the Economic or Financial Case. As many as the appraisal supports; not a fixed number.]
+
 **Purpose**: [1 paragraph: Why does this project exist?]
 
 **Problem Statement**: [2-3 sentences: What's broken and why does it matter?]
@@ -36,7 +42,7 @@
 
 **Expected Benefits**: £[X]M over [Y] years
 
-- [Top 3 benefits with values]
+- [The benefits that carry most of the value, each with its figure; as many as matter, not a fixed three]
 
 **Return on Investment**:
 
@@ -44,17 +50,11 @@
 - Payback Period: [X] months
 - ROI: [X]%
 
-**Recommended Option**: Option [X]: [Name]
-
-**Key Risks**:
+**Key Risks**: [A risk that would change the recommendation if it materialised also goes in the Go/No-Go line above]
 
 1. [Risk 1]
 2. [Risk 2]
 3. [Risk 3]
-
-**Go/No-Go Recommendation**: **PROCEED** | **DO NOT PROCEED** | **DEFER**
-
-**Rationale**: [2-3 sentences explaining recommendation]
 
 **Next Steps if Approved**:
 
