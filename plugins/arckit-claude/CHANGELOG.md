@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.18.0] — 2026-10-09
+
 ### Added
 
 - **`/arckit:social-value`** (`arckit-uk-gcloud`) writes the supplier's G-Cloud 15 social value commitments to `projects/000-global/supplier/ARC-000-SOCV-v1.0.md`: the declaration's social value sections A to C, the missions, policy outcomes and measures committed to (worded as the live listings show them, with the declaration checkbox to tick where GCA's wording is longer), a delivery plan for each, a named Social Value Contact and operational readiness. Social value is 10% of the score on every lot, marked pass/fail.
@@ -14,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Three doc-type codes**, `SOCV` (Social Value Commitments) and `LOTQ` (G-Cloud Lot Questions), both HIGH severity, and `RATE` (G-Cloud Lot 3 Rate Card), the supplier's one Lot 3 rate card that `/arckit:pricing` writes to `projects/000-global/supplier/` and every Lot 3 service shares. All three are registered in `doc-types.mjs` and `/arckit:pages`, with quality-checklist sections. The G-Cloud sections of the checklist (SUPP, DECL, SVCD, SDD, PRIC, SECA, GCMP, GCRV) now check G-Cloud 15 rules.
 
 ### Changed
+
+- **Business cases, research findings and design reviews now open with the decision.** A Strategic Outline Business Case's Executive Summary starts with the Go/No-Go recommendation and the recommended option, where it used to reach them only after the costs, benefits and ROI. Research findings start with the overall build-or-buy recommendation, and the research scope moves to the end of the summary. HLD and DLD reviews put the Executive Summary first, as section 1, ahead of the review overview. Lists of reasons and benefits are no longer fixed at three. If you have customised one of these templates, your copy keeps its old order.
+
+- **`/arckit:fr-irn` follows the IRN v1.2 grid.** The aDRI replaced the v0.4 questionnaire with `Référentiel_IRN_v1.2.xlsx`, and the way the grid is filled changed with it. The assessment is now built around the digital assets in scope instead of five organisational layers: each pillar lists its criteria by ID, with the criterion's scope (organisation or asset) and a maturity level to report from the official grid, where the old scaffold had R/NR cells per layer. The summary matrix is pillars by asset, and the document no longer promises a 0–100 score the workbook does not compute. RES-7 and RES-8 carry their v1.2 names. The command, template, guide and quality checklist are updated; criterion text is still not reproduced (CC BY-NC-ND). Contributed by @thomas-jardinet (#911).
 
 - **The `arckit-uk-gcloud` overlay now writes G-Cloud 15 bids.** G-Cloud 15 (RM1557.15) went live on 6 August 2026 under the Procurement Act 2023, run by the Government Commercial Agency (GCA, formerly Crown Commercial Service), and the Digital Marketplace now lists only G-Cloud 15 services. The overlay was a port of G-Cloud Kit's G-Cloud 14 commands; it now carries G-Cloud Kit's G-Cloud 15 rewrite as of v0.8.2, adapted to ArcKit's projects and document IDs, including the v0.8.2 fixes from running the workflow on two real supplier projects. G-Cloud 14 is no longer supported. Every question, limit, scoring rule and pricing rule comes from GCA's question export and tender documents, and where the 42,893 live G-Cloud 15 listings (scraped 7 October 2026) show a rule the export doesn't state, the listings are the evidence.
   - **Five lots instead of three.** `/arckit:service-design` chooses between Lots 1a (IaaS and PaaS), 1b (above OFFICIAL), 2a (iSaaS), 2b (SaaS) and 3 (Cloud Support), records the lot on the service design, and names the matching SDD command.

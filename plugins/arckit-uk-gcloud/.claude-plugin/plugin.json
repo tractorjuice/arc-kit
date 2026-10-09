@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-uk-gcloud",
   "displayName": "ArcKit UK G-Cloud Supplier Bid-Authoring Overlay",
-  "version": "6.17.5",
+  "version": "6.18.0",
   "defaultEnabled": false,
   "description": "UK G-Cloud Supplier Bid-Authoring Overlay for ArcKit — 15 supplier-side commands that drive a G-Cloud 15 (RM1557.15) Digital Marketplace submission end to end: supplier profile, social value, lot questions, Procurement Act 2023 supplier declaration, service design, Service Definition Documents for Lots 1a, 1b, 2a, 2b and 3, pricing (1a/1b price formula, 2a/2b discount bands, Lot 3 DDaT rate card), security evidence, competitor benchmark, submission review, and GCA submission packaging. Recipe: uk-gcloud-submission. Requires arckit core plugin. PROPRIETARY — not covered by the repository MIT licence. EXPERIMENTAL.",
   "author": {
@@ -38,7 +38,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.17.5"
+      "version": "=6.18.0"
     }
   ]
 }
