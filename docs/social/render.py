@@ -413,6 +413,7 @@ REGULATION_WEEK = [
 CAMPAIGN_SINGLES = {
     "directory-launch": ('Now in the plugin directory', 'Find ArcKit and install it inside Claude', ['The core plugin joins the overlays already listed', 'Nothing in ArcKit approves an action for you', 'Marketplace install still works as before']),
     "bring-your-own-template": ("Bring your own template", "/arckit:customize  /arckit:template-builder", ["Share a house template, public or cleared", "We draft in it on a fictional project", "Published side by side, credited your way"]),
+    "decision-first": ("Lead with the decision", "The answer first, then the reasons", ["Business cases open with Go or No-Go", "Research opens with build or buy", "Design reviews give the verdict in section 1"]),
 }
 
 

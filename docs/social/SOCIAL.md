@@ -157,7 +157,7 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/15
 
 ### Q7. Decision documents lead with the decision — LinkedIn group (Question voice) — posted 8 October
 
-Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-7514025369092517888>. The change is PR #921, merged to main on 8 October but not released, because of the release freeze while core ArcKit is in the plugin directory review. Group only, with no image: the page and Discord #announcements are for released changes. The post promises a follow-up, so when the release ships, post it on the page, reply in this group thread, and post in #announcements.
+Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-7514025369092517888>, and the same day in Discord #show-your-working (<https://discord.com/channels/1470672254831689893/1552141776607776858/1557821764518809794>), where it asks a question rather than announcing anything. The change is PR #921, merged to main on 8 October and released in ArcKit 6.18.0 on 10 October. No image, and nothing on the page or in #announcements until the release, because those are for released changes. The post promised a follow-up: Q8 to Q10 are that follow-up.
 
 > How far into a business case does a board member get before they reach the recommendation?
 >
@@ -168,3 +168,40 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-75140253
 > The change isn't in a release yet; we'll post here when it is.
 >
 > What does your board want to see in the first line?
+
+### Q8. ArcKit 6.18.0, decision documents lead with the decision — LinkedIn page, with the `decision-first` image (Warm "we" voice) — posted 10 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:share:7514640144403025920/>. The release follow-up Q7 promised. It went out in the afternoon because the page had already posted *ArcKit Explained* Day 11 at 08:30. Image: `docs/social/out/campaigns/decision-first-1080x1350.png` (from `render.py`, `CAMPAIGN_SINGLES`), added before the text so the release link didn't replace it with a preview card. Alt text: *ArcKit card: Lead with the decision. The answer first, then the reasons. Business cases open with Go or No-Go. Research opens with build or buy. Design reviews give the verdict in section 1.*
+
+> ArcKit 6.18.0 is out, and our decision documents now lead with the decision.
+>
+> A Strategic Outline Business Case now opens with the Go/No-Go recommendation and the recommended option, then the reasons, then the context, costs and risks. Research findings open with the build-or-buy recommendation, and high-level and detailed design reviews put their verdict in section 1. A risk that could change the decision sits right beside it.
+>
+> It's Barbara Minto's Pyramid Principle applied to the Green Book's five cases: the answer first, then the reasons, then the evidence.
+>
+> For French public sector teams, the digital resilience index (IRN) assessment now follows the official v1.2 grid, contributed by Thomas Jardinet.
+>
+> See what changed and update: https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.0
+>
+> #EnterpriseArchitecture #GreenBook #PublicSector #OpenSource
+
+### Q9. ArcKit 6.18.0 — LinkedIn group, reply in the Q7 thread (Question voice) — posted 10 October
+
+Posted as a comment on <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-7514025369092517888>, keeping Q7's promise in the place it was made. No image.
+
+> It's out now, in ArcKit 6.18.0. Business cases, research findings and design reviews open with the recommendation, and if you've customised one of those templates, your copy keeps its old order. If you try it on your next business case, tell us whether that first line is the one your board wants to read.
+> https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.0
+
+### Q10. ArcKit 6.18.0 — Discord #announcements — posted 10 October, with the `decision-first` image
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/1558433787212472412>. Existing users will notice the change in their next business case, research findings or design review, so it belongs in #announcements. The fr-irn line credits the contributor.
+
+> 🧭 **Decision documents now lead with the decision**
+> ArcKit 6.18.0 is out. The summary of these documents now opens with the answer:
+> • Business cases: the Go/No-Go recommendation and the recommended option first, then the reasons, then costs and risks
+> • Research findings: the build-or-buy recommendation first, the research scope at the end
+> • HLD and DLD reviews: the executive summary is now section 1, with the verdict in its first sentence
+> A risk that could change the decision now sits beside the verdict. If you've customised one of these templates, your copy keeps its old order.
+> French public sector users: /arckit:fr-irn now follows the aDRI's IRN v1.2 grid, built around the digital assets in scope. Thanks to Thomas Jardinet (@thomas-jardinet on GitHub) for the contribution.
+> Update to ArcKit 6.18.0 to get both, and tell us how your next summary reads in #show-your-working
+> <https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.0>
