@@ -157,7 +157,7 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/15
 
 ### Q7. Decision documents lead with the decision — LinkedIn group (Question voice) — posted 8 October
 
-Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-7514025369092517888>, and the same day in Discord #show-your-working (<https://discord.com/channels/1470672254831689893/1552141776607776858/1557821764518809794>), where it asks a question rather than announcing anything. The change is PR #921, merged to main on 8 October and released in ArcKit 6.18.0 on 10 October. No image, and nothing on the page or in #announcements until the release, because those are for released changes. The post promised a follow-up: Q8 to Q10 are that follow-up.
+Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-7514025369092517888>, and the same day in Discord #show-your-working (<https://discord.com/channels/1470672254831689893/1552141776607776858/1557821764518809794>), where it asks a question rather than announcing anything. The change is PR #921, merged to main on 8 October and released in ArcKit 6.18.0 on 10 October. No image, and nothing on the page or in #announcements until the release, because those are for released changes. The post promised a follow-up: Q8 to Q11 are that follow-up.
 
 > How far into a business case does a board member get before they reach the recommendation?
 >
@@ -205,3 +205,9 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/15
 > French public sector users: /arckit:fr-irn now follows the aDRI's IRN v1.2 grid, built around the digital assets in scope. Thanks to Thomas Jardinet (@thomas-jardinet on GitHub) for the contribution.
 > Update to ArcKit 6.18.0 to get both, and tell us how your next summary reads in #show-your-working
 > <https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.0>
+
+### Q11. ArcKit 6.18.0 — Discord #show-your-working, reply to Q7's Discord post — posted 10 October
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/1558445561357803674>, as a Discord reply to the 8 October post, which ended "It isn't in a release yet". A reply rather than an edit, so the original and its question stay as they were.
+
+> It's in ArcKit 6.18.0 now, released today: update and your next business case, research findings or design review opens with the decision. Details in #announcements. The question still stands: what does your board want to read in the first line?
