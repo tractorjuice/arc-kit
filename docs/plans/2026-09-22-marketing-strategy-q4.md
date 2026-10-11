@@ -3,6 +3,7 @@
 > **Status:** draft for maintainer review. Messaging revised on 23 September after the competitive brief (`2026-09-23-competitive-brief.md`). Built with the marketing plugin's campaign-plan method, from the September traction report (`reports/traction/2026-09-01-traction.md`), `docs/INVESTOR-REPORT.md`, and the article archive.
 > **Window:** 1 October – 31 December 2026 (13 weeks). **The launch was brought forward to 23 September**: the adopter form, `ADOPTERS.md`, the landing page and the launch article all went live that day, so the prep-week and week-1 rows below are done.
 > **Budget:** close to zero. Owned and earned channels only. The real constraint is maintainer time, budgeted at about 6 hours a week.
+> **Updated 11 October:** ArcKit was pitched to The Next New Thing's weekly GitHub roundup (§4, §5), and the 10-second intro videos now exist (§6).
 
 ---
 
@@ -98,8 +99,9 @@ Always write "GitHub Copilot" in full. Never write "Copilot" alone.
 | **Department and NHS digital blogs** | Earned | Their endorsement carries more weight than anything ArcKit says about itself | Co-written case study, published by the adopter | High (sign-off lead times) |
 | **Map Camp / Wardley community** | Earned | The Wardley suite is a distinctive draw, and this community overlaps heavily with public-sector architecture | Talk or lightning-talk submission, map walkthrough | Medium (confirm 2026 dates and CFP) |
 | **Supplier and consultancy outreach** | Earned | Secondary audience, faster to publish case studies | Direct outreach to 10 G-Cloud suppliers already using or forking ArcKit | Low–Medium |
+| **AI-builder shows**: [The Next New Thing](https://thenextnewthing.ai)'s weekly GitHub roundup (added 11 October) | Earned | Not the primary audience: about 63.5K YouTube subscribers, mostly AI founders and builders. But the show has featured Archify (number one on 4 September), Paperclip and several Claude Code plugins, and ends each Friday episode with audience submissions. A feature would bring stars and GitHub traffic rather than adopters | One email pitch, plus a 60-second screen recording if they ask | Low |
 
-**Deliberately not used this quarter:** paid ads (no budget, and a poor fit for public-sector buyers); star-chasing launches on Hacker News or Product Hunt (they don't serve the adoption goal, but keep one in reserve for the v7 release).
+**Deliberately not used this quarter:** paid ads (no budget, and a poor fit for public-sector buyers); star-chasing launches on Hacker News or Product Hunt (they don't serve the adoption goal, but keep one in reserve for the v7 release). The Next New Thing pitch is the one exception: a single email, and the show already covers the tools ArcKit builds on.
 
 **Later option, not this quarter: ArcKit reference for ChatGPT Enterprise workspaces** (noted 1 October 2026). OpenAI's [Hosting a plugin with ChatGPT Sites](https://help.openai.com/en/articles/20001547-hosting-a-plugin-with-chatgpt-sites) lets a workspace host MCP tools on a ChatGPT Site and use them as a plugin in ChatGPT and Codex. It reaches the departments that have ChatGPT Enterprise rather than a coding assistant (MoJ's 2,500 seats). It would carry reference material only: find the right template, what the Technology Code of Practice or Service Standard expects, the quality checklist for a document type. It can't generate governed documents, because there is no repository, no hooks and no provenance. Constraints: sharing stays inside one Business or Enterprise workspace (personal and Pro accounts can't share at all), admins must turn on "Create plugins with MCPs" and "Upload plugins" (off by default in Enterprise), and content on a Site is held by OpenAI, so it suits public templates and guidance, not project documents. So each organisation would host its own copy; ArcKit's part would be a short guide and a ready-made prompt for their admin. Revisit once Sites is generally available, ideally with a ChatGPT Enterprise adopter as part of a pilot workshop. The Codex extension does not change: it is already a Codex plugin with skills, hooks and templates, which a Site-hosted plugin can't carry.
 
@@ -115,6 +117,9 @@ Weeks start on Monday. Status is *Planned* for every row until work starts.
 | Prep (28 Sep) | Case-study template + 30-min interview script | Internal | Maintainer. Reused for every case study | Planned |
 | 1 (5 Oct) | "For UK public sector" landing page on arckit.org (messages 1–3, security/classification FAQ, adopter CTA) | Website | Depends on the adopter form | Planned |
 | 1 (5 Oct) | Campaign launch article: *"Show your working: who uses ArcKit?"* (why we're asking, how to join anonymously) | Articles, Medium, LinkedIn | Follow RELEASING.md article rules | Planned |
+| 1 (5 Oct) | Pitch to The Next New Thing's GitHub roundup (audience submissions), sent to hi@thenextnewthing.ai on 11 Oct. It opened with Archify and covered enterprise-architecture support and the regional and sector add-ons | Email (earned) | Maintainer. No reply yet | Sent |
+| 1 (5 Oct) | 10-second intro videos: 16:9 and 9:16, each with a fade-in title and with the logo built from its parts | Video | Made with HyperFrames on 11 Oct. Not yet posted | Done |
+| 2 (12 Oct) | Check the Friday 16 Oct episode, and the following Fridays, for ArcKit in audience submissions. If it's featured, post on the page, then the group, then Discord, and offer the 60-second recording | LinkedIn, Discord | Reactive slot. Same channel order as every other post | Planned |
 | 2 (12 Oct) | Office hours #1 announced (held week 4) | LinkedIn, community Slack | Book a recurring slot (e.g. first Thursday of the month) | Planned |
 | 2 (12 Oct) | LinkedIn series begins, "One artefact, 20 minutes": SOBC on a public test repo | LinkedIn | 2 posts a week from here, alternating artefact walkthroughs and community posts | Planned |
 | 3 (19 Oct) | Pilot workshop offer: 4 free slots, direct outreach to known forkers, issue filers and article commenters | Email/DM, LinkedIn | Prioritise contacts with a public-sector link | Planned |
@@ -162,6 +167,8 @@ About 20% of LinkedIn slots stay open for release news and anything reactive (ne
 | Adopters section on arckit.org | Web | Logo wall or text list, anonymous-tier counts | Must | Week 6 |
 | Map Camp talk submission | Talk | Wardley suite + public-sector strategy mapping | Nice | CFP deadline (confirm) |
 | Year-in-review article | Article | Adopter roll-up + 2027 roadmap tease | Must | Week 12 |
+| Intro videos (4) | Video | 10-second silent brand intros on the navy blueprint background. 16:9 (1920×1080) and 9:16 (1080×1920), each in two styles: a fade-in title, and the logo built from its parts (brackets, caret, cursor line, nodes, pin). They open demos and office-hours recordings, and suit LinkedIn, Discord, Shorts and Reels | Nice | Done (11 Oct). Not yet in the repo |
+| 60-second screen recording | Video | One command running end to end on a public test repo, opened by an intro video. Offered in The Next New Thing pitch | Nice | On request |
 
 ---
 
