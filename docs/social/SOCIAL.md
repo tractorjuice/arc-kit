@@ -211,3 +211,37 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/15
 Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/1558445561357803674>, as a Discord reply to the 8 October post, which ended "It isn't in a release yet". A reply rather than an edit, so the original and its question stay as they were.
 
 > It's in ArcKit 6.18.0 now, released today: update and your next business case, research findings or design review opens with the decision. Details in #announcements. The question still stands: what does your board want to read in the first line?
+
+### Q12. 2,634 directory installs — LinkedIn page, with the 30s `arckit-directory-installs` video (Warm "we" voice)
+
+Not posted yet. Video: `~/hyperframes/arckit-directory-installs/renders/arckit-directory-installs.mp4` (30 seconds, 1080 × 1350, silent), made with HyperFrames as a sequel to the `arckit-traction` video. Upload the video before pasting the text, or the link turns into a preview card that replaces it. The page posts *ArcKit Explained* at 08:30 until 13 October, so this takes the week's free slot, in the afternoon. The numbers are the Claude plugin directory's Usage tab for each plugin, data through 10 October 2026, read on 12 October, and they are installs only (rule 3). The posts say nothing about the core plugin being in the directory, so *Now in the Claude plugin directory* keeps its day.
+
+> For the first time, we can see how often ArcKit's plugins are installed from the Claude plugin directory: 2,634 times, to 10 October.
+>
+> Each overlay adds the commands for one jurisdiction's or sector's rules. The Austrian overlay leads with 611 installs, then the EU overlay (431) and NHS clinical safety (424). Most installs started on a plugin's page on Claude.ai (1,676), and 491 came from browsing plugins in Cowork.
+>
+> ArcKit itself still never phones home: these are the directory's counts of installs, not of who uses ArcKit. The overlays build on the core ArcKit plugin, and arckit.org shows how to install both.
+>
+> If your team uses ArcKit, tell us: named, anonymously or privately.
+> https://arckit.org/public-sector?utm_campaign=show-your-working&utm_source=linkedin-page
+>
+> #EnterpriseArchitecture #PublicSector #OpenSource #Governance
+
+### Q13. 2,634 directory installs — LinkedIn group (Question voice), with the 60s `arckit-directory-installs-long` video
+
+Not posted yet. The same day as Q12, after it. Video: `~/hyperframes/arckit-directory-installs-long/renders/arckit-directory-installs-long.mp4` (60 seconds, 1080 × 1350, silent). It adds a spotlight on the top three, with what each overlay covers taken from its `plugin.json` description.
+
+> Which rules does your architecture work answer to?
+>
+> The Claude plugin directory now counts installs for the ArcKit plugins listed there: 2,634 to 10 October. The Austrian overlay has the most (611), covering data protection, cybersecurity, federal procurement and accessibility law. The EU overlay, covering GDPR, the AI Act, DORA, NIS2, the Cyber Resilience Act and more, has 431, and NHS clinical safety (DCB0129, DCB0160, DTAC) has 424. There are overlays for the US, Canada, the UAE, France, the Netherlands, Australia (federal and energy) and UK payments too.
+>
+> These are installs, not users: ArcKit still never phones home.
+>
+> Which jurisdiction or sector should get an overlay next?
+
+### Q14. 2,634 directory installs — Discord #show-your-working, with the 30s video
+
+Not posted yet. Not #announcements: nothing changes for people who already use ArcKit. Video: `~/hyperframes/arckit-directory-installs/renders/arckit-directory-installs-discord.mp4`, a 2 MB copy of Q12's video, re-encoded to fit Discord's 10 MB upload limit for servers without a boost. The 9:16 cut, `~/hyperframes/arckit-directory-installs-vertical/renders/arckit-directory-installs-vertical.mp4`, is for YouTube Shorts if we try it (see *Where ArcKit posts*).
+
+> 📈 First numbers from the Claude plugin directory: 2,634 installs of ArcKit plugins, to 10 October. Austria's overlay is out in front with 611; the EU and NHS clinical safety overlays are close behind at 431 and 424.
+> ArcKit itself still sends us nothing, so this channel is where we hear how it's going. Which overlay would you want next?
