@@ -992,6 +992,33 @@ def copy_extension_files(plugin_sources):
                 shutil.copy2(src, dst)
                 print(f"  Copied: {src} -> {dst}")
 
+        # Overlay-only references. The loop above replaces references/
+        # wholesale from arckit-claude, so a reference file that only a
+        # community plugin carries never reached the extensions, while the
+        # converted commands still told the model to read it there:
+        # uk-nhs-dcb0129/-dcb0160 (duaa2025.md, hazard-archetypes.md,
+        # nhs-clinical-safety-checklist.md), five oaa commands
+        # (placeholder-substitutions.md) and agent-integration /
+        # agent-inventory (agent-architecture-reference.md). Shared
+        # references exist in core too and are byte-identical, so core wins.
+        merged_refs = 0
+        for src_plugin in plugin_sources[:-1]:
+            src_dir = os.path.join(src_plugin, "references")
+            if not os.path.isdir(src_dir):
+                continue
+            for entry in sorted(os.listdir(src_dir)):
+                src_path = os.path.join(src_dir, entry)
+                if not os.path.isfile(src_path):
+                    continue
+                if os.path.exists(os.path.join(core_plugin_dir, "references", entry)):
+                    continue
+                dst_path = os.path.join(ext_dir, "references", entry)
+                os.makedirs(os.path.dirname(dst_path), exist_ok=True)
+                shutil.copy2(src_path, dst_path)
+                merged_refs += 1
+        if merged_refs:
+            print(f"  Merged {merged_refs} overlay-only reference file(s)")
+
 
 def strip_claude_only_skill_fields(skills_dir):
     """Strip Claude-only frontmatter fields (paths, allowed-tools, disallowed-tools)
