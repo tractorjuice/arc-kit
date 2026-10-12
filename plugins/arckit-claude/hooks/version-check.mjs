@@ -15,7 +15,8 @@
  *      MCP diagnostics no longer printing resolved secrets, the plugin
  *      skills/hook-error/cache fixes, and the file-tool symlink and
  *      Grep/Glob deny-rule fixes, Claude Opus 5.5 availability, Claude
- *      Sonnet 5.5 availability, and Claude mods (the status band) depend on
+ *      Sonnet 5.5 availability, and plugin SessionStart hooks in new cloud
+ *      sessions depend on
  *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/
  *      v2.1.172+/v2.1.200+/v2.1.219+/v2.1.221+/v2.1.234+/v2.1.246+/
  *      v2.1.251+/v2.1.280+/v2.1.284+/v2.1.287+). Silent on
@@ -107,7 +108,7 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Opus 5 at \`effort: xhigh\`/\`max\` with thinking disabled is sent as \`high\` instead of failing, so ArcKit's \`effort: max\` commands complete on thinking-off sessions rather than erroring (needs v2.1.251)\n` +
     `- Claude Opus 5.5 — the default Opus model; it always thinks, so \`effort: max\` commands cannot be sent as \`high\` by a thinking-off session and the provenance Effective Effort row is accurate (needs v2.1.280)\n` +
     `- Claude Sonnet 5.5 — the default Sonnet model on the Anthropic API; like Opus 5.5 it always thinks, so \`effort: max\` commands run at \`max\` on it (needs v2.1.284)\n` +
-    `- Claude mods — ArcKit's status band above the prompt (project, artefact, DRAFT and overdue-review counts); also fixes plugin SessionStart hooks not running in new cloud sessions (needs v2.1.287)\n\n` +
+    `- Plugin SessionStart hooks now run in new cloud sessions, so ArcKit's session-start hooks run there too (needs v2.1.287)\n\n` +
     `Update with: \`claude update\`\n\n` +
     `**Tip — stop drifting back below the floor:** after updating, add ` +
     `\`"minimumVersion": "${MIN_CLAUDE_CODE_VERSION}"\` to your \`.claude/settings.json\`. ` +

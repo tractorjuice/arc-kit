@@ -258,8 +258,7 @@ copy_distribution_files() {
 # Also left out, because nothing an installed plugin runs uses them and the
 # directory holds a plugin with more than 512 files for a reviewer: the four
 # Self-Harness modules (the autoresearch loop runs them from this repository),
-# the status band's engine test (`claude plugin test` runs it from source), the
-# skills lint config, and check-prerequisites.sh (no command calls it; the CLI
+# the skills lint config, and check-prerequisites.sh (no command calls it; the CLI
 # scaffold copies it from scripts/bash/ separately). tsconfig.json and
 # .claude-plugin/types/ are generated locally by plugin tooling and are not
 # tracked; the tar reads the working tree, so they would otherwise ship.
@@ -283,7 +282,6 @@ copy_claude_core_files() {
     --exclude='./hooks/weakness-miner.mjs' \
     --exclude='./hooks/harness-proposer.mjs' \
     --exclude='./hooks/harness-validator.mjs' \
-    --exclude='./hooks/mod/status-band.test.ts' \
     --exclude='./skills/.markdownlint-cli2.jsonc' \
     --exclude='./scripts/bash/check-prerequisites.sh' \
     --exclude='./tsconfig.json' \
