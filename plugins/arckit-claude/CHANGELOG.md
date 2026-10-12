@@ -9,6 +9,8 @@ Releases before 6.13.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+## [6.18.2] — 2026-10-12
+
 ### Removed
 
 - **The status band above the prompt is gone.** It was a Claude Code mod, and the Claude plugin directory holds any plugin that includes one for a reviewer. `/arckit:health` still reports stale drafts and overdue reviews, and the stale-artefact notice at session start still lists them. Nothing ArcKit checks or blocks has changed. If you set `ARCKIT_NO_STATUS_BAND`, you can remove it.
