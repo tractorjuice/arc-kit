@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **Two UAE guides named a command that doesn't exist.** The UAE data sharing and UAE Pass guides pointed to `/arckit:integration`; they now point to `/arckit:data-mesh-contract` and `/arckit:diagram`.
+- **Templates you customise are now used.** `/arckit:customize` saves templates to `.arckit/templates-custom/`, but 72 commands and three writer agents only looked in `.arckit/templates/`, so a customised template was ignored and the default was used instead. They now check `.arckit/templates-custom/`, then `.arckit/templates/`, then the plugin's default. Contributed by @trednets (#930).
+- **Overlay reference files reach the other AI tools.** Reference files that only an overlay carries never reached the seven generated extensions (Codex, Gemini, OpenCode, Copilot, Vibe, Kimi, Paperclip), so the UK NHS DCB0129 and DCB0160 commands, five Open Agile Architecture commands and two AI Agent Architecture commands ran without the material they tell the model to read. The converter now copies them. Contributed by @trednets (#931).
 
 ## [6.18.0] — 2026-10-09
 
