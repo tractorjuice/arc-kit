@@ -85,7 +85,8 @@ After your PR is merged to `main`:
 # 1. Ensure you're on main with latest changes
 git checkout main && git pull
 
-# 2. Edit CHANGELOGs manually
+# 2. Edit CHANGELOGs manually (bump-version.sh then moves the oldest
+#    plugin releases to docs/changelog/arckit-plugin-archive.md)
 
 # 3. Preview release notes (optional)
 ./scripts/generate-release-notes.sh

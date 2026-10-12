@@ -158,7 +158,9 @@ The highest-signal failures — collected from real releases. Read these before 
   tag is the `git tag -a vX.Y.Z` in step 8.
 - **Two CHANGELOGs, not one.** `CHANGELOG.md` is the CLI changelog; `plugins/arckit-claude/CHANGELOG.md`
   is the plugin changelog. Both need an entry. They are human-authored — `generate-release-notes.sh`
-  only *previews* what changed, it does not write them.
+  only *previews* what changed, it does not write them. `bump-version.sh` then runs
+  `scripts/trim-plugin-changelog.py`, which keeps the plugin file under 64 KB by moving whole
+  older minor series to `docs/changelog/arckit-plugin-archive.md`; commit both files.
 - **CLI and plugin versions are independent but bumped together.** `bump-version.sh` moves both to
   the same number by design; don't try to skew them.
 - **`push-extensions.sh` needs `GH_TOKEN`** and skips repos that don't yet exist on GitHub — a
