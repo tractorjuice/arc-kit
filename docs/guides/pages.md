@@ -50,6 +50,11 @@ optional overlay/community `pack`, lifecycle `status`, plus
 The fallback `Other / Uncategorised` section is reserved for guides without an
 explicit mapping.
 
+The site copies the core ArcKit guides into `docs/guides/`, plus the guides of
+each overlay you have installed, for you or for this repository. Each overlay
+ships the guides for its own commands, so a French or TOGAF guide appears only
+when that overlay is installed.
+
 ---
 
 ## Generated Site Features

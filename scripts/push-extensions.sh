@@ -254,6 +254,15 @@ copy_distribution_files() {
 # behavioural evals. The evals are maintainer tooling run from this repository;
 # shipping them put ~7 MB of fixtures and recordings in every install, and the
 # Claude plugin directory's scan flagged a download-and-run line in their README.
+#
+# Also left out, because nothing an installed plugin runs uses them and the
+# directory holds a plugin with more than 512 files for a reviewer: the four
+# Self-Harness modules (the autoresearch loop runs them from this repository),
+# the status band's engine test (`claude plugin test` runs it from source), the
+# skills lint config, and check-prerequisites.sh (no command calls it; the CLI
+# scaffold copies it from scripts/bash/ separately). tsconfig.json and
+# .claude-plugin/types/ are generated locally by plugin tooling and are not
+# tracked; the tar reads the working tree, so they would otherwise ship.
 copy_claude_core_files() {
   local source_path="$1"
   local destination_path="$2"
@@ -270,6 +279,15 @@ copy_claude_core_files() {
     --exclude='.DS_Store' \
     --exclude='./plugins' \
     --exclude='./.claude-plugin/marketplace.json' \
+    --exclude='./hooks/autoresearch-tracer.mjs' \
+    --exclude='./hooks/weakness-miner.mjs' \
+    --exclude='./hooks/harness-proposer.mjs' \
+    --exclude='./hooks/harness-validator.mjs' \
+    --exclude='./hooks/mod/status-band.test.ts' \
+    --exclude='./skills/.markdownlint-cli2.jsonc' \
+    --exclude='./scripts/bash/check-prerequisites.sh' \
+    --exclude='./tsconfig.json' \
+    --exclude='./.claude-plugin/types' \
     -cf - . | tar -C "$destination_path" -xf -
 }
 
@@ -434,6 +452,16 @@ publish_claude_plugins_repo() {
   echo "  Namespacing overlay command invocations for Claude Code..."
   if ! python3 "$ROOT_DIR/scripts/claude_command_namespacing.py" "$clone_path"; then
     red "  Failed to namespace overlay command invocations"
+    cd "$ROOT_DIR"
+    return 1
+  fi
+
+  # The plugin directory holds a version for a reviewer if a plugin folder has
+  # more than 512 files, a non-image file of 256 KiB or more, or an unreadable
+  # binary. Check what is about to be pushed, stray local files included.
+  echo "  Checking plugin folders against the plugin directory's file rules..."
+  if ! python3 "$ROOT_DIR/scripts/check-plugin-directory-limits.py" "$clone_path" | sed 's/^/    /'; then
+    red "  A plugin folder breaks the plugin directory's file rules; not pushing"
     cd "$ROOT_DIR"
     return 1
   fi

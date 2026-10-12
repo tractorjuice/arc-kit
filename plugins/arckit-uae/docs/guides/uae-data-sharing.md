@@ -61,7 +61,7 @@ Output: `projects/<id>/ARC-<id>-DSHR-v1.0.md`
 | Privacy | PDPL baseline + lawful basis | `/arckit:uae-pdpl` |
 | Classification | Per-dataset Smart Data tags | `/arckit:uae-classification` |
 | Sharing | Data Sharing Agreement | `/arckit:uae-data-sharing` |
-| Integration | Federation / API contracts | `/arckit:integration` |
+| Integration | Federation / API contracts | `/arckit:data-mesh-contract` |
 
 ---
 

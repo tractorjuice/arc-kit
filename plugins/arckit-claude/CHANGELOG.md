@@ -12,6 +12,7 @@ Releases before 6.13.0 are in the [changelog archive](https://github.com/tractor
 ### Changed
 
 - **This changelog now lists only recent releases.** At 321 KB it was too large for the Claude plugin directory's validator to read. Releases before 6.13.0 are in the [changelog archive](https://github.com/tractorjuice/arc-kit/blob/main/docs/changelog/arckit-plugin-archive.md), word for word, and each minor series moves there as it ages out.
+- **This plugin ships 469 files instead of 587**, under the Claude plugin directory's 512-file limit. Overlay guides now ship with their overlay, and `/arckit:pages` adds them to your site when that overlay is installed. The Self-Harness modules, the status band's engine test, a lint config and `check-prerequisites.sh` no longer ship; nothing an installed plugin runs used them.
 
 ## [6.18.0] — 2026-10-09
 

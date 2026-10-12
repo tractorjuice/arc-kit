@@ -95,7 +95,6 @@ const ROOTS = [
   'plugins/arckit-claude/plugins/eu',
   '.arckit/templates',
   'docs/guides/eu-cloud-sovereignty.md',
-  'plugins/arckit-claude/docs/guides',
 ];
 
 // `references/quality-checklist.md` is a shared asset copied into EVERY

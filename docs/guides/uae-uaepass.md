@@ -57,7 +57,7 @@ Output: `projects/<id>/ARC-<id>-UPASS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Architecture | Identity boundaries and integration surface | `/arckit:platform-design`, `/arckit:integration` |
+| Architecture | Identity boundaries and integration surface | `/arckit:platform-design`, `/arckit:diagram` |
 | UAE Pass | Integration design + onboarding pack | `/arckit:uae-uaepass` |
 | Decisions | Profile choice and e-signature mechanism as ADRs | `/arckit:adr` |
 | Security | Reconcile with IAS T5 (Access Control) controls | `/arckit:uae-ias` |

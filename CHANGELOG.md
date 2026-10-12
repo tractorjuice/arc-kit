@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **The plugin's changelog now lists only recent releases.** `plugins/arckit-claude/CHANGELOG.md` had grown to 321 KB, too large for the Claude plugin directory's validator to read, which kept the core plugin on a policy hold. It now holds the releases since 6.13.0 (59 KB), with a link at the top to `docs/changelog/arckit-plugin-archive.md`, where every older entry is kept word for word. `bump-version.sh` moves each minor series to the archive as it ages out, keeping the file under 64 KB, and CI fails if it passes 128 KB.
+- **Core ArcKit ships 469 files instead of 587.** The Claude plugin directory holds a plugin with more than 512 files for a reviewer, and core was over the limit. Each overlay now ships the guides for its own commands, so 111 guides moved out of core, and seven files only maintainers use no longer ship: the four Self-Harness modules, the status band's engine test, a lint config and `check-prerequisites.sh`. `/arckit:pages` adds an overlay's guides when that overlay is installed for you or for the repository, so your site no longer lists guides for overlays you don't use. The generated extensions no longer carry guides for the Claude-only overlays (UK G-Cloud, Repository Tooling, FDE), whose commands they don't have. A new check, run in CI and by the release script before it pushes, fails any published plugin folder over 512 files, any non-image file of 256 KiB or more, or an unreadable binary.
+
+### Fixed
+
+- **Two UAE guides named a command that doesn't exist.** The UAE data sharing and UAE Pass guides pointed to `/arckit:integration`; they now point to `/arckit:data-mesh-contract` and `/arckit:diagram`.
 
 ## [6.18.0] — 2026-10-09
 
