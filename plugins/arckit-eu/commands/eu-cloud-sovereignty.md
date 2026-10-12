@@ -82,7 +82,7 @@ Read all documents from Step 0. Identify:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/eu-cloud-sovereignty-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/eu-cloud-sovereignty-template.md` exists in the project root, then `.arckit/templates/eu-cloud-sovereignty-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/eu-cloud-sovereignty-template.md`
 - **Also read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` — needed to resolve the `<!-- DOC-CONTROL-HEADER -->` marker in Step 5

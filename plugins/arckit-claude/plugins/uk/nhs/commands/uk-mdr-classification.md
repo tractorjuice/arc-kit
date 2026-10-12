@@ -61,7 +61,7 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
 2. **Read the template**:
-   - `templates-custom/uk-mdr-classification-template.md` → `.arckit/templates/uk-mdr-classification-template.md` → `${CLAUDE_PLUGIN_ROOT}/templates/uk-mdr-classification-template.md`
+   - `.arckit/templates-custom/uk-mdr-classification-template.md` → `.arckit/templates/uk-mdr-classification-template.md` → `${CLAUDE_PLUGIN_ROOT}/templates/uk-mdr-classification-template.md`
 
 3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
 

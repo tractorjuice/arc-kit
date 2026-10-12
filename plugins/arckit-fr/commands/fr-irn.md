@@ -83,7 +83,7 @@ Start with the assets that carry vital business functions. If no artifacts exist
 
 ### Step 3: Read Template
 
-- **First**, check if `.arckit/templates/fr-irn-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/fr-irn-template.md` exists in the project root, then `.arckit/templates/fr-irn-template.md`
 - **If found**: use the user's customised template
 - **If not found**: use `${CLAUDE_PLUGIN_ROOT}/templates/fr-irn-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `IRN` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.

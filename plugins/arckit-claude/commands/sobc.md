@@ -122,7 +122,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 7. **Generate comprehensive SOBC**:
 
    **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/sobc-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/sobc-template.md` exists in the project root, then `.arckit/templates/sobc-template.md`
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/sobc-template.md` (default)
    - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
