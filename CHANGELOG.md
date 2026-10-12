@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- **The status band is gone from core ArcKit.** It was a Claude Code mod that drew project, artefact, DRAFT and overdue-review counts above the prompt. The Claude plugin directory holds any plugin that includes a mod for a reviewer, and the band was the last thing holding core there. `/arckit:health` still reports drafts and overdue reviews, and the stale-artefact monitor still lists them at session start. Every gate was already a classic hook, so nothing ArcKit enforces has changed. `tests/plugin/no-mod.test.mjs` keeps a mod from coming back into core. The Claude Code minimum stays at v2.1.287, which also makes plugin SessionStart hooks run in new cloud sessions.
+
 ## [6.18.1] — 2026-10-12
 
 ### Changed

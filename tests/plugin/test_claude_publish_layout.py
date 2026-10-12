@@ -166,7 +166,6 @@ MAINTAINER_ONLY = (
     "hooks/weakness-miner.mjs",
     "hooks/harness-proposer.mjs",
     "hooks/harness-validator.mjs",
-    "hooks/mod/status-band.test.ts",
     "skills/.markdownlint-cli2.jsonc",
     "scripts/bash/check-prerequisites.sh",
 )
