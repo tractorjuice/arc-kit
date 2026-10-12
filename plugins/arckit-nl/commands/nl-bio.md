@@ -72,7 +72,7 @@ Read all documents from Step 0. Extract the system's control environment, any ex
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/nl-bio-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/nl-bio-template.md` exists in the project root, then `.arckit/templates/nl-bio-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-bio-template.md`
 

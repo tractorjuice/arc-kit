@@ -80,7 +80,7 @@ Read all documents from Step 0. Identify:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/at-dsgvo-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/at-dsgvo-template.md` exists in the project root, then `.arckit/templates/at-dsgvo-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/at-dsgvo-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `ATDSG` carries the Austria regime, which hard-routes to `_partials/document-control-at.md` whatever the operator's user config says.

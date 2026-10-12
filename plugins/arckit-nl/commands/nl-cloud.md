@@ -76,7 +76,7 @@ Read all documents from Step 0. Extract and note the TBB category (if determined
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/nl-cloud-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/nl-cloud-template.md` exists in the project root, then `.arckit/templates/nl-cloud-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-cloud-template.md`
 

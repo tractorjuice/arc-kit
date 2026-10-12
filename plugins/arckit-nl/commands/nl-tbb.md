@@ -70,7 +70,7 @@ Read all documents from Step 0. Extract the information types, users, and existi
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/nl-tbb-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/nl-tbb-template.md` exists in the project root, then `.arckit/templates/nl-tbb-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-tbb-template.md`
 

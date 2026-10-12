@@ -75,7 +75,7 @@ Read all documents from Step 0. Identify:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/eu-dsa-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/eu-dsa-template.md` exists in the project root, then `.arckit/templates/eu-dsa-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/eu-dsa-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.

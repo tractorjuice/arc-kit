@@ -96,7 +96,7 @@ The orchestrator passes you a JSON object in its Agent prompt:
 
 ### Step A: Render the main RSCH artefact
 
-1. **Read the RSCH template.** Open `${CLAUDE_PLUGIN_ROOT}/templates/research-findings-template.md`. If `.arckit/templates/research-findings-template.md` exists in the project root, prefer that (user override). Then read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in every template you render, including the vendor profiles and tech-notes spawned below — the partial it selects is the only source of the Document Control table's 14 standard fields and of the classification ladder. Do not hand-write that table.
+1. **Read the RSCH template.** Open `${CLAUDE_PLUGIN_ROOT}/templates/research-findings-template.md`. If `.arckit/templates-custom/research-findings-template.md` exists in the project root, prefer that (user override, written by `/arckit:customize`); otherwise, if `.arckit/templates/research-findings-template.md` exists, prefer that. Then read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in every template you render, including the vendor profiles and tech-notes spawned below — the partial it selects is the only source of the Document Control table's 14 standard fields and of the classification ladder. Do not hand-write that table.
 
 2. **Read the project's previous artefact if one exists.** `Glob` for `{project_path}/research/ARC-{project_id}-RSCH-*-v*.md`. If found, read the highest-version file to copy forward the Document Control authorship metadata (Owner, Reviewed By, Approved By).
 

@@ -67,7 +67,7 @@ Read all documents from Step 0. Extract the hosting model, actual contracted pro
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/nl-exit-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/nl-exit-template.md` exists in the project root, then `.arckit/templates/nl-exit-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-exit-template.md`
 

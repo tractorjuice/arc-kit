@@ -76,7 +76,7 @@ Read all documents from Step 0. Note especially:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/fr-dinum-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/fr-dinum-template.md` exists in the project root, then `.arckit/templates/fr-dinum-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/fr-dinum-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `DINUM` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.

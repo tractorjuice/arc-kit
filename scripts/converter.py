@@ -393,12 +393,19 @@ def rewrite_paths(prompt, config):
     """Rewrite ${CLAUDE_PLUGIN_ROOT} paths using agent config."""
     result = rewrite_user_config_placeholders(prompt)
 
-    # Claude commands use literal `.arckit/templates/` for project-local
-    # overrides and `${CLAUDE_PLUGIN_ROOT}/templates/` for shipped defaults.
-    # Codex projects keep shipped defaults in `.arckit/templates/`, so their
-    # project override path must be rewritten before plugin-root expansion.
+    # Claude commands check `.arckit/templates-custom/` (written by
+    # /arckit:customize), then `.arckit/templates/`, then
+    # `${CLAUDE_PLUGIN_ROOT}/templates/` for shipped defaults. Codex projects
+    # keep shipped defaults in `.arckit/templates/`, so their project override
+    # path must be rewritten before plugin-root expansion; that turns the
+    # two-step lookup into "templates-custom, then templates-custom", which
+    # is collapsed back to one step.
     if config.get("project_template_overrides"):
         result = result.replace(".arckit/templates/", ".arckit/templates-custom/")
+        result = re.sub(r"(`\.arckit/templates-custom/([^`]+)`[^\n]*?), then `\.arckit/templates-custom/\2`",
+                        r"\1", result)
+        result = re.sub(r"(`\.arckit/templates-custom/([^`]+)`[^\n]*?); otherwise, if "
+                        r"`\.arckit/templates-custom/\2` exists, prefer that\.", r"\1.", result)
 
     if config.get("script_path_prefix"):
         result = result.replace(

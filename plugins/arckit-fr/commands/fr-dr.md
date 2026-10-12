@@ -86,7 +86,7 @@ Read all documents from Step 0. Extract:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/fr-dr-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/fr-dr-template.md` exists in the project root, then `.arckit/templates/fr-dr-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/fr-dr-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `DR` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.
