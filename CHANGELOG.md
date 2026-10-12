@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.18.1] — 2026-10-12
+
 ### Changed
 
 - **The plugin's changelog now lists only recent releases.** `plugins/arckit-claude/CHANGELOG.md` had grown to 321 KB, too large for the Claude plugin directory's validator to read, which kept the core plugin on a policy hold. It now holds the releases since 6.13.0 (59 KB), with a link at the top to `docs/changelog/arckit-plugin-archive.md`, where every older entry is kept word for word. `bump-version.sh` moves each minor series to the archive as it ages out, keeping the file under 64 KB, and CI fails if it passes 128 KB.

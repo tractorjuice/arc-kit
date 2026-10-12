@@ -9,6 +9,8 @@ Releases before 6.13.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+## [6.18.1] — 2026-10-12
+
 ### Changed
 
 - **This changelog now lists only recent releases.** At 321 KB it was too large for the Claude plugin directory's validator to read. Releases before 6.13.0 are in the [changelog archive](https://github.com/tractorjuice/arc-kit/blob/main/docs/changelog/arckit-plugin-archive.md), word for word, and each minor series moves there as it ages out.
