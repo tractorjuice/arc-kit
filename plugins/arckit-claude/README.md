@@ -66,7 +66,36 @@ claude --plugin-dir /path/to/arckit-claude
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.287?** v2.1.287 adds **Claude mods**, which ArcKit uses to draw a status line above the prompt: how many projects and artefacts you have, how many are DRAFT, and how many reviews are overdue. It also fixes plugin SessionStart hooks not running in new cloud sessions, which skipped ArcKit's session set-up and version check there. The floor carries v2.1.284, which adds **Claude Sonnet 5.5** (`claude-sonnet-5-5`), the default Sonnet model on the Anthropic API, with 1M context; earlier clients cannot select it. Like Opus 5.5 it always thinks and defaults to `effort: medium`, so ArcKit's `effort: max` commands run at `max` on it. The floor carries v2.1.280, which adds **Claude Opus 5.5** (`claude-opus-5-5`), the default Opus model. Opus 5.5 always thinks, so ArcKit's `effort: max` commands can no longer be quietly sent as `high` by a session with thinking off, and the Effective Effort row in each artefact's Build Provenance is accurate. The floor carries v2.1.251, which stops the file tools following a symlink swapped inside the working directory after the permission check, and makes Grep and Glob honour `Read()` deny rules through symlinked paths — the class of bypass ArcKit's `file-protection` and `secret-file-scanner` gates sit in front of. It also sends Opus 5 `effort: xhigh`/`max` as `high` when thinking is off instead of failing, so ArcKit's `effort: max` commands complete on thinking-off sessions. v2.1.246 fixed four plugin-loading bugs that hit ArcKit's exact layout: `/reload-plugins` counted 0 skills for `skills/*/SKILL.md` plugins, hook errors showed a literal `${CLAUDE_PLUGIN_ROOT}`, the plugin cache created duplicate SHA-named directories, and `claude plugin update <bare-name>` failed. The floor carries forward v2.1.234, which stops Claude Code's MCP diagnostics printing **resolved secrets** — ArcKit bundles two keyed MCP servers whose `${user_config.*}` API keys sit in request headers, and on a keyless session those connections fail by design, so ArcKit routinely produces exactly the diagnostics this fixed. v2.1.221 fixed `WebSearch` returning a 400 at `effort: xhigh`/`max` with thinking disabled, which silently broke ArcKit's `effort: max` commands and research agents for anyone running with thinking off. v2.1.222-v2.1.224 close PreToolUse auto-allow bypasses in background agent tasks (load-bearing since v2.1.232 made spawns background by default), Bash permission-check bypasses, and a sandbox deny-path bypass. It also carries v2.1.219's **Claude Opus 5** (`claude-opus-5`) with 1M context and fast mode (superseded as the default by Opus 5.5); v2.1.200's project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility; the v2.1.198-v2.1.199 background-subagent reliability, parent error-propagation, and hook stderr-visibility fixes; v2.1.197's Claude Sonnet 5 default with native 1M context; and v2.1.172's wildcard-domain `WebFetch` fix. It also carries the older MCP `alwaysLoad`, provenance hook, release validation, telemetry, `/context`, Auto mode, plugin update, MCP leak, retry, and subagent working-directory fixes ArcKit relies on.
+> **Why v2.1.287?** It adds **Claude mods**, which ArcKit uses to draw a status line above the prompt: how many projects and artefacts you have, how many are DRAFT, and how many reviews are overdue. It also fixes plugin SessionStart hooks not running in new cloud sessions, which skipped ArcKit's session set-up and version check there.
+>
+> The floor also carries earlier releases ArcKit depends on:
+>
+> **Models**
+>
+> - **v2.1.284** adds **Claude Sonnet 5.5** (`claude-sonnet-5-5`), the default Sonnet model on the Anthropic API, with 1M context; earlier clients cannot select it. Like Opus 5.5 it always thinks and defaults to `effort: medium`, so ArcKit's `effort: max` commands run at `max` on it.
+> - **v2.1.280** adds **Claude Opus 5.5** (`claude-opus-5-5`), the default Opus model. It always thinks, so ArcKit's `effort: max` commands can no longer be quietly sent as `high` by a session with thinking off, and the Effective Effort row in each artefact's Build Provenance is accurate.
+> - **v2.1.219** adds **Claude Opus 5** (`claude-opus-5`) with 1M context and fast mode (superseded as the default by Opus 5.5).
+> - **v2.1.197** makes Claude Sonnet 5 the default, with native 1M context.
+>
+> **Security and permissions**
+>
+> - **v2.1.251** stops the file tools following a symlink swapped inside the working directory after the permission check, and makes Grep and Glob honour `Read()` deny rules through symlinked paths — the class of bypass ArcKit's `file-protection` and `secret-file-scanner` gates sit in front of.
+> - **v2.1.234** stops Claude Code's MCP diagnostics printing **resolved secrets**. ArcKit bundles two keyed MCP servers whose `${user_config.*}` API keys sit in request headers, and on a keyless session those connections fail by design, so ArcKit routinely produces exactly the diagnostics this fixed.
+> - **v2.1.222–v2.1.224** close PreToolUse auto-allow bypasses in background agent tasks (load-bearing since v2.1.232 made spawns background by default), Bash permission-check bypasses, and a sandbox deny-path bypass.
+> - **v2.1.172** fixes wildcard-domain `WebFetch` rules.
+>
+> **Effort and thinking**
+>
+> - **v2.1.251** also sends Opus 5 `effort: xhigh`/`max` as `high` when thinking is off instead of failing, so ArcKit's `effort: max` commands complete on thinking-off sessions.
+> - **v2.1.221** fixes `WebSearch` returning a 400 at `effort: xhigh`/`max` with thinking disabled, which silently broke ArcKit's `effort: max` commands and research agents for anyone running with thinking off.
+>
+> **Plugin loading and agents**
+>
+> - **v2.1.246** fixes four plugin-loading bugs that hit ArcKit's exact layout: `/reload-plugins` counted 0 skills for `skills/*/SKILL.md` plugins, hook errors showed a literal `${CLAUDE_PLUGIN_ROOT}`, the plugin cache created duplicate SHA-named directories, and `claude plugin update <bare-name>` failed.
+> - **v2.1.200** fixes project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility.
+> - **v2.1.198–v2.1.199** fix background-subagent reliability, parent error propagation and hook stderr visibility.
+>
+> **Older fixes:** MCP `alwaysLoad`, provenance hook, release validation, telemetry, `/context`, Auto mode, plugin update, MCP leak, retry and subagent working-directory fixes ArcKit relies on.
 
 ## Quick Start
 
