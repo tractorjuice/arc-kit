@@ -212,9 +212,9 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/15
 
 > It's in ArcKit 6.18.0 now, released today: update and your next business case, research findings or design review opens with the decision. Details in #announcements. The question still stands: what does your board want to read in the first line?
 
-### Q12. 2,634 directory installs — LinkedIn page, with the 30s `arckit-directory-installs` video (Warm "we" voice)
+### Q12. 2,634 directory installs — LinkedIn page, with the 30s `arckit-directory-installs` video (Warm "we" voice) — posted 12 October
 
-Not posted yet. Video: `~/hyperframes/arckit-directory-installs/renders/arckit-directory-installs.mp4` (30 seconds, 1080 × 1350, silent), made with HyperFrames as a sequel to the `arckit-traction` video. Upload the video before pasting the text, or the link turns into a preview card that replaces it. The page posts *ArcKit Explained* at 08:30 until 13 October, so this takes the week's free slot, in the afternoon. The numbers are the Claude plugin directory's Usage tab for each plugin, data through 10 October 2026, read on 12 October, and they are installs only (rule 3). The posts say nothing about the core plugin being in the directory, so *Now in the Claude plugin directory* keeps its day.
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7515470852335976449/>. Video: `~/hyperframes/arckit-directory-installs/renders/arckit-directory-installs.mp4` (30 seconds, 1080 × 1350, silent), made with HyperFrames as a sequel to the `arckit-traction` video; the upload was `arckit-directory-installs-linkedin.mp4`, a 5.7 MB copy. LinkedIn ignores a video file supplied by browser automation (an image is accepted), so the maintainer attached the video by hand and the text was pasted in after. Upload the video before pasting the text, or the link turns into a preview card that replaces it. The page posts *ArcKit Explained* at 08:30 until 13 October, so this takes the week's free slot, in the afternoon. The numbers are the Claude plugin directory's Usage tab for each plugin, data through 10 October 2026, read on 12 October, and they are installs only (rule 3). The posts say nothing about the core plugin being in the directory, so *Now in the Claude plugin directory* keeps its day.
 
 > For the first time, we can see how often ArcKit's plugins are installed from the Claude plugin directory: 2,634 times, to 10 October.
 >
@@ -227,9 +227,9 @@ Not posted yet. Video: `~/hyperframes/arckit-directory-installs/renders/arckit-d
 >
 > #EnterpriseArchitecture #PublicSector #OpenSource #Governance
 
-### Q13. 2,634 directory installs — LinkedIn group (Question voice), with the 60s `arckit-directory-installs-long` video
+### Q13. 2,634 directory installs — LinkedIn group (Question voice), with the 60s `arckit-directory-installs-long` video — posted 12 October
 
-Not posted yet. The same day as Q12, after it. Video: `~/hyperframes/arckit-directory-installs-long/renders/arckit-directory-installs-long.mp4` (60 seconds, 1080 × 1350, silent). It adds a spotlight on the top three, with what each overlay covers taken from its `plugin.json` description.
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7515471725409656833/>, after Q12, with the video attached by hand (`arckit-directory-installs-long-linkedin.mp4`, a 7.7 MB copy). Video: `~/hyperframes/arckit-directory-installs-long/renders/arckit-directory-installs-long.mp4` (60 seconds, 1080 × 1350, silent). It adds a spotlight on the top three, with what each overlay covers taken from its `plugin.json` description.
 
 > Which rules does your architecture work answer to?
 >
@@ -239,9 +239,9 @@ Not posted yet. The same day as Q12, after it. Video: `~/hyperframes/arckit-dire
 >
 > Which jurisdiction or sector should get an overlay next?
 
-### Q14. 2,634 directory installs — Discord #show-your-working, with the 30s video
+### Q14. 2,634 directory installs — Discord #show-your-working, with the 30s video — posted 12 October
 
-Not posted yet. Not #announcements: nothing changes for people who already use ArcKit. Video: `~/hyperframes/arckit-directory-installs/renders/arckit-directory-installs-discord.mp4`, a 2 MB copy of Q12's video, re-encoded to fit Discord's 10 MB upload limit for servers without a boost. The 9:16 cut, `~/hyperframes/arckit-directory-installs-vertical/renders/arckit-directory-installs-vertical.mp4`, is for YouTube Shorts if we try it (see *Where ArcKit posts*).
+Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/1559227999058927728>, before the LinkedIn posts while the video was being attached there. Not #announcements: nothing changes for people who already use ArcKit. Video: `~/hyperframes/arckit-directory-installs/renders/arckit-directory-installs-discord.mp4`, a 2 MB copy of Q12's video, re-encoded to fit Discord's 10 MB upload limit for servers without a boost. The 9:16 cut, `~/hyperframes/arckit-directory-installs-vertical/renders/arckit-directory-installs-vertical.mp4`, is for YouTube Shorts if we try it (see *Where ArcKit posts*).
 
 > 📈 First numbers from the Claude plugin directory: 2,634 installs of ArcKit plugins, to 10 October. Austria's overlay is out in front with 611; the EU and NHS clinical safety overlays are close behind at 431 and 424.
 > ArcKit itself still sends us nothing, so this channel is where we hear how it's going. Which overlay would you want next?
