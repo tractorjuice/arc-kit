@@ -168,7 +168,7 @@ See `hooks.json` for the full registration. No hook in this directory grants a p
 - `score-validator.mjs` — vendor-score validation
 - `secret-detection.mjs` / `secret-file-scanner.mjs` — secret-leak prevention
 - `session-learner.mjs` / `telemetry.mjs` — see above
-- `sync-guides.mjs` — keep `docs/guides/` in sync with `arckit-claude/guides/`
+- `sync-guides.mjs` — keep `docs/guides/` in sync with core's `docs/guides/` and those of the installed overlays (each overlay ships the guides for its own commands; `overlayGuideDirs()` in `hook-utils.mjs` finds them through `installed_plugins.json`, or beside core in a source checkout)
 - `tidy-wardley-labels.mjs` — Wardley Map label tidying (PostToolUse:Write|Edit, scoped to `(/projects/**/wardley-maps/**)`, `continueOnBlock: true`). After a Wardley artefact is written, rewrites the `label [x, y]` offsets inside its ` ```mermaid ` `wardley-beta` block so component labels don't overlap on render. Block-scoped: only the ` ```mermaid ` fence is touched — the canonical ` ```wardley ` (OWM) block, prose and tables are left byte-for-byte unchanged. The tidy engine is vendored alongside the hook as `wardley-tidy.mjs` + `wardley-label-placement.mjs` (see "Vendored Wardley tidy engine" below), so tidying runs offline with no `npx`/install step. Fails soft — any tidy error leaves the file exactly as written.
 - `update-manifest.mjs` — see above
 - `validate-arc-filename.mjs` — enforce `ARC-NNN-*-vN.N.md` naming: a wrong path is blocked and the reason names the corrected one (the write is never rewritten)

@@ -216,7 +216,7 @@ project/
 
 1. Create `plugins/arckit-claude/commands/{name}.md` with YAML frontmatter (source of truth for Claude Code)
 2. Create `.arckit/templates/{name}-template.md` (also copy to `plugins/arckit-claude/templates/`)
-3. Create `docs/guides/{name}.md`, then run `python3 scripts/check-guide-parity.py --sync` to copy it into `plugins/arckit-claude/docs/guides/`
+3. Create `docs/guides/{name}.md` and copy it into `plugins/arckit-claude/docs/guides/` (an overlay command's guide goes in that overlay's `docs/guides/` instead); `python3 scripts/check-guide-parity.py` then keeps the copy in step
 4. If heavy web research (>10 WebSearch/WebFetch calls), create `plugins/arckit-claude/agents/arckit-{name}.md` and make the command a thin wrapper
 5. Run `python scripts/converter.py` to generate Codex/OpenCode/Gemini/Copilot variants
 6. Test plugin in a test repo, test CLI via `arckit init test --ai codex --no-git`
@@ -224,16 +224,18 @@ project/
 
 **Command must**: check prerequisites; use `create-project.sh --json` for project path; read its template; **use Write tool** to save output (avoids 32K output token limit); show only a summary; delegate to agent if research-heavy; declare `handoffs:` for logical next steps. A command that asks the user anything follows `references/interview-pattern.md`: prefill from the arguments and the project context, ask everything in **one** call with one **(Recommended)** option per question, take the default for any unanswered question and list it as an assumption, and never block in a headless run. `tests/plugin/test_interview_pattern.py` asserts every command that names `AskUserQuestion` points at the reference and carries no multi-round boilerplate.
 
-### Guide Trees (two copies, root is canonical)
+### Guide Trees (root is canonical, each plugin ships its own)
 
-User guides live in two places: **`docs/guides/`** (canonical — the published site, plus CLI package data) and **`plugins/arckit-claude/docs/guides/`** (the copy `scripts/converter.py` pushes into all seven generated extensions). They must be byte-identical for every guide present in both.
+User guides live in **`docs/guides/`** (canonical — the published site, plus CLI package data) and in a copy inside the plugin whose command each guide documents: **`plugins/arckit-claude/docs/guides/`** for core commands and the general guides, **`plugins/arckit-<overlay>/docs/guides/`** for an overlay's commands. Every plugin copy must be byte-identical to its root original. `scripts/converter.py` merges all the plugin trees it converts into each generated extension's `docs/guides/`; `/arckit:pages` (`sync-guides.mjs`) copies core's guides plus those of every overlay installed for the user or the repo, found through Claude Code's `installed_plugins.json` (or beside core in a source checkout).
 
-Nothing guarded this until #675, and the trees drifted silently **in both directions** — the plugin tree lost whole sections (including one that four `*-research.md` guides linked to, shipping a dead anchor to every extension), while the root tree went stale on a doc-type code and a config path. `sync-shared-assets.py` does **not** cover `docs/guides`; `scripts/check-guide-parity.py` does, and CI runs it via `lint-markdown.yml`.
+Overlay guides used to sit in core's tree too. That shipped 111 guides for commands core doesn't have to every core install and, with the oversized CHANGELOG, kept core on the Claude plugin directory's "files the validator couldn't inspect" hold: 587 files against a limit of 512. `check-guide-parity.py` now fails on an overlay guide placed in core, and `scripts/check-plugin-directory-limits.py` (run by `tests/plugin/test_claude_publish_layout.py` in CI and by `push-extensions.sh` before it pushes) fails on any published plugin folder over 512 files, any non-image file of 256 KiB or more, or an unreadable binary.
+
+Nothing guarded the copies until #675, and the root and core trees drifted silently **in both directions** — the plugin tree lost whole sections (including one that four `*-research.md` guides linked to, shipping a dead anchor to every extension), while the root tree went stale on a doc-type code and a config path. `sync-shared-assets.py` does **not** cover `docs/guides`; `scripts/check-guide-parity.py` does, and CI runs it via `lint-markdown.yml`.
 
 - Edit `docs/guides/{name}.md`, then `python3 scripts/check-guide-parity.py --sync`.
-- **Never edit the plugin copy directly** — `--sync` overwrites it from root.
-- `--sync` only ever writes to the plugin tree. If the plugin copy holds the correct content, port it into the root copy by hand *first*, or the sync destroys it.
-- Root-only guides are fine (community-overlay and maintainer docs deliberately don't ship to extensions); a **plugin-only** guide is an error, because it can never reach the site or the CLI package. Record intentional root-only guides in `ROOT_ONLY_BY_DESIGN` in the script.
+- **Never edit a plugin copy directly** — `--sync` overwrites it from root.
+- `--sync` only ever writes to the plugin trees, and only for guides already in one. A new guide is copied into its plugin's tree by hand. If a plugin copy holds the correct content, port it into the root copy by hand *first*, or the sync destroys it.
+- Root-only guides are fine (overlay overviews and maintainer docs deliberately don't ship); a **plugin-only** guide is an error, because it can never reach the site or the CLI package, and so is a guide in two plugin trees. Record intentional root-only guides in `ROOT_ONLY_BY_DESIGN` in the script.
 
 ### Shared Assets (three sync layers)
 

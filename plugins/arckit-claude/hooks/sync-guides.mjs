@@ -34,7 +34,7 @@ import {
 import { spawnSync } from 'node:child_process';
 import {
   isDir, isFile, mtimeMs, readText, listDir,
-  findRepoRoot, parseHookInput,
+  findRepoRoot, overlayGuideDirs, parseHookInput,
 } from './hook-utils.mjs';
 import { scanAllArtifacts } from './graph-utils.mjs';
 import {
@@ -972,7 +972,18 @@ const destDir = join(repoRoot, 'docs', 'guides');
 
 // ── 1. Sync guides + extract titles ──
 
-const sourceFiles = walkMdFiles(sourceDir);
+// Core's own guides, then each installed overlay's: an overlay ships the
+// guides for its own commands. Core wins if two plugins ever share a name.
+const overlayDirs = overlayGuideDirs(pluginRoot, repoRoot);
+const sourceFiles = [];
+const seenGuides = new Set();
+for (const dir of [sourceDir, ...overlayDirs]) {
+  for (const file of walkMdFiles(dir)) {
+    if (seenGuides.has(file.rel)) continue;
+    seenGuides.add(file.rel);
+    sourceFiles.push(file);
+  }
+}
 if (sourceFiles.length === 0) process.exit(0);
 
 let copied = 0;
@@ -1191,7 +1202,7 @@ const message = [
   `- \`docs/llms.txt\` — ${llmsTxtAction}`,
   ``,
   `### Guide Sync`,
-  `- **${total}** guide files (**${copied}** copied, **${skipped}** up to date)`,
+  `- **${total}** guide files (**${copied}** copied, **${skipped}** up to date)${overlayDirs.length > 0 ? `, including guides from ${overlayDirs.length} installed overlay(s)` : ''}`,
   communityGuideCount > 0 ? `- **${communityGuideCount}** community guide(s) from \`.arckit/guides-custom/\`` : '',
   ``,
   `### Repository Info`,

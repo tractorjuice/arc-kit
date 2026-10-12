@@ -848,13 +848,15 @@ def copy_extension_files(plugin_sources):
     After the v5.0.0 plugin split, `templates/` lives in 6 different source
     directories (one per plugin). Non-Claude extensions stay monolithic, so
     templates from every source are merged into one `templates/` per extension.
-    Other directories (scripts, guides, config, schemas, skills, references)
-    only exist in `arckit-claude` and are copied from there.
+    `docs/guides/` is merged the same way: each overlay keeps the guides for
+    its own commands, so the core plugin doesn't ship them. Other directories
+    (scripts, config, schemas, skills, references) only exist in
+    `arckit-claude` and are copied from there.
 
     Args:
         plugin_sources: List of plugin source dirs (e.g. ["plugins/arckit-uae",
             ..., "plugins/arckit-claude"]). The last entry MUST be the core plugin
-            ("plugins/arckit-claude") since that's where scripts/guides/etc. live.
+            ("plugins/arckit-claude") since that's where scripts/config/etc. live.
     """
     core_plugin_dir = plugin_sources[-1]
 
@@ -882,7 +884,6 @@ def copy_extension_files(plugin_sources):
         ("hooks/owm-tidy.mjs", "hooks/owm-tidy.mjs"),
         ("hooks/okf-frontmatter.mjs", "hooks/okf-frontmatter.mjs"),
         ("hooks/wardley-label-placement.mjs", "hooks/wardley-label-placement.mjs"),
-        ("docs/guides", "docs/guides"),
         ("config", "config"),
         ("schemas", "schemas"),
         ("skills", "skills"),
@@ -964,6 +965,26 @@ def copy_extension_files(plugin_sources):
                 f"  Merged data from {len(plugin_sources)} plugin source(s) "
                 f"-> {ext_data_dir} ({merged_data_count} files)"
             )
+
+        # Merge `docs/guides/` from every plugin source. Each overlay ships
+        # the guides for its own commands; core's tree holds only core's.
+        # Core is last in plugin_sources, so it wins a name collision.
+        ext_guides_dir = os.path.join(ext_dir, "docs", "guides")
+        if os.path.isdir(ext_guides_dir):
+            shutil.rmtree(ext_guides_dir)
+        merged_guide_count = 0
+        for src_plugin in plugin_sources:
+            src_guides = os.path.join(src_plugin, "docs", "guides")
+            if not os.path.isdir(src_guides):
+                continue
+            shutil.copytree(src_guides, ext_guides_dir, dirs_exist_ok=True)
+            merged_guide_count += sum(
+                len(files) for _, _, files in os.walk(src_guides)
+            )
+        print(
+            f"  Merged guides from {len(plugin_sources)} plugin source(s) "
+            f"-> {ext_guides_dir} ({merged_guide_count} files)"
+        )
 
         # Core-only categories
         for src_rel, dst_rel in core_only_copies:

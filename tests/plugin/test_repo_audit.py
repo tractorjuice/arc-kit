@@ -229,7 +229,7 @@ def test_command_clones_shallow_and_public_only():
 
 def test_guide_exists_in_both_trees_and_matches():
     root_guide = REPO_ROOT / "docs/guides/repo-audit.md"
-    plugin_guide = REPO_ROOT / "plugins/arckit-claude/docs/guides/repo-audit.md"
+    plugin_guide = REPO_ROOT / "plugins/arckit-repo/docs/guides/repo-audit.md"
     assert root_guide.is_file(), "root guide missing"
     assert plugin_guide.is_file(), "plugin guide copy missing"
     assert read(root_guide) == read(plugin_guide), "guide trees drifted"

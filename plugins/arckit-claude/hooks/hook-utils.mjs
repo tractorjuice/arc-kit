@@ -10,7 +10,8 @@
  */
 
 import { readFileSync, statSync, readdirSync, writeSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { homedir } from 'node:os';
+import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
 import { DOC_TYPES } from '../config/doc-types.mjs';
 
 // ── File System ──
@@ -74,6 +75,83 @@ export function findRepoRoot(cwd) {
 function isArcKitProjectsDir(projectsDir) {
   if (!isDir(projectsDir)) return false;
   return listDir(projectsDir).some((entry) => /^\d{3}(?:-|$)/.test(entry));
+}
+
+// ── Overlay Plugins ──
+
+const OVERLAY_NAME_RE = /^arckit-[a-z0-9-]+$/;
+
+function isWithin(child, parent) {
+  const rel = relative(parent, child);
+  return rel === '' || (!rel.startsWith('..') && !isAbsolute(rel));
+}
+
+function pluginName(dir) {
+  try {
+    return JSON.parse(readFileSync(join(dir, '.claude-plugin', 'plugin.json'), 'utf8')).name;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * The `docs/guides/` folders of the ArcKit overlays available to this repo.
+ * Each overlay ships the guides for its own commands; core ships only core's,
+ * so /arckit:pages lists an overlay's guides only when that overlay is here.
+ *
+ * Two sources, the first found winning for each overlay:
+ *  - Folders beside the core plugin: the source checkout, where core and the
+ *    overlays sit side by side under plugins/ and load with --plugin-dir. In
+ *    the plugin cache the folders beside core are its other versions, all
+ *    named `arckit`, so this finds nothing there.
+ *  - Claude Code's plugins/installed_plugins.json: every installed `arckit-*`
+ *    plugin installed for the user or for this repo (or a folder above it).
+ *    A repo-scoped install wins over a user-scoped one.
+ *
+ * @param {string} pluginRoot - the core plugin's folder (CLAUDE_PLUGIN_ROOT)
+ * @param {string} repoRoot - the repo /arckit:pages runs in
+ * @param {object} env - process.env, or a stand-in in tests
+ * @returns {string[]} existing guide folders, sorted by overlay name
+ */
+export function overlayGuideDirs(pluginRoot, repoRoot, env = process.env) {
+  const found = new Map();
+
+  const core = resolve(pluginRoot);
+  const parent = dirname(core);
+  for (const entry of listDir(parent)) {
+    const dir = join(parent, entry);
+    if (dir === core) continue;
+    const name = pluginName(dir);
+    if (name && OVERLAY_NAME_RE.test(name) && !found.has(name)) found.set(name, dir);
+  }
+
+  const configDir = env.CLAUDE_CONFIG_DIR || join(env.HOME || homedir(), '.claude');
+  let plugins = {};
+  try {
+    plugins = JSON.parse(readFileSync(join(configDir, 'plugins', 'installed_plugins.json'), 'utf8')).plugins || {};
+  } catch {
+    plugins = {};
+  }
+  const repo = resolve(repoRoot);
+  const installed = new Map();
+  for (const [key, installs] of Object.entries(plugins)) {
+    const name = key.split('@')[0];
+    if (!OVERLAY_NAME_RE.test(name) || found.has(name)) continue;
+    for (const install of Array.isArray(installs) ? installs : [installs]) {
+      if (!install || typeof install.installPath !== 'string') continue;
+      if (install.projectPath) {
+        if (isWithin(repo, resolve(install.projectPath))) installed.set(name, install.installPath);
+      } else if (!installed.has(name)) {
+        installed.set(name, install.installPath);
+      }
+    }
+  }
+  for (const [name, dir] of installed) found.set(name, dir);
+
+  return [...found.keys()]
+    .sort()
+    .map((name) => join(found.get(name), 'docs', 'guides'))
+    .filter((dir) => isDir(dir));
 }
 
 // ── Doc Type Extraction ──
