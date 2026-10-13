@@ -297,3 +297,43 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/15
 > https://www.youtube.com/playlist?list=PLHAFN5RjB5As
 > New to ArcKit altogether? ArcKit explained gives the overview in under eight minutes: <https://youtu.be/-oQ5VRpkxp0>
 > Tell us here what works and what doesn't.
+
+### Q19. ArcKit commands series — LinkedIn page, with a frame from the principles film (Warm "we" voice) — posted 13 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:share:7515712597132951552/>, about 10:58, the page's third post that day after the 08:30 *ArcKit Explained* post and Q16. Image: the real-output scene of `03-arckit-principles.mp4` (ARC-000-PRIN-v1.0 from the public test project arckit-test-project-v19-gov-api-aggregator), attached before the text, with alt text.
+
+The series has 76 films, one per core command, each 73 to 90 seconds. They were made with HyperFrames in `~/hyperframes/arckit-command-videos` and narrated by a Kokoro synthetic voice, so every title says "(experimental)". Each film shows a real output from a public test project, a template outline where no test project has one yet, or a labelled illustrative terminal output for commands that write no document.
+
+Playlist: <https://www.youtube.com/playlist?list=PLOxB2ULF5XX0>. Films 01 to 04 were public when this went up. YouTube's daily upload limit for a new, unverified channel stopped the rest, so they go up over the following days.
+
+> A short film for every ArcKit command, starting today.
+>
+> Each one takes about a minute and a half to show what the command is for, when to run it, what it reads first, what to check and what to run next. Each also shows a real output: a document the command wrote in one of our public test projects, so you can see what you'll get before you run it.
+>
+> There are 76 commands, so the films are going up over the next couple of days. The first four are live now: start, init, principles and stakeholders.
+>
+> As with the beginners' guide, the narration is AI-generated, so we're treating the series as an experiment. Tell us which commands you'd like covered in more depth.
+>
+> https://www.youtube.com/playlist?list=PLOxB2ULF5XX0
+>
+> #EnterpriseArchitecture #PublicSector #OpenSource #Governance
+
+### Q20. ArcKit commands series — LinkedIn group (Question voice) — posted 13 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7515712722928312320/>, straight after Q19. No image: the playlist link makes a YouTube preview card.
+
+> Which ArcKit command would you most like to see in action?
+>
+> We've started a series of short films, one for each of the 76 commands. Each shows when to run the command, what it reads, a real document it wrote in one of the public test projects, and what to check before you rely on it. Four are up now, and the rest follow over the next couple of days.
+>
+> It's an experiment with AI narration, so tell us what's missing or unclear and we'll use it for the next round.
+>
+> https://www.youtube.com/playlist?list=PLOxB2ULF5XX0
+
+### Q21. ArcKit commands series — Discord #show-your-working — posted 13 October
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/1559505876086161438>. Not #announcements: nothing changes for people who already use ArcKit.
+
+> 🧪 New: a short film for every ArcKit command, about 90 seconds each: when to run it, what it reads, a real output from a public test project, what to check and what to run next.
+> The first four are up (start, init, principles, stakeholders), and the rest land over the next couple of days: https://www.youtube.com/playlist?list=PLOxB2ULF5XX0
+> Which command should we look at more closely next?
