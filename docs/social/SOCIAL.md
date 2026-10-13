@@ -20,6 +20,7 @@ One job per channel, and never the same text in two places. Decided 30 September
 | Discord #announcements | ArcKit server (read-only) | For existing users | Releases and "what changed for you", short, linked | Short "we" |
 | Discord #show-your-working | ArcKit server (open) | Conversation | Results, adopter chat, help; the private route for adopters who can't post a public GitHub issue | Informal |
 | Medium | medium.com/arckit | Article mirrors | The article, unchanged | Article |
+| YouTube | youtube.com/@**arckitorg** (`@arckit` was taken) | Video guides | Narrated guides and explainers, grouped in playlists. Titles carry "(experimental)" while we test AI narration | Warm "we" in descriptions |
 
 **Order for each new piece:**
 
@@ -245,3 +246,54 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/15
 
 > 📈 First numbers from the Claude plugin directory: 2,634 installs of ArcKit plugins, to 10 October. Austria's overlay is out in front with 611; the EU and NHS clinical safety overlays are close behind at 431 and 424.
 > ArcKit itself still sends us nothing, so this channel is where we hear how it's going. Which overlay would you want next?
+
+### Q15. ArcKit 6.18.2 — Discord #announcements, reply to Q6 — posted 13 October
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/1559464583196844055>, as a reply to Q6, the status-line post, so the original stays as written. 6.18.2 takes the status line out again, so people who read Q6 need to know.
+
+> **ArcKit 6.18.2 is out**
+> The status line above the prompt has been removed. Taking it out lets the core plugin be listed in the Claude plugin directory, which sends any plugin that adds to Claude Code's own interface for a manual review first.
+> Everything else works as before: `/arckit:health` still reports stale drafts and overdue reviews, and the stale-document notice still appears when a session starts. If you set `ARCKIT_NO_STATUS_BAND`, you can delete it.
+> Update with `claude plugin update arckit@arckit-claude`
+> <https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.2>
+
+### Q16. ArcKit on YouTube, ArcKit for Beginners — LinkedIn page, with the guide thumbnail (Warm "we" voice) — posted 13 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:share:7515679273064525824/>, about 08:45, after the page's last scheduled *ArcKit Explained* post at 08:30. Image: `~/hyperframes/arckit-beginners-guide/renders/thumbnail-1280x720.png`, attached before the text so the link doesn't replace it with a preview card, with alt text. The guide (63 minutes, plus four parts of 11 to 22 minutes) was made with HyperFrames from `ArcKit_for_Beginners__Command_by_Command_from_Stra.md`; the narration is a Kokoro synthetic voice, which is why every title says "(experimental)". Playlist: <https://www.youtube.com/playlist?list=PLHAFN5RjB5As>. Videos: full guide <https://youtu.be/AWaSJAnDXlA>, Part 1 <https://youtu.be/9GLUdUmjMgc>, Part 2 <https://youtu.be/3GUjyWB6s2Q>, Part 3 <https://youtu.be/8zpM9Jncack>, Part 4 <https://youtu.be/7i7ddGkKuOc>. Description links stay unclickable until the channel's one-off phone verification.
+
+> ArcKit is now on YouTube, starting with an experimental guide for anyone new to it.
+>
+> ArcKit for Beginners follows one fictional project, Northbridge Council modernising its customer portal, from architecture principles to the release decision. At each step it shows what ArcKit drafts and where a named person checks the work and decides. Watch it as one guide of just over an hour, with chapters, or in four parts of 11 to 22 minutes:
+>
+> 1. Set up the project and establish governance
+> 2. Turn business intent into architectural decisions
+> 3. Connect procurement, design review and delivery
+> 4. Verify the evidence and keep it current
+>
+> The narration is AI-generated, so we're treating the series as an experiment. Tell us in the comments what works and what doesn't, and we'll use it to shape what we make next.
+>
+> https://www.youtube.com/playlist?list=PLHAFN5RjB5As
+>
+> #EnterpriseArchitecture #PublicSector #OpenSource #Governance
+
+### Q17. ArcKit for Beginners — LinkedIn group (Question voice) — posted 13 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7515679437095616512/>, straight after Q16. No image: the playlist link makes a YouTube preview card, which takes readers straight to the videos.
+
+> How do you bring someone new up to speed on your architecture governance?
+>
+> We've been trying a video guide. ArcKit for Beginners, on ArcKit's new YouTube channel, follows one fictional council project through every command and approval gate, from principles to the release decision. It runs just over an hour, or in four parts of 11 to 22 minutes, and the narration is AI-generated.
+>
+> It's an experiment, so we'd value your view: is video useful for this, is the pace right, and which step would you want covered in more depth?
+>
+> https://www.youtube.com/playlist?list=PLHAFN5RjB5As
+
+### Q18. ArcKit on YouTube — Discord #show-your-working — posted 13 October
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/1559472608741826572>. Not #announcements: nothing changes for people who already use ArcKit. The channel and explainer links are wrapped in `<…>`, so only the playlist shows an embed.
+
+> 🧪 ArcKit now has a YouTube channel: <https://www.youtube.com/@arckitorg>
+> First up is an experimental, AI-narrated ArcKit for Beginners guide: one fictional council project, command by command from principles to the release decision. One hour with chapters, or four shorter parts:
+> https://www.youtube.com/playlist?list=PLHAFN5RjB5As
+> New to ArcKit altogether? ArcKit explained gives the overview in under eight minutes: <https://youtu.be/-oQ5VRpkxp0>
+> Tell us here what works and what doesn't.
