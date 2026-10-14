@@ -83,7 +83,7 @@ Questions test scenarios, not recall. For example: "Your stakeholder analysis is
 ### 6.1 Awareness and Foundation quizzes
 
 - **Pages:** quiz pages on arckit.org under `/certification/`. A small **Cloudflare Worker** marks the answers, so the answer key never reaches the browser. **[default]**
-- **On a pass:** the Worker returns a signed credential (see §7), so there's no account and no database.
+- **On a pass:** the Worker returns a signed credential (see §7). There's no account. The Worker keeps each issued credential (the name, level, time and signed credential) in Workers KV so its short credential link keeps working; nothing else is stored.
 - **Question bank:** held in a private repo and served by the Worker. Each Foundation attempt draws 40 questions, weighted by domain.
 - **Integrity:** these levels are open-book and low-stakes by design. The real gate is Practitioner.
 - **Keeping it current:** a CI check confirms every command and doc-type named in a question still exists in `doc-types.mjs` and `commands/`, so questions can't silently go stale.
@@ -116,7 +116,7 @@ Questions test scenarios, not recall. For example: "Your stakeholder analysis is
 
 ## 7. Credentials
 
-- **Format:** **Open Badges 3.0** (W3C Verifiable Credentials), signed with an ArcKit Ed25519 key. The issuer profile is published at `arckit.org/certification/issuer.json`. Anyone can verify a badge, and no third-party platform is involved.
+- **Format:** **Open Badges 3.0** (W3C Verifiable Credentials), signed with an ArcKit RSA key (RS256, the Open Badges 3.0 baseline that every verifier supports). The issuer profile is published at `arckit.org/certification/issuer.json`. Anyone can verify a badge, and no third-party platform is involved.
 - **Badge art:** one badge per level in the series look (navy blueprint, teal, the ArcKit mark), plus a small mark for each track.
 - **LinkedIn:** each credential page has an "Add to LinkedIn" link that pre-fills name, issuing organisation (the ArcKit page), credential ID and URL.
 - **Validity [default]:**

@@ -1,0 +1,9 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2", "https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json"],
+  "id": "https://arckit.org/certification/issuer.json",
+  "type": ["Profile"],
+  "name": "ArcKit",
+  "url": "https://arckit.org",
+  "description": "ArcKit, the open-source enterprise architecture governance harness for AI coding assistants. Credentials are signed with the keys published at https://arckit.org/certification/jwks.json.",
+  "image": { "id": "https://arckit.org/assets/ArcKit_Mark_Dark.png", "type": "Image" }
+}

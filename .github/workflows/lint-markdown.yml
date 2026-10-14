@@ -52,6 +52,9 @@ on:
       - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
       - "tests/plugin/**"
+      - "certification/**"
+      - "tests/certification/**"
+      - "docs/certification/**"
   pull_request:
     paths:
       - "**/*.md"
@@ -102,6 +105,9 @@ on:
       - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
       - "tests/plugin/**"
+      - "certification/**"
+      - "tests/certification/**"
+      - "docs/certification/**"
 
 jobs:
   lint:
@@ -239,4 +245,4 @@ jobs:
         # validators are re-run here as well as in their own steps above, which
         # costs a second and cannot go stale.
         shell: bash
-        run: node --test tests/plugin/*.test.mjs tests/plugin/test_*.mjs
+        run: node --test tests/plugin/*.test.mjs tests/plugin/test_*.mjs tests/certification/*.test.mjs

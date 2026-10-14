@@ -1,0 +1,32 @@
+name = "arckit-cert"
+main = "src/index.mjs"
+compatibility_date = "2026-10-01"
+
+# Served on arckit.org's own subdomain (the zone is in the same Cloudflare account), not workers.dev.
+workers_dev = false
+preview_urls = false
+routes = [{ pattern = "certification-api.arckit.org", custom_domain = true }]
+
+[vars]
+SITE_URL = "https://arckit.org"
+ALLOWED_ORIGINS = "https://arckit.org"
+# Retired public keys, kept so credentials signed with them still verify. Keep in step with docs/certification/jwks.json.
+PUBLIC_KEYS = '{"keys":[]}'
+
+# Per-IP limit on quiz submissions, per Cloudflare location; protects the KV write quota.
+[[ratelimits]]
+name = "SUBMIT_LIMITER"
+namespace_id = "1001"
+
+  [ratelimits.simple]
+  limit = 5
+  period = 60
+
+# Namespaces arckit-cert-questions and arckit-cert-credentials (created 14 Oct 2026).
+[[kv_namespaces]]
+binding = "QUESTIONS"
+id = "0844c49ba1c44301880da698381c596e"
+
+[[kv_namespaces]]
+binding = "CREDENTIALS"
+id = "b278d68e91d94e65af8937f787a02e85"

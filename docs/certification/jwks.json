@@ -1,0 +1,12 @@
+{
+  "keys": [
+    {
+      "kty": "RSA",
+      "n": "yVugPNXVwzdgBxki30b2HrP5y_5UI8sCTgO2IERRofObAHn42FWraMHWVHWDFgVMyEUD-Kpg03yyCNIz4XxBE6CMdfStqXUmK0-6UEehDfle5nird4hgcFLPr0RaqrfG_R7eroJzIXlsZE5zoiCxej8fA6TUdbZ8Izlw0P_0_Aat8OG-tmkBn98-bnfGm-4dv3Zw5YN_3aYq5SC1aJG1cKXxOo0ZKCv9HwInWUzTFq9fnKLjrELu1-E87lbBExNHWF6COau5P_bYnHGthSLYDu_h1OEHVzG3EfjQHnr15ksXsX86DQIWnwp2QIXzyRQRGFzuQCVBKMPoO53l6viqEQ",
+      "e": "AQAB",
+      "kid": "arckit-cert-2026-10-14",
+      "use": "sig",
+      "alg": "RS256"
+    }
+  ]
+}
