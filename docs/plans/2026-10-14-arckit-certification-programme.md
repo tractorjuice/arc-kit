@@ -83,7 +83,7 @@ Questions test scenarios, not recall. For example: "Your stakeholder analysis is
 ### 6.1 Awareness and Foundation quizzes
 
 - **Pages:** quiz pages on arckit.org under `/certification/`. A small **Cloudflare Worker** marks the answers, so the answer key never reaches the browser. **[default]**
-- **On a pass:** the Worker returns a signed credential (see §7), so there's no account and no database.
+- **On a pass:** the Worker returns a signed credential (see §7). There's no account. The Worker keeps each issued credential (the name, level, time and signed credential) in Workers KV so its short credential link keeps working; nothing else is stored.
 - **Question bank:** held in a private repo and served by the Worker. Each Foundation attempt draws 40 questions, weighted by domain.
 - **Integrity:** these levels are open-book and low-stakes by design. The real gate is Practitioner.
 - **Keeping it current:** a CI check confirms every command and doc-type named in a question still exists in `doc-types.mjs` and `commands/`, so questions can't silently go stale.
