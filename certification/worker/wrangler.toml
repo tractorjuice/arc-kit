@@ -1,0 +1,16 @@
+name = "arckit-cert"
+main = "src/index.mjs"
+compatibility_date = "2026-10-01"
+
+[vars]
+SITE_URL = "https://arckit.org"
+ALLOWED_ORIGINS = "https://arckit.org,http://localhost:4000,http://localhost:8000"
+
+# IDs are printed by `npx wrangler kv namespace create …` in Task 10, Step 3.
+[[kv_namespaces]]
+binding = "QUESTIONS"
+id = "set-in-task-10"
+
+[[kv_namespaces]]
+binding = "CREDENTIALS"
+id = "set-in-task-10"
