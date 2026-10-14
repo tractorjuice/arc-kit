@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
     <link rel="stylesheet" href="../theme.css?v=4.12.4">
     <link rel="stylesheet" href="../heroes.css?v=4.12.4">
-    <link rel="stylesheet" href="certification.css?v=1">
+    <link rel="stylesheet" href="certification.css?v=2">
 
     <style>
         body,
@@ -387,15 +387,24 @@
               <a class="govuk-button" id="linkedin-link" href="#" rel="noopener">Add to LinkedIn</a>
               <a class="govuk-button govuk-button--secondary" id="credential-link" href="#">View your credential</a>
             </p>
+            <section id="review-box" aria-labelledby="review-heading" hidden>
+              <h2 class="govuk-heading-m" id="review-heading">Your answers</h2>
+              <p class="govuk-body app-cert-note">Each question with the right answer and why it’s right.</p>
+              <ol class="app-cert-review" id="review-list"></ol>
+            </section>
             <div id="fail-box" class="app-cert-card" hidden>
               <h2 class="govuk-heading-m">Not this time</h2>
               <p class="govuk-body" id="fail-score"></p>
-              <p class="govuk-body">Watch <a class="govuk-link" href="https://youtu.be/-oQ5VRpkxp0">ArcKit explained</a> and try again.</p>
+              <div id="areas-box" hidden>
+                <h3 class="govuk-heading-s">Areas to revisit</h3>
+                <ul class="govuk-list govuk-list--bullet" id="areas-list"></ul>
+              </div>
+              <p class="govuk-body">Watch <a class="govuk-link" href="https://youtu.be/-oQ5VRpkxp0">ArcKit explained</a> and try again. Each attempt is a new set of questions.</p>
               <button type="button" class="govuk-button" id="retry">Try again</button>
             </div>
           </div>
         </div>
-        <script type="module" src="awareness.js"></script>
+        <script type="module" src="awareness.js?v=2"></script>
     </main>
 
     <footer class="app-footer">

@@ -150,6 +150,72 @@ html.dark-mode {
     color: var(--cert-muted);
 }
 
+/* Review after a pass: one card per question, teal edge if right, grey if not.
+   The ✓/✗ mark and hidden "Correct"/"Incorrect" text carry the meaning too. */
+.app-cert-review {
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+}
+
+.app-cert-review__item {
+    background: var(--cert-card-bg);
+    border: 1px solid var(--cert-card-border);
+    border-left: 4px solid var(--cert-teal);
+    border-radius: 4px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+}
+
+.app-cert-review__item--wrong {
+    border-left-color: var(--cert-muted);
+}
+
+.app-cert-review__prompt {
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
+.app-cert-review__mark {
+    display: inline-block;
+    min-width: 1.5em;
+    color: var(--cert-teal);
+}
+
+.app-cert-review__item--wrong .app-cert-review__mark {
+    color: var(--cert-muted);
+}
+
+.app-cert-review__answers {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 0.25rem 1rem;
+    margin: 0 0 0.75rem;
+}
+
+.app-cert-review__answers dt {
+    font-weight: 700;
+    color: var(--cert-muted);
+}
+
+.app-cert-review__answers dd {
+    margin: 0;
+}
+
+.app-cert-review__why {
+    margin-bottom: 0;
+}
+
+@media (max-width: 40.0625em) {
+    .app-cert-review__answers {
+        grid-template-columns: 1fr;
+    }
+
+    .app-cert-review__answers dd {
+        margin-bottom: 0.5rem;
+    }
+}
+
 /* ------------------------------------------------------------
    Credential
    ------------------------------------------------------------ */
