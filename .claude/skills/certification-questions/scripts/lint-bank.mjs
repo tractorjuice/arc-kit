@@ -60,6 +60,8 @@ for (const q of qs) {
   // absolute word. Test-wise candidates learn these patterns within one attempt.
   const shaped = (o) => /[;—–]|\s-\s/.test(o);
   if (shaped(key) && opts.filter(shaped).length === 1) warn(id, 'only the key has a "claim; qualifier" shape');
+  const hedged = (o) => /\b(without|unless|rather than|except|although|provided|as long as|so long as)\b/i.test(o);
+  if (hedged(key) && opts.filter(hedged).length === 1) warn(id, 'only the key carries a hedge (without/unless/rather than…)');
   const ABSOLUTE = /\b(only|always|never|exactly|any|all|every|none|must)\b/i;
   const distractors = opts.filter((_, i) => i !== q.answer);
   if (!ABSOLUTE.test(key) && distractors.every((o) => ABSOLUTE.test(o))) warn(id, 'every distractor uses an absolute word and the key does not');
