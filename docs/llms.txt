@@ -26,7 +26,8 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 
 - [ArcKit certification](https://arckit.org/certification/index.html): Four levels, Awareness, Foundation, Practitioner and Expert, of which Awareness and Foundation are free. Each pass earns an Open Badges 3.0 credential that can be added to LinkedIn.
 - [Awareness quiz](https://arckit.org/certification/awareness.html): 10 questions, 8 right to pass, unlimited attempts. Covers what ArcKit is and why its documents are defensible.
-- [Credential page](https://arckit.org/certification/credential.html): Links take the form `credential.html?id=<12-character ID>`. Credentials are Open Badges 3.0 VC-JWTs signed with RS256. The issuer profile is at [issuer.json](https://arckit.org/certification/issuer.json) and the public keys at [jwks.json](https://arckit.org/certification/jwks.json). A credential confirms ArcKit skill; it does not endorse the holder's work or organisation.
+- [Credential page](https://arckit.org/certification/credential.html): Links take the form `credential.html?id=<12-character ID>`. Credentials are Open Badges 3.0 VC-JWTs signed with RS256. The issuer profile is at [issuer.json](https://arckit.org/certification/issuer.json) and the public keys at [jwks.json](https://arckit.org/certification/jwks.json). A credential confirms that the holder passed the ArcKit assessment at that level; it does not endorse their work or organisation.
+- [Certification policies](https://arckit.org/certification/policies.html): Appeals (a re-check within 10 working days, then an appeal decided by someone not involved), access arrangements (up to 25% extra time, other formats), malpractice and revocation, conflicts of interest, retakes, validity by ArcKit major version, complaints, equality, prior learning and a yearly report.
 
 ## Guides by phase
 
