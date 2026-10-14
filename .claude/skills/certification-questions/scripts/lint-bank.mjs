@@ -56,6 +56,14 @@ for (const q of qs) {
   if (key.length === longest) err(id, 'the correct option is (or ties for) the longest');
   if (longest / Math.max(1, Math.min(...lens)) > 1.25) warn(id, 'option lengths vary by more than 1.25x');
 
+  // Shape cues: the key is the only option with a qualifier clause, or the only one without an
+  // absolute word. Test-wise candidates learn these patterns within one attempt.
+  const shaped = (o) => /[;—–]|\s-\s/.test(o);
+  if (shaped(key) && opts.filter(shaped).length === 1) warn(id, 'only the key has a "claim; qualifier" shape');
+  const ABSOLUTE = /\b(only|always|never|exactly|any|all|every|none|must)\b/i;
+  const distractors = opts.filter((_, i) => i !== q.answer);
+  if (!ABSOLUTE.test(key) && distractors.every((o) => ABSOLUTE.test(o))) warn(id, 'every distractor uses an absolute word and the key does not');
+
   if ([q.prompt, ...opts].some((t) => VERSIONISH.test(t))) warn(id, 'number that may be a version or count (trivia, or goes stale)');
   if ([q.prompt, ...opts].some((t) => PATHISH.test(t))) warn(id, 'file path in the item (goes stale)');
 

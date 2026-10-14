@@ -49,6 +49,8 @@ The question banks decide who gets an ArcKit credential. Treat a question like c
 | A seventh question in a domain | Swap: retire one first |
 | Uploading after `check-bank` alone | `lint-bank`, then independent review, then upload |
 | A three-sentence explanation | Use 1–2 sentences on why the key is right |
+| Only the key has a "claim; qualifier" shape, or only the key avoids "only/always/never" | Give options the same shape; `lint-bank` warns |
+| Claiming the videos cover the whole pool | Say what a candidate should watch and read, and keep items within it |
 | Trivia: versions, counts, file paths | Test ideas that survive releases |
 | Uploading during a webinar or live session | Wait until it's over |
 | No smoke test after upload | Step 8, every time |

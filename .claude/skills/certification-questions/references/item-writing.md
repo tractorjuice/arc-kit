@@ -14,6 +14,7 @@ Each item has a **stem** (the question), one **key** (the correct answer), three
 
 - **Plausible distractors.** Each wrong option should tempt someone who half-knows the topic. None should be arguably correct.
 - **Balanced options.** The key is never the longest, and no option is much longer or shorter than the rest (within about 1.25x). `lint-bank` checks this.
+- **Same shape.** The key must not be the only option with a qualifier clause ("X; Y"), and must not be the only one without an absolute word (only, always, never, exactly). `lint-bank` warns on both.
 - **Spread the key.** Vary the key's position across the bank and use at least three positions in each domain.
 - **ArcKit's own words.** Use the terms the guides and templates use (`docs/guides/`, `plugins/arckit-claude/templates/`). Keep the language simple and readable for non-native speakers.
 - **No "all of the above" or "none of the above".**
