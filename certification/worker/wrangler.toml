@@ -7,6 +7,10 @@ workers_dev = false
 preview_urls = false
 routes = [{ pattern = "certification-api.arckit.org", custom_domain = true }]
 
+# Two Worker secrets are set with `npx wrangler secret put` and never stored here:
+# SIGNING_KEY (the RS256 private JWK) and DRAW_HMAC_KEY (base64url of 32 random
+# bytes, which signs each quiz draw). See certification/README.md.
+
 [vars]
 SITE_URL = "https://arckit.org"
 ALLOWED_ORIGINS = "https://arckit.org"
