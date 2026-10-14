@@ -30,16 +30,20 @@ test('rejects missing, short and long names', () => {
   assert.equal(validateName('x'.repeat(NAME_MAX)).ok, true);
 });
 
-test('answers must be one in-range integer per question', () => {
-  const good = bank.questions.map(() => 0);
-  assert.deepEqual(validateAnswers(good, bank), { ok: true, value: good });
-  assert.equal(validateAnswers(good.slice(1), bank).ok, false);       // too few
-  assert.equal(validateAnswers([...good, 0], bank).ok, false);        // too many
-  assert.equal(validateAnswers(good.map((_, i) => (i === 3 ? 4 : 0)), bank).ok, false); // out of range
-  assert.equal(validateAnswers(good.map((_, i) => (i === 3 ? '1' : 0)), bank).ok, false); // string
-  assert.equal(validateAnswers(good.map((_, i) => (i === 3 ? null : 0)), bank).ok, false); // unanswered
-  assert.match(validateAnswers(good.map((_, i) => (i === 3 ? null : 0)), bank).error, /question 4/);
-  assert.equal(validateAnswers('0,0,0', bank).ok, false);
+test('answers must be one in-range integer per drawn question', () => {
+  const drawn = bank.questions.slice(0, 10);
+  const good = drawn.map(() => 0);
+  assert.deepEqual(validateAnswers(good, drawn), { ok: true, value: good });
+  assert.equal(validateAnswers(good.slice(1), drawn).ok, false);       // too few
+  assert.equal(validateAnswers([...good, 0], drawn).ok, false);        // too many
+  assert.match(validateAnswers([...good, 0], drawn).error, /all 10 questions/);
+  assert.equal(validateAnswers(good.map((_, i) => (i === 3 ? 4 : 0)), drawn).ok, false); // out of range
+  assert.equal(validateAnswers(good.map((_, i) => (i === 3 ? -1 : 0)), drawn).ok, false); // negative
+  assert.equal(validateAnswers(good.map((_, i) => (i === 3 ? 1.5 : 0)), drawn).ok, false); // not an integer
+  assert.equal(validateAnswers(good.map((_, i) => (i === 3 ? '1' : 0)), drawn).ok, false); // string
+  assert.equal(validateAnswers(good.map((_, i) => (i === 3 ? null : 0)), drawn).ok, false); // unanswered
+  assert.match(validateAnswers(good.map((_, i) => (i === 3 ? null : 0)), drawn).error, /question 4/);
+  assert.equal(validateAnswers('0,0,0', drawn).ok, false);
 });
 
 test('line breaks and tabs become spaces before control characters are stripped', () => {

@@ -1,4 +1,5 @@
-import { publicQuestions, mark } from './quiz.mjs';
+import { drawIds, isDrawable, mark, publicDraw, resolveDraw } from './quiz.mjs';
+import { importDrawKey, signDraw, verifyDraw } from './drawsig.mjs';
 import { validateName, validateAnswers } from './validate.mjs';
 import {
   buildCredential, credentialPageUrl, signJws, verifyJws, publicJwkFrom, toJwtPayload, wholeSecondIso, ACHIEVEMENTS,
@@ -8,6 +9,8 @@ import { linkedInAddUrl } from './linkedin.mjs';
 const MAX_BODY = 10_000;
 const ID_RE = /^\/credentials\/([a-z2-7]{12})$/;
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz234567';
+const UNAVAILABLE = 'The quiz isn’t available right now. Try again later.';
+const STALE_DRAW = 'The questions have changed or this attempt has expired. Reload the page and try again.';
 
 function corsHeaders(origin, allowed) {
   const list = (allowed || '').split(',').map((s) => s.trim()).filter(Boolean);
@@ -37,6 +40,33 @@ async function loadBank(env, level) {
   return raw ? JSON.parse(raw) : null;
 }
 
+// The bank and the draw-signing key, or null when either is missing. A bank in
+// the old shape (no domains to draw from) counts as missing. Logs which part is
+// absent, never the key.
+async function quizReady(env) {
+  const bank = await loadBank(env, 'awareness');
+  if (!isDrawable(bank)) {
+    if (bank) console.error('The awareness bank has no domains to draw from');
+    return null;
+  }
+  const hmacKey = await importDrawKey(env.DRAW_HMAC_KEY);
+  if (!hmacKey) {
+    console.error('DRAW_HMAC_KEY is missing or shorter than 32 bytes');
+    return null;
+  }
+  return { bank, hmacKey };
+}
+
+async function serveDraw(env, cors) {
+  const ready = await quizReady(env);
+  if (!ready) return json({ error: UNAVAILABLE }, 503, cors);
+  const { bank, hmacKey } = ready;
+  const ids = drawIds(bank);
+  const drawToken = await signDraw(hmacKey, { ids, bv: bank.bankVersion });
+  const { level, bankVersion, total, required, questions } = publicDraw(bank, ids);
+  return json({ level, bankVersion, total, required, drawToken, questions }, 200, cors);
+}
+
 // The current signing key's public half plus every retired key in PUBLIC_KEYS,
 // so credentials signed before a key rotation still verify.
 function verificationKeys(env) {
@@ -57,18 +87,22 @@ async function submit(request, env, cors) {
   try { body = JSON.parse(text); } catch { return json({ error: 'Send the form as JSON.' }, 400, cors); }
   if (!body || typeof body !== 'object') return json({ error: 'Send the form as JSON.' }, 400, cors);
 
-  const bank = await loadBank(env, 'awareness');
-  if (!bank) return json({ error: 'The quiz isn’t available right now. Try again later.' }, 503, cors);
-  if (body.bankVersion !== bank.bankVersion) {
-    return json({ error: 'The questions have changed since you opened this page. Reload the page and try again.' }, 409, cors);
-  }
+  const ready = await quizReady(env);
+  if (!ready) return json({ error: UNAVAILABLE }, 503, cors);
+  const { bank, hmacKey } = ready;
+  // The signed draw is the attempt. No draw (a page from before v2), a forged or
+  // expired one, or one for an earlier bank version all ask for a reload.
+  const draw = await verifyDraw(hmacKey, body.drawToken, { bv: bank.bankVersion });
+  const drawn = draw.ok ? resolveDraw(bank, draw.ids) : null;
+  if (!drawn) return json({ error: STALE_DRAW }, 409, cors);
   const name = validateName(body.name);
   if (!name.ok) return json({ error: name.error }, 400, cors);
-  const answers = validateAnswers(body.answers, bank);
+  const answers = validateAnswers(body.answers, drawn);
   if (!answers.ok) return json({ error: answers.error }, 400, cors);
 
-  const result = mark(bank, answers.value);
-  if (!result.passed) return json({ passed: false, ...result }, 200, cors);
+  const { score, total, required, passed, areasToRevisit, review } = mark(bank, draw.ids, answers.value);
+  // A fail names the areas to revisit but never which questions were wrong.
+  if (!passed) return json({ passed: false, score, total, required, areasToRevisit }, 200, cors);
 
   const id = newId();
   const issuedAt = wholeSecondIso();
@@ -78,10 +112,13 @@ async function submit(request, env, cors) {
   const credentialUrl = credentialPageUrl(env.SITE_URL, id);
   return json({
     passed: true,
-    ...result,
+    score,
+    total,
+    required,
     credentialId: id,
     credentialUrl,
     linkedInUrl: linkedInAddUrl({ certName: credential.name, issuedAt, certUrl: credentialUrl, certId: id }),
+    review,
   }, 200, cors);
 }
 
@@ -107,11 +144,7 @@ export default {
     const cors = corsHeaders(request.headers.get('Origin'), env.ALLOWED_ORIGINS);
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     try {
-      if (request.method === 'GET' && url.pathname === '/awareness/questions') {
-        const bank = await loadBank(env, 'awareness');
-        if (!bank) return json({ error: 'The quiz isn’t available right now. Try again later.' }, 503, cors);
-        return json(publicQuestions(bank), 200, cors);
-      }
+      if (request.method === 'GET' && url.pathname === '/awareness/questions') return await serveDraw(env, cors);
       if (request.method === 'POST' && url.pathname === '/awareness/submit') return await submit(request, env, cors);
       const m = request.method === 'GET' && url.pathname.match(ID_RE);
       if (m) return await getCredential(m[1], env, cors);

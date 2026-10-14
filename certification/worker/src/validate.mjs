@@ -21,12 +21,13 @@ export function validateName(raw) {
   return { ok: true, value };
 }
 
-export function validateAnswers(raw, bank) {
-  const n = bank.questions.length;
+// `questions` are the drawn questions, in the order the answers come in.
+export function validateAnswers(raw, questions) {
+  const n = questions.length;
   if (!Array.isArray(raw) || raw.length !== n) return { ok: false, error: `Answer all ${n} questions.` };
   for (let i = 0; i < n; i++) {
     const a = raw[i];
-    if (!Number.isInteger(a) || a < 0 || a >= bank.questions[i].options.length) {
+    if (!Number.isInteger(a) || a < 0 || a >= questions[i].options.length) {
       return { ok: false, error: `Answer question ${i + 1}.` };
     }
   }
