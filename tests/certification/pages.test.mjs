@@ -64,3 +64,7 @@ test('quiz never shows a raw parser error', () => {
   assert.doesNotMatch(js, /showError\(e\.message/);
   assert.match(js, /res\.json\(\)\.catch\(/);
 });
+
+test('API base is a placeholder that can never resolve until deploy time', () => {
+  assert.match(read('certification/config.js'), /export const API_BASE = 'https:\/\/[^']+\.invalid';/);
+});

@@ -41,3 +41,28 @@ test('answers must be one in-range integer per question', () => {
   assert.match(validateAnswers(good.map((_, i) => (i === 3 ? null : 0)), bank).error, /question 4/);
   assert.equal(validateAnswers('0,0,0', bank).ok, false);
 });
+
+test('line breaks and tabs become spaces before control characters are stripped', () => {
+  assert.equal(validateName('Mark\nCraddock').value, 'Mark Craddock');
+  assert.equal(validateName('Mark\tCraddock').value, 'Mark Craddock');
+  assert.equal(validateName('Mark\r\nCraddock').value, 'Mark Craddock');
+});
+
+test('strips invisible format and bidi controls, keeps ZWNJ and ZWJ', () => {
+  assert.equal(validateName('Mark\u202ECraddock').value, 'MarkCraddock'); // right-to-left override
+  assert.equal(validateName('\u200BAl').value, 'Al'); // zero-width space
+  for (const c of ['\u061C', '\u200E', '\u200F', '\u202A', '\u2060', '\u2064', '\u2066', '\u2069', '\uFEFF']) {
+    assert.equal(validateName(`Sam${c}Ng`).value.includes(c), false, c.codePointAt(0).toString(16));
+  }
+  assert.equal(validateName('\u200B\u200B').ok, false); // nothing visible left
+  const zwnj = 'Mehdi\u200Czadeh';
+  assert.equal(validateName(zwnj).value, zwnj);
+  const zwj = 'Ka\u200Dmala';
+  assert.equal(validateName(zwj).value, zwj);
+});
+
+test('a decomposed accent is composed (NFC)', () => {
+  const out = validateName('Jose\u0301');
+  assert.equal(out.value, 'Jos\u00E9');
+  assert.equal(out.value.length, 4);
+});

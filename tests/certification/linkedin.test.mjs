@@ -24,3 +24,15 @@ test('uses the UTC month, so a late-night pass is not shifted', () => {
   const url = new URL(linkedInAddUrl({ certName: 'x', issuedAt: '2026-10-31T23:59:59.000Z', certUrl: 'https://arckit.org', certId: 'a' }));
   assert.equal(url.searchParams.get('issueMonth'), '10');
 });
+
+test('encodes spaces as %20, never +', () => {
+  const href = linkedInAddUrl({
+    certName: 'ArcKit Awareness (ArcKit 6)',
+    issuedAt: '2026-10-26T10:00:00Z',
+    certUrl: 'https://arckit.org/certification/credential.html?id=abcdefghjkmn',
+    certId: 'abcdefghjkmn',
+  });
+  assert.match(href, /[?&]name=ArcKit%20Awareness%20\(ArcKit%206\)&/);
+  assert.equal(href.includes('+'), false);
+  assert.match(href, /^https:\/\/www\.linkedin\.com\/profile\/add\?startTask=CERTIFICATION_NAME&name=.*&organizationId=146637218&issueYear=2026&issueMonth=10&certUrl=.*&certId=abcdefghjkmn$/);
+});

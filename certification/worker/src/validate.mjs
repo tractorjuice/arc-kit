@@ -6,7 +6,11 @@ export function validateName(raw) {
   if (typeof raw !== 'string') return { ok: false, error: 'Enter your name.' };
   const value = raw
     .normalize('NFC')
+    .replace(/\s+/g, ' ') // \n and \t become spaces before control characters are stripped
     .replace(/[\u0000-\u001F\u007F]/g, '')
+    // Invisible format and bidi controls. U+200C ZWNJ and U+200D ZWJ stay:
+    // Persian and Indic names need them.
+    .replace(/[\u061C\u200B\u200E\u200F\u202A-\u202E\u2060-\u2064\u2066-\u2069\uFEFF]/g, '')
     .replace(/\s+/g, ' ')
     .trim();
   if (value.length < 2) return { ok: false, error: 'Enter your full name as you want it on the credential.' };
