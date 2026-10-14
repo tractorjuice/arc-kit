@@ -12,9 +12,15 @@ function fakeKV(initial = {}) {
   return { get: async (k) => (m.has(k) ? m.get(k) : null), put: async (k, v) => { m.set(k, v); }, map: m };
 }
 
+const RSA_GEN = { name: 'RSASSA-PKCS1-v1_5', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256' };
+const rsaKeys = new Map();
+// One keypair per kid per file, shared across tests.
 async function makeKey(kid = 'test-key') {
-  const kp = await crypto.subtle.generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']);
-  return { ...(await crypto.subtle.exportKey('jwk', kp.privateKey)), kid };
+  if (!rsaKeys.has(kid)) {
+    const kp = await crypto.subtle.generateKey(RSA_GEN, true, ['sign', 'verify']);
+    rsaKeys.set(kid, await crypto.subtle.exportKey('jwk', kp.privateKey));
+  }
+  return { ...rsaKeys.get(kid), kid };
 }
 
 async function makeEnv({ withBank = true, kid = 'test-key' } = {}) {
@@ -189,7 +195,7 @@ test('after a key rotation, credentials signed with the old key verify through P
   const newKey = await makeKey('new-key');
   const id = await storeSigned(env, oldKey);
   env.SIGNING_KEY = JSON.stringify(newKey);
-  env.PUBLIC_KEYS = JSON.stringify({ keys: [{ ...publicJwkFrom(oldKey), use: 'sig', alg: 'EdDSA' }] });
+  env.PUBLIC_KEYS = JSON.stringify({ keys: [{ ...publicJwkFrom(oldKey), use: 'sig', alg: 'RS256' }] });
   assert.equal((await (await call(env, `/credentials/${id}`)).json()).valid, true);
   // The new key signs new credentials, which verify too.
   const fresh = await (await pass(env)).json();

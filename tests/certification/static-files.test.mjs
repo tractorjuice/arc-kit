@@ -36,9 +36,9 @@ test('published key set, when present, holds public keys only', () => {
   const { keys } = JSON.parse(readFileSync(p, 'utf8'));
   assert.ok(keys.length >= 1);
   for (const k of keys) {
-    assert.equal(k.kty, 'OKP');
-    assert.equal(k.crv, 'Ed25519');
-    assert.equal('d' in k, false);
-    assert.ok(k.kid && k.x);
+    assert.equal(k.kty, 'RSA');
+    assert.equal(k.alg, 'RS256');
+    assert.ok(k.kid && k.n && k.e);
+    for (const priv of ['d', 'p', 'q', 'dp', 'dq', 'qi']) assert.equal(priv in k, false, priv);
   }
 });

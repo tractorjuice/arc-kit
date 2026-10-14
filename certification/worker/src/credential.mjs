@@ -1,5 +1,5 @@
-// Open Badges 3.0 credentials, signed as compact JWS (EdDSA / Ed25519).
-// WebCrypto only, so this runs unchanged in the Worker and in Node tests.
+// Open Badges 3.0 credentials, signed as compact JWS (RS256: RSASSA-PKCS1-v1_5 with SHA-256),
+// the OB 3.0 baseline every verifier supports. WebCrypto only, so this runs unchanged in the Worker and in Node tests.
 
 export const ISSUER_ID = 'https://arckit.org/certification/issuer.json';
 
@@ -18,6 +18,7 @@ export const ACHIEVEMENTS = {
   },
 };
 
+const RSA = { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' };
 const MAJOR_VERSION = 'ArcKit 6';
 const enc = new TextEncoder();
 const dec = new TextDecoder();
@@ -77,16 +78,16 @@ export function toJwtPayload(credential) {
   };
 }
 
-export function publicJwkFrom({ kty, crv, x, kid }) {
-  return { kty, crv, x, kid };
+export function publicJwkFrom({ kty, n, e, kid }) {
+  return { kty, n, e, kid };
 }
 
 export async function signJws(payload, privateJwk) {
-  const header = { alg: 'EdDSA', kid: keyUri(privateJwk.kid), typ: 'JWT' };
+  const header = { alg: 'RS256', kid: keyUri(privateJwk.kid), typ: 'JWT' };
   const input = `${b64urlJson(header)}.${b64urlJson(payload)}`;
-  const { kty, crv, x, d } = privateJwk;
-  const key = await crypto.subtle.importKey('jwk', { kty, crv, x, d }, { name: 'Ed25519' }, false, ['sign']);
-  const sig = new Uint8Array(await crypto.subtle.sign({ name: 'Ed25519' }, key, enc.encode(input)));
+  const { kty, n, e, d, p, q, dp, dq, qi } = privateJwk;
+  const key = await crypto.subtle.importKey('jwk', { kty, n, e, d, p, q, dp, dq, qi }, RSA, false, ['sign']);
+  const sig = new Uint8Array(await crypto.subtle.sign(RSA.name, key, enc.encode(input)));
   return `${input}.${b64url(sig)}`;
 }
 
@@ -101,13 +102,13 @@ export async function verifyJws(jws, keys) {
     if (parts.length !== 3 || parts.some((p) => p.length === 0)) return { valid: false };
     const header = JSON.parse(dec.decode(fromB64url(parts[0])));
     if (Object.keys(header).some((k) => !HEADER_KEYS.has(k))) return { valid: false };
-    if (header.alg !== 'EdDSA') return { valid: false };
+    if (header.alg !== 'RS256') return { valid: false };
     if ('typ' in header && header.typ !== 'JWT') return { valid: false };
     const publicJwk = keys.find((k) => keyUri(k.kid) === header.kid);
     if (!publicJwk) return { valid: false };
-    const { kty, crv, x } = publicJwk;
-    const key = await crypto.subtle.importKey('jwk', { kty, crv, x }, { name: 'Ed25519' }, false, ['verify']);
-    const ok = await crypto.subtle.verify({ name: 'Ed25519' }, key, fromB64url(parts[2]), enc.encode(`${parts[0]}.${parts[1]}`));
+    const { kty, n, e } = publicJwk;
+    const key = await crypto.subtle.importKey('jwk', { kty, n, e }, RSA, false, ['verify']);
+    const ok = await crypto.subtle.verify(RSA.name, key, fromB64url(parts[2]), enc.encode(`${parts[0]}.${parts[1]}`));
     if (!ok) return { valid: false };
     const payload = JSON.parse(dec.decode(fromB64url(parts[1])));
     if (payload.iss !== ISSUER_ID) return { valid: false };

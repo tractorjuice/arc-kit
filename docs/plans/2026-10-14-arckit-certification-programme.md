@@ -116,7 +116,7 @@ Questions test scenarios, not recall. For example: "Your stakeholder analysis is
 
 ## 7. Credentials
 
-- **Format:** **Open Badges 3.0** (W3C Verifiable Credentials), signed with an ArcKit Ed25519 key. The issuer profile is published at `arckit.org/certification/issuer.json`. Anyone can verify a badge, and no third-party platform is involved.
+- **Format:** **Open Badges 3.0** (W3C Verifiable Credentials), signed with an ArcKit RSA key (RS256, the Open Badges 3.0 baseline that every verifier supports). The issuer profile is published at `arckit.org/certification/issuer.json`. Anyone can verify a badge, and no third-party platform is involved.
 - **Badge art:** one badge per level in the series look (navy blueprint, teal, the ArcKit mark), plus a small mark for each track.
 - **LinkedIn:** each credential page has an "Add to LinkedIn" link that pre-fills name, issuing organisation (the ArcKit page), credential ID and URL.
 - **Validity [default]:**

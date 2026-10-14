@@ -2,7 +2,7 @@
 
 The Worker and tooling behind <https://arckit.org/certification/>. Design: `docs/plans/2026-10-14-arckit-certification-programme.md`.
 
-- `worker/`: Cloudflare Worker. It serves questions, marks answers and signs Open Badges 3.0 credentials (EdDSA). It has no runtime dependencies.
+- `worker/`: Cloudflare Worker. It serves questions, marks answers and signs Open Badges 3.0 credentials (RS256). It has no runtime dependencies.
 - `private/` (gitignored): the real question banks, with answer keys. They never go in this repo.
 - The pages and public keys live in `docs/certification/`. At deploy time, set `API_BASE` in `docs/certification/config.js` to the deployed Worker URL.
 

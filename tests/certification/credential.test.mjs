@@ -5,8 +5,19 @@ import {
   publicJwkFrom, signJws, verifyJws, toJwtPayload, wholeSecondIso, keyUri,
 } from '../../certification/worker/src/credential.mjs';
 
+const RSA_GEN = { name: 'RSASSA-PKCS1-v1_5', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256' };
+const rsaKeys = new Map();
+// One keypair per kid per file; RSA keygen is cheap but not free.
 async function testKey(kid = 'test-key') {
-  const kp = await crypto.subtle.generateKey({ name: 'Ed25519' }, true, ['sign', 'verify']);
+  if (!rsaKeys.has(kid)) {
+    const kp = await crypto.subtle.generateKey(RSA_GEN, true, ['sign', 'verify']);
+    rsaKeys.set(kid, await crypto.subtle.exportKey('jwk', kp.privateKey));
+  }
+  return { ...rsaKeys.get(kid), kid };
+}
+// A distinct keypair that reuses a kid, to prove the kid alone does not select trust.
+async function freshKey(kid) {
+  const kp = await crypto.subtle.generateKey(RSA_GEN, true, ['sign', 'verify']);
   return { ...(await crypto.subtle.exportKey('jwk', kp.privateKey)), kid };
 }
 
@@ -17,10 +28,10 @@ const b64 = (obj) => Buffer.from(JSON.stringify(obj)).toString('base64url');
 
 // Signs an arbitrary header and payload with a private JWK, to build tokens signJws never would.
 async function signRaw(header, payload, jwk) {
-  const { kty, crv, x, d } = jwk;
-  const key = await crypto.subtle.importKey('jwk', { kty, crv, x, d }, { name: 'Ed25519' }, false, ['sign']);
+  const { kty, n, e, d, p, q, dp, dq, qi } = jwk;
+  const key = await crypto.subtle.importKey('jwk', { kty, n, e, d, p, q, dp, dq, qi }, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['sign']);
   const input = `${b64(header)}.${b64(payload)}`;
-  const sig = Buffer.from(await crypto.subtle.sign({ name: 'Ed25519' }, key, new TextEncoder().encode(input))).toString('base64url');
+  const sig = Buffer.from(await crypto.subtle.sign('RSASSA-PKCS1-v1_5', key, new TextEncoder().encode(input))).toString('base64url');
   return `${input}.${sig}`;
 }
 
@@ -69,7 +80,7 @@ test('sign then verify round-trips, including non-ASCII names', async () => {
   const jws = await signJws(toJwtPayload(buildCredential(base)), key);
   assert.equal(jws.split('.').length, 3);
   const header = part(jws, 0);
-  assert.deepEqual(header, { alg: 'EdDSA', kid: 'https://arckit.org/certification/jwks.json#test-key', typ: 'JWT' });
+  assert.deepEqual(header, { alg: 'RS256', kid: 'https://arckit.org/certification/jwks.json#test-key', typ: 'JWT' });
   assert.deepEqual(Object.keys(header), ['alg', 'kid', 'typ']);
   assert.equal(header.kid, keyUri('test-key'));
   const out = await verifyJws(jws, [publicJwkFrom(key)]);
@@ -91,13 +102,13 @@ test('header and claims must be exactly as OB 3.0 requires', async () => {
   const kid = keyUri('test-key');
   const keys = [publicJwkFrom(key)];
   // The helper itself produces a valid token, so each rejection below is down to the one change.
-  assert.equal((await verifyJws(await signRaw({ alg: 'EdDSA', kid, typ: 'JWT' }, payload, key), keys)).valid, true);
-  assert.equal((await verifyJws(await signRaw({ alg: 'EdDSA', kid }, payload, key), keys)).valid, true); // typ is optional
-  assert.equal((await verifyJws(await signRaw({ alg: 'EdDSA', kid, typ: 'vc+jwt' }, payload, key), keys)).valid, false);
-  assert.equal((await verifyJws(await signRaw({ alg: 'EdDSA', kid, typ: 'JWT', jwk: publicJwkFrom(key) }, payload, key), keys)).valid, false);
-  assert.equal((await verifyJws(await signRaw({ alg: 'EdDSA', kid: 'test-key', typ: 'JWT' }, payload, key), keys)).valid, false); // bare kid
-  assert.equal((await verifyJws(await signRaw({ alg: 'EdDSA', kid: keyUri('nobody'), typ: 'JWT' }, payload, key), keys)).valid, false);
-  const header = { alg: 'EdDSA', kid, typ: 'JWT' };
+  assert.equal((await verifyJws(await signRaw({ alg: 'RS256', kid, typ: 'JWT' }, payload, key), keys)).valid, true);
+  assert.equal((await verifyJws(await signRaw({ alg: 'RS256', kid }, payload, key), keys)).valid, true); // typ is optional
+  assert.equal((await verifyJws(await signRaw({ alg: 'RS256', kid, typ: 'vc+jwt' }, payload, key), keys)).valid, false);
+  assert.equal((await verifyJws(await signRaw({ alg: 'RS256', kid, typ: 'JWT', jwk: publicJwkFrom(key) }, payload, key), keys)).valid, false);
+  assert.equal((await verifyJws(await signRaw({ alg: 'RS256', kid: 'test-key', typ: 'JWT' }, payload, key), keys)).valid, false); // bare kid
+  assert.equal((await verifyJws(await signRaw({ alg: 'RS256', kid: keyUri('nobody'), typ: 'JWT' }, payload, key), keys)).valid, false);
+  const header = { alg: 'RS256', kid, typ: 'JWT' };
   assert.equal((await verifyJws(await signRaw(header, { ...payload, iss: 'https://evil.example/issuer.json' }, key), keys)).valid, false);
   assert.equal((await verifyJws(await signRaw(header, { ...payload, jti: 'https://arckit.org/other' }, key), keys)).valid, false);
   assert.equal((await verifyJws(await signRaw(header, { ...payload, sub: 'urn:uuid:other' }, key), keys)).valid, false);
@@ -107,15 +118,24 @@ test('header and claims must be exactly as OB 3.0 requires', async () => {
   assert.equal((await verifyJws(await signRaw(header, { iss: ISSUER_ID, credentialSubject: { name: 'X' } }, key), keys)).valid, false); // jti and sub required
 });
 
+test('an EdDSA header is refused even when otherwise valid and signed with the right key', async () => {
+  const key = await testKey();
+  const payload = toJwtPayload(buildCredential(base));
+  const keys = [publicJwkFrom(key)];
+  const kid = keyUri('test-key');
+  assert.equal((await verifyJws(await signRaw({ alg: 'RS256', kid, typ: 'JWT' }, payload, key), keys)).valid, true);
+  assert.equal((await verifyJws(await signRaw({ alg: 'EdDSA', kid, typ: 'JWT' }, payload, key), keys)).valid, false);
+});
+
 test('public JWK never carries the private part', async () => {
   const pub = publicJwkFrom(await testKey('k1'));
-  assert.deepEqual(Object.keys(pub).sort(), ['crv', 'kid', 'kty', 'x']);
+  assert.deepEqual(Object.keys(pub).sort(), ['e', 'kid', 'kty', 'n']);
 });
 
 test('tampered, malformed or wrong-key tokens are invalid', async () => {
   const key = await testKey();
   const other = await testKey('other');
-  const sameKidWrongKey = await testKey('test-key');
+  const sameKidWrongKey = await freshKey('test-key');
   const payload = toJwtPayload(buildCredential(base));
   const jws = await signJws(payload, key);
   const [h, p, s] = jws.split('.');

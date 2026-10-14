@@ -29,9 +29,12 @@ test('writes the public key set, then prints the private key', (t) => {
   assert.equal(r.status, 0, r.stderr);
   const { keys } = JSON.parse(readFileSync(out, 'utf8'));
   assert.equal(keys.length, 1);
-  assert.equal('d' in keys[0], false);
+  assert.equal(keys[0].kty, 'RSA');
+  assert.equal(keys[0].alg, 'RS256');
+  for (const f of ['d', 'p', 'q', 'dp', 'dq', 'qi']) assert.equal(f in keys[0], false, f);
   const priv = JSON.parse(r.stdout);
-  assert.ok(priv.d);
+  for (const f of ['d', 'p', 'q', 'dp', 'dq', 'qi']) assert.ok(priv[f], f);
   assert.equal(priv.kid, keys[0].kid);
-  assert.equal(priv.x, keys[0].x);
+  assert.equal(priv.n, keys[0].n);
+  assert.equal(priv.e, keys[0].e);
 });
