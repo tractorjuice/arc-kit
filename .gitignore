@@ -247,3 +247,8 @@ deepbook-test-output/
 
 # Behavioural eval recordings (scripts/eval-headless.py, claude plugin eval)
 plugins/arckit-claude/evals/results/
+
+# Certification: the real question banks hold answer keys and never go in this public repo.
+certification/private/
+certification/worker/node_modules/
+certification/worker/.wrangler/
