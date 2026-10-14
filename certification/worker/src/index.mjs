@@ -1,4 +1,4 @@
-import { drawIds, isDrawable, mark, publicDraw, resolveDraw } from './quiz.mjs';
+import { drawIds, isDrawable, isWholeDraw, mark, publicDraw, resolveDraw } from './quiz.mjs';
 import { importDrawKey, signDraw, verifyDraw } from './drawsig.mjs';
 import { validateName, validateAnswers } from './validate.mjs';
 import {
@@ -93,7 +93,8 @@ async function submit(request, env, cors) {
   // The signed draw is the attempt. No draw (a page from before v2), a forged or
   // expired one, or one for an earlier bank version all ask for a reload.
   const draw = await verifyDraw(hmacKey, body.drawToken, { bv: bank.bankVersion });
-  const drawn = draw.ok ? resolveDraw(bank, draw.ids) : null;
+  const resolved = draw.ok ? resolveDraw(bank, draw.ids) : null;
+  const drawn = resolved && isWholeDraw(bank, resolved) ? resolved : null;
   if (!drawn) return json({ error: STALE_DRAW }, 409, cors);
   const name = validateName(body.name);
   if (!name.ok) return json({ error: name.error }, 400, cors);

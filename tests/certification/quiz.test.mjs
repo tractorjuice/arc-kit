@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
-  drawIds, isDrawable, mark, publicDraw, randomInt, requiredScore, resolveDraw, shuffle,
+  drawIds, isDrawable, isWholeDraw, mark, publicDraw, randomInt, requiredScore, resolveDraw, shuffle,
 } from '../../certification/worker/src/quiz.mjs';
 
 const bank = JSON.parse(readFileSync(new URL('./fixtures/awareness.sample.json', import.meta.url), 'utf8'));
@@ -68,8 +68,32 @@ test('shuffle is a permutation and leaves its input alone', () => {
   const out = shuffle(input);
   assert.deepEqual([...out].sort((a, b) => a - b), input);
   assert.deepEqual(input, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-  // With rand always 0, Fisher–Yates rotates the first element to the end.
-  assert.deepEqual(shuffle([1, 2, 3, 4], () => 0), [2, 3, 4, 1]);
+  // Fisher–Yates asks for a value in [0, i + 1) for i = n-1 down to 1. The
+  // biased Sattolo variant asks for [0, i) and would record 3, 2, 1.
+  const bounds = [];
+  shuffle([1, 2, 3, 4], (n) => { bounds.push(n); return 0; });
+  assert.deepEqual(bounds, [4, 3, 2]);
+});
+
+test('isDrawable and drawIds agree on bad banks, so the Worker answers 503 not 500', () => {
+  assert.equal(isDrawable(bank), true);
+  const nullQuestion = structuredClone(bank);
+  nullQuestion.questions[0] = null;
+  assert.equal(isDrawable(nullQuestion), false);
+  for (const v of [undefined, 7, null, '']) {
+    const b = structuredClone(bank);
+    b.bankVersion = v;
+    assert.equal(isDrawable(b), false, String(v));
+  }
+});
+
+test('isWholeDraw wants drawPerDomain from every domain', () => {
+  const ids = drawIds(bank);
+  assert.equal(isWholeDraw(bank, resolveDraw(bank, ids)), true);
+  assert.equal(isWholeDraw(bank, resolveDraw(bank, ids.slice(0, 1))), false);
+  const inDomain = bank.questions.filter((q) => q.domain === 'basics').slice(0, 10).map((q) => q.id);
+  assert.equal(isWholeDraw(bank, resolveDraw(bank, inDomain)), false);
+  assert.equal(isWholeDraw(bank, null), false);
 });
 
 test('the public view of a draw holds no answer or explanation, at any depth', () => {

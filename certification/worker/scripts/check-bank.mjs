@@ -12,6 +12,7 @@ export const PROMPT_MIN = 10;
 export const PROMPT_MAX = 200;
 export const OPTION_MAX = 160;
 export const EXPLANATION_MAX = 300;
+export const MIN_PER_POSITION = 4;
 
 const isObject = (v) => Boolean(v) && typeof v === 'object' && !Array.isArray(v);
 const nonEmpty = (v) => typeof v === 'string' && v.trim().length > 0;
@@ -96,5 +97,11 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   }
   const problems = checkBank(bank);
   if (problems.length) { console.error(problems.join('\n')); process.exit(1); }
+  // Not a failure: a lopsided answer key is a tell, so say so.
+  const counts = Array.from({ length: OPTIONS }, (_, i) => bank.questions.filter((q) => q.answer === i).length);
+  const thin = counts.map((n, i) => ({ n, i })).filter(({ n }) => n < MIN_PER_POSITION);
+  for (const { n, i } of thin) {
+    console.log(`Warning: answer position ${String.fromCharCode(65 + i)} holds only ${n} of ${bank.questions.length} answers (spread: ${counts.join(', ')}).`);
+  }
   console.log('Bank OK');
 }

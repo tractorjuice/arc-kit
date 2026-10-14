@@ -2,7 +2,7 @@
 // so before marking only publicDraw() output may ever leave the Worker.
 //
 // Each attempt draws `drawPerDomain` questions from every domain and shuffles
-// them. The drawn IDs travel in a signed draw token (drawtoken.mjs); marking
+// them. The drawn IDs travel in a signed draw token (drawsig.mjs); marking
 // looks them up again in the bank.
 
 const RANGE = 2 ** 32;
@@ -35,9 +35,20 @@ export function shuffle(items, rand = randomInt) {
 export function isDrawable(bank) {
   if (!bank || typeof bank !== 'object' || !bank.domains || typeof bank.domains !== 'object') return false;
   if (!Number.isInteger(bank.drawPerDomain) || bank.drawPerDomain < 1 || !Array.isArray(bank.questions)) return false;
+  if (typeof bank.bankVersion !== 'string' || bank.bankVersion.length === 0) return false;
+  // drawIds reads domain and id from every question, so each must be an object with a string id.
+  if (!bank.questions.every((q) => q && typeof q === 'object' && !Array.isArray(q) && typeof q.id === 'string')) return false;
   const keys = Object.keys(bank.domains);
   if (keys.length === 0) return false;
-  return keys.every((d) => bank.questions.filter((q) => q && q.domain === d).length >= bank.drawPerDomain);
+  return keys.every((d) => bank.questions.filter((q) => q.domain === d).length >= bank.drawPerDomain);
+}
+
+// True when `questions` (from resolveDraw) is the shape drawIds makes: exactly
+// drawPerDomain from each domain, nothing else. A signed token for a shorter or
+// lopsided list (for example one easy question) is not an attempt.
+export function isWholeDraw(bank, questions) {
+  if (!Array.isArray(questions) || questions.length !== bank.drawPerDomain * Object.keys(bank.domains).length) return false;
+  return Object.keys(bank.domains).every((d) => questions.filter((q) => q.domain === d).length === bank.drawPerDomain);
 }
 
 // drawPerDomain random questions from each domain, in random order. Returns IDs.

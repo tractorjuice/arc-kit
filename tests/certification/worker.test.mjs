@@ -197,6 +197,32 @@ test('a signed draw naming questions the bank no longer holds gets 409', async (
   assert.equal(res.status, 409);
 });
 
+test('a signed draw of the wrong shape (one ID, or all from one domain) gets 409', async () => {
+  const env = await makeEnv();
+  const hmacKey = await importDrawKey(env.DRAW_HMAC_KEY);
+  const one = await signDraw(hmacKey, { ids: ['s01'], bv: 'sample-2' });
+  const res = await submit(env, { name: 'Sam Ng', answers: [byId.get('s01').answer], bankVersion: 'sample-2', drawToken: one });
+  assert.equal(res.status, 409);
+  assert.equal((await res.json()).error, STALE);
+  const basics = bank.questions.filter((q) => q.domain === 'basics').slice(0, 10).map((q) => q.id);
+  const lopsided = await signDraw(hmacKey, { ids: basics, bv: 'sample-2' });
+  const res2 = await submit(env, { name: 'Sam Ng', answers: basics.map((id) => byId.get(id).answer), bankVersion: 'sample-2', drawToken: lopsided });
+  assert.equal(res2.status, 409);
+  assert.equal(env.CREDENTIALS.map.size, 0);
+});
+
+test('a bank with a null question or a non-string bankVersion is 503, never 500', async (t) => {
+  t.mock.method(console, 'error', () => {});
+  for (const edit of [(b) => { b.questions[0] = null; }, (b) => { b.bankVersion = 7; }]) {
+    const env = await makeEnv();
+    const b = structuredClone(bank);
+    edit(b);
+    await env.QUESTIONS.put('awareness', JSON.stringify(b));
+    assert.equal((await call(env, '/awareness/questions')).status, 503);
+    assert.equal((await submit(env, { name: 'Sam Ng', answers: [], drawToken: 'x.y' })).status, 503);
+  }
+});
+
 test('a draw older than three hours gets 409', async () => {
   const env = await makeEnv();
   const hmacKey = await importDrawKey(env.DRAW_HMAC_KEY);

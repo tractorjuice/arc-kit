@@ -125,3 +125,21 @@ test('the CLI prints "Bank OK" or the problems and exits 1', () => {
   assert.equal(none.status, 1);
   assert.match(none.stderr, /Usage/);
 });
+
+test('a lopsided answer spread warns on stdout but still passes', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'check-bank-'));
+  try {
+    const path = join(dir, 'skewed.json');
+    const skewed = structuredClone(sample);
+    skewed.questions.forEach((q, i) => { q.answer = i < 27 ? i % 3 : 3; });
+    writeFileSync(path, JSON.stringify(skewed));
+    const out = spawnSync(process.execPath, [script, path], { encoding: 'utf8' });
+    assert.equal(out.status, 0);
+    assert.match(out.stdout, /Warning: answer position D holds only 3 of 30/);
+    assert.match(out.stdout, /Bank OK/);
+    const fine = spawnSync(process.execPath, [script, fileURLToPath(fixture)], { encoding: 'utf8' });
+    assert.doesNotMatch(fine.stdout, /Warning/);
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

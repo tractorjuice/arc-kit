@@ -70,7 +70,7 @@ test('a draw lasts three hours', async () => {
 test('a draw for another bank version is refused', async () => {
   const { hmacKey, tok } = await setup();
   assert.deepEqual(await verifyDraw(hmacKey, tok, { bv: 'sample-3', now: T0 }), { ok: false, reason: 'version' });
-  assert.equal((await verifyDraw(hmacKey, tok, { now: T0 })).ok, false);
+  assert.deepEqual(await verifyDraw(hmacKey, tok, { now: T0 }), { ok: false, reason: 'version' });
 });
 
 test('malformed input is refused without throwing', async () => {
@@ -84,6 +84,11 @@ test('malformed input is refused without throwing', async () => {
   for (const c of cases) {
     const out = await verifyDraw(hmacKey, c, { bv, now: T0 });
     assert.equal(out.ok, false, String(c).slice(0, 40));
+    // Shape failures are 'malformed'; a well-formed token with a bad MAC is 'signature'.
+    assert.ok(['malformed', 'signature'].includes(out.reason), String(c).slice(0, 40));
+    if (typeof c !== 'string' || !/^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/.test(c) || c.length > 4096) {
+      assert.equal(out.reason, 'malformed', String(c).slice(0, 40));
+    }
   }
   // Correctly signed, but the payload isn't a draw.
   const signed = async (text) => {
@@ -99,7 +104,7 @@ test('malformed input is refused without throwing', async () => {
     assert.deepEqual(await verifyDraw(hmacKey, await signed(text), { bv, now: T0 }), { ok: false, reason: 'malformed' }, text);
   }
   // Not a key at all.
-  assert.equal((await verifyDraw(null, tok, { bv, now: T0 })).ok, false);
+  assert.deepEqual(await verifyDraw(null, tok, { bv, now: T0 }), { ok: false, reason: 'malformed' });
 });
 
 test('the HMAC key must be base64url of at least 32 bytes', async () => {
