@@ -3,6 +3,11 @@
 
 export const ISSUER_ID = 'https://arckit.org/certification/issuer.json';
 
+// The published key set. A JWS header's kid is a URI that dereferences to the
+// key: the JWKS URL plus a fragment naming the key (OB 3.0 §8.2.3).
+export const JWKS_URL = 'https://arckit.org/certification/jwks.json';
+export const keyUri = (kid) => `${JWKS_URL}#${kid}`;
+
 export const ACHIEVEMENTS = {
   awareness: {
     id: 'https://arckit.org/certification/achievements/awareness.json',
@@ -35,7 +40,12 @@ export function credentialPageUrl(siteUrl, id) {
   return `${siteUrl}/certification/credential.html?id=${encodeURIComponent(id)}`;
 }
 
-export function buildCredential({ id, name, level, issuedAt, siteUrl }) {
+// ISO 8601 UTC with no fractional seconds, e.g. 2026-10-14T09:30:00Z.
+export function wholeSecondIso(date = new Date()) {
+  return date.toISOString().replace(/\.\d+Z$/, 'Z');
+}
+
+export function buildCredential({ id, name, level, issuedAt, siteUrl, subjectId = `urn:uuid:${crypto.randomUUID()}` }) {
   const achievement = ACHIEVEMENTS[level];
   if (!achievement) throw new Error(`Unknown level: ${level}`);
   return {
@@ -46,10 +56,24 @@ export function buildCredential({ id, name, level, issuedAt, siteUrl }) {
     validFrom: issuedAt,
     name: `${achievement.name} (${MAJOR_VERSION})`,
     credentialSubject: {
+      id: subjectId,
       type: ['AchievementSubject'],
       name,
+      identifier: [{ type: 'IdentityObject', identityType: 'name', hashed: false, identityHash: name }],
       achievement: { type: ['Achievement'], ...achievement },
     },
+  };
+}
+
+// OB 3.0 §8.2.4.1: the JWT payload is the credential plus iss, jti, nbf and sub.
+// There is no exp, because the credential has no validUntil.
+export function toJwtPayload(credential) {
+  return {
+    ...credential,
+    iss: credential.issuer.id,
+    jti: credential.id,
+    nbf: Math.floor(Date.parse(credential.validFrom) / 1000),
+    sub: credential.credentialSubject.id,
   };
 }
 
@@ -58,7 +82,7 @@ export function publicJwkFrom({ kty, crv, x, kid }) {
 }
 
 export async function signJws(payload, privateJwk) {
-  const header = { alg: 'EdDSA', typ: 'vc+jwt', kid: privateJwk.kid };
+  const header = { alg: 'EdDSA', kid: keyUri(privateJwk.kid), typ: 'JWT' };
   const input = `${b64urlJson(header)}.${b64urlJson(payload)}`;
   const { kty, crv, x, d } = privateJwk;
   const key = await crypto.subtle.importKey('jwk', { kty, crv, x, d }, { name: 'Ed25519' }, false, ['sign']);
@@ -66,17 +90,30 @@ export async function signJws(payload, privateJwk) {
   return `${input}.${b64url(sig)}`;
 }
 
-export async function verifyJws(jws, publicJwk) {
+const HEADER_KEYS = new Set(['alg', 'kid', 'typ']);
+
+// `keys` is an array of public JWKs, each with a kid. The header must name one
+// of them by its key URI; an embedded jwk is refused, so a token can never
+// supply its own key.
+export async function verifyJws(jws, keys) {
   try {
     const parts = typeof jws === 'string' ? jws.split('.') : [];
     if (parts.length !== 3 || parts.some((p) => p.length === 0)) return { valid: false };
     const header = JSON.parse(dec.decode(fromB64url(parts[0])));
+    if (Object.keys(header).some((k) => !HEADER_KEYS.has(k))) return { valid: false };
     if (header.alg !== 'EdDSA') return { valid: false };
+    if ('typ' in header && header.typ !== 'JWT') return { valid: false };
+    const publicJwk = keys.find((k) => keyUri(k.kid) === header.kid);
+    if (!publicJwk) return { valid: false };
     const { kty, crv, x } = publicJwk;
     const key = await crypto.subtle.importKey('jwk', { kty, crv, x }, { name: 'Ed25519' }, false, ['verify']);
     const ok = await crypto.subtle.verify({ name: 'Ed25519' }, key, fromB64url(parts[2]), enc.encode(`${parts[0]}.${parts[1]}`));
     if (!ok) return { valid: false };
-    return { valid: true, payload: JSON.parse(dec.decode(fromB64url(parts[1]))) };
+    const payload = JSON.parse(dec.decode(fromB64url(parts[1])));
+    if (payload.iss !== ISSUER_ID) return { valid: false };
+    if (typeof payload.jti !== 'string' || payload.jti !== payload.id) return { valid: false };
+    if (typeof payload.sub !== 'string' || payload.sub !== payload.credentialSubject?.id) return { valid: false };
+    return { valid: true, payload };
   } catch {
     return { valid: false };
   }

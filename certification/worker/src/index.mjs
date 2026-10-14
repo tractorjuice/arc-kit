@@ -1,6 +1,8 @@
 import { publicQuestions, mark } from './quiz.mjs';
 import { validateName, validateAnswers } from './validate.mjs';
-import { buildCredential, credentialPageUrl, signJws, verifyJws, publicJwkFrom, ACHIEVEMENTS } from './credential.mjs';
+import {
+  buildCredential, credentialPageUrl, signJws, verifyJws, publicJwkFrom, toJwtPayload, wholeSecondIso, ACHIEVEMENTS,
+} from './credential.mjs';
 import { linkedInAddUrl } from './linkedin.mjs';
 
 const MAX_BODY = 10_000;
@@ -35,7 +37,20 @@ async function loadBank(env, level) {
   return raw ? JSON.parse(raw) : null;
 }
 
+// The current signing key's public half plus every retired key in PUBLIC_KEYS,
+// so credentials signed before a key rotation still verify.
+function verificationKeys(env) {
+  const retired = JSON.parse(env.PUBLIC_KEYS || '{"keys":[]}').keys;
+  const seen = new Set();
+  return [publicJwkFrom(JSON.parse(env.SIGNING_KEY)), ...retired.map(publicJwkFrom)]
+    .filter((k) => !seen.has(k.kid) && seen.add(k.kid));
+}
+
 async function submit(request, env, cors) {
+  if (env.SUBMIT_LIMITER) {
+    const { success } = await env.SUBMIT_LIMITER.limit({ key: request.headers.get('CF-Connecting-IP') || 'unknown' });
+    if (!success) return json({ error: 'Too many attempts. Wait a minute and try again.' }, 429, cors);
+  }
   const text = await request.text();
   if (text.length > MAX_BODY) return json({ error: 'That submission is too large.' }, 413, cors);
   let body;
@@ -56,9 +71,9 @@ async function submit(request, env, cors) {
   if (!result.passed) return json({ passed: false, ...result }, 200, cors);
 
   const id = newId();
-  const issuedAt = new Date().toISOString();
+  const issuedAt = wholeSecondIso();
   const credential = buildCredential({ id, name: name.value, level: 'awareness', issuedAt, siteUrl: env.SITE_URL });
-  const jws = await signJws(credential, JSON.parse(env.SIGNING_KEY));
+  const jws = await signJws(toJwtPayload(credential), JSON.parse(env.SIGNING_KEY));
   await env.CREDENTIALS.put(`cred:${id}`, JSON.stringify({ id, name: name.value, level: 'awareness', issuedAt, jws }));
   const credentialUrl = credentialPageUrl(env.SITE_URL, id);
   return json({
@@ -74,13 +89,15 @@ async function getCredential(id, env, cors) {
   const raw = await env.CREDENTIALS.get(`cred:${id}`);
   if (!raw) return json({ error: 'No credential with that ID.' }, 404, cors);
   const rec = JSON.parse(raw);
-  const check = await verifyJws(rec.jws, publicJwkFrom(JSON.parse(env.SIGNING_KEY)));
-  const valid = check.valid && check.payload?.credentialSubject?.name === rec.name;
-  const achievementName = `${ACHIEVEMENTS[rec.level].name} (ArcKit 6)`;
+  const check = await verifyJws(rec.jws, verificationKeys(env));
+  const valid = check.valid && check.payload.credentialSubject?.name === rec.name;
+  // Show what was signed when the signature holds; otherwise fall back to the stored record.
+  const achievementName = valid ? check.payload.name : ACHIEVEMENTS[rec.level].name;
+  const issuedAt = valid ? check.payload.validFrom : rec.issuedAt;
   const credentialUrl = credentialPageUrl(env.SITE_URL, id);
   return json({
-    id, name: rec.name, level: rec.level, achievementName, issuedAt: rec.issuedAt, valid, jws: rec.jws, credentialUrl,
-    linkedInUrl: linkedInAddUrl({ certName: achievementName, issuedAt: rec.issuedAt, certUrl: credentialUrl, certId: id }),
+    id, name: rec.name, level: rec.level, achievementName, issuedAt, valid, jws: rec.jws, credentialUrl,
+    linkedInUrl: linkedInAddUrl({ certName: achievementName, issuedAt, certUrl: credentialUrl, certId: id }),
   }, 200, cors);
 }
 
@@ -99,7 +116,11 @@ export default {
       const m = request.method === 'GET' && url.pathname.match(ID_RE);
       if (m) return await getCredential(m[1], env, cors);
       return json({ error: 'No credential with that ID.' }, 404, cors);
-    } catch {
+    } catch (e) {
+      // Log the error, never the request body, the name or the key. A JSON.parse
+      // SyntaxError message quotes its input (a malformed SIGNING_KEY, or a stored
+      // name), so for those only the error type is logged.
+      console.error(e instanceof SyntaxError ? 'SyntaxError' : e instanceof Error ? e.message : String(e));
       return json({ error: 'Something went wrong. Try again.' }, 500, cors);
     }
   },
