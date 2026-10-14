@@ -52,6 +52,9 @@ on:
       - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
       - "tests/plugin/**"
+      - "certification/**"
+      - "tests/certification/**"
+      - "docs/certification/**"
   pull_request:
     paths:
       - "**/*.md"
@@ -102,6 +105,9 @@ on:
       - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
       - "tests/plugin/**"
+      - "certification/**"
+      - "tests/certification/**"
+      - "docs/certification/**"
 
 jobs:
   lint:
