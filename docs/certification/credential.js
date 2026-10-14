@@ -24,9 +24,14 @@ async function load() {
     $('cred-achievement').textContent = c.achievementName;
     $('cred-issued').textContent = new Date(c.issuedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
     $('cred-id').textContent = c.id;
-    $('cred-linkedin').href = c.linkedInUrl;
+    $('cred-linkedin').href = typeof c.linkedInUrl === 'string' && c.linkedInUrl.startsWith('https://') ? c.linkedInUrl : '#';
     $('cred-download').href = URL.createObjectURL(new Blob([c.jws], { type: 'application/jwt' }));
-    if (!c.valid) { $('cred-linkedin').hidden = true; $('cred-download').hidden = true; }
+    if (!c.valid) {
+      $('cred-linkedin').hidden = true;
+      $('cred-download').hidden = true;
+      $('cred-badge').hidden = true;
+      $('cred-confirms').textContent = 'This credential’s signature doesn’t check out, so it doesn’t confirm that anyone passed. Ask the holder for a new link.';
+    }
     $('cred').hidden = false;
   } catch {
     missing('Couldn’t check the credential', 'Something went wrong. Try again later.');

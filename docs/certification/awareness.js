@@ -3,6 +3,10 @@ import { API_BASE } from './config.js';
 const $ = (id) => document.getElementById(id);
 let bank;
 
+class QuizError extends Error {}
+
+const httpsOnly = (url) => (typeof url === 'string' && url.startsWith('https://') ? url : '#');
+
 function showError(message) {
   $('quiz-error-text').textContent = message;
   $('quiz-error').hidden = false;
@@ -41,15 +45,15 @@ function renderQuestions() {
 async function load() {
   try {
     const res = await fetch(`${API_BASE}/awareness/questions`);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'The quiz isn’t available right now.');
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !Array.isArray(data.questions)) throw new QuizError(data.error || 'The quiz isn’t available right now. Try again later.');
     bank = data;
     renderQuestions();
     $('quiz-loading').hidden = true;
     $('quiz').hidden = false;
   } catch (e) {
     $('quiz-loading').hidden = true;
-    showError(e.message || 'The quiz isn’t available right now. Try again later.');
+    showError(e instanceof QuizError ? e.message : 'The quiz isn’t available right now. Try again later.');
   }
 }
 
@@ -75,14 +79,14 @@ async function onSubmit(ev) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, answers, bankVersion: bank.bankVersion }),
     });
-    const out = await res.json();
+    const out = await res.json().catch(() => ({}));
     if (!res.ok) return showError(out.error || 'Something went wrong. Try again.');
     $('quiz').hidden = true;
     $('result').hidden = false;
     if (out.passed) {
       $('pass-score').textContent = `You scored ${out.score} out of ${out.total}.`;
-      $('linkedin-link').href = out.linkedInUrl;
-      $('credential-link').href = out.credentialUrl;
+      $('linkedin-link').href = httpsOnly(out.linkedInUrl);
+      $('credential-link').href = httpsOnly(out.credentialUrl);
       $('pass-panel').hidden = false;
       $('pass-links').hidden = false;
     } else {
@@ -100,6 +104,8 @@ $('quiz').addEventListener('submit', onSubmit);
 $('retry').addEventListener('click', () => {
   $('result').hidden = true;
   $('fail-box').hidden = true;
+  $('pass-panel').hidden = true;
+  $('pass-links').hidden = true;
   document.querySelectorAll('#questions input:checked').forEach((r) => { r.checked = false; });
   $('quiz').hidden = false;
   window.scrollTo(0, 0);

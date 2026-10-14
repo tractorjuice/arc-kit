@@ -35,3 +35,32 @@ test('sitemap and privacy policy mention certification', () => {
   assert.match(read('sitemap.xml'), /https:\/\/arckit\.org\/certification\/awareness\.html/);
   assert.match(read('privacy.html'), /id="certification"/);
 });
+
+test('every relative href and src in the pages resolves to a file', () => {
+  // jwks.json is generated and committed at deploy time (Task 10).
+  const deployTime = new Set(['certification/jwks.json']);
+  for (const p of ['index', 'awareness', 'credential']) {
+    const html = read(`certification/${p}.html`);
+    for (const [, ref] of html.matchAll(/(?:href|src)="([^"#?]+)[^"]*"/g)) {
+      if (/^(?:[a-z]+:|\/\/)/i.test(ref)) continue;
+      const target = new URL(ref, `file:///docs/certification/${p}.html`).pathname.replace(/^\/docs\//, '');
+      if (deployTime.has(target)) continue;
+      assert.ok(existsSync(new URL(`../../docs/${target}`, import.meta.url)), `${p}.html -> ${ref}`);
+    }
+  }
+});
+
+test('pages carry their own keywords, not the privacy page ones', () => {
+  for (const p of ['index', 'awareness', 'credential']) assert.doesNotMatch(read(`certification/${p}.html`), /ArcKit privacy policy/, p);
+});
+
+test('an invalid credential says it confirms nothing', () => {
+  const js = read('certification/credential.js');
+  assert.match(js, /if \(!c\.valid\) \{[\s\S]*cred-confirms[\s\S]*doesn’t confirm that anyone passed/);
+});
+
+test('quiz never shows a raw parser error', () => {
+  const js = read('certification/awareness.js');
+  assert.doesNotMatch(js, /showError\(e\.message/);
+  assert.match(js, /res\.json\(\)\.catch\(/);
+});
