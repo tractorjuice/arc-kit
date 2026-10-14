@@ -1,0 +1,9 @@
+{
+  "@context": ["https://www.w3.org/ns/credentials/v2", "https://purl.imsglobal.org/spec/ob/v3p0/context-3.0.3.json"],
+  "id": "https://arckit.org/certification/achievements/awareness.json",
+  "type": ["Achievement"],
+  "name": "ArcKit Awareness",
+  "description": "Knows what ArcKit is and how it keeps AI-drafted architecture documents defensible: templates, citations, traceability, provenance and people making the decisions.",
+  "criteria": { "narrative": "Passed the ArcKit Awareness quiz (10 questions, 80% to pass) for ArcKit 6." },
+  "image": { "id": "https://arckit.org/certification/badges/awareness.svg", "type": "Image" }
+}

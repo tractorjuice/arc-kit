@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-labelledby="t">
+  <title id="t">ArcKit Awareness badge, ArcKit 6</title>
+  <polygon points="300,24 539,162 539,438 300,576 61,438 61,162" fill="#0b1f33" stroke="#1ed3c6" stroke-width="18" stroke-linejoin="round"/>
+  <polygon points="300,72 497,186 497,414 300,528 103,414 103,186" fill="none" stroke="#b1b4b6" stroke-width="2" stroke-opacity="0.5"/>
+  <g stroke="#1ed3c6" stroke-opacity="0.18" stroke-width="1">
+    <line x1="140" y1="240" x2="460" y2="240"/><line x1="140" y1="300" x2="460" y2="300"/><line x1="140" y1="360" x2="460" y2="360"/>
+    <line x1="220" y1="170" x2="220" y2="430"/><line x1="300" y1="150" x2="300" y2="450"/><line x1="380" y1="170" x2="380" y2="430"/>
+  </g>
+  <text x="300" y="215" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="46" font-weight="700" fill="#ffffff">ArcKit</text>
+  <text x="300" y="318" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="52" font-weight="800" letter-spacing="4" fill="#1ed3c6">AWARENESS</text>
+  <text x="300" y="400" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="30" fill="#b1b4b6">ArcKit 6</text>
+</svg>
