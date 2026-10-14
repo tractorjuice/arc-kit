@@ -37,8 +37,9 @@
 
     <!-- GOV.UK Frontend v5.13.0 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
-    <link rel="stylesheet" href="../theme.css?v=4.12.3">
-    <link rel="stylesheet" href="../heroes.css?v=4.12.3">
+    <link rel="stylesheet" href="../theme.css?v=4.12.4">
+    <link rel="stylesheet" href="../heroes.css?v=4.12.4">
+    <link rel="stylesheet" href="certification.css?v=1">
 
     <style>
         body,
@@ -287,8 +288,9 @@
         </div>
     </nav>
 
-    <div class="app-page-hero">
+    <div class="app-page-hero app-page-hero--certification">
         <div class="govuk-width-container app-page-hero__content">
+            <span class="app-page-hero__stat">Level 1 · Free</span>
             <h1 class="app-page-hero__title">ArcKit Awareness quiz</h1>
             <p class="app-page-hero__description">10 questions. Get 8 right to earn your credential. You can try again as often as you like.</p>
         </div>
@@ -296,19 +298,20 @@
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-width-container">
+          <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to certification</a>
           <div id="quiz-error" class="govuk-error-summary" role="alert" tabindex="-1" hidden>
             <h2 class="govuk-error-summary__title">There is a problem</h2>
             <p class="govuk-body" id="quiz-error-text"></p>
           </div>
           <p class="govuk-body" id="quiz-loading">Loading the questions…</p>
           <form id="quiz" novalidate hidden>
-            <div class="govuk-form-group">
+            <div class="govuk-form-group app-cert-card">
               <label class="govuk-label govuk-label--m" for="name">Your name</label>
               <div class="govuk-hint" id="name-hint">As you want it to appear on your credential. It will be shown on a public page.</div>
-              <input class="govuk-input govuk-!-width-two-thirds" id="name" name="name" type="text" autocomplete="name" maxlength="100" aria-describedby="name-hint">
+              <input class="govuk-input" id="name" name="name" type="text" autocomplete="name" maxlength="100" aria-describedby="name-hint">
             </div>
             <div id="questions"></div>
-            <p class="govuk-body govuk-!-font-size-16">We keep your name, the date and your credential so your credential link works. We don’t ask for your email. See the <a class="govuk-link" href="../privacy.html#certification">privacy policy</a>.</p>
+            <p class="govuk-body govuk-!-font-size-16 app-cert-note">We keep your name, the date and your credential so your credential link works. We don’t ask for your email. See the <a class="govuk-link" href="../privacy.html#certification">privacy policy</a>.</p>
             <button type="submit" class="govuk-button" id="submit">Check my answers</button>
           </form>
           <div id="result" hidden>
@@ -320,7 +323,7 @@
               <a class="govuk-button" id="linkedin-link" href="#" rel="noopener">Add to LinkedIn</a>
               <a class="govuk-button govuk-button--secondary" id="credential-link" href="#">View your credential</a>
             </p>
-            <div id="fail-box" hidden>
+            <div id="fail-box" class="app-cert-card" hidden>
               <h2 class="govuk-heading-m">Not this time</h2>
               <p class="govuk-body" id="fail-score"></p>
               <p class="govuk-body">Watch <a class="govuk-link" href="https://youtu.be/-oQ5VRpkxp0">ArcKit explained</a> and try again.</p>

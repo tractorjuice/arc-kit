@@ -37,8 +37,9 @@
 
     <!-- GOV.UK Frontend v5.13.0 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
-    <link rel="stylesheet" href="../theme.css?v=4.12.3">
-    <link rel="stylesheet" href="../heroes.css?v=4.12.3">
+    <link rel="stylesheet" href="../theme.css?v=4.12.4">
+    <link rel="stylesheet" href="../heroes.css?v=4.12.4">
+    <link rel="stylesheet" href="certification.css?v=1">
 
     <style>
         body,
@@ -287,8 +288,9 @@
         </div>
     </nav>
 
-    <div class="app-page-hero">
+    <div class="app-page-hero app-page-hero--certification">
         <div class="govuk-width-container app-page-hero__content">
+            <span class="app-page-hero__stat">Open Badges 3.0 credentials</span>
             <h1 class="app-page-hero__title">ArcKit certification</h1>
             <p class="app-page-hero__description">Show that you can use ArcKit to produce architecture documents you can defend.</p>
         </div>
@@ -296,25 +298,51 @@
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-width-container">
-          <h2 class="govuk-heading-l">Four levels</h2>
-          <table class="govuk-table">
-            <thead class="govuk-table__head"><tr class="govuk-table__row">
-              <th scope="col" class="govuk-table__header">Level</th>
-              <th scope="col" class="govuk-table__header">What it shows</th>
-              <th scope="col" class="govuk-table__header">How</th>
-              <th scope="col" class="govuk-table__header">Available</th>
-            </tr></thead>
-            <tbody class="govuk-table__body">
-              <tr class="govuk-table__row"><td class="govuk-table__cell"><strong>Awareness</strong></td><td class="govuk-table__cell">You know what ArcKit is and why its documents are defensible</td><td class="govuk-table__cell">Free 10-question quiz</td><td class="govuk-table__cell"><a class="govuk-link" href="awareness.html">Take the quiz</a></td></tr>
-              <tr class="govuk-table__row"><td class="govuk-table__cell"><strong>Foundation</strong></td><td class="govuk-table__cell">You can choose and run the right commands for a project</td><td class="govuk-table__cell">Free 40-question scenario quiz</td><td class="govuk-table__cell">November 2026</td></tr>
-              <tr class="govuk-table__row"><td class="govuk-table__cell"><strong>Practitioner</strong></td><td class="govuk-table__cell">You have produced a governed, traceable set of documents and improved them by hand</td><td class="govuk-table__cell">A reviewed project</td><td class="govuk-table__cell">Pilot, December 2026</td></tr>
-              <tr class="govuk-table__row"><td class="govuk-table__cell"><strong>Expert</strong></td><td class="govuk-table__cell">You can lead ArcKit adoption and extend ArcKit</td><td class="govuk-table__cell">Portfolio, contribution and conversation</td><td class="govuk-table__cell">2027</td></tr>
-            </tbody>
-          </table>
+          <a href="../index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
+          <p class="govuk-body-l">Four levels, from knowing what ArcKit is to leading its adoption. The first two are free.</p>
+
+          <ul class="app-cert-levels">
+            <li class="app-cert-level app-cert-level--live">
+              <p class="app-cert-level__step">Level 1 · Free</p>
+              <h2 class="app-cert-level__name">Awareness</h2>
+              <p class="govuk-body app-cert-level__what">You know what ArcKit is and why its documents are defensible.</p>
+              <p class="app-cert-level__how">A 10-question online quiz. Get 8 right to pass.</p>
+              <div class="app-cert-level__footer"><a class="govuk-button" href="awareness.html">Take the quiz</a></div>
+            </li>
+            <li class="app-cert-level">
+              <p class="app-cert-level__step">Level 2 · Free</p>
+              <h2 class="app-cert-level__name">Foundation</h2>
+              <p class="govuk-body app-cert-level__what">You can choose and run the right commands for a project.</p>
+              <p class="app-cert-level__how">A 40-question scenario quiz.</p>
+              <div class="app-cert-level__footer"><span class="app-cert-soon">November 2026</span></div>
+            </li>
+            <li class="app-cert-level">
+              <p class="app-cert-level__step">Level 3</p>
+              <h2 class="app-cert-level__name">Practitioner</h2>
+              <p class="govuk-body app-cert-level__what">You have produced a governed, traceable set of documents and improved them by hand.</p>
+              <p class="app-cert-level__how">A project you submit, reviewed by a person.</p>
+              <div class="app-cert-level__footer"><span class="app-cert-soon">Pilot, December 2026</span></div>
+            </li>
+            <li class="app-cert-level">
+              <p class="app-cert-level__step">Level 4</p>
+              <h2 class="app-cert-level__name">Expert</h2>
+              <p class="govuk-body app-cert-level__what">You can lead ArcKit adoption and extend ArcKit.</p>
+              <p class="app-cert-level__how">A portfolio, a contribution and a conversation.</p>
+              <div class="app-cert-level__footer"><span class="app-cert-soon">2027</span></div>
+            </li>
+          </ul>
+
           <h2 class="govuk-heading-l">Before the Awareness quiz</h2>
           <p class="govuk-body">Watch <a class="govuk-link" href="https://youtu.be/-oQ5VRpkxp0">ArcKit explained</a> (8 minutes) and Part 1 of <a class="govuk-link" href="https://www.youtube.com/playlist?list=PLHAFN5RjB5As">ArcKit for Beginners</a>. That covers everything the quiz asks.</p>
+
           <h2 class="govuk-heading-l">What a credential is</h2>
-          <p class="govuk-body">Each credential is an Open Badges 3.0 credential signed by ArcKit. Anyone can check it at its link, and you can add it to LinkedIn in one click. It confirms your ArcKit skill. It does not endorse your work or your organisation.</p>
+          <div class="app-cert-explainer">
+            <img src="badges/awareness.svg" alt="" width="120" height="120">
+            <div>
+              <p class="govuk-body">Each credential is an Open Badges 3.0 credential signed by ArcKit. Anyone can check it at its link, and you can add it to LinkedIn in one click.</p>
+              <p class="govuk-body">It confirms your ArcKit skill. It does not endorse your work or your organisation.</p>
+            </div>
+          </div>
         </div>
     </main>
 
