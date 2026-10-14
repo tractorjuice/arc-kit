@@ -1,0 +1,17 @@
+{
+  "level": "awareness",
+  "bankVersion": "sample-1",
+  "passMark": 0.8,
+  "questions": [
+    { "id": "s01", "prompt": "Sample one?", "options": ["A", "B", "C", "D"], "answer": 1 },
+    { "id": "s02", "prompt": "Sample two?", "options": ["A", "B", "C", "D"], "answer": 0 },
+    { "id": "s03", "prompt": "Sample three?", "options": ["A", "B", "C", "D"], "answer": 2 },
+    { "id": "s04", "prompt": "Sample four?", "options": ["A", "B", "C", "D"], "answer": 3 },
+    { "id": "s05", "prompt": "Sample five?", "options": ["A", "B", "C", "D"], "answer": 1 },
+    { "id": "s06", "prompt": "Sample six?", "options": ["A", "B", "C", "D"], "answer": 0 },
+    { "id": "s07", "prompt": "Sample seven?", "options": ["A", "B", "C", "D"], "answer": 2 },
+    { "id": "s08", "prompt": "Sample eight?", "options": ["A", "B", "C", "D"], "answer": 3 },
+    { "id": "s09", "prompt": "Sample nine?", "options": ["A", "B", "C", "D"], "answer": 1 },
+    { "id": "s10", "prompt": "Sample ten?", "options": ["A", "B", "C", "D"], "answer": 0 }
+  ]
+}
