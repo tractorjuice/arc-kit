@@ -22,11 +22,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arckit.org/certification/awareness.html">
     <meta property="og:site_name" content="ArcKit">
-    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta property="og:image" content="https://arckit.org/certification/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="The ArcKit Awareness badge beside the words ArcKit certification">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ArcKit Awareness quiz">
     <meta name="twitter:description" content="10 questions. Get 8 right to earn your credential. You can try again as often as you like.">
-    <meta name="twitter:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:image" content="https://arckit.org/certification/og-image.png">
     <link rel="canonical" href="https://arckit.org/certification/awareness.html">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
@@ -251,10 +254,71 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "WebPage",
-        "@id": "https://arckit.org/certification/awareness.html",
-        "name": "ArcKit Awareness quiz",
-        "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "@id": "https://arckit.org/certification/awareness.html",
+                "url": "https://arckit.org/certification/awareness.html",
+                "name": "ArcKit Awareness quiz",
+                "isPartOf": {
+                    "@id": "https://arckit.org/#website"
+                },
+                "publisher": {
+                    "@id": "https://arckit.org/#organization"
+                },
+                "inLanguage": "en-GB",
+                "breadcrumb": {
+                    "@id": "https://arckit.org/certification/awareness.html#breadcrumb"
+                },
+                "mainEntity": {
+                    "@id": "https://arckit.org/certification/awareness.html#quiz"
+                }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://arckit.org/certification/awareness.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "ArcKit",
+                        "item": "https://arckit.org/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Certification",
+                        "item": "https://arckit.org/certification/index.html"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 3,
+                        "name": "Awareness quiz",
+                        "item": "https://arckit.org/certification/awareness.html"
+                    }
+                ]
+            },
+            {
+                "@type": "Quiz",
+                "@id": "https://arckit.org/certification/awareness.html#quiz",
+                "name": "ArcKit Awareness quiz",
+                "description": "10 multiple-choice questions on what ArcKit is and how it keeps AI-drafted architecture documents defensible. Get 8 right to earn the ArcKit Awareness credential. Unlimited attempts.",
+                "educationalLevel": "Beginner",
+                "learningResourceType": "Quiz",
+                "isAccessibleForFree": true,
+                "inLanguage": "en-GB",
+                "assesses": "Knows what ArcKit is and why its documents are defensible.",
+                "about": {
+                    "@id": "https://arckit.org/certification/achievements/awareness.json"
+                },
+                "provider": {
+                    "@id": "https://arckit.org/#organization"
+                },
+                "publisher": {
+                    "@id": "https://arckit.org/#organization"
+                }
+            }
+        ]
     }
     </script>
 </head>

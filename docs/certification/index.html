@@ -22,11 +22,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arckit.org/certification/index.html">
     <meta property="og:site_name" content="ArcKit">
-    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta property="og:image" content="https://arckit.org/certification/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="The ArcKit Awareness badge beside the words ArcKit certification">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ArcKit certification">
     <meta name="twitter:description" content="Show you can use ArcKit well. Four levels, from a free 10-minute quiz to an expert review.">
-    <meta name="twitter:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:image" content="https://arckit.org/certification/og-image.png">
     <link rel="canonical" href="https://arckit.org/certification/index.html">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
@@ -251,10 +254,119 @@
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "WebPage",
-        "@id": "https://arckit.org/certification/index.html",
-        "name": "ArcKit certification",
-        "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "@id": "https://arckit.org/certification/index.html",
+                "url": "https://arckit.org/certification/index.html",
+                "name": "ArcKit certification",
+                "description": "Four ArcKit certification levels, from Awareness to Expert. Each pass earns an Open Badges 3.0 credential you can add to LinkedIn.",
+                "isPartOf": {
+                    "@id": "https://arckit.org/#website"
+                },
+                "publisher": {
+                    "@id": "https://arckit.org/#organization"
+                },
+                "inLanguage": "en-GB",
+                "breadcrumb": {
+                    "@id": "https://arckit.org/certification/index.html#breadcrumb"
+                },
+                "about": [
+                    {
+                        "@id": "https://arckit.org/certification/achievements/awareness.json"
+                    },
+                    {
+                        "@id": "https://arckit.org/certification/index.html#foundation"
+                    },
+                    {
+                        "@id": "https://arckit.org/certification/index.html#practitioner"
+                    },
+                    {
+                        "@id": "https://arckit.org/certification/index.html#expert"
+                    }
+                ]
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": "https://arckit.org/certification/index.html#breadcrumb",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "ArcKit",
+                        "item": "https://arckit.org/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Certification",
+                        "item": "https://arckit.org/certification/index.html"
+                    }
+                ]
+            },
+            {
+                "@type": "EducationalOccupationalCredential",
+                "@id": "https://arckit.org/certification/achievements/awareness.json",
+                "name": "ArcKit Awareness",
+                "description": "Passed the ArcKit Awareness quiz: 10 questions, 8 right to pass.",
+                "credentialCategory": "Open Badges 3.0 credential",
+                "educationalLevel": "Beginner",
+                "competencyRequired": "Knows what ArcKit is and why its documents are defensible.",
+                "recognizedBy": {
+                    "@id": "https://arckit.org/#organization"
+                },
+                "url": "https://arckit.org/certification/awareness.html",
+                "image": "https://arckit.org/certification/badges/awareness.svg",
+                "isAccessibleForFree": true,
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "GBP"
+                }
+            },
+            {
+                "@type": "EducationalOccupationalCredential",
+                "@id": "https://arckit.org/certification/index.html#foundation",
+                "name": "ArcKit Foundation",
+                "description": "A 40-question scenario quiz. Planned for November 2026.",
+                "credentialCategory": "Open Badges 3.0 credential",
+                "educationalLevel": "Foundation",
+                "competencyRequired": "Can choose and run the right ArcKit commands for a project.",
+                "recognizedBy": {
+                    "@id": "https://arckit.org/#organization"
+                },
+                "isAccessibleForFree": true,
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "GBP"
+                }
+            },
+            {
+                "@type": "EducationalOccupationalCredential",
+                "@id": "https://arckit.org/certification/index.html#practitioner",
+                "name": "ArcKit Practitioner",
+                "description": "A project you submit, reviewed by a person. Pilot planned for December 2026.",
+                "credentialCategory": "Open Badges 3.0 credential",
+                "educationalLevel": "Practitioner",
+                "competencyRequired": "Has produced a governed, traceable set of architecture documents with ArcKit and improved them by hand.",
+                "recognizedBy": {
+                    "@id": "https://arckit.org/#organization"
+                }
+            },
+            {
+                "@type": "EducationalOccupationalCredential",
+                "@id": "https://arckit.org/certification/index.html#expert",
+                "name": "ArcKit Expert",
+                "description": "A portfolio, a contribution and a conversation. Planned for 2027.",
+                "credentialCategory": "Open Badges 3.0 credential",
+                "educationalLevel": "Expert",
+                "competencyRequired": "Can lead ArcKit adoption and extend ArcKit.",
+                "recognizedBy": {
+                    "@id": "https://arckit.org/#organization"
+                }
+            }
+        ]
     }
     </script>
 </head>
