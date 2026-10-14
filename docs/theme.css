@@ -596,6 +596,10 @@ html.dark-mode .app-page-hero--viewer {
     background: linear-gradient(135deg, #001a40 0%, #000d20 100%);
 }
 
+html.dark-mode .app-page-hero--certification {
+    background: linear-gradient(135deg, #0b4a5a 0%, #07121e 100%);
+}
+
 /* ============================================================
    No-JS Fallback: system dark preference
    ============================================================ */

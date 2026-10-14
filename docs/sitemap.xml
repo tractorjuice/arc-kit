@@ -360,6 +360,16 @@
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
-  <url><loc>https://arckit.org/certification/index.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://arckit.org/certification/awareness.html</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+    <url>
+        <loc>https://arckit.org/certification/index.html</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/certification/awareness.html</loc>
+        <lastmod>2026-10-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
 </urlset>

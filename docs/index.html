@@ -190,6 +190,21 @@
         .app-explore-card:nth-child(3) { border-top-color: #912b88; }
         .app-explore-card:nth-child(4) { border-top-color: #f47738; }
 
+        .app-explore-card--wide {
+            grid-column: 1 / -1;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border-top-color: #1ed3c6;
+        }
+
+        .app-explore-card--wide img { flex: none; }
+        .app-explore-card--wide .govuk-body-s { margin-bottom: 0; }
+
+        @media (max-width: 40.0625em) {
+            .app-explore-card--wide { flex-direction: column; align-items: flex-start; }
+        }
+
         .app-jurisdiction-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -1015,6 +1030,13 @@
                     <h3 class="govuk-heading-m"><a href="use-cases.html" class="govuk-link">Example Projects</a></h3>
                     <p class="govuk-body-s">AI-generated architecture documentation from 44 public test projects spanning health, AI, cloud, and data.</p>
                 </div>
+                <div class="app-explore-card app-explore-card--wide">
+                    <img src="certification/badges/awareness.svg" alt="" width="88" height="88">
+                    <div>
+                        <h3 class="govuk-heading-m"><a href="certification/index.html" class="govuk-link">ArcKit Certification</a></h3>
+                        <p class="govuk-body-s">Show you can use ArcKit. Take the free Awareness quiz and add a signed Open Badges 3.0 credential to your LinkedIn profile. Foundation follows in November.</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1051,6 +1073,7 @@
                         <li><a href="https://github.com/tractorjuice/arc-kit/issues" class="govuk-link">Report Issues</a></li>
                         <li><a href="https://github.com/tractorjuice/arc-kit/releases" class="govuk-link">Releases</a></li>
                         <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md" class="govuk-link">Contributing</a></li>
+                        <li><a href="certification/index.html" class="govuk-link">ArcKit Certification</a></li>
                         <li><a href="privacy.html" class="govuk-link">Privacy Policy</a></li>
                     </ul>
                 </div>

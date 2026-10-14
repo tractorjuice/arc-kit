@@ -24,9 +24,10 @@ function renderQuestions() {
   const box = $('questions');
   box.replaceChildren();
   bank.questions.forEach((q, i) => {
-    const group = el('div', { class: 'govuk-form-group' });
+    const group = el('div', { class: 'govuk-form-group app-cert-card app-cert-question' });
     const fs = el('fieldset', { class: 'govuk-fieldset' });
-    const legend = el('legend', { class: 'govuk-fieldset__legend govuk-fieldset__legend--s' }, `${i + 1}. ${q.prompt}`);
+    const legend = el('legend', { class: 'govuk-fieldset__legend govuk-fieldset__legend--s' });
+    legend.append(el('span', { class: 'app-cert-qnum' }, `Question ${i + 1} of ${bank.questions.length}`), q.prompt);
     const radios = el('div', { class: 'govuk-radios', 'data-module': 'govuk-radios' });
     q.options.forEach((opt, j) => {
       const id = `q${i}-o${j}`;

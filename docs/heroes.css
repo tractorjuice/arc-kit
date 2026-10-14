@@ -310,3 +310,34 @@
             transparent 2px, transparent 26px
         );
 }
+
+/* ============================================================
+   Variant: Certification  — badge navy-to-teal, hexagon lattice
+   ============================================================ */
+.app-page-hero--certification {
+    background: linear-gradient(135deg, #0f5e73 0%, #0b1f33 100%);
+}
+
+.app-page-hero--certification::before {
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(30, 211, 198, 0.06) 0px, rgba(30, 211, 198, 0.06) 1px,
+            transparent 1px, transparent 26px
+        ),
+        repeating-linear-gradient(
+            60deg,
+            rgba(30, 211, 198, 0.06) 0px, rgba(30, 211, 198, 0.06) 1px,
+            transparent 1px, transparent 26px
+        ),
+        repeating-linear-gradient(
+            -60deg,
+            rgba(30, 211, 198, 0.06) 0px, rgba(30, 211, 198, 0.06) 1px,
+            transparent 1px, transparent 26px
+        );
+}
+
+.app-page-hero--certification::after {
+    background: #1ed3c6;
+    opacity: 0.85;
+}

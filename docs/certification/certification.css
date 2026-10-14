@@ -1,0 +1,261 @@
+/*
+ * ArcKit certification pages.
+ * Palette follows the badge: navy #0b1f33, teal #1ed3c6, grey #b1b4b6.
+ * The site's theme.css restyles GOV.UK text classes for dark mode, but not the
+ * form, table and summary-list components these pages use, so they are covered here.
+ */
+
+:root {
+    --cert-teal: #0f7f86;
+    --cert-teal-bright: #1ed3c6;
+    --cert-card-bg: #f6f8f9;
+    --cert-card-border: #d8dee2;
+    --cert-muted: #505a5f;
+}
+
+html.dark-mode {
+    --cert-teal: #1ed3c6;
+    --cert-card-bg: #232629;
+    --cert-card-border: #363b40;
+    --cert-muted: #b1b4b6;
+}
+
+/* ------------------------------------------------------------
+   Levels (landing page)
+   ------------------------------------------------------------ */
+.app-cert-levels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem;
+    margin: 0 0 2.5rem;
+    padding: 0;
+    list-style: none;
+}
+
+.app-cert-level {
+    display: flex;
+    flex-direction: column;
+    background: var(--cert-card-bg);
+    border: 1px solid var(--cert-card-border);
+    border-top: 4px solid var(--cert-card-border);
+    border-radius: 4px;
+    padding: 1.25rem 1.25rem 1.5rem;
+}
+
+.app-cert-level--live {
+    border-top-color: var(--cert-teal-bright);
+}
+
+.app-cert-level__step {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--cert-muted);
+    margin: 0 0 0.25rem;
+}
+
+.app-cert-level__name {
+    font-size: 1.375rem;
+    font-weight: 700;
+    margin: 0 0 0.75rem;
+}
+
+.app-cert-level__what {
+    margin: 0 0 0.75rem;
+}
+
+.app-cert-level__how {
+    font-size: 0.9375rem;
+    color: var(--cert-muted);
+    margin: 0 0 1.25rem;
+}
+
+.app-cert-level__footer {
+    margin-top: auto;
+}
+
+.app-cert-level__footer .govuk-button {
+    margin-bottom: 0;
+}
+
+.app-cert-soon {
+    display: inline-block;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--cert-muted);
+    border: 1px solid var(--cert-card-border);
+    border-radius: 2px;
+    padding: 0.2rem 0.6rem;
+}
+
+/* Side-by-side "credential" explainer with the badge */
+.app-cert-explainer {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1.5rem;
+    align-items: center;
+    background: var(--cert-card-bg);
+    border: 1px solid var(--cert-card-border);
+    border-left: 4px solid var(--cert-teal-bright);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.app-cert-explainer .govuk-body:last-child {
+    margin-bottom: 0;
+}
+
+@media (max-width: 40.0625em) {
+    .app-cert-explainer {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ------------------------------------------------------------
+   Quiz
+   ------------------------------------------------------------ */
+.app-cert-card {
+    background: var(--cert-card-bg);
+    border: 1px solid var(--cert-card-border);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.app-cert-card .govuk-input {
+    max-width: 30rem;
+}
+
+.app-cert-qnum {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--cert-teal);
+    margin-bottom: 0.35rem;
+}
+
+.app-cert-question .govuk-fieldset__legend {
+    margin-bottom: 1rem;
+}
+
+.app-cert-question .govuk-radios__item:last-child {
+    margin-bottom: 0.75rem;
+}
+
+.app-cert-note {
+    color: var(--cert-muted);
+}
+
+/* ------------------------------------------------------------
+   Credential
+   ------------------------------------------------------------ */
+.app-cert-credential {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 2rem;
+    align-items: start;
+    background: var(--cert-card-bg);
+    border: 1px solid var(--cert-card-border);
+    border-top: 4px solid var(--cert-teal-bright);
+    border-radius: 4px;
+    padding: 1.75rem 2rem 1rem;
+    margin-bottom: 2rem;
+}
+
+.app-cert-credential__badge {
+    width: 100%;
+    max-width: 11rem;
+    height: auto;
+}
+
+.app-cert-credential .govuk-summary-list {
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 40.0625em) {
+    .app-cert-credential {
+        grid-template-columns: 1fr;
+        padding: 1.25rem;
+    }
+
+    .app-cert-credential__badge {
+        max-width: 8rem;
+    }
+}
+
+/* ------------------------------------------------------------
+   GOV.UK components in dark mode
+   ------------------------------------------------------------ */
+html.dark-mode .govuk-label,
+html.dark-mode .govuk-fieldset__legend,
+html.dark-mode .govuk-radios__label,
+html.dark-mode .govuk-error-summary__title,
+html.dark-mode .govuk-summary-list__key,
+html.dark-mode .govuk-summary-list__value,
+html.dark-mode .govuk-panel__title,
+html.dark-mode .govuk-panel__body,
+html.dark-mode strong:not(.govuk-tag) {
+    color: #f0f0f0;
+}
+
+html.dark-mode .govuk-hint {
+    color: #b1b4b6;
+}
+
+html.dark-mode .govuk-input {
+    background: #111315;
+    color: #f0f0f0;
+    border-color: #b1b4b6;
+}
+
+html.dark-mode .govuk-input:focus {
+    outline: 3px solid #ffdd00;
+    box-shadow: inset 0 0 0 2px #f0f0f0;
+}
+
+/* The radio circle and dot are drawn with currentColor borders. */
+html.dark-mode .govuk-radios__label::before {
+    background: #111315;
+}
+
+html.dark-mode .govuk-radios__input:focus + .govuk-radios__label::before {
+    box-shadow: 0 0 0 4px #ffdd00;
+}
+
+html.dark-mode .govuk-error-summary {
+    background: #2a1714;
+    border-color: #f47e6a;
+}
+
+html.dark-mode .govuk-error-summary .govuk-body {
+    color: #f6c7bf;
+}
+
+html.dark-mode .govuk-summary-list__row {
+    border-bottom-color: #363b40;
+}
+
+html.dark-mode .govuk-button--secondary {
+    background: #3a3f44;
+    color: #f0f0f0;
+    box-shadow: 0 2px 0 #111315;
+}
+
+html.dark-mode .govuk-button--secondary:hover {
+    background: #4a5056;
+    color: #fff;
+}
+
+html.dark-mode .govuk-panel--confirmation {
+    background: #00703c;
+}
+
+/* Selected answer picks up the badge teal, in both modes. */
+.app-cert-question .govuk-radios__input:checked + .govuk-radios__label::before,
+.app-cert-question .govuk-radios__input:checked + .govuk-radios__label::after {
+    border-color: var(--cert-teal);
+}

@@ -22,6 +22,12 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Workflow diagrams](https://arckit.org/WORKFLOW-DIAGRAMS.md): Visual flow from project init through procurement.
 - [Guides index](https://arckit.org/guides.html): Per-command usage guides.
 
+## Certification
+
+- [ArcKit certification](https://arckit.org/certification/index.html): Four levels, Awareness, Foundation, Practitioner and Expert, of which Awareness and Foundation are free. Each pass earns an Open Badges 3.0 credential that can be added to LinkedIn.
+- [Awareness quiz](https://arckit.org/certification/awareness.html): 10 questions, 8 right to pass, unlimited attempts. Covers what ArcKit is and why its documents are defensible.
+- [Credential page](https://arckit.org/certification/credential.html): Links take the form `credential.html?id=<12-character ID>`. Credentials are Open Badges 3.0 VC-JWTs signed with RS256. The issuer profile is at [issuer.json](https://arckit.org/certification/issuer.json) and the public keys at [jwks.json](https://arckit.org/certification/jwks.json). A credential confirms ArcKit skill; it does not endorse the holder's work or organisation.
+
 ## Guides by phase
 
 ### Onboarding and setup
