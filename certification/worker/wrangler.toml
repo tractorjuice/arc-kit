@@ -2,6 +2,11 @@ name = "arckit-cert"
 main = "src/index.mjs"
 compatibility_date = "2026-10-01"
 
+# Served on arckit.org's own subdomain (the zone is in the same Cloudflare account), not workers.dev.
+workers_dev = false
+preview_urls = false
+routes = [{ pattern = "certification-api.arckit.org", custom_domain = true }]
+
 [vars]
 SITE_URL = "https://arckit.org"
 ALLOWED_ORIGINS = "https://arckit.org"
@@ -17,11 +22,11 @@ namespace_id = "1001"
   limit = 5
   period = 60
 
-# IDs are printed by `npx wrangler kv namespace create …` in Task 10, Step 3.
+# Namespaces arckit-cert-questions and arckit-cert-credentials (created 14 Oct 2026).
 [[kv_namespaces]]
 binding = "QUESTIONS"
-id = "set-in-task-10"
+id = "0844c49ba1c44301880da698381c596e"
 
 [[kv_namespaces]]
 binding = "CREDENTIALS"
-id = "set-in-task-10"
+id = "b278d68e91d94e65af8937f787a02e85"

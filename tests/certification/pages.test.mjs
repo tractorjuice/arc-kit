@@ -37,14 +37,11 @@ test('sitemap and privacy policy mention certification', () => {
 });
 
 test('every relative href and src in the pages resolves to a file', () => {
-  // jwks.json is generated and committed at deploy time (Task 10).
-  const deployTime = new Set(['certification/jwks.json']);
   for (const p of ['index', 'awareness', 'credential']) {
     const html = read(`certification/${p}.html`);
     for (const [, ref] of html.matchAll(/(?:href|src)="([^"#?]+)[^"]*"/g)) {
       if (/^(?:[a-z]+:|\/\/)/i.test(ref)) continue;
       const target = new URL(ref, `file:///docs/certification/${p}.html`).pathname.replace(/^\/docs\//, '');
-      if (deployTime.has(target)) continue;
       assert.ok(existsSync(new URL(`../../docs/${target}`, import.meta.url)), `${p}.html -> ${ref}`);
     }
   }
@@ -66,5 +63,5 @@ test('quiz never shows a raw parser error', () => {
 });
 
 test('API base is a placeholder that can never resolve until deploy time', () => {
-  assert.match(read('certification/config.js'), /export const API_BASE = 'https:\/\/[^']+\.invalid';/);
+  assert.match(read('certification/config.js'), /export const API_BASE = 'https:\/\/certification-api\.arckit\.org';/);
 });

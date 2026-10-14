@@ -4,7 +4,7 @@ The Worker and tooling behind <https://arckit.org/certification/>. Design: `docs
 
 - `worker/`: Cloudflare Worker. It serves questions, marks answers and signs Open Badges 3.0 credentials (RS256). It has no runtime dependencies.
 - `private/` (gitignored): the real question banks, with answer keys. They never go in this repo.
-- The pages and public keys live in `docs/certification/`. At deploy time, set `API_BASE` in `docs/certification/config.js` to the deployed Worker URL.
+- The pages and public keys live in `docs/certification/`. The Worker runs at <https://certification-api.arckit.org> (a custom domain on the arckit.org zone), and `docs/certification/config.js` points the pages at it.
 
 Tests: `node --test tests/certification/*.test.mjs`.
 
