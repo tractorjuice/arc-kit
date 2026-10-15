@@ -337,3 +337,38 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/15
 > 🧪 New: a short film for every ArcKit command, about 90 seconds each: when to run it, what it reads, a real output from a public test project, what to check and what to run next.
 > The first four are up (start, init, principles, stakeholders), and the rest land over the next couple of days: https://www.youtube.com/playlist?list=PLOxB2ULF5XX0
 > Which command should we look at more closely next?
+
+### Q22. All 76 command films live — LinkedIn page (Warm "we" voice) — posted 15 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7516375246296334336/>. No image: the playlist link makes the preview card. The last films, 60 to 76, went public on 15 October, which completed the playlist (76 videos).
+
+> All 76 ArcKit command films are now on YouTube.
+>
+> Each one takes about a minute and a half to show what a command is for, when to run it, what it reads first, a real output from one of our public test projects, what to check and what to run next. The set runs from /arckit:start to /arckit:import-okf.
+>
+> Pick the command you're about to run and watch that one first.
+>
+> The narration is AI-generated, so we're still treating the series as an experiment. Tell us which films help and which need another pass.
+>
+> https://www.youtube.com/playlist?list=PLOxB2ULF5XX0
+>
+> #EnterpriseArchitecture #PublicSector #OpenSource #Governance
+
+### Q23. All 76 command films live — LinkedIn group (Question voice) — posted 15 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7516375393084284928/>, straight after Q22. No image: the playlist link makes a YouTube preview card.
+
+> Which ArcKit command will you run next? There's now a short film for it.
+>
+> All 76 command films are up, about 90 seconds each: when to run the command, what it reads, a real document it wrote in one of the public test projects, and what to check before you rely on it.
+>
+> They're AI-narrated and still an experiment, so tell us which ones help and which need a clearer explanation.
+>
+> https://www.youtube.com/playlist?list=PLOxB2ULF5XX0
+
+### Q24. All 76 command films live — Discord #show-your-working, reply to Q21 — posted 15 October
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/1560168646486261810>, as a reply to Q21. Q21 promised the rest "over the next couple of days", so the reply closes that loop and leaves the original as written.
+
+> All 76 are up now, from /arckit:start to /arckit:import-okf: https://www.youtube.com/playlist?list=PLOxB2ULF5XX0
+> Which one should we look at more closely next?
