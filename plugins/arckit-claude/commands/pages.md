@@ -417,6 +417,9 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | BIO2 | `ARC-*-BIO2-*.md` | BIO2 Conformance Assessment |
 | **Governance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
 | | NLEXIT | `ARC-*-NLEXIT-*.md` | NL Cloud Exit Plan |
+| | NORA | `ARC-*-NORA-*.md` | NORA Conformance Assessment |
+| **Architecture (Community-contributed — Netherlands Public Sector Overlay)** | | | |
+| | GEMMA | `ARC-*-GEMMA-*.md` | GEMMA Alignment Assessment |
 | **Compliance (Community-contributed — UK NHS Clinical Safety Overlay)** | | | |
 | | NHSDTAC | `ARC-*-NHSDTAC-*.md` | NHS Digital Technology Assessment Criteria (DTAC v3) |
 | | NHSMDR | `ARC-*-NHSMDR-*.md` | UK MDR + EU MDR SaMD/AIaMD Classification |
