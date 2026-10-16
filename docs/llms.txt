@@ -179,6 +179,8 @@ French government (apply on top of EU baseline):
 - [Te Beschermen Belangen / VIRBI 2025](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-tbb.md): `/arckit:nl-tbb` TBB category from BIV scoring across the five kernbelangen, with any existing VIRBI 2025 rubricering applied as a floor. Produces no rubricering of its own.
 - [BIO2 conformance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-bio.md): `/arckit:nl-bio` Baseline Informatiebeveiliging Overheid 2 conformance on NEN-EN-ISO/IEC 27001:2023 and 27002:2022, plus the mandatory overheidsmaatregelen.
 - [Cloud exit plan](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-exit.md): `/arckit:nl-exit` mandatory clause 3.2 exit plan — planned exit and disruptive interruption, provider data destruction, annual self-test.
+- [NORA conformance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-nora.md): `/arckit:nl-nora` NORA architectuurprincipes NAP01–NAP17 per implicatie and Vijflaagsmodel layer, rolled up to kwaliteitsdoelen and kernwaarden, with the GEMMA supplement for gemeenten. Assesses against local extracts built from the public sources.
+- [GEMMA landscape mapping](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-gemma.md): `/arckit:nl-gemma` a gemeente's application landscape against the GEMMA referentiecomponenten and bedrijfsfuncties — coverage, overlap, gaps, standards, data exchange and roadmap candidates.
 
 ### Canada Federal compliance (community-contributed)
 
