@@ -857,8 +857,9 @@ def copy_extension_files(plugin_sources):
     templates from every source are merged into one `templates/` per extension.
     `docs/guides/` is merged the same way: each overlay keeps the guides for
     its own commands, so the core plugin doesn't ship them. Other directories
-    (scripts, config, schemas, skills, references) only exist in
-    `arckit-claude` and are copied from there.
+    (scripts, config, schemas, skills, references) are copied from
+    `arckit-claude`; reference and script files that only an overlay carries
+    are added after.
 
     Args:
         plugin_sources: List of plugin source dirs (e.g. ["plugins/arckit-uae",
@@ -901,6 +902,22 @@ def copy_extension_files(plugin_sources):
     # dispatch, plugin hooks). Skipped when copying to non-Claude extensions
     # because they would either silently fail or behave incorrectly there.
     claude_only_skills = {"arckit-build"}
+
+    # The scripts core actually ships, as paths under scripts/. Core ships
+    # only the entries above, not its whole scripts/ dir (csf-score.mjs stays
+    # behind), so an overlay script loses a name clash only to one of these.
+    core_scripts_dir = os.path.join(core_plugin_dir, "scripts")
+    core_shipped_scripts = set()
+    for src_rel, _dst_rel in core_only_copies:
+        src = os.path.join(core_plugin_dir, src_rel)
+        if not src_rel.startswith("scripts/"):
+            continue
+        if os.path.isdir(src):
+            for root, _dirs, files in os.walk(src):
+                core_shipped_scripts.update(
+                    os.path.relpath(os.path.join(root, f), core_scripts_dir) for f in files)
+        elif os.path.isfile(src):
+            core_shipped_scripts.add(os.path.relpath(src, core_scripts_dir))
 
     for config in AGENT_CONFIG.values():
         ext_dir = config.get("extension_dir")
@@ -1046,6 +1063,34 @@ def copy_extension_files(plugin_sources):
                 merged_refs += 1
         if merged_refs:
             print(f"  Merged {merged_refs} overlay-only reference file(s)")
+
+        # Overlay scripts. A community plugin's commands call its own
+        # scripts as ${CLAUDE_PLUGIN_ROOT}/scripts/<name>, which rewrite_paths
+        # points at the extension's scripts/ dir, the same place as core's.
+        # arckit-nl's NORA/GEMMA extract fetch (arc-kit#941) is the first:
+        # the extract cannot ship, so without the script a non-Claude target
+        # has nothing to read. Core wins a name clash with a script it ships;
+        # one it does not ship must not block the overlay's, or neither
+        # would reach the extension.
+        merged_scripts = 0
+        for src_plugin in plugin_sources[:-1] if copy_scripts else []:
+            src_dir = os.path.join(src_plugin, "scripts")
+            if not os.path.isdir(src_dir):
+                continue
+            for root, dirs, files in os.walk(src_dir):
+                dirs[:] = [d for d in dirs if d != "__pycache__"]
+                for filename in sorted(files):
+                    if filename.endswith(".pyc"):
+                        continue
+                    rel = os.path.relpath(os.path.join(root, filename), src_dir)
+                    if rel in core_shipped_scripts:
+                        continue
+                    dst_path = os.path.join(ext_dir, "scripts", rel)
+                    os.makedirs(os.path.dirname(dst_path), exist_ok=True)
+                    shutil.copy2(os.path.join(root, filename), dst_path)
+                    merged_scripts += 1
+        if merged_scripts:
+            print(f"  Merged {merged_scripts} overlay script file(s)")
 
 
 def strip_claude_only_skill_fields(skills_dir):
