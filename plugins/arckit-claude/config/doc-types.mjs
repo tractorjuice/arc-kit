@@ -248,6 +248,8 @@ export const DOC_TYPES = {
   'TBB':       { name: 'Te Beschermen Belangen / VIRBI 2025 Rubricering', category: 'Compliance', regime: 'NL', severity: 'HIGH' },
   'BIO2':      { name: 'BIO2 Conformance Assessment',                   category: 'Compliance',  regime: 'NL', severity: 'HIGH' },
   'NLEXIT':    { name: 'NL Cloud Exit Plan',                            category: 'Governance',  regime: 'NL' },
+  'NORA':      { name: 'NORA Conformance Assessment',                   category: 'Governance',  regime: 'NL' },
+  'GEMMA':     { name: 'GEMMA Alignment Assessment',                    category: 'Architecture', regime: 'NL' },
   // UK Financial Services Payments Overlay (arckit-uk-finance) — community-contributed,
   // EXPERIMENTAL. Outputs require review by qualified UK FS regulatory counsel + firm
   // MLRO / Compliance Officer before reliance.

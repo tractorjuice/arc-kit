@@ -1,11 +1,13 @@
 # ArcKit — Netherlands Public Sector Overlay
 
-4 slash commands covering Netherlands (Rijksoverheid) cloud and information-security compliance:
+6 slash commands covering Netherlands (Rijksoverheid) cloud and information-security compliance, and the NORA and GEMMA reference architectures:
 
 - `/arckit-nl:nl-cloud` — Rijksbreed Cloudbeleid Compliance Assessment (Herziening rijksbreed cloudbeleid 2026)
 - `/arckit-nl:nl-tbb` — Te Beschermen Belangen (TBB) / VIRBI 2025 rubricering determination
 - `/arckit-nl:nl-bio` — BIO2 conformance assessment
 - `/arckit-nl:nl-exit` — Cloud exit plan (Rijksbreed cloudbeleid clause 3.2)
+- `/arckit-nl:nl-nora` — NORA conformance assessment (NAP01–NAP17, with the GEMMA supplement for gemeenten)
+- `/arckit-nl:nl-gemma` — GEMMA landscape mapping for gemeenten (referentiecomponenten and bedrijfsfuncties)
 
 Recipes: No recipes ship in this overlay yet.
 
@@ -22,9 +24,13 @@ On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy
 
 Unlike France's SecNumCloud, the Netherlands has no published qualification list of compliant cloud providers. `/arckit-nl:nl-cloud` deliberately does not name, shortlist, or rate specific commercial cloud providers as compliant or qualified — it assesses eligibility and obligations against the Herziening rijksbreed cloudbeleid 2026 text only.
 
+## NORA and GEMMA reference material
+
+ArcKit ships no NORA or GEMMA text. `/arckit-nl:nl-nora` and `/arckit-nl:nl-gemma` first run `scripts/nl-references.py` (Python 3, no other packages), which builds local extracts in `projects/000-global/external/` from the public sources — the NORA Online API and `export/GEMMA release.xml` in the GEMMA Archi-repository — and refreshes them only when the source has changed. Extracts placed by hand are never overwritten. Offline builds from downloaded files are supported; see the [NL overlay guide](https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/nl-overlay.md#nora-and-gemma-reference-material).
+
 ## Data
 
-This overlay adds commands, templates and reference material only. It sends no data of its own, and it has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
+This overlay adds commands, templates, reference material and one script. The script reads two public sources, `www.noraonline.nl` and GitHub (`api.github.com`, `raw.githubusercontent.com`), and sends nothing about the project. The overlay has no hooks and no MCP servers. Its commands run in Claude alongside the `arckit` core plugin, whose README lists what that plugin sends and when. Privacy policy: <https://arckit.org/privacy.html>.
 
 ## Maintainer
 

@@ -72,7 +72,7 @@
     {
       "name": "arckit-nl",
       "source": "./plugins/nl",
-      "description": "Netherlands Public Sector Overlay — 4 commands for the Rijksbreed cloudbeleid 2026, VIRBI 2025 / Te Beschermen Belangen rubricering, BIO2 conformance, and cloud exit planning",
+      "description": "Netherlands Public Sector Overlay — 6 commands for the Rijksbreed cloudbeleid 2026, VIRBI 2025 / Te Beschermen Belangen rubricering, BIO2 conformance, cloud exit planning, and NORA and GEMMA reference-architecture assessments",
       "version": "6.18.2",
       "author": {
         "name": "TractorJuice"
@@ -84,6 +84,8 @@
         "architecture",
         "governance",
         "netherlands",
+        "nora",
+        "gemma",
         "cloud",
         "compliance"
       ],
