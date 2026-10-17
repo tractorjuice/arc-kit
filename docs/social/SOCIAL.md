@@ -372,3 +372,74 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/15
 
 > All 76 are up now, from /arckit:start to /arckit:import-okf: https://www.youtube.com/playlist?list=PLOxB2ULF5XX0
 > Which one should we look at more closely next?
+
+### Q25. Overlay command films — LinkedIn page (Warm "we" voice) — posted 16 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:share:7516774593865547776/>, the page's second post that day after the scheduled *From the Articles* post. No image: the channel link makes a YouTube preview card. The 102 overlay films, one per command in the 14 community overlays, went public on 15 and 16 October in one playlist per overlay (`~/hyperframes/arckit-overlay-videos/uploads.json`).
+
+> Every ArcKit overlay now has its own short films.
+>
+> We've made one for each command in the 14 community overlays: 102 films, about a minute and a half each. They cover the EU, France, Austria, the Netherlands, Canada, US federal, the UAE, Australia and Australian energy, plus TOGAF ADM, Open Agile Architecture, AI agent architecture, UK finance and the NHS.
+>
+> Each film shows what the command is for, what it reads first, the document it writes (a real example where one of our public test projects has one, otherwise the template it fills in), what to check, and what to run next.
+>
+> The overlays are community-contributed, so have qualified reviewers check what they draft before you rely on it. The narration is AI-generated, so the films are still an experiment. Tell us which ones help.
+>
+> Every overlay has its own playlist: https://www.youtube.com/@arckitorg/playlists
+>
+> #EnterpriseArchitecture #Compliance #OpenSource #Governance
+
+### Q26. Overlay command films — LinkedIn group (Question voice) — posted 16 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7516774781136887808/>, straight after Q25. No image: the channel link makes a YouTube preview card.
+
+> Working with the EU AI Act, Canada's ITSG-33, FedRAMP or the NHS clinical safety standards? There's now a short film for the ArcKit command that covers it.
+>
+> We've added 102 films for the 14 community overlays, one per command and about 90 seconds each: what the command reads, the document it drafts, and what to check before you rely on it. The overlays are community-contributed, so a qualified reviewer should still check their output.
+>
+> They're AI-narrated and still an experiment. Which overlay do you use, and is there a framework we haven't covered yet?
+>
+> https://www.youtube.com/@arckitorg/playlists
+
+### Q27. Overlay command films — Discord #show-your-working — posted 16 October
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/1560567997951647766>. Not #announcements: nothing changes for people who already use ArcKit.
+
+> 🧪 New: a short film for every command in the community overlays, 102 in all across 14 overlays: EU, France, Austria, Netherlands, Canada, US federal, UAE, Australia, Australian energy, TOGAF ADM, Open Agile Architecture, AI agent architecture, UK finance and UK NHS.
+> Each one shows what the command reads, the document it drafts and what to check. One playlist per overlay: https://www.youtube.com/@arckitorg/playlists
+> Which overlay should we look at more closely next?
+
+### Q28. ArcKit recipes explainer — LinkedIn page (Warm "we" voice) — posted 17 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:share:7517136873409134592/>. No image: the video link makes the preview card. The film (1:19, <https://youtu.be/b1EVJenis0M>) is in the "ArcKit explainers" playlist with en-GB captions.
+
+> Build a whole project's governance documents in one run, with an ArcKit recipe.
+>
+> A recipe lists the documents a project needs and what each one depends on. /arckit:build follows it and drafts the set in waves: principles first, then requirements and stakeholders, then the decision records, each wave waiting for the documents it needs.
+>
+> Our new short film shows what's inside a recipe, part of the uk-saas recipe that ships with ArcKit, and what to check before you build. There are recipes for defence, the NHS and payments too, and in our overlays for the UAE, Canada, Australia and the US. Copy one into .arckit/recipes to make it your own.
+>
+> Every document it drafts is a starting point for qualified people to review.
+>
+> https://youtu.be/b1EVJenis0M
+>
+> #EnterpriseArchitecture #Governance #OpenSource #PublicSector
+
+### Q29. ArcKit recipes explainer — LinkedIn group (Question voice) — posted 17 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7517137057115205632/>, straight after Q28.
+
+> How many governance documents does your next project need, and in what order?
+>
+> An ArcKit recipe answers that up front. It lists the documents and what each depends on, and /arckit:build drafts them in waves. Our new 80-second film walks through one: the uk-saas recipe that ships with ArcKit.
+>
+> If you've written your own recipe, or there's one you'd like us to add, tell us below.
+>
+> https://youtu.be/b1EVJenis0M
+
+### Q30. ArcKit recipes explainer — Discord #show-your-working — posted 17 October
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/1560930209593819198>.
+
+> 🧪 New short film: how ArcKit recipes work. What's inside one, part of the uk-saas recipe, and what to check before /arckit:build drafts the set in waves: https://youtu.be/b1EVJenis0M
+> Which recipe should we look at next?
