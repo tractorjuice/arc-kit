@@ -11,10 +11,10 @@ The header row is a pipe-delimited markdown table. Commands are listed as column
 
 ### Adding a New Column
 
-1. Find the alphabetical position for the new command name in the header row
+1. Find the command's tier position in the header row (columns follow the same tier order as the rows)
 2. Insert `| {name}` at that position in the header row
-3. Insert `|------` at the same position in the separator row (line 21)
-4. Insert `|` (empty cell) at the same column position in **every** existing data row (lines 22-69)
+3. Insert `|------` at the same position in the separator row
+4. Insert `|` (empty cell) at the same column position in **every** existing data row
 
 **Important**: The column position must be consistent across all rows. Count pipes from the left to ensure alignment.
 
@@ -45,7 +45,7 @@ Each command has a row showing what it produces and which other commands depend 
 
 ### Row Insertion Position
 
-Insert the new row alphabetically among existing command rows (lines 22-67). The row for `**HLD (external)**` and `**DLD (external)**` always go at the end (lines 68-69).
+Insert the new row in tier order, among the commands of its tier. The `**HLD (external)**` and `**DLD (external)**` rows always go at the end.
 
 ## Tier Groupings Format
 
@@ -64,20 +64,20 @@ Commands are organized into tiers based on dependency depth. Each tier has a hea
 |------|------|-------------|
 | 0 | Foundation | No mandatory dependencies |
 | 1 | Strategic Context | Depends on Foundation |
-| 1.5 | Risk Assessment | Depends on Stakeholders |
-| 2 | Business Justification | Depends on Stakeholders + Risk |
-| 3 | Requirements Definition | Depends on Business Case |
-| 3.5 | Strategic Planning | Platform Strategy, Roadmaps, Strategy |
-| 4 | Detailed Design | Depends on Requirements |
-| 5 | Procurement | Depends on Requirements |
-| 6 | Design Reviews | Depends on Design Documents |
-| 7 | Implementation Planning | Depends on Design Reviews |
-| 7.5 | Backlog Export | Depends on Backlog |
-| 8 | Operations | Depends on Architecture |
-| 9 | Quality Assurance | Can run iteratively |
-| 10 | Compliance Assessment | Depends on Multiple Artifacts |
-| 11 | Project Story & Reporting | Depends on All Artifacts |
-| 12 | Documentation Publishing | Utility |
+| 2 | Risk Assessment | Depends on Stakeholders |
+| 3 | Business Justification | Depends on Stakeholders + Risk |
+| 4 | Requirements Definition | Depends on Stakeholders |
+| 5 | Strategic Planning | Platform Strategy, Roadmaps, Strategy |
+| 6 | Detailed Design | Depends on Requirements |
+| 7 | Procurement | Depends on Requirements |
+| 8 | Design Reviews | Depends on Design Documents |
+| 9 | Implementation Planning | Depends on Design Reviews |
+| 10 | Backlog Export | Depends on Backlog |
+| 11 | Operations | Depends on Architecture |
+| 12 | Quality Assurance | Can run iteratively |
+| 13 | Compliance Assessment | Depends on Multiple Artifacts |
+| 14 | Project Story & Reporting | Depends on All Artifacts |
+| 15 | Documentation Publishing | Utility |
 
 ### Choosing the Right Tier
 
@@ -85,10 +85,10 @@ Place the new command in the tier that matches its highest mandatory dependency:
 
 - If it depends on nothing mandatory: Tier 0
 - If it depends on principles/plan: Tier 1
-- If it depends on requirements: Tier 3-5 (depending on other dependencies)
-- If it depends on design outputs: Tier 6-8
-- If it assesses compliance: Tier 10
-- If it's a utility or publishing tool: Tier 12
+- If it depends on requirements: Tier 4-7 (depending on other dependencies)
+- If it depends on design outputs: Tier 8-11
+- If it assesses compliance: Tier 13
+- If it's a utility or publishing tool: Tier 15
 
 ## Changelog Entry Format
 
