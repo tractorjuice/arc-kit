@@ -3,7 +3,7 @@
 4 slash commands covering Netherlands (Rijksoverheid) cloud and information-security compliance:
 
 - `/arckit-nl:nl-cloud` — Rijksbreed Cloudbeleid Compliance Assessment (Herziening rijksbreed cloudbeleid 2026)
-- `/arckit-nl:nl-tbb` — Te Beschermen Belangen (TBB) / VIRBI 2025 rubricering determination
+- `/arckit-nl:nl-tbb` — Te Beschermen Belangen (TBB) category determination, using any existing VIRBI 2025 rubricering as a floor
 - `/arckit-nl:nl-bio` — BIO2 conformance assessment
 - `/arckit-nl:nl-exit` — Cloud exit plan (Rijksbreed cloudbeleid clause 3.2)
 

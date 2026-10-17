@@ -5,7 +5,7 @@ argument-hint: "<project ID or cloud service description, e.g. '001', 'case mana
 effort: high
 handoffs:
   - command: nl-tbb
-    description: Determine the TBB category / VIRBI 2025 rubricering for the data in scope before finalising the clause 5.2 eligibility check
+    description: Determine the TBB category for the data in scope before finalising the clause 5.2 eligibility check
     condition: "TBB category not yet determined for the data processed by this system"
   - command: nl-exit
     description: Produce the mandatory clause 3.2 exit plan once materieel cloudgebruik is confirmed
