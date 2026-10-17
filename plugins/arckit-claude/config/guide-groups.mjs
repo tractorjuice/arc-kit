@@ -42,6 +42,7 @@ export const GUIDE_CATEGORY_ORDER = [
   'FDE Site Generator',
   'Repository Plugin',
   'TOGAF ADM Overlay',
+  'Open Agile Architecture Overlay',
   'Australian Federal / Energy Overlay',
   'Community overlays - Austria',
   'Canada Federal Overlay',
@@ -250,6 +251,14 @@ add(GUIDE_SECTIONS.OVERLAY, 'TOGAF ADM Overlay', 'community', [
   'architecture-repository',
 ], 'TOGAF ADM Overlay');
 
+add(GUIDE_SECTIONS.OVERLAY, 'Open Agile Architecture Overlay', 'community', [
+  'oaa-adm-lite',
+  'product-architecture',
+  'agile-strategy',
+  'agile-security',
+  'agile-governance',
+], 'Open Agile Architecture Overlay');
+
 add(GUIDE_SECTIONS.OVERLAY, 'Australian Federal / Energy Overlay', 'community', [
   'au-aescsf',
   'au-ai-assurance',
@@ -315,6 +324,10 @@ add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - France', 'community', [
 
 add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - Netherlands', 'community', [
   'nl-overlay',
+  'nl-tbb',
+  'nl-cloud',
+  'nl-bio',
+  'nl-exit',
 ], 'Community overlays - Netherlands');
 
 add(GUIDE_SECTIONS.OVERLAY, 'UAE Federal Overlay', 'community', [
