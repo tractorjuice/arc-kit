@@ -99,8 +99,8 @@ plausible generic architecture.
 | `architecture` | Vendor HLD, **DIAG**, **REQ**, **PRIN** | Containers, technology choices, boundaries, external systems |
 | `workflow` | **SOW**, **PLAN**, **PROC**, delivery artefacts | Stages, approval gates, decision points, owners |
 | `sequence` | Vendor DLD, **INT** requirements, API contracts | Participants, ordered messages, returns, async hops |
-| `dataflow` | **DFD**, **DM** (data model), **DPIA** | Sources, transformations, stores, consumers, PII flows |
-| `lifecycle` | **REQ** (status fields), **DM**, ADRs | States, transitions, retries, terminal and failure states |
+| `dataflow` | **DFD**, **DATA** (data model), **DPIA** | Sources, transformations, stores, consumers, PII flows |
+| `lifecycle` | **REQ** (status fields), **DATA**, ADRs | States, transitions, retries, terminal and failure states |
 
 Also read any **external documents** in `external/` and enterprise standards in
 `projects/000-global/external/`. When a diagram element comes from an external

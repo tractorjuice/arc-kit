@@ -52,7 +52,7 @@ Generate a comprehensive TCoP review document by:
    - **DIAG** (Architecture Diagrams, in diagrams/) — Extract: Deployment topology
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Technology choices
+   - **RSCH** / **AWRS** / **AZRS** / **GCRS** (Research) — Extract: Technology choices
    - **AIPB** (AI Playbook) — Extract: AI/ML system assessments
    - **DPIA** (Data Protection Impact Assessment) — Extract: Data protection context
 

@@ -61,11 +61,11 @@ Identify the target project from the hook context. If the user specifies a proje
 
 If the project already exists, check for existing `ARC-{PROJECT_ID}-PLAT-v*.md` files. If found, ask user if they want to overwrite or update.
 
-**Gathering rules** (apply to all user questions in this command):
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions total.** After that, infer the best answer from available context.
-- If still ambiguous after 2 rounds, make a reasonable choice and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
 ---
 
@@ -500,7 +500,7 @@ After writing the file, provide a **concise summary** (NOT the full document):
 **Prerequisites** (should run before platform design):
 - `/arckit:principles` - Architecture principles
 - `/arckit:stakeholders` - Stakeholder analysis (highly recommended)
-- `/arckit:requirements` - Platform requirements (recommended)
+- `/arckit:requirements` - Platform requirements (required)
 - `/arckit:wardley` - Value chain analysis (recommended)
 
 **Next Steps** (run after platform design):

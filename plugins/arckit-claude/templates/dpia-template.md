@@ -675,7 +675,7 @@ If YES, select condition(s):
 
 ### 9.1 Link to Security Controls
 
-**Security Assessment Reference**: `projects/{project_id}/ARC-{PROJECT_ID}-SBD-v*.md`
+**Security Assessment Reference**: `projects/{project_id}/ARC-{PROJECT_ID}-SECD-v*.md`
 
 **DPIA Mitigations → Security Controls Mapping**:
 

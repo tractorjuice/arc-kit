@@ -67,7 +67,7 @@ Parse the user input for:
 
 - **DIAG** (Architecture Diagrams)
   - Extract: Deployment topology, component inventory, integration points
-- **RSCH** (Research Findings) or **AWSR** / **AZUR** (Cloud Research)
+- **RSCH** (Research Findings) or **AWRS** / **AZRS** / **GCRS** (Cloud Research)
   - Extract: Recommended services, platform choices, vendor decisions
 
 **OPTIONAL** (read if available, skip silently if missing):

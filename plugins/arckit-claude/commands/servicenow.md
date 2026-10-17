@@ -73,7 +73,7 @@ Read existing artifacts from the project context:
 
 ### Phase 1: Context Gathering
 
-Read all documents listed in the "Read Available Documents" section above before proceeding.
+Read all documents listed in the "Input Context Required" section above before proceeding.
 
 **IMPORTANT**: Parse the user's request for:
 

@@ -75,111 +75,148 @@ This gameplay analysis is derived from the following Wardley Map artifact:
 
 ## Play Options by Category
 
-### A. Accelerator Plays
+Category letters and names follow `/arckit:wardley.gameplay` (Step 5). List only the plays you evaluated; leave the rest out.
 
-*Speed up component evolution to reshape the landscape.*
+### A. User Perception
 
-| Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
-|-----------|-----------|---------------|-----------------------|----------------|-----------|
-| Open approaches (open source, open data, open standards) | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Exploit the ecosystem | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Contribute to standards bodies | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-
-### B. Decelerator Plays
-
-*Slow down competitor evolution or commoditisation.*
+*Which plays are relevant given your user-facing components and their evolution stage?*
 
 | Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
 |-----------|-----------|---------------|-----------------------|----------------|-----------|
-| FUD (Fear, Uncertainty, Doubt) | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Education | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Bundling | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Creating Artificial Needs | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Confusion of Choice | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Brand and Marketing | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| FUD | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Artificial Competition | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Lobbying/Counterplay | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+
+### B. Accelerators
+
+*Which plays would accelerate evolution of Custom-Built components you want to commoditise, or grow a market you want to lead?*
+
+| Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
+|-----------|-----------|---------------|-----------------------|----------------|-----------|
+| Market Enablement | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Open Approaches | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Exploiting Network Effects | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Co-operation | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Industrial Policy | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+
+### C. De-accelerators
+
+*Which plays could slow commoditisation of components you want to protect? Flag CE plays with an explicit warning.*
+
+| Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
+|-----------|-----------|---------------|-----------------------|----------------|-----------|
+| Exploiting Constraint | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Intellectual Property Rights/IPR | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Creating Constraints | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+
+### D. Dealing with Toxicity
+
+*Which components are toxic (technical debt, poor fit, declining value), and what is the appropriate disposal strategy?*
+
+| Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
+|-----------|-----------|---------------|-----------------------|----------------|-----------|
+| Pig in a Poke | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Disposal of Liability | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Sweat and Dump | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Refactoring | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+
+### E. Market
+
+*What market-positioning plays are available given your evolution stage and competitive position?*
+
+| Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
+|-----------|-----------|---------------|-----------------------|----------------|-----------|
 | Differentiation | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Lobbying and regulatory influence | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Pricing Policy | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Buyer/Supplier Power | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Harvesting | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Standards Game | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Last Man Standing | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Signal Distortion | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Trading | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
 
-### C. Market Plays
+### F. Defensive
 
-*Shape market conditions in your favour.*
-
-| Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
-|-----------|-----------|---------------|-----------------------|----------------|-----------|
-| Buyer and supplier education | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Creating constraints | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Press and analyst briefings | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-
-### D. Defensive Plays
-
-*Protect your position from competitive threats.*
+*What threats need defending against, and which defensive plays are appropriate?*
 
 | Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
 |-----------|-----------|---------------|-----------------------|----------------|-----------|
-| Protective moat (IP, switching costs) | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Embrace and extend | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Threat acquisition | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Threat Acquisition | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Raising Barriers to Entry | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Procrastination | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Defensive Regulation | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Limitation of Competition | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Managing Inertia | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
 
-### E. Attacking Plays
+### G. Attacking
 
-*Move against competitor positions.*
-
-| Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
-|-----------|-----------|---------------|-----------------------|----------------|-----------|
-| Exploiting inertia | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Undermining barriers to entry | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Talent acquisition | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-
-### F. Ecosystem Plays
-
-*Leverage or build ecosystems for competitive advantage.*
+*What offensive plays are executable given your resources, risk tolerance and time horizon?*
 
 | Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
 |-----------|-----------|---------------|-----------------------|----------------|-----------|
-| Building a platform | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Co-opting an ecosystem | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Creating a pricing game | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Directed Investment | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Experimentation | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Centre of Gravity | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Undermining Barriers to Entry | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Fool's Mate | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Press Release Process | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Playing Both Sides | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
 
-### G. Positional Plays
+### H. Ecosystem
 
-*Move to advantageous positions on the map.*
-
-| Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
-|-----------|-----------|---------------|-----------------------|----------------|-----------|
-| Tower and moat | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Land grab | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Sensing engine | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-
-### H. Poison Plays
-
-*Make a position undesirable for competitors.*
+*What ecosystem plays are available: do you have the components and relationships to build or join an ecosystem?*
 
 | Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
 |-----------|-----------|---------------|-----------------------|----------------|-----------|
-| Disposal of a liability | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Swamping | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Alliances | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Co-creation | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Sensing Engines/ILC | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Tower and Moat | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| N-sided Markets | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Co-opting and Intercession | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Embrace and Extend | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Channel Conflicts and Disintermediation | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
 
-### I. Innovation Plays
+### I. Competitor
 
-*Create new value through novel combinations.*
-
-| Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
-|-----------|-----------|---------------|-----------------------|----------------|-----------|
-| Design for uncharted spaces | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Signal distortion | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-
-### J. People Plays
-
-*Leverage talent and culture as competitive advantage.*
+*What competitor-directed plays are available? Flag CE plays with explicit ethical caution.*
 
 | Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
 |-----------|-----------|---------------|-----------------------|----------------|-----------|
-| Centres of gravity | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Pioneer / settler / town planner model | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Ambush | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Fragmentation Play | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Reinforcing Competitor Inertia | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Sapping | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Misdirection | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Restriction of Movement | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Talent Raid | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Circling and Probing | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
 
-### K. Political Plays
+### J. Positional
 
-*Navigate organisational or market politics.*
+*What positional plays would secure or improve your strategic position on the map?*
 
 | Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
 |-----------|-----------|---------------|-----------------------|----------------|-----------|
-| Creating artificial constraints | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
-| Trojan horse | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Land Grab | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| First Mover/Fast Follower | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Aggregation | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Weak Signal/Horizon | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+
+### K. Poison
+
+*Recognise these when they are used against you. Flag whether any are currently affecting your value chain, as defensive awareness.*
+
+| Play Name | Alignment | Applicability | Evolution Stage Match | Recommendation | Rationale |
+|-----------|-----------|---------------|-----------------------|----------------|-----------|
+| Licensing Play | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Insertion | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
+| Designed to Fail | High / Medium / Low | {Why or why not applicable} | {Does this play match the component's evolution stage?} | Apply / Monitor / Skip | {Why apply/monitor/skip — specific to this map and context} |
 
 ---
 

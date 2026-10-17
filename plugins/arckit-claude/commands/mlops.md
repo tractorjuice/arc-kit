@@ -72,9 +72,9 @@ Parse the user input for:
 
 **OPTIONAL** (read if available, skip silently if missing):
 
-- **RSCH** / **AWRS** / **AZRS** (Research) — Extract: ML platform choices, serving infrastructure, cost estimates
+- **RSCH** / **AWRS** / **AZRS** / **GCRS** (Research) — Extract: ML platform choices, serving infrastructure, cost estimates
 - **ATRS** (Algorithmic Transparency) — Extract: Transparency requirements, publication obligations
-- **J936** (JSP 936 AI Assurance) — Extract: Defence AI assurance requirements, risk classification
+- **JSP936** (JSP 936 AI Assurance) — Extract: Defence AI assurance requirements, risk classification
 
 ### Phase 1b: Read external documents and policies
 

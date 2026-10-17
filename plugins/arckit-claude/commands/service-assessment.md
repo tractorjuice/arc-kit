@@ -116,7 +116,7 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 - **EVAL** (Evaluation Criteria)
 - **ANAL** (Governance Analysis)
 - **WARD** (Wardley Map) — strategic analysis
-- **RSCH** / **AWSR** / **AZUR** — technology research
+- **RSCH** / **AWRS** / **AZRS** / **GCRS** — technology research
 
 ### Step 2b: Read external documents and policies
 

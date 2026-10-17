@@ -44,7 +44,7 @@ $ARGUMENTS
 
 **OPTIONAL** (read if available, skip silently if missing):
 
-- **RSCH** (Research Findings) or **AWSR** / **AZUR** (Cloud Research)
+- **RSCH** (Research Findings) or **AWRS** / **AZRS** / **GCRS** (Cloud Research)
   - Extract: Options already analyzed, vendor comparisons, TCO data
 - **STKE** (Stakeholder Analysis)
   - Extract: Stakeholder goals, decision authority, RACI context

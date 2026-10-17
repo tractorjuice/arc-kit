@@ -40,7 +40,7 @@ Rows and columns cover the 63 core commands that read, or are read by, another c
 | **research** |  |  |  |  |  |  |  |  |  | R | O | O |  |  | - |  |  |  | O |  |  |  |  |  |  | R |  | O | R |  | O |  | R | R |  | O | R |  |  |  |  |  |  |  |  | R | O | O |  |  |  |  |  |  | O | O |  |  |  |  |  | R | R |
 | **azure-research** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  | R |  | O | R |  | O |  | R | R |  |  | R |  |  |  |  |  |  |  |  | R | O | O |  |  |  |  |  |  | O | O |  |  |  |  |  | R | R |
 | **aws-research** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  | R |  | O | R |  | O |  | R | R |  |  | R |  |  |  |  |  |  |  |  | R | O | O |  |  |  |  |  |  | O | O |  |  |  |  |  | R | R |
-| **gcp-research** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
+| **gcp-research** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  | O |  | R | R |  |  | R |  |  |  |  |  |  |  |  | R | O | O |  |  |  |  |  |  | O | O |  |  |  |  |  | R | R |
 | **datascout** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **grants** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **gov-reuse** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
@@ -183,7 +183,7 @@ Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
   - Multi-instance document type (ARC-*-WCLM-{NUM}-v*.md), stored in wardley-maps/ subdirectory
 - **diagram** → Depends on: principles (R), requirements (R), wardley (O), tcop (O), ai-playbook (O), atrs (O), vendor HLD (O), vendor DLD (O)
   - Note: Can generate diagrams from user description alone; richer output when requirements and other artifacts exist
-- **adr** → Depends on: principles (M), requirements (M), risk (R), stakeholders (O), research (O), azure-research (O), aws-research (O), wardley (O)
+- **adr** → Depends on: principles (M), requirements (M), risk (R), stakeholders (O), research (O), azure-research (O), aws-research (O), gcp-research (O), wardley (O)
   - Note: Architecture Decision Records; warns if principles or requirements are missing
 - **data-mesh-contract** → Depends on: principles (M), stakeholders (R), requirements (R), data-model (R)
   - Note: Federated data product contracts for mesh architectures; requires principles for governance standards
@@ -192,12 +192,12 @@ Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 
 Most procurement commands require ARC-*-REQ-*.md:
 
-- **sow** → Depends on: principles (M), requirements (M), stakeholders (R), research (R), azure-research (R), aws-research (R), risk (O)
-- **dos** → Depends on: principles (M), requirements (M), stakeholders (R), research (R), azure-research (R), aws-research (R), risk (O), sow (O)
+- **sow** → Depends on: principles (M), requirements (M), stakeholders (R), research (R), azure-research (R), aws-research (R), gcp-research (R), risk (O)
+- **dos** → Depends on: principles (M), requirements (M), stakeholders (R), research (R), azure-research (R), aws-research (R), gcp-research (R), risk (O), sow (O)
 - **gcloud-search** → Depends on: requirements (M), principles (R), Digital Marketplace access (External)
   - Note: Stops if the project has no requirements
 - **gcloud-clarify** → Depends on: requirements (M), gcloud-search (M), principles (R), research (O)
-- **evaluate** → Depends on: principles (M), requirements (M), research (R), azure-research (R), aws-research (R), sow (R), dos (R), gcloud-search (R), stakeholders (O), dpia (O)
+- **evaluate** → Depends on: principles (M), requirements (M), research (R), azure-research (R), aws-research (R), gcp-research (R), sow (R), dos (R), gcloud-search (R), stakeholders (O), dpia (O)
 - **score** → Depends on: evaluate (M), competitors (O)
   - Note: Structured vendor scoring with JSON storage, comparison, and audit trail
   - Integrates with evaluate criteria; scores stored in `projects/{id}/vendors/scores.json`
@@ -230,9 +230,9 @@ Most procurement commands require ARC-*-REQ-*.md:
 ### Tier 11: Operations (Depends on Architecture)
 
 - **servicenow** → Depends on: requirements (M), diagram (M), principles (R), data-model (R), vendor HLD (R), vendor DLD (R), wardley (O), traceability (O), tcop (O)
-- **devops** → Depends on: principles (M), requirements (M), research (R), azure-research (R), aws-research (R), diagram (R), risk (O), data-model (O), tcop (O)
-- **mlops** → Depends on: requirements (M), principles (R), data-model (R), ai-playbook (R), research (O), azure-research (O), aws-research (O), atrs (O), jsp-936 (O) [for AI projects]
-- **finops** → Depends on: requirements (M), principles (R), diagram (R), devops (R), stakeholders (O), sobc (O), research (O), azure-research (O), aws-research (O)
+- **devops** → Depends on: principles (M), requirements (M), research (R), azure-research (R), aws-research (R), gcp-research (R), diagram (R), risk (O), data-model (O), tcop (O)
+- **mlops** → Depends on: requirements (M), principles (R), data-model (R), ai-playbook (R), research (O), azure-research (O), aws-research (O), gcp-research (O), atrs (O), jsp-936 (O) [for AI projects]
+- **finops** → Depends on: requirements (M), principles (R), diagram (R), devops (R), stakeholders (O), sobc (O), research (O), azure-research (O), aws-research (O), gcp-research (O)
 - **operationalize** → Depends on: requirements (M), diagram (M), principles (R), risk (R), servicenow (R), stakeholders (O), data-model (O), devops (O), traceability (O)
 - **traceability** → Depends on: requirements (M), adr (R), hld-review (R), dld-review (R), vendor HLD (R), vendor DLD (R)
   - Note: Hook pre-processing reduces dependency on direct HLD/DLD file reads
@@ -254,9 +254,9 @@ These assess compliance across the project:
 - **maturity-model** → Depends on: principles (R), stakeholders (O), risk (O), requirements (O), strategy (O), data-model (O)
   - Note: Generates capability maturity model with current-state assessment, target-state definition, and improvement roadmap
   - Can run once principles exist; feeds into roadmap and strategy for improvement planning
-- **service-assessment** → Depends on: principles (M), requirements (M), plan (R), stakeholders (R), risk (R), sobc (R), data-model (R), dpia (R), diagram (R), hld-review (R), dld-review (R), devops (R), traceability (R), secure (R), research (O), azure-research (O), aws-research (O), wardley (O), sow (O), evaluate (O), analyze (O), tcop (O), ai-playbook (O), atrs (O)
+- **service-assessment** → Depends on: principles (M), requirements (M), plan (R), stakeholders (R), risk (R), sobc (R), data-model (R), dpia (R), diagram (R), hld-review (R), dld-review (R), devops (R), traceability (R), secure (R), research (O), azure-research (O), aws-research (O), gcp-research (O), wardley (O), sow (O), evaluate (O), analyze (O), tcop (O), ai-playbook (O), atrs (O)
   - Note: Compliance artifacts are optional - service-assessment identifies them as gaps if missing
-- **tcop** → Depends on: principles (M), requirements (M), stakeholders (R), risk (R), diagram (R), dpia (O), research (O), azure-research (O), aws-research (O), ai-playbook (O)
+- **tcop** → Depends on: principles (M), requirements (M), stakeholders (R), risk (R), diagram (R), dpia (O), research (O), azure-research (O), aws-research (O), gcp-research (O), ai-playbook (O)
 - **ai-playbook** → Depends on: principles (M), requirements (M), risk (R), data-model (R), stakeholders (O), dpia (O) [if AI system]
 - **atrs** → Depends on: principles (M), requirements (M), ai-playbook (R), data-model (O), dpia (O), hld-review (O), dld-review (O), tcop (O) [for AI/algorithmic systems]
 - **secure** → Depends on: principles (M), requirements (M), risk (R), dpia (R), diagram (R), tcop (O), ai-playbook (O), atrs (O)
@@ -267,7 +267,7 @@ These assess compliance across the project:
 
 Final reporting commands that create comprehensive project narratives and presentations:
 
-- **story** → Depends on: principles (M), plan (R), stakeholders (R), risk (R), sobc (R), requirements (R), roadmap (R), data-model (R), dpia (R), research (R), azure-research (R), aws-research (R), wardley (R), diagram (R), sow (R), dos (R), evaluate (R), hld-review (R), dld-review (R), backlog (R), servicenow (R), devops (R), traceability (R), analyze (R), service-assessment (R), tcop (R), ai-playbook (R), atrs (R), secure (R), mod-secure (R), jsp-936 (R)
+- **story** → Depends on: principles (M), plan (R), stakeholders (R), risk (R), sobc (R), requirements (R), roadmap (R), data-model (R), dpia (R), research (R), azure-research (R), aws-research (R), gcp-research (R), wardley (R), diagram (R), sow (R), dos (R), evaluate (R), hld-review (R), dld-review (R), backlog (R), servicenow (R), devops (R), traceability (R), analyze (R), service-assessment (R), tcop (R), ai-playbook (R), atrs (R), secure (R), mod-secure (R), jsp-936 (R)
   - Note: Requires principles as foundation; recommends multiple artifacts for comprehensive narrative
   - Generates comprehensive historical record with timeline analysis, traceability chains, governance achievements
   - Best run at project milestones or completion when most/all artifacts are complete
@@ -442,6 +442,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
   - stakeholders reads requirements on the same terms as principles (O → R)
   - data-mesh-contract reads requirements when they exist (O → R) and only checks that a DPIA exists, so dpia is no longer an input
   - servicenow can read tcop (O), dpia can read ai-playbook (O), presentation can read adr (O), and atrs can read tcop, hld-review and dld-review (O)
+- **Updated**: after the prompts were fixed, gcp-research is read wherever aws-research is, at the same level, in sow, mlops, evaluate, dos, finops, story, service-assessment, adr, tcop and devops
 - **Synced**: the copies in `plugins/arckit-claude/docs/` and the codex, copilot and opencode extensions now match this file, apart from this changelog
 
 ### 2026-10-07 - UK G-Cloud Supplier Overlay moves to G-Cloud 15 (Community, Proprietary)

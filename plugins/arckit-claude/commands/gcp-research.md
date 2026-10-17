@@ -71,7 +71,7 @@ Read:
 
 **Mandatory:** `projects/{P}-{NAME}/ARC-*-REQ-*.md`. If missing, stop and tell the user to run `/arckit:requirements` first — there is nothing to select services against.
 
-**Recommended if present:** `projects/000-global/ARC-000-PRIN-*.md` (hosting and open-source posture), `ARC-*-STKE-*.md`, `ARC-*-SOBC-*.md` (budget envelope), and any existing `ARC-*-HLD-*.md`.
+**Recommended if present:** `projects/000-global/ARC-000-PRIN-*.md` (hosting and open-source posture), `ARC-*-STKE-*.md`, `ARC-*-SOBC-*.md` (budget envelope), and any vendor HLD (`vendors/*/hld-v*.md`).
 
 ### Step 2: Build the project_profile
 

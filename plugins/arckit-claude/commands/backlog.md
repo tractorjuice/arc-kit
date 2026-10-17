@@ -1642,8 +1642,9 @@ Then re-run /arckit:backlog
 ```text
 ⚠️ Warning: hld-v*.md not found. Stories will not be mapped to components.
 
-For better component mapping, run:
-  /arckit:hld or /arckit:diagram
+For better component mapping, add the vendor's HLD at
+  projects/{project-dir}/vendors/{vendor}/hld-v1.md
+or run /arckit:diagram
 
 Then re-run /arckit:backlog
 ```
@@ -1729,18 +1730,17 @@ Output:
 ### Inputs From
 
 - `/arckit:requirements` → All stories
-- `/arckit:hld` → Component mapping
+- `/arckit:hld-review` / `/arckit:dld-review` and the vendor HLD/DLD → Component mapping
 - `/arckit:stakeholders` → User personas
-- `/arckit:risk-register` → Risk priorities
-- `/arckit:threat-model` → Security stories
-- `/arckit:business-case` → Value priorities
+- `/arckit:risk` → Risk priorities and security threats
+- `/arckit:sobc` → Value priorities
 - `/arckit:principles` → Definition of Done
+- `/arckit:dpia` → Privacy-related tasks (optional)
 
 ### Outputs To
 
-- `/arckit:traceability` → Requirements → Stories → Sprints
-- `/arckit:test-strategy` → Test cases from acceptance criteria
-- `/arckit:analyze` → Backlog completeness check
+- `/arckit:trello` → Trello board export (reads `ARC-*-BKLG-*.json`)
+- `/arckit:story` → Delivery narrative
 
 ---
 
