@@ -12,7 +12,7 @@
 /arckit:mod-secure Assess MOD Secure by Design for <programme>
 ```
 
-Output: `projects/<id>/ARC-<id>-MSBD-v1.0.md`.
+Output: `projects/<id>/ARC-<id>-SECD-MOD-v1.0.md`.
 
 ---
 

@@ -58,11 +58,11 @@ Mermaid diagrams (Gantt, pie, C4, quadrant) render natively in MARP.
 | Context & Objectives | Business challenge, strategic objectives, success criteria | STRAT, SOBC, REQ |
 | Stakeholder Landscape | Key stakeholders, influence/interest mapping | STKE |
 | Architecture Overview | Current → target state, C4 context diagram | DIAG, STRAT |
-| Technology Decisions | Key choices with rationale | RSCH, AWSR, AZUR, ADR |
+| Technology Decisions | Key choices with rationale | RSCH, AWRS, AZRS, GCRS, ADR |
 | Key Requirements | Category counts, critical requirements | REQ |
 | Risk Summary | Top risks, mitigation, distribution chart | RISK |
 | Roadmap & Timeline | Gantt chart, milestones, status | PLAN, ROAD |
-| Compliance & Governance | Standards compliance status | TCOP, SECD, MSBD, DPIA |
+| Compliance & Governance | Standards compliance status | TCOP, SECD, SECD-MOD, DPIA |
 | Recommendations & Next Steps | Actions, decisions, owners, deadlines | Synthesised |
 | Questions & Discussion | Contact, next review date | Project metadata |
 

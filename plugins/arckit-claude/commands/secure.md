@@ -162,33 +162,33 @@ Generate a comprehensive Secure by Design assessment document by:
     - Identify investment alignment and funding opportunities
     - Record gaps where the project or department does not yet meet Cyber Action Plan expectations
 
-10. **Assess Government Cyber Security Profession alignment**:
+11. **Assess Government Cyber Security Profession alignment**:
     - Determine whether the department participates in the Government Cyber Security Profession
     - Record Certified Cyber Professional (CCP) certification status for project security roles
     - Map security roles to DDaT (Digital, Data and Technology) profession framework
     - Assess engagement with the Government Cyber Academy (learning areas, completions)
     - Identify workforce development gaps and training actions
 
-11. **Map GovS 007: Security alignment**:
+12. **Map GovS 007: Security alignment**:
     - Complete the GovS 007 principle mapping table (9 principles → CAF sections and ArcKit artefacts)
     - For principle 5 (Security culture), reference Section 11 (Government Cyber Security Profession) in addition to CAF B6
     - For principle 8 (Continuous improvement), reference Section 9.4 (Cyber Action Plan Alignment) in addition to CAF D2
     - Identify named security role holders (SSRO, DSO, SIRO) and populate the security roles table
     - Assess status for each GovS 007 principle based on evidence from sections 1–9 and the Cyber Action Plan / Profession sections
 
-12. **Identify critical security issues**:
+13. **Identify critical security issues**:
 
 - Issues that block progression to next phase
 - Unacceptable risk levels
 - Regulatory non-compliance (UK GDPR, Data Protection Act)
 
-13. **Generate actionable recommendations**:
+14. **Generate actionable recommendations**:
     - Critical priority (0-30 days) - blockers for next phase
     - High priority (1-3 months) - significant risk reduction
     - Medium priority (3-6 months) - continuous improvement
     - Include VMS enrollment and Cyber Action Plan alignment actions where applicable
 
-14. **Detect version**: Before generating the document ID, check if a previous version exists:
+15. **Detect version**: Before generating the document ID, check if a previous version exists:
     - Look for existing `ARC-{PROJECT_ID}-SECD-v*.md` files in the project directory
     - **If no existing file**: Use VERSION="1.0"
     - **If existing file found**:
@@ -198,7 +198,7 @@ Generate a comprehensive Secure by Design assessment document by:
       - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new CAF objectives assessed, fundamentally different security posture, significant architecture changes
     - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-15. **Save the document**:
+16. **Save the document**:
 
     Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SECD** per-type checks pass. Fix any failures before proceeding.
 
@@ -217,7 +217,7 @@ Before completing the document, populate ALL document control fields in the head
 **Auto-populated fields** (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → Determined version from step 11
+- `[VERSION]` → Determined version from step 15
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Secure by Design Assessment"
 - `ARC-[PROJECT_ID]-SECD-v[VERSION]` → Construct using format from Step 1

@@ -45,7 +45,7 @@ $ARGUMENTS
      - If missing: warn user to run `/arckit:principles` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - **RSCH** / **AWSR** / **AZUR** (Technology Research) in `projects/{project-dir}/`
+   - **RSCH** / **AWRS** / **AZRS** / **GCRS** (Technology Research) in `projects/{project-dir}/`
      - Extract: Vendor landscape, technology decisions, TCO estimates
    - **STKE** (Stakeholder Analysis) in `projects/{project-dir}/`
      - Extract: Business drivers, success criteria, evaluation priorities

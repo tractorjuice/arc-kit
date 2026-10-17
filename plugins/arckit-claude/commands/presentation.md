@@ -55,10 +55,10 @@ $ARGUMENTS
 - **SOBC** (Business Case) — benefits, costs, ROI → Executive summary
 - **DIAG** (Architecture Diagrams) — C4, deployment, data flow → Architecture slide
 - **WARD** (Wardley Map) — strategic positioning → Strategy slide
-- **RSCH** / **AWSR** / **AZUR** / **GCRS** — technology research → Technology decisions
+- **RSCH** / **AWRS** / **AZRS** / **GCRS** — technology research → Technology decisions
 - **SOW** / **DOS** — procurement → Procurement status
 - **HLDR** / **DLDR** (Design Reviews) → Quality assurance
-- **TCOP** / **SECD** / **MSBD** — compliance assessments → Compliance slide
+- **TCOP** / **SECD** / **SECD-MOD** — compliance assessments → Compliance slide
 - **DPIA** (DPIA) → Data protection
 - **AIPB** / **ATRS** — AI governance → AI compliance
 - **DEVOPS** (DevOps Strategy) → Delivery approach
@@ -138,7 +138,7 @@ Build the slide deck by extracting key content from each artifact:
 - Target state and key changes
 - Embed Mermaid C4 context diagram or reference existing diagrams
 
-**Technology Decisions** (from RSCH, AWSR, AZUR, GCRS, ADR):
+**Technology Decisions** (from RSCH, AWRS, AZRS, GCRS, ADR):
 
 - Key build vs buy decisions
 - Technology choices with rationale
@@ -158,7 +158,7 @@ Build the slide deck by extracting key content from each artifact:
 - Mermaid Gantt chart of project phases
 - Key milestones with status
 
-**Compliance & Governance** (from TCOP, SECD, MSBD, DPIA, AIPB):
+**Compliance & Governance** (from TCOP, SECD, SECD-MOD, DPIA, AIPB):
 
 - Standards compliance status table
 - Only include if UK Government or compliance-heavy project

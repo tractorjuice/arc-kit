@@ -53,7 +53,7 @@ This command generates DOS-compliant procurement documentation from your existin
 
 - **STKE** (Stakeholder Analysis) — Extract: user personas, business drivers, evaluation priorities
   - If missing: WARN — consider running `/arckit:stakeholders` to understand stakeholder priorities
-- **RSCH**/**AWRS**/**AZRS** (Technology Research) — Extract: technology decisions informing essential skills requirements
+- **RSCH**/**AWRS**/**AZRS**/**GCRS** (Technology Research) — Extract: technology decisions informing essential skills requirements
 
 **OPTIONAL** (read if available, skip silently):
 
@@ -67,11 +67,11 @@ This command generates DOS-compliant procurement documentation from your existin
 - If no external DOS docs exist but they would improve the submission, ask: "Do you have any contractor CVs, previous DOS submissions, or buyer requirement documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
-**Gathering rules** (apply to all user questions in this command):
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions total.** After that, infer the best answer from available context.
-- If still ambiguous after 2 rounds, make a reasonable choice and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
 ### 2. Identify the target project
 

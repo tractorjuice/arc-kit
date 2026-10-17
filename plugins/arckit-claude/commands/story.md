@@ -42,14 +42,14 @@ $ARGUMENTS
 - **REQ** (Requirements) — BR/FR/NFR/INT/DR traceability
 - **DATA** (Data Model) — entities, relationships, governance
 - **DIAG** (Architecture Diagrams) — C4, deployment, data flow
-- **RSCH** / **AWSR** / **AZUR** — technology research
+- **RSCH** / **AWRS** / **AZRS** / **GCRS** — technology research
 - **WARD** (Wardley Map) — strategic positioning
 - **PLAN** (Project Plan) — timeline, phases, gates
 - **SOW** / **DOS** — procurement documents
 - **EVAL** (Evaluation Criteria) — vendor evaluation
 - **HLDR** / **DLDR** (Design Reviews)
 - **TCOP** (TCoP Assessment)
-- **SECD** / **MSBD** — security assessments
+- **SECD** / **SECD-MOD** — security assessments
 - **DPIA** (DPIA)
 - **AIPB** (AI Playbook)
 - **ATRS** (ATRS record)

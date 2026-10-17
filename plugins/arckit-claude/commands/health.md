@@ -73,7 +73,7 @@ The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of wha
 >
 > 1. **Scan Scope** — identified all projects and ARC-* artifacts
 > 2. **Metadata Extraction** — read every artifact and extracted dates, statuses, requirement IDs, review verdicts, and conditions
-> 3. **Rule Application** — applied all 7 detection rules and generated findings with severities
+> 3. **Rule Application** — applied all nine detection rules and generated findings with severities
 >
 > The hook's `hook context` above contains all findings — use them directly. **Do NOT re-read any artifact files.** Proceed to Step 4 to format the console output.
 >

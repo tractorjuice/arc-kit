@@ -67,7 +67,7 @@ Parse the user input for:
 
 **OPTIONAL** (read if available, skip silently if missing):
 
-- **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Cloud provider choices, service pricing, platform decisions
+- **RSCH** / **AWRS** / **AZRS** / **GCRS** (Research) — Extract: Cloud provider choices, service pricing, platform decisions
 - **STKE** (Stakeholder Analysis) — Extract: Business drivers, budget constraints, ROI expectations
 - **SOBC** (Business Case) — Extract: Budget allocations, cost targets, ROI commitments
 

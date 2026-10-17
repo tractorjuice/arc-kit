@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Commands now find the documents they are told to read.** A read-through of all 76 core commands found prompts naming document codes that don't exist (AWSR, AZUR, MSBD, J936 and DM, plus SBD and DMOD in two templates). So a command could miss the AWS or Azure research, the MOD Secure by Design assessment, the JSP 936 assessment or the data model. They now use the registered codes.
+- **Cloud research reads the vendor HLD.** `/arckit:aws-research`, `/arckit:azure-research` and `/arckit:gcp-research` looked for `ARC-*-HLD-*.md`, which no file is called. They now read the vendor HLD from `vendors/*/hld-v*.md`.
+- **Google Cloud research is read wherever AWS and Azure research are.** Nine commands listed only AWS and Azure research as inputs: sow, mlops, evaluate, dos, finops, story, service-assessment, adr and tcop.
+- **Clearer instructions in seven commands:**
+  - `/arckit:backlog` no longer points to commands that don't exist.
+  - `/arckit:secure` numbers its steps correctly.
+  - `/arckit:servicenow` points to the right section.
+  - `/arckit:health` gives the right number of detection rules.
+  - `/arckit:platform-design` no longer calls requirements both mandatory and recommended.
+  - `/arckit:gcloud-clarify` names the G-Cloud search file correctly.
+  - Five commands now ask their questions in one message: data-mesh-contract, dos, evaluate, platform-design and jsp-936.
+- **Two templates corrected.** The MOD Secure by Design template now describes continuous assurance, which replaced RMADS accreditation in August 2023, and its footer names `/arckit:mod-secure`. The Wardley gameplay template uses the same 11 play categories as the command.
+
 ## [6.18.2] — 2026-10-12
 
 ### Removed

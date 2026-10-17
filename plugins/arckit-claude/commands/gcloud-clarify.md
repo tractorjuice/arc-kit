@@ -327,7 +327,7 @@ Important: Do not award contracts to services with CRITICAL gaps until gaps are 
 ## Error Handling
 
 - **No ARC-*-REQ-*.md**: ERROR "Requirements not found - run /arckit:requirements first"
-- **No gcloud-ARC-*-REQ-*.md**: ERROR "G-Cloud search results not found - run /arckit:gcloud-search first"
+- **No ARC-*-GCLD-*.md**: ERROR "G-Cloud search results not found - run /arckit:gcloud-search first"
 - **No services shortlisted**: ERROR "No services to clarify - gcloud-search found no results"
 - **All MUST requirements confirmed**: INFO "All MUST requirements confirmed with evidence - minimal clarification needed. Proceed to /arckit:evaluate"
 
