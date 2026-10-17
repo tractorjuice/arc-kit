@@ -5931,7 +5931,301 @@
                     </table>
                 </div>
 
-        <p class="govuk-body govuk-!-margin-top-4">Not in the matrix: <code>/arckit:start</code>, <code>/arckit:import-okf</code>, <code>/arckit:init</code>, <code>/arckit:customize</code>, <code>/arckit:template-builder</code> need no earlier documents, and <code>/arckit:build</code>, <code>/arckit:export-okf</code>, <code>/arckit:pages</code>, <code>/arckit:health</code>, <code>/arckit:search</code>, <code>/arckit:impact</code>, <code>/arckit:navigator</code>, <code>/arckit:graph-report</code> work across whatever the project already holds rather than on particular documents. Community overlay commands aren&rsquo;t shown; each overlay&rsquo;s guide lists what its commands read.</p>
+        <p class="govuk-body govuk-!-margin-top-4">Not in the matrix: <code>/arckit:start</code>, <code>/arckit:import-okf</code>, <code>/arckit:init</code>, <code>/arckit:customize</code>, <code>/arckit:template-builder</code> need no earlier documents, and <code>/arckit:build</code>, <code>/arckit:export-okf</code>, <code>/arckit:pages</code>, <code>/arckit:health</code>, <code>/arckit:search</code>, <code>/arckit:impact</code>, <code>/arckit:navigator</code>, <code>/arckit:graph-report</code> work across whatever the project already holds rather than on particular documents. Community overlay and tooling commands are in the tables <a href="#overlay-dependencies" class="govuk-link">below the matrix</a>.</p>
+
+
+        <h3 class="govuk-heading-m govuk-!-margin-top-8" id="overlay-dependencies">Community overlay dependencies</h3>
+        <p class="govuk-body">Each community overlay and tooling plugin, with what its commands read: ArcKit core documents, documents from the same overlay, and in places another overlay&#x27;s. Levels come from each command&#x27;s own prompt, read in full. An input the prompt reads only &quot;if present&quot; is optional unless the prompt also says to note or record the gap when it is missing. Where a UK G-Cloud command reads the service design document for the service&#x27;s own lot, all five sdd-lot commands are listed; only the one for that lot applies.</p>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Canadian Federal Overlay (12 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-fitaa</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements, stakeholders</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-pia</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements, stakeholders</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-atip</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">ca-pia, data-model, principles, requirements</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-aia</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, requirements</td><td class="govuk-table__cell">ca-pia, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-charter</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">requirements, stakeholders</td><td class="govuk-table__cell">ca-fitaa, ca-pia, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-itsg-33</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">ca-pia, fr-dr, requirements</td><td class="govuk-table__cell">ca-soia, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-soia</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">ca-fitaa, ca-itsg-33, principles, requirements</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-cloud-residency</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">ca-pia, requirements</td><td class="govuk-table__cell">ca-itsg-33, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-gc-digital-standards</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">ca-aia, principles, requirements, service-assessment</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-ola</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">ca-fitaa, principles, requirements, service-assessment</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-pspc</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">ca-cloud-residency, ca-itsg-33, principles, requirements, sobc</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:ca-ocap</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">ca-pia, data-model, principles, requirements</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">UAE Federal Overlay (12 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-classification</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">principles, uae-pdpl</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-pdpl</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-ias</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">principles, requirements, secure</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-cloud-residency</code></td><td class="govuk-table__cell">uae-classification</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">principles, requirements, uae-ias</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-uaepass</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">principles, requirements, secure</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-zero-bureaucracy</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">principles, requirements</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-digital-records</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements, uae-classification</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-data-sharing</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">uae-classification, uae-pdpl</td><td class="govuk-table__cell">data-model, principles, requirements</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-priorities-alignment</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">adr, principles, requirements, sobc, uae-classification, uae-cloud-residency, uae-data-sharing, uae-digital-records, uae-ias, uae-pdpl, uae-uaepass, uae-zero-bureaucracy</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-ai-charter</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">dpia, principles, requirements</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-ai-autonomy-tier</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">principles, requirements, uae-ai-charter</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uae-procurement</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">principles, requirements, risk, sobc</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">EU Overlay (8 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:eu-rgpd</code></td><td class="govuk-table__cell">data-model</td><td class="govuk-table__cell">principles, requirements, stakeholders</td><td class="govuk-table__cell">risk, secure</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:eu-nis2</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">principles, risk, secure</td><td class="govuk-table__cell">eu-dora, fr-secnumcloud</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:eu-ai-act</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, risk, stakeholders</td><td class="govuk-table__cell">principles, secure</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:eu-dora</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">principles, risk, secure</td><td class="govuk-table__cell">eu-nis2, fr-secnumcloud</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:eu-cra</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">principles, risk, secure</td><td class="govuk-table__cell">data-model, eu-nis2</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:eu-dsa</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">risk, stakeholders</td><td class="govuk-table__cell">eu-rgpd, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:eu-data-act</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, risk, secure</td><td class="govuk-table__cell">eu-rgpd, fr-secnumcloud</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:eu-cloud-sovereignty</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">fr-secnumcloud, principles, risk</td><td class="govuk-table__cell">eu-nis2, fr-dinum, nl-cloud</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">French Public Sector Overlay (12 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-secnumcloud</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">fr-dinum, principles, risk</td><td class="govuk-table__cell">fr-marche-public, secure</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-rgpd</code></td><td class="govuk-table__cell">data-model, eu-rgpd</td><td class="govuk-table__cell">requirements, stakeholders</td><td class="govuk-table__cell">fr-dinum, secure</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-ebios</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, fr-dinum, fr-secnumcloud, secure, stakeholders</td><td class="govuk-table__cell">principles, risk</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-anssi</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, fr-ebios, fr-pssi, secure</td><td class="govuk-table__cell">eu-nis2, fr-secnumcloud, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-anssi-carto</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, fr-anssi, secure, stakeholders</td><td class="govuk-table__cell">fr-ebios, fr-secnumcloud, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-pssi</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, fr-anssi, fr-ebios, secure, stakeholders</td><td class="govuk-table__cell">eu-nis2, fr-anssi-carto, fr-rgpd, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-dr</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, fr-anssi, secure</td><td class="govuk-table__cell">fr-ebios, fr-pssi, fr-secnumcloud</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-marche-public</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">fr-dinum, fr-secnumcloud, risk</td><td class="govuk-table__cell">data-model, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-dinum</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">principles, secure, stakeholders</td><td class="govuk-table__cell">fr-secnumcloud, risk</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-algorithme-public</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, eu-rgpd, fr-rgpd, stakeholders</td><td class="govuk-table__cell">eu-ai-act, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-code-reuse</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, fr-dinum, stakeholders</td><td class="govuk-table__cell">fr-marche-public, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:fr-irn</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">principles, requirements, research, stakeholders</td><td class="govuk-table__cell">eu-rgpd, fr-anssi, fr-ebios, fr-rgpd, fr-secnumcloud</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Netherlands Public Sector Overlay (4 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:nl-cloud</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">nl-bio, nl-tbb, principles, risk</td><td class="govuk-table__cell">dpia, secure</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:nl-tbb</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, risk</td><td class="govuk-table__cell">principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:nl-bio</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">nl-cloud, nl-tbb, risk, secure</td><td class="govuk-table__cell">data-model</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:nl-exit</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">nl-cloud, risk</td><td class="govuk-table__cell">data-model</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Austrian Overlay (4 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:at-barrierefreiheit</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">diagram, stakeholders, vendor HLD</td><td class="govuk-table__cell">at-bvergg, risk, sobc</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:at-dsgvo</code></td><td class="govuk-table__cell">data-model, eu-rgpd</td><td class="govuk-table__cell">requirements, stakeholders</td><td class="govuk-table__cell">risk, secure</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:at-nisg</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">eu-nis2, principles, risk, secure</td><td class="govuk-table__cell">at-dsgvo, eu-dora</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:at-bvergg</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">at-dsgvo, at-nisg, risk, secure</td><td class="govuk-table__cell">data-model, principles</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Australian Federal Overlay (10 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-e8-posture</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">requirements, risk</td><td class="govuk-table__cell">maturity-model, principles, traceability</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-pia</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, dfd, requirements, stakeholders</td><td class="govuk-table__cell">au-e8-posture, principles, risk, traceability</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-dss</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, dfd, diagram, requirements, stakeholders</td><td class="govuk-table__cell">au-e8-posture, au-pia, maturity-model, principles, risk, servicenow, traceability</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-ism-controls</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, dfd, diagram, requirements, risk</td><td class="govuk-table__cell">au-e8-posture, au-ndb-playbook, maturity-model, principles, servicenow, traceability</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-ndb-playbook</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">au-e8-posture, au-ism-controls, au-pia, data-model, dfd, risk</td><td class="govuk-table__cell">servicenow, traceability</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-pspf</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">au-e8-posture, au-ism-controls, au-pia, data-model, diagram, risk</td><td class="govuk-table__cell">au-disp-attestation, maturity-model, servicenow, traceability</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-ai-assurance</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">au-pia, data-model, dfd, requirements, risk, traceability</td><td class="govuk-table__cell">au-e8-posture, au-ism-controls, maturity-model</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-disp-attestation</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">au-e8-posture, au-ism-controls, au-pia, au-pspf, risk</td><td class="govuk-table__cell">au-ndb-playbook, maturity-model, servicenow, traceability</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-ot-security</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, dfd, diagram, maturity-model, requirements, risk, servicenow, stakeholders, traceability</td><td class="govuk-table__cell">au-e8-posture, au-ism-controls, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-soci-cirmp</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, dfd, diagram, maturity-model, requirements, risk, servicenow, stakeholders, traceability</td><td class="govuk-table__cell">au-e8-posture, au-ism-controls, au-ndb-playbook, au-ot-security, au-pia, principles</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Australian Energy Sector Overlay (2 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-aescsf</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">requirements, stakeholders</td><td class="govuk-table__cell">au-e8-posture, au-ism-controls, au-ot-security, au-soci-cirmp, data-model, dfd, diagram, maturity-model, principles, risk, servicenow, traceability</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:au-energy-compliance</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">requirements, stakeholders</td><td class="govuk-table__cell">adr, au-aescsf, au-ot-security, au-pia, au-soci-cirmp, data-model, dfd, diagram, principles, risk, servicenow, traceability</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">USA Federal Civilian Overlay (10 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:us-fisma-categorization</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">data-model, principles, stakeholders</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:us-nist-800-53</code></td><td class="govuk-table__cell">us-fisma-categorization</td><td class="govuk-table__cell">adr, requirements</td><td class="govuk-table__cell">principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:us-fedramp-ssp</code></td><td class="govuk-table__cell">us-fisma-categorization, us-nist-800-53</td><td class="govuk-table__cell">data-model, diagram, requirements</td><td class="govuk-table__cell">principles, vendor DLD, vendor HLD</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:us-fedramp-readiness</code></td><td class="govuk-table__cell">us-fedramp-ssp, us-nist-800-53</td><td class="govuk-table__cell">us-fisma-categorization</td><td class="govuk-table__cell">principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:us-zero-trust</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">diagram, vendor DLD, vendor HLD</td><td class="govuk-table__cell">principles, us-fedramp-ssp, us-nist-800-53</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:us-icam</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">requirements, stakeholders, us-fisma-categorization</td><td class="govuk-table__cell">principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:us-ai-rmf</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, requirements, stakeholders</td><td class="govuk-table__cell">principles, us-nist-800-53</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:us-ai-impact</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">requirements, stakeholders, us-ai-rmf</td><td class="govuk-table__cell">principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:us-privacy-pia</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, requirements, stakeholders</td><td class="govuk-table__cell">principles, risk, us-icam</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:us-sbom-eo-14028</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">requirements, us-nist-800-53, vendor DLD, vendor HLD</td><td class="govuk-table__cell">principles</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">UK Financial Services Payments Overlay (4 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uk-fs-sca-rts</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uk-fs-safeguarding</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, requirements</td><td class="govuk-table__cell">principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uk-fs-consumer-duty</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">principles, requirements, risk, stakeholders</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uk-fs-ctp-dependency</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">principles, requirements, risk, uk-fs-safeguarding</td><td class="govuk-table__cell">&mdash;</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">UK NHS Clinical Safety Overlay (4 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uk-nhs-dcb0129</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, requirements, stakeholders</td><td class="govuk-table__cell">atrs, dpia, principles, risk</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uk-nhs-dcb0160</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements, stakeholders, uk-nhs-dcb0129</td><td class="govuk-table__cell">operationalize</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uk-nhs-dtac</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements, stakeholders</td><td class="govuk-table__cell">atrs, dld-review, dpia, hld-review, secure, uk-nhs-dcb0129, uk-nhs-dcb0160</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:uk-mdr-classification</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">data-model, principles, requirements, stakeholders</td><td class="govuk-table__cell">secure</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">FDE Site Generator (1 command)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-fde:create</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Repository Tooling (2 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-repo:repo-audit</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">principles, requirements</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-repo:repo-docs</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">UK G-Cloud Supplier Bid-Authoring Overlay (15 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:supplier-profile</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:social-value</code></td><td class="govuk-table__cell">supplier-profile</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:lot-questions</code></td><td class="govuk-table__cell">sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3, security, supplier-profile</td><td class="govuk-table__cell">pricing, service-design, social-value</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:service-design</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">supplier-profile</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:sdd-lot1a</code></td><td class="govuk-table__cell">service-design, supplier-profile</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">lot-questions</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:sdd-lot1b</code></td><td class="govuk-table__cell">service-design, supplier-profile</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">lot-questions</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:sdd-lot2a</code></td><td class="govuk-table__cell">service-design, supplier-profile</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">lot-questions</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:sdd-lot2b</code></td><td class="govuk-table__cell">service-design, supplier-profile</td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">lot-questions</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:sdd-lot3</code></td><td class="govuk-table__cell">service-design, supplier-profile</td><td class="govuk-table__cell">pricing</td><td class="govuk-table__cell">lot-questions</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:declaration</code></td><td class="govuk-table__cell">supplier-profile</td><td class="govuk-table__cell">lot-questions, service-design, social-value</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:pricing</code></td><td class="govuk-table__cell">service-design, supplier-profile</td><td class="govuk-table__cell">sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3</td><td class="govuk-table__cell">gcloud-competitors, tenders</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:security</code></td><td class="govuk-table__cell">service-design, supplier-profile</td><td class="govuk-table__cell">lot-questions, sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:gcloud-competitors</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">competitors, service-design, tenders</td><td class="govuk-table__cell">pricing, sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3, social-value</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:review</code></td><td class="govuk-table__cell">service-design</td><td class="govuk-table__cell">declaration, lot-questions, pricing, sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3, security, social-value, supplier-profile</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:submission-pack</code></td><td class="govuk-table__cell">declaration, lot-questions, pricing, sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3, security, service-design, social-value, supplier-profile</td><td class="govuk-table__cell">review</td><td class="govuk-table__cell">&mdash;</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">TOGAF ADM (9 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:adm-preliminary</code></td><td class="govuk-table__cell">principles</td><td class="govuk-table__cell">stakeholders, strategy</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:business-capability-map</code></td><td class="govuk-table__cell">adm-preliminary</td><td class="govuk-table__cell">principles, requirements, stakeholders</td><td class="govuk-table__cell">application-inventory</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:application-inventory</code></td><td class="govuk-table__cell">adm-preliminary</td><td class="govuk-table__cell">business-capability-map, principles, requirements</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:application-rationalization</code></td><td class="govuk-table__cell">application-inventory</td><td class="govuk-table__cell">adm-preliminary, adr, business-capability-map, principles, transition-architecture</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:gap-analysis</code></td><td class="govuk-table__cell">business-capability-map</td><td class="govuk-table__cell">principles, strategy</td><td class="govuk-table__cell">adm-preliminary, risk, stakeholders</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:transition-architecture</code></td><td class="govuk-table__cell">gap-analysis</td><td class="govuk-table__cell">adr, application-rationalization, roadmap</td><td class="govuk-table__cell">risk, stakeholders</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:architecture-board</code></td><td class="govuk-table__cell">principles</td><td class="govuk-table__cell">adm-preliminary, business-capability-map, vendor HLD</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:architecture-change</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">adm-preliminary, architecture-board, business-capability-map, principles, transition-architecture</td><td class="govuk-table__cell">application-inventory</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:architecture-repository</code></td><td class="govuk-table__cell">principles</td><td class="govuk-table__cell">adr, diagram, story</td><td class="govuk-table__cell">application-inventory, architecture-board, architecture-change, business-capability-map, gap-analysis, transition-architecture</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">AI Agent Architecture (6 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:agent-inventory</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">adm-preliminary, application-inventory, principles</td><td class="govuk-table__cell">agent-design, agent-governance, agent-integration, agent-maturity, agent-security</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:agent-design</code></td><td class="govuk-table__cell">agent-inventory, requirements</td><td class="govuk-table__cell">ai-playbook, principles, risk, stakeholders</td><td class="govuk-table__cell">hld-review, secure</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:agent-governance</code></td><td class="govuk-table__cell">agent-design, agent-inventory</td><td class="govuk-table__cell">architecture-board, principles</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:agent-integration</code></td><td class="govuk-table__cell">agent-design</td><td class="govuk-table__cell">agent-governance, agent-inventory</td><td class="govuk-table__cell">adm-preliminary, agent-security, principles</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:agent-security</code></td><td class="govuk-table__cell">agent-design, agent-inventory</td><td class="govuk-table__cell">mod-secure, principles, risk, secure</td><td class="govuk-table__cell">agent-governance, ai-playbook, dpia</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:agent-maturity</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">agent-design, agent-governance, agent-integration, agent-inventory, agent-security, maturity-model, principles, risk</td><td class="govuk-table__cell">ai-playbook, architecture-board, hld-review, secure</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Open Agile Architecture (5 commands)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:oaa-adm-lite</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">adm-preliminary, principles</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:product-architecture</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">business-capability-map, oaa-adm-lite, principles</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:agile-strategy</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">business-capability-map, oaa-adm-lite, principles, product-architecture, transition-architecture</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:agile-security</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">agile-strategy, oaa-adm-lite, principles, product-architecture</td><td class="govuk-table__cell">&mdash;</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit:agile-governance</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">agile-security, agile-strategy, oaa-adm-lite, principles, product-architecture</td><td class="govuk-table__cell">&mdash;</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
 
         <p class="govuk-body govuk-!-margin-top-4">
             <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/DEPENDENCY-MATRIX.md" class="govuk-link">View full dependency matrix with critical paths and design notes</a>
