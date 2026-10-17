@@ -297,6 +297,219 @@ Publishing command that generates the documentation site:
 
 ---
 
+## Community Overlay Dependencies
+
+Each community overlay and tooling plugin, with what its commands read: ArcKit core documents, documents from the same overlay, and in places another overlay's. Levels come from each command's own prompt, read in full. An input the prompt reads only "if present" is optional unless the prompt also says to note or record the gap when it is missing. Where a UK G-Cloud command reads the service design document for the service's own lot, all five sdd-lot commands are listed; only the one for that lot applies.
+
+Some prompts name codes that are not registered, so they are not shown: `DR` used for data requirements in the Canadian and UAE overlays (DR is the French Diffusion Restreinte doc-type), `ARCH`, `INT`, `USTY`, `JRNY`, `KPI` and `ANALYZE`. `DMOD` is read as the data model.
+
+### ArcKit Canadian Federal Overlay (`arckit-ca`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:ca-fitaa` | — | — | data-model, principles, requirements, stakeholders |
+| `/arckit:ca-pia` | — | — | data-model, principles, requirements, stakeholders |
+| `/arckit:ca-atip` | — | — | ca-pia, data-model, principles, requirements |
+| `/arckit:ca-aia` | — | data-model, requirements | ca-pia, principles |
+| `/arckit:ca-charter` | — | requirements, stakeholders | ca-fitaa, ca-pia, principles |
+| `/arckit:ca-itsg-33` | — | ca-pia, fr-dr, requirements | ca-soia, principles |
+| `/arckit:ca-soia` | — | — | ca-fitaa, ca-itsg-33, principles, requirements |
+| `/arckit:ca-cloud-residency` | — | ca-pia, requirements | ca-itsg-33, principles |
+| `/arckit:ca-gc-digital-standards` | — | — | ca-aia, principles, requirements, service-assessment |
+| `/arckit:ca-ola` | — | — | ca-fitaa, principles, requirements, service-assessment |
+| `/arckit:ca-pspc` | — | — | ca-cloud-residency, ca-itsg-33, principles, requirements, sobc |
+| `/arckit:ca-ocap` | — | — | ca-pia, data-model, principles, requirements |
+
+### ArcKit UAE Federal Overlay (`arckit-uae`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:uae-classification` | — | requirements | principles, uae-pdpl |
+| `/arckit:uae-pdpl` | — | — | data-model, principles, requirements |
+| `/arckit:uae-ias` | — | — | principles, requirements, secure |
+| `/arckit:uae-cloud-residency` | uae-classification | — | principles, requirements, uae-ias |
+| `/arckit:uae-uaepass` | — | — | principles, requirements, secure |
+| `/arckit:uae-zero-bureaucracy` | — | — | principles, requirements |
+| `/arckit:uae-digital-records` | — | — | data-model, principles, requirements, uae-classification |
+| `/arckit:uae-data-sharing` | — | uae-classification, uae-pdpl | data-model, principles, requirements |
+| `/arckit:uae-priorities-alignment` | — | — | adr, principles, requirements, sobc, uae-classification, uae-cloud-residency, uae-data-sharing, uae-digital-records, uae-ias, uae-pdpl, uae-uaepass, uae-zero-bureaucracy |
+| `/arckit:uae-ai-charter` | — | — | dpia, principles, requirements |
+| `/arckit:uae-ai-autonomy-tier` | — | — | principles, requirements, uae-ai-charter |
+| `/arckit:uae-procurement` | — | — | principles, requirements, risk, sobc |
+
+### ArcKit EU Overlay (`arckit-eu`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:eu-rgpd` | data-model | principles, requirements, stakeholders | risk, secure |
+| `/arckit:eu-nis2` | requirements | principles, risk, secure | eu-dora, fr-secnumcloud |
+| `/arckit:eu-ai-act` | requirements | data-model, risk, stakeholders | principles, secure |
+| `/arckit:eu-dora` | requirements | principles, risk, secure | eu-nis2, fr-secnumcloud |
+| `/arckit:eu-cra` | requirements | principles, risk, secure | data-model, eu-nis2 |
+| `/arckit:eu-dsa` | requirements | risk, stakeholders | eu-rgpd, principles |
+| `/arckit:eu-data-act` | requirements | data-model, risk, secure | eu-rgpd, fr-secnumcloud |
+| `/arckit:eu-cloud-sovereignty` | requirements | fr-secnumcloud, principles, risk | eu-nis2, fr-dinum, nl-cloud |
+
+### ArcKit French Public Sector Overlay (`arckit-fr`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:fr-secnumcloud` | requirements | fr-dinum, principles, risk | fr-marche-public, secure |
+| `/arckit:fr-rgpd` | data-model, eu-rgpd | requirements, stakeholders | fr-dinum, secure |
+| `/arckit:fr-ebios` | requirements | data-model, fr-dinum, fr-secnumcloud, secure, stakeholders | principles, risk |
+| `/arckit:fr-anssi` | requirements | data-model, fr-ebios, fr-pssi, secure | eu-nis2, fr-secnumcloud, principles |
+| `/arckit:fr-anssi-carto` | requirements | data-model, fr-anssi, secure, stakeholders | fr-ebios, fr-secnumcloud, principles |
+| `/arckit:fr-pssi` | requirements | data-model, fr-anssi, fr-ebios, secure, stakeholders | eu-nis2, fr-anssi-carto, fr-rgpd, principles |
+| `/arckit:fr-dr` | requirements | data-model, fr-anssi, secure | fr-ebios, fr-pssi, fr-secnumcloud |
+| `/arckit:fr-marche-public` | requirements | fr-dinum, fr-secnumcloud, risk | data-model, principles |
+| `/arckit:fr-dinum` | requirements | principles, secure, stakeholders | fr-secnumcloud, risk |
+| `/arckit:fr-algorithme-public` | requirements | data-model, eu-rgpd, fr-rgpd, stakeholders | eu-ai-act, principles |
+| `/arckit:fr-code-reuse` | requirements | data-model, fr-dinum, stakeholders | fr-marche-public, principles |
+| `/arckit:fr-irn` | — | principles, requirements, research, stakeholders | eu-rgpd, fr-anssi, fr-ebios, fr-rgpd, fr-secnumcloud |
+
+### ArcKit Netherlands Public Sector Overlay (`arckit-nl`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:nl-cloud` | requirements | nl-bio, nl-tbb, principles, risk | dpia, secure |
+| `/arckit:nl-tbb` | requirements | data-model, risk | principles |
+| `/arckit:nl-bio` | requirements | nl-cloud, nl-tbb, risk, secure | data-model |
+| `/arckit:nl-exit` | requirements | nl-cloud, risk | data-model |
+
+### ArcKit Austrian Overlay (`arckit-at`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:at-barrierefreiheit` | requirements | diagram, stakeholders, vendor HLD | at-bvergg, risk, sobc |
+| `/arckit:at-dsgvo` | data-model, eu-rgpd | requirements, stakeholders | risk, secure |
+| `/arckit:at-nisg` | requirements | eu-nis2, principles, risk, secure | at-dsgvo, eu-dora |
+| `/arckit:at-bvergg` | requirements | at-dsgvo, at-nisg, risk, secure | data-model, principles |
+
+### ArcKit Australian Federal Overlay (`arckit-au`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:au-e8-posture` | — | requirements, risk | maturity-model, principles, traceability |
+| `/arckit:au-pia` | — | data-model, dfd, requirements, stakeholders | au-e8-posture, principles, risk, traceability |
+| `/arckit:au-dss` | — | data-model, dfd, diagram, requirements, stakeholders | au-e8-posture, au-pia, maturity-model, principles, risk, servicenow, traceability |
+| `/arckit:au-ism-controls` | — | data-model, dfd, diagram, requirements, risk | au-e8-posture, au-ndb-playbook, maturity-model, principles, servicenow, traceability |
+| `/arckit:au-ndb-playbook` | — | au-e8-posture, au-ism-controls, au-pia, data-model, dfd, risk | servicenow, traceability |
+| `/arckit:au-pspf` | — | au-e8-posture, au-ism-controls, au-pia, data-model, diagram, risk | au-disp-attestation, maturity-model, servicenow, traceability |
+| `/arckit:au-ai-assurance` | — | au-pia, data-model, dfd, requirements, risk, traceability | au-e8-posture, au-ism-controls, maturity-model |
+| `/arckit:au-disp-attestation` | — | au-e8-posture, au-ism-controls, au-pia, au-pspf, risk | au-ndb-playbook, maturity-model, servicenow, traceability |
+| `/arckit:au-ot-security` | — | data-model, dfd, diagram, maturity-model, requirements, risk, servicenow, stakeholders, traceability | au-e8-posture, au-ism-controls, principles |
+| `/arckit:au-soci-cirmp` | — | data-model, dfd, diagram, maturity-model, requirements, risk, servicenow, stakeholders, traceability | au-e8-posture, au-ism-controls, au-ndb-playbook, au-ot-security, au-pia, principles |
+
+### ArcKit Australian Energy Sector Overlay (`arckit-au-energy`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:au-aescsf` | — | requirements, stakeholders | au-e8-posture, au-ism-controls, au-ot-security, au-soci-cirmp, data-model, dfd, diagram, maturity-model, principles, risk, servicenow, traceability |
+| `/arckit:au-energy-compliance` | — | requirements, stakeholders | adr, au-aescsf, au-ot-security, au-pia, au-soci-cirmp, data-model, dfd, diagram, principles, risk, servicenow, traceability |
+
+### ArcKit USA Federal Civilian Overlay (`arckit-us`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:us-fisma-categorization` | — | requirements | data-model, principles, stakeholders |
+| `/arckit:us-nist-800-53` | us-fisma-categorization | adr, requirements | principles |
+| `/arckit:us-fedramp-ssp` | us-fisma-categorization, us-nist-800-53 | data-model, diagram, requirements | principles, vendor DLD, vendor HLD |
+| `/arckit:us-fedramp-readiness` | us-fedramp-ssp, us-nist-800-53 | us-fisma-categorization | principles |
+| `/arckit:us-zero-trust` | — | diagram, vendor DLD, vendor HLD | principles, us-fedramp-ssp, us-nist-800-53 |
+| `/arckit:us-icam` | — | requirements, stakeholders, us-fisma-categorization | principles |
+| `/arckit:us-ai-rmf` | — | data-model, requirements, stakeholders | principles, us-nist-800-53 |
+| `/arckit:us-ai-impact` | — | requirements, stakeholders, us-ai-rmf | principles |
+| `/arckit:us-privacy-pia` | — | data-model, requirements, stakeholders | principles, risk, us-icam |
+| `/arckit:us-sbom-eo-14028` | — | requirements, us-nist-800-53, vendor DLD, vendor HLD | principles |
+
+### ArcKit UK Financial Services Payments Overlay (`arckit-uk-finance`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:uk-fs-sca-rts` | — | — | data-model, principles, requirements |
+| `/arckit:uk-fs-safeguarding` | — | data-model, requirements | principles |
+| `/arckit:uk-fs-consumer-duty` | — | — | principles, requirements, risk, stakeholders |
+| `/arckit:uk-fs-ctp-dependency` | — | principles, requirements, risk, uk-fs-safeguarding | — |
+
+### ArcKit UK NHS Clinical Safety Overlay (`arckit-uk-nhs`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:uk-nhs-dcb0129` | — | data-model, requirements, stakeholders | atrs, dpia, principles, risk |
+| `/arckit:uk-nhs-dcb0160` | — | data-model, principles, requirements, stakeholders, uk-nhs-dcb0129 | operationalize |
+| `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-nhs-dcb0129, uk-nhs-dcb0160 |
+| `/arckit:uk-mdr-classification` | — | data-model, principles, requirements, stakeholders | secure |
+
+### ArcKit FDE Site Generator (`arckit-fde`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit-fde:create` | — | — | — |
+
+### ArcKit Repository Tooling (`arckit-repo`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit-repo:repo-audit` | — | principles, requirements | — |
+| `/arckit-repo:repo-docs` | — | — | — |
+
+### ArcKit UK G-Cloud Supplier Bid-Authoring Overlay (`arckit-uk-gcloud`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:supplier-profile` | — | — | — |
+| `/arckit:social-value` | supplier-profile | — | — |
+| `/arckit:lot-questions` | sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3, security, supplier-profile | pricing, service-design, social-value | — |
+| `/arckit:service-design` | — | supplier-profile | — |
+| `/arckit:sdd-lot1a` | service-design, supplier-profile | — | lot-questions |
+| `/arckit:sdd-lot1b` | service-design, supplier-profile | — | lot-questions |
+| `/arckit:sdd-lot2a` | service-design, supplier-profile | — | lot-questions |
+| `/arckit:sdd-lot2b` | service-design, supplier-profile | — | lot-questions |
+| `/arckit:sdd-lot3` | service-design, supplier-profile | pricing | lot-questions |
+| `/arckit:declaration` | supplier-profile | lot-questions, service-design, social-value | — |
+| `/arckit:pricing` | service-design, supplier-profile | sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3 | gcloud-competitors, tenders |
+| `/arckit:security` | service-design, supplier-profile | lot-questions, sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3 | — |
+| `/arckit:gcloud-competitors` | — | competitors, service-design, tenders | pricing, sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3, social-value |
+| `/arckit:review` | service-design | declaration, lot-questions, pricing, sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3, security, social-value, supplier-profile | — |
+| `/arckit:submission-pack` | declaration, lot-questions, pricing, sdd-lot1a, sdd-lot1b, sdd-lot2a, sdd-lot2b, sdd-lot3, security, service-design, social-value, supplier-profile | review | — |
+
+### ArcKit TOGAF ADM (`arckit-togaf-adm`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:adm-preliminary` | principles | stakeholders, strategy | — |
+| `/arckit:business-capability-map` | adm-preliminary | principles, requirements, stakeholders | application-inventory |
+| `/arckit:application-inventory` | adm-preliminary | business-capability-map, principles, requirements | — |
+| `/arckit:application-rationalization` | application-inventory | adm-preliminary, adr, business-capability-map, principles, transition-architecture | — |
+| `/arckit:gap-analysis` | business-capability-map | principles, strategy | adm-preliminary, risk, stakeholders |
+| `/arckit:transition-architecture` | gap-analysis | adr, application-rationalization, roadmap | risk, stakeholders |
+| `/arckit:architecture-board` | principles | adm-preliminary, business-capability-map, vendor HLD | — |
+| `/arckit:architecture-change` | — | adm-preliminary, architecture-board, business-capability-map, principles, transition-architecture | application-inventory |
+| `/arckit:architecture-repository` | principles | adr, diagram, story | application-inventory, architecture-board, architecture-change, business-capability-map, gap-analysis, transition-architecture |
+
+### ArcKit AI Agent Architecture (`arckit-agent-architecture`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:agent-inventory` | — | adm-preliminary, application-inventory, principles | agent-design, agent-governance, agent-integration, agent-maturity, agent-security |
+| `/arckit:agent-design` | agent-inventory, requirements | ai-playbook, principles, risk, stakeholders | hld-review, secure |
+| `/arckit:agent-governance` | agent-design, agent-inventory | architecture-board, principles | — |
+| `/arckit:agent-integration` | agent-design | agent-governance, agent-inventory | adm-preliminary, agent-security, principles |
+| `/arckit:agent-security` | agent-design, agent-inventory | mod-secure, principles, risk, secure | agent-governance, ai-playbook, dpia |
+| `/arckit:agent-maturity` | — | agent-design, agent-governance, agent-integration, agent-inventory, agent-security, maturity-model, principles, risk | ai-playbook, architecture-board, hld-review, secure |
+
+### ArcKit Open Agile Architecture (`arckit-oaa`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:oaa-adm-lite` | — | adm-preliminary, principles | — |
+| `/arckit:product-architecture` | — | business-capability-map, oaa-adm-lite, principles | — |
+| `/arckit:agile-strategy` | — | business-capability-map, oaa-adm-lite, principles, product-architecture, transition-architecture | — |
+| `/arckit:agile-security` | — | agile-strategy, oaa-adm-lite, principles, product-architecture | — |
+| `/arckit:agile-governance` | — | agile-security, agile-strategy, oaa-adm-lite, principles, product-architecture | — |
+
+---
+
 ## Critical Paths
 
 ### Standard Project Path (Non-AI, Non-Government)
@@ -423,11 +636,16 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 6.18.2
 - **Matrix Date**: 2026-10-17
-- **Commands Documented**: 76 core commands; community overlay commands are described in the Changelog
+- **Commands Documented**: 76 core commands in the matrix; 120 community overlay and tooling commands in Community Overlay Dependencies
 - **Matrix Rows**: 65 (63 commands + 2 external documents)
 - **Note**: `/arckit:build`, `/arckit:customize`, `/arckit:export-okf`, `/arckit:graph-report`, `/arckit:health`, `/arckit:impact`, `/arckit:import-okf`, `/arckit:init`, `/arckit:navigator`, `/arckit:pages`, `/arckit:search`, `/arckit:start`, `/arckit:template-builder` are not in the matrix. They need no earlier documents, or they work across whatever the project already holds rather than on particular documents, and no other command reads their output
 
 ## Changelog
+
+### 2026-10-17 - Community overlay dependencies
+
+- **Added**: a Community Overlay Dependencies section with one table per overlay and tooling plugin, covering all 120 commands outside core. Each command's prompt and template were read in full to record what it reads and at what level
+- **Rule**: an input read only "if present" is optional unless the prompt also says to note or record the gap when it is missing
 
 ### 2026-10-17 - Matrix rebuilt from the command files
 

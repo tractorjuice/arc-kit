@@ -157,6 +157,17 @@ html.dark-mode .govuk-details__text {
     border-left-color: #555555;
 }
 
+html.dark-mode .govuk-table__header,
+html.dark-mode .govuk-table__cell {
+    color: #f0f0f0;
+    border-bottom-color: #555555;
+}
+
+html.dark-mode .govuk-table code {
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
 html.dark-mode .govuk-warning-text__icon {
     border-color: #f0f0f0;
     color: #f0f0f0;
