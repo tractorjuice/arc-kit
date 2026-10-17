@@ -1209,7 +1209,7 @@ graph TD
 
 ## Alternative View: Gantt Chart Format
 
-For project planning purposes, here's a Gantt chart representation of a typical UK Government AI project. No task starts before a document it needs or recommends, apart from plan and risk, which you can re-run once the requirements exist:
+For project planning purposes, here's a Gantt chart representation of a typical UK Government AI project. No task starts before a document it needs or recommends, apart from plan, stakeholders and risk, which you can re-run once the requirements exist:
 
 ```mermaid
 gantt
@@ -1395,7 +1395,7 @@ graph LR
   - Arrows now mean a mandatory input (solid) or a recommended input (dotted); the legend explains what is left out
   - Canada and UAE diagrams redrawn from their build recipes; the UAE diagram drops data-model and framework, which the recipe doesn't run
   - Government code discovery shows the commands' real inputs: no other command reads their reports
-  - Gantt chart reordered so no task starts before a document it needs or recommends (apart from plan and risk); adds adr and diagram
+  - Gantt chart reordered so no task starts before a document it needs or recommends (apart from plan, stakeholders and risk); adds adr and diagram
   - Tier table adds start, archify, grants, tenders and competitors
 - **Earlier Changes (1.3.0, 2026-03-16)**:
   - Added Wardley Mapping Suite workflow diagram (wardley.value-chain, wardley.doctrine, wardley.climate, wardley.gameplay)

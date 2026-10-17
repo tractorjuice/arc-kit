@@ -26,9 +26,9 @@ Rows and columns cover the 63 core commands that read, or are read by, another c
 | **plan** | - |  |  |  | O | O |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  | R | R |
 | **principles** | R | - | R | R | R | R | M | M | M | M | O | R | O | R | R | R | R | R | M | R | R | O | O | O | O | M | M | O | O | R | M | M | M | M | R | R | M |  | O | O | M | M | R |  | R | M | R | R | R |  | R | M | M | R | M | M | M | M | M | M | M | M | M |
 | **stakeholders** | R |  | - | M | M | M | R | R | M | R | O | R |  | R | R | R | R | R | R | R | R |  |  |  | R | R | R |  | O |  | O | R | R | R |  |  | O |  |  |  |  |  | R |  |  |  |  | O | O |  | R | O |  | O | R | R | O |  |  |  |  | R | R |
-| **risk** | O |  |  | - | R | R | O | R | O |  | O |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  | O | O |  |  |  |  |  |  | R | R | R |  |  | O |  |  | R |  | R | O | R | O | R | R | R |  | R | R | R | R | R |
-| **sobc** | O |  |  | O | - | R | O | O | R |  | O | O |  |  | R | R | R | R |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  | O |  |  | R |  |  |  | R |  |  |  |  |  |  | R | R |
-| **requirements** | R |  | O | R | O | - | M | M |  | M | R | M | O | R | M | M | M | M | M | M | M | O | O | O | M | M | O |  | R | R | M | O | M | M | M | M | M |  | O | O | M | M | M |  | M | M | M | M | M | M | M | R | R | O | M | M | M | M | M | M | M | R | R |
+| **risk** | R |  |  | - | R | R | O | R | O |  | O |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  | O | O |  |  |  |  |  |  | R | R | R |  |  | O |  |  | R |  | R | O | R | O | R | R | R |  | R | R | R | R | R |
+| **sobc** | R |  |  | O | - | R | O | O | R |  | O | O |  |  | R | R | R | R |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  | O |  |  | R |  |  |  | R |  |  |  |  |  |  | R | R |
+| **requirements** | R |  | R | R | O | - | M | M |  | M | R | M | O | R | M | M | M | M | M | M | M | O | O | O | M | M | O |  | R | R | M | R | M | M | M | M | M |  | O | O | M | M | M |  | M | M | M | M | M | M | M | R | R | O | M | M | M | M | M | M | M | R | R |
 | **platform-design** |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **roadmap** |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R |
 | **strategy** |  |  |  |  |  |  |  |  | - | R | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  | R |
@@ -36,7 +36,7 @@ Rows and columns cover the 63 core commands that read, or are read by, another c
 | **glossary** |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **data-model** |  |  |  |  |  |  | O |  |  | R | R | - | O | M |  |  |  |  | R |  |  |  |  | O |  | O |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  | R |  |  | R | O | R |  | O |  | R | R |  | O | R |  | R | O |  |  | O | R |  |
 | **archify** |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **dpia** |  |  |  | O |  |  |  |  |  |  |  |  | O | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  | O |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  | R | O | O | O | R |  |  | R | R |
+| **dpia** |  |  |  | O |  |  |  |  |  |  |  |  | O | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  | R | O | O | O | R |  |  | R | R |
 | **research** |  |  |  |  |  |  |  |  |  | R | O | O |  |  | - |  |  |  | O |  |  |  |  |  |  | R |  | O | R |  | O |  | R | R |  | O | R |  |  |  |  |  |  |  |  | R | O | O |  |  |  |  |  |  | O | O |  |  |  |  |  | R | R |
 | **azure-research** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  | R |  | O | R |  | O |  | R | R |  |  | R |  |  |  |  |  |  |  |  | R | O | O |  |  |  |  |  |  | O | O |  |  |  |  |  | R | R |
 | **aws-research** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  | R |  | O | R |  | O |  | R | R |  |  | R |  |  |  |  |  |  |  |  | R | O | O |  |  |  |  |  |  | O | O |  |  |  |  |  | R | R |
@@ -48,12 +48,12 @@ Rows and columns cover the 63 core commands that read, or are read by, another c
 | **gov-landscape** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **dfd** |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **wardley.value-chain** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **wardley** |  |  |  |  |  |  | R | R | R |  |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  | - | R | M | M | O | O |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  | R | R |
+| **wardley** |  |  |  |  |  |  | R | R | R |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  | - | R | M | M | O | O |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  | R | R |
 | **wardley.doctrine** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | - | R | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **wardley.gameplay** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **wardley.climate** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | R | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **diagram** |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  | R |  |  |  | M | R |  | R | M |  |  |  |  |  | R | R |  |  | R | O | O | R | R |
-| **adr** |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  | M |  |  |  |  |  |  |  |  |  |  |
+| **adr** |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  | M |  |  |  |  |  |  |  |  |  | O |
 | **data-mesh-contract** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **sow** |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | O |  |  | R |  |  |  | R |  |  |  |  |  |  |  |  |  | O |  |  |  | O |  |  |  |  |  |  | R | R |
 | **dos** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R |
@@ -63,8 +63,8 @@ Rows and columns cover the 63 core commands that read, or are read by, another c
 | **score** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **tenders** |  |  |  | O | O |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **competitors** |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
-| **hld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | M | R |  |  |  |  |  |  | R |  |  | R |  | R |  |  |  |  |  |  | R | R |
-| **dld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  | R |  |  | R |  | R |  |  |  |  |  |  | R | R |
+| **hld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | M | R |  |  |  |  |  |  | R |  |  | R |  | R |  |  | O |  |  |  | R | R |
+| **dld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  | R |  |  | R |  | R |  |  | O |  |  |  | R | R |
 | **backlog** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | M |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |
 | **trello** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
 | **servicenow** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  | R |  |  | O |  |  |  |  |  |  |  |  |  | R |  |
@@ -78,8 +78,8 @@ Rows and columns cover the 63 core commands that read, or are read by, another c
 | **conformance** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |
 | **maturity-model** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |
 | **service-assessment** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  | R |  |
-| **tcop** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  | O |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  | O |  |  |  |  | O | R |  |  | O | - |  |  | O |  |  | R | R |
-| **ai-playbook** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  | O | O |  |  | O | O | - | R | O |  | R | R | R |
+| **tcop** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  | O |  |  |  |  |  |  |  |  |  |  | O |  |  |  | O | O |  |  |  |  | O | R |  |  | O | - |  | O | O |  |  | R | R |
+| **ai-playbook** |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  | O | O |  |  | O | O | - | R | O |  | R | R | R |
 | **atrs** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  | O | O |  |  | O |  |  | - | O |  |  | R | R |
 | **secure** |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  | R |  |  | R |  |  |  | - | R |  | R | R |
 | **mod-secure** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O |  |  |  |  |  |  |  | - | O | R | R |
@@ -96,12 +96,12 @@ Rows and columns cover the 63 core commands that read, or are read by, another c
 These commands can run first:
 
 - **start** - Onboarding and navigation (console-only diagnostic, no file output; recommends `init` and `principles`)
-- **plan** - Project planning and timeline (reads stakeholders, requirements and principles (R), and sobc and risk (O), if they exist)
+- **plan** - Project planning and timeline (reads stakeholders, requirements, principles, sobc and risk (R), if they exist)
 - **principles** - Architecture principles (reads no earlier ArcKit documents)
 
 ### Tier 1: Strategic Context (Depends on Foundation)
 
-- **stakeholders** → Depends on: principles (R), requirements (O)
+- **stakeholders** → Depends on: principles (R), requirements (R)
 
 ### Tier 2: Risk Assessment (Depends on Stakeholders)
 
@@ -141,9 +141,9 @@ These commands can run first:
 Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 
 - **data-model** → Depends on: requirements (M), principles (R), stakeholders (R), sobc (O), research (O)
-- **archify** → Depends on: wardley (R), plan (O), principles (O), requirements (O), data-model (O), dpia (O), dfd (O), diagram (O), adr (O), sow (O), vendor HLD (O), vendor DLD (O)
-  - Note: wardley is the input for `wardley` renders. Renders existing artefacts as interactive HTML. Adds no new analysis, so it is a leaf: nothing consumes its output as input.
-- **dpia** → Depends on: data-model (M), principles (R), stakeholders (R), requirements (R), risk (O), secure (O)
+- **archify** → Depends on: plan (O), principles (O), requirements (O), data-model (O), dpia (O), dfd (O), wardley (O), diagram (O), adr (O), sow (O), vendor HLD (O), vendor DLD (O)
+  - Note: wardley is the input for `wardley` renders. Renders existing artefacts as interactive HTML and adds no new analysis. It writes the same DIAG doc-type as diagram, so commands that read diagrams may read its output too; the matrix records those reads under diagram.
+- **dpia** → Depends on: data-model (M), principles (R), stakeholders (R), requirements (R), risk (O), ai-playbook (O), secure (O)
 - **research** → Depends on: requirements (M), principles (R), stakeholders (R), sobc (R), tenders (R)
   - Note: Also spawns `vendors/{slug}-profile.md` and `tech-notes/{slug}.md` for reusable knowledge (use `--no-spawn` to skip)
 - **azure-research** → Depends on: requirements (M), principles (R), stakeholders (R), sobc (R), vendor HLD (R), MCP Server (External)
@@ -185,7 +185,7 @@ Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
   - Note: Can generate diagrams from user description alone; richer output when requirements and other artifacts exist
 - **adr** → Depends on: principles (M), requirements (M), risk (R), stakeholders (O), research (O), azure-research (O), aws-research (O), wardley (O)
   - Note: Architecture Decision Records; warns if principles or requirements are missing
-- **data-mesh-contract** → Depends on: principles (M), stakeholders (R), data-model (R), requirements (O), dpia (O)
+- **data-mesh-contract** → Depends on: principles (M), stakeholders (R), requirements (R), data-model (R)
   - Note: Federated data product contracts for mesh architectures; requires principles for governance standards
 
 ### Tier 7: Procurement (Depends on Requirements)
@@ -229,7 +229,7 @@ Most procurement commands require ARC-*-REQ-*.md:
 
 ### Tier 11: Operations (Depends on Architecture)
 
-- **servicenow** → Depends on: requirements (M), diagram (M), principles (R), data-model (R), vendor HLD (R), vendor DLD (R), wardley (O), traceability (O)
+- **servicenow** → Depends on: requirements (M), diagram (M), principles (R), data-model (R), vendor HLD (R), vendor DLD (R), wardley (O), traceability (O), tcop (O)
 - **devops** → Depends on: principles (M), requirements (M), research (R), azure-research (R), aws-research (R), diagram (R), risk (O), data-model (O), tcop (O)
 - **mlops** → Depends on: requirements (M), principles (R), data-model (R), ai-playbook (R), research (O), azure-research (O), aws-research (O), atrs (O), jsp-936 (O) [for AI projects]
 - **finops** → Depends on: requirements (M), principles (R), diagram (R), devops (R), stakeholders (O), sobc (O), research (O), azure-research (O), aws-research (O)
@@ -258,7 +258,7 @@ These assess compliance across the project:
   - Note: Compliance artifacts are optional - service-assessment identifies them as gaps if missing
 - **tcop** → Depends on: principles (M), requirements (M), stakeholders (R), risk (R), diagram (R), dpia (O), research (O), azure-research (O), aws-research (O), ai-playbook (O)
 - **ai-playbook** → Depends on: principles (M), requirements (M), risk (R), data-model (R), stakeholders (O), dpia (O) [if AI system]
-- **atrs** → Depends on: principles (M), requirements (M), ai-playbook (R), data-model (O), dpia (O) [for AI/algorithmic systems]
+- **atrs** → Depends on: principles (M), requirements (M), ai-playbook (R), data-model (O), dpia (O), hld-review (O), dld-review (O), tcop (O) [for AI/algorithmic systems]
 - **secure** → Depends on: principles (M), requirements (M), risk (R), dpia (R), diagram (R), tcop (O), ai-playbook (O), atrs (O)
 - **mod-secure** → Depends on: principles (M), requirements (M), risk (R), secure (R), diagram (O)
 - **jsp-936** → Depends on: principles (M), requirements (M), risk (R), ai-playbook (R), data-model (O), diagram (O), mod-secure (O) [for MOD AI systems]
@@ -271,7 +271,7 @@ Final reporting commands that create comprehensive project narratives and presen
   - Note: Requires principles as foundation; recommends multiple artifacts for comprehensive narrative
   - Generates comprehensive historical record with timeline analysis, traceability chains, governance achievements
   - Best run at project milestones or completion when most/all artifacts are complete
-- **presentation** → Depends on: principles (M), plan (R), stakeholders (R), risk (R), sobc (R), requirements (R), roadmap (R), strategy (R), dpia (R), research (R), azure-research (R), aws-research (R), gcp-research (R), wardley (R), diagram (R), sow (R), dos (R), hld-review (R), dld-review (R), devops (R), tcop (R), ai-playbook (R), atrs (R), secure (R), mod-secure (R)
+- **presentation** → Depends on: principles (M), plan (R), stakeholders (R), risk (R), sobc (R), requirements (R), roadmap (R), strategy (R), dpia (R), research (R), azure-research (R), aws-research (R), gcp-research (R), wardley (R), diagram (R), sow (R), dos (R), hld-review (R), dld-review (R), devops (R), tcop (R), ai-playbook (R), atrs (R), secure (R), mod-secure (R), adr (O)
   - Note: Reads available artifacts and reformats into MARP slide deck for governance boards
   - Supports focus modes: Executive, Technical, Stakeholder, Procurement
   - Can run at any milestone when at least 3 artifacts exist; more artifacts = richer slides
@@ -368,7 +368,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 **ARC-*-REQ-*.md** (from requirements) - read by 57 commands:
 
-- plan (R), stakeholders (O), risk (R), sobc (O), platform-design (M), roadmap (M), framework (M), glossary (R), data-model (M), archify (O), dpia (R), research (M), azure-research (M), aws-research (M), gcp-research (M), datascout (M), grants (M), gov-reuse (M), gov-code-search (O), gov-landscape (O), dfd (O), wardley.value-chain (M), wardley (M), wardley.doctrine (O), wardley.climate (R), diagram (R), adr (M), data-mesh-contract (O), sow (M), dos (M), gcloud-search (M), gcloud-clarify (M), evaluate (M), tenders (O), competitors (O), hld-review (M), dld-review (M), backlog (M), servicenow (M), devops (M), mlops (M), finops (M), operationalize (M), traceability (M), analyze (M), principles-compliance (R), conformance (R), maturity-model (O), service-assessment (M), tcop (M), ai-playbook (M), atrs (M), secure (M), mod-secure (M), jsp-936 (M), story (R), presentation (R)
+- plan (R), stakeholders (R), risk (R), sobc (O), platform-design (M), roadmap (M), framework (M), glossary (R), data-model (M), archify (O), dpia (R), research (M), azure-research (M), aws-research (M), gcp-research (M), datascout (M), grants (M), gov-reuse (M), gov-code-search (O), gov-landscape (O), dfd (O), wardley.value-chain (M), wardley (M), wardley.doctrine (O), wardley.climate (R), diagram (R), adr (M), data-mesh-contract (R), sow (M), dos (M), gcloud-search (M), gcloud-clarify (M), evaluate (M), tenders (O), competitors (O), hld-review (M), dld-review (M), backlog (M), servicenow (M), devops (M), mlops (M), finops (M), operationalize (M), traceability (M), analyze (M), principles-compliance (R), conformance (R), maturity-model (O), service-assessment (M), tcop (M), ai-playbook (M), atrs (M), secure (M), mod-secure (M), jsp-936 (M), story (R), presentation (R)
 
 **ARC-*-STKE-*.md** (from stakeholders) - read by 38 commands:
 
@@ -376,7 +376,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 **ARC-*-RISK-*.md** (from risk) - read by 28 commands:
 
-- plan (O), sobc (R), requirements (R), platform-design (O), roadmap (R), strategy (O), glossary (O), dpia (O), adr (R), sow (O), dos (O), hld-review (R), dld-review (R), backlog (R), devops (O), operationalize (R), analyze (R), principles-compliance (O), conformance (R), maturity-model (O), service-assessment (R), tcop (R), ai-playbook (R), secure (R), mod-secure (R), jsp-936 (R), story (R), presentation (R)
+- plan (R), sobc (R), requirements (R), platform-design (O), roadmap (R), strategy (O), glossary (O), dpia (O), adr (R), sow (O), dos (O), hld-review (R), dld-review (R), backlog (R), devops (O), operationalize (R), analyze (R), principles-compliance (O), conformance (R), maturity-model (O), service-assessment (R), tcop (R), ai-playbook (R), secure (R), mod-secure (R), jsp-936 (R), story (R), presentation (R)
 
 **ARC-*-DATA-*.md** (from data-model) - read by 22 commands:
 
@@ -384,7 +384,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 **ARC-*-SOBC-*.md** (from sobc) - read by 19 commands:
 
-- plan (O), risk (O), requirements (R), platform-design (O), roadmap (O), strategy (R), glossary (O), data-model (O), research (R), azure-research (R), aws-research (R), gcp-research (R), grants (R), backlog (R), finops (O), analyze (R), service-assessment (R), story (R), presentation (R)
+- plan (R), risk (O), requirements (R), platform-design (O), roadmap (O), strategy (R), glossary (O), data-model (O), research (R), azure-research (R), aws-research (R), gcp-research (R), grants (R), backlog (R), finops (O), analyze (R), service-assessment (R), story (R), presentation (R)
 
 **ARC-*-RSCH-*.md** (from research) - read by 19 commands:
 
@@ -397,11 +397,11 @@ principles-compliance → conformance → analyze → service-assessment → sto
 ### Commands That Produce Critical Artifacts (High Fan-Out)
 
 - **principles** → read by 59 commands (26 M, 23 R, 10 O)
-- **requirements** → read by 57 commands (36 M, 10 R, 11 O)
+- **requirements** → read by 57 commands (36 M, 12 R, 9 O)
 - **stakeholders** → read by 38 commands (4 M, 25 R, 9 O)
-- **risk** → read by 28 commands (0 M, 18 R, 10 O)
+- **risk** → read by 28 commands (0 M, 19 R, 9 O)
 - **data-model** → read by 22 commands (1 M, 12 R, 9 O)
-- **sobc** → read by 19 commands (0 M, 12 R, 7 O)
+- **sobc** → read by 19 commands (0 M, 13 R, 6 O)
 - **research** → read by 19 commands (0 M, 9 R, 10 O)
 - The vendor HLD (external) → read by 12 commands (1 M, 8 R, 3 O)
 
@@ -436,6 +436,12 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Fixed**: levels that no longer matched the command files. For example, requirements needs stakeholders (M), wardley and adr need principles and requirements (M), risk can read the tenders and competitors reports, and principles reads no earlier documents
 - **Removed**: pages from the grid. It publishes whatever the project holds rather than depending on particular documents
 - **Updated**: every Tier "Depends on" line, the fan-in summary, two design notes, and the critical paths (adr and diagram added, because conformance needs adr and servicenow and operationalize need diagram)
+- **Checked**: a second pass read every core command prompt and its template in full. It led to 12 corrections:
+  - archify reads wardley only for Wardley renders (R → O)
+  - plan reads sobc and risk on the same terms as its other inputs (O → R)
+  - stakeholders reads requirements on the same terms as principles (O → R)
+  - data-mesh-contract reads requirements when they exist (O → R) and only checks that a DPIA exists, so dpia is no longer an input
+  - servicenow can read tcop (O), dpia can read ai-playbook (O), presentation can read adr (O), and atrs can read tcop, hld-review and dld-review (O)
 - **Synced**: the copies in `plugins/arckit-claude/docs/` and the codex, copilot and opencode extensions now match this file, apart from this changelog
 
 ### 2026-10-07 - UK G-Cloud Supplier Overlay moves to G-Cloud 15 (Community, Proprietary)
