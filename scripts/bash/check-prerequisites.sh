@@ -168,9 +168,11 @@ if [[ -n "$PROJECT_DIR" ]]; then
     fi
 fi
 
-# Check required files if specified
+# Check required files if specified. `${a[@]+"${a[@]}"}` expands an empty array
+# to nothing; a plain "${a[@]}" is an unbound variable under set -u in bash 3.2,
+# the bash macOS ships.
 ALL_REQUIRED_FOUND=true
-for required_file in "${REQUIRED_FILES[@]}"; do
+for required_file in ${REQUIRED_FILES[@]+"${REQUIRED_FILES[@]}"}; do
     if [[ -n "$PROJECT_DIR" ]]; then
         full_path="$PROJECT_DIR/$required_file"
     else
@@ -204,7 +206,7 @@ if [[ "$JSON_MODE" == "true" ]]; then
     fi
 
     echo -n "  \"AVAILABLE_DOCS\": "
-    output_json_array "${AVAILABLE_DOCS[@]}"
+    output_json_array ${AVAILABLE_DOCS[@]+"${AVAILABLE_DOCS[@]}"}
     echo ""
     echo "}"
 else
@@ -230,7 +232,7 @@ else
         if [[ ${#AVAILABLE_DOCS[@]} -eq 0 ]]; then
             echo "  (no artifacts found)"
         else
-            for doc in "${AVAILABLE_DOCS[@]}"; do
+            for doc in ${AVAILABLE_DOCS[@]+"${AVAILABLE_DOCS[@]}"}; do
                 echo "  ✓ $doc"
             done
         fi

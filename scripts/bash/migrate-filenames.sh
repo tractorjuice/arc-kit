@@ -19,73 +19,74 @@ shopt -s nullglob
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
-# File mapping: old filename -> type code
-declare -A FILE_MAPPING=(
+# File mapping: old filename -> type code, as "old-name:CODE" pairs. Pairs, not
+# an associative array: macOS ships bash 3.2, which has none.
+FILE_MAPPING=(
     # Core documents
-    ["requirements.md"]="REQ"
-    ["stakeholder-drivers.md"]="STKE"
-    ["stakeholder-analysis.md"]="STKE"  # Alternative name
-    ["risk-register.md"]="RISK"
-    ["sobc.md"]="SOBC"
-    ["data-model.md"]="DATA"
+    "requirements.md:REQ"
+    "stakeholder-drivers.md:STKE"
+    "stakeholder-analysis.md:STKE"  # Alternative name
+    "risk-register.md:RISK"
+    "sobc.md:SOBC"
+    "data-model.md:DATA"
     # research-findings.md moved to research/ subdirectory (multi-instance)
-    ["traceability-matrix.md"]="TRAC"
-    ["analysis-report.md"]="ANAL"
+    "traceability-matrix.md:TRAC"
+    "analysis-report.md:ANAL"
 
     # Global documents (for 000-global)
-    ["architecture-principles.md"]="PRIN"
-    ["principles.md"]="PRIN"  # Alternative name
+    "architecture-principles.md:PRIN"
+    "principles.md:PRIN"  # Alternative name
 
     # Strategy & Operations
-    ["project-plan.md"]="PLAN"
-    ["roadmap.md"]="ROAD"
-    ["devops-strategy.md"]="DEVOPS"
-    ["mlops-strategy.md"]="MLOPS"
-    ["finops-strategy.md"]="FINOPS"
-    ["operational-readiness.md"]="OPS"
-    ["servicenow-design.md"]="SNOW"
-    ["backlog.md"]="BKLG"
-    ["platform-design.md"]="PLAT"
+    "project-plan.md:PLAN"
+    "roadmap.md:ROAD"
+    "devops-strategy.md:DEVOPS"
+    "mlops-strategy.md:MLOPS"
+    "finops-strategy.md:FINOPS"
+    "operational-readiness.md:OPS"
+    "servicenow-design.md:SNOW"
+    "backlog.md:BKLG"
+    "platform-design.md:PLAT"
 
     # Procurement
-    ["sow.md"]="SOW"
-    ["dos-requirements.md"]="DOS"
-    ["digital-marketplace-dos.md"]="DOS"  # Alternative name
-    ["gcloud-requirements.md"]="GCLD"
-    ["gcloud-clarification-questions.md"]="GCLC"
-    ["evaluation-criteria.md"]="EVAL"
+    "sow.md:SOW"
+    "dos-requirements.md:DOS"
+    "digital-marketplace-dos.md:DOS"  # Alternative name
+    "gcloud-requirements.md:GCLD"
+    "gcloud-clarification-questions.md:GCLC"
+    "evaluation-criteria.md:EVAL"
 
     # Compliance
-    ["tcop-review.md"]="TCOP"
-    ["tcop-assessment.md"]="TCOP"  # Alternative name
-    ["ukgov-secure-by-design.md"]="SECD"
-    ["secure-by-design.md"]="SECD"  # Alternative name
-    ["mod-secure-by-design.md"]="SECD-MOD"
-    ["ai-playbook-assessment.md"]="AIPB"
-    ["atrs-record.md"]="ATRS"
-    ["jsp-936.md"]="JSP936"
-    ["jsp936.md"]="JSP936"  # Alternative name
-    ["dpia.md"]="DPIA"
-    ["principles-compliance-assessment.md"]="PRIN-COMP"
-    ["conformance-assessment.md"]="CONF"
+    "tcop-review.md:TCOP"
+    "tcop-assessment.md:TCOP"  # Alternative name
+    "ukgov-secure-by-design.md:SECD"
+    "secure-by-design.md:SECD"  # Alternative name
+    "mod-secure-by-design.md:SECD-MOD"
+    "ai-playbook-assessment.md:AIPB"
+    "atrs-record.md:ATRS"
+    "jsp-936.md:JSP936"
+    "jsp936.md:JSP936"  # Alternative name
+    "dpia.md:DPIA"
+    "principles-compliance-assessment.md:PRIN-COMP"
+    "conformance-assessment.md:CONF"
 
     # Reviews
-    ["hld-review.md"]="HLDR"
-    ["hld.md"]="HLDR"  # Alternative name
-    ["dld-review.md"]="DLDR"
-    ["dld.md"]="DLDR"  # Alternative name
+    "hld-review.md:HLDR"
+    "hld.md:HLDR"  # Alternative name
+    "dld-review.md:DLDR"
+    "dld.md:DLDR"  # Alternative name
 
     # Other
-    ["PROJECT-STORY.md"]="STORY"
+    "PROJECT-STORY.md:STORY"
 )
 
-# Subdirectory mappings for multi-instance types
-declare -A SUBDIR_MAPPING=(
-    ["decisions"]="ADR"
-    ["diagrams"]="DIAG"
-    ["wardley-maps"]="WARD"
-    ["data-contracts"]="DMC"
-    ["research"]="RSCH"
+# Subdirectory mappings for multi-instance types, as "subdir:CODE" pairs
+SUBDIR_MAPPING=(
+    "decisions:ADR"
+    "diagrams:DIAG"
+    "wardley-maps:WARD"
+    "data-contracts:DMC"
+    "research:RSCH"
 )
 
 usage() {
@@ -321,8 +322,8 @@ migrate_project() {
     fi
 
     # Migrate root-level files
-    for old_name in "${!FILE_MAPPING[@]}"; do
-        local type_code="${FILE_MAPPING[$old_name]}"
+    for pair in "${FILE_MAPPING[@]}"; do
+        local old_name="${pair%%:*}" type_code="${pair##*:}"
         local old_path="$project_dir/$old_name"
 
         if [[ -f "$old_path" ]]; then
@@ -342,8 +343,8 @@ migrate_project() {
 
     # Also check procurement/ subdirectory for old-style files
     if [[ -d "$project_dir/procurement" ]]; then
-        for old_name in "${!FILE_MAPPING[@]}"; do
-            local type_code="${FILE_MAPPING[$old_name]}"
+        for pair in "${FILE_MAPPING[@]}"; do
+            local old_name="${pair%%:*}" type_code="${pair##*:}"
             local old_path="$project_dir/procurement/$old_name"
 
             if [[ -f "$old_path" ]]; then
@@ -373,8 +374,8 @@ migrate_project() {
     done
 
     # Migrate subdirectories
-    for subdir_name in "${!SUBDIR_MAPPING[@]}"; do
-        local type_code="${SUBDIR_MAPPING[$subdir_name]}"
+    for pair in "${SUBDIR_MAPPING[@]}"; do
+        local subdir_name="${pair%%:*}" type_code="${pair##*:}"
         migrate_subdir "$project_dir/$subdir_name" "$project_id" "$type_code" "$backup_dir"
     done
 

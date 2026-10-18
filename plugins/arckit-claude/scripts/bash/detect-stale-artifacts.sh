@@ -28,11 +28,14 @@ today="$(date +%Y-%m-%d)"
 stale_count=0
 max_report=10
 
-# Resolve a GNU-style date threshold for draft staleness (30 days ago).
-# Falls back silently if `date -d` unsupported.
+# Resolve the date threshold for draft staleness (30 days ago): GNU `date -d`,
+# then BSD `date -v` (macOS, where -d means something else). If neither
+# works, the draft check is skipped; overdue reviews are still reported.
 draft_threshold=""
 if date -d "30 days ago" +%Y-%m-%d >/dev/null 2>&1; then
   draft_threshold="$(date -d "30 days ago" +%Y-%m-%d)"
+elif date -v-30d +%Y-%m-%d >/dev/null 2>&1; then
+  draft_threshold="$(date -v-30d +%Y-%m-%d)"
 fi
 
 # Iterate ARC-*.md files under projects/, ignoring symlinks and node_modules

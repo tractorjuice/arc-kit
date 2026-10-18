@@ -150,20 +150,23 @@ calculate_completion() {
     local total=10
     local completed=0
 
-    # Standard artifacts (8 items) — check both legacy and ARC-*-TYPE-* naming
-    local -A artifact_patterns=(
-        [stakeholder-drivers.md]="STKE"
-        [risk-register.md]="RISK"
-        [sobc.md]="SOBC"
-        [requirements.md]="REQ"
-        [data-model.md]="DATA"
-        [research-findings.md]="RSCH"
-        [sow.md]="SOW"
-        [evaluation-criteria.md]="EVAL"
+    # Standard artifacts (8 items) — check both legacy and ARC-*-TYPE-* naming.
+    # "legacy-name:CODE" pairs, not an associative array: macOS ships bash 3.2.
+    local artifact_patterns=(
+        "stakeholder-drivers.md:STKE"
+        "risk-register.md:RISK"
+        "sobc.md:SOBC"
+        "requirements.md:REQ"
+        "data-model.md:DATA"
+        "research-findings.md:RSCH"
+        "sow.md:SOW"
+        "evaluation-criteria.md:EVAL"
     )
 
-    for artifact in "${!artifact_patterns[@]}"; do
-        local type_code="${artifact_patterns[$artifact]}"
+    local pair artifact type_code
+    for pair in "${artifact_patterns[@]}"; do
+        artifact="${pair%%:*}"
+        type_code="${pair##*:}"
         if [[ -f "$project_dir/$artifact" ]] || compgen -G "$project_dir/ARC-*-${type_code}-*.md" > /dev/null 2>&1; then
             ((completed++))
         fi

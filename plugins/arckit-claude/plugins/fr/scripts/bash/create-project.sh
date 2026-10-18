@@ -397,7 +397,7 @@ if [[ "$OUTPUT_JSON" == "true" ]]; then
     echo "  \"success\": true,"
     echo "  \"project_dir\": \"$PROJECT_DIR\","
     echo "  \"project_number\": \"$PROJECT_NUMBER\","
-    echo "  \"project_name\": \"$PROJECT_NAME\","
+    echo "  \"project_name\": \"$(json_escape "$PROJECT_NAME")\","
     echo "  \"requirements_file\": \"$PROJECT_DIR/ARC-${PROJECT_NUMBER}-REQ-v1.0.md\","
     echo "  \"stakeholders_file\": \"$PROJECT_DIR/ARC-${PROJECT_NUMBER}-STKE-v1.0.md\","
     echo "  \"risk_file\": \"$PROJECT_DIR/ARC-${PROJECT_NUMBER}-RISK-v1.0.md\","
@@ -414,7 +414,7 @@ if [[ "$OUTPUT_JSON" == "true" ]]; then
     echo "  \"global_external_dir\": \"$REPO_ROOT/projects/000-global/external\","
     echo "  \"policies_dir\": \"$REPO_ROOT/projects/000-global/policies\","
     echo -n "  \"next_steps\": "
-    output_json_array "${NEXT_STEPS[@]}"
+    output_json_array ${NEXT_STEPS[@]+"${NEXT_STEPS[@]}"}
     echo ""
     echo "}"
 else

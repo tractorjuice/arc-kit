@@ -379,20 +379,27 @@ require_dir() {
 # JSON Helper Functions
 # ============================================================================
 
-# Escape string for JSON
+# Escape string for JSON: backslashes, quotes, newlines, carriage returns, tabs.
+# Parameter expansion rather than sed: `sed ':a;N;$!ba'` is GNU-only, and
+# macOS's sed rejected it, so every JSON string came out unescaped there.
 json_escape() {
     local string="$1"
-    # Escape backslashes, quotes, and newlines
-    echo "$string" | sed 's/\\/\\\\/g' | sed 's/"/\\"/g' | sed ':a;N;$!ba;s/\n/\\n/g'
+    string="${string//\\/\\\\}"
+    string="${string//\"/\\\"}"
+    string="${string//$'\n'/\\n}"
+    string="${string//$'\r'/\\r}"
+    string="${string//$'\t'/\\t}"
+    printf '%s\n' "$string"
 }
 
-# Output JSON array from bash array
+# Output JSON array from the arguments. Iterating "$@" rather than a copy of it
+# keeps an empty call legal under set -u in bash 3.2, the bash macOS ships.
 output_json_array() {
-    local items=("$@")
     local json="["
     local first=true
+    local item
 
-    for item in "${items[@]}"; do
+    for item in "$@"; do
         if [[ "$first" == "true" ]]; then
             first=false
         else
