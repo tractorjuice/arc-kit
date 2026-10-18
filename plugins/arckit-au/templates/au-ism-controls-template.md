@@ -345,7 +345,7 @@ ISM controls are organised into 17 domains. Applicability depends on the system'
 | Restrict Administrative Privileges | 5 (Personnel), 10 (System Management) | Privileged access mgmt |
 | Patch Operating Systems | 9, 10 | OS-level patching |
 | Multi-Factor Authentication | 9, 12 (Cryptography) | Authentication mechanism |
-| Regular Backups | 4 (Security Documentation), 11 (System Monitoring), 17 (Working-Off-Site security for offline backups) | BCP + restore testing |
+| Regular Backups | 10 (System Management) | The ISM places data backup and restoration controls in its Guidelines for System Management; BCP + restore testing |
 
 ---
 

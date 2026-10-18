@@ -69,7 +69,7 @@ Generates an ASD Essential Eight maturity posture assessment covering all 8 miti
 
 #### `/arckit:au-ism-controls`
 
-Generates an ASD Information Security Manual Statement of Applicability across all 17 control domains (Cyber Security Roles & Responsibilities; Cyber Security Incidents; Outsourced Services; Security Documentation; Personnel Security; Physical Security; Communications Infrastructure; Communications Systems; Enterprise Mobility; Evaluated Products; Information Technology Equipment; Media; System Hardening; System Management; System Monitoring; Software Development; Database Systems & Servers; Network Security; Cryptography; Gateways; Data Transfers). ISM extends E8 — produces the comprehensive control set on top of the mitigation baseline. Handoffs: `risk` (gaps and treatment plan), `au-pspf` (Outcome 2 — information security — instantiated by ISM), `au-disp-attestation` (cross-refs Domain 4).
+Generates an ASD Information Security Manual Statement of Applicability across all 17 control domains (Cyber Security Roles & Responsibilities; Cyber Security Incidents; Outsourced Services; Security Documentation; Personnel Security; Physical Security; Communications Infrastructure; Communications Systems; Enterprise Mobility; Evaluated Products; Information Technology Equipment; Media; System Hardening; System Management; System Monitoring; Software Development; Database Systems & Servers; Network Security; Cryptography; Gateways; Data Transfers). ISM extends E8 — produces the comprehensive control set on top of the mitigation baseline. Handoffs: `risk` (gaps and treatment plan), `au-pspf` (the PSPF Technology domain requires the ISM to be applied), `au-disp-attestation` (cross-refs Domain 4).
 
 ### Privacy + Incident Response
 
@@ -79,7 +79,7 @@ Generates a Privacy Impact Assessment under Privacy Act 1988 s33D (introduced by
 
 #### `/arckit:au-ndb-playbook`
 
-Generates an OAIC Notifiable Data Breach scheme operational response playbook (Privacy Act Part IIIC). Documents the 30-day notification timeline, the eligible-data-breach assessment criteria, the OAIC reporting workflow, and the affected-individual notification template. Operational artefact — depends on `au-pia` because it requires the designated Privacy Officer (APP 1) and APP 11 control inventory from the PIA. Handoffs: `au-disp-attestation` (DISP incident reporting cross-refs NDB), `risk`.
+Generates an OAIC Notifiable Data Breach scheme operational response playbook (Privacy Act Part IIIC). Documents the two statutory clocks — a suspected breach assessed within 30 days (s 26WH), and an eligible data breach notified to the OAIC and affected individuals as soon as practicable (ss 26WK, 26WL) — the eligible-data-breach assessment criteria, the OAIC reporting workflow, and the affected-individual notification template. Operational artefact — depends on `au-pia` because it requires the designated Privacy Officer (APP 1) and APP 11 control inventory from the PIA. Handoffs: `au-disp-attestation` (DISP incident reporting cross-refs NDB), `risk`.
 
 ### Optional critical infrastructure support
 
@@ -95,11 +95,11 @@ Generates a SOCI Act / Critical Infrastructure Risk Management Program governanc
 
 #### `/arckit:au-dss`
 
-Generates a DTA Digital Service Standard conformance assessment against all 13 criteria (1. Understand user needs; 2. Solve a whole problem; 3. Provide a joined-up experience; 4. Make it simple and intuitive; 5. Use ATO/digital-government building blocks; 6. Build a multidisciplinary team; 7. Iterate and improve frequently; 8. Use open standards; 9. Make it accessible and inclusive; 10. Test the service; 11. Measure performance; 12. Provide an unbroken digital service; 13. Use trusted hosting and supplier arrangements). Replaces the UK `tcop` command for AU projects (DTA DSS is the AU equivalent of UK TCoP). Handoffs: `au-e8-posture` (Criterion 13 cross-refs E8/IRAP-assessed hosting), `au-pia` (Criterion 7 cross-refs PIA + privacy notice).
+Generates a DTA Digital Service Standard conformance assessment against all 10 criteria of the current Standard (1. Have a clear intent; 2. Know your user; 3. Leave no one behind; 4. Connect services; 5. Build trust in design; 6. Don't reinvent the wheel; 7. Do no harm; 8. Innovate with purpose; 9. Monitor your service; 10. Keep it relevant), in effect from 1 July 2024 for new and replacement services and from 1 July 2025 for existing public-facing services. Replaces the UK `tcop` command for AU projects (DTA DSS is the AU equivalent of UK TCoP). Handoffs: `au-e8-posture` (Criterion 5 — Build trust in design — cross-refs E8 security measures), `au-pia` (Criterion 7 — Do no harm — cross-refs the PIA).
 
 #### `/arckit:au-pspf`
 
-Generates a Protective Security Policy Framework outcomes scorecard against the 4 outcomes (Security Governance; Information Security; Personnel Security; Physical Security) and 16 core requirements. PSPF Outcome 2 (Information Security) is instantiated by `au-ism-controls` — the PSPF scorecard pulls from the ISM Statement of Applicability. Handoffs: `au-disp-attestation` (DISP Domain 1 — Governance — cross-refs PSPF Outcome 1; Domain 3 — Physical — cross-refs PSPF Outcome 4), `risk`.
+Generates a Protective Security Policy Framework scorecard against the six security domains of the current PSPF release (Governance; Risk; Information; Technology; Personnel; Physical) and their numbered requirements, scoped from the PSPF List of Requirements. The Technology domain requires the ISM to be applied and the Essential Eight at Maturity Level Two, so the PSPF scorecard pulls from the `au-ism-controls` Statement of Applicability and the `au-e8-posture` assessment. Handoffs: `au-disp-attestation` (DISP Domain 1 — Governance — cross-refs the PSPF Governance and Risk domains; Domain 3 — Physical — cross-refs the PSPF Physical domain), `risk`.
 
 #### `/arckit:au-ai-assurance`
 
@@ -123,7 +123,7 @@ Recipe: [`au-federal.yaml`](../../arckit-au/recipes/au-federal.yaml)
 - `arckit:secure` → `arckit:au-e8-posture` (E8 ML2 replaces UK Secure-by-Design)
 - `arckit:dpia` → `arckit:au-pia` (Privacy Act 1988 replaces UK GDPR/DPA 2018)
 
-The wave shape mirrors `ca-federal-fitaa` — foundation → research wave + early domain artefacts → mid-domain → late ADRs → flagship → synthesis. `AU_DISP` is the consolidation flagship in W5, depending on `AU_E8`, `AU_ISM`, `AU_PIA`, `AU_NDB`, and `AU_PSPF` having completed in earlier waves.
+The wave shape mirrors `ca-federal-fitaa` — foundation → research wave + early domain artefacts → mid-domain → late ADRs → flagship → synthesis. `AU_DISP` is the consolidation flagship in W6 (requirements wait for stakeholders, so `REQ` runs in W2 after `STKE` in W1), depending on `AU_E8`, `AU_ISM`, `AU_PIA`, `AU_NDB`, and `AU_PSPF` having completed in earlier waves.
 
 ### Visual and evidence targets
 

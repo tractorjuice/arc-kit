@@ -1418,8 +1418,8 @@ All artifacts must pass these 10 checks:
 ### AUNDB -- Notifiable Data Breaches Playbook
 
 - Eligibility test stated as an explicit decision tree over the three statutory limbs: unauthorised access, disclosure or loss; serious harm likely; remediable by reasonable steps
-- The eligibility conclusion follows the logic — limbs 1 and 2 satisfied with limb 3 unsatisfied yields an eligible data breach requiring notification within 30 days
-- 30-day timeline planned day by day from Day 0 awareness through Day 30 notification, with the intermediate phases named
+- The eligibility conclusion follows the logic — limbs 1 and 2 satisfied with limb 3 unsatisfied yields an eligible data breach requiring notification to the OAIC and affected individuals as soon as practicable (ss 26WK, 26WL)
+- Timeline keeps the two clocks separate: the s 26WH assessment of a suspected breach completed within 30 days of awareness, and notification as soon as practicable from the point the entity believes an eligible data breach has occurred; no milestone schedules notification for Day 30 or treats 30 days as a notification deadline
 - RACI covers Privacy Officer, Security Officer, CISO, Legal, Communications and the accountable executive
 - Detection and containment procedures name the channels by which breaches become known, the immediate containment steps and evidence preservation
 - Serious-harm assessment criteria stated (financial loss, identity theft, emotional distress, physical safety, reputational harm), together with the reasonable-steps mitigation that can remove eligibility
@@ -1482,27 +1482,27 @@ All artifacts must pass these 10 checks:
 
 ### AUDSS -- Digital Service Standard Assessment
 
-- All 13 Digital Service Standard criteria assessed, each with status, evidence summary, gap description and remediation with owner and target date
-- Service phase recorded (Discovery / Alpha / Beta / Live) alongside user base and transaction volume
-- Accessibility assessed against WCAG 2.2 AA with assistive-technology testing and a published accessibility statement
-- Privacy criterion evidenced by a completed PIA and APP compliance rather than an assertion
-- Security criterion cross-referenced to the E8 posture rather than described independently
-- Open-source criterion states the strategy, repository and licence, or records the exemption
-- Performance measures name the KPIs (completion rate, user satisfaction, cost per transaction, digital take-up)
-- Non-digital experience addressed with assisted digital, phone and in-person channel design — not deferred as out of scope
+- All 10 criteria of the current Digital Service Standard assessed by their current names and numbers (Have a clear intent; Know your user; Leave no one behind; Connect services; Build trust in design; Don't reinvent the wheel; Do no harm; Innovate with purpose; Monitor your service; Keep it relevant), each with status, evidence summary, gap description and remediation with owner and target date — no criterion from the earlier 13-criterion Standard is used
+- Service context records the service type (informational or transactional; public- or staff-facing), whether it is new, a replacement or existing, IOF applicability and the date the Standard applies from, alongside phase and transaction volume
+- Criterion 3 (Leave no one behind) records the WCAG version and conformance level achieved against the latest WCAG version, with assistive-technology testing and a feedback mechanism
+- Criterion 5 (Build trust in design) cross-referenced to the E8 posture rather than described independently
+- Criterion 7 (Do no harm) evidenced by a completed PIA and APP compliance rather than an assertion
+- Criterion 9 (Monitor your service) names the baseline and the performance indicators measured
+- Any exemption sought names the criterion and its rationale
 - Compliance summary table reconciles with the per-criterion assessments
-- Services approaching an assessment gate identify the top three risks to passing, with mitigations
+- Assessment readiness identifies the top three risks to meeting all 10 criteria and reporting compliance to the DTA, with mitigations
 
 ### AUPSPF -- Protective Security Policy Framework
 
-- All four PSPF outcomes assessed: security governance, information security, personnel security, physical security
-- All 16 core requirements (CR1–CR16) assessed individually, each with compliance status, supporting evidence, gap description, remediation with owner and date, and the self-assessment level achieved
-- Compliance summary carries 16 rows and reconciles with the individual core-requirement assessments
-- Entity type recorded (non-corporate Commonwealth, corporate Commonwealth, contractor, panel member, state government under flow-down) together with the applicability driver — direct or contractual flow-down
-- Chief Security Officer designated
-- Evidence cites the ISM, E8, PIA and DISP artefacts where they exist rather than restating their content
-- Non-corporate Commonwealth entities record Annual Self-Assessment status, last submission to AGD and current self-assessed maturity
-- Recommendations grouped Quick Wins / Short-Term / Medium-Term, each tagged to a specific core requirement
+- The PSPF release assessed is named (e.g. Release 2026), and the assessment uses that release's six security domains — Governance (GOV), Risk (RISK), Information (INFO), Technology (TECH), Personnel (PER), Physical (PHYS) — not the four outcomes and 16 core requirements of earlier editions
+- Requirement scoping lists the requirements in scope per domain from the PSPF List of Requirements, with any scoped out and the reason
+- Each in-scope requirement is cited by its PSPF number and domain code, with its reporting type, status, evidence, gap and remediation with owner and date; no requirement number is invented — unverified numbers are marked `[VERIFY]`
+- Compliance summary carries one row per domain and reconciles with the requirement-level assessments
+- Entity type recorded (non-corporate Commonwealth, corporate Commonwealth, wholly-owned Commonwealth company, state or territory agency, service provider under deed or agreement) together with the applicability driver
+- Chief Security Officer and Chief Information Security Officer designated
+- Technology domain evidence cites the ISM and E8 artefacts (ISM applied; Essential Eight Maturity Level Two), and other evidence cites the PIA and DISP artefacts where they exist, rather than restating their content
+- Entities that must report record the annual protective security report position: reporting period, submission to the Department of Home Affairs, Accountable Authority approval, report to the Minister and the ASD Cyber Security Survey
+- Recommendations grouped Quick Wins / Short-Term / Medium-Term, each tagged to a domain and requirement number
 
 ### AUDISP -- Defence Industry Security Programme Attestation
 

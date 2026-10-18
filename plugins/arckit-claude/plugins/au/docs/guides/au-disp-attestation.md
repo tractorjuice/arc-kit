@@ -41,17 +41,21 @@ Output: `projects/<id>/ARC-<id>-AUDISP-v1.0.md`
 |---------|----------|
 | Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
 | Revision History | Version, date, author, changes, approvals |
-| Executive Summary | DISP level targeted, attestation status, headline gaps, board action required |
-| Member Identity | Legal entity, ABN, ownership tree, accountable individuals |
-| Foreign Ownership Control & Influence (FOCI) Declaration | Ownership, control, influence; mitigation arrangements where required |
-| Domain 1 — Governance | Security governance, risk, accountability; evidence cross-references to PSPF Outcome 1 |
-| Domain 2 — Personnel Security | Vetting, ongoing suitability, separation; evidence from PSPF Outcome 3 |
-| Domain 3 — Physical Security | Premises, certified zones, custody; evidence from PSPF Outcome 4 |
-| Domain 4 — Information & Cyber | E8, ISM, PIA, NDB evidence; AI assurance for AI-enabled Defence services |
-| Supply Chain Security | Sub-contractor vetting, supply-chain risk register, security clauses |
-| Incident History | Material security incidents in attestation window |
-| Annual Board Attestation | Statement signed by accountable authority confirming the posture |
-| Maintenance Cadence | Annual attestation cycle; per-incident updates |
+| Executive Summary | Organisation, DISP level sought, attestation readiness, key gaps, target attestation date |
+| 1. Organisation Profile | Legal entity and ABN, trading names, business activity, headcount, sites, Defence contracts in scope, level sought, target date |
+| 2. DISP Level Sought | Level, regulatory driver, justification, anticipated Defence work and classification |
+| 3. Security Officer Designation | Chief Security Officer, authority, clearance, deputy, contact, vetting status |
+| 4. Four Security Domains Coverage | Domain 1 Governance (cross-references the PSPF Governance and Risk domains), Domain 2 Personnel Security (PSPF Personnel domain), Domain 3 Physical Security (PSPF Physical domain), Domain 4 Information & Cyber Security (E8, ISM): status, evidence, gaps, remediation, sign-off |
+| 5. Essential Eight ML2 Evidence Per Strategy | Current ML, ML2 evidence, gap and sign-off for each of the eight strategies |
+| 6. ISM Applicability Highlights | The ISM control areas most material to DISP, with implementation status and gaps |
+| 7. Foreign Ownership, Control or Influence (FOCI) Declaration | Foreign ownership, board members, personnel access, supply-chain dependencies, mitigation plan |
+| 8. Supply Chain Security | Tier 1 suppliers, attestations held, last review, supply-chain risk management process |
+| 9. Incident Response & Reporting | Incident response plan, 24-hour Defence notification capability, NDB integration, last exercise, lessons learned |
+| 10. Security Awareness Training | Programme, modules, completion rate, refresher cadence, cleared-personnel briefings |
+| 11. Annual Self-Audit Plan | Scope, methodology, frequency, evidence retention, last and next audit |
+| 12. Attestation Statement | Statement of accuracy with CSO and Director sign-off, attestation date, re-attestation due |
+| 13. External References | Upstream ArcKit evidence, document register, citations, unreferenced documents, verification dates |
+| Visual Evidence Decision Rule | When a companion diagram is drawn, drafted with `Pending Input` labels, or recorded as a visual evidence gap |
 
 ---
 

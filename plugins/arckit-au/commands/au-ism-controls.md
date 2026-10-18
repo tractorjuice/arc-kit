@@ -40,7 +40,7 @@ $ARGUMENTS
 
 ## Context
 
-The Australian Signals Directorate (ASD) Information Security Manual (ISM) is the comprehensive set of cyber-security controls for Australian Government information systems. Where the Essential Eight is a mitigation framework targeting attack-vector defence, the ISM is the comprehensive control set covering governance, personnel, physical, communications, ICT system, networking, cryptography, gateway, data-transfer, evaluation, working-off-site, and incident-response domains. ISM compliance is the core technical-controls evidence for PSPF Information Security outcome and a primary input to DISP attestation.
+The Australian Signals Directorate (ASD) Information Security Manual (ISM) is the comprehensive set of cyber-security controls for Australian Government information systems. Where the Essential Eight is a mitigation framework targeting attack-vector defence, the ISM is the comprehensive control set covering governance, personnel, physical, communications, ICT system, networking, cryptography, gateway, data-transfer, evaluation, working-off-site, and incident-response domains. ISM compliance is the core technical-controls evidence for the PSPF Technology domain (which requires the ISM to be applied) and a primary input to DISP attestation.
 
 **Authoritative anchor**: ASD Information Security Manual — <https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism>
 
