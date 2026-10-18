@@ -49,9 +49,14 @@ Strong Customer Authentication (SCA) requirements for UK payment service provide
   fraud or other abuses.
 - **PSRs 2017, Regulation 106A** — grants the FCA power to make technical standards specifying SCA
   requirements, exemptions, and secure communication obligations.
-- **UK Technical Standards on Strong Customer Authentication and Common and Secure Methods of
-  Communication (FCA 2020/70, as amended by PS21/19)** — sets out the detailed exemption conditions
-  (Articles 10–18) and dynamic-linking requirements that apply in Great Britain post-EU-withdrawal.
+- **The FCA's Technical Standards on Strong Customer Authentication and Common and Secure Methods
+  of Communication (the UK SCA-RTS)** — made by the FCA under regulation 106A; they replaced
+  Commission Delegated Regulation (EU) 2018/389 on 31 December 2020 and were amended by PS21/19
+  (FCA 2021/45; Article 10A in force 26 March 2022) and FCA 2025/62 (Article 11, in force 19 March
+  2026). They set out the SCA requirements (Articles 4 to 9, including dynamic linking in
+  Article 5), the exemptions (Articles 10 to 18), and the fraud-rate calculation, cessation and
+  monitoring rules (Articles 19 to 21). The current text is in the FCA Handbook under Technical
+  Standards → Payment Services.
 - **FCA Payment Services and Electronic Money — Our Approach Document (current edition)** — the
   FCA's non-binding but authoritative interpretive guidance on how it applies the PSRs 2017.
 
@@ -61,10 +66,10 @@ Strong Customer Authentication (SCA) requirements for UK payment service provide
 |-------------|-----------------|-------|
 | Authorised Payment Institution (PI) | Yes | Full PSRs 2017 scope |
 | E-Money Institution (EMI) | Yes | Via PSRs 2017 applied to e-money payment transactions |
-| Account Servicing PSP (ASPSP) | Yes | Must offer dedicated interface; Article 10A applies |
-| Third-Party Provider — PISP | Yes | Relies on ASPSP SCA; must not impede |
-| Third-Party Provider — AISP | Yes (Art 10A post-PS21/19) | 90-day re-consent; exemption available |
-| Small Payment Institution | Partial | Exempt from Reg 100 if below thresholds |
+| Account Servicing PSP (ASPSP) | Yes | Must offer an access interface (SCA-RTS Article 30; a dedicated interface for the accounts in Article 31(2)); may use Article 10A for AISP access |
+| Third-Party Provider — PISP | Yes | May rely on the ASPSP's authentication procedures (PSRs 2017 Reg 100(4)) |
+| Third-Party Provider — AISP | Yes | May rely on the ASPSP's authentication procedures (Reg 100(4)); user must reconfirm consent with the AISP every 90 days for access the user is not actively requesting (SCA-RTS Article 36(6)) |
+| Small Payment Institution | Yes | Regulation 100 applies to all PSPs subject to the PSRs 2017; there is no size-based exemption (FCA Approach Document, May 2026, paragraph 20.1) |
 
 **This firm's regulatory perimeter**: {{FIRM_AUTHORISATION_TYPE}} — {{REGULATORY_PERIMETER_NARRATIVE}}
 
@@ -82,9 +87,10 @@ Strong Customer Authentication (SCA) requirements for UK payment service provide
 
 ### 2.1 SCA Factor Inventory
 
-SCA requires at least two independent elements from the following three categories (PSRs 2017
-Reg 100(2)). Dynamic linking (Reg 100(3)) must bind the authentication code to a specific amount
-and payee for remote payment transactions.
+SCA requires two or more independent elements from the following three categories (PSRs 2017
+regulation 2(1), definition of strong customer authentication; SCA-RTS Articles 4 and 9). Dynamic
+linking (PSRs 2017 regulation 100(2); SCA-RTS Article 5) must bind the authentication code to a
+specific amount and payee for electronic remote payment transactions.
 
 | Factor category | Elements available | Dynamic linking capable? |
 |-----------------|--------------------|--------------------------|
@@ -126,9 +132,13 @@ required or an exemption can be applied.
 The sections below record the firm's design decision for each SCA-RTS exemption. Each entry uses
 the format defined in `uk-fs-sca-rts-exemption-matrix-template.md`.
 
-**Article 12 is explicitly excluded from scope** — it applies only to payment account access by
-Account Information Service Providers (AISPs) and has been superseded for AISP reauthentication
-by Article 10A (PS21/19, effective 26 March 2022).
+One entry per exemption in Chapter 3 of the UK SCA-RTS: Articles 10 (payment account information
+accessed directly), 10A (payment account information accessed through an AISP), 11 (contactless
+payments at point of sale), 12 (unattended terminals for transport fares and parking fees), 13
+(trusted beneficiaries), 14 (recurring transactions), 15 (credit transfers between accounts held
+by the same person), 16 (low-value transactions), 17 (secure corporate payment processes and
+protocols) and 18 (transaction risk analysis). Record an exemption that does not fit the firm's
+channels as DO_NOT_APPLY with the reason.
 
 {{INSERT_EXEMPTION_MATRIX_ENTRIES_HERE}}
 
@@ -139,28 +149,33 @@ by Article 10A (PS21/19, effective 26 March 2022).
 This section applies only if the firm is applying the Article 18 (TRA) exemption. If Article 18
 is not applied (DO_NOT_APPLY decision in §3), mark this section N/A.
 
-### 4.1 Reference Fraud Rates (UK SCA-RTS Article 18)
+### 4.1 Reference Fraud Rates and Exemption Threshold Values (UK SCA-RTS Appendix)
 
-The following reference fraud rates must be continuously met for the TRA exemption to remain valid.
-Fraud rates are expressed as basis points (bps) of transaction value — i.e., fraud losses divided
-by total transaction value for the same transaction category and channel.
+A remote electronic payment can be exempted under Article 18 only if its amount does not exceed
+the exemption threshold value (ETV) and the PSP's fraud rate for that payment type is at or below
+the reference rate for that ETV (Article 18(2)(a) and (b)). The fraud rate is the value of
+unauthorised or fraudulent remote transactions divided by the value of all remote transactions of
+the same type, whether authenticated with SCA or exempted under Articles 13 to 18, calculated on a
+rolling quarterly (90-day) basis (Article 19(1)). Rates are percentages of transaction value.
 
-| Transaction value band | Reference fraud rate (remote card transactions) | Reference fraud rate (credit transfers) |
-|------------------------|------------------------------------------------|----------------------------------------|
-| Up to £30 | 0.13% | 0.01% |
-| Up to £100 | 0.06% | 0.01% |
-| Up to £250 | 0.01% | 0.005% |
+| ETV (transaction amount up to) | Reference fraud rate — remote electronic card-based payments | Reference fraud rate — remote electronic credit transfers |
+|--------------------------------|---------------------------------------------------------------|------------------------------------------------------------|
+| £85 | 0.13% | 0.015% |
+| £220 | 0.06% | 0.01% |
+| £440 | 0.01% | 0.005% |
 
-Source: UK SCA-RTS (FCA 2020/70, amended per PS21/19), cross-referenced against FCA Approach
-Document §§ on TRA.
+Source: UK SCA-RTS Appendix (FCA Handbook, Technical Standards → Payment Services; shown as
+unchanged since 1 January 2021), with guidance in the FCA Approach Document (May 2026),
+paragraphs 20.71 to 20.80.
 
 ### 4.2 Firm Fraud Rate Monitoring
 
 | Metric | Current value | Threshold | Status |
 |--------|--------------|-----------|--------|
-| Remote card transaction fraud rate (rolling 90 days) | {{CURRENT_CARD_FRAUD_RATE}} | {{TARGET_THRESHOLD}} | {{CARD_FRAUD_RATE_STATUS}} |
-| Credit transfer fraud rate (rolling 90 days) | {{CURRENT_CT_FRAUD_RATE}} | {{TARGET_CT_THRESHOLD}} | {{CT_FRAUD_RATE_STATUS}} |
-| **150% threshold trigger (mandatory SCA reintroduction)** | — | {{TRIGGER_THRESHOLD}} | {{TRIGGER_STATUS}} |
+| Remote electronic card-based payment fraud rate (rolling 90 days) | {{CURRENT_CARD_FRAUD_RATE}} | {{TARGET_THRESHOLD}} (reference rate for the targeted ETV) | {{CARD_FRAUD_RATE_STATUS}} |
+| Remote electronic credit transfer fraud rate (rolling 90 days) | {{CURRENT_CT_FRAUD_RATE}} | {{TARGET_CT_THRESHOLD}} (reference rate for the targeted ETV) | {{CT_FRAUD_RATE_STATUS}} |
+| Firm early-warning threshold (internal control, not a regulatory threshold) | — | {{EARLY_WARNING_THRESHOLD}} | {{EARLY_WARNING_STATUS}} |
+| Quarters above the reference rate, per ETV band (Article 20(2) cessation after two consecutive quarters) | {{QUARTERS_ABOVE_REFERENCE}} | 2 | {{CESSATION_STATUS}} |
 
 ### 4.3 FCA Reporting
 
@@ -199,22 +214,25 @@ Document §§ on TRA.
 
 | Trigger | Escalation action | Owner | SLA |
 |---------|-------------------|-------|-----|
-| Fraud rate exceeds 100% of reference rate | Internal alert to Fraud Operations | {{INTERNAL_ALERT_OWNER}} | {{INTERNAL_ALERT_SLA}} |
-| Fraud rate exceeds 150% of reference rate | Mandatory SCA reintroduction; MLRO + Compliance notified | MLRO | {{SCA_REINTRODUCTION_SLA}} |
+| Fraud rate reaches the firm's early-warning threshold (below the reference rate) | Internal alert to Fraud Operations | {{INTERNAL_ALERT_OWNER}} | {{INTERNAL_ALERT_SLA}} |
+| Monitored fraud rate exceeds the applicable reference rate | Report to the FCA immediately with the measures to restore compliance (SCA-RTS Article 20(1)); MLRO + Compliance notified | Compliance Officer | Immediate |
+| Fraud rate exceeds the reference rate for two consecutive quarters | Cease TRA for that payment type and ETV band immediately; apply SCA (Article 20(2)) | {{CESSATION_OWNER}} | Immediate |
+| Fraud rate at or below the reference rate for one quarter after cessation | Notify the FCA with evidence before using TRA again (Article 20(3) and (4)) | Compliance Officer | {{RESUMPTION_SLA}} |
 | Regulatory request for data | Provide audit trail within {{REGULATOR_SLA}} | Compliance Officer | {{REGULATORY_REQUEST_SLA}} |
 
 ---
 
 ## 6. Audit Trail Requirements
 
-All exemption decisions must be logged to a tamper-evident audit trail. The trail must be available
-to the FCA on request (PSRs 2017 Reg 100 + FCA Handbook SYSC 9.1).
+All exemption decisions must be logged to a tamper-evident audit trail. The fraud-rate methodology,
+the fraud rates and the Article 21 monitoring results must be available to the FCA on request
+(SCA-RTS Articles 19(3) and 21(2)).
 
 ### 6.1 Fields Logged Per Exemption Decision
 
 | Field | Description | Format |
 |-------|-------------|--------|
-| `exemption_code` | Article reference applied (e.g., `ART10`, `ART18`) | String |
+| `exemption_code` | Article reference applied (e.g., `ART10`, `ART10A`, `ART12`, `ART18`) | String |
 | `transaction_reference` | Unique transaction ID | UUID |
 | `transaction_amount` | Transaction value in minor currency units | Integer |
 | `currency` | ISO 4217 currency code | String (3) |
@@ -230,7 +248,7 @@ to the FCA on request (PSRs 2017 Reg 100 + FCA Handbook SYSC 9.1).
 
 | Requirement | Detail |
 |-------------|--------|
-| **Retention period** | Minimum 5 years (PSRs 2017 Reg 100; FCA SYSC 9.1) |
+| **Retention period** | {{RETENTION_PERIOD}} (firm-set and confirmed with counsel; five years is a common baseline — PSRs 2017 Reg 100 sets no retention period) |
 | **Storage location** | {{AUDIT_STORAGE_LOCATION}} |
 | **Access controls** | {{AUDIT_ACCESS_CONTROLS}} |
 | **Regulator-readable format** | Machine-readable (JSON / CSV export within 24 hours of request) |
@@ -245,10 +263,13 @@ to the FCA on request (PSRs 2017 Reg 100 + FCA Handbook SYSC 9.1).
 | PSRs 2017 | Payment Services Regulations 2017 (SI 2017/752) | <https://www.legislation.gov.uk/uksi/2017/752> |
 | PSRs 2017 Reg 100 | Authentication requirements | <https://www.legislation.gov.uk/uksi/2017/752/regulation/100> |
 | PSRs 2017 Reg 106A | FCA power to make SCA technical standards | <https://www.legislation.gov.uk/uksi/2017/752/regulation/106A> |
-| FCA Approach Document | Payment Services and Electronic Money — Our Approach (current edition) | <https://www.fca.org.uk/publication/finalised-guidance/payment-services-electronic-money-approach.pdf> |
+| UK SCA-RTS Chapter 3 | Exemptions from strong customer authentication, Articles 10 to 21 (FCA Handbook) | <https://handbook.fca.org.uk/technical-standards/s140c1226> |
+| UK SCA-RTS Appendix | Reference fraud rates and exemption threshold values (FCA Handbook) | <https://handbook.fca.org.uk/technical-standards/provision/s140c1230sn0p1854> |
+| FCA Approach Document | Payment Services and Electronic Money — Our Approach (May 2026, Chapter 20) | <https://www.fca.org.uk/publication/finalised-guidance/payment-services-electronic-money-approach.pdf> |
 | FCA Firms SCA Guidance | Strong Customer Authentication — FCA firms guidance page | <https://www.fca.org.uk/firms/strong-customer-authentication> |
 | FCA PS19/26 | Brexit — UK SCA-RTS (post-EU-withdrawal framework) | <https://www.fca.org.uk/publications/policy-statements/ps19-26-brexit-regulatory-technical-standards-strong-customer-authentication> |
-| FCA PS21/19 | Changes to SCA-RTS — Article 10A AISP exemption | <https://www.fca.org.uk/publications/policy-statements/ps21-19-changes-sca-rts-and-guidance-approach-document-and-perimeter-guidance-manual> |
+| FCA PS21/19 | Changes to SCA-RTS — Article 10A AISP exemption (29 November 2021) | <https://www.fca.org.uk/publications/policy-statements/ps21-19-changes-sca-rts-and-guidance-approach-document-and-perimeter-guidance-manual> |
+| FCA Handbook Notice 136 | FCA 2025/62 — Article 11 risk-based contactless exemption, in force 19 March 2026 (December 2025) | <https://www.fca.org.uk/publication/handbook/handbook-notice-136.pdf> |
 | FCA SCA coronavirus statement | FCA SCA extension — COVID-19 (30 April 2020) | <https://www.fca.org.uk/news/statements/strong-customer-authentication-and-coronavirus> |
 | UK Finance SCA Guidance | UK Finance Industry Guidance on Strong Customer Authentication (2025) | <https://www.ukfinance.org.uk/system/files/2025-07/UK-Finance-Industry-Guidance-Strong-Customer-Authentication.pdf> |
 | FCA key publications | FCA EMI and Payment Institutions — key publications | <https://www.fca.org.uk/firms/emi-payment-institutions-key-publications> |

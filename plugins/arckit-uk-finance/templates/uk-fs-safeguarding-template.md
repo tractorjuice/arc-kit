@@ -39,7 +39,7 @@
 > firm's MLRO (for AML-angle review of the client-money position, not primary safeguarding
 > accountability), and the firm's Compliance Officer before implementation. Regulatory citations
 > reflect the position as at the document creation date; verify against current FCA publications —
-> including the FCA Approach Document (May 2026 edition) and PS24/9 — before reliance.
+> including the FCA Approach Document (May 2026 edition), PS25/12 and CASS 15 — before reliance.
 
 ---
 
@@ -110,7 +110,7 @@ The following funds are **not** relevant funds and are therefore excluded from s
 
 | Method | Applicable to this firm? | Regulatory basis | Notes |
 |--------|--------------------------|------------------|-------|
-| Segregation in designated safeguarding account | {{SEGREGATION_APPLICABLE}} | EMR 2011 Reg 20, Reg 21; PSRs 2017 Reg 23(2)–(11) | Primary method |
+| Segregation in designated safeguarding account | {{SEGREGATION_APPLICABLE}} | EMR 2011 Reg 20, Reg 21; PSRs 2017 Reg 23(5)–(11) | Primary method |
 | Comparable guarantee | {{GUARANTEE_APPLICABLE}} | EMR 2011 Reg 22; PSRs 2017 Reg 23(12)–(13) | Alternative method |
 | Insurance policy | {{INSURANCE_APPLICABLE}} | EMR 2011 Reg 22; PSRs 2017 Reg 23(12)–(13) | Alternative method |
 
@@ -124,7 +124,7 @@ The firm has selected **{{SAFEGUARDING_METHOD}}** because: {{METHOD_SELECTION_RA
 
 The following controls prevent commingling of relevant funds with the firm's own operational funds.
 The commingling prohibition is set out in **EMR 2011 Reg 21(3)(b)** (the designated account "must
-be used only for holding those funds or assets") and **PSRs 2017 Reg 23(6)**.
+be used only for holding those funds or assets") and **PSRs 2017 Reg 23(5) and 23(7)(b)**.
 
 1. {{COMMINGLING_CONTROL_1}}
 2. {{COMMINGLING_CONTROL_2}}
@@ -136,16 +136,16 @@ be used only for holding those funds or assets") and **PSRs 2017 Reg 23(6)**.
 
 | Event | Segregation deadline | Regulatory basis |
 |-------|----------------------|------------------|
-| Receipt of funds from customer (payment institution) | End of business day of receipt | PSRs 2017 Reg 23(2) |
-| Receipt of funds for e-money issuance (EMI) | "by the end of five business days after the date on which the electronic money has been issued" (verbatim) | EMR 2011 Reg 20(4) |
+| Receipt of relevant funds (payment institution) | Segregated from receipt; if still held at the end of the business day following the day of receipt, placed in a designated account or invested in relevant assets | PSRs 2017 Reg 23(5)–(6) |
+| Receipt of funds in exchange for e-money (EMI) | Segregated from receipt; if still held at the end of the business day following the day of receipt, placed in a designated account or invested in relevant assets | EMR 2011 Reg 21(1)–(2) |
+| E-money funds received by payment instrument (EMI) | Need not be safeguarded until credited or made available to the EMI, but "by the end of five business days after the date on which the electronic money has been issued" (verbatim) | EMR 2011 Reg 20(4) |
 | {{FIRM_SPECIFIC_TRIGGER}} | {{FIRM_SPECIFIC_DEADLINE}} | {{FIRM_SPECIFIC_BASIS}} |
 
 <!-- Add additional rows as needed -->
 
-> **FCA practice note**: The May 2026 Approach Document expects firms to minimise the float
-> period between receipt and segregation in practice, even where the statutory deadline allows
-> up to five business days. Firms should document the operational target alongside the statutory
-> deadline.
+> **FCA practice note**: The May 2026 Approach Document (paragraph 10.2) states that the
+> obligation to safeguard starts immediately on receipt of funds. Firms should document their
+> operational target for placing funds alongside the statutory deadlines above.
 
 ---
 
@@ -258,17 +258,20 @@ flowchart LR
 
 ### 7.3 Regulator-Readable Evidence Pack
 
-The following data and reports must be producible on FCA request, and are submitted via the monthly
-safeguarding return (SUP 16 Annex 34A for payment institutions; SUP 16 Annex 34B for EMIs):
+The following data and reports must be producible on FCA request. The monthly safeguarding return
+(REP027) is submitted within 15 business days of each month end under SUP 16.14A, with its content
+set by SUP 16 Annex 29BR — one return for payment institutions and EMIs. Records made under CASS 15
+are retained for 5 years unless a CASS 15 rule states otherwise (CASS 15.8.8R(3)); the 5-year
+period for the other items below is a firm policy aligned to that rule.
 
 | Evidence item | Format | Retention period | Responsible system |
 |---------------|--------|------------------|--------------------|
-| Daily reconciliation records | {{RECON_FORMAT}} | 6 years (FCA SUP 16) | {{RECON_SYSTEM}} |
-| Designated account bank statements | {{STATEMENT_FORMAT}} | 6 years | {{STATEMENT_SYSTEM}} |
-| Shortfall notification log | {{SHORTFALL_LOG_FORMAT}} | 6 years | {{SHORTFALL_LOG_SYSTEM}} |
-| SMF sign-off register | {{SIGNOFF_FORMAT}} | 6 years | {{SIGNOFF_SYSTEM}} |
-| Insurance / guarantee policy documents | {{POLICY_DOC_FORMAT}} | 6 years | {{POLICY_DOC_SYSTEM}} |
-| Monthly safeguarding return (REP-CRIM) | SUP 16 Annex 34A/34B format | 6 years | {{MONTHLY_RETURN_SYSTEM}} |
+| Daily reconciliation records | {{RECON_FORMAT}} | 5 years (CASS 15.8.8R(3)) | {{RECON_SYSTEM}} |
+| Designated account bank statements | {{STATEMENT_FORMAT}} | 5 years | {{STATEMENT_SYSTEM}} |
+| Shortfall notification log | {{SHORTFALL_LOG_FORMAT}} | 5 years | {{SHORTFALL_LOG_SYSTEM}} |
+| SMF sign-off register | {{SIGNOFF_FORMAT}} | 5 years | {{SIGNOFF_SYSTEM}} |
+| Insurance / guarantee policy documents | {{POLICY_DOC_FORMAT}} | 5 years | {{POLICY_DOC_SYSTEM}} |
+| Monthly safeguarding return (REP027) | SUP 16 Annex 29BR format, submitted via RegData | 5 years | {{MONTHLY_RETURN_SYSTEM}} |
 
 <!-- Add additional rows as needed -->
 
@@ -284,7 +287,7 @@ safeguarding return (SUP 16 Annex 34A for payment institutions; SUP 16 Annex 34B
 | **FSCS coverage limit** | {{FSCS_COVERAGE}} |
 | **Second safeguarding bank available?** | {{SECOND_BANK_AVAILABLE}} |
 | **Fund portability procedure** | {{FUND_PORTABILITY_PROCEDURE}} |
-| **Insolvency priority claim basis** | PSRs 2017 Reg 23(5): payment service users' claims rank in priority to all other creditors |
+| **Insolvency priority claim basis** | PSRs 2017 Reg 23(14)–(15): payment service users' claims are paid from the asset pool in priority to all other creditors |
 | **Recovery time objective (RTO)** | {{SAFEGUARDING_BANK_FAILURE_RTO}} |
 | **Recovery point objective (RPO)** | {{SAFEGUARDING_BANK_FAILURE_RPO}} |
 | **FCA notification required?** | Yes — notify FCA immediately if safeguarding bank fails or terminates the relationship |
@@ -321,9 +324,11 @@ safeguarding return (SUP 16 Annex 34A for payment institutions; SUP 16 Annex 34B
 | PSRs 2017 Reg 23 | Payment Services Regulations 2017 — Regulation 23: Safeguarding | <https://www.legislation.gov.uk/uksi/2017/752/regulation/23> |
 | PSRs 2017 | Payment Services Regulations 2017 (SI 2017/752) — full instrument | <https://www.legislation.gov.uk/uksi/2017/752> |
 | FCA Approach Document | Payment Services and Electronic Money — Our Approach (FCA, May 2026) | <https://www.fca.org.uk/publication/finalised-guidance/payment-services-electronic-money-approach.pdf> |
-| FCA PS24/9 | PS24/9 — Safeguarding reforms for payment and e-money firms (2024) | <https://www.fca.org.uk/publication/policy/ps24-9.pdf> |
-| FCA CP22/25 | CP22/25 — Improving outcomes for consumers of payment and e-money firms | <https://www.fca.org.uk/publication/consultation/cp22-25.pdf> |
-| FCA SUP 16 | SUP 16 — Reporting requirements (entry point for Annex 34A/34B monthly safeguarding return) | <https://www.handbook.fca.org.uk/handbook/SUP/16/> |
+| FCA PS25/12 | PS25/12 — Changes to the safeguarding regime for payments and e-money firms (August 2025) | <https://www.fca.org.uk/publications/policy-statements/ps25-12-changes-safeguarding-regime-payments-and-e-money-firms> |
+| FCA 2025/38 | Payments and Electronic Money (Safeguarding) Instrument 2025 (in force 7 May 2026) | <https://api-handbook.fca.org.uk/files/instrument/Glossary-GEN-CASS-SUP/FCA%202025/38-2026-05-07.pdf> |
+| FCA CP24/20 | CP24/20 — Changes to the safeguarding regime for payments and e-money firms (September 2024) | <https://www.fca.org.uk/publication/consultation/cp24-20.pdf> |
+| FCA CASS 15 | CASS 15 — Payment services and electronic money: relevant funds | <https://handbook.fca.org.uk/handbook/cass15> |
+| FCA SUP 16 | SUP 16 — Reporting requirements (SUP 16.14A and Annex 29BR, monthly safeguarding return) | <https://handbook.fca.org.uk/handbook/sup16> |
 | FCA key publications | FCA EMI and Payment Institutions — key publications | <https://www.fca.org.uk/firms/emi-payment-institutions-key-publications> |
 
 ## 10. External References

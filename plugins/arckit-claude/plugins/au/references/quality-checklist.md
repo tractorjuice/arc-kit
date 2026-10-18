@@ -1689,12 +1689,12 @@ All artifacts must pass these 10 checks:
 
 ### FSSCA -- SCA-RTS Exemption Assessment
 
-- All nine in-scope exemptions assessed (Articles 10, 10A, 11, 13, 14, 15, 16, 17, 18), each with a decision of APPLY, DO_NOT_APPLY or CONDITIONAL
-- Article 12 explicitly excluded as out of scope — AISP payment account access is covered by Article 10A post-PS21/19
+- All ten UK SCA-RTS exemptions assessed (Articles 10, 10A, 11, 12, 13, 14, 15, 16, 17, 18), each with a decision of APPLY, DO_NOT_APPLY or CONDITIONAL — Article 12 (unattended terminals for transport fares and parking fees) is an exemption like the others, not an AISP rule
+- Article titles match the UK SCA-RTS: 10 payment account information accessed directly, 10A accessed through an AISP, 11 contactless payments at point of sale, 12 unattended terminals for transport fares and parking fees, 13 trusted beneficiaries, 14 recurring transactions, 15 credit transfers between accounts held by the same person, 16 low-value transactions, 17 secure corporate payment processes and protocols, 18 transaction risk analysis
 - Every decision justified against the firm's actual payment channels and risk profile rather than asserted
-- Where Article 18 TRA is applied, the firm's current fraud rate per payment category is stated
-- The applicable reference fraud-rate band cited, and the targeted exemption threshold consistent with that band — a threshold cannot be claimed while the corresponding fraud-rate condition is unmet
-- The continuous nature of the TRA fraud-rate condition stated, not treated as a one-off test
+- Where Article 18 TRA is applied, the firm's current fraud rate per payment type is stated, calculated under Article 19 on a rolling quarterly basis
+- The reference fraud rate and exemption threshold value cited from the UK SCA-RTS Appendix (ETVs £85 / £220 / £440), and the targeted ETV consistent with the firm's fraud rate — an ETV cannot be claimed while the corresponding fraud-rate condition is unmet
+- The continuous nature of the TRA fraud-rate condition stated, not treated as a one-off test, with the Article 20 rule (immediate report to the FCA when a reference rate is exceeded; cessation after two consecutive quarters above it) — no percentage-of-reference trigger presented as regulatory
 - Exemption decisions consistent with each other where they interact
 
 ### FSSAFE -- Safeguarding Arrangements
@@ -1703,10 +1703,11 @@ All artifacts must pass these 10 checks:
 - Safeguarding method stated with justification: segregation, insurance, or comparable guarantee
 - SPI safeguarding correctly characterised as voluntary — registered SPIs are not required to safeguard, and where elected the Reg 23 mechanics and insolvency priority follow
 - Designated accounts record institution name, FCA FRN, account type, sort code or IBAN, and date designated
-- Segregation trigger stated against the correct deadline for the authorisation type — end of business on the day of receipt under PSRs 2017 Reg 23(2), or within five business days of issuance for EMIs under EMR 2011 Reg 20(4)
+- Segregation trigger stated against the correct rule — funds kept segregated from receipt, and placed in a designated account or invested in relevant assets if still held at the end of the business day following the day of receipt (PSRs 2017 Reg 23(5)–(6); EMR 2011 Reg 21(1)–(2)); for EMIs, funds received by payment instrument safeguarded by the end of five business days after the e-money is issued (EMR 2011 Reg 20(4))
 - Controls preventing commingling with operational funds documented, along with the controls keeping the designated account to safeguarding use only
 - Where insurance or a comparable guarantee is used, the insurer or guarantor, coverage amount, sublimits and insolvency trigger are recorded, with confirmation the cover was in place before any relevant funds were received
-- Reconciliation approach documented with frequency and break-resolution process
+- Reconciliation approach documented with frequency and break-resolution process — internal and external safeguarding reconciliations at least once each reconciliation day (CASS 15.8.19R and 15.8.42R, from 7 May 2026)
+- Monthly safeguarding return cited as REP027 under SUP 16.14A and SUP 16 Annex 29BR — not REP-CRIM, which is the annual financial crime report
 
 ### FSCD -- Consumer Duty Assessment
 

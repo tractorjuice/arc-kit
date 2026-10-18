@@ -32,10 +32,14 @@ statements.
 - **Product launch or material change** — a new product, a fee change, a change to the distribution
   strategy, or a change to the target market definition requires an updated target market assessment
   and, where the change affects Price and Value, a refreshed fair-value statement.
-- **Post-FCA observation cycle** — the FCA's December 2024 good-and-poor-practice observations
-  identified common weaknesses (backward-looking harm assessments, under-evidenced vulnerable
-  customer sections, generic forward plans). If the firm's existing Board Report exhibits these
-  weaknesses, this command provides a structured re-draft.
+- **Post-FCA observation cycle** — the FCA's "Consumer Duty board reports: good practice and areas
+  for improvement" (11 December 2024, last updated 9 March 2026) reviewed first-year reports from
+  180 firms and named five areas for improvement: data quality, a view across distribution chains,
+  analysis of different customer types including vulnerability, challenge from the board, and
+  taking effective action. Its blog "Year 2 Consumer Duty Board Reports: progress and what comes
+  next" (16 April 2026) found improvement but continuing gaps, including data presented without
+  saying what it shows about outcomes and board challenge that is not documented. If the firm's
+  existing Board Report shows these weaknesses, this command provides a structured re-draft.
 - **Vulnerable customer cohort refresh** — if the firm's identification methodology has changed
   (new proxy indicators, updated MI, changes to the customer support journey), the cohort summary
   needs updating independently of the annual cycle.
@@ -146,15 +150,14 @@ PRIN 2A) for a stable legislative anchor.
 - **Consumer Duty applies to firms with retail customers only.** Wholesale-only firms are out of
   scope. Firms with a mixed book must document which products and channels are in scope and mark
   wholesale-only sections explicitly as N/A with a rationale.
-- **"Foreseeable harm" is a forward-looking standard.** The FCA's December 2024 board-report
-  observations found many firms were backward-looking — using past complaints data as the primary
-  harm evidence. Past data is necessary but not sufficient. The harm assessment must consider
-  product-design risks, distribution risks, and operational capability risks that could arise even
-  where they have not yet materialised.
-- **Board attestation requires named SMF holders, not teams.** The FCA's December 2024 observations
-  noted a pattern of attestation blocks listing teams rather than named individuals. The attestation
-  must be signed by the named SMFs — typically SMF3 (CEO), SMF7 (Group Entity Senior Manager or
-  equivalent), and the SMF for Compliance Oversight — not by "the Compliance Team".
+- **"Foreseeable harm" is a forward-looking standard.** Past complaints data is necessary but not
+  sufficient as harm evidence. The harm assessment must consider product-design risks,
+  distribution risks, and operational capability risks that could arise even where they have not
+  yet materialised.
+- **Board attestation requires named SMF holders, not teams.** The attestation must be signed by
+  the named SMFs — typically SMF3 (CEO), SMF7 (Group Entity Senior Manager or equivalent), and the
+  SMF for Compliance Oversight — not by "the Compliance Team". The FCA's board-report publications
+  both ask for evidence that the governing body challenged the report, so record that challenge.
 - **Price-personalisation is a high-scrutiny area.** Where the firm's pricing algorithm produces
   different prices for different consumers, it must demonstrate that variation reflects genuine cost
   or risk differentials, not discriminatory profiling. DPIA and Article 22 UK GDPR alignment is
@@ -172,7 +175,8 @@ PRIN 2A) for a stable legislative anchor.
 | FCA PS22/9 — A new Consumer Duty (policy statement, July 2022) | <https://www.fca.org.uk/publications/policy-statements/ps22-9-new-consumer-duty> |
 | FCA FG22/5 — Guidance for firms on the Consumer Duty (PDF, August 2022) | <https://www.fca.org.uk/publication/finalised-guidance/fg22-5.pdf> |
 | FCA PS22/9 — Policy Statement PDF | <https://www.fca.org.uk/publication/policy/ps22-9.pdf> |
-| FCA Consumer Duty board reports: good practice and areas for improvement (December 2024, updated March 2026) | <https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement> |
+| FCA Consumer Duty board reports: good practice and areas for improvement (11 December 2024, last updated 9 March 2026) | <https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement> |
+| FCA blog — Year 2 Consumer Duty Board Reports: progress and what comes next (16 April 2026) | <https://www.fca.org.uk/news/blogs/year-2-consumer-duty-board-reports-progress-and-what-comes-next> |
 | FCA Consumer Duty — information for firms | <https://www.fca.org.uk/firms/consumer-duty/information-firms> |
 | FCA Handbook (entry point — navigate to PRIN 2A for Consumer Duty rules) | <https://www.handbook.fca.org.uk> |
 | FCA 2022/31 — Consumer Duty instrument (introduces Principle 12 and PRIN 2A) | <https://www.fca.org.uk/publication/policy/fca-2022-31.pdf> |
