@@ -106,7 +106,7 @@ Include a separate **Acronyms** table for quick reference.
 
 ### 5. Auto-Populate Document Control
 
-Generate Document ID: `ARC-{PROJECT_ID}-GLOS-v1.0` (for filename: `ARC-{PROJECT_ID}-GLOS-v1.0.md`)
+Generate Document ID: `ARC-{PROJECT_ID}-GLOS-v{VERSION}` (for filename: `ARC-{PROJECT_ID}-GLOS-v{VERSION}.md`)
 
 - Set Document Type: "Project Glossary"
 - Set owner, dates
@@ -123,7 +123,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{project-dir}/ARC-{PROJECT_ID}-GLOS-v1.0.md
+projects/{project-dir}/ARC-{PROJECT_ID}-GLOS-v{VERSION}.md
 ```
 
 Use the Write tool with the complete glossary content following the template structure.
@@ -135,8 +135,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Project Glossary Created
 
-**Document**: `projects/{project-dir}/ARC-{PROJECT_ID}-GLOS-v1.0.md`
-**Document ID**: ARC-{PROJECT_ID}-GLOS-v1.0
+**Document**: `projects/{project-dir}/ARC-{PROJECT_ID}-GLOS-v{VERSION}.md`
+**Document ID**: ARC-{PROJECT_ID}-GLOS-v{VERSION}
 
 ### Glossary Overview
 - **Total Terms Defined**: [N]
@@ -166,7 +166,7 @@ After writing the file, show a concise summary (NOT the full document):
 3. Add missing definitions for flagged terms
 4. Review data model terminology: `/arckit:data-model`
 
-**File location**: `projects/{project-dir}/ARC-{PROJECT_ID}-GLOS-v1.0.md`
+**File location**: `projects/{project-dir}/ARC-{PROJECT_ID}-GLOS-v{VERSION}.md`
 ```
 
 ---
@@ -184,7 +184,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` -> Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` -> "1.0" (or increment if previous version exists)
+- `[VERSION]` -> from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-GLOS-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` -> Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` -> "Project Glossary"
 - `ARC-[PROJECT_ID]-GLOS-v[VERSION]` -> Construct using format above
@@ -254,7 +254,7 @@ The footer should be populated with:
    - Glossary is informed by: `/arckit:requirements`, `/arckit:data-model`, `/arckit:stakeholders`, `/arckit:principles`, `/arckit:sobc`, `/arckit:research`, `/arckit:adr`, `/arckit:strategy`, `/arckit:risk`
    - Glossary feeds into: `/arckit:data-model` (validated entity/attribute names)
 
-8. **Version Management**: If a glossary already exists (ARC-*-GLOS-v*.md), create a new version (v2.0) rather than overwriting. Glossaries should be versioned to track terminology evolution.
+8. **Version Management**: If a glossary already exists (ARC-*-GLOS-v*.md), write the next version beside it rather than overwriting it, as `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` describes: terms added or corrected is a minor increment, a restructured glossary a major one. Glossaries should be versioned to track terminology evolution.
 
 9. **Scope**: If the user specifies "all projects", scan artifacts across all project directories and create a consolidated glossary in `projects/000-global/`.
 

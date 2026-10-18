@@ -154,15 +154,9 @@ If the screening shows DPIA NOT REQUIRED, ask the user if they want to proceed a
 
 Generate the DPIA by:
 
-1. **Detect version**: Before generating the document ID, check if a previous version exists:
-   - Look for existing `ARC-{PROJECT_ID}-DPIA-v*.md` files in the project directory
-   - **If no existing file**: Use VERSION="1.0"
-   - **If existing file found**:
-     - Read the existing document to understand its scope
-     - Compare against current data model and requirements
-     - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed risk scores, updated mitigations, corrected details
-     - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new data categories, new processing purposes, fundamentally different risk landscape
-   - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+1. **Detect version**: follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-{PROJECT_ID}-DPIA-v*.md` in the project directory, comparing against the current data model and requirements. For a DPIA:
+   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed risk scores, updated mitigations, corrected details
+   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new data categories, new processing purposes, fundamentally different risk landscape
 
 2. **Auto-populate Document Control**:
    - **Document ID**: `ARC-{PROJECT_ID}-DPIA-v{VERSION}` (e.g., `ARC-001-DPIA-v1.0`)

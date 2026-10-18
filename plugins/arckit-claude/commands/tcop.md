@@ -94,15 +94,9 @@ Generate a comprehensive TCoP review document by:
 
 8. **Prioritize actions**: Identify critical issues requiring immediate attention
 
-9. **Detect version**: Before generating the document ID, check if a previous version exists:
-   - Look for existing `ARC-{PROJECT_ID}-TCOP-v*.md` files in the project directory
-   - **If no existing file**: Use VERSION="1.0"
-   - **If existing file found**:
-     - Read the existing document to understand its scope
-     - Compare against current project state and compliance evidence
-     - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed assessments, updated evidence, corrected details
-     - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new TCoP points assessed, fundamentally different compliance posture, significant project changes
-   - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+9. **Detect version**: follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-{PROJECT_ID}-TCOP-v*.md` in the project directory, comparing against the current project state and compliance evidence. For a TCoP review:
+   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed assessments, updated evidence, corrected details
+   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new TCoP points assessed, fundamentally different compliance posture, significant project changes
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **TCOP** per-type checks pass. Fix any failures before proceeding.
 
@@ -121,7 +115,7 @@ Before completing the document, populate ALL document control fields in the head
 **Auto-populated fields** (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → Determined version from step 8
+- `[VERSION]` → Determined version from step 9
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Technology Code of Practice Review"
 - `ARC-[PROJECT_ID]-TCOP-v[VERSION]` → Construct using format from Step 1

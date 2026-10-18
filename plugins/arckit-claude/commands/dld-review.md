@@ -194,7 +194,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-DLDR-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Detailed Design Review"
 - `ARC-[PROJECT_ID]-DLDR-v[VERSION]` → Construct using format above
@@ -240,7 +240,7 @@ The footer should be populated with:
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DLDR** per-type checks pass. Fix any failures before proceeding.
 
 9. **Write outputs**:
-   - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-DLDR-v1.0.md` - Full review report
+   - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-DLDR-v{VERSION}.md` - Full review report
    - Update traceability matrix with implementation details
    - Create implementation checklist if approved
 

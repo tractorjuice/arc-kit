@@ -724,7 +724,9 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 Generate a comprehensive markdown report saved to:
 
-**`projects/{project-dir}/ARC-{PROJECT_ID}-SVCASS-v1.0.md`**
+**`projects/{project-dir}/ARC-{PROJECT_ID}-SVCASS-v{VERSION}.md`**
+
+Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier report, never over it. Preparing for a later phase (Alpha to Beta, Beta to Live) is a major increment.
 
 Example: `projects/001-nhs-appointment/ARC-001-SVCASS-v1.0.md`
 

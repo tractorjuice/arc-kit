@@ -146,7 +146,7 @@ If no principles document exists, note this as a gap and recommend running `/arc
 
 ### 8. Auto-Populate Document Control
 
-Generate Document ID: `ARC-{PROJECT_ID}-MMOD-v1.0` (for filename: `ARC-{PROJECT_ID}-MMOD-v1.0.md`)
+Generate Document ID: `ARC-{PROJECT_ID}-MMOD-v{VERSION}` (for filename: `ARC-{PROJECT_ID}-MMOD-v{VERSION}.md`)
 
 - Set Document Type: "Maturity Model"
 - Set owner, dates
@@ -163,7 +163,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{project-dir}/ARC-{PROJECT_ID}-MMOD-v1.0.md
+projects/{project-dir}/ARC-{PROJECT_ID}-MMOD-v{VERSION}.md
 ```
 
 Use the Write tool with the complete maturity model content following the template structure.
@@ -175,8 +175,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Capability Maturity Model Created
 
-**Document**: `projects/{project-dir}/ARC-{PROJECT_ID}-MMOD-v1.0.md`
-**Document ID**: ARC-{PROJECT_ID}-MMOD-v1.0
+**Document**: `projects/{project-dir}/ARC-{PROJECT_ID}-MMOD-v{VERSION}.md`
+**Document ID**: ARC-{PROJECT_ID}-MMOD-v{VERSION}
 
 ### Maturity Model Overview
 - **Capability Dimensions**: [N] dimensions defined
@@ -205,7 +205,7 @@ After writing the file, show a concise summary (NOT the full document):
 3. Create phased roadmap for maturity progression: `/arckit:roadmap`
 4. Incorporate maturity targets into architecture strategy: `/arckit:strategy`
 
-**File location**: `projects/{project-dir}/ARC-{PROJECT_ID}-MMOD-v1.0.md`
+**File location**: `projects/{project-dir}/ARC-{PROJECT_ID}-MMOD-v{VERSION}.md`
 ```
 
 ---
@@ -223,7 +223,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` -> Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` -> "1.0" (or increment if previous version exists)
+- `[VERSION]` -> from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-MMOD-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` -> Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` -> "Maturity Model"
 - `ARC-[PROJECT_ID]-MMOD-v[VERSION]` -> Construct using format above
@@ -285,7 +285,7 @@ The footer should be populated with:
 
 4. **Use Write Tool**: The maturity model document is typically 300-500 lines. ALWAYS use the Write tool to create it. Never output the full content in chat.
 
-5. **Version Management**: If a maturity model already exists (ARC-*-MMOD-v*.md), create a new version (v2.0) rather than overwriting. Maturity models should be versioned to track assessment evolution over time.
+5. **Version Management**: If a maturity model already exists (ARC-*-MMOD-v*.md), write the next version beside it rather than overwriting it, as `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` describes: a re-assessment or a change to the dimensions or levels is a major increment, refreshed evidence a minor one. Maturity models should be versioned to track assessment evolution over time.
 
 6. **Self-Assessment Calibration**: The questionnaire answers for L1, L3, and L5 must be clearly differentiated so that assessors can reliably score themselves. Avoid ambiguous or overlapping descriptions between levels.
 

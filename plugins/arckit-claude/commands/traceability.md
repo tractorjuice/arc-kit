@@ -176,8 +176,7 @@ The hook provides the existing TRAC version and a suggested next version. Use th
 2. **If hook provides an existing version** (e.g., "v1.0"):
    - Use the hook's **suggested next version** as the default (minor increment, e.g., 1.0 → 1.1)
    - **Major increment** (e.g., 1.0 → 2.0): Only if scope materially changed — new requirement categories traced, fundamentally different coverage, significant new artifacts added
-3. Use the determined version for document ID, filename, Document Control, and Revision History
-4. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+3. Carry the version through the document and its Revision History as `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` describes. If the hook gave no version line at all, follow that reference from the start for `ARC-{PROJECT_ID}-TRAC-v*.md`
 
 ### Step 1: Construct Document ID
 

@@ -133,7 +133,7 @@ This phase contains the following artifacts:
 
 ### Step 5: Generate FWRK Overview Document
 
-Determine version: Use Glob to check for existing `projects/{PID}-{name}/framework/ARC-{PID}-FWRK-v*.md` files. If none exist, use VERSION="1.0". If an existing version is found, read it and determine the appropriate increment (minor for refreshed content, major for structural changes).
+Determine version: follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `projects/{PID}-{name}/framework/ARC-{PID}-FWRK-v*.md` (Glob for the existing files). A changed phase structure is a major increment; refreshed content a minor one.
 
 Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus any FWRK-specific checks pass. Fix any failures before proceeding.
 

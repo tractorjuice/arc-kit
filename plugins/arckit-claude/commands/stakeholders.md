@@ -126,7 +126,7 @@ $ARGUMENTS
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **STKE** per-type checks pass. Fix any failures before proceeding.
 
 7. **Write the output**:
-   - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-STKE-v1.0.md`
+   - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-STKE-v{VERSION}.md`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier analysis, never over it. Stakeholders added or removed is a major increment
    - Use the exact template structure
    - Fill in ALL sections with realistic, thoughtful analysis
    - DO NOT leave sections as TBD unless genuinely unknown
@@ -138,7 +138,7 @@ Before completing the document, populate document information fields:
 ### Auto-populated fields
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001")
-- `[VERSION]` → Start with "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-STKE-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → Document purpose
 - `ARC-[PROJECT_ID]-STKE-v[VERSION]` → Generated document ID

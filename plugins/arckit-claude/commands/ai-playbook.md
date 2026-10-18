@@ -380,7 +380,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-AIPB-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "UK Government AI Playbook Assessment"
 - `ARC-[PROJECT_ID]-AIPB-v[VERSION]` → Construct using format above
@@ -427,7 +427,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 11. **Write comprehensive output**:
 
-Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-AIPB-v1.0.md`
+Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-AIPB-v{VERSION}.md`
 
 Use template structure from `uk-gov-ai-playbook-template.md`
 

@@ -96,7 +96,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-GCLD-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "G-Cloud Service Requirements"
 - `ARC-[PROJECT_ID]-GCLD-v[VERSION]` → Construct using format above
@@ -261,7 +261,7 @@ Fill the rest of the template, then write the file:
 - **External References** — the document register, citations and unreferenced documents, per the citation instructions.
 
 **CRITICAL**: Use the **Write tool** to save the completed document to
-`projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md`. Writing it inline
+`projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v{VERSION}.md`. Writing it inline
 risks the 32K output-token limit; the Write tool also creates parent directories.
 
 Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLD** per-type checks pass. Fix any failures before proceeding.
@@ -289,7 +289,7 @@ Output to user:
 ✅ Generated G-Cloud service search for [PROJECT_NAME]
 
 Framework: G-Cloud
-Document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md
+Document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v{VERSION}.md
 
 Requirements Summary:
 - ✅ Requirements extracted from ARC-*-REQ-*.md
@@ -312,7 +312,7 @@ Alternative Services:
 3. [Service Name] by [Supplier] - [URL]
 
 Next Steps:
-1. Review document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md
+1. Review document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v{VERSION}.md
 2. Visit recommended service page: [Link]
 3. Contact supplier for detailed information
 4. Validate integration requirements (INT-xxx)

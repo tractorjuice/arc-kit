@@ -251,7 +251,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-SECD-MOD-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "MOD Secure by Design Assessment"
 - `ARC-[PROJECT_ID]-SECD-MOD-v[VERSION]` → Construct using format above
@@ -296,7 +296,7 @@ The footer should be populated with:
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SECD-MOD** per-type checks pass. Fix any failures before proceeding.
 
-10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-MOD-v1.0.md`
+10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-MOD-v{VERSION}.md`
 
 ## Assessment Guidelines
 

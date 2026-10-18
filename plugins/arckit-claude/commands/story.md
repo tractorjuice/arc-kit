@@ -9,7 +9,7 @@ allowed-tools:
 
 You are helping an enterprise architect **generate a comprehensive project story** that documents the journey of an ArcKit-managed project from inception to completion, with heavy emphasis on timeline analysis and governance achievements.
 
-This command creates a **ARC-{PROJECT_ID}-STORY-v1.0.md** document that serves as:
+This command creates a **ARC-{PROJECT_ID}-STORY-v{VERSION}.md** document that serves as:
 
 - A historical record of the project's evolution through the ArcKit governance framework
 - A detailed timeline analysis with multiple visualization types (Gantt, flowchart, table, pie chart)
@@ -649,17 +649,10 @@ Write comprehensive analysis sections:
 
 ### Step 11: Detect Version
 
-Before generating the document ID, check if a previous version exists:
+Follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-{PROJECT_ID}-STORY-v*.md` in the project directory. For a project story:
 
-1. Look for existing `ARC-{PROJECT_ID}-STORY-v*.md` files in the project directory
-2. **If no existing file**: Use VERSION="1.0"
-3. **If existing file found**:
-   - Read the existing document to understand its scope
-   - Compare against current project artifacts and timeline
-   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed metrics, updated timeline, corrected details
-   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new project phases covered, fundamentally different achievements, significant new artifacts added
-4. Use the determined version for document ID, filename, Document Control, and Revision History
-5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+- **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed metrics, updated timeline, corrected details
+- **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new project phases covered, fundamentally different achievements, significant new artifacts added
 
 ### Step 12: Construct Document Control Metadata
 
@@ -735,7 +728,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 ```text
 Write tool:
-- file_path: projects/[PROJECT_ID]-[PROJECT_NAME]/ARC-{PROJECT_ID}-STORY-v1.0.md
+- file_path: projects/[PROJECT_ID]-[PROJECT_NAME]/ARC-{PROJECT_ID}-STORY-v{VERSION}.md
 - content: [Full populated template with all placeholders replaced]
 ```
 
@@ -812,7 +805,7 @@ Governance & Traceability      4 days      5%
 📄 **Document Contents**
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-The 2,400-line ARC-{PROJECT_ID}-STORY-v1.0.md includes:
+The 2,400-line ARC-{PROJECT_ID}-STORY-v{VERSION}.md includes:
 
 ✓ Executive summary with timeline snapshot
 ✓ 4 timeline visualizations (Gantt, flowchart, table, pie chart)
@@ -846,7 +839,7 @@ The story demonstrates systematic architecture governance from stakeholder needs
 
 1. **Prerequisites first**: Always check that architecture principles exist before generating a story. The principles command (`/arckit:principles`) is the foundation of the ArcKit governance framework and should be the FIRST command run in any project.
 
-2. **Use Write tool**: The ARC-{PROJECT_ID}-STORY-v1.0.md will be 2000-3000 lines. You MUST use the Write tool to avoid exceeding token limits.
+2. **Use Write tool**: The ARC-{PROJECT_ID}-STORY-v{VERSION}.md will be 2000-3000 lines. You MUST use the Write tool to avoid exceeding token limits.
 
 3. **Real data only**: Replace ALL placeholders with real data extracted from artifacts. No "[PLACEHOLDER]" should remain in the final document.
 
@@ -888,7 +881,7 @@ cd projects/009-cabinet-office-genai
 ## Success Criteria
 
 - ✅ Prerequisites checked (architecture principles exist)
-- ✅ ARC-{PROJECT_ID}-STORY-v1.0.md created in project directory
+- ✅ ARC-{PROJECT_ID}-STORY-v{VERSION}.md created in project directory
 - ✅ All timeline data extracted from git log or file dates
 - ✅ All placeholders replaced with real data
 - ✅ 4 timeline visualizations generated

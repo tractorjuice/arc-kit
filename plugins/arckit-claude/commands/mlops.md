@@ -256,7 +256,7 @@ Verify before saving:
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **MLOPS** per-type checks pass. Fix any failures before proceeding.
 
-1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v1.0.md`
+1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v{VERSION}.md`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier strategy, never over it
 
 2. **Provide summary**:
 
@@ -283,7 +283,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 - Human Oversight: [Required / Advisory]
 - ATRS: [Required / Not Required]
 
-**File**: projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v1.0.md
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v{VERSION}.md
 
 **Next Steps**:
 1. Review model inventory with data science team
@@ -336,9 +336,9 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 **Auto-populate**:
 
 - `[PROJECT_ID]` → From project path
-- `[VERSION]` → "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-MLOPS-v*.md` exists
 - `[DATE]` → Current date (YYYY-MM-DD)
-- `ARC-[PROJECT_ID]-MLOPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-MLOPS-v1.0.md`)
+- `ARC-[PROJECT_ID]-MLOPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-MLOPS-v{VERSION}.md`)
 
 **Generation Metadata Footer**:
 

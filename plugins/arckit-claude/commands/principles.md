@@ -70,15 +70,9 @@ $ARGUMENTS
    - **Retail**: Add principles for payment processing, inventory systems, customer data
    - **Government**: Add accessibility (Section 508), public records, security clearances
 
-7. **Detect version**: Before generating the document, check if a previous version exists:
-   - Look for existing `ARC-000-PRIN-v*.md` files in `projects/000-global/`
-   - **If no existing file**: Use VERSION="1.0"
-   - **If existing file found**:
-     - Read the existing document to understand its scope
-     - Compare against current inputs
-     - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed content, updated details, corrections
-     - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new principle categories, removed categories, fundamentally different guidance
-   - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+7. **Detect version**: follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-000-PRIN-v*.md` in `projects/000-global/`. For principles:
+   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed content, updated details, corrections
+   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new principle categories, removed categories, fundamentally different guidance
 
 8. **Write the output**:
 
