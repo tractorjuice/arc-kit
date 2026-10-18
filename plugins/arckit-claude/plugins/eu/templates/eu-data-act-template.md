@@ -146,7 +146,7 @@
 | Smart contracts — essential requirements met | Art. 36 | ☐ |
 | Automated data sharing through smart contracts enabled (where applicable) | Art. 37 | ☐ |
 
-## 8. Trade Secret Protection (Article 12 and Recitals)
+## 8. Trade Secret Protection (Articles 4(6)–(9), 5(9)–(11) and 8(6))
 
 | Safeguard | Status |
 |-----------|--------|

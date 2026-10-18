@@ -43,7 +43,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 **When to use this:**
 
 - **After**: `/arckit:stakeholders` (MANDATORY - SOBC must link to stakeholder goals)
-- **Before**: `/arckit:requirements` (SOBC justifies whether to proceed with detailed requirements)
+- **Usually before**: `/arckit:requirements` (SOBC justifies whether to proceed with detailed requirements). Where requirements already exist, for example in a bulk build (`/arckit:build` recipes build REQ first) or a refresh, read them to sharpen the cost estimates; they are an OPTIONAL input below, never a reason to stop
 - **Purpose**: Secure executive approval and funding to proceed to next stage
 
 **Note**: Later stages will create OBC (Outline Business Case) and FBC (Full Business Case) with more accurate costs. This SOBC uses strategic estimates and options analysis.

@@ -497,6 +497,7 @@ All artifacts must pass these 10 checks:
 - Qualification vs Visa distinction explicitly noted (critical procurement risk)
 - Extraterritorial legal risk assessed per provider (Cloud Act, FISA-702 at minimum)
 - OIV/OSE designation status determined with LPM obligations mapped (or explicitly marked N/A)
+- Binding obligation under the arrêté du 12 août 2026 assessed independently of OIV/OSE status (not marked N/A solely because the entity is not OIV/OSE)
 - Architecture pattern (A/B/C) recommended based on data sensitivity level
 - Decision matrix includes clear recommendation with rationale
 - ANSSI position on FISA-702 residual risk documented
@@ -569,7 +570,7 @@ All artifacts must pass these 10 checks:
 - System scope and deployment environment (cloud / on-premise / hybrid) documented
 - All 42 hygiene measures assessed with status (✅ Implemented / ⚠️ Partial / ❌ Not implemented / N/A)
 - Not-applicable measures documented with justification
-- Cloud security recommendations (ANSSI 2021) assessed if cloud services are used
+- ANSSI cloud hosting recommendations for sensitive IS (v1.0, July 2024) assessed if cloud services are used
 - Cloud provider qualification status (SecNumCloud / EU-qualified / Other) assessed if applicable
 - Gap analysis produced with priority (🔴 High / 🟠 Medium / 🟡 Low), owner, and remediation action for each gap
 - Summary score (N / 42 implemented) reported
@@ -628,7 +629,7 @@ All artifacts must pass these 10 checks:
 - At least 8 security principles defined, consistent with ANSSI recommendations
 - Organisational structure documented: Highest Authority (AA), RSSI, (FSSI,) DPO, DSI, CSSI
 - Security governance committees documented (steering, operational, homologation board)
-- All 7 security domains covered: access management, network, workstations, applications, data, physical, business continuity
+- All 8 security domains covered: access management, network, workstations, applications, data, physical, business continuity, vulnerability management
 - User obligations defined
 - Incident management framework defined (declaration, qualification, ANSSI/CERT-FR notification, containment)
 - Applicable standards referenced (RGS, ANSSI hygiene, EBIOS, ISO 27001, sector-specific)
@@ -647,7 +648,7 @@ All artifacts must pass these 10 checks:
 - Publication obligation assessed: which project code must be published on code.gouv.fr
 - Exceptions to publication obligation documented with justification (security, trade secret, third-party IP)
 - Reused components register populated (source, version, licence, integration method)
-- Circulaire PM n°6264-SG (2021) compliance — evidence that reuse was assessed before commissioning new development
+- Circulaire PM n°6264/SG (27 April 2021) — evidence that reuse was assessed before commissioning new development
 
 ### ATBFR -- Austrian Accessibility Assessment (BaFG / WZG)
 
@@ -842,12 +843,12 @@ All artifacts must pass these 10 checks:
 
 ### ACHG -- Architecture Change Request
 
-- Change classified as EVOLUTIONARY, TRANSFORMATIONAL or CORRECTIVE with justification
+- Change classified as SIMPLIFICATION, INCREMENTAL or RE-ARCHITECTING (the TOGAF Phase H classification) with justification
 - Priority set (CRITICAL / HIGH / MEDIUM / LOW) and consistent with the impact assessment
 - Impact assessed across all four dimensions: capability, application, technology, governance
 - Affected artefacts listed by document ID, each with the action required
 - ADM re-entry point determined per phase (A–H) with the scope of re-entry, not just YES/NO
-- Re-entry point consistent with the change type — transformational changes re-enter at Phase A or B
+- Re-entry point consistent with the change type — a re-architecting change starts a new ADM cycle (usually at Phase A); a simplification change stays within Phase H
 - Cost and benefit both quantified
 - Approval workflow names the approving authority for the assessed priority
 
@@ -916,8 +917,8 @@ All artifacts must pass these 10 checks:
 - Every agent has a unique AGT-xxx ID used consistently across all sections
 - Model and deployment environment recorded per agent (Prod / Staging / Dev / Planned)
 - Risk level assigned (Critical / High / Medium / Low)
-- Oversight stated as human-in-the-loop, human-on-the-loop or human-out-of-loop — no other values
-- No Critical-risk agent left at human-out-of-loop without a documented justification
+- Oversight stated as human-in-the-loop, human-on-the-loop or human-out-of-the-loop — no other values
+- No Critical-risk agent left at human-out-of-the-loop without a documented justification
 - Capability matrix lists tools, memory types and output types per agent
 - Security classification records data sensitivity, access level and isolation for every agent
 - Audit requirement set per agent, and set to Yes wherever data sensitivity is High

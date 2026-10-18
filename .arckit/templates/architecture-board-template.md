@@ -177,7 +177,7 @@ All decisions must be recorded in the Decision Register with:
 | Architecture Principles | `ARC-000-PRIN-v[N].md` | Board enforces principles compliance |
 | ADM Plan | `ARC-[P]-ADMP-v[N].md` | Board governs Phase G implementation |
 | Gap Analysis | `ARC-[P]-GAPA-v[N].md` | Board prioritises gap closure |
-| Architecture Change Requests | `ARC-[P]-ACHG-v[N].md` | Board approves/denies changes |
+| Architecture Change Requests | `changes/ARC-[P]-ACHG-[NNN]-v[N].md` | Board approves/denies changes |
 
 ## 9. External References
 

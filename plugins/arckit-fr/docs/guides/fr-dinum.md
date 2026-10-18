@@ -32,7 +32,7 @@ Output: `projects/<id>/ARC-<id>-DINUM-v1.0.md`
 |---------|----------|
 | RGI v2 | Interoperability standards (open formats, APIs, protocols) |
 | RGAA v4.1 | Accessibility compliance (WCAG 2.1 AA + French extensions) |
-| RGESN | Eco-design for digital services (115 criteria) |
+| RGESN | Eco-design for digital services (RGESN 2024: 78 criteria in 9 families) |
 | RGS v2 | General security baseline for information systems |
 | Doctrine Cloud | Data classification, cloud strategy, SecNumCloud triggers |
 | SILL | Recommended open source software stack |
@@ -68,7 +68,7 @@ Output: `projects/<id>/ARC-<id>-DINUM-v1.0.md`
 
 - RGI: open standards and interoperable formats used; APIs RESTful with OpenAPI spec.
 - RGAA v4.1: accessibility audit planned; legal accessibility statement required.
-- RGESN: eco-design 115 criteria assessed for new digital service.
+- RGESN: the 78 criteria of RGESN 2024 (9 families) assessed for new digital service.
 - RGS: security level determined (RGS */** /***); homologation if required.
 - Doctrine cloud: data classification performed; SecNumCloud triggered if sensitive.
 - SILL: recommended open source stack consulted before procurement.

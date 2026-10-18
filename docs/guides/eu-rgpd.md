@@ -23,6 +23,8 @@
 /arckit:eu-rgpd Assess GDPR compliance for <project or data processing activity>
 ```
 
+In Claude Code the overlay installs as its own plugin, `arckit-eu`, so the command is `/arckit-eu:eu-rgpd`.
+
 Output: `projects/<id>/ARC-<id>-RGPD-v1.0.md`
 
 > **Auto-versioning**: Re-running increments the version automatically.

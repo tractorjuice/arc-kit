@@ -14,7 +14,8 @@
 | Agent inventory (`ARC-<id>-AAGI-v1.0.md`) | Agent register, lifecycle, and deployment context |
 | Agent governance (`ARC-<id>-AAOV-v1.0.md`) | Oversight, approval, and audit requirements |
 | Agent security (`ARC-<id>-AASE-v1.0.md`) | Security controls and permitted communication patterns |
-| System diagrams or HLD reviews | Existing system integration and platform context |
+| Global principles (`ARC-000-PRIN-v1.0.md`) | Integration standards and interoperability requirements |
+| ADM preliminary (`ARC-<id>-ADMP-v1.0.md`) | Integration architecture references and migration phases |
 
 ---
 

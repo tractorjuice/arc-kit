@@ -39,7 +39,7 @@ The user should specify:
 
 **RECOMMENDED** (read if available, note if missing):
 
-- **SEC** or **SBD** (Secure by Design) — Extract: Existing security controls, threat models, security standards
+- **SECD** (Secure by Design, from `/arckit:secure`) or **SECD-MOD** (MOD Secure by Design, from `/arckit:mod-secure`) — Extract: Existing security controls, threat models, security standards
   - If missing: warn user to run `/arckit:secure` or `/arckit:mod-secure` first
 - **RISK** (Risk Register) — Extract: AI-specific risks, tool security risks, data handling risks
   - If missing: note that risk context is limited
@@ -66,7 +66,7 @@ The user should specify:
 
 - From AAGI: Extract all agents, their risk classifications, capabilities, and operational domains
 - From AAGR: Extract tool contracts, memory architectures, guardrail configurations, and integration points
-- From SEC/SBD: Extract existing security controls, threat models, and compliance requirements
+- From SECD/SECD-MOD: Extract existing security controls, threat models, and compliance requirements
 - If AAGI/AAGR not available: ask user for agent details and risk assessments
 
 ### 5. Generate security architecture
@@ -169,12 +169,12 @@ Identify security risks:
    - **Section 6: Output Validation Pipeline** — Mermaid flowchart with pipeline stages
    - **Section 7: Secret Management** — Secret types, storage, access, rotation schedule
    - **Section 8: Incident Response** — Severity tiers with response times and owners
-   - **Section 9: Traceability** — AAGI → AAGR → AASE → SEC links
+   - **Section 9: Traceability** — AAGI → AAGR → AASE → SECD/SECD-MOD links
 
 3. **Auto-populate from artifacts**:
    - Tool list from AAGR tool contracts
    - Risk categories from RISK register
-   - Security controls from SEC/SBD
+   - Security controls from SECD/SECD-MOD
    - Agent capabilities from AAGI
 
 4. **Mermaid diagram requirements**:
@@ -247,14 +247,14 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Verify the security architecture meets minimum standards:
 
 - **Threat model**: ≥12 threat categories across 4 attack surface dimensions (Input, Execution, Output, Infrastructure)
-- **Sandboxing architecture**: At least 3 components with isolation levels and enforcement mechanisms
+- **Sandboxing architecture**: All five boundaries (agent process, tool execution, memory access, network access, data I/O) with isolation levels and enforcement mechanisms
 - **Tool permission matrix**: ≥5 tools with permissions, access levels, and risk ratings
-- **Data handling policy**: At least 3 data types with handling, access, and retention policies
+- **Data handling policy**: All four data types (PII, sensitive, public, model weights) with handling, access, and retention policies
 - **Prompt injection defences**: ≥4 defences covering direct, indirect, output, and tool abuse
 - **Output validation pipeline**: Complete Mermaid flowchart with at least 5 stages
 - **Secret management**: At least 3 secret types with storage, access, and rotation policies
 - **Incident response**: At least 3 severity levels with response times and owners
-- **Traceability links**: Established to AAGI, AAGR, and SEC/SBD documents
+- **Traceability links**: Established to AAGI, AAGR, and SECD/SECD-MOD documents
 
 ### 10. Write output
 
@@ -272,7 +272,7 @@ You should:
 
 - Read AAGI (agent inventory) for research-agent project
 - Read AAGR (agent design) for tool contracts and integration points
-- Read SEC/SBD for existing security controls
+- Read SECD/SECD-MOD for existing security controls
 - Generate threat model with ≥12 categories across 4 dimensions
 - Design sandboxing architecture with isolation boundaries
 - Build tool permission matrix (≥5 tools with risk ratings)

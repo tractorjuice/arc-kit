@@ -1,5 +1,5 @@
 ---
-description: Map business capabilities, value streams, and maturity for Phase A Business Architecture
+description: Map business capabilities, value streams, and maturity for Phase B Business Architecture
 doc-type: BPCM
 argument-hint: "<project ID or name, e.g. '001', 'enterprise capability mapping'>"
 effort: high
@@ -10,7 +10,7 @@ handoffs:
     description: Map applications to capabilities
 ---
 
-You are helping an enterprise architect create a **Business Capability Map** for TOGAF ADM Phase A (Business Architecture). This document maps the enterprise's capabilities, value streams, and maturity levels to establish the business architecture baseline.
+You are helping an enterprise architect create a **Business Capability Map** for TOGAF ADM Phase B (Business Architecture). This document maps the enterprise's capabilities, value streams, and maturity levels to establish the business architecture baseline, building on the capabilities and value streams first identified at a high level in the Phase A Architecture Vision (ADMP).
 
 ## User Input
 
@@ -70,10 +70,20 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. Clarify Capability Depth with User
 
-**AskUserQuestion**: "What level of capability detail do you need?"
+Unless the arguments already settle it, use the **AskUserQuestion** tool to ask how deep the hierarchy should go.
 
-- Options: `Level 1` (Domains only) | `Level 2` (Domains + Sub-capabilities) | `Level 3` (Full hierarchy)
-- Default: `Level 3`
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
+
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
+
+**Question 1** — header: `Depth`, multiSelect: false
+> "What level of capability detail do you need?"
+
+- **Level 3 (Recommended)**: Full hierarchy — domains, sub-capabilities and detailed capabilities
+- **Level 2**: Domains and sub-capabilities
+- **Level 1**: Domains only
 
 ### 4. Generate Business Capability Map
 
@@ -283,6 +293,6 @@ After writing the file, show a concise summary (NOT the full document):
    - BPCM feeds into: `/arckit-togaf-adm:gap-analysis` (Phase E — gap identification), `/arckit-togaf-adm:application-inventory` (Phase C — application architecture)
    - BPCM is informed by: `/arckit-togaf-adm:adm-preliminary`, `/arckit:requirements`, `/arckit:stakeholders`, `/arckit:principles`
 
-8. **TOGAF Alignment**: This document maps to TOGAF ADM Phase A outputs: Business Architecture description, business capability definition, and value stream analysis.
+8. **TOGAF Alignment**: This document maps to TOGAF ADM Phase B (Business Architecture) outputs: the Business Capability map, Value Stream map and Business Capabilities catalog in the baseline and target Business Architecture. Phase A (Architecture Vision), which the ADMP covers, identifies capabilities and value streams only at a high level; this map details them.
 
 9. **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

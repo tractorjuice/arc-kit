@@ -22,6 +22,8 @@
 /arckit:eu-dsa Assess DSA compliance for <service description and monthly EU user count>
 ```
 
+In Claude Code the overlay installs as its own plugin, `arckit-eu`, so the command is `/arckit-eu:eu-dsa`.
+
 Output: `projects/<id>/ARC-<id>-DSA-v1.0.md`
 
 ---

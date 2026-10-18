@@ -10,7 +10,7 @@ handoffs:
     description: Analyze capability coverage from application inventory
 ---
 
-You are helping an enterprise architect create an **Application Inventory** — a comprehensive portfolio catalog that maps all existing applications, their strategic fit, dependencies, technology landscape, and lifecycle status. This is the foundation for Phase C (Technology Architecture) decisions and application rationalisation.
+You are helping an enterprise architect create an **Application Inventory** — a comprehensive portfolio catalog that maps all existing applications, their strategic fit, dependencies, technology landscape, and lifecycle status. This is the foundation for TOGAF Phase C (Information Systems Architectures — Application Architecture) decisions and application rationalisation.
 
 ## User Input
 
@@ -66,12 +66,20 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. Clarify Scope with User
 
-Before generating the inventory, ask the user about the scope of this assessment:
+Unless the arguments or the project context already settle it, use the **AskUserQuestion** tool to ask about the scope of this assessment.
 
-**AskUserQuestion**: "What is the scope of this application inventory?"
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Options: `All applications` | `Business Unit` | `Specific Project`
-- Default: `All applications`
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
+
+**Question 1** — header: `Coverage`, multiSelect: false
+> "What is the scope of this application inventory?"
+
+- **All applications (Recommended)**: Every application inside the ADMP scope
+- **Business Unit**: Applications one business unit owns or uses
+- **Specific Project**: Only the applications a single project touches
 
 ### 4. Gather Application Data
 
@@ -351,6 +359,6 @@ After writing the file, show a concise summary (NOT the full document):
    - **Input**: Requires ADMP (scope), uses BPCM (capability mapping), REQ (requirements), PRIN (technology standards)
    - **Output**: Feeds `/arckit-togaf-adm:application-rationalization` (portfolio decisions), `/arckit-togaf-adm:gap-analysis` (capability gaps)
 
-7. **TOGAF Alignment**: This document maps to TOGAF Phase C (Technology Architecture) outputs: existing technology baseline, technology standards, and application portfolio assessment.
+7. **TOGAF Alignment**: This document maps to TOGAF Phase C (Information Systems Architectures — Application Architecture) outputs: the Application Portfolio catalog, Interface catalog and baseline Application Architecture. Its technology-stack and vendor columns are inputs to Phase D (Technology Architecture), not Phase D outputs.
 
 8. **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji.

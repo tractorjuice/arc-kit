@@ -211,12 +211,16 @@
 |-----|---------|---------|-------|----------------|
 | [Gap description] | [Art. XX] | 🔴 High | [Role] | [Date] |
 
-**Key AI Act application dates**:
+**Key AI Act application dates** (Article 113 as amended by Regulation (EU) 2026/1744):
 
-- February 2025: Prohibited AI practices apply
-- August 2025: GPAI model obligations apply
-- August 2026: High-risk AI (Annex III) obligations apply
-- August 2027: High-risk AI (Annex I products) obligations apply
+- 2 February 2025: Prohibited AI practices and AI literacy apply
+- 2 August 2025: GPAI model obligations, governance and penalties apply
+- 2 August 2026: General application, including Article 50 transparency obligations
+- 2 December 2026: Article 5(1)(ba)–(bb) prohibitions apply; Article 50(2) marking deadline for generative AI systems placed on the market before 2 August 2026
+- 2 August 2027: GPAI models placed on the market before 2 August 2025 must comply
+- 2 December 2027: High-risk AI (Annex III) obligations apply
+- 2 August 2028: High-risk AI (Annex I products) obligations apply
+- 2 August 2030: Pre-existing high-risk AI systems used by public authorities must comply
 
 ---
 

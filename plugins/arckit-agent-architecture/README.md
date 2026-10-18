@@ -7,11 +7,11 @@
 | `/arckit:agent-inventory` | `AAGI` | Agent inventory and capabilities assessment |
 | `/arckit:agent-design` | `AAGR` | Agent design patterns and architecture decisions |
 | `/arckit:agent-governance` | `AAOV` | Governance frameworks, human oversight, and audit trails |
-| `/arckit:agent-integration` | `AAIN` | Agent-to-agent integration, tool contracts, and orchestration |
+| `/arckit:agent-integration` | `AAIN` | Agent-to-agent integration, inter-agent contracts, message protocols, and failure isolation |
 | `/arckit:agent-security` | `AASE` | Agent security hardening, sandboxing, and permission models |
 | `/arckit:agent-maturity` | `AAMT` | Agent maturity model and continuous improvement |
 
-Recipe: `agent-architecture` (6 phases: inventory → design → governance → integration → security → maturity).
+Recipe: `agent-architecture` (foundation artefacts → inventory → design → governance, integration and security in parallel → optional maturity assessment).
 
 ## Requires arckit core plugin
 

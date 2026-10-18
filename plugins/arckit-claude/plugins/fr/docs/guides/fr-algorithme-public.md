@@ -34,7 +34,7 @@ Output: `projects/<id>/ARC-<id>-ALGO-v1.0.md`
 | Scope Determination | Which decisions are covered (administrative decisions affecting individuals) |
 | Algorithm Inventory | Per-algorithm section (ALGO-xx identifier) |
 | Algorithm Description | Plain-language description, purpose, legal basis |
-| Parameters and Weights | All input parameters and their relative weights |
+| Parameters and Weights | Input parameters and their influence; weighting applied to a person's case is communicated to them on request |
 | Human Oversight | Human review mechanisms and appeal rights |
 | GDPR Art. 22 | Automated individual decisions — safeguards required |
 | EU AI Act | Flag if ML system falls under AI Act high-risk category |
@@ -45,10 +45,10 @@ Output: `projects/<id>/ARC-<id>-ALGO-v1.0.md`
 
 ## Scope — Which Decisions Are Covered
 
-Individual administrative decisions based exclusively or significantly on algorithmic processing, including:
-tax assessment, benefits eligibility, social scoring, scholarship allocation, admission decisions, permit decisions, fine calculation.
+Individual administrative decisions taken on the basis of algorithmic processing (CRPA L311-3-1), whatever the degree of human involvement: fully automated processing and decision-support tools whose output a human then acts on are both covered. CRPA R311-3-1-2 requires the administration to explain the degree and mode of the algorithm's contribution to the decision, and DINUM's guide on public algorithms states that the obligations apply whatever the degree of human involvement. Examples include:
+tax assessment, benefits eligibility, scholarship allocation, admission decisions, permit decisions, fine calculation.
 
-Excluded: decisions with mandatory human review at every step.
+Not covered: general (regulatory) decisions. Disclosure is limited where it would harm a secret protected by law (CRPA L311-5 2°, such as national defence, State security, or the prevention of offences by the competent services).
 
 ---
 
@@ -69,7 +69,7 @@ Excluded: decisions with mandatory human review at every step.
 - Legal obligation scope confirmed (CRPA Art. L311-3-1).
 - All in-scope algorithms inventoried with ALGO-xx identifier.
 - Plain-language description suitable for the public (not technical).
-- All parameters and weights documented — no "black box" permitted.
+- Parameters and their influence documented. The rules defining the main processes are published online (CRPA L312-1-3, administrations with 50 or more agents). The parameters and, where applicable, their weighting as applied to a person's situation are communicated to that person on request (CRPA R311-3-1-2). Details may be withheld only where disclosure would harm a secret protected by law (CRPA L311-5 2°, L311-6), and the rest is then disclosed after redaction (L311-7).
 - Human oversight mechanism documented (who can review, how to appeal).
 - GDPR Art. 22 safeguards in place for automated individual decisions.
 - EU AI Act flag if ML system used (may trigger high-risk classification).
@@ -80,7 +80,7 @@ Excluded: decisions with mandatory human review at every step.
 
 ## Key Notes
 
-- **Legally binding**: Unlike the UK ATRS (voluntary), the French transparency obligation is a statutory requirement enforceable by the CADA.
+- **Legally binding**: Unlike the UK ATRS (voluntary), the French transparency obligation is a statutory requirement. A refusal to communicate can be referred to the CADA, whose opinion comes before any action in the administrative courts.
 - **CADA** = Commission d'Accès aux Documents Administratifs — oversees compliance and handles citizen complaints.
 - **Plain language requirement**: The description must be understandable by any citizen without technical background.
 - **Scope**: Applies to public administrations only — private sector algorithmic decisions are not covered by CRPA (but may be covered by GDPR Art. 22).

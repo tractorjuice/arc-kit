@@ -18,7 +18,7 @@ handoffs:
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
-You are helping an enterprise architect assess **public code reuse opportunities** before commissioning new development for a French public administration project. French administrations are required by the **Circulaire du Premier Ministre n°6264-SG (27 April 2021)** and the **Loi pour une République Numérique (2016, Art. 16)** to:
+You are helping an enterprise architect assess **public code reuse opportunities** before commissioning new development for a French public administration project. French State administrations are directed by the **Circulaire du Premier ministre n°6264/SG du 27 avril 2021** (politique publique de la donnée, des algorithmes et des codes sources) to strengthen the opening of public source code and the use of free and open source software, and the **Loi pour une République Numérique (2016, Art. 16)** requires administrations to encourage free software and open formats. In practice this means they are expected to:
 
 1. **Search for and reuse existing public code** before building from scratch
 2. **Publish code developed for the administration** as open source (unless exceptions apply)
@@ -244,7 +244,7 @@ Next steps:
 
 ## Important Notes
 
-- **Legal obligation for public administrations**: The Circulaire PM n°6264-SG (2021) makes searching for and reusing public code a required step before commissioning new development. This is not optional. The reuse assessment is the evidence that this step was completed.
+- **Policy obligation for State administrations**: The Circulaire PM n°6264/SG (27 April 2021) instructs ministries to strengthen the opening of public source code and the use of free software. It is an instruction from the Prime Minister to State administrations rather than a statute, and it does not set out a stand-alone "reuse before build" rule. The reuse assessment is the evidence that the project applied this policy before commissioning new development.
 - **SILL is maintained by DINUM**: The SILL changes regularly as new software is added and removed. Always check the current version at code.gouv.fr/sill — do not rely on cached or printed versions.
 - **code.gouv.fr is the publication destination**: When French public code must be published, code.gouv.fr is the centralised catalogue. Publication is coordinated through the DINUM mission logiciels libres.
 - **Contribution-back is encouraged, not always mandatory**: The Circulaire encourages contributing improvements back upstream but does not make it legally mandatory in all cases. However, it is a strong recommendation and expected for OIV and major public IS projects.
@@ -257,13 +257,13 @@ Next steps:
 |----------|-----------|-----|
 | code.gouv.fr — French public administration open source repositories | DINUM | https://code.gouv.fr/sources/ |
 | SILL (Socle Interministériel de Logiciels Libres) — recommended open source software for the French State | DINUM | https://code.gouv.fr/sill/ |
-| Circulaire PM n°6264-SG (2021) — open source obligation for public administrations | DINUM | https://www.numerique.gouv.fr/publications/politique-logiciel-libre/ |
+| Circulaire PM n°6264/SG du 27 avril 2021 — politique publique de la donnée, des algorithmes et des codes sources | Légifrance | https://www.legifrance.gouv.fr/circulaire/id/45162 |
 | Loi République Numérique Art. 16 — code publication obligation | Légifrance | https://www.legifrance.gouv.fr/loda/id/JORFTEXT000033202746 |
 | EUPL-1.2 licence — recommended for French public code | Joinup / EC | https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12 |
 | Joinup — EU public code catalogue | European Commission | https://joinup.ec.europa.eu/ |
 | DINUM mission logiciels libres | DINUM | https://code.gouv.fr/ |
 
-> **Note for reviewers**: French public administrations are legally required to search for existing open source code before commissioning new development (Circulaire 2021), and to publish code developed for them as open source unless exceptions apply (Loi République Numérique 2016). The SILL is a curated list of recommended free software maintained by an interministerial working group under DINUM — analogous in purpose to the UK's Technology Code of Practice open standards requirement, but with a formal recommended software list.
+> **Note for reviewers**: French State administrations are instructed to open their source code and favour free software (Circulaire PM n°6264/SG, 2021), which in practice means searching for existing public code before commissioning new development, and to publish code developed for them as open source unless exceptions apply (Loi République Numérique 2016). The SILL is a curated list of recommended free software maintained by an interministerial working group under DINUM — analogous in purpose to the UK's Technology Code of Practice open standards requirement, but with a formal recommended software list.
 
 ## Success Criteria
 

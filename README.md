@@ -447,7 +447,7 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 **Dutch government** (apply on top of the EU baseline for Netherlands central-government deployments — domain-maintained by [@umag](https://github.com/umag)):
 
 - `/arckit:nl-cloud` — Rijksbreed cloudbeleid 2026 compliance (materieel cloudgebruik, exit plan, CISO Rijk notification, EEA residency, staatsgeheim / TBB eligibility)
-- `/arckit:nl-tbb` — Te Beschermen Belangen and VIRBI 2025 rubricering (BIV scoring across five kernbelangen, one-way TBB↔rubricering inference)
+- `/arckit:nl-tbb` — Te Beschermen Belangen (TBB) category determination (BIV scoring across five kernbelangen; any existing VIRBI 2025 rubricering is applied as a floor on the category, never derived from it)
 - `/arckit:nl-bio` — BIO2 conformance (OBDO, on NEN-EN-ISO/IEC 27001:2023 and 27002:2022)
 - `/arckit:nl-exit` — Cloud exit plan under Rijksbreed cloudbeleid clause 3.2 (planned exit and disruptive interruption, annual review)
 
@@ -458,7 +458,7 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 - `/arckit:at-bvergg` — Bundesvergabegesetz 2018 procurement — Oberschwellen/Unterschwellen, ANKÖ publication, Bestbieterprinzip, BVwG review
 - `/arckit:at-barrierefreiheit` — Digital accessibility across both transposition tracks — BaFG (European Accessibility Act, private sector) and WZG (public sector), EN 301 549 / WCAG 2.1 AA, Barrierefreiheitserklärung, SMS and FFG
 
-These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry `[NEEDS VERIFICATION]` markers where a point is genuinely open rather than unreviewed — further implementing ordinances under the NISG 2026, Länder scope, current guidance versions, and recent DSB case law. `nl-cloud` and `nl-tbb` play the same role for Dutch deployments, with `nl-cloud` keying its public-cloud eligibility off the rubricering determined by `nl-tbb`.
+These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry `[NEEDS VERIFICATION]` markers where a point is genuinely open rather than unreviewed — further implementing ordinances under the NISG 2026, Länder scope, current guidance versions, and recent DSB case law. `nl-cloud` and `nl-tbb` play the same role for Dutch deployments, with `nl-cloud` keying its public-cloud eligibility off the TBB category determined by `nl-tbb`.
 
 ---
 
@@ -626,7 +626,7 @@ Enterprise Architecture Development Method — 9 commands covering the full ADM 
 | Command | Doc Type | Phase | Description |
 |---------|----------|-------|-------------|
 | `/arckit:adm-preliminary` | ADMP | Preliminary | Architecture vision, scope, drivers, constraints |
-| `/arckit:business-capability-map` | BPCM | Phase A | Business capability hierarchy, value streams, maturity |
+| `/arckit:business-capability-map` | BPCM | Phase B | Business capability hierarchy, value streams, maturity |
 | `/arckit:application-inventory` | APP | Phase C | Application catalog with strategic fit scoring |
 | `/arckit:application-rationalization` | APPR | Phase C | Keep/merge/replace/retire decisions |
 | `/arckit:gap-analysis` | GAPA | Phase E | Capability gap matrix, workstream mapping |
@@ -1321,9 +1321,9 @@ French standard risk analysis for IS homologation:
 
 Assess compliance with ANSSI's foundational hygiene guide:
 
-- 7 themes: administration, authentication, updates, monitoring, backups, network, workstations
-- Cloud security recommendations (ANSSI cloud qualification matrix)
-- Gap analysis with prioritised remediation (P1–P3)
+- 10 chapters: awareness and training, knowing the IS, authentication and access control, workstations, network, administration, mobile working, updates, monitoring/audit/response, going further
+- ANSSI recommendations for hosting sensitive IS in the cloud (July 2024)
+- Gap analysis with prioritised remediation (High / Medium / Low)
 - Integration with EBIOS and PSSI
 
 **`/arckit:fr-anssi-carto`** → ANSSI SI Cartography (4-level IS mapping)
@@ -1359,16 +1359,16 @@ Assess compliance with French digital government doctrine:
 Generate procurement documentation compliant with French public contract law:
 
 - Marché public thresholds and procedures (below/above EU thresholds)
-- CCAP, CCTP, RC documentation templates
+- Requirements statement, award criteria, and security and sovereignty clauses for the consultation file
 - ANSSI-qualified provider requirements (PASSI, PRIS, PDIS)
-- Achat public durable obligations (environmental and social clauses)
+- Digital State doctrine checklist (cloud, RGI, RGAA, RGESN, open source, GDPR)
 
 **`/arckit:fr-pssi`** → PSSI (Politique de Sécurité des Systèmes d'Information)
 
 Generate IS security policy for French public sector entities:
 
 - 9-section structure approved by the Highest Authority (AA)
-- 7 security domains (network, workstations, applications, IS management, physical, personnel, continuity)
+- 8 security domains (access management, network, workstations, applications, data protection, physical, business continuity, vulnerability management)
 - RSSI, DPO, DSI, and FSSI roles
 - Review cycle and integration with EBIOS and homologation
 
@@ -1392,7 +1392,7 @@ Generate mandatory transparency notice under CRPA Art. L311-3-1:
 - EU AI Act flagging for ML-based systems
 - More legally binding than the UK ATRS equivalent
 
-**`/arckit:fr-code-reuse`** → French Public Code Reuse Assessment (Circulaire 2021-1524)
+**`/arckit:fr-code-reuse`** → French Public Code Reuse Assessment (Circulaire PM n°6264/SG, 2021)
 
 Assess code reuse obligations before building or procuring:
 

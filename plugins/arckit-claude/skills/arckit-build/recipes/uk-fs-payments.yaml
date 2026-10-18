@@ -68,7 +68,7 @@ targets:
     skill: arckit:requirements
     args: "{NAME}"
     output: { project: "{P}-{NAME}", type: REQ }
-    deps: [PRIN]
+    deps: [PRIN, STKE]
 
   - id: RISK
     skill: arckit:risk

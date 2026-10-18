@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:business-capability-map` creates the business architecture baseline for TOGAF ADM Phase A. It maps capability hierarchy, value streams, capability maturity, heatmaps, and requirement or principle traceability.
+`/arckit:business-capability-map` creates the business architecture baseline for TOGAF ADM Phase B (Business Architecture), detailing the capabilities and value streams the Phase A Architecture Vision sketches at a high level. It maps capability hierarchy, value streams, capability maturity, heatmaps, and requirement or principle traceability.
 
 ---
 

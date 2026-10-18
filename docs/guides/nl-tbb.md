@@ -29,6 +29,8 @@ Any source that still cites VIRBI 2013 is flagged as stale: VIRBI 2025 (BWBR0051
 /arckit:nl-tbb <project ID or dataset/system description>
 ```
 
+In Claude Code the overlay installs as its own plugin, `arckit-nl`, so the command is `/arckit-nl:nl-tbb`.
+
 Example: `/arckit:nl-tbb TBB determination for 001, citizen-facing benefits platform processing large-scale personal data, no prior classification on record`
 
 Output: `projects/<id>/ARC-<id>-TBB-v1.0.md`

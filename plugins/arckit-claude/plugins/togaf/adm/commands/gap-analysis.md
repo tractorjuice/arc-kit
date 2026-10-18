@@ -29,12 +29,10 @@ $ARGUMENTS
 
 **RECOMMENDED** (read if available, note if missing):
 
-- **PRIN** (Architecture Principles) — Extract: Guiding principles, compliance requirements, technology standards, design constraints
+- **PRIN** (Architecture Principles, in 000-global) — Extract: Guiding principles, decision framework, compliance requirements, technology standards, design constraints, governance standards
   - If missing: note in assumptions that principle alignment could not be validated
 - **STRAT** (Architecture Strategy) — Extract: Strategic vision, target state description, strategic themes, investment priorities
   - If missing: note in assumptions that strategic alignment could not be validated
-- **PRIN** (Architecture Principles, in 000-global) — Extract: Enterprise-level principles, decision framework, governance standards
-  - If missing: note in assumptions that enterprise-level principle alignment could not be validated
 
 ### Prerequisites 1b: Read external documents and policies
 
@@ -69,16 +67,18 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. AskUserQuestion: Gap Severity Weighting
 
-Before generating the analysis, ask the user how to weight gap severity scoring:
+Unless the arguments already settle it, use the **AskUserQuestion** tool to ask how to weight gap severity scoring.
 
-**AskUserQuestion**: "How should gap severity be weighted?"
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Options: `Balanced` | `Strategic-risk` | `Operational`
-- Default: `Balanced`
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
-**Weighting profiles**:
+**Question 1** — header: `Weighting`, multiSelect: false
+> "How should gap severity be weighted?"
 
-- **Balanced**: Equal weight to strategic impact and operational cost of the gap
+- **Balanced (Recommended)**: Equal weight to strategic impact and operational cost of the gap
 - **Strategic-risk**: Heavier weighting on strategic impact — gaps that threaten business outcomes are prioritised regardless of effort
 - **Operational**: Heavier weighting on effort/cost — gaps that can be closed quickly with high business value are prioritised
 
@@ -248,9 +248,8 @@ After writing the file, show a concise summary (NOT the full document):
 
 ### Synthesised From
 - ✅ Business Capability Model: ARC-{P}-BPCM-v[N].md
-- [✅/⚠️] Architecture Principles: ARC-{P}-APP-v[N].md
 - [✅/⚠️] Architecture Strategy: ARC-{P}-STRAT-v[N].md
-- [✅/⚠️] Principles: ARC-000-PRIN-v[N].md
+- [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
 
 ### Next Steps
 1. Review gap analysis with Architecture Board: `/arckit-togaf-adm:architecture-board`
@@ -273,7 +272,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 2. **Use Write Tool**: The gap analysis document is typically 250-400 lines. ALWAYS use the Write tool to create it. Never output the full content in chat.
 
-3. **Mandatory Prerequisites**: BPCM is the only mandatory prerequisite. Without a capability baseline, gap analysis cannot be performed. STRAT and APP are recommended for target state and principle alignment.
+3. **Mandatory Prerequisites**: BPCM is the only mandatory prerequisite. Without a capability baseline, gap analysis cannot be performed. STRAT and PRIN are recommended for target state and principle alignment.
 
 4. **Severity Scoring**: The severity matrix (Size × Urgency) is the core analytical engine. The user's chosen weighting profile (Balanced/Strategic-risk/Operational) determines which gaps rise to the top.
 

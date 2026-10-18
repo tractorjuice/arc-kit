@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:application-inventory` creates a portfolio catalogue of existing applications, including lifecycle state, ownership, technology stack, dependencies, strategic fit, and capability support. It is the foundation for application rationalisation and Phase C application architecture decisions.
+`/arckit:application-inventory` creates a portfolio catalogue of existing applications, including lifecycle state, ownership, technology stack, dependencies, strategic fit, and capability support. It is the foundation for application rationalisation and for TOGAF Phase C (Information Systems Architectures — Application Architecture) decisions.
 
 ---
 

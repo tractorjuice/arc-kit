@@ -71,17 +71,34 @@ Identify the target project from the hook context or user input. Extract the pro
 
 ### 4. Gather Context via Questions
 
-**Gathering rules** (apply to all user questions in this command):
+Use the **AskUserQuestion** tool only for what the arguments, the application inventory and the other project artefacts do not already answer.
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions total.** After that, infer the best answer from available context.
-- If still ambiguous after 2 rounds, make a reasonable choice and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-**Key questions** (ask only if context is insufficient):
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
-- What is the target timeframe for portfolio rationalisation? (Default: 24 months)
-- What are the key drivers for rationalisation? (e.g., cost reduction, cloud migration, security compliance)
-- Are there any applications that are non-negotiable (must keep or must retire)?
+**Question 1** — header: `Timeframe`, multiSelect: false
+> "What is the target timeframe for portfolio rationalisation?"
+
+- **24 months (Recommended)**: Time to replace or retire most applications without overloading delivery teams
+- **12 months**: Aggressive — suits a small portfolio or a hard contract or support deadline
+- **36 months**: Gradual — suits a large portfolio with many dependencies
+
+**Question 2** — header: `Drivers`, multiSelect: true
+> "What are the key drivers for rationalisation?"
+
+- **Cost reduction (Recommended)**: Cut licence, support and infrastructure cost
+- **Cloud migration**: Move workloads to cloud platforms and retire on-premises estate
+- **Security and compliance**: Remove unsupported or non-compliant applications
+- **Technical debt**: Replace legacy platforms that are expensive to change
+
+**Question 3** — header: `Fixed apps`, multiSelect: false
+> "Are any applications non-negotiable (must keep or must retire)? Name them under Other."
+
+- **Take them from project records (Recommended)**: Treat keep or retire decisions already recorded in ADRs, the board charter or external documents as fixed; decide every other application on its scores
+- **No fixed decisions**: Decide every application on its scores, including any an earlier decision covered
 
 ### 5. Generate Rationalisation Decisions
 

@@ -39,6 +39,7 @@
 
 | Framework | Applicability | Source |
 |-----------|--------------|--------|
+| Arrêté du 12 août 2026 (approves the SecNumCloud 3.2 requirements; taken under décret n° 2026-272 du 14 avril 2026, loi SREN art. 31) | [In scope / Out of scope — see Section 4.3] | Légifrance |
 | SecNumCloud 3.2 | [Required / Recommended / N/A] | ANSSI |
 | LPM (OIV obligations) | [Yes / No] | SGDSN |
 | NIS2 / OSE designation | [Yes / No] | ANSSI |
@@ -90,7 +91,7 @@ Legend: ✅ Confirmed | ⚠️ Residual risk | 🔄 In progress | ❌ Not met
 
 > ⚠️ **ANSSI position**: SecNumCloud 3.2 requires providers to demonstrate that no foreign law can compel data access. Providers with US parent companies carry residual FISA-702 risk that qualification does not fully eliminate.
 
-## 4. OIV/OSE Obligation Mapping
+## 4. OIV/OSE and Arrêté du 12 août 2026 Obligation Mapping
 
 ### 4.1 OIV Obligations (LPM Article 22 + ANSSI sector orders)
 
@@ -112,6 +113,16 @@ Legend: ✅ Confirmed | ⚠️ Residual risk | 🔄 In progress | ❌ Not met
 | NIS security measures | ANSSI NIS guide | [Yes/No] |
 | Incident notification within 24h | NIS2 Art. 23 | [Yes/No] |
 | Security audit every 3 years | ANSSI | [Yes/No] |
+
+### 4.3 Binding Obligation under the Arrêté du 12 août 2026
+
+[Assess independently of OIV/OSE status — do not write "N/A" solely because the entity is not OIV/OSE]
+
+| Question | Answer | Rationale |
+|----------|--------|-----------|
+| Is the entity a State administration, a State operator or a designated GIP — or a supplier / sub-contractor to one? | [Yes/No] | |
+| Does the system process data of particular sensitivity within the arrêté's scope? | [Yes/No] | |
+| Outcome: SecNumCloud 3.2 qualification (or an ANSSI-recognised equivalent European certification) legally required? | [Yes/No] | |
 
 ## 5. Architecture Recommendations
 

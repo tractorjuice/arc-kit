@@ -51,7 +51,7 @@
 | Framework | Applicability | Source |
 |-----------|--------------|--------|
 | Herziening rijksbreed cloudbeleid 2026 | [Applicable / N/A] | Ministerie van Economische Zaken en Klimaat |
-| VIRBI 2025 rubricering | [Applicable / N/A — see `/arckit:nl-tbb`] | Rijksoverheid |
+| VIRBI 2025 rubricering | [Applicable / N/A — existing marking as recorded by `/arckit:nl-tbb`] | Rijksoverheid |
 | BIO2 | [Applicable / N/A — see `/arckit:nl-bio`] | OBDO |
 | Cyberbeveiligingswet (Cbw) / Wet weerbaarheid kritieke entiteiten (Wwke) | [Applicable / N/A] | Rijksoverheid |
 | GDPR / AVG | [Data categories] | Autoriteit Persoonsgegevens |
@@ -90,7 +90,7 @@ Required for materieel cloudgebruik, based on the application's BIV/TBB classifi
 
 | Data category | TBB / rubricering | Public cloud status |
 |---------------|-------------------|---------------------|
-| [Data category] | [From `/arckit:nl-tbb`: TBB 1–4 / Stg. level / ongerubriceerd] | [PROHIBITED if staatsgeheim gerubriceerd or TBB 1–3 / Not prohibited under 5.2] |
+| [Data category] | [From `/arckit:nl-tbb`: final TBB 1–4, plus the existing marking it records — Stg. level / ongerubriceerd / none recorded] | [PROHIBITED if staatsgeheim gerubriceerd or TBB 1–3 / Not prohibited under 5.2] |
 
 > Public cloud is **prohibited** for staatsgeheim gerubriceerde informatie and for Te Beschermen Belangen niveau 1, 2, and 3. If the TBB category has not been determined, run `/arckit:nl-tbb` before finalising this determination.
 

@@ -31,12 +31,12 @@ Output: `projects/<id>/ARC-<id>-PSSI-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| 1. Purpose and Context | Organisational context, IS scope, regulatory basis |
-| 2. Security Objectives | Confidentiality, integrity, availability, traceability targets |
-| 3. Security Principles | 8+ core principles (defence in depth, least privilege, etc.) |
+| 1. Purpose and Scope | Purpose, IS scope, relationship with other documents |
+| 2. Security Context | Organisation profile, essential values, main threats |
+| 3. Security Objectives | 8+ security principles (defence in depth, least privilege, etc.) and objectives by property (confidentiality, integrity, availability, traceability, authentication) |
 | 4. Organisational Structure | AA, RSSI, DPO, DSI, FSSI roles and responsibilities |
 | 5. Applicable Standards | ANSSI referentials, RGS, NIS2, GDPR, sector standards |
-| 6. Security Domains | 7 domains (network, workstations, applications, IS management, physical, personnel, continuity) |
+| 6. Security Domains | 8 domains (access management and authentication, network, workstations and endpoints, applications, data protection, physical, business continuity, vulnerability management and updates) |
 | 7. User Obligations | Acceptable use, incident reporting, classification handling |
 | 8. Incident Management | Detection, response, escalation procedures |
 | 9. Lifecycle | 3-year review cycle, update triggers, approval process |
@@ -51,7 +51,7 @@ Output: `projects/<id>/ARC-<id>-PSSI-v1.0.md`
 | RSSI | Responsible for IS security, PSSI maintenance |
 | DPO | Data protection obligations, GDPR intersection |
 | DSI | Technical implementation, IS operations |
-| FSSI | Functional IS security officer (operational level) |
+| FSSI | Fonctionnaire de sécurité des SI — handles classified and DR information security |
 
 ---
 
@@ -71,7 +71,7 @@ Output: `projects/<id>/ARC-<id>-PSSI-v1.0.md`
 - AA (Highest Authority) identified and prepared to sign.
 - IS scope matches cartography Level 1 missions.
 - 8+ security principles documented.
-- All 7 security domains covered with specific measures.
+- All 8 security domains covered with specific measures.
 - RSSI, DPO, DSI, FSSI roles defined with named individuals or positions.
 - EBIOS RM study referenced for risk analysis basis.
 - 3-year review cycle defined with explicit update triggers.

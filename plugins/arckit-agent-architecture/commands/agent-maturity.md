@@ -26,15 +26,12 @@ $ARGUMENTS
 
 **RECOMMENDED** (read if available, note if missing):
 
-- **AAGI** (Agent Inventory, recommended) — Extract: agent inventory, capability baseline, ownership, lifecycle state, current architecture state
-  - If missing: Note that the guide is unavailable; maturity assessment will rely on available evidence
-- **AAGR** (Agent Architecture Specification, recommended) — Extract: architecture decisions, tool contracts, guardrails, orchestration design, current implementation state
+- **AAGI** (Agent Inventory) — Extract: agent inventory, capability baseline, ownership, lifecycle state, current architecture state
+  - If missing: Note that the agent inventory is unavailable; maturity assessment will rely on available evidence
+- **AAGR** (Agent Architecture Specification) — Extract: architecture decisions, tool contracts, guardrails, orchestration design, current implementation state
   - If missing: Note that design specifications are unavailable
-- **maturity-model output from core** (recommended) — Extract: existing enterprise maturity assessments, capability baselines, benchmark data
+- **MMOD** (Maturity Model Assessment, from core `/arckit:maturity-model`) — Extract: existing enterprise maturity assessments, capability baselines, benchmark data
   - If missing: Note that enterprise maturity context is limited
-
-**RECOMMENDED** (read if available, note if missing):
-
 - **PRIN** (Architecture Principles, in 000-global) — Extract: AI/agent principles, governance principles, technology standards
 - **AAOV** (Agent Governance Framework) — Extract: oversight tiers, compliance status, audit program, governance maturity
 - **AASE** (Agent Security Architecture) — Extract: security controls, threat model, security maturity
@@ -43,7 +40,7 @@ $ARGUMENTS
 
 **OPTIONAL** (read if available, skip silently if missing):
 
-- **BORD** (Board Review) — Extract: board-approved AI strategy, risk appetite, investment commitments
+- **BORD** (Architecture Board Charter, from `/arckit:architecture-board` in the TOGAF ADM overlay) — Extract: board-approved AI strategy, risk appetite, investment commitments
 - **AIPB** (AI Playbook) — Extract: AI ethics principles, model governance standards
 - **HLDR** (High-Level Design Review) — Extract: existing system architecture context
 - **SECD** (Secure by Design) — Extract: security control maturity
@@ -210,7 +207,7 @@ Before generating the document ID, check if a previous version exists:
 
 1. **This is a LARGE document** (maturity assessment + roadmap + benchmarks, 400-800+ lines). You MUST use the **Write tool** to create the file. DO NOT output the full document to the user (you will exceed token limits).
 
-2. **Follow the template structure** with all 6 sections:
+2. **Follow the template structure** with all 7 sections:
 
    **Section 1: Maturity Model Framework**
    - 5×5 maturity model table (5 dimensions × 5 levels)
@@ -239,9 +236,11 @@ Before generating the document ID, check if a previous version exists:
    - Regulatory alignment assessment
 
    **Section 6: Traceability**
-   - AAGI → AAGR → AAMT links
+   - AAGI → AAGR → AAMT links, plus the AAOV, AASE and AAIN evidence used for the governance, security and integration dimensions
    - Cross-references to related artefacts
-   - Source document citations
+
+   **Section 7: External References**
+   - Document register, citations and unreferenced documents, per the citation instructions in Step 5
 
 3. **Mermaid diagram requirements**:
    - Quadrant chart for maturity heatmap

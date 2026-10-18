@@ -69,24 +69,20 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. AskUserQuestion: Number of Transition Architectures
 
-Before generating the transition architecture, use the **AskUserQuestion** tool to determine the number of transition architectures (intermediate states between baseline and target):
+Unless the arguments or the gap analysis already settle it, use the **AskUserQuestion** tool to determine the number of transition architectures (intermediate states between baseline and target).
 
-**AskUserQuestion**: "How many transition architectures (migration waves) should the plan cover?"
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Options: `2 waves` | `3 waves (Recommended)` | `4 waves`
-- Default: `3 waves`
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
-**Wave profiles**:
+**Question 1** — header: `Waves`, multiSelect: false
+> "How many transition architectures (migration waves) should the plan cover?"
 
-- **2 waves**: Simple transition — baseline → intermediate → target. Suitable for focused, short-duration programmes (≤12 months).
 - **3 waves (Recommended)**: Balanced transition — baseline → Architecture 2 → Architecture 3 → target. Most common for enterprise transformations (12–36 months).
+- **2 waves**: Simple transition — baseline → intermediate → target. Suitable for focused, short-duration programmes (≤12 months).
 - **4 waves**: Granular transition — baseline → Architecture 2 → Architecture 3 → Architecture 4 → target. Suitable for complex, long-duration programmes (24–48 months) with many interdependencies.
-
-**Gathering rules** (apply to all questions):
-
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
-- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
 
 ### 4. Gather Transition Context
 

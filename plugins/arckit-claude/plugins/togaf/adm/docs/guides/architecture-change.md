@@ -15,6 +15,7 @@
 | ADM preliminary (`ARC-<id>-ADMP-v1.0.md`) | ADM scope and architecture framework |
 | Global principles (`ARC-000-PRIN-v1.0.md`) | Principle compliance implications |
 | Transition architecture (`ARC-<id>-TRANS-v1.0.md`) | Current migration plan impact |
+| Application inventory (`ARC-<id>-APP-v1.0.md`) | Optional application baseline for the application impact |
 | Existing change documents or board minutes | Change history and prior decisions |
 
 ---
@@ -35,7 +36,7 @@ Output: `projects/<id>/changes/ARC-<id>-ACHG-001-v1.0.md`
 |---------|----------|
 | Change Request | Requested change, type, urgency, requester |
 | Rationale | Why the change is needed now |
-| Impact Assessment | Business, application, technology, data, security, delivery impact |
+| Impact Assessment | Capability, application, technology and governance impact |
 | Affected Artefacts | Documents and decisions that must change |
 | ADM Re-Entry Point | Recommended ADM phase to revisit |
 | Cost and Benefit | Expected cost, value, trade-offs |
@@ -47,20 +48,23 @@ Output: `projects/<id>/changes/ARC-<id>-ACHG-001-v1.0.md`
 
 ## Change Types
 
-| Type | Use When |
-|------|----------|
-| Evolutionary | Adjusts an existing architecture within approved direction |
-| Corrective | Fixes a defect, compliance gap, or failed assumption |
-| Transformational | Changes target state, scope, or strategic direction |
-| Emergency | Requires accelerated governance due to urgent risk or delivery pressure |
+The command uses the three classes TOGAF Phase H (Architecture Change Management) defines.
+
+| Type | Use When | Usual handling |
+|------|----------|----------------|
+| Simplification | Reduces or rationalises the architecture, often to cut investment | Change management within Phase H |
+| Incremental | Derives more value from the existing architecture | Change management, or partial re-architecting of the phases it touches |
+| Re-architecting | Creates new value through structural change to the target state, scope or direction | A new ADM cycle, usually from Phase A |
+
+An urgent or corrective change is not a separate type. Classify it by its scope and set its priority to Critical or High.
 
 ---
 
 ## Review Checklist
 
 - The requested change is specific and actionable.
-- Impacts are assessed across capability, application, technology, data, security, and delivery.
-- ADM re-entry point is justified.
+- Impacts are assessed across capability, application, technology, and governance.
+- ADM re-entry point is justified and consistent with the change type.
 - Affected artefacts are listed with update actions.
 - Approval workflow names the accountable decision forum or owner.
 
