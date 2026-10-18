@@ -1090,16 +1090,16 @@ Added 18 new commands covering EU regulations and French public sector governanc
 
 ### Netherlands Public Sector Overlay (arckit-nl) — community-contributed
 
-- `/arckit:nl-tbb` — Te Beschermen Belangen / VIRBI 2025 rubricering. Depends on: stakeholders (M), requirements (R), risk (R). Produces ARC-*-TBB-*.md
-- `/arckit:nl-cloud` — Rijksbreed cloudbeleid 2026 compliance. Depends on: requirements (M), nl-tbb (M), risk (R), eu-nis2 (O). Produces ARC-*-RBCLOUD-*.md
-- `/arckit:nl-bio` — BIO2 conformance assessment. Depends on: requirements (M), principles (R), risk (R). Produces ARC-*-BIO2-*.md
-- `/arckit:nl-exit` — Cloud exit plan (Rijksbreed cloudbeleid clause 3.2). Depends on: nl-cloud (M), requirements (R). Produces ARC-*-NLEXIT-*.md
+- `/arckit:nl-tbb` — Te Beschermen Belangen (TBB) category determination; any existing VIRBI 2025 rubricering is a floor on the category, never an output. Depends on: requirements (M), data-model (R), risk (R), principles (O). Produces ARC-*-TBB-*.md
+- `/arckit:nl-cloud` — Rijksbreed cloudbeleid 2026 compliance. Depends on: requirements (M), nl-tbb (R), nl-bio (R), principles (R), risk (R), dpia (O), secure (O). Produces ARC-*-RBCLOUD-*.md
+- `/arckit:nl-bio` — BIO2 conformance assessment. Depends on: requirements (M), nl-cloud (R), nl-tbb (R), risk (R), secure (R), data-model (O). Produces ARC-*-BIO2-*.md
+- `/arckit:nl-exit` — Cloud exit plan (Rijksbreed cloudbeleid clause 3.2). Depends on: requirements (M), nl-cloud (R), risk (R), data-model (O). Produces ARC-*-NLEXIT-*.md
 
 **Key inter-dependencies among NL commands**:
 
-- `nl-tbb` → feeds `nl-cloud` (M) — the rubricering / TBB category determines public-cloud eligibility under clause 5.2
-- `nl-cloud` → feeds `nl-exit` (M) — the exit plan is required for material cloud use identified by the assessment
-- `eu-nis2` → informs `nl-cloud` (O) where the entity falls under the Cbw as an essential entity
+- `nl-tbb` → feeds `nl-cloud` (R) — the TBB category, with any existing marking it records, decides the clause 5.2 public-cloud prohibition; without it `nl-cloud` flags the category as pending
+- `nl-cloud` → feeds `nl-exit` (R) — the exit plan is required for material cloud use identified by the assessment
+- `nl-cloud` assesses Cbw essential-entity status itself (clause 4.3); it does not read an `eu-nis2` artefact
 
 **Typical Dutch central-government compliance path**:
 

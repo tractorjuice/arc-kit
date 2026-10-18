@@ -30,6 +30,8 @@ See also: [Netherlands overlay guide](nl-overlay.md)
 /arckit:nl-cloud <project ID or cloud service description>
 ```
 
+In Claude Code the overlay installs as its own plugin, `arckit-nl`, so the command is `/arckit-nl:nl-cloud`.
+
 Example: `/arckit:nl-cloud Cloud hosting assessment for 001, departmental email and document collaboration service currently under review for public cloud migration`
 
 Output: `projects/<id>/ARC-<id>-RBCLOUD-v1.0.md`

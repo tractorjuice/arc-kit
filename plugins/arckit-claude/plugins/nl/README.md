@@ -7,6 +7,8 @@
 - `/arckit-nl:nl-bio` — BIO2 conformance assessment
 - `/arckit-nl:nl-exit` — Cloud exit plan (Rijksbreed cloudbeleid clause 3.2)
 
+In Claude Code the overlay installs as its own plugin, `arckit-nl`, so its commands carry that prefix: `/arckit-nl:nl-tbb` and so on. Core commands such as `/arckit:requirements` keep the `arckit` prefix.
+
 Recipes: No recipes ship in this overlay yet.
 
 ## Requires arckit core plugin

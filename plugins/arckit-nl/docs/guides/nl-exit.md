@@ -27,6 +27,8 @@ See also: [Netherlands overlay guide](nl-overlay.md)
 /arckit:nl-exit <project ID or cloud service description>
 ```
 
+In Claude Code the overlay installs as its own plugin, `arckit-nl`, so the command is `/arckit-nl:nl-exit`.
+
 Example: `/arckit:nl-exit Produce the exit plan for a departmental email and document collaboration service currently in public cloud, no prior exit test conducted`
 
 Output: `projects/<id>/ARC-<id>-NLEXIT-v1.0.md`

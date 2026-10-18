@@ -242,10 +242,12 @@ export const DOC_TYPES = {
   'AUDISP':    { name: 'AU DISP Member Self-Attestation Pack',         category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   // Netherlands Public Sector Overlay (arckit-nl) — community-contributed,
   // EXPERIMENTAL. Outputs require review by qualified NL counsel and, for any
-  // rubricering determination, a departmental beveiligingsautoriteit or
-  // rubriceringsambtenaar before reliance.
+  // TBB category determination, a departmental beveiligingsautoriteit or
+  // rubriceringsambtenaar before reliance. TBB is a category determination
+  // only: /arckit:nl-tbb records an existing rubricering as a floor and never
+  // produces one (TBB systematiek v1.0, §2.1 and §3.1).
   'RBCLOUD':   { name: 'Rijksbreed Cloudbeleid Compliance Assessment',  category: 'Compliance',  regime: 'NL', severity: 'HIGH' },
-  'TBB':       { name: 'Te Beschermen Belangen / VIRBI 2025 Rubricering', category: 'Compliance', regime: 'NL', severity: 'HIGH' },
+  'TBB':       { name: 'Te Beschermen Belangen (TBB) Category Determination', category: 'Compliance', regime: 'NL', severity: 'HIGH' },
   'BIO2':      { name: 'BIO2 Conformance Assessment',                   category: 'Compliance',  regime: 'NL', severity: 'HIGH' },
   'NLEXIT':    { name: 'NL Cloud Exit Plan',                            category: 'Governance',  regime: 'NL' },
   // UK Financial Services Payments Overlay (arckit-uk-finance) — community-contributed,
