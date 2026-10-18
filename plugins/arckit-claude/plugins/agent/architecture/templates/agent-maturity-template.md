@@ -362,6 +362,8 @@ gantt
 | Agent Inventory | ARC-{P}-AAGI-v{VERSION} | [Agent inventory and capability baseline] |
 | Agent Architecture Specification | ARC-{P}-AAGR-v{VERSION} | [Design patterns, tool contracts, guardrails] |
 | Agent Governance Framework | ARC-{P}-AAOV-v{VERSION} | [Governance maturity evidence] |
+| Agent Security Architecture | ARC-{P}-AASE-v{VERSION} | [Security maturity evidence] |
+| Agent Integration Architecture | ARC-{P}-AAIN-v{VERSION} | [Integration maturity evidence] |
 | Architecture Principles | ARC-000-PRIN-v{VERSION} | [Principles alignment for maturity targets] |
 
 ### 6.2 Cross-References

@@ -198,7 +198,7 @@ flowchart LR
 |--------|-----------|------|
 | AAGI | [Agent Inventory ID] | [Agent list, risk classifications] |
 | AAGR | [Agent Design ID] | [Tool contracts, architecture] |
-| SEC / SBD | [Secure by Design ID] | [Security controls, threat models] |
+| SECD / SECD-MOD | [Secure by Design ID] | [Security controls, threat models] |
 | AAOV | [Governance ID] | [Oversight tiers, compliance] |
 
 ---
