@@ -39,6 +39,10 @@ python3 scripts/eval-headless.py --replay evals/results/<timestamp>
 # run a command at a different effort level on a given model
 python3 scripts/eval-headless.py --tag effort-comparison --model claude-sonnet-5-5 --effort high --runs 2
 
+# run a changed command beside the current one and see which graders moved
+python3 scripts/eval-headless.py --case "sobc*" --variant ~/sobc-shorter.md --runs 2
+python3 scripts/eval-headless.py --tag template-fields --variant ~/variants/owner-column/
+
 # the official runner, once enabled
 claude plugin eval plugins/arckit-claude --ablation none --allow-tools Read Write Edit Glob Grep Bash
 ```
@@ -46,6 +50,8 @@ claude plugin eval plugins/arckit-claude --ablation none --allow-tools Read Writ
 Each live run costs real money on your account: a read-only case is around one to two dollars and an artefact-writing case several, because the plugin's session context is loaded on every turn. Cases default to `runs: 1`; raise it for a behaviour that looks flaky, not by default. `--ablation none` matters on the official runner: the without-plugin arm cannot run a slash command, so it only doubles the cost.
 
 `--effort` (or `effort:` in a `case.yaml`) runs the case against a temporary copy of the plugin with the invoked command's `effort:` line changed. A command's own frontmatter wins over the session's effort, so this is the only way to compare levels on one command. Each recording notes the model, the requested effort, and the thinking and output tokens from the result event; a changed thinking-token count is how you can see the override took effect.
+
+`--variant` tests a change before you make it. It runs every selected case twice, once on the plugin as it stands and once with the variant laid over a copy of it, in fresh workspaces and at the same effort level, so the two arms differ only in the variant's files. A file is a new body for the invoked command, and every selected case must invoke the same one. A directory mirrors the plugin's layout, so `variants/owner-column/templates/secure-template.md` changes a template and can sit beside `commands/` and `references/` files. The runner refuses a variant identical to the plugin, and lists any path it adds rather than changes, so a misspelt path shows up before you pay for the runs. The report pools each case's runs and lists only the graders whose pass count moved (`better  every-action-has-an-owner: 1/2 → 2/2`), with score, cost, output tokens and early stops per arm. Recordings go under `baseline/` and `variant/` in the results directory, with `variant.json`, a copy of the variant's files as tested, and `comparison.json`. `--replay` on that directory re-scores and compares both arms, and on `baseline/` or `variant/` re-scores one. A comparison costs twice a normal run, and one run per arm says little about a behaviour that varies, so use `--runs 2` or more before trusting a moved grader.
 
 A run that finishes normally but never writes the document its `file_exists` grader expects is reported as `EARLY STOP`, with the run's last words, and recorded as `early_stop` in `aggregate.json`. Opus 5.5 can end a turn with a progress report ("next I'll write the file…") instead of a tool call, and `claude -p` treats that as the end of the run, so an early stop says the command or agent needs its *Finish in this turn* rule, not that the document was wrong.
 
