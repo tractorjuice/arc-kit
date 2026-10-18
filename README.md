@@ -2055,6 +2055,7 @@ arckit init .
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
+- **Community**: the [ArcKit LinkedIn group](https://www.linkedin.com/groups/17641034/) for worked examples, office hours and questions, and [Discord](https://discord.gg/HsA4Y3hQ4) for chat with other users
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
 - **Latest Version**: [v6.18.2](https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.2)
 
