@@ -17,6 +17,7 @@ An `llm` or `baseline` grader is reported as skipped, never as passed.
     python3 scripts/eval-headless.py --tag injection        # by tag
     python3 scripts/eval-headless.py --replay <results dir> # re-score, no model
     python3 scripts/eval-headless.py --case "sobc*" --model claude-sonnet-5-5 --effort high
+    python3 scripts/eval-headless.py --case "sobc*" --variant ~/sobc-shorter.md --runs 2
 
 `--effort` (or `effort:` in a case) runs the case against a temporary copy of
 the plugin whose invoked command has that `effort:` level. A command's own
@@ -25,7 +26,15 @@ levels. Each run records the model, the requested effort, and the thinking and
 output tokens the result event reports, which is how you can see the override
 took effect.
 
-Exit 0 when every scored case meets --threshold (default 1.0), 1 otherwise.
+`--variant` runs every case twice, on the plugin as it stands and with a
+change laid over a copy of it, then reports per case the graders whose pass
+count moved. A file is a new body for the invoked command; a directory
+mirrors the plugin's layout (`commands/`, `templates/`, `references/`, ...).
+Each arm is recorded under `baseline/` and `variant/`; `--replay` on the
+results directory re-scores and compares both.
+
+Exit 0 when every scored case meets --threshold (default 1.0), 1 otherwise;
+for a comparison, every scored case of the variant.
 """
 
 from __future__ import annotations
@@ -52,9 +61,10 @@ EFFORT_LEVELS = ("low", "medium", "high", "xhigh", "max")
 # Left out of a plugin copy: the eval results tree and the nested overlay
 # mirror are large and never loaded by a core command.
 COPY_IGNORE = shutil.ignore_patterns("evals", "plugins", "node_modules", "__pycache__", ".DS_Store")
+VARIANT_IGNORE = {"__pycache__", ".DS_Store"}
 
 
-# ── Effort override ──────────────────────────────────────────────────
+# ── Plugin copies: effort override and variants ──────────────────────
 
 
 def prompt_command(prompt: str) -> str:
@@ -64,15 +74,25 @@ def prompt_command(prompt: str) -> str:
     return m.group(1)
 
 
-def plugin_with_effort(plugin_dir: Path, command: str, effort: str, dest: Path) -> Path:
-    """Copy the plugin to `dest` with `commands/<command>.md` set to `effort`.
+def build_plugin(plugin_dir: Path, dest: Path, *, command: str, effort: str | None = None,
+                 overlay: dict[str, Path] | None = None) -> Path:
+    """Copy the plugin to `dest`, lay `overlay` over it, then set the command's effort.
 
-    The command's `effort:` line is replaced, or added to its frontmatter when
-    it has none. Nothing else in the copy changes.
+    `overlay` maps plugin-relative paths to the files that replace or add them
+    (see `variant_files`). Effort goes on last, so `--effort` wins over a
+    variant's own `effort:` line and both arms of a comparison run at one level.
     """
-    if effort not in EFFORT_LEVELS:
+    if effort is not None and effort not in EFFORT_LEVELS:
         raise ValueError(f"unknown effort level {effort!r}; expected one of {EFFORT_LEVELS}")
     shutil.copytree(plugin_dir, dest, ignore=COPY_IGNORE, symlinks=True)
+    for rel, src in (overlay or {}).items():
+        target = dest / rel
+        target.parent.mkdir(parents=True, exist_ok=True)
+        # The copy keeps symlinks; writing through one would change the real plugin.
+        target.unlink(missing_ok=True)
+        shutil.copyfile(src, target)
+    if effort is None:
+        return dest
     cmd_file = dest / "commands" / f"{command}.md"
     if not cmd_file.is_file():
         raise FileNotFoundError(f"no command file for /arckit:{command} in {plugin_dir}")
@@ -87,6 +107,67 @@ def plugin_with_effort(plugin_dir: Path, command: str, effort: str, dest: Path) 
         front += f"\neffort: {effort}"
     cmd_file.write_text(front + body, encoding="utf-8")
     return dest
+
+
+def plugin_with_effort(plugin_dir: Path, command: str, effort: str, dest: Path) -> Path:
+    """Copy the plugin to `dest` with `commands/<command>.md` set to `effort`.
+
+    The command's `effort:` line is replaced, or added to its frontmatter when
+    it has none. Nothing else in the copy changes.
+    """
+    return build_plugin(plugin_dir, dest, command=command, effort=effort)
+
+
+def variant_files(variant: Path, command: str | None) -> dict[str, Path]:
+    """The plugin-relative paths a variant replaces or adds, mapped to their source files.
+
+    A file is a new body for the invoked command, `commands/<command>.md`. A
+    directory mirrors the plugin's layout, so it can change a template, a
+    reference or an agent as well as the command.
+    """
+    if variant.is_file():
+        if not command:
+            raise ValueError("a single-file variant replaces the invoked command, and no command was given")
+        return {f"commands/{command}.md": variant}
+    if not variant.is_dir():
+        raise FileNotFoundError(f"no variant at {variant}")
+    files = {}
+    for p in sorted(variant.rglob("*")):
+        rel = p.relative_to(variant)
+        if p.is_file() and not VARIANT_IGNORE & set(rel.parts):
+            files[rel.as_posix()] = p
+    if not files:
+        raise ValueError(f"the variant directory {variant} holds no files")
+    return files
+
+
+def check_variant(plugin_dir: Path, files: dict[str, Path]) -> tuple[list[str], list[str]]:
+    """Split a variant's paths into those it changes and those it adds; refuse a no-op.
+
+    A variant identical to the plugin would pay for two identical runs, and a
+    misspelt path shows up here as an added file rather than a silent no-op.
+    """
+    changed, added = [], []
+    for rel, src in sorted(files.items()):
+        target = plugin_dir / rel
+        if not target.is_file():
+            added.append(rel)
+        elif target.read_bytes() != src.read_bytes():
+            changed.append(rel)
+    if not changed and not added:
+        raise ValueError(f"the variant is identical to {plugin_dir}; there is nothing to compare")
+    return changed, added
+
+
+def single_command(cases: list[dict]) -> str:
+    """The one command a single-file variant replaces, across every selected case."""
+    commands = sorted({prompt_command(c["prompt"]) for c in cases})
+    if len(commands) != 1:
+        raise ValueError(
+            "a single-file variant replaces one command, but the selected cases invoke "
+            + ", ".join(f"/arckit:{c}" for c in commands)
+            + "; narrow --case or --tag, or pass a directory that names each file")
+    return commands[0]
 
 
 # ── Case loading ─────────────────────────────────────────────────────
@@ -331,12 +412,91 @@ def record(case: dict, rec: dict, workspace: Path, before: set[str], out_dir: Pa
     return case_out
 
 
+def recorded_runs(results_dir: Path, case_name: str) -> int:
+    """How many runs of a case a results directory holds: `<case>.runN/` per run, or one `<case>/`."""
+    if not results_dir.is_dir():
+        return 1
+    pattern = re.compile(rf"{re.escape(case_name)}\.run(\d+)")
+    numbers = [int(m.group(1)) for p in results_dir.iterdir()
+               if (m := pattern.fullmatch(p.name)) and (p / "recording.json").is_file()]
+    return max(numbers, default=1)
+
+
 def load_recording(case_out: Path) -> dict:
     rec = json.loads((case_out / "recording.json").read_text(encoding="utf-8"))
     transcript = case_out / "transcript.jsonl"
     rec["events"] = [json.loads(l) for l in transcript.read_text(encoding="utf-8").splitlines() if l.strip()] \
         if transcript.exists() else []
     return rec
+
+
+# ── Comparison ───────────────────────────────────────────────────────
+
+
+def compare(baseline: list[dict], variant: list[dict]) -> list[dict]:
+    """Per case, each arm's mean score, cost and output, and the graders whose pass count moved.
+
+    Runs are pooled per case rather than paired by run number: with `--runs 2`
+    a grader that passed once in each arm has not moved, whichever run it was.
+    """
+    arms = {"baseline": baseline, "variant": variant}
+    rows = []
+    for name in dict.fromkeys(e["case"] for e in baseline + variant):
+        runs = {arm: [e for e in entries if e["case"] == name] for arm, entries in arms.items()}
+        tally: dict[str, dict[str, tuple[int, int]]] = {arm: {} for arm in arms}
+        for arm, entries in runs.items():
+            for e in entries:
+                for g in e["graders"]:
+                    if g.get("skipped"):
+                        continue
+                    passed, seen = tally[arm].get(g["name"], (0, 0))
+                    tally[arm][g["name"]] = (passed + bool(g["passed"]), seen + 1)
+        moved = []
+        for g in sorted(set(tally["baseline"]) & set(tally["variant"])):
+            (bp, bn), (vp, vn) = tally["baseline"][g], tally["variant"][g]
+            if bp * vn != vp * bn:
+                moved.append({"name": g, "baseline": [bp, bn], "variant": [vp, vn],
+                              "change": "better" if vp * bn > bp * vn else "worse"})
+
+        def mean(values):
+            values = [v for v in values if v is not None]
+            return sum(values) / len(values) if values else None
+
+        rows.append({
+            "case": name,
+            "runs": {arm: len(entries) for arm, entries in runs.items()},
+            "score": {arm: mean(e["score"] for e in entries) for arm, entries in runs.items()},
+            "cost_usd": {arm: round(sum(float(e.get("cost_usd") or 0) for e in entries), 4)
+                         for arm, entries in runs.items()},
+            "output_tokens": {arm: mean(e.get("output_tokens") for e in entries) for arm, entries in runs.items()},
+            "early_stops": {arm: sum(1 for e in entries if e.get("early_stop")) for arm, entries in runs.items()},
+            "graders": moved,
+        })
+    return rows
+
+
+def print_comparison(rows: list[dict]) -> None:
+    def num(v, spec):
+        return "n/a" if v is None else format(v, spec)
+
+    print("\nbaseline → variant")
+    for row in rows:
+        s, c, t, stops = row["score"], row["cost_usd"], row["output_tokens"], row["early_stops"]
+        print(f"  {row['case']}: score {num(s['baseline'], '.2f')} → {num(s['variant'], '.2f')}, "
+              f"cost ${c['baseline']:.2f} → ${c['variant']:.2f}, "
+              f"output tokens {num(t['baseline'], '.0f')} → {num(t['variant'], '.0f')}")
+        for g in row["graders"]:
+            (bp, bn), (vp, vn) = g["baseline"], g["variant"]
+            print(f"      {g['change']:<6}  {g['name']}: {bp}/{bn} → {vp}/{vn}")
+        if not row["graders"]:
+            print("      no grader result moved")
+        if stops["baseline"] or stops["variant"]:
+            print(f"      early stops {stops['baseline']} → {stops['variant']}")
+    better = sum(g["change"] == "better" for row in rows for g in row["graders"])
+    worse = sum(g["change"] == "worse" for row in rows for g in row["graders"])
+    cost = {arm: sum(row["cost_usd"][arm] for row in rows) for arm in ("baseline", "variant")}
+    print(f"variant: {better} grader result(s) better, {worse} worse; "
+          f"cost ${cost['baseline']:.2f} → ${cost['variant']:.2f}")
 
 
 # ── Main ─────────────────────────────────────────────────────────────
@@ -353,12 +513,17 @@ def main() -> int:
     ap.add_argument("--effort", choices=EFFORT_LEVELS,
                     help="run the invoked command at this effort level (overrides the case's `effort:`)")
     ap.add_argument("--timeout", type=int, help="seconds per run (overrides the case's timeout_seconds)")
+    ap.add_argument("--variant", type=Path,
+                    help="also run every case with this command file, or this directory laid over "
+                         "the plugin, and report which graders moved")
     ap.add_argument("--threshold", type=float, default=1.0)
     ap.add_argument("--output-dir", type=Path)
     ap.add_argument("--replay", type=Path, help="re-score this results directory without calling the model")
     ap.add_argument("--json", type=Path, help="write the aggregate result to this path as well")
     ap.add_argument("--keep-temp", action="store_true")
     args = ap.parse_args()
+    if args.variant and args.replay:
+        ap.error("--variant runs live; to re-score a comparison, pass its results directory to --replay")
 
     plugin_dir = args.plugin.resolve()
     eval_dir = plugin_dir / args.eval_dir
@@ -366,6 +531,15 @@ def main() -> int:
     if not cases:
         print("no cases matched", file=sys.stderr)
         return 1
+
+    overlay = None
+    if args.variant:
+        variant = args.variant.resolve()
+        try:
+            overlay = variant_files(variant, single_command(cases) if variant.is_file() else None)
+            changed, added = check_variant(plugin_dir, overlay)
+        except (ValueError, FileNotFoundError) as exc:
+            ap.error(f"--variant: {exc}")
 
     if args.replay:
         out_dir = args.replay.resolve()
@@ -376,77 +550,123 @@ def main() -> int:
         out_dir.mkdir(parents=True, exist_ok=True)
         mode = "live"
 
-    aggregate = {"mode": mode, "plugin": str(plugin_dir), "cases": [], "total_cost_usd": 0.0}
-    worst = 1.0
+    # A comparison keeps each arm's recordings in the layout a single run uses,
+    # under baseline/ and variant/, so `--replay <dir>/variant` re-scores one arm
+    # and `--replay <dir>` (found by its variant.json) re-scores and compares both.
+    comparing = overlay is not None or (mode == "replay" and (out_dir / "variant.json").is_file())
+    arms = [("baseline", None), ("variant", overlay)] if comparing else [(None, None)]
+    if overlay is not None:
+        variant_meta = {"variant": str(variant), "changed": changed, "added": added,
+                        "model": args.model, "effort": args.effort}
+        (out_dir / "variant.json").write_text(json.dumps(variant_meta, indent=2), encoding="utf-8")
+        # Keep the files tested, since the variant is usually edited again afterwards.
+        for rel, src in overlay.items():
+            kept = out_dir / "variant-files" / rel
+            kept.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, kept)
+        print(f"[variant] {args.variant}: changes {', '.join(changed) or 'nothing'}"
+              f"{'; adds ' + ', '.join(added) if added else ''}")
+        print("          each case runs twice: on the plugin as it stands, then with the variant")
+    elif comparing:
+        variant_meta = json.loads((out_dir / "variant.json").read_text(encoding="utf-8"))
+
+    aggregates = {arm: {"mode": mode, "plugin": str(plugin_dir), "cases": [], "total_cost_usd": 0.0}
+                  for arm, _ in arms}
+    worst = dict.fromkeys(aggregates, 1.0)
     for case in cases:
-        runs = args.runs or (1 if mode == "replay" else int(case.get("runs", 1)))
+        if args.runs:
+            runs = args.runs
+        elif mode == "replay":
+            runs = max(recorded_runs(out_dir / arm if arm else out_dir, case["name"]) for arm, _ in arms)
+        else:
+            runs = int(case.get("runs", 1))
         for run_no in range(1, runs + 1):
             case_key = case["name"] if runs == 1 else f"{case['name']}.run{run_no}"
-            case_out = out_dir / case_key
-            if mode == "replay":
-                if not (case_out / "recording.json").exists():
-                    print(f"[skip] {case_key}: no recording in {out_dir}")
-                    continue
-                rec = load_recording(case_out)
-            else:
-                workspace = Path(tempfile.mkdtemp(prefix=f"arckit-eval-{case['name']}-"))
-                effort = args.effort or case.get("effort")
-                plugin_copy = None
-                try:
-                    build_workspace(case, workspace)
-                    before = snapshot(workspace)
-                    run_plugin = plugin_dir
-                    if effort:
-                        plugin_copy = Path(tempfile.mkdtemp(prefix="arckit-eval-plugin-"))
-                        run_plugin = plugin_with_effort(
-                            plugin_dir, prompt_command(case["prompt"]), effort, plugin_copy / "arckit")
-                    print(f"[run ] {case_key}{f' (effort: {effort})' if effort else ''} …", flush=True)
-                    rec = run_claude(case, workspace, run_plugin, args.model, args.timeout)
-                    rec["requested_model"] = args.model or case.get("model")
-                    rec["requested_effort"] = effort
-                    rec["created_files"] = sorted(snapshot(workspace) - before)
-                    case_out = record({**case, "name": case_key}, rec, workspace, before, out_dir)
-                finally:
-                    if plugin_copy:
-                        shutil.rmtree(plugin_copy, ignore_errors=True)
-                    if args.keep_temp:
-                        print(f"       workspace kept at {workspace}")
-                    else:
-                        shutil.rmtree(workspace, ignore_errors=True)
-            scored = score_case(case, rec, case_out / "files")
-            (case_out / "scores.json").write_text(json.dumps(scored, indent=2), encoding="utf-8")
-            score = scored["score"]
-            stopped = early_stop(rec, scored)
-            if score is not None:
-                worst = min(worst, score)
-            aggregate["cases"].append({
-                "name": case_key, "score": score, "cost_usd": rec.get("cost_usd"),
-                "num_turns": rec.get("num_turns"), "models": rec.get("models"),
-                "requested_effort": rec.get("requested_effort"),
-                "thinking_tokens": rec.get("thinking_tokens"), "output_tokens": rec.get("output_tokens"),
-                "duration_ms": rec.get("duration_ms"), "graders": scored["graders"],
-                "early_stop": stopped,
-            })
-            aggregate["total_cost_usd"] += float(rec.get("cost_usd") or 0)
-            label = "pass" if score == 1.0 else ("FAIL" if score is not None else "n/a ")
-            extra = " TIMED OUT" if rec.get("timed_out") else ""
-            if stopped:
-                extra += " EARLY STOP"
-            if rec.get("thinking_tokens") is not None:
-                extra += (f" thinking={rec.get('thinking_tokens')} output={rec.get('output_tokens')}"
-                         f" models={','.join(rec.get('models') or [])}")
-            print(f"[{label}] {case_key}: score={score} cost=${rec.get('cost_usd') or 0:.2f} turns={rec.get('num_turns')}{extra}")
-            for g in scored["graders"]:
-                mark = "skip" if g.get("skipped") else ("ok  " if g["passed"] else "FAIL")
-                print(f"         {mark} {g['name']}: {g['details']}")
-            if stopped:
-                print(f"         ended without writing the document; last words: {stopped!r}")
+            for arm, arm_overlay in arms:
+                arm_dir = out_dir / arm if arm else out_dir
+                case_out = arm_dir / case_key
+                shown = f"{case_key} ({arm})" if arm else case_key
+                if mode == "replay":
+                    if not (case_out / "recording.json").exists():
+                        print(f"[skip] {shown}: no recording in {arm_dir}")
+                        continue
+                    rec = load_recording(case_out)
+                else:
+                    workspace = Path(tempfile.mkdtemp(prefix=f"arckit-eval-{case['name']}-"))
+                    effort = args.effort or case.get("effort")
+                    plugin_copy = None
+                    try:
+                        build_workspace(case, workspace)
+                        before = snapshot(workspace)
+                        run_plugin = plugin_dir
+                        # Both arms of a comparison run from a copy made the same way,
+                        # so the only difference between them is the variant's files.
+                        if effort or arm:
+                            plugin_copy = Path(tempfile.mkdtemp(prefix="arckit-eval-plugin-"))
+                            run_plugin = build_plugin(plugin_dir, plugin_copy / "arckit",
+                                                      command=prompt_command(case["prompt"]),
+                                                      effort=effort, overlay=arm_overlay)
+                        print(f"[run ] {shown}{f' (effort: {effort})' if effort else ''} …", flush=True)
+                        rec = run_claude(case, workspace, run_plugin, args.model, args.timeout)
+                        rec["requested_model"] = args.model or case.get("model")
+                        rec["requested_effort"] = effort
+                        if arm:
+                            rec["arm"] = arm
+                        rec["created_files"] = sorted(snapshot(workspace) - before)
+                        case_out = record({**case, "name": case_key}, rec, workspace, before, arm_dir)
+                    finally:
+                        if plugin_copy:
+                            shutil.rmtree(plugin_copy, ignore_errors=True)
+                        if args.keep_temp:
+                            print(f"       workspace kept at {workspace}")
+                        else:
+                            shutil.rmtree(workspace, ignore_errors=True)
+                scored = score_case(case, rec, case_out / "files")
+                (case_out / "scores.json").write_text(json.dumps(scored, indent=2), encoding="utf-8")
+                score = scored["score"]
+                stopped = early_stop(rec, scored)
+                if score is not None:
+                    worst[arm] = min(worst[arm], score)
+                aggregates[arm]["cases"].append({
+                    "name": case_key, "case": case["name"], "score": score, "cost_usd": rec.get("cost_usd"),
+                    "num_turns": rec.get("num_turns"), "models": rec.get("models"),
+                    "requested_effort": rec.get("requested_effort"),
+                    "thinking_tokens": rec.get("thinking_tokens"), "output_tokens": rec.get("output_tokens"),
+                    "duration_ms": rec.get("duration_ms"), "graders": scored["graders"],
+                    "early_stop": stopped,
+                })
+                aggregates[arm]["total_cost_usd"] += float(rec.get("cost_usd") or 0)
+                label = "pass" if score == 1.0 else ("FAIL" if score is not None else "n/a ")
+                extra = " TIMED OUT" if rec.get("timed_out") else ""
+                if stopped:
+                    extra += " EARLY STOP"
+                if rec.get("thinking_tokens") is not None:
+                    extra += (f" thinking={rec.get('thinking_tokens')} output={rec.get('output_tokens')}"
+                             f" models={','.join(rec.get('models') or [])}")
+                print(f"[{label}] {shown}: score={score} cost=${rec.get('cost_usd') or 0:.2f} turns={rec.get('num_turns')}{extra}")
+                for g in scored["graders"]:
+                    mark = "skip" if g.get("skipped") else ("ok  " if g["passed"] else "FAIL")
+                    print(f"         {mark} {g['name']}: {g['details']}")
+                if stopped:
+                    print(f"         ended without writing the document; last words: {stopped!r}")
 
-    (out_dir / "aggregate.json").write_text(json.dumps(aggregate, indent=2), encoding="utf-8")
+    for arm, aggregate in aggregates.items():
+        arm_dir = out_dir / arm if arm else out_dir
+        arm_dir.mkdir(parents=True, exist_ok=True)
+        (arm_dir / "aggregate.json").write_text(json.dumps(aggregate, indent=2), encoding="utf-8")
+    result = aggregates.get(None)
+    if comparing:
+        rows = compare(aggregates["baseline"]["cases"], aggregates["variant"]["cases"])
+        print_comparison(rows)
+        result = {"mode": mode, **variant_meta, "cases": rows,
+                  "total_cost_usd": {arm: a["total_cost_usd"] for arm, a in aggregates.items()}}
+        (out_dir / "comparison.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     if args.json:
-        args.json.write_text(json.dumps(aggregate, indent=2), encoding="utf-8")
-    print(f"\nresults: {out_dir}  total cost: ${aggregate['total_cost_usd']:.2f}")
-    return 0 if worst >= args.threshold else 1
+        args.json.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    total = sum(a["total_cost_usd"] for a in aggregates.values())
+    print(f"\nresults: {out_dir}  total cost: ${total:.2f}")
+    # A comparison's exit status is the variant's, against the same threshold.
+    return 0 if worst[arms[-1][0]] >= args.threshold else 1
 
 
 if __name__ == "__main__":
