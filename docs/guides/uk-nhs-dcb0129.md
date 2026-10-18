@@ -14,7 +14,7 @@ Three files in `projects/{NNN}-<slug>/clinical-safety/`:
 
 | File | Purpose |
 |---|---|
-| `SAFETY.md` | Front-door anchor: required Marcus-spec fields (product-name, version, CSO, organisation, status, hazard-log-url, last-reviewed) + ArcKit Document Control + Summary |
+| `SAFETY.md` | Front-door anchor: required Marcus-spec fields (product-name, version, standard, CSO, organisation, status, hazard-log-url, last-reviewed) + ArcKit Document Control + Summary |
 | `SAFETY-CASE.md` | Clinical Safety Case Report with 6 GSN-inspired sections: Intended Use, Scope, Safety Argument (G1.1–G1.6 cross-referencing hazards), Evidence, Residual Risk, CSO Sign-off |
 | `HAZARD-LOG.md` | YAML-frontmatter hazard array + controls + rendered Markdown table. 6 starter hazards: wrong-patient identity, stale clinical data, audit-trail gap, authorisation bypass, alert delivery failure, write-integrity loss |
 
@@ -37,7 +37,7 @@ The 3 files together implement the four DCB0129 deliverables — Clinical Risk M
 
 ## Prerequisites
 
-Requires the project's REQ, DATA, STKE, RISK artefacts. Will read the project's DPIA if present (privacy hazards may overlap with clinical hazards).
+Requires the project's REQ, DATA and STKE artefacts. Will read the project's RISK register if present (to cross-reference project risks and clinical hazards) and its DPIA if present (privacy hazards may overlap with clinical hazards).
 
 A named, qualified **Clinical Safety Officer** (CSO) with current GMC / NMC / HCPC / GPhC registration MUST be appointed to sign off the case. The command generates the documents in `DRAFT` status with the CSO field left as `[PENDING]`.
 

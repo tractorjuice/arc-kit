@@ -29,7 +29,7 @@ NHS DCB0129 (Clinical Risk Management — Manufacture) · NHS DCB0160 (Clinical 
 
 ## Status
 
-**Community-contributed.** Output should be reviewed by a qualified Clinical Safety Officer (CSO with appropriate GMC / NMC / HCPC registration) and, for MDR classification, by a qualified Regulatory Affairs specialist before reliance. This plugin is **not** clinical, legal, or regulatory advice.
+**Community-contributed.** Output should be reviewed by a qualified Clinical Safety Officer (CSO with appropriate GMC / NMC / HCPC / GPhC registration) and, for MDR classification, by a qualified Regulatory Affairs specialist before reliance. This plugin is **not** clinical, legal, or regulatory advice.
 
 ## Data
 

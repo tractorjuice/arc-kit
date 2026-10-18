@@ -22,7 +22,7 @@ Single artefact `projects/{NNN}-<slug>/ARC-{NNN}-NHSMDR-v1.0.md` covering:
 - **EU MDR 2017/745 classification** — Rule 11 reasoning, divergence from UK classification (EU is typically more conservative; many products that were Class I under MDD moved to Class IIa under MDR)
 - **Marking pathway** — UKCA (GB), UKNI (NI under Windsor Framework), CE (EU market + NI), CE-in-GB transitional arrangements
 - **Conformity-assessment route** — self-declaration vs Approved Body vs Notified Body, with technical documentation and clinical evaluation expectations
-- **MHRA SaMD / AIaMD Programme** alignment — applicable Work Packages (WP1 Software, WP6 AIaMD, WP9 Cyber Security, WP11 Best Practice for Manufacturers)
+- **MHRA SaMD / AIaMD Programme** alignment — applicable work packages from the MHRA Software and AI as a Medical Device Change Programme roadmap (WP1 Qualification, WP2 Classification, WP3 Premarket requirements, WP4 Post Market, WP5 Cyber Secure Medical Devices; for AIaMD also WP9 AI Rigour, WP10 Project Glass Box, WP11 Project Ship of Theseus)
 - **Standards alignment** — ISO 14971 (risk management), IEC 62304 (software lifecycle), ISO 13485 (QMS, signposted), IEC 62366-1 (usability), ISO/IEC 27001 (information security), ISO/IEC TR 24028 (AI trustworthiness for AIaMD)
 - **Post-market obligations** — PMS plan, vigilance reporting timelines, PSUR cadence, FSCA, AIaMD substantial-change handling
 - **Substantial change triggers**, **open regulatory risks**

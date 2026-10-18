@@ -6,7 +6,7 @@ effort: high
 keep-coding-instructions: true
 handoffs:
   - command: uk-nhs-dcb0129
-    description: DCB0129 hazard log feeds the ISO 14971 risk file expected by both UK MDR and EU MDR.
+    description: DCB0129 hazard log feeds the ISO 14971 risk file expected by both UK MDR and EU MDR — run uk-nhs-dcb0129 first if clinical-safety/HAZARD-LOG.md is not present.
   - command: uk-nhs-dtac
     description: DTAC consumes the classification statement to determine procurement assurance route.
   - command: risk
@@ -58,6 +58,7 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
    - `ARC-{PID}-STKE-*.md` — intended users (clinicians, patients, both)
    - `ARC-{PID}-DATA-*.md` — what clinical data is processed and how
    - `clinical-safety/SAFETY-CASE.md` if present — clinical purpose statement and intended-use scope
+   - `clinical-safety/HAZARD-LOG.md` if present — hazards to cross-reference in the ISO 14971 row and to derive the IEC 62304 software safety class
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
 2. **Read the template**:
@@ -107,7 +108,7 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
      - Clinical evaluation expectation (literature route, clinical investigation, or post-market clinical follow-up)
 
    - **MHRA SaMD / AIaMD Programme considerations**:
-     - Identify which MHRA AIaMD Programme work packages apply (e.g. WP1 Software, WP6 AIaMD, WP9 Cyber Security, WP11 Best Practice for Manufacturers)
+     - Identify which MHRA Software and AI as a Medical Device Change Programme work packages apply: WP1 Qualification, WP2 Classification, WP3 Premarket requirements, WP4 Post Market, WP5 Cyber Secure Medical Devices, and for AIaMD also WP9 AI Rigour, WP10 Project Glass Box (AI interpretability) and WP11 Project Ship of Theseus (AI adaptivity). WP6–WP8 have no discrete deliverables; their content was absorbed into the others
      - Flag any in-flight regulatory change relevant to the product (the MHRA roadmap is evolving — version-pin the assessment date)
 
    - **Standards alignment**:
