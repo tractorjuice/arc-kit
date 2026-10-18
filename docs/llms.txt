@@ -246,8 +246,8 @@ French government (apply on top of EU baseline):
 
 - [FIPS 199 categorization](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fisma-categorization.md): `/arckit:us-fisma-categorization` FIPS 199 system categorization (Low / Moderate / High water-mark).
 - [NIST SP 800-53 tailoring](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-nist-800-53.md): `/arckit:us-nist-800-53` NIST SP 800-53 Rev 5 control tailoring against the Low / Moderate / High baseline.
-- [FedRAMP System Security Plan](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fedramp-ssp.md): `/arckit:us-fedramp-ssp` FedRAMP SSP (Moderate / High baseline) aligned to the current template.
-- [FedRAMP readiness](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fedramp-readiness.md): `/arckit:us-fedramp-readiness` 3PAO-style Readiness Assessment Report with capability statement and gap analysis.
+- [FedRAMP System Security Plan](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fedramp-ssp.md): `/arckit:us-fedramp-ssp` FedRAMP SSP (Moderate / High baseline) in 14 sections mapped to the FedRAMP Rev 5 SSP template.
+- [FedRAMP readiness](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fedramp-readiness.md): `/arckit:us-fedramp-readiness` internal readiness self-assessment in the 3PAO Readiness Assessment Report format, with capability statement and gap analysis.
 - [Zero Trust maturity](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-zero-trust.md): `/arckit:us-zero-trust` CISA Zero Trust Maturity Model v2.0 assessment across the five pillars.
 - [ICAM architecture](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-icam.md): `/arckit:us-icam` federal Identity, Credential and Access Management architecture per OMB M-19-17.
 - [NIST AI RMF](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-ai-rmf.md): `/arckit:us-ai-rmf` NIST AI Risk Management Framework 1.0 assessment (Govern / Map / Measure / Manage).

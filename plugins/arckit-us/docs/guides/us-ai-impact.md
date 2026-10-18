@@ -32,9 +32,10 @@ Reviewed by the CAIO, the SAOP for privacy alignment, the System Owner, and the 
 
 1. Determine rights-impacting / safety-impacting classification per M-24-10 definitions.
 2. Apply the minimum-practices checklist (impact assessment, real-world testing, monitoring, human review, public notice, opt-out).
-3. Capture the federal.ai.gov use-case inventory record.
-4. Where the AI is procured, build the M-25-21 acquisition clauses into the SOW / contract.
-5. Surface disclosures, opt-out pathways, and feedback channels.
+3. Record the waiver posture for any practice not met: the CAIO's written determination, the ground, compensating measures, OMB reporting and annual certification.
+4. Capture the federal.ai.gov use-case inventory record.
+5. Where the AI is procured, build the M-25-21 acquisition clauses into the SOW / contract.
+6. Surface disclosures, opt-out pathways, and feedback channels.
 
 ---
 

@@ -4,8 +4,8 @@
 
 - `/arckit-us:us-fisma-categorization` — FIPS 199 categorization (NIST SP 800-60 information types)
 - `/arckit-us:us-nist-800-53` — NIST SP 800-53 Rev 5 tailoring against Low / Moderate / High baselines
-- `/arckit-us:us-fedramp-ssp` — FedRAMP System Security Plan (Moderate / High template, 15 sections)
-- `/arckit-us:us-fedramp-readiness` — 3PAO-style Readiness Assessment Report + Agency vs JAB path
+- `/arckit-us:us-fedramp-ssp` — FedRAMP System Security Plan (Moderate / High, 14 sections mapped to the FedRAMP Rev 5 SSP template)
+- `/arckit-us:us-fedramp-readiness` — internal readiness self-assessment in the FedRAMP 3PAO Readiness Assessment Report format + Agency vs JAB path
 - `/arckit-us:us-zero-trust` — CISA Zero Trust Maturity Model v2.0 across 5 pillars + 3 cross-cuts
 - `/arckit-us:us-icam` — OMB M-19-17 / NIST SP 800-63-3 IAL/AAL/FAL (PIV + login.gov integration)
 - `/arckit-us:us-ai-rmf` — NIST AI RMF 1.0 (Govern/Map/Measure/Manage) + Generative AI Profile (AI 600-1)
@@ -35,7 +35,7 @@ FIPS 199 / SP 800-60 Vol 2 · NIST SP 800-53 Rev 5 / SP 800-53B · FedRAMP Rev 5
 
 ## Statutory currency
 
-EO 14110 (Safe, Secure, and Trustworthy AI) was **revoked January 2025**. The active AI assurance mandates are **OMB M-24-10 + M-25-21**. FedRAMP completed the **Rev 5** transition in 2024 — Rev 4 references are deprecated throughout. Verify citations against the current Federal Register, OMB Circulars page, and FedRAMP.gov before relying on any artefact.
+EO 14110 (Safe, Secure, and Trustworthy AI) was **revoked January 2025**. The active AI assurance mandates are **OMB M-24-10 + M-25-21**. FedRAMP completed the **Rev 5** transition in 2024 — Rev 4 references are deprecated throughout. Under the FedRAMP Consolidated Rules for 2026, FedRAMP stopped accepting FedRAMP Ready submissions on **28 July 2026** and marked the Rev 5 SSP template legacy; `us-fedramp-readiness` is an internal self-assessment and cannot confer FedRAMP Ready. Verify citations against the current Federal Register, OMB Circulars page, and FedRAMP.gov before relying on any artefact.
 
 ## Data
 
