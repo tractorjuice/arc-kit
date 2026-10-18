@@ -13,8 +13,8 @@ ATIP reconciliation sits between the Privacy Impact Assessment and the data mode
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Disclosure scenarios, programme description, third-party touchpoints |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Per-element sensitivity flags and disclosure recipients |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Field-level structure that the severance rules act on |
+| Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Per-element sensitivity flags and disclosure recipients |
+| Data model (`ARC-<id>-DATA-v*.md`) | Field-level structure that the severance rules act on |
 | Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Authoritative source for the §4–§8 register and PIB references |
 
 ---

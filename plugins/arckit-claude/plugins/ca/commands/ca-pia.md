@@ -30,7 +30,7 @@ You are an enterprise architect generating a Canada Privacy Impact Assessment (P
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, DR, DMOD, and STKE artefacts (if present)
+   - The project's REQ (including its `DR-*` data requirements), DATA (data model) and STKE artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/ca-pia-template.md` (user override)

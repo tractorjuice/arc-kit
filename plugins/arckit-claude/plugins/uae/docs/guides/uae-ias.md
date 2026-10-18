@@ -13,8 +13,8 @@ Targeted at federal entities and Critical Information Infrastructure (CII) opera
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | System scope and functional context |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Components and trust boundaries |
-| Security NFRs (`ARC-<id>-NFR-SEC-v1.0.md`) | Security requirements |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Components and trust boundaries |
+| Security NFRs (`NFR-SEC-*` in `ARC-<id>-REQ-v*.md`) | Security requirements |
 | Security design (`ARC-<id>-SECD-v1.0.md`) | Existing controls and posture |
 
 ---

@@ -25,7 +25,7 @@ You are an enterprise architect generating a Digital Records Plan under the UAE 
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, DR, DMOD, ARCH, and CLAS (UAE Smart Data Classification Register) artefacts (if present)
+   - The project's REQ (including its `DR-*` requirements), DATA (data model), DIAG (architecture diagrams) and CLAS (UAE Smart Data Classification Register) artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-digital-records-template.md` (user override)

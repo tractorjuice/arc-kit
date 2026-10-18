@@ -45,7 +45,7 @@ Add domain qualifiers (NHS, HMRC, MoD, GDS) in the prompt to narrow results to s
 /arckit:gov-code-search <query>
 ```
 
-Outputs: `projects/<id>/research/ARC-<id>-GOVS-v1.0.md` (if a project exists), or to a timestamped file in the current directory.
+Outputs: `projects/<id>/research/ARC-<id>-GCSR-001-v1.0.md` (if a project exists), or to a timestamped file in the current directory.
 
 > **Auto-versioning**: Re-running this command when a document already exists automatically increments the version.
 

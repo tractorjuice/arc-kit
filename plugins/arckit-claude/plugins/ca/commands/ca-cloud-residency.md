@@ -30,7 +30,7 @@ You are an enterprise architect generating a Canada sovereign cloud residency as
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
    - The project's REQ artefact, with particular attention to NFR-AVL availability, NFR-LOC residency, and NFR-SEC data-handling requirements
    - The project's ITSG artefact (`ARC-<id>-ITSG-*.md`) for the categorisation and control profile, if present
-   - The project's DR artefact for per-element sensitivity, including any Indigenous-data flags from `ca-ocap`
+   - The project's DATA artefact (data model) for per-element sensitivity, including any Indigenous-data flags from `ca-ocap`
    - The project's PIA artefact (`ARC-<id>-PIA-*.md`) for personal-information residency drivers
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:

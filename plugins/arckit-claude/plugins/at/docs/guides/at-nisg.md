@@ -14,8 +14,8 @@
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service / sector context |
 | EU NIS2 assessment (`ARC-<id>-NIS2-v*.md`) | Base NIS2 compliance — required prerequisite |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Components and trust boundaries |
-| Security NFRs (`ARC-<id>-NFR-SEC-v1.0.md`) | Existing security posture |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Components and trust boundaries |
+| Security NFRs (`NFR-SEC-*` in `ARC-<id>-REQ-v*.md`) | Existing security posture |
 
 ---
 

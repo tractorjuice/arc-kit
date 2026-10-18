@@ -41,7 +41,7 @@
 
 ## Section 2 — System Categorization
 
-[Cross-reference the FIPS 199 categorization artefact (`ARC-{P}-FISMA-v*`). Summarise the high-water mark and the driving information types.]
+[Cross-reference the FIPS 199 categorization artefact (`ARC-{P}-FIPS199-v*`). Summarise the high-water mark and the driving information types.]
 
 | CIA Objective | Impact Level |
 |---------------|--------------|
@@ -138,7 +138,7 @@
 
 ## Section 8 — Minimum Security Controls
 
-[Cross-reference the tailored 800-53 control set artefact (`ARC-{P}-NIST53-v*`). Summarise the baseline selection and the count of controls implemented / inherited / hybrid / not-applicable / planned. The full Tailoring Matrix lives in the 800-53 artefact; do not duplicate it here.]
+[Cross-reference the tailored 800-53 control set artefact (`ARC-{P}-NIST-v*`). Summarise the baseline selection and the count of controls implemented / inherited / hybrid / not-applicable / planned. The full Tailoring Matrix lives in the 800-53 artefact; do not duplicate it here.]
 
 | Source | Count |
 |--------|-------|
@@ -243,7 +243,7 @@ For each control family, document implementation narratives. Full control-by-con
 
 ### PT — PII Processing and Transparency
 
-[Cross-ref PIA artefact (`ARC-{P}-PIA-v*`). Privacy notices, consent, opt-out.]
+[Cross-ref PIA artefact (`ARC-{P}-USPIA-v*`). Privacy notices, consent, opt-out.]
 
 ### RA — Risk Assessment
 
@@ -303,7 +303,7 @@ For each control family, document implementation narratives. Full control-by-con
 | Attachment 1 | Information Security Policies and Procedures | [Reference] |
 | Attachment 2 | User Guide | [Reference] |
 | Attachment 3 | Digital Identity Worksheet | [Reference] |
-| Attachment 4 | Privacy Impact Assessment (PIA) | [ARC-{P}-PIA-v*] |
+| Attachment 4 | Privacy Impact Assessment (PIA) | [ARC-{P}-USPIA-v*] |
 | Attachment 5 | Rules of Behavior (RoB) | [Reference] |
 | Attachment 6 | Information System Contingency Plan (ISCP) | [Reference] |
 | Attachment 7 | Configuration Management Plan (CMP) | [Reference] |
@@ -313,7 +313,7 @@ For each control family, document implementation narratives. Full control-by-con
 | Attachment 11 | Authenticated Vulnerability Scan Reports | [Reference] |
 | Attachment 12 | Penetration Test Report | [Reference] |
 | Attachment 13 | Customer Responsibility Matrix (CRM) | [Reference] |
-| Attachment 14 | FIPS 199 Categorization | [ARC-{P}-FISMA-v*] |
+| Attachment 14 | FIPS 199 Categorization | [ARC-{P}-FIPS199-v*] |
 | Attachment 15 | Separation of Duties Matrix | [Reference] |
 | Attachment 16 | Training Records | [Reference] |
 

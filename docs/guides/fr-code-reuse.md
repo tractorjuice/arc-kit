@@ -11,7 +11,7 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Functional requirements to match against existing code |
-| Research (`ARC-<id>-RES-v*.md`) | Market analysis context |
+| Research (`research/ARC-<id>-RSCH-*-v*.md`) | Market analysis context |
 
 ---
 

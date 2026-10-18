@@ -84,9 +84,9 @@ Gaps identified during the readiness assessment that must be remediated before a
 | Artefact | Control ID(s) | Evidence Status (Complete / Partial / Missing) | Location / Link |
 |----------|---------------|------------------------------------------------|-----------------|
 | System Security Plan (SSP) | [All] | [Complete] | [ARC-{P}-FRSSP-v*] |
-| FIPS 199 Categorization | [RA-2] | [Complete] | [ARC-{P}-FISMA-v*] |
-| Tailored 800-53 Control Set | [All] | [Complete] | [ARC-{P}-NIST53-v*] |
-| Privacy Impact Assessment | [PT family] | [Complete] | [ARC-{P}-PIA-v*] |
+| FIPS 199 Categorization | [RA-2] | [Complete] | [ARC-{P}-FIPS199-v*] |
+| Tailored 800-53 Control Set | [All] | [Complete] | [ARC-{P}-NIST-v*] |
+| Privacy Impact Assessment | [PT family] | [Complete] | [ARC-{P}-USPIA-v*] |
 | Contingency Plan | [CP-2] | [Complete] | [Reference] |
 | Incident Response Plan | [IR-8] | [Complete] | [Reference] |
 | Configuration Management Plan | [CM-9] | [Complete] | [Reference] |

@@ -82,7 +82,7 @@ templateVersion: "1.0"
 | ADR | `ARC-XXX-ADR-v[N].md` | Pattern Name, REF-001 | Decisions → Patterns/References |
 | DIAG | `ARC-XXX-DIAG-v[N].md` | REF-001 | Diagrams → Reference Architectures |
 | STORY | `ARC-XXX-STORY-v[N].md` | LL-001 | Stories → Lessons Learned |
-| ANALYZE | `ARC-XXX-ANALYZE-v[N].md` | LL-002, BB-001 | Analysis → Lessons/Building Blocks |
+| ANAL | `ARC-XXX-ANAL-v[N].md` | LL-002, BB-001 | Analysis → Lessons/Building Blocks |
 
 ## 8. External References
 

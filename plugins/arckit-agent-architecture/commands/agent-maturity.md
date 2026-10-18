@@ -37,8 +37,8 @@ $ARGUMENTS
 
 - **PRIN** (Architecture Principles, in 000-global) — Extract: AI/agent principles, governance principles, technology standards
 - **AAOV** (Agent Governance Framework) — Extract: oversight tiers, compliance status, audit program, governance maturity
-- **AASC** (Agent Security Architecture) — Extract: security controls, threat model, security maturity
-- **AAIT** (Agent Integration Design) — Extract: integration patterns, API maturity, interoperability
+- **AASE** (Agent Security Architecture) — Extract: security controls, threat model, security maturity
+- **AAIN** (Agent Integration Architecture) — Extract: integration patterns, API maturity, interoperability
 - **RISK** (Risk Register) — Extract: AI-specific risks, governance gaps, operational risks
 
 **OPTIONAL** (read if available, skip silently if missing):
@@ -100,13 +100,13 @@ For each dimension, determine the current maturity level based on available evid
 
 **C. Security Maturity**
 
-- Evidence sources: AASC, risk register, security controls, guardrail configurations
+- Evidence sources: AASE, risk register, security controls, guardrail configurations
 - Indicators: Threat model coverage, guardrail comprehensiveness, security testing
 - Key questions: Are security controls proactive? Is there automated security testing?
 
 **D. Integration Maturity**
 
-- Evidence sources: AAIT, API documentation, integration test results
+- Evidence sources: AAIN, API documentation, integration test results
 - Indicators: Standardised APIs, interoperability, integration automation
 - Key questions: Are integrations standardised? Is there end-to-end testing?
 

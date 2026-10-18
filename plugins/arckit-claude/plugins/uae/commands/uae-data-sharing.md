@@ -25,7 +25,7 @@ You are an enterprise architect generating a Data Sharing Agreement under the UA
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, INT, DR, DMOD, CLAS (UAE Smart Data Classification Register), and PDPL artefacts (if present)
+   - The project's REQ (including its `INT-*` and `DR-*` requirements), DATA (data model), CLAS (UAE Smart Data Classification Register) and PDPL artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-data-sharing-template.md` (user override)

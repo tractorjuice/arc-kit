@@ -224,7 +224,7 @@ If comparing vendors:
    - Risk mitigation for chosen vendor
    - Contract negotiation points
 
-4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-VEND-v1.0.md`
+4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-VEND-v{VERSION}.md`, working out `{VERSION}` with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` so a re-run writes the next comparison beside the earlier one
 
 ## Example Usage
 

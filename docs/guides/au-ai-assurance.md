@@ -14,9 +14,9 @@ The AI Assurance Framework is the operational expression of Australia's responsi
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | AI system description, intended use, user populations |
 | `/arckit:au-pia` output (`ARC-<id>-AUPIA-v1.0.md`) | Automated decision-making notification posture |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Training, validation, and inference data flows |
+| Data model (`ARC-<id>-DATA-v*.md`) | Training, validation, and inference data flows |
 | Risk register (`ARC-<id>-RISK-v1.0.md`) | AI-specific risks (bias, drift, hallucination, misuse) |
-| HLD (`ARC-<id>-HLD-v1.0.md`) | Model architecture, hosting, monitoring posture |
+| Vendor HLD (`vendors/*/hld-v*.md`) | Model architecture, hosting, monitoring posture |
 
 ---
 

@@ -24,7 +24,7 @@ You are an enterprise architect generating a three-tier AI Autonomy Posture for 
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, NFR-SEC, ARCH, and any AICH (UAE AI Charter) artefact (if present)
+   - The project's REQ (including its `NFR-SEC-*` requirements), DIAG (architecture diagrams) and any AICH (UAE AI Charter) artefact (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-ai-autonomy-tier-template.md` (user override)

@@ -23,7 +23,7 @@ You are an enterprise architect generating a Service Catalogue Review under the 
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, USTY (user stories), JRNY (journeys), and any KPI artefacts (if present)
+   - The project's REQ and BKLG (product backlog, for user stories) artefacts, and any journey maps or KPI baselines the project holds (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-zero-bureaucracy-template.md` (user override)

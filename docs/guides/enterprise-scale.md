@@ -312,7 +312,7 @@ projects/
 ├── 000-global/
 │   ├── ARC-000-PRIN-v1.0.md      # Enterprise architecture principles
 │   ├── ARC-000-ADR-001-v1.0.md   # Enterprise-wide decisions (e.g. cloud provider)
-│   └── ARC-000-FRAM-v1.0.md      # Reference frameworks (data, security, AI)
+│   └── framework/ARC-000-FWRK-v1.0.md  # Reference framework (from /arckit:framework)
 ├── 001-customer-portal/           # Application project 1
 ├── 002-billing-platform/          # Application project 2
 └── 042-identity-service/          # Application project N
@@ -458,7 +458,7 @@ enterprise_architecture:
   pinned_sha: a3f8b21
   required_artifacts:
     - ARC-000-PRIN-v1.0.md
-    - ARC-000-FRAM-SEC-v1.0.md
+    - framework/ARC-000-FWRK-v1.0.md
 ```
 
 A CI job (in the EA repo) opens PRs downstream whenever the manifest falls behind. Combine with `/arckit:principles-compliance` to prove conformance on every downstream PR.

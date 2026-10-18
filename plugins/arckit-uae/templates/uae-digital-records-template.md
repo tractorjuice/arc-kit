@@ -43,7 +43,7 @@
 |-----------------|-------------------|----------------------------------|-------|
 | Capture | [system / journey] | [Open / Shared / Confidential / Secret / Top Secret] | [notes] |
 | Classification | [system] | [classification] | [cross-ref to CLAS Dataset ID] |
-| Storage | [system / region] | [classification] | [residency note — see CLDR if applicable] |
+| Storage | [system / region] | [classification] | [residency note — see the CRES residency assessment if applicable] |
 | Access | [system / IAM model] | [classification] | [notes] |
 | Retention | [retention store / archive] | [classification] | [retention period] |
 | Disposal | [process] | [classification] | [disposal evidence] |

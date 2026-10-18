@@ -42,7 +42,7 @@ You are an enterprise architect generating a First Nations OCAP® sovereignty as
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, DR, and DMOD artefacts (if present)
+   - The project's REQ (including its `DR-*` data requirements) and DATA (data model) artefacts (if present)
    - The project's `ARC-<id>-PIA-v*.md` if the `ca-pia` command has run
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
@@ -68,7 +68,7 @@ You are an enterprise architect generating a First Nations OCAP® sovereignty as
         - Flags the assessment header `Status: PLANNING SCAFFOLD — INCOMPLETE`
         - Does **NOT** generate a self-declared OCAP register, DSA terms, or co-governance arrangement
         - Stops generating subsequent sections and surfaces a single Open Item: "FNIGC pre-engagement required before this assessment can be completed."
-      - If the answer is `N/A`, the architect must justify in writing why no Indigenous data is in scope (with cross-reference to DR and DMOD); if justification is sound, the artefact is closed with an N/A finding and no further sections are generated.
+      - If the answer is `N/A`, the architect must justify in writing why no Indigenous data is in scope (with cross-reference to the `DR-*` requirements and the DATA artefact); if justification is sound, the artefact is closed with an N/A finding and no further sections are generated.
 
    2. **Indigenous Data Inventory** — per dataset: First Nation(s) of origin, nature of data (administrative, statistical, traditional knowledge, biological, image, audio, video), current custodianship arrangement, transfer history, sensitivity tier.
 

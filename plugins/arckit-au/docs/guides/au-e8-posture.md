@@ -13,7 +13,7 @@ The Essential Eight is the ASD's prioritised baseline for mitigating cyber secur
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, hosting model, user populations |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Sensitive data categories that drive control intensity |
+| Data model (`ARC-<id>-DATA-v*.md`) | Sensitive data categories that drive control intensity |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, security operations owner |
 
 ---

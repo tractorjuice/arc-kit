@@ -12,7 +12,7 @@
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Technical and functional requirements |
 | Stakeholder analysis | Contracting authority and key stakeholders |
-| Research (`ARC-<id>-RES-v*.md`) | Market analysis and vendor landscape |
+| Research (`research/ARC-<id>-RSCH-*-v*.md`) | Market analysis and vendor landscape |
 
 ---
 

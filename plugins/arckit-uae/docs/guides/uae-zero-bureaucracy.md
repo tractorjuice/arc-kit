@@ -11,9 +11,9 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service scope and user outcomes |
-| User stories (`ARC-<id>-USTY-v1.0.md`) | End-to-end user journeys |
-| Journey maps (`ARC-<id>-JRNY-v1.0.md`) | Step-by-step interactions |
-| KPI artefacts (`ARC-<id>-KPI-v*.md`) | Existing performance baseline |
+| User stories (`ARC-<id>-BKLG-v*.md`, from `/arckit:backlog`) | End-to-end user journeys |
+| Journey maps (held by the project, for example under `external/`) | Step-by-step interactions |
+| KPI baselines (held by the project, for example under `external/`) | Existing performance baseline |
 
 ---
 

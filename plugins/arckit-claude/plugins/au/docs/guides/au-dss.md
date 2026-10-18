@@ -15,7 +15,7 @@ The DTA DSS is the Australian counterpart to the UK GDS Service Standard. The co
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, user needs, accessibility targets |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | User populations, accountable authority, partners |
 | Strategy (`ARC-<id>-STRAT-v1.0.md`) | Programme phase, success measures |
-| HLD (`ARC-<id>-HLD-v1.0.md`) | Technical posture, accessibility implementation |
+| Vendor HLD (`vendors/*/hld-v*.md`) | Technical posture, accessibility implementation |
 
 ---
 
