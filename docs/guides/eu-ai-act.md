@@ -23,6 +23,8 @@
 /arckit:eu-ai-act Assess AI Act compliance for <AI system description>
 ```
 
+In Claude Code the overlay installs as its own plugin, `arckit-eu`, so the command is `/arckit-eu:eu-ai-act`.
+
 Output: `projects/<id>/ARC-<id>-AIACT-v1.0.md`
 
 ---
@@ -56,6 +58,23 @@ Output: `projects/<id>/ARC-<id>-AIACT-v1.0.md`
 | Law enforcement | Polygraph, risk assessment tools |
 | Migration | Asylum, border screening |
 | Administration of justice | Legal interpretation, dispute resolution |
+
+---
+
+## Application Dates
+
+The dates are in Article 113, as amended by Regulation (EU) 2026/1744 (the Digital Omnibus on AI, in force since 27 July 2026). The omnibus moved the high-risk dates back. August 2027 is not a date of full application: the only obligation that falls due then is for GPAI models already on the market before 2 August 2025.
+
+| Date | What applies |
+|------|--------------|
+| 2 February 2025 | Prohibited practices (Art. 5) and AI literacy |
+| 2 August 2025 | GPAI model obligations, governance and penalties |
+| 2 August 2026 | General application, including Art. 50 transparency |
+| 2 December 2026 | New Art. 5 prohibitions on non-consensual intimate imagery and child sexual abuse material |
+| 2 August 2027 | GPAI models placed on the market before 2 August 2025 must comply |
+| 2 December 2027 | High-risk obligations for Annex III systems |
+| 2 August 2028 | High-risk obligations for AI systems in Annex I products |
+| 2 August 2030 | Pre-existing high-risk systems used by public authorities must comply |
 
 ---
 
