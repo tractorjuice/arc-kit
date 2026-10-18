@@ -51,7 +51,7 @@ Output: `projects/<id>/ARC-<id>-PROC-v1.0.md`
 
 ## When to run
 
-- After SOBC — once the affordability envelope and commercial case are set, the route and instrument can be sized.
+- After SOBC — once the affordability envelope and commercial case are set, the route and instrument can be sized. Under the TBS *Directive on the Management of Projects and Programmes* the business case compares the options and the procurement strategy is set out for the recommended one, so run `/arckit:sobc` first. If the strategy then moves the cost or the route, revisit the business case at the next gate.
 - Before market engagement — the route, the trade-agreement coverage, and the PSAB posture must be set before any RFI / Industry Day to avoid contradictory market signals.
 - After a material scope or value change — a procurement designed against last quarter's scope can fall on the wrong side of a CFTA / CETA / CPTPP / WTO-AGP threshold when value moves.
 - Pre-posting refresh — re-verify thresholds at posting; thresholds adjust biennially and trade-agreement coverage evolves.
@@ -87,7 +87,6 @@ Output: `projects/<id>/ARC-<id>-PROC-v1.0.md`
 ## Handoffs
 
 - **`evaluate`** — PSPC route selection feeds the vendor evaluation framework's scoring rubric. The high-level mandatory / point-rated / financial dimensions and weight envelope set here are inherited by the detailed evaluation rubric, where per-criterion scoring guidance and mandatory-evidence requirements live.
-- **`sobc`** — The procurement strategy feeds the Strategic Outline Business Case's procurement and commercial pillars. The recommended route, the trade-agreement coverage, the PSAB posture, and the clearance-lead-time picture inform the affordability envelope and the commercial-case narrative; cross-link rather than duplicate.
 
 ---
 

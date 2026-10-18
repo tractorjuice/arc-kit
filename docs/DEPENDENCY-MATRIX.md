@@ -312,9 +312,9 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:ca-atip` | — | — | ca-pia, data-model, principles, requirements |
 | `/arckit:ca-aia` | — | data-model, requirements | ca-pia, principles |
 | `/arckit:ca-charter` | — | requirements, stakeholders | ca-fitaa, ca-pia, principles |
-| `/arckit:ca-itsg-33` | — | ca-pia, fr-dr, requirements | ca-soia, principles |
+| `/arckit:ca-itsg-33` | — | ca-pia, data-model, requirements | ca-soia, principles |
 | `/arckit:ca-soia` | — | — | ca-fitaa, ca-itsg-33, principles, requirements |
-| `/arckit:ca-cloud-residency` | — | ca-pia, requirements | ca-itsg-33, principles |
+| `/arckit:ca-cloud-residency` | — | ca-pia, data-model, requirements | ca-itsg-33, principles |
 | `/arckit:ca-gc-digital-standards` | — | — | ca-aia, principles, requirements, service-assessment |
 | `/arckit:ca-ola` | — | — | ca-fitaa, principles, requirements, service-assessment |
 | `/arckit:ca-pspc` | — | — | ca-cloud-residency, ca-itsg-33, principles, requirements, sobc |
@@ -1188,16 +1188,16 @@ The 12 commands cover: FITAA (Bill C-70 2024), federal privacy and access (Priva
 
 ```text
 Flow 1 — FITAA-class application (registration scheme, scoring, automated triage):
-principles → requirements → ca-charter → ca-fitaa → ca-pia → ca-atip → ca-aia (if ADM) → ca-ocap (if Indigenous data)
+principles → stakeholders → requirements → ca-charter → ca-fitaa → ca-pia → ca-atip → ca-aia (if ADM) → ca-ocap (if Indigenous data)
   → ca-itsg-33 → ca-soia (if classified) → ca-cloud-residency → ca-ola
-  → ca-gc-digital-standards → ca-pspc → adr → sobc → risk → framework
+  → ca-gc-digital-standards → risk → sobc → ca-pspc → adr → framework
 ```
 
 ```text
 Flow 2 — generic federal Canadian application:
-principles → requirements → ca-pia → ca-atip → ca-aia (if ADM) → ca-ocap (if Indigenous data)
+principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (if ADM) → ca-ocap (if Indigenous data)
   → ca-itsg-33 → ca-cloud-residency → ca-ola
-  → ca-gc-digital-standards → ca-pspc → adr → sobc → risk → framework
+  → ca-gc-digital-standards → risk → sobc → ca-pspc → adr → framework
 ```
 
 **Handoff matrix** (extracted from `plugins/arckit-ca/commands/ca-*.md` frontmatter — these are the suggested next commands after each one runs):
@@ -1232,7 +1232,6 @@ principles → requirements → ca-pia → ca-atip → ca-aia (if ADM) → ca-oc
 | `ca-ola` | `ca-gc-digital-standards` | OLA service equivalence is a baseline expectation under the GC Digital Standards scorecard |
 | `ca-ola` | `service-assessment` | OLA review feeds the service-assessment evidence base for bilingualism and active offer |
 | `ca-pspc` | `evaluate` | PSPC route selection feeds the vendor evaluation framework's scoring rubric |
-| `ca-pspc` | `sobc` | Procurement strategy feeds the SOBC's procurement and commercial pillars |
 | `ca-ocap` | `data-model` | OCAP-mapped classifications and access controls feed the data-model stewardship and access policies |
 | `ca-ocap` | `ca-pia` | Personal-information processing of Indigenous data inherits PIA controls plus OCAP-derived restrictions |
 | `ca-ocap` | `ca-atip` | ATIP severance design must reflect OCAP access and control determinations for Indigenous datasets |

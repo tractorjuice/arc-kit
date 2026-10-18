@@ -7,8 +7,6 @@ keep-coding-instructions: true
 handoffs:
   - command: evaluate
     description: PSPC route selection feeds the vendor evaluation framework's scoring rubric.
-  - command: sobc
-    description: Procurement strategy feeds the Strategic Outline Business Case's procurement and commercial pillars.
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -29,7 +27,7 @@ You are an enterprise architect generating a federal Canadian procurement strate
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
    - The project's REQ artefact (if present) — scope, value drivers, integration surface
-   - The project's SOBC artefact (if present) — affordability envelope, commercial case, route hypothesis
+   - The project's SOBC artefact (if present) — affordability envelope, commercial case, route hypothesis. The business case comes first: it compares the options, and this strategy is written for the option it recommends
    - The project's `ca-itsg-33` artefact if present — security control profile drives clearance posture and supplier security obligations
    - The project's `ca-cloud-residency` artefact if present — sub-processor analysis, residency and CSP shortlist where cloud is in scope of the procurement
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`

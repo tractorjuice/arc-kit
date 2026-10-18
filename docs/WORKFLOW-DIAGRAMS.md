@@ -913,6 +913,7 @@ For systems that fall in scope of the Foreign Influence Transparency and Account
 ```mermaid
 graph TD
     principles[principles]
+    stakeholders[stakeholders]
     requirements[requirements]
     ca_charter[ca-charter]
     ca_pia[ca-pia]
@@ -931,7 +932,8 @@ graph TD
     risk[risk]
     framework[framework]
 
-    principles --> requirements
+    principles --> stakeholders
+    stakeholders --> requirements
     requirements --> ca_charter
     requirements --> ca_pia
     ca_charter --> ca_fitaa
@@ -949,15 +951,16 @@ graph TD
     ca_cloud_residency --> ca_pspc
     ca_ola --> adr
     ca_pspc --> adr
-    ca_pspc --> sobc
+    sobc --> ca_pspc
     risk --> sobc
     ca_fitaa --> risk
     ca_itsg_33 --> risk
     ca_ola --> framework
     ca_gc_digital_standards --> framework
-    sobc --> framework
+    ca_pspc --> framework
 
     style principles fill:#90EE90
+    style stakeholders fill:#90EE90
     style requirements fill:#90EE90
     style ca_charter fill:#FFD700
     style ca_pia fill:#FFB347
@@ -994,6 +997,7 @@ For federal Canadian digital services that do not engage FITAA, drop `ca-charter
 ```mermaid
 graph TD
     principles[principles]
+    stakeholders[stakeholders]
     requirements[requirements]
     ca_pia[ca-pia]
     ca_atip[ca-atip]
@@ -1009,7 +1013,8 @@ graph TD
     risk[risk]
     framework[framework]
 
-    principles --> requirements
+    principles --> stakeholders
+    stakeholders --> requirements
     requirements --> ca_pia
     ca_pia --> ca_atip
     ca_pia --> ca_aia
@@ -1022,16 +1027,17 @@ graph TD
     ca_cloud_residency --> ca_pspc
     ca_ola --> adr
     ca_pspc --> adr
-    ca_pspc --> sobc
+    sobc --> ca_pspc
     risk --> sobc
     ca_atip --> risk
     ca_aia --> risk
     ca_itsg_33 --> risk
     ca_ola --> framework
     ca_gc_digital_standards --> framework
-    sobc --> framework
+    ca_pspc --> framework
 
     style principles fill:#90EE90
+    style stakeholders fill:#90EE90
     style requirements fill:#90EE90
     style ca_pia fill:#FFB347
     style ca_atip fill:#FFB347

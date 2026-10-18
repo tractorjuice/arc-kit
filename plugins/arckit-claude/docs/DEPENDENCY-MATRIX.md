@@ -312,9 +312,9 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:ca-atip` | — | — | ca-pia, data-model, principles, requirements |
 | `/arckit:ca-aia` | — | data-model, requirements | ca-pia, principles |
 | `/arckit:ca-charter` | — | requirements, stakeholders | ca-fitaa, ca-pia, principles |
-| `/arckit:ca-itsg-33` | — | ca-pia, fr-dr, requirements | ca-soia, principles |
+| `/arckit:ca-itsg-33` | — | ca-pia, data-model, requirements | ca-soia, principles |
 | `/arckit:ca-soia` | — | — | ca-fitaa, ca-itsg-33, principles, requirements |
-| `/arckit:ca-cloud-residency` | — | ca-pia, requirements | ca-itsg-33, principles |
+| `/arckit:ca-cloud-residency` | — | ca-pia, data-model, requirements | ca-itsg-33, principles |
 | `/arckit:ca-gc-digital-standards` | — | — | ca-aia, principles, requirements, service-assessment |
 | `/arckit:ca-ola` | — | — | ca-fitaa, principles, requirements, service-assessment |
 | `/arckit:ca-pspc` | — | — | ca-cloud-residency, ca-itsg-33, principles, requirements, sobc |
