@@ -70,28 +70,47 @@ Step 3: Can the entity remediate through reasonable
        │         Step 2.
        │
        └── No  → ELIGIBLE DATA BREACH.
-                 30-day notification clock starts from when reasonable
-                 grounds to believe were established (typically Day 0).
-                 Notify OAIC + affected individuals.
+                 Prepare the statement and give it to the OAIC as soon
+                 as practicable (s 26WK), then notify affected
+                 individuals as soon as practicable (s 26WL).
+                 Do NOT wait for Day 30 — 30 days is the limit for
+                 assessing a suspected breach (s 26WH), not a
+                 notification deadline.
 ```
+
+> **Two clocks.** The s 26WH assessment clock starts when the entity becomes aware of reasonable grounds to *suspect* an eligible data breach; the assessment must be completed within 30 days. The notification duty starts when the entity has reasonable grounds to *believe* an eligible data breach has occurred, at any point, including Day 0; notification is then due as soon as practicable.
 
 ---
 
-## 3. 30-Day Timeline Plan
+## 3. Assessment and Notification Timeline
 
-| Day | Milestone | Owner | Output |
-|-----|-----------|-------|--------|
-| **Day 0** | Detect → Contain → Activate playbook → Notify Privacy Officer + accountable officer | SOC / detector | Incident ticket, containment evidence |
-| **Day 0–1** | Initial scoping → preliminary eligibility assessment → set 30-day clock | Privacy Officer | Eligibility memo (preliminary) |
-| **Day 1–3** | Forensic investigation → identify affected individuals + types of personal information involved | Security Officer + Privacy Officer | Scope statement |
-| **Day 3–7** | Serious-harm assessment per individual cohort → identify reasonable-steps mitigations | Privacy Officer + Legal | Harm assessment + mitigation list |
-| **Day 7–10** | Reasonable-steps execution → re-test eligibility | Security Officer | Mitigation evidence |
-| **Day 10–14** | Final eligibility decision → if eligible, draft OAIC notification + individual notifications | Privacy Officer + Legal + Comms | Draft notifications |
-| **Day 14–21** | Legal review → executive sign-off → finalise OAIC form + individual notification | Legal + accountable officer | Approved notifications |
-| **Day 21–25** | Submit OAIC notification → execute individual notifications | Privacy Officer + Comms | OAIC submission receipt; individual notification log |
-| **Day 25–30** | Public statement if required → media response → regulator follow-up | Comms + accountable officer | Public statement; media log |
-| **Day 30** | Notification deadline → all required notifications complete | Privacy Officer | Compliance evidence pack |
-| **Day 30+** | Post-incident review (within 90 days) → lessons-learned → AUE8/AUISM/AUPIA artefact updates | Privacy Officer + Security Officer | Post-incident review document |
+### Clock A — Assessment of a suspected breach (s 26WH): 30 days at most
+
+| When | Milestone | Owner | Output |
+|------|-----------|-------|--------|
+| **Day 0** | Aware of reasonable grounds to *suspect* an eligible data breach → Contain → Activate playbook → Notify Privacy Officer + accountable officer → start assessment | SOC / detector + Privacy Officer | Incident ticket, containment evidence, assessment start date recorded |
+| **Day 0–3** | Forensic investigation → identify affected individuals + types of personal information involved | Security Officer + Privacy Officer | Scope statement |
+| **Day 3–7** | Serious-harm assessment per individual cohort → identify and take remedial action | Privacy Officer + Legal + Security Officer | Harm assessment, remedial-action evidence |
+| **[Target date, well inside 30 days]** | Assessment decision: eligible / not eligible, with reasons | Privacy Officer | Assessment record |
+| **Day 30 (ceiling)** | Assessment must be complete. If it is not, record why and escalate — this is a compliance failure, not a planned milestone | Privacy Officer + accountable officer | Escalation record |
+
+### Clock B — Notification of an eligible data breach (ss 26WK, 26WL): as soon as practicable
+
+Clock B starts at the **belief point**: the moment the entity has reasonable grounds to *believe* an eligible data breach has occurred. That can be Day 0 (a plain breach needs no assessment) or any day during Clock A. It never waits for Clock A's Day 30.
+
+| When | Milestone | Owner | Output |
+|------|-----------|-------|--------|
+| **Belief point** | Stop assessing; record the date and the grounds for the belief | Privacy Officer | Belief record |
+| **As soon as practicable** | Prepare the s 26WK statement from the pre-approved template → legal review + sign-off under pre-agreed delegations | Privacy Officer + Legal + accountable officer | Approved statement |
+| **As soon as practicable** | Give the statement to the OAIC | Privacy Officer | OAIC submission receipt |
+| **As soon as practicable after the statement** | Notify affected individuals: all individuals, only those at risk of serious harm, or by publication where direct notification is not practicable | Privacy Officer + Comms | Individual notification log |
+| **As required** | Public statement → media response → regulator follow-up | Comms + accountable officer | Public statement; media log |
+
+### After the incident
+
+| When | Milestone | Owner | Output |
+|------|-----------|-------|--------|
+| **Within 90 days of closure** | Post-incident review → lessons learned → AUE8/AUISM/AUPIA artefact updates | Privacy Officer + Security Officer | Post-incident review document |
 
 ---
 

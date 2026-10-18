@@ -4,16 +4,16 @@
 
 - `/arckit-au:au-e8-posture` — ASD Essential Eight ML0–ML3 maturity assessment (8 mitigation strategies)
 - `/arckit-au:au-pia` — Privacy Act 1988 s33D Privacy Impact Assessment (13 APPs)
-- `/arckit-au:au-dss` — DTA Digital Service Standard (13 criteria) compliance assessment
+- `/arckit-au:au-dss` — DTA Digital Service Standard (10 criteria) compliance assessment
 - `/arckit-au:au-ism-controls` — ASD Information Security Manual Statement of Applicability (17 control domains)
 - `/arckit-au:au-ndb-playbook` — OAIC Notifiable Data Breach response playbook (Privacy Act 1988 Part IIIC)
 - `/arckit-au:au-ot-security` — ASD operational technology cyber security assessment for connected OT environments
 - `/arckit-au:au-soci-cirmp` — SOCI Act / Critical Infrastructure Risk Management Program governance pack
-- `/arckit-au:au-pspf` — Protective Security Policy Framework (4 outcomes / 16 core requirements)
+- `/arckit-au:au-pspf` — Protective Security Policy Framework (six security domains, current annual release)
 - `/arckit-au:au-ai-assurance` — DTA AI Assurance Framework + Responsible AI Policy v2.0 baseline
 - `/arckit-au:au-disp-attestation` — DISP Member self-attestation pack (consolidates E8, ISM, PIA, NDB, PSPF)
 
-Recipe: `au-federal` (35 default targets across 9 build waves, plus optional default-off OT and SOCI/CIRMP targets).
+Recipe: `au-federal` (37 default targets across 13 build waves, plus optional default-off OT and SOCI/CIRMP targets).
 
 `au-ot-security` and `au-soci-cirmp` are general Australian critical-infrastructure capabilities, not energy-specific commands. They are optional in `au-federal` and intended to be reused by the first industry-specific Australian menu, `au-energy`, which will layer AESCSF, AER ring-fencing, NER/NGR, and AEMO obligations on top.
 

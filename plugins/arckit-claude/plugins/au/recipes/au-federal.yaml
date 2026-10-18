@@ -9,7 +9,7 @@
 #
 # Produces every artefact a Federal/DISP build needs: E8 maturity posture, ISM
 # Statement of Applicability, DTA DSS conformance, Privacy Act PIA, NDB scheme
-# playbook, PSPF outcome scorecard, DTA AI assurance baseline, and a DISP
+# playbook, PSPF domain scorecard, DTA AI assurance baseline, and a DISP
 # self-attestation pack — plus the core ArcKit governance suite tailored for
 # Australian Federal entities and Defence-cleared suppliers.
 #
@@ -21,8 +21,8 @@
 #     au-ism-controls               ASD ISM 17-domain Statement of Applicability
 #     au-pia                        Privacy Act 1988 s33D + 13 APPs assessment
 #     au-ndb-playbook               OAIC Notifiable Data Breach response
-#     au-dss                        DTA Digital Service Standard 13 criteria
-#     au-pspf                       PSPF 4 outcomes + 16 core requirements
+#     au-dss                        DTA Digital Service Standard 10 criteria
+#     au-pspf                       PSPF six security domains (current release)
 #     au-ai-assurance               DTA AI Assurance Framework + AI Policy v2.0
 #     au-disp-attestation           DISP Member self-attestation (4 domains)
 #
@@ -140,11 +140,13 @@ targets:
     output: { project: "{P}-{NAME}", type: GLOS }
     deps: [PRIN]
 
+  # /arckit:requirements treats the stakeholder analysis as mandatory input,
+  # so REQ waits for STKE rather than running in the same wave.
   - id: REQ
     skill: arckit:requirements
     args: "{NAME}"
     output: { project: "{P}-{NAME}", type: REQ }
-    deps: [PRIN]
+    deps: [PRIN, STKE]
 
   - id: STKE
     skill: arckit:stakeholders
@@ -252,8 +254,9 @@ targets:
 
   # --- Service + AI compliance (DSS, PSPF, AI assurance) -----------------
   # DSS is the AU equivalent of UK TCoP (replaces arckit:tcop in the uk-saas
-  # baseline). PSPF Outcome 2 (information security) is instantiated by
-  # AU_ISM. AI assurance cross-references PIA (APP) and E8 (DLP).
+  # baseline). The PSPF Technology domain requires the ISM to be applied,
+  # so AU_PSPF depends on AU_ISM. AI assurance cross-references PIA (APP)
+  # and E8 (DLP).
   - id: AU_DSS
     skill: arckit-au:au-dss
     args: "{P}"
