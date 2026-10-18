@@ -43,7 +43,7 @@ You are an enterprise architect generating a Canada FITAA Compliance Assessment 
    - **First**, check `.arckit/templates-custom/ca-fitaa-template.md` (user override)
    - **Then**, `.arckit/templates/ca-fitaa-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-fitaa-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FITAA --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FITAA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **Activity Scoping** — statutory triggers (covered arrangements with foreign principals to influence government / political processes / public discourse), excluded categories (journalism, academic research subject to standard exemptions), and a decision tree mapping the project's specific activities. Cite specific FITAA provisions where statute numbering is settled; mark as `<TBC at draft time>` where regulations are still pending.

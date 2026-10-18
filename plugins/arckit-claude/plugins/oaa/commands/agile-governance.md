@@ -137,7 +137,7 @@ Create the Agile Governance document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAGOV --filename` (canonical form: `ARC-{P}-OAGOV-v1.0`)
+- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAGOV {VERSION} --filename` (canonical form: `ARC-{P}-OAGOV-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 
@@ -232,7 +232,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-OAGOV-v1.0.md
+projects/{P}/ARC-{P}-OAGOV-v{VERSION}.md
 ```
 
 ### 9. Show Summary to User
@@ -242,8 +242,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Agile Governance Document Created
 
-**Document**: `projects/{P}/ARC-{P}-OAGOV-v1.0.md`
-**Document ID**: ARC-{P}-OAGOV-v1.0
+**Document**: `projects/{P}/ARC-{P}-OAGOV-v{VERSION}.md`
+**Document ID**: ARC-{P}-OAGOV-v{VERSION}
 
 ### Governance Cadence Profile
 - **Review panel**: [N] members, [Roles]
@@ -297,7 +297,7 @@ After writing the file, show a concise summary (NOT the full document):
 3. Create initial compliance evidence template
 4. Run first sprint review gate at Sprint 0 end
 
-**File location**: `projects/{P}/ARC-{P}-OAGOV-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-OAGOV-v{VERSION}.md`
 ```
 
 ## Important Notes

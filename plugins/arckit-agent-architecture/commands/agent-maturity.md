@@ -278,7 +278,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → Determined from Step 9
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-AAMT-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Agent Program Maturity Model"
 - `ARC-[PROJECT_ID]-AAMT-v[VERSION]` → Construct using format above
@@ -322,8 +322,8 @@ Before completing the document, populate ALL document control fields in the head
 ```markdown
 ## Agent Program Maturity Model Created
 
-**Document**: projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAMT-v1.0.md
-**Document ID**: ARC-{PROJECT_ID}-AAMT-v1.0
+**Document**: projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAMT-v{VERSION}.md
+**Document ID**: ARC-{PROJECT_ID}-AAMT-v{VERSION}
 
 ### Maturity Summary
 
@@ -351,7 +351,7 @@ Before completing the document, populate ALL document control fields in the head
 
 ### Files Created
 
-📄 `projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAMT-v1.0.md` ({line_count} lines)
+📄 `projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAMT-v{VERSION}.md` ({line_count} lines)
 ```
 
 ## Important Notes

@@ -94,7 +94,7 @@ Start with the assets that carry vital business functions. If no artifacts exist
 
 1. **Detect version**: Check for existing `ARC-{PROJECT_ID}-IRN-v*.md` files
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-IRN-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-IRN-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Classification: Diffusion Restreinte (dependency mapping reveals strategic vulnerabilities)
 
 For each of the **8 IRN pillars**, create a structured section:

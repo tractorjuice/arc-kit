@@ -71,7 +71,7 @@ Create a comprehensive Architecture Board Charter following the template structu
 
 #### Document Control
 
-- Generate Document ID: `ARC-{P}-BORD-v1.0` (for filename: `ARC-{P}-BORD-v1.0.md`)
+- Generate Document ID: `ARC-{P}-BORD-v{VERSION}` (for filename: `ARC-{P}-BORD-v{VERSION}.md`)
 - Set owner, dates, status, classification
 - Review cycle: Quarterly review of charter, monthly Board meetings
 
@@ -204,7 +204,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields*:
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-BORD-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Architecture Board Charter"
 
@@ -249,7 +249,7 @@ The footer should be populated with:
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-BORD-v1.0.md
+projects/{P}/ARC-{P}-BORD-v{VERSION}.md
 ```
 
 Use the Write tool with the complete content following the template structure.
@@ -261,8 +261,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Architecture Board Charter Created
 
-**Document**: `projects/{P}/ARC-{P}-BORD-v1.0.md`
-**Document ID**: ARC-{P}-BORD-v1.0
+**Document**: `projects/{P}/ARC-{P}-BORD-v{VERSION}.md`
+**Document ID**: ARC-{P}-BORD-v{VERSION}
 
 ### Board Charter Summary
 - **Purpose**: [Brief purpose statement]
@@ -317,7 +317,7 @@ After writing the file, show a concise summary (NOT the full document):
 - [N] board members defined
 - Decision framework covers [N] decision types
 
-**File location**: `projects/{P}/ARC-{P}-BORD-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-BORD-v{VERSION}.md`
 ```
 
 ## Important Notes

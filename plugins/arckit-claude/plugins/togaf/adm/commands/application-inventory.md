@@ -233,7 +233,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-APP-v1.0.md
+projects/{P}/ARC-{P}-APP-v{VERSION}.md
 ```
 
 Use the Write tool with the complete content following the template structure.
@@ -243,7 +243,7 @@ Use the Write tool with the complete content following the template structure.
 Before completing the document, populate document information fields:
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001")
-- `[VERSION]` → Start with "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-APP-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Application Inventory"
 - `ARC-[PROJECT_ID]-APP-v[VERSION]` → Generated document ID
@@ -278,8 +278,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Application Inventory Complete
 
-**Document**: `projects/{P}/ARC-{P}-APP-v1.0.md`
-**Document ID**: ARC-{P}-APP-v1.0
+**Document**: `projects/{P}/ARC-{P}-APP-v{VERSION}.md`
+**Document ID**: ARC-{P}-APP-v{VERSION}
 
 ### Inventory Scope
 - **Scope**: [All applications / Business Unit / Project-specific]
@@ -340,7 +340,7 @@ After writing the file, show a concise summary (NOT the full document):
 - [N] risks identified
 - [N] lifecycle actions required
 
-**File location**: `projects/{P}/ARC-{P}-APP-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-APP-v{VERSION}.md`
 ```
 
 ## Important Notes

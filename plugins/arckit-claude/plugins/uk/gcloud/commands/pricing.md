@@ -38,6 +38,8 @@ $ARGUMENTS
 
 ## Instructions
 
+**Questions** — whenever this command asks with **AskUserQuestion**, follow the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`: ask only what the project context cannot settle, in one call, with one option marked (Recommended); with no question tool available, take that default, say so in the summary, and never block.
+
 ### 1. Resolve the existing service project
 
 The user should identify the service in `$ARGUMENTS` by **service name** (or name fragment) or by
@@ -346,15 +348,17 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
      {PROJECT_ID} PRIC --filename
 ```
 
-This returns `ARC-{NNN}-PRIC-v1.0.md` (using the zero-padded project number from Step 1). Use the
+This returns `ARC-{NNN}-PRIC-v{VERSION}.md` (using the zero-padded project number from Step 1). Use the
 returned filename for a new document and take the version (`1.0`) from it. On a re-run, increment the
 existing document's version instead and add a Revision History row.
 
 **Lot 3 also writes the supplier rate card.** `RATE` is single-instance and supplier-wide, like the
 supplier profile:
 
+Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" 000 RATE --filename
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" 000 RATE {VERSION} --filename
 ```
 
 This returns `ARC-000-RATE-v1.0.md` for a new card. When a card already exists, keep its version if

@@ -107,7 +107,7 @@ Identify residual risks — e.g. data-format lock-in, proprietary managed-servic
 
 **CRITICAL**: Use the **Write tool** to create the exit plan document.
 
-1. Use `node scripts/generate-document-id.mjs <PROJECT_ID> NLEXIT --filename` for the artefact filename.
+1. Use `node scripts/generate-document-id.mjs <PROJECT_ID> NLEXIT {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 2. **Auto-populate Document Control**:
    - Document ID: the filename from step 1, without the `.md` extension

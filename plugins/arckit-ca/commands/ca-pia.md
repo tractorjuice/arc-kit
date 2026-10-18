@@ -36,7 +36,7 @@ You are an enterprise architect generating a Canada Privacy Impact Assessment (P
    - **First**, check `.arckit/templates-custom/ca-pia-template.md` (user override)
    - **Then**, `.arckit/templates/ca-pia-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-pia-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> PIA --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> PIA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **Programme / System Description** — what the system does, who operates it, the personal information lifecycle (collect → use → disclose → retain → dispose) and the subject populations affected.

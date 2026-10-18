@@ -75,7 +75,7 @@ Read `.arckit/templates-custom/at-barrierefreiheit-template.md` if it exists, ot
 
 ### Step 4: Generate the Austrian Accessibility Assessment
 
-1. **Detect version**: Check for existing `ARC-{PROJECT_ID}-ATBFR-v*.md` files. Increment the minor version if one exists; otherwise start at `v1.0`.
+1. **Detect version**: Check for existing `ARC-{PROJECT_ID}-ATBFR-v*.md` files. Increment the minor version if one exists; otherwise start at `v1.0`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 2. **Auto-populate Document Control**: resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`.
    - Classification: **Offen** once the accessibility statement is published, **Eingeschränkt** while non-conformances are open, since the gap list is an unremediated to-do list.

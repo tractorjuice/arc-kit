@@ -86,7 +86,7 @@ Create the Architecture Vision document following the template structure. Popula
 
 #### Document Control
 
-- Generate Document ID: `ARC-{P}-ADMP-v1.0` (for filename: `ARC-{P}-ADMP-v1.0.md`)
+- Generate Document ID: `ARC-{P}-ADMP-v{VERSION}` (for filename: `ARC-{P}-ADMP-v{VERSION}.md`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 - Set owner, dates, status, classification
 - Review cycle: Monthly during active ADM cycle
 
@@ -191,7 +191,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-ADMP-v1.0.md
+projects/{P}/ARC-{P}-ADMP-v{VERSION}.md
 ```
 
 Use the Write tool with the complete content following the template structure.
@@ -203,8 +203,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Architecture Vision Created
 
-**Document**: `projects/{P}/ARC-{P}-ADMP-v1.0.md`
-**Document ID**: ARC-{P}-ADMP-v1.0
+**Document**: `projects/{P}/ARC-{P}-ADMP-v{VERSION}.md`
+**Document ID**: ARC-{P}-ADMP-v{VERSION}
 
 ### Vision Scope
 - **Scope**: [Enterprise-wide / Business Unit / Project-specific]
@@ -242,7 +242,7 @@ After writing the file, show a concise summary (NOT the full document):
 - Addresses [N] stakeholder drivers
 - Defines [N] success criteria
 
-**File location**: `projects/{P}/ARC-{P}-ADMP-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-ADMP-v{VERSION}.md`
 ```
 
 ## Important Notes

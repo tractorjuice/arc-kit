@@ -58,11 +58,11 @@ $ARGUMENTS
 
 Before generating the agent design, use the **AskUserQuestion** tool to gather key parameters. **Skip any question where the user has already provided a clear answer in their arguments.**
 
-**Gathering rules** (apply to all questions in this section):
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
-- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
 **Question 1** — header: `Pattern`, multiSelect: false
 > "What agent architecture pattern best describes this agent?"
@@ -75,7 +75,7 @@ Before generating the agent design, use the **AskUserQuestion** tool to gather k
 **Question 2** — header: `Scope`, multiSelect: false
 > "What is the primary scope of this agent?"
 
-- **Task Automation**: Automating repetitive workflows (data processing, report generation, routine decisions)
+- **Task Automation (Recommended)**: Automating repetitive workflows (data processing, report generation, routine decisions)
 - **Knowledge Work**: Research, analysis, synthesis (document analysis, market research, decision support)
 - **Creative**: Generation and ideation (content creation, design, brainstorming)
 - **Decision Support**: Recommendation and evaluation (risk assessment, prioritization, planning)
@@ -189,7 +189,7 @@ Before generating the document ID, check if a previous version exists:
 
 ### 8. Construct Document Control Metadata
 
-- **Document ID**: `ARC-{PROJECT_ID}-AAGR-v{VERSION}` (e.g., `ARC-001-AAGR-v1.0`)
+- **Document ID**: `ARC-{PROJECT_ID}-AAGR-v{VERSION}` (e.g., `ARC-001-AAGR-v1.0`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 **Populate document control fields**:
 
@@ -326,8 +326,8 @@ The footer should be populated with:
 ## Agent Architecture Specification Created
 
 **Agent**: {agent_name}
-**Document**: projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAGR-v1.0.md
-**Document ID**: ARC-{PROJECT_ID}-AAGR-v1.0
+**Document**: projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAGR-v{VERSION}.md
+**Document ID**: ARC-{PROJECT_ID}-AAGR-v{VERSION}
 
 ### Architecture Pattern
 
@@ -396,7 +396,7 @@ The footer should be populated with:
 
 ### Files Created
 
-📄 `projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAGR-v1.0.md` ({line_count} lines)
+📄 `projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAGR-v{VERSION}.md` ({line_count} lines)
 ```
 
 ## Important Notes

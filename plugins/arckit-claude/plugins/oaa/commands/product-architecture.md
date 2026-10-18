@@ -134,7 +134,7 @@ Create the Product Architecture document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAPR --filename` (canonical form: `ARC-{P}-OAPR-v1.0`)
+- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAPR {VERSION} --filename` (canonical form: `ARC-{P}-OAPR-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 
@@ -201,7 +201,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-OAPR-v1.0.md
+projects/{P}/ARC-{P}-OAPR-v{VERSION}.md
 ```
 
 ### 9. Show Summary to User
@@ -211,8 +211,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Agile Product Architecture Created
 
-**Document**: `projects/{P}/ARC-{P}-OAPR-v1.0.md`
-**Document ID**: ARC-{P}-OAPR-v1.0
+**Document**: `projects/{P}/ARC-{P}-OAPR-v{VERSION}.md`
+**Document ID**: ARC-{P}-OAPR-v{VERSION}
 
 ### Product Profile
 - **Mission**: [One-sentence mission]
@@ -255,7 +255,7 @@ After writing the file, show a concise summary (NOT the full document):
 3. Plan dual transformation: `/arckit-oaa:agile-strategy`
 4. Establish governance cadence: `/arckit-oaa:agile-governance`
 
-**File location**: `projects/{P}/ARC-{P}-OAPR-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-OAPR-v{VERSION}.md`
 ```
 
 ## Important Notes

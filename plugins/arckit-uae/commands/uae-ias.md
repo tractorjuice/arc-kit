@@ -30,7 +30,7 @@ You are an enterprise architect generating a UAE IAS Statement of Applicability 
    - **First**, check `.arckit/templates-custom/uae-ias-template.md` (user override)
    - **Then**, `.arckit/templates/uae-ias-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-ias-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> IAS --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> IAS {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 5. Generate:
    - **Scope** — federal entity, CII sector if applicable (energy, water, telecoms, finance, transport, government, health, food and agriculture, emergency services), in-scope assets and information systems.

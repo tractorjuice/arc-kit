@@ -321,7 +321,7 @@ def test_lot3_sdd_lists_role_levels_without_rates():
 
 def test_pricing_owns_the_supplier_rate_card():
     pricing = (COMMANDS / "pricing.md").read_text(encoding="utf-8")
-    assert "generate-document-id.mjs\" 000 RATE --filename" in pricing
+    assert "generate-document-id.mjs\" 000 RATE {VERSION} --filename" in pricing
     assert "rate-card-template.md" in pricing
     assert (TEMPLATES / "rate-card-template.md").is_file()
     sdd3 = (COMMANDS / "sdd-lot3.md").read_text(encoding="utf-8")

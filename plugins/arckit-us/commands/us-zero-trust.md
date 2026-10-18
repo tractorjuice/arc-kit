@@ -62,7 +62,7 @@ NIST SP 800-207 is the foundational Zero Trust Architecture specification (logic
 
 3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> ZTA --filename` for the artefact filename. The type code for this command is `ZTA`.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> ZTA {VERSION} --filename` for the artefact filename. The type code for this command is `ZTA`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the US regime to `_partials/document-control-us.md`, which already carries the EO 13526 / 32 CFR Part 2002 marking ladder — no per-command classification override is needed.
 

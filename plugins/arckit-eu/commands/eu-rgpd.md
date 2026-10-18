@@ -114,7 +114,7 @@ Based on the data model and requirements, automatically score the EDPB 9 criteri
    - Existing file → minor increment if refreshed, major if scope changed
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-RGPD-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-RGPD-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}

@@ -131,7 +131,7 @@ $ARGUMENTS
    Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AAGI** per-type checks pass. Fix any failures before proceeding.
 
 8. **Write the output**:
-   - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-AAGI-v1.0.md`
+   - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-AAGI-v{VERSION}.md`
    - Use the exact template structure from `agent-inventory-template.md`
    - Include Mermaid dependency diagram
    - Include all sections even if some are marked as "No agents found" or "TBD"
@@ -143,7 +143,7 @@ Before completing the document, populate document information fields:
 ### Auto-populated fields
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001")
-- `[VERSION]` → Start with "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-AAGI-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → Document purpose
 - `ARC-[PROJECT_ID]-AAGI-v[VERSION]` → Generated document ID
@@ -246,7 +246,7 @@ Create the comprehensive agent inventory following the template structure with a
 
 ### 2. Write Directly to File
 
-**Use the Write tool** to create `projects/{project-dir}/ARC-{PROJECT_ID}-AAGI-v1.0.md` with the complete agent inventory.
+**Use the Write tool** to create `projects/{project-dir}/ARC-{PROJECT_ID}-AAGI-v{VERSION}.md` with the complete agent inventory.
 
 **DO NOT** output the full document in your response. This would exceed token limits.
 
@@ -258,7 +258,7 @@ After writing the file, show ONLY a concise summary:
 ## Agent Inventory Complete ✅
 
 **Project**: [Project Name]
-**File Created**: `projects/[PROJECT]/ARC-{PROJECT_ID}-AAGI-v1.0.md`
+**File Created**: `projects/[PROJECT]/ARC-{PROJECT_ID}-AAGI-v{VERSION}.md`
 
 ### Inventory Summary
 

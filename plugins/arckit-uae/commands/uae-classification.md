@@ -33,7 +33,7 @@ You are an enterprise architect generating a UAE Smart Data Classification Regis
    - **Then**, `.arckit/templates/uae-classification-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-classification-template.md`
 3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> CLAS --filename` for the artefact filename.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> CLAS {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. For UAE Federal entities the UAE block (Federal Entity, Cabinet Instrument, Sovereign Cloud Region, AI Autonomy Tier) MUST appear.
 6. For each dataset the project handles, assign one of the four Smart Data Framework classes — Open, Confidential, Sensitive or Secret — with explicit handling, storage, and declassification rules. Apply the framework's criteria:
    - Classify the dataset on its most sensitive item (Part 1, standard DC1.1).

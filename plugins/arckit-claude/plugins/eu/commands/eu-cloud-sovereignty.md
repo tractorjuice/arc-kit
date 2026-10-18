@@ -102,7 +102,7 @@ Show this scoping summary before generating the full document.
 
 **CRITICAL**: Use the **Write tool** to create the assessment document.
 
-1. **Generate the artefact filename**: Use `node scripts/generate-document-id.mjs <PROJECT_ID> EUCSF --filename` for the artefact filename. This returns `ARC-{PROJECT_ID}-EUCSF-v1.0.md` for a first assessment. If an assessment for this project already exists, pass the next version as the third positional argument — minor increment (e.g. `1.1`) for a routine refresh, major increment (e.g. `2.0`) if scope or minimum SEAL levels changed — and add a Revision History row instead of overwriting at v1.0.
+1. **Generate the artefact filename**: Use `node scripts/generate-document-id.mjs <PROJECT_ID> EUCSF {VERSION} --filename` for the artefact filename. This returns `ARC-{PROJECT_ID}-EUCSF-v{VERSION}.md` for a first assessment. If an assessment for this project already exists, pass the next version as the third positional argument — minor increment (e.g. `1.1`) for a routine refresh, major increment (e.g. `2.0`) if scope or minimum SEAL levels changed — and add a Revision History row instead of overwriting at v1.0. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 2. **Auto-populate Document Control**:
    - Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before populating the fields below.

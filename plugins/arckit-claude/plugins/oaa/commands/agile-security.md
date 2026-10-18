@@ -135,7 +135,7 @@ Create the Agile Security document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OASEC --filename` (canonical form: `ARC-{P}-OASEC-v1.0`)
+- Generate Document ID with `node scripts/generate-document-id.mjs {P} OASEC {VERSION} --filename` (canonical form: `ARC-{P}-OASEC-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 
@@ -216,7 +216,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-OASEC-v1.0.md
+projects/{P}/ARC-{P}-OASEC-v{VERSION}.md
 ```
 
 ### 9. Show Summary to User
@@ -226,8 +226,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Agile Security Document Created
 
-**Document**: `projects/{P}/ARC-{P}-OASEC-v1.0.md`
-**Document ID**: ARC-{P}-OASEC-v1.0
+**Document**: `projects/{P}/ARC-{P}-OASEC-v{VERSION}.md`
+**Document ID**: ARC-{P}-OASEC-v{VERSION}
 
 ### Security Backlog Profile
 - **Security epic categories**: [N] categories defined
@@ -274,7 +274,7 @@ After writing the file, show a concise summary (NOT the full document):
 3. Establish governance cadence: `/arckit-oaa:agile-governance`
 4. Configure CI/CD security pipeline integration
 
-**File location**: `projects/{P}/ARC-{P}-OASEC-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-OASEC-v{VERSION}.md`
 ```
 
 ## Important Notes
