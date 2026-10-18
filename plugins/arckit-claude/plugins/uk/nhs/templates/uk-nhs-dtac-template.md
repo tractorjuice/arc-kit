@@ -308,12 +308,12 @@ DTAC **v3** (current as at 2026-05). Verify against <https://transform.england.n
 
 ### A.6 MHRA AIaMD Programme alignment
 
-| MHRA AIaMD WP | Applicability | Status |
+| MHRA Change Programme WP | Applicability | Status |
 |---|---|---|
-| WP1 Software | | |
-| WP6 AIaMD | | |
-| WP9 Cyber Security | | |
-| WP11 Best Practice for Manufacturers | | |
+| WP5 Cyber Secure Medical Devices | | |
+| WP9 AI Rigour | | |
+| WP10 Project Glass Box (AI interpretability) | | |
+| WP11 Project Ship of Theseus (AI adaptivity) | | |
 
 ---
 

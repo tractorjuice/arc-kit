@@ -34,7 +34,7 @@
 | Field | Value |
 |---|---|
 | `product-name` | [PRODUCT_NAME] |
-| `product-version` | [PRODUCT_VERSION_BEING_DEPLOYED] |
+| `version` | [PRODUCT_VERSION_BEING_DEPLOYED] |
 | `standard` | DCB0160 |
 | `deployment-organisation` | [DEPLOYING_NHS_ORGANISATION] |
 | `clinical-safety-officer` | [PENDING — deploying-organisation CSO name and GMC/NMC/HCPC/GPhC registration] |

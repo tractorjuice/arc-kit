@@ -438,7 +438,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:uk-nhs-dcb0129` | — | data-model, requirements, stakeholders | atrs, dpia, principles, risk |
 | `/arckit:uk-nhs-dcb0160` | — | data-model, principles, requirements, stakeholders, uk-nhs-dcb0129 | operationalize |
 | `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-nhs-dcb0129, uk-nhs-dcb0160 |
-| `/arckit:uk-mdr-classification` | — | data-model, principles, requirements, stakeholders | secure |
+| `/arckit:uk-mdr-classification` | — | data-model, principles, requirements, stakeholders | secure, uk-nhs-dcb0129 |
 
 ### ArcKit FDE Site Generator (`arckit-fde`)
 

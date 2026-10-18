@@ -59,4 +59,4 @@ The deployment safety case is a legal obligation of the deploying NHS organisati
 - `/arckit:uk-nhs-dcb0129` — manufacturer-side companion (run first or attach external)
 - `/arckit:uk-nhs-dtac` — DTAC Section 1 may need the deployer case if the deploying NHS organisation is responsible for procurement assurance
 - `/arckit:risk` — deployment-specific risks cross-reference the project risk register
-- `/arckit:operationalize` — runbooks, on-call, incident response feed the deployer hazard-mitigation plan
+- `/arckit:operationalize` — builds the runbooks, on-call and incident-response procedures that carry out the deployment hazard controls (manual fallback, interface monitoring, local incident reporting)
