@@ -109,7 +109,7 @@ targets:
     skill: arckit:requirements
     args: "{NAME}"
     output: { project: "{P}-{NAME}", type: REQ }
-    deps: [PRIN, ORG_RESEARCH]
+    deps: [PRIN, ORG_RESEARCH, STKE]
 
   - id: STKE
     skill: arckit:stakeholders

@@ -10,6 +10,10 @@ Checks:
 - the dependency graph is acyclic (a cycle makes the harness halt at runtime with
   an empty wave, which is a confusing way to learn about it)
 - no wave is wider than Claude Code's concurrent-subagent cap
+- ordering rules hold: a target producing a doc-type that reads another as a
+  mandatory input runs after it (ORDER_RULES). /arckit:requirements stops to warn
+  when the stakeholder analysis is missing, yet every core recipe ran REQ and
+  STKE in the same wave, so REQ was always written without it.
 
 That last check exists because the cap DENIES rather than queues. Verified
 against the Claude Code v2.1.220 binary: exceeding it throws "Concurrent
@@ -35,6 +39,24 @@ except ImportError:
     sys.exit(2)
 
 REQUIRED_TOP_KEYS = {"recipe", "schema_version", "targets", "defaults"}
+
+# (earlier output.type, later output.type, why). When a recipe builds both, every
+# target of the later type must depend on every target of the earlier type,
+# directly or through other targets.
+ORDER_RULES = [
+    ("STKE", "REQ", "/arckit:requirements reads the stakeholder analysis and warns if it is missing"),
+]
+
+# Recipes whose ordering fix is in flight in their own #949 overlay PR. They warn
+# instead of failing until those PRs merge; empty this set then, so the rule is
+# enforced everywhere.
+ORDER_RULES_PENDING = {
+    "plugins/arckit-agent-architecture/recipes/agent-architecture.yaml",
+    "plugins/arckit-au/recipes/au-federal.yaml",
+    "plugins/arckit-oaa/recipes/oaa-full.yaml",
+    "plugins/arckit-togaf-adm/recipes/togaf-adm-full.yaml",
+    "plugins/arckit-togaf-adm/recipes/togaf-agent-full.yaml",
+}
 
 errors = []
 warnings = []
@@ -67,6 +89,47 @@ def compute_waves(targets, target_id_set):
         pending -= set(wave)
         done |= set(wave)
     return waves, []
+
+
+def ancestors(targets, target_id_set):
+    """Map each target id to every target it depends on, directly or transitively."""
+    direct = {}
+    for t in targets:
+        resolved = set()
+        for dep in t.get("deps") or []:
+            if "*" in dep:
+                resolved |= {tid for tid in target_id_set if fnmatch.fnmatch(tid, dep)}
+            elif dep in target_id_set:
+                resolved.add(dep)
+        direct[t["id"]] = resolved - {t["id"]}
+    result = {}
+    for tid in direct:
+        seen, stack = set(), list(direct[tid])
+        while stack:
+            d = stack.pop()
+            if d not in seen:
+                seen.add(d)
+                stack.extend(direct.get(d, ()))
+        result[tid] = seen
+    return result
+
+
+def order_violations(targets, target_id_set):
+    """Return (earlier_id, later_id, why) for every ORDER_RULES pair a recipe breaks."""
+    by_type = {}
+    for t in targets:
+        out = t.get("output") or {}
+        if isinstance(out, dict) and out.get("type"):
+            by_type.setdefault(out["type"], []).append(t["id"])
+    anc = ancestors(targets, target_id_set)
+    found = []
+    for earlier, later, why in ORDER_RULES:
+        for later_id in by_type.get(later, []):
+            for earlier_id in by_type.get(earlier, []):
+                if earlier_id not in anc[later_id]:
+                    found.append((earlier_id, later_id, why))
+    return found
+
 
 paths = sorted(
     glob.glob("plugins/arckit-*/recipes/*.yaml")
@@ -152,6 +215,13 @@ for path in paths:
                     f"{path}: widest wave is {widest}, within {CONCURRENCY_CAP - widest} "
                     f"of the concurrent-subagent cap ({CONCURRENCY_CAP})"
                 )
+
+        for earlier_id, later_id, why in order_violations(valid_targets, target_id_set):
+            message = (
+                f"{path}: target {later_id} must depend on {earlier_id} ({why}); "
+                f"add {earlier_id} to its deps"
+            )
+            (warnings if path in ORDER_RULES_PENDING else errors).append(message)
 
     recipes_checked += 1
 
