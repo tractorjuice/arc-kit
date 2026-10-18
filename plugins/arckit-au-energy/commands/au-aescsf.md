@@ -12,6 +12,8 @@ handoffs:
     description: OT security findings provide zone, conduit, connectivity, and remote-access evidence for energy OT environments.
   - command: au-soci-cirmp
     description: SOCI/CIRMP evidence supports critical-infrastructure risk treatment and incident escalation context.
+  - command: au-energy-compliance
+    description: The energy compliance pack reads this AESCSF assessment, when present, as cyber-posture context for its ring-fencing, AEMO interface, and SOCI escalation findings.
   - command: dfd
     description: Data-flow diagrams provide IT/OT, market, DERMS, DOE, CSIP-AUS, and vendor-access evidence.
   - command: diagram
@@ -96,7 +98,7 @@ The Australian Energy Sector Cyber Security Framework is an energy-sector cyber 
 
    - **Asset, Interface, and Evidence Inventory** - identify source-of-truth registers for OT assets, IT systems, DERMS / DOE platforms, market interfaces, APIs, telemetry links, metering assets, vendor remote-access paths, data catalogues, control evidence, owners, criticality, and inventory gaps. Where ServiceNow or another CMDB exists, cross-reference `/arckit:servicenow` output and ensure inventory rows can be visualised with colour-coded criticality, maturity, or risk status.
 
-   - **Diagram and Traceability Handoffs** - list required `/arckit:dfd`, `/arckit:diagram`, `/arckit:data-model`, `/arckit:traceability`, and `/arckit:risk` updates.
+   - **Diagram and Traceability Handoffs** - list required `/arckit:dfd`, `/arckit:diagram`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:traceability`, `/arckit:risk`, and `/arckit:graph-report` updates.
 
    - **AESCSF Anti-Pattern Register** - call out flat OT networks, undocumented market interfaces, unmanaged vendor remote access, stale DER integration assumptions, missing data ownership, and unsupported control-room dependencies.
 

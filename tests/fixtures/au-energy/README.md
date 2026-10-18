@@ -1,6 +1,6 @@
 # `au-energy` Validation Fixtures (Synthetic Test Data)
 
-Synthetic discovery packs to validate the ArcKit **`au-energy`** recipe (`plugins/arckit-au/recipes/au-energy.yaml`) end-to-end — closing the merge blocker noted in the recipe YAML: *"validation against an energy-sector / SOCI test fixture is required before merge."*
+Synthetic discovery packs to validate the ArcKit **`au-energy`** recipe (`plugins/arckit-au-energy/recipes/au-energy.yaml`) end-to-end — closing the merge blocker noted in the recipe YAML: *"validation against an energy-sector / SOCI test fixture is required before merge."*
 
 > ⚠️ **All data here is SYNTHETIC.** Both organisations are fictional composites built with the Forrester-TEI composite method from public sources. They do not represent any real network, supplier, person, or client. **Method, full reference list, provenance map and validation log:** see [`REFERENCES_AND_METHODOLOGY.md`](./REFERENCES_AND_METHODOLOGY.md).
 
@@ -108,10 +108,10 @@ E8 (ML1/ML2 with OT carve-outs), ISM (IT-aligned, partial OT), Privacy/APP (life
 These fixtures are **Track A (clean-slate)** discovery inputs. To validate the recipe:
 
 1. **Stand up a project** for each fixture (e.g. `projects/003-eastland-dnsp/` and `projects/004-voltiq-supplier/`) and point discovery inputs at the relevant `tests/fixtures/au-energy/fixture-*` folder.
-2. **Establish the federal baseline first** (the `au-energy` recipe composes on `au-federal`): run `au-e8-posture`, `au-ism-controls`, `au-pia` as needed so the energy commands have their prerequisites.
-3. **Run the energy commands:**
-   - Fixture A: `au-aescsf 003` then `au-soci-cirmp 003`.
-   - Fixture B: `au-aescsf 004` then `au-soci-cirmp 004`.
+2. **Establish the federal baseline first** (the `au-energy` recipe composes on `au-federal`): run `au-e8-posture`, `au-ism-controls`, `au-pia`, `au-ndb-playbook` as needed so the energy commands have their prerequisites.
+3. **Run the energy commands** in the recipe's order, so each one can read the artefacts before it:
+   - Fixture A: `au-ot-security 003`, `au-soci-cirmp 003`, `au-aescsf 003`, then `au-energy-compliance 003`.
+   - Fixture B: `au-soci-cirmp 004`, `au-aescsf 004`, then `au-energy-compliance 004` (`au-ot-security` is N/A unless the customer grants Voltiq direct OT access).
 4. **Score against expected outcomes:**
    - **A — AESCSF:** overall MIL pinned at **MIL-1** by the lagging domains (TVM, IAM, SA, EDM, WM, CA); OT overlay populated; anti-patterns surfaced.
    - **A — SOCI:** applies; four-hazard table with **thin personnel & supply-chain**; untested 12-hr OT pipeline flagged; board-attestation cycle recorded.

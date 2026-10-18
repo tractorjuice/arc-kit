@@ -12,6 +12,8 @@ handoffs:
     description: OT security evidence supports control-system, grid-edge, and operational technology compliance context.
   - command: au-pia
     description: Privacy impact evidence supports customer, metering, billing, and energy data handling.
+  - command: au-ndb-playbook
+    description: NDB playbook evidence supports breach-notification and escalation pathways for customer, metering, and DER data.
   - command: dfd
     description: Data-flow diagrams provide regulated/unregulated, market, AEMO, metering, DER, and customer flow evidence.
   - command: diagram
@@ -59,9 +61,10 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
    - The project's REQ artefact - extract energy-sector obligations, regulated services, market roles, customer data, metering, DER, settlement, availability, and incident requirements.
    - The project's STKE artefact - identify regulated entity, affiliate, ring-fenced business unit, market participant, AEMO contact, regulator, cyber, privacy, OT, operations, and supplier stakeholders.
    - The project's SOCI/CIRMP artefact (`ARC-{P}-AUSOCI-v*`) if available.
-   - The project's AESCSF artefact (`ARC-{P}-AUAESCSF-v*`) if available.
+   - The project's AESCSF artefact (`ARC-{P}-AUAESCSF-v*`) if available. Optional input: where it exists, cite its maturity gaps as evidence in the findings they affect, such as vendor and affiliate access, AEMO interfaces, and SOCI escalation, and carry any that block compliance into Evidence Gaps and Recommendations. Do not reassess AESCSF maturity here; that is `/arckit-au-energy:au-aescsf`'s job, and the pack runs without it.
    - The project's OT security artefact (`ARC-{P}-AUOT-v*`) if available.
    - The project's PIA artefact (`ARC-{P}-AUPIA-v*`) if available.
+   - The project's NDB playbook (`ARC-{P}-AUNDB-v*`) if available. Optional input: use its notification and escalation pathways for customer, metering, and DER data in the DER, Metering, Settlement, and Customer Data Implications section and the SOCI incident escalation row.
    - Existing DFD, diagram, data-model, traceability, ADR, and risk artefacts if available.
    - Existing ServiceNow / CMDB, asset inventory, service catalogue, interface register, data catalogue, vendor access register, obligation register, or evidence register artefacts if available.
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
@@ -99,7 +102,7 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
 
    - **Energy Data Model Dependencies** - record regulated services, assets, customers, NMIs, meters, DER, settlements, outages, market transactions, telemetry, and operational data dependencies.
 
-   - **Diagram and Traceability Handoffs** - list required `/arckit:dfd`, `/arckit:diagram`, `/arckit:data-model`, and `/arckit:traceability` updates.
+   - **Diagram and Traceability Handoffs** - list required `/arckit:dfd`, `/arckit:diagram`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:traceability`, and `/arckit:graph-report` updates.
 
    - **Architecture Decision Seeds** - propose ADRs for ring-fencing boundaries, shared services, market interface design, DER integration, customer data sharing, and SOCI escalation choices.
 
