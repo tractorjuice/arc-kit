@@ -1267,7 +1267,7 @@ Wave 5 (authorization): us-sbom-eo-14028 → us-fedramp-ssp → us-fedramp-readi
 | `us-nist-800-53` | `us-zero-trust` | Control selections (especially AC, IA, SC families) feed the CISA Zero Trust Maturity Model scoring |
 | `us-nist-800-53` | `us-sbom-eo-14028` | Supply-chain controls (SR family) cross-reference the EO 14028 secure-software attestation and SBOM register |
 | `us-nist-800-53` | `adr` | Significant tailoring decisions (compensating controls, control inheritance boundaries, parameter values) warrant ADRs |
-| `us-fedramp-ssp` | `us-fedramp-readiness` | The SSP is the primary input to the 3PAO Readiness Assessment Report; gaps surfaced during SSP authoring populate the RAR gap register |
+| `us-fedramp-ssp` | `us-fedramp-readiness` | The SSP is the primary input to the readiness self-assessment (3PAO RAR format); gaps surfaced during SSP authoring populate its gap register |
 | `us-fedramp-ssp` | `us-zero-trust` | SSP control implementations seed the CISA Zero Trust Maturity scoring (Identity, Devices, Networks, Apps & Workloads, Data pillars) |
 | `us-fedramp-ssp` | `us-icam` | The Types of Users section and IA-family control implementations connect to the ICAM architecture |
 | `us-fedramp-readiness` | `service-assessment` | The readiness gap register feeds the broader service-assessment evidence pack |

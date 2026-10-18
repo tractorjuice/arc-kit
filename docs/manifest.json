@@ -1473,7 +1473,7 @@
     },
     {
       "path": "docs/guides/us-fedramp-readiness.md",
-      "title": "US FedRAMP Readiness Assessment Report",
+      "title": "US FedRAMP Readiness Self-Assessment",
       "category": "USA Federal Civilian Overlay",
       "status": "community",
       "section": "Overlay Packs",

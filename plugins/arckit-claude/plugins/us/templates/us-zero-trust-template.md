@@ -68,7 +68,9 @@ CISA ZTMM v2.0 cross-cutting capabilities applied across all five pillars.
 
 ---
 
-## 4. Maturity Heatmap Summary
+## 4. Maturity Heatmap
+
+### 4.1 Summary by Pillar and Cross-Cut
 
 | Dimension | Current Overall | Target Overall | Gap |
 |-----------|-----------------|----------------|-----|
@@ -83,13 +85,51 @@ CISA ZTMM v2.0 cross-cutting capabilities applied across all five pillars.
 
 **Overall Current Maturity**: [Stage] · **Overall Target Maturity**: [Advanced — OMB M-22-09]
 
+### 4.2 Function Heatmap — Current State
+
+One row per pillar, one cell per ZTMM v2.0 function (Tables 2–7 of the model). Cell code: **T** Traditional · **I** Initial · **A** Advanced · **O** Optimal · **—** no such function in that row. Each code must match the function scores in Section 5 and, for the Cross-Cutting Capabilities row, Section 3. The last three columns are the Visibility & Analytics, Automation & Orchestration and Governance capabilities the model scores within each pillar.
+
+| Pillar | Function 1 | Function 2 | Function 3 | Function 4 | Function 5 | Visibility & Analytics | Automation & Orchestration | Governance |
+|--------|------------|------------|------------|------------|------------|------------------------|----------------------------|------------|
+| **Identity** | Authentication: [T/I/A/O] | Identity Stores: [T/I/A/O] | Risk Assessments: [T/I/A/O] | Access Management: [T/I/A/O] | — | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+| **Devices** | Policy Enforcement & Compliance Monitoring: [T/I/A/O] | Asset & Supply Chain Risk Management: [T/I/A/O] | Resource Access: [T/I/A/O] | Device Threat Protection: [T/I/A/O] | — | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+| **Networks** | Network Segmentation: [T/I/A/O] | Network Traffic Management: [T/I/A/O] | Traffic Encryption: [T/I/A/O] | Network Resilience: [T/I/A/O] | — | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+| **Applications & Workloads** | Application Access: [T/I/A/O] | Application Threat Protections: [T/I/A/O] | Accessible Applications: [T/I/A/O] | Secure Application Development & Deployment Workflow: [T/I/A/O] | Application Security Testing: [T/I/A/O] | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+| **Data** | Data Inventory Management: [T/I/A/O] | Data Categorization: [T/I/A/O] | Data Availability: [T/I/A/O] | Data Access: [T/I/A/O] | Data Encryption: [T/I/A/O] | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+| **Cross-Cutting Capabilities** | — | — | — | — | — | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+
+### 4.3 Function Heatmap — Target State
+
+Same rows and columns as 4.2, with the target stage for each function. No target may sit below its current stage.
+
+| Pillar | Function 1 | Function 2 | Function 3 | Function 4 | Function 5 | Visibility & Analytics | Automation & Orchestration | Governance |
+|--------|------------|------------|------------|------------|------------|------------------------|----------------------------|------------|
+| **Identity** | Authentication: [T/I/A/O] | Identity Stores: [T/I/A/O] | Risk Assessments: [T/I/A/O] | Access Management: [T/I/A/O] | — | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+| **Devices** | Policy Enforcement & Compliance Monitoring: [T/I/A/O] | Asset & Supply Chain Risk Management: [T/I/A/O] | Resource Access: [T/I/A/O] | Device Threat Protection: [T/I/A/O] | — | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+| **Networks** | Network Segmentation: [T/I/A/O] | Network Traffic Management: [T/I/A/O] | Traffic Encryption: [T/I/A/O] | Network Resilience: [T/I/A/O] | — | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+| **Applications & Workloads** | Application Access: [T/I/A/O] | Application Threat Protections: [T/I/A/O] | Accessible Applications: [T/I/A/O] | Secure Application Development & Deployment Workflow: [T/I/A/O] | Application Security Testing: [T/I/A/O] | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+| **Data** | Data Inventory Management: [T/I/A/O] | Data Categorization: [T/I/A/O] | Data Availability: [T/I/A/O] | Data Access: [T/I/A/O] | Data Encryption: [T/I/A/O] | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+| **Cross-Cutting Capabilities** | — | — | — | — | — | [T/I/A/O] | [T/I/A/O] | [T/I/A/O] |
+
 ---
 
 ## 5. Pillar-Specific Findings
 
+Score every ZTMM v2.0 function in each pillar, including the pillar's own Visibility & Analytics, Automation & Orchestration and Governance capabilities. Stages: Traditional / Initial / Advanced / Optimal.
+
 ### 5.1 Identity
 
 **Current State**: [Describe IdP, MFA posture, account lifecycle, phishing-resistant authenticator coverage, privileged access management.]
+
+| Function | Current Stage | Evidence | Target Stage | Gap Actions |
+|----------|---------------|----------|--------------|-------------|
+| Authentication | [Stage] | [1–2 sentences] | [Stage] | [Actions] |
+| Identity Stores | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Risk Assessments | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Access Management | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Visibility & Analytics | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Automation & Orchestration | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Governance | [Stage] | [Evidence] | [Stage] | [Actions] |
 
 **Uplift Opportunities**:
 
@@ -102,6 +142,16 @@ CISA ZTMM v2.0 cross-cutting capabilities applied across all five pillars.
 
 **Current State**: [Describe device inventory, EDR coverage, device-health attestation, BYOD posture.]
 
+| Function | Current Stage | Evidence | Target Stage | Gap Actions |
+|----------|---------------|----------|--------------|-------------|
+| Policy Enforcement & Compliance Monitoring | [Stage] | [1–2 sentences] | [Stage] | [Actions] |
+| Asset & Supply Chain Risk Management | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Resource Access | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Device Threat Protection | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Visibility & Analytics | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Automation & Orchestration | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Governance | [Stage] | [Evidence] | [Stage] | [Actions] |
+
 **Uplift Opportunities**:
 
 - [ ] Real-time device-health attestation as a condition of access (NIST SP 800-207 §2.1).
@@ -112,6 +162,16 @@ CISA ZTMM v2.0 cross-cutting capabilities applied across all five pillars.
 ### 5.3 Networks
 
 **Current State**: [Describe segmentation strategy, east-west encryption posture, micro-segmentation maturity, software-defined perimeter adoption.]
+
+| Function | Current Stage | Evidence | Target Stage | Gap Actions |
+|----------|---------------|----------|--------------|-------------|
+| Network Segmentation | [Stage] | [1–2 sentences] | [Stage] | [Actions] |
+| Network Traffic Management | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Traffic Encryption | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Network Resilience | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Visibility & Analytics | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Automation & Orchestration | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Governance | [Stage] | [Evidence] | [Stage] | [Actions] |
 
 **Uplift Opportunities**:
 
@@ -124,6 +184,17 @@ CISA ZTMM v2.0 cross-cutting capabilities applied across all five pillars.
 
 **Current State**: [Describe workload identity, secrets management, application-layer authentication, runtime protection.]
 
+| Function | Current Stage | Evidence | Target Stage | Gap Actions |
+|----------|---------------|----------|--------------|-------------|
+| Application Access | [Stage] | [1–2 sentences] | [Stage] | [Actions] |
+| Application Threat Protections | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Accessible Applications | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Secure Application Development & Deployment Workflow | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Application Security Testing | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Visibility & Analytics | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Automation & Orchestration | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Governance | [Stage] | [Evidence] | [Stage] | [Actions] |
+
 **Uplift Opportunities**:
 
 - [ ] Workload identity per service (SPIFFE / X.509 SVIDs).
@@ -134,6 +205,17 @@ CISA ZTMM v2.0 cross-cutting capabilities applied across all five pillars.
 ### 5.5 Data
 
 **Current State**: [Describe data classification, encryption-at-rest, DLP, data-access monitoring.]
+
+| Function | Current Stage | Evidence | Target Stage | Gap Actions |
+|----------|---------------|----------|--------------|-------------|
+| Data Inventory Management | [Stage] | [1–2 sentences] | [Stage] | [Actions] |
+| Data Categorization | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Data Availability | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Data Access | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Data Encryption | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Visibility & Analytics | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Automation & Orchestration | [Stage] | [Evidence] | [Stage] | [Actions] |
+| Governance | [Stage] | [Evidence] | [Stage] | [Actions] |
 
 **Uplift Opportunities**:
 
@@ -204,7 +286,41 @@ CISA ZTMM v2.0 cross-cutting capabilities applied across all five pillars.
 
 ---
 
-## 9. References
+## 9. NIST SP 800-53 Rev 5 Control Linkage
+
+Map every ZTMM function to the NIST SP 800-53 Rev 5 controls that evidence it, and record each control's status in the NIST 800-53 artefact (`ARC-{P}-NIST-v*`). Flag for re-tailoring any control whose function sits below its target stage, or that the artefact does not yet carry. Three rows carry example control IDs; replace every row with the system's own mapping.
+
+| Pillar / Cross-Cut | ZTMM Function | NIST SP 800-53 Rev 5 Controls | Status in NIST Artefact | Re-tailoring Needed? |
+|--------------------|---------------|-------------------------------|-------------------------|----------------------|
+| Identity | Authentication | [e.g. IA-2, IA-2(1), IA-2(2), IA-5, IA-8] | [Implemented / Inherited / Hybrid / Planned / Not in artefact] | [Yes / No — reason] |
+| Identity | Identity Stores | [Control IDs] | [Status] | [Yes / No] |
+| Identity | Risk Assessments | [Control IDs] | [Status] | [Yes / No] |
+| Identity | Access Management | [Control IDs] | [Status] | [Yes / No] |
+| Devices | Policy Enforcement & Compliance Monitoring | [Control IDs] | [Status] | [Yes / No] |
+| Devices | Asset & Supply Chain Risk Management | [Control IDs] | [Status] | [Yes / No] |
+| Devices | Resource Access | [Control IDs] | [Status] | [Yes / No] |
+| Devices | Device Threat Protection | [Control IDs] | [Status] | [Yes / No] |
+| Networks | Network Segmentation | [e.g. SC-7, SC-7(4), SC-7(5), SC-7(8)] | [Status] | [Yes / No] |
+| Networks | Network Traffic Management | [Control IDs] | [Status] | [Yes / No] |
+| Networks | Traffic Encryption | [Control IDs] | [Status] | [Yes / No] |
+| Networks | Network Resilience | [Control IDs] | [Status] | [Yes / No] |
+| Applications & Workloads | Application Access | [Control IDs] | [Status] | [Yes / No] |
+| Applications & Workloads | Application Threat Protections | [Control IDs] | [Status] | [Yes / No] |
+| Applications & Workloads | Accessible Applications | [Control IDs] | [Status] | [Yes / No] |
+| Applications & Workloads | Secure Application Development & Deployment Workflow | [Control IDs] | [Status] | [Yes / No] |
+| Applications & Workloads | Application Security Testing | [Control IDs] | [Status] | [Yes / No] |
+| Data | Data Inventory Management | [Control IDs] | [Status] | [Yes / No] |
+| Data | Data Categorization | [Control IDs] | [Status] | [Yes / No] |
+| Data | Data Availability | [Control IDs] | [Status] | [Yes / No] |
+| Data | Data Access | [Control IDs] | [Status] | [Yes / No] |
+| Data | Data Encryption | [e.g. SC-13, SC-28, SC-28(1)] | [Status] | [Yes / No] |
+| Cross-Cut | Visibility & Analytics | [Control IDs] | [Status] | [Yes / No] |
+| Cross-Cut | Automation & Orchestration | [Control IDs] | [Status] | [Yes / No] |
+| Cross-Cut | Governance | [Control IDs] | [Status] | [Yes / No] |
+
+---
+
+## 10. References
 
 | Reference | Citation | URL |
 |-----------|----------|-----|
@@ -215,7 +331,7 @@ CISA ZTMM v2.0 cross-cutting capabilities applied across all five pillars.
 
 ---
 
-## 10. Approvals
+## 11. Approvals
 
 | Role | Name | Signature | Date |
 |------|------|-----------|------|

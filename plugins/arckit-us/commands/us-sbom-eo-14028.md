@@ -55,7 +55,7 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
    - `projects/000-global/ARC-000-PRIN-*.md` (architecture principles, if present)
    - The project's REQ artefact — extract `INT-*` (integration requirements), `NFR-SEC-*`, plus any procurement requirements
    - The project's NIST 800-53 control-tailoring artefact — for SR and SA family implementation evidence
-   - The project's HLD / DLD artefact — for component inventory and build pipeline architecture
+   - Any vendor HLD / DLD documents under `projects/<id>/vendors/` — for component inventory and build pipeline architecture
    - Any vendor / third-party software inventory under `projects/<id>/vendors/`
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 

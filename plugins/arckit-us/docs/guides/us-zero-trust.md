@@ -29,10 +29,11 @@ Reviewed by the agency CISO, ISSO, and the System Owner. Roadmap uplift items ar
 
 ## Process Overview
 
-1. Score current posture for each of the 5 pillars and 3 cross-cuts across the 4 maturity stages.
+1. Score current and target posture for every ZTMM v2.0 function in the 5 pillars and the 3 cross-cuts, across the 4 maturity stages, and lay the scores out as current-state and target-state heatmaps.
 2. Cite supporting evidence — controls implemented, telemetry sources, automation in place.
 3. Identify gaps blocking the next maturity stage; capture proposed uplift initiatives with owner, timeline, and dependency.
 4. Tie the roadmap to M-22-09 milestones where they still apply, and to agency-specific ZT strategy targets.
+5. Map each ZTMM function to the NIST SP 800-53 Rev 5 controls that evidence it, and flag controls in the NIST artefact for re-tailoring.
 
 ---
 

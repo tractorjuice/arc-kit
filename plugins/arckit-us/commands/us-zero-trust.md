@@ -51,7 +51,7 @@ NIST SP 800-207 is the foundational Zero Trust Architecture specification (logic
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (architecture principles, if present)
    - The project's NIST 800-53 control-tailoring artefact (if present) — for AC, IA, SC, SI control evidence
-   - The project's HLD / DLD and architecture diagrams — for network architecture, segmentation posture, identity flows
+   - Any vendor HLD / DLD documents under `projects/<id>/vendors/` and the project's architecture diagrams (DIAG, in `projects/<id>/diagrams/`) — for network architecture, segmentation posture, identity flows
    - The project's FedRAMP SSP (if present) — for Types-of-Users, interconnections, network architecture sections
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 

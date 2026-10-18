@@ -2,7 +2,7 @@
 
 > **Overlay**: USA Federal Civilian Community Overlay | **ArcKit Version**: [VERSION]
 
-`/arckit:us-fedramp-ssp` produces a FedRAMP System Security Plan (SSP) using the current Rev 5 SSP template structure. It documents the authorization boundary, system architecture, control implementations, shared responsibility (customer vs. CSP), interconnections, data flows, and the personnel and roles supporting Authority-to-Operate. The SSP is the **primary artefact** in the FedRAMP authorization package — every other artefact (SAP, SAR, POA&M, ConMon) references and is constrained by it.
+`/arckit:us-fedramp-ssp` produces a FedRAMP System Security Plan (SSP) draft in 14 sections, each mapped to a section or appendix of the FedRAMP Rev 5 SSP template (12 front-matter sections and Appendices A–Q); the last section lists every appendix and its source. It documents the authorization boundary, system architecture, control implementations, shared responsibility (customer vs. CSP), interconnections, data flows, and the personnel and roles supporting Authority-to-Operate. The SSP is the **primary artefact** in the FedRAMP authorization package — every other artefact (SAP, SAR, POA&M, ConMon) references and is constrained by it.
 
 The SSP is read end-to-end by the 3PAO during the assessment, by the JAB or sponsoring Agency's AO during the authorization decision, and by FedRAMP PMO during package review. Errors in the authorization boundary or shared-responsibility matrix surface as ATO blockers; weak control narratives drive extensive 3PAO interview cycles. Treat the SSP as a serious technical document, not a marketing artefact.
 
@@ -41,7 +41,7 @@ Reviewed by the CSP's CISO, the System Owner, ISSO, AO, and the FedRAMP PMO. Man
 
 ## Regulatory Anchors
 
-- **FedRAMP SSP Template Rev 5** — <https://www.fedramp.gov/documents-templates/>
+- **FedRAMP SSP Template Rev 5** — <https://www.fedramp.gov/documents-templates/> (marked legacy on 23 June 2026 under the FedRAMP Consolidated Rules for 2026: <https://www.fedramp.gov/2026/timeline/>)
 - **FedRAMP Authorization Boundary Guidance** — <https://www.fedramp.gov/assets/resources/documents/CSP_A_FedRAMP_Authorization_Boundary_Guidance.pdf>
 - **NIST SP 800-37 Rev 2** — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-37r2.pdf>
 
