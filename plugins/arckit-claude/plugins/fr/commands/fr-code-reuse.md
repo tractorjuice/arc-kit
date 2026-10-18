@@ -13,6 +13,8 @@ handoffs:
   - command: fr-dinum
     description: Align code reuse and open source decisions with DINUM doctrine obligations
     condition: "Project is a French public administration IS subject to DINUM circulaire on open source"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

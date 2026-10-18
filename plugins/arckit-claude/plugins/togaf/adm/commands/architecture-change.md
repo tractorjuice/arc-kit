@@ -8,6 +8,8 @@ handoffs:
     description: Update transition plan for approved changes
   - command: gap-analysis
     description: Re-assess gaps after change implementation
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create an **Architecture Change Request** for TOGAF Phase H (Architecture Change Management). This document captures change requests with full impact assessment across capability, application, technology, and governance domains, plus ADM cycle re-entry points.

@@ -7,6 +7,13 @@ handoffs:
     description: Prepare the supplier declaration once the lot questions are answered
   - command: /arckit:service-design
     description: Design a service in a lot group that has no service yet
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the

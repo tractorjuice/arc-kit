@@ -8,6 +8,8 @@ handoffs:
     description: Apply governance to multi-agent orchestration
   - command: agent-security
     description: Secure inter-agent communication
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect design the integration architecture for a multi-agent system — defining inter-agent contracts, message protocols, shared state, and failure isolation boundaries.

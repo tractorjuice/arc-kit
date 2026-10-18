@@ -20,6 +20,16 @@ handoffs:
     condition: "Lot 3 (Cloud Support) selected"
   - command: /arckit:pricing
     description: Produce the G-Cloud 15 pricing document for this service
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the
@@ -311,8 +321,7 @@ for UK Gov context if unavailable).
 the ArcKit helper:
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
-     {PROJECT_ID} SVCD --filename
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} SVCD --filename
 ```
 
 This returns `ARC-{NNN}-SVCD-v{VERSION}.md` (using the zero-padded `project_number` from Step 3). Use the

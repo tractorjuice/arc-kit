@@ -8,6 +8,8 @@ handoffs:
     description: Design architecture for new or modified agents
   - command: agent-security
     description: Assess security posture for inventoried agents
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a comprehensive AI agent inventory that catalogs all existing AI agents across the programme — documenting capabilities, security posture, and human oversight levels.

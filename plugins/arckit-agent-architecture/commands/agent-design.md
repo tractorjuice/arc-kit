@@ -8,6 +8,8 @@ handoffs:
     description: Design integration contracts for multi-agent systems
   - command: agent-security
     description: Design security architecture for agents
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect design an AI agent architecture specification following a structured, traceable framework.

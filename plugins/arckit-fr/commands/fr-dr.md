@@ -16,6 +16,8 @@ handoffs:
   - command: fr-pssi
     description: Incorporate DR handling rules into the organisation's formal security policy
     condition: "Organisation requires a formal PSSI covering DR data handling"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

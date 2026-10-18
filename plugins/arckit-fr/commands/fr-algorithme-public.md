@@ -16,6 +16,8 @@ handoffs:
   - command: dpia
     description: Conduct a DPIA if the algorithm systematically processes personal data at scale or profiles individuals
     condition: "Algorithm involves profiling, systematic processing, or sensitive data — DPIA required under GDPR Article 35"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

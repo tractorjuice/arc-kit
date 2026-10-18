@@ -9,6 +9,13 @@ handoffs:
     description: Produce a Data Protection Impact Assessment using ArcKit core
   - command: /arckit:review
     description: Validate security evidence as part of submission completeness
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the
@@ -286,8 +293,7 @@ doesn't give stays `[PENDING]` — it has no default.
 with the ArcKit helper (no `--next-num` — SECA is not multi-instance):
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
-     {PROJECT_ID} SECA --filename
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} SECA --filename
 ```
 
 This returns `ARC-{NNN}-SECA-v{VERSION}.md` (using the zero-padded project number from Step 1). Use the

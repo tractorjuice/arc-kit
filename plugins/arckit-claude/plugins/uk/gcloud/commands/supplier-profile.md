@@ -9,6 +9,10 @@ handoffs:
     description: Design the first service offering once the supplier profile exists
   - command: /arckit-uk-gcloud:declaration
     description: Prepare the supplier declaration from the profile
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the

@@ -8,6 +8,8 @@ handoffs:
     description: Present transition plan to Architecture Board for approval
   - command: architecture-change
     description: Create change requests for transition scope changes
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a **Transition Architecture** for TOGAF ADM Phase F (Migration Planning). This document defines transition architectures (intermediate states between baseline and target), work packages to achieve each transition, migration wave sequencing, resource plans, risk contingencies, and acceptance criteria for every work package.

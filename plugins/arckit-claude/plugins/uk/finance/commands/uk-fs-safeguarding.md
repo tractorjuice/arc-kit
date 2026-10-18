@@ -13,6 +13,13 @@ handoffs:
     description: Reconciliation runbook is a day-2 operational artefact — assemble it via /arckit:operationalize.
   - command: adr
     description: Safeguarding method choice (segregation vs insurance vs guarantee) is an architectural decision worth recording.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command — CRITICAL SEVERITY** — not part of the officially-maintained
@@ -53,7 +60,7 @@ $ARGUMENTS
 Run:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<product-context>"
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<product-context>"
 ```
 
 If the project already exists, locate it by scanning `projects/` for the matching numbered directory
@@ -66,7 +73,7 @@ Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detect
 Run:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_NUMBER> FSSAFE {VERSION} --filename
+node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_NUMBER> FSSAFE {VERSION} --filename
 ```
 
 This produces a filename of the form `ARC-NNN-FSSAFE-v{VERSION}.md`. FSSAFE is the doc-type code for this

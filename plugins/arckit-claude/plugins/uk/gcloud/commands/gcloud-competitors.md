@@ -7,6 +7,13 @@ handoffs:
     description: Adjust pricing based on the competitive benchmark
   - command: /arckit-uk-gcloud:review
     description: Fold competitive positioning into the submission review
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the
@@ -261,8 +268,7 @@ rather than minting new ones.
 with the ArcKit helper (no `--next-num` — GCMP is not multi-instance):
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
-     {PROJECT_ID} GCMP --filename
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} GCMP --filename
 ```
 
 This returns `ARC-{NNN}-GCMP-v{VERSION}.md` (using the zero-padded project number from Step 1). Use the

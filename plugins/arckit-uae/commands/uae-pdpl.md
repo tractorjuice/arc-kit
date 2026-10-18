@@ -11,6 +11,10 @@ handoffs:
     description: Per-share lawful-basis mapping continues into the data sharing agreement.
   - command: uae-classification
     description: PDPL-relevant datasets must be classified appropriately.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
@@ -33,7 +37,7 @@ You are an enterprise architect generating a UAE PDPL Compliance Assessment for 
    - **First**, check `.arckit/templates-custom/uae-pdpl-template.md` (user override)
    - **Then**, `.arckit/templates/uae-pdpl-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-pdpl-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> PDPL {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> PDPL {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 5. Generate the following sections:
    - **Scope** — what processing is covered, what carve-outs apply. Note free-zone regimes DIFC DPL and ADGM DPR are out of scope of the federal PDPL; healthcare data may also fall under ADHICS.

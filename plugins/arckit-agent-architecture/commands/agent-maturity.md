@@ -8,6 +8,8 @@ handoffs:
     description: Design improvements based on maturity gaps
   - command: agent-governance
     description: Strengthen governance based on maturity assessment
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create an **AI Agent Program Maturity Model** assessment. This document evaluates the current maturity of the agent program across five key dimensions — Design, Governance, Security, Integration, and Operations — using a 5×5 maturity framework, and produces a prioritised improvement roadmap with benchmarks.

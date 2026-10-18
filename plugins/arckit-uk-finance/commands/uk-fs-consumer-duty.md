@@ -17,6 +17,13 @@ handoffs:
     description: SCA biometric/accessibility design intersects with Consumer Understanding outcome for vulnerable customers.
   - command: uk-fs-safeguarding
     description: EMI/PI redemption accessibility under Consumer Support outcome intersects with safeguarding obligations.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output is
@@ -47,7 +54,7 @@ $ARGUMENTS
 Run:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<product-context>"
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<product-context>"
 ```
 
 If the project already exists, locate it by scanning `projects/` for the matching numbered directory
@@ -60,7 +67,7 @@ Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detect
 Run:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_NUMBER> FSCD {VERSION} --filename
+node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_NUMBER> FSCD {VERSION} --filename
 ```
 
 This produces a filename of the form `ARC-NNN-FSCD-v{VERSION}.md`. FSCD is the doc-type code for this

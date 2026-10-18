@@ -13,6 +13,13 @@ handoffs:
     description: Project risk register cross-references regulatory-classification risks (misclassification, market-access risk, post-market surveillance failure).
   - command: adr
     description: Major regulatory routing decisions (e.g. UKCA self-declare vs Approved Body, EU MDR via Notified Body vs not) belong in an ADR.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output is **not** regulatory advice. Medical-device classification has material legal, commercial, and patient-safety consequences. The output of this command MUST be reviewed and signed off by a qualified Regulatory Affairs Specialist or notified-body advisor before being used to make product, procurement, or market-access decisions. Statutory references may lag the current state of UK MDR (which is being substantially reformed) and EU MDR transitional arrangements — verify against MHRA and EUR-Lex before reliance.
@@ -64,9 +71,9 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
 2. **Read the template**:
    - `.arckit/templates-custom/uk-mdr-classification-template.md` → `.arckit/templates/uk-mdr-classification-template.md` → `${CLAUDE_PLUGIN_ROOT}/templates/uk-mdr-classification-template.md`
 
-3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
+3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
 
-4. **Generate the filename** via `node scripts/generate-document-id.mjs <PROJECT_ID> NHSMDR {VERSION} --filename`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+4. **Generate the filename** via `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> NHSMDR {VERSION} --filename`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. **Resolve the `<!-- DOC-CONTROL-HEADER -->` marker** per `RENDERING.md`. This is a conventional ArcKit `ARC-{NNN}-NHSMDR-v{VERSION}.md` file.
 

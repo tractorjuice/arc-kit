@@ -7,6 +7,10 @@ keep-coding-instructions: true
 handoffs:
   - command: evaluate
     description: PSPC route selection feeds the vendor evaluation framework's scoring rubric.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -35,7 +39,7 @@ You are an enterprise architect generating a federal Canadian procurement strate
    - **First**, check `.arckit/templates-custom/ca-pspc-template.md` (user override)
    - **Then**, `.arckit/templates/ca-pspc-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-pspc-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> PROC {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> PROC {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **Procurement Scope** — what is being procured: goods, professional services, cloud, software licences, managed services. Per item, capture description, estimated value range, term, and any extension options. Aggregate to a single estimated procurement value used downstream for threshold analysis.

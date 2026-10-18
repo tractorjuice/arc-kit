@@ -12,6 +12,8 @@ handoffs:
   - command: traceability
     description: Link AI Act conformity requirements back to functional requirements
     condition: "High-risk AI system classification confirmed"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

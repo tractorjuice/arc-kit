@@ -19,6 +19,8 @@ handoffs:
   - command: fr-ebios
     description: EBIOS risk study for operational resilience gaps
     condition: "RES-4 (Operational Resilience) reveals significant risk management gaps"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

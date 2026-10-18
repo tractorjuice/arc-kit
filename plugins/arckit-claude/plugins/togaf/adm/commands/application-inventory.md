@@ -8,6 +8,8 @@ handoffs:
     description: Decide keep/merge/replace/retire for each application
   - command: gap-analysis
     description: Analyze capability coverage from application inventory
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create an **Application Inventory** — a comprehensive portfolio catalog that maps all existing applications, their strategic fit, dependencies, technology landscape, and lifecycle status. This is the foundation for TOGAF Phase C (Information Systems Architectures — Application Architecture) decisions and application rationalisation.

@@ -20,6 +20,8 @@ handoffs:
   - command: eu-nis2
     description: Align PSSI security measures with NIS2 Article 21 obligations
     condition: "Organisation is an OSE under NIS2"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

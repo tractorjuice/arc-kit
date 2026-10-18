@@ -12,6 +12,8 @@ handoffs:
     condition: "Data sharing involves public sector bodies or procurement"
   - command: risk
     description: Integrate Data Act compliance gaps and data sharing risks into the risk register
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

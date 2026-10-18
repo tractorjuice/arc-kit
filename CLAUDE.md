@@ -239,9 +239,9 @@ Nothing guarded the copies until #675, and the root and core trees drifted silen
 
 ### Shared Assets (three sync layers)
 
-A file under `plugins/arckit-claude/references/` or `templates/_partials/` is a **shared asset**: every plugin and every runtime must carry the same bytes. Adding or editing one means running three scripts, in this order, before pushing — CI checks each and a missed one costs a round trip (#843 needed two):
+A file under `plugins/arckit-claude/references/` or `templates/_partials/` is a **shared asset**: every plugin and every runtime must carry the same bytes. So are the helper scripts overlay commands run, listed in `SHARED_FILES` in `sync-shared-assets.py`: `create-project.sh`, `list-projects.sh`, `common.sh`, `generate-document-id.mjs` and the `config/doc-types.mjs` it imports (and, for `arckit-eu` alone, `csf-score.mjs`). In Claude Code an overlay is its own plugin, so its commands run `${CLAUDE_PLUGIN_ROOT}/scripts/...` from their own copy, never a relative `scripts/...` path (#971); `tests/plugin/test_overlay_scripts_resolve.py` enforces that. Adding or editing one means running three scripts, in this order, before pushing — CI checks each and a missed one costs a round trip (#843 needed two):
 
-1. `python3 scripts/sync-shared-assets.py` — copies core `references/` and the partials into every community plugin (`lint-markdown.yml` runs `--check`).
+1. `python3 scripts/sync-shared-assets.py` — copies core `references/`, the partials and the helper scripts into every community plugin (`lint-markdown.yml` runs `--check`). Editing `doc-types.mjs` to register a code is an edit to a shared asset, so run it then too.
 2. `python3 scripts/sync-claude-plugin-layout.py` — mirrors the community plugins into the nested `plugins/arckit-claude/plugins/` tree (`tests/plugin/test_claude_overlay_namespacing.py` and `test_release_process.py` assert it).
 3. `python3 scripts/converter.py` — ships them to the seven generated extensions (gitignored locally; pushed at release).
 

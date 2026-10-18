@@ -8,6 +8,8 @@ handoffs:
     description: Create work packages to close identified gaps
   - command: architecture-board
     description: Present gap analysis to Architecture Board for prioritization
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect perform a **Gap Analysis** for TOGAF ADM Phase E (Opportunities & Solutions). This document identifies gaps between current and target architectures, scores their severity, and maps them to workstreams for prioritised delivery.

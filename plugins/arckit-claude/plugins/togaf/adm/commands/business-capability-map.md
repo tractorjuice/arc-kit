@@ -8,6 +8,8 @@ handoffs:
     description: Analyze capability gaps against target state
   - command: application-inventory
     description: Map applications to capabilities
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a **Business Capability Map** for TOGAF ADM Phase B (Business Architecture). This document maps the enterprise's capabilities, value streams, and maturity levels to establish the business architecture baseline, building on the capabilities and value streams first identified at a high level in the Phase A Architecture Vision (ADMP).

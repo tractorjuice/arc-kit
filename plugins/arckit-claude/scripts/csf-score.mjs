@@ -72,6 +72,9 @@ export const NOMINAL_MAX_SCORE = 1000;
 // unlike `generate-document-id.mjs`'s `../config/doc-types.mjs` import.
 const CATALOGUE_FILE = 'csf-criteria-calculator-2026-06-01.json';
 const CATALOGUE_CANDIDATES = [
+  // The copy sync-shared-assets.py ships inside arckit-eu, which is the copy
+  // /arckit-eu:eu-cloud-sovereignty runs: <eu plugin>/scripts -> <eu plugin>/data
+  resolve(__dirname, '../data', CATALOGUE_FILE),
   // Source repo: plugins/arckit-claude/scripts -> plugins/arckit-eu/data
   resolve(__dirname, '../../arckit-eu/data', CATALOGUE_FILE),
   // Source repo mirror inside the core: plugins/arckit-claude/plugins/eu/data

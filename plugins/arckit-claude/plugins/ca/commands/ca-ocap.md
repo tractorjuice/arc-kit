@@ -11,6 +11,10 @@ handoffs:
     description: Personal-information processing of Indigenous data inherits the PIA controls plus OCAP-derived restrictions.
   - command: ca-atip
     description: ATIP severance design must reflect OCAP access and control determinations for Indigenous datasets.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -49,7 +53,7 @@ You are an enterprise architect generating a First Nations OCAP® sovereignty as
    - **First**, check `.arckit/templates-custom/ca-ocap-template.md` (user override)
    - **Then**, `.arckit/templates/ca-ocap-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-ocap-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> OCAP {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> OCAP {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed. Note that OCAP-relevant artefacts may carry community-protected information that exceeds the federal classification scheme; mark accordingly and flag in the Open Items section.
 5. Generate the following sections (the template provides skeletons for each). **The FNIGC Pre-Engagement Confirmation gate in step 5.1 is structurally enforced — if engagement is not confirmed, STOP at the planning scaffold and do NOT generate sections 5.2–5.10.**
 
