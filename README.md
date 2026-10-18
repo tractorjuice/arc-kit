@@ -626,7 +626,7 @@ Enterprise Architecture Development Method — 9 commands covering the full ADM 
 | Command | Doc Type | Phase | Description |
 |---------|----------|-------|-------------|
 | `/arckit:adm-preliminary` | ADMP | Preliminary | Architecture vision, scope, drivers, constraints |
-| `/arckit:business-capability-map` | BPCM | Phase A | Business capability hierarchy, value streams, maturity |
+| `/arckit:business-capability-map` | BPCM | Phase B | Business capability hierarchy, value streams, maturity |
 | `/arckit:application-inventory` | APP | Phase C | Application catalog with strategic fit scoring |
 | `/arckit:application-rationalization` | APPR | Phase C | Keep/merge/replace/retire decisions |
 | `/arckit:gap-analysis` | GAPA | Phase E | Capability gap matrix, workstream mapping |

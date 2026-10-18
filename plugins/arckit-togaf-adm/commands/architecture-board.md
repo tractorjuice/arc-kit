@@ -35,15 +35,13 @@ Identify the target project from the hook context. If the user specifies a proje
 
 **MANDATORY** (warn if missing):
 
-- **PRIN** (Architecture Principles, in `000-global`) — Extract: All principles, governance standards, decision rights, compliance requirements
+- **PRIN** (Architecture Principles, in `000-global`) — Extract: All principles, including any domain-specific ones, governance standards, decision rights, compliance requirements, compliance gates, exception criteria
   - If missing: STOP and ask user to run `/arckit:principles` first. The Architecture Board cannot operate without defined principles.
 
 **RECOMMENDED** (read if available, note if missing):
 
 - **ADMP** (ADM Cycle Plan) — Extract: ADM phase scope, governance model, stakeholder engagement plan, phase sequencing
   - If missing: note in assumptions that ADM governance alignment could not be validated
-- **PRIN** (Architecture Principles) — Extract: Domain-specific principles, compliance gates, exception criteria
-  - If missing: note in assumptions that domain-level principle alignment could not be validated
 - **BPCM** (Business Capability Map) — Extract: Capability maturity, ownership, governance needs
   - If missing: note in assumptions that capability governance could not be assessed
 - **HLD** (High-Level Design) — Extract: Architecture decisions requiring governance review
@@ -154,7 +152,7 @@ Cross-reference to related documents:
 - Architecture Principles (`ARC-000-PRIN-v[N].md`) — board enforces principles
 - ADM Plan (`ARC-{P}-ADMP-v[N].md`) — board governs Phase G
 - Gap Analysis (`ARC-{P}-GAPA-v[N].md`) — board prioritises gap closure
-- Architecture Change Requests (`ARC-{P}-ACHG-v[N].md`) — board approves changes
+- Architecture Change Requests (`changes/ARC-{P}-ACHG-{NNN}-v[N].md`) — board approves changes
 
 ### 6. UK Government Specifics
 
@@ -305,7 +303,6 @@ After writing the file, show a concise summary (NOT the full document):
 ### Synthesised From
 - ✅ Architecture Principles: ARC-000-PRIN-v[N].md
 - [✅/⚠️] ADM Plan: ARC-{P}-ADMP-v[N].md
-- [✅/⚠️] Architecture Principles (domain): ARC-{P}-APP-v[N].md
 - [✅/⚠️] Business Capability Map: ARC-{P}-BPCM-v[N].md
 
 ### Next Steps

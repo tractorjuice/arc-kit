@@ -361,6 +361,10 @@ export const MULTI_INSTANCE_TYPES = new Set([
   'WGAM', 'WCLM', 'WVCH',
   'GOVR', 'GCSR', 'GLND', 'GRNT',
   'CDAU',
+  // arckit-togaf-adm: /arckit:architecture-change numbers each TOGAF Phase H
+  // change request (ARC-001-ACHG-001-v1.0.md in changes/). Missing from both
+  // lists, the hook read ACHG-001 as the doc-type and blocked every write (#949).
+  'ACHG',
 ]);
 
 // Type code -> required subdirectory
@@ -389,6 +393,7 @@ export const SUBDIR_MAP = {
   'GRNT': 'research',
   'CDAU': 'audits',
   'FWRK': 'framework',
+  'ACHG': 'changes',
 };
 
 // Derived: set of all valid type codes

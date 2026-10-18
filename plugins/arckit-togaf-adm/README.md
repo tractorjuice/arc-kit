@@ -3,8 +3,8 @@
 9 slash commands and the `togaf-adm-full` build recipe covering the TOGAF Architecture Development Method:
 
 - `/arckit:adm-preliminary` — Preliminary phase: scope, drivers, constraints, architecture vision
-- `/arckit:business-capability-map` — Phase A Business Architecture: strategy, capabilities, value chains
-- `/arckit:application-inventory` — Phase C Application Architecture: portfolio assessment and integration patterns
+- `/arckit:business-capability-map` — Phase B Business Architecture: capabilities, value streams, maturity
+- `/arckit:application-inventory` — Phase C Information Systems Architectures (Application Architecture): portfolio assessment and integration patterns
 - `/arckit:application-rationalization` — Application rationalization: consolidate, retire, replace
 - `/arckit:gap-analysis` — Phase E Opportunities & Solutions: gap analysis and workload prioritization
 - `/arckit:transition-architecture` — Phase F Migration Planning: transition architectures and work packages
