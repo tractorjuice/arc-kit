@@ -4,7 +4,7 @@
 `docs/guides.html` and `docs/roles.html` are hand-maintained. Nothing derives
 them from `docs/guides/`, so a guide can exist in both guide trees, pass
 `check-guide-parity.py`, ship to all seven extension formats, and still be
-invisible on the site: reachable only by guessing its `guide-viewer.html?guide=`
+invisible on the site: reachable only by guessing its `guide/<name>.html`
 URL. That shipped with `/arckit:repo-audit` in v6.7.0 and was fixed in PR #681.
 
 Two directions are checked:
@@ -30,7 +30,9 @@ ROOT = Path(__file__).resolve().parent.parent
 GUIDES_DIR = ROOT / "docs/guides"
 SITE_PAGES = (ROOT / "docs/guides.html", ROOT / "docs/roles.html")
 
-LINK_RE = re.compile(r"guide=([A-Za-z0-9._/-]+)")
+# A guide's static page, guide/<name>.html (scripts/generate-site-pages.py),
+# or the old guide-viewer.html?guide=<name> form that now redirects to it.
+LINK_RE = re.compile(r"(?:guide-viewer\.html\?guide=|(?<![\w-])guide/)([A-Za-z0-9._/-]+?)(?:\.html)?(?=[\"'#&?\s])")
 
 # Guides deliberately not linked from any site page. Keep this list short and
 # justified — an entry here is a guide no site visitor can ever reach.
@@ -84,7 +86,7 @@ def main() -> int:
         print(
             "\n  A site visitor cannot reach these. Add a list entry to "
             "docs/guides.html (or docs/roles.html for role guides) linking\n"
-            '  guide-viewer.html?guide=<name>, and remember to bump that '
+            '  guide/<name>.html, and remember to bump that '
             "section's guide count. If a guide is intentionally\n"
             "  unreachable, add it to UNLINKED_BY_DESIGN in this script with a reason.",
             file=sys.stderr,
@@ -95,7 +97,7 @@ def main() -> int:
         print(f"\nFAIL {len(dead)} site link(s) pointing at a guide that does not exist:", file=sys.stderr)
         for name in dead:
             pages = sorted(p.name for p, links in per_page.items() if name in links)
-            print(f"  guide={name}  (linked from {', '.join(pages)})", file=sys.stderr)
+            print(f"  guide/{name}.html  (linked from {', '.join(pages)})", file=sys.stderr)
 
     if stale_exempt:
         failed = True

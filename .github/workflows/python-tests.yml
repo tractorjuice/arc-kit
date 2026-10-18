@@ -29,10 +29,13 @@ jobs:
         with:
           python-version: "3.12"
 
-      # The suite's only third-party imports are pytest and yaml. `-e .` is
-      # needed because several suites import from `src/arckit_cli/`.
+      # The suite's third-party imports are pytest and yaml, plus the two
+      # Markdown packages test_site_pages.py needs. Those are pinned to the
+      # versions in scripts/generate-site-pages.py because its --check compares
+      # the pages byte for byte. `-e .` is needed because several suites
+      # import from `src/arckit_cli/`.
       - name: Install test dependencies
-        run: python -m pip install -e . pytest pyyaml
+        run: python -m pip install -e . pytest pyyaml markdown-it-py==4.0.0 linkify-it-py==2.0.3
 
       # The generated content under extensions/** is gitignored (see .gitignore
       # "Generated distribution formats"), so a fresh checkout holds only each

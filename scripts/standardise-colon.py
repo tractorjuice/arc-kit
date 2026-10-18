@@ -59,6 +59,10 @@ EXCLUDE_PREFIXES = [
     "plugins/arckit-claude/CHANGELOG.md",
     "docs/changelog/",             # older plugin releases moved out of the plugin CHANGELOG
     "docs/articles/",
+    # Pages scripts/generate-site-pages.py renders from docs/articles/ and
+    # docs/guides/: fix the source and regenerate, never edit them here.
+    "docs/share/",
+    "docs/guide/",
     "docs/plans/",                 # planning artefacts; may quote the dot form verbatim
     "docs/proposals/",
     "docs/superpowers/",

@@ -13,6 +13,7 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <!-- page:meta -->
     <meta name="description" content="ArcKit Guide Viewer - Read detailed command and role guides for enterprise architecture governance directly in your browser.">
     <meta name="keywords" content="ArcKit guide viewer, architecture guides, command documentation, role guides, UK government architecture">
     <meta name="author" content="ArcKit">
@@ -28,6 +29,7 @@
     <meta name="twitter:description" content="Read detailed ArcKit command and role guides for enterprise architecture governance directly in your browser.">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide-viewer.html">
+    <!-- /page:meta -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
@@ -40,9 +42,6 @@
     <link rel="stylesheet" href="theme.css?v=4.12.3">
     <link rel="stylesheet" href="heroes.css?v=4.12.3">
 
-    <!-- marked.js v15.0.6 + DOMPurify -->
-    <script src="https://cdn.jsdelivr.net/npm/marked@15.0.6/marked.min.js" integrity="sha384-b5hg04N6F0rvyz1a/GVoPPY0JcqGTARCmEuFCqwQKX3zq7LsxhV+n+6Ykh2pQOCH" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js" integrity="sha384-eEu5CTj3qGvu9PdJuS+YlkNi7d2XxQROAFYOr59zgObtlcux1ae1Il3u7jvdCSWu" crossorigin="anonymous"></script>
 
     <style>
         body,
@@ -192,6 +191,13 @@
             font-size: 0.9rem;
         }
 
+        /* On a phone a wide table scrolls on its own instead of widening the page,
+           and a long URL wraps. */
+        .app-markdown { overflow-wrap: break-word; }
+        @media (max-width: 640px) {
+            .app-markdown table { display: block; overflow-x: auto; }
+        }
+
         .app-markdown th, .app-markdown td {
             border: 1px solid #b1b4b6;
             padding: 0.75rem;
@@ -326,6 +332,7 @@
             font-size: 0.875rem;
         }
     </style>
+    <!-- page:jsonld -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -348,6 +355,7 @@
         ]
     }
     </script>
+    <!-- /page:jsonld -->
 </head>
 <body class="govuk-template__body">
     <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
@@ -384,14 +392,17 @@
 
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
+            <!-- page:hero -->
             <span class="app-page-hero__stat">Guide Viewer</span>
             <h1 class="app-page-hero__title" id="guide-title">Guide Viewer</h1>
             <p class="app-page-hero__description">Rendered command and role guide documentation.</p>
+            <!-- /page:hero -->
         </div>
     </div>
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-width-container">
+            <!-- page:body -->
             <a id="back-link" href="guides.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Guides</a>
 
             <div id="loading" class="app-loading">
@@ -410,6 +421,7 @@
             <div id="films" class="app-films" hidden></div>
 
             <div id="content" class="app-markdown" style="display:none"></div>
+            <!-- /page:body -->
         </div>
     </main>
 
@@ -419,136 +431,21 @@
         </div>
     </footer>
 
+    <!-- viewer-only -->
     <script>
+        // Every guide is published as a static page under guide/ by
+        // scripts/generate-site-pages.py. This viewer only forwards the old
+        // guide-viewer.html?guide=<name> links there, keeping any #anchor.
         (function() {
-            var params = new URLSearchParams(window.location.search);
-            var guide = params.get('guide');
-
-            if (!guide) {
+            var guide = new URLSearchParams(window.location.search).get('guide');
+            if (!guide || !/^[a-z0-9][a-z0-9.\-\/]*$/i.test(guide) || guide.indexOf('..') !== -1) {
                 window.location.replace('guides.html');
                 return;
             }
-
-            // Sanitise: allow only alphanumeric, hyphens, slashes (for roles/)
-            if (!/^[a-z0-9\-\/]+$/.test(guide)) {
-                showError('Invalid guide name.');
-                return;
-            }
-
-            // Set back link: role guides go back to roles.html
-            var backLink = document.getElementById('back-link');
-            if (guide.indexOf('roles/') === 0) {
-                backLink.href = 'roles.html';
-                backLink.textContent = 'Back to Roles';
-            }
-
-            // Short narrated film for each command guide (YouTube IDs, @arckitorg)
-            var FILMS = {"adm-preliminary":[["Yl5IlhRPdMw","Film: /arckit:adm-preliminary"]],"adr":[["I_uktOK2Wgs","Film: /arckit:adr"]],"agent-design":[["0YCEuv_tffI","Film: /arckit:agent-design"]],"agent-governance":[["LSKQPjkIgic","Film: /arckit:agent-governance"]],"agent-integration":[["Ktrjkt4EWSU","Film: /arckit:agent-integration"]],"agent-inventory":[["MghbrO1UuN4","Film: /arckit:agent-inventory"]],"agent-maturity":[["g8GdQyHQ790","Film: /arckit:agent-maturity"]],"agent-security":[["XFYy7UzBDKI","Film: /arckit:agent-security"]],"agile-governance":[["VQDICzGkTz8","Film: /arckit:agile-governance"]],"agile-security":[["L11N6IAdIQA","Film: /arckit:agile-security"]],"agile-strategy":[["6g3Wc2cCxTo","Film: /arckit:agile-strategy"]],"ai-playbook":[["qlsgE742Jr4","Film: /arckit:ai-playbook"]],"analyze":[["P9z_HakhfUs","Film: /arckit:analyze"]],"application-inventory":[["SDz19FD_LH0","Film: /arckit:application-inventory"]],"application-rationalization":[["qxAxDKMXHa8","Film: /arckit:application-rationalization"]],"archify":[["e-Qm2j-pJd4","Film: /arckit:archify"]],"architecture-board":[["33uBY_xDbFY","Film: /arckit:architecture-board"]],"architecture-change":[["LkNXJL6n-0g","Film: /arckit:architecture-change"]],"architecture-repository":[["JB1tKL7kJ64","Film: /arckit:architecture-repository"]],"at-barrierefreiheit":[["7pzyiOS4NuI","Film: /arckit:at-barrierefreiheit"]],"at-bvergg":[["90GNSIPgnd4","Film: /arckit:at-bvergg"]],"at-dsgvo":[["yZkLiZieceg","Film: /arckit:at-dsgvo"]],"at-nisg":[["XUZ2QWinraI","Film: /arckit:at-nisg"]],"atrs":[["9xFRppRKdik","Film: /arckit:atrs"]],"au-aescsf":[["WDY0bAA0mZ0","Film: /arckit:au-aescsf"]],"au-ai-assurance":[["y64F29zKKqs","Film: /arckit:au-ai-assurance"]],"au-disp-attestation":[["rdJdim71bGA","Film: /arckit:au-disp-attestation"]],"au-dss":[["L8hY9NIBNT8","Film: /arckit:au-dss"]],"au-e8-posture":[["j-a0G5hiC-w","Film: /arckit:au-e8-posture"]],"au-energy-compliance":[["NeFfiHOPrW0","Film: /arckit:au-energy-compliance"]],"au-ism-controls":[["7Bw_vsVGPOw","Film: /arckit:au-ism-controls"]],"au-ndb-playbook":[["ga-AKWSiR7w","Film: /arckit:au-ndb-playbook"]],"au-ot-security":[["dfMEDWRYtyU","Film: /arckit:au-ot-security"]],"au-pia":[["TfMdNjx5cAk","Film: /arckit:au-pia"]],"au-pspf":[["5MnXysJ_hjM","Film: /arckit:au-pspf"]],"au-soci-cirmp":[["Xvp2yKE5M5c","Film: /arckit:au-soci-cirmp"]],"aws-research":[["M3C0_4uiQhs","Film: /arckit:aws-research"]],"azure-research":[["jyj320MIBFQ","Film: /arckit:azure-research"]],"backlog":[["UZQXs3ydIzM","Film: /arckit:backlog"]],"build":[["CczEb5Q2UxA","Film: /arckit:build"],["b1EVJenis0M","Explainer: ArcKit recipes"]],"business-capability-map":[["HTEBO2L3PCg","Film: /arckit:business-capability-map"]],"ca-aia":[["G5leZWouRc0","Film: /arckit:ca-aia"]],"ca-atip":[["AxP6cvk5IUw","Film: /arckit:ca-atip"]],"ca-charter":[["Ammb8N7ptr8","Film: /arckit:ca-charter"]],"ca-cloud-residency":[["mw0CtSM6FdU","Film: /arckit:ca-cloud-residency"]],"ca-fitaa":[["Buars0nkUeA","Film: /arckit:ca-fitaa"]],"ca-gc-digital-standards":[["C_fbkYFifhA","Film: /arckit:ca-gc-digital-standards"]],"ca-itsg-33":[["AFkH0_a9WTI","Film: /arckit:ca-itsg-33"]],"ca-ocap":[["Y-TgyDZgsQc","Film: /arckit:ca-ocap"]],"ca-ola":[["XGUdDJKJOYM","Film: /arckit:ca-ola"]],"ca-pia":[["Vq-_iHp_G3U","Film: /arckit:ca-pia"]],"ca-pspc":[["ggV3V0-YbvU","Film: /arckit:ca-pspc"]],"ca-soia":[["uMgx9VlMI8I","Film: /arckit:ca-soia"]],"competitors":[["IUSF_7ar7p0","Film: /arckit:competitors"]],"conformance":[["0FvrvVGgEm4","Film: /arckit:conformance"]],"create":[["Sz1PY6JsbP0","Film: /arckit-fde:create"]],"customize":[["fkA7O9fWV0k","Film: /arckit:customize"]],"data-mesh-contract":[["hr_U35U--Zk","Film: /arckit:data-mesh-contract"]],"data-model":[["SSGI7wj-kBc","Film: /arckit:data-model"]],"datascout":[["jvDe1F3bPHk","Film: /arckit:datascout"]],"declaration":[["LRPaTeZhRYo","Film: /arckit:declaration"]],"devops":[["PfEQgmgiqYM","Film: /arckit:devops"]],"dfd":[["hm9sbyPD0XI","Film: /arckit:dfd"]],"diagram":[["48iVuZYY-r8","Film: /arckit:diagram"]],"dld-review":[["EFQoFPrvsm0","Film: /arckit:dld-review"]],"dos":[["eLSKXWtIkkE","Film: /arckit:dos"]],"dpia":[["K7FWTZV2e4A","Film: /arckit:dpia"]],"eu-ai-act":[["ezTokowJcaQ","Film: /arckit:eu-ai-act"]],"eu-cloud-sovereignty":[["F-1YZFhICiI","Film: /arckit:eu-cloud-sovereignty"]],"eu-cra":[["MK5ToXKLAKo","Film: /arckit:eu-cra"]],"eu-data-act":[["bHLWGSUFRiU","Film: /arckit:eu-data-act"]],"eu-dora":[["V8R6xtT7X2k","Film: /arckit:eu-dora"]],"eu-dsa":[["j6CuAkbUzPU","Film: /arckit:eu-dsa"]],"eu-nis2":[["4zIQIXprV1w","Film: /arckit:eu-nis2"]],"eu-rgpd":[["iUk_4H1n_TU","Film: /arckit:eu-rgpd"]],"evaluate":[["-908y3ZGqNA","Film: /arckit:evaluate"]],"export-okf":[["-rmPl6HiIm0","Film: /arckit:export-okf"]],"finops":[["1Be52Gd82Y8","Film: /arckit:finops"]],"fr-algorithme-public":[["vLKHNzaMosc","Film: /arckit:fr-algorithme-public"]],"fr-anssi":[["I8AnGXi7NRQ","Film: /arckit:fr-anssi"]],"fr-anssi-carto":[["7HhLHnHv7OY","Film: /arckit:fr-anssi-carto"]],"fr-code-reuse":[["rp3KHS89PJ0","Film: /arckit:fr-code-reuse"]],"fr-dinum":[["JTTGgGeTeUA","Film: /arckit:fr-dinum"]],"fr-dr":[["pm7mYM-feVw","Film: /arckit:fr-dr"]],"fr-ebios":[["A_6SRLle4c4","Film: /arckit:fr-ebios"]],"fr-irn":[["G8UM-Yv9oB0","Film: /arckit:fr-irn"]],"fr-marche-public":[["4ORQI87Jkcc","Film: /arckit:fr-marche-public"]],"fr-pssi":[["Lw3vb_o9sEc","Film: /arckit:fr-pssi"]],"fr-rgpd":[["ip2beHg61lk","Film: /arckit:fr-rgpd"]],"fr-secnumcloud":[["dNOqHGIMYeM","Film: /arckit:fr-secnumcloud"]],"framework":[["lFn9FmvqETc","Film: /arckit:framework"]],"gap-analysis":[["ztdWiYtGwMI","Film: /arckit:gap-analysis"]],"gcloud-clarify":[["VVyhubH8FmI","Film: /arckit:gcloud-clarify"]],"gcloud-competitors":[["dTh0XNY67XU","Film: /arckit:gcloud-competitors"]],"gcloud-search":[["g0fXRwdRn0o","Film: /arckit:gcloud-search"]],"gcp-research":[["HZd5GG-TPL8","Film: /arckit:gcp-research"]],"glossary":[["EDi3A03k8dA","Film: /arckit:glossary"]],"gov-code-search":[["MOG0CWJ4DUM","Film: /arckit:gov-code-search"]],"gov-landscape":[["R19lDnAg9Vk","Film: /arckit:gov-landscape"]],"gov-reuse":[["KjWPP4FOcQg","Film: /arckit:gov-reuse"]],"grants":[["JZHQbKkhGcc","Film: /arckit:grants"]],"graph-report":[["Fl1imgBnpk8","Film: /arckit:graph-report"]],"health":[["xgAfzJ_TQqE","Film: /arckit:health"]],"hld-review":[["9XTg-YuO0VE","Film: /arckit:hld-review"]],"impact":[["vKph4FY2sfQ","Film: /arckit:impact"]],"import-okf":[["sWLkJT88Q3A","Film: /arckit:import-okf"]],"init":[["qn9cLyGQWTg","Film: /arckit:init"]],"jsp-936":[["LUaaJqi3N5A","Film: /arckit:jsp-936"]],"lot-questions":[["C8cTeELeIi4","Film: /arckit:lot-questions"]],"maturity-model":[["k7r66E4fq2o","Film: /arckit:maturity-model"]],"mlops":[["JoMRf5t05qY","Film: /arckit:mlops"]],"mod-secure":[["Bd-sItWISLg","Film: /arckit:mod-secure"]],"navigator":[["CPDHq7_xCkY","Film: /arckit:navigator"]],"nl-bio":[["Z9juIvtoVcQ","Film: /arckit:nl-bio"]],"nl-cloud":[["PSBJg_rTLc4","Film: /arckit:nl-cloud"]],"nl-exit":[["WpeXcsx1w34","Film: /arckit:nl-exit"]],"nl-overlay":[["Ffuaw-AShWQ","Film: /arckit:nl-tbb"],["PSBJg_rTLc4","Film: /arckit:nl-cloud"],["WpeXcsx1w34","Film: /arckit:nl-exit"],["Z9juIvtoVcQ","Film: /arckit:nl-bio"]],"nl-tbb":[["Ffuaw-AShWQ","Film: /arckit:nl-tbb"]],"oaa-adm-lite":[["9_c_ctYeFFE","Film: /arckit:oaa-adm-lite"]],"operationalize":[["1jVcCWzVhWI","Film: /arckit:operationalize"]],"pages":[["R2u4KbxjPT8","Film: /arckit:pages"]],"plan":[["7cHjdys1k-Q","Film: /arckit:plan"]],"platform-design":[["NsmMV0Sk6Sc","Film: /arckit:platform-design"]],"presentation":[["dA8rtkm5yw0","Film: /arckit:presentation"]],"pricing":[["NXW6SPytD5Y","Film: /arckit:pricing"]],"principles":[["4AjvKvK81So","Film: /arckit:principles"]],"principles-compliance":[["7RI4WC_Zqkw","Film: /arckit:principles-compliance"]],"product-architecture":[["EmoqZ329RLU","Film: /arckit:product-architecture"]],"repo-audit":[["JDHKZue9Bqs","Film: /arckit-repo:repo-audit"]],"repo-docs":[["K0Qo3lYtlkE","Film: /arckit-repo:repo-docs"]],"requirements":[["ys48EIKihWE","Film: /arckit:requirements"]],"research":[["O84VEX-afus","Film: /arckit:research"]],"review":[["1cydRJOXK6E","Film: /arckit:review"]],"risk":[["3f9aKlGVCeM","Film: /arckit:risk"]],"roadmap":[["Hizn3WDnf-E","Film: /arckit:roadmap"]],"score":[["cj2DbOJjiQc","Film: /arckit:score"]],"sdd-lot1a":[["ufCYiK88OYY","Film: /arckit:sdd-lot1a"]],"sdd-lot1b":[["pX5kF1VS7Es","Film: /arckit:sdd-lot1b"]],"sdd-lot2a":[["prtEbr0kAbo","Film: /arckit:sdd-lot2a"]],"sdd-lot2b":[["jTOR2VOPv3c","Film: /arckit:sdd-lot2b"]],"sdd-lot3":[["wdqpzP3a_K8","Film: /arckit:sdd-lot3"]],"search":[["7dfj9YF6yQ4","Film: /arckit:search"]],"secure":[["YQ86qR_mcUo","Film: /arckit:secure"]],"security":[["cvHG2cQ15c4","Film: /arckit:security"]],"service-assessment":[["E2QJqkzIivk","Film: /arckit:service-assessment"]],"service-design":[["4leT6nd8jb4","Film: /arckit:service-design"]],"servicenow":[["f9u3c7dWGlk","Film: /arckit:servicenow"]],"sobc":[["rQ4gA_RDrlo","Film: /arckit:sobc"]],"social-value":[["5pAjS98F5xM","Film: /arckit:social-value"]],"sow":[["8p9D_x-WGxQ","Film: /arckit:sow"]],"stakeholders":[["0Do7gEsJMLY","Film: /arckit:stakeholders"]],"start":[["fxdrHP5flWM","Film: /arckit:start"]],"story":[["uvHQHn-qBVQ","Film: /arckit:story"]],"strategy":[["iSMt32ekDvU","Film: /arckit:strategy"]],"submission-pack":[["shJhXFVq19A","Film: /arckit:submission-pack"]],"supplier-profile":[["dJcdWbwZgW0","Film: /arckit:supplier-profile"]],"tcop":[["g8xbnSg-opo","Film: /arckit:tcop"]],"template-builder":[["axQVUF4iRdg","Film: /arckit:template-builder"]],"tenders":[["EL9Tq-7crGw","Film: /arckit:tenders"]],"traceability":[["JRAIZum1gXg","Film: /arckit:traceability"]],"transition-architecture":[["2Z-lN87ilts","Film: /arckit:transition-architecture"]],"trello":[["1nej0MmCQZM","Film: /arckit:trello"]],"uae-ai-autonomy-tier":[["kbwcg34FMiU","Film: /arckit:uae-ai-autonomy-tier"]],"uae-ai-charter":[["-p3jCyaU920","Film: /arckit:uae-ai-charter"]],"uae-classification":[["2vEcXe35jrk","Film: /arckit:uae-classification"]],"uae-cloud-residency":[["QbSsEnl1pv4","Film: /arckit:uae-cloud-residency"]],"uae-data-sharing":[["vB9gIbE3Oxk","Film: /arckit:uae-data-sharing"]],"uae-digital-records":[["FgcvKGeoqh8","Film: /arckit:uae-digital-records"]],"uae-ias":[["La0gsySqAZ4","Film: /arckit:uae-ias"]],"uae-pdpl":[["iGYqBxK9FDQ","Film: /arckit:uae-pdpl"]],"uae-priorities-alignment":[["_16iB6RGqBE","Film: /arckit:uae-priorities-alignment"]],"uae-procurement":[["jX6_Jyomy3E","Film: /arckit:uae-procurement"]],"uae-uaepass":[["Q7q-4RcAJ0I","Film: /arckit:uae-uaepass"]],"uae-zero-bureaucracy":[["ndmqHRSj4zM","Film: /arckit:uae-zero-bureaucracy"]],"uk-fs-consumer-duty":[["IopEsJRnGp0","Film: /arckit:uk-fs-consumer-duty"]],"uk-fs-ctp-dependency":[["rVQbscgnsVo","Film: /arckit:uk-fs-ctp-dependency"]],"uk-fs-safeguarding":[["bHIClzPDJRw","Film: /arckit:uk-fs-safeguarding"]],"uk-fs-sca-rts":[["zLf4vrDxZ80","Film: /arckit:uk-fs-sca-rts"]],"uk-mdr-classification":[["uktCXBiPPl8","Film: /arckit:uk-mdr-classification"]],"uk-nhs-dcb0129":[["qR9TAb1xT_4","Film: /arckit:uk-nhs-dcb0129"]],"uk-nhs-dcb0160":[["vGeIuM3MYwY","Film: /arckit:uk-nhs-dcb0160"]],"uk-nhs-dtac":[["fb-VCXyBXGk","Film: /arckit:uk-nhs-dtac"]],"us-ai-impact":[["hmQYGIt3U4E","Film: /arckit:us-ai-impact"]],"us-ai-rmf":[["0kC1sV6xms8","Film: /arckit:us-ai-rmf"]],"us-fedramp-readiness":[["pGgNtdlyHbo","Film: /arckit:us-fedramp-readiness"]],"us-fedramp-ssp":[["nf8lzCCvx-o","Film: /arckit:us-fedramp-ssp"]],"us-fisma-categorization":[["otZsz09rpZg","Film: /arckit:us-fisma-categorization"]],"us-icam":[["RZMh5Hh7p9w","Film: /arckit:us-icam"]],"us-nist-800-53":[["_lb9K1jjmjI","Film: /arckit:us-nist-800-53"]],"us-privacy-pia":[["iPqiCfllLvQ","Film: /arckit:us-privacy-pia"]],"us-sbom-eo-14028":[["FmjwIMU_TdA","Film: /arckit:us-sbom-eo-14028"]],"us-zero-trust":[["ZpKMwRfE5tw","Film: /arckit:us-zero-trust"]],"wardley":[["SHVxAC9I7ig","Film: /arckit:wardley"]],"wardley-climate":[["tV4CjK6Vw90","Film: /arckit:wardley.climate"]],"wardley-doctrine":[["cVBEmtfwaIA","Film: /arckit:wardley.doctrine"]],"wardley-gameplay":[["H_gy4dItglQ","Film: /arckit:wardley.gameplay"]],"wardley-value-chain":[["g0v0OKJE0Ro","Film: /arckit:wardley.value-chain"]]};
-
-            var rawUrl = 'https://raw.githubusercontent.com/tractorjuice/arc-kit/main/docs/guides/' + guide + '.md';
-
-            fetch(rawUrl)
-                .then(function(res) {
-                    if (!res.ok) throw new Error(res.status === 404 ? 'Guide not found' : 'Failed to load guide (HTTP ' + res.status + ')');
-                    return res.text();
-                })
-                .then(function(md) {
-                    // Extract title from first # heading
-                    var titleMatch = md.match(/^#\s+(.+)$/m);
-                    if (titleMatch) {
-                        document.title = titleMatch[1] + ' - ArcKit';
-                    }
-
-                    // Per-guide SEO: self-referential canonical + Open Graph so each
-                    // ?guide=<slug> URL is uniquely indexable instead of collapsing to
-                    // the bare guide-viewer.html shell.
-                    var guideTitle = titleMatch ? titleMatch[1] : 'Guide';
-                    var guideUrl = 'https://arckit.org/guide-viewer.html?guide=' + guide;
-                    var setMeta = function(sel, attr, val) {
-                        var el = document.querySelector(sel);
-                        if (el && val) el.setAttribute(attr, val);
-                    };
-                    setMeta('link[rel="canonical"]', 'href', guideUrl);
-                    setMeta('meta[property="og:url"]', 'content', guideUrl);
-                    setMeta('meta[property="og:title"]', 'content', guideTitle);
-                    setMeta('meta[name="twitter:title"]', 'content', guideTitle);
-                    var gPara = md.split(/\n\n+/).find(function(chunk){
-                        return chunk && !chunk.startsWith('#') && !chunk.startsWith('!') && !chunk.startsWith('---') && !chunk.startsWith('>') && !chunk.startsWith('|');
-                    });
-                    if (gPara) {
-                        var gClean = gPara.replace(/\*\*|__|`/g, '').replace(/\s+/g,' ').trim();
-                        if (gClean.length > 220) gClean = gClean.slice(0, 217) + '…';
-                        setMeta('meta[property="og:description"]', 'content', gClean);
-                        setMeta('meta[name="twitter:description"]', 'content', gClean);
-                    }
-
-                    var rawHtml = marked.parse(md);
-                    var safeHtml = DOMPurify.sanitize(rawHtml);
-                    var contentEl = document.getElementById('content');
-                    contentEl.innerHTML = safeHtml;
-                    showFilms(FILMS[guide] || []);
-                    document.getElementById('loading').style.display = 'none';
-                    contentEl.style.display = 'block';
-                })
-                .catch(function(err) {
-                    showError(err.message);
-                });
-
-            // Build a play card per film. The YouTube player (youtube-nocookie.com)
-            // is only created when the reader presses play.
-            function showFilms(films) {
-                if (!films.length) return;
-                var box = document.getElementById('films');
-                films.forEach(function(f) {
-                    var id = f[0], label = f[1];
-                    var wrap = document.createElement('div');
-                    wrap.className = 'app-film';
-                    var btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'app-film__play';
-                    btn.setAttribute('aria-label', 'Play ' + label);
-                    var icon = document.createElement('span');
-                    icon.className = 'app-film__icon';
-                    icon.setAttribute('aria-hidden', 'true');
-                    icon.textContent = '\u25B6';
-                    var text = document.createElement('span');
-                    text.textContent = label;
-                    btn.appendChild(icon);
-                    btn.appendChild(text);
-                    btn.addEventListener('click', function() {
-                        var frame = document.createElement('iframe');
-                        frame.className = 'app-film__frame';
-                        frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&cc_load_policy=1';
-                        frame.title = label;
-                        frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
-                        frame.allowFullscreen = true;
-                        wrap.replaceChild(frame, btn);
-                        frame.focus();
-                    });
-                    var note = document.createElement('p');
-                    note.className = 'govuk-body-s app-film__note';
-                    var link = document.createElement('a');
-                    link.className = 'govuk-link';
-                    link.href = 'https://youtu.be/' + id;
-                    link.target = '_blank';
-                    link.rel = 'noopener';
-                    link.textContent = 'Watch on YouTube';
-                    note.appendChild(document.createTextNode('A short AI-narrated film with English captions. Pressing play loads the YouTube player. '));
-                    note.appendChild(link);
-                    wrap.appendChild(btn);
-                    wrap.appendChild(note);
-                    box.appendChild(wrap);
-                });
-                box.hidden = false;
-            }
-
-            function showError(msg) {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('error-message').textContent = msg;
-                document.getElementById('error').style.display = 'block';
-            }
+            window.location.replace('guide/' + guide + '.html' + window.location.hash);
         })();
     </script>
+    <!-- /viewer-only -->
 <script src="theme.js"></script>
 </body>
 </html>

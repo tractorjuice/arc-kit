@@ -7,7 +7,7 @@ A one-day launch kit, ready for the day the core `arckit` plugin is approved in 
 **On the day, in order:**
 
 1. Confirm the core plugin is live in the directory.
-2. Publish the article: move `docs/social/drafts/arckit-in-claude-plugin-directory.md` to `docs/articles/<date>-arckit-in-claude-plugin-directory.md` (force-add it; `docs/articles/` is gitignored), fill in [DATE], add its card to `docs/articles.html` and the home-page strip, render a hero, run `scripts/generate-article-share-pages.py`.
+2. Publish the article: move `docs/social/drafts/arckit-in-claude-plugin-directory.md` to `docs/articles/<date>-arckit-in-claude-plugin-directory.md` (force-add it; `docs/articles/` is gitignored), fill in [DATE], add its card to `docs/articles.html` and the home-page strip, render a hero, run `uv run scripts/generate-site-pages.py`.
 3. Swap `<slug>` in the posts below for the article's slug, then post the page post with the card, the group version and the Discord note. Suggest the reshare line to the maintainer.
 
 Rules: `SOCIAL.md`. The drafts deliberately give no plugin count (the marketplace, README and CLAUDE.md disagree, and the private `arckit-uk-gcloud` overlay must never be implied as listed), describe the permission change only as what is true from 6.17.2, and say nothing about earlier review outcomes.
