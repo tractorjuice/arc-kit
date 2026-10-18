@@ -30,11 +30,13 @@ Use the overlay if any of the following describe the project:
 - **Building a new product on an existing FCA authorisation** — adding a new payment rail, a
   new card-present exemption design, a virtual account product, or a cross-border FX offering
   to a firm already authorised under PSRs 2017 or EMR 2011.
-- **Refreshing artefacts after a regulatory change** — FCA PS24/9 (safeguarding reforms), PS24/16
-  (Critical Third Parties, effective January 2025), or a future SCA-RTS instrument revision has
-  changed an obligation and the firm's compliance documentation needs updating.
+- **Refreshing artefacts after a regulatory change** — FCA PS25/12 (safeguarding reforms: CASS 15
+  and the monthly safeguarding return, in force 7 May 2026), PS24/16 (Critical Third Parties,
+  effective January 2025), or an SCA-RTS amendment such as FCA 2025/62 (risk-based contactless
+  exemption, in force 19 March 2026) has changed an obligation and the firm's compliance
+  documentation needs updating.
 - **Preparing for FCA supervisory engagement** — an FCA skilled-person review (s166), a Dear CEO
-  letter response, or an annual safeguarding return audit trail requires the firm to produce
+  letter response, or a monthly safeguarding return audit trail requires the firm to produce
   structured, traceable compliance documentation.
 - **Onboarding an architecture team to payments compliance** — the commands produce teaching
   artefacts that ground architects and engineers in the regulatory anchors without requiring
@@ -67,14 +69,17 @@ Before running the commands:
 ### `/arckit:uk-fs-sca-rts` — SCA-RTS Exemption Design
 
 Generates an SCA-RTS exemption design pack for an authorised PSP, EMI, or PI subject to the Payment
-Services Regulations 2017 and the UK Technical Standards on Strong Customer Authentication (FCA
-2020/70 as amended by PS21/19). The artefact covers: an exemption applicability matrix for Articles
-10, 10A, 11, 13–18 (with Article 12 out of scope as AISP-only); Transaction Risk Analysis (TRA)
-fraud rate band assessment under Article 18; authentication architecture (knowledge / possession /
-inherence factor inventory; dynamic linking implementation); fraud monitoring framework including
-reporting cadence and MLRO notification triggers; and audit trail requirements. Doc-type code:
-**FSSCA**. Principal citations: PSRs 2017 SI 2017/752; FCA PS21/19; FCA 2020/70; the FCA Approach
-Document (current edition).
+Services Regulations 2017 and the FCA's Technical Standards on Strong Customer Authentication and
+Common and Secure Methods of Communication (the UK SCA-RTS, made under PSRs 2017 regulation 106A
+and amended by PS21/19 and FCA 2025/62). The artefact covers: an exemption applicability matrix for
+all ten exemptions — Articles 10, 10A, 11, 12 (unattended terminals for transport fares and parking
+fees), 13, 14, 15, 16, 17 and 18; Transaction Risk Analysis (TRA) reference fraud rates and
+exemption threshold values under Articles 18 and 19, with the Article 20 cessation rule;
+authentication architecture (knowledge / possession / inherence factor inventory; dynamic linking
+implementation); fraud monitoring framework including Article 20 reporting, Article 21 monitoring
+and MLRO notification triggers; and audit trail requirements. Doc-type code: **FSSCA**. Principal
+citations: PSRs 2017 SI 2017/752; the UK SCA-RTS in the FCA Handbook; FCA PS21/19; FCA 2025/62;
+the FCA Approach Document (May 2026).
 
 ### `/arckit:uk-fs-safeguarding` — EMI / PI Safeguarding Assessment
 
@@ -82,11 +87,12 @@ Generates a safeguarding assessment for an authorised EMI or API (or an SPI that
 safeguards) under EMR 2011 Reg 20–22 and PSRs 2017 Reg 23. The artefact covers: safeguarding method
 statement (segregation in a designated bank account, comparable insurance policy, or comparable
 guarantee — with full justification for the chosen method); designated safeguarding bank or insurer
-details; end-to-end client-funds flow diagram; daily reconciliation framework with a four-tier
-sign-off chain; and an audit plan aligned to FCA REP-CRIM expectations and the monthly safeguarding
-return (SUP 16 Annex 34A for payment institutions; SUP 16 Annex 34B for EMIs). Failure scenarios and
-recovery plans are required sections. Doc-type code: **FSSAFE** (CRITICAL severity). Principal
-citations: EMR 2011 SI 2011/99; PSRs 2017 SI 2017/752; FCA PS24/9; FCA Approach Document (May 2026).
+details; end-to-end client-funds flow diagram; daily reconciliation framework (CASS 15.8.19R and
+15.8.42R) with a four-tier sign-off chain; and an audit plan aligned to SUP 3A safeguarding audits
+and the monthly safeguarding return (REP027: SUP 16.14A, content in SUP 16 Annex 29BR — one return
+for payment institutions and EMIs). Failure scenarios and recovery plans are required sections.
+Doc-type code: **FSSAFE** (CRITICAL severity). Principal citations: EMR 2011 SI 2011/99; PSRs 2017
+SI 2017/752; FCA PS25/12 and CASS 15 (in force 7 May 2026); FCA Approach Document (May 2026).
 
 ### `/arckit:uk-fs-consumer-duty` — Consumer Duty Annual Board Report
 
@@ -97,8 +103,9 @@ anchored on FCA Principle 12 and PRIN 2A. The artefact covers: per-outcome evide
 framework; target market assessment; vulnerable customer cohort identification using the FG22/5
 four vulnerability drivers (health, life events, resilience, capability); foreseeable harms register;
 and a board attestation block for SMF holder sign-off. Doc-type code: **FSCD**. Principal citations:
-FCA PS22/9; FCA FG22/5; FCA Consumer Duty board-report good practice observations (December 2024,
-updated March 2026); FCA PRIN 2A via FCA 2022/31.
+FCA PS22/9; FCA FG22/5; FCA "Consumer Duty board reports: good practice and areas for improvement"
+(11 December 2024, last updated 9 March 2026); FCA blog "Year 2 Consumer Duty Board Reports:
+progress and what comes next" (16 April 2026); FCA PRIN 2A via FCA 2022/31.
 
 ### `/arckit:uk-fs-ctp-dependency` — Critical Third Party Dependency Assessment
 
@@ -201,10 +208,12 @@ verified as live at the time the commands were authored.
 
 - [Payment Services Regulations 2017 (SI 2017/752)](https://www.legislation.gov.uk/uksi/2017/752)
 - [Electronic Money Regulations 2011 (SI 2011/99)](https://www.legislation.gov.uk/uksi/2011/99)
-- [Payment Services and Electronic Money — Our Approach (FCA, current edition)](https://www.fca.org.uk/publication/finalised-guidance/payment-services-electronic-money-approach.pdf)
+- [Payment Services and Electronic Money — Our Approach (FCA, May 2026)](https://www.fca.org.uk/publication/finalised-guidance/payment-services-electronic-money-approach.pdf)
 - [FCA EMI and Payment Institutions — key publications](https://www.fca.org.uk/firms/emi-payment-institutions-key-publications)
+- [UK SCA-RTS Chapter 3 — Exemptions from SCA (FCA Handbook)](https://handbook.fca.org.uk/technical-standards/s140c1226)
 - [FCA PS21/19 — SCA-RTS changes (Article 10A)](https://www.fca.org.uk/publications/policy-statements/ps21-19-changes-sca-rts-and-guidance-approach-document-and-perimeter-guidance-manual)
-- [FCA PS24/9 — Safeguarding reforms](https://www.fca.org.uk/publication/policy/ps24-9.pdf)
+- [FCA Handbook Notice 136 — FCA 2025/62, Article 11 contactless change (December 2025)](https://www.fca.org.uk/publication/handbook/handbook-notice-136.pdf)
+- [FCA PS25/12 — Changes to the safeguarding regime for payments and e-money firms (August 2025)](https://www.fca.org.uk/publications/policy-statements/ps25-12-changes-safeguarding-regime-payments-and-e-money-firms)
 - [FCA PS22/9 — A new Consumer Duty](https://www.fca.org.uk/publications/policy-statements/ps22-9-new-consumer-duty)
 - [FCA FG22/5 — Guidance for firms on the Consumer Duty (PDF)](https://www.fca.org.uk/publication/finalised-guidance/fg22-5.pdf)
 - [FCA PS24/16 — Operational resilience: Critical third parties](https://www.fca.org.uk/publications/policy-statements/ps24-16-operational-resilience-critical-third-parties-uk-financial-sector)
@@ -212,5 +221,6 @@ verified as live at the time the commands were authored.
 - [HM Treasury — Critical Third Parties: HMT's approach to designation (March 2024)](https://www.gov.uk/government/publications/critical-third-parties-hm-treasurys-approach-to-designation)
 - [FCA CTP Sourcebook instrument (FCA 2024/41)](https://www.handbook.fca.org.uk/instrument/2024/FCA_2024_41.pdf)
 - [FCA Strong Customer Authentication — firms guidance](https://www.fca.org.uk/firms/strong-customer-authentication)
-- [FCA Consumer Duty board reports: good practice and areas for improvement (December 2024, updated March 2026)](https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement)
-- [FCA SUP 16 — Reporting requirements (entry point for Annex 34A/34B)](https://www.handbook.fca.org.uk/handbook/SUP/16/)
+- [FCA Consumer Duty board reports: good practice and areas for improvement (11 December 2024, last updated 9 March 2026)](https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement)
+- [FCA blog — Year 2 Consumer Duty Board Reports: progress and what comes next (16 April 2026)](https://www.fca.org.uk/news/blogs/year-2-consumer-duty-board-reports-progress-and-what-comes-next)
+- [FCA Handbook SUP 16 — Reporting requirements (SUP 16.14A and Annex 29BR, monthly safeguarding return)](https://handbook.fca.org.uk/handbook/sup16)

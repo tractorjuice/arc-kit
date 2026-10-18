@@ -1,6 +1,8 @@
 ## Reconciliation Cadence and Sign-Off Chain
 
-**Reconciliation frequency**: {{RECONCILIATION_FREQUENCY}}
+**Reconciliation frequency**: {{RECONCILIATION_FREQUENCY}} (minimum: internal and external
+safeguarding reconciliations as frequently as necessary and no less than once each reconciliation
+day — CASS 15.8.19R and CASS 15.8.42R, from 7 May 2026)
 
 ### Position Reconciliation Steps
 
@@ -26,15 +28,16 @@ position reconciliation itself.
 | **Break aging escalation threshold** | {{BREAK_AGING_ESCALATION_THRESHOLD}} |
 | **Break analysis evidence format** | {{BREAK_ANALYSIS_EVIDENCE_FORMAT}} |
 
-### Intraday Reconciliation (firms processing >£10m/day) — OPTIONAL
+### Intraday Reconciliation — OPTIONAL
 
-*Complete this section if the firm processes more than £10m in relevant funds per business day,
-or if the FCA Approach Document (May 2026 edition) supervisory expectations otherwise apply. Mark
-N/A if the firm operates below the intraday-cadence threshold.*
+*Complete this section if the firm has decided to reconcile more than once each reconciliation
+day. There is no regulatory volume threshold for intraday reconciliation; record the firm's own
+trigger (for example a daily relevant-funds volume) and the reason for it. Mark N/A otherwise.*
 
 | Field | Value |
 |-------|-------|
 | **Intraday reconciliation applicable?** | {{INTRADAY_APPLICABLE}} |
+| **Firm's intraday trigger** | {{INTRADAY_TRIGGER}} |
 | **Intraday reconciliation frequency** | {{INTRADAY_FREQUENCY}} |
 | **Intraday cut-off windows** | {{INTRADAY_CUTOFF_WINDOWS}} |
 | **Intraday sign-off owner** | {{INTRADAY_SIGNOFF_OWNER_ROLE}} |
@@ -49,29 +52,36 @@ N/A if the firm operates below the intraday-cadence threshold.*
 | 3 | {{TIER_3_ROLE}} | Variance > {{TIER_3_ESCALATION_THRESHOLD}} or repeat pattern | {{TIER_3_SLA}} |
 | 4 | {{TIER_4_SMF_HOLDER}} | Material shortfall (FCA notification triggered) | {{TIER_4_SLA}} |
 
-**Evidence retention**: 6 years (minimum per FCA SUP 16).
+**Evidence retention**: 5 years (CASS 15.8.8R(3): records made under CASS 15 are kept for 5 years
+unless a CASS 15 rule states otherwise).
 
 ### Variance Handling Protocol
 
 - Surplus: {{SURPLUS_PROCEDURE}}
-- Shortfall: {{SHORTFALL_PROCEDURE_INCLUDING_FCA_NOTIFICATION_TRIGGER}}
+- Shortfall: {{SHORTFALL_PROCEDURE_INCLUDING_FCA_NOTIFICATION_TRIGGER}} (CASS 15.8.60R: inform the
+  FCA in writing without delay where the firm will be unable to, or materially fails to, pay a
+  shortfall into a relevant funds account or conduct its reconciliations)
 - Unreconciled position older than {{UNRECONCILED_AGE_DAYS}} days: {{UNRECONCILED_ESCALATION_PROCEDURE}}
 
-### SUP 16 Annex 34A / 34B Field Mapping
+### Monthly Safeguarding Return (SUP 16 Annex 29BR) Field Mapping
 
 Map each FCA monthly safeguarding return field to the firm's source-of-truth data field, so the
-return can be produced directly from the reconciliation data without manual transcription. APIs
-submit Annex 34A; EMIs submit Annex 34B.
+return can be produced directly from the reconciliation data without manual transcription. The
+return (REP027) is required by SUP 16.14A, due within 15 business days of each month end, and
+its content is set by SUP 16 Annex 29BR. There is one return for authorised PIs, authorised and
+small EMIs, credit unions issuing e-money and SPIs that opt in.
 
-<!-- Map each Annex 34A/34B column to the firm's source-of-truth data field. See
-https://www.handbook.fca.org.uk/handbook/SUP/16/ for the current annex specification. -->
+<!-- The rows below follow the content list in the FCA Approach Document (May 2026), Chapter 13
+(REP027). Check the current form in SUP 16 Annex 29BR at https://handbook.fca.org.uk/handbook/sup16
+and in RegData before go-live. -->
 
-| Annex 34A/34B field | Firm source-of-truth field | Source system | Calculation / aggregation |
-|---------------------|-----------------------------|---------------|----------------------------|
-| Total relevant funds held (period-end) | {{ANNEX_34_TOTAL_RELEVANT_FUNDS_SOURCE}} | {{ANNEX_34_TOTAL_RELEVANT_FUNDS_SYSTEM}} | {{ANNEX_34_TOTAL_RELEVANT_FUNDS_CALC}} |
-| Safeguarded balance (designated account) | {{ANNEX_34_SAFEGUARDED_BALANCE_SOURCE}} | {{ANNEX_34_SAFEGUARDED_BALANCE_SYSTEM}} | {{ANNEX_34_SAFEGUARDED_BALANCE_CALC}} |
-| Reconciliation variance (period-end) | {{ANNEX_34_VARIANCE_SOURCE}} | {{ANNEX_34_VARIANCE_SYSTEM}} | {{ANNEX_34_VARIANCE_CALC}} |
-| Number of breaks in period | {{ANNEX_34_BREAK_COUNT_SOURCE}} | {{ANNEX_34_BREAK_COUNT_SYSTEM}} | {{ANNEX_34_BREAK_COUNT_CALC}} |
-| Material shortfall events in period | {{ANNEX_34_SHORTFALL_EVENTS_SOURCE}} | {{ANNEX_34_SHORTFALL_EVENTS_SYSTEM}} | {{ANNEX_34_SHORTFALL_EVENTS_CALC}} |
+| Safeguarding return item | Firm source-of-truth field | Source system | Calculation / aggregation |
+|--------------------------|-----------------------------|---------------|----------------------------|
+| Amounts of relevant funds safeguarded | {{RETURN_RELEVANT_FUNDS_SOURCE}} | {{RETURN_RELEVANT_FUNDS_SYSTEM}} | {{RETURN_RELEVANT_FUNDS_CALC}} |
+| Number of clients for which relevant funds were safeguarded | {{RETURN_CLIENT_COUNT_SOURCE}} | {{RETURN_CLIENT_COUNT_SYSTEM}} | {{RETURN_CLIENT_COUNT_CALC}} |
+| Relevant funds bank accounts and relevant assets accounts (and the institutions holding them) | {{RETURN_ACCOUNTS_SOURCE}} | {{RETURN_ACCOUNTS_SYSTEM}} | {{RETURN_ACCOUNTS_CALC}} |
+| Any excess or shortfall identified, and adjustments made | {{RETURN_EXCESS_SHORTFALL_SOURCE}} | {{RETURN_EXCESS_SHORTFALL_SYSTEM}} | {{RETURN_EXCESS_SHORTFALL_CALC}} |
+| Whether internal and external reconciliations were carried out every reconciliation day | {{RETURN_RECON_COMPLETENESS_SOURCE}} | {{RETURN_RECON_COMPLETENESS_SYSTEM}} | {{RETURN_RECON_COMPLETENESS_CALC}} |
+| Notifiable breaches | {{RETURN_BREACHES_SOURCE}} | {{RETURN_BREACHES_SYSTEM}} | {{RETURN_BREACHES_CALC}} |
 
 <!-- Add additional Annex field-mapping rows as the firm's submission template requires -->

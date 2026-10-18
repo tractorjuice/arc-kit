@@ -207,8 +207,7 @@ Print the summary per `## Output Summary` below. Do not echo the full artefact.
   characteristics of vulnerability in practice.
 - **"Foreseeable harm" is a forward-looking standard — past complaints data is necessary but not
   sufficient.** The harm assessment must consider product-design risks, distribution risks, and
-  operational capability risks even where those harms have not yet occurred. FCA board-report
-  observations (December 2024) found many firms were backward-looking only.
+  operational capability risks even where those harms have not yet occurred.
 - **Price-personalisation (e.g. dynamic FX rates, tiered fee structures) is a high-scrutiny area.**
   Where the firm's pricing algorithm produces different prices for different consumers, it must
   demonstrate that the variation reflects genuine cost or risk differentials, not discriminatory
@@ -216,14 +215,18 @@ Print the summary per `## Output Summary` below. Do not echo the full artefact.
   affects individual consumers materially.
 - **Board attestation is a regulatory artefact — SMF holders sign, not just the executive sponsoring
   the product.** The attestation must be signed by the named SMF holders (typically SMF3 — CEO,
-  SMF7 — Group Entity Senior Manager or equivalent, and the SMF for Compliance Oversight). The FCA's
-  December 2024 observations noted a pattern of attestation blocks that listed teams rather than
-  named individuals.
-- **The FCA's December 2024 good-and-poor-practice observations show what "doing it right" looks
-  like.** The FCA reviewed 180 firms' first annual Board Reports and found common weaknesses: lack
-  of outcome-specific metrics, backward-looking harm assessments, under-evidenced vulnerable customer
-  sections, and forward plans that were generic rather than firm-specific. Read these observations
-  before finalising.
+  SMF7 — Group Entity Senior Manager or equivalent, and the SMF for Compliance Oversight). Name
+  individuals, not teams.
+- **Read the FCA's two board-report publications before finalising.** "Consumer Duty board reports:
+  good practice and areas for improvement" (published 11 December 2024; last updated 9 March 2026,
+  with insight for smaller firms added on 24 February 2026) reviewed the first annual board reports
+  from 180 firms. Its areas for improvement are data quality, a comprehensive view across
+  distribution chains, analysis of different customer types including those with characteristics
+  of vulnerability, challenge from the board, and taking effective action. The FCA blog "Year 2
+  Consumer Duty Board Reports: progress and what comes next" (16 April 2026) found firms had
+  improved but that gaps remained: data presented without saying what it shows about outcomes,
+  weak monitoring of outcomes delivered through distribution chains, board challenge not
+  documented, and less attention to consumer understanding and support than to products and value.
 - **The FCA removed the mandatory Consumer Duty Board Champion requirement in February 2025.**
   Per the FCA's 27 February 2025 update to PS22/9: "We no longer expect firms to have a Consumer
   Duty Board champion, although they can retain the role should they wish to do so." If the firm
@@ -256,7 +259,8 @@ publications are updated without prior notice.
 | FCA PS22/9 — A new Consumer Duty (policy statement, July 2022) | <https://www.fca.org.uk/publications/policy-statements/ps22-9-new-consumer-duty> |
 | FCA FG22/5 — Guidance for firms on the Consumer Duty (PDF, August 2022) | <https://www.fca.org.uk/publication/finalised-guidance/fg22-5.pdf> |
 | FCA PS22/9 — Policy Statement PDF | <https://www.fca.org.uk/publication/policy/ps22-9.pdf> |
-| FCA Consumer Duty board reports: good practice and areas for improvement (December 2024, updated March 2026) | <https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement> |
+| FCA Consumer Duty board reports: good practice and areas for improvement (11 December 2024, last updated 9 March 2026) | <https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement> |
+| FCA blog — Year 2 Consumer Duty Board Reports: progress and what comes next (16 April 2026) | <https://www.fca.org.uk/news/blogs/year-2-consumer-duty-board-reports-progress-and-what-comes-next> |
 | FCA Consumer Duty — information for firms | <https://www.fca.org.uk/firms/consumer-duty/information-firms> |
 | FCA Handbook (entry point — navigate to PRIN 2A for Consumer Duty rules) | <https://www.handbook.fca.org.uk> |
 | FCA 2022/31 — Consumer Duty instrument (introduces Principle 12 and PRIN 2A) | <https://www.fca.org.uk/publication/policy/fca-2022-31.pdf> |
