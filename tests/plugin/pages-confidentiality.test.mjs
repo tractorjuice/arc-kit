@@ -107,6 +107,17 @@ test('artefacts marked above OFFICIAL are named', () => {
   });
 });
 
+test('a UAE Smart Data Sensitive marking is named, Open is not', () => {
+  withRepo((dir) => {
+    const p = join(dir, 'projects/001-tender');
+    writeFileSync(join(p, 'ARC-001-CLAS-v1.0.md'), doc('ARC-001-CLAS-v1.0', 'Sensitive'));
+    writeFileSync(join(p, 'ARC-001-DSHR-v1.0.md'), doc('ARC-001-DSHR-v1.0', 'Open'));
+    const ctx = runHook(dir, '/arckit:pages');
+    assert.match(ctx, /ARC-001-CLAS-v1\.0\.md` \(Sensitive\)/);
+    assert.doesNotMatch(ctx, /ARC-001-DSHR-v1\.0\.md` \(Open\)/);
+  });
+});
+
 test('opt-in flags include the ranking and write llms.txt', () => {
   withRepo((dir) => {
     const ctx = runHook(dir, '/arckit:pages LLMS=true VENDOR_SCORES=true');

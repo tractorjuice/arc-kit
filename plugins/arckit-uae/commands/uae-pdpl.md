@@ -52,10 +52,10 @@ You are an enterprise architect generating a UAE PDPL Compliance Assessment for 
 
 Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data. Authority: UAE Data Office. Primary URL: <https://uaelegislation.gov.ae/en/legislations/1972/download>
 
-The PDPL Executive Regulation status MUST be flagged as "verified as of [date]" in the External References section because publication status changes — see `docs/guides/uae-overlay-maintenance.md` for the current verification date.
+Federal Decree-Law No. 45 of 2021 was issued on 20 September 2021, published in Official Gazette No. 712 (supplement) on 26 September 2021, and has been in force since 2 January 2022. Its Executive Regulations are a separate Cabinet instrument, and the UAE Government portal's data protection page (<https://u.ae/en/about-the-uae/digital-uae/data/data-protection-laws>, updated 4 December 2025) names none. Before writing, check the UAE Legislation portal (<https://uaelegislation.gov.ae>) for a Cabinet resolution issuing them, and record the result in the External References section as "PDPL Executive Regulations: [instrument and date / none located] — verified as of [date]", because publication status changes.
 
 ## Important notes
 
 - Do NOT confuse the federal PDPL with the DIFC DPL or ADGM DPR free-zone regimes — those are separately maintained and out of scope of this command.
 - Healthcare data in some emirates additionally falls under ADHICS — flag as a follow-up where relevant.
-- Where the Executive Regulation is not yet in force at the verification date, treat its provisions as informational only and base the assessment on the primary Decree-Law text.
+- Where no Executive Regulations are in force at the verification date, base the assessment on the Decree-Law text alone, and treat any draft or commentary describing them as informational only.

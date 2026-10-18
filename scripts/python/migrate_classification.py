@@ -7,12 +7,16 @@ for each based on the existing UK ladder value, and produces a unified diff
 the architect can review before committing. Does NOT modify files unless
 --apply is passed.
 
-Mapping:
-  PUBLIC            -> Open
-  OFFICIAL          -> Shared
-  OFFICIAL-SENSITIVE -> Confidential
-  SECRET            -> Secret  (no change in name)
-  TOP SECRET        -> Top Secret (no change; rare in ArcKit corpora)
+Mapping, onto the four classes of the UAE Smart Data Framework (Part 1,
+Data Classification Standard DC1: Open, Confidential, Sensitive, Secret):
+  PUBLIC             -> Open
+  OFFICIAL           -> Confidential
+  OFFICIAL-SENSITIVE -> Sensitive
+  SECRET             -> Secret
+  TOP SECRET         -> Secret  (the framework has no class above Secret)
+
+Values from the overlay's earlier five-rung ladder (Shared, Top Secret) are
+not UK values, so they are left untouched; re-label them by hand.
 
 Use:
   arckit migrate-classification              # report only, propose mappings
@@ -25,10 +29,10 @@ from pathlib import Path
 
 MAPPING = {
     "PUBLIC": "Open",
-    "OFFICIAL": "Shared",
-    "OFFICIAL-SENSITIVE": "Confidential",
+    "OFFICIAL": "Confidential",
+    "OFFICIAL-SENSITIVE": "Sensitive",
     "SECRET": "Secret",
-    "TOP SECRET": "Top Secret",
+    "TOP SECRET": "Secret",
 }
 
 CLASSIFICATION_LINE = re.compile(

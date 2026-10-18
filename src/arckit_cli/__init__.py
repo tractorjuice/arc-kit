@@ -1228,8 +1228,11 @@ def migrate_classification(
     One-time helper for projects switching to the UAE Federal Overlay (v4.10).
     Walks projects/ for ARC-* artefacts and proposes mappings:
 
-      PUBLIC -> Open, OFFICIAL -> Shared, OFFICIAL-SENSITIVE -> Confidential,
-      SECRET -> Secret, TOP SECRET -> Top Secret
+      PUBLIC -> Open, OFFICIAL -> Confidential, OFFICIAL-SENSITIVE -> Sensitive,
+      SECRET -> Secret, TOP SECRET -> Secret
+
+    The UAE Smart Data Framework has four classes (Open, Confidential,
+    Sensitive, Secret) and nothing above Secret.
 
     Default is report-only; pass --apply to write the changes.
     """

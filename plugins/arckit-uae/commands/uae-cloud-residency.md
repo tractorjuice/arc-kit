@@ -36,7 +36,7 @@ You are an enterprise architect assessing UAE sovereign cloud residency under th
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 5. Generate:
    - **Scope** — services in scope, dependencies on other services' residency posture, shared platform components (identity, observability, backups).
-   - **Per-Dataset Residency Assessment** — for each Dataset ID from the CLAS register, map Classification → Required residency → Chosen CSP → Region → Compliance check. Confidential, Secret, and Top Secret datasets MUST resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2.
+   - **Per-Dataset Residency Assessment** — for each Dataset ID from the CLAS register, map Classification → Required residency → Chosen CSP → Region → Compliance check. Confidential, Sensitive, and Secret datasets MUST resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2.
    - **CSP Due-Diligence Pack** — for each candidate CSP (Core42 / G42 sovereign cloud, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS), record certification posture (DESC for Dubai entities, CSC accreditation), regional footprint, sovereign-data scope, and any documented limitations.
    - **Shared-Responsibility Matrix** — per chosen CSP, division of security responsibilities across infrastructure, platform, application, data, identity, and operational layers.
    - **Exit and Portability Plan** — data egress strategy, format portability, identity migration, key custody on exit, contingency residency on regulatory change.
@@ -51,6 +51,7 @@ UAE National Cloud Security Policy v2, published by the UAE Cybersecurity Counci
 
 ## Important notes
 
-- Confidential / Secret / Top Secret data MUST be hosted on UAE-resident infrastructure. Flag any non-compliant dataset as a critical gap and recommend either re-classification (with rationale) or migration.
+- Confidential / Sensitive / Secret data MUST be hosted on UAE-resident infrastructure. Flag any non-compliant dataset as a critical gap and recommend either re-classification (with rationale) or migration.
+- AWS `me-south-1` is the Middle East (Bahrain) Region, so it is not UAE-resident. AWS's UAE Region is `me-central-1`, Middle East (UAE), open since August 2022. Record the AWS Region per dataset; do not treat an AWS workload as UAE-resident unless it runs in `me-central-1` or another UAE location.
 - DESC accreditation is Dubai-specific; federal entities may rely on CSC accreditation. Both should be recorded where applicable.
 - Each material residency decision (chosen CSP, region, derogation) should be captured as a formal ADR — see the `adr` handoff.

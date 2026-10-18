@@ -47,10 +47,11 @@ You are an enterprise architect generating a Digital Records Plan under the UAE 
 
 ## Authoritative anchor
 
-UAE Government Services Digital Records Policy — Cabinet decision, 23 April 2026 (Cabinet Affairs). Primary URL: <https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting>
+UAE Government Services Digital Records Policy — approved by the UAE Cabinet on 23 April 2026. Primary URL (UAE Cabinet announcement): <https://uaecabinet.ae/en/news/under-directives-of-uae-president-and-in-world-first-mohammed-bin-rashid-reveals-new-uae-government-framework-to-deploy-agentic-ai-across-50-of-government-sectors-operations-within-two-years>. The Dubai Media Office carries the same text: <https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting>
 
 ## Important notes
 
+- Neither announcement names the federal body that owns or administers the policy, and the policy text was not published with them. Do not attribute it to the Ministry of Cabinet Affairs or to the National Library and Archives. Record the administering body in the artefact only when the entity has it in writing (for example, the comprehensive records guide the announcement mentions); otherwise record it as an open item for the entity's records or data office to confirm.
 - The Cabinet decision designates digital records as the official source — ensure this is reflected explicitly per record type, not merely as a policy aspiration.
 - Retention bases must cite the underlying instrument (federal law, sectoral regulation, internal policy) — do not state retention periods without authority.
 - Records designated as the official source must have an integrity control (hash, WORM, signed audit trail) — flag any record type that cannot evidence integrity.
