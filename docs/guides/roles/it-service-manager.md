@@ -13,20 +13,20 @@ The IT Service Manager ensures IT services are delivered effectively and efficie
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit:servicenow` | Design ServiceNow service management — CMDB, SLAs, incident, change, problem management | [Guide](#docs/guides/servicenow.md) |
-| `/arckit:operationalize` | Create operational readiness pack — support model, runbooks, DR/BCP, on-call, handover | [Guide](#docs/guides/operationalize.md) |
-| `/arckit:finops` | Create FinOps strategy — cloud cost management, optimization, governance, forecasting | [Guide](#docs/guides/finops.md) |
+| `/arckit:servicenow` | Design ServiceNow service management — CMDB, SLAs, incident, change, problem management | [Guide](../servicenow.md) |
+| `/arckit:operationalize` | Create operational readiness pack — support model, runbooks, DR/BCP, on-call, handover | [Guide](../operationalize.md) |
+| `/arckit:finops` | Create FinOps strategy — cloud cost management, optimization, governance, forecasting | [Guide](../finops.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit:requirements` | Review service-level requirements (SLAs, availability, support hours) | [Guide](#docs/guides/requirements.md) |
-| `/arckit:risk` | Review operational risks and service continuity | [Guide](#docs/guides/risk.md) |
-| `/arckit:backlog` | Review backlog for operational and support stories | [Guide](#docs/guides/backlog.md) |
-| `/arckit:traceability` | Verify service requirements trace to operational design | [Guide](#docs/guides/traceability.md) |
-| `/arckit:health` | Monitor artifact health for live service documentation | [Guide](#docs/guides/artifact-health.md) |
-| `/arckit:diagram` | Review infrastructure and service diagrams | [Guide](#docs/guides/diagram.md) |
+| `/arckit:requirements` | Review service-level requirements (SLAs, availability, support hours) | [Guide](../requirements.md) |
+| `/arckit:risk` | Review operational risks and service continuity | [Guide](../risk.md) |
+| `/arckit:backlog` | Review backlog for operational and support stories | [Guide](../backlog.md) |
+| `/arckit:traceability` | Verify service requirements trace to operational design | [Guide](../traceability.md) |
+| `/arckit:health` | Monitor artifact health for live service documentation | [Guide](../artifact-health.md) |
+| `/arckit:diagram` | Review infrastructure and service diagrams | [Guide](../diagram.md) |
 
 ## Typical Workflow
 

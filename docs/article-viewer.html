@@ -13,6 +13,7 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <!-- page:meta -->
     <meta name="description" content="ArcKit Article Viewer - Read ArcKit release notes, deep-dives, and announcements directly in your browser.">
     <meta name="keywords" content="ArcKit articles, enterprise architecture blog, release notes, Wardley Mapping, UK government architecture">
     <meta name="author" content="ArcKit">
@@ -28,6 +29,7 @@
     <meta name="twitter:description" content="Read ArcKit release notes and deep-dives directly in your browser.">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/article-viewer.html">
+    <!-- /page:meta -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
@@ -39,8 +41,6 @@
     <link rel="stylesheet" href="theme.css?v=4.12.3">
     <link rel="stylesheet" href="heroes.css?v=4.12.3">
 
-    <script src="https://cdn.jsdelivr.net/npm/marked@15.0.6/marked.min.js" integrity="sha384-b5hg04N6F0rvyz1a/GVoPPY0JcqGTARCmEuFCqwQKX3zq7LsxhV+n+6Ykh2pQOCH" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js" integrity="sha384-eEu5CTj3qGvu9PdJuS+YlkNi7d2XxQROAFYOr59zgObtlcux1ae1Il3u7jvdCSWu" crossorigin="anonymous"></script>
 
     <style>
         body, .govuk-template, .govuk-template__body {
@@ -172,6 +172,9 @@
         .app-markdown img { max-width: 100%; height: auto; margin: 1.5rem 0; }
         .app-markdown hr { border: none; border-top: 1px solid #b1b4b6; margin: 2.5rem 0; }
         .app-markdown table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.9375rem; }
+        /* On a phone a wide table scrolls on its own instead of widening the page, and a long URL wraps. */
+        .app-markdown { overflow-wrap: break-word; }
+        @media (max-width: 640px) { .app-markdown table { display: block; overflow-x: auto; } }
         .app-markdown th, .app-markdown td { border: 1px solid #b1b4b6; padding: 0.75rem; text-align: left; }
         .app-markdown th { background: #f3f2f1; font-weight: 700; }
 
@@ -190,6 +193,7 @@
         .app-footer a { color: white; text-decoration: underline; }
         .app-footer a:hover { color: #c084fc; }
     </style>
+    <!-- page:jsonld -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -212,6 +216,7 @@
         ]
     }
     </script>
+    <!-- /page:jsonld -->
 </head>
 <body class="govuk-template__body">
     <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
@@ -248,14 +253,17 @@
 
     <div class="app-page-hero app-page-hero--articles">
         <div class="govuk-width-container app-page-hero__content">
+            <!-- page:hero -->
             <span class="app-page-hero__stat" id="hero-stat">Articles</span>
             <h1 class="app-page-hero__title" id="hero-title">Loading article</h1>
             <p class="app-page-hero__description" id="hero-desc">Rendered article from the ArcKit writing collection.</p>
+            <!-- /page:hero -->
         </div>
     </div>
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-width-container">
+            <!-- page:body -->
             <a id="back-link" href="articles.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Articles</a>
 
             <div id="loading" class="app-loading">
@@ -278,6 +286,7 @@
             </div>
 
             <article id="content" class="app-markdown" style="display:none"></article>
+            <!-- /page:body -->
         </div>
     </main>
 
@@ -290,113 +299,26 @@
     <script type="module" src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js" integrity="sha384-DwGEYeDIkSBDH4+n4Z+tY7m0/hKLvETQmD6glhDiHn0lFo3hffImqh39zfNvHVrd" crossorigin="anonymous"></script>
     <script type="module">import { initAll } from "https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js"; initAll();</script>
     <script src="theme.js"></script>
+    <!-- viewer-only -->
     <script>
+        // Every listed article is published as a static page under share/ by
+        // scripts/generate-site-pages.py. This viewer only forwards the old
+        // article-viewer.html?a=<slug> links there, keeping the other query
+        // parameters (utm_*) and any #anchor. A -medium or -linkedin copy of an
+        // article has no page of its own and goes to the article itself.
         (function() {
             var params = new URLSearchParams(window.location.search);
             var slug = params.get('a');
-            if (!slug) { window.location.replace('articles.html'); return; }
-            if (!/^[a-z0-9\-]+$/.test(slug)) { showError('Invalid article name.'); return; }
-
-            var mdUrl = 'articles/' + slug + '.md';
-            var heroCandidates = [
-                'articles/' + slug + '-hero.png',
-                'articles/' + slug.replace(/-(support|medium|linkedin|post|for-companies|funding-research|on-github)$/, '') + '-hero.png'
-            ];
-
-            fetch(mdUrl)
-                .then(function(res) {
-                    if (!res.ok) throw new Error(res.status === 404 ? 'Article not found' : 'Failed to load article (HTTP ' + res.status + ')');
-                    return res.text();
-                })
-                .then(function(md) {
-                    var titleMatch = md.match(/^#\s+(.+)$/m);
-                    var articleTitle = titleMatch ? titleMatch[1] : 'Article';
-                    document.title = articleTitle + ' - ArcKit';
-                    document.getElementById('hero-title').textContent = articleTitle;
-
-                    // Per-article SEO: rewrite the canonical + Open Graph tags so each
-                    // ?a=<slug> URL is uniquely indexable instead of collapsing to the
-                    // bare article-viewer.html shell.
-                    var articleUrl = 'https://arckit.org/article-viewer.html?a=' + slug;
-                    var setMeta = function(sel, attr, val) {
-                        var el = document.querySelector(sel);
-                        if (el && val) el.setAttribute(attr, val);
-                    };
-                    setMeta('link[rel="canonical"]', 'href', articleUrl);
-                    setMeta('meta[property="og:url"]', 'content', articleUrl);
-                    setMeta('meta[property="og:title"]', 'content', articleTitle);
-                    setMeta('meta[name="twitter:title"]', 'content', articleTitle);
-
-                    var firstPara = md.split(/\n\n+/).find(function(chunk){
-                        return chunk && !chunk.startsWith('#') && !chunk.startsWith('!') && !chunk.startsWith('---');
-                    });
-                    if (firstPara) {
-                        var clean = firstPara.replace(/\*\*|__|`/g, '').replace(/\s+/g,' ').trim();
-                        if (clean.length > 220) clean = clean.slice(0, 217) + '…';
-                        document.getElementById('hero-desc').textContent = clean;
-                        setMeta('meta[property="og:description"]', 'content', clean);
-                        setMeta('meta[name="twitter:description"]', 'content', clean);
-                    }
-
-                    var dateMatch = slug.match(/^(\d{4})-(\d{2})-(\d{2})-/);
-                    if (dateMatch) {
-                        var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-                        var y = dateMatch[1], m = months[parseInt(dateMatch[2],10)-1], d = parseInt(dateMatch[3],10);
-                        var dateStr = d + ' ' + m + ' ' + y;
-                        document.getElementById('meta-date').textContent = dateStr;
-                        document.getElementById('meta').style.display = 'flex';
-                        document.getElementById('hero-stat').textContent = dateStr;
-                    }
-
-                    tryHero(heroCandidates, 0);
-
-                    var rawHtml = marked.parse(md);
-                    var safeHtml = DOMPurify.sanitize(rawHtml);
-                    var contentEl = document.getElementById('content');
-                    // Parse sanitised HTML via DOMParser, then move its body children
-                    // into the article container so no innerHTML assignment is used.
-                    var parsed = new DOMParser().parseFromString(safeHtml, 'text/html');
-                    while (parsed.body.firstChild) {
-                        contentEl.appendChild(parsed.body.firstChild);
-                    }
-
-                    // Strip the H1 from the rendered body (we already show it in the hero).
-                    var firstH1 = contentEl.querySelector('h1');
-                    if (firstH1) firstH1.remove();
-
-                    // Rewrite relative image src to be relative to articles/.
-                    contentEl.querySelectorAll('img').forEach(function(img) {
-                        var src = img.getAttribute('src') || '';
-                        if (!/^(https?:)?\/\//.test(src) && !src.startsWith('articles/') && !src.startsWith('/')) {
-                            img.setAttribute('src', 'articles/' + src);
-                        }
-                    });
-
-                    document.getElementById('loading').style.display = 'none';
-                    contentEl.style.display = 'block';
-                })
-                .catch(function(err) { showError(err.message); });
-
-            function tryHero(urls, idx) {
-                if (idx >= urls.length) return;
-                var test = new Image();
-                test.onload = function() {
-                    var heroEl = document.getElementById('article-hero');
-                    heroEl.src = urls[idx];
-                    heroEl.style.display = 'block';
-                };
-                test.onerror = function() { tryHero(urls, idx + 1); };
-                test.src = urls[idx];
+            if (!slug || !/^[a-z0-9\-]+$/.test(slug)) {
+                window.location.replace('articles.html');
+                return;
             }
-
-            function showError(msg) {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('error-message').textContent = msg;
-                document.getElementById('error').style.display = 'block';
-                document.getElementById('hero-title').textContent = 'Article not found';
-                document.getElementById('hero-desc').textContent = msg;
-            }
+            slug = slug.replace(/-(medium|linkedin)$/, '');
+            params.delete('a');
+            var rest = params.toString();
+            window.location.replace('share/' + slug + '.html' + (rest ? '?' + rest : '') + window.location.hash);
         })();
     </script>
+    <!-- /viewer-only -->
 </body>
 </html>

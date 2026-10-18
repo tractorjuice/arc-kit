@@ -41,7 +41,7 @@ The primary audience (UK public sector architects) is on LinkedIn and in the cro
 | Discord | any | attach slide 1 of a series; link the share page |
 | Instagram / portrait (if ever used) | 1080 × 1350 | `docs/social/out/<series>/slide-N-1080x1350.png` |
 
-Link to `https://arckit.org/share/<slug>.html`, never to `article-viewer.html?a=…`: the viewer is rendered in the browser, so link previews only ever see a generic card. LinkedIn fixes a post's preview when it is published, so a wrong card means deleting and reposting, not editing. Add `?utm_campaign=show-your-working&utm_source=<channel>` to campaign links so Google Analytics can separate campaign traffic from release traffic. On Discord, wrap GitHub links in `<…>` to stop the generic GitHub embed.
+Link to `https://arckit.org/share/<slug>.html`, never to `article-viewer.html?a=…`: the share page is the article itself, with its own preview card, while the viewer only redirects to it. LinkedIn fixes a post's preview when it is published, so a wrong card means deleting and reposting, not editing. Add `?utm_campaign=show-your-working&utm_source=<channel>` to campaign links so Google Analytics can separate campaign traffic from release traffic. On Discord, wrap GitHub links in `<…>` to stop the generic GitHub embed.
 
 Render the cards with:
 

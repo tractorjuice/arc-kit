@@ -683,7 +683,7 @@ vibe</code></pre></div>
                     <div class="app-code-block govuk-!-margin-top-2">Now create all the artifacts. Take your time. Do not stop until complete.</div>
                     <p class="govuk-body govuk-!-margin-top-3"><strong>When to use it:</strong> greenfield projects, demos, proofs of concept, vibe-coding sessions where you want a complete first-pass set of artifacts to react to.</p>
                     <p class="govuk-body"><strong>When not to use it:</strong> heavily regulated work (Secure by Design, MOD, EU AI Act) where each artifact needs reviewer sign-off; existing projects with artifacts already on disk (run <code>/arckit:navigator</code> first); token-constrained sessions.</p>
-                    <p class="govuk-body govuk-!-margin-bottom-0"><strong>If the run stalls:</strong> resume with <em>"Continue from where you stopped. Do not stop until complete."</em> Then run your platform's health command (<code>/arckit:health</code>, <code>$arckit-health</code>, or <code>/arckit-health</code>) to spot anything skipped. Full guide: <a href="guide-viewer.html?guide=start" class="govuk-link">Getting Started with ArcKit</a>.</p>
+                    <p class="govuk-body govuk-!-margin-bottom-0"><strong>If the run stalls:</strong> resume with <em>"Continue from where you stopped. Do not stop until complete."</em> Then run your platform's health command (<code>/arckit:health</code>, <code>$arckit-health</code>, or <code>/arckit-health</code>) to spot anything skipped. Full guide: <a href="guide/start.html" class="govuk-link">Getting Started with ArcKit</a>.</p>
                 </div>
             </div>
 
@@ -705,7 +705,7 @@ vibe</code></pre></div>
                     <p class="govuk-body"><strong>Customize:</strong> copy a recipe to <code>.arckit/recipes/{name}.yaml</code> and edit. The harness reads project overrides first, falling back to the plugin defaults &mdash; your customisations survive plugin updates.</p>
                     <p class="govuk-body"><strong>Resumable:</strong> state persists to <code>projects/{P}/.arckit/state.json</code>. If a wave fails, fix the underlying issue and run <code>/arckit:build 001 --resume</code> to pick up exactly where it stopped.</p>
                     <p class="govuk-body"><strong>Other platforms note:</strong> this command is not generated for Codex, Gemini, OpenCode, GitHub Copilot, or Mistral Vibe. The build harness depends on Claude Code's parallel agent dispatch and plugin hook behaviour, so there is no supported non-Claude build-harness command.</p>
-                    <p class="govuk-body govuk-!-margin-bottom-0"><strong>When to use it:</strong> end-to-end governance builds where you want a full template-driven artefact set committed in atomic, reviewable waves. Full guide: <a href="guide-viewer.html?guide=build" class="govuk-link">Build Harness Guide</a>.</p>
+                    <p class="govuk-body govuk-!-margin-bottom-0"><strong>When to use it:</strong> end-to-end governance builds where you want a full template-driven artefact set committed in atomic, reviewable waves. Full guide: <a href="guide/build.html" class="govuk-link">Build Harness Guide</a>.</p>
                 </div>
             </div>
 
