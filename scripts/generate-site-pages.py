@@ -45,7 +45,7 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-from urllib.parse import parse_qsl, urlencode, urlsplit
+from urllib.parse import parse_qsl, unquote, urlencode, urlsplit
 
 MARKDOWN_IT_VERSION = "4.0.0"
 
@@ -220,7 +220,9 @@ def rewrite_url(url: str, attr: str, page: Page, site: Site) -> str:
     Guides are written for GitHub, so a relative link resolves against the
     guide's own folder. Articles were written for the viewer at the site root,
     so their links resolve against docs/ and their images against docs/articles/.
-    A link to anywhere else in the repo goes to the file on GitHub.
+    A link to anywhere else in the repo, or to Markdown in docs/ with no page of
+    its own, goes to the file on GitHub, which renders it; the site would serve
+    the raw Markdown.
     """
     if not url or url.startswith("#"):
         return url
@@ -247,7 +249,10 @@ def rewrite_url(url: str, attr: str, page: Page, site: Site) -> str:
         target = REPO_BLOB + repo_path
     else:
         site_path, query = site_target(repo_path[len("docs/"):], query, site)
-        target = posixpath.relpath(site_path, posixpath.dirname(page.out))
+        if site_path.endswith(".md"):
+            target = REPO_BLOB + "docs/" + site_path
+        else:
+            target = posixpath.relpath(site_path, posixpath.dirname(page.out))
     return target + (f"?{query}" if query else "") + (f"#{fragment}" if fragment else "")
 
 
@@ -417,10 +422,39 @@ def guide_pages(site: Site) -> dict[Path, str]:
     return pages
 
 
-def tracked_articles() -> set[str]:
-    out = subprocess.run(["git", "ls-files", "--", "docs/articles"], cwd=REPO,
-                         capture_output=True, text=True, check=True).stdout
-    return set(out.split())
+def tracked_files() -> set[str]:
+    out = subprocess.run(["git", "ls-files", "-z"], cwd=REPO, capture_output=True, text=True, check=True).stdout
+    return set(filter(None, out.split("\0")))
+
+
+def broken_links(pages: dict[Path, str], tracked: set[str]) -> list[str]:
+    """Links and images on the pages whose target is not in git.
+
+    The site serves only committed files, and a GitHub link only works for a
+    committed file. docs/articles/ is gitignored so drafts stay local, which
+    means a published article's images need `git add -f` too: two articles
+    shipped from March to October 2026 with four diagrams that never were.
+    """
+    files = tracked | {str(p.relative_to(REPO)) for p in pages}
+    folders = {str(parent) for f in files for parent in Path(f).parents}
+    broken = []
+    for path, text in pages.items():
+        folder = posixpath.dirname(str(path.relative_to(REPO)))
+        for _attr, value in ATTR_RE.findall(text):
+            url = html.unescape(value)
+            parts = urlsplit(url)
+            if url.startswith(REPO_BLOB):
+                target = unquote(urlsplit(url[len(REPO_BLOB):]).path)
+            elif SCHEME_RE.match(url) or url.startswith(("#", "//")) or not parts.path:
+                continue
+            elif url.startswith("/"):
+                target = "docs" + unquote(parts.path)
+            else:
+                target = posixpath.normpath(posixpath.join(folder, unquote(parts.path)))
+            target = target.rstrip("/")
+            if target not in files and target not in folders:
+                broken.append(f"{path.relative_to(REPO)}: {url}")
+    return broken
 
 
 def cards() -> list[dict[str, str]]:
@@ -440,9 +474,8 @@ def cards() -> list[dict[str, str]]:
     return found
 
 
-def article_pages(site: Site, listed: list[dict[str, str]]) -> dict[Path, str]:
+def article_pages(site: Site, listed: list[dict[str, str]], tracked: set[str]) -> dict[Path, str]:
     template = load_template(ARTICLE_TEMPLATE)
-    tracked = tracked_articles()
     pages: dict[Path, str] = {}
     for card in listed:
         slug = card["slug"]
@@ -473,7 +506,10 @@ def article_pages(site: Site, listed: list[dict[str, str]]) -> dict[Path, str]:
             stat = f"{int(d)} {MONTHS[int(m) - 1]} {y}"
             graph["datePublished"] = f"{y}-{m}-{d}"
             content.append(f'<div class="app-article-meta"><span class="app-article-meta__date">{stat}</span></div>')
-        content.append(f'<article id="content" class="app-markdown">\n{render_body(md, page, site)}</article>')
+        body = render_body(md, page, site)
+        if hero:  # the hero shows it; drop the same image where the article repeats it
+            body = re.sub(rf'<p><img src="\.\./{re.escape(esc(hero))}"[^>]*></p>\n?', "", body)
+        content.append(f'<article id="content" class="app-markdown">\n{body}</article>')
 
         pages[SHARE_OUT / f"{slug}.html"] = fill(template, 1, {
             "page:meta": meta_block(card["title"], clip(summary, 155), summary, url, image,
@@ -517,7 +553,12 @@ def build() -> tuple[dict[Path, str], str, Site]:
     missing = sorted(c["slug"] for c in listed if not (ARTICLES / f"{c['slug']}.md").is_file())
     if missing:
         sys.exit("Cards on docs/articles.html with no docs/articles/<slug>.md: " + ", ".join(missing))
-    pages = {**guide_pages(site), **article_pages(site, listed)}
+    tracked = tracked_files()
+    pages = {**guide_pages(site), **article_pages(site, listed, tracked)}
+    broken = broken_links(pages, tracked)
+    if broken:
+        sys.exit("Links to files that are not in git. Commit the file (`git add -f` under the gitignored "
+                 "docs/articles/), or fix the link in the Markdown:\n  " + "\n  ".join(broken))
     return pages, sitemap_text(SITEMAP.read_text(encoding="utf-8"), site, listed), site
 
 

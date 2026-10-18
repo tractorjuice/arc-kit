@@ -115,7 +115,7 @@ Generates a DISP Member self-attestation pack — the apex artefact for Defence-
 
 ## Build recipe
 
-Recipe: [`au-federal.yaml`](../../arckit-au/recipes/au-federal.yaml)
+Recipe: [`au-federal.yaml`](../../plugins/arckit-au/recipes/au-federal.yaml)
 
 37 default targets across the build waves + 3 post-build hooks (`arckit:health`, `arckit:graph-report`, `arckit:pages`), with optional default-off `AIP`, `DATASCOUT`, `AU_OT` and `AU_SOCI` targets for cross-sector critical-infrastructure and procurement use. The recipe swaps three commands from the `uk-saas` baseline (per maintainer guidance on #424):
 

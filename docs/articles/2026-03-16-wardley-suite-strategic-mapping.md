@@ -10,7 +10,7 @@ Here's what the suite looks like in practice.
 
 The Wardley suite follows a natural analytical flow. You don't have to run them in order, and each command works independently, but the outputs build on each other when they exist.
 
-![Wardley Suite Command Flow](2026-03-16-wardley-suite-flow.png)
+![Wardley Suite Command Flow](2026-03-16-wardley-suite-hero.png)
 
 **`/arckit.wardley.value-chain`** starts at the beginning: what does the user actually need, and what components support that need? It decomposes a user need into a dependency chain, assigns visibility positions, identifies evolution stages, and outputs OWM-ready syntax. If you've ever stared at a blank Wardley Map canvas wondering where to start, this is your answer. Feed it a domain like "patient appointment booking" and it traces the chain from patient need through booking interface, appointment logic, identity verification, notification, down to infrastructure. Each component gets an evolution position and a visibility score.
 
