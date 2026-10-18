@@ -31,6 +31,8 @@ Material that cites the original BIO, BIO1 or an earlier BIO2 version is flagged
 /arckit:nl-bio <project ID or system description>
 ```
 
+In Claude Code the overlay installs as its own plugin, `arckit-nl`, so the command is `/arckit-nl:nl-bio`.
+
 Example: `/arckit:nl-bio Assess BIO2 conformance for a ministry shared-services platform, ISO 27001 certification not pursued, BIV scores not yet determined`
 
 Output: `projects/<id>/ARC-<id>-BIO2-v1.0.md`

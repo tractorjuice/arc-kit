@@ -22,6 +22,8 @@ For non-Dutch projects the overlay is dormant: it adds four new doc-types (RBCLO
 
 ## The Four Commands
 
+In Claude Code the overlay installs as its own plugin, `arckit-nl`, so its commands carry that prefix: `/arckit-nl:nl-tbb`, `/arckit-nl:nl-cloud`, `/arckit-nl:nl-bio` and `/arckit-nl:nl-exit`. Core commands such as `/arckit:requirements` keep the `arckit` prefix.
+
 ### `/arckit:nl-tbb`
 
 Determines the **Te Beschermen Belangen (TBB) category** for a system or dataset using the TBB systematiek's BIV scoring method — Beschikbaarheid, Integriteit, and Vertrouwelijkheid scored independently on a four-point scale, with the **highest** of the three scores (never an average) setting the category. It never produces a VIRBI 2025 rubricering: it records any rubricering the information already carries and uses it only as a floor on the category. It states the mandatory one-way inference warning: a TBB category does not imply the system holds data at the corresponding Stg. classification. Produces `ARC-{id}-TBB-v{version}.md`.

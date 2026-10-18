@@ -413,7 +413,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | FSCTP | `ARC-*-FSCTP-*.md` | UK Critical Third Parties Dependency Assessment |
 | **Compliance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
 | | RBCLOUD | `ARC-*-RBCLOUD-*.md` | Rijksbreed Cloudbeleid Compliance Assessment |
-| | TBB | `ARC-*-TBB-*.md` | Te Beschermen Belangen / VIRBI 2025 Rubricering |
+| | TBB | `ARC-*-TBB-*.md` | Te Beschermen Belangen (TBB) Category Determination |
 | | BIO2 | `ARC-*-BIO2-*.md` | BIO2 Conformance Assessment |
 | **Governance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
 | | NLEXIT | `ARC-*-NLEXIT-*.md` | NL Cloud Exit Plan |

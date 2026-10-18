@@ -72,7 +72,7 @@
     {
       "name": "arckit-nl",
       "source": "./plugins/arckit-nl",
-      "description": "Netherlands Public Sector Overlay — 4 commands for the Rijksbreed cloudbeleid 2026, VIRBI 2025 / Te Beschermen Belangen rubricering, BIO2 conformance, and cloud exit planning",
+      "description": "Netherlands Public Sector Overlay — 4 commands for the Rijksbreed cloudbeleid 2026, Te Beschermen Belangen (TBB) category determination under VIRBI 2025, BIO2 conformance, and cloud exit planning",
       "version": "6.18.2",
       "author": {
         "name": "TractorJuice"
