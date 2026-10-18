@@ -47,17 +47,6 @@ ORDER_RULES = [
     ("STKE", "REQ", "/arckit:requirements reads the stakeholder analysis and warns if it is missing"),
 ]
 
-# Recipes whose ordering fix is in flight in their own #949 overlay PR. They warn
-# instead of failing until those PRs merge; empty this set then, so the rule is
-# enforced everywhere.
-ORDER_RULES_PENDING = {
-    "plugins/arckit-agent-architecture/recipes/agent-architecture.yaml",
-    "plugins/arckit-au/recipes/au-federal.yaml",
-    "plugins/arckit-oaa/recipes/oaa-full.yaml",
-    "plugins/arckit-togaf-adm/recipes/togaf-adm-full.yaml",
-    "plugins/arckit-togaf-adm/recipes/togaf-agent-full.yaml",
-}
-
 errors = []
 warnings = []
 recipes_checked = 0
@@ -221,7 +210,7 @@ for path in paths:
                 f"{path}: target {later_id} must depend on {earlier_id} ({why}); "
                 f"add {earlier_id} to its deps"
             )
-            (warnings if path in ORDER_RULES_PENDING else errors).append(message)
+            errors.append(message)
 
     recipes_checked += 1
 

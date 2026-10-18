@@ -380,7 +380,7 @@ You should:
 - Flag completeness: 95% complete
 - **BLOCKING**: Need to add fallback procedure for system failures
 - **WARNING**: Model card not yet published (recommended)
-- Write to `projects/NNN-benefits-chatbot/ARC-NNN-ATRS-v1.0.md`
+- Write to `projects/NNN-benefits-chatbot/ARC-NNN-ATRS-v{VERSION}.md`
 - Provide next steps: "Complete fallback procedures, then ready for SRO approval and GOV.UK publication"
 
 ## Important Notes

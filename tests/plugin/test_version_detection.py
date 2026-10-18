@@ -38,16 +38,22 @@ def _declared_codes(path: Path) -> list[str]:
 def _instructions(path: Path) -> str:
     """The command body, plus the agent it hands the write to (framework -> arckit-framework)."""
     text = path.read_text(encoding="utf-8")
-    agent = PLUGIN / "agents" / f"arckit-{path.stem}.md"
+    agent = path.parent.parent / "agents" / f"arckit-{path.stem}.md"
     if agent.exists():
         text += agent.read_text(encoding="utf-8")
     return text
 
 
 MULTI = _multi_instance_types()
+# Core and every community overlay. Overlays carry their own copy of the reference
+# (scripts/sync-shared-assets.py), so the same pointer resolves in each plugin.
 SINGLE_INSTANCE = sorted(
-    p for p in (PLUGIN / "commands").glob("*.md") if any(c not in MULTI for c in _declared_codes(p))
+    p for p in REPO_ROOT.glob("plugins/arckit-*/commands/*.md") if any(c not in MULTI for c in _declared_codes(p))
 )
+
+
+def _id(path: Path) -> str:
+    return f"{path.parent.parent.name}/{path.stem}"
 
 def _pinned_to_v1(path: Path) -> list[str]:
     """The command's own output named at v1.0 with a placeholder project ID.
@@ -59,7 +65,8 @@ def _pinned_to_v1(path: Path) -> list[str]:
     own = [c for c in _declared_codes(path) if c not in MULTI]
     found = set()
     for code in own:
-        found.update(re.findall(r"ARC-[{\[](?:PROJECT_ID|PID|P)[}\]]-" + re.escape(code) + r"-v1\.0\b", text))
+        found.update(re.findall(
+            r"ARC-(?:[{\[](?:PROJECT_ID|PID|P|NNN)[}\]]|<[a-z-]+>|NNN)-" + re.escape(code) + r"-v1\.0\b", text))
     return sorted(found)
 
 
@@ -79,7 +86,7 @@ def test_the_commands_from_946_are_single_instance():
             "wardley.doctrine", "requirements", "framework"} <= names
 
 
-@pytest.mark.parametrize("path", SINGLE_INSTANCE, ids=lambda p: p.stem)
+@pytest.mark.parametrize("path", SINGLE_INSTANCE, ids=_id)
 def test_single_instance_command_follows_version_detection(path):
     assert POINTER in _instructions(path), (
         f"{path.name} writes a single-instance artefact but does not reference {POINTER}, "
@@ -87,7 +94,7 @@ def test_single_instance_command_follows_version_detection(path):
     )
 
 
-@pytest.mark.parametrize("path", SINGLE_INSTANCE, ids=lambda p: p.stem)
+@pytest.mark.parametrize("path", SINGLE_INSTANCE, ids=_id)
 def test_own_output_is_not_pinned_to_v1(path):
     pinned = _pinned_to_v1(path)
     assert not pinned, f"{path.name} pins its output to v1.0: {pinned}; use v{{VERSION}} from the version check"

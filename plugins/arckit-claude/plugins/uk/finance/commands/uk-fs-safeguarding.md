@@ -61,13 +61,15 @@ instead of recreating it. Extract `project_dir` and `project_number` from the JS
 
 ### Step 2 — Generate the document ID
 
+Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+
 Run:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_NUMBER> FSSAFE --filename
+${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_NUMBER> FSSAFE {VERSION} --filename
 ```
 
-This produces a filename of the form `ARC-NNN-FSSAFE-v1.0.md`. FSSAFE is the doc-type code for this
+This produces a filename of the form `ARC-NNN-FSSAFE-v{VERSION}.md`. FSSAFE is the doc-type code for this
 artefact.
 
 ### Step 3 — Read the templates and rendering partials

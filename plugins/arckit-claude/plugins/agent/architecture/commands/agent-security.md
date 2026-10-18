@@ -197,7 +197,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-AASE-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Agent Security Architecture"
 - `ARC-[PROJECT_ID]-AASE-v[VERSION]` → Construct using format above
@@ -258,7 +258,7 @@ Verify the security architecture meets minimum standards:
 
 ### 10. Write output
 
-- `projects/{project-dir}/ARC-{PROJECT_ID}-AASE-v1.0.md` — Full security architecture document
+- `projects/{project-dir}/ARC-{PROJECT_ID}-AASE-v{VERSION}.md` — Full security architecture document
 - Update traceability matrix with security references
 
 **CRITICAL - Show Summary Only**:

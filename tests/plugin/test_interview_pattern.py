@@ -17,7 +17,18 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 PLUGIN = REPO_ROOT / "plugins" / "arckit-claude"
 REFERENCE = PLUGIN / "references" / "interview-pattern.md"
 POINTER = "${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md"
-INTERVIEWING = sorted(p for p in (PLUGIN / "commands").glob("*.md") if "AskUserQuestion" in p.read_text(encoding="utf-8"))
+# Plugins outside the pattern, with the reason. Keep this short: an entry exempts a
+# whole plugin.
+NOT_ON_THE_PATTERN = {
+    # Standalone tooling plugin (no core dependency, no shared references/): its
+    # /arckit-fde:create site wizard asks one setup concern at a time by design.
+    "arckit-fde",
+}
+# Core and every community overlay that asks the user anything.
+INTERVIEWING = sorted(
+    p for p in REPO_ROOT.glob("plugins/arckit-*/commands/*.md")
+    if p.parent.parent.name not in NOT_ON_THE_PATTERN and "AskUserQuestion" in p.read_text(encoding="utf-8")
+)
 
 
 def test_reference_exists_and_states_the_five_rules():
@@ -33,20 +44,20 @@ def test_at_least_the_known_interviewing_commands_are_covered():
             "presentation", "sobc", "template-builder"} <= names
 
 
-@pytest.mark.parametrize("path", INTERVIEWING, ids=lambda p: p.stem)
+@pytest.mark.parametrize("path", INTERVIEWING, ids=lambda p: f"{p.parent.parent.name}/{p.stem}")
 def test_interviewing_command_points_at_the_pattern(path):
     text = path.read_text(encoding="utf-8")
     assert POINTER in text, f"{path.name} asks questions but does not reference {POINTER}"
 
 
-@pytest.mark.parametrize("path", INTERVIEWING, ids=lambda p: p.stem)
+@pytest.mark.parametrize("path", INTERVIEWING, ids=lambda p: f"{p.parent.parent.name}/{p.stem}")
 def test_no_multi_round_boilerplate(path):
     text = path.read_text(encoding="utf-8")
     assert not re.search(r"Maximum \d+ rounds", text), f"{path.name} still allows a second round"
     assert "Ask the most important question first" not in text, f"{path.name} still sequences questions"
 
 
-@pytest.mark.parametrize("path", INTERVIEWING, ids=lambda p: p.stem)
+@pytest.mark.parametrize("path", INTERVIEWING, ids=lambda p: f"{p.parent.parent.name}/{p.stem}")
 def test_every_question_marks_its_default(path):
     """A single-select `**Question N**` block offers exactly one (Recommended) option, the default the
     pattern falls back to; a multi-select block marks at most one (none means an empty default)."""

@@ -253,8 +253,10 @@ the appropriate inline citation marker (see Step 3).
 
 Generate the document ID with the ArcKit helper (SUPP is single-instance):
 
+Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" 000 SUPP --filename
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" 000 SUPP {VERSION} --filename
 ```
 
 This returns `ARC-000-SUPP-v1.0.md` for a new profile. For an update, increment the existing

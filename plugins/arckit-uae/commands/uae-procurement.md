@@ -31,7 +31,7 @@ You are an enterprise architect generating a federal procurement strategy under 
    - **Then**, `.arckit/templates/uae-procurement-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-procurement-template.md`
 3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FPRO --filename` for the artefact filename.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FPRO {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
    - **Procurement Strategy** — scope, value bracket, route to market (open / restricted / direct award), use of framework agreements, justification for the chosen route under the Decree-Law, indicative timeline, and risks.

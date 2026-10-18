@@ -186,7 +186,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields*:
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-APPR-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Application Rationalisation"
 - `[COMMAND]` → "arckit.application-rationalization"
@@ -245,7 +245,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-APPR-v1.0.md
+projects/{P}/ARC-{P}-APPR-v{VERSION}.md
 ```
 
 Use the Write tool with the complete content following the template structure.
@@ -257,8 +257,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Application Rationalisation Complete
 
-**Document**: `projects/{P}/ARC-{P}-APPR-v1.0.md`
-**Document ID**: ARC-{P}-APPR-v1.0
+**Document**: `projects/{P}/ARC-{P}-APPR-v{VERSION}.md`
+**Document ID**: ARC-{P}-APPR-v{VERSION}
 
 ### Decision Summary
 | Decision | Count | Applications |
@@ -294,7 +294,7 @@ After writing the file, show a concise summary (NOT the full document):
 3. Begin gap analysis for replaced applications: `/arckit-togaf-adm:gap-analysis`
 4. Plan transition work packages: `/arckit-togaf-adm:transition-architecture`
 
-**File location**: `projects/{P}/ARC-{P}-APPR-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-APPR-v{VERSION}.md`
 ```
 
 ## Important Notes

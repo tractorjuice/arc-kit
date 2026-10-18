@@ -73,7 +73,7 @@ Use the **Read tool** on each of these; where several versions exist, read the h
   supplier-wide fact (certifications, locations, clearances, contacts) as `[PENDING]`.
 - **Service design** (this project): `{path}/ARC-{PROJECT_ID}-SVCD-v*.md`. If it is missing, **stop**:
   tell the user to run `/arckit-uk-gcloud:service-design` first, because it records the lot this command checks.
-- **Existing SDD** (present on a re-run): `{path}/ARC-{PROJECT_ID}-SDD-v*.md`.
+- **Existing SDD** (present on a re-run): `{path}/ARC-{PROJECT_ID}-SDD-v*.md`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 - **Lot questions** (if written): `projects/000-global/supplier/ARC-000-LOTQ-v*.md`. Only **Part 2
   (Lots 2a and 2b)** matters here: its mandatory award criteria repeat SDD answers.
 
@@ -212,7 +212,7 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
      {PROJECT_ID} SDD --filename
 ```
 
-This returns `ARC-{NNN}-SDD-v1.0.md` (using the zero-padded project number from Step 1). Use the
+This returns `ARC-{NNN}-SDD-v{VERSION}.md` (using the zero-padded project number from Step 1). Use the
 returned filename for a new SDD. On a re-run, use the incremented version instead (e.g.
 `ARC-{NNN}-SDD-v1.1.md`) and add the Revision History row.
 

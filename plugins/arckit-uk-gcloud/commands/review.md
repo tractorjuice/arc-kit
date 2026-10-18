@@ -528,7 +528,7 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
      {PROJECT_ID} GCRV --filename
 ```
 
-This returns `ARC-{NNN}-GCRV-v1.0.md` (using the zero-padded project number from Step 1). Use the
+This returns `ARC-{NNN}-GCRV-v{VERSION}.md` (using the zero-padded project number from Step 1). Use the
 returned filename and take the version from it. If the service already has a review report,
 increment the version instead and add a Revision History row.
 
@@ -541,7 +541,7 @@ increment the version instead and add a Revision History row.
 - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/review-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
 
-Set the Document ID to `ARC-{PROJECT_ID}-GCRV-v{VERSION}` and the Document Type to
+Set the Document ID to `ARC-{PROJECT_ID}-GCRV-v{VERSION}` and the Document Type to Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 `G-Cloud Submission Review`, and the `**G-Cloud Lot**` line to the lot from the service design.
 Populate the template from Step 3:
 

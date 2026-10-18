@@ -31,6 +31,8 @@ $ARGUMENTS
 
 ## Instructions
 
+**Questions** — whenever this command asks with **AskUserQuestion**, follow the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`: ask only what the project context cannot settle, in one call, with one option marked (Recommended); with no question tool available, take that default, say so in the summary, and never block.
+
 ### 1. Resolve the existing service project
 
 The user should identify the service in `$ARGUMENTS` by **service name** (or name fragment) or by

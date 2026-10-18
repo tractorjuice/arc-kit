@@ -144,7 +144,7 @@ Create the Agile Strategy Canvas document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OASTR --filename` (canonical form: `ARC-{P}-OASTR-v1.0`)
+- Generate Document ID with `node scripts/generate-document-id.mjs {P} OASTR {VERSION} --filename` (canonical form: `ARC-{P}-OASTR-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 
@@ -205,7 +205,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-OASTR-v1.0.md
+projects/{P}/ARC-{P}-OASTR-v{VERSION}.md
 ```
 
 ### 9. Show Summary to User
@@ -215,8 +215,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Agile Strategy Canvas Created
 
-**Document**: `projects/{P}/ARC-{P}-OASTR-v1.0.md`
-**Document ID**: ARC-{P}-OASTR-v1.0
+**Document**: `projects/{P}/ARC-{P}-OASTR-v{VERSION}.md`
+**Document ID**: ARC-{P}-OASTR-v{VERSION}
 
 ### Dual Transformation Profile
 - **Digital transformation**: [Technology, product and operating-model shifts in brief]
@@ -259,7 +259,7 @@ After writing the file, show a concise summary (NOT the full document):
 3. Establish governance cadence: `/arckit-oaa:agile-governance`
 4. If the canvas changes product outcomes, refresh the product architecture: `/arckit-oaa:product-architecture`
 
-**File location**: `projects/{P}/ARC-{P}-OASTR-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-OASTR-v{VERSION}.md`
 ```
 
 ## Important Notes

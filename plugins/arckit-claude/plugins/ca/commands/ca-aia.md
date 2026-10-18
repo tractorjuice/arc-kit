@@ -43,7 +43,7 @@ You are an enterprise architect generating a Canada Algorithmic Impact Assessmen
    - **First**, check `.arckit/templates-custom/ca-aia-template.md` (user override)
    - **Then**, `.arckit/templates/ca-aia-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-aia-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AIA --filename` for the artefact filename.
+3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AIA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **System Description** — purpose of the system, the specific decisions automated (or assisted), training-data lineage (sources, vintage, licensing), vendor / open-source provenance (model family, supplier, hosting jurisdiction), and the stewardship chain (owner, operator, accountable executive).

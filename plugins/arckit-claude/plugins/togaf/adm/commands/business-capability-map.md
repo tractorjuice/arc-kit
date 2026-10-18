@@ -91,7 +91,7 @@ Create a comprehensive Business Capability Map following the template structure.
 
 #### Document Control
 
-- Generate Document ID: `ARC-{P}-BPCM-v1.0` (for filename: `ARC-{P}-BPCM-v1.0.md`)
+- Generate Document ID: `ARC-{P}-BPCM-v{VERSION}` (for filename: `ARC-{P}-BPCM-v{VERSION}.md`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 - Set owner, dates, classification, status
 - Review cycle: Monthly during active ADM cycle
 
@@ -206,7 +206,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-BPCM-v1.0.md
+projects/{P}/ARC-{P}-BPCM-v{VERSION}.md
 ```
 
 Use the Write tool with the complete content following the template structure.
@@ -218,8 +218,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Business Capability Map Created
 
-**Document**: `projects/{P}/ARC-{P}-BPCM-v1.0.md`
-**Document ID**: ARC-{P}-BPCM-v1.0
+**Document**: `projects/{P}/ARC-{P}-BPCM-v{VERSION}.md`
+**Document ID**: ARC-{P}-BPCM-v{VERSION}
 
 ### Capability Overview
 - **Capability Depth**: [Level 1 / Level 2 / Level 3]
@@ -272,7 +272,7 @@ After writing the file, show a concise summary (NOT the full document):
 - Aligned to [N] architecture principles
 - Supports [N] stakeholder value expectations
 
-**File location**: `projects/{P}/ARC-{P}-BPCM-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-BPCM-v{VERSION}.md`
 ```
 
 ## Important Notes

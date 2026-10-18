@@ -76,7 +76,7 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
 
 3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUENERGY --filename` for the artefact filename.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUENERGY {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) -- replace the standard UK line in the header.
 

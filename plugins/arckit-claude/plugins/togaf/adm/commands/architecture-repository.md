@@ -318,7 +318,7 @@ projects/000-global/ARC-000-REPO-v1.0.md
 For project-scoped repositories (when a specific project ID is provided):
 
 ```text
-projects/{P}/ARC-{P}-REPO-v1.0.md
+projects/{P}/ARC-{P}-REPO-v{VERSION}.md
 ```
 
 Use the Write tool with the complete repository content following the template structure.
@@ -336,7 +336,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → `000` for global, or extracted from project path
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-REPO-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Architecture Repository"
 - `[COMMAND]` → "arckit.architecture-repository"

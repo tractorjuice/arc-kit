@@ -76,7 +76,7 @@ ASD operational technology guidance is reusable beyond any one industry sector. 
 
 3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUOT --filename` for the artefact filename.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUOT {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the AU regime to `_partials/document-control-au.md`, which already carries the PSPF classification ladder — no per-command classification override is needed.
 

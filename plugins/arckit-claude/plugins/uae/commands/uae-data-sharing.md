@@ -32,7 +32,7 @@ You are an enterprise architect generating a Data Sharing Agreement under the UA
    - **Then**, `.arckit/templates/uae-data-sharing-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-data-sharing-template.md`
 3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> DSHR --filename` for the artefact filename.
+4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> DSHR {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
    - **Sharing Parties** — provider entity, consumer entity, joint-controller status, service-level commitments.

@@ -315,7 +315,7 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
      {PROJECT_ID} SVCD --filename
 ```
 
-This returns `ARC-{NNN}-SVCD-v1.0.md` (using the zero-padded `project_number` from Step 3). Use the
+This returns `ARC-{NNN}-SVCD-v{VERSION}.md` (using the zero-padded `project_number` from Step 3). Use the
 returned filename and take the version from it. If the service already has a service design,
 increment the version instead and add a Revision History row.
 
@@ -359,7 +359,7 @@ Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and
 
 Use the **Write tool** to save the completed document to:
 
-`{project_dir}/{filename}` — e.g. `projects/004-secure-case-mgmt/ARC-004-SVCD-v1.0.md`
+`{project_dir}/{filename}` — e.g. `projects/004-secure-case-mgmt/ARC-004-SVCD-v1.0.md` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 (The Write tool creates parent directories automatically.) Do **not** echo the full document into
 your response — print only the summary below.

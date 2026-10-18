@@ -74,7 +74,7 @@ Use the **Read tool** on the highest version of each of these that exists:
   answers; this document must agree with it
 - Lot questions (supplier-wide): `projects/000-global/supplier/ARC-000-LOTQ-v*.md` — certifications
   and award-criteria answers given at lot level, in the Part for this service's lot group
-- Existing security document (on a re-run): `{path}/ARC-{PROJECT_ID}-SECA-v*.md`
+- Existing security document (on a re-run): `{path}/ARC-{PROJECT_ID}-SECA-v*.md` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 If the supplier profile or service design is missing, warn the user that running
 `/arckit:supplier-profile` and `/arckit:service-design` first produces a consistent document, then
@@ -290,7 +290,7 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
      {PROJECT_ID} SECA --filename
 ```
 
-This returns `ARC-{NNN}-SECA-v1.0.md` (using the zero-padded project number from Step 1). Use the
+This returns `ARC-{NNN}-SECA-v{VERSION}.md` (using the zero-padded project number from Step 1). Use the
 returned filename and take the version from it. If the service already has a security document,
 increment the version instead and add a Revision History row.
 

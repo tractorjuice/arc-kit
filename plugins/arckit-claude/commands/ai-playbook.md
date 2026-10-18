@@ -480,7 +480,7 @@ You should:
   3. Publish ATRS
   4. Create contestability process
   5. Re-assess after remediation
-- Write to `projects/NNN-benefits-chatbot/ARC-NNN-AIPB-v1.0.md`
+- Write to `projects/NNN-benefits-chatbot/ARC-NNN-AIPB-v{VERSION}.md`
 - **Summary**: "HIGH-RISK AI system with 4 blocking issues. Cannot deploy until ALL principles met."
 
 ## Important Notes

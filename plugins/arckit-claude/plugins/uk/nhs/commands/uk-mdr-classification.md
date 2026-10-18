@@ -66,9 +66,9 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
 
 3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
 
-4. **Generate the filename** via `node scripts/generate-document-id.mjs <PROJECT_ID> NHSMDR --filename`.
+4. **Generate the filename** via `node scripts/generate-document-id.mjs <PROJECT_ID> NHSMDR {VERSION} --filename`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
-5. **Resolve the `<!-- DOC-CONTROL-HEADER -->` marker** per `RENDERING.md`. This is a conventional ArcKit `ARC-{NNN}-NHSMDR-v1.0.md` file.
+5. **Resolve the `<!-- DOC-CONTROL-HEADER -->` marker** per `RENDERING.md`. This is a conventional ArcKit `ARC-{NNN}-NHSMDR-v{VERSION}.md` file.
 
 6. **Generate the assessment sections**:
 
@@ -137,7 +137,7 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
 7. **Populate the External References section** per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. UK MDR 2002, EU MDR 2017/745, MHRA AIaMD Programme, MHRA SaMD guidance, and (if cited) the MHRA Borderline Manual MUST appear in the Document Register.
 
 8. **Before writing the file**, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **NHSMDR** per-type checks pass. Fix any failures before proceeding.
-9. **Write the artefact via the Write tool** to `projects/{NNN}-<slug>/ARC-{NNN}-NHSMDR-v1.0.md`.
+9. **Write the artefact via the Write tool** to `projects/{NNN}-<slug>/ARC-{NNN}-NHSMDR-v{VERSION}.md`.
 
 10. **Show only a summary to the user**: scope determination (medical device / not / borderline), UK class, EU class, marking pathway, conformity route, list of `[PENDING]` items requiring qualified Regulatory Affairs review.
 
