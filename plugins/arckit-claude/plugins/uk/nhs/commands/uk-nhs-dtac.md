@@ -15,6 +15,13 @@ handoffs:
     description: DTAC Section 3 (Technical Assurance) cross-references the Secure by Design assessment.
   - command: service-assessment
     description: DTAC overlaps the GDS Service Standard; run service-assessment if the product is also a GDS-assessed service.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output is **not** procurement, regulatory, or clinical advice. DTAC v3 is the current published version as at writing (2026-05) — verify against <https://transform.england.nhs.uk/key-tools-and-info/digital-technology-assessment-criteria-dtac/> for any subsequent revisions before submission to an NHS buyer or assurance team. DTAC outputs MUST be reviewed by the product's Clinical Safety Officer, DPO, and engineering lead before submission.
@@ -67,9 +74,9 @@ DTAC was introduced by NHSX (now part of NHS England's Transformation Directorat
 2. **Read the template**:
    - `.arckit/templates-custom/uk-nhs-dtac-template.md` → `.arckit/templates/uk-nhs-dtac-template.md` → `${CLAUDE_PLUGIN_ROOT}/templates/uk-nhs-dtac-template.md`
 
-3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
+3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
 
-4. **Generate the filename** via `node scripts/generate-document-id.mjs <PROJECT_ID> NHSDTAC {VERSION} --filename` (this is a single-instance artefact; no `--next-num`). Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+4. **Generate the filename** via `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> NHSDTAC {VERSION} --filename` (this is a single-instance artefact; no `--next-num`). Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. **Resolve the `<!-- DOC-CONTROL-HEADER -->` marker** per `RENDERING.md`. The DTAC artefact is a conventional ArcKit `ARC-{NNN}-NHSDTAC-v{VERSION}.md` file.
 

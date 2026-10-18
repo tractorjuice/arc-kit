@@ -15,6 +15,8 @@ handoffs:
   - command: at-nisg
     description: Reflect NISG supply chain obligations in vendor security clauses
     condition: "Contracting entity is Essential or Important under NISG"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

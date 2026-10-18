@@ -28,6 +28,13 @@ handoffs:
     description: Architecture decisions should be raised for ring-fencing boundaries, AEMO interfaces, DER integration, and data-sharing choices.
   - command: graph-report
     description: Governance graph metrics show register coverage, cross-reference density, and missing compliance evidence links.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > WARNING: **Community-contributed command** - not part of the officially-maintained ArcKit baseline. Output must be reviewed by qualified legal, regulatory, energy compliance, privacy, cyber security, OT, and operational risk advisers before reliance. Verify the current AER, AEMC, AEMO, CISC, NER, NGR, SOCI, and entity-specific obligations before external use.
@@ -74,9 +81,9 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
    - Then: `.arckit/templates/au-energy-compliance-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-energy-compliance-template.md`
 
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUENERGY {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> AUENERGY {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) -- replace the standard UK line in the header.
 

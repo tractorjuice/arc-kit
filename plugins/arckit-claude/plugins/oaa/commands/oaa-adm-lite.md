@@ -16,6 +16,10 @@ handoffs:
 
   - command: agile-governance
     description: Establish governance cadence for the programme
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 You are helping an enterprise architect create an **O-AA ADM Lite** architecture using Open Agile Architecture (O-AA, C208) mapped to TOGAF ADM phases across agile sprints. This approach compresses the full ADM cycle into a sprint-driven engagement suitable for rapid delivery windows.
@@ -155,7 +159,7 @@ Create the O-AA ADM Lite document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAAL {VERSION} --filename` (canonical form: `ARC-{P}-OAAL-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+- Generate Document ID with `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs {P} OAAL {VERSION} --filename` (canonical form: `ARC-{P}-OAAL-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 

@@ -9,6 +9,13 @@ handoffs:
     description: Generate NCSC Cloud Security Principles assertions
   - command: /arckit-uk-gcloud:lot-questions
     description: Answer the Lot 3 mandatory award criteria and certifications (once per Lot 3 bid)
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the
@@ -234,8 +241,7 @@ appropriate inline citation marker (see Step 4).
 with the ArcKit helper (no `--next-num` — SDD is not multi-instance):
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
-     {PROJECT_ID} SDD --filename
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} SDD --filename
 ```
 
 This returns `ARC-{NNN}-SDD-v{VERSION}.md` (using the zero-padded project number from Step 1). Use the

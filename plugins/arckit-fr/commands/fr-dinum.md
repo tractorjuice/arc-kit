@@ -12,6 +12,8 @@ handoffs:
     condition: "Cloud hosting required under doctrine cloud de l'État"
   - command: secure
     description: Generate Secure by Design assessment aligned with RGS findings
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

@@ -9,6 +9,13 @@ handoffs:
     description: Compare the prices, discounts or rate card with Digital Marketplace rivals
   - command: /arckit-uk-gcloud:review
     description: Check the pricing against the SDD and flag remaining [PENDING] items
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the
@@ -344,8 +351,7 @@ Carry its caveat verbatim: **awarded value ≠ actual spend**. Don't re-derive o
 with the ArcKit helper (no `--next-num` — PRIC is not multi-instance):
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
-     {PROJECT_ID} PRIC --filename
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} PRIC --filename
 ```
 
 This returns `ARC-{NNN}-PRIC-v{VERSION}.md` (using the zero-padded project number from Step 1). Use the

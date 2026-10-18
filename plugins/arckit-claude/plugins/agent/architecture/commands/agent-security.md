@@ -6,6 +6,8 @@ effort: high
 handoffs:
   - command: agent-governance
     description: Align security controls with governance requirements
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect design an AI agent security architecture that establishes sandboxing, permissions, injection defences, and output validation for autonomous AI agent systems.

@@ -87,10 +87,12 @@ Since #723 the generator itself catches this (`PROJECT_ID must be numeric ... lo
 grep -n "generate-document-id.mjs" arckit-<prefix>/commands/<prefix>-*.md | grep -v "<PROJECT_ID>\|{P}"
 ```
 
-**Working precedent:** `plugins/arckit-ca/commands/ca-pia.md:32`:
-> `node scripts/generate-document-id.mjs <PROJECT_ID> PIA --filename`
+**Working precedent:** `plugins/arckit-ca/commands/ca-pia.md`:
+> `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> PIA {VERSION} --filename`
 
 **Note:** all 12 `uae-*` commands had this bug; fixed in #722.
+
+**The path matters too (#971).** In Claude Code each overlay is its own plugin, so the only script path that resolves is `${CLAUDE_PLUGIN_ROOT}/scripts/...` inside the overlay itself. `scripts/sync-shared-assets.py` copies core's helpers (`create-project.sh`, `list-projects.sh`, `common.sh`, `generate-document-id.mjs` and `config/doc-types.mjs`) into every overlay for that. A relative `scripts/...` path runs against the user's project, `.arckit/scripts/...` exists only after `arckit init`, and `${CLAUDE_PLUGIN_ROOT}/../arckit-claude/...` isn't in the plugin cache. Name the runner too (`node`, `bash`): `generate-document-id.mjs` isn't executable. `tests/plugin/test_overlay_scripts_resolve.py` fails on any of these.
 
 ### B4 — Converter outputs are stale
 
@@ -155,7 +157,8 @@ For each new `xx-*` command file:
 - [ ] **Frontmatter:** `description` present. No invalid fields (`name:`, `color:`, `permissionMode:`, `tools:` are NOT valid plugin command frontmatter — `name:` in particular is a common contributor mistake; filename is source of truth).
 - [ ] **`$ARGUMENTS` placeholder** present in body — `tests/plugin/test_commands_structure.py::test_arguments_placeholder_present` checks this. Existing `ca-*`/`uae-*` commands fail this test (32 known failures); new overlay commands should pass.
 - [ ] **`create-project.sh` lookup** — only required for project-bootstrapping commands (`principles`, `requirements`, the first command someone runs). Most overlay commands assume the project already exists and skip this; that matches the FR/AT/EU/CA precedent. Not a defect when absent.
-- [ ] **`generate-document-id.mjs`** invoked correctly (B3).
+- [ ] **`generate-document-id.mjs`** invoked correctly (B3), by `node ${CLAUDE_PLUGIN_ROOT}/scripts/...`.
+- [ ] **`allowed-tools`** pre-approves what the command touches in its plugin folder: `Read(/${CLAUDE_PLUGIN_ROOT}/**)` when it reads a template or reference, and a `Bash(node|bash ${CLAUDE_PLUGIN_ROOT}/scripts/<file> *)` rule (plus the quoted-path form) for each script it runs. Without them every run prompts. `tests/plugin/test_command_script_permissions.py` checks overlays as well as core.
 - [ ] **`<!-- DOC-CONTROL-HEADER -->` resolution** instruction (B2 — should override classification when not UK/UAE).
 - [ ] **Write tool** used to save artefact (32K output token limit otherwise).
 - [ ] **Handoffs:** every `handoffs.command` value resolves to a real file in `plugins/arckit-claude/commands/`. Common bug: pluralisation (`risks` vs `risk`); deps on commands shipping in sibling PRs. Validation needs YAML parsing (handoffs are nested under YAML frontmatter — raw grep misses), e.g.:
@@ -203,8 +206,9 @@ done | grep -E "<prefix>-"
 # B2: missing classification override
 grep -L "classification scheme\|UK line in the header" arckit-<prefix>/commands/<prefix>-*.md
 
-# B3: generate-document-id.mjs mis-invocation
+# B3: generate-document-id.mjs mis-invocation, and script paths an overlay can't reach (#971)
 grep -n "generate-document-id.mjs [A-Z]\+ --filename" arckit-<prefix>/commands/<prefix>-*.md
+grep -nE '(^|[^}/.[:alnum:]_-])(\.arckit/)?scripts/[a-z/-]+\.(mjs|sh)|CLAUDE_PLUGIN_ROOT\}/\.\./' arckit-<prefix>/commands/<prefix>-*.md
 
 # B4: converter drift
 python scripts/converter.py && git status --porcelain | grep -v "memory/"

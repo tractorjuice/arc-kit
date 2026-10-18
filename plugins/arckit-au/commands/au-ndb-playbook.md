@@ -20,6 +20,13 @@ handoffs:
     description: NDB triggers, roles, decisions, notifications, and lessons learned should trace to evidence and controls.
   - command: graph-report
     description: Graph reporting should show AUNDB coverage alongside privacy, security, risk, and traceability artefacts.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a Privacy Officer and legal counsel before adoption. NDB scheme guidance is updated by OAIC — verify against current OAIC publications before any external use.
@@ -75,9 +82,9 @@ A working NDB playbook is operational — it must be executable under time press
    - Then: `.arckit/templates/au-ndb-playbook-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-ndb-playbook-template.md`
 
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUNDB {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> AUNDB {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the AU regime to `_partials/document-control-au.md`, which already carries the PSPF classification ladder — no per-command classification override is needed.
 

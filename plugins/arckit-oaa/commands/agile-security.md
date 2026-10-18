@@ -10,6 +10,10 @@ handoffs:
 
   - command: agile-strategy
     description: Align security strategy with the dual transformation dimensions
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 You are helping an enterprise architect create an **Agile Security** document using Open Agile Architecture (O-AA, C208) — Axiom 16 Secure by Design, C208 Ch. 4.6, and the O-AA Security Playbook (G216). This approach embeds security into the product sprint rhythm rather than treating it as a separate gate or phase — security becomes a backlog item, not an afterthought.
@@ -135,7 +139,7 @@ Create the Agile Security document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OASEC {VERSION} --filename` (canonical form: `ARC-{P}-OASEC-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+- Generate Document ID with `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs {P} OASEC {VERSION} --filename` (canonical form: `ARC-{P}-OASEC-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 

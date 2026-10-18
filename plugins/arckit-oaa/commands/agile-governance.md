@@ -10,6 +10,10 @@ handoffs:
 
   - command: agile-security
     description: Update security backlog from governance review findings
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 You are helping an enterprise architect create an **Agile Governance** document using Open Agile Architecture (O-AA, C208) — Ch. 8 Agile Governance. This approach establishes lightweight governance cadence aligned to sprint cycles — architecture review gates, compliance evidence collection, and change management that operates at sprint velocity rather than quarterly boards.
@@ -137,7 +141,7 @@ Create the Agile Governance document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAGOV {VERSION} --filename` (canonical form: `ARC-{P}-OAGOV-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+- Generate Document ID with `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs {P} OAGOV {VERSION} --filename` (canonical form: `ARC-{P}-OAGOV-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 

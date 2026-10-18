@@ -16,6 +16,8 @@ handoffs:
   - command: secure
     description: Address security findings from the cartography attack surface analysis
     condition: "Cartography reveals unacceptable attack surface exposure"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

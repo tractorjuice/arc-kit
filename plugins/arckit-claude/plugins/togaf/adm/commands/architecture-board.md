@@ -6,6 +6,8 @@ effort: high
 handoffs:
   - command: architecture-change
     description: Create architecture change requests
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect establish an **Architecture Board Charter** for TOGAF ADM Phase G (Implementation Governance). This document defines the Board's mandate, membership, decision framework, compliance scorecard, and exception processes.

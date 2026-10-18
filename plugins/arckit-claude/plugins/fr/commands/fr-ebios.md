@@ -17,6 +17,8 @@ handoffs:
   - command: risk
     description: Import EBIOS residual risks into the project risk register
     condition: "Residual risks from Workshop 5 need to be tracked in the project risk register"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

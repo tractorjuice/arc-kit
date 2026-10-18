@@ -9,6 +9,13 @@ handoffs:
     description: Generate the security evidence for this service
   - command: /arckit-uk-gcloud:lot-questions
     description: Answer the Lot 1a/1b lot questions, including bidding for Lot 1b and ISO 27018 (once per bid)
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the
@@ -216,8 +223,7 @@ Step 4).
 with the ArcKit helper (no `--next-num` — SDD is not multi-instance):
 
 ```bash
-node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" \
-     {PROJECT_ID} SDD --filename
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" {PROJECT_ID} SDD --filename
 ```
 
 This returns `ARC-{NNN}-SDD-v{VERSION}.md` (using the zero-padded project number from Step 1). Use the

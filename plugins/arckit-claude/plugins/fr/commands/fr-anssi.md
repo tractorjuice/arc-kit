@@ -16,6 +16,8 @@ handoffs:
   - command: secure
     description: Implement the technical security measures identified in the ANSSI gap analysis
     condition: "ANSSI hygiene gaps require implementation in the codebase or infrastructure"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

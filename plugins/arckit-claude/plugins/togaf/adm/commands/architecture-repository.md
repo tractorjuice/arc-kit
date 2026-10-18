@@ -6,6 +6,8 @@ effort: max
 handoffs:
   - command: adm-preliminary
     description: Feed repository standards back into next ADM cycle
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create an **Architecture Repository** — the central knowledge store for the organisation's architecture artefacts including patterns, standards, reference architectures, lessons learned, and reusable building blocks. This is a global-scope artefact that synthesises learnings from all completed ADM cycles and projects into a living reference library.

@@ -8,6 +8,8 @@ handoffs:
     description: Map business capabilities within the defined scope
   - command: gap-analysis
     description: Perform gap analysis based on scope and vision
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create an **Architecture Vision** document for the Preliminary phase of the TOGAF Architecture Development Method (ADM). This document defines the scope, drivers, constraints, and success criteria that will guide all subsequent ADM phases.

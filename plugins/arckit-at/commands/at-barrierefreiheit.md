@@ -13,6 +13,11 @@ handoffs:
   - command: at-dsgvo
     description: Assess DSG obligations where the feedback mechanism collects personal data
     condition: "Feedback mechanism or complaints channel processes personal data"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
 ---
 
 
@@ -63,7 +68,7 @@ $ARGUMENTS
 
 ### Step 1: Identify or Create Project
 
-Identify the target project from the hook context. If the project doesn't exist, create it with `${CLAUDE_PLUGIN_ROOT}/../arckit-claude/scripts/bash/create-project.sh --json --name "<project-name>"` — the `--name` is required, and without it the script exits 1 rather than returning a path.
+Identify the target project from the hook context. If the project doesn't exist, create it with `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` — the `--name` is required, and without it the script exits 1 rather than returning a path.
 
 ### Step 2: Read Source Artifacts
 

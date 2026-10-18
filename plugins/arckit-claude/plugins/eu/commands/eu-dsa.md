@@ -13,6 +13,8 @@ handoffs:
   - command: risk
     description: Integrate DSA compliance gaps and systemic risk findings into the risk register
     condition: "VLOP or VLOSE designation applies"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

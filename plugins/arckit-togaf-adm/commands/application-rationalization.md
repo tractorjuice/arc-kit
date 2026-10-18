@@ -8,6 +8,8 @@ handoffs:
     description: Analyze capability gaps from rationalization decisions
   - command: transition-architecture
     description: Plan migration work packages for rationalized applications
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect rationalise the application portfolio using **keep/merge/replace/retire** decisions. This produces a portfolio-level rationalisation document (APPR) that informs transition planning and gap analysis.

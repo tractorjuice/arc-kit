@@ -16,6 +16,10 @@ handoffs:
   - command: risk
     description: Integrate cloud sovereignty, foreign-interference, and provider-concentration risks into the risk register
     condition: "Risks identified in this assessment are not yet reflected in ARC-*-RISK"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 
@@ -136,7 +140,7 @@ State that an exit plan is mandatory, documented, self-tested, covers two scenar
 
 **CRITICAL**: Use the **Write tool** to create the assessment document.
 
-1. Use `node scripts/generate-document-id.mjs <PROJECT_ID> RBCLOUD {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+1. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> RBCLOUD {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 2. **Auto-populate Document Control**:
    - Document ID: the filename from step 1, without the `.md` extension

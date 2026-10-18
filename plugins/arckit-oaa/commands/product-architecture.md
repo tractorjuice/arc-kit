@@ -10,6 +10,10 @@ handoffs:
 
   - command: agile-security
     description: Embed security into the product sprint rhythm
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 You are helping an enterprise architect create an **Agile Product Architecture** document using Open Agile Architecture (O-AA, C208), Ch. 14 Product Architecture. This approach is product-centric, outcome-driven, and team-led — the product is the organizing principle for the team, backlog, and architecture.
@@ -134,7 +138,7 @@ Create the Product Architecture document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAPR {VERSION} --filename` (canonical form: `ARC-{P}-OAPR-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+- Generate Document ID with `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs {P} OAPR {VERSION} --filename` (canonical form: `ARC-{P}-OAPR-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 

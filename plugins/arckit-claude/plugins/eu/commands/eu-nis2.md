@@ -14,6 +14,8 @@ handoffs:
     description: Integrate NIS2 gap findings into the project risk register
   - command: secure
     description: Implement security controls addressing NIS2 Article 21 ten minimum measures
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

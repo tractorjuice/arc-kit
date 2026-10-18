@@ -13,6 +13,8 @@ handoffs:
   - command: eu-ai-act
     description: Assess AI Act obligations where AI systems process personal data
     condition: "Project uses AI or automated decision-making involving personal data"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

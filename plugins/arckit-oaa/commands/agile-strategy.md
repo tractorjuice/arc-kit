@@ -10,6 +10,10 @@ handoffs:
 
   - command: agile-governance
     description: Establish governance cadence for the transformation programme
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 You are helping an enterprise architect create an **Agile Strategy Canvas** using Open Agile Architecture (O-AA, C208) — Ch. 11 Agile Strategy. This approach plans the dual transformation C208 is written for — the Digital Transformation of the enterprise together with its Agile Transformation — on a canvas that drives backlog-driven delivery.
@@ -144,7 +148,7 @@ Create the Agile Strategy Canvas document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OASTR {VERSION} --filename` (canonical form: `ARC-{P}-OASTR-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+- Generate Document ID with `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs {P} OASTR {VERSION} --filename` (canonical form: `ARC-{P}-OASTR-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 

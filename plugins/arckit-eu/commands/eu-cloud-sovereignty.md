@@ -16,6 +16,12 @@ handoffs:
   - command: risk
     description: Register unmet minimum SEAL levels and sovereignty gaps in the project risk register
     condition: "Gap analysis identifies objectives below the tender specification's minimum SEAL"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/csf-score.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/csf-score.mjs" *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 
@@ -102,7 +108,7 @@ Show this scoping summary before generating the full document.
 
 **CRITICAL**: Use the **Write tool** to create the assessment document.
 
-1. **Generate the artefact filename**: Use `node scripts/generate-document-id.mjs <PROJECT_ID> EUCSF {VERSION} --filename` for the artefact filename. This returns `ARC-{PROJECT_ID}-EUCSF-v{VERSION}.md` for a first assessment. If an assessment for this project already exists, pass the next version as the third positional argument — minor increment (e.g. `1.1`) for a routine refresh, major increment (e.g. `2.0`) if scope or minimum SEAL levels changed — and add a Revision History row instead of overwriting at v1.0. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+1. **Generate the artefact filename**: Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> EUCSF {VERSION} --filename` for the artefact filename. This returns `ARC-{PROJECT_ID}-EUCSF-v{VERSION}.md` for a first assessment. If an assessment for this project already exists, pass the next version as the third positional argument — minor increment (e.g. `1.1`) for a routine refresh, major increment (e.g. `2.0`) if scope or minimum SEAL levels changed — and add a Revision History row instead of overwriting at v1.0. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 2. **Auto-populate Document Control**:
    - Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before populating the fields below.
@@ -137,7 +143,7 @@ Show this scoping summary before generating the full document.
    - State the formula with its terms resolved: **Sovereignty Score = Σ over the eight objectives of (Score(SOVn) / 1000) × Weight(SOVn)**, expressed as a percentage. Because each objective's actual maximum slightly exceeds 1000 (see above), a **maximal response scores 100.0756%, not 100%** — this is the framework's own documented rounding behaviour; report it faithfully and do not clamp the result to 100%.
    - **SEAL is not an input to the Score, and the Score does not determine SEAL.** Per the Implementation guidance (p.9): "The same answers are used to determine the SEAL of each row, with each answer defining the SEAL level of the question." Score and SEAL are two independent readings of the same 48 answers — never derive one from the other, and never imply a high Score guarantees a high SEAL or vice versa.
    - **Overall SEAL** = `SEAL-{N}` where N is the **minimum** SEAL level across every answered criterion in the whole assessment (calculator: `="SEAL-"&MIN(H5:H251)`) — not an average, and not derived from the per-objective "SEAL evidenced" values alone; compute it across all 48 answers directly.
-   - **Compute per-criterion, showing the arithmetic**: for every one of the 48 criteria, record the selected answer, its Score value, and its SEAL level in **Appendix A** (Step 5.12) — this is what makes the Sovereignty Score checkable without re-running any scorer. If `scripts/csf-score.mjs` is present in this environment, run `node scripts/csf-score.mjs --answers <selections>.json --json` and use its output for Score(SOVn), the Sovereignty Score, and the overall SEAL. Non-Claude runtimes (Codex, Gemini, OpenCode, Copilot) do not carry it — if it is not present, compute the identical arithmetic by hand directly from the catalogue and show every step in Appendix A — the artefact must be checkable without the scorer either way.
+   - **Compute per-criterion, showing the arithmetic**: for every one of the 48 criteria, record the selected answer, its Score value, and its SEAL level in **Appendix A** (Step 5.12) — this is what makes the Sovereignty Score checkable without re-running any scorer. If `${CLAUDE_PLUGIN_ROOT}/scripts/csf-score.mjs` is present in this environment, run `node ${CLAUDE_PLUGIN_ROOT}/scripts/csf-score.mjs --answers <selections>.json --json` and use its output for Score(SOVn), the Sovereignty Score, and the overall SEAL. Non-Claude runtimes (Codex, Gemini, OpenCode, Copilot) do not carry it — if it is not present, compute the identical arithmetic by hand directly from the catalogue and show every step in Appendix A — the artefact must be checkable without the scorer either way.
    - Weight table for all eight objectives (must sum to exactly 100%)
    - Scored table: objective, Score, Max Score (always 1000), Weight, Weighted Contribution — cross-reference the corresponding rows in Appendix A rather than restating their derivation
    - State clearly: the Sovereignty Score contributes to the tender's quality score as an **award criterion** — this is separate from, and does not override, the minimum-SEAL rejection gate in Section 2

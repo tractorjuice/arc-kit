@@ -11,6 +11,8 @@ handoffs:
     description: Integrate DORA ICT risk findings and third-party concentration risks into the risk register
   - command: secure
     description: Implement technical security controls addressing DORA ICT risk management requirements
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

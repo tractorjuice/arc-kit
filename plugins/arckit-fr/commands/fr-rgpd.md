@@ -13,6 +13,8 @@ handoffs:
   - command: fr-marche-public
     description: Include GDPR/DPA obligations in procurement documentation
     condition: "Procurement involves data processors"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

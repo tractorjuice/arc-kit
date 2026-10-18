@@ -2,6 +2,11 @@
 description: Bundle all documents for a G-Cloud 15 service into a submission pack for GCA
 doc-type: none
 effort: medium
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
 ---
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the

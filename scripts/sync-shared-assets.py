@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
-"""Sync shared template partials and references from plugins/arckit-claude/ (core) into
-every community plugin tree.
+"""Sync shared template partials, references and helper scripts from
+plugins/arckit-claude/ (core) into every community plugin tree.
 
 Background: community-overlay commands reference partials and references via
 `${CLAUDE_PLUGIN_ROOT}/templates/_partials/...` and `${CLAUDE_PLUGIN_ROOT}/
 references/...`. `${CLAUDE_PLUGIN_ROOT}` resolves to each plugin's own root, so
 those files must exist inside each community plugin tree — not just in core.
 Closes #520.
+
+The same holds for core's helper scripts. Overlay commands create projects and
+name artefacts with `create-project.sh` and `generate-document-id.mjs`, and in
+Claude Code each overlay is its own plugin, so a relative `scripts/...` path
+(the user's project) or core's `${CLAUDE_PLUGIN_ROOT}` (unreachable from an
+overlay) never finds them (#971). Each overlay carries its own copy, with the
+files those scripts load: `common.sh` and the doc-type registry.
 
 Usage:
 
@@ -25,6 +32,21 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CORE_PLUGIN = REPO_ROOT / "plugins" / "arckit-claude"
 SHARED_DIRS = ("templates/_partials", "references")
+# Core's helper scripts and the files they load at run time. The converter
+# still takes scripts/ and config/ from core alone, so these copies matter only
+# to Claude Code, where each overlay is its own plugin root.
+SHARED_FILES = (
+    "scripts/bash/common.sh",
+    "scripts/bash/create-project.sh",
+    "scripts/bash/list-projects.sh",
+    "scripts/generate-document-id.mjs",
+    "config/doc-types.mjs",
+)
+# Core files only one overlay runs. csf-score.mjs scores the EU Cloud
+# Sovereignty Framework and finds its catalogue in the eu plugin's data/.
+PLUGIN_FILES = {
+    "arckit-eu": ("scripts/csf-score.mjs",),
+}
 
 
 # Plugins exempt from the shared-asset sync: the core plugin itself (the source
@@ -58,7 +80,13 @@ def iter_shared_files() -> list[Path]:
         if not src_dir.exists():
             continue
         files.extend(sorted(p for p in src_dir.rglob("*") if p.is_file()))
+    files.extend(CORE_PLUGIN / rel for rel in SHARED_FILES)
     return files
+
+
+def files_for(plugin: Path, shared: list[Path]) -> list[Path]:
+    """The shared files plus any core file only this plugin carries."""
+    return shared + [CORE_PLUGIN / rel for rel in PLUGIN_FILES.get(plugin.name, ())]
 
 
 def relative_to_core(path: Path) -> Path:
@@ -68,7 +96,7 @@ def relative_to_core(path: Path) -> Path:
 def check(community_plugins: list[Path], shared: list[Path]) -> int:
     drift: list[tuple[Path, str]] = []  # (path, reason)
     for plugin in community_plugins:
-        for src in shared:
+        for src in files_for(plugin, shared):
             dst = plugin / relative_to_core(src)
             if not dst.exists():
                 drift.append((dst, "missing"))
@@ -93,7 +121,7 @@ def check(community_plugins: list[Path], shared: list[Path]) -> int:
 def write(community_plugins: list[Path], shared: list[Path]) -> int:
     written = 0
     for plugin in community_plugins:
-        for src in shared:
+        for src in files_for(plugin, shared):
             dst = plugin / relative_to_core(src)
             dst.parent.mkdir(parents=True, exist_ok=True)
             if dst.exists() and filecmp.cmp(src, dst, shallow=False):

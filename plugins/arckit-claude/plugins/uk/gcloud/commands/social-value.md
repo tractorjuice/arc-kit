@@ -9,6 +9,10 @@ handoffs:
     description: Answer the lot questions once the services have their SDDs
   - command: /arckit-uk-gcloud:declaration
     description: The declaration's social value section summarises this document
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — part of the `arckit-uk-gcloud` overlay, not the

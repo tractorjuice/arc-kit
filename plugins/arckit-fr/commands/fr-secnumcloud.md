@@ -12,6 +12,8 @@ handoffs:
     condition: "Entity has OIV or OSE designation"
   - command: risk
     description: Integrate SecNumCloud and extraterritorial risks into the risk register
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

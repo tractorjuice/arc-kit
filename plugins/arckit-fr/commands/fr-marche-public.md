@@ -9,6 +9,8 @@ handoffs:
     condition: "Tenders received and ready for evaluation"
   - command: traceability
     description: Link procurement requirements back to functional and non-functional requirements
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

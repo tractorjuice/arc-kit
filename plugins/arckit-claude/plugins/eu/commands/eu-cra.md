@@ -12,6 +12,8 @@ handoffs:
     condition: "Product with digital elements includes an AI component"
   - command: secure
     description: Implement security controls addressing CRA Annex I essential requirements
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 

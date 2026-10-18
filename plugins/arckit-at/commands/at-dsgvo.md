@@ -13,6 +13,8 @@ handoffs:
   - command: at-nisg
     description: Assess NISG obligations where personal data is processed by Essential/Important entities
     condition: "Entity potentially qualifies as Essential or Important under NISG"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
