@@ -104,18 +104,19 @@ The French cloud-first policy mandates evaluation in order:
 
 ## 4. RGESN — Digital Service Ecodesign
 
-### 4.1 RGESN 2024 — 79 Criteria across 8 Categories
+### 4.1 RGESN 2024 — 78 Criteria across 9 Families
 
-| Category | Criteria Count | Status | Key Gaps |
+| Family | Criteria Count | Status | Key Gaps |
 |---------|--------------|--------|---------|
-| 1. Strategy | 9 | ☐ | |
-| 2. Specifications | 19 | ☐ | |
-| 3. Architecture | 8 | ☐ | |
-| 4. UX/UI | 12 | ☐ | |
-| 5. Content | 9 | ☐ | |
-| 6. Frontend | 11 | ☐ | |
-| 7. Backend | 8 | ☐ | |
-| 8. Hosting | 3 | ☐ | |
+| 1. Strategy (Stratégie) | 10 | ☐ | |
+| 2. Specifications (Spécifications) | 10 | ☐ | |
+| 3. Architecture | 7 | ☐ | |
+| 4. UX/UI | 15 | ☐ | |
+| 5. Content (Contenus) | 8 | ☐ | |
+| 6. Frontend | 7 | ☐ | |
+| 7. Backend | 4 | ☐ | |
+| 8. Hosting (Hébergement) | 10 | ☐ | |
+| 9. Algorithms (Algorithmie) | 7 | ☐ | |
 
 ### 4.2 Hosting Sustainability
 

@@ -17,20 +17,23 @@
 
 ## Executive Summary
 
-| Hygiene Measure Theme | Total Measures | Implemented | Partial | Not Implemented |
+| Hygiene Guide Chapter | Total Measures | Implemented | Partial | Not Implemented |
 |----------------------|----------------|-------------|---------|-----------------|
-| Know and manage your assets | 5 | — | — | — |
-| Manage user and admin accounts | 8 | — | — | — |
-| Authenticate and control access | 7 | — | — | — |
-| Secure workstations and mobile devices | 7 | — | — | — |
-| Protect your network | 7 | — | — | — |
-| Secure your servers and applications | 5 | — | — | — |
-| Manage vulnerabilities and updates | 3 | — | — | — |
+| I. Raise awareness and train | 3 | — | — | — |
+| II. Know the information system | 4 | — | — | — |
+| III. Authenticate and control access | 6 | — | — | — |
+| IV. Secure workstations | 5 | — | — | — |
+| V. Secure the network | 8 | — | — | — |
+| VI. Secure administration | 3 | — | — | — |
+| VII. Manage mobile working | 4 | — | — | — |
+| VIII. Keep the information system up to date | 2 | — | — | — |
+| IX. Monitor, audit, respond | 5 | — | — | — |
+| X. Going further | 2 | — | — | — |
 | **Total** | **42** | — | — | — |
 
 | Cloud Recommendations | Status |
 |----------------------|--------|
-| ANSSI cloud security recommendations (updated 2024) | [Applicable / Not applicable] |
+| ANSSI recommendations for hosting sensitive IS in the cloud (v1.0, July 2024) | [Applicable / Not applicable] |
 | Cloud provider trust level | [SecNumCloud / EU-qualified / Other] |
 
 ---
@@ -42,7 +45,7 @@
 | System studied | [Name and brief description] |
 | Assessment boundary | [What is included / excluded] |
 | Deployment environment | [Cloud / On-premise / Hybrid] |
-| Primary ANSSI guide | Guide d'hygiène informatique (2017 edition, 42 measures) |
+| Primary ANSSI guide | Guide d'hygiène informatique (version 2.0, 2017 — 42 measures in 10 chapters) |
 | Supplementary guides | [List applicable ANSSI technical guides] |
 | Regulatory context | [OIV / OSE / Public sector / Private — affects applicability of measures] |
 
@@ -52,86 +55,103 @@
 
 **Status codes**: ✅ Implemented | ⚠️ Partial | ❌ Not implemented | N/A Not applicable
 
-### Theme 1 — Know and Manage Your Assets
+Status is assessed against each measure's *standard* level. Where the guide also defines a *renforcé* (reinforced) level for a measure, record in Gap / Evidence whether it is met or targeted.
+
+### I — Raise Awareness and Train (Sensibiliser et former)
 
 | # | Measure | Status | Gap / Evidence |
 |---|---------|--------|---------------|
-| 1 | Establish and maintain an up-to-date inventory of all hardware assets | | |
-| 2 | Establish and maintain an up-to-date inventory of all software assets | | |
-| 3 | Define and use naming conventions for accounts and machines | | |
-| 4 | Identify a technical contact responsible for each software product | | |
-| 5 | Produce and maintain a network map | | |
+| 1 | Train operational teams in information system security | | |
+| 2 | Raise users' awareness of basic IT security practices | | |
+| 3 | Control the risks of outsourced IT (infogérance) | | |
 
-### Theme 2 — Manage User and Admin Accounts
+### II — Know the Information System (Connaître le système d'information)
 
 | # | Measure | Status | Gap / Evidence |
 |---|---------|--------|---------------|
-| 6 | Limit the number of accounts with administrative privileges | | |
-| 7 | Define a strong password policy for all accounts | | |
-| 8 | Change default credentials on all equipment | | |
-| 9 | Prefer individual accounts over shared accounts | | |
-| 10 | Revoke inactive accounts promptly | | |
-| 11 | Define and apply a user access management process (joiners/movers/leavers) | | |
-| 12 | Separate privileged administrator accounts from daily-use accounts | | |
-| 13 | Do not grant local administrator rights to standard users | | |
+| 4 | Identify the most sensitive information and servers, and maintain a network diagram | | |
+| 5 | Keep an exhaustive, up-to-date inventory of privileged accounts | | |
+| 6 | Organise joiner, leaver and change-of-role procedures for users | | |
+| 7 | Allow only managed devices to connect to the organisation's network | | |
 
-### Theme 3 — Authenticate and Control Access
+### III — Authenticate and Control Access (Authentifier et contrôler les accès)
 
 | # | Measure | Status | Gap / Evidence |
 |---|---------|--------|---------------|
-| 14 | Authenticate all users before granting access to information systems | | |
-| 15 | Enable multi-factor authentication for all remote access and admin accounts | | |
-| 16 | Apply the principle of least privilege for all accounts | | |
-| 17 | Limit access to data and applications to authorised users only | | |
-| 18 | Restrict physical access to sensitive systems | | |
-| 19 | Log and monitor all authentication events | | |
-| 20 | Protect the confidentiality and integrity of remote maintenance sessions | | |
+| 8 | Identify each person accessing the system by name, and distinguish user and administrator roles | | |
+| 9 | Assign the right permissions on the information system's sensitive resources | | |
+| 10 | Define and check rules for choosing and sizing passwords | | |
+| 11 | Protect passwords stored on systems | | |
+| 12 | Change default authentication credentials on devices and services | | |
+| 13 | Use strong authentication wherever possible | | |
 
-### Theme 4 — Secure Workstations and Mobile Devices
-
-| # | Measure | Status | Gap / Evidence |
-|---|---------|--------|---------------|
-| 21 | Apply a configuration baseline to all workstations | | |
-| 22 | Enable full-disk encryption on all laptops and mobile devices | | |
-| 23 | Protect workstations with endpoint detection capability | | |
-| 24 | Control the use of removable media | | |
-| 25 | Disable autorun on all workstations | | |
-| 26 | Implement an email filtering solution | | |
-| 27 | Implement a web content filtering solution | | |
-
-### Theme 5 — Protect Your Network
+### IV — Secure Workstations (Sécuriser les postes)
 
 | # | Measure | Status | Gap / Evidence |
 |---|---------|--------|---------------|
-| 28 | Segment the network and isolate sensitive systems | | |
-| 29 | Filter inbound and outbound network flows | | |
-| 30 | Use encrypted protocols for all sensitive communications | | |
-| 31 | Secure Wi-Fi access points | | |
-| 32 | Limit exposure of administration interfaces to the internet | | |
-| 33 | Deploy an intrusion detection capability | | |
-| 34 | Collect and centralise security logs | | |
+| 14 | Apply a minimum security level across all IT equipment | | |
+| 15 | Protect against threats from removable media | | |
+| 16 | Use a centralised management tool to make security policies consistent | | |
+| 17 | Enable and configure the local firewall on workstations | | |
+| 18 | Encrypt sensitive data sent over the Internet | | |
 
-### Theme 6 — Secure Servers and Applications
+### V — Secure the Network (Sécuriser le réseau)
 
 | # | Measure | Status | Gap / Evidence |
 |---|---------|--------|---------------|
-| 35 | Apply a hardened configuration baseline to all servers | | |
-| 36 | Disable unused services and ports on all systems | | |
-| 37 | Supervise privileged access to production systems | | |
-| 38 | Implement backup and recovery procedures | | |
-| 39 | Test backup recovery regularly | | |
+| 19 | Segment the network and partition the zones from each other | | |
+| 20 | Secure Wi-Fi access networks and keep their uses separate | | |
+| 21 | Use secure protocols wherever they exist | | |
+| 22 | Set up a secure Internet access gateway | | |
+| 23 | Partition Internet-facing services from the rest of the information system | | |
+| 24 | Protect business email | | |
+| 25 | Secure dedicated network interconnections with partners | | |
+| 26 | Control and protect access to server rooms and technical premises | | |
 
-### Theme 7 — Manage Vulnerabilities and Updates
+### VI — Secure Administration (Sécuriser l'administration)
 
 | # | Measure | Status | Gap / Evidence |
 |---|---------|--------|---------------|
-| 40 | Keep all software and firmware up to date | | |
-| 41 | Subscribe to CERT-FR security advisories | | |
-| 42 | Define and apply a vulnerability management process | | |
+| 27 | Block Internet access from workstations or servers used to administer the information system | | |
+| 28 | Use a dedicated, partitioned network to administer the information system | | |
+| 29 | Limit administration rights on workstations to strict operational need | | |
+
+### VII — Manage Mobile Working (Gérer le nomadisme)
+
+| # | Measure | Status | Gap / Evidence |
+|---|---------|--------|---------------|
+| 30 | Physically secure mobile devices | | |
+| 31 | Encrypt sensitive data, especially on equipment that could be lost | | |
+| 32 | Secure the network connection of devices used while working remotely | | |
+| 33 | Adopt security policies dedicated to mobile terminals | | |
+
+### VIII — Keep the Information System Up to Date (Maintenir le système d'information à jour)
+
+| # | Measure | Status | Gap / Evidence |
+|---|---------|--------|---------------|
+| 34 | Define an update policy for information system components (including CERT-FR vulnerability monitoring) | | |
+| 35 | Anticipate end of support for software and systems, and limit software dependencies | | |
+
+### IX — Monitor, Audit, Respond (Superviser, auditer, réagir)
+
+| # | Measure | Status | Gap / Evidence |
+|---|---------|--------|---------------|
+| 36 | Enable and configure logs on the most important components | | |
+| 37 | Define and apply a backup policy for critical components | | |
+| 38 | Carry out regular security checks and audits, then apply the corrective actions | | |
+| 39 | Appoint an information system security lead and make them known to staff | | |
+| 40 | Define a security incident management procedure | | |
+
+### X — Going Further (Pour aller plus loin)
+
+| # | Measure | Status | Gap / Evidence |
+|---|---------|--------|---------------|
+| 41 | Carry out a formal risk analysis | | |
+| 42 | Prefer ANSSI-qualified products and services | | |
 
 ---
 
-## 3. ANSSI Cloud Security Recommendations (2021)
+## 3. ANSSI Cloud Hosting Recommendations for Sensitive IS (v1.0, July 2024)
 
 [Complete if the system uses cloud services — IaaS, PaaS, SaaS, or hybrid]
 
@@ -139,6 +159,7 @@
 
 | Criterion | Recommendation | Status |
 |-----------|---------------|--------|
+| IS category | [DR-level sensitive IS / sensitive IS under the State "cloud au centre" doctrine / sensitive IS of an OIV or OSE / SIIV] — ANSSI recommends the cloud offer types to favour for each category | |
 | Provider qualification | Prefer SecNumCloud-qualified providers for sensitive data | |
 | Data location | EU-only hosting for data subject to French law | |
 | Extraterritorial law exposure | Assess US CLOUD Act / China MLSA applicability | |

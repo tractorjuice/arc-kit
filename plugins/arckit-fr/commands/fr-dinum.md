@@ -133,7 +133,7 @@ Show this scoping table to the user before generating the full assessment.
    - Compliance rate: [X]% if audit data available, otherwise [To be assessed via RGAA audit]
 
 6. **Section 4: RGESN — Digital Service Ecodesign**
-   - 8-category table across 79 criteria (2024 version)
+   - 9-family table across 78 criteria (RGESN 2024, the current version 2: Strategy, Specifications, Architecture, UX/UI, Content, Frontend, Backend, Hosting, Algorithms)
    - Hosting sustainability requirements
    - Note any ecodesign constraints from requirements
 

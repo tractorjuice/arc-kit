@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:fr-anssi` assesses compliance with the ANSSI Guide d'hygiène informatique (42 measures across 7 themes) and ANSSI cloud security recommendations. Applicable to all French organisations, public or private.
+`/arckit:fr-anssi` assesses compliance with the ANSSI Guide d'hygiène informatique (version 2.0, 2017 — 42 measures across 10 chapters) and the ANSSI recommendations for hosting sensitive information systems in the cloud (version 1.0, July 2024). Applicable to all French organisations, public or private.
 
 ---
 
@@ -30,21 +30,30 @@ Output: `projects/<id>/ARC-<id>-ANSSI-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Theme 1: Administration | Admin account management, privileged access |
-| Theme 2: Authentication | Password policy, MFA, account lockout |
-| Theme 3: Updates | Patch management, end-of-life components |
-| Theme 4: Monitoring | Log collection, SIEM, alert management |
-| Theme 5: Backups | Backup policy, offline copies, restoration testing |
-| Theme 6: Network | Segmentation, firewall rules, DMZ |
-| Theme 7: Workstations | Endpoint protection, removable media, encryption |
-| Cloud Section | ANSSI cloud qualification matrix applicability |
-| Gap Analysis | Priority matrix (P1 critical / P2 high / P3 medium) |
+| Executive Summary | Measures implemented / partial / not implemented per chapter; cloud applicability |
+| 1. Scope and Applicable Guides | System studied, boundary, deployment environment, regulatory context |
+| 2. Hygiene Guide — 42 Measures | Ten chapters, I to X (see below) |
+| 3. Cloud Hosting Recommendations | IS category, recommended cloud offer type, provider qualification, cloud architecture security |
+| 4. Gap Analysis and Remediation Plan | Priority (🔴 High / 🟠 Medium / 🟡 Low), owner, target date; summary score |
 
 ---
 
-## 42 Measures — 7 Themes
+## 42 Measures — 10 Chapters
 
-Each theme covers 5–8 measures assessed as: ✅ Compliant · ⚠️ Partial · ❌ Non-compliant · N/A Not applicable.
+| Chapter | Measures |
+|---------|----------|
+| I. Raise awareness and train (Sensibiliser et former) | 1–3 |
+| II. Know the information system (Connaître le système d'information) | 4–7 |
+| III. Authenticate and control access (Authentifier et contrôler les accès) | 8–13 |
+| IV. Secure workstations (Sécuriser les postes) | 14–18 |
+| V. Secure the network (Sécuriser le réseau) | 19–26 |
+| VI. Secure administration (Sécuriser l'administration) | 27–29 |
+| VII. Manage mobile working (Gérer le nomadisme) | 30–33 |
+| VIII. Keep the information system up to date (Maintenir le système d'information à jour) | 34–35 |
+| IX. Monitor, audit, respond (Superviser, auditer, réagir) | 36–40 |
+| X. Going further (Pour aller plus loin) | 41–42 |
+
+Each measure is assessed against its *standard* level as: ✅ Implemented · ⚠️ Partial · ❌ Not implemented · N/A Not applicable. Where the guide defines a *renforcé* (reinforced) level, the assessment notes whether it is met or targeted.
 
 ---
 
@@ -63,10 +72,10 @@ Each theme covers 5–8 measures assessed as: ✅ Compliant · ⚠️ Partial ·
 
 ## Review Checklist
 
-- All 42 measures assessed across 7 themes.
-- Priority gaps flagged (P1 critical requires immediate remediation).
+- All 42 measures assessed across the 10 chapters.
+- Priority gaps flagged (🔴 High: before go-live or within 30 days).
 - Cloud section completed if cloud services in scope.
-- ANSSI cloud qualification matrix applied (SecNumCloud, C5, CSA STAR, EUCS).
+- Cloud offer type checked against the ANSSI recommendation for the system's IS category (SecNumCloud qualification where recommended).
 - Gap analysis with remediation timeline produced.
 - Assessment classified Diffusion Restreinte (ANSSI assessment is sensitive).
 
@@ -75,5 +84,5 @@ Each theme covers 5–8 measures assessed as: ✅ Compliant · ⚠️ Partial ·
 ## Key Notes
 
 - **Scope**: Applicable to any French organisation (public or private) — not limited to OIV/OSE.
-- **Cloud qualification**: ANSSI distinguishes SecNumCloud (French sovereign qualification) from other cloud certifications — the guide specifies which qualification level is appropriate for which data sensitivity.
+- **Cloud recommendations**: For each IS category (DR-level sensitive IS, sensitive IS under the State "cloud au centre" doctrine, sensitive IS of an OIV or OSE, SIIV), ANSSI recommends which cloud offer types to favour, given data sensitivity and the threat level. SecNumCloud is the qualification it recommends throughout.
 - **ANSSI** = French national cybersecurity agency, analogous to the UK's NCSC.

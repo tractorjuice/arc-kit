@@ -109,7 +109,7 @@ For each algorithm subject to the transparency obligation, document in plain lan
 3. **Algorithm type**: Rule-based (deterministic rules, thresholds, scoring formulas) or statistical/ML model. Use plain language — avoid jargon.
 4. **Inputs**: What data does the algorithm receive? List all criteria, indicators, documents, or data points used.
 5. **Output**: What does the algorithm produce — a score, a ranking, a classification, a recommendation, a decision?
-6. **Parameters and weights**: For each input parameter, describe its influence on the output. If it is a rule-based system, describe the rules. If it is a model, describe the most significant factors. Weights need not be published if doing so would enable gaming — but the existence of influential parameters must be disclosed.
+6. **Parameters and weights**: For each input parameter, describe its influence on the output. If it is a rule-based system, describe the rules. If it is a model, describe the most significant factors. The rules defining the main algorithmic processes are published online (CRPA L312-1-3); the parameters and, where applicable, their weighting as applied to a person's situation are communicated to that person on request (CRPA R311-3-1-2). Weights or other details may be withheld only where disclosure would harm a secret protected by law (CRPA L311-5 2°, e.g. the prevention of offences for a fraud-detection model, or L311-6). Name the ground relied on, and disclose the rest after redaction (L311-7) — the existence of influential parameters is still disclosed.
 7. **Human review**: Is the algorithmic output the final decision, or does a human decision-maker review it? Document the human oversight step.
 
 #### Step 4c: Data Assessment (for each ALGO-xx)

@@ -32,8 +32,8 @@
 
 French public administrations are subject to two complementary obligations:
 
-**1. Reuse before build** (Circulaire PM n°6264-SG, 27 April 2021)
-Public administrations must search for and reuse existing public code before commissioning new development. This applies to all software developed or commissioned by the State.
+**1. Reuse before build** (Circulaire PM n°6264/SG, 27 April 2021)
+The circular instructs State administrations to strengthen the opening of public source code and the use of free software. Searching for and reusing existing public code before commissioning new development is how a project applies that policy. The circular is an instruction to State administrations, not a statute.
 
 **2. Publish custom code** (Loi République Numérique, Art. 16; DINUM mission logiciels libres)
 Software developed by or for the administration must be published as open source, except where national security, trade secrets, or third-party rights prevent publication.
