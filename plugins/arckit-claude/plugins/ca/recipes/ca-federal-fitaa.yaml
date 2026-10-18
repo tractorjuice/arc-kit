@@ -28,7 +28,7 @@
 #     ca-cloud-residency            GC sovereign cloud residency + CLOUD Act
 #     ca-gc-digital-standards       10 GC Digital Standards scorecard
 #     ca-ola                        Official Languages Act (Parts IV / V / VI)
-#     ca-pspc                       PSPC Supply Manual + ICV / CFTA / CETA
+#     ca-pspc                       PSPC Supply Manual + Indigenous procurement / CFTA / CETA
 #     ca-ocap                       First Nations OCAP® sovereignty (optional)
 #
 #   Differences from the UAE recipe specifically
@@ -123,17 +123,19 @@ targets:
     output: { project: "{P}-{NAME}", type: GLOS }
     deps: [PRIN]
 
-  - id: REQ
-    skill: arckit:requirements
-    args: "{NAME}"
-    output: { project: "{P}-{NAME}", type: REQ }
-    deps: [PRIN]
-
   - id: STKE
     skill: arckit:stakeholders
     args: "{NAME}"
     output: { project: "{P}-{NAME}", type: STKE }
     deps: [PRIN]
+
+  # Requirements need the stakeholder analysis (a MANDATORY input of
+  # /arckit:requirements), so they run after it rather than alongside it.
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN, STKE]
 
   # --- Research wave (parallel, before ADRs) ------------------------------
   # Org research runs first (no deps) and writes to projects/000-global/research/
@@ -263,13 +265,6 @@ targets:
     output: { project: "{P}-{NAME}", type: DIGSTD }
     deps: [REQ]
 
-  # --- Procurement (towards the end) ------------------------------------
-  - id: CA_PSPC
-    skill: arckit-ca:ca-pspc
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: PROC }
-    deps: [REQ, CA_ITSG, CA_CRES]
-
   # --- Cross-cutting and supporting outputs -----------------------------
   - id: DATA_MODEL
     skill: arckit:data-model
@@ -283,6 +278,23 @@ targets:
     args: "{P}"
     output: { project: "{P}-{NAME}", type: RISK }
     deps: [CA_FITAA, CA_PIA, CA_AIA, CA_CHARTER, CA_ITSG]
+
+  # --- Business case (before procurement) -------------------------------
+  # The TBS Directive on the Management of Projects and Programmes has the
+  # business case compare the options and the procurement strategy set out
+  # for the recommended one, so the SOBC runs before ca-pspc.
+  - id: SOBC
+    skill: arckit:sobc
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SOBC }
+    deps: [REQ, STKE, RISK]
+
+  # --- Procurement (after the business case) ----------------------------
+  - id: CA_PSPC
+    skill: arckit-ca:ca-pspc
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: PROC }
+    deps: [REQ, SOBC, CA_ITSG, CA_CRES]
 
   # --- Strategic outputs ------------------------------------------------
   - id: WARDLEY
@@ -333,13 +345,6 @@ targets:
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ, CA_PSPC]
-
-  # --- Strategic / business case (after most ca-* available) -----------
-  - id: SOBC
-    skill: arckit:sobc
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: SOBC }
-    deps: [REQ, RISK, CA_PSPC]
 
   # --- Framework synthesis (executive view of all ca-* artefacts) ------
   - id: FRAMEWORK

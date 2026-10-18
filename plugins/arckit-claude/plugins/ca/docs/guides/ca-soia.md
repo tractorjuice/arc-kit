@@ -15,7 +15,6 @@ SOIA handling sits on top of the ITSG-33 security baseline. The ITSG-33 Statemen
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Functional context and the SOI-relevant data flows |
 | ITSG-33 Statement of Applicability (`ARC-<id>-ITSG-v1.0.md`) | System-level categorisation, control profile, and CMVP envelope — prerequisite |
 | FITAA Compliance Assessment (`ARC-<id>-FITAA-v1.0.md`) | Where present, the protected investigative dataset overlaps with SOI |
-| Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Personal-information drivers for any identities subject to s.8 protection |
 
 ---
 
