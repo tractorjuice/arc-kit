@@ -405,7 +405,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | Command | Needs (M) | Recommended (R) | Optional (O) |
 |---------|-----------|-----------------|--------------|
 | `/arckit:au-aescsf` | — | requirements, stakeholders | au-e8-posture, au-ism-controls, au-ot-security, au-soci-cirmp, data-model, dfd, diagram, maturity-model, principles, risk, servicenow, traceability |
-| `/arckit:au-energy-compliance` | — | requirements, stakeholders | adr, au-aescsf, au-ot-security, au-pia, au-soci-cirmp, data-model, dfd, diagram, principles, risk, servicenow, traceability |
+| `/arckit:au-energy-compliance` | — | requirements, stakeholders | adr, au-aescsf, au-ndb-playbook, au-ot-security, au-pia, au-soci-cirmp, data-model, dfd, diagram, principles, risk, servicenow, traceability |
 
 ### ArcKit USA Federal Civilian Overlay (`arckit-us`)
 

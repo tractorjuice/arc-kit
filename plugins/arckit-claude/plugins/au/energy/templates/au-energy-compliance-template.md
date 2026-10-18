@@ -36,6 +36,7 @@
 | Shared services | [Position] | [Evidence] | [Gap] | [Yes / No] |
 | Staff and system access | [Position] | [Evidence] | [Gap] | [Yes / No] |
 | Affiliate data sharing | [Position] | [Evidence] | [Gap] | [Yes / No] |
+| Branding and cross-promotion | [Position] | [Evidence] | [Gap] | [Yes / No] |
 | Waivers / exemptions | [Position] | [Evidence] | [Gap] | [Yes / No / N/A] |
 
 ---
