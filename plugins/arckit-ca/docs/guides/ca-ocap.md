@@ -13,8 +13,8 @@ The command enforces a structural FNIGC pre-engagement gate. If the architect ca
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | System scope and Indigenous-data triggers |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Per-element collection / use / disclosure |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Entity-level data classifications |
+| Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Per-element collection / use / disclosure |
+| Data model (`ARC-<id>-DATA-v*.md`) | Entity-level data classifications |
 | Privacy Impact Assessment (`ARC-<id>-PIA-v*.md`) | Privacy controls inherited; OCAP layers community sovereignty over the PIA's federal privacy posture |
 
 ---

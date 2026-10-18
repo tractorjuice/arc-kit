@@ -74,7 +74,7 @@ analyze → story → presentation → pages
 - `ARC-{PID}-PRIN-COMP-v*.md` — Principles compliance scorecard
 - `ARC-{PID}-CONF-v*.md` — Architecture conformance assessment
 - `ARC-{PID}-STORY-v*.md` — Project story
-- `ARC-{PID}-STGY-v*.md` — Architecture strategy
+- `ARC-{PID}-STRAT-v*.md` — Architecture strategy
 
 ## Related Roles
 

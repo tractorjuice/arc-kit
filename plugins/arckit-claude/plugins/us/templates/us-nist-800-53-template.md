@@ -25,7 +25,7 @@
 
 | Field | Value |
 |-------|-------|
-| **FIPS 199 High-Water Mark** | [LOW / MODERATE / HIGH — cross-ref `ARC-{P}-FISMA-v*`] |
+| **FIPS 199 High-Water Mark** | [LOW / MODERATE / HIGH — cross-ref `ARC-{P}-FIPS199-v*`] |
 | **Selected Control Baseline** | [Low / Moderate / High] |
 | **Baseline Source** | [NIST SP 800-53B / FedRAMP Rev 5 / Agency Overlay] |
 | **Catalog Version** | [NIST SP 800-53 Rev 5.1.1 / FedRAMP Rev 5 Baselines vNN] |
@@ -83,7 +83,7 @@
 | CM-6 | Configuration Settings | [Mod] | [Implemented] | [N/A] | [Common Secure Configurations: DISA STIG / CIS Benchmarks Level 1] | [None] | [Compliance scanner: quarterly] |
 | CP-9 | System Backup | [Mod] | [Inherited] | [CSP: AWS Backup cross-region] | [Frequency: daily; retention: 90 days] | [None] | [Customer validates restore quarterly] |
 | IA-2(1) | MFA to Privileged Accounts | [Mod] | [Implemented] | [N/A] | [Phishing-resistant authenticator required] | [None] | [Cross-ref Zero Trust Identity pillar] |
-| IR-4 | Incident Handling | [Mod] | [Implemented] | [N/A] | [IR Plan: ARC-{P}-IR-v*] | [None] | [US-CERT reporting: 1 hour] |
+| IR-4 | Incident Handling | [Mod] | [Implemented] | [N/A] | [Incident response plan reference] | [None] | [US-CERT reporting: 1 hour] |
 | RA-5 | Vulnerability Monitoring and Scanning | [Mod] | [Implemented] | [N/A] | [Scan frequency: weekly authenticated; monthly external] | [None] | [Cross-ref ConMon] |
 | SC-7 | Boundary Protection | [Mod] | [Hybrid] | [CSP: AWS WAF / Shield] | [Egress filtering: deny-by-default] | [None] | [Customer responsibility: WAF rules] |
 | SI-2 | Flaw Remediation | [Mod] | [Implemented] | [N/A] | [Patch windows: High = 30 days, Med = 90 days] | [None] | [Tracked via vulnerability-management platform] |

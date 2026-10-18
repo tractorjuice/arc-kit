@@ -13,7 +13,7 @@ The Act was substantively amended by *An Act for the Substantive Equality of Can
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, user populations, surfaces in scope |
-| Service assessment (`ARC-<id>-SAS-v1.0.md`) | Bilingualism evidence and active-offer posture |
+| Service assessment (`ARC-<id>-SVCASS-v*.md`) | Bilingualism evidence and active-offer posture |
 | FITAA assessment (`ARC-<id>-FITAA-v1.0.md`) | Any public register triggers Part IV bilingual obligations |
 
 ---

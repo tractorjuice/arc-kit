@@ -24,7 +24,7 @@ You are an enterprise architect generating a UAE Pass integration design for a U
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, ARCH, INT, NFR-SEC, and SECD artefacts (if present)
+   - The project's REQ (including its `INT-*` and `NFR-SEC-*` requirements), DIAG (architecture diagrams) and SECD artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-uaepass-template.md` (user override)

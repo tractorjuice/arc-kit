@@ -16,7 +16,7 @@ The PSPF is the umbrella protective-security policy for Australian federal entit
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, security advisor, vetting officer |
 | `/arckit:au-ism-controls` output (`ARC-<id>-AUISM-v1.0.md`) | Information security evidence for Outcome 4 |
 | `/arckit:au-e8-posture` output (`ARC-<id>-AUE8-v1.0.md`) | Cyber baseline for Outcome 4 |
-| HLD (`ARC-<id>-HLD-v1.0.md`) | Physical environment, personnel scope, information flows |
+| Vendor HLD (`vendors/*/hld-v*.md`) | Physical environment, personnel scope, information flows |
 
 ---
 

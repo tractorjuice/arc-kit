@@ -12,7 +12,7 @@
 /arckit:secure Assess UK Government Secure by Design for <service>
 ```
 
-Output: `projects/<id>/ARC-<id>-SECU-v1.0.md`.
+Output: `projects/<id>/ARC-<id>-SECD-v1.0.md`.
 
 ---
 

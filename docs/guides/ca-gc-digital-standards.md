@@ -13,7 +13,7 @@ The Digital Standards are not aspirational principles. They sit under the TBS *P
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, user populations, intended outcomes |
-| Service assessment (`ARC-<id>-SAS-v1.0.md`) | GDS-style evidence base — many points map onto Digital Standards |
+| Service assessment (`ARC-<id>-SVCASS-v*.md`) | GDS-style evidence base — many points map onto Digital Standards |
 | Retrospective notes | Iteration cadence, learning loops, team practices |
 | Accessibility audits | WCAG 2.1 AA / 2.2 AA conformance, manual and assistive-tech reviews |
 | PIA / AIA artefacts | Standard 5 (security and privacy) and Standard 9 (ethical) evidence |

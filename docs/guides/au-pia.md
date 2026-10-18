@@ -13,8 +13,8 @@ The PIA is a recognised due diligence artefact for Australian Federal entities a
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, decision logic, automated decision-making scope |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Per-element personal information inventory and sensitivity flags |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Entities and relationships carrying personal information |
+| Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Per-element personal information inventory and sensitivity flags |
+| Data model (`ARC-<id>-DATA-v*.md`) | Entities and relationships carrying personal information |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Subject populations, partner agencies, processors, offshore recipients |
 
 ---

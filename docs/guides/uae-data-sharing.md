@@ -11,9 +11,9 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Cross-entity flows in scope |
-| Integration spec (`ARC-<id>-INT-v1.0.md`) | Existing integration surface |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Per-share data categories |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Entity-level structure |
+| Integration spec (`INT-*` in `ARC-<id>-REQ-v*.md`) | Existing integration surface |
+| Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Per-share data categories |
+| Data model (`ARC-<id>-DATA-v*.md`) | Entity-level structure |
 | Smart Data Classification Register (`ARC-<id>-CLAS-v*.md`) | Per-share sensitivity |
 | PDPL assessment (`ARC-<id>-PDPL-v*.md`) | Lawful-basis register |
 

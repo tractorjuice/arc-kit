@@ -48,7 +48,7 @@ principles → wardley → strategy → roadmap → presentation
 ## Key Artifacts You Own
 
 - `ARC-000-PRIN-v*.md` — Enterprise architecture principles (global, cross-project)
-- `ARC-{PID}-STGY-v*.md` — Architecture strategy (co-owned with Enterprise Architect)
+- `ARC-{PID}-STRAT-v*.md` — Architecture strategy (co-owned with Enterprise Architect)
 - `ARC-{PID}-ROAD-v*.md` — Strategic roadmap
 
 ## Related Roles

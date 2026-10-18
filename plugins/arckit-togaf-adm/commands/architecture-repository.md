@@ -30,7 +30,7 @@ $ARGUMENTS
 - **ADR-\*** (Architecture Decision Records across all projects) — Extract: Decisions made, alternatives considered, consequences, rationale. These feed directly into the patterns library and standards register.
 - **DIAG-\*** (Architecture Diagrams across all projects) — Extract: Reference architecture patterns, system context diagrams, integration patterns. These feed into the reference architectures section.
 - **STORY-\*** (Project stories/narratives across all projects) — Extract: Project outcomes, what worked, what didn't, unexpected challenges. These feed into lessons learned.
-- **ANALYZE-\*** (Analysis artefacts across all projects) — Extract: Technical findings, performance data, assessment results. These feed into building blocks and lessons learned.
+- **ANAL-\*** (Analysis artefacts across all projects) — Extract: Technical findings, performance data, assessment results. These feed into building blocks and lessons learned.
 
 **OPTIONAL** (read if available, skip silently if missing):
 
@@ -48,7 +48,7 @@ Scan all `projects/*/` directories for the following artefact types:
 - **ADR** files (`ARC-*-ADR-v*.md`, `ARC-*-ADR-*-*-v*.md`) — Architecture Decision Records
 - **DIAG** files (`ARC-*-DIAG-v*.md`) — Architecture diagrams and reference models
 - **STORY** files (`ARC-*-STORY-v*.md`) — Project stories and narratives
-- **ANALYZE** files (`ARC-*-ANALYZE-v*.md`) — Technical analysis documents
+- **ANAL** files (`ARC-*-ANAL-v*.md`) — Technical analysis documents
 - **BPCM**, **GAPA**, **TRANS**, **APP**, **BORD**, **ACHG** files — Supplementary sources for cross-domain patterns
 
 ### Prerequisites 1c: Read external documents and policies
@@ -102,7 +102,7 @@ Read PRIN and scan all available project artefacts. Classify each artefact's con
 - Include: system integration patterns, security architectures, data flow templates, cloud reference models
 - Each reference architecture links back to the original diagram source
 
-#### From STORY + ANALYZE → Lessons Learned
+#### From STORY + ANAL → Lessons Learned
 
 - Story outcomes that reveal process improvements become lessons
 - Analysis findings that identify technical pitfalls or successes become lessons
@@ -190,7 +190,7 @@ Each reference architecture includes:
 
 #### Lessons Learned
 
-Catalogue lessons from STORY and ANALYZE artefacts:
+Catalogue lessons from STORY and ANAL artefacts:
 
 | Lesson ID | Project | Lesson | Category | Impact |
 |-----------|---------|--------|----------|--------|
@@ -428,7 +428,7 @@ After writing the file, show a concise summary (NOT the full document):
 - ✅ ADR artefacts: [N] decisions across [N] projects
 - ✅ DIAG artefacts: [N] diagrams across [N] projects
 - ✅ STORY artefacts: [N] stories across [N] projects
-- ✅ ANALYZE artefacts: [N] analyses across [N] projects
+- ✅ ANAL artefacts: [N] analyses across [N] projects
 
 ### Traceability
 - [N] repository entries traced to source artefacts
@@ -469,7 +469,7 @@ After writing the file, show a concise summary (NOT the full document):
 6. **Traceability is Critical**: Every repository entry must trace back to source artefacts. Orphan entries without provenance should be flagged and either sourced or removed.
 
 7. **Integration with Other Commands**:
-   - **Input**: Synthesises from PRIN, ADR, DIAG, STORY, ANALYZE, BPCM, GAPA, TRANS, APP, BORD, ACHG
+   - **Input**: Synthesises from PRIN, ADR, DIAG, STORY, ANAL, BPCM, GAPA, TRANS, APP, BORD, ACHG
    - **Output**: Feeds into `/arckit:adm-preliminary` (standards inform scope), all future project artefacts (reference patterns and standards)
    - **Feedback loop**: New projects create artefacts → repository is updated → next ADM cycle uses updated repository
 

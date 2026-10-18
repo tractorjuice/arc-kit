@@ -13,9 +13,9 @@ The ISM is the authoritative control library for Australian Federal entities and
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, hosting model, data flows |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Sensitivity categories driving control intensity |
+| Data model (`ARC-<id>-DATA-v*.md`) | Sensitivity categories driving control intensity |
 | `/arckit:au-e8-posture` output (`ARC-<id>-AUE8-v1.0.md`) | Cyber baseline that the ISM SoA cross-references |
-| HLD (`ARC-<id>-HLD-v1.0.md`) | Architecture, identity model, key management |
+| Vendor HLD (`vendors/*/hld-v*.md`) | Architecture, identity model, key management |
 
 ---
 

@@ -15,7 +15,7 @@ Reviewed by the agency Chief AI Officer (CAIO), Senior AI Official (SAO), Senior
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | AI-related FRs and NFRs, decision logic |
-| Data Model (`ARC-<id>-DMOD-v1.0.md`) | Training data, inference data, PII flags |
+| Data Model (`ARC-<id>-DATA-v*.md`) | Training data, inference data, PII flags |
 | Architecture Principles (`ARC-<id>-PRIN-v1.0.md`) | Responsible-AI principles |
 
 ---

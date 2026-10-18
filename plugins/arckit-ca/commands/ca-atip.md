@@ -28,7 +28,7 @@ You are an enterprise architect generating a Canada ATIP (Access to Information 
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, DR, and DMOD artefacts (if present)
+   - The project's REQ (including its `DR-*` data requirements) and DATA (data model) artefacts (if present)
    - The project's PIA artefact if present (`projects/<project-id>/ARC-<project-id>-PIA-v*.md`) — its personal-information inventory is the authoritative source for the Privacy Act §4–§8 register here
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:

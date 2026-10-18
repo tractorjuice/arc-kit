@@ -37,7 +37,7 @@ You are an enterprise architect generating a Canada Algorithmic Impact Assessmen
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
    - The project's REQ artefact (in particular any NFR-AI / NFR-DEC requirements covering automated decision-making, bias, contestability, or human override)
    - The project's `ARC-<id>-PIA-v*.md` (`ca-pia` artefact) where present — AIA depth must match PIA depth
-   - The project's DR and DMOD artefacts (training-data lineage, decision boundary inputs)
+   - The project's REQ (its `DR-*` data requirements) and DATA (data model) artefacts, for training-data lineage and decision boundary inputs
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/ca-aia-template.md` (user override)

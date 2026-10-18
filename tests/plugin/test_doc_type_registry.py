@@ -66,6 +66,14 @@ def test_guard_is_wired_into_ci():
         ("ARC-{PROJECT_ID}-WGAM-{NUM}-v{VERSION}.md", "WGAM"),
         ("ARC-{PID}-ADR-001-v1.0.md", "ADR"),
         ("ARC-001-DSCT-002-v2.1.md", "DSCT"),
+        # Read globs and guide placeholders (#949). A command that reads
+        # `ARC-*-ANALYZE-v*.md` or a guide that lists `ARC-<id>-DMOD-v1.0.md` as
+        # an input names a file nothing ever writes, so the read silently finds
+        # nothing. None of these forms matched before.
+        ("ARC-*-ANALYZE-v*.md", "ANALYZE"),
+        ("ARC-<id>-DMOD-v1.0.md", "DMOD"),
+        ("ARC-<project-id>-PIA-v*.md", "PIA"),
+        ("diagrams/ARC-<id>-DIAG-*-v*.md", "DIAG"),
     ],
 )
 def test_command_code_regex_matches_written_filename_forms(filename, expected):
@@ -116,6 +124,28 @@ def test_guard_rejects_unregistered_multi_instance_code(tmp_path):
 
     assert result.returncode == 1, "guard passed on unregistered codes"
     for code in ("BOGUS", "ZZZZ", "QQQQ"):
+        assert code in result.stderr, f"{code} not reported:\n{result.stderr}"
+
+
+@pytest.mark.parametrize(
+    "probe",
+    [
+        REPO_ROOT / "docs/guides/zz-doc-type-registry-probe.md",
+        REPO_ROOT / "plugins/arckit-claude/templates/zz-doc-type-registry-probe-template.md",
+    ],
+    ids=["guide", "template"],
+)
+def test_guard_rejects_unregistered_code_in_guides_and_templates(probe):
+    """#949: overlay guides listed `ARC-<id>-DMOD-v1.0.md` and templates cited
+    `ARC-{P}-FISMA-v*`, codes the registry never had. Guides and templates are
+    read by people and by the model, so the gate covers them too."""
+    probe.write_text("| Data model (`ARC-<id>-BOGUSDM-v1.0.md`) | input |\n[Cross-ref `ARC-{P}-ZZQQ-v*`]\n")
+    try:
+        result = subprocess.run(["python3", str(GUARD)], capture_output=True, text=True, cwd=REPO_ROOT)
+    finally:
+        probe.unlink(missing_ok=True)
+    assert result.returncode == 1, "guard passed on unregistered codes"
+    for code in ("BOGUSDM", "ZZQQ"):
         assert code in result.stderr, f"{code} not reported:\n{result.stderr}"
 
 

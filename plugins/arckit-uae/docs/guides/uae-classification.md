@@ -14,7 +14,7 @@ This is the **upstream artefact** for the UAE federal overlay — most other UAE
 |----------|---------|
 | Architecture principles (`ARC-000-PRIN-*.md`) | Federal principles applied to classification |
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Datasets in scope of the service |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Per-entity sensitivity inputs |
+| Data model (`ARC-<id>-DATA-v*.md`) | Per-entity sensitivity inputs |
 | `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data` user-config |
 
 ---

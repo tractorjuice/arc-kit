@@ -14,7 +14,7 @@
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Processing activities and data flows |
 | EU GDPR assessment (`ARC-<id>-RGPD-v*.md`) | Base GDPR compliance — required prerequisite |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Personal-data categories and entities |
+| Data model (`ARC-<id>-DATA-v*.md`) | Personal-data categories and entities |
 
 ---
 

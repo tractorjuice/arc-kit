@@ -37,7 +37,7 @@
 | **Population Affected** | [Federal employees / public / regulated cohort] |
 | **Build / Buy / GenAI Wrapper** | [In-house / Vendor-built / Off-the-shelf with custom prompts] |
 | **Cross-ref AI RMF** | [ARC-{P}-AIRMF-v*] |
-| **Cross-ref PIA (if PII)** | [ARC-{P}-PIA-v*] |
+| **Cross-ref PIA (if PII)** | [ARC-{P}-USPIA-v*] |
 | **CAIO** | [Name + role] |
 | **Use-Case Owner** | [Name + role] |
 | **Assessment Date** | [YYYY-MM-DD] |

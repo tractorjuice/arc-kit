@@ -14,8 +14,8 @@ The Office of the Commissioner of Foreign Influence Transparency is newly stood 
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Activity description and arrangement triggers |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Foreign principals, registrants, civil-society stakeholders |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Register data fields, public vs protected flags |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Arrangement / registrant / foreign-principal entities |
+| Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Register data fields, public vs protected flags |
+| Data model (`ARC-<id>-DATA-v*.md`) | Arrangement / registrant / foreign-principal entities |
 
 ---
 

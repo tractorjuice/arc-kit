@@ -34,7 +34,7 @@
 | **Project Phase** | [Initiation / Development / Operations / Decommissioned] |
 | **Project Purpose** | [What the system does] |
 | **PIA Trigger** | [New system / Substantial change / Periodic review / Privacy Act SoR change] |
-| **Cross-ref FISMA Categorization** | [ARC-{P}-FISMA-v*] |
+| **Cross-ref FIPS 199 Categorization** | [ARC-{P}-FIPS199-v*] |
 | **Cross-ref AI Impact Assessment (if AI used)** | [ARC-{P}-AIIA-v*] |
 | **Assessment Date** | [YYYY-MM-DD] |
 
@@ -106,7 +106,7 @@
 | Notice | [Met / Gap] | [Notice text + posting location] | [Gap] | [Action] |
 | Choice (opt-in / opt-out where applicable) | [Met / Gap] | [Mechanism] | [Gap] | [Action] |
 | Access (individual's right to inspect their record) | [Met / Gap] | [Process + form] | [Gap] | [Action] |
-| Security (cross-ref 800-53 controls) | [Met / Gap] | [Cross-ref ARC-{P}-NIST53-v*] | [Gap] | [Action] |
+| Security (cross-ref 800-53 controls) | [Met / Gap] | [Cross-ref ARC-{P}-NIST-v*] | [Gap] | [Action] |
 | Accountability (designated SAOP, training, audit) | [Met / Gap] | [SAOP designation; training records] | [Gap] | [Action] |
 | Data Quality (accuracy, completeness, timeliness) | [Met / Gap] | [Validation processes] | [Gap] | [Action] |
 | Transparency (publication of PIA + SORN) | [Met / Gap] | [Publication URL] | [Gap] | [Action] |

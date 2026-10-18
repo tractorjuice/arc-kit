@@ -37,7 +37,7 @@ You are an enterprise architect generating a Canada FITAA Compliance Assessment 
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, STKE, DR, and DMOD artefacts (if present)
+   - The project's REQ (including its `DR-*` data requirements), STKE and DATA (data model) artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/ca-fitaa-template.md` (user override)

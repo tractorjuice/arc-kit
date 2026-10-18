@@ -31,7 +31,7 @@ You are an enterprise architect generating an ITSG-33 Statement of Applicability
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
    - The project's REQ artefact, paying particular attention to NFR-SEC-* security requirements
-   - The project's DR artefact for data sensitivity classifications
+   - The project's DATA artefact (data model) for data sensitivity classifications
    - The project's PIA artefact (`ARC-<id>-PIA-*.md`) for personal-information-driven categorisation drivers
    - The project's SOIA artefact (`ARC-<id>-SOIA-*.md`) if classified information is in scope
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`

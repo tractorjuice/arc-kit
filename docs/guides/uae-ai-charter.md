@@ -11,8 +11,8 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | AI system purpose, users, decisions made |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Model placement, data flow, inference path |
-| Security NFRs (`ARC-<id>-NFR-SEC-v1.0.md`) | Confidentiality and integrity requirements |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Model placement, data flow, inference path |
+| Security NFRs (`NFR-SEC-*` in `ARC-<id>-REQ-v*.md`) | Confidentiality and integrity requirements |
 | DPIA / fairness / bias artefacts (if present) | Existing privacy and bias controls |
 
 ---

@@ -11,9 +11,9 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service scope and record-producing flows |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Record categories collected |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Entity-level ownership inputs |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Storage and lifecycle components |
+| Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Record categories collected |
+| Data model (`ARC-<id>-DATA-v*.md`) | Entity-level ownership inputs |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Storage and lifecycle components |
 | Smart Data Classification Register (`ARC-<id>-CLAS-v*.md`) | Sensitivity → retention rules |
 
 ---

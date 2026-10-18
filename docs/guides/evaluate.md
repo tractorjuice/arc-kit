@@ -29,7 +29,7 @@ Output:
 
 - `projects/<id>/ARC-<id>-EVAL-v1.0.md` (framework)
 - `projects/<id>/vendors/<vendor>/ARC-<id>-EVAL-<vendor>-v1.0.md` (scoring)
-- `projects/<id>/ARC-<id>-EVCP-v1.0.md` (comparison)
+- `projects/<id>/ARC-<id>-VEND-v1.0.md` (comparison)
 
 ---
 
@@ -66,7 +66,7 @@ Output:
 |------|-------------|--------|
 | Create Framework | Before receiving proposals | `ARC-<id>-EVAL-v1.0.md` |
 | Score Vendor | After receiving a proposal | `vendors/<name>/ARC-<id>-EVAL-<name>-v1.0.md` |
-| Compare Vendors | After scoring multiple vendors | `ARC-<id>-EVCP-v1.0.md` |
+| Compare Vendors | After scoring multiple vendors | `ARC-<id>-VEND-v1.0.md` |
 
 ---
 

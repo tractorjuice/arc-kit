@@ -58,7 +58,7 @@ plan → principles → stakeholders → risk → sobc → requirements → plat
 
 - `ARC-{PID}-STKE-v*.md` — Stakeholder analysis
 - `ARC-{PID}-SOBC-v*.md` — Strategic Outline Business Case
-- `ARC-{PID}-STGY-v*.md` — Architecture strategy
+- `ARC-{PID}-STRAT-v*.md` — Architecture strategy
 - `ARC-{PID}-ROAD-v*.md` — Strategic roadmap
 - `ARC-{PID}-PLAT-v*.md` — Platform design (if applicable)
 

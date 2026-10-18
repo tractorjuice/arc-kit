@@ -17,7 +17,7 @@ Reviewed by the SAOP, the System Owner, the agency Privacy Office, General Couns
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, data requirements (DR-*) |
-| Data Model (`ARC-<id>-DMOD-v1.0.md`) | Entities carrying PII, relationships, retention |
+| Data Model (`ARC-<id>-DATA-v*.md`) | Entities carrying PII, relationships, retention |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Subject populations, partner agencies, processors |
 | Architecture Principles (`ARC-<id>-PRIN-v1.0.md`) | Privacy-by-design posture |
 

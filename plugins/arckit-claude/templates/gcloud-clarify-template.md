@@ -305,7 +305,7 @@ Common vague marketing language requiring clarification:
 ## Referenced Documents
 
 - **Requirements**: projects/[project]/ARC-*-REQ-v*.md
-- **G-Cloud Search**: projects/[project]/procurement/ARC-*-GCLOUD-v*.md
+- **G-Cloud Search**: projects/[project]/procurement/ARC-*-GCLD-v*.md
 - **Service Pages**: [list all service URLs]
 
 ## External References

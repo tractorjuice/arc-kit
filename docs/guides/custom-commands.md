@@ -122,6 +122,7 @@ Say you want a command that generates a Service Level Agreement skeleton from ex
 ````markdown
 ---
 description: Generate an SLA skeleton from non-functional requirements
+doc-type: SLA
 argument-hint: "<project ID, e.g. '001'>"
 effort: medium
 handoffs:
@@ -156,12 +157,14 @@ $ARGUMENTS
    - Include measurement method, reporting cadence, and breach consequences
    - Maintain traceability: every SLA row cites its source NFR ID
 
-4. **Detect version** and write to `projects/<project-id>/ARC-<id>-SLA-v<version>.md`.
+4. **Detect version** with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` and write to `projects/<project-id>/ARC-<id>-SLA-v<version>.md`.
 ````
 
-**2. Create `plugins/arckit-claude/templates/sla-template.md`** with the document skeleton (document-control header, SLA table, review cadence, and signature block).
+**2. Register the `SLA` code.** Add `'SLA': { name: 'Service Level Agreement', category: 'Operations' },` to `DOC_TYPES` in `plugins/arckit-claude/config/doc-types.mjs`, and add `SLA` to the known artifact types in `plugins/arckit-claude/commands/pages.md`. `validate-arc-filename.mjs` blocks any `ARC-*` write whose code is not registered, and `scripts/check-doc-type-registry.py` fails CI on an unregistered code in a command, template or guide.
 
-**3. Run the converter:**
+**3. Create `plugins/arckit-claude/templates/sla-template.md`** with the document skeleton (document-control header, SLA table, review cadence, and signature block).
+
+**4. Run the converter:**
 
 ```bash
 python scripts/converter.py
@@ -169,9 +172,9 @@ python scripts/converter.py
 
 This writes out the six target files with correct placeholders and paths.
 
-**4. Add the user-facing guide** at `plugins/arckit-claude/docs/guides/sla.md` following the house style (see `plugins/arckit-claude/docs/guides/principles.md` or `plugins/arckit-claude/docs/guides/adr.md` for examples). This is the source location; the `sync-guides` hook and converter mirror it to `docs/guides/` and into every extension's `docs/guides/` tree.
+**5. Add the user-facing guide** at `docs/guides/sla.md` following the house style (see `docs/guides/principles.md` or `docs/guides/adr.md` for examples). This is the source location: `python3 scripts/check-guide-parity.py --sync` copies it to `plugins/arckit-claude/docs/guides/`, and the converter carries it into every extension's `docs/guides/` tree.
 
-**5. Update `CHANGELOG.md`** under `## [Unreleased]`.
+**6. Update `CHANGELOG.md`** under `## [Unreleased]`.
 
 ---
 

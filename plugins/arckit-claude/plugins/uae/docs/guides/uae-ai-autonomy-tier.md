@@ -13,8 +13,8 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | AI use cases and scope |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Model placement and inference path |
-| Security NFRs (`ARC-<id>-NFR-SEC-v1.0.md`) | Confidentiality and integrity requirements |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Model placement and inference path |
+| Security NFRs (`NFR-SEC-*` in `ARC-<id>-REQ-v*.md`) | Confidentiality and integrity requirements |
 | AI Charter assessment (`ARC-<id>-AICH-v*.md`) | Charter posture per use case |
 
 ---

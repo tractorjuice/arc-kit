@@ -34,7 +34,7 @@ For every major capability the project requires, evaluate whether a federally-pr
 |------------|------------------------------------|--------------------------|---------------|-------------------|
 | Identity (citizens / residents) | UAE Pass | [Reuse / Build] | [justification] | [risk] |
 | Inter-entity connectivity | FedNet | [Reuse / Build] | [justification] | [risk] |
-| Hosting | UAE government cloud (per CLDR) | [Reuse / Build] | [justification] | [risk] |
+| Hosting | UAE government cloud (per the CRES residency assessment) | [Reuse / Build] | [justification] | [risk] |
 | Notifications (SMS / email) | [federal provider] | [Reuse / Build] | [justification] | [risk] |
 | Payments | [federal payment gateway] | [Reuse / Build] | [justification] | [risk] |
 | Data exchange | Government Services Data Sharing capability | [Reuse / Build] | [justification] | [risk] |

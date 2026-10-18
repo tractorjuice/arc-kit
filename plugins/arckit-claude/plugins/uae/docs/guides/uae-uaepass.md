@@ -11,9 +11,9 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Citizen-facing flows that need authentication |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Service topology and identity boundaries |
-| Integration spec (`ARC-<id>-INT-v1.0.md`) | Existing integration surface |
-| Security NFRs (`ARC-<id>-NFR-SEC-v1.0.md`) | Authentication / e-signature requirements |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Service topology and identity boundaries |
+| Integration spec (`INT-*` in `ARC-<id>-REQ-v*.md`) | Existing integration surface |
+| Security NFRs (`NFR-SEC-*` in `ARC-<id>-REQ-v*.md`) | Authentication / e-signature requirements |
 
 ---
 

@@ -15,7 +15,7 @@ The NDB playbook is operational — it is read in the middle of an incident, not
 | `/arckit:au-pia` output (`ARC-<id>-AUPIA-v1.0.md`) | Personal information inventory; eligible-data-breach criteria already drafted |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, privacy officer, security incident commander |
 | Risk register (`ARC-<id>-RISK-v1.0.md`) | Data-breach risks identified at design time |
-| Runbooks (`ARC-<id>-RBK-v1.0.md`) | Existing incident response procedures the NDB workflow plugs into |
+| Runbooks (the operational readiness pack, `ARC-<id>-OPS-v*.md`) | Existing incident response procedures the NDB workflow plugs into |
 
 ---
 

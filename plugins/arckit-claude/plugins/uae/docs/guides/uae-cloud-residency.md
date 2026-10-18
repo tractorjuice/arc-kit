@@ -11,7 +11,7 @@
 | Artefact | Purpose |
 |----------|---------|
 | Smart Data Classification Register (`ARC-<id>-CLAS-v*.md`) | **Required** — drives residency rules per dataset |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Workload topology and components |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Workload topology and components |
 | IAS Statement of Applicability (`ARC-<id>-IAS-v*.md`) | T-family technical controls constrain CSP choice |
 
 > **Run after**: `/arckit-uae:uae-classification` — the command halts if the classification register is missing.

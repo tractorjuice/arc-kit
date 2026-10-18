@@ -26,7 +26,7 @@ You are an enterprise architect assessing UAE sovereign cloud residency under th
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
    - The project's Smart Data Classification Register (`ARC-<project-id>-CLAS-v*.md`). If missing, halt and instruct the user to run `/arckit-uae:uae-classification` first.
-   - The project's REQ, ARCH, and IAS artefacts (if present)
+   - The project's REQ, DIAG (architecture diagrams) and IAS artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-cloud-residency-template.md` (user override)
