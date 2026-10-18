@@ -8,13 +8,16 @@
 
 ## Inputs
 
-| Artefact | Purpose |
-|----------|---------|
-| Requirements (`ARC-<id>-REQ-v1.0.md`) | Scope to be procured |
-| SOBC (`ARC-<id>-SOBC-v*.md`) | Strategic case and budget |
-| Risk register (`ARC-<id>-RISK-v*.md`) | Risks allocated supplier vs entity |
-| AT DSGVO assessment (`ARC-<id>-ATDSG-v*.md`) | If processors of personal data are involved |
-| AT NISG assessment (`ARC-<id>-ATNISG-v*.md`) | If contracting entity is Essential or Important |
+| Artefact | Requirement | Purpose |
+|----------|-------------|---------|
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | Mandatory (warns if missing) | Scope to be procured — the Leistungsbeschreibung is traced to FR / NFR / INT |
+| Risk register (`ARC-<id>-RISK-v*.md`) | Recommended | Vendor, lock-in, sovereignty and supply-chain risks |
+| AT DSGVO assessment (`ARC-<id>-ATDSG-v*.md`) | Recommended | Auftragsverarbeitung clauses where processors of personal data are involved |
+| AT NISG assessment (`ARC-<id>-ATNISG-v*.md`) | Recommended | Supply-chain clauses where the contracting entity is Essential or Important |
+| Secure by Design assessment (`ARC-<id>-SECD-v*.md`) | Recommended | Security controls to require of the supplier |
+| Architecture principles, data model | Optional | Open-source and cloud policy; data categories that drive DPA and sovereignty clauses |
+
+The business case (`/arckit:sobc`) usually comes first in the workflow below, but the command does not read it — give the Auftragswert in the arguments or the requirements.
 
 ---
 
@@ -32,13 +35,15 @@ Output: `projects/<id>/ARC-<id>-BVERGG-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Scope and Threshold Determination | Oberschwellen vs Unterschwellen calculation against current EU thresholds |
-| Procurement Procedure Selection | Open / restricted / negotiated / competitive dialogue / innovation partnership |
-| ANKÖ Publication Plan | Notice timing, language, content per BVergG §§ |
-| Award Criteria | Mandatory / quality / price weights and scoring rubric |
-| BVergGVS Secondary Rules | Defence / security / utilities / concessions where applicable |
-| Vendor Security & Data-Protection Clauses | DSGVO processor clauses, NISG supply-chain clauses |
-| BVwG Review Pathway | Standstill, pre-review request, BVwG appeal route and timing |
+| Executive Summary | Auftragswert, threshold tier, procedure and publication at a glance |
+| 1. Contracting Authority and Procedure | Auftraggeber classification, procedure selection (open / restricted / negotiated / competitive dialogue / innovation partnership), threshold determination against current EU thresholds |
+| 2. Leistungsbeschreibung | Functional, non-functional, integration and data scope traced to requirements; accessibility (EN 301 549) |
+| 3. Eignung | Ausschlussgründe (§78), financial and technical suitability, proportionality |
+| 4. Zuschlagskriterien | Bestbieter award criteria, weights and scoring method |
+| 5. Vertragliche Regelungen | SLA, Auftragsverarbeitung (DSGVO), NISG supply-chain clauses, IP / open source / exit, governing law |
+| 6. Publication and Timeline | ANKÖ and TED notices, eForms, Angebotsfrist, Q&A, standstill, award |
+| 7. Review and Remedies | BVwG / Landesverwaltungsgerichte, fees, interim measures |
+| 8. Vergabeakt | Procurement file structure, retention, audit trail, ESPD annex |
 | External References | BVergG 2018 (idF Vergaberechtsgesetz 2026) + EU directive transposition citations |
 
 ---
@@ -84,6 +89,6 @@ Output: `projects/<id>/ARC-<id>-BVERGG-v1.0.md`
 - **Vergaberechtsgesetz 2026**: the BVergG 2018 was substantially amended (BGBl. I Nr. 8/2026, in force 1 March 2026; eForms from 1 October 2026) — permanent Direktvergabe limits (supplies/services €143K, works €200K; document ≥3 offers from €50K), harmonised Ausschlussgründe/Selbstreinigung, eForms below-threshold, and a tiered Nachprüfungs-fee system. The BVergG 2018 keeps its name and numbering.
 - **Threshold drift**: EU procurement thresholds change every two years — items marked `[NEEDS VERIFICATION]` must be confirmed against the latest regulation before external publication.
 - **Accessibility standard version**: §107 BVergG invokes EN 301 549, and the version that matters is the one cited in the Official Journal, because that is what carries a presumption of conformity. Today that is **v3.2.1**, which normatively references **WCAG 2.1 AA**. The revision carrying WCAG 2.2 AA (v4.1.1, drafted as v4.1.0 for public review in November 2025) is expected to be OJ-cited around October 2026 `[NEEDS VERIFICATION]`. Specifying 2.2 AA before that citation raises the bar above what the law requires without saying so, which is a defensible choice for a long contract but has to be a stated decision rather than a copied figure. Note this differs from the UK, where SI 2022/1097 replaced the fixed WCAG reference with a rolling one and 2.2 AA is already the monitored target — that UK position does not transfer to an EU-derived regime.
-- **Defence / utilities / concessions**: BVergGVS imposes additional rules — confirm sectoral scope before relying on the standard BVergG path.
+- **Defence, concessions and utilities follow other rules**: defence and security procurement falls under the BVergGVS 2012, concessions under the BVergGKonz 2018, and utilities (Sektorenauftraggeber) under the sector provisions of the BVergG 2018 itself — confirm which applies before relying on the standard BVergG path.
 - **Run after pre-checks**: `/arckit:at-dsgvo` and `/arckit:at-nisg` should run first if either applies — their clauses feed the vendor pack.
 - **Community-contributed**: Output should be reviewed by qualified Vergabejurist / Rechtsabteilung before reliance.

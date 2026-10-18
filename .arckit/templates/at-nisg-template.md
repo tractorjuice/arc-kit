@@ -2,7 +2,7 @@
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:at-nisg`
 >
-> ⚠️ **Community-contributed** — review before relying on output. The **NISG 2026 (BGBl. I Nr. 94/2025)** is a standalone act that replaces the NISG 2018; it enters into force **1 October 2026 (§51)**, with registration due within three months (§29 Abs. 3). Paragraph (§) references in this template have been checked against the enacted text (BGBl. I Nr. 94/2025); its implementing ordinances (Verordnungen) are still forthcoming, so items marked `[NEEDS VERIFICATION]` — chiefly ordinance-dependent detail and operational channel names (e.g. the NIS2-Meldeplattform) — must still be confirmed before external reliance.
+> ⚠️ **Community-contributed** — review before relying on output. The **NISG 2026 (BGBl. I Nr. 94/2025)** is a standalone act that replaced the NISG 2018; it has been in force since **1 October 2026 (§51)**, with registration due within three months (§29 Abs. 3). Paragraph (§) references in this template have been checked against the enacted text (BGBl. I Nr. 94/2025). The first implementing ordinance, the **NISV 2026 (BGBl. II Nr. 290/2026)**, has applied since the end of 1 October 2026; further ordinances may follow, so items marked `[NEEDS VERIFICATION]` — chiefly ordinance-dependent detail and operational channel names (e.g. the NIS2-Meldeplattform) — must still be confirmed before external reliance.
 
 ## Document Control
 
@@ -51,7 +51,7 @@
 | Item | Value |
 |------|-------|
 | Entity Designation | [Essential / Important / Out of scope] |
-| Previous NISG 2018 status | [Betreiber wesentlicher Dienste / None] |
+| Previous NISG 2018 status | [Betreiber wesentlicher Dienste / None] — BwD Bescheide became void on 1 Oct 2026 (§51 Abs. 5) |
 | Main establishment | [AT / other EU MS] |
 | Cross-border operations | [List MS] |
 | Size threshold result | [≥250 emp / 50–250 / <50 / micro] |
@@ -84,6 +84,12 @@
 | 9 | HR security + access control | | | |
 | 10 | MFA + secure communications | | | |
 
+| NISV 2026 requirement | Status | Evidence / Gap |
+|-----------------------|--------|----------------|
+| Implementing Regulation (EU) 2024/2690 Art. 2 + Annex requirements applied (§2 NISV 2026 extends them to all Anlage 1/2 entity types) | | |
+| Risk analysis covers technological, human, ICT-supply-chain and site-related risks (§3 NISV 2026) | | |
+| Compensating measures documented and reviewed at least annually where a requirement cannot be met (§4 NISV 2026) | [Yes / No / N/A] | |
+
 A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced by BMI/sectoral authorities): [Summary]
 
 ---
@@ -94,6 +100,7 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 |------|--------|----------------|
 | Reporting to the responsible sector-specific CSIRT — or the national CSIRT if none — established (§34 Abs. 1; CSIRTs per §8) via the NIS2-Meldeplattform — CERT.at (national CSIRT), GovCERT (public-admin sectoral CSIRT); the CSIRT forwards to the Cybersicherheitsbehörde without delay (§34 Abs. 1) | | |
 | Registration with the Cybersicherheitsbehörde (§3a) completed (§29 Abs. 3) | | |
+| Incident classification mapped to §35 NISG 2026 and §§5–7 NISV 2026 significance criteria | | |
 | 24-hour early warning capability (§34) | | |
 | 72-hour notification capability (§34) | | |
 | Intermediate (on request) / 1-month final report process (§34) | | |
@@ -152,7 +159,7 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 | Selbstdeklaration of implemented measures submitted (§33 Abs. 1 — within 12 months of the registration duty, ~by 30 Sep 2027) | [Yes / No / Planned] | |
 | Independent body / auditor (§7) engaged for the Wirksamkeitsnachweis (§33 Abs. 2 — first request earliest 2 years after entry into force, ~Oct 2028) | [Yes / No / Planned] | |
 | Essential entity: 2-month response capability for the operative/organisational Nachweis (§33 Abs. 2 second sentence — general window is 2 years, Essential entities only 2 months from the Aufforderung) | [Yes / No / Planned] | |
-| Eligibility / accreditation confirmed | [Yes / No] | |
+| Eligibility / accreditation confirmed | [Yes / No] | Until twelve months after the §7 Abs. 6 ordinance enters into force, qualified bodies under §18 Abs. 1 NISG 2018 count as independent bodies (§51 Abs. 7) |
 | Scope of assessment | [Full / Partial] | |
 | Last assessment date | [YYYY-MM-DD / N/A] | |
 | Findings remediated | [Yes / Partial / No] | |
