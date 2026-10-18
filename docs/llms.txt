@@ -29,6 +29,11 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Credential page](https://arckit.org/certification/credential.html): Links take the form `credential.html?id=<12-character ID>`. Credentials are Open Badges 3.0 VC-JWTs signed with RS256. The issuer profile is at [issuer.json](https://arckit.org/certification/issuer.json) and the public keys at [jwks.json](https://arckit.org/certification/jwks.json). A credential confirms that the holder passed the ArcKit assessment at that level; it does not endorse their work or organisation.
 - [Certification policies](https://arckit.org/certification/policies.html): Appeals (a re-check within 10 working days, then an appeal decided by someone not involved), access arrangements (up to 25% extra time, other formats), malpractice and revocation, conflicts of interest, retakes, validity by ArcKit major version, complaints, equality, prior learning and a yearly report.
 
+## Expert help
+
+- [ArcKit FDE](https://arckit.org/fde/): ArcKit Forward Deploy Engineering, the paid service run by ArcKit's creator. A senior architect embeds with a UK public sector team and uses ArcKit to produce a board-ready governance pack in five days: architecture principles, requirements, an Orange Book risk register and a stakeholder map, with evidence shaped around the Green Book, the Orange Book, the GDS Service Standard, the Technology Code of Practice and GovS 005. Fixed price: £25K over five consecutive days, or £35K one day a week for five weeks. Optional embedded follow-on covers ADRs, vendor evaluation, service assessment preparation, and AI and data governance. For programmes heading into a gate, a procurement, an assurance review or a board. The service has its own [llms.txt](https://tractorjuice.github.io/arckit-fde/llms.txt).
+- [ArcKit architects](https://tractorjuice.github.io/arckit-fde/architects.html): Architects who deliver ArcKit engagements, and how to request a referral or join the network.
+
 ## Guides by phase
 
 ### Onboarding and setup
@@ -343,54 +348,54 @@ G-Cloud 15 (RM1557.15), run by the Government Commercial Agency (GCA, formerly C
 
 Published articles, newest first:
 
-- [ArcKit TOGAF ADM: The Method Becomes a Governed Workflow](https://arckit.org/share/2026-07-01-arckit-togaf-adm.html): Release / 1 July 2026.
-- [ArcKit AI Agent Architecture: Governed Design for Autonomous Systems](https://arckit.org/share/2026-06-30-arckit-agent-architecture.html): Release / 30 June 2026.
-- [I Built ArcKit for Myself. Thank You for Using It.](https://arckit.org/share/2026-06-29-arckit-usage-signals.html): Community / 29 June 2026.
-- [ArcKit and OKF: knowledge interoperability without giving up governance](https://arckit.org/share/2026-06-19-okf-compatibility-workflows.html): Analysis / 19 June 2026.
-- [ArcKit Self-Harness: when the governance harness starts improving itself](https://arckit.org/share/2026-06-19-self-harness-autoresearch.html): Technical / 19 June 2026.
-- [ArcKit v5.14: Mistral Vibe joins the harness](https://arckit.org/share/2026-06-17-arckit-vibe-extension.html): Release / 17 June 2026.
-- [Don't Build an AI App. Build an AI CLI Harness.](https://arckit.org/share/2026-06-15-ai-cli-harness-not-ai-app.html): Analysis / 15 June 2026.
-- [The supplier side of G-Cloud: ArcKit's new bid-authoring overlay](https://arckit.org/share/2026-06-10-arckit-uk-gcloud-supplier-overlay.html): Release / 10 June 2026.
-- [ArcKit FDE is now a plugin: generate your own forward deploy site in one command](https://arckit.org/share/2026-06-09-arckit-fde-site-generator.html): Release / 9 June 2026.
-- [Britain's War on Consultants: What the Procurement Data Actually Shows](https://arckit.org/share/2026-06-03-uk-government-consulting-spend.html): Analysis / 3 June 2026.
-- [ArcKit v5.9.0: Procurement Market Intelligence from Real Award Data](https://arckit.org/share/2026-06-02-uk-tenders-procurement-intelligence.html): Release / 2 June 2026.
-- [ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay](https://arckit.org/share/2026-05-28-v540-uk-nhs-clinical-safety-overlay.html): Release / 28 May 2026.
-- [ArcKit v5.3: The First Sector Overlay, for UK Payments](https://arckit.org/share/2026-05-27-v530-uk-finance-payments-overlay.html): Release / 27 May 2026.
-- [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](https://arckit.org/share/2026-05-24-v510-us-federal-civilian-overlay.html): Release / 24 May 2026.
-- [How ArcKit tidies Wardley Map labels: a deterministic placement engine, stepped through](https://arckit.org/share/2026-05-22-tidy-wardley-labels.html): Technical / 22 May 2026.
-- [The token budget behind ArcKit's plugin split, and how to split a plugin of your own](https://arckit.org/share/2026-05-20-plugin-split-token-budget.html): Technical / 20 May 2026.
-- [The Leaf Node Problem: why your AI pilot is optimising the wrong thing](https://arckit.org/share/2026-05-19-leaf-node-problem.html): Technical / 19 May 2026.
-- [Your Wardley Maps belong in Git: what Mermaid support changes](https://arckit.org/share/2026-05-19-wardley-maps-mermaid-github.html): Technical / 19 May 2026.
-- [ArcKit v5.0.0: one toolkit, seven plugins, install only what you need](https://arckit.org/share/2026-05-18-arckit-v5-plugin-split.html): Release / 18 May 2026.
-- [We are launching ArcKit FDE: embedded architects for UK public sector](https://arckit.org/share/2026-05-12-arckit-fde-launch.html): Launch / 12 May 2026.
-- [Five patterns to steal from anthropics/financial-services](https://arckit.org/share/2026-05-06-anthropics-financial-services-architecture-lesson.html): Technical / 6 May 2026.
-- [Wanted: /arckit:build recipes for your jurisdiction](https://arckit.org/share/2026-05-03-community-recipes-wanted.html): Community / 3 May 2026.
-- [ArcKit v4.13.0: The Build Harness — Building a full architecture in one Claude Code session. AKA The GDS Harness](https://arckit.org/share/2026-05-03-build-harness-parallel-architecture-generation.html): Release / 3 May 2026.
-- [I have saved the UK economy £24 billion. ArcKit is the third time.](https://arckit.org/share/2026-05-03-how-open-source-saved-uk-economy-12bn.html): Essay / 3 May 2026.
-- [Internal Memo, Somewhere in a Big 4 Consulting Company](https://arckit.org/share/2026-05-01-consulting-internal-memo.html): Essay / 1 May 2026.
-- [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](https://arckit.org/share/2026-04-30-uae-overlay-launch.html): Release / 30 April 2026.
-- [How ArcKit v4.10 Accelerates the UAE's Federal Agentic Decree](https://arckit.org/share/2026-04-30-uae-agentic-decree-arckit-v4-10.html): Essay / 30 April 2026.
-- [The CAIO's First 90 Days: Delivering the UAE Cabinet Agentic AI Mandate](https://arckit.org/share/2026-04-30-uae-caio-first-90-days.html): Guide / 30 April 2026.
-- [The UAE Agentic Decree: A 90-Day ArcKit Playbook](https://arckit.org/share/2026-04-30-uae-agentic-decree-90-day-playbook.html): Guide / 30 April 2026.
-- [The Toolkit Drafts. The Architect Judges.](https://arckit.org/share/2026-04-30-toolkit-drafts-architect-judges.html): Essay / 30 April 2026.
-- [Pricing the ArcKit Project: What Would an Investor Actually Pay?](https://arckit.org/share/2026-04-28-pricing-arckit-investor.html): Essay / 28 April 2026.
-- [From ArcKit to McKinsey-Style Infographics in an Afternoon](https://arckit.org/share/2026-04-27-mckinsey-decks-from-arckit.html): Essay / 27 April 2026.
-- [The Five Wardley Commands in ArcKit](https://arckit.org/share/2026-04-22-wardley-commands-walkthrough.html): Guide / 22 April 2026.
-- [ArcKit 4.9.0: Wardley Maps Render Natively](https://arckit.org/share/2026-04-22-v490-wardley-mapping-support.html): Release / 22 April 2026.
-- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](https://arckit.org/share/2026-04-20-consulting-deliverable-is-dead.html): Essay / 20 April 2026.
-- [What You Can Now Do in Austria with ArcKit v4.8](https://arckit.org/share/2026-04-20-v480-austrian-overlay.html): Release / 20 April 2026.
-- [ArcKit v4.7: 18 EU and French Regulatory Commands](https://arckit.org/share/2026-04-19-v470-eu-french-regulatory.html): Release / 19 April 2026.
-- [Why an EA Toolkit is Trending on GitHub in 2026](https://arckit.org/share/2026-04-19-arckit-trending-on-github.html): Milestone / 19 April 2026.
-- [Finding UK Funding for Public Sector Projects](https://arckit.org/share/2026-04-07-v464-grants-command-for-companies.html): Release / 7 April 2026.
-- [Automated UK Funding Research with the Grants Command](https://arckit.org/share/2026-04-07-v464-grants-command-funding-research.html): Release / 7 April 2026.
-- [Discovering What Government Has Already Built](https://arckit.org/share/2026-03-23-government-code-discovery-commands.html): Release / 23 March 2026.
-- [Building ClaudeClaw: Autonomous Agents on Claude Code](https://arckit.org/share/2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code.html): Technical / 18 March 2026.
-- [ArcKit v4.3.0: Complete Wardley Mapping Suite](https://arckit.org/share/2026-03-16-wardley-suite-strategic-mapping.html): Release / 16 March 2026.
-- [Your Architecture Documents Are Connected](https://arckit.org/share/2026-03-12-document-map-medium.html): Release / 12 March 2026.
-- [ArcKit v4.1.1: Copilot, Vendor Scoring, Blast Radius](https://arckit.org/share/2026-03-11-v411-copilot-vendor-scoring-impact.html): Release / 11 March 2026.
-- [ArcKit v4: First-Class Codex and Gemini Support](https://arckit.org/share/2026-03-08-v4-codex-gemini-support.html): Release / 8 March 2026.
-- [The People Behind ArcKit](https://arckit.org/share/2026-02-28-arckit-contributors-medium-post.html): Community / 28 February 2026.
-- [ArcKit Recommends Claude Code v2.1.63+](https://arckit.org/share/2026-02-28-arckit-v2163-linkedin-post.html): Release / 28 February 2026.
+- [ArcKit TOGAF ADM: The Method Becomes a Governed Workflow](https://arckit.org/articles/2026-07-01-arckit-togaf-adm.md): Release / 1 July 2026.
+- [ArcKit AI Agent Architecture: Governed Design for Autonomous Systems](https://arckit.org/articles/2026-06-30-arckit-agent-architecture.md): Release / 30 June 2026.
+- [I Built ArcKit for Myself. Thank You for Using It.](https://arckit.org/articles/2026-06-29-arckit-usage-signals.md): Community / 29 June 2026.
+- [ArcKit and OKF: knowledge interoperability without giving up governance](https://arckit.org/articles/2026-06-19-okf-compatibility-workflows.md): Analysis / 19 June 2026.
+- [ArcKit Self-Harness: when the governance harness starts improving itself](https://arckit.org/articles/2026-06-19-self-harness-autoresearch.md): Technical / 19 June 2026.
+- [ArcKit v5.14: Mistral Vibe joins the harness](https://arckit.org/articles/2026-06-17-arckit-vibe-extension.md): Release / 17 June 2026.
+- [Don't Build an AI App. Build an AI CLI Harness.](https://arckit.org/articles/2026-06-15-ai-cli-harness-not-ai-app.md): Analysis / 15 June 2026.
+- [The supplier side of G-Cloud: ArcKit's new bid-authoring overlay](https://arckit.org/articles/2026-06-10-arckit-uk-gcloud-supplier-overlay.md): Release / 10 June 2026.
+- [ArcKit FDE is now a plugin: generate your own forward deploy site in one command](https://arckit.org/articles/2026-06-09-arckit-fde-site-generator.md): Release / 9 June 2026.
+- [Britain's War on Consultants: What the Procurement Data Actually Shows](https://arckit.org/articles/2026-06-03-uk-government-consulting-spend.md): Analysis / 3 June 2026.
+- [ArcKit v5.9.0: Procurement Market Intelligence from Real Award Data](https://arckit.org/articles/2026-06-02-uk-tenders-procurement-intelligence.md): Release / 2 June 2026.
+- [ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay](https://arckit.org/articles/2026-05-28-v540-uk-nhs-clinical-safety-overlay.md): Release / 28 May 2026.
+- [ArcKit v5.3: The First Sector Overlay, for UK Payments](https://arckit.org/articles/2026-05-27-v530-uk-finance-payments-overlay.md): Release / 27 May 2026.
+- [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](https://arckit.org/articles/2026-05-24-v510-us-federal-civilian-overlay.md): Release / 24 May 2026.
+- [How ArcKit tidies Wardley Map labels: a deterministic placement engine, stepped through](https://arckit.org/articles/2026-05-22-tidy-wardley-labels.md): Technical / 22 May 2026.
+- [The token budget behind ArcKit's plugin split, and how to split a plugin of your own](https://arckit.org/articles/2026-05-20-plugin-split-token-budget.md): Technical / 20 May 2026.
+- [The Leaf Node Problem: why your AI pilot is optimising the wrong thing](https://arckit.org/articles/2026-05-19-leaf-node-problem.md): Technical / 19 May 2026.
+- [Your Wardley Maps belong in Git: what Mermaid support changes](https://arckit.org/articles/2026-05-19-wardley-maps-mermaid-github.md): Technical / 19 May 2026.
+- [ArcKit v5.0.0: one toolkit, seven plugins, install only what you need](https://arckit.org/articles/2026-05-18-arckit-v5-plugin-split.md): Release / 18 May 2026.
+- [We are launching ArcKit FDE: embedded architects for UK public sector](https://arckit.org/articles/2026-05-12-arckit-fde-launch.md): Launch / 12 May 2026.
+- [Five patterns to steal from anthropics/financial-services](https://arckit.org/articles/2026-05-06-anthropics-financial-services-architecture-lesson.md): Technical / 6 May 2026.
+- [Wanted: /arckit:build recipes for your jurisdiction](https://arckit.org/articles/2026-05-03-community-recipes-wanted.md): Community / 3 May 2026.
+- [ArcKit v4.13.0: The Build Harness — Building a full architecture in one Claude Code session. AKA The GDS Harness](https://arckit.org/articles/2026-05-03-build-harness-parallel-architecture-generation.md): Release / 3 May 2026.
+- [I have saved the UK economy £24 billion. ArcKit is the third time.](https://arckit.org/articles/2026-05-03-how-open-source-saved-uk-economy-12bn.md): Essay / 3 May 2026.
+- [Internal Memo, Somewhere in a Big 4 Consulting Company](https://arckit.org/articles/2026-05-01-consulting-internal-memo.md): Essay / 1 May 2026.
+- [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](https://arckit.org/articles/2026-04-30-uae-overlay-launch.md): Release / 30 April 2026.
+- [How ArcKit v4.10 Accelerates the UAE's Federal Agentic Decree](https://arckit.org/articles/2026-04-30-uae-agentic-decree-arckit-v4-10.md): Essay / 30 April 2026.
+- [The CAIO's First 90 Days: Delivering the UAE Cabinet Agentic AI Mandate](https://arckit.org/articles/2026-04-30-uae-caio-first-90-days.md): Guide / 30 April 2026.
+- [The UAE Agentic Decree: A 90-Day ArcKit Playbook](https://arckit.org/articles/2026-04-30-uae-agentic-decree-90-day-playbook.md): Guide / 30 April 2026.
+- [The Toolkit Drafts. The Architect Judges.](https://arckit.org/articles/2026-04-30-toolkit-drafts-architect-judges.md): Essay / 30 April 2026.
+- [Pricing the ArcKit Project: What Would an Investor Actually Pay?](https://arckit.org/articles/2026-04-28-pricing-arckit-investor.md): Essay / 28 April 2026.
+- [From ArcKit to McKinsey-Style Infographics in an Afternoon](https://arckit.org/articles/2026-04-27-mckinsey-decks-from-arckit.md): Essay / 27 April 2026.
+- [The Five Wardley Commands in ArcKit](https://arckit.org/articles/2026-04-22-wardley-commands-walkthrough.md): Guide / 22 April 2026.
+- [ArcKit 4.9.0: Wardley Maps Render Natively](https://arckit.org/articles/2026-04-22-v490-wardley-mapping-support.md): Release / 22 April 2026.
+- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](https://arckit.org/articles/2026-04-20-consulting-deliverable-is-dead.md): Essay / 20 April 2026.
+- [What You Can Now Do in Austria with ArcKit v4.8](https://arckit.org/articles/2026-04-20-v480-austrian-overlay.md): Release / 20 April 2026.
+- [ArcKit v4.7: 18 EU and French Regulatory Commands](https://arckit.org/articles/2026-04-19-v470-eu-french-regulatory.md): Release / 19 April 2026.
+- [Why an EA Toolkit is Trending on GitHub in 2026](https://arckit.org/articles/2026-04-19-arckit-trending-on-github.md): Milestone / 19 April 2026.
+- [Finding UK Funding for Public Sector Projects](https://arckit.org/articles/2026-04-07-v464-grants-command-for-companies.md): Release / 7 April 2026.
+- [Automated UK Funding Research with the Grants Command](https://arckit.org/articles/2026-04-07-v464-grants-command-funding-research.md): Release / 7 April 2026.
+- [Discovering What Government Has Already Built](https://arckit.org/articles/2026-03-23-government-code-discovery-commands.md): Release / 23 March 2026.
+- [Building ClaudeClaw: Autonomous Agents on Claude Code](https://arckit.org/articles/2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code.md): Technical / 18 March 2026.
+- [ArcKit v4.3.0: Complete Wardley Mapping Suite](https://arckit.org/articles/2026-03-16-wardley-suite-strategic-mapping.md): Release / 16 March 2026.
+- [Your Architecture Documents Are Connected](https://arckit.org/articles/2026-03-12-document-map-medium.md): Release / 12 March 2026.
+- [ArcKit v4.1.1: Copilot, Vendor Scoring, Blast Radius](https://arckit.org/articles/2026-03-11-v411-copilot-vendor-scoring-impact.md): Release / 11 March 2026.
+- [ArcKit v4: First-Class Codex and Gemini Support](https://arckit.org/articles/2026-03-08-v4-codex-gemini-support.md): Release / 8 March 2026.
+- [The People Behind ArcKit](https://arckit.org/articles/2026-02-28-arckit-contributors-medium-post.md): Community / 28 February 2026.
+- [ArcKit Recommends Claude Code v2.1.63+](https://arckit.org/articles/2026-02-28-arckit-v2163-linkedin-post.md): Release / 28 February 2026.
 
 ## Roles
 

@@ -294,7 +294,9 @@ def fill(template: str, depth: int, parts: dict[str, str], source: str) -> str:
     return text.replace("<!DOCTYPE html>\n", "<!DOCTYPE html>\n" + note, 1)
 
 
-def meta_block(title: str, description: str, preview: str, url: str, image: str, image_alt: str = "") -> str:
+def meta_block(title: str, description: str, preview: str, url: str, image: str, markdown: str, image_alt: str = "") -> str:
+    """Head tags for one page. `markdown` is the page's source, which docs/llms.txt
+    also links: the alternate link lets an AI tool that lands on the HTML find it."""
     page_title = title if "ArcKit" in title else f"{title} | ArcKit"
     lines = [
         f'<meta name="description" content="{esc(description)}">',
@@ -315,6 +317,7 @@ def meta_block(title: str, description: str, preview: str, url: str, image: str,
         f'<meta name="twitter:description" content="{esc(preview)}">',
         f'<meta name="twitter:image" content="{esc(image)}">',
         f'<link rel="canonical" href="{esc(url)}">',
+        f'<link rel="alternate" type="text/markdown" href="{esc(markdown)}">',
     ]
     return "\n    ".join(lines)
 
@@ -401,7 +404,7 @@ def guide_pages(site: Site) -> dict[Path, str]:
             content.append(f'<script src="{root}films.js"></script>')
 
         pages[GUIDE_OUT / f"{name}.html"] = fill(template, depth, {
-            "page:meta": meta_block(title, clip(lead, 155), clip(lead, 220), url, DEFAULT_IMAGE),
+            "page:meta": meta_block(title, clip(lead, 155), clip(lead, 220), url, DEFAULT_IMAGE, f"{SITE}/guides/{name}.md"),
             "page:jsonld": jsonld_block([
                 {"@type": "TechArticle", "@id": url, "headline": title, "description": clip(lead, 220),
                  "url": url, "inLanguage": "en-GB", "author": ARCKIT, "publisher": ARCKIT,
@@ -473,7 +476,8 @@ def article_pages(site: Site, listed: list[dict[str, str]]) -> dict[Path, str]:
         content.append(f'<article id="content" class="app-markdown">\n{render_body(md, page, site)}</article>')
 
         pages[SHARE_OUT / f"{slug}.html"] = fill(template, 1, {
-            "page:meta": meta_block(card["title"], clip(summary, 155), summary, url, image, alt if hero else ""),
+            "page:meta": meta_block(card["title"], clip(summary, 155), summary, url, image,
+                                    f"{SITE}/articles/{slug}.md", alt if hero else ""),
             "page:jsonld": jsonld_block([graph, breadcrumb("Articles", "articles.html", card["title"], url)]),
             "page:hero": hero_block(stat, heading, clip(lead, 220)),
             "page:body": "\n".join(content),

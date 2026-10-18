@@ -64,6 +64,7 @@ def test_every_guide_has_its_own_page(name):
     assert canonical(page) == f"https://arckit.org/guide/{name}.html"
     assert "<title>Guide Viewer" not in text
     assert 'class="app-markdown"' in text and "Loading guide" not in text
+    assert f'<link rel="alternate" type="text/markdown" href="https://arckit.org/guides/{name}.md">' in text
 
 
 @pytest.mark.parametrize("slug", listed_slugs())
@@ -75,6 +76,17 @@ def test_every_listed_article_has_its_own_page(slug):
     assert canonical(page) == f"https://arckit.org/share/{slug}.html"
     assert 'http-equiv="refresh"' not in text and "location.replace" not in text
     assert '<article id="content" class="app-markdown">' in text
+    assert f'<link rel="alternate" type="text/markdown" href="https://arckit.org/articles/{slug}.md">' in text
+
+
+def test_llms_txt_lists_the_service_and_links_markdown():
+    # llms.txt is how AI assistants learn what ArcKit offers: it names the
+    # FDE service, and its article links are the Markdown, like its guide links.
+    llms = (DOCS / "llms.txt").read_text(encoding="utf-8")
+    assert "## Expert help" in llms and "(https://arckit.org/fde/)" in llms
+    for slug in re.findall(r"https://arckit\.org/articles/([A-Za-z0-9_-]+)\.md", llms):
+        assert (DOCS / "articles" / f"{slug}.md").is_file(), f"llms.txt links a missing article: {slug}"
+    assert "article-viewer.html" not in llms and "arckit.org/share/" not in llms
 
 
 def test_viewers_only_redirect():
