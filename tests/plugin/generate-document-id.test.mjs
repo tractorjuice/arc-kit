@@ -217,3 +217,15 @@ test('--relpath agrees with SUBDIR_MAP for every mapped type', () => {
     );
   }
 });
+
+test('ACHG change requests are numbered in changes/ (#949)', () => {
+  // /arckit:architecture-change writes ARC-{P}-ACHG-{NUM}-v1.0.md under
+  // changes/. Until ACHG was registered as multi-instance, the filename hook
+  // blocked every one of those writes.
+  assert.ok(MULTI_INSTANCE_TYPES.has('ACHG'));
+  assert.equal(SUBDIR_MAP.ACHG, 'changes');
+  assert.equal(
+    run('001', 'ACHG', '--relpath', '--next-num', '/nonexistent-dir').out,
+    'changes/ARC-001-ACHG-001-v1.0.md'
+  );
+});

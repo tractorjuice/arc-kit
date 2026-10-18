@@ -34,17 +34,17 @@ targets:
     output: { project: "000-global", type: PRIN }
     deps: []
 
-  - id: REQ
-    skill: arckit:requirements
-    args: "{NAME}"
-    output: { project: "{P}-{NAME}", type: REQ }
-    deps: [PRIN]
-
   - id: STKE
     skill: arckit:stakeholders
     args: "{NAME}"
     output: { project: "{P}-{NAME}", type: STKE }
     deps: [PRIN]
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN, STKE]
 
   - id: RISK
     skill: arckit:risk

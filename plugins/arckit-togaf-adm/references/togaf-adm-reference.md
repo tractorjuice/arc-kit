@@ -1,37 +1,37 @@
 # TOGAF ADM Reference
 
-Enterprise Architecture Development Method (ADM) phase descriptions.
-Based on The Open Group Architecture Framework, Version 10.
+Architecture Development Method (ADM) phase descriptions.
+Based on The TOGAF Standard, 10th Edition (The Open Group).
 
 ## Preliminary Phase
 
-Set the scope, drivers, and constraints for the architecture work. Establish the Architecture Vision including principles, governance framework, and stakeholder map. Define the architecture capabilities needed within the organization.
+Prepare the organisation for architecture work. Define the architecture capability the organisation needs, establish the architecture principles and governance framework, identify the stakeholders, and tailor the ADM to the organisation.
 
-**Key outputs**: Architecture Principles, Stakeholder Map, Architecture Vision document, scope and constraints statement.
+**Key outputs**: Architecture Principles, Tailored Architecture Framework, governance framework, initial Architecture Repository, Request for Architecture Work.
 
 ## Phase A: Architecture Vision
 
-Define the Business Architecture including strategy, capabilities, and value chains. Establish business goals, objectives, and constraints. Create the initial Capability Map and identify the scope of work.
+Set the scope, drivers, and constraints of the architecture engagement and develop a high-level vision of the capabilities and business value it will deliver. Identify business goals and stakeholder concerns, sketch the initial business capabilities and value streams at a high level, and obtain approval for the Statement of Architecture Work.
 
-**Key outputs**: Architecture Vision document, Business Goals, Capability Map, Stakeholder Concerns register.
+**Key outputs**: Architecture Vision, Statement of Architecture Work, Stakeholder Map, Capability Assessment, high-level baseline and target descriptions.
 
 ## Phase B: Business Architecture
 
-Develop detailed Business Architecture. Analyze business capabilities, value streams, organization structure, and business processes. Map capabilities to strategic objectives and identify capability gaps.
+Develop the baseline and target Business Architecture. Detail the business capabilities and value streams first sketched in Phase A, together with organisation structure and business processes. Map capabilities to strategic objectives and identify capability gaps.
 
-**Key outputs**: Capability Maps, Business Process Models, Organization Maps, Value Stream models.
+**Key outputs**: Business Capability map, Value Stream map, Organization map, Business Capabilities catalog, baseline and target Business Architecture, Business Architecture gap analysis.
 
-## Phase C: Data Architecture
+## Phase C: Information Systems Architectures
 
-Develop Data Architecture including data models and reference models. Define logical and conceptual data models, data governance policies, data classification, and master data management strategy.
+Develop the baseline and target Data Architecture and Application Architecture. Data Architecture covers conceptual and logical data models, data classification, and data management. Application Architecture covers the application portfolio, application interfaces, and how applications support business capabilities.
 
-**Key outputs**: Conceptual Data Models, Logical Data Models, Data Classification schema, Data Governance Framework.
+**Key outputs**: Data: Conceptual and Logical Data Models, Data Entity catalog, Data Classification schema. Application: Application Portfolio catalog, Interface catalog, Application/Function matrix.
 
 ## Phase D: Technology Architecture
 
-Develop Application and Technology Architecture. Cover infrastructure, platforms, application portfolio, and integration patterns. Define technology standards, interoperability requirements, and deployment models.
+Develop the baseline and target Technology Architecture. Cover infrastructure, platforms, and deployment environments that host the applications and data defined in Phase C. Define technology standards, interoperability requirements, and deployment models.
 
-**Key outputs**: Application Portfolio, Integration Architecture, Technology Standards, Deployment Model.
+**Key outputs**: Technology Standards catalog, Technology Portfolio catalog, Environments and Locations diagram, Deployment Model.
 
 ## Phase E: Opportunities & Solutions
 
@@ -53,7 +53,7 @@ Establish Architecture Board and compliance review process. Govern implementatio
 
 ## Phase H: Architecture Change Management
 
-Manage architecture change requests and ADM re-entry points. Assess impact of changes on existing architecture, establish change evaluation criteria, and define re-trigger conditions for the ADM cycle.
+Manage architecture change requests and ADM re-entry points. Assess impact of changes on existing architecture, establish change evaluation criteria, and define re-trigger conditions for the ADM cycle. TOGAF classifies each change as a **simplification** change (normally handled through change management), an **incremental** change (handled through change management or by partial re-architecting, depending on its nature), or a **re-architecting** change (the architecture goes through the ADM cycle again).
 
 **Key outputs**: Change Request log, Impact Assessment, ADM Re-entry decisions, Updated Architecture Repository entries.
 

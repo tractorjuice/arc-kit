@@ -843,12 +843,12 @@ All artifacts must pass these 10 checks:
 
 ### ACHG -- Architecture Change Request
 
-- Change classified as EVOLUTIONARY, TRANSFORMATIONAL or CORRECTIVE with justification
+- Change classified as SIMPLIFICATION, INCREMENTAL or RE-ARCHITECTING (the TOGAF Phase H classification) with justification
 - Priority set (CRITICAL / HIGH / MEDIUM / LOW) and consistent with the impact assessment
 - Impact assessed across all four dimensions: capability, application, technology, governance
 - Affected artefacts listed by document ID, each with the action required
 - ADM re-entry point determined per phase (A–H) with the scope of re-entry, not just YES/NO
-- Re-entry point consistent with the change type — transformational changes re-enter at Phase A or B
+- Re-entry point consistent with the change type — a re-architecting change starts a new ADM cycle (usually at Phase A); a simplification change stays within Phase H
 - Cost and benefit both quantified
 - Approval workflow names the approving authority for the assessed priority
 
