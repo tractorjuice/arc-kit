@@ -30,6 +30,16 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 > ArcKit produces **DRAFT artefacts for qualified people to review**, not legal, regulatory, clinical, or security advice. See [What ArcKit does not do](#what-arckit-does-not-do).
 
+## Watch first
+
+New to ArcKit, or explaining it to someone who doesn't use a coding assistant? Start with a film:
+
+- [ArcKit explained](https://youtu.be/-oQ5VRpkxp0): what ArcKit is and how it keeps AI-drafted architecture documents reviewable, in under eight minutes.
+- [ArcKit for Beginners](https://www.youtube.com/playlist?list=PLHAFN5RjB5As): one fictional council project, followed from its architecture principles to the release decision. One hour, or four shorter parts.
+- [ArcKit commands](https://www.youtube.com/playlist?list=PLOxB2ULF5XX0): a film of about a minute and a half for each command: what it is for, when to run it and what it produces.
+
+The [ArcKit YouTube channel](https://www.youtube.com/@arckitorg/playlists) also has a playlist for each overlay. The narration is AI-generated and the films are experimental; tell us on [Discord](https://discord.gg/HsA4Y3hQ4) what to cover next.
+
 ---
 
 ## Quick Start
