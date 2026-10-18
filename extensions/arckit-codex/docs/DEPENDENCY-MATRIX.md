@@ -502,10 +502,10 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 
 | Command | Needs (M) | Recommended (R) | Optional (O) |
 |---------|-----------|-----------------|--------------|
-| `/arckit:oaa-adm-lite` | — | adm-preliminary, principles | — |
-| `/arckit:product-architecture` | — | business-capability-map, oaa-adm-lite, principles | — |
-| `/arckit:agile-strategy` | — | business-capability-map, oaa-adm-lite, principles, product-architecture, transition-architecture | — |
-| `/arckit:agile-security` | — | agile-strategy, oaa-adm-lite, principles, product-architecture | — |
+| `/arckit:oaa-adm-lite` | — | adm-preliminary, principles, requirements, stakeholders | — |
+| `/arckit:product-architecture` | — | business-capability-map, oaa-adm-lite, principles, requirements, stakeholders | — |
+| `/arckit:agile-strategy` | — | business-capability-map, oaa-adm-lite, principles, product-architecture, requirements, stakeholders, transition-architecture | — |
+| `/arckit:agile-security` | — | agile-strategy, oaa-adm-lite, principles, product-architecture, requirements | — |
 | `/arckit:agile-governance` | — | agile-security, agile-strategy, oaa-adm-lite, principles, product-architecture | — |
 
 ---

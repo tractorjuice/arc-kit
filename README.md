@@ -646,22 +646,22 @@ Open Agile Architecture (O-AA, standard C208) — agile enterprise architecture 
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
-| `/arckit-oaa:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (2–4 week engagement windows) |
+| `/arckit-oaa:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (4–8 week engagement windows) |
 | `/arckit-oaa:product-architecture` | `OAPR` | Product-centric architecture — cross-functional teams, backlog-driven delivery |
-| `/arckit-oaa:agile-strategy` | `OASTR` | Dual transformation canvas — legacy modernization + greenfield innovation |
+| `/arckit-oaa:agile-strategy` | `OASTR` | Dual transformation canvas — digital transformation + agile transformation |
 | `/arckit-oaa:agile-security` | `OASEC` | Security embedded in sprint rhythm — threat modeling, compliance evidence |
 | `/arckit-oaa:agile-governance` | `OAGOV` | Lightweight governance cadence aligned to sprint cycles |
 
-Handoff chain: `agile-strategy` → `product-architecture` → `oaa-adm-lite` → `agile-security` → `agile-governance`.
+Handoff chain: `oaa-adm-lite` → `product-architecture` → `agile-strategy` → `agile-security` → `agile-governance`.
 
 **Install:** `claude plugin install arckit arckit-oaa`
-**Recipe:** `oaa-full` — strategy → product → ADM Lite → security → governance
+**Recipe:** `oaa-full` — ADM Lite → product → strategy → security → governance
 
 ---
 
 ## Using TOGAF ADM and O-AA Together
 
-The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.18.2` pin) — neither depends on the other. O-AA maps the ADM cycle to 2–4 week sprints; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.18.2` pin) — neither depends on the other. O-AA maps the ADM cycle onto sprints within a 4–8 week engagement; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Pattern | When to use | Sequence |
 |---------|-------------|----------|
@@ -680,8 +680,8 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 **Running both in the same project:**
 
 - No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.18.2` pins.
-- Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.json` (architecture-change ↔ agile-governance).
-- Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands do not read TOGAF outputs, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
+- Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.yaml` (architecture-change ↔ agile-governance).
+- Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands read TOGAF outputs when they exist (ADM Preliminary, business capability map, transition architecture) but do not require them, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
 ---
 

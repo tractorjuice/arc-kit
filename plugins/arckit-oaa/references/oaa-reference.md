@@ -8,12 +8,12 @@ The O-AA Standard (C208) is built on **16 published axioms**. ArcKit commands ci
 
 | # | Axiom | Applied by |
 |---|---|---|
-| 1 | Customer Experience Focus | `oaa-adm-lite` |
+| 1 | Customer Experience Focus | `oaa-adm-lite`, `agile-strategy` |
 | 2 | Outside-In Thinking | — |
 | 3 | Rapid Feedback Loops | `oaa-adm-lite` |
 | 4 | Touchpoint Orchestration | — |
 | 5 | Value Stream Alignment | `oaa-adm-lite`, `agile-strategy` |
-| 6 | Autonomous Cross-Functional Teams | `oaa-adm-lite`, `product-architecture` |
+| 6 | Autonomous Cross-Functional Teams | `oaa-adm-lite`, `product-architecture`, `agile-strategy` |
 | 7 | Authority, Responsibility, and Accountability Distribution | `oaa-adm-lite`, `agile-governance` |
 | 8 | Loosely-Coupled Systems | — |
 | 9 | Modular Data Platform | — |
@@ -21,21 +21,26 @@ The O-AA Standard (C208) is built on **16 published axioms**. ArcKit commands ci
 | 11 | Partitioning Over Layering | — |
 | 12 | Organization Mirroring Architecture | — |
 | 13 | Organizational Leveling | — |
-| 14 | Bias for Change | `oaa-adm-lite` |
-| 15 | Project to Product Shift | `oaa-adm-lite`, `product-architecture` |
+| 14 | Bias for Change | `oaa-adm-lite`, `agile-strategy` |
+| 15 | Project to Product Shift | `oaa-adm-lite`, `product-architecture`, `agile-strategy` |
 | 16 | Secure by Design | `agile-security` |
 
 ## C208 Ch. 11 — Agile Strategy
 
-Covers dual transformation strategy for enterprise architecture:
+C208 is written to cover the **Digital Transformation** of the enterprise together with its **Agile Transformation** (Ch. 1; Ch. 3, "A Dual Transformation"). "Dual transformation" in O-AA means these two, run together — not a legacy track and an innovation track.
 
-- **Legacy Modernization Track**: Incremental evolution of existing architecture through sprint-based improvements
+Ch. 11 frames agile strategy through six tenets (cite by title; do not quote text that cannot be checked against C208):
 
-- **Greenfield Innovation Track**: New architecture built from scratch for new capabilities
+- Grasp the Situation
+- Frame Strategy Around "Hard-to-Reverse" Choices
+- Anticipate Unintended Consequences
+- Strategy is a Journey
+- Mix Stability and Dynamism
+- Do Not Deploy Strategy in Silos
 
-- **Strategy Canvas**: Visual mapping of current state, target state, and transformation path
+It also covers bending the law of unintended consequences and succeeding at strategy deployment.
 
-- **Portfolio Alignment**: Architecture investments mapped to business outcomes and strategic priorities
+How ArcKit applies it: the agile strategy canvas has a **digital dimension** (technology, product, operating model — legacy modernization sits in technology) and an **agile dimension** (organizational, cultural, team agility), plus axiom-based design principles, resilience mapping, transformation waves and a strategy-to-backlog mapping. The canvas format is an ArcKit convention.
 
 Used by: `agile-strategy` command (OASTR doc type). Related C208 content: Ch. 3 (A Dual Transformation) and Axiom 12.
 
@@ -91,7 +96,7 @@ Used by: `agile-governance` command (OAGOV doc type). Related C208 content: Axio
 
 The O-AA standard does **not** define an ADM cycle. The `oaa-adm-lite` command's sprint map (Sprint 0–4+ ↔ ADM-P…H) is an ArcKit convention that maps **TOGAF ADM phases (C182)** onto agile sprints, drawing its agile-architecture substance from C208 Part 1 (Ch. 3–9, including the 16 axioms of Ch. 9):
 
-- **Sprint Windows**: 2–4 week engagement windows per ADM phase
+- **Sprint Windows**: one sprint (1–2 weeks) per pair of ADM phases; Sprint 0 to Sprint 3 fit a 4–8 week engagement window
 
 - **Backlog-Driven ADM**: Each ADM phase broken into user stories and backlog items
 

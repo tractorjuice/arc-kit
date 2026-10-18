@@ -1,9 +1,9 @@
 recipe: oaa-full
 schema_version: 1
 description: >
-  Open Agile Architecture (O-AA C208) full lifecycle: strategy canvas,
-  product-centric architecture, ADM Lite sprint mapping, security embedded
-  in sprint rhythm, and governance cadence.
+  Open Agile Architecture (O-AA C208) full lifecycle: ADM Lite sprint
+  mapping, product-centric architecture, agile strategy canvas, security
+  embedded in sprint rhythm, and governance cadence.
 
 defaults:
   version: "1.0"
@@ -29,44 +29,47 @@ targets:
     output: { project: "000-global", type: PRIN }
     deps: []
 
-  - id: REQ
-    skill: arckit:requirements
-    args: "{NAME}"
-    output: { project: "{P}-{NAME}", type: REQ }
-    deps: [PRIN]
-
   - id: STKE
     skill: arckit:stakeholders
     args: "{NAME}"
     output: { project: "{P}-{NAME}", type: STKE }
     deps: [PRIN]
 
-  - id: OASTR
-    skill: arckit-oaa:agile-strategy
+  # /arckit:requirements reads the stakeholder analysis, so it runs after STKE.
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN, STKE]
+
+  # The O-AA order follows what each command reads and hands off to:
+  # ADM Lite -> product architecture -> agile strategy -> security -> governance.
+  - id: OAAL
+    skill: arckit-oaa:oaa-adm-lite
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: OASTR }
+    output: { project: "{P}-{NAME}", type: OAAL }
     deps: [PRIN, STKE, REQ]
 
   - id: OAPR
     skill: arckit-oaa:product-architecture
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OAPR }
-    deps: [REQ, STKE]
+    deps: [PRIN, REQ, STKE, OAAL]
 
-  - id: OAAL
-    skill: arckit-oaa:oaa-adm-lite
+  - id: OASTR
+    skill: arckit-oaa:agile-strategy
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: OAAL }
-    deps: [PRIN, STKE, REQ, OAPR]
+    output: { project: "{P}-{NAME}", type: OASTR }
+    deps: [PRIN, STKE, REQ, OAAL, OAPR]
 
   - id: OASEC
     skill: arckit-oaa:agile-security
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OASEC }
-    deps: [OAAL, OAPR]
+    deps: [REQ, OAAL, OAPR, OASTR]
 
   - id: OAGOV
     skill: arckit-oaa:agile-governance
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OAGOV }
-    deps: [OAAL, OASEC]
+    deps: [OAAL, OAPR, OASTR, OASEC]

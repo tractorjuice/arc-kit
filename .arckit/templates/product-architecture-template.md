@@ -19,8 +19,6 @@
 
 ---
 
----
-
 ## 1. Product Mission and Outcome
 
 ### 1.1 Product Mission Statement
@@ -48,6 +46,20 @@
 3. **Principle 3:** {guiding design principle}
 
 > O-AA axioms applied: Axiom 15 (Project to Product Shift) — the product, not the project, is the organizing principle for the team, backlog, and architecture; Axiom 6 (Autonomous Cross-Functional Teams) — the owning team holds the architecture, not a central group.
+
+### 1.4 Product Boundary
+
+Define what the product is and is not before describing its internal structure.
+
+| In the product | Outside the product (owner) |
+|---|---|
+| {capability, journey or component the team owns} | {adjacent product, platform or service, and the team that owns it} |
+
+### 1.5 Outcome Traceability
+
+| Outcome (1.2) | Stakeholder goal (STKE) | Measure |
+|---|---|---|
+| {outcome} | {STKE goal ID and summary, or "No STKE artefact"} | {KPI and target} |
 
 ---
 
@@ -226,11 +238,82 @@ functional_items:
 | **refactoring** | Architecture debt, structural improvement | Schema migration, API versioning |
 | **compliance** | Regulatory compliance implementation | Audit logging, data retention |
 
+### 3.3 Requirements Coverage
+
+Every functional and non-functional requirement from the requirements artefact (`ARC-[PROJECT_ID]-REQ`) lands in a backlog item or is recorded as outside the product boundary.
+
+| Requirement | Backlog item(s) | Status |
+|---|---|---|
+| {FR-xxx / NFR-xxx} | {ARCH-xxx, FEAT-xxx} | In scope |
+| {FR-xxx / NFR-xxx} | — | Out of scope: {reason and owning product} |
+
 ---
 
-## 4. Release Architecture Roadmap
+## 4. Architecture Guardrails
 
-### 4.1 Release Planning
+Guardrails are the non-negotiable constraints the team designs within. The embedded architect owns them; changing one is an architecture decision recorded as an ADR.
+
+### 4.1 Non-Negotiable Constraints
+
+| ID | Constraint | Category | Source | Verified by |
+|---|---|---|---|---|
+| GR-001 | {e.g. All personal data encrypted at rest (AES-256)} | Compliance | {regulation, principle or NFR ID} | {automated check or review} |
+| GR-002 | {e.g. p95 response time < 2s} | Performance | {NFR ID} | {load test in CI} |
+| GR-003 | {e.g. No direct database access across product boundaries} | Architecture | {principle ID} | {architecture review} |
+
+### 4.2 Technology Standards and Approved Building Blocks
+
+| Concern | Approved option | Status | Notes |
+|---|---|---|---|
+| {e.g. Vector store} | {approved building block} | Adopted / Trial / Hold | {constraints on use} |
+
+### 4.3 Anti-Patterns and Forbidden Approaches
+
+| Anti-pattern | Why it is forbidden | Use instead |
+|---|---|---|
+| {e.g. Hard-coded credentials} | {risk} | {approved alternative} |
+
+---
+
+## 5. Product Architecture Diagram
+
+### 5.1 C4 Component View
+
+Show the product's components, its integration points with other products and external systems, data flows and API boundaries. Use Mermaid C4 syntax.
+
+```mermaid
+C4Component
+    title Component view for {product_name}
+
+    Person(user, "{Primary user}", "{What they do}")
+
+    Container_Boundary(product, "{product_name}") {
+        Component(api, "API Gateway", "{technology}", "Authenticates and routes requests")
+        Component(core, "{Core component}", "{technology}", "{responsibility}")
+        ComponentDb(store, "{Data store}", "{technology}", "{data held}")
+    }
+
+    System_Ext(other, "{Other product or external system}", "{responsibility}")
+
+    Rel(user, api, "Uses", "HTTPS")
+    Rel(api, core, "Calls", "{protocol}")
+    Rel(core, store, "Reads and writes")
+    Rel(core, other, "Calls", "{contract name}")
+```
+
+### 5.2 Interfaces and Dependencies
+
+Interfaces to other products are contracts with an owner. Dependencies record their coupling type so the team can see which ones constrain its release cadence.
+
+| Interface or dependency | Direction | Contract | Owner | Coupling type |
+|---|---|---|---|---|
+| {e.g. Identity platform} | Consumes | {API spec or event schema} | {owning team} | Runtime synchronous / Asynchronous event / Build-time / Data |
+
+---
+
+## 6. Release Architecture Roadmap
+
+### 6.1 Release Planning
 
 ```yaml
 # roadmap.yaml — release architecture roadmap
@@ -241,7 +324,7 @@ releases:
 
   - version: "0.1.0"
     name: "Foundation"
-    target_date: "2026-10-01"
+    target_date: "[YYYY-MM-DD]"
     outcome: "Core AI pipeline operational with compliance baseline"
     architecture_scope:
 
@@ -269,7 +352,7 @@ releases:
 
   - version: "0.2.0"
     name: "Agent Orchestration"
-    target_date: "2026-12-01"
+    target_date: "[YYYY-MM-DD]"
     outcome: "Multi-agent workflows with guardrails"
     architecture_scope:
 
@@ -295,7 +378,7 @@ releases:
 
   - version: "1.0.0"
     name: "Production Readiness"
-    target_date: "2027-02-01"
+    target_date: "[YYYY-MM-DD]"
     outcome: "GA release with full compliance coverage"
     architecture_scope:
 
@@ -326,7 +409,7 @@ architecture_evolution:
 
 ```
 
-### 4.2 Release Gate Criteria
+### 6.2 Release Gate Criteria
 
 | Gate | Criteria | Validator |
 |---|---|---|
@@ -336,9 +419,9 @@ architecture_evolution:
 
 ---
 
-## 5. Value Stream Mapping
+## 7. Value Stream Mapping
 
-### 5.1 Value Stream Definition
+### 7.1 Value Stream Definition
 
 ```yaml
 # value_streams.yaml — value stream mapping
@@ -436,7 +519,7 @@ value_streams:
 
 ```
 
-### 5.2 Value Stream Metrics
+### 7.2 Value Stream Metrics
 
 | Metric | Target | Current | Gap |
 |---|---|---|---|
@@ -448,9 +531,9 @@ value_streams:
 
 ---
 
-## 6. Embedded Compliance Per Feature
+## 8. Embedded Compliance Per Feature
 
-### 6.1 Compliance Integration Approach
+### 8.1 Compliance Integration Approach
 
 O-AA principle: Compliance is embedded in every feature, not bolted on at the end. Each backlog item carries its compliance requirements.
 
@@ -528,7 +611,7 @@ compliance_gaps:
 
 ```
 
-### 6.2 Compliance-as-Code Integration
+### 8.2 Compliance-as-Code Integration
 
 | Integration Point | Tool | Frequency |
 |---|---|---|
@@ -540,7 +623,7 @@ compliance_gaps:
 
 ---
 
-## 7. Template Usage Guide
+## 9. Template Usage Guide
 
 ### When to Use This Template
 
@@ -554,11 +637,11 @@ compliance_gaps:
 
 ### When NOT to Use This Template
 
-- **Enterprise-wide transformation:** Use the TOGAF ADM workflow (ADR-001) for enterprise scope
+- **Enterprise-wide transformation:** Use the TOGAF ADM workflow (`/arckit:adm-preliminary`) for enterprise scope
 
-- **Regulatory compliance project:** Use the compliance validation pipeline (ADR-005) as primary
+- **Regulatory compliance project:** Use a dedicated compliance assessment as the primary artefact
 
-- **Infrastructure-only work:** Use the technology architecture template from Phase C
+- **Infrastructure-only work:** Use a technology architecture (TOGAF Phase D) instead
 
 ### Integration with TOGAF ADM
 
@@ -567,16 +650,17 @@ compliance_gaps:
 | Product mission | Phase A (Vision) | Refines enterprise vision for the product |
 | Team composition | Phase B (Business) | Product-centric team vs capability-centric org |
 | Backlog architecture items | Phase C (Information Systems) | Incremental architecture evolution |
+| Architecture guardrails | Phase D (Technology) + Phase G (Governance) | Constraints the team designs within |
 | Release roadmap | Phase E+F (Opportunities + Migration) | Time-boxed delivery of architecture |
 | Value streams | Phase B (Business) | Product value delivery focus |
 | Embedded compliance | Phase G (Governance) | Continuous vs phase-gate compliance |
 
 ---
 
-## 8. Sample: Paperclip Product Architecture
+## 10. Worked Sample: Combined `product-architecture.yaml`
 
 ```yaml
-# paperclip-product-architecture.yaml — sample
+# product-architecture.yaml — worked sample (Paperclip, an agent orchestration product)
 product:
   name: "Paperclip"
   version: "0.1.0"
@@ -584,6 +668,16 @@ product:
   outcome:
     value: "Reduce architecture-to-implementation handoff from weeks to hours"
     adoption: "100% of ${user_config.organisation_name} client engagements use Paperclip within 6 months"
+
+guardrails:
+
+  - id: "GR-001"
+    constraint: "No agent writes to another product's data store directly"
+    category: "architecture"
+
+  - id: "GR-002"
+    constraint: "All issue payloads encrypted in transit (TLS 1.3)"
+    category: "compliance"
 
 team:
   roles:
@@ -607,7 +701,7 @@ team:
 release_roadmap:
 
   - version: "0.1.0"
-    target_date: "2026-09-15"
+    target_date: "[YYYY-MM-DD]"
     outcome: "Core agent orchestration with Paperclip API"
     architecture_items:
 
@@ -618,7 +712,7 @@ release_roadmap:
       - "Wake payload delivery"
 
   - version: "0.2.0"
-    target_date: "2026-11-01"
+    target_date: "[YYYY-MM-DD]"
     outcome: "Multi-company support with compliance pipeline"
     architecture_items:
 

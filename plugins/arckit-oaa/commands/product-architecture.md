@@ -60,6 +60,14 @@ Use this command when **any** of the following conditions are met:
 
   - If missing: note that capability context is limited
 
+- **REQ** (Requirements) — Extract: Functional and non-functional requirements (FR/NFR) to place inside or outside the product boundary
+
+  - If missing: note that requirements traceability cannot be completed, and suggest `/arckit:requirements`
+
+- **STKE** (Stakeholder Analysis) — Extract: Stakeholder goals and measures that the product outcomes serve
+
+  - If missing: note that product outcomes are not traced to stakeholder goals
+
 ### Prerequisites 1b: Read external documents and policies
 
 - Read any **external documents** listed in the project context (`external/` files) — extract product definitions, product roadmaps, team charter documents
@@ -111,11 +119,14 @@ O-AA product architecture practice (C208 Ch. 14) establishes that:
 
 The product architecture command defines artefacts whose structure is inlined in `product-architecture-template.md`:
 
-- **`product-architecture.yaml`** — product mission, outcomes, guardrails, team composition, backlog structure
+- **`product-architecture.yaml`** — product mission, outcomes, guardrails, team composition, release roadmap (the combined structure in the template's worked sample)
 
-- **`vision.yaml`** — architecture vision inherited from O-AA Lite or ADM Preliminary (`/arckit:oaa-adm-lite`, `/arckit:adm-preliminary`)
+- **`team.yaml`**, **`backlog.yaml`**, **`roadmap.yaml`**, **`value_streams.yaml`**, **`compliance.yaml`** — the per-section structures inlined in the template
 
-- **`implementation-strategy.yaml`** — implementation waves (consistent with `/arckit:transition-architecture`)
+It also reads two artefacts it does not define:
+
+- **`vision.yaml`** — architecture vision from O-AA ADM Lite (structure inlined in `oaa-adm-lite-template.md`) or the ADM Preliminary
+- **`implementation-strategy.yaml`** — implementation waves from O-AA ADM Lite Sprint 3 (consistent with `/arckit:transition-architecture`)
 
 ### 5. Generate Product Architecture Document
 
@@ -133,9 +144,11 @@ Create the Product Architecture document following the template structure.
 
 - One-sentence mission capturing the product's purpose and target value
 
-- Outcome dimensions: Value, Adoption, Experience, Delivery cadence
+- Outcome dimensions: Value, Outcome, Experience, Adoption — each traced to a stakeholder goal from STKE where available
 
 - Product principles derived from O-AA axioms
+
+- Product boundary: what the product is and is not, stated before its internal structure
 
 #### Cross-Functional Team Composition
 
@@ -153,6 +166,8 @@ Create the Product Architecture document following the template structure.
 
 - Architecture decision records (ADRs) linked to backlog items
 
+- Requirements coverage: every FR/NFR from REQ lands in a backlog item or is recorded as out of scope with a reason
+
 #### Architecture Guardrails
 
 - Non-negotiable constraints (compliance, security, performance)
@@ -168,6 +183,8 @@ Create the Product Architecture document following the template structure.
 - Integration points with other products and external systems
 
 - Data flow and API boundaries
+
+- Interfaces to other products as contracts with owners, and dependencies with their coupling type
 
 ### 6. External References
 
@@ -224,7 +241,13 @@ After writing the file, show a concise summary (NOT the full document):
 ### Synthesised From
 - [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
 
+- [✅/⚠️] O-AA ADM Lite: ARC-{P}-OAAL-v[N].md
+
 - [✅/⚠️] Business Capability Map: ARC-{P}-BPCM-v[N].md
+
+- [✅/⚠️] Requirements: ARC-{P}-REQ-v[N].md
+
+- [✅/⚠️] Stakeholder Analysis: ARC-{P}-STKE-v[N].md
 
 ### Next Steps
 1. Populate product backlog with architecture epics
@@ -239,7 +262,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 1. **Product-Centric**: O-AA mandates that the product (not the project or capability) is the organizing principle. Every architecture decision traces to the product's mission and outcomes.
 
-2. **Sprint Artefacts**: The `product-architecture.yaml` and `vision.yaml` structures are defined inline in `product-architecture-template.md`. Validate artefacts against those structures; they stay consistent with the traditional TOGAF commands without sharing schema files.
+2. **Sprint Artefacts**: The `product-architecture.yaml` structure and its per-section structures are defined inline in `product-architecture-template.md`; `vision.yaml` is defined in `oaa-adm-lite-template.md`. Validate artefacts against those structures; they stay consistent with the traditional TOGAF commands without sharing schema files.
 
 3. **Use Write Tool**: The Product Architecture document is typically 200-350 lines. ALWAYS use the Write tool to create it.
 

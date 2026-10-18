@@ -26,6 +26,7 @@
 | Agile product architecture (`ARC-<id>-OAPR-v*.md`) | Recommended. Product mission, guardrails, technology constraints |
 | O-AA ADM Lite (`ARC-<id>-OAAL-v*.md`) | Recommended. Sprint plan, governance cadence, compliance mapping |
 | Agile strategy canvas (`ARC-<id>-OASTR-v*.md`) | Recommended. Risk profile, transformation risks, security strategy |
+| Requirements (`ARC-<id>-REQ-v*.md`) | Recommended. Security NFRs (NFR-SEC) that every security story traces to |
 | Project external documents (`projects/<id>/external/`) | Read if present. Security policies, compliance requirements, threat models, regulatory obligations |
 | Enterprise standards (`projects/000-global/external/`) | Read if present. Security standards, data classification policies, incident response procedures |
 
@@ -47,11 +48,12 @@ If the named project does not exist, the command creates it. If an OASEC documen
 
 | Area | What the document sets out |
 |------|----------------------------|
-| Security backlog | Epic categories (data protection, authentication and authorisation, encryption, monitoring, incident response, compliance reporting); a target of 20-30% of sprint capacity, adjusted to risk; stories in the form "As a [role], I want [security control] so that [threat mitigated]" with testable acceptance criteria |
-| Threat modelling | A Sprint 0 model (STRIDE or equivalent) updated each sprint as a backlog item, fed by SAST and DAST tools |
+| Security backlog | Epic categories (data protection, authentication and authorisation, encryption, monitoring, incident response, compliance reporting); a target of 20-30% of sprint capacity, adjusted to risk; stories in the form "As a [role], I want [security control] so that [threat mitigated]" with testable acceptance criteria, each traced to an NFR-SEC requirement |
+| Threat modelling | A Sprint 0 model structured by STRIDE category (or a named equivalent), updated each sprint as a backlog item, fed by SAST and DAST tools |
 | Compliance evidence | Evidence produced with each feature and mapped to GDPR, APRA, APP and the AI Act; always current, never gathered for an audit |
 | Guardrails | Non-negotiable constraints, approved security building blocks, forbidden approaches (such as rolling your own crypto or hardcoded credentials), lightweight sprint-level reviews |
 | AI/ML security | ATRS compliance per sprint, automated bias testing in CI/CD, mitigations for model poisoning, data leakage and adversarial attacks, differential privacy or federated learning where applicable |
+| Exceptions | A path for a failing security check under delivery pressure: sign-off by severity, accepted risk with a resolution deadline, review at each sprint boundary |
 
 ---
 
@@ -67,9 +69,15 @@ If the named project does not exist, the command creates it. If an OASEC documen
 | Pillar 3: Compliance-as-Code Integration Points | Regulatory controls as executable validation rules feeding `governance-report.yaml` |
 | Pillar 4: Continuous Security Validation (Replacing Phase Gates) | Traditional gate against its continuous replacement and evidence; sprint-gate validation pipeline |
 | Sprint Security Backlog Template | `security-backlog.yaml`: component risk classification, security stories, security debt |
+| Threat Model Per Sprint (STRIDE) | STRIDE questions and `threat-model.yaml`: threats per component with likelihood, impact, mitigating story and residual risk |
+| Compliance Evidence Per Sprint | `compliance-evidence.yaml`: evidence per control with owner, requirement, artefact and result |
+| Security Architecture Guardrails | Non-negotiable constraints, approved building blocks, anti-patterns, review gates |
+| AI/ML Security Considerations | Transparency, bias, model security and privacy activities per sprint |
+| Security Exception Path | Sign-off by severity, accepted risk with a resolution deadline, escalation |
+| Requirements Traceability (NFR-SEC) | Security stories and threats per NFR-SEC requirement; gaps |
 | Security Metrics Dashboard | Posture metrics with thresholds and alerts |
 | TOGAF ADM Phase Mapping | Agile security activity for each ADM phase |
-| Integration Points | Links to the organisation's ADRs and the agile governance template |
+| Integration Points | TOGAF Phase G, the organisation's reference documents where they exist, and the agile governance template |
 | Example CI Checks (Illustrative) | Pipeline shape only; ArcKit does not ship these tools |
 | Risk Assessment | Risks of the approach itself and their mitigations |
 | Acceptance Criteria | Checklist for the completed document |
@@ -85,10 +93,11 @@ If the named project does not exist, the command creates it. If an OASEC documen
 - The document names the phase gates it replaces and the gates that remain.
 - There is an exception path for a failing security check under delivery pressure, with a named sign-off.
 - Findings carry a severity and a resolution deadline.
+- Security stories trace to NFR-SEC requirements, and untraced requirements are listed as gaps.
 
 ---
 
 ## Next Steps
 
 - `/arckit-oaa:agile-governance` - Establish governance cadence including security review gates.
-- `/arckit-oaa:agile-strategy` - Align security strategy with the dual transformation tracks.
+- `/arckit-oaa:agile-strategy` - Align security strategy with the dual transformation dimensions.

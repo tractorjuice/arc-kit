@@ -62,15 +62,17 @@ If the named project does not exist, the command creates it. If an OAGOV documen
 | Section | Contents |
 |---------|----------|
 | Document Control | Document ID, owner, status, classification; review cycle per sprint |
-| Why This Replaces the ARB | Centralised review board compared with the agile governance cadence |
-| Cadence Overview | Sprint, month, quarter and continuous horizons |
-| 1. Sprint Architecture Review Checklist | Pre-sprint and post-sprint checks, with example automation |
-| 2. Architecture Debt Tracking | Five debt categories, debt register with severity and status, review rules by severity, monthly review |
-| 3. Quarterly Architecture Health Assessment | Scored assessment, scoring rubric, assessment outputs |
-| 4. Continuous Compliance Monitoring | Automated checks, `governance-report.yaml` integration, weekly reporting |
-| 5. Distributed Governance Roles | Responsibilities by role, escalation path, exception handling |
-| 6. Integration with TOGAF ADM | Mapping to ADM Phases G and H |
-| 7. Trigger Guidance | When to use the cadence and when a traditional board fits better |
+| Why This Replaces the ARB | Centralised review board compared with the sprint review panel, and the conditions for reverting to a board |
+| Cadence Overview | Sprint, month, quarter and continuous horizons, each event with its input, output artefact and owner |
+| 1. Sprint Review Panel | Panel members and the perspective each brings, decision authority matrix |
+| 2. Sprint Architecture Review Checklist | Pre-sprint, mid-sprint and post-sprint checks, gate criteria with remediation, example automation |
+| 3. Change Management at Sprint Velocity | `change-request.yaml` structure, decision timeline within the sprint |
+| 4. Architecture Debt Tracking | Five debt categories, debt register with severity and status, review rules by severity, monthly review |
+| 5. Quarterly Architecture Health Assessment | Scored assessment, scoring rubric, assessment outputs |
+| 6. Continuous Compliance Monitoring and Evidence | Automated checks, `compliance-evidence.yaml`, `governance-report.yaml` integration, weekly reporting, governance metrics |
+| 7. Distributed Governance Duties | Continuous duties by role, escalation tiers and their decisions, exception handling |
+| 8. Integration with TOGAF ADM | Mapping to ADM Phases G and H |
+| 9. Trigger Guidance | When to use the cadence and when a traditional board fits better |
 | External References | Document Register (C208 with URL and verification date), citations |
 
 ---

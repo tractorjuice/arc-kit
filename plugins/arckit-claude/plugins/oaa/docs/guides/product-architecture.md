@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit-oaa:product-architecture` creates an Agile Product Architecture document using Open Agile Architecture (O-AA, C208) Ch. 14, Product Architecture. The product is the organising principle for the team, the backlog and the architecture. The document sets the product mission and outcomes, the permanent cross-functional team, architecture items in the product backlog, architecture guardrails, a component diagram, the release roadmap, value streams and the compliance controls carried by each feature. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
+`/arckit-oaa:product-architecture` creates an Agile Product Architecture document using Open Agile Architecture (O-AA, C208) Ch. 14, Product Architecture. The product is the organising principle for the team, the backlog and the architecture. The document sets the product mission, outcomes and boundary, the permanent cross-functional team, architecture items in the product backlog with requirements coverage, architecture guardrails, a C4 component diagram with the product's interfaces and dependencies, the release roadmap, value streams and the compliance controls carried by each feature. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
 
 ---
 
@@ -25,6 +25,8 @@
 | Architecture principles (`ARC-000-PRIN-v*.md`) | Recommended. Product architecture principles, technology standards, compliance requirements. If missing, the command warns you to run `/arckit:principles` first |
 | O-AA ADM Lite (`ARC-<id>-OAAL-v*.md`) | Recommended. Sprint plan, vision, scope, success criteria |
 | Business capability map (`ARC-<id>-BPCM-v*.md`) | Recommended. Product capabilities, value streams, capability ownership |
+| Requirements (`ARC-<id>-REQ-v*.md`) | Recommended. Functional and non-functional requirements to place inside or outside the product boundary |
+| Stakeholder analysis (`ARC-<id>-STKE-v*.md`) | Recommended. Stakeholder goals and measures that the product outcomes serve |
 | Project external documents (`projects/<id>/external/`) | Read if present. Product definitions, product roadmaps, team charters |
 | Enterprise standards (`projects/000-global/external/`) | Read if present. Product architecture standards, team composition guidelines |
 
@@ -58,14 +60,16 @@ If the named project does not exist, the command creates it. If an OAPR document
 | Section | Contents |
 |---------|----------|
 | Document Control | Document ID, owner, status, classification; review cycle per sprint |
-| 1. Product Mission and Outcome | One-sentence mission, outcome targets (value, adoption, experience, delivery cadence), product principles derived from O-AA axioms |
+| 1. Product Mission and Outcome | One-sentence mission, outcome targets (value, outcome, experience, adoption), product principles derived from O-AA axioms, product boundary, outcomes traced to stakeholder goals |
 | 2. Cross-Functional Team Composition | Roles (Product Owner, Architect, Lead Engineer, AI Safety Engineer, DevOps, QA), cadence, and the embedded architect's responsibilities |
-| 3. Product Backlog with Architecture Items | Architecture items as first-class backlog entries with acceptance criteria, compliance mapping, story points, risk and linked ADRs; item types |
-| 4. Release Architecture Roadmap | Releases with architecture scope and compliance milestones; release gate criteria |
-| 5. Value Stream Mapping | Delivery and runtime value streams, touch, wait and lead times, value stream metrics |
-| 6. Embedded Compliance Per Feature | Regulations and controls, feature compliance matrix, compliance gaps, compliance-as-code integration points |
-| 7. Template Usage Guide | When to use the template and how its elements map to TOGAF ADM phases |
-| 8. Sample | Worked YAML sample of a product architecture |
+| 3. Product Backlog with Architecture Items | Architecture items as first-class backlog entries with acceptance criteria, compliance mapping, story points, risk and linked ADRs; item types; requirements coverage |
+| 4. Architecture Guardrails | Non-negotiable constraints, technology standards and approved building blocks, anti-patterns |
+| 5. Product Architecture Diagram | Mermaid C4 component view; interfaces as contracts with owners, dependencies with coupling type |
+| 6. Release Architecture Roadmap | Releases with architecture scope and compliance milestones; release gate criteria |
+| 7. Value Stream Mapping | Delivery and runtime value streams, touch, wait and lead times, value stream metrics |
+| 8. Embedded Compliance Per Feature | Regulations and controls, feature compliance matrix, compliance gaps, compliance-as-code integration points |
+| 9. Template Usage Guide | When to use the template and how its elements map to TOGAF ADM phases |
+| 10. Worked Sample | Combined `product-architecture.yaml` sample |
 | External References | Document Register (C208 with URL and verification date), citations |
 
 ---
@@ -79,6 +83,7 @@ If the named project does not exist, the command creates it. If an OAPR document
 - Interfaces between products are contracts with owners; dependencies are listed with their coupling type.
 - Guardrails list non-negotiable constraints, approved building blocks and forbidden approaches.
 - A Mermaid C4 component diagram shows product components, integration points, data flow and API boundaries.
+- Every requirement lands in a backlog item or is recorded as out of scope.
 
 ---
 

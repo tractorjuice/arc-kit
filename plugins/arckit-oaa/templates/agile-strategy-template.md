@@ -1,7 +1,7 @@
 # Agile Strategy Canvas
 
 > **Template:** Agile Strategy Canvas (O-AA Dual Transformation Planning)
-> **Issue:** ${user_config.project_issue_prefix}-126 | **Command:** `/arckit:agile-strategy`
+> **Command:** `/arckit:agile-strategy`
 > **Structure:** inlined below (YAML example in the YAML Structure section)
 > **O-AA Reference:** Agile Strategy (C208 Ch. 11)
 
@@ -15,8 +15,6 @@
 | Version | Date | Author | Description | Reviewer | Approver |
 |---------|------|--------|-------------|----------|----------|
 | `[VERSION]` | `[YYYY-MM-DD]` | ArcKit AI | Initial creation | `[REVIEWER_NAME]` | `[APPROVER_NAME]` |
-
----
 
 ---
 
@@ -44,7 +42,7 @@ Do NOT use when:
 
 ## Canvas Overview
 
-The Agile Strategy Canvas captures the **dual transformation** agenda:
+The Agile Strategy Canvas captures the **dual transformation** agenda. C208 is written to cover the Digital Transformation of the enterprise together with its Agile Transformation, so the canvas plans both dimensions together:
 
 | Dimension | Focus Areas |
 |---|---|
@@ -133,6 +131,7 @@ Describe the operating model changes to support agile, product-centric delivery.
 | `target_operating_model` | Target operating model (platform teams, stream-aligned teams, enabling teams) |
 | `capability_gaps` | Organizational capabilities needed but currently missing |
 | `platform_strategy` | Internal platform strategy (build vs buy, shared services, API marketplace) |
+| `funding_model` | Current and target funding model (project budgets vs product or value-stream funding) |
 
 **Example:**
 
@@ -148,6 +147,9 @@ operating_model:
 
     - "Product management maturity (outcome ownership vs feature delivery)"
   platform_strategy: "Build internal developer platform with self-service CI/CD, observability, and AI model registry"
+  funding_model:
+    current: "Annual project budgets approved per business case"
+    target: "Persistent funding per value stream, reviewed quarterly against outcome measures"
 
 ```
 
@@ -349,6 +351,8 @@ Map the dual transformation activities across delivery waves.
 |---|---|
 | `wave` | Wave number and name |
 | `duration` | Duration in weeks/sprints |
+| `outcome` | The outcome the wave buys |
+| `success_measures` | The measures that would show the wave worked |
 | `digital_activities` | Digital transformation activities in this wave |
 | `agile_activities` | Agile transformation activities in this wave |
 | `resilience_milestones` | Resilience targets achieved by end of this wave |
@@ -361,6 +365,12 @@ transformation_waves:
 
   - wave: "Wave 0 — Foundation"
     duration: "4 weeks"
+    outcome: "Teams and platform ready to deliver the first value stream"
+    success_measures:
+
+      - "First stream-aligned team formed with an embedded architect"
+
+      - "Self-service deployment pipeline used by the first team"
     digital_activities:
 
       - "Platform infrastructure provisioning (Kubernetes, observability stack)"
@@ -380,6 +390,12 @@ transformation_waves:
 
   - wave: "Wave 1 — First Value Stream"
     duration: "8 weeks"
+    outcome: "Customer onboarding runs on the target architecture"
+    success_measures:
+
+      - "Onboarding time reduced from 14 days to under 2 days"
+
+      - "Deployment frequency at least weekly for the onboarding team"
     digital_activities:
 
       - "Migrate first value stream to cloud-native architecture"
@@ -403,9 +419,44 @@ transformation_waves:
 
 ---
 
+## Section 6: Strategy-to-Backlog Mapping
+
+Strategy enters the product backlog as epics, so the canvas drives delivery instead of sitting on a shelf. Each epic traces to a stakeholder goal (`ARC-[PROJECT_ID]-STKE`) or business requirement (`ARC-[PROJECT_ID]-REQ`) where those artefacts exist.
+
+| Field | Description |
+|---|---|
+| `epic` | Strategy epic ID and title |
+| `wave` | Transformation wave that delivers it |
+| `traces_to` | Stakeholder goal or business requirement IDs |
+| `features` | Features that realise the epic |
+| `guardrails` | Architecture guardrails the epic must respect |
+| `axiom` | Published O-AA axiom the epic applies, cited by number and name |
+
+**Example:**
+
+```yaml
+strategy_backlog:
+
+  - epic: "EP-001 — Self-service customer onboarding"
+    wave: "Wave 1 — First Value Stream"
+    traces_to: ["G-1", "BR-003"]
+    features:
+
+      - "Digital identity verification"
+
+      - "Real-time eligibility check"
+    guardrails:
+
+      - "Personal data stays in the approved region"
+    axiom: "Axiom 5 — Value Stream Alignment"
+
+```
+
+---
+
 ## YAML Structure
 
-The structured version of this canvas is the `agile-strategy-canvas.yaml` artefact, defined by the YAML example above. Validate your canvas by self-checking it against that structure, and run `/arckit:health` after the build to catch stale or orphaned artefacts.
+The structured version of this canvas is the `strategy-canvas.yaml` artefact, defined by the YAML examples above. Validate your canvas by self-checking it against that structure, and run `/arckit:health` after the build to catch stale or orphaned artefacts.
 
 ---
 
@@ -416,8 +467,8 @@ The structured version of this canvas is the `agile-strategy-canvas.yaml` artefa
 | Axiom 1 (Customer Experience Focus) | Design principles prioritise customer outcomes over document artefacts |
 | Axiom 5 (Value Stream Alignment) | Transformation waves align to value streams, not calendar quarters |
 | Axiom 6 (Autonomous Cross-Functional Teams) | Governance distributed to teams; architect embedded in delivery teams |
-| Axiom 14 (Bias for Change) | Operating model shifts from temporary project structures to permanent product organizations |
-| Axiom 15 (Project to Product Shift) | Product transformation maps customer/employee experience improvements |
+| Axiom 14 (Bias for Change) | The canvas is living: waves and principles are revised each sprint as outcomes are measured |
+| Axiom 15 (Project to Product Shift) | Operating model shifts from temporary project structures to permanent product organizations |
 
 ---
 
