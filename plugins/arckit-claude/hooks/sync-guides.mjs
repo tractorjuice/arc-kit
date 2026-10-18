@@ -1101,8 +1101,10 @@ if (!includeVendorScores) {
 // Classification scan: artefacts whose Document Control marks them above
 // OFFICIAL (or the equivalent in the other classification ladders). Reported
 // to the user every run; nothing is blocked, because docs/ is only published
-// when the user commits and pushes it.
-const SENSITIVE_MARKINGS = /OFFICIAL[-\s]SENSITIVE|\bTOP[-\s]SECRET\b|\bSECRET\b|\bCONFIDENTIAL\b|\bRESTRICTED\b|\bPROTECTED\b|Vertraulich|Geheim|Eingeschr[aä]nkt/i;
+// when the user commits and pushes it. A bare `Sensitive` is the UAE Smart
+// Data Framework class between Confidential and Secret; it is matched only as
+// the whole value so that ordinary prose is not caught.
+const SENSITIVE_MARKINGS = /OFFICIAL[-\s]SENSITIVE|\bTOP[-\s]SECRET\b|\bSECRET\b|\bCONFIDENTIAL\b|\bRESTRICTED\b|\bPROTECTED\b|Vertraulich|Geheim|Eingeschr[aä]nkt|^\W*Sensitive\W*$/i;
 function collectDocPaths(node, out) {
   if (Array.isArray(node)) { for (const item of node) collectDocPaths(item, out); return; }
   if (node && typeof node === 'object') {

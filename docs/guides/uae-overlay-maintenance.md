@@ -14,17 +14,19 @@ Each row records a regulatory or policy instrument cited by one or more `uae-*` 
 
 | Regulation / Instrument | Authority | Primary URL | Verified | Next Review | Used By |
 |---|---|---|---|---|---|
-| Federal Decree-Law No. 45 of 2021 (Personal Data Protection Law) | UAE Data Office | u.ae/en/about-the-uae/digital-uae/data/data-protection-laws | 2026-04-30 | 2026-07-30 | uae-pdpl, uae-data-sharing |
+| Federal Decree-Law No. 45 of 2021 (Personal Data Protection Law) | UAE Data Office | u.ae/en/about-the-uae/digital-uae/data/data-protection-laws | 2026-10-18 | 2027-01-30 | uae-pdpl, uae-data-sharing |
 | UAE Cabinet Decree (23 April 2026) — agentic AI mandate | UAE Cabinet | docs/sources/2026-04-23-uae-cabinet-decree.md (repo-mirrored) | 2026-04-30 | 2026-07-30 | uae-ai-charter, uae-ai-autonomy-tier, uae-priorities-alignment |
-| UAE Smart Data Framework | TDRA / UAE Data Office | u.ae/en/about-the-uae/digital-uae/data | 2026-04-30 | 2026-07-30 | uae-classification |
+| UAE Smart Data Framework — Part 1: Smart Data Principles and Standards (v2.0, February 2019); Part 2: Smart Data Implementation Guide (v2.0, March 2019) | UAE Federal Government (published on u.ae) | u.ae/en/about-the-uae/digital-uae/data/data-operability | 2026-10-18 | 2027-01-30 | uae-classification, Document Control (UAE partial) |
 | UAE National Cloud Security Policy v2 | UAE Cybersecurity Council | csc.gov.ae | 2026-04-30 | 2026-07-30 | uae-cloud-residency |
 | UAE IAS (Information Assurance Standard) v2 | UAE Cybersecurity Council | csc.gov.ae | 2026-04-30 | 2026-07-30 | uae-ias |
-| UAE Pass Service Provider integration guide | TDRA | uaepass.ae | 2026-04-30 | 2026-07-30 | uae-uaepass |
+| UAE Pass Service Provider integration guide | TDRA | docs.uaepass.ae | 2026-10-18 | 2027-01-30 | uae-uaepass |
 | UAE Code for Government Services | Office of the Prime Minister | u.ae/en/about-the-uae/the-uae-government/government-of-future | 2026-04-30 | 2026-07-30 | uae-zero-bureaucracy |
-| UAE Government Services Digital Records Policy | Cabinet Affairs / National Archives | u.ae | 2026-04-30 | 2026-07-30 | uae-digital-records |
+| UAE Government Services Digital Records Policy | UAE Cabinet (approved 23 April 2026; administering body not named) | uaecabinet.ae (Cabinet meeting announcement, 23 April 2026) | 2026-10-18 | 2027-01-30 | uae-digital-records |
 | UAE Government Services Data Sharing Policy | Cabinet Affairs | u.ae | 2026-04-30 | 2026-07-30 | uae-data-sharing |
 | Federal Government Guide to Aligning Digital Government Projects with National Priorities | Office of the Prime Minister | u.ae | 2026-04-30 | 2026-07-30 | uae-priorities-alignment |
 | UAE Charter for the Development and Use of AI | UAE AI Office | ai.gov.ae | 2026-04-30 | 2026-07-30 | uae-ai-charter |
+| Guidance Note on the Consumer Protection and Responsible Adoption and Use of AI and ML by Licensed Financial Institutions in the U.A.E. (issued 11 February 2026) | Central Bank of the UAE | rulebook.centralbank.ae | 2026-10-18 | 2027-01-30 | uae-ai-autonomy-tier |
+| Guidelines for Financial Institutions Adopting Enabling Technologies (issued 15 November 2021) | CBUAE, SCA, DFSA and ADGM FSRA (joint) | rulebook.centralbank.ae | 2026-10-18 | 2027-01-30 | uae-ai-autonomy-tier |
 | Federal Decree-Law No. 11 of 2023 on Procurements in the Federal Government | Ministry of Finance | mof.gov.ae | 2026-04-30 | 2026-07-30 | uae-procurement |
 | MoF Digital Procurement Platform | Ministry of Finance | mof.gov.ae | 2026-04-30 | 2026-07-30 | uae-procurement |
 
@@ -53,58 +55,46 @@ Cadence: 30 January, 30 April, 30 July, 30 October. Next scheduled review: **202
 
 ---
 
-## Known Limitations / Not-Verified Items
+## Formerly Not-Verified Items
 
-Six citations in the overlay are marked `[NEEDS VERIFICATION]` in the affected commands' prompts. They render in generated artefacts as inline notes so the architect can see at-glance where to apply local expertise.
+Six citations shipped in v4.10 marked `[NEEDS VERIFICATION]`. Each was checked against its primary source on 18 October 2026 under issue #949, and the guides, commands and templates now state what the source says. Where the source does not settle a point, the wording says so rather than guessing.
 
-### 1. PDPL Executive Regulation status
+### 1. PDPL Executive Regulations
 
-The PDPL (Federal Decree-Law No. 45 of 2021) was issued in November 2021. Its Executive Regulation, which contains the operative rules on lawful basis tests, DPIA thresholds, and cross-border transfer instruments, was not in force at the time of writing. The overlay applies the conservative reading consistent with the published Decree-Law and the UAE Data Office guidance, but anything that depends on the Executive Regulation should be verified against the gazette.
+Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data was issued on 20 September 2021, published in Official Gazette No. 712 (supplement) on 26 September 2021, and has been in force since 2 January 2022 (UAE Legislation portal entry for the Decree-Law; u.ae data protection laws page). Its Executive Regulations are a separate Cabinet instrument. The UAE Government portal's data protection page (updated 4 December 2025) names none, and secondary commentary disagrees on whether they have been issued. The status is therefore not asserted: `/arckit:uae-pdpl` records it in each artefact as checked against the UAE Legislation portal, with the date of the check, and bases the assessment on the Decree-Law text alone when no Executive Regulations are in force.
 
-Tracking: GitHub issue (to be opened post-merge under the v4.10 tracking issue).
+### 2. Smart Data classes
 
-### 2. Smart Data Classifications exact level names
+The UAE Smart Data Framework sets **four** classes: `Open`, `Confidential`, `Sensitive` and `Secret`. Source: *Part 1: Smart Data Principles and Standards*, v2.0 (February 2019), Data Classification Standard DC1, and *Part 2: Smart Data Implementation Guide*, v2.0 (March 2019), Guidance Note 5.1, which gives the criteria and examples for each class. Both are published at <https://u.ae/en/about-the-uae/digital-uae/data/data-operability>. In the framework, `Shared` and `Closed` are exchange modes, not classes, and there is no `Top Secret` class. The earlier five-rung ladder (`Open / Shared / Confidential / Secret / Top Secret`) is replaced in the UAE commands and templates, the UAE Document Control partial, the regime routing table in `RENDERING.md`, the CLAS quality checks, the `default_classification` and `classification_scheme` userConfig descriptions, and the `arckit migrate-classification` mapping (UK `TOP SECRET` now maps to `Secret`). Documents already labelled `Shared` or `Top Secret` are not blocked by any hook or check.
 
-The UAE Smart Data Framework references five classification levels. The overlay uses `Open / Shared / Confidential / Secret / Top Secret` based on the most recent published guidance. Federal entities have used slight name variations historically, and we have not yet seen the canonical level names in a single authoritative source. The mapping is conservative; the names should be verified against the entity's local Data Office guidance before publication.
+### 3. UAE Pass and eIDAS
 
-Tracking: GitHub issue (to be opened post-merge).
+The UAE PASS developer documentation (<https://docs.uaepass.ae/quick-start-guide-uae-pass-staging-environment/user-account-types>) defines three account types: SOP1 Basic (unverified), SOP2 Advanced (verified, advanced signature) and SOP3 Qualified (verified with biometrics, qualified signature). It publishes no mapping to the eIDAS levels of assurance; the only `eidas` strings in it are identifiers in the signing platform's URNs. The earlier working assumption (Verified ≈ Substantial, Basic ≈ Low) was ArcKit's, not TDRA's, and the guide now says so: any eIDAS equivalence is the architect's assumption, to be confirmed with TDRA before a cross-border identity acceptance design.
 
-### 3. UAE Pass Loa-to-eIDAS mapping
+### 4. AWS `me-south-1`
 
-UAE Pass publishes Basic and Verified profiles. There is no formal mapping between these profiles and the eIDAS Levels of Assurance (Low / Substantial / High). The overlay's `uae-uaepass` command applies a working assumption (Verified ~= Substantial; Basic ~= Low) that aligns with how some federal entities have treated cross-recognition. This should be checked with TDRA before any cross-border identity acceptance design.
+`me-south-1` is AWS's Middle East (Bahrain) Region, so it is not UAE-resident and does not meet the overlay's UAE-residency rule for Confidential, Sensitive and Secret datasets. AWS's UAE Region is `me-central-1`, Middle East (UAE), open since August 2022 (AWS Availability Zones documentation; AWS News Blog). The text of the National Cloud Security Policy v2 could not be retrieved from csc.gov.ae on 18 October 2026, so whether it permits a non-UAE Region for Open data is left to the policy text, which `/arckit:uae-cloud-residency` cites.
 
-Tracking: GitHub issue (to be opened post-merge).
+### 5. Central Bank AI guidance
 
-### 4. AWS me-south-1 acceptability
+The Central Bank of the UAE issued the *Guidance Note on the Consumer Protection and Responsible Adoption and Use of Artificial Intelligence and Machine Learning by Licensed Financial Institutions in the U.A.E.* on 11 February 2026 (CBUAE Rulebook, Market Conduct & Consumer Protection). It applies to CBUAE-licensed financial institutions, including insurance providers, and is to be read with the UAE Charter for the Development and Use of AI and the *Guidelines for Financial Institutions Adopting Enabling Technologies*. Those Guidelines were issued on 15 November 2021 jointly by CBUAE, the Securities and Commodities Authority (SCA), the DFSA and the ADGM FSRA, and are in force. For a capital-markets entity supervised by SCA, the joint 2021 Guidelines are the instrument SCA co-issued; the 2026 Guidance Note is a CBUAE instrument.
 
-AWS operates the `me-south-1` region in Bahrain. Several UAE federal use-cases have run on it historically. The current Cloud Security Policy v2 may or may not accept it for `Confidential` and above; the overlay's `uae-cloud-residency` command lists it as a borderline option pending Cybersecurity Council confirmation. UAE-resident options (Microsoft UAE North/Central, Core42 / G42 sovereign, e& Sovereign Launchpad on AWS) are recommended in preference until the position is verified.
+### 6. Digital Records Policy owner
 
-Tracking: GitHub issue (to be opened post-merge).
-
-### 5. UAE Central Bank AI guidance
-
-The Central Bank of the UAE has issued AI-related guidance for licensed financial entities. The overlay's `uae-ai-autonomy-tier` Tier 3 (regulated/financial) refers to it generically. The exact citation, and the boundary between Central Bank guidance and Securities and Commodities Authority (SCA) guidance for capital-markets entities, is not yet pinned down.
-
-Tracking: GitHub issue (to be opened post-merge).
-
-### 6. Cabinet Affairs vs National Archives ownership of the Digital Records Policy
-
-The UAE Government Services Digital Records Policy is owned and published under the federal Office of the Prime Minister. The day-to-day stewardship has historically sat with both Cabinet Affairs and the National Archives (different aspects: governance vs records-management technical detail). The overlay names "Cabinet Affairs / National Archives" as joint authority. A clearer single owner would help reviewers know whose interpretation to defer to in edge cases.
-
-Tracking: GitHub issue (to be opened post-merge).
+The UAE Cabinet approved the Government Services Digital Records Policy on 23 April 2026. The Cabinet's announcement and the Dubai Media Office release carry the same text: the policy sets a national framework for managing government services data, makes digital records the official source of core data, and adds a comprehensive records guide. Neither names the body that owns or administers the policy, and neither names the Ministry of Cabinet Affairs or the National Library and Archives; the policy text was not published with them. The earlier "Cabinet Affairs / National Archives" attribution is withdrawn. `/arckit:uae-digital-records` records the administering body only when the entity has it in writing, and otherwise lists it as an open item.
 
 ---
 
-## Open GitHub Issues
+## Resolution Status
 
-A tracking issue will be opened for each of the six gaps under the v4.10 milestone. They will be linked here once filed:
+All six items were resolved under GitHub issue #949 on 18 October 2026:
 
-- `[ ]` PDPL Executive Regulation status
-- `[ ]` Smart Data Classifications exact level names
-- `[ ]` UAE Pass LoA-to-eIDAS mapping
-- `[ ]` AWS me-south-1 acceptability
-- `[ ]` UAE Central Bank AI guidance
-- `[ ]` Cabinet Affairs vs National Archives ownership
+- `[x]` PDPL Executive Regulations — status recorded per artefact with the date checked
+- `[x]` Smart Data classes — four classes, from the framework itself
+- `[x]` UAE Pass and eIDAS — no published mapping
+- `[x]` AWS `me-south-1` — Bahrain, not UAE-resident
+- `[x]` Central Bank AI guidance — CBUAE Guidance Note, 11 February 2026
+- `[x]` Digital Records Policy owner — not named by the Cabinet
 
 ---
 
@@ -116,7 +106,7 @@ The role:
 
 - Auto-requested for review on PRs touching `plugins/arckit-uae/commands/uae-*.md`, `plugins/arckit-uae/templates/uae-*-template.md`, `plugins/arckit-uae/recipes/uae-*.yaml`, and `.arckit/templates/uae-*-template.md`.
 - Owns the quarterly review for the Citation Register.
-- Confirms or rejects the six not-verified items above.
+- Reviews the six formerly not-verified items above against local practice, especially the PDPL Executive Regulations status and the Digital Records Policy's administering body, which the public sources do not settle.
 - Recommends additions when new federal instruments are gazetted.
 - Not in the merge path; the repository owner remains the final approver.
 

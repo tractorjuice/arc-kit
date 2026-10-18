@@ -83,7 +83,7 @@ Output: `projects/<id>/ARC-<id>-AICH-v1.0.md`
 
 ## Key Notes
 
-- **Sector regulation**: For Central Bank-regulated workloads the Charter is a floor — the UAE Central Bank AI guidance is flagged as `[NEEDS VERIFICATION]` in the overlay maintenance log.
+- **Sector regulation**: For Central Bank-regulated workloads the Charter is a floor. The Central Bank of the UAE issued its *Guidance Note on the Consumer Protection and Responsible Adoption and Use of Artificial Intelligence and Machine Learning by Licensed Financial Institutions in the U.A.E.* on 11 February 2026, and it states that it is to be read with the Charter. See `uae-ai-autonomy-tier.md` for how it applies to Tier 3 workloads.
 - **Run order**: Run before `/arckit-uae:uae-ai-autonomy-tier` so the Charter posture informs the tier design.
 - **Cross-jurisdiction projects**: For systems also touching the EU, run alongside `/arckit-eu:eu-ai-act`.
 - **Community-contributed**: Output should be reviewed by qualified AI ethics / federal compliance counsel before reliance.

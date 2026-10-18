@@ -3,7 +3,7 @@
 | **Document ID** | ARC-[PROJECT_ID]-[TYPE_CODE]-v[VERSION] |
 | **Document Type** | [DOCUMENT_TYPE_NAME] |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [Open / Shared / Confidential / Secret / Top Secret] |
+| **Classification** | [Open / Confidential / Sensitive / Secret] |
 | **Status** | DRAFT |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |

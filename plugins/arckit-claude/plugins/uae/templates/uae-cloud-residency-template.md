@@ -33,9 +33,9 @@ For each Dataset ID from the project's Smart Data Classification Register (`ARC-
 
 | Dataset ID | Classification | Required residency | Chosen CSP | Region | Compliance check |
 |------------|----------------|---------------------|------------|--------|-------------------|
-| [DS-001] | [Open / Shared / Confidential / Secret / Top Secret] | [UAE-resident / no constraint] | [Core42 / G42 / Microsoft UAE North / UAE Central / FedNet / e& Sovereign Launchpad / etc.] | [region] | [Compliant / Non-compliant — rationale] |
+| [DS-001] | [Open / Confidential / Sensitive / Secret] | [UAE-resident / no constraint] | [Core42 / G42 / Microsoft UAE North / UAE Central / FedNet / e& Sovereign Launchpad / etc.] | [region] | [Compliant / Non-compliant — rationale] |
 
-> Confidential, Secret, and Top Secret datasets MUST resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2. Any non-compliant row is a critical gap.
+> Confidential, Sensitive, and Secret datasets MUST resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2. Any non-compliant row is a critical gap.
 
 ## CSP Due-Diligence Pack
 

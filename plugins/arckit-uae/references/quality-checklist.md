@@ -1143,7 +1143,7 @@ All artifacts must pass these 10 checks:
 
 - Every dataset assessed by its Dataset ID from the CLAS register rather than re-enumerated
 - Classification, required residency, chosen CSP, region and compliance check recorded per dataset
-- Confidential, Secret and Top Secret datasets resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2, with any exception raised rather than left implicit
+- Confidential, Sensitive and Secret datasets resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2, with any exception raised rather than left implicit
 - CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS) covering certification posture (DESC for Dubai entities, CSC accreditation), regional footprint, sovereign-data scope and documented limitations
 - Shared-responsibility matrix divides responsibility across infrastructure, platform, application, data, identity and operational layers for each chosen CSP
 - Shared platform components (identity, observability, backups) assessed for residency, not only the primary services
@@ -1151,8 +1151,9 @@ All artifacts must pass these 10 checks:
 
 ### CLAS -- UAE Smart Data Classification Register
 
-- Every dataset assigned exactly one Smart Data level (Open / Shared / Confidential / Secret / Top Secret) — no other values
-- Level definitions cited to the UAE Smart Data Classifications publication, which appears in the Document Register with its primary URL and verification date
+- Every dataset assigned exactly one of the four Smart Data Framework classes (Open / Confidential / Sensitive / Secret) — no other values; `Shared` and `Top Secret` are not classes
+- Class definitions cited to the UAE Smart Data Framework (Part 1, Data Classification Standard DC1; Part 2, Guidance Note 5.1), which appears in the Document Register with its primary URL and verification date
+- Every dataset classified above Open carries a documented rationale, since Open is the framework's default for non-personal data
 - Handling, storage and declassification rules stated per dataset, not per level alone
 - Each dataset cross-referenced upstream to the BR / DR requirements that drove its capture and downstream to the INT requirements that consume it
 - PDPL lawful basis referenced for every dataset containing personal data

@@ -12,7 +12,7 @@ When a template contains the marker `<!-- DOC-CONTROL-HEADER -->`, the command t
    - otherwise → `document-control-uk.md`
 3. **Inline the chosen partial's contents** at the marker location, applying the standard `${user_config.organisation_name}` and `${user_config.default_classification}` substitutions.
 4. **Remove the `<!-- DOC-CONTROL-HEADER -->` marker line and its descriptive comment** from the final output.
-5. **Populate the UAE-specific fields** (Federal Entity, Cabinet Instrument cited, Sovereign Cloud Region, AI Autonomy Tier) from upstream artefacts where available, or leave the `[PENDING — ...]` placeholder for the architect to fill.
+5. **Populate the UAE-specific fields** (Federal Entity, Cabinet Instrument cited, Sovereign Cloud Region, AI Autonomy Tier) from upstream artefacts where available, or leave the `[PENDING — ...]` placeholder for the architect to fill. Set the UAE `Classification` field from the four UAE Smart Data Framework classes (Open / Confidential / Sensitive / Secret). If `default_classification` holds a UK value, map it (PUBLIC → Open, OFFICIAL → Confidential, OFFICIAL-SENSITIVE → Sensitive, SECRET and TOP SECRET → Secret); if it holds `Shared` or `Top Secret` from ArcKit's earlier UAE ladder, use Confidential or Secret respectively.
 6. **For the AT partial**, set the `Classification` field from the InfoSiG ladder (Offen / Eingeschränkt / Vertraulich / Geheim / Streng geheim) — not the UK ladder. If `default_classification` holds a UK value, map it (PUBLIC → Offen, OFFICIAL → Eingeschränkt, OFFICIAL-SENSITIVE → Eingeschränkt or Vertraulich, SECRET → Geheim/Streng geheim).
 7. **For the US partial**, the rungs come from two different instruments and are not one statutory scale. `CONFIDENTIAL`, `SECRET` and `TOP SECRET` are the classification levels of EO 13526 §1.2, which states that no other terms identify US classified information. `CUI` is not a classification level at all: it is the control marking of 32 CFR 2002.20, which permits either `CONTROLLED` or `CUI` as the banner word — use `CUI`, and record category or limited-dissemination markings (`CUI//SP-PRIV`, `CUI//NOFORN`) in `Distribution` rather than in this field. A federal civilian artefact is `UNCLASSIFIED` or `CUI` in almost every case. Never put a FIPS 199 impact level (`LOW` / `MODERATE` / `HIGH`) here — that is a separate axis, it categorises the system rather than marking the document, and the `FIPS199` artefact that derives it is itself commonly marked `CUI`.
 
@@ -29,7 +29,7 @@ Checked first, and taken from the artefact rather than from the user:
 | CA | `document-control-ca.md` | UNCLASSIFIED / Protected A–C / CONFIDENTIAL / SECRET / TOP SECRET | hard-routes |
 | FR | `document-control-fr.md` | Non protégé / Diffusion Restreinte / Secret / Très Secret | hard-routes |
 | NL | `document-control-nl.md` | Ongerubriceerd / Departementaal VERTROUWELIJK / Stg. CONFIDENTIEEL / Stg. GEHEIM / Stg. ZEER GEHEIM | hard-routes |
-| UAE | `document-control-uae.md` | Open / Shared / Confidential / Secret / Top Secret | hard-routes |
+| UAE | `document-control-uae.md` | Open / Confidential / Sensitive / Secret | hard-routes |
 | US | `document-control-us.md` | UNCLASSIFIED / CUI / CONFIDENTIAL / SECRET / TOP SECRET | hard-routes |
 | UK | `document-control-uk.md` | PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET | falls through to step 2 |
 | MOD | `document-control-uk.md` | PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET | falls through to step 2 |
