@@ -335,7 +335,9 @@ Generate actionable next steps:
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **PRIN-COMP** per-type checks pass. Fix any failures before proceeding.
 
 Use the **Write tool** to create:
-`projects/{project-dir}/ARC-{PROJECT_ID}-PRIN-COMP-v1.0.md`
+`projects/{project-dir}/ARC-{PROJECT_ID}-PRIN-COMP-v{VERSION}.md`
+
+Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier scorecard, never over it, so compliance can be compared across gates.
 
 **Document Structure** (see template below)
 
@@ -394,7 +396,7 @@ Display concise summary (NOT full document):
 
 | Field | Value |
 |-------|-------|
-| **Document ID** | ARC-{PROJECT_ID}-PRIN-COMP-v1.0 |
+| **Document ID** | ARC-{PROJECT_ID}-PRIN-COMP-v{VERSION} |
 | **Project** | {PROJECT_NAME} (Project {PROJECT_ID}) |
 | **Document Type** | Principles Compliance Assessment |
 | **Classification** | [OFFICIAL / OFFICIAL-SENSITIVE] |

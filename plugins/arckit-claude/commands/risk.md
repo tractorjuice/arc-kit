@@ -383,7 +383,7 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
 
     Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **RISK** per-type checks pass. Fix any failures before proceeding.
 
-    - Create or update `projects/NNN-project-name/ARC-{PROJECT_ID}-RISK-v1.0.md`
+    - Write `projects/NNN-project-name/ARC-{PROJECT_ID}-RISK-v{VERSION}.md`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier register, never over it
     - Use project directory structure (create if doesn't exist)
     - File name pattern: `ARC-{PROJECT_ID}-RISK-v{VERSION}.md`
     - Update date and version in header
@@ -395,7 +395,7 @@ Before completing the document, populate document information fields:
 ### Auto-populated fields
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001")
-- `[VERSION]` → Start with "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-RISK-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → Document purpose
 - `ARC-[PROJECT_ID]-RISK-v[VERSION]` → Generated document ID
@@ -427,7 +427,7 @@ Before completing the document, populate document information fields:
 
 Provide:
 
-1. **Location**: `projects/NNN-project-name/ARC-{PROJECT_ID}-RISK-v1.0.md`
+1. **Location**: `projects/NNN-project-name/ARC-{PROJECT_ID}-RISK-v{VERSION}.md`
 2. **Summary**:
    - "Created comprehensive risk register following HM Treasury Orange Book"
    - "Identified [X] risks across 6 categories"

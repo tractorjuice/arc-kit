@@ -691,7 +691,7 @@ Use this heuristic to prioritise findings:
 
 ### 6. Produce Comprehensive Analysis Report
 
-Generate a comprehensive Markdown report and save it to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md` with the following structure:
+Generate a comprehensive Markdown report and save it to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md` with the following structure:
 
 ```markdown
 # Architecture Governance Analysis Report
@@ -1351,7 +1351,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-ANAL-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Governance Analysis Report"
 - `ARC-[PROJECT_ID]-ANAL-v[VERSION]` → Construct using format above
@@ -1400,7 +1400,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 Save the complete analysis report generated in Step 6 to:
 
-**`projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md`**
+**`projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md`**
 
 The saved report must include:
 
@@ -1419,7 +1419,7 @@ After writing the file, provide a summary message to the user:
 ✅ Governance Analysis Complete
 
 **Project**: {project-name}
-**Report Location**: projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md
+**Report Location**: projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md
 
 **Overall Status**: ✅ Ready / ⚠️ Issues Found / ❌ Critical Issues
 **Governance Health Score**: {score}/100 ({grade})
@@ -1451,7 +1451,7 @@ After writing the file, provide a summary message to the user:
 - {action}
 - {action}
 
-📄 Full analysis report saved to: projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md
+📄 Full analysis report saved to: projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md
 ```
 
 ### 8. Provide Remediation Guidance
@@ -1481,7 +1481,7 @@ After outputting the report, ask:
 ### Analysis Guidelines
 
 - **DO NOT modify existing artifacts** (non-destructive analysis)
-- **DO write analysis report** to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md`
+- **DO write analysis report** to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md`
 - **NEVER hallucinate missing sections** (if absent, report them accurately)
 - **Prioritize principle violations** (these are always CRITICAL)
 - **Prioritize UK Gov compliance issues** (mandatory for public sector)
@@ -1553,7 +1553,7 @@ Example output: "Architecture Governance Analysis Report" with 18 findings (3 CR
 ## Important Notes
 
 - This is **non-destructive analysis** - existing artifacts are not modified
-- Analysis report is saved to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md` for audit trail
+- Analysis report is saved to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md` for audit trail
 - Run `/arckit:analyze` after major changes to requirements, designs, or assessments
 - Ideal times to run:
   - Before issuing SOW/RFP to vendors

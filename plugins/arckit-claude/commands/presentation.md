@@ -9,7 +9,7 @@ allowed-tools:
 
 You are helping an enterprise architect **generate a MARP-format presentation** from existing ArcKit project artifacts. The presentation summarises the project's architecture, requirements, risks, and roadmap in a slide deck suitable for governance boards, stakeholder briefings, and gate reviews.
 
-This command creates an **ARC-{PROJECT_ID}-PRES-v1.0.md** document that serves as:
+This command creates an **ARC-{PROJECT_ID}-PRES-v{VERSION}.md** document that serves as:
 
 - A slide deck in [MARP](https://marp.app/) format (renders to PDF/PPTX/HTML via MARP CLI or VS Code extension)
 - A governance-ready summary drawing from existing ArcKit artifacts
@@ -204,17 +204,10 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 #### Step 7a: Detect Version
 
-Before generating the document ID, check if a previous version exists:
+Follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-{PROJECT_ID}-PRES-v*.md` in the project directory. For a presentation:
 
-1. Look for existing `ARC-{PROJECT_ID}-PRES-v*.md` files in the project directory
-2. **If no existing file**: Use VERSION="1.0"
-3. **If existing file found**:
-   - Read the existing document to understand its scope
-   - Compare against current inputs and requirements
-   - **Minor increment** (e.g., 1.0 → 1.1): Same focus and artifact set — refreshed content
-   - **Major increment** (e.g., 1.0 → 2.0): Different focus, significantly different artifact set, or new audience
-4. Use the determined version for document ID, filename, Document Control, and Revision History
-5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+- **Minor increment** (e.g., 1.0 → 1.1): Same focus and artifact set — refreshed content
+- **Major increment** (e.g., 1.0 → 2.0): Different focus, significantly different artifact set, or new audience
 
 #### Step 7b: Construct Document ID
 
@@ -317,7 +310,7 @@ After writing the file, show ONLY a concise summary:
 ## Presentation Complete ✅
 
 **Project**: [Project Name]
-**File Created**: `projects/[PROJECT]/ARC-{PROJECT_ID}-PRES-v1.0.md`
+**File Created**: `projects/[PROJECT]/ARC-{PROJECT_ID}-PRES-v{VERSION}.md`
 
 ### Presentation Summary
 
@@ -340,8 +333,8 @@ After writing the file, show ONLY a concise summary:
 
 **Rendering**:
 - VS Code: Install [MARP for VS Code](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode) → Open file → Preview
-- CLI: `marp --pdf ARC-{PROJECT_ID}-PRES-v1.0.md` (requires [MARP CLI](https://github.com/marp-team/marp-cli))
-- HTML: `marp ARC-{PROJECT_ID}-PRES-v1.0.md` → opens in browser
+- CLI: `marp --pdf ARC-{PROJECT_ID}-PRES-v{VERSION}.md` (requires [MARP CLI](https://github.com/marp-team/marp-cli))
+- HTML: `marp ARC-{PROJECT_ID}-PRES-v{VERSION}.md` → opens in browser
 
 ### Next Steps
 

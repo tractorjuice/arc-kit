@@ -185,7 +185,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-GCLC-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "G-Cloud Clarification Questions"
 - `ARC-[PROJECT_ID]-GCLC-v[VERSION]` → Construct using format above
@@ -240,7 +240,7 @@ Populate the template read in Step 3b:
 - **Referenced Documents** and **External References** — every requirement artefact and supplier service page the assessment drew on. Follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`: inline citation markers next to claims taken from a supplier's page, and each source registered in the External References tables.
 
 **CRITICAL**: Use the **Write tool** to save the completed document to
-`projects/[project]/procurement/ARC-{PROJECT_ID}-GCLC-v1.0.md`. Writing it inline
+`projects/[project]/procurement/ARC-{PROJECT_ID}-GCLC-v{VERSION}.md`. Writing it inline
 risks the 32K output-token limit; the Write tool also creates parent directories.
 
 Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLC** per-type checks pass. Fix any failures before proceeding.
@@ -266,7 +266,7 @@ Output to user:
 ✅ Generated G-Cloud clarification questions for [PROJECT_NAME]
 
 Services Analyzed: [N]
-Document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLC-v1.0.md
+Document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLC-v{VERSION}.md
 
 Gap Analysis Summary:
 - [Service 1]: [Risk Level] - [N] critical gaps, [N] high gaps
@@ -279,7 +279,7 @@ Recommendations:
 - 🟢 [N] services are LOW risk (proceed to technical demo)
 
 Next Steps:
-1. Review generated questions in ARC-{PROJECT_ID}-GCLC-v1.0.md
+1. Review generated questions in ARC-{PROJECT_ID}-GCLC-v{VERSION}.md
 2. Send email to suppliers using provided templates
 3. Set response deadline: [DATE + 1 week]
 4. Schedule follow-up to review responses

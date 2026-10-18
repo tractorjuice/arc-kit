@@ -224,7 +224,7 @@ $ARGUMENTS
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DATA** per-type checks pass. Fix any failures before proceeding.
 
 9. **Write the output**:
-   - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-DATA-v1.0.md`
+   - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-DATA-v{VERSION}.md`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier model, never over it. Entities added or removed is a major increment
    - Use the exact template structure from `data-model-template.md`
    - Include Mermaid ERD at the top for quick visualization
    - Include all sections even if some are TBD
@@ -237,7 +237,7 @@ Before completing the document, populate document information fields:
 ### Auto-populated fields
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001")
-- `[VERSION]` → Start with "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-DATA-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → Document purpose
 - `ARC-[PROJECT_ID]-DATA-v[VERSION]` → Generated document ID
@@ -333,7 +333,7 @@ Create the comprehensive data model following the template structure with all se
 
 ### 2. Write Directly to File
 
-**Use the Write tool** to create `projects/[PROJECT]/ARC-{PROJECT_ID}-DATA-v1.0.md` with the complete data model.
+**Use the Write tool** to create `projects/[PROJECT]/ARC-{PROJECT_ID}-DATA-v{VERSION}.md` with the complete data model.
 
 **DO NOT** output the full document in your response. This would exceed token limits.
 
@@ -345,7 +345,7 @@ After writing the file, show ONLY a concise summary:
 ## Data Model Complete ✅
 
 **Project**: [Project Name]
-**File Created**: `projects/[PROJECT]/ARC-{PROJECT_ID}-DATA-v1.0.md`
+**File Created**: `projects/[PROJECT]/ARC-{PROJECT_ID}-DATA-v{VERSION}.md`
 
 ### Data Model Summary
 
@@ -395,7 +395,7 @@ After writing the file, show ONLY a concise summary:
 
 ### Next Steps
 
-- Review `ARC-{PROJECT_ID}-DATA-v1.0.md` for full ERD and entity details
+- Review `ARC-{PROJECT_ID}-DATA-v{VERSION}.md` for full ERD and entity details
 - Validate with data owners and stakeholders
 - Run `/arckit:research` to research database technologies
 - Run `/arckit:hld-review` after HLD is created

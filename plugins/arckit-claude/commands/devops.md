@@ -272,7 +272,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 **CRITICAL - Use Write Tool**: DevOps documents are large. Use Write tool to save.
 
-1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-DEVOPS-v1.0.md`
+1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-DEVOPS-v{VERSION}.md`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier strategy, never over it
 
 2. **Provide summary**:
 
@@ -303,7 +303,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 - Dependency Scanning: [Enabled]
 - Container Scanning: [Enabled]
 
-**File**: projects/{project-name}/ARC-{PROJECT_ID}-DEVOPS-v1.0.md
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-DEVOPS-v{VERSION}.md
 
 **Next Steps**:
 1. Set up source control repository structure
@@ -363,9 +363,9 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 **Auto-populate**:
 
 - `[PROJECT_ID]` → From project path
-- `[VERSION]` → "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-DEVOPS-v*.md` exists
 - `[DATE]` → Current date (YYYY-MM-DD)
-- `ARC-[PROJECT_ID]-DEVOPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-DEVOPS-v1.0.md`)
+- `ARC-[PROJECT_ID]-DEVOPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-DEVOPS-v{VERSION}.md`)
 
 **Generation Metadata Footer**:
 

@@ -259,7 +259,7 @@ After generation, validate the design:
 
 After generating the ServiceNow design:
 
-2. **Save the file** to `projects/{project-name}/ARC-{PROJECT_ID}-SNOW-v1.0.md`
+2. **Save the file** to `projects/{project-name}/ARC-{PROJECT_ID}-SNOW-v{VERSION}.md`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier design, never over it
 
 3. **Provide a summary** to the user:
    - Number of CMDB CIs created
@@ -285,7 +285,7 @@ After generating the ServiceNow design:
 
 ### File Location
 
-Save output to: `projects/{project-name}/ARC-{PROJECT_ID}-SNOW-v1.0.md`
+Save output to: `projects/{project-name}/ARC-{PROJECT_ID}-SNOW-v{VERSION}.md`
 
 ### Content Structure
 
@@ -405,7 +405,7 @@ Before completing the document, populate document information fields:
 ### Auto-populated fields
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001")
-- `[VERSION]` → Start with "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-SNOW-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → Document purpose
 - `ARC-[PROJECT_ID]-SNOW-v[VERSION]` → Generated document ID
@@ -583,7 +583,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 ServiceNow designs are typically very large documents (500+ lines) due to the comprehensive nature of CMDB structures, SLAs, incident management, and runbooks.
 
 To avoid exceeding the 32K token output limit:
-2. **ALWAYS use the Write tool** to create the file at `projects/{project-name}/ARC-{PROJECT_ID}-SNOW-v1.0.md`
+2. **ALWAYS use the Write tool** to create the file at `projects/{project-name}/ARC-{PROJECT_ID}-SNOW-v{VERSION}.md`
 3. **Do NOT output the full document** in your response to the user
 4. **Only show a summary** (use the template below)
 
@@ -613,7 +613,7 @@ After generating the ServiceNow design, provide this summary:
 - Assignment groups: [list key groups]
 
 **Key Files Created**:
-- projects/{project-name}/ARC-{PROJECT_ID}-SNOW-v1.0.md
+- projects/{project-name}/ARC-{PROJECT_ID}-SNOW-v{VERSION}.md
 
 **Next Steps**:
 1. Review SLA targets with service owner

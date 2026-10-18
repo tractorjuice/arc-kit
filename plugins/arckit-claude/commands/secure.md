@@ -188,15 +188,9 @@ Generate a comprehensive Secure by Design assessment document by:
     - Medium priority (3-6 months) - continuous improvement
     - Include VMS enrollment and Cyber Action Plan alignment actions where applicable
 
-15. **Detect version**: Before generating the document ID, check if a previous version exists:
-    - Look for existing `ARC-{PROJECT_ID}-SECD-v*.md` files in the project directory
-    - **If no existing file**: Use VERSION="1.0"
-    - **If existing file found**:
-      - Read the existing document to understand its scope
-      - Compare against current inputs and project state
-      - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed assessments, updated control status, corrected details
-      - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new CAF objectives assessed, fundamentally different security posture, significant architecture changes
-    - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+15. **Detect version**: follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-{PROJECT_ID}-SECD-v*.md` in the project directory. For a Secure by Design assessment:
+    - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed assessments, updated control status, corrected details
+    - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new CAF objectives assessed, fundamentally different security posture, significant architecture changes
 
 16. **Save the document**:
 

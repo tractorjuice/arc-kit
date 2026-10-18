@@ -242,17 +242,10 @@ Before completing the document, populate ALL document control fields in the head
 
 ### Step 0: Detect Version
 
-Before generating the document ID, check if a previous version exists:
+Follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-{PROJECT_ID}-SOBC-v*.md` in the project directory. For a business case:
 
-1. Look for existing `ARC-{PROJECT_ID}-SOBC-v*.md` files in the project directory
-2. **If no existing file**: Use VERSION="1.0"
-3. **If existing file found**:
-   - Read the existing document to understand its scope
-   - Compare against current inputs and requirements
-   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed estimates, updated stakeholder data, corrected details
-   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new options added, fundamentally different recommendations, significant new stakeholder goals
-4. Use the determined version for document ID, filename, Document Control, and Revision History
-5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+- **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed estimates, updated stakeholder data, corrected details
+- **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new options added, fundamentally different recommendations, significant new stakeholder goals
 
 ### Step 1: Construct Document ID
 
@@ -298,7 +291,7 @@ Before generating the document ID, check if a previous version exists:
 
 Provide:
 
-1. **Location**: `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v1.0.md`
+1. **Location**: `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v{VERSION}.md`
 2. **Summary**:
    - "Created Strategic Outline Business Case (SOBC) for [project name]"
    - "Analyzed [X] options against [Y] stakeholder goals"
@@ -432,7 +425,7 @@ After writing the file, show ONLY a concise summary:
 ## SOBC Complete ✅
 
 **Project**: [Project Name]
-**File Created**: `projects/[PROJECT]/ARC-{PROJECT_ID}-SOBC-v1.0.md`
+**File Created**: `projects/[PROJECT]/ARC-{PROJECT_ID}-SOBC-v{VERSION}.md`
 
 ### SOBC Summary
 
@@ -485,7 +478,7 @@ After writing the file, show ONLY a concise summary:
 
 ### Next Steps
 
-- Review `ARC-{PROJECT_ID}-SOBC-v1.0.md` for full SOBC document
+- Review `ARC-{PROJECT_ID}-SOBC-v{VERSION}.md` for full SOBC document
 - Present to Senior Responsible Owner (SRO) for approval
 - If approved, run `/arckit:requirements` to define detailed requirements
 - After requirements, refine to Outline Business Case (OBC) with firmer costs

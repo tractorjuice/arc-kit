@@ -237,7 +237,7 @@ Focus: Phase III/IV maturity targets. Embed continuous improvement as a cultural
 
 ## Step 9: Generate Output
 
-**File Location**: `projects/{project_number}-{project_name}/wardley-maps/ARC-{PROJECT_ID}-WDOC-v1.0.md`
+**File Location**: `projects/{project_number}-{project_name}/wardley-maps/ARC-{PROJECT_ID}-WDOC-v{VERSION}.md`
 
 **Naming Convention** (single-instance document — one per project, versioned on re-assessment):
 
@@ -273,14 +273,14 @@ Before completing the document, populate ALL document control fields in the head
 **Construct Document ID**:
 
 - **Document ID**: `ARC-{PROJECT_ID}-WDOC-v{VERSION}` (e.g., `ARC-001-WDOC-v1.0`)
-- WDOC is single-instance per project. If `ARC-{PROJECT_ID}-WDOC-v1.0.md` already exists, create `v2.0` as a re-assessment.
+- WDOC is single-instance per project. Work out `{VERSION}` with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier assessment, never over it. A re-assessment after an improvement period is a major increment (v1.0 → v2.0, v2.0 → v3.0); a correction to the current assessment is a minor one.
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (initial) or next version if re-assessing
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-WDOC-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Wardley Doctrine Assessment"
 - `[COMMAND]` → "arckit.wardley.doctrine"

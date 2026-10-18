@@ -93,7 +93,7 @@ Create a comprehensive Architecture Strategy document that synthesises insights 
 
 #### Document Control
 
-- Generate Document ID: `ARC-[PROJECT_ID]-STRAT-v1.0` (for filename: `ARC-{PROJECT_ID}-STRAT-v1.0.md`)
+- Generate Document ID: `ARC-[PROJECT_ID]-STRAT-v[VERSION]` (for filename: `ARC-{PROJECT_ID}-STRAT-v{VERSION}.md`)
 - Set owner, dates, strategic horizon
 - Review cycle: Quarterly (default for strategy documents)
 
@@ -234,7 +234,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-STRAT-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Architecture Strategy"
 - `ARC-[PROJECT_ID]-STRAT-v[VERSION]` → Construct using format above
@@ -286,7 +286,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v1.0.md
+projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v{VERSION}.md
 ```
 
 Use the Write tool with the complete strategy content following the template structure.
@@ -298,8 +298,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Architecture Strategy Created
 
-**Document**: `projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v1.0.md`
-**Document ID**: ARC-[PROJECT_ID]-STRAT-v1.0
+**Document**: `projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v{VERSION}.md`
+**Document ID**: ARC-[PROJECT_ID]-STRAT-v[VERSION]
 
 ### Strategy Overview
 - **Strategic Horizon**: FY [START_YEAR] - FY [END_YEAR] ([N] years)
@@ -352,7 +352,7 @@ After writing the file, show a concise summary (NOT the full document):
 - Delivers [N] strategic outcomes
 - Mitigates [N] strategic risks
 
-**File location**: `projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v1.0.md`
+**File location**: `projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v{VERSION}.md`
 ```
 
 ## Important Notes
@@ -375,7 +375,7 @@ After writing the file, show a concise summary (NOT the full document):
    - Strategy feeds into: `/arckit:requirements` (detailed requirements), `/arckit:roadmap` (expanded timeline), `/arckit:plan` (project delivery)
    - Strategy is informed by: `/arckit:principles`, `/arckit:stakeholders`, `/arckit:wardley`, `/arckit:sobc`, `/arckit:risk`
 
-9. **Version Management**: If a strategy already exists (ARC-*-STRAT-v*.md), create a new version (v2.0) rather than overwriting. Strategies should be versioned to track evolution.
+9. **Version Management**: If a strategy already exists (ARC-*-STRAT-v*.md), write the next version beside it rather than overwriting it, as `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` describes: a changed vision, strategic themes or investment envelope is a major increment, refreshed detail a minor one. Strategies should be versioned to track evolution.
 
 10. **Financial Years**: For UK Government, use "FY 2024/25" notation (April-March). For US/other contexts, use appropriate fiscal year notation.
 
