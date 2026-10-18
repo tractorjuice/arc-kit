@@ -26,9 +26,9 @@ $ARGUMENTS
 
 **MANDATORY** (warn if missing):
 
-- **AAGI** (Agent Inventory, recommended) — Extract: agent catalogue, current capabilities, lifecycle status, and operational context
+- **AAGI** (Agent Inventory) — Extract: agent catalogue, AGT-xxx IDs, current capabilities, ownership, lifecycle status, and operational context. The Section 7 traceability starts from it (AAGI → AAGR → REQ)
   - If missing: warn user to run `/arckit:agent-inventory` first
-- **REQ** (Requirements, recommended) — Extract: FR/NFR for agent capabilities, tool requirements, memory requirements, guardrail requirements
+- **REQ** (Requirements) — Extract: FR/NFR for agent capabilities, tool requirements, memory requirements, guardrail requirements
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
@@ -42,7 +42,6 @@ $ARGUMENTS
 
 - **HLDR** (High-Level Design Review) — Extract: existing system architecture the agent will integrate with
 - **SECD** (Secure by Design) — Extract: security controls applicable to agent systems
-- **AAGI** (Agent Inventory) — Extract: existing agents, capability baseline, ownership, and operational status
 
 ### 2. Identify the target project
 
@@ -97,7 +96,7 @@ Before generating the agent design, use the **AskUserQuestion** tool to gather k
 **Agent identity and purpose**:
 
 - **Agent name**: Short, descriptive name (e.g., "Research Analyst Agent")
-- **Agent ID**: Unique identifier (e.g., "AGT-001")
+- **Agent ID**: Unique identifier — reuse the agent's AGT-xxx ID from the agent inventory (e.g., "AGT-001")
 - **Purpose**: One-sentence description of what the agent does
 - **Domain**: Domain of expertise (e.g., "financial analysis", "code review")
 
@@ -114,7 +113,7 @@ Extract from REQ artifacts or define new:
 
 - **Tool ID**: Unique identifier (e.g., "T-001")
 - **Tool name**: Descriptive name
-- **Tool type**: MCP / REST / Function / Database
+- **Tool type**: MCP / REST / Function
 - **Permissions**: Read / Write / Execute
 - **Input schema**: Key parameters
 - **Output schema**: Return format

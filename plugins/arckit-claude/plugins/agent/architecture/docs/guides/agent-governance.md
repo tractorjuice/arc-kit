@@ -14,8 +14,8 @@
 | Agent design (`ARC-<id>-AAGR-v1.0.md`) | Mandatory autonomy, tool use, decision patterns, integration points |
 | Global principles (`ARC-000-PRIN-v1.0.md`) | Governance principles and human oversight standards |
 | Architecture board (`ARC-<id>-BORD-v1.0.md`) | Board policies, risk appetite, approval precedents |
-| Risk register (`ARC-<id>-RISK-v1.0.md`) | AI, operational, security, and compliance risks |
-| AI or regulatory assessments | AI Playbook, AI Act, NIST AI RMF, sector controls as applicable |
+| Regulatory requirements (`projects/000-global/external/`) | AI Act, NIST AI RMF, sector governance standards and audit mandates as applicable |
+| Existing governance policies (`projects/<id>/governance/`) | Current oversight models and approval hierarchies |
 
 ---
 
@@ -33,14 +33,14 @@ Output: `projects/<id>/ARC-<id>-AAOV-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Oversight Model | Human oversight tiers by risk and autonomy |
+| Oversight Model | Three oversight tiers (Tier 1 human-in-the-loop, Tier 2 human-on-the-loop, Tier 3 human-out-of-the-loop) assigned per agent by risk and autonomy |
 | Approval Matrix | Who approves design, deployment, tool access, and changes |
 | Audit Requirements | Logs, evidence, retention, review cadence |
 | Monitoring KPIs | Safety, quality, performance, incident, and drift signals |
 | Escalation Procedures | Operational and governance escalation paths |
 | Incident Response Plan | Severity, response times, owners, communications |
 | Compliance Mapping | Applicable AI, security, data, and sector controls |
-| Traceability | Links to inventory, design, principles, board, and risk artefacts |
+| Traceability | Links to inventory, design, principles, and board artefacts |
 
 ---
 

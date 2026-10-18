@@ -916,8 +916,8 @@ All artifacts must pass these 10 checks:
 - Every agent has a unique AGT-xxx ID used consistently across all sections
 - Model and deployment environment recorded per agent (Prod / Staging / Dev / Planned)
 - Risk level assigned (Critical / High / Medium / Low)
-- Oversight stated as human-in-the-loop, human-on-the-loop or human-out-of-loop — no other values
-- No Critical-risk agent left at human-out-of-loop without a documented justification
+- Oversight stated as human-in-the-loop, human-on-the-loop or human-out-of-the-loop — no other values
+- No Critical-risk agent left at human-out-of-the-loop without a documented justification
 - Capability matrix lists tools, memory types and output types per agent
 - Security classification records data sensitivity, access level and isolation for every agent
 - Audit requirement set per agent, and set to Yes wherever data sensitivity is High

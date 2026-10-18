@@ -10,7 +10,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| ADM preliminary (`ARC-<id>-ADMP-v1.0.md`) | Optional programme scope and transformation context |
+| ADM preliminary (`ARC-<id>-ADMP-v1.0.md`) | Recommended programme scope and transformation context |
 | Application inventory (`ARC-<id>-APP-v1.0.md`) | Application and hosting context for deployed agents |
 | Global principles (`ARC-000-PRIN-v1.0.md`) | Agent governance, AI, technology, and risk guardrails |
 | Existing agent designs (`ARC-<id>-AAGR-v1.0.md`) | Agent capabilities and architecture details |
@@ -33,12 +33,12 @@ Output: `projects/<id>/ARC-<id>-AAGI-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Agent Register | Name, owner, purpose, lifecycle, environment |
-| Capability Matrix | Business and technical capabilities per agent |
-| Agent Dependencies | Models, tools, data sources, systems, other agents |
-| Security Classification | Data sensitivity, tool risk, access, deployment exposure |
-| Agent Lifecycle | Prototype, pilot, production, deprecated, retired |
-| Oversight Model | Human-in-the-loop, human-on-the-loop, escalation path |
+| Agent Register | Agent ID, name, purpose, model, deployment (Prod, Staging, Dev, Planned), owner, risk level, oversight level |
+| Capability Matrix | Tools, skills, memory type (session, durable, vector, episodic) and output types per agent |
+| Agent Dependencies | Agent-to-agent orchestration, data flows and shared tools (Mermaid flowchart) |
+| Security Classification | Data sensitivity, access level, isolation, audit required |
+| Agent Lifecycle | Status (Active, In Development, Deprecating, Retired), created and updated dates, version |
+| Oversight Model | Human-in-the-loop, human-on-the-loop or human-out-of-the-loop per agent, with approval gates, monitoring and escalation |
 | Traceability | Links to ADM, applications, design, governance, and security artefacts |
 
 ---

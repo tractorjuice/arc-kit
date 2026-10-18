@@ -191,9 +191,9 @@ Humans monitor and can intervene but don't approve each action:
 - **Emergency stop**: Immediate halt capability
 - **Periodic review**: Scheduled audits of agent decisions
 
-### Autonomous with Audit
+### Human-out-of-the-Loop
 
-Agents operate independently with comprehensive logging:
+No human approves or monitors each action; agents operate independently and humans review afterwards through comprehensive logging:
 
 - **Immutable audit trails**: Tamper-proof logs of all decisions
 - **Automated compliance checks**: Policy evaluation of agent actions
