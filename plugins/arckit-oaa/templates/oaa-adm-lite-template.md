@@ -1,6 +1,6 @@
 # O-AA ADM Lite Template
 
-> Maps the TOGAF ADM cycle to agile sprints. Use when delivering AI architectures in 2-4 week engagement windows. Sprint artefact structures are inlined in each sprint section below.
+> Maps the TOGAF ADM cycle to agile sprints. Use when delivering AI architectures in 4-8 week engagement windows (Sprint 0 to Sprint 3 take 7 weeks at the default sprint lengths). Sprint artefact structures are inlined in each sprint section below.
 
 ## Document Control
 
@@ -78,9 +78,9 @@ Use this template when **any** of the following conditions are met:
 ### Activities
 
 1. **Preliminary (ADM-P):** Determine strategic drivers, constraints, and existing assets
-2. **Stakeholder analysis:** Map roles to concerns to compliance requirements
-3. **Vision definition (ADM-A):** Scope AI workload type, data classification, jurisdiction
-4. **Success criteria:** Define measurable targets (latency, accuracy, availability)
+2. **Stakeholder analysis:** Map roles to concerns to compliance requirements (from the stakeholder analysis, `ARC-[PROJECT_ID]-STKE`, where it exists)
+3. **Vision definition (ADM-A):** Scope AI workload type, data classification, jurisdiction, and the high-level business capabilities in scope
+4. **Success criteria:** Define measurable targets (latency, accuracy, availability), traced to requirement IDs (`ARC-[PROJECT_ID]-REQ`) where they exist
 5. **Architecture contract:** Agree on deliverable format and handoff process
 
 ### Deliverables
@@ -163,7 +163,7 @@ vision:
 
 ### Activities
 
-1. **Capability definition (ADM-B):** Current-state vs target-state gap analysis
+1. **Business capability mapping (ADM-B):** Baseline and target business capability map with gap analysis, refining the high-level capabilities scoped in the Sprint 0 vision (ADM-A)
 2. **Process mapping:** Value streams with SLA targets
 3. **Data asset inventory (ADM-C):** Classification, volume, retention, encryption
 4. **Data flow definition:** Source → destination with transformation and compliance controls
@@ -176,6 +176,28 @@ vision:
 | `business-architecture.yaml` | Inlined below (capabilities + data) | Self-check against the inlined structure |
 | `data-architecture.yaml` | Inlined below | Self-check against the inlined structure |
 | `capability-gap-analysis.md` | N/A (markdown) | Cross-reference with vision.yaml success criteria |
+
+### Business Architecture Structure
+
+```yaml
+capabilities:
+
+  - id: "CAP-001"
+    name: "Document Question Answering"
+    level: 1
+    baseline_maturity: 1      # 0-5
+    target_maturity: 3        # 0-5
+    gap: "No retrieval over internal documents; answers are manual"
+    effort_estimate_weeks: 4
+    value_streams: ["VS-001"]
+value_streams:
+
+  - id: "VS-001"
+    name: "Client query to answer"
+    stages: ["Query received", "Context retrieved", "Answer generated", "Answer reviewed"]
+    sla_target: "p95 answer < 2s"
+
+```
 
 ### Data Architecture Structure
 
@@ -470,7 +492,7 @@ compliance_artifacts:
 |---|---|---|---|
 | 0 | ADM-P + A | `vision.yaml` | `stakeholder-map.md` |
 | 1 | ADM-B + C (data) | `business-architecture.yaml` | `data-architecture.yaml` |
-| 2 | ADM-C (tech) + D | `technology-architecture.yaml` | `tech-stack-compliance.md` |
+| 2 | ADM-C (part) + D | `technology-architecture.yaml` | `tech-stack-compliance.md` |
 | 3 | ADM-E + F | `implementation-strategy.yaml` | `migration-plan.md` |
 | 4+ | ADM-G + H | `governance-report.yaml` | `change-request.yaml` |
 

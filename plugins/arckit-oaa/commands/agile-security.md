@@ -9,7 +9,7 @@ handoffs:
     description: Establish governance cadence including security review gates
 
   - command: agile-strategy
-    description: Align security strategy with dual transformation tracks
+    description: Align security strategy with the dual transformation dimensions
 ---
 
 You are helping an enterprise architect create an **Agile Security** document using Open Agile Architecture (O-AA, C208) — Axiom 16 Secure by Design, C208 Ch. 4.6, and the O-AA Security Playbook (G216). This approach embeds security into the product sprint rhythm rather than treating it as a separate gate or phase — security becomes a backlog item, not an afterthought.
@@ -63,6 +63,10 @@ Use this command when **any** of the following conditions are met:
 - **OASTR** (Agile Strategy Canvas) — Extract: Risk profile, transformation risks, security strategy
 
   - If missing: note that strategy context is limited
+
+- **REQ** (Requirements) — Extract: Security non-functional requirements (NFR-SEC) and any compliance requirements, so every security story traces to a requirement
+
+  - If missing: note that security stories cannot be traced to NFR-SEC requirements, and suggest `/arckit:requirements`
 
 ### Prerequisites 1b: Read external documents and policies
 
@@ -147,9 +151,11 @@ Create the Agile Security document following the template structure.
 
 - **Acceptance criteria**: Each security story includes testable security acceptance criteria
 
+- **Requirements traceability**: Each security story traces to an NFR-SEC requirement from REQ where one exists; NFR-SEC entries with no story are listed as gaps
+
 #### Threat Modeling per Sprint
 
-- **Sprint 0 threat model**: Initial threat model covering product architecture (STRIDE or equivalent)
+- **Sprint 0 threat model**: Initial threat model covering product architecture, structured by STRIDE category (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege) or an equivalent method named in the document
 
 - **Sprint N threat updates**: Each sprint updates threat model based on new features, identified vulnerabilities, and environment changes
 
@@ -176,6 +182,14 @@ Create the Agile Security document following the template structure.
 - **Anti-patterns**: Forbidden security approaches (e.g., rolling your own crypto, hardcoded credentials)
 
 - **Security review gates**: Lightweight sprint-level security reviews, not heavy-gate audits
+
+#### Security Exception Path
+
+- **Trigger**: A security check fails and the delivery date cannot move
+
+- **Decision**: Who may accept the risk at each severity, and who signs the exception off
+
+- **Record**: The exception is logged as accepted risk with a severity and a resolution deadline, and reviewed at each sprint boundary
 
 #### AI/ML Security Considerations
 
@@ -251,6 +265,8 @@ After writing the file, show a concise summary (NOT the full document):
 - [✅/⚠️] O-AA ADM Lite: ARC-{P}-OAAL-v[N].md
 
 - [✅/⚠️] Agile Strategy: ARC-{P}-OASTR-v[N].md
+
+- [✅/⚠️] Requirements: ARC-{P}-REQ-v[N].md
 
 ### Next Steps
 1. Create security epics for Sprint 0

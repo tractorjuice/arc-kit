@@ -23,6 +23,8 @@
 |----------|---------|
 | Architecture principles (`ARC-000-PRIN-v*.md`) | Recommended. Guiding principles, decision framework, technology standards. If missing, the command warns you to run `/arckit:principles` first |
 | ADM Preliminary / Architecture Vision (`ARC-<id>-ADMP-v*.md`) | Recommended. Existing scope, drivers and constraints. If missing, Sprint 0 establishes the vision from scratch |
+| Stakeholder analysis (`ARC-<id>-STKE-v*.md`) | Recommended. Roles, drivers, goals and concerns for the Sprint 0 stakeholder map |
+| Requirements (`ARC-<id>-REQ-v*.md`) | Recommended. Business requirements and NFR targets for the Sprint 0 success criteria |
 | Project external documents (`projects/<id>/external/`) | Read if present. Vision documents, strategic plans, enterprise architecture mandates |
 | Enterprise standards (`projects/000-global/external/`) | Read if present. Architecture vision statements, transformation plans, cross-project alignment documents |
 
@@ -50,6 +52,8 @@ If the named project does not exist, the command creates it. If an OAAL document
 | Sprint 3 | ADM-E + F | Implementation Wave | 2 weeks | `implementation-strategy.yaml` |
 | Sprint 4+ | ADM-G + H | Governance + Change | Ongoing | `governance-report.yaml`, `change-request.yaml` |
 
+At the default sprint lengths, Sprint 0 to Sprint 3 take 7 weeks, inside the 4-8 week engagement window the approach is designed for. Sprint 0 names the high-level business capabilities in scope as part of the vision (TOGAF Phase A); Sprint 1 develops the baseline and target business capability map, which TOGAF places in Phase B.
+
 The document cites the published O-AA axioms it applies by number and name: 1 (Customer Experience Focus), 3 (Rapid Feedback Loops), 5 (Value Stream Alignment), 6 (Autonomous Cross-Functional Teams), 7 (Authority, Responsibility, and Accountability Distribution), 10 (Simple Common Operating Principles), 14 (Bias for Change) and 15 (Project to Product Shift). It does not quote axiom text that cannot be checked against C208.
 
 ---
@@ -61,8 +65,8 @@ The document cites the published O-AA axioms it applies by number and name: 1 (C
 | Document Control | Document ID, owner, status, classification; review cycle per sprint |
 | Trigger Guidance | When to use ADM Lite and when to use the full ADM instead |
 | Sprint Map | Sprint-to-ADM-phase table with duration and key output |
-| Sprint 0: Vision + Stakeholders (ADM-P + A) | Axiom alignment, activities, `vision.yaml` structure (scope, constraints, stakeholders, success criteria, regulatory controls, risks), `stakeholder-map.md`, go/no-go gate |
-| Sprint 1: Business + Data Architecture (ADM-B + C partial) | Capability gaps, value streams with SLAs, data assets and data flows with compliance controls, application components |
+| Sprint 0: Vision + Stakeholders (ADM-P + A) | Axiom alignment, activities, high-level capabilities in scope, `vision.yaml` structure (scope, constraints, stakeholders, success criteria, regulatory controls, risks), `stakeholder-map.md`, go/no-go gate |
+| Sprint 1: Business + Data Architecture (ADM-B + C partial) | Baseline and target business capability map with gaps (`business-architecture.yaml`), value streams with SLAs, data assets and data flows with compliance controls, application components |
 | Sprint 2: Technology Architecture (ADM-C continuation + D) | Technology standards, infrastructure and network topology, monitoring stack, compliance validation, architecture freeze |
 | Sprint 3: Implementation Wave (ADM-E + F) | Work packages, migration waves and strategy with rollback trigger, risk register |
 | Sprint 4+: Continuous Governance (ADM-G + H) | `governance-report.yaml`, governance cadence, change requests through `/arckit:architecture-change` |
@@ -80,7 +84,7 @@ The document cites the published O-AA axioms it applies by number and name: 1 (C
 - Each sprint has a deliverable and a sprint-level acceptance criterion, not just a theme.
 - The document states what the lighter cadence gives up and does not claim to be an audit trail.
 - Governance and change handling sit in a sprint or are handed to `/arckit:agile-governance`.
-- The plan traces to the principles, and to the ADM Preliminary where one exists.
+- The plan traces to the principles, and to the ADM Preliminary, stakeholder analysis and requirements where they exist.
 - Run `/arckit:health` after the build to catch stale or orphaned artefacts.
 
 ---

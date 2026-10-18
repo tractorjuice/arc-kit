@@ -157,6 +157,10 @@ Create the Agile Governance document following the template structure.
 
 - **Escalation paths**: When issues exceed sprint panel authority
 
+- **Cadence horizons**: Sprint (panel checks), month (debt review), quarter (health assessment) and continuous (compliance monitoring), each event with an input, an output artefact and an owner
+
+- **Distributed duties**: The continuous governance duty each panel member carries between panel checks
+
 #### Architecture Review Gates
 
 - **Pre-sprint gate**: Architecture alignment check before sprint planning
@@ -166,6 +170,12 @@ Create the Agile Governance document following the template structure.
 - **Post-sprint gate**: Compliance evidence review, architecture decision validation
 
 - **Gate criteria**: Pass/fail criteria per gate, remediation paths for failures
+
+#### Architecture Debt and Health
+
+- **Debt register**: Compliance, scalability, security, observability and documentation debt, with severity, status and resolution sprint; review rules by severity
+
+- **Quarterly health assessment**: Scored assessment (alignment, compliance maturity, observability, documentation, security posture, debt burden) feeding `governance-report.yaml`
 
 #### Change Management Process
 
