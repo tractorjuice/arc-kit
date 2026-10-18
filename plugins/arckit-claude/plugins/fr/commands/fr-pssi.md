@@ -162,7 +162,7 @@ List all standards and guides the PSSI references:
 
 #### Step 4g: Security Domains
 
-For each of the seven security domains in the template (access management, network security, workstation security, application security, data protection, physical security, business continuity), define:
+For each of the eight security domains in the template (access management and authentication, network security, workstation and endpoint security, application security, data protection, physical security, business continuity and recovery, vulnerability management and updates), define:
 
 - The principle that applies in this domain
 - The minimum standard required
@@ -273,7 +273,7 @@ Next steps:
 - ✅ Security objectives defined for each property (C/I/A/T/Authentication) with RGS level if applicable
 - ✅ 8+ security principles defined, consistent with ANSSI recommendations
 - ✅ Organisational structure documented: AA, RSSI, (FSSI,) DPO, DSI, CSSI
-- ✅ All 7 security domains covered with principles and minimum standards
+- ✅ All 8 security domains covered with principles and minimum standards
 - ✅ User obligations defined
 - ✅ Incident management framework defined (roles and escalation)
 - ✅ Applicable standards and baseline documented (RGS, ANSSI hygiene, EBIOS, ISO 27001)

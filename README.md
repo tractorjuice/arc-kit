@@ -1321,9 +1321,9 @@ French standard risk analysis for IS homologation:
 
 Assess compliance with ANSSI's foundational hygiene guide:
 
-- 7 themes: administration, authentication, updates, monitoring, backups, network, workstations
-- Cloud security recommendations (ANSSI cloud qualification matrix)
-- Gap analysis with prioritised remediation (P1–P3)
+- 10 chapters: awareness and training, knowing the IS, authentication and access control, workstations, network, administration, mobile working, updates, monitoring/audit/response, going further
+- ANSSI recommendations for hosting sensitive IS in the cloud (July 2024)
+- Gap analysis with prioritised remediation (High / Medium / Low)
 - Integration with EBIOS and PSSI
 
 **`/arckit:fr-anssi-carto`** → ANSSI SI Cartography (4-level IS mapping)
@@ -1359,16 +1359,16 @@ Assess compliance with French digital government doctrine:
 Generate procurement documentation compliant with French public contract law:
 
 - Marché public thresholds and procedures (below/above EU thresholds)
-- CCAP, CCTP, RC documentation templates
+- Requirements statement, award criteria, and security and sovereignty clauses for the consultation file
 - ANSSI-qualified provider requirements (PASSI, PRIS, PDIS)
-- Achat public durable obligations (environmental and social clauses)
+- Digital State doctrine checklist (cloud, RGI, RGAA, RGESN, open source, GDPR)
 
 **`/arckit:fr-pssi`** → PSSI (Politique de Sécurité des Systèmes d'Information)
 
 Generate IS security policy for French public sector entities:
 
 - 9-section structure approved by the Highest Authority (AA)
-- 7 security domains (network, workstations, applications, IS management, physical, personnel, continuity)
+- 8 security domains (access management, network, workstations, applications, data protection, physical, business continuity, vulnerability management)
 - RSSI, DPO, DSI, and FSSI roles
 - Review cycle and integration with EBIOS and homologation
 
@@ -1392,7 +1392,7 @@ Generate mandatory transparency notice under CRPA Art. L311-3-1:
 - EU AI Act flagging for ML-based systems
 - More legally binding than the UK ATRS equivalent
 
-**`/arckit:fr-code-reuse`** → French Public Code Reuse Assessment (Circulaire 2021-1524)
+**`/arckit:fr-code-reuse`** → French Public Code Reuse Assessment (Circulaire PM n°6264/SG, 2021)
 
 Assess code reuse obligations before building or procuring:
 
