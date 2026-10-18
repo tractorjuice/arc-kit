@@ -25,6 +25,8 @@ Use it when specifying a tender, when evaluating a candidate service against one
 /arckit:eu-cloud-sovereignty Assess sovereignty posture for <cloud service or tender>
 ```
 
+In Claude Code the overlay installs as its own plugin, `arckit-eu`, so the command is `/arckit-eu:eu-cloud-sovereignty`.
+
 Output: `projects/<id>/ARC-<id>-EUCSF-v1.0.md`
 
 ---
@@ -52,11 +54,13 @@ Strategic sovereignty carries the heaviest weight, and together with technology 
 
 | Level | Meaning |
 |-------|---------|
-| SEAL-0 | No sovereignty — exclusive non-EU control, governed entirely outside the EU |
+| SEAL-0 | No sovereignty — exclusive non-EU control, governed entirely by non-EU jurisdictions |
 | SEAL-1 | Jurisdictional sovereignty — EU law formally applies, limited practical enforceability |
-| SEAL-2 | Data sovereignty — EU law applicable and enforceable, material non-EU dependencies remain |
-| SEAL-3 | Digital resilience — EU actors exercise meaningful but not full influence |
+| SEAL-2 | Data sovereignty — EU jurisdictions apply, material dependencies remain |
+| SEAL-3 | Technological sovereignty — EU jurisdictions apply, EU actors exercise meaningful but not full influence |
 | SEAL-4 | Full digital sovereignty — technology and operations under complete EU control |
+
+The names and wording follow the Implementation guidance (pp.2–3), which the command reproduces verbatim. Framework v1.2.1 (October 2025, p.3) names SEAL-3 *Digital Resilience* and words SEAL-2 as "EU law applicable and enforceable, with material non-EU dependencies remaining"; a tender written against v1.2.1 may use those terms.
 
 ---
 

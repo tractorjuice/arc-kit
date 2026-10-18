@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:eu-dora` generates a DORA (Digital Operational Resilience Act, Regulation EU 2022/2554) compliance assessment for financial sector entities. DORA applies from 17 January 2025 and replaces NIS2 for in-scope financial entities.
+`/arckit:eu-dora` generates a DORA (Digital Operational Resilience Act, Regulation EU 2022/2554) compliance assessment for financial sector entities. DORA has applied since 17 January 2025. For the financial entities in its scope it applies instead of NIS2's cybersecurity risk-management, reporting and supervision provisions, though not instead of NIS2 as a whole (see Key Notes).
 
 ---
 
@@ -21,6 +21,8 @@
 ```bash
 /arckit:eu-dora Assess DORA compliance for <financial entity type>
 ```
+
+In Claude Code the overlay installs as its own plugin, `arckit-eu`, so the command is `/arckit-eu:eu-dora`.
 
 Output: `projects/<id>/ARC-<id>-DORA-v1.0.md`
 
@@ -79,5 +81,5 @@ Output: `projects/<id>/ARC-<id>-DORA-v1.0.md`
 ## Key Notes
 
 - **France**: DORA supervised by ACPR (banking/insurance) and AMF (investment firms).
-- **NIS2 relationship**: DORA is lex specialis for financial entities — NIS2 does not apply to DORA-regulated entities.
+- **NIS2 relationship**: DORA is *lex specialis* to NIS2 (DORA recital 16) and a sector-specific Union legal act under NIS2 Article 4 (DORA Art. 1(2)). For the financial entities it covers, DORA's rules on ICT risk management, incident reporting, resilience testing, information sharing and third-party risk apply instead of NIS2's risk-management, reporting and supervision provisions (NIS2 recital 28). NIS2 is not switched off entirely: the entity can still be identified as essential or important under national NIS2 law, group entities or services in a NIS2 sector outside DORA stay under NIS2 (NIS2 Art. 4(1)), and the competent authority passes major-incident details to the NIS2 CSIRTs, competent authorities or single points of contact (DORA Art. 19(6)). Run `/arckit:eu-nis2` for any part of the group DORA does not cover.
 - **TLPT**: Threat-Led Penetration Testing follows TIBER-EU methodology; only required for significant institutions designated by competent authorities.

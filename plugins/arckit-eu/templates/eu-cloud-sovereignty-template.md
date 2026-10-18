@@ -77,11 +77,13 @@
 
 ### 3.0 SEAL Level Definitions
 
+> **Source**: reproduced verbatim from the Cloud Sovereignty Framework Implementation guidance (pp.2–3). SEAL-2's "with material dependencies remain" is the source's own wording. Framework v1.2.1 (October 2025, p.3) words the levels differently — SEAL-2 "EU law applicable and enforceable, with material non-EU dependencies remaining", and SEAL-3 is named *Digital Resilience* — a tender specification written against v1.2.1 may use those terms.
+
 | Level | Name | Definition |
 |-------|------|------------|
 | SEAL-0 | No Sovereignty | Service, technology or operations under exclusive control of non-EU third parties, governed entirely by non-EU jurisdictions |
 | SEAL-1 | Jurisdictional Sovereignty | EU law formally applies with limited practical enforceability; service, technology or operations under exclusive control of non-EU third parties |
-| SEAL-2 | Data Sovereignty | EU jurisdictions apply, with material dependencies remaining; service, technology or operations under indirect control of non-EU third parties |
+| SEAL-2 | Data Sovereignty | EU jurisdictions apply, with material dependencies remain; service, technology or operations under indirect control of non-EU third parties |
 | SEAL-3 | Technological Sovereignty | EU jurisdictions apply, EU actors exercising meaningful but not full influence; service, technology or operations under marginal control of non-EU third parties |
 | SEAL-4 | Full Digital Sovereignty | Technology and operations under complete EU control, subject only to EU jurisdiction, with no critical non-EU dependencies |
 

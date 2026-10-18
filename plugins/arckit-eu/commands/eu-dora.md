@@ -5,8 +5,8 @@ argument-hint: "<project ID or entity type, e.g. '001', 'French payment institut
 effort: high
 handoffs:
   - command: eu-nis2
-    description: Map overlapping NIS2 cybersecurity obligations for financial entities designated as OSE
-    condition: "Entity is also subject to NIS2 as an operator of essential services"
+    description: Assess NIS2 for group entities or services that DORA does not cover — DORA applies instead of NIS2's risk-management and reporting provisions only for the financial entities in its scope
+    condition: "Group includes entities or services in a NIS2 sector outside DORA scope"
   - command: risk
     description: Integrate DORA ICT risk findings and third-party concentration risks into the risk register
   - command: secure
@@ -43,7 +43,7 @@ $ARGUMENTS
 
 **OPTIONAL** (read if available, skip silently):
 
-- **NIS2** (NIS2 Assessment) — Extract: overlapping security obligations for financial entities designated as OSE
+- **NIS2** (NIS2 Assessment) — Extract: whether the entity is identified as essential or important under national NIS2 law, and NIS2 obligations for any group entity or service DORA does not cover
 - **SECNUM** (SecNumCloud Assessment) — Extract: cloud provider sovereignty assessment for French financial entities
 
 ### Step 0b: Read external documents and policies
@@ -201,7 +201,7 @@ Simplified Regime: {Eligible / Not eligible}
 Total Gaps: {N} ({N} high priority)
 
 Next steps:
-1. {If OSE designation: Run /arckit:eu-nis2 for NIS2 overlap}
+1. {If group entities or services fall in a NIS2 sector outside DORA scope: Run /arckit:eu-nis2}
 2. Run /arckit:risk to register DORA gaps
 3. Run /arckit:secure for ICT security controls
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -209,6 +209,7 @@ Next steps:
 
 ## Important Notes
 
+- **NIS2 relationship**: DORA is a sector-specific Union legal act under NIS2 Article 4 for financial entities (DORA Article 1(2)) and *lex specialis* to NIS2 (DORA recital 16). For the financial entities in DORA's scope, DORA's ICT risk-management, incident-reporting, resilience-testing, information-sharing and ICT third-party risk rules apply instead of NIS2's cybersecurity risk-management, reporting and supervision and enforcement provisions (NIS2 recital 28). NIS2 is not switched off entirely: the entity can still be identified as essential or important under the national law transposing NIS2 Article 3; group entities in a NIS2 sector that DORA does not cover stay under NIS2 (NIS2 Art. 4(1)); the competent authority passes major-incident details to the NIS2 CSIRTs, competent authorities or single points of contact (DORA Art. 19(6)) and can cooperate with NIS2 bodies (DORA Art. 47); and ICT third-party providers may be NIS2 entities in their own right.
 - **DORA is live**: DORA has applied since 17 January 2025. All identified gaps represent current non-compliance. There is no transition period remaining.
 - **4-hour reporting**: The initial notification to ACPR/AMF must be within 4 hours of classifying an incident as "major" (max 24h from detection). This requires 24/7 monitoring and rapid classification capability.
 - **Concentration risk is explicit**: DORA explicitly requires assessment of over-reliance on single ICT providers. Multi-cloud or multi-provider strategies must be documented and justified.

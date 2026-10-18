@@ -8,8 +8,8 @@ handoffs:
     description: Assess SecNumCloud alignment for French entities with OIV/OSE designation
     condition: "Entity is French and has OIV or OSE designation"
   - command: eu-dora
-    description: Map overlapping ICT resilience obligations for financial sector entities
-    condition: "Entity is in the financial sector and subject to both NIS2 and DORA"
+    description: Assess DORA, which applies instead of NIS2's risk-management, reporting and supervision provisions for the financial entities it covers (NIS2 Art. 4, DORA Art. 1(2))
+    condition: "Entity is a financial entity within DORA scope (DORA Article 2)"
   - command: risk
     description: Integrate NIS2 gap findings into the project risk register
   - command: secure
@@ -47,7 +47,7 @@ $ARGUMENTS
 **OPTIONAL** (read if available, skip silently):
 
 - **SECNUM** (SecNumCloud Assessment) — Extract: OIV/OSE designation already assessed, cloud security posture
-- **DORA** (DORA Assessment) — Extract: overlapping ICT resilience obligations if financial sector
+- **DORA** (DORA Assessment) — Extract: DORA scope decision and the ICT risk-management and incident-reporting controls already assessed, if the entity is a financial entity
 
 ### Step 0b: Read external documents and policies
 
@@ -73,7 +73,7 @@ Read all documents from Step 0. Identify:
 - Organisation size (> 250 employees / 50–250 / < 50)
 - Member state(s) of operation
 - OIV/OSE designation status (France-specific)
-- Financial sector involvement (DORA overlap)
+- Financial sector involvement: whether the entity is a financial entity within DORA scope (see Important Notes — DORA then applies instead of NIS2 Articles 21 and 23)
 
 ### Step 3: NIS2 Template Reading
 
@@ -150,7 +150,7 @@ Show entity classification before generating the full document.
      - Early warning: 24 hours (national CSIRT)
      - Incident notification: 72 hours (CSIRT + authority)
      - Intermediate: on request
-     - Final report: 1 month
+     - Final report: no later than one month after the incident notification (Art. 23(4)(d)); if the incident is still ongoing then, a progress report, with the final report within one month of the incident being handled (Art. 23(4)(e))
    - Reporting readiness checklist
    - CSIRT contact details for the relevant member state
 
@@ -218,7 +218,7 @@ Incident Reporting: {Ready / Gap — 24h/72h capability needed}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
 1. {If OIV/OSE (France): Run /arckit:fr-secnumcloud}
-2. {If financial sector: Run /arckit:eu-dora for DORA overlap}
+2. {If a financial entity within DORA scope: Run /arckit:eu-dora — DORA applies instead of NIS2's risk-management and reporting provisions}
 3. Run /arckit:secure to implement Article 21 controls
 4. Run /arckit:risk to register NIS2 gaps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -229,6 +229,7 @@ Next steps:
 - **Management body liability**: NIS2 explicitly makes management body members personally liable for non-compliance. This is a new and significant change from NIS1. Flag this prominently.
 - **24-hour reporting capability**: The 24-hour early warning window is very tight. Flag if no 24/7 incident detection and reporting capability exists.
 - **OIV/OSE and NIS2 in France**: French OIV entities are subject to stricter obligations under LPM that supplement NIS2. OIV/SIIV systems must comply with both. ANSSI is the single competent authority for both regimes.
+- **DORA for financial entities**: DORA is a sector-specific Union legal act under NIS2 Article 4 for financial entities (DORA Article 1(2)) and *lex specialis* to NIS2 (DORA recital 16). For the financial entities it covers, DORA's ICT risk-management, incident-reporting, resilience-testing, information-sharing and ICT third-party risk rules apply instead of NIS2's cybersecurity risk-management (Art. 21), reporting (Art. 23) and supervision and enforcement (Chapter VII) provisions (NIS2 recital 28). Do not score such an entity against Articles 21 and 23 — run `/arckit:eu-dora`. NIS2 still matters: the entity can still be identified as essential or important under the national law transposing NIS2 Article 3 (DORA Art. 1(2)); entities in a NIS2 sector that DORA does not cover stay under NIS2 (NIS2 Art. 4(1)); DORA competent authorities pass major-incident details to the NIS2 CSIRTs, competent authorities or single points of contact (DORA Art. 19(6)) and can cooperate with NIS2 bodies (DORA Art. 47); and the ICT providers the entity relies on may be NIS2 entities in their own right.
 - **Member state variations**: NIS2 transposition varies. Germany (NIS2UmsuCG) and France have extended scope beyond EU minimum. Verify national transposition law for each member state of operation.
 - **Use Write Tool**: NIS2 assessments cover 8 sections with technical and regulatory depth. Always use the Write tool.
 

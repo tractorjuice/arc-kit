@@ -22,6 +22,8 @@
 /arckit:eu-cra Assess CRA compliance for <product description and classification>
 ```
 
+In Claude Code the overlay installs as its own plugin, `arckit-eu`, so the command is `/arckit-eu:eu-cra`.
+
 Output: `projects/<id>/ARC-<id>-CRA-v1.0.md`
 
 ---
