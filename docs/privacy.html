@@ -290,7 +290,7 @@
         </div>
     </nav>
 
-    <div class="app-page-hero">
+    <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <h1 class="app-page-hero__title">Privacy Policy</h1>
             <p class="app-page-hero__description">What the ArcKit plugins and this website collect, what they send to other services, and when.</p>
@@ -319,6 +319,7 @@
                     </ol>
                     <p class="govuk-body">The <code>arckit-repo</code> overlay also clones the repository you name when you run <code>/arckit:repo-audit</code>, from that repository&rsquo;s own host.</p>
 
+                    <div class="app-table-scroll" role="region" aria-label="MCP servers bundled with the core arckit plugin" tabindex="0">
                     <table class="govuk-table">
                         <caption class="govuk-table__caption govuk-table__caption--s">MCP servers bundled with the core <code>arckit</code> plugin</caption>
                         <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Server</th><th scope="col" class="govuk-table__header">Endpoint</th><th scope="col" class="govuk-table__header">Run by</th><th scope="col" class="govuk-table__header">Policy that applies</th></tr></thead>
@@ -331,6 +332,7 @@
                         <tr class="govuk-table__row"><td class="govuk-table__cell">UK Tenders</td><td class="govuk-table__cell"><code>tenders.run.cns.me</code></td><td class="govuk-table__cell">An independent community service, not operated by ArcKit</td><td class="govuk-table__cell">Its operator&rsquo;s terms</td></tr>
                         </tbody>
                     </table>
+                    </div>
                     <p class="govuk-body">The community overlays (for example the UAE, France, Canada and UK Finance overlays) add commands, templates and reference material only. They send no data of their own.</p>
 
                     <h3 class="govuk-heading-m">Using ArcKit on sensitive material</h3>
