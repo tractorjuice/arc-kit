@@ -762,6 +762,33 @@ All artifacts must pass these 10 checks:
 - Annual review cycle set with a named owner and next review date
 - Residual risks (data-format lock-in, proprietary managed-service coupling, provider non-cooperation) identified with likelihood, impact, and mitigation
 
+### NORA -- NORA Conformance Assessment
+
+- The NORA extract used is named in Scope and Source with its source version, and is registered in External References with the CC BY-ND 3.0 NL licence line
+- All 17 architectuurprincipes (NAP01–NAP17) are assessed in ID order; no retired basisprincipe (BP) or afgeleid principe (AP) is assessed
+- Every stelling is quoted verbatim from the extract with a citation row — no NORA text is paraphrased, summarised or translated
+- Every NAP, implicatie and kwaliteitsdoel ID, title and relation matches the extract exactly — none is invented, renumbered or "corrected"
+- Every implicatie listed under a NAP in the extract has a status, evidence and gap; missing evidence is recorded as Unknown, never as Implemented
+- Each NAP's conformance follows the stated derivation rule, and *Not applicable* always carries a justification
+- No overall percentage or single NORA score is reported — the distribution across the 17 NAPs is shown instead
+- Kwaliteitsdoel and kernwaarde roll-ups use only relations stated in the extract; unresolved relations from the extract's Data notes are listed under Source limitations
+- Deviations are separated from gaps, and each deviation has an ADR reference or "ADR required"
+- Non-conformance is not described as a legal breach
+- GEMMA mode is recorded with its reason; it is on only for a gemeente (or an explicit override) with a GEMMA principles extract present
+- In GEMMA mode, each GAP is matched to its NAP by title or NORA link, never by number alone, and every GEMMA implicatie is quoted verbatim and numbered `GAPnn.i` in extract order, with that numbering declared in Scope and Source
+- NAP conformance and GAP conformance are reported separately and never merged into one result
+
+### GEMMA -- GEMMA Alignment Assessment
+
+- The GEMMA referentiecomponenten extract and at least one landscape source are named in Scope and Sources with their versions or dates
+- Every referentiecomponent, bedrijfsfunctie, applicatieservice and standaard name matches the extract exactly — none is invented, merged or renamed
+- Every application carries a confidence: Stated mappings cite their source, Inferred mappings give a rationale, and Unmapped applications are not forced onto a component
+- Overlaps are examined for sector-specific use before a rationalisation candidate is proposed
+- Unfilled components carry a relevance judgement (Expected / Possibly not needed / To be confirmed) with a reason
+- Bedrijfsfunctie coverage distinguishes *Not supported* (landscape gap) from *No GEMMA component* (reference-model property)
+- Standards support and data exchange are evidence-based, with Unknown as the default where evidence is missing
+- Every roadmap candidate traces to a finding in Sections 3–6, and no product or supplier is recommended or called GEMMA-compliant
+
 ### ADMP -- TOGAF ADM Preliminary Phase
 
 - Architecture Vision stated as an outcome, not a restatement of scope

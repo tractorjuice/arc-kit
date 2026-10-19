@@ -58,7 +58,11 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 REWRITABLE_SUFFIXES = {".md", ".yaml", ".yml"}
 RECIPE_SUFFIXES = {".yaml", ".yml"}
 
-IGNORED_NAMES = {".git", "node_modules", ".npm", ".pnpm-store"}
+# Generated and OS clutter that no copy of a plugin tree carries: the local
+# mirror (sync-claude-plugin-layout.py), the namespace rewrite here and the
+# converter's extension scripts all skip it. push-extensions.sh keeps its
+# own list as tar --exclude flags.
+IGNORED_NAMES = {".git", "node_modules", ".npm", ".pnpm-store", "__pycache__", ".DS_Store"}
 
 
 def command_namespaces(repo_root: Path | None = None) -> dict[str, str]:

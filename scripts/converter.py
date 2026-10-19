@@ -1,9 +1,14 @@
+import filecmp
 import os
 import re
 import json
 import shutil
+import sys
 
 import yaml
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from claude_command_namespacing import IGNORED_NAMES  # noqa: E402
 
 
 CLAUDE_ONLY_COMMAND_FIELDS = (
@@ -857,13 +862,15 @@ def copy_extension_files(plugin_sources):
     templates from every source are merged into one `templates/` per extension.
     `docs/guides/` is merged the same way: each overlay keeps the guides for
     its own commands, so the core plugin doesn't ship them. Other directories
-    (scripts, config, schemas, skills, references) only exist in
-    `arckit-claude` and are copied from there.
+    (config, schemas, skills, references) are copied from `arckit-claude`,
+    with reference files that only an overlay carries added after. `scripts/`
+    is rebuilt from every source: the overlays' trees first, then core's
+    shipped entries, so core wins a path both carry.
 
     Args:
         plugin_sources: List of plugin source dirs (e.g. ["plugins/arckit-uae",
             ..., "plugins/arckit-claude"]). The last entry MUST be the core plugin
-            ("plugins/arckit-claude") since that's where scripts/config/etc. live.
+            ("plugins/arckit-claude"), which is copied last.
     """
     core_plugin_dir = plugin_sources[-1]
 
@@ -901,6 +908,15 @@ def copy_extension_files(plugin_sources):
     # dispatch, plugin hooks). Skipped when copying to non-Claude extensions
     # because they would either silently fail or behave incorrectly there.
     claude_only_skills = {"arckit-build"}
+
+    # The script paths core ships, case-folded: core's copy of each wins, so
+    # an overlay's copy at the same path is not shipped.
+    core_scripts = {}
+    for src_rel, _dst_rel in core_only_copies:
+        if src_rel.startswith("scripts/"):
+            for path in _script_files(os.path.join(core_plugin_dir, src_rel)):
+                rel = os.path.relpath(path, os.path.join(core_plugin_dir, "scripts"))
+                core_scripts[rel.replace(os.sep, "/").casefold()] = rel.replace(os.sep, "/")
 
     for config in AGENT_CONFIG.values():
         ext_dir = config.get("extension_dir")
@@ -940,11 +956,10 @@ def copy_extension_files(plugin_sources):
         # Merge `data/` from every plugin source into one data/ dir, the same
         # way `templates/` is merged above. plugins/arckit-eu/data/ (arc-kit#782,
         # the CSF calculator catalogue) is the first plugin to use this shape;
-        # this merge is generic so any future plugin's data/ ships too. Node
-        # scripts that consume a plugin's data/ (e.g. csf-score.mjs) are
-        # deliberately NOT copied here — see core_only_copies below and its
-        # comment — so non-Claude targets get the raw data for the model to
-        # read directly, but not the script.
+        # this merge is generic so any future plugin's data/ ships too. A
+        # script that reads it (arckit-eu's csf-score.mjs) ships with its
+        # overlay's scripts/ and finds it at ../data/; where the script is
+        # missing, the model reads the data directly.
         ext_data_dir = os.path.join(ext_dir, "data")
         if os.path.isdir(ext_data_dir):
             shutil.rmtree(ext_data_dir)
@@ -993,6 +1008,18 @@ def copy_extension_files(plugin_sources):
             f"-> {ext_guides_dir} ({merged_guide_count} files)"
         )
 
+        # scripts/ is rebuilt on every run, so a script an overlay renames or
+        # deletes cannot linger and be published by push-extensions.sh. The
+        # overlays' trees go in first and core's entries below are merged in.
+        ext_scripts_dir = os.path.join(ext_dir, "scripts")
+        if os.path.isdir(ext_scripts_dir):
+            shutil.rmtree(ext_scripts_dir)
+        if copy_scripts:
+            merged_scripts = copy_overlay_scripts(
+                plugin_sources[:-1], ext_scripts_dir, core_scripts)
+            if merged_scripts:
+                print(f"  Merged {merged_scripts} overlay script file(s)")
+
         # Core-only categories
         for src_rel, dst_rel in core_only_copies:
             if not copy_scripts and src_rel.startswith("scripts/"):
@@ -1002,9 +1029,13 @@ def copy_extension_files(plugin_sources):
             src = os.path.join(core_plugin_dir, src_rel)
             dst = os.path.join(ext_dir, dst_rel)
             if os.path.isdir(src):
-                if os.path.isdir(dst):
-                    shutil.rmtree(dst)
-                shutil.copytree(src, dst)
+                if src_rel.startswith("scripts/"):
+                    # Merge, so the overlay scripts beside core's stay.
+                    shutil.copytree(src, dst, dirs_exist_ok=True, ignore=_ignore_script_entries)
+                else:
+                    if os.path.isdir(dst):
+                        shutil.rmtree(dst)
+                    shutil.copytree(src, dst)
                 if dst_rel == "skills":
                     # Skip Claude-only skills for non-Claude targets
                     for skill_name in claude_only_skills:
@@ -1046,6 +1077,81 @@ def copy_extension_files(plugin_sources):
                 merged_refs += 1
         if merged_refs:
             print(f"  Merged {merged_refs} overlay-only reference file(s)")
+
+
+# Test code in an overlay's scripts/ is for the overlay's own CI and never
+# ships. Generated and OS clutter is IGNORED_NAMES, the list the local plugin
+# mirror (sync-claude-plugin-layout.py) skips too.
+SCRIPT_TEST_DIRS = {"test", "tests", "__tests__", "fixtures"}
+SCRIPT_TEST_FILE = re.compile(r"^test_.*\.py$|\.(?:test|spec)\.[cm]?[jt]s$")
+
+
+def _ignore_script_entries(_directory, names):
+    """shutil.copytree ignore= callback with the same rules as _script_files."""
+    return {n for n in names
+            if n in IGNORED_NAMES or n in SCRIPT_TEST_DIRS or SCRIPT_TEST_FILE.search(n)}
+
+
+def _script_files(src):
+    """The files under a script path or tree that may ship, in a stable order."""
+    if os.path.isfile(src):
+        return [src]
+    found = []
+    for root, dirs, files in os.walk(src):
+        skip = _ignore_script_entries(root, dirs + files)
+        dirs[:] = sorted(d for d in dirs if d not in skip)
+        found.extend(os.path.join(root, f) for f in sorted(files) if f not in skip)
+    return found
+
+
+def copy_overlay_scripts(overlay_dirs, ext_scripts_dir, core_scripts):
+    """Copy every overlay's scripts/ tree into an extension's scripts/ dir.
+
+    A community plugin's commands call its scripts as
+    ${CLAUDE_PLUGIN_ROOT}/scripts/<name>, which rewrite_paths points at the
+    extension's scripts/ dir, the same place as core's. arckit-nl's NORA/GEMMA
+    extract fetch (arc-kit#941) is the first script only an overlay carries.
+
+    A path core ships (core_scripts, {case-folded path: path}) is skipped:
+    core's copy wins, and every overlay carries core's helper scripts
+    (sync-shared-assets.py, whose --check catches a stale copy). Otherwise two
+    overlays may carry one path only with identical bytes. Any other clash
+    stops the run, as does a path that differs from another only in case: on
+    a case-insensitive filesystem (macOS, where releases are cut) the two are
+    one file, so one plugin's commands would run the other's script.
+
+    Returns the number of files copied.
+    """
+    shipped = {}
+    for plugin in overlay_dirs:
+        src_dir = os.path.join(plugin, "scripts")
+        if not os.path.isdir(src_dir):
+            continue
+        for src in _script_files(src_dir):
+            rel = os.path.relpath(src, src_dir).replace(os.sep, "/")
+            core_rel = core_scripts.get(rel.casefold())
+            if core_rel == rel:
+                continue
+            if core_rel is not None:
+                raise SystemExit(
+                    f"converter: {os.path.basename(plugin)} ships scripts/{rel}, which "
+                    f"differs from core's scripts/{core_rel} only in case. Rename one."
+                )
+            prior = shipped.get(rel.casefold())
+            if prior is not None:
+                prior_rel, prior_plugin, prior_src = prior
+                if prior_rel == rel and filecmp.cmp(prior_src, src, shallow=False):
+                    continue
+                raise SystemExit(
+                    f"converter: {os.path.basename(prior_plugin)} ships scripts/{prior_rel} "
+                    f"and {os.path.basename(plugin)} ships scripts/{rel}; both would land on "
+                    "one path in the extensions with different content. Rename one."
+                )
+            shipped[rel.casefold()] = (rel, plugin, src)
+            dst = os.path.join(ext_scripts_dir, rel)
+            os.makedirs(os.path.dirname(dst), exist_ok=True)
+            shutil.copy2(src, dst)
+    return len(shipped)
 
 
 def strip_claude_only_skill_fields(skills_dir):

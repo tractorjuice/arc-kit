@@ -30,16 +30,6 @@ PLUGIN_LAYOUT = (
     ("plugins/arckit-agent-architecture", "plugins/agent/architecture"),
     ("plugins/arckit-repo", "plugins/repo"),
 )
-IGNORED_NAMES = {
-    ".git",
-    "node_modules",
-    ".npm",
-    ".pnpm-store",
-}
-
-
-def ignore_generated(_directory: str, names: list[str]) -> set[str]:
-    return {name for name in names if name in IGNORED_NAMES}
 
 
 # --- Claude Code overlay command namespacing ------------------------------
@@ -51,6 +41,7 @@ def ignore_generated(_directory: str, names: list[str]) -> set[str]:
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from claude_command_namespacing import (  # noqa: E402
+    IGNORED_NAMES,
     REWRITABLE_SUFFIXES,
     namespace_tree,
     command_namespaces,
@@ -58,6 +49,10 @@ from claude_command_namespacing import (  # noqa: E402
     publish_bytes,
     rewrite as rewrite_overlay_invocations,
 )
+
+
+def ignore_generated(_directory: str, names: list[str]) -> set[str]:
+    return {name for name in names if name in IGNORED_NAMES}
 
 
 def copy_tree(source: Path, destination: Path) -> None:
