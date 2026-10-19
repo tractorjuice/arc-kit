@@ -8,7 +8,7 @@ Today we're introducing the **ArcKit Architects directory** — a place to find 
 
 ## What Is the ArcKit Architects Directory
 
-The [ArcKit Architects page](https://tractorjuice.github.io/arckit-fde/architects.html) is a curated directory of senior practitioners who use ArcKit to deliver enterprise architecture governance, training, and AI-assisted consulting services. These are architects who have demonstrated experience with ArcKit in client engagements and can help your organization adopt the harness effectively.
+The [ArcKit Architects page](https://arckit.org/fde/architects.html) is a curated directory of senior practitioners who use ArcKit to deliver enterprise architecture governance, training, and AI-assisted consulting services. These are architects who have demonstrated experience with ArcKit in client engagements and can help your organization adopt the harness effectively.
 
 Currently, the directory features **Mark Craddock**, the creator of ArcKit and lead of the Forward Deploy Engineering (FDE) practice. Mark brings extensive experience in UK public sector digital transformation, specializing in:
 
@@ -86,7 +86,7 @@ We'll review your application and, if approved, add you to the directory with a 
 
 If you're looking for an ArcKit architect to help with your project, you have several options:
 
-1. **Browse the directory** at [https://tractorjuice.github.io/arckit-fde/architects.html](https://tractorjuice.github.io/arckit-fde/architects.html) and contact architects directly
+1. **Browse the directory** at [https://arckit.org/fde/architects.html](https://arckit.org/fde/architects.html) and contact architects directly
 2. **Request a referral** by contacting me with the subject **"ArcKit Architect Referral"** and a brief description of your needs
 3. **Start with a bootstrap sprint** — a fixed-price, fixed-scope engagement that produces the four-artefact governance pack (principles, requirements, risk, stakeholders) in one intensive week or across five weeks
 

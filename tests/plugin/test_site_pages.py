@@ -115,6 +115,20 @@ def test_fde_panel_is_site_only():
         assert "ArcKit FDE" not in guide.read_text(encoding="utf-8")
 
 
+def test_fde_lives_on_arckit_org():
+    # The FDE pages moved here from their own GitHub Pages site, which a search
+    # engine counted as a different domain. A link back to that site, or a
+    # canonical URL naming it, would hand it the credit again.
+    for page in ("", "architects.html", "samples/governance-pack.html"):
+        text = (DOCS / "fde" / (page or "index.html")).read_text(encoding="utf-8")
+        assert f'<link rel="canonical" href="https://arckit.org/fde/{page}">' in text
+    assert "<loc>https://arckit.org/fde/</loc>" in (DOCS / "sitemap.xml").read_text(encoding="utf-8")
+    stale = [str(p.relative_to(DOCS)) for p in DOCS.rglob("*")
+             if p.suffix in {".html", ".md", ".txt", ".xml"}
+             and "tractorjuice.github.io/arckit-fde" in p.read_text(encoding="utf-8")]
+    assert not stale, f"links to the old FDE site: {stale}"
+
+
 @pytest.mark.parametrize(
     "kind,out,source,url,attr,expected",
     [

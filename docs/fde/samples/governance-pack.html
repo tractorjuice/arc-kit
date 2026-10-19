@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX6P1GM31K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SX6P1GM31K');
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sample First-Sprint Pack | ArcKit FDE</title>
+    <meta
+      name="description"
+      content="Sample ArcKit Forward Deploy Engineering outputs from the bootstrap sprint: principles, requirements, risk and stakeholders for a UK public sector programme."
+    >
+    <link rel="canonical" href="https://arckit.org/fde/samples/governance-pack.html">
+    <meta property="og:title" content="Sample First-Sprint Pack | ArcKit FDE">
+    <meta
+      property="og:description"
+      content="Representative examples of the principles, requirements, risk and stakeholder outputs produced in the first ArcKit FDE sprint."
+    >
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://arckit.org/fde/samples/governance-pack.html">
+    <meta property="og:image" content="https://arckit.org/fde/assets/hero-governance-pack.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="../assets/arckit-mark.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body class="subpage">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" aria-label="Primary navigation">
+      <a class="brand" href="../" aria-label="ArcKit FDE home">
+        <img src="../assets/arckit-mark.svg" width="44" height="20" alt="">
+        <span>ArcKit FDE</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu" onclick="var n=document.getElementById('primary-nav');var o=n.classList.toggle('nav--open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')">
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+      </button>
+      <nav id="primary-nav" onclick="if(event.target.tagName==='A'){this.classList.remove('nav--open');var b=document.querySelector('.nav-toggle');if(b){b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Open menu')}}">
+        <a href="../#what">What is FDE</a>
+        <a href="../#offer">Bootstrap</a>
+        <a href="../#embed">Embed</a>
+        <a href="../#policy">Policy</a>
+        <a class="nav-cta" href="mailto:mark@firstliot.uk?subject=ArcKit%20FDE%20enquiry">Enquire</a>
+      </nav>
+    </header>
+
+    <main id="main" class="sample-page">
+      <section class="sample-hero">
+        <div class="section-kicker">Representative outputs</div>
+        <h1>Sample bootstrap pack</h1>
+        <p>
+          These examples show the level of structure produced in the first one-week ArcKit FDE sprint. They are fictional samples for a digital licensing service, not client deliverables.
+        </p>
+      </section>
+
+      <section class="sample-output" aria-labelledby="principles-title">
+        <div>
+          <span class="doc-index">01</span>
+          <h2 id="principles-title">Principles</h2>
+        </div>
+        <div class="sample-block">
+          <h3>PR-01: Start with public outcomes</h3>
+          <p>
+            Every architecture choice must show the public outcome, user need and policy objective it supports before solution preferences are locked in.
+          </p>
+          <dl>
+            <div>
+              <dt>Rationale</dt>
+              <dd>Supports Green Book appraisal by making the link between objectives, options and expected public value explicit.</dd>
+            </div>
+            <div>
+              <dt>Implications</dt>
+              <dd>Design decisions include a policy-outcome note, measurable success indicator and evidence owner.</dd>
+            </div>
+            <div>
+              <dt>Evidence tags</dt>
+              <dd>Green Book, Service Standard point 1, GovS 005 Digital.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="sample-output" aria-labelledby="requirements-title">
+        <div>
+          <span class="doc-index">02</span>
+          <h2 id="requirements-title">Requirements</h2>
+        </div>
+        <div class="sample-block">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Requirement</th>
+                <th>Evidence</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="ID">REQ-U-01</td>
+                <td data-label="Requirement">The service must support assisted digital routes for users who cannot complete the journey online.</td>
+                <td data-label="Evidence">Service Standard, accessibility and inclusion evidence.</td>
+              </tr>
+              <tr>
+                <td data-label="ID">REQ-T-04</td>
+                <td data-label="Requirement">The solution must use open standards for data exchange unless an exception is agreed by the technical authority.</td>
+                <td data-label="Evidence">TCoP, Service Standard point 13.</td>
+              </tr>
+              <tr>
+                <td data-label="ID">REQ-A-02</td>
+                <td data-label="Requirement">Each major delivery option must record cost, benefit, risk and dependency assumptions.</td>
+                <td data-label="Evidence">Green Book business-case evidence.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="sample-output" aria-labelledby="risk-title">
+        <div>
+          <span class="doc-index">03</span>
+          <h2 id="risk-title">Risk</h2>
+        </div>
+        <div class="sample-block">
+          <h3>R-03: Unclear ownership of data sharing</h3>
+          <table>
+            <tbody>
+              <tr>
+                <th scope="row">Cause</th>
+                <td>Multiple public bodies contribute data but ownership and lawful-basis responsibilities are not yet agreed.</td>
+              </tr>
+              <tr>
+                <th scope="row">Event</th>
+                <td>Data-sharing agreement is delayed or challenged during assurance.</td>
+              </tr>
+              <tr>
+                <th scope="row">Effect</th>
+                <td>Alpha cannot progress to procurement or beta without rework, legal review and revised delivery dates.</td>
+              </tr>
+              <tr>
+                <th scope="row">Treatment</th>
+                <td>Name an accountable information owner, complete DPIA screening and agree evidence required for the next governance gate.</td>
+              </tr>
+              <tr>
+                <th scope="row">Evidence tags</th>
+                <td>Orange Book, TCoP privacy, Service Standard point 9.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="sample-output" aria-labelledby="stakeholders-title">
+        <div>
+          <span class="doc-index">04</span>
+          <h2 id="stakeholders-title">Stakeholders</h2>
+        </div>
+        <div class="sample-block">
+          <table>
+            <thead>
+              <tr>
+                <th>Group</th>
+                <th>Decision need</th>
+                <th>Likely concern</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Group">Senior responsible owner</td>
+                <td data-label="Decision need">Confidence that scope, benefits and risks justify the next gate.</td>
+                <td data-label="Likely concern">Unfunded dependencies or unclear accountability.</td>
+              </tr>
+              <tr>
+                <td data-label="Group">Digital and technology authority</td>
+                <td data-label="Decision need">Evidence that architecture choices meet standards and can be operated sustainably.</td>
+                <td data-label="Likely concern">Legacy integration, security controls and supplier lock-in.</td>
+              </tr>
+              <tr>
+                <td data-label="Group">Commercial and procurement</td>
+                <td data-label="Decision need">Requirements and evaluation criteria that support a fair market approach.</td>
+                <td data-label="Likely concern">Over-specified solutions, weak outcome measures or unclear acceptance criteria.</td>
+              </tr>
+              <tr>
+                <td data-label="Group">Service users and operational staff</td>
+                <td data-label="Decision need">A route for user needs, exclusions and service pain points to shape delivery decisions.</td>
+                <td data-label="Likely concern">Digital exclusion, channel shift pressure and operational workarounds.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div>
+          <p class="eyebrow">Forward deploy engineering</p>
+          <h2>Embed an ArcKit FDE in your programme.</h2>
+        </div>
+        <a class="button primary" href="mailto:mark@firstliot.uk?subject=ArcKit%20FDE%20sample%20pack%20enquiry">Enquire about availability</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-brand">
+        <img src="../assets/arckit-mark.svg" width="30" height="30" alt="">
+        <span>ArcKit FDE</span>
+      </div>
+      <p>Forward deploy engineering for UK public sector architecture. <a href="../../">ArcKit home</a> &middot; <a href="../../privacy.html">Privacy</a></p>
+    </footer>
+  </body>
+</html>
