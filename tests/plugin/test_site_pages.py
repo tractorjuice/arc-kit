@@ -129,6 +129,20 @@ def test_fde_lives_on_arckit_org():
     assert not stale, f"links to the old FDE site: {stale}"
 
 
+def test_linkedin_icon_opens_the_arckit_page():
+    # The LinkedIn icon in every page's top bar opens ArcKit's LinkedIn page.
+    # The group has links of its own that say so, and
+    # linkedin.com/company/arckit is a different company.
+    icon = re.compile(r'<a href="([^"]*linkedin[^"]*)"[^>]*class="app-icon-link"')
+    wrong = {}
+    for page in DOCS.rglob("*.html"):
+        for href in icon.findall(page.read_text(encoding="utf-8")):
+            if href != "https://www.linkedin.com/company/arckit-org/":
+                wrong[str(page.relative_to(DOCS))] = href
+    assert not wrong, f"LinkedIn icons that don't open the ArcKit page: {wrong}"
+    assert icon.search((DOCS / "guide" / "risk.html").read_text(encoding="utf-8"))
+
+
 @pytest.mark.parametrize(
     "kind,out,source,url,attr,expected",
     [
