@@ -305,7 +305,6 @@
 <hr />
 <h2 id="the-openclaw-architecture-in-60-seconds">The OpenClaw Architecture in 60 Seconds</h2>
 <p>OpenClaw's architecture has four layers:</p>
-<p><img src="../articles/diagrams/openclaw-arch.png" alt="OpenClaw Architecture" /></p>
 <p><strong>Gateway</strong>: A local process that acts as the single control plane. It manages sessions (one per conversation thread), routes inbound messages from any connected platform to the LLM, and dispatches responses back. It also manages the tool registry and event lifecycle.</p>
 <p><strong>Skills</strong>: Directories containing a <code>SKILL.md</code> with metadata and instructions. The LLM reads these to understand what tools are available and how to use them. Skills can declare dependencies, required permissions, and tool configurations.</p>
 <p><strong>Multi-channel inbox</strong>: The signature feature. One agent instance handles messages from WhatsApp, Telegram, Slack, Discord, and 20+ other platforms simultaneously. Each channel maps to a session, so context is preserved per conversation.</p>
@@ -418,7 +417,6 @@ claude --channels plugin:telegram@claude-plugins-official plugin:discord@claude-
 <h3 id="layer-1-the-gateway">Layer 1: The Gateway</h3>
 <p><strong>OpenClaw</strong>: A standalone local process (Node.js) that manages sessions, routes messages, and maintains the tool registry. It speaks to messaging platforms via adapters and to the LLM via API.</p>
 <p><strong>ClaudeClaw</strong>: Headless mode (<code>claude -p</code>) is your programmatic bridge. HTTP hooks are your outbound event stream. The Gateway orchestrates both.</p>
-<p><img src="../articles/diagrams/claudeclaw-gateway.png" alt="ClaudeClaw Gateway Architecture" /></p>
 <p>The Gateway is custom code — though its scope shrinks with every channel plugin Anthropic or the community ships. For platforms with native channel support (Telegram, Discord as of v2.1.80), the Gateway is optional: channels handle the full message lifecycle. For everything else, the Gateway's responsibilities are:</p>
 <ol>
 <li><strong>Session mapping</strong>: Each messaging channel/thread maps to a Claude Code session. The Gateway spawns <code>claude -p</code> processes in headless mode and tracks which channel ID corresponds to which session ID. For ongoing conversations, it uses <code>--resume SESSION_ID</code> to maintain context.</li>
@@ -559,7 +557,21 @@ claude --channels plugin:telegram@claude-plugins-official
 <hr />
 <h2 id="a-minimal-claudeclaw-what-youd-build">A Minimal ClaudeClaw: What You'd Build</h2>
 <p>If you wanted a working prototype, here's the minimum viable architecture:</p>
-<p><img src="../articles/diagrams/claudeclaw-project.png" alt="Minimal ClaudeClaw Project Structure" /></p>
+<pre><code class="language-text">claudeclaw/
+├── .claude/
+│   ├── agents/
+│   │   ├── orchestrator.md        # multi-agent orchestration
+│   │   └── research-agent.md
+│   ├── skills/
+│   │   ├── email-triage/SKILL.md
+│   │   ├── calendar-manage/SKILL.md
+│   │   ├── code-review/SKILL.md
+│   │   └── deploy-monitor/SKILL.md
+│   └── settings.json              # hooks and permissions
+├── .mcp.json                      # channel plugins (Telegram, Discord)
+└── gateway/                       # optional: ~500 lines of TypeScript for
+                                   # platforms without a channel plugin
+</code></pre>
 <p>With native channels for Telegram and Discord, the Gateway is only needed for unsupported platforms. If your messaging needs are covered by channel plugins, the Gateway is optional — the entire system reduces to Claude Code configuration files: agent markdown, skill markdown, channel credentials, and a <code>settings.json</code>. If you need Slack, Teams, or other platforms without channel plugins, the Gateway is ~500 lines of TypeScript on top of that.</p>
 <p>Either way, the agents are markdown files with YAML frontmatter. The skills are markdown files. The channels are plugin configurations. The intelligence is in the model. The code is just plumbing — and with channels, there's less plumbing than ever.</p>
 <hr />

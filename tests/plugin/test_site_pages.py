@@ -122,6 +122,11 @@ def test_fde_panel_is_site_only():
         ("guide", "guide/roles/ba.html", "docs/guides/roles/ba.md", "../requirements.md", "href", "../requirements.html"),
         ("guide", "guide/risk.html", "docs/guides/risk.md", "../../plugins/arckit-claude/commands/risk.md", "href",
          "https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-claude/commands/risk.md"),
+        # Markdown in docs/ with no page of its own: the site would serve it raw.
+        ("guide", "guide/start.html", "docs/guides/start.md", "../WORKFLOW-DIAGRAMS.md", "href",
+         "https://github.com/tractorjuice/arc-kit/blob/main/docs/WORKFLOW-DIAGRAMS.md"),
+        ("article", "share/a.html", "docs/articles/a.md", "articles/unlisted.md", "href",
+         "https://github.com/tractorjuice/arc-kit/blob/main/docs/articles/unlisted.md"),
         # Articles were written for the viewer at the site root.
         ("article", "share/a.html", "docs/articles/a.md", "article-viewer.html?a=b&utm_source=x", "href", "b.html?utm_source=x"),
         ("article", "share/a.html", "docs/articles/a.md", "article-viewer.html?a=b-medium", "href", "b.html"),
@@ -136,6 +141,31 @@ def test_links_point_at_static_pages(kind, out, source, url, attr, expected):
     gen = load_generator()
     site = gen.Site(guides=frozenset({"risk", "requirements"}), articles=frozenset({"a", "b"}))
     assert gen.rewrite_url(url, attr, gen.Page(kind, out, source), site) == expected
+
+
+def test_links_to_files_not_in_git_are_reported():
+    # The site and GitHub serve only committed files. Two articles linked four
+    # diagrams that were never committed, and guides linked the pre-plugins/ layout.
+    gen = load_generator()
+    page = gen.REPO / "docs" / "share" / "a.html"
+    text = ('<img src="../articles/diagrams/x.png"><a href="../guides.html#top">guides</a>'
+            '<a href="b.html">b</a><a href="../fde/">fde</a><a href="https://example.org/">x</a>'
+            '<a href="https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/README.md">old</a>')
+    broken = gen.broken_links({page: text, gen.REPO / "docs" / "share" / "b.html": ""},
+                              {"docs/guides.html", "docs/fde/index.html"})
+    assert broken == [
+        "docs/share/a.html: ../articles/diagrams/x.png",
+        "docs/share/a.html: https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/README.md",
+    ]
+
+
+@pytest.mark.parametrize("slug", listed_slugs())
+def test_article_pages_show_each_image_once(slug):
+    # The hero already shows the card image; an article that repeats it inline
+    # would show the same picture twice.
+    images = re.findall(r'<img[^>]+src="([^"]+)"', (DOCS / "share" / f"{slug}.html").read_text(encoding="utf-8"))
+    repeated = sorted({src for src in images if images.count(src) > 1})
+    assert not repeated, f"{slug} shows the same image more than once: {repeated}"
 
 
 def test_heading_ids_match_github():

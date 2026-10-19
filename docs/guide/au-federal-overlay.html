@@ -526,7 +526,7 @@
 <p>Generates a DISP Member self-attestation pack — the apex artefact for Defence-supplier scope. Consolidates the four DISP security domains (Governance &amp; Personnel; Personnel Security; Physical Security; Information &amp; Cyber Security) plus FOCI (Foreign Ownership, Control and Influence) declaration, supply chain assurance, and the annual board attestation. <strong>Run last in the AU stream</strong> — it pulls evidence from <code>au-e8-posture</code> (Domain 4), <code>au-ism-controls</code> (Domain 4 + cross-domain), <code>au-pia</code> + <code>au-ndb-playbook</code> (privacy alignment + incident reporting), and <code>au-pspf</code> (Domain 1 + Domain 3 cross-refs). Per the DISP framework, attestation level (1, 2, or 3) determines the rigour expected — Level 2 is the typical Federal-supplier baseline, Level 3 applies to higher-classification work.</p>
 <hr />
 <h2 id="build-recipe">Build recipe</h2>
-<p>Recipe: <a href="https://github.com/tractorjuice/arc-kit/blob/main/arckit-au/recipes/au-federal.yaml"><code>au-federal.yaml</code></a></p>
+<p>Recipe: <a href="https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-au/recipes/au-federal.yaml"><code>au-federal.yaml</code></a></p>
 <p>37 default targets across the build waves + 3 post-build hooks (<code>arckit:health</code>, <code>arckit:graph-report</code>, <code>arckit:pages</code>), with optional default-off <code>AIP</code>, <code>DATASCOUT</code>, <code>AU_OT</code> and <code>AU_SOCI</code> targets for cross-sector critical-infrastructure and procurement use. The recipe swaps three commands from the <code>uk-saas</code> baseline (per maintainer guidance on #424):</p>
 <ul>
 <li><code>arckit:tcop</code> → <code>arckit:au-dss</code> (DTA DSS replaces UK TCoP)</li>
