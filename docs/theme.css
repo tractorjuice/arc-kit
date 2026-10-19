@@ -502,7 +502,10 @@ html.dark-mode .app-markdown code {
     color: #f0f0f0;
 }
 
-/* pre blocks already dark-themed, no override needed */
+/* pre blocks are already dark; code inside one keeps the block's background, not a box per line */
+html.dark-mode .app-markdown pre code {
+    background: none;
+}
 
 /* A Mermaid diagram (diagrams.js) shows as code until it is drawn, then on the page itself */
 .app-markdown pre.mermaid[data-processed] {
