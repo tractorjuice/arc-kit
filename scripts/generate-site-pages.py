@@ -17,7 +17,11 @@ This script renders the Markdown when the site is built and writes:
   docs/guide/<name>.html   one page per docs/guides/**/*.md
   docs/share/<slug>.html   one page per article card on docs/articles.html,
                            at the URL social posts already link to
-  docs/sitemap.xml         the entries between the site-pages markers
+  docs/sitemap.xml         the entries between the site-pages markers, and the
+                           <lastmod> of each hand-written entry above them
+  scripts/sitemap-lastmod.json
+                           a fingerprint of each hand-written entry's text
+                           and the date that text last changed
 
 Each page has its own title, description, canonical URL, preview tags,
 structured data, and the text itself in the HTML. A ```mermaid block becomes a
@@ -33,12 +37,14 @@ forward old ?guide= and ?a= links to these pages.
 Plain `python3` works when the two pinned packages are installed. The versions
 are pinned here and in .github/workflows/python-tests.yml because --check
 compares bytes. Run it after editing a guide, an article or its card on
-docs/articles.html, docs/assets/guide-films.json, or either viewer.
+docs/articles.html, docs/assets/guide-films.json, either viewer, or the text of
+a page the sitemap lists by hand, such as docs/index.html or docs/llms.txt.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import json
 import posixpath
@@ -46,6 +52,7 @@ import re
 import subprocess
 import sys
 from dataclasses import dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import parse_qsl, unquote, urlencode, urlsplit
 
@@ -66,6 +73,7 @@ ARTICLES = DOCS / "articles"
 LISTING = DOCS / "articles.html"
 FILMS = DOCS / "assets" / "guide-films.json"
 SITEMAP = DOCS / "sitemap.xml"
+LASTMOD = REPO / "scripts" / "sitemap-lastmod.json"
 GUIDE_TEMPLATE = DOCS / "guide-viewer.html"
 ARTICLE_TEMPLATE = DOCS / "article-viewer.html"
 
@@ -107,6 +115,7 @@ FDE_PANEL = (
 
 SITEMAP_START = "<!-- site-pages:start (scripts/generate-site-pages.py) -->"
 SITEMAP_END = "<!-- site-pages:end -->"
+HAND_ENTRY_RE = re.compile(r"<loc>([^<]+)</loc>(\s*)(?:<lastmod>[^<]*</lastmod>\s*)?")
 
 MONTHS = ["January", "February", "March", "April", "May", "June", "July",
           "August", "September", "October", "November", "December"]
@@ -562,7 +571,52 @@ def sitemap_text(current: str, site: Site, listed: list[dict[str, str]]) -> str:
     return pattern.sub(lambda _m: "\n".join(lines), current, count=1)
 
 
-def build() -> tuple[dict[Path, str], str, Site]:
+def page_text(path: Path) -> str:
+    """The text a reader sees change: <main> without its markup and scripts, or a whole non-HTML file.
+
+    The menu, footer and <head> are left out, so a link changed on every page
+    doesn't re-date them all: Google reads <lastmod> as the date of the content.
+    """
+    text = path.read_text(encoding="utf-8")
+    if path.suffix != ".html":
+        return text
+    main = re.search(r"<main\b.*?</main>", text, re.S)
+    body = re.sub(r"<(script|style)\b.*?</\1>", " ", main.group(0) if main else text, flags=re.S)
+    return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", body)).split())
+
+
+def date_hand_entries(head: str, record: dict[str, dict[str, str]],
+                      today: str) -> tuple[str, dict[str, dict[str, str]], list[str]]:
+    """Give each hand-written sitemap entry the date its page's text last changed.
+
+    CI checks out no history, so git can't date a page. scripts/sitemap-lastmod.json
+    instead keeps a fingerprint of each page's text and the date it was taken; a
+    page whose text no longer matches is dated today. Returns the dated entries,
+    the new record and the pages that changed.
+    """
+    dated: dict[str, dict[str, str]] = {}
+    changed: list[str] = []
+
+    def repl(m: re.Match) -> str:
+        loc, space = m.group(1), m.group(2)
+        path = loc.removeprefix(f"{SITE}/")
+        rel = path + "index.html" if path == "" or path.endswith("/") else path
+        if not (DOCS / rel).is_file():
+            sys.exit(f"docs/sitemap.xml lists {loc}, but docs/{rel} doesn't exist")
+        fingerprint = hashlib.sha256(page_text(DOCS / rel).encode("utf-8")).hexdigest()
+        kept = record.get(rel, {})
+        if kept.get("text_sha256") == fingerprint:
+            date = kept["lastmod"]
+        else:
+            date = today
+            changed.append(f"docs/{rel}")
+        dated[rel] = {"lastmod": date, "text_sha256": fingerprint}
+        return f"<loc>{loc}</loc>{space}<lastmod>{date}</lastmod>{space}"
+
+    return HAND_ENTRY_RE.sub(repl, head), dated, changed
+
+
+def build() -> tuple[dict[Path, str], str, str, list[str], Site]:
     listed = cards()
     site = Site(
         guides=frozenset(str(p.relative_to(GUIDES).with_suffix("")) for p in GUIDES.rglob("*.md")),
@@ -577,7 +631,11 @@ def build() -> tuple[dict[Path, str], str, Site]:
     if broken:
         sys.exit("Links to files that are not in git. Commit the file (`git add -f` under the gitignored "
                  "docs/articles/), or fix the link in the Markdown:\n  " + "\n  ".join(broken))
-    return pages, sitemap_text(SITEMAP.read_text(encoding="utf-8"), site, listed), site
+    head, marker, rest = sitemap_text(SITEMAP.read_text(encoding="utf-8"), site, listed).partition(SITEMAP_START)
+    record = json.loads(LASTMOD.read_text(encoding="utf-8")) if LASTMOD.is_file() else {}
+    head, dated, changed = date_hand_entries(head, record, datetime.now(timezone.utc).date().isoformat())
+    lastmod = json.dumps(dated, indent=2, sort_keys=True) + "\n"
+    return pages, head + marker + rest, lastmod, changed, site
 
 
 def main() -> int:
@@ -590,7 +648,7 @@ def main() -> int:
               "Run: uv run scripts/generate-site-pages.py" + (" --check" if args.check else ""))
         return 1
 
-    pages, sitemap, site = build()
+    pages, sitemap, lastmod, changed, site = build()
     existing = set(GUIDE_OUT.rglob("*.html")) | set(SHARE_OUT.glob("*.html"))
     problems, written = [], 0
 
@@ -613,8 +671,15 @@ def main() -> int:
     if SITEMAP.read_text(encoding="utf-8") != sitemap:
         if args.check:
             problems.append("stale: docs/sitemap.xml")
+            problems += [f"text changed, so its sitemap date needs updating: {page}" for page in changed]
         else:
             SITEMAP.write_text(sitemap, encoding="utf-8")
+            written += 1
+    if (LASTMOD.read_text(encoding="utf-8") if LASTMOD.is_file() else "") != lastmod:
+        if args.check:
+            problems.append(f"stale: {LASTMOD.relative_to(REPO)}")
+        else:
+            LASTMOD.write_text(lastmod, encoding="utf-8")
             written += 1
 
     if problems:

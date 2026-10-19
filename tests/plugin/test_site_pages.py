@@ -11,6 +11,7 @@ Markdown. Like test_article_listing.py, this runs in the Python suite.
 
 from __future__ import annotations
 
+import hashlib
 import html
 import importlib.util
 import os
@@ -105,6 +106,50 @@ def test_sitemap_lists_pages_not_viewers():
     assert "<loc>https://arckit.org/guide/risk.html</loc>" in sitemap
     for slug in listed_slugs():
         assert f"<loc>https://arckit.org/share/{slug}.html</loc>" in sitemap
+
+
+def test_sitemap_lists_every_public_page():
+    # Every page a search engine should index is in the sitemap. The viewers only
+    # redirect, a credential page is noindex, and a page whose canonical URL is
+    # elsewhere is a copy of that page.
+    gen = load_generator()
+    listed = set(re.findall(r"<loc>https://arckit\.org/([^<]*)</loc>", (DOCS / "sitemap.xml").read_text(encoding="utf-8")))
+    missing = []
+    for name in sorted(gen.tracked_files()):
+        page = REPO / name
+        if not name.startswith("docs/") or page.suffix != ".html":
+            continue
+        rel = page.relative_to(DOCS).as_posix()
+        urls = {rel, rel.removesuffix("index.html")}
+        text = page.read_text(encoding="utf-8")
+        canonical = re.search(r'rel="canonical" href="([^"]*)"', text)
+        elsewhere = canonical and canonical.group(1).removeprefix("https://arckit.org/") not in urls
+        redirects = 'http-equiv="refresh"' in text or "location.replace(" in text
+        if not (urls & listed or elsewhere or redirects or 'content="noindex' in text):
+            missing.append(rel)
+    assert not missing, f"public pages missing from docs/sitemap.xml: {missing}"
+
+
+def test_sitemap_dates_follow_the_page_text(tmp_path):
+    # A hand-written entry keeps its date while its page's text is unchanged and
+    # is dated today once it changes. A menu or footer edit doesn't count.
+    gen = load_generator()
+    pages = []
+    for nav, text in (("x", "Risk register"), ("y", "Risk  register"), ("x", "Risk register, updated")):
+        pages.append(tmp_path / f"{len(pages)}.html")
+        pages[-1].write_text(f'<nav><a href="{nav}">FDE</a></nav><main><p>{text}</p></main><footer>{nav}</footer>',
+                             encoding="utf-8")
+    assert gen.page_text(pages[0]) == gen.page_text(pages[1]) != gen.page_text(pages[2])
+
+    head = "<url>\n        <loc>https://arckit.org/roles.html</loc>\n        <changefreq>monthly</changefreq>\n"
+    fingerprint = hashlib.sha256(gen.page_text(DOCS / "roles.html").encode("utf-8")).hexdigest()
+    kept, _, changed = gen.date_hand_entries(
+        head, {"roles.html": {"lastmod": "2026-06-15", "text_sha256": fingerprint}}, "2030-01-01")
+    assert "</loc>\n        <lastmod>2026-06-15</lastmod>\n        <changefreq>" in kept and not changed
+    moved, record, changed = gen.date_hand_entries(
+        head, {"roles.html": {"lastmod": "2026-06-15", "text_sha256": "old"}}, "2030-01-01")
+    assert "<lastmod>2030-01-01</lastmod>" in moved and changed == ["docs/roles.html"]
+    assert record["roles.html"] == {"lastmod": "2030-01-01", "text_sha256": fingerprint}
 
 
 def test_fde_panel_is_site_only():
