@@ -301,7 +301,7 @@
 <p>This pattern is common enough that researchers have a name for it. Valentine, Sergeeva, Tan and Yang published a 2024 study in the <em>Proceedings of the ACM on Human-Computer Interaction</em> showing how algorithms deployed inside conventional hierarchical structures end up reinforcing those structures rather than reshaping them. Mar Gonzalez picked it up as Idea 10 of <em>Organizing Intelligence</em>, DeepMind's May 2026 collection of frontier AI research that will redefine how organisations build, lead and scale. Both papers are worth reading in full. The architectural shorthand is simpler: <strong>the leaf node problem</strong>.</p>
 <h2 id="what-the-map-shows">What the map shows</h2>
 <p>If you draw the situation as a Wardley Map, two user anchors appear, both legitimate, both pulling in different directions. The Enterprise anchor wants company-level optimal decisions. The Team manager anchor wants their team's KPIs hit. Each anchor has its own value chain.</p>
-<pre><code class="language-mermaid">wardley-beta
+<pre class="mermaid">wardley-beta
 title The Leaf Node Problem
 
 anchor Enterprise [0.97, 0.78]
@@ -341,7 +341,7 @@ evolve Shared data fabric 0.72
 
 note &quot;AI trapped here serving local KPIs&quot; [0.45, 0.70]
 note &quot;Lever: lift AI to cross-org context&quot; [0.60, 0.30]
-</code></pre>
+</pre>
 <p>Inside the team manager's chain, AI tooling lands close to commodity. It is the most evolved component on the map: vendor platforms, foundation-model APIs, off-the-shelf agent frameworks, evaluation harnesses. That maturity is exactly what makes the trap easy to walk into. You can stand up an AI pilot in a single sprint because the building blocks are right there. The chain serves the team manager's KPIs all the way up. The chain terminates at a dashboard.</p>
 <p>Inside the enterprise chain, the equivalent component (call it strategic AI guidance) sits one rung lower in evolution. It depends on cross-functional context, which in turn depends on a shared data fabric. Both of those are typically custom-built or absent. There is no convenient procurement route. There is no team that owns them. Standing the enterprise chain up takes quarters, not sprints.</p>
 <p>The Wardley Map makes the asymmetry visible. The leaf chain is easy and ships. The enterprise chain is hard and waits.</p>
@@ -381,6 +381,8 @@ note &quot;Lever: lift AI to cross-org context&quot; [0.60, 0.30]
 <li><strong>GitHub</strong> — code, issues, and contributions: <a href="https://github.com/tractorjuice/arc-kit">github.com/tractorjuice/arc-kit</a></li>
 </ul>
 </article>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js" integrity="sha384-yQ4mmBBT+vhTAwjFH0toJXNYJ6O4usWnt6EPIdWwrRvx2V/n5lXuDZQwQFeSFydF" crossorigin="anonymous"></script>
+<script src="../diagrams.js"></script>
         </div>
     </main>
 

@@ -529,7 +529,7 @@
 <p>Deployment and Data Flow diagrams use Mermaid only. Sequence diagrams support both Mermaid and PlantUML.</p>
 <hr />
 <h2 id="example-output-excerpt">Example Output (Excerpt)</h2>
-<pre><code class="language-mermaid">flowchart TB
+<pre class="mermaid">flowchart TB
     subgraph GOVUK[&quot;Cabinet Office GenAI Platform&quot;]
         Web[GenAI Portal\nReact]
         API[API Gateway\nLambda]
@@ -547,7 +547,7 @@
     Orchestrator --&gt;|Semantic search| VectorDB
     Orchestrator --&gt;|Prompt| GPT4
     Orchestrator --&gt;|Updates| Notify
-</code></pre>
+</pre>
 <p>Paste into <a href="https://mermaid.live">https://mermaid.live</a> for PNG/SVG export.</p>
 <h3 id="plantuml-c4-example-excerpt">PlantUML C4 Example (Excerpt)</h3>
 <pre><code class="language-plantuml">@startuml
@@ -599,6 +599,8 @@ Lay_Right(api, orch)
 </ul>
 </div>
 <script src="../films.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js" integrity="sha384-yQ4mmBBT+vhTAwjFH0toJXNYJ6O4usWnt6EPIdWwrRvx2V/n5lXuDZQwQFeSFydF" crossorigin="anonymous"></script>
+<script src="../diagrams.js"></script>
         </div>
     </main>
 

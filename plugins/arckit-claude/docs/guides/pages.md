@@ -142,15 +142,14 @@ Site available at: `https://{owner}.github.io/{repo}/`
 
 The generated site automatically renders Mermaid diagrams:
 
-```markdown
+````markdown
 ```mermaid
 graph TD
     A[Start] --> B{Decision}
     B -->|Yes| C[Action]
     B -->|No| D[End]
-```text
-
 ```
+````
 
 Supported diagram types:
 
@@ -170,7 +169,7 @@ Supported diagram types:
 |-----------|---------|---------|
 | Styling | GOV.UK Frontend | 5.13.0 |
 | Markdown | marked.js | 15.0.6 |
-| Diagrams | mermaid.js | 11.4.1 |
+| Diagrams | mermaid.js | 11.15.0 |
 
 All libraries loaded from CDN for easy updates.
 

@@ -502,7 +502,23 @@ html.dark-mode .app-markdown code {
     color: #f0f0f0;
 }
 
-/* pre blocks already dark-themed, no override needed */
+/* pre blocks are already dark; code inside one keeps the block's background, not a box per line */
+html.dark-mode .app-markdown pre code {
+    background: none;
+}
+
+/* A Mermaid diagram (diagrams.js) shows as code until it is drawn, then on the page itself */
+.app-markdown pre.mermaid[data-processed] {
+    background: none;
+    color: inherit;
+    padding: 0;
+    text-align: center;
+}
+
+/* Node labels are paragraphs inside the SVG: they take the diagram's colours, not the page's */
+.app-markdown pre.mermaid[data-processed] p {
+    color: inherit;
+}
 
 html.dark-mode .app-markdown blockquote {
     background: #2a2a2a;
