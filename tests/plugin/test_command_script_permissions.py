@@ -33,9 +33,9 @@ COMMANDS = sorted((PLUGIN / "commands").glob("*.md")) + sorted(
     p for p in PLUGIN.parent.glob("arckit-*/commands/*.md") if not p.is_relative_to(PLUGIN)
 )
 
-# `node|bash|python3 [quote]${CLAUDE_PLUGIN_ROOT}/scripts/<file>[quote]`, or the script run directly
+# `node|bash|python3|python [quote]${CLAUDE_PLUGIN_ROOT}/scripts/<file>[quote]`, or the script run directly
 INVOCATION = re.compile(
-    r'(?P<runner>\b(?:node|bash|sh|python3)\s+)?(?P<q>"?)\$\{CLAUDE_PLUGIN_ROOT\}/scripts/(?P<script>[A-Za-z0-9_./-]+?\.(?:mjs|sh|py))(?P=q)'
+    r'(?P<runner>\b(?:node|bash|sh|python3?)\s+)?(?P<q>"?)\$\{CLAUDE_PLUGIN_ROOT\}/scripts/(?P<script>[A-Za-z0-9_./-]+?\.(?:mjs|sh|py))(?P=q)'
 )
 
 
@@ -125,7 +125,7 @@ def test_rules_only_name_plugin_files():
     for path in COMMANDS + SKILLS:
         for rule in frontmatter(path).get("allowed-tools") or []:
             assert rule == READ_OWN_FILES or re.fullmatch(
-                r'Bash\((?:(?:node|bash|sh|python3) )?"?\$\{CLAUDE_PLUGIN_ROOT\}/scripts/[A-Za-z0-9_./-]+"? \*\)', rule
+                r'Bash\((?:(?:node|bash|sh|python3?) )?"?\$\{CLAUDE_PLUGIN_ROOT\}/scripts/[A-Za-z0-9_./-]+"? \*\)', rule
             ), f"{path}: unexpected allowed-tools rule {rule!r}"
 
 

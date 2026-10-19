@@ -68,16 +68,18 @@ NORA and GEMMA are too large to assess reliably from model knowledge (89 NORA im
 Each extract keeps its title as its first line, which is how the commands identify it, and carries a version stamp on its second line: the latest change on NORA Online, or the GEMMA commit. On every run the script compares that stamp with the live source and refreshes the extract only when the source has changed, so an assessment is reproducible against a known source version. The command reports what happened:
 
 - **`fetched`, `refreshed`, `current`** — the extract matches the live source.
-- **`offline`** — the source could not be reached; the existing extract is used and the artefact notes that a newer version may exist.
+- **`offline`** — the source, or a local file given with `--from-dump` or `--from-xml`, could not be used; the existing extract is used and the artefact notes that a newer version may exist.
 - **`manual`** — the extract was placed by hand or built from a local file. The live source never replaces it unless the script runs with `--force`, and the artefact notes that its currency was not checked.
-- **`missing`** — no extract and no connection: the command stops without writing an artefact.
+- **`missing`** — no extract, and none could be built: the command stops without writing an artefact.
+
+Each status line also says where the extract came from (`origin`: `api`, `file` or `hand`). The script exits with 0 when every requested source has a usable extract, 1 when one has none, and 2 for a usage error; `python3 nl-references.py --help` lists all of this.
 
 An extract the script wrote is replaced whenever its source changes, edits included. To keep your own edits, delete the stamp line (line 2): the file then counts as placed by hand. A GEMMA set with a file missing, or with files from different versions (an interrupted refresh), is rebuilt when the source can be reached, and used as it is when it cannot.
 
 **Working offline.** The script can also build the extracts from files downloaded elsewhere:
 
 ```bash
-python3 nl-references.py nora  --from-dump <NORA Online XML export>
+python3 nl-references.py nora  --from-dump <NORA Online XML export> [--from-dump <another export>]
 python3 nl-references.py gemma --from-xml  "<GEMMA release.xml>"
 ```
 
@@ -104,7 +106,7 @@ For the reference architectures:
 
 ```text
 principles, requirements
-  → nl-gemma   (gemeenten: needs a landscape source, e.g. an application inventory)
+  → nl-gemma   (gemeenten: needs a landscape source, e.g. an application inventory from the TOGAF ADM overlay)
   → nl-nora    (uses the GEMMA mapping as evidence for reuse and standardisation)
   → adr        (for each deliberate deviation from a principle)
   → risk, roadmap

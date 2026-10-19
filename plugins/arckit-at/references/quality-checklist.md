@@ -764,7 +764,7 @@ All artifacts must pass these 10 checks:
 
 ### NORA -- NORA Conformance Assessment
 
-- The NORA extract used is named in Scope and Source with its dump date, and is registered in External References with the CC BY-ND 3.0 NL licence line
+- The NORA extract used is named in Scope and Source with its source version, and is registered in External References with the CC BY-ND 3.0 NL licence line
 - All 17 architectuurprincipes (NAP01–NAP17) are assessed in ID order; no retired basisprincipe (BP) or afgeleid principe (AP) is assessed
 - Every stelling is quoted verbatim from the extract with a citation row — no NORA text is paraphrased, summarised or translated
 - Every NAP, implicatie and kwaliteitsdoel ID, title and relation matches the extract exactly — none is invented, renumbered or "corrected"

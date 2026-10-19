@@ -30,21 +30,38 @@ that do not resolve are reported in a Data notes section, not corrected.
 
 Usage:
     python3 nl-references.py {nora,gemma,all} [--dir DIR] [--force]
-    python3 nl-references.py nora  --from-dump nora-dump.xml [...]   # offline
-    python3 nl-references.py gemma --from-xml "GEMMA release.xml"    # offline
+    python3 nl-references.py nora  --from-dump nora-dump.xml [--from-dump more.xml]   # offline
+    python3 nl-references.py gemma --from-xml "GEMMA release.xml"                     # offline
 
 Prints one JSON object per source on stdout, for example
-    {"source": "nora", "status": "current", "version": "...", "files": [...]}
-status is one of: fetched, refreshed, current, manual, offline, missing.
-Exit code 0 when every requested source has a usable extract, 2 otherwise.
+    {"source": "nora", "status": "current", "origin": "api", "version": "...", "files": [...]}
+
+status:
+    fetched    no extract was there; it has been built
+    refreshed  the source had changed (or --force); the extract has been rebuilt
+    current    the extract matches the live source
+    manual     the extract was placed by hand or built from a local file; not
+               replaced (use --force)
+    offline    the source, or the local file, could not be used; the existing
+               extract is kept as it is
+    missing    no extract, and none could be built
+origin: api (fetched by this script), file (built with --from-dump or
+--from-xml), hand (placed by hand), or null when there is no extract.
+A status that is not fetched, refreshed or current carries a note or an error.
+
+Exit code 0 when every requested source has a usable extract, 1 when one has
+none, 2 for a usage error.
 """
 import argparse
+import hashlib
 import html
 import http.client
 import json
 import os
 import re
 import sys
+import tempfile
+import time
 import unicodedata
 import urllib.parse
 import urllib.request
@@ -91,15 +108,16 @@ class SourceUnavailable(Exception):
 
 # ---------------------------------------------------------------- shared
 
-def log(msg):
-    print(msg, file=sys.stderr)
-
-
 MAX_BYTES = 64 * 1024 * 1024   # GEMMA release.xml is about 13 MB
+CHUNK = 64 * 1024
 
 
 def http_get(url, params=None, timeout=60):
-    """GET a URL and return the body, unpacked if the server compressed it."""
+    """GET a URL and return the body, unpacked if the server compressed it.
+
+    `timeout` bounds each read; the whole download must also finish within
+    `timeout` seconds of reading, so a server that trickles bytes cannot stall
+    a run."""
     if params:
         url += "?" + urllib.parse.urlencode(params)
     where = url.split("?")[0]
@@ -108,14 +126,29 @@ def http_get(url, params=None, timeout=60):
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept-Encoding": "gzip"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
-            data = resp.read(MAX_BYTES + 1)
+            deadline = time.monotonic() + timeout
+            chunks, size = [], 0
+            while True:
+                if time.monotonic() > deadline:
+                    raise SourceUnavailable(f"{where}: download took longer than {timeout} s, abandoned")
+                chunk = resp.read(CHUNK)
+                if not chunk:
+                    break
+                chunks.append(chunk)
+                size += len(chunk)
+                if size > MAX_BYTES:
+                    raise SourceUnavailable(too_large)
             encoding = (resp.headers.get("Content-Encoding") or "").strip().lower()
+            expected = (resp.headers.get("Content-Length") or "").strip()
     # URLError, HTTPError and timeouts are OSErrors; a connection dropped
     # mid-response (IncompleteRead, BadStatusLine) is an HTTPException.
     except (OSError, ValueError, http.client.HTTPException) as exc:
         raise SourceUnavailable(f"{where}: {exc}") from exc
-    if len(data) > MAX_BYTES:
-        raise SourceUnavailable(too_large)
+    data = b"".join(chunks)
+    # http.client returns a short body without complaint when the connection
+    # closes early; Content-Length (of the bytes as sent) tells.
+    if expected.isdigit() and int(expected) != len(data):
+        raise SourceUnavailable(f"{where}: response was cut short ({len(data)} of {expected} bytes)")
     if encoding == "gzip":
         # Unpack with the same cap, so a small compressed body cannot expand
         # without limit, and refuse a stream that was cut short.
@@ -141,17 +174,18 @@ def http_json(url, params=None):
 
 
 def parse_xml(data, label):
-    """Parse XML, refusing any DTD or entity declaration (XXE and entity-expansion guard).
+    """Parse XML, refusing any DTD (XXE and entity-expansion guard).
 
     The check runs inside expat, on the document as the parser decodes it, so
     it holds in every encoding: a byte search for "<!DOCTYPE" misses UTF-16.
-    Neither source uses a DTD; MediaWiki and Archi exports carry none."""
+    An entity can only be declared inside a DOCTYPE, so refusing the DOCTYPE
+    refuses every entity declaration too. Neither source uses a DTD; MediaWiki
+    and Archi exports carry none."""
     def refuse(*_args):
-        raise SourceUnavailable(f"refusing {label}: contains a DOCTYPE or ENTITY declaration")
+        raise SourceUnavailable(f"refusing {label}: contains a DOCTYPE declaration")
 
     scan = expat.ParserCreate()
     scan.StartDoctypeDeclHandler = refuse
-    scan.EntityDeclHandler = refuse
     try:
         scan.Parse(data, True)
         return ET.fromstring(data)
@@ -185,20 +219,75 @@ def stamp_line(source, origin, version):
 # controls other than newline and tab, variation selectors, and the blank
 # letters some fonts draw as empty. Any of them can carry a hidden message.
 INVISIBLE_CATEGORIES = {"Cf", "Co", "Cn", "Cs", "Zl", "Zp"}
-INVISIBLE_EXTRA = set(range(0xFE00, 0xFE10)) | set(range(0xE0100, 0xE01F0)) | {
-    0x034F, 0x115F, 0x1160, 0x17B4, 0x17B5, 0x2800, 0x3164, 0xFFA0}
-# This script's own source links. No `&` or backslash inside, so nothing in a
-# link can be read as an entity or an escape; a URL with either is escaped
-# like any other text and stays visible.
-AUTOLINK = re.compile(r"<https?://[^\s<>&\\]*>")
+INVISIBLE_EXTRA = (set(range(0xFE00, 0xFE10)) | set(range(0xE0100, 0xE01F0))
+                   | set(range(0x180B, 0x1810)) | {
+                       0x034F, 0x115F, 0x1160, 0x17B4, 0x17B5, 0x2800, 0x3164, 0xFFA0,
+                       0x16FE4, 0x1D159})
+MAX_MARKS = 2   # combining marks kept on one base character; more only stack out of sight
 
 
 def visible_chars(text):
-    return "".join(
-        ch for ch in text
-        if ch in "\n\t" or not (unicodedata.category(ch) in INVISIBLE_CATEGORIES
-                                or unicodedata.category(ch) == "Cc"
-                                or ord(ch) in INVISIBLE_EXTRA))
+    """Remove what renders as nothing, and what can push text out of sight.
+
+    Wide spaces become plain spaces, and a pile of combining marks on one
+    character is cut to MAX_MARKS (Dutch needs at most one after NFC)."""
+    out, marks = [], 0
+    for ch in unicodedata.normalize("NFC", text):
+        cat = unicodedata.category(ch)
+        if ch not in "\n\t" and (cat in INVISIBLE_CATEGORIES or cat == "Cc" or ord(ch) in INVISIBLE_EXTRA):
+            continue
+        if cat in ("Mn", "Me"):
+            marks += 1
+            if marks > MAX_MARKS:
+                continue
+        else:
+            marks = 0
+        out.append(" " if cat == "Zs" else ch)
+    return "".join(out)
+
+
+# A heading at the start of a source line would pose as a section of the
+# extract. Headings are the one structure the script writes itself, so this
+# escape is applied where source text enters (clean()); neutralise() leaves
+# a backslash before `#` as it is, since `\#` can only render a literal `#`.
+HEADING_START = re.compile(r"^([ \t]{0,3})#", re.M)
+
+
+def escape_headings(text):
+    return HEADING_START.sub(lambda m: m.group(1) + "\\#", text)
+
+
+# One container marker at a line start: a list item or a blockquote.
+# A list marker needs a space or tab after it; a blockquote marker does not.
+CONTAINER = re.compile(r"[ \t]*(?:>|(?:[-*+]|\d{1,9}[.)])(?=[ \t]|$))[ \t]*")
+
+
+def escape_containers(body):
+    """Escape a blockquote or heading that opens inside list items or quotes.
+
+    `- > # x` is a heading in a quote in a list item, at any depth. Walking
+    the markers one at a time keeps this linear, where a regex with nested
+    repeats could backtrack. The script never writes a list item that opens
+    with `>` or `#`, so only source text is touched."""
+    lines = body.split("\n")
+    for i, line in enumerate(lines):
+        pos, parts, changed = 0, [], False
+        while True:
+            m = CONTAINER.match(line, pos)
+            if not m:
+                break
+            marker = m.group(0)
+            if pos and marker.strip() == ">":
+                marker = marker.replace(">", "\\>", 1)   # a quote inside a list item
+                changed = True
+            parts.append(marker)
+            pos = m.end()
+        if pos and line.startswith("#", pos):
+            parts.append("\\")
+            changed = True
+        if changed:
+            lines[i] = "".join(parts) + line[pos:]
+    return "\n".join(lines)
 
 
 def neutralise(text):
@@ -206,12 +295,21 @@ def neutralise(text):
 
     The sources are editable by others, and the model reads the raw Markdown,
     so nothing may be hidden from a person reading the rendered page. This is
-    an allow-list, not a list of known tricks: after invisible characters are
-    removed, every `&` and every `<` is escaped except in the `<https://...>`
-    autolinks this script writes, so no entity and no HTML of any kind
-    (comment, tag, CDATA, processing instruction) can form; and below the
-    header every backslash and every `[` is escaped, so no link title, image
-    alt text, footnote or reference definition can form.
+    an allow-list, not a list of known tricks, and it has no exceptions: after
+    invisible characters are removed, every `&` and every `<` is escaped, so
+    no entity and no HTML of any kind (comment, tag, CDATA, processing
+    instruction, autolink) can form. Below the header every backslash, `[`,
+    backtick and `~` is escaped too, so no link title, image alt text,
+    footnote, reference definition, code span or fenced block (a Mermaid
+    block can carry a `%%` comment) can form, and a blockquote or setext
+    underline at the start of a line is escaped, so source text cannot pose as
+    a section of the extract. The script's own links are bare URLs, which
+    need none of these characters.
+
+    Headings are the one structure the script writes itself, so a `#` at the
+    start of a source line is escaped where the text enters: clean() for
+    multi-line fields, and one_line() keeps every other field on its line.
+    The `\\#` that leaves is the one backslash not doubled here.
     Hidden text is not deleted but shown, where a reviewer can see it. Runs
     over the whole extract after every field is in place, so no field and no
     order of cleaning steps can get round it."""
@@ -220,36 +318,36 @@ def neutralise(text):
     # text and links to its sources; everything after it holds source text.
     split = text.find("\n## ")
     split = len(text) if split < 0 else split
-
-    def escape(segment, in_body):
-        # Escape unconditionally rather than recognise syntax: deciding what
-        # counts as an entity or an escaped bracket is exactly where a filter
-        # and a renderer disagree (`&#8203` without `;`, `\\[` = `\` + `[`).
-        segment = segment.replace("&", "&amp;").replace("<", "&lt;")
-        if in_body:
-            segment = segment.replace("\\", "\\\\").replace("[", "\\[")
-        return segment
-
-    parts, pos = [], 0
-    for m in list(AUTOLINK.finditer(text)) + [None]:
-        end = m.start() if m else len(text)
-        for a, b in ((pos, min(end, split)), (max(pos, split), end)):
-            if a < b:
-                parts.append(escape(text[a:b], a >= split))
-        if m:
-            parts.append(m.group(0))   # this script's own <https://...> link: left as written
-            pos = m.end()
-    return "".join(parts)
+    # Escape unconditionally rather than recognise syntax: deciding what
+    # counts as an entity or an escaped bracket is exactly where a filter and
+    # a renderer disagree (`&#8203` without `;`, `\\[` = `\` + `[`).
+    head = text[:split].replace("&", "&amp;").replace("<", "&lt;")
+    body = text[split:].replace("&", "&amp;").replace("<", "&lt;")
+    body = re.sub(r"\\(?!#)", r"\\\\", body)
+    for ch in "[`~$":   # $ opens math on GitHub, where \phantom{} hides text
+        body = body.replace(ch, "\\" + ch)
+    body = re.sub(r"^([ \t]*)(>|=+[ \t]*$|-+[ \t]*$)", r"\1\\\2", body, flags=re.M)
+    return head + escape_containers(body)
 
 
 def write_extract(path, title, stamp, body):
-    """body starts with the title line; the stamp goes in as line 2."""
+    """body starts with the title line; the stamp goes in as line 2.
+
+    Written to a new temporary file beside the extract, then moved into
+    place. mkstemp creates the file itself (O_EXCL), so a symlink planted at
+    a predictable name cannot redirect the write, and two runs at once never
+    share a temporary file."""
     assert body.startswith(title + "\n"), f"{path}: body does not start with its title"
     text = title + "\n" + stamp + "\n" + neutralise(body[len(title) + 1:])
-    tmp = path + ".tmp"
-    with open(tmp, "w", encoding="utf-8", newline="\n") as f:
-        f.write(text)
-    os.replace(tmp, path)
+    directory, name = os.path.split(path)
+    fd, tmp = tempfile.mkstemp(dir=directory or ".", prefix=f".{name}.", suffix=".tmp")
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
+            f.write(text)
+        os.replace(tmp, path)
+    finally:
+        if os.path.exists(tmp):
+            os.unlink(tmp)
 
 
 def clean(value):
@@ -262,18 +360,35 @@ def clean(value):
     v = html.unescape(v).replace("\u00a0", " ")
     v = re.sub(r"<!--.*?(?:-->|$)", "", v, flags=re.S)
     v = re.sub(r"\{\{[^{}]*\}\}", "", v)                        # templates
-    v = re.sub(r"\[\[(?:[^\]|]*\|)?([^\]]*)\]\]", r"\1", v)     # [[target|label]] -> label
-    v = re.sub(r"\[(https?://\S+)\s+([^\]]+)\]", r"\2 (\1)", v)  # [url label]
+    # Bounded repeats: an unbounded class lets a long run of `[[` or
+    # `[http://` cost quadratic time (hours on a 2 MB page).
+    v = re.sub(r"\[\[(?:[^\]|\n]{0,300}\|)?([^\]\n]{0,300})\]\]", r"\1", v)        # [[target|label]] -> label
+    v = re.sub(r"\[(https?://[^\s\]]{1,2000})[ \t]+([^\]\n]{1,500})\]", r"\2 (\1)", v)  # [url label]
     v = re.sub(r"<br\s*/?>", "\n", v, flags=re.I)
     v = re.sub(r"</?(?:span|div|small|sup|sub|u|s)[^>]*>", "", v, flags=re.I)
     # Bullets before bold: once '''x''' is **x**, a line opening in bold
     # would read as a sub-bullet.
     v = re.sub(r"^\*\*\s*", "  - ", v, flags=re.M)              # wiki sub-bullets
     v = re.sub(r"^\*\s*", "- ", v, flags=re.M)                  # wiki bullets
+    # Wiki numbered items. Left as they were, `# item` read as a Markdown
+    # heading; Markdown numbers `1.` items itself.
+    v = re.sub(r"^##\s*", "   1. ", v, flags=re.M)              # wiki numbered sub-items
+    v = re.sub(r"^#\s*", "1. ", v, flags=re.M)                  # wiki numbered items
     v = re.sub(r"'''(.*?)'''", r"**\1**", v)
     v = re.sub(r"''(.*?)''", r"*\1*", v)
     v = re.sub(r"[ \t]+\n", "\n", v)
-    return re.sub(r"\n{3,}", "\n\n", v).strip()
+    # Remove what neutralise() would remove before escaping headings: a line
+    # opening with a zero-width or wide space before `#` passes the escape,
+    # then becomes a heading once that character is gone.
+    v = visible_chars(v)
+    return escape_headings(re.sub(r"\n{3,}", "\n\n", v).strip())
+
+
+def one_line(value):
+    """A name, ID or other single-line field: each line break becomes a space,
+    so source text cannot start a line of its own (a heading, say). Other
+    whitespace is left as the source has it."""
+    return re.sub(r"[\r\n\v\f\x85]+", " ", str(value or "")).strip()
 
 
 def data_notes(notes, what):
@@ -287,21 +402,31 @@ def data_notes(notes, what):
 NORA_QUERY = "[[Elementtype::" + "||".join(NORA_TYPES) + "]]"
 
 
+ASK_LIMIT = 200
+MAX_ASK_PAGES = 100   # 20,000 rows; NORA has under 1,000 elements
+
+
 def nora_ask(query, printouts=()):
-    """Run a Semantic MediaWiki ask query, following offsets; yield (title, printouts)."""
+    """Run a Semantic MediaWiki ask query, following offsets; yield (title, printouts).
+
+    Each next offset must move forward, and the number of pages is capped, so
+    a source that keeps answering with the same offset cannot loop forever."""
     offset = 0
-    while True:
-        q = query + "".join(f"|?{p}" for p in printouts) + f"|limit=200|offset={offset}"
+    for _page in range(MAX_ASK_PAGES):
+        q = query + "".join(f"|?{p}" for p in printouts) + f"|limit={ASK_LIMIT}|offset={offset}"
         data = http_json(NORA_API, {"action": "ask", "query": q, "format": "json"})
-        if "query" not in data:
-            raise SourceUnavailable(f"NORA ask query failed: {data.get('error', data)}")
+        if not isinstance(data, dict) or "query" not in data:
+            raise SourceUnavailable(f"NORA ask query failed: {data.get('error', data) if isinstance(data, dict) else data}")
         results = data["query"].get("results") or {}
         for title, row in results.items():
-            yield title, row.get("printouts", {})
+            yield one_line(title), row.get("printouts", {})
         nxt = data.get("query-continue-offset")
         if not nxt or not results:
             return
+        if int(nxt) <= offset:
+            raise SourceUnavailable(f"NORA ask query did not advance (offset {offset}, next {nxt})")
         offset = int(nxt)
+    raise SourceUnavailable(f"NORA ask query returned more than {MAX_ASK_PAGES} pages")
 
 
 def nora_live_version():
@@ -341,41 +466,55 @@ def nora_pages(roots):
 
 
 def element_props(text):
-    """Parse the `{{#element: |Key=Value ...}}` block; values may span lines."""
-    m = re.search(r"\{\{#[Ee]lement:(.*?)\n\}\}", text, re.S)
-    body = m.group(1) if m else text
+    """Parse the `{{#element: |Key=Value ...}}` block; values may span lines.
+
+    Found with str.find, not a lazy regex, which would rescan to the end of
+    the page from every unclosed opener."""
+    starts = [i for i in (text.find("{{#element:"), text.find("{{#Element:")) if i >= 0]
+    start = min(starts) if starts else -1
+    end = text.find("\n}}", start) if start >= 0 else -1
+    body = text[start + len("{{#element:"):end] if start >= 0 and end >= 0 else text
     props, key = {}, None
     for line in body.split("\n"):
-        km = re.match(r"^\|\s*([^=|]+?)\s*=(.*)$", line)
-        if km:
-            key = km.group(1).strip()
-            props[key] = km.group(2)
+        name, eq, value = line[1:].partition("=") if line.startswith("|") else ("", "", "")
+        if eq and name.strip() and "|" not in name:
+            key = name.strip()
+            props[key] = value
         elif key is not None:
             props[key] += "\n" + line
     return {k: v.strip() for k, v in props.items()}
+
+
+TIMESTAMP = re.compile(r"\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ")
 
 
 def nora_load(roots):
     type_re = re.compile(r"\|\s*Elementtype\s*=\s*([^\n|}]+)")
     elements, latest = {t: {} for t in NORA_TYPES}, ""
     for title, ts, text in nora_pages(roots):
-        latest = max(latest, ts)
+        if TIMESTAMP.fullmatch(ts or ""):   # it goes into the header and the version
+            latest = max(latest, ts)
         m = type_re.search(text)
         if not m or m.group(1).strip() not in NORA_TYPES:
             continue
         p = element_props(text)
         if p.get("Status actualiteit") != "Actueel":
             continue
-        elements[m.group(1).strip()][title] = p
+        elements[m.group(1).strip()][one_line(title)] = p
     return elements, latest
 
 
 def split_list(value):
-    return [x.strip() for x in html.unescape(value).split(",") if x.strip()]
+    return [one_line(x) for x in html.unescape(value).split(",") if x.strip()]
 
 
 def nora_url(title):
-    return NORA_WIKI + title.replace(" ", "_")
+    """A bare URL that holds nothing neutralise() escapes: letters (accented
+    ones too) and digits stay readable, anything else outside `_(),-.'` is
+    percent-encoded."""
+    return NORA_WIKI + "".join(
+        c if c.isalnum() or c in "_(),-.'" else urllib.parse.quote(c, safe="")
+        for c in title.replace(" ", "_"))
 
 
 def nora_id_key(eid):
@@ -386,7 +525,10 @@ def nora_id_key(eid):
 def nora_build(elements, latest, source_desc):
     kwd, kd = elements["Kernwaarde"], elements["Kwaliteitsdoel"]
     nap, imp = elements["Architectuurprincipe"], elements["Implicatie"]
-    kd_id = {t: p.get("ID", "?") for t, p in kd.items()}
+    def eid(p):
+        return one_line(p.get("ID")) or "?"
+
+    kd_id = {t: eid(p) for t, p in kd.items()}
     notes = []
 
     def resolve_kd(names, owner):
@@ -395,7 +537,7 @@ def nora_build(elements, latest, source_desc):
             if n in kd_id:
                 out.append(f"{kd_id[n]} {n.replace(' (Doel)', '')}")
             else:
-                notes.append(f"{owner} references kwaliteitsdoel `{n}`, which is not a current kwaliteitsdoel.")
+                notes.append(f"{owner} references kwaliteitsdoel \"{n}\", which is not a current kwaliteitsdoel.")
         return out
 
     imps_by_nap = {t: [] for t in nap}
@@ -407,7 +549,7 @@ def nora_build(elements, latest, source_desc):
                 imps_by_nap[target].append((title, p))
                 hit = True
         if not hit:
-            notes.append(f"Implicatie {p.get('ID', '?')} `{title}` realises `{', '.join(targets) or '(nothing)'}`, "
+            notes.append(f"Implicatie {eid(p)} \"{title}\" realises \"{', '.join(targets) or '(nothing)'}\", "
                          "which is not a current architectuurprincipe; it is omitted.")
 
     L = [NORA_TITLE + "\n"]
@@ -415,7 +557,7 @@ def nora_build(elements, latest, source_desc):
              "[noraonline.nl](https://www.noraonline.nl). Copyright Staat der Nederlanden, licensed "
              "[CC BY-ND 3.0 NL](http://creativecommons.org/licenses/by-nd/3.0/nl/). "
              "Text is reproduced verbatim (wiki markup removed); it must not be adapted or translated.\n>\n"
-             f"> **Dump:** {source_desc}, latest revision {latest[:10]}. "
+             f"> **Export:** {source_desc}, latest revision {latest[:10] or 'unknown'}. "
              f"**Extracted:** {date.today().isoformat()} with `nl-references.py`.\n>\n"
              "> **Scope:** elements with *Status actualiteit = Actueel* only: "
              f"{len(kwd)} kernwaarden, {len(kd)} kwaliteitsdoelen, {len(nap)} architectuurprincipes, "
@@ -429,35 +571,35 @@ def nora_build(elements, latest, source_desc):
     L.append("")
 
     L.append("## Kernwaarden\n")
-    for title, p in sorted(kwd.items(), key=lambda x: nora_id_key(x[1].get("ID", ""))):
-        L.append(f"### {p.get('ID')} {title}\n")
-        L.append(f"- **Bron:** <{nora_url(title)}>")
-        L.append(f"- **Motiveert:** {', '.join(resolve_kd(split_list(p.get('Motiveert', '')), p.get('ID')))}\n")
+    for title, p in sorted(kwd.items(), key=lambda x: nora_id_key(eid(x[1]))):
+        L.append(f"### {eid(p)} {title}\n")
+        L.append(f"- **Bron:** {nora_url(title)}")
+        L.append(f"- **Motiveert:** {', '.join(resolve_kd(split_list(p.get('Motiveert', '')), eid(p)))}\n")
         L.append(clean(p.get("Omschrijving", "")) + "\n")
 
     L.append("## Kwaliteitsdoelen\n")
-    for title, p in sorted(kd.items(), key=lambda x: nora_id_key(x[1].get("ID", ""))):
-        L.append(f"### {p.get('ID')} {title.replace(' (Doel)', '')}\n")
-        L.append(f"- **Bron:** <{nora_url(title)}>\n")
+    for title, p in sorted(kd.items(), key=lambda x: nora_id_key(eid(x[1]))):
+        L.append(f"### {eid(p)} {title.replace(' (Doel)', '')}\n")
+        L.append(f"- **Bron:** {nora_url(title)}\n")
         L.append(clean(p.get("Beschrijving", "")) + "\n")
 
     L.append("## Architectuurprincipes\n")
-    for title, p in sorted(nap.items(), key=lambda x: nora_id_key(x[1].get("ID", ""))):
-        nid = p.get("ID")
+    for title, p in sorted(nap.items(), key=lambda x: nora_id_key(eid(x[1]))):
+        nid = eid(p)
         L.append(f"### {nid} {title}\n")
-        L.append(f"- **Bron:** <{nora_url(title)}>")
+        L.append(f"- **Bron:** {nora_url(title)}")
         L.append(f"- **Realiseert:** {', '.join(resolve_kd(split_list(p.get('Realiseert', '')), nid))}\n")
         L.append(f"**Stelling:** {clean(p.get('Stelling', ''))}\n")
         L.append(f"**Rationale:**\n\n{clean(p.get('Rationale', ''))}\n")
-        rows = sorted(imps_by_nap[title], key=lambda x: nora_id_key(x[1].get("ID", "")))
+        rows = sorted(imps_by_nap[title], key=lambda x: nora_id_key(eid(x[1])))
         if not rows:
-            notes.append(f"Architectuurprincipe {nid} `{title}` has no current implicaties.")
+            notes.append(f"Architectuurprincipe {nid} \"{title}\" has no current implicaties.")
             continue
         L.append(f"#### Implicaties van {nid}\n")
         for ititle, ip in rows:
             layers = sorted(set(re.findall(r"[1-5]", ip.get("Laag binnen vijflaagsmodel", ""))))
             layer_txt = ", ".join(f"{x} {NORA_LAYERS[x]}" for x in layers) or "geen laag opgegeven"
-            L.append(f"- **{ip.get('ID')} {ititle}** — laag: {layer_txt} — <{nora_url(ititle)}>  ")
+            L.append(f"- **{eid(ip)} {ititle}** — laag: {layer_txt} — {nora_url(ititle)}  ")
             L.append("  " + clean(ip.get("Beschrijving", "")).replace("\n", "\n  "))
         L.append("")
 
@@ -475,15 +617,21 @@ def nora_from_api(live=None):
     return version, {NORA_FILE: nora_build(elements, latest, "NORA Online API export")}
 
 
+def read_local(path):
+    """A --from-* file, with the same size cap as a download."""
+    with open(path, "rb") as f:
+        data = f.read(MAX_BYTES + 1)
+    if len(data) > MAX_BYTES:
+        raise SourceUnavailable(f"{path}: larger than {MAX_BYTES // 2**20} MB, refused")
+    return data
+
+
 def nora_from_dumps(paths):
-    roots = []
-    for p in paths:
-        with open(p, "rb") as f:
-            roots.append(parse_xml(f.read(), p))
+    roots = [parse_xml(read_local(p), p) for p in paths]
     elements, latest = nora_load(roots)
-    names = ", ".join(os.path.basename(p) for p in paths)
+    names = ", ".join(one_line(os.path.basename(p)) for p in paths)
     text = nora_build(elements, latest, f"NORA Online export ({names})")
-    return f"dump-{latest[:19] or 'unknown'}", {NORA_FILE: text}
+    return f"dump-{latest or 'unknown'}", {NORA_FILE: text}
 
 
 # ---------------------------------------------------------------- GEMMA
@@ -503,30 +651,39 @@ def gemma_live_version():
         when = record["commit"]["committer"]["date"][:10]
     except (KeyError, TypeError) as exc:
         raise SourceUnavailable(f"GitHub returned an unexpected commit record: {exc!r}") from exc
+    if not re.fullmatch(r"\d{4}-\d\d-\d\d", when or ""):   # goes into the stamp line
+        raise SourceUnavailable(f"GitHub returned an invalid commit date: {when!r}")
     return f"{sha[:7]}-{when}", sha
 
 
-def gemma_model(data):
-    root = parse_xml(data, GEMMA_EXPORT)
-    prop_names = {p.get("identifier"): p.findtext(AM_NS + "name") or ""
+# Properties written out as paragraphs (through clean()); every other
+# property is a single-line field.
+GEMMA_TEXT_PROPS = {"Toelichting", "GEMMA-toelichting", "Implicaties"}
+
+
+def gemma_model(data, label=GEMMA_EXPORT):
+    root = parse_xml(data, label)
+    prop_names = {p.get("identifier"): one_line(p.findtext(AM_NS + "name"))
                   for p in root.iter(AM_NS + "propertyDefinition")}
     elements = {}
     for el in root.iter(AM_NS + "element"):
         props = {}
         for p in el.findall(f"{AM_NS}properties/{AM_NS}property"):
-            props[prop_names.get(p.get("propertyDefinitionRef"), "?")] = p.findtext(AM_NS + "value") or ""
+            key = prop_names.get(p.get("propertyDefinitionRef"), "?")
+            value = p.findtext(AM_NS + "value") or ""
+            props[key] = value if key in GEMMA_TEXT_PROPS else one_line(value)
         elements[el.get("identifier")] = {
             "id": el.get("identifier"),
             "type": el.get(XSI_TYPE),
             "gtype": props.get("GEMMA type", ""),
-            "name": (el.findtext(AM_NS + "name") or "").strip(),
+            "name": one_line(el.findtext(AM_NS + "name")),
             "doc": el.findtext(AM_NS + "documentation") or "",
             "props": props,
         }
     relations = [(r.get(XSI_TYPE), r.get("source"), r.get("target"))
                  for r in root.iter(AM_NS + "relationship")]
     if not elements:
-        raise SourceUnavailable(f"{GEMMA_EXPORT} holds no elements")
+        raise SourceUnavailable(f"{label} holds no elements")
     return elements, relations
 
 
@@ -620,7 +777,7 @@ def gemma_principles(g, source_desc):
         pr = p["props"]
         pid = pr.get("ID") or "(geen ID)"
         if not pr.get("ID"):
-            notes.append(f"Principle `{p['name']}` has no ID.")
+            notes.append(f"Principle \"{p['name']}\" has no ID.")
         L.append(f"### {pid} {p['name']}\n")
         L.append(f"- **Bron:** {pr.get('Heeft bron', '—')}")
         if pr.get("NORA principe"):
@@ -669,7 +826,7 @@ def gemma_components(g, source_desc):
         for c in sorted((c for c in comps if c["gtype"] == gtype), key=lambda c: c["name"].casefold()):
             pr = c["props"]
             L.append(f"### {c['name']}\n")
-            meta = [f"Status: {pr.get('GEMMA status') or '—'}", f"Object ID: `{pr.get('Object ID', '—')}`"]
+            meta = [f"Status: {pr.get('GEMMA status') or '—'}", f"Object ID: {pr.get('Object ID') or '—'}"]
             biv = [f"{k[0]}: {pr[k]}" for k in ("Beschikbaarheid", "Integriteit", "Vertrouwelijkheid") if pr.get(k)]
             if biv:
                 bbn = pr.get("BBN", "")
@@ -684,7 +841,7 @@ def gemma_components(g, source_desc):
             if c["doc"]:
                 L.append(clean(c["doc"]) + "\n")
             else:
-                notes.append(f"{gtype} `{c['name']}` has no description.")
+                notes.append(f"{gtype} \"{c['name']}\" has no description.")
             if pr.get("Toelichting"):
                 L.append(f"**Toelichting:** {clean(pr['Toelichting'])}\n")
 
@@ -713,6 +870,9 @@ def gemma_components(g, source_desc):
     return "\n".join(L)
 
 
+MAX_TREE_DEPTH = 40
+
+
 def gemma_functions(g, source_desc):
     notes = []
     funcs = {i for i, e in g.el.items() if e["type"] == "BusinessFunction"}
@@ -739,6 +899,10 @@ def gemma_functions(g, source_desc):
 
     def render(fid, depth):
         e = g.el[fid]
+        if depth > MAX_TREE_DEPTH:   # a malformed model must not exhaust the stack
+            notes.append(f"The tree under \"{g.name(fid)}\" is deeper than {MAX_TREE_DEPTH} levels; "
+                         "the deeper levels are not shown.")
+            return
         if fid in seen:   # modelled under several parents: point back to the first occurrence
             ref = f"*{e['name']}* — zie eerder in dit document (valt onder meerdere bovenliggende functies)"
             L.append(f"{'  ' * max(depth - 4, 0)}- {ref}" if depth > 3 else f"- {ref}\n")
@@ -766,6 +930,13 @@ def gemma_functions(g, source_desc):
 
     for r in roots:
         render(r, 1)
+    # Functions in an aggregation cycle have no root above them, so the tree
+    # never reaches them; report them rather than let them vanish.
+    unreached = sorted(funcs - seen, key=lambda i: g.name(i).casefold())
+    if unreached:
+        notes.append(f"{len(unreached)} bedrijfsfunctie(s) are reachable from no top-level function "
+                     "(an aggregation cycle) and are not in the tree: "
+                     + ", ".join(f"\"{g.name(f)}\"" for f in unreached) + ".")
     if shared:
         L.append("\n## Functies onder meerdere bovenliggende functies\n")
         L.append("Modelled deliberately under more than one parent; described at their first occurrence.\n")
@@ -775,8 +946,8 @@ def gemma_functions(g, source_desc):
     return "\n".join(L)
 
 
-def gemma_build(data, source_desc):
-    elements, relations = gemma_model(data)
+def gemma_build(data, source_desc, label=GEMMA_EXPORT):
+    elements, relations = gemma_model(data, label)
     g = Graph(elements, relations, [])
     return {
         "gemma-principes.md": gemma_principles(g, source_desc),
@@ -795,9 +966,11 @@ def gemma_from_api(live=None):
 
 
 def gemma_from_xml(path):
-    with open(path, "rb") as f:
-        data = f.read()
-    return "file", gemma_build(data, f"local copy `{os.path.basename(path)}`")
+    """(version, texts) from a local copy; the version is a hash of the file,
+    so two different copies never share one."""
+    data = read_local(path)
+    version = "xml-" + hashlib.sha256(data).hexdigest()[:12]
+    return version, gemma_build(data, f"local copy `{one_line(os.path.basename(path))}`", label=path)
 
 
 # ---------------------------------------------------------------- refresh logic
@@ -833,14 +1006,37 @@ def existing_state(directory, files):
         return "file", versions.pop() if len(versions) == 1 else None
     if present < len(files) or len(versions) > 1:
         return "partial", None
-    return "api", versions.pop()
+    (version,) = versions   # exactly one, or the check above is gone
+    return "api", version
 
+
+ORIGIN = {"missing": None, "manual": "hand", "file": "file", "api": "api", "partial": "api"}
 
 # A source that answers in a shape this script does not read (a format
 # change) is handled like one that cannot be reached: the existing extract
 # is kept and the error is reported, rather than the run ending in a
 # traceback the command cannot read.
-SOURCE_ERRORS = (SourceUnavailable, KeyError, IndexError, TypeError, AttributeError, ValueError)
+SOURCE_ERRORS = (SourceUnavailable, KeyError, IndexError, TypeError, AttributeError, ValueError,
+                 RecursionError)
+
+
+def describe(exc):
+    return str(exc) if isinstance(exc, (SourceUnavailable, OSError)) else f"unexpected response: {exc!r}"
+
+
+def kept_or_missing(result, state, version, note, exc):
+    """The status when no new extract could be built: the existing one is
+    used as it is (offline), or there is none (missing)."""
+    if state == "missing":
+        return {**result, "status": "missing", "origin": None, "version": None, "error": describe(exc)}
+    return {**result, "status": "offline", "origin": ORIGIN[state], "version": version,
+            "note": note, "error": describe(exc)}
+
+
+def write_all(source, directory, origin, version, texts, files):
+    os.makedirs(directory, exist_ok=True)
+    for name, title in files.items():
+        write_extract(os.path.join(directory, name), title, stamp_line(source, origin, version), texts[name])
 
 
 def refresh(source, directory, force, live_version, build, files):
@@ -850,59 +1046,62 @@ def refresh(source, directory, force, live_version, build, files):
     returns (version, texts), reusing a live result it is given, so a
     refresh asks the source for its version once."""
     state, version = existing_state(directory, files)
-    paths = [os.path.join(directory, n) for n in files]
-    result = {"source": source, "files": paths}
+    result = {"source": source, "files": [os.path.join(directory, n) for n in files]}
     if state in ("manual", "file") and not force:
         how = "placed by hand" if state == "manual" else "built from a local file"
-        return {**result, "status": "manual", "version": version,
+        return {**result, "status": "manual", "origin": ORIGIN[state], "version": version,
                 "note": f"extract was {how}; not refreshed (use --force to replace it)"}
     try:
         live = None
         if state == "api" and not force:
             live = live_version()
             if live[0] == version:
-                return {**result, "status": "current", "version": version}
+                return {**result, "status": "current", "origin": "api", "version": version}
         new_version, texts = build(live)
     except SOURCE_ERRORS as exc:
-        error = str(exc) if isinstance(exc, SourceUnavailable) else f"unexpected response: {exc!r}"
-        if state == "missing":
-            return {**result, "status": "missing", "version": None, "error": error}
         note = ("source unreachable; existing extract used as is" if state != "partial" else
                 "source unreachable; some extract files are missing or from different "
                 "versions, and the existing ones are used as they are")
-        return {**result, "status": "offline", "version": version, "note": note, "error": error}
-    os.makedirs(directory, exist_ok=True)
-    for name, title in files.items():
-        write_extract(os.path.join(directory, name), title, stamp_line(source, "api", new_version), texts[name])
-    return {**result, "status": "fetched" if state == "missing" else "refreshed", "version": new_version}
+        return kept_or_missing(result, state, version, note, exc)
+    write_all(source, directory, "api", new_version, texts, files)
+    return {**result, "status": "fetched" if state == "missing" else "refreshed", "origin": "api",
+            "version": new_version}
 
 
 def from_local(source, directory, force, build, files):
     """Build one source's extracts from local files (--from-dump, --from-xml).
 
     Replaces an extract this script wrote, fetched or built from a file, but
-    not one placed by hand unless --force is given."""
-    paths = [os.path.join(directory, n) for n in files]
-    result = {"source": source, "files": paths}
-    if existing_state(directory, files)[0] == "manual" and not force:
-        return {**result, "status": "manual", "version": None,
+    not one placed by hand unless --force is given. A local file that cannot
+    be read or used leaves the existing extract as it is."""
+    state, version = existing_state(directory, files)
+    result = {"source": source, "files": [os.path.join(directory, n) for n in files]}
+    if state == "manual" and not force:
+        return {**result, "status": "manual", "origin": "hand", "version": None,
                 "note": "an extract placed by hand is in the way; not replaced (use --force to replace it)"}
-    version, texts = build()
-    os.makedirs(directory, exist_ok=True)
-    for name, title in files.items():
-        write_extract(os.path.join(directory, name), title, stamp_line(source, "file", version), texts[name])
-    return {**result, "status": "fetched", "version": version}
+    try:
+        new_version, texts = build()
+    except (OSError, *SOURCE_ERRORS) as exc:
+        return kept_or_missing(result, state, version,
+                               "local file could not be used; existing extract used as is", exc)
+    write_all(source, directory, "file", new_version, texts, files)
+    return {**result, "status": "fetched" if state == "missing" else "refreshed", "origin": "file",
+            "version": new_version}
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0],
+                                 epilog=__doc__.split("\n\n", 1)[1],
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("source", choices=("nora", "gemma", "all"))
     ap.add_argument("--dir", default=DEFAULT_DIR, help=f"output directory (default: {DEFAULT_DIR})")
     ap.add_argument("--force", action="store_true",
                     help="rebuild even when current, and replace extracts placed by hand")
-    ap.add_argument("--from-dump", nargs="+", metavar="XML",
-                    help="build the NORA extract offline from NORA Online MediaWiki XML export file(s)")
+    # One file per option, repeated for more: a list option would swallow the
+    # source argument after it (`--from-dump x.xml nora`).
+    ap.add_argument("--from-dump", action="append", metavar="XML",
+                    help="build the NORA extract offline from a NORA Online MediaWiki XML export "
+                         "(repeat for several files)")
     ap.add_argument("--from-xml", metavar="XML",
                     help="build the GEMMA extracts offline from a local copy of `GEMMA release.xml`")
     args = ap.parse_args(argv)
@@ -913,27 +1112,26 @@ def main(argv=None):
 
     nora_files = {NORA_FILE: NORA_TITLE}
     results = []
-    try:
-        if args.source in ("nora", "all"):
-            if args.from_dump:
-                results.append(from_local("nora", args.dir, args.force,
-                                          lambda: nora_from_dumps(args.from_dump), nora_files))
-            else:
-                results.append(refresh("nora", args.dir, args.force,
-                                       nora_live_version, nora_from_api, nora_files))
-        if args.source in ("gemma", "all"):
-            if args.from_xml:
-                results.append(from_local("gemma", args.dir, args.force,
-                                          lambda: gemma_from_xml(args.from_xml), GEMMA_FILES))
-            else:
-                results.append(refresh("gemma", args.dir, args.force,
-                                       gemma_live_version, gemma_from_api, GEMMA_FILES))
-    except (OSError, *SOURCE_ERRORS) as exc:  # a --from-* file missing or not a usable export
-        log(f"error: {exc}")
-        return 2
+    # Each source gets its own result, so a failure in one never hides the
+    # other's status.
+    if args.source in ("nora", "all"):
+        if args.from_dump:
+            results.append(from_local("nora", args.dir, args.force,
+                                      lambda: nora_from_dumps(args.from_dump), nora_files))
+        else:
+            results.append(refresh("nora", args.dir, args.force,
+                                   nora_live_version, nora_from_api, nora_files))
+    if args.source in ("gemma", "all"):
+        if args.from_xml:
+            results.append(from_local("gemma", args.dir, args.force,
+                                      lambda: gemma_from_xml(args.from_xml), GEMMA_FILES))
+        else:
+            results.append(refresh("gemma", args.dir, args.force,
+                                   gemma_live_version, gemma_from_api, GEMMA_FILES))
     for r in results:
-        print(json.dumps(r, ensure_ascii=False))
-    return 0 if all(r["status"] != "missing" for r in results) else 2
+        # ASCII only: a Windows console or pipe may not take UTF-8.
+        print(json.dumps(r), flush=True)
+    return 0 if all(r["status"] != "missing" for r in results) else 1
 
 
 if __name__ == "__main__":

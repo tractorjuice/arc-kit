@@ -19,7 +19,7 @@
 
 **Assessment scope**: [Service / system / programme assessed]
 
-**NORA source**: [Extract filename], dump latest revision [YYYY-MM-DD] — 17 architectuurprincipes (NAP01–NAP17)
+**NORA source**: [Extract filename], source version [the extract's `version=` value] — 17 architectuurprincipes (NAP01–NAP17)
 
 **GEMMA source**: [Extract filename and source version — or "GEMMA mode off: (reason)"]
 
@@ -47,7 +47,7 @@
 | Providing organisation and bestuurslaag | [e.g. Gemeente / Provincie / Waterschap / Rijk / ZBO] |
 | Service type | [Citizen-facing / business-facing / internal / chain (keten) service] |
 | NORA source document | [Path to extract in `projects/000-global/external/`] |
-| NORA dump date | [Latest revision date stated in the extract] |
+| NORA source version | [The extract's `version=` value, and the latest revision date in its header] |
 | Principle set applied | NORA architectuurprincipes NAP01–NAP17 (*Status actualiteit = Actueel*). Retired basisprincipes (BP) and afgeleide principes (AP) are not assessed. |
 | GEMMA mode | [On — gemeente, GEMMA principles extract present / Off — (reason)] |
 | GEMMA source document | [Path to GEMMA principles extract and its source version, or "—"] |
@@ -68,7 +68,13 @@
 | … | … | … | … | … |
 | NAP17 | [Title from extract] | [Status] | [n / n / n / n / n] | [Gap or —] |
 
-**Conformance rule** — a NAP is *Conformant* only when every applicable implicatie is Implemented; *Not conformant* when no applicable implicatie is Implemented or Partial; *Undetermined* when evidence is missing for most applicable implicaties; otherwise *Partially conformant*. *Not applicable* requires a written justification.
+**Conformance rule** — Apply the rules in this order; the first that matches decides:
+
+1. **Not applicable** — every implicatie is Not applicable, each with a written justification.
+2. **Conformant** — every applicable implicatie is Implemented.
+3. **Undetermined** — more than half of the applicable implicaties are Unknown.
+4. **Not conformant** — no applicable implicatie is Implemented or Partial.
+5. **Partially conformant** — any other combination.
 
 ---
 
@@ -198,7 +204,7 @@ Deliberate, justified departures from a NAP or GAP ("pas toe of leg uit"). Each 
 
 | Doc ID | Filename | Type | Source Location | Description |
 |--------|----------|------|-----------------|-------------|
-| [DOC_ID] | [nora-principes.md] | External document | projects/000-global/external/ | NORA architectuurprincipes extract — NORA Online dump, latest revision [YYYY-MM-DD]. NORA © Staat der Nederlanden, CC BY-ND 3.0 NL |
+| [DOC_ID] | [nora-principes.md] | External document | projects/000-global/external/ | NORA architectuurprincipes extract — NORA Online, source version [version]. NORA © Staat der Nederlanden, CC BY-ND 3.0 NL |
 | [DOC_ID] | [gemma-principes.md] *(GEMMA mode only)* | External document | projects/000-global/external/ | GEMMA architectuurprincipes extract — [source version]. GEMMA © VNG Realisatie, EUPL; NORA-derived text CC BY-ND 3.0 NL |
 | WEB-1 | <https://www.noraonline.nl> | Web URL | noraonline.nl | NORA — Nederlandse Overheid Referentie Architectuur (source of the extract; not fetched during this assessment) |
 

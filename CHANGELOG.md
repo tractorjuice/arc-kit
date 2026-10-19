@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **NORA and GEMMA for the Netherlands overlay.** `/arckit:nl-nora` assesses a Dutch government service against the NORA architectuurprincipes NAP01–NAP17, per implicatie and per Vijflaagsmodel layer, rolled up to kwaliteitsdoelen and kernwaarden; for a gemeente it adds the GEMMA principles alongside, never merged. `/arckit:nl-gemma` maps a gemeente's application landscape onto the GEMMA referentiecomponenten and bedrijfsfuncties: coverage, overlap, gaps, standards, data exchange and roadmap candidates. ArcKit ships no NORA or GEMMA text: both commands first run the overlay's `scripts/nl-references.py`, which builds local extracts from the NORA Online API and the GEMMA Archi-repository and refreshes them only when the source has changed. Extracts placed by hand are never overwritten, and offline builds from downloaded files are supported. New doc-types `NORA` and `GEMMA`. Contributed by @trednets (#941).
-- **Overlay scripts reach the other AI tools.** The converter now copies a script that only an overlay carries into the generated extensions, as it already did for overlay reference files. `nl-references.py` is the first. Contributed by @trednets (#951).
+- **Overlay scripts reach the other AI tools.** The converter now copies a script that only an overlay carries into the generated extensions, as it already did for overlay reference files: the EU overlay's CSF scorer (`csf-score.mjs`) now reaches them, and the NL overlay's `nl-references.py` does too. Contributed by @trednets (#951).
 
 ### Fixed
 
