@@ -11,6 +11,7 @@ Markdown. Like test_article_listing.py, this runs in the Python suite.
 
 from __future__ import annotations
 
+import html
 import importlib.util
 import os
 import re
@@ -173,3 +174,53 @@ def test_heading_ids_match_github():
     body = gen.add_heading_ids("<h2>Orange Book 4Ts: Risk Responses</h2>\n<h2>Inputs</h2>\n<h2>Inputs</h2>")
     assert '<h2 id="orange-book-4ts-risk-responses">' in body
     assert '<h2 id="inputs">' in body and '<h2 id="inputs-1">' in body
+
+
+def site_pages() -> list[Path]:
+    return sorted((DOCS / "guide").rglob("*.html")) + sorted((DOCS / "share").glob("*.html"))
+
+
+def test_mermaid_blocks_become_diagrams():
+    # Neither viewer loaded Mermaid, so every ```mermaid block showed as code.
+    gen = load_generator()
+    site = gen.Site(guides=frozenset(), articles=frozenset())
+    page = gen.Page("guide", "guide/roles/x.html", "docs/guides/roles/x.md")
+    body = gen.render_body("# X\n\n```mermaid\ngraph TD\n    A --> B\n```\n\n```text\nA --> B\n```\n", page, site)
+    assert '<pre class="mermaid">graph TD\n    A --&gt; B\n</pre>' in body
+    assert '<pre><code class="language-text">A --&gt; B\n</code></pre>' in body
+    assert gen.diagram_scripts(body, "../../") == [gen.MERMAID_JS, '<script src="../../diagrams.js"></script>']
+    assert gen.diagram_scripts("<pre><code>x</code></pre>", "../") == []
+
+
+def test_pages_load_mermaid_only_with_a_diagram():
+    # Mermaid is 3 MB, so only a page with a diagram loads it.
+    for page in site_pages():
+        text = page.read_text(encoding="utf-8")
+        has_diagram = '<pre class="mermaid">' in text
+        assert ("/mermaid.min.js" in text) == has_diagram, page.relative_to(REPO)
+        assert ('diagrams.js"></script>' in text) == has_diagram, page.relative_to(REPO)
+    assert (DOCS / "diagrams.js").is_file()
+
+
+# The first statement of a Mermaid diagram names its type. A block without one,
+# such as a `subgraph ... end` snippet that teaches the syntax, draws as a
+# syntax error, so it belongs in a ```text fence.
+MERMAID_TYPE = re.compile(
+    r"(flowchart|graph|sequenceDiagram|classDiagram(-v2)?|stateDiagram(-v2)?|erDiagram|journey|gantt|pie|"
+    r"quadrantChart|requirementDiagram|gitGraph|C4(Context|Container|Component|Dynamic|Deployment)|mindmap|"
+    r"timeline|zenuml|sankey(-beta)?|xychart(-beta)?|block(-beta)?|packet(-beta)?|kanban|architecture-beta|"
+    r"radar-beta|treemap(-beta)?|wardley-beta)\b"
+)
+
+
+def test_every_diagram_names_its_type():
+    problems = []
+    for page in site_pages():
+        for source in re.findall(r'<pre class="mermaid">(.*?)</pre>', page.read_text(encoding="utf-8"), re.S):
+            lines = [line.strip() for line in html.unescape(source).splitlines()]
+            lines = [line for line in lines if line and not line.startswith("%%")]
+            if lines and lines[0] == "---":  # front matter
+                lines = lines[lines.index("---", 1) + 1:]
+            if not lines or not MERMAID_TYPE.match(lines[0]):
+                problems.append(f"{page.relative_to(REPO)}: {lines[0] if lines else '(empty)'}")
+    assert not problems, "Mermaid blocks with no diagram type; fence them as ```text:\n  " + "\n  ".join(problems)

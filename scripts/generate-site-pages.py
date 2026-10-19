@@ -20,7 +20,9 @@ This script renders the Markdown when the site is built and writes:
   docs/sitemap.xml         the entries between the site-pages markers
 
 Each page has its own title, description, canonical URL, preview tags,
-structured data, and the text itself in the HTML. The two viewers are the
+structured data, and the text itself in the HTML. A ```mermaid block becomes a
+diagram: the page loads a pinned Mermaid and docs/diagrams.js, which draw it
+in the browser, and shows the block's source until they do. The two viewers are the
 templates: the parts between their <!-- page:* --> markers are filled in and
 the <!-- viewer-only --> parts dropped. In the browser the viewers now only
 forward old ?guide= and ?a= links to these pages.
@@ -71,6 +73,13 @@ SITE = "https://arckit.org"
 REPO_BLOB = "https://github.com/tractorjuice/arc-kit/blob/main/"
 DEFAULT_IMAGE = f"{SITE}/og-image.png"
 
+# The Mermaid release /arckit:pages loads and the mermaid-syntax rules were
+# checked against. 11.14.0 misread hyphens in wardley-beta names; 11.15.0
+# reads them. The hash pins the file, so change the two together.
+MERMAID_JS = ('<script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js" '
+              'integrity="sha384-yQ4mmBBT+vhTAwjFH0toJXNYJ6O4usWnt6EPIdWwrRvx2V/n5lXuDZQwQFeSFydF" '
+              'crossorigin="anonymous"></script>')
+
 # Site-only additions for the guides UK public sector teams search for
 # (OpenSEO keyword research, 18 October 2026). `title` replaces the guide's
 # H1 in the page title and preview cards; `fde` adds the ArcKit FDE panel.
@@ -113,6 +122,7 @@ CARD_SUMMARY_RE = re.compile(r'app-article-card__summary">(.*?)</p>', re.S)
 ATTR_RE = re.compile(r'\b(href|src)="([^"]*)"')
 SCHEME_RE = re.compile(r"^[A-Za-z][A-Za-z0-9+.-]*:")
 HEADING_RE = re.compile(r"<h([2-6])>(.*?)</h\1>", re.S)
+MERMAID_RE = re.compile(r'<pre><code class="language-mermaid">(.*?)</code></pre>', re.S)
 LIST_START_RE = re.compile(r"^([-*+]|\d+[.)])\s")
 SKIP_PREFIXES = ("#", "!", "---", ">", "|", "<", "```", "[!")
 
@@ -260,7 +270,13 @@ def render_body(md: str, page: Page, site: Site) -> str:
     body = MD.render(md)
     body = re.sub(r"<h1>.*?</h1>\n?", "", body, count=1, flags=re.S)  # the hero shows it
     body = add_heading_ids(body)
+    body = MERMAID_RE.sub(r'<pre class="mermaid">\1</pre>', body)
     return ATTR_RE.sub(lambda m: f'{m.group(1)}="{esc(rewrite_url(html.unescape(m.group(2)), m.group(1), page, site))}"', body)
+
+
+def diagram_scripts(body: str, root: str) -> list[str]:
+    """Mermaid and docs/diagrams.js, for a page with a diagram and no other."""
+    return [MERMAID_JS, f'<script src="{root}diagrams.js"></script>'] if '<pre class="mermaid">' in body else []
 
 
 def prefix_template(template: str, depth: int) -> str:
@@ -407,6 +423,7 @@ def guide_pages(site: Site) -> dict[Path, str]:
         content.append(f'<div id="content" class="app-markdown">\n{body}</div>')
         if films.get(name):
             content.append(f'<script src="{root}films.js"></script>')
+        content += diagram_scripts(body, root)
 
         pages[GUIDE_OUT / f"{name}.html"] = fill(template, depth, {
             "page:meta": meta_block(title, clip(lead, 155), clip(lead, 220), url, DEFAULT_IMAGE, f"{SITE}/guides/{name}.md"),
@@ -510,6 +527,7 @@ def article_pages(site: Site, listed: list[dict[str, str]], tracked: set[str]) -
         if hero:  # the hero shows it; drop the same image where the article repeats it
             body = re.sub(rf'<p><img src="\.\./{re.escape(esc(hero))}"[^>]*></p>\n?', "", body)
         content.append(f'<article id="content" class="app-markdown">\n{body}</article>')
+        content += diagram_scripts(body, "../")
 
         pages[SHARE_OUT / f"{slug}.html"] = fill(template, 1, {
             "page:meta": meta_block(card["title"], clip(summary, 155), summary, url, image,

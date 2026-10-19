@@ -629,7 +629,7 @@ Final x/y coordinates are calculated for each node, respecting minimum spacing, 
 </table>
 <h3 id="boundary-styling">Boundary Styling</h3>
 <p>Use dashed borders for trust boundaries and solid borders for system boundaries:</p>
-<pre><code class="language-mermaid">%% Trust boundary (dashed)
+<pre><code class="language-text">%% Trust boundary (dashed)
 subgraph TrustBoundary[&quot;DMZ&quot;]
     style TrustBoundary stroke:#1168BD,stroke-dasharray:5 5,fill:none
 end
@@ -705,7 +705,7 @@ end
 <p>This alone resolves most edge crossing issues.</p>
 <h3 id="step-2-add-subgraph-grouping">Step 2: Add Subgraph Grouping</h3>
 <p>Group related elements using <code>subgraph</code> blocks:</p>
-<pre><code class="language-mermaid">subgraph Services[&quot;Business Services&quot;]
+<pre><code class="language-text">subgraph Services[&quot;Business Services&quot;]
     PaymentService[&quot;Payment Service&quot;]
     NotificationService[&quot;Notification Service&quot;]
     AuditService[&quot;Audit Service&quot;]

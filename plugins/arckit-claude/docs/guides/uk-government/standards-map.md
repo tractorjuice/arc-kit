@@ -9,7 +9,7 @@ This reference maps the major UK government functional standards, digital polici
 ## Relationship Overview
 
 ```mermaid
-flowchart TD
+flowchart LR
     GOVS001["GovS 001<br/>Government Functions"]
 
     GOVS001 --> GOVS002["GovS 002<br/>Project Delivery"]
@@ -67,6 +67,10 @@ flowchart TD
 
     GOVS010 --> DQF
     GOVS013 --> COUNTER_FRAUD_FUN["GovS 013 Guidance & Fraud Functional Standard"]
+
+    classDef default fill:#f3f2f1,stroke:#b1b4b6,color:#0b0c0c
+    classDef govs fill:#1d70b8,stroke:#003078,color:#ffffff
+    class GOVS001,GOVS002,GOVS003,GOVS004,GOVS005,GOVS006,GOVS007,GOVS008,GOVS009,GOVS010,GOVS011,GOVS013,GOVS014,GOVS015 govs
 ```
 
 *Blue nodes* (GovS) are functional standards published by the Cabinet Office. *Grey nodes* represent the downstream policies, playbooks, and assurance activities most relevant to digital delivery.

@@ -436,7 +436,7 @@
 <p>This reference maps the major UK government functional standards, digital policies, and assurance frameworks that apply to technology-enabled services. It highlights how top-level <strong>GovS functional standards</strong> drive the application of specific guidance such as the <strong>Service Standard</strong>, <strong>Technology Code of Practice</strong>, <strong>AI Playbook</strong>, and security, commercial, and finance controls.</p>
 <hr />
 <h2 id="relationship-overview">Relationship Overview</h2>
-<pre><code class="language-mermaid">flowchart TD
+<pre class="mermaid">flowchart LR
     GOVS001[&quot;GovS 001&lt;br/&gt;Government Functions&quot;]
 
     GOVS001 --&gt; GOVS002[&quot;GovS 002&lt;br/&gt;Project Delivery&quot;]
@@ -494,7 +494,11 @@
 
     GOVS010 --&gt; DQF
     GOVS013 --&gt; COUNTER_FRAUD_FUN[&quot;GovS 013 Guidance &amp; Fraud Functional Standard&quot;]
-</code></pre>
+
+    classDef default fill:#f3f2f1,stroke:#b1b4b6,color:#0b0c0c
+    classDef govs fill:#1d70b8,stroke:#003078,color:#ffffff
+    class GOVS001,GOVS002,GOVS003,GOVS004,GOVS005,GOVS006,GOVS007,GOVS008,GOVS009,GOVS010,GOVS011,GOVS013,GOVS014,GOVS015 govs
+</pre>
 <p><em>Blue nodes</em> (GovS) are functional standards published by the Cabinet Office. <em>Grey nodes</em> represent the downstream policies, playbooks, and assurance activities most relevant to digital delivery.</p>
 <hr />
 <h2 id="lifecycle-application">Lifecycle Application</h2>
@@ -557,6 +561,8 @@
 </ul>
 <p>Use this map when planning UK government digital or AI services to ensure the correct policies, approvals, and evidence are in scope from the outset.</p>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js" integrity="sha384-yQ4mmBBT+vhTAwjFH0toJXNYJ6O4usWnt6EPIdWwrRvx2V/n5lXuDZQwQFeSFydF" crossorigin="anonymous"></script>
+<script src="../../diagrams.js"></script>
         </div>
     </main>
 

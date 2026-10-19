@@ -378,7 +378,7 @@ graph TD
     H -->|Informs| F[ARC-id-BKLG-v1.0.md]
     H -->|Informs| G[ARC-id-SOW-v1.0.md]
 
-    style H fill:#e1f5ff
+    style H fill:#e1f5ff,color:#0b0c0c
 ```
 
 **Input Artifacts**:
