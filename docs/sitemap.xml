@@ -37,6 +37,24 @@
         <priority>0.8</priority>
     </url>
     <url>
+        <loc>https://arckit.org/fde/</loc>
+        <lastmod>2026-10-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/fde/architects.html</loc>
+        <lastmod>2026-10-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/fde/samples/governance-pack.html</loc>
+        <lastmod>2026-10-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/roles.html</loc>
         <lastmod>2026-06-15</lastmod>
         <changefreq>monthly</changefreq>

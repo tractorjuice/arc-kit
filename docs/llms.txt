@@ -31,8 +31,9 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 
 ## Expert help
 
-- [ArcKit FDE](https://arckit.org/fde/): ArcKit Forward Deploy Engineering, the paid service run by ArcKit's creator. A senior architect embeds with a UK public sector team and uses ArcKit to produce a board-ready governance pack in five days: architecture principles, requirements, an Orange Book risk register and a stakeholder map, with evidence shaped around the Green Book, the Orange Book, the GDS Service Standard, the Technology Code of Practice and GovS 005. Fixed price: £25K over five consecutive days, or £35K one day a week for five weeks. Optional embedded follow-on covers ADRs, vendor evaluation, service assessment preparation, and AI and data governance. For programmes heading into a gate, a procurement, an assurance review or a board. The service has its own [llms.txt](https://tractorjuice.github.io/arckit-fde/llms.txt).
-- [ArcKit architects](https://tractorjuice.github.io/arckit-fde/architects.html): Architects who deliver ArcKit engagements, and how to request a referral or join the network.
+- [ArcKit FDE](https://arckit.org/fde/): ArcKit Forward Deploy Engineering, the paid service run by ArcKit's creator. A senior architect embeds with a UK public sector team and uses ArcKit to produce a board-ready governance pack in five days: architecture principles, requirements, an Orange Book risk register and a stakeholder map, with evidence shaped around the Green Book, the Orange Book, the GDS Service Standard, the Technology Code of Practice and GovS 005. Fixed price: £25K over five consecutive days, or £35K one day a week for five weeks. Optional embedded follow-on covers ADRs, vendor evaluation, service assessment preparation, and AI and data governance. For programmes heading into a gate, a procurement, an assurance review or a board.
+- [Sample bootstrap pack](https://arckit.org/fde/samples/governance-pack.html): Fictional sample outputs, for a digital licensing service, showing the structure of the principles, requirements, risk and stakeholder documents the five days produce.
+- [ArcKit architects](https://arckit.org/fde/architects.html): Architects who deliver ArcKit engagements, and how to request a referral or join the network.
 
 ## Guides by phase
 
