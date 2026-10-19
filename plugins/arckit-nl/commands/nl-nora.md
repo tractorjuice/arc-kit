@@ -20,6 +20,11 @@ handoffs:
   - command: risk
     description: Carry open NORA and GEMMA gaps into the risk register
     condition: "High-priority gaps are not yet reflected in ARC-*-RISK"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(python3 "${CLAUDE_PLUGIN_ROOT}/scripts/nl-references.py" *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 
@@ -172,11 +177,9 @@ Do not compute an overall percentage or a single NORA or GEMMA score. Report the
 
 **CRITICAL**: Use the **Write tool** to create the assessment document.
 
-1. **Detect version**: Glob for `projects/{project_id}/ARC-{PROJECT_ID}-NORA-v*.md`:
-   - No existing file → VERSION="1.0"
-   - Existing file → minor increment (e.g. 1.0 → 1.1) when refreshing evidence; major increment (e.g. 1.1 → 2.0) when the service scope, the GEMMA mode or an extract version has changed
+1. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> NORA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it. A major increment also applies when the service scope, the GEMMA mode or an extract version has changed.
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-NORA-v{VERSION}`
+   - Document ID: the filename from step 1, without the `.md` extension
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}

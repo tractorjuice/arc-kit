@@ -17,6 +17,11 @@ handoffs:
   - command: principles
     description: Reflect GEMMA alignment in the organisation's architecture principles
     condition: "ARC-000-PRIN does not yet reference GEMMA"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(python3 "${CLAUDE_PLUGIN_ROOT}/scripts/nl-references.py" *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 
@@ -153,11 +158,9 @@ Using the extract's tree and its *Ondersteund door* lines: for each bedrijfsfunc
 
 **CRITICAL**: Use the **Write tool** to create the document.
 
-1. **Detect version**: Glob for `projects/{project_id}/ARC-{PROJECT_ID}-GEMMA-v*.md`:
-   - No existing file → VERSION="1.0"
-   - Existing file → minor increment (e.g. 1.0 → 1.1) when refreshing evidence; major increment (e.g. 1.1 → 2.0) when the scope, a landscape source or the GEMMA extract version has changed
+1. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> GEMMA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it. A major increment also applies when the scope, a landscape source or the GEMMA extract version has changed.
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-GEMMA-v{VERSION}`
+   - Document ID: the filename from step 1, without the `.md` extension
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
