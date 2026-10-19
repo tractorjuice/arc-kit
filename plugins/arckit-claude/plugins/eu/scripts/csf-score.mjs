@@ -45,15 +45,14 @@
  * Pure Node, zero npm dependencies — see generate-document-id.mjs for why
  * that matters (the marketplace never runs `npm install` for plugin scripts).
  *
- * Non-Claude command targets (Codex, Gemini, OpenCode, Copilot) do not ship
- * this script — `scripts/converter.py` deliberately excludes it from the
- * generated extensions, matching `generate-document-id.mjs`'s NOT being
- * copied there either for scoring purposes. Those targets still ship the
- * catalogue JSON itself (merged like `templates/`), so the command markdown
- * instructs the model to compute the same per-criterion arithmetic directly
- * from the catalogue when this script is unavailable — the artefact must
- * show that arithmetic either way, so the score is checkable without a
- * scorer at all.
+ * `scripts/converter.py` ships arckit-eu's copy to the generated extensions
+ * with the overlay's scripts/, and the catalogue JSON to their data/ (merged
+ * like `templates/`). A runtime that reads scripts from the project's
+ * `.arckit/scripts/` (Codex, OpenCode, Copilot, Kimi) may not have it, so the
+ * command markdown instructs the model to compute the same per-criterion
+ * arithmetic directly from the catalogue when this script is unavailable —
+ * the artefact must show that arithmetic either way, so the score is
+ * checkable without a scorer at all.
  */
 
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
