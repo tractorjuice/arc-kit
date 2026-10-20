@@ -438,6 +438,7 @@ The full table of public test repos is in [CLAUDE.md](https://github.com/tractor
 ## Optional
 
 - [Contributors](https://arckit.org/contributors.html): Credits and acknowledgements.
+- [ArcKit on GitHub](https://arckit.org/on-github.html): Public repositories that use or mention ArcKit, updated weekly. Data: https://arckit.org/on-github.json.
 - [Guide viewer](https://arckit.org/guide-viewer.html): Standalone viewer for individual guides.
 - [Knowledge compounding](https://arckit.org/guides/knowledge-compounding.md): Reusable vendor profiles.
 - [Session memory](https://arckit.org/guides/session-memory.md): Cross-session state.

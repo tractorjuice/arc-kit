@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX6P1GM31K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SX6P1GM31K');
+    </script>
+    <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Public GitHub repositories that use or mention ArcKit, found by a weekly search: who has ArcKit documents, who has it set up, and who writes about it.">
+    <title>ArcKit on GitHub | Who Uses and Mentions ArcKit</title>
+    <meta name="keywords" content="ArcKit adoption, ArcKit users, ArcKit on GitHub, ArcKit examples, architecture governance repositories">
+    <meta name="author" content="ArcKit">
+    <meta property="og:title" content="ArcKit on GitHub">
+    <meta property="og:description" content="Public GitHub repositories that use or mention ArcKit, found by a weekly search: who has ArcKit documents, who has it set up, and who writes about it.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arckit.org/on-github.html">
+    <meta property="og:site_name" content="ArcKit">
+    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ArcKit on GitHub">
+    <meta name="twitter:description" content="Public GitHub repositories that use or mention ArcKit, found by a weekly search: who has ArcKit documents, who has it set up, and who writes about it.">
+    <meta name="twitter:image" content="https://arckit.org/og-image.png">
+    <link rel="canonical" href="https://arckit.org/on-github.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="assets/favicon-192.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- GOV.UK Frontend v5.13.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+    <link rel="stylesheet" href="theme.css?v=4.12.3">
+    <link rel="stylesheet" href="heroes.css?v=4.12.3">
+
+    <style>
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+
+        [class*="govuk-"] {
+            font-family: inherit;
+        }
+
+        /* Nav Bar */
+        .app-nav-bar {
+            background: #0B1F33;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #505a5f;
+        }
+
+        .app-nav-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-nav-bar__list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-nav-bar__item a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            border-top: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+        }
+
+        .app-nav-bar__item a:hover,
+        .app-nav-bar__item a:focus {
+            background: #1d1d1d;
+            border-bottom-color: #1d70b8;
+            color: #ffffff;
+        }
+
+        .app-nav-bar__item--active a {
+            border-bottom-color: #1d70b8;
+        }
+
+        .app-nav-bar__brand {
+            color: #ffffff;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            display: block;
+        }
+
+        .app-nav-bar__brand:hover,
+        .app-nav-bar__brand:focus {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .app-nav-bar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 48em) {
+            .app-nav-bar__toggle { display: block; }
+            .app-nav-bar__list { display: none; flex-direction: column; width: 100%; }
+            .app-nav-bar__list--open { display: flex; }
+            .app-nav-bar__inner { flex-wrap: wrap; }
+            .app-nav-bar__item a { padding: 0.75rem 1rem; border-bottom: none; border-left: 3px solid transparent; }
+            .app-nav-bar__item a:hover,
+            .app-nav-bar__item a:focus { border-left-color: #1d70b8; border-bottom: none; }
+            .app-nav-bar__item--active a { border-left-color: #1d70b8; border-bottom: none; }
+        }
+
+        /* Hero: GitHub slate with a contribution-graph grid */
+        .app-page-hero--github {
+            background: linear-gradient(135deg, #2d333b 0%, #0d1117 100%);
+        }
+
+        .app-page-hero--github::before {
+            background:
+                conic-gradient(from 270deg at 11px 11px, rgba(87, 171, 90, 0.34) 25%, transparent 0) 0 0 / 70px 42px,
+                conic-gradient(from 270deg at 11px 11px, rgba(87, 171, 90, 0.18) 25%, transparent 0) 28px 14px / 56px 70px,
+                conic-gradient(from 270deg at 11px 11px, rgba(255, 255, 255, 0.05) 25%, transparent 0) 0 0 / 14px 14px;
+            -webkit-mask-image: linear-gradient(90deg, transparent 30%, #000 75%);
+            mask-image: linear-gradient(90deg, transparent 30%, #000 75%);
+        }
+
+        html.dark-mode .app-page-hero--github {
+            background: linear-gradient(135deg, #22272e 0%, #010409 100%);
+        }
+
+        /* Stat cards (same as the home page) */
+        .app-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin: 0 0 2rem;
+        }
+        .app-stat-card {
+            background: #f3f2f1;
+            padding: 1.25rem 1rem;
+            text-align: center;
+            border-left: 4px solid #1d70b8;
+        }
+        .app-stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1d70b8;
+            line-height: 1;
+            font-variant-numeric: tabular-nums;
+        }
+        .app-stat-label {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #0b0c0c;
+            margin-top: 0.5rem;
+        }
+        .app-stat-sub {
+            font-size: 0.875rem;
+            color: #505a5f;
+            margin-top: 0.25rem;
+        }
+        html.dark-mode .app-stat-sub { color: #a0a8b0; }
+
+        /* Week-by-week small multiples */
+        .app-trend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0 1.5rem;
+        }
+        .app-trend {
+            position: relative;
+        }
+        .app-trend__title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 0.25rem;
+        }
+        .app-trend svg {
+            display: block;
+            width: 100%;
+            height: 120px;
+            overflow: visible;
+        }
+        .app-trend .grid { stroke: #b1b4b6; stroke-width: 1; }
+        .app-trend .line { fill: none; stroke: var(--app-accent); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+        .app-trend .dot { fill: var(--app-accent); stroke: #fff; stroke-width: 2; }
+        .app-trend .cross { stroke: #505a5f; stroke-width: 1; }
+        .app-trend .axis { fill: #505a5f; font-size: 12px; }
+        .app-trend .end { fill: #0b0c0c; font-size: 13px; font-weight: 700; }
+        .app-trend__tip {
+            position: absolute;
+            top: 0;
+            pointer-events: none;
+            background: #0b0c0c;
+            color: #fff;
+            font-size: 0.8125rem;
+            padding: 0.25rem 0.5rem;
+            white-space: nowrap;
+            transform: translateX(-50%);
+        }
+        .app-trend__tip strong { display: block; font-size: 1rem; }
+        :root { --app-accent: #1d70b8; }
+        html.dark-mode { --app-accent: #4da3ff; }
+        html.dark-mode .app-trend .grid { stroke: #555555; }
+        html.dark-mode .app-trend .dot { stroke: #1a1a1a; }
+        html.dark-mode .app-trend .cross { stroke: #a0a8b0; }
+        html.dark-mode .app-trend .axis { fill: #a0a8b0; }
+        html.dark-mode .app-trend .end { fill: #f0f0f0; }
+        html.dark-mode .app-trend__tip { background: #f0f0f0; color: #0b0c0c; }
+
+        /* Tabs (same buttons as Getting Started) */
+        .app-platform-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 2rem 0 1.5rem;
+        }
+        .app-platform-tab {
+            padding: 0.625rem 1.25rem;
+            border: 2px solid #b1b4b6;
+            background: #fff;
+            color: #0b0c0c;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+        }
+        .app-platform-tab:hover {
+            border-color: #1d70b8;
+            background: #f8f8f8;
+        }
+        .app-platform-tab--active,
+        .app-platform-tab--active:hover {
+            border-color: #1d70b8;
+            background: #1d70b8;
+            color: #fff;
+        }
+        .app-platform-tab:focus-visible {
+            outline: 3px solid #ffdd00;
+            outline-offset: 0;
+        }
+
+        /* Filters (same as AI Commands) */
+        .app-filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f3f2f1;
+        }
+        .app-filter-controls label {
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+        .app-filter-controls select,
+        .app-filter-controls input[type="text"] {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 2px solid #0b0c0c;
+            max-width: 100%;
+        }
+        .app-filter-controls input[type="text"] { min-width: 200px; }
+        .app-command-count {
+            font-weight: 700;
+            color: #505a5f;
+        }
+
+        /* Tables */
+        .app-gh-table-container {
+            overflow-x: auto;
+            margin: 0 0 1.5rem;
+        }
+        .app-gh-table {
+            width: 100%;
+            min-width: 46rem;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+        .app-gh-table th,
+        .app-gh-table td {
+            padding: 0.5rem 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #b1b4b6;
+            vertical-align: top;
+        }
+        .app-gh-table th {
+            background: #f3f2f1;
+            white-space: nowrap;
+            padding: 0;
+        }
+        .app-gh-table th button {
+            all: unset;
+            box-sizing: border-box;
+            display: block;
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .app-gh-table th button:hover { background: #e8e6e3; }
+        .app-gh-table th button:focus-visible { outline: 3px solid #ffdd00; }
+        .app-gh-table th button::after { content: '\2195'; margin-left: 0.4rem; opacity: 0.4; }
+        .app-gh-table th[aria-sort="ascending"] button::after { content: '\2191'; opacity: 1; }
+        .app-gh-table th[aria-sort="descending"] button::after { content: '\2193'; opacity: 1; }
+        .app-gh-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+        .app-gh-table th.num button { text-align: right; }
+        .app-gh-table .nowrap { white-space: nowrap; }
+        .app-gh-table tbody tr:hover { background: #f8f8f8; }
+        .app-gh-table a { font-weight: 700; overflow-wrap: break-word; }
+        .app-gh-table .app-gh-sub {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            color: #505a5f;
+            font-size: 0.8125rem;
+            margin-top: 0.125rem;
+            max-width: 32rem;
+        }
+        .app-gh-table .app-gh-where {
+            font-weight: 400;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            max-width: 26rem;
+        }
+        .app-gh-table .app-gh-kind { min-width: 10rem; }
+        .app-gh-table .govuk-tag { margin-left: 0.375rem; font-size: 0.75rem; padding: 0 0.3rem; vertical-align: 1px; }
+        .app-gh-types { max-width: 18rem; color: #505a5f; }
+        html.dark-mode .app-gh-table th { background: #2a2a2a; color: #f0f0f0; }
+        html.dark-mode .app-gh-table th button:hover { background: #333333; }
+        html.dark-mode .app-gh-table td { border-bottom-color: #555555; color: #f0f0f0; }
+        html.dark-mode .app-gh-table tbody tr:hover { background: #252525; }
+        html.dark-mode .app-gh-table .app-gh-sub,
+        html.dark-mode .app-gh-types { color: #a0a8b0; }
+
+        .app-gh-panel[hidden] { display: none; }
+        .app-gh-status { margin: 1rem 0 2rem; }
+
+        /* Footer */
+        .app-footer {
+            background: #0b0c0c;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .app-footer a { color: white; text-decoration: underline; }
+        .app-footer a:hover { color: #5694ca; }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://arckit.org/on-github.html",
+        "name": "ArcKit on GitHub",
+        "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
+    }
+    </script>
+</head>
+<body class="govuk-template__body">
+    <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <nav class="app-nav-bar" aria-label="Main navigation">
+        <div class="govuk-width-container app-nav-bar__inner">
+            <a href="index.html" class="app-nav-bar__brand">ArcKit</a>
+            <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
+            <ul class="app-nav-bar__list" id="nav-menu">
+                <li class="app-nav-bar__item"><a href="commands.html">AI Commands</a></li>
+                <li class="app-nav-bar__item"><a href="use-cases.html">Example Projects</a></li>
+                <li class="app-nav-bar__item"><a href="guides.html">Guides</a></li>
+                <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
+                <li class="app-nav-bar__item"><a href="articles.html">Articles</a></li>
+                <li class="app-nav-bar__item"><a href="getting-started.html">Getting Started</a></li>
+                <li class="app-nav-bar__item"><a href="contributors.html">Contributors</a></li>
+                <li class="app-nav-bar__item"><a href="fde/">FDE</a></li>
+            </ul>
+            <div class="app-nav-bar__icons">
+                <a href="https://github.com/tractorjuice/arc-kit" class="app-icon-link" aria-label="GitHub repository" title="GitHub repository">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                </a>
+                <a href="https://discord.gg/HsA4Y3hQ4" target="_blank" rel="noopener" class="app-icon-link" aria-label="Discord community" title="Discord community">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/arckit-org/" target="_blank" rel="noopener" class="app-icon-link" aria-label="ArcKit on LinkedIn" title="ArcKit on LinkedIn">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>
+                </a>
+                <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-page-hero app-page-hero--github">
+        <div class="govuk-width-container app-page-hero__content">
+            <div class="app-page-hero__stat" id="gh-updated">Updated every Monday</div>
+            <h1 class="app-page-hero__title">ArcKit on GitHub</h1>
+            <p class="app-page-hero__description">Public repositories that use ArcKit or mention it. We search GitHub every Monday and list everything we find.</p>
+        </div>
+    </div>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-width-container">
+            <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
+
+            <noscript>
+                <div class="govuk-warning-text">
+                    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                    <strong class="govuk-warning-text__text">This page needs JavaScript to show the lists. The data behind it is in <a href="on-github.json" class="govuk-link">on-github.json</a>.</strong>
+                </div>
+            </noscript>
+            <p class="govuk-body app-gh-status" id="gh-status" role="status">Loading this week&rsquo;s results&hellip;</p>
+
+            <div id="gh-content" hidden>
+                <div class="app-stats-grid">
+                    <div class="app-stat-card">
+                        <div class="app-stat-number" data-stat="using"></div>
+                        <div class="app-stat-label">Using ArcKit</div>
+                        <div class="app-stat-sub" data-sub="using"></div>
+                    </div>
+                    <div class="app-stat-card">
+                        <div class="app-stat-number" data-stat="organisations"></div>
+                        <div class="app-stat-label">Organisations</div>
+                        <div class="app-stat-sub" data-sub="organisations">own repos using ArcKit</div>
+                    </div>
+                    <div class="app-stat-card">
+                        <div class="app-stat-number" data-stat="mentioning"></div>
+                        <div class="app-stat-label">Mentioning ArcKit</div>
+                        <div class="app-stat-sub" data-sub="mentioning">repos: lists, articles, docs and code</div>
+                    </div>
+                    <div class="app-stat-card">
+                        <div class="app-stat-number" data-stat="issues_prs"></div>
+                        <div class="app-stat-label">Issues and PRs</div>
+                        <div class="app-stat-sub" data-sub="issues_prs">in other people&rsquo;s repos</div>
+                    </div>
+                    <div class="app-stat-card">
+                        <div class="app-stat-number" data-stat="commits"></div>
+                        <div class="app-stat-label">Commits</div>
+                        <div class="app-stat-sub" data-sub="commits"></div>
+                    </div>
+                </div>
+
+                <div class="govuk-inset-text">
+                    <p class="govuk-body">ArcKit sends no usage data, so these numbers come only from searching public GitHub. Private repositories, other code hosts and the plugin installs themselves never show up, so the real use is higher. Other projects are also called ArcKit, and we leave those out.</p>
+                    <p class="govuk-body govuk-!-margin-bottom-0">Don&rsquo;t want your repository listed here? <a href="https://github.com/tractorjuice/arc-kit/issues/new?title=Please+leave+my+repo+off+ArcKit+on+GitHub" class="govuk-link">Open an issue</a> and we&rsquo;ll take it off the next weekly update. Want to tell us how your organisation uses ArcKit? <a href="https://github.com/tractorjuice/arc-kit/blob/main/ADOPTERS.md" class="govuk-link">Add it to the adopters list</a>.</p>
+                </div>
+
+                <h2 class="govuk-heading-l govuk-!-margin-top-8">Week by week</h2>
+                <p class="govuk-body" id="gh-trend-note"></p>
+                <div class="app-trend-grid" id="gh-trend"></div>
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Show the weekly numbers as a table</span></summary>
+                    <div class="govuk-details__text">
+                        <div class="app-gh-table-container">
+                            <table class="app-gh-table">
+                                <thead><tr><th scope="col">Week</th><th scope="col" class="num">Using</th><th scope="col" class="num">Organisations</th><th scope="col" class="num">Mentioning</th><th scope="col" class="num">Issues and PRs</th><th scope="col" class="num">Repos with commits</th></tr></thead>
+                                <tbody id="gh-history"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </details>
+
+                <h2 class="govuk-heading-l govuk-!-margin-top-8">Who uses it and who mentions it</h2>
+                <div class="app-platform-tabs" role="tablist" aria-label="Lists">
+                    <button class="app-platform-tab app-platform-tab--active" role="tab" id="tab-using" aria-controls="panel-using" aria-selected="true" data-tab="using">Using ArcKit</button>
+                    <button class="app-platform-tab" role="tab" id="tab-mentioning" aria-controls="panel-mentioning" aria-selected="false" tabindex="-1" data-tab="mentioning">Mentioning ArcKit</button>
+                    <button class="app-platform-tab" role="tab" id="tab-threads" aria-controls="panel-threads" aria-selected="false" tabindex="-1" data-tab="threads">Issues and PRs</button>
+                    <button class="app-platform-tab" role="tab" id="tab-commits" aria-controls="panel-commits" aria-selected="false" tabindex="-1" data-tab="commits">Commits</button>
+                </div>
+
+                <section class="app-gh-panel" role="tabpanel" id="panel-using" aria-labelledby="tab-using">
+                    <p class="govuk-body">A repository counts as using ArcKit when it holds ARC documents that ArcKit wrote, or has ArcKit set up for Claude Code, Codex, Copilot or another assistant without any documents yet.</p>
+                    <div class="app-filter-controls">
+                        <div>
+                            <label for="using-owner">Owner:</label>
+                            <select id="using-owner" data-filter="owner_kind">
+                                <option value="">Anyone</option>
+                                <option value="Organisation">Organisations</option>
+                                <option value="Person">People</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="using-search">Search:</label>
+                            <input type="text" id="using-search" data-search placeholder="Repo, description or document type">
+                        </div>
+                        <div class="app-command-count" aria-live="polite" data-count></div>
+                    </div>
+                    <div class="app-gh-table-container">
+                        <table class="app-gh-table" data-table="using">
+                            <caption class="govuk-visually-hidden">Repositories using ArcKit</caption>
+                            <thead><tr>
+                                <th scope="col" data-key="repo"><button type="button">Repository</button></th>
+                                <th scope="col" data-key="owner_kind"><button type="button">Owner</button></th>
+                                <th scope="col" class="num" data-key="arc_files"><button type="button">ARC documents</button></th>
+                                <th scope="col" data-key="doc_types"><button type="button">Document types</button></th>
+                                <th scope="col" data-key="created"><button type="button">Created</button></th>
+                                <th scope="col" data-key="last_push"><button type="button">Last push</button></th>
+                            </tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="app-gh-panel" role="tabpanel" id="panel-mentioning" aria-labelledby="tab-mentioning" hidden>
+                    <p class="govuk-body">Repositories that name ArcKit without using it: awesome lists and trend trackers, articles, documentation, code that borrows from ArcKit, and READMEs.</p>
+                    <div class="app-filter-controls">
+                        <div>
+                            <label for="mentioning-kind">Kind:</label>
+                            <select id="mentioning-kind" data-filter="kind">
+                                <option value="">All kinds</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="mentioning-search">Search:</label>
+                            <input type="text" id="mentioning-search" data-search placeholder="Repo, description or mention">
+                        </div>
+                        <div class="app-command-count" aria-live="polite" data-count></div>
+                    </div>
+                    <div class="app-gh-table-container">
+                        <table class="app-gh-table" data-table="mentions">
+                            <caption class="govuk-visually-hidden">Repositories mentioning ArcKit</caption>
+                            <thead><tr>
+                                <th scope="col" data-key="repo"><button type="button">Repository</button></th>
+                                <th scope="col" data-key="kind"><button type="button">Kind</button></th>
+                                <th scope="col" data-key="where"><button type="button">Where it&rsquo;s mentioned</button></th>
+                                <th scope="col" class="num" data-key="stars"><button type="button">Stars</button></th>
+                                <th scope="col" data-key="last_push"><button type="button">Last push</button></th>
+                            </tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="app-gh-panel" role="tabpanel" id="panel-threads" aria-labelledby="tab-threads" hidden>
+                    <p class="govuk-body">Issues and pull requests in other people&rsquo;s repositories that mention ArcKit.</p>
+                    <div class="app-filter-controls">
+                        <div>
+                            <label for="threads-type">Type:</label>
+                            <select id="threads-type" data-filter="type">
+                                <option value="">Issues and PRs</option>
+                                <option value="Issue">Issues</option>
+                                <option value="PR">Pull requests</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="threads-search">Search:</label>
+                            <input type="text" id="threads-search" data-search placeholder="Repo, title or author">
+                        </div>
+                        <div class="app-command-count" aria-live="polite" data-count></div>
+                    </div>
+                    <div class="app-gh-table-container">
+                        <table class="app-gh-table" data-table="threads">
+                            <caption class="govuk-visually-hidden">Issues and pull requests mentioning ArcKit</caption>
+                            <thead><tr>
+                                <th scope="col" data-key="date"><button type="button">Date</button></th>
+                                <th scope="col" data-key="title"><button type="button">Title</button></th>
+                                <th scope="col" data-key="repo"><button type="button">Repository</button></th>
+                                <th scope="col" data-key="type"><button type="button">Type</button></th>
+                                <th scope="col" data-key="state"><button type="button">State</button></th>
+                                <th scope="col" data-key="author"><button type="button">Author</button></th>
+                            </tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="app-gh-panel" role="tabpanel" id="panel-commits" aria-labelledby="tab-commits" hidden>
+                    <p class="govuk-body">Repositories whose commit messages mention ArcKit, with the latest one. Commits copied from ArcKit&rsquo;s own history are left out.</p>
+                    <div class="app-filter-controls">
+                        <div>
+                            <label for="commits-search">Search:</label>
+                            <input type="text" id="commits-search" data-search placeholder="Repo or message">
+                        </div>
+                        <div class="app-command-count" aria-live="polite" data-count></div>
+                    </div>
+                    <div class="app-gh-table-container">
+                        <table class="app-gh-table" data-table="commits">
+                            <caption class="govuk-visually-hidden">Repositories with commits mentioning ArcKit</caption>
+                            <thead><tr>
+                                <th scope="col" data-key="repo"><button type="button">Repository</button></th>
+                                <th scope="col" class="num" data-key="commits"><button type="button">Commits</button></th>
+                                <th scope="col" data-key="latest"><button type="button">Latest</button></th>
+                                <th scope="col" data-key="message"><button type="button">Latest message</button></th>
+                            </tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="govuk-width-container">
+            <p class="govuk-body-s"><a href="index.html" class="govuk-link">Back to ArcKit</a> | <a href="https://github.com/tractorjuice/arc-kit" class="govuk-link">GitHub</a> | <a href="privacy.html" class="govuk-link">Privacy</a> | MIT License</p>
+        </div>
+    </footer>
+
+    <!-- GOV.UK Frontend JavaScript -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js" integrity="sha384-DwGEYeDIkSBDH4+n4Z+tY7m0/hKLvETQmD6glhDiHn0lFo3hffImqh39zfNvHVrd" crossorigin="anonymous"></script>
+    <script type="module">
+        import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
+        initAll()
+    </script>
+<script src="theme.js"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            var GH = 'https://github.com/';
+
+            // Everything on this page comes from other people's repositories, so it is only ever set as text.
+            function el(tag, attrs, children) {
+                var node = document.createElement(tag);
+                Object.keys(attrs || {}).forEach(function (k) { node.setAttribute(k, attrs[k]); });
+                (children || []).forEach(function (c) {
+                    if (c === null || c === undefined || c === '') return;
+                    node.appendChild(typeof c === 'string' || typeof c === 'number' ? document.createTextNode(String(c)) : c);
+                });
+                return node;
+            }
+
+            function link(url, text, cls) {
+                if (typeof url !== 'string' || url.indexOf(GH) !== 0) return el('span', {}, [text]);
+                return el('a', { href: url, class: 'govuk-link' + (cls ? ' ' + cls : ''), rel: 'nofollow noopener' }, [text]);
+            }
+
+            function types(r) {
+                if (!r.doc_types) return el('td', { class: 'app-gh-types' }, ['Set up: ' + (r.setup || 'plugin settings')]);
+                var all = r.doc_types.split(', ');
+                if (all.length <= 10) return el('td', { class: 'app-gh-types' }, [r.doc_types]);
+                return el('td', { class: 'app-gh-types', title: r.doc_types }, [all.slice(0, 9).join(', ') + ' and ' + (all.length - 9) + ' more']);
+            }
+
+            function sub(text) { return text ? el('span', { class: 'app-gh-sub' }, [text]) : null; }
+            function newTag(row) { return row.new ? el('strong', { class: 'govuk-tag govuk-tag--green' }, ['New']) : null; }
+
+            function day(s) { return new Date(s + 'T00:00:00Z'); }
+            var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            function fmt(s, month) {
+                if (!s) return '';
+                var d = day(s), m = MONTHS[d.getUTCMonth()];
+                return d.getUTCDate() + ' ' + (month === 'long' ? m : m.slice(0, 3)) + ' ' + d.getUTCFullYear();
+            }
+            function plural(n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+
+            // ---- Tables ----------------------------------------------------------
+            var TABLES = {
+                using: {
+                    sort: ['arc_files', -1], noun: ['repo', 'repos'],
+                    search: ['repo', 'description', 'doc_types', 'setup'],
+                    cells: function (r) {
+                        return [
+                            el('td', {}, [link(r.url, r.repo), newTag(r), sub(r.description)]),
+                            el('td', {}, [r.owner_kind]),
+                            el('td', { class: 'num' }, [r.arc_files ? r.arc_files : 'None yet', r.projects ? sub(plural(r.projects, 'project', 'projects')) : null]),
+                            types(r),
+                            el('td', { class: 'nowrap' }, [fmt(r.created)]),
+                            el('td', { class: 'nowrap' }, [fmt(r.last_push)])
+                        ];
+                    }
+                },
+                mentions: {
+                    sort: ['stars', -1], noun: ['repo', 'repos'],
+                    search: ['repo', 'description', 'where', 'kind'],
+                    cells: function (r) {
+                        return [
+                            el('td', {}, [link(r.url, r.repo), newTag(r), sub(r.description)]),
+                            el('td', { class: 'app-gh-kind' }, [r.kind]),
+                            el('td', {}, [link(r.where_url, r.where || 'Repository', 'app-gh-where')]),
+                            el('td', { class: 'num' }, [r.stars.toLocaleString('en-GB')]),
+                            el('td', { class: 'nowrap' }, [fmt(r.last_push)])
+                        ];
+                    }
+                },
+                threads: {
+                    sort: ['date', -1], noun: ['issue or PR', 'issues and PRs'],
+                    search: ['repo', 'title', 'author'],
+                    cells: function (r) {
+                        return [
+                            el('td', { class: 'nowrap' }, [fmt(r.date)]),
+                            el('td', {}, [link(r.url, r.title), newTag(r)]),
+                            el('td', {}, [link(GH + r.repo, r.repo, 'app-gh-where')]),
+                            el('td', {}, [r.type === 'PR' ? 'Pull request' : 'Issue']),
+                            el('td', {}, [r.state === 'open' ? 'Open' : 'Closed']),
+                            el('td', {}, [r.author])
+                        ];
+                    }
+                },
+                commits: {
+                    sort: ['latest', -1], noun: ['repo', 'repos'],
+                    search: ['repo', 'message'],
+                    cells: function (r) {
+                        return [
+                            el('td', {}, [link(GH + r.repo, r.repo), newTag(r)]),
+                            el('td', { class: 'num' }, [r.commits]),
+                            el('td', { class: 'nowrap' }, [fmt(r.latest)]),
+                            el('td', {}, [link(r.url, r.message, 'app-gh-where')])
+                        ];
+                    }
+                }
+            };
+
+            function setupTable(name, rows) {
+                var cfg = TABLES[name];
+                var table = document.querySelector('[data-table="' + name + '"]');
+                var panel = table.closest('section');
+                var tbody = table.querySelector('tbody');
+                var heads = Array.prototype.slice.call(table.querySelectorAll('th[data-key]'));
+                var selects = Array.prototype.slice.call(panel.querySelectorAll('select[data-filter]'));
+                var search = panel.querySelector('[data-search]');
+                var count = panel.querySelector('[data-count]');
+                var state = { key: cfg.sort[0], dir: cfg.sort[1] };
+
+                function value(r, key) {
+                    var v = r[key];
+                    return typeof v === 'string' ? v.toLowerCase() : v;
+                }
+
+                function render() {
+                    var q = search.value.trim().toLowerCase();
+                    var shown = rows.filter(function (r) {
+                        var okFilter = selects.every(function (s) { return !s.value || r[s.dataset.filter] === s.value; });
+                        var okSearch = !q || cfg.search.some(function (k) { return String(r[k] || '').toLowerCase().indexOf(q) !== -1; });
+                        return okFilter && okSearch;
+                    }).sort(function (a, b) {
+                        var x = value(a, state.key), y = value(b, state.key);
+                        return x < y ? -state.dir : x > y ? state.dir : 0;
+                    });
+                    var frag = document.createDocumentFragment();
+                    shown.forEach(function (r) { frag.appendChild(el('tr', {}, cfg.cells(r))); });
+                    tbody.replaceChildren(frag);
+                    count.textContent = 'Showing ' + shown.length + ' of ' + plural(rows.length, cfg.noun[0], cfg.noun[1]);
+                    heads.forEach(function (th) {
+                        if (th.dataset.key === state.key) th.setAttribute('aria-sort', state.dir > 0 ? 'ascending' : 'descending');
+                        else th.removeAttribute('aria-sort');
+                    });
+                }
+
+                heads.forEach(function (th) {
+                    th.querySelector('button').addEventListener('click', function () {
+                        var key = th.dataset.key;
+                        if (state.key === key) state.dir = -state.dir;
+                        else state = { key: key, dir: typeof rows[0][key] === 'string' && !/date|created|push|latest/.test(key) ? 1 : -1 };
+                        render();
+                    });
+                });
+                selects.forEach(function (s) { s.addEventListener('change', render); });
+                search.addEventListener('input', render);
+                render();
+            }
+
+            // ---- Tabs ------------------------------------------------------------
+            function setupTabs() {
+                var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+                function activate(tab, focus) {
+                    tabs.forEach(function (t) {
+                        var on = t === tab;
+                        t.classList.toggle('app-platform-tab--active', on);
+                        t.setAttribute('aria-selected', on ? 'true' : 'false');
+                        t.tabIndex = on ? 0 : -1;
+                        document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+                    });
+                    if (focus) tab.focus();
+                    if (history.replaceState) history.replaceState(null, '', '#' + tab.dataset.tab);
+                }
+                tabs.forEach(function (tab, i) {
+                    tab.addEventListener('click', function () { activate(tab); });
+                    tab.addEventListener('keydown', function (e) {
+                        var next = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
+                        if (next === undefined) return;
+                        e.preventDefault();
+                        activate(tabs[(next + tabs.length) % tabs.length], true);
+                    });
+                });
+                var start = tabs.filter(function (t) { return '#' + t.dataset.tab === location.hash; })[0];
+                if (start) activate(start);
+            }
+
+            // ---- Week by week ----------------------------------------------------
+            var SVG = 'http://www.w3.org/2000/svg';
+            function svg(tag, attrs, text) {
+                var node = document.createElementNS(SVG, tag);
+                Object.keys(attrs).forEach(function (k) { node.setAttribute(k, attrs[k]); });
+                if (text !== undefined) node.textContent = text;
+                return node;
+            }
+            function niceMax(v) {
+                if (v <= 5) return 5;
+                var p = Math.pow(10, Math.floor(Math.log10(v)));
+                var m = [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].filter(function (s) { return s * p >= v; })[0];
+                return m * p;
+            }
+
+            var TREND = [
+                ['using', 'Repos using ArcKit'],
+                ['mentioning', 'Repos mentioning ArcKit'],
+                ['issues_prs', 'Issues and PRs'],
+                ['commit_repos', 'Repos with commits']
+            ];
+
+            function drawTrend(box, history, key) {
+                var chart = box.querySelector('.app-trend__chart');
+                var w = Math.max(chart.clientWidth, 160), h = 120;
+                var pad = { l: 4, r: 36, t: 14, b: 20 };
+                var n = history.length;
+                var top = niceMax(Math.max.apply(null, history.map(function (d) { return d[key]; })));
+                var x = function (i) { return pad.l + (n === 1 ? 0 : i * (w - pad.l - pad.r) / (n - 1)); };
+                var y = function (v) { return pad.t + (1 - v / top) * (h - pad.t - pad.b); };
+                var s = svg('svg', { viewBox: '0 0 ' + w + ' ' + h, role: 'img', 'aria-label': box.dataset.label + ' by week' });
+                s.appendChild(svg('line', { class: 'grid', x1: pad.l, x2: w - pad.r, y1: y(top), y2: y(top) }));
+                s.appendChild(svg('line', { class: 'grid', x1: pad.l, x2: w - pad.r, y1: y(0), y2: y(0) }));
+                s.appendChild(svg('text', { class: 'axis', x: pad.l, y: y(top) - 4 }, top.toLocaleString('en-GB')));
+                s.appendChild(svg('text', { class: 'axis', x: pad.l, y: h - 4 }, fmt(history[0].week).replace(/ \d{4}$/, '')));
+                s.appendChild(svg('text', { class: 'axis', x: w - pad.r, y: h - 4, 'text-anchor': 'end' }, fmt(history[n - 1].week).replace(/ \d{4}$/, '')));
+                s.appendChild(svg('path', { class: 'line', d: history.map(function (d, i) { return (i ? 'L' : 'M') + x(i) + ',' + y(d[key]); }).join('') }));
+                if (n <= 12) history.forEach(function (d, i) { s.appendChild(svg('circle', { class: 'dot', cx: x(i), cy: y(d[key]), r: 4 })); });
+                s.appendChild(svg('text', { class: 'end', x: x(n - 1) + 8, y: y(history[n - 1][key]) + 4 }, history[n - 1][key].toLocaleString('en-GB')));
+
+                var cross = svg('line', { class: 'cross', y1: pad.t, y2: y(0), visibility: 'hidden' });
+                s.appendChild(cross);
+                var hit = svg('rect', { x: 0, y: 0, width: w, height: h, fill: 'transparent' });
+                s.appendChild(hit);
+                var tip = box.querySelector('.app-trend__tip');
+                hit.addEventListener('pointermove', function (e) {
+                    var r = s.getBoundingClientRect();
+                    var px = (e.clientX - r.left) * w / r.width;
+                    var i = Math.max(0, Math.min(n - 1, Math.round((px - pad.l) / ((w - pad.l - pad.r) / (n - 1)))));
+                    cross.setAttribute('x1', x(i)); cross.setAttribute('x2', x(i)); cross.setAttribute('visibility', 'visible');
+                    tip.replaceChildren(el('strong', {}, [history[i][key].toLocaleString('en-GB')]), 'Week of ' + fmt(history[i].week));
+                    tip.hidden = false;
+                    // Sit above the point, inside the chart's box.
+                    var half = tip.offsetWidth / 2;
+                    tip.style.left = Math.max(half, Math.min(box.clientWidth - half, x(i) * r.width / w)) + 'px';
+                    tip.style.top = Math.max(0, chart.offsetTop + y(history[i][key]) * r.height / h - tip.offsetHeight - 10) + 'px';
+                });
+                hit.addEventListener('pointerleave', function () { cross.setAttribute('visibility', 'hidden'); tip.hidden = true; });
+                chart.replaceChildren(s);
+            }
+
+            function setupTrend(history) {
+                var grid = document.getElementById('gh-trend');
+                var note = document.getElementById('gh-trend-note');
+                var tbody = document.getElementById('gh-history');
+                history.slice().reverse().forEach(function (d) {
+                    tbody.appendChild(el('tr', {}, [
+                        el('td', { class: 'nowrap' }, [fmt(d.week)]),
+                        el('td', { class: 'num' }, [d.using]), el('td', { class: 'num' }, [d.organisations]),
+                        el('td', { class: 'num' }, [d.mentioning]), el('td', { class: 'num' }, [d.issues_prs]),
+                        el('td', { class: 'num' }, [d.commit_repos])
+                    ]));
+                });
+                if (history.length < 2) {
+                    // The search runs on Mondays; the first one may have been run by hand on another day.
+                    var next = day(history[0].week);
+                    next.setUTCDate(next.getUTCDate() + ((8 - next.getUTCDay()) % 7 || 7));
+                    note.textContent = 'The charts start after the second weekly search, on ' + fmt(next.toISOString().slice(0, 10), 'long') + '.';
+                    grid.hidden = true;
+                    return;
+                }
+                note.textContent = 'One chart per measure, each on its own scale. Hover over a chart to see a week.';
+                var boxes = TREND.map(function (t) {
+                    var box = el('div', { class: 'app-trend', 'data-label': t[1] }, [
+                        el('h3', { class: 'app-trend__title' }, [t[1]]),
+                        el('div', { class: 'app-trend__chart' }),
+                        el('div', { class: 'app-trend__tip', hidden: '' })
+                    ]);
+                    grid.appendChild(box);
+                    return [box, t[0]];
+                });
+                function drawAll() { boxes.forEach(function (b) { drawTrend(b[0], history, b[1]); }); }
+                drawAll();
+                var timer;
+                window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(drawAll, 150); });
+            }
+
+            // ---- Page ------------------------------------------------------------
+            function show(data) {
+                var s = data.summary;
+                document.getElementById('gh-updated').textContent = 'Updated ' + fmt(data.week, 'long');
+                document.querySelectorAll('[data-stat]').forEach(function (n) { n.textContent = s[n.dataset.stat].toLocaleString('en-GB'); });
+                var subs = {
+                    using: 'repos: ' + s.artefacts + ' with ARC documents, ' + s.set_up + ' set up',
+                    commits: 'naming ArcKit, across ' + plural(s.commit_repos, 'repo', 'repos')
+                };
+                var fresh = { using: s.new.using, mentioning: s.new.mentioning, issues_prs: s.new.issues_prs, commits: s.new.commit_repos };
+                document.querySelectorAll('[data-sub]').forEach(function (n) {
+                    var k = n.dataset.sub;
+                    if (subs[k]) n.textContent = subs[k];
+                    if (fresh[k]) n.textContent += ' · ' + fresh[k] + ' new this week';
+                });
+                if (s.hidden_rows) {
+                    document.querySelector('.govuk-inset-text p').appendChild(document.createTextNode(
+                        ' ' + plural(s.hidden_rows, 'entry is', 'entries are') + ' left off this page at the owners’ request.'));
+                }
+
+                var kinds = {};
+                data.mentions.forEach(function (r) { kinds[r.kind] = (kinds[r.kind] || 0) + 1; });
+                var kindSelect = document.getElementById('mentioning-kind');
+                Object.keys(kinds).sort(function (a, b) { return kinds[b] - kinds[a]; }).forEach(function (k) {
+                    kindSelect.appendChild(el('option', { value: k }, [k + ' (' + kinds[k] + ')']));
+                });
+
+                var tabCounts = { using: s.using, mentioning: s.mentioning, threads: s.issues_prs, commits: s.commit_repos };
+                document.querySelectorAll('[role="tab"]').forEach(function (t) { t.textContent += ' (' + tabCounts[t.dataset.tab] + ')'; });
+
+                document.getElementById('gh-status').hidden = true;
+                document.getElementById('gh-content').hidden = false;
+                setupTrend(data.history);
+                setupTable('using', data.using);
+                setupTable('mentions', data.mentions);
+                setupTable('threads', data.threads);
+                setupTable('commits', data.commits);
+                setupTabs();
+            }
+
+            fetch('on-github.json', { cache: 'no-cache' })
+                .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+                .then(show)
+                .catch(function () {
+                    var status = document.getElementById('gh-status');
+                    status.replaceChildren('We couldn’t load this week’s results. Try again later, or ',
+                        el('a', { href: 'on-github.json', class: 'govuk-link' }, ['open the data file']), '.');
+                });
+        })();
+    </script>
+</body>
+</html>
