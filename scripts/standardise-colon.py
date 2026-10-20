@@ -67,6 +67,7 @@ EXCLUDE_PREFIXES = [
     "docs/proposals/",
     "docs/superpowers/",
     "docs/pitch-decks/",
+    "docs/on-github.json",         # other people's repo text, quoted as the weekly scan found it
     ".arckit/memory/",
     "node_modules/", ".git/",
     "scripts/converter.py",        # community-rewrite literals patched by hand
