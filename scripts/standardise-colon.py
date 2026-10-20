@@ -68,6 +68,7 @@ EXCLUDE_PREFIXES = [
     "docs/superpowers/",
     "docs/pitch-decks/",
     "docs/on-github.json",         # other people's repo text, quoted as the weekly scan found it
+    "docs/on-github.html",         # the same text, which generate-site-pages.py writes into the page
     ".arckit/memory/",
     "node_modules/", ".git/",
     "scripts/converter.py",        # community-rewrite literals patched by hand
