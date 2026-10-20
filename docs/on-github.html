@@ -879,8 +879,9 @@
                     ]));
                 });
                 if (history.length < 2) {
+                    // The search runs on Mondays; the first one may have been run by hand on another day.
                     var next = day(history[0].week);
-                    next.setUTCDate(next.getUTCDate() + 7);
+                    next.setUTCDate(next.getUTCDate() + ((8 - next.getUTCDay()) % 7 || 7));
                     note.textContent = 'The charts start after the second weekly search, on ' + fmt(next.toISOString().slice(0, 10), 'long') + '.';
                     grid.hidden = true;
                     return;
