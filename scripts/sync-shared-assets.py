@@ -33,8 +33,9 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 CORE_PLUGIN = REPO_ROOT / "plugins" / "arckit-claude"
 SHARED_DIRS = ("templates/_partials", "references")
 # Core's helper scripts and the files they load at run time. The converter
-# still takes scripts/ and config/ from core alone, so these copies matter only
-# to Claude Code, where each overlay is its own plugin root.
+# copies core's scripts/ over the overlays' and takes config/ from core alone,
+# so these copies matter only to Claude Code, where each overlay is its own
+# plugin root.
 SHARED_FILES = (
     "scripts/bash/common.sh",
     "scripts/bash/create-project.sh",
