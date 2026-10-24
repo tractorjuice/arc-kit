@@ -18,8 +18,6 @@ This article walks through the architecture layer by layer.
 
 OpenClaw's architecture has four layers:
 
-![OpenClaw Architecture](diagrams/openclaw-arch.png)
-
 **Gateway**: A local process that acts as the single control plane. It manages sessions (one per conversation thread), routes inbound messages from any connected platform to the LLM, and dispatches responses back. It also manages the tool registry and event lifecycle.
 
 **Skills**: Directories containing a `SKILL.md` with metadata and instructions. The LLM reads these to understand what tools are available and how to use them. Skills can declare dependencies, required permissions, and tool configurations.
@@ -202,8 +200,6 @@ Here's how each OpenClaw layer maps to Claude Code features, and where you need 
 **OpenClaw**: A standalone local process (Node.js) that manages sessions, routes messages, and maintains the tool registry. It speaks to messaging platforms via adapters and to the LLM via API.
 
 **ClaudeClaw**: Headless mode (`claude -p`) is your programmatic bridge. HTTP hooks are your outbound event stream. The Gateway orchestrates both.
-
-![ClaudeClaw Gateway Architecture](diagrams/claudeclaw-gateway.png)
 
 The Gateway is custom code — though its scope shrinks with every channel plugin Anthropic or the community ships. For platforms with native channel support (Telegram, Discord as of v2.1.80), the Gateway is optional: channels handle the full message lifecycle. For everything else, the Gateway's responsibilities are:
 
@@ -420,7 +416,22 @@ OpenClaw supports local models (LLaMA, DeepSeek) for low-cost tasks. Claude Code
 
 If you wanted a working prototype, here's the minimum viable architecture:
 
-![Minimal ClaudeClaw Project Structure](diagrams/claudeclaw-project.png)
+```text
+claudeclaw/
+├── .claude/
+│   ├── agents/
+│   │   ├── orchestrator.md        # multi-agent orchestration
+│   │   └── research-agent.md
+│   ├── skills/
+│   │   ├── email-triage/SKILL.md
+│   │   ├── calendar-manage/SKILL.md
+│   │   ├── code-review/SKILL.md
+│   │   └── deploy-monitor/SKILL.md
+│   └── settings.json              # hooks and permissions
+├── .mcp.json                      # channel plugins (Telegram, Discord)
+└── gateway/                       # optional: ~500 lines of TypeScript for
+                                   # platforms without a channel plugin
+```
 
 With native channels for Telegram and Discord, the Gateway is only needed for unsupported platforms. If your messaging needs are covered by channel plugins, the Gateway is optional — the entire system reduces to Claude Code configuration files: agent markdown, skill markdown, channel credentials, and a `settings.json`. If you need Slack, Teams, or other platforms without channel plugins, the Gateway is ~500 lines of TypeScript on top of that.
 

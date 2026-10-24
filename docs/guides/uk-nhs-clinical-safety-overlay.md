@@ -6,7 +6,7 @@ The UK NHS Clinical Safety Overlay adds 4 community-contributed commands coverin
 
 The DCB0129 and DCB0160 commands adopt Dr Marcus Baw's [SAFETY.md spec v2.0.0-draft](https://github.com/pacharanero/SAFETY.md) verbatim for filenames and YAML-frontmatter hazard log, placed inside an ArcKit project subdirectory rather than the repo root, with an ArcKit Document Control block prepended.
 
-This overlay closes part of [#424](https://github.com/tractorjuice/arc-kit/issues/424). The full design decision log lives at [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](../superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) and was written so the proposed co-maintainer can review and push back on any decision before tagging.
+This overlay closes part of [#424](https://github.com/tractorjuice/arc-kit/issues/424). The full design decision log lives at [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](https://github.com/tractorjuice/arc-kit/blob/469e0b7d/docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) and was written so the proposed co-maintainer can review and push back on any decision before tagging.
 
 ---
 
@@ -211,4 +211,4 @@ before the product is deployed into clinical use, submitted to an NHS buyer, or 
 - Marcus Baw DCB0129 templated — <https://github.com/turva-uk/dcb0129-template>
 - Marcus Baw DCB0129 markdown — <https://github.com/turva-uk/dcb0129-markdown>
 - ArcKit issue [#424](https://github.com/tractorjuice/arc-kit/issues/424) — Community overlay recruitment thread and design context
-- Spec doc [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](../superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) — full design decision log written for @pacharanero review
+- Spec doc [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](https://github.com/tractorjuice/arc-kit/blob/469e0b7d/docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) — full design decision log written for @pacharanero review

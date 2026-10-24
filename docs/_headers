@@ -5,6 +5,9 @@
 /*.html
   Cache-Control: public, max-age=300, must-revalidate
 
+/on-github.json
+  Cache-Control: public, max-age=300, must-revalidate
+
 /sitemap.xml
   Cache-Control: public, max-age=3600, must-revalidate
 

@@ -2,7 +2,7 @@
 
 White-label the bootstrap sprint. Your brand, your pricing, your contact, published to GitHub Pages.
 
-Last month we launched [ArcKit FDE](https://tractorjuice.github.io/arckit-fde/): real agentic AI in the room, a small embedded team, and a fixed-price bootstrap sprint that produces the principles, requirements, risk and stakeholder pack a programme needs to unlock its next decision. The site that sells it is a single hand-written page. Today that page becomes a plugin you can run for yourself.
+Last month we launched [ArcKit FDE](https://arckit.org/fde/): real agentic AI in the room, a small embedded team, and a fixed-price bootstrap sprint that produces the principles, requirements, risk and stakeholder pack a programme needs to unlock its next decision. The site that sells it is a single hand-written page. Today that page becomes a plugin you can run for yourself.
 
 The new `arckit-fde` plugin adds one command, `/arckit-fde:create`. It interviews you for the handful of things that actually change between firms, then renders a complete, accessible, GitHub-Pages-ready consulting site into `docs/`. No build step, no framework, no design work.
 

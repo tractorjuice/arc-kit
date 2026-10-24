@@ -2,7 +2,7 @@
 
 Real agentic AI, small teams, accelerated programmes.
 
-Today we are launching [ArcKit FDE](https://tractorjuice.github.io/arckit-fde/): real agentic AI in the room, small embedded teams, accelerating UK public sector programmes through the gates that usually stall them. Bootstrap any project in a week. Fixed price £25K for the four-artefact governance pack. Optional embedded follow-on after that.
+Today we are launching [ArcKit FDE](https://arckit.org/fde/): real agentic AI in the room, small embedded teams, accelerating UK public sector programmes through the gates that usually stall them. Bootstrap any project in a week. Fixed price £25K for the four-artefact governance pack. Optional embedded follow-on after that.
 
 The name borrows from a category that OpenAI just made explicit. Yesterday they launched The OpenAI Deployment Company with around four billion dollars of initial investment, nineteen capital partners, and a hundred and fifty engineers folded in from the Tomoro acquisition. What matters is not the headline number. It is the name they chose for the people doing the work. Not consultants. Forward Deployed Engineers.
 
@@ -60,7 +60,7 @@ By Friday afternoon the programme has a board-readable pack. The follow-on weeks
 
 If you have a programme that is heading into a board, a procurement, an assurance review or an architecture gate, and you are not yet sure the evidence holds up, the bootstrap sprint is what it was built for. £25K, one week, board-ready pack on Friday.
 
-Site: [arckit.org/fde](https://tractorjuice.github.io/arckit-fde/)
+Site: [arckit.org/fde](https://arckit.org/fde/)
 
 Examples: real ArcKit outputs from [NHS Appointment Booking](https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/), [HMRC Tax Assistant](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/), [Cabinet Office GenAI Platform](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/), [Scottish Courts GenAI Strategy](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/), plus fifteen more on [arckit.org/use-cases](https://arckit.org/use-cases.html).
 

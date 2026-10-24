@@ -436,7 +436,7 @@ Downstream artifacts cite the global principle by ID:
 
 > NFR-SEC-012 — Shall comply with enterprise principle `ARC-000-PRIN-v1.0#P-07` (zero-trust network access).
 
-No copy. Just a stable pointer. ArcKit's [Citation Traceability](../../arckit-claude/references/citation-instructions.md) pattern handles this out of the box.
+No copy. Just a stable pointer. ArcKit's [Citation Traceability](../../plugins/arckit-claude/references/citation-instructions.md) pattern handles this out of the box.
 
 ### 2. Git submodule / subtree sync
 

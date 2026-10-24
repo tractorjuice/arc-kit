@@ -2,7 +2,9 @@
 
 Organisations that have told us they use ArcKit.
 
-ArcKit collects no usage data. Nothing phones home, and nothing will, because a governance toolkit should not quietly report on the projects it helps. That means this page is the only record of who uses it, and it only lists organisations that asked to be listed.
+ArcKit collects no usage data. Nothing phones home, and nothing will, because a governance toolkit should not quietly report on the projects it helps. This page lists only organisations that asked to be listed.
+
+[ArcKit on GitHub](https://arckit.org/on-github.html) is separate. It is a weekly search of public GitHub for repositories that use or mention ArcKit, so it sees only public work. Telling us here is the only way private work gets counted.
 
 ## Add your organisation
 

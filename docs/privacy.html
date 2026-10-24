@@ -273,7 +273,7 @@
                 <li class="app-nav-bar__item"><a href="articles.html">Articles</a></li>
                 <li class="app-nav-bar__item"><a href="getting-started.html">Getting Started</a></li>
                 <li class="app-nav-bar__item"><a href="contributors.html">Contributors</a></li>
-                <li class="app-nav-bar__item"><a href="https://tractorjuice.github.io/arckit-fde/">FDE</a></li>
+                <li class="app-nav-bar__item"><a href="fde/">FDE</a></li>
             </ul>
             <div class="app-nav-bar__icons">
                 <a href="https://github.com/tractorjuice/arc-kit" class="app-icon-link" aria-label="GitHub repository" title="GitHub repository">
@@ -282,7 +282,7 @@
                 <a href="https://discord.gg/HsA4Y3hQ4" target="_blank" rel="noopener" class="app-icon-link" aria-label="Discord community" title="Discord community">
                     <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/></svg>
                 </a>
-                <a href="https://www.linkedin.com/groups/17641034/" target="_blank" rel="noopener" class="app-icon-link" aria-label="ArcKit LinkedIn group" title="ArcKit LinkedIn group">
+                <a href="https://www.linkedin.com/company/arckit-org/" target="_blank" rel="noopener" class="app-icon-link" aria-label="ArcKit on LinkedIn" title="ArcKit on LinkedIn">
                     <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>
                 </a>
                 <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
@@ -290,7 +290,7 @@
         </div>
     </nav>
 
-    <div class="app-page-hero">
+    <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <h1 class="app-page-hero__title">Privacy Policy</h1>
             <p class="app-page-hero__description">What the ArcKit plugins and this website collect, what they send to other services, and when.</p>
@@ -320,6 +320,7 @@
                     <p class="govuk-body">The <code>arckit-repo</code> overlay also clones the repository you name when you run <code>/arckit:repo-audit</code>, from that repository&rsquo;s own host.</p>
                     <p class="govuk-body">The <code>arckit-nl</code> overlay also fetches public reference material when you run <code>/arckit:nl-nora</code> or <code>/arckit:nl-gemma</code>: requests to NORA Online (<code>www.noraonline.nl</code>) and GitHub (<code>api.github.com</code>, <code>raw.githubusercontent.com</code>) for the NORA and GEMMA content those commands assess against. No project data is sent. Like any web request, they show your IP address to those services, and they identify themselves as ArcKit in their User-Agent header.</p>
 
+                    <div class="app-table-scroll" role="region" aria-label="MCP servers bundled with the core arckit plugin" tabindex="0">
                     <table class="govuk-table">
                         <caption class="govuk-table__caption govuk-table__caption--s">MCP servers bundled with the core <code>arckit</code> plugin</caption>
                         <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Server</th><th scope="col" class="govuk-table__header">Endpoint</th><th scope="col" class="govuk-table__header">Run by</th><th scope="col" class="govuk-table__header">Policy that applies</th></tr></thead>
@@ -351,6 +352,9 @@
 
                     <h2 class="govuk-heading-l" id="certification">ArcKit certification</h2>
                     <p class="govuk-body">When you pass the Awareness quiz we keep your name as you entered it, which level you passed, when, and the signed credential. We keep them so your credential link keeps working, and anyone with the link can see your name and credential. We don’t ask for your email or keep your answers. To have a credential removed, open an issue on GitHub or message us on Discord with the credential ID.</p>
+
+                    <h2 class="govuk-heading-l">Public repositories</h2>
+                    <p class="govuk-body">Once a week we search public GitHub for repositories that use or mention ArcKit, and list them on <a href="on-github.html" class="govuk-link">ArcKit on GitHub</a>. The search sees only what is already public: ArcKit itself still sends nothing, and private repositories never appear. If you&rsquo;d rather your repository wasn&rsquo;t listed, <a href="https://github.com/tractorjuice/arc-kit/issues/new?title=Please+leave+my+repo+off+ArcKit+on+GitHub" class="govuk-link">open an issue</a> and we&rsquo;ll take it off the next weekly update.</p>
 
                     <h2 class="govuk-heading-l">Changes and contact</h2>
                     <p class="govuk-body">Changes to this policy are made in the public <a href="https://github.com/tractorjuice/arc-kit/commits/main/docs/privacy.html" class="govuk-link">repository history</a>. Questions or requests go to a <a href="https://github.com/tractorjuice/arc-kit/issues/new" class="govuk-link">GitHub issue</a>.</p>

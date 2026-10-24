@@ -147,9 +147,9 @@ Every artefact written by the build harness gets a `## Build Provenance` block i
 
 ## See also
 
-- [`SKILL.md`](../../arckit-claude/skills/arckit-build/SKILL.md) — full orchestration spec
-- [`recipes/uk-saas.yaml`](../../arckit-claude/skills/arckit-build/recipes/uk-saas.yaml) — annotated reference recipe
-- [`recipes/uk-mod-sovereign.yaml`](../../arckit-claude/skills/arckit-build/recipes/uk-mod-sovereign.yaml) — sovereign-deployment variant
+- [`SKILL.md`](../../plugins/arckit-claude/skills/arckit-build/SKILL.md) — full orchestration spec
+- [`recipes/uk-saas.yaml`](../../plugins/arckit-claude/skills/arckit-build/recipes/uk-saas.yaml) — annotated reference recipe
+- [`recipes/uk-mod-sovereign.yaml`](../../plugins/arckit-claude/skills/arckit-build/recipes/uk-mod-sovereign.yaml) — sovereign-deployment variant
 - [Plugin Hooks → Provenance stamping](../../CLAUDE.md#provenance-stamping-provenance-stampmjs) — how build provenance is captured
 
 ---
