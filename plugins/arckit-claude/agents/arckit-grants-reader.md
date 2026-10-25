@@ -68,7 +68,7 @@ The orchestrator passes you a JSON object in its Agent prompt with these fields:
    - `funder_type` — choose the most specific enum that applies (e.g. an Innovate UK programme is `innovate-uk`, not `uk-gov-department`)
    - `fetched_from_url` — the URL you fetched the primary evidence from
    - `fetched_at_iso` — current UTC timestamp in ISO-8601 (`YYYY-MM-DDTHH:MM:SSZ`)
-   - `citation_id` — a short UPPERCASE-DASH-DIGITS token (e.g. `IUK-SMART-1`, `WT-DTD-1`) you generate per programme for the orchestrator's traceability
+   - `citation_id` — a short UPPERCASE-DASH-DIGITS token (e.g. `IUK-KTP-1`, `WT-DTD-1`) you generate per programme for the orchestrator's traceability
    - `evidence` — sub-object with whichever Evidence fields you extracted from the page
    - `confidence` — `high` if the evidence came from the funder's official page, `medium` if from a third-party aggregator (including GrantNav), `low` if extracted from sparse or indirect sources
 

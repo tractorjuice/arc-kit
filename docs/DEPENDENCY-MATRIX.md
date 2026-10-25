@@ -202,7 +202,7 @@ Most procurement commands require ARC-*-REQ-*.md:
   - Note: Structured vendor scoring with JSON storage, comparison, and audit trail
   - Integrates with evaluate criteria; scores stored in `projects/{id}/vendors/scores.json`
 - **tenders** → Depends on: principles (O), requirements (O)
-  - Note: Procurement market intelligence from the UK Tenders MCP — award-value benchmarks, top suppliers, incumbency/concentration across ~677k UK contracting processes
+  - Note: Procurement market intelligence from the UK Tenders MCP — award-value benchmarks, top suppliers, incumbency/concentration across more than 700k UK contracting processes (October 2026)
   - Requires the bundled `uk-tenders` MCP server (keyless, deferred, best-effort availability)
   - Outputs TNDR artefact; feeds into sobc (Economic Case benchmarks), risk (concentration risk), research (build-vs-buy market context)
   - Agent-delegating command (reader/orchestrator/writer three-tier split); shares `arckit-tenders-reader` with `/arckit:competitors`

@@ -894,7 +894,7 @@ Research available solutions to meet requirements with build vs buy analysis:
 
 Identify and evaluate funding opportunities with eligibility scoring:
 
-- UK Innovate UK grants and R&D funding (e.g. Smart Grants, KTP, SBRI)
+- UK Innovate UK grants and R&D funding (e.g. Knowledge Transfer Partnerships, SBRI)
 - UK Research and Innovation (UKRI) funding calls
 - Charitable foundations and philanthropic funding (e.g. National Lottery Heritage Fund, Wellcome Trust)
 - Accelerator and incubator programmes (e.g. DCMS, DSIT-backed cohorts)
@@ -1746,7 +1746,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | `/arckit:tenders` | Procurement market intelligence — award-value benchmarks, top suppliers, incumbency and concentration, from the UK Tenders MCP | — | 🟣 Experimental |
 | `/arckit:competitors` | Competitor landscape — rival suppliers, awarded-value market share, head-to-head and concentration, from the UK Tenders MCP | — | 🟣 Experimental |
 
-> **Note**: `/arckit:tenders` and `/arckit:competitors` both use the bundled `uk-tenders` MCP server (keyless, deferred) via the shared `arckit-tenders-reader` subagent. Data: ~677,000 UK contracting processes across FTS, Contracts Finder, Public Contracts Scotland, Sell2Wales, and eTendersNI; nightly refresh; best-effort availability (no formal SLA). `/arckit:tenders` outputs a `TNDR` artefact (market-wide benchmarks, incumbency, concentration). `/arckit:competitors` outputs a `CMPT` artefact (rival-supplier landscape, market-share ranking, head-to-head).
+> **Note**: `/arckit:tenders` and `/arckit:competitors` both use the bundled `uk-tenders` MCP server (keyless, always loaded) via the shared `arckit-tenders-reader` subagent. Data: more than 700,000 UK contracting processes (October 2026) across FTS, Contracts Finder, Public Contracts Scotland, Sell2Wales, and eTendersNI; nightly refresh; best-effort availability (no formal SLA). `/arckit:tenders` outputs a `TNDR` artefact (market-wide benchmarks, incumbency, concentration). `/arckit:competitors` outputs a `CMPT` artefact (rival-supplier landscape, market-share ranking, head-to-head).
 
 ### Government Code Discovery
 
