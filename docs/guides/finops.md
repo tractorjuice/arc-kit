@@ -107,13 +107,15 @@ Output: `projects/<id>/ARC-<id>-FINOPS-v1.0.md`
 
 ### Maturity in the strategy
 
-The strategy records one overall current and target level as a summary. Use the FinOps Foundation's per-capability view above when you assess it.
+The strategy rates the current and target level of each FinOps capability, grouped by the Foundation's domains, as the Foundation does. An overall level, if given, is only a labelled summary of those ratings.
 
 | Level | Characteristics | Cost Visibility |
 |-------|-----------------|-----------------|
 | Crawl | Basic tagging, monthly reports | Limited |
 | Walk | Automated reports, budgets, alerts | Moderate |
 | Run | Real-time visibility, optimization automation, forecasting | Full |
+
+The table is a rough guide to what each level looks like for cost visibility; the Foundation's own descriptions and sample KPIs per level are on its [maturity model page](https://www.finops.org/framework/maturity-model/).
 
 ### Tagging Strategy Example
 

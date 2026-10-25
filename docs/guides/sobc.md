@@ -120,7 +120,7 @@ Output: `projects/<id>/ARC-<id>-SOBC-v1.0.md`
 
 ### Economic Case Options
 
-The command asks how many options to appraise (three, four or five) and always includes a baseline, which it labels Option 0, Do Nothing. Treat that baseline as HM Treasury's business as usual option, with its own costs, benefits and risks, and check the shortlist against the [options appraisal](#options-appraisal) guidance above.
+The command follows HM Treasury's shortlist. By default it appraises five options: Option 0, business as usual (BAU), which is not "do nothing" and always has its own costs, benefits and risks; do minimum; the preferred way forward; and more and less ambitious versions of it. It appraises three when the preferred way forward is the do minimum, and more than five when alternatives differ in design. At SOC stage the result is the preferred way forward; the preferred option comes at OBC. See the [options appraisal](#options-appraisal) guidance above.
 
 ### One-Page Workflow
 
