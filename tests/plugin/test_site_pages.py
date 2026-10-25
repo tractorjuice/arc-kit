@@ -63,7 +63,9 @@ def test_every_guide_has_its_own_page(name):
     page = DOCS / "guide" / f"{name}.html"
     assert page.is_file(), f"no static page for docs/guides/{name}.md"
     text = page.read_text(encoding="utf-8")
-    assert canonical(page) == f"https://arckit.org/guide/{name}.html"
+    # A reference page the main guide covers in full names that guide's page instead.
+    covered_by = load_generator().GUIDE_EXTRAS.get(name, {}).get("canonical", name)
+    assert canonical(page) == f"https://arckit.org/guide/{covered_by}.html"
     assert "<title>Guide Viewer" not in text
     assert 'class="app-markdown"' in text and "Loading guide" not in text
     assert f'<link rel="alternate" type="text/markdown" href="https://arckit.org/guides/{name}.md">' in text

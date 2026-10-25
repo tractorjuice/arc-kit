@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:atrs produces the public transparency record required for UK Government algorithmic tools that influence decisions about people.">
+    <meta name="description" content="The Algorithmic Transparency Recording Standard (ATRS) is how UK public sector organisations publish information about the algorithmic tools they use and…">
     <meta name="author" content="ArcKit">
-    <title>Algorithmic Transparency Recording Standard (ATRS) Guide | ArcKit</title>
-    <meta property="og:title" content="Algorithmic Transparency Recording Standard (ATRS) Guide">
-    <meta property="og:description" content="/arckit:atrs produces the public transparency record required for UK Government algorithmic tools that influence decisions about people.">
+    <title>ATRS: who must publish a record, and how | ArcKit</title>
+    <meta property="og:title" content="ATRS: who must publish a record, and how">
+    <meta property="og:description" content="The Algorithmic Transparency Recording Standard (ATRS) is how UK public sector organisations publish information about the algorithmic tools they use and why. This guide covers who must publish a record, what a record…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/uk-government/algorithmic-transparency.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Algorithmic Transparency Recording Standard (ATRS) Guide">
-    <meta name="twitter:description" content="/arckit:atrs produces the public transparency record required for UK Government algorithmic tools that influence decisions about people.">
+    <meta name="twitter:title" content="ATRS: who must publish a record, and how">
+    <meta name="twitter:description" content="The Algorithmic Transparency Recording Standard (ATRS) is how UK public sector organisations publish information about the algorithmic tools they use and why. This guide covers who must publish a record, what a record…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/uk-government/algorithmic-transparency.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/uk-government/algorithmic-transparency.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/uk-government/algorithmic-transparency.html",
-                "headline": "Algorithmic Transparency Recording Standard (ATRS) Guide",
-                "description": "/arckit:atrs produces the public transparency record required for UK Government algorithmic tools that influence decisions about people.",
+                "headline": "ATRS: who must publish a record, and how",
+                "description": "The Algorithmic Transparency Recording Standard (ATRS) is how UK public sector organisations publish information about the algorithmic tools they use and why. This guide covers who must publish a record, what a record…",
                 "url": "https://arckit.org/guide/uk-government/algorithmic-transparency.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Algorithmic Transparency Recording Standard (ATRS) Guide",
+                        "name": "ATRS: who must publish a record, and how",
                         "item": "https://arckit.org/guide/uk-government/algorithmic-transparency.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Algorithmic Transparency Recording Standard (ATRS) Guide</h1>
-            <p class="app-page-hero__description">/arckit:atrs produces the public transparency record required for UK Government algorithmic tools that influence decisions about people.</p>
+            <h1 class="app-page-hero__title">Algorithmic Transparency Recording Standard (ATRS): who must publish and how</h1>
+            <p class="app-page-hero__description">The Algorithmic Transparency Recording Standard (ATRS) is how UK public sector organisations publish information about the algorithmic tools they use and why. This guide covers who must publish a record, what a record…</p>
         </div>
     </div>
 
@@ -431,16 +431,42 @@
             <a href="../../guides.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Guides</a>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:atrs</code> produces the public transparency record required for UK Government algorithmic tools that influence decisions about people.</p>
+<p>The Algorithmic Transparency Recording Standard (ATRS) is how UK public sector organisations publish information about the algorithmic tools they use and why. This guide covers who must publish a record, what a record contains, how it is cleared and published, and how <code>/arckit:atrs</code> drafts one.</p>
 <hr />
-<h2 id="command">Command</h2>
-<pre><code class="language-bash">/arckit:atrs Create Algorithmic Transparency Record for &lt;AI system&gt;
-</code></pre>
-<p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-ATRS-v1.0.md</code>.</p>
+<h2 id="who-must-publish-a-record">Who must publish a record</h2>
+<p><a href="http://GOV.UK">GOV.UK</a>'s <a href="https://www.gov.uk/government/publications/guidance-for-organisations-using-the-algorithmic-transparency-recording-standard/algorithmic-transparency-recording-standard-guidance-for-public-sector-bodies">ATRS guidance for public sector bodies</a> (updated May 2025) sets the scope:</p>
+<ul>
+<li>The ATRS is mandatory for all government departments, and for arm's-length bodies (ALBs) that deliver public or frontline services or directly interact with the general public.</li>
+<li>Within those organisations, it is mandatory for algorithmic tools that have a significant influence on a decision-making process with public effect, or that directly interact with the general public.</li>
+<li>The Data Standards Authority recommends it for the rest of the public sector.</li>
+</ul>
+<p>A scope and exemptions policy sets out what can be left out of a record, or when a whole record can be withheld. The guidance generally prefers partial redaction, with an explanation, to not publishing a record at all.</p>
 <hr />
-<h2 id="record-template-highlights">Record Template Highlights</h2>
+<h2 id="what-a-record-contains">What a record contains</h2>
+<table>
+<thead>
+<tr>
+<th>Tier</th>
+<th>Audience</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Tier 1</td>
+<td>The general public, in clear and simple language</td>
+<td>One summary information sheet</td>
+</tr>
+<tr>
+<td>Tier 2</td>
+<td>Specialist audiences, though still public</td>
+<td>Eight further sheets: ownership, description, deployment, tool and model specifications, data, and risks</td>
+</tr>
+</tbody>
+</table>
+<h3 id="where-the-evidence-comes-from">Where the evidence comes from</h3>
 <table>
 <thead>
 <tr>
@@ -483,7 +509,20 @@
 </tbody>
 </table>
 <hr />
-<h2 id="publication-checklist">Publication Checklist</h2>
+<div class="govuk-inset-text app-fde-panel">
+<p class="govuk-body"><strong>Heading into a gate, a procurement or a board?</strong> ArcKit FDE puts a senior architect in your team for five days to produce your principles, requirements, risk register and stakeholder map, at a fixed price. <a class="govuk-link" href="../../fde/">See how ArcKit FDE works</a>.</p>
+</div>
+<h2 id="completing-and-publishing-a-record">Completing and publishing a record</h2>
+<ol>
+<li>Contact your organisation's single point of contact (SPOC) for the ATRS before you start work on a record.</li>
+<li>Download the <a href="https://www.gov.uk/government/publications/algorithmic-transparency-template">ATRS template</a> in Excel or Google Sheets format, and keep its format unchanged.</li>
+<li>Complete it in plain language, ideally checking it with people who have no connection to the tool.</li>
+<li>Send the completed template to your SPOC or the ATRS team (<a href="mailto:algorithmic-transparency@dsit.gov.uk">algorithmic-transparency@dsit.gov.uk</a>) for a readability check.</li>
+<li>Get written confirmation that the record has passed your organisation's internal sign-off.</li>
+<li>The ATRS team publishes the record to the <a href="https://www.gov.uk/algorithmic-transparency-records">GOV.UK repository of algorithmic transparency records</a>.</li>
+</ol>
+<p>A substantive change to the tool means updating the record, clearing it again and sending the update to the ATRS team.</p>
+<h3 id="publication-checklist">Publication checklist</h3>
 <ul>
 <li>Record reviewed by legal, comms, and service owner.</li>
 <li>Sensitive details (security configuration, PII) removed before publication.</li>
@@ -492,8 +531,20 @@
 <li>Link record from <a href="http://GOV.UK">GOV.UK</a> service page or relevant policy page.</li>
 </ul>
 <hr />
+<h2 id="using-arckitatrs">Using /arckit:atrs</h2>
+<pre><code class="language-bash">/arckit:atrs Create Algorithmic Transparency Record for &lt;AI system&gt;
+</code></pre>
+<p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-ATRS-v1.0.md</code>. The command drafts the record from your project's artefacts; clearing and publishing it follow the steps above.</p>
+<hr />
 <h2 id="alignment">Alignment</h2>
 <p>Pair the ATRS record with <code>/arckit:ai-playbook</code> and <code>/arckit:jsp-936</code> outputs to ensure consistency across ethical, assurance, and transparency artefacts.</p>
+<hr />
+<h2 id="useful-links">Useful Links</h2>
+<ul>
+<li><a href="https://www.gov.uk/government/publications/guidance-for-organisations-using-the-algorithmic-transparency-recording-standard/algorithmic-transparency-recording-standard-guidance-for-public-sector-bodies">ATRS guidance for public sector bodies</a> (<a href="http://GOV.UK">GOV.UK</a>)</li>
+<li><a href="https://www.gov.uk/government/publications/algorithmic-transparency-template">ATRS template</a></li>
+<li><a href="https://www.gov.uk/algorithmic-transparency-records">Published algorithmic transparency records</a></li>
+</ul>
 </div>
         </div>
     </main>
