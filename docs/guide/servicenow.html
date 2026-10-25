@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:servicenow creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.">
+    <meta name="description" content="A configuration management database (CMDB) records the configuration items (CIs) behind a service, such as applications, servers and databases, and how…">
     <meta name="author" content="ArcKit">
-    <title>ServiceNow Service Design Playbook | ArcKit</title>
-    <meta property="og:title" content="ServiceNow Service Design Playbook">
-    <meta property="og:description" content="/arckit:servicenow creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.">
+    <title>CMDB guide: ServiceNow CMDB and service design | ArcKit</title>
+    <meta property="og:title" content="CMDB guide: ServiceNow CMDB and service design">
+    <meta property="og:description" content="A configuration management database (CMDB) records the configuration items (CIs) behind a service, such as applications, servers and databases, and how they depend on each other. This guide covers what a CMDB holds…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/servicenow.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="ServiceNow Service Design Playbook">
-    <meta name="twitter:description" content="/arckit:servicenow creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.">
+    <meta name="twitter:title" content="CMDB guide: ServiceNow CMDB and service design">
+    <meta name="twitter:description" content="A configuration management database (CMDB) records the configuration items (CIs) behind a service, such as applications, servers and databases, and how they depend on each other. This guide covers what a CMDB holds…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/servicenow.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/servicenow.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/servicenow.html",
-                "headline": "ServiceNow Service Design Playbook",
-                "description": "/arckit:servicenow creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.",
+                "headline": "CMDB guide: ServiceNow CMDB and service design",
+                "description": "A configuration management database (CMDB) records the configuration items (CIs) behind a service, such as applications, servers and databases, and how they depend on each other. This guide covers what a CMDB holds…",
                 "url": "https://arckit.org/guide/servicenow.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "ServiceNow Service Design Playbook",
+                        "name": "CMDB guide: ServiceNow CMDB and service design",
                         "item": "https://arckit.org/guide/servicenow.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">ServiceNow Service Design Playbook</h1>
-            <p class="app-page-hero__description">/arckit:servicenow creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.</p>
+            <h1 class="app-page-hero__title">CMDB and ServiceNow service design: a practical guide</h1>
+            <p class="app-page-hero__description">A configuration management database (CMDB) records the configuration items (CIs) behind a service, such as applications, servers and databases, and how they depend on each other. This guide covers what a CMDB holds…</p>
         </div>
     </div>
 
@@ -439,9 +439,60 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:servicenow</code> creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.</p>
+<p>A configuration management database (CMDB) records the configuration items (CIs) behind a service, such as applications, servers and databases, and how they depend on each other. This guide covers what a CMDB holds, how ServiceNow structures its CMDB, and how <code>/arckit:servicenow</code> designs the CMDB, SLAs, incident and change processes for a service.</p>
 <hr />
-<h2 id="inputs">Inputs</h2>
+<h2 id="what-a-cmdb-is">What a CMDB is</h2>
+<p>In IT service management, a configuration item is any component you need to manage to deliver a service. Configuration management keeps accurate records of those items and the relationships between them. A CMDB is where those records live.</p>
+<p>ServiceNow's <a href="https://www.servicenow.com/docs/bundle/zurich-servicenow-platform/page/product/configuration-management/concept/c_ITILConfigurationManagement.html">CMDB documentation</a> (Zurich release) describes its CMDB application as a way to &quot;build logical representations of assets, services, and the relationships between them that comprise the infrastructure of your organization&quot;. Details about these components are stored in the CMDB as configuration items.</p>
+<p>The relationships matter as much as the items. They are what let support and change teams see which services a failing server or a planned change could affect.</p>
+<hr />
+<h2 id="how-the-servicenow-cmdb-is-structured">How the ServiceNow CMDB is structured</h2>
+<table>
+<thead>
+<tr>
+<th>Part</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Configuration Item table (<code>cmdb_ci</code>)</td>
+<td>The core class, which stores the basic attributes of all CIs.</td>
+</tr>
+<tr>
+<td>Class tables</td>
+<td>Sets of CIs that share attributes, such as computers, are stored in their own class table. Each class inherits attributes from the one above it, back to the base CI class.</td>
+</tr>
+<tr>
+<td>CI Relationship table (<code>cmdb_rel_ci</code>)</td>
+<td>Defines all relationships between CIs.</td>
+</tr>
+<tr>
+<td>CI Class Manager</td>
+<td>Manages classes within the CMDB hierarchy: their attributes, identification rules and member CIs.</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="https://www.servicenow.com/docs/bundle/zurich-servicenow-platform/page/product/configuration-management/concept/c_ConfigurationManagementDatabase.html">CMDB schema model</a> notes that CIs from tables that do not extend <code>cmdb_ci</code> don't appear in Dependency Views maps or CI relation formatters.</p>
+<h3 id="populating-the-cmdb">Populating the CMDB</h3>
+<p>ServiceNow lists four ways to get data in:</p>
+<ul>
+<li>Discovery.</li>
+<li>IntegrationHub ETL or Import Sets, to import and integrate data from a third-party source.</li>
+<li>Integrating with an external CMDB.</li>
+<li>Creating CIs manually.</li>
+</ul>
+<h3 id="keeping-the-data-healthy">Keeping the data healthy</h3>
+<ul>
+<li><strong>CMDB Health</strong> monitors duplicate CIs, required CI fields and audits.</li>
+<li><strong>CMDB Identification and Reconciliation</strong> reconciles data integrity issues.</li>
+<li><strong>CMDB Data Manager</strong> handles bulk CI life cycle operations such as deletion, archival and attestation.</li>
+<li><strong>CMDB Workspace</strong> is where you search the CMDB and reach its dashboards.</li>
+</ul>
+<hr />
+<h2 id="using-arckitservicenow">Using /arckit:servicenow</h2>
+<p><code>/arckit:servicenow</code> creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.</p>
+<h3 id="inputs">Inputs</h3>
 <table>
 <thead>
 <tr>
@@ -468,13 +519,11 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="command">Command</h2>
+<h3 id="command">Command</h3>
 <pre><code class="language-bash">/arckit:servicenow Create ServiceNow service design for &lt;service&gt;
 </code></pre>
 <p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-SNOW-v1.0.md</code></p>
-<hr />
-<h2 id="service-design-structure">Service Design Structure</h2>
+<h3 id="service-design-structure">Service Design Structure</h3>
 <table>
 <thead>
 <tr>
@@ -545,8 +594,8 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="cmdb-ci-classes">CMDB CI Classes</h2>
+<h3 id="cmdb-ci-classes">CMDB CI Classes</h3>
+<p>These are the logical layers the design maps your architecture onto. Map each one to the CI classes your ServiceNow instance uses.</p>
 <table>
 <thead>
 <tr>
@@ -588,8 +637,7 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="incident-priority-matrix">Incident Priority Matrix</h2>
+<h3 id="incident-priority-matrix">Incident Priority Matrix</h3>
 <table>
 <thead>
 <tr>
@@ -620,8 +668,8 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="sla-responseresolution-targets">SLA Response/Resolution Targets</h2>
+<h3 id="sla-responseresolution-targets">SLA Response/Resolution Targets</h3>
+<p>These are example targets. Set yours from the service's non-functional requirements and support model.</p>
 <table>
 <thead>
 <tr>
@@ -664,8 +712,7 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="change-types">Change Types</h2>
+<h3 id="change-types">Change Types</h3>
 <table>
 <thead>
 <tr>
@@ -696,8 +743,7 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="one-page-workflow">One-Page Workflow</h2>
+<h3 id="one-page-workflow">One-Page Workflow</h3>
 <table>
 <thead>
 <tr>
@@ -734,8 +780,7 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="integration-points">Integration Points</h2>
+<h3 id="integration-points">Integration Points</h3>
 <table>
 <thead>
 <tr>
@@ -761,7 +806,7 @@
 <td>Auto-populate CMDB</td>
 </tr>
 <tr>
-<td>Identity Provider (Azure AD)</td>
+<td>Identity Provider (Microsoft Entra ID, formerly Azure AD)</td>
 <td>User Management</td>
 <td>SSO, group sync</td>
 </tr>
@@ -826,11 +871,18 @@
 <h2 id="key-principles">Key Principles</h2>
 <ol>
 <li><strong>CMDB as Source of Truth</strong>: All service relationships mapped and maintained.</li>
-<li><strong>ITIL Alignment</strong>: Follow ITIL v4 practices for service management.</li>
+<li><strong>ITIL Alignment</strong>: Follow ITIL practices for service management. The design uses ITIL 4 terms. <a href="https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1">ITIL (Version 5)</a> is now available from PeopleCert, with a bridge course for ITIL 4 holders.</li>
 <li><strong>Automation First</strong>: Automate ticket creation, routing, and remediation.</li>
 <li><strong>Continuous Improvement</strong>: Regular service reviews and CSI initiatives.</li>
 <li><strong>Integration</strong>: Connect ServiceNow to monitoring, CI/CD, and cloud platforms.</li>
 </ol>
+<hr />
+<h2 id="useful-links">Useful Links</h2>
+<ul>
+<li><a href="https://www.servicenow.com/docs/bundle/zurich-servicenow-platform/page/product/configuration-management/concept/c_ITILConfigurationManagement.html">Configuration Management Database (CMDB)</a> (ServiceNow docs, Zurich release)</li>
+<li><a href="https://www.servicenow.com/docs/bundle/zurich-servicenow-platform/page/product/configuration-management/concept/c_ConfigurationManagementDatabase.html">CMDB schema model</a> (ServiceNow docs)</li>
+<li><a href="https://www.servicenow.com/docs/bundle/zurich-servicenow-platform/page/product/configuration-management/concept/cnfig-mgmt-and-cmdb.html">Overview of CMDB</a> (ServiceNow docs)</li>
+</ul>
 </div>
 <script src="../films.js"></script>
         </div>

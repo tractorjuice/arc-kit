@@ -86,7 +86,7 @@
     </url>
     <url>
         <loc>https://arckit.org/llms.txt</loc>
-        <lastmod>2026-10-20</lastmod>
+        <lastmod>2026-10-25</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
@@ -167,7 +167,7 @@
     <url>
         <loc>https://arckit.org/guide/ai-playbook.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/analyze.html</loc>
@@ -305,9 +305,14 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://arckit.org/guide/aws-documentation-mcp.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/guide/aws-research.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/azure-research.html</loc>
@@ -317,7 +322,7 @@
     <url>
         <loc>https://arckit.org/guide/backlog.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/build.html</loc>
@@ -437,12 +442,12 @@
     <url>
         <loc>https://arckit.org/guide/data-mesh-contract.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/data-model.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/data-quality-framework.html</loc>
@@ -477,12 +482,12 @@
     <url>
         <loc>https://arckit.org/guide/dfd.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/diagram.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/dld-review.html</loc>
@@ -497,7 +502,7 @@
     <url>
         <loc>https://arckit.org/guide/dpia.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/enterprise-scale.html</loc>
@@ -557,7 +562,7 @@
     <url>
         <loc>https://arckit.org/guide/finops.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/fr-algorithme-public.html</loc>
@@ -642,12 +647,12 @@
     <url>
         <loc>https://arckit.org/guide/gcloud-search.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/gcp-research.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/glossary.html</loc>
@@ -677,7 +682,7 @@
     <url>
         <loc>https://arckit.org/guide/grants.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/graph-report.html</loc>
@@ -717,7 +722,7 @@
     <url>
         <loc>https://arckit.org/guide/jsp-936.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/knowledge-compounding.html</loc>
@@ -740,6 +745,11 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://arckit.org/guide/microsoft-learn-mcp.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/guide/migration.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
@@ -747,7 +757,7 @@
     <url>
         <loc>https://arckit.org/guide/mlops.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/mod-secure.html</loc>
@@ -1057,7 +1067,7 @@
     <url>
         <loc>https://arckit.org/guide/servicenow.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/session-memory.html</loc>
@@ -1077,7 +1087,7 @@
     <url>
         <loc>https://arckit.org/guide/sow.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/stakeholder-analysis.html</loc>
@@ -1127,7 +1137,7 @@
     <url>
         <loc>https://arckit.org/guide/tenders.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/testing-plugin-branches.html</loc>
@@ -1245,11 +1255,6 @@
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://arckit.org/guide/uk-government/ai-playbook.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
         <loc>https://arckit.org/guide/uk-government/algorithmic-transparency.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
@@ -1352,7 +1357,7 @@
     <url>
         <loc>https://arckit.org/guide/wardley.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/wardley-climate.html</loc>

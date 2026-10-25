@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="Generate a sprint-ready backlog from existing ArcKit artefacts with /arckit:backlog. The command converts requirements into groomed stories, groups them…">
+    <meta name="description" content="A product backlog is the ordered list of work a team needs to do to improve a product, and user stories are a common way to write its items. This guide…">
     <meta name="author" content="ArcKit">
-    <title>Product Backlog Quick Guide | ArcKit</title>
-    <meta property="og:title" content="Product Backlog Quick Guide">
-    <meta property="og:description" content="Generate a sprint-ready backlog from existing ArcKit artefacts with /arckit:backlog. The command converts requirements into groomed stories, groups them into sprints, and exports markdown, CSV, and JSON for tooling.">
+    <title>User story template and product backlog guide | ArcKit</title>
+    <meta property="og:title" content="User story template and product backlog guide">
+    <meta property="og:description" content="A product backlog is the ordered list of work a team needs to do to improve a product, and user stories are a common way to write its items. This guide covers what a backlog holds, a user story template with acceptance…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/backlog.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Product Backlog Quick Guide">
-    <meta name="twitter:description" content="Generate a sprint-ready backlog from existing ArcKit artefacts with /arckit:backlog. The command converts requirements into groomed stories, groups them into sprints, and exports markdown, CSV, and JSON for tooling.">
+    <meta name="twitter:title" content="User story template and product backlog guide">
+    <meta name="twitter:description" content="A product backlog is the ordered list of work a team needs to do to improve a product, and user stories are a common way to write its items. This guide covers what a backlog holds, a user story template with acceptance…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/backlog.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/backlog.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/backlog.html",
-                "headline": "Product Backlog Quick Guide",
-                "description": "Generate a sprint-ready backlog from existing ArcKit artefacts with /arckit:backlog. The command converts requirements into groomed stories, groups them into sprints, and exports markdown, CSV, and JSON for tooling.",
+                "headline": "User story template and product backlog guide",
+                "description": "A product backlog is the ordered list of work a team needs to do to improve a product, and user stories are a common way to write its items. This guide covers what a backlog holds, a user story template with acceptance…",
                 "url": "https://arckit.org/guide/backlog.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Product Backlog Quick Guide",
+                        "name": "User story template and product backlog guide",
                         "item": "https://arckit.org/guide/backlog.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Product Backlog Quick Guide</h1>
-            <p class="app-page-hero__description">Generate a sprint-ready backlog from existing ArcKit artefacts with /arckit:backlog. The command converts requirements into groomed stories, groups them into sprints, and exports markdown, CSV, and JSON for tooling.</p>
+            <h1 class="app-page-hero__title">Product backlog and user story template</h1>
+            <p class="app-page-hero__description">A product backlog is the ordered list of work a team needs to do to improve a product, and user stories are a common way to write its items. This guide covers what a backlog holds, a user story template with acceptance…</p>
         </div>
     </div>
 
@@ -439,9 +439,72 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p>Generate a sprint-ready backlog from existing ArcKit artefacts with <code>/arckit:backlog</code>. The command converts requirements into groomed stories, groups them into sprints, and exports markdown, CSV, and JSON for tooling.</p>
+<p>A product backlog is the ordered list of work a team needs to do to improve a product, and user stories are a common way to write its items. This guide covers what a backlog holds, a user story template with acceptance criteria, how to prioritise, and how <code>/arckit:backlog</code> builds a sprint-ready backlog from your requirements.</p>
 <hr />
-<h2 id="input-readiness">Input Readiness</h2>
+<h2 id="what-a-product-backlog-is">What a product backlog is</h2>
+<p>The <a href="https://scrumguides.org/scrum-guide.html">Scrum Guide</a> (November 2020) says: &quot;The Product Backlog is an emergent, ordered list of what is needed to improve the product. It is the single source of work undertaken by the Scrum Team.&quot;</p>
+<ul>
+<li><strong>Ownership</strong>: the Product Owner is accountable for managing it. That means setting and communicating the Product Goal, creating and explaining backlog items, ordering them, and making sure the backlog is visible and understood.</li>
+<li><strong>Product Goal</strong>: a future state of the product that the Scrum Team plans against. The Scrum Guide places it in the Product Backlog.</li>
+<li><strong>Refinement</strong>: breaking items down into smaller, more precise ones, and adding details such as a description, order and size. This is an ongoing activity, not a one-off event.</li>
+<li><strong>Sizing</strong>: the Developers who will do the work are responsible for sizing it.</li>
+<li><strong>Ready for selection</strong>: an item the team can finish within one sprint is ready to be picked at Sprint Planning.</li>
+</ul>
+<p>The Scrum Guide does not mention user stories or story points. They are common practices that teams add to it.</p>
+<p>The <a href="http://GOV.UK">GOV.UK</a> Service Manual's <a href="https://www.gov.uk/service-manual/agile-delivery/agile-tools-techniques">agile tools and techniques</a> page describes the product backlog as where a team stores the user stories it has not started yet, in order of priority. Teams following Scrum also keep a sprint backlog for the stories they agreed to work on in that sprint. <a href="http://GOV.UK">GOV.UK</a>'s guide to deciding on priorities adds that a backlog is likely to hold other kinds of work too, such as support tickets and tasks to deal with technical debt.</p>
+<hr />
+<h2 id="user-story-template">User story template</h2>
+<p>The <a href="http://GOV.UK">GOV.UK</a> Service Manual's guide to <a href="https://www.gov.uk/service-manual/agile-delivery/writing-user-stories">writing user stories</a> uses this structure:</p>
+<pre><code class="language-text">As a... [who is the user?]
+I need/want/expect to... [what does the user want to do?]
+So that... [why does the user want to do this?]
+</code></pre>
+<p>You can use a different format, but every story should name the actor, the narrative and the goal. The goal matters most: it tells the team which problem it is solving and when the story is done. If you can't write the goal, question whether the feature is needed.</p>
+<p>Add <strong>acceptance criteria</strong>: a checklist of outcomes that show the story meets the user need, often written as a list that starts &quot;it's done when...&quot;.</p>
+<pre><code class="language-text">As a new user
+I want to create an account with my email address and a password
+So that I can come back to the service and see my saved preferences
+
+It's done when:
+- the user can create an account with an email address and password
+- the user gets a confirmation email
+- the user can sign in with the new account
+</code></pre>
+<p>A story that would take more than a few weeks to develop and test is an <strong>epic</strong>. Where you can, split epics into stories that fit within one iteration (sprint).</p>
+<hr />
+<h2 id="prioritising-the-backlog">Prioritising the backlog</h2>
+<p><a href="http://GOV.UK">GOV.UK</a>'s guide to <a href="https://www.gov.uk/service-manual/agile-delivery/deciding-on-priorities">deciding on priorities</a> says priorities should be decided regularly, and based on performance analysis, user research and input from stakeholders. The person leading the exercise should use a clear method and involve the delivery team and stakeholders.</p>
+<p>One method it describes is MoSCoW, which sorts items into:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Must have</td>
+<td>The product can't work without it</td>
+</tr>
+<tr>
+<td>Should have</td>
+<td>Greatly improves the product, but isn't essential to it working</td>
+</tr>
+<tr>
+<td>Could have</td>
+<td>Improves the service; leaving it out for now does little harm</td>
+</tr>
+<tr>
+<td>Will not have</td>
+<td>Low priority; the team has agreed not to do it</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="using-arckitbacklog">Using /arckit:backlog</h2>
+<p><code>/arckit:backlog</code> converts requirements into groomed stories, groups them into sprints, and exports markdown, CSV, and JSON for tooling.</p>
+<h3 id="input-readiness">Input Readiness</h3>
 <table>
 <thead>
 <tr>
@@ -465,15 +528,13 @@
 </tbody>
 </table>
 <p><em>Strongly recommended</em>: risk register (for priority), business case (for value), traceability matrix (for gaps).</p>
-<hr />
-<h2 id="command-patterns">Command Patterns</h2>
+<h3 id="command-patterns">Command Patterns</h3>
 <pre><code class="language-bash">/arckit:backlog                      # default: 8 sprints, 20 pts each
 /arckit:backlog VELOCITY=25 SPRINTS=12 FORMAT=all
 /arckit:backlog PRIORITY=risk        # other options: value, moscow, multi
 </code></pre>
 <p>Outputs land in <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-BKLG-v1.0.*</code>.</p>
-<hr />
-<h2 id="backlog-workflow">Backlog Workflow</h2>
+<h3 id="backlog-workflow">Backlog Workflow</h3>
 <table>
 <thead>
 <tr>
@@ -517,7 +578,8 @@
 <hr />
 <h2 id="useful-references">Useful References</h2>
 <ul>
-<li><a href="http://GOV.UK">GOV.UK</a> Service Manual on <a href="https://www.gov.uk/service-manual/agile-delivery">Agile delivery</a> (estimation guidance).</li>
+<li><a href="https://scrumguides.org/scrum-guide.html">The Scrum Guide</a> (2020), for the product backlog, refinement and sprint definitions.</li>
+<li><a href="http://GOV.UK">GOV.UK</a> Service Manual: <a href="https://www.gov.uk/service-manual/agile-delivery/writing-user-stories">writing user stories</a>, <a href="https://www.gov.uk/service-manual/agile-delivery/deciding-on-priorities">deciding on priorities</a> and <a href="https://www.gov.uk/service-manual/agile-delivery/agile-tools-techniques">agile tools and techniques</a>.</li>
 <li><code>/arckit:traceability</code> to spot requirements without coverage before backlog generation.</li>
 </ul>
 </div>

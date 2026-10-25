@@ -1,8 +1,50 @@
-# Procurement Market Intelligence Guide
+# Find a Tender and Contracts Finder: UK public contract award data
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit:tenders` discovers procurement market intelligence — award-value benchmarks, top suppliers, incumbency patterns, and concentration — from live UK procurement notices via the UK Tenders MCP.
+Find a Tender is the free GOV.UK service where UK public sector buyers publish procurement notices, and Contracts Finder holds older notices for England. This guide explains both services, how notices are published under the Procurement Act 2023, and how `/arckit:tenders` turns their award data into market intelligence.
+
+---
+
+## What Find a Tender is
+
+[Find a Tender](https://www.find-tender.service.gov.uk/) is "where public sector buyers publish notices about procurement opportunities and contracts". Since 24 February 2025 it has also been the central digital platform for the Procurement Act 2023. All UK contracting authorities publish their procurement information there, and suppliers register and hold the business information they share with buyers ([Central Digital Platform factsheet](https://www.gov.uk/government/publications/procurement-act-2023-short-guides/central-digital-platform-factsheet-html)). It is free for everyone, and you should not pay to view public sector opportunities.
+
+Find a Tender publishes:
+
+- notices about new UK procurements from 24 February 2025, above and below threshold (below-threshold notices in Scotland are the exception)
+- above-threshold notices for older procurements, across the contract life cycle from pipeline to termination
+- searchable views of opportunities, contracts and commercial tools (framework agreements, dynamic markets and dynamic purchasing systems)
+
+It also offers [notice data through an API](https://www.find-tender.service.gov.uk/Developer/Documentation).
+
+## What Contracts Finder is
+
+[Contracts Finder](https://www.gov.uk/contracts-finder) lets you search for information about contracts with the government and its agencies: current and forthcoming opportunities, and details of previous tenders and contracts. [Search Contracts Finder](https://www.contractsfinder.service.gov.uk/).
+
+Its role has narrowed since the Procurement Act 2023 came in. [PPN 019](https://www.gov.uk/government/publications/ppn-019-requirements-to-publish-on-contracts-finder/update-to-legal-requirements-to-publish-procurement-information-on-contracts-finder) (updated 31 March 2025) says no new procurements are run under the Public Contracts Regulations 2015 after 24 February 2025. For procurements started under those regulations, organisations in scope still publish award information on Contracts Finder. Find a Tender points to Contracts Finder for below-threshold information on older procurements in England and other non-devolved territories.
+
+## How notices are published under the Procurement Act 2023
+
+The Act's rules took effect on 24 February 2025 ([Procurement Act 2023: short guide for suppliers](https://www.gov.uk/government/publications/procurement-act-2023-short-guides/the-procurement-act-2023-a-short-guide-for-suppliers-html)). For a procurement that starts on or after that date, the buyer publishes a series of notices on Find a Tender through the life of the contract ([Find a Tender notice types](https://www.find-tender.service.gov.uk/Home/NoticeTypes)):
+
+| Stage | Notices |
+|-------|---------|
+| Before the tender | UK1 pipeline notice, UK2 preliminary market engagement notice, UK3 planned procurement notice |
+| Tender or direct award | UK4 tender notice, UK5 transparency notice |
+| Award | UK6 contract award notice, UK7 contract details notice |
+| During the contract | UK9 contract performance notice, UK10 contract change notice, UK11 contract termination notice |
+| Other | UK12 procurement termination notice, UK13 to UK16 dynamic market notices, UK17 payments compliance notice |
+
+- Every below-threshold contract needs a UK7 contract details notice.
+- The Act's notices don't apply where Scottish rules apply, where Northern Irish rules apply to a below-threshold contract, or to frameworks, dynamic purchasing systems and qualification systems set up under earlier legislation.
+- A procurement that started under earlier legislation keeps using that legislation's notice types.
+
+---
+
+## Using /arckit:tenders
+
+`/arckit:tenders` discovers procurement market intelligence — award-value benchmarks, top suppliers, incumbency patterns, and concentration — from live UK procurement notices via the UK Tenders MCP. That MCP mirrors notices from Find a Tender, Contracts Finder and the three devolved portals (see [Data Source](#data-source)).
 
 > **Agent Architecture**: This command uses a three-tier reader/writer subagent split. The **`arckit-tenders-reader`** subagent fetches evidence from the UK Tenders MCP (keeping that I/O isolated from your main context window). The orchestrator tier (the slash command) validates the reader's JSON payload against the `tenders-handoff.schema.json` schema and computes deterministic derived fields. The **`arckit-tenders-writer`** subagent then renders the final artefact. The slash command launches and coordinates both agents. On runtimes without subagent dispatch (Codex, Gemini, OpenCode, Copilot, Paperclip, Vibe, Kimi), the command ships as the equivalent single-agent `arckit-tenders` prompt instead, which does the same discovery, derivation and rendering in one role.
 
@@ -19,7 +61,7 @@ Procurement market intelligence is the systematic collection and analysis of rea
 - What is the median award value — a useful anchor for the Economic Case?
 - Has the buying organisation previously awarded this work, and to whom?
 
-> **Mandatory caveat.** Awarded value is not actual spend; figures are for market context and benchmarking, not the costed Economic Case. Never use TNDR figures as the cost line in a Green Book / Orange Book Economic Case without independent substantiation.
+> **Mandatory caveat.** Awarded value is not actual spend; figures are for market context and benchmarking, not the costed Economic Case. Never use TNDR figures as the cost line in a Green Book Economic Case without independent substantiation.
 
 ---
 
@@ -29,7 +71,7 @@ Procurement market intelligence is the systematic collection and analysis of rea
 - **Before scoping a procurement** — understand the supply base, concentration, and typical award size
 - **When assessing build vs buy** — quantify the commercial market depth before recommending a build
 - **When requesting approval for a sole-source** or direct award — evidence the supply landscape
-- **As early-stage market engagement intelligence** — complement formal Prior Information Notices
+- **As early-stage market engagement intelligence** — complement formal preliminary market engagement (a UK2 notice under the Procurement Act 2023)
 
 ---
 
@@ -57,16 +99,16 @@ The command accepts four input forms, which can be combined:
 
 You can combine flags: `/arckit:tenders cloud hosting --cpv 72200000 --buyer 'DVLA'`.
 
-**CPV code format:** eight digits, optionally followed by a division suffix (`NNNNNNNN-N`). Common codes:
+**CPV code format:** eight digits, optionally followed by a hyphen and the check digit (`NNNNNNNN-N`). In the [Common Procurement Vocabulary](https://ted.europa.eu/en/simap/cpv), the first two digits identify the division and the ninth digit verifies the others. Common codes:
 
 | Code | Category |
 |------|----------|
-| 72200000 | Software-related services |
+| 72200000 | Software programming and consultancy services |
 | 72300000 | Data services |
-| 72600000 | IT support and consultancy |
-| 48000000 | Software packages and systems |
-| 79000000 | Business services |
-| 73000000 | R&D services |
+| 72600000 | Computer support and consultancy services |
+| 48000000 | Software package and information systems |
+| 79000000 | Business services: law, marketing, consulting, recruitment, printing and security |
+| 73000000 | Research and development services and related consultancy services |
 
 ---
 
@@ -88,7 +130,7 @@ You can combine flags: `/arckit:tenders cloud hosting --cpv 72200000 --buyer 'DV
 /arckit:tenders [project-number-or-name] <capability | --cpv NNNNNNNN | --buyer 'Name' | --supplier 'Name'>
 ```
 
-Outputs: `projects/<id>/research/ARC-<id>-TNDR-<NNN>-v1.0.md`
+Output: `projects/<id>/research/ARC-<id>-TNDR-<NNN>-v1.0.md`
 
 > **Multi-instance type**: `TNDR` artefacts are sequenced within the project's `research/` directory. Re-running produces a new numbered artefact (`TNDR-001`, `TNDR-002`, …) rather than overwriting the previous run.
 
@@ -139,8 +181,8 @@ A `HIGH` concentration flag should be registered as a supplier-dependency risk i
 
 | Property | Detail |
 |----------|--------|
-| **MCP server** | `uk-tenders` (keyless, deferred load) |
-| **Coverage** | ~677,000 UK contracting processes across five national portals |
+| **MCP server** | `uk-tenders` (keyless, always loaded) |
+| **Coverage** | About 726,000 UK contracting processes across five national portals (25 October 2026); Contracts Finder from November 2016, Find a Tender from January 2021 |
 | **Portals covered** | Find a Tender Service (FTS), Contracts Finder, Public Contracts Scotland, Sell2Wales, eTendersNI |
 | **Refresh cadence** | Nightly |
 | **Availability** | Best-effort single Cloud Run instance — no formal SLA. A dead endpoint degrades gracefully (the reader returns partial data and the artefact renders with degraded-source notes). |
@@ -191,3 +233,13 @@ The reader returns evidence across five procurement portals, ranked internally b
 - Use market depth evidence in build-vs-buy analysis (`/arckit:research`)
 - Record route-to-market decisions as ADRs (`/arckit:adr`)
 - Escalate `HIGH` concentration findings to commercial lead before procurement scoping
+
+---
+
+## Useful Links
+
+- [Find a Tender](https://www.find-tender.service.gov.uk/) and its [GOV.UK start page](https://www.gov.uk/find-tender)
+- [Contracts Finder](https://www.gov.uk/contracts-finder)
+- [Procurement Act 2023: short guides](https://www.gov.uk/government/publications/procurement-act-2023-short-guides) (GOV.UK)
+- [Find a Tender notice types and sequences](https://www.find-tender.service.gov.uk/Home/NoticeTypes)
+- [PPN 019: requirements to publish on Contracts Finder](https://www.gov.uk/government/publications/ppn-019-requirements-to-publish-on-contracts-finder/update-to-legal-requirements-to-publish-procurement-information-on-contracts-finder)

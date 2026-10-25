@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:dfd generates Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation, producing both data-flow-diagram DSL and Mermaid…">
+    <meta name="description" content="A data flow diagram (DFD) shows how data moves through a system: where it comes from, what changes it, where it is kept and where it goes. This guide…">
     <meta name="author" content="ArcKit">
-    <title>Data Flow Diagram Guide | ArcKit</title>
-    <meta property="og:title" content="Data Flow Diagram Guide">
-    <meta property="og:description" content="/arckit:dfd generates Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation, producing both data-flow-diagram DSL and Mermaid renderings in a single governance artifact.">
+    <title>Data flow diagram (DFD): symbols, levels and balancing | ArcKit</title>
+    <meta property="og:title" content="Data flow diagram (DFD): symbols, levels and balancing">
+    <meta property="og:description" content="A data flow diagram (DFD) shows how data moves through a system: where it comes from, what changes it, where it is kept and where it goes. This guide covers the four DFD symbols, context diagrams and levels, the…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/dfd.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Data Flow Diagram Guide">
-    <meta name="twitter:description" content="/arckit:dfd generates Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation, producing both data-flow-diagram DSL and Mermaid renderings in a single governance artifact.">
+    <meta name="twitter:title" content="Data flow diagram (DFD): symbols, levels and balancing">
+    <meta name="twitter:description" content="A data flow diagram (DFD) shows how data moves through a system: where it comes from, what changes it, where it is kept and where it goes. This guide covers the four DFD symbols, context diagrams and levels, the…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/dfd.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/dfd.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/dfd.html",
-                "headline": "Data Flow Diagram Guide",
-                "description": "/arckit:dfd generates Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation, producing both data-flow-diagram DSL and Mermaid renderings in a single governance artifact.",
+                "headline": "Data flow diagram (DFD): symbols, levels and balancing",
+                "description": "A data flow diagram (DFD) shows how data moves through a system: where it comes from, what changes it, where it is kept and where it goes. This guide covers the four DFD symbols, context diagrams and levels, the…",
                 "url": "https://arckit.org/guide/dfd.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Data Flow Diagram Guide",
+                        "name": "Data flow diagram (DFD): symbols, levels and balancing",
                         "item": "https://arckit.org/guide/dfd.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Data Flow Diagram Guide</h1>
-            <p class="app-page-hero__description">/arckit:dfd generates Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation, producing both data-flow-diagram DSL and Mermaid renderings in a single governance artifact.</p>
+            <h1 class="app-page-hero__title">Data flow diagram (DFD): Yourdon-DeMarco symbols and levels</h1>
+            <p class="app-page-hero__description">A data flow diagram (DFD) shows how data moves through a system: where it comes from, what changes it, where it is kept and where it goes. This guide covers the four DFD symbols, context diagrams and levels, the…</p>
         </div>
     </div>
 
@@ -439,8 +439,66 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:dfd</code> generates Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation, producing both <code>data-flow-diagram</code> DSL and Mermaid renderings in a single governance artifact.</p>
+<p>A data flow diagram (DFD) shows how data moves through a system: where it comes from, what changes it, where it is kept and where it goes. This guide covers the four DFD symbols, context diagrams and levels, the balancing rule, and how <code>/arckit:dfd</code> draws a DFD from your requirements.</p>
 <hr />
+<h2 id="what-a-data-flow-diagram-is">What a data flow diagram is</h2>
+<p>Ed Yourdon describes the DFD in <em>Just Enough Structured Analysis</em>, chapter 9 (archived copy) as a tool that pictures &quot;a system as a network of functional processes, connected to one another by 'pipelines' and 'holding tanks' of data&quot;.</p>
+<p>Flows are data in motion. Stores are data at rest. A DFD does not show the order in which things happen: Yourdon calls it &quot;a network of communicating, asynchronous processes&quot;, and the process numbers do not imply a sequence. For the structure of the data, draw a <a href="data-model.html">data model</a> alongside it.</p>
+<p>Yourdon notes that DFDs suit systems whose functions are more complex than the data they handle. Security teams also use them for threat modelling. Microsoft's <a href="https://learn.microsoft.com/azure/security/develop/threat-modeling-tool-getting-started">Threat Modeling Tool</a>, for example, has you draw a DFD and add trust boundaries to it.</p>
+<hr />
+<h2 id="the-four-dfd-symbols">The four DFD symbols</h2>
+<p>The table uses Yourdon's names and shapes.</p>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Drawn as</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Process (also called a bubble)</td>
+<td>Circle</td>
+<td>A part of the system that turns inputs into outputs. Name it with a verb and an object, such as &quot;Validate payment&quot;</td>
+</tr>
+<tr>
+<td>Flow</td>
+<td>Named arrow</td>
+<td>Data moving between parts of the system. Each flow carries one kind of data, given by its name</td>
+</tr>
+<tr>
+<td>Store</td>
+<td>Two parallel lines</td>
+<td>Data at rest. Yourdon names stores in the plural, after the data they hold, such as &quot;Orders&quot;</td>
+</tr>
+<tr>
+<td>Terminator (external entity)</td>
+<td>Rectangle</td>
+<td>A person, organisation or other system outside the system boundary. You cannot change how it works</td>
+</tr>
+</tbody>
+</table>
+<p>Other notations draw processes differently. Yourdon notes that the circle is associated with the Yourdon-DeMarco notation, the oval with Gane and Sarson's, and the rectangle with SADT. He calls the differences &quot;purely cosmetic&quot;. What matters is using one shape consistently.</p>
+<hr />
+<h2 id="context-diagrams-levels-and-balancing">Context diagrams, levels and balancing</h2>
+<p>A real system has too many processes for one diagram. Yourdon's guideline is no more than about half a dozen processes on a diagram. So DFDs are drawn in levels, each adding detail to one part of the level above:</p>
+<ol>
+<li><strong>Context diagram</strong>: one process for the whole system, with every terminator and every flow that crosses the system boundary.</li>
+<li><strong>Figure 0</strong>: the major functions inside the system, numbered 1, 2, 3.</li>
+<li><strong>Lower levels</strong>: process 2 is broken down in Figure 2, whose processes are numbered 2.1, 2.2, 2.3, and so on.</li>
+</ol>
+<p>ArcKit calls the context diagram Level 0 and the first breakdown (Yourdon's Figure 0) Level 1. The process numbering is the same.</p>
+<p>Levels must <strong>balance</strong>. In Yourdon's words, &quot;the dataflows coming into and going out of a bubble at one level must correspond to the dataflows coming into and going out of an entire figure at the next lower level which describes that bubble.&quot;</p>
+<p>Yourdon also lists common mistakes to check for:</p>
+<ul>
+<li>a process with inputs but no outputs (a &quot;black hole&quot;)</li>
+<li>a process with outputs but no inputs (&quot;spontaneous generation&quot;)</li>
+<li>a store that is only read or only written, unless it is an external store shared with a terminator</li>
+</ul>
+<hr />
+<h2 id="using-arckitdfd">Using /arckit:dfd</h2>
+<p><code>/arckit:dfd</code> generates Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation, producing both <code>data-flow-diagram</code> DSL and Mermaid renderings in a single governance artifact.</p>
 <h2 id="purpose">Purpose</h2>
 <p>Data Flow Diagrams are essential for understanding how data moves through a system -- who produces it, what processes transform it, and where it is stored. Without clear data flow visibility, teams face:</p>
 <ul>
@@ -599,7 +657,7 @@
 <p><strong>Start with Level 0</strong>: The context diagram establishes the system boundary and all external entities. Always create this first before decomposing into lower levels.</p>
 </li>
 <li>
-<p><strong>Use the data-flow-diagram DSL for formal reviews</strong>: The <code>data-flow-diagram</code> Python tool (<code>pip install data-flow-diagram</code>) renders true Yourdon-DeMarco notation with circles, parallel lines, and rectangles -- preferred for architecture review boards.</p>
+<p><strong>Use the data-flow-diagram DSL for formal reviews</strong>: The <a href="https://github.com/pbauermeister/dfd"><code>data-flow-diagram</code></a> Python tool renders Yourdon-style notation (process bubbles, two-line stores, entity rectangles) through Graphviz -- preferred for architecture review boards. Install <a href="https://graphviz.org/download/">Graphviz</a> first, then <code>pip install data-flow-diagram</code> (or <code>uv tool install data-flow-diagram</code>). Copy the <code>dfd</code> block into a file and run <code>data-flow-diagram context.dfd -o context.svg</code>. The tool has no <code>title</code> statement, so delete any <code>title</code> line, or turn it into a <code>#</code> comment, before rendering.</p>
 </li>
 <li>
 <p><strong>Use Mermaid for inline documentation</strong>: The Mermaid output renders automatically in GitHub, VS Code, and online editors -- ideal for embedding in wikis and READMEs.</p>
@@ -650,8 +708,9 @@
 Location: projects/007-nhs-appointment/diagrams/ARC-007-DFD-001-v1.0.md
 
 Rendering Options:
-- data-flow-diagram CLI: pip install data-flow-diagram &amp;&amp; dfd &lt; file.dfd
-  (Produces true Yourdon-DeMarco notation as SVG/PNG)
+- data-flow-diagram CLI (needs Graphviz): pip install data-flow-diagram,
+  then data-flow-diagram file.dfd -o file.svg
+  (Produces Yourdon-style notation as SVG, PNG or PDF)
 - Mermaid Live Editor: https://mermaid.live (paste Mermaid code)
 - GitHub/VS Code: Mermaid code renders automatically
 

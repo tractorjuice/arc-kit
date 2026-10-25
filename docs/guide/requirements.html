@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:requirements produces a single living document covering business, functional, non-functional, integration, and data requirements.">
+    <meta name="description" content="A requirements document records why a change is needed, what the solution must do and how well it must do it. This guide explains business, functional…">
     <meta name="author" content="ArcKit">
-    <title>Requirements Guide | ArcKit</title>
-    <meta property="og:title" content="Requirements Guide">
-    <meta property="og:description" content="/arckit:requirements produces a single living document covering business, functional, non-functional, integration, and data requirements.">
+    <title>Non-functional requirements and requirements documents | ArcKit</title>
+    <meta property="og:title" content="Non-functional requirements and requirements documents">
+    <meta property="og:description" content="A requirements document records why a change is needed, what the solution must do and how well it must do it. This guide explains business, functional and non-functional requirements, with examples for UK public…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/requirements.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Requirements Guide">
-    <meta name="twitter:description" content="/arckit:requirements produces a single living document covering business, functional, non-functional, integration, and data requirements.">
+    <meta name="twitter:title" content="Non-functional requirements and requirements documents">
+    <meta name="twitter:description" content="A requirements document records why a change is needed, what the solution must do and how well it must do it. This guide explains business, functional and non-functional requirements, with examples for UK public…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/requirements.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/requirements.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/requirements.html",
-                "headline": "Requirements Guide",
-                "description": "/arckit:requirements produces a single living document covering business, functional, non-functional, integration, and data requirements.",
+                "headline": "Non-functional requirements and requirements documents",
+                "description": "A requirements document records why a change is needed, what the solution must do and how well it must do it. This guide explains business, functional and non-functional requirements, with examples for UK public…",
                 "url": "https://arckit.org/guide/requirements.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Requirements Guide",
+                        "name": "Non-functional requirements and requirements documents",
                         "item": "https://arckit.org/guide/requirements.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Requirements Guide</h1>
-            <p class="app-page-hero__description">/arckit:requirements produces a single living document covering business, functional, non-functional, integration, and data requirements.</p>
+            <h1 class="app-page-hero__title">Non-functional requirements and the business requirements document</h1>
+            <p class="app-page-hero__description">A requirements document records why a change is needed, what the solution must do and how well it must do it. This guide explains business, functional and non-functional requirements, with examples for UK public…</p>
         </div>
     </div>
 
@@ -439,12 +439,123 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:requirements</code> produces a single living document covering business, functional, non-functional, integration, and data requirements.</p>
+<p>A requirements document records why a change is needed, what the solution must do and how well it must do it. This guide explains business, functional and non-functional requirements, with examples for UK public services, and how <code>/arckit:requirements</code> writes them into one document.</p>
+<hr />
+<h2 id="types-of-requirement">Types of requirement</h2>
+<p>The International Institute of Business Analysis (IIBA) classifies requirements into four types in its <a href="https://www.iiba.org/globalassets/standards-and-resources/core-standard/iiba-core-standard.pdf">Global Business Analysis Core Standard</a>, an abridged version of the foundational concepts in the BABOK Guide:</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>IIBA definition</th>
+<th>Where ArcKit records it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Business requirements</td>
+<td>Goals, objectives and outcomes that describe why a change has been initiated</td>
+<td><code>BR-###</code></td>
+</tr>
+<tr>
+<td>Stakeholder requirements</td>
+<td>The needs of stakeholders that must be met to achieve the business requirements</td>
+<td>Stakeholder goals from <code>/arckit:stakeholders</code>, which each requirement traces to</td>
+</tr>
+<tr>
+<td>Solution requirements: functional</td>
+<td>The capabilities a solution must have, in terms of the behaviour and information it will manage</td>
+<td><code>FR-###</code>, plus <code>INT-###</code> for interfaces and <code>DR-###</code> for data</td>
+</tr>
+<tr>
+<td>Solution requirements: non-functional</td>
+<td>Conditions under which a solution must remain effective, or qualities it must have. Also called quality of service requirements</td>
+<td><code>NFR-&lt;category&gt;-###</code></td>
+</tr>
+<tr>
+<td>Transition requirements</td>
+<td>Temporary capabilities and conditions needed to move from the current state to the future state, such as data conversion, training and business continuity</td>
+<td>Data migration requirements in the data section</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-business-requirements-document">The business requirements document</h3>
+<p>A business requirements document (BRD) holds the business requirements for a change: the goals and outcomes it must achieve. IIBA's <a href="https://www.iiba.org/contentassets/38e412c7b77d456297d953de5bf5ca61/requirement-types-infograph.pdf">requirement types guide</a> says business requirements are written at a strategic level and should not contain solution elements.</p>
+<p>ArcKit keeps business, functional, non-functional, integration and data requirements in one document. Each solution requirement can then trace back to the business requirement and the stakeholder goal it serves.</p>
+<hr />
+<h2 id="non-functional-requirements">Non-functional requirements</h2>
+<p>A non-functional requirement (NFR) says how well the solution must work, not what it does. Write each one so it can be measured and tested, for example &quot;95% of searches return in under 2 seconds&quot; rather than &quot;the system must be fast&quot;.</p>
+<p>ArcKit's requirements template groups NFRs by category:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Prefix</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Performance</td>
+<td><code>NFR-P-###</code></td>
+<td>P95 page response under 500ms at expected peak load</td>
+</tr>
+<tr>
+<td>Availability and resilience</td>
+<td><code>NFR-A-###</code></td>
+<td>99.9% availability, with recovery objectives for a regional outage</td>
+</tr>
+<tr>
+<td>Scalability</td>
+<td><code>NFR-S-###</code></td>
+<td>Handle three times today's peak users without redesign</td>
+</tr>
+<tr>
+<td>Security</td>
+<td><code>NFR-SEC-###</code></td>
+<td>Multi-factor authentication for all administrative access</td>
+</tr>
+<tr>
+<td>Compliance and regulatory</td>
+<td><code>NFR-C-###</code></td>
+<td>Processing meets UK GDPR, with a completed DPIA</td>
+</tr>
+<tr>
+<td>Usability and accessibility</td>
+<td><code>NFR-U-###</code></td>
+<td>Meets WCAG 2.2 Level AA</td>
+</tr>
+<tr>
+<td>Maintainability and supportability</td>
+<td><code>NFR-M-###</code></td>
+<td>Structured logs and metrics for every service</td>
+</tr>
+<tr>
+<td>Portability and interoperability</td>
+<td><code>NFR-I-###</code></td>
+<td>Public APIs follow open standards and are documented</td>
+</tr>
+</tbody>
+</table>
+<h3 id="accessibility-is-a-legal-requirement-for-public-services">Accessibility is a legal requirement for public services</h3>
+<p><a href="http://GOV.UK">GOV.UK</a>'s guidance on <a href="https://www.gov.uk/guidance/accessibility-requirements-for-public-sector-websites-and-apps">accessibility requirements for public sector websites and apps</a> says they must meet the WCAG 2.2 AA standard, under the Public Sector Bodies (Websites and Mobile Applications) (No. 2) Accessibility Regulations 2018, and must publish an accessibility statement. The <a href="https://www.gov.uk/service-manual/helping-people-to-use-your-service/understanding-wcag">Service Manual</a> says government services must achieve WCAG 2.2 level AA. Record this as an NFR with its own acceptance criteria.</p>
+<hr />
 <div class="govuk-inset-text app-fde-panel">
 <p class="govuk-body"><strong>Heading into a gate, a procurement or a board?</strong> ArcKit FDE puts a senior architect in your team for five days to produce your principles, requirements, risk register and stakeholder map, at a fixed price. <a class="govuk-link" href="../fde/">See how ArcKit FDE works</a>.</p>
 </div>
+<h2 id="reviewing-a-requirements-document">Reviewing a requirements document</h2>
+<h3 id="review-checklist">Review Checklist</h3>
+<ul>
+<li>Every requirement includes acceptance criteria and traceability references (stakeholder IDs, risks, principles).</li>
+<li>Conflicts and dependencies are called out (e.g. BR vs NFR tension).</li>
+<li>Regulatory obligations (TCoP, GDPR, WCAG, PCI-DSS) are captured explicitly.</li>
+<li>Integration requirements specify protocols, authentication, and error handling.</li>
+<li>Data requirements include lawful basis and retention aligned with DPIA outputs.</li>
+</ul>
 <hr />
-<h2 id="preparation">Preparation</h2>
+<h2 id="using-arckitrequirements">Using /arckit:requirements</h2>
+<p><code>/arckit:requirements</code> produces a single living document covering business, functional, non-functional, integration, and data requirements.</p>
+<h3 id="preparation">Preparation</h3>
 <table>
 <thead>
 <tr>
@@ -467,16 +578,14 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="command">Command</h2>
+<h3 id="command">Command</h3>
 <pre><code class="language-bash">/arckit:requirements Create requirements for &lt;project&gt;
 </code></pre>
 <p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-REQ-v1.0.md</code>.</p>
 <blockquote>
 <p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
 </blockquote>
-<hr />
-<h2 id="requirements-matrix">Requirements Matrix</h2>
+<h3 id="requirements-matrix">Requirements Matrix</h3>
 <table>
 <thead>
 <tr>
@@ -519,18 +628,8 @@
 </tr>
 </tbody>
 </table>
-<p>For public sector projects, MoSCoW priorities are automatically assigned.</p>
-<hr />
-<h2 id="review-checklist">Review Checklist</h2>
-<ul>
-<li>Every requirement includes acceptance criteria and traceability references (stakeholder IDs, risks, principles).</li>
-<li>Conflicts and dependencies are called out (e.g. BR vs NFR tension).</li>
-<li>Regulatory obligations (TCoP, GDPR, WCAG, PCI-DSS) are captured explicitly.</li>
-<li>Integration requirements specify protocols, authentication, and error handling.</li>
-<li>Data requirements include lawful basis and retention aligned with DPIA outputs.</li>
-</ul>
-<hr />
-<h2 id="after-generation">After Generation</h2>
+<p>Every requirement gets a MoSCoW priority (MUST_HAVE, SHOULD_HAVE, COULD_HAVE or WONT_HAVE), testable acceptance criteria and a rationale.</p>
+<h3 id="after-generation">After Generation</h3>
 <ol>
 <li>Workshop with stakeholders to confirm priorities and resolve conflicts.</li>
 <li>Feed requirements into <code>/arckit:sow</code>, <code>/arckit:diagram</code>, <code>/arckit:backlog</code>.</li>
@@ -538,6 +637,13 @@
 <li>Re-run the command whenever scope changes; commit deltas for audit.</li>
 <li>Pair with <code>/arckit:traceability</code> to ensure design, tests, and operational artefacts stay aligned.</li>
 </ol>
+<hr />
+<h2 id="useful-links">Useful Links</h2>
+<ul>
+<li><a href="https://www.iiba.org/globalassets/standards-and-resources/core-standard/iiba-core-standard.pdf">IIBA Global Business Analysis Core Standard</a> (PDF)</li>
+<li><a href="https://www.gov.uk/guidance/accessibility-requirements-for-public-sector-websites-and-apps">Accessibility requirements for public sector websites and apps</a> (<a href="http://GOV.UK">GOV.UK</a>)</li>
+<li><a href="traceability.html">Traceability guide</a>, for linking requirements to design and tests</li>
+</ul>
 </div>
 <script src="../films.js"></script>
         </div>

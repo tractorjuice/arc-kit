@@ -579,7 +579,8 @@ claude
 <ul>
 <li><strong>Type</strong>: HTTP (remote endpoint)</li>
 <li><strong>Commands</strong>: <code>/arckit:aws-research</code></li>
-<li><strong>Tools</strong>: <code>search_documentation</code>, <code>read_documentation</code>, <code>get_regional_availability</code>, <code>list_regions</code>, <code>recommend</code></li>
+<li><strong>Tools</strong>: <code>search_documentation</code>, <code>read_documentation</code>, <code>get_regional_availability</code>, <code>list_regions</code>, <code>retrieve_skill</code></li>
+<li><strong>Compared with AWS's other documentation servers</strong>: see <a href="aws-documentation-mcp.html">AWS documentation MCP servers</a></li>
 <li><strong>Setup</strong>: None — works immediately after plugin installation</li>
 </ul>
 <h3 id="microsoft-learn">Microsoft Learn</h3>
@@ -597,11 +598,11 @@ claude
 <ul>
 <li><strong>Type</strong>: HTTP (remote endpoint)</li>
 <li><strong>Commands</strong>: <code>/arckit:gcp-research</code></li>
-<li><strong>Tools</strong>: <code>search_documents</code>, <code>get_document</code>, <code>batch_get_documents</code></li>
+<li><strong>Tools</strong>: <code>search_documents</code>, <code>get_documents</code>, <code>answer_query</code> (Google replaced <code>get_document</code> and <code>batch_get_documents</code> with <code>get_documents</code> on 8 March 2026)</li>
 </ul>
 <p><strong>Setup</strong>:</p>
 <ol>
-<li>Get a free API key from <a href="https://aistudio.google.com/apikey">Google AI Studio</a> or the <a href="https://console.cloud.google.com/apis/credentials">Google Cloud Console</a></li>
+<li>In the <a href="https://console.cloud.google.com/apis/credentials">Google Cloud Console</a>, enable the Developer Knowledge API for your project, create an API key, and restrict the key to that API (see Google's <a href="https://developers.google.com/knowledge/mcp">Developer Knowledge MCP setup</a>)</li>
 <li><strong>Claude Code:</strong> the ArcKit plugin asks for the key when you enable it, as a sensitive setting kept in your system keychain. To add or change it later, open <code>/plugin</code>, choose <strong>arckit</strong>, and open its configure screen (or run <code>claude plugin configure arckit</code> on Claude Code v2.1.285+). ArcKit passes it to the server in a request header; it isn't written to any file.</li>
 <li><strong>Other assistants</strong> (Codex CLI, Gemini CLI, OpenCode, GitHub Copilot, Kimi, Mistral Vibe) read it from the environment instead:</li>
 </ol>
@@ -667,7 +668,7 @@ Invalid MCP server config for 'datacommons-mcp': Missing environment variables: 
 </ol>
 <h3 id="api-key-works-but-commands-fail">API key works but commands fail</h3>
 <ul>
-<li><strong>Google</strong>: Ensure the API key has the &quot;Generative Language API&quot; enabled in Google Cloud Console</li>
+<li><strong>Google</strong>: Ensure the Developer Knowledge API is enabled for the key's project and included in the key's API restrictions; otherwise requests fail with &quot;403 API target restriction&quot;</li>
 <li><strong>Data Commons</strong>: Ensure the key is active and not rate-limited</li>
 </ul>
 <hr />
@@ -789,8 +790,8 @@ Invalid MCP server config for 'datacommons-mcp': Missing environment variables: 
 <h2 id="resources">Resources</h2>
 <ul>
 <li><a href="https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server">AWS Knowledge MCP</a> — AWS documentation server</li>
-<li><a href="https://learn.microsoft.com/api/mcp">Microsoft Learn MCP</a> — Azure documentation server</li>
-<li><a href="https://developerknowledge.googleapis.com/mcp">Google Developer Knowledge MCP</a> — Google Cloud documentation server</li>
+<li><a href="https://learn.microsoft.com/training/support/mcp">Microsoft Learn MCP</a> — Azure documentation server (see also <a href="microsoft-learn-mcp.html">Microsoft Learn MCP server</a>)</li>
+<li><a href="https://developers.google.com/knowledge/mcp">Google Developer Knowledge MCP</a> — Google Cloud documentation server</li>
 <li><a href="https://datacommons.org">Data Commons</a> — Public statistical data</li>
 <li><a href="https://modelcontextprotocol.io/">Model Context Protocol</a> — MCP specification</li>
 <li><a href="https://github.com/anthropics/skills">Anthropic Skills</a> — Document skills (PDF, DOCX, PPTX, XLSX)</li>

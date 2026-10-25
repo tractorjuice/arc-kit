@@ -4,6 +4,8 @@
 
 `/arckit:ai-playbook` documents compliance with the UK Government AI Playbook’s 10 principles and 6 ethical themes.
 
+> **Full guide**: [AI Playbook for the UK Government](../ai-playbook.md) covers what the playbook is, who it applies to, the exact wording of the 10 principles, the six ethical themes and the review checklist. This page is the short summary.
+
 ---
 
 ## Command
@@ -20,7 +22,7 @@ Output: `projects/<id>/ARC-<id>-AIPB-v1.0.md`.
 
 | Principle | Focus | Evidence Examples | Linked Artefacts |
 |-----------|-------|-------------------|------------------|
-| Understand users | Problem definition, user research, success metrics | Discovery notes, KPIs, personas | `/arckit:stakeholders`, `/arckit:requirements` |
+| Know what AI is and its limitations | AI capabilities and limits, accuracy of outputs | Documented limitations, output testing process | `/arckit:requirements`, `/arckit:risk` |
 | Lawful & ethical | GDPR, EqIA, DPIA, lawful basis | DPIA, legal review | `/arckit:dpia`, `/arckit:secure` |
 | Security | Threat model, controls, monitoring | STRIDE, Secure by Design, logging plan | `/arckit:secure`, `/arckit:servicenow` |
 | Human control | Human-in-the-loop, override, accountability | RAISO, playbooks, escalation paths | `/arckit:jsp-936`, runbooks |
