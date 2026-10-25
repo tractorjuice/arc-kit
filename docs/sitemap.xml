@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://arckit.org/</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-10-25</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
@@ -20,7 +20,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guides.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-10-25</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -752,7 +752,7 @@
     <url>
         <loc>https://arckit.org/guide/mod-secure.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/national-data-strategy.html</loc>
@@ -1032,7 +1032,7 @@
     <url>
         <loc>https://arckit.org/guide/secure.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/security.html</loc>
@@ -1252,15 +1252,10 @@
     <url>
         <loc>https://arckit.org/guide/uk-government/algorithmic-transparency.html</loc>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/uk-government/digital-marketplace.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://arckit.org/guide/uk-government/secure-by-design.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1270,17 +1265,7 @@
         <priority>0.6</priority>
     </url>
     <url>
-        <loc>https://arckit.org/guide/uk-government/technology-code-of-practice.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
         <loc>https://arckit.org/guide/uk-mdr-classification.html</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
-    </url>
-    <url>
-        <loc>https://arckit.org/guide/uk-mod/secure-by-design.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>

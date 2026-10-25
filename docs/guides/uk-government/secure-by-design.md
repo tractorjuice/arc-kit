@@ -4,6 +4,8 @@
 
 `/arckit:secure` captures NCSC Secure by Design, Cyber Essentials, and GDPR evidence for civilian (non-MOD) services.
 
+> **Full guide**: [Secure by Design for UK government](../secure.md) covers who Secure by Design applies to, its 10 principles, this evidence checklist and the full `/arckit:secure` assessment. This page is the short summary.
+
 ---
 
 ## Command
