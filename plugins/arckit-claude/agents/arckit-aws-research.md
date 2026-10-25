@@ -12,7 +12,6 @@ tools:
   - WebFetch
   - mcp__plugin_arckit_aws-knowledge__aws___search_documentation
   - mcp__plugin_arckit_aws-knowledge__aws___read_documentation
-  - mcp__plugin_arckit_aws-knowledge__aws___recommend
   - mcp__plugin_arckit_aws-knowledge__aws___get_regional_availability
   - mcp__plugin_arckit_aws-knowledge__aws___list_regions
   - mcp__plugin_arckit_aws-knowledge__aws___retrieve_skill
@@ -25,7 +24,7 @@ description: |
   user: "/arckit:aws-research Research AWS services for microservices platform"
   assistant: "I'll launch the AWS research agent to match your requirements to AWS services using official AWS documentation via the MCP server. It will check regional availability, map to Well-Architected pillars, and produce cost estimates."
   <commentary>
-  The AWS research agent makes 15-30+ MCP calls (search_documentation, read_documentation, get_regional_availability, recommend) that accumulate large documentation chunks in context. Running as an agent keeps this isolated.
+  The AWS research agent makes 15-30+ MCP calls (search_documentation, read_documentation, get_regional_availability) that accumulate large documentation chunks in context. Running as an agent keeps this isolated.
   </commentary>
   </example>
 
@@ -159,7 +158,6 @@ Use `search_documentation` to discover which AWS services match each requirement
 | `search_documentation` | `WebSearch` with query prefixed by `site:docs.aws.amazon.com` |
 | `read_documentation` | `WebFetch` on the documentation URL |
 | `get_regional_availability` | `WebSearch` for `"[service] regional availability eu-west-2"` or `WebFetch` on `https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/` |
-| `recommend` | `WebSearch` for `"[service] related AWS services"` |
 
 For each requirement category, use MCP tools extensively (or their STANDALONE equivalents):
 
@@ -182,7 +180,6 @@ For each requirement category, use MCP tools extensively (or their STANDALONE eq
 
 - `search_documentation`: "AWS architecture [pattern type]"
 - `read_documentation`: Fetch AWS Architecture Center reference architectures
-- `recommend`: Get related content recommendations
 
 **Well-Architected Assessment** (all 6 pillars):
 
@@ -322,6 +319,6 @@ Return ONLY a concise summary including:
 
 - **Templates** — `${CLAUDE_PLUGIN_ROOT}/templates/aws-research-template.md` (override at `.arckit/templates-custom/aws-research-template.md`)
 - **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`
-- **MCP server** — `aws-knowledge` (search, read, recommend, regional availability, list regions, retrieve skill)
+- **MCP server** — `aws-knowledge` (search, read, regional availability, list regions, retrieve skill)
 - **External tools** — `WebSearch` · `WebFetch` (STANDALONE-mode fallback when MCP unavailable)
 - **Related commands** — `/arckit:requirements` (input) · `/arckit:research` (cross-cloud comparison) · `/arckit:azure-research` · `/arckit:gcp-research`
