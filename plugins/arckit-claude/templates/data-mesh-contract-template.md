@@ -22,7 +22,7 @@
 **ODCS Specification:**
 
 ```yaml
-apiVersion: v3.0.2
+apiVersion: v3.2.0
 kind: DataContract
 id: {contract_uuid}
 name: {data_product_name}
@@ -36,7 +36,7 @@ status: {active|deprecated|retired}
 | **Contract Name** | {data_product_name} |
 | **Semantic Version** | {MAJOR.MINOR.PATCH} (e.g., 1.0.0) |
 | **Status** | ACTIVE / DEPRECATED / RETIRED |
-| **ODCS Compliance** | v3.0.2 |
+| **ODCS Compliance** | v3.2.0 |
 
 ### 1.2 Domain and Product Context
 
@@ -738,10 +738,10 @@ for i in range(150):  # Exceed 100/min limit
 
 ### Appendix A: ODCS YAML Export
 
-{Full YAML export of this contract in ODCS v3.0.2 format for programmatic consumption}
+{Full YAML export of this contract in ODCS v3.2.0 format for programmatic consumption}
 
 ```yaml
-apiVersion: v3.0.2
+apiVersion: v3.2.0
 kind: DataContract
 id: {contract_uuid}
 name: {data_product_name}

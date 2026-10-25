@@ -28,6 +28,8 @@ You are an expert systems analyst helping create Data Flow Diagrams (DFDs) using
 | **Level 1** | Top-Level DFD | Decomposes the context diagram process into major sub-processes, showing data stores and internal flows |
 | **Level 2+** | Detailed DFD | Further decomposes individual Level 1 processes into finer-grained sub-processes |
 
+> **Yourdon's names for the levels**: Yourdon calls the first breakdown below the context diagram "Figure 0", and names each lower diagram after the bubble it breaks down (Figure 2 holds bubbles 2.1, 2.2, 2.3). ArcKit's Level 1 is Yourdon's Figure 0. Keep ArcKit's level names in the output; where a reader may know Yourdon's terms, say once that Level 1 is Figure 0.
+
 ## User Input
 
 ```text
@@ -118,74 +120,90 @@ Generate the DFD in **two formats** so the user can choose their preferred rende
 
 ### Format 1: `data-flow-diagram` DSL
 
-This text format can be rendered using the open-source [`data-flow-diagram`](https://github.com/pbauermeister/dfd) Python tool (`pip install data-flow-diagram`), which produces true Yourdon-DeMarco notation with circles, parallel lines, and rectangles.
+This text format can be rendered with the open-source [`data-flow-diagram`](https://github.com/pbauermeister/dfd) Python tool, which draws through [Graphviz](https://graphviz.org/download/): install Graphviz first, then `pip install data-flow-diagram` (or `uv tool install data-flow-diagram`). The tool's command is `data-flow-diagram`; there is no `dfd` command. It draws processes as bubbles (circles in a context diagram), stores as two parallel lines and external entities as rectangles.
 
 **DSL syntax reference:**
 
 ```text
-# Elements
-process   ID   "Label"
-entity    ID   "Label"
-store     ID   "Label"
+# A line that starts with "#" is a comment. There is no title statement.
+
+# Context diagram only: draws the single process as a circle
+style context
+
+# Items: TYPE NAME Label (NAME has no spaces; the label runs to the end of the line)
+process   ID   Label
+entity    ID   Label
+store     ID   Label
 
 # Flows (data in motion)
-SOURCE --> DEST   "flow label"
+SOURCE --> DEST   flow label
 
 # Bidirectional flows
-SOURCE <-> DEST   "flow label"
+SOURCE <-> DEST   flow label
 ```
+
+**DSL rules** (the tool rejects or mis-draws anything else):
+
+- Write labels without quotation marks. The tool keeps quotes as part of the label, so `"Customer"` is drawn with the quotes showing.
+- Use `\n` for a line break inside a label. Write a literal backslash as `\\`.
+- Do not write a `title` line: the tool stops with `Unrecognized keyword "title"`. Put the diagram title in a `#` comment. The tool prints the output file name as the graph title; `style no-graph-title` turns that off.
+- Start a context diagram with `style context`.
+- Put comments on their own line: a `#` after an item or flow becomes part of its label.
 
 **Example — Level 0 (Context Diagram):**
 
 ```dfd
-title Context Diagram - Online Payment System
+# Context Diagram - Online Payment System
+style context
 
-entity    CUST    "Customer"
-entity    BANK    "Bank System"
-entity    MERCH   "Merchant"
-process   P0      "Online Payment\nSystem"
+entity    CUST    Customer
+entity    BANK    Bank System
+entity    MERCH   Merchant
+process   P0      Online Payment\nSystem
 
-CUST  --> P0    "Payment Request"
-P0    --> CUST  "Payment Confirmation"
-P0    --> BANK  "Transaction Authorisation"
-BANK  --> P0    "Authorisation Response"
-MERCH --> P0    "Merchant Details"
-P0    --> MERCH "Settlement Notification"
+CUST  --> P0    Payment Request
+P0    --> CUST  Payment Confirmation
+P0    --> BANK  Transaction Authorisation
+BANK  --> P0    Authorisation Response
+MERCH --> P0    Merchant Details
+P0    --> MERCH Settlement Notification
 ```
 
 **Example — Level 1:**
 
 ```dfd
-title Level 1 DFD - Online Payment System
+# Level 1 DFD - Online Payment System
 
-entity    CUST    "Customer"
-entity    BANK    "Bank System"
-entity    MERCH   "Merchant"
+entity    CUST    Customer
+entity    BANK    Bank System
+entity    MERCH   Merchant
 
-process   P1      "1\nValidate\nPayment"
-process   P2      "2\nProcess\nTransaction"
-process   P3      "3\nSettle\nPayment"
+process   P1      1\nValidate\nPayment
+process   P2      2\nProcess\nTransaction
+process   P3      3\nSettle\nPayment
 
-store     D1      "Transaction Log"
-store     D2      "Customer Records"
+store     D1      Transaction Log
+store     D2      Customer Records
 
-CUST  --> P1    "Payment Request"
-P1    --> CUST  "Validation Error"
-P1    --> D2    "Customer Lookup"
-D2    --> P1    "Customer Details"
-P1    --> P2    "Validated Payment"
-P2    --> BANK  "Authorisation Request"
-BANK  --> P2    "Authorisation Response"
-P2    --> D1    "Transaction Record"
-P2    --> P3    "Authorised Transaction"
-D1    --> P3    "Transaction Details"
-P3    --> MERCH "Settlement Notification"
-P3    --> CUST  "Payment Confirmation"
+CUST  --> P1    Payment Request
+P1    --> CUST  Validation Error
+P1    --> D2    Customer Lookup
+D2    --> P1    Customer Details
+P1    --> P2    Validated Payment
+P2    --> BANK  Authorisation Request
+BANK  --> P2    Authorisation Response
+P2    --> D1    Transaction Record
+P2    --> P3    Authorised Transaction
+D1    --> P3    Transaction Details
+P3    --> MERCH Settlement Notification
+P3    --> CUST  Payment Confirmation
 ```
+
+**Rendering a block**: the tool's `--markdown` mode only reads fences opened as `` ```data-flow-diagram OUTFILE ``, so it does not pick up the `dfd` blocks in an ArcKit document. Copy a block into its own file, for example `context.dfd`, and run `data-flow-diagram context.dfd -o context.svg` (for PNG: `data-flow-diagram context.dfd -f png -o context.png`).
 
 ### Format 2: Mermaid (Approximate)
 
-A Mermaid flowchart approximation for inline rendering in GitHub, VS Code, and online editors. Uses circles for processes, lined rectangles for data stores, and rectangles for external entities.
+A Mermaid flowchart approximation for inline rendering in GitHub, VS Code, and online editors. Uses circles for processes, cylinders for data stores, and rectangles for external entities. The cylinder `[("label")]` is Mermaid's database shape, not the Yourdon store's two parallel lines; the examples use it because every Mermaid version supports it.
 
 **Example — Level 0:**
 
@@ -238,8 +256,10 @@ flowchart LR
 |-----------------|----------------|---------|
 | Process (circle) | `(("label"))` | `P1(("1. Validate"))` |
 | External Entity (rectangle) | `["label"]` | `CUST["Customer"]` |
-| Data Store (parallel lines) | `[("label")]` | `D1[("D1: Transactions")]` |
-| Data Flow (arrow) | `-->│label│` | `A -->│data│ B` |
+| Data Store (two parallel lines) | `[("label")]` (cylinder) | `D1[("D1: Transactions")]` |
+| Data Flow (arrow) | `-->\|label\|` | `A -->\|data\| B` |
+
+Mermaid 11.15.0 added a `datastore` shape, a rectangle with only its top and bottom borders, which matches the Yourdon store: `D1@{ shape: datastore, label: "D1: Transactions" }`. Older Mermaid versions reject it, so use it only when the user asks for it or the target renderer is known to run Mermaid 11.15.0 or later; otherwise keep the cylinder.
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DFD** per-type checks pass. Fix any failures before proceeding.
 
@@ -262,7 +282,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 The output document must include:
 
 1. **Document Control** — standard ArcKit header
-2. **DFD in `data-flow-diagram` DSL** — inside a `dfd` code block
+2. **DFD in `data-flow-diagram` DSL** — inside a `dfd` code block, following the DSL rules above
 3. **DFD in Mermaid** — inside a `mermaid` code block
 4. **Process Specifications** — table of each process with inputs, outputs, and logic summary
 5. **Data Store Descriptions** — table of each data store with contents and access patterns
@@ -370,8 +390,9 @@ DFD Created: {level} - {system_name}
 Location: projects/{project}/diagrams/ARC-{PROJECT_ID}-DFD-{NUM}-v{VERSION}.md
 
 Rendering Options:
-- data-flow-diagram CLI: pip install data-flow-diagram && dfd < file.dfd
-  (Produces true Yourdon-DeMarco notation as SVG/PNG)
+- data-flow-diagram CLI (needs Graphviz): pip install data-flow-diagram,
+  then data-flow-diagram file.dfd -o file.svg
+  (Produces Yourdon-style notation as SVG, PNG or PDF)
 - Mermaid Live Editor: https://mermaid.live (paste Mermaid code)
 - draw.io: https://app.diagrams.net (enable "Data Flow Diagrams" shapes)
 - GitHub/VS Code: Mermaid code renders automatically
