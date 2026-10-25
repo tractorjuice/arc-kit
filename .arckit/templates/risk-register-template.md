@@ -248,6 +248,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 #### Risk Response (4Ts Framework)
 
 **Primary Response:** TREAT (Mitigate/Reduce)
+**Orange Book option (D6):** Change the likelihood; change the consequences
 
 **Rationale:**
 [Why this response was chosen - e.g., "Risk exceeds appetite but can be mitigated through additional controls at reasonable cost"]
@@ -476,15 +477,19 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 
 ## F. 4Ts Response Framework Summary
 
+The 4Ts are ArcKit's response labels. The Orange Book does not use them: each maps to one of the risk treatment options in Orange Book principle D6, shown in the second column.
+
 **Risk Response Distribution:**
 
-| Response | Count | % | Total Risk Score | Key Examples |
-|----------|-------|---|------------------|--------------|
-| **TOLERATE** | 2 | 20% | 7 (Low) | R-008, R-010 - Low risks within appetite |
-| **TREAT** | 6 | 60% | 68 (High) | R-001, R-002, R-003, R-005, R-007, R-009 - Active mitigation |
-| **TRANSFER** | 1 | 10% | 9 (Medium) | R-004 - Cyber insurance obtained |
-| **TERMINATE** | 1 | 10% | 6 (Medium) | R-006 - High-risk vendor option cancelled |
-| **TOTAL** | 10 | 100% | 90 | |
+| Response | Orange Book option (D6) | Count | % | Total Risk Score | Key Examples |
+|----------|-------------------------|-------|---|------------------|--------------|
+| **TOLERATE** | Retain the risk by informed decision | 2 | 20% | 7 (Low) | R-008, R-010 - Low risks within appetite |
+| **TREAT** | Change the likelihood; change the consequences | 6 | 60% | 68 (High) | R-001, R-002, R-003, R-005, R-007, R-009 - Active mitigation |
+| **TRANSFER** | Share the risk (for example through commercial contracts) | 1 | 10% | 9 (Medium) | R-004 - Cyber insurance obtained |
+| **TERMINATE** | Avoid the risk (do not start or continue the activity) | 1 | 10% | 6 (Medium) | R-006 - High-risk vendor option cancelled |
+| **TOTAL** | | 10 | 100% | 90 | |
+
+**Risks taken or increased to pursue an opportunity** (Orange Book D6 option with no 4Ts label): [List risk IDs, the opportunity pursued and the appetite assessment, or "None"]
 
 **Response Breakdown by Category:**
 
@@ -712,7 +717,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 
 ## K. Orange Book Compliance Checklist
 
-This risk register demonstrates compliance with HM Treasury Orange Book (2023):
+This checklist records how this risk register supports the main principles (Part I) and the Risk Control Framework (Part II) of [HM Treasury's Orange Book](https://www.gov.uk/government/publications/orange-book/the-orange-book-management-of-risk-principles-and-concepts) (May 2023 edition). Compliance with the Orange Book is disclosed by the organisation, or departures explained, in the governance statement accompanying its annual resource accounts. This register is evidence towards that, not a statement of compliance. The 4Ts response labels and the inherent and residual scores are ArcKit conventions, not Orange Book requirements.
 
 ### Part I - Risk Management Principles
 
@@ -732,10 +737,11 @@ This risk register demonstrates compliance with HM Treasury Orange Book (2023):
   - Evidence-based assessment (likelihood and impact justified)
 
 - ✅ **D. Risk Management Processes**
-  - Systematic identification across 6 categories
-  - Consistent assessment methodology (5×5 matrix)
-  - 4Ts response framework applied
-  - Inherent and residual risk tracked
+  - Systematic identification across 6 categories, checked against the Orange Book Annex 4 example categories
+  - Common risk criteria for likelihood and consequences (D4), applied through the 5×5 matrix
+  - Each risk evaluated against risk appetite, with a treatment option chosen and mapped to Orange Book D6 (recorded with ArcKit's 4Ts labels)
+  - Treatment plans give rationale, actions, owners, resources, indicators, timescales and reporting (D8)
+  - Scores recorded before and after controls (ArcKit's inherent and residual scores) to show control effect
 
 - ✅ **E. Continual Improvement**
   - Regular review schedule (weekly/monthly/quarterly)
@@ -745,11 +751,18 @@ This risk register demonstrates compliance with HM Treasury Orange Book (2023):
 
 ### Part II - Risk Control Framework
 
-- ✅ **4-Pillar "House" Structure**
-  - Risk appetite and tolerance defined
-  - Risk ownership and governance established
-  - Risk assessment methodology documented
-  - Control effectiveness measured (inherent vs residual)
+The Risk Control Framework has four pillars, underpinned by the three lines model. Record the project-level evidence this register gives for each:
+
+- ✅ **Pillar 1: Governance and Management Framework**
+  - Risk governance and escalation paths defined (Steering Committee, Project Board, Audit Committee)
+- ✅ **Pillar 2: Roles and Accountabilities**
+  - Every risk has a named risk owner and action owner (from the stakeholder RACI matrix)
+- ✅ **Pillar 3: Strategy, Planning and Reporting**
+  - Risks linked to objectives; reporting schedule and Key Risk Indicators defined (Section J)
+- ✅ **Pillar 4: Standards, Policies and Procedures**
+  - Risk appetite thresholds and approval routes applied; relevant functional standards and policies identified
+- ✅ **Three lines model**
+  - [Describe the first, second and third line assurance over this project's risks, or "Not yet defined"]
 
 ---
 
@@ -839,7 +852,7 @@ This risk register demonstrates compliance with HM Treasury Orange Book (2023):
    - [ ] Quarterly risk appetite compliance review
    - [ ] Lessons learned from risk materialization (if any)
    - [ ] Risk register process improvement review
-   - [ ] Train new risk owners on Orange Book methodology
+   - [ ] Train new risk owners on the organisation's risk management framework and the Orange Book principles
 
 ---
 
@@ -847,7 +860,7 @@ This risk register demonstrates compliance with HM Treasury Orange Book (2023):
 
 ---
 
-*This risk register follows HM Treasury Orange Book (2023) principles and integrates with ArcKit's stakeholder-driven architecture governance framework.*
+*This risk register follows the principles of HM Treasury's Orange Book (May 2023 edition) and integrates with ArcKit's stakeholder-driven architecture governance framework.*
 
 *For questions or updates, contact: [Risk Register Owner Name and Email]*
 

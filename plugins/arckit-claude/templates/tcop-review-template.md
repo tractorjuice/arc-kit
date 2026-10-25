@@ -514,7 +514,8 @@
 |------------|--------|------------------|
 | Senior Responsible Owner (SRO) appointed for digital function | [MET / NOT MET / N/A] | [Name or reference] |
 | Lifecycle stage identified (Discovery / Alpha / Beta / Live) | [MET / NOT MET / N/A] | [Current stage] |
-| CDDO digital spend control thresholds met | [MET / NOT MET / N/A] | [Spend amount and control reference] |
+| Approval route identified under the Digital Assurance Playbook (organisation investment board or equivalent; HM Treasury above the delegated authority limit or if novel, contentious or repercussive) | [MET / NOT MET / N/A] | [Whole-life cost, delegated authority limit and approving body] |
+| Initiative recorded on the HM Treasury-mandated pipeline (Government Assurance Services) where required: any cryptographic product, other digital and technology delivery above £5 million whole-life cost, or a different threshold the organisation has set | [MET / NOT MET / N/A] | [Pipeline reference, or why entry is not required] |
 | DDaT capability framework applied to team roles | [MET / NOT MET / N/A] | [Evidence of DDaT role mapping] |
 | Performance and status reported to the Permanent Secretary | [MET / NOT MET / N/A] | [Reporting cadence and method] |
 
@@ -550,7 +551,7 @@
 | Project Lead | [Name] | | |
 | Technical Architect | [Name] | | |
 | Senior Responsible Owner | [Name] | | |
-| Digital Spend Control (if applicable) | [Name] | | |
+| Organisation Digital Assurance (if applicable) | [Name] | | |
 
 ---
 

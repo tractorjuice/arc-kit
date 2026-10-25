@@ -121,7 +121,7 @@ $ARGUMENTS
    - Acknowledge conflicts honestly
    - Provide practical resolution strategies
    - Include both quantitative and qualitative measures
-   - Consider UK Government context if applicable (Minister accountability, public scrutiny, parliamentary questions, transparency requirements, GovS 005 digital governance roles including SRO, Service Owner, CDDO, and DDaT Profession Lead)
+   - Consider UK Government context if applicable (Minister accountability, public scrutiny, parliamentary questions, transparency requirements). Use the organisation-level digital roles that GovS 005 (version 2.2, section 4.6) defines: accounting officer, senior officer accountable for the organisation's digital portfolio, senior officer accountable for data, senior officer accountable for technology, senior officer accountable for service delivery, service owner and digital service manager. Attribute other roles to their own source, not to GovS 005: the Senior Responsible Owner (SRO) to the SRO role guidance and GovS 002, product and delivery managers to the GOV.UK Service Manual, and the organisation's digital assurance team to the Digital Assurance Playbook. The Cabinet Office digital and technology spend controls ended on 31 March 2026, and CDDO became part of GDS in January 2025: do not give any stakeholder a spend control role or list CDDO as a stakeholder
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **STKE** per-type checks pass. Fix any failures before proceeding.
 
