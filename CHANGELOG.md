@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **The filename hook no longer creates folders, and only acts inside your project.** Before you approved a Write to a misnamed `ARC-*` file, `validate-arc-filename.mjs` created the subfolder it was about to suggest, such as `decisions/` or `research/`. It found the project by cutting the path at the first `projects/` without resolving `..`, so a crafted path such as `/home/you/Xprojects/B/../../../repo/projects/001-x/ARC-001-ADR-v1.0.md` made it create `/home/you/Xprojects/B/decisions` and name that folder back to the model as the correct place to write. The hook now resolves the path, checks it lies inside `<repo>/projects/<project>/` (the repo found from the session's working directory) and leaves any other path alone. It no longer creates directories at all: the Write tool creates the missing subfolder once you approve it. A misnamed file inside a project is still blocked with the corrected path, as before. `tests/plugin/validate-arc-filename-confinement.test.mjs` checks that a traversal path leaves nothing on disk.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added
