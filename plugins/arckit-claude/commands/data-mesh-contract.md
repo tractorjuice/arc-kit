@@ -235,7 +235,7 @@ Using the template and context gathered, generate a comprehensive data mesh cont
    - Contract ID: Generate a UUID
    - Contract Name: `{data-product-name}`
    - Semantic Version: Start at `1.0.0`
-   - Status: ACTIVE (for published) or DRAFT (for new)
+   - Status: `draft` for a new contract, `active` once published. Write ODCS's lowercase values (`proposed`, `draft`, `active`, `deprecated`, `retired`) here and in the Appendix A YAML; the document-control Status stays DRAFT
    - Domain: Extract from project name or ask user (e.g., "customer", "seller", "finance")
    - Data Product: The data product name
    - Tenant: Organization name (if known from stakeholders, otherwise placeholder)

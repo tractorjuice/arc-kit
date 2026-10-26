@@ -492,7 +492,7 @@ graph TD
 
 - Supply side: Local authorities with datasets, IoT sensor providers
 - Demand side: Local authorities needing data, researchers, urban planners
-- Transaction: Data product licensing (Open Data Contract Standard v3.0.2)
+- Transaction: Data product licensing (Open Data Contract Standard v3.2.0)
 - Network effects: More data sources → richer analytics → more demand → more supply
 
 **Key Canvases**:
