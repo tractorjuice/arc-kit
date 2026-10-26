@@ -2,8 +2,8 @@ recipe: agent-architecture
 schema_version: 1
 description: >
   AI Agent Architecture lifecycle: foundation artefacts, agent inventory,
-  architecture specification, integration, governance, security, and optional
-  maturity assessment.
+  architecture specification, then governance, integration and security in
+  parallel, and an optional maturity assessment that reads all three.
 
 defaults:
   version: "1.0"
@@ -30,7 +30,7 @@ targets:
     skill: arckit:requirements
     args: "{NAME} AI agent programme"
     output: { project: "{P}-{NAME}", type: REQ }
-    deps: [PRIN]
+    deps: [PRIN, STKE]
 
   - id: STKE
     skill: arckit:stakeholders
@@ -84,4 +84,4 @@ targets:
     skill: arckit-agent-architecture:agent-maturity
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AAMT }
-    deps: [AAGI, AAGR, AAOV, AASE]
+    deps: [AAGI, AAGR, AAOV, AAIN, AASE]

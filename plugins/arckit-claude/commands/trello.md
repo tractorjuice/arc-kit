@@ -54,7 +54,7 @@ Find the project directory:
 
 Locate the backlog JSON file:
 
-- Look for `ARC-*-BKLG-*.json` in `projects/{project-dir}/`
+- Look for `ARC-*-BKLG-*.json` in `projects/{project-dir}/`. A re-run of `/arckit:backlog` writes a new version beside the old one, so if there are several, use the highest version (v1.10 is later than v1.9)
 - This is produced by `/arckit:backlog FORMAT=json`
 
 **If no JSON file found**:

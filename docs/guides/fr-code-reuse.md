@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:fr-code-reuse` assesses public code reuse opportunities before building or procuring, following the legal obligation under Circulaire 2021-1524 (Prime Minister circular on free software and open source in public administration).
+`/arckit:fr-code-reuse` assesses public code reuse opportunities before building or procuring, following the Circulaire du Premier ministre n°6264/SG du 27 avril 2021 (politique publique de la donnée, des algorithmes et des codes sources), which instructs State administrations to open their source code and favour free and open source software.
 
 ---
 
@@ -11,7 +11,7 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Functional requirements to match against existing code |
-| Research (`ARC-<id>-RES-v*.md`) | Market analysis context |
+| Research (`research/ARC-<id>-RSCH-*-v*.md`) | Market analysis context |
 
 ---
 
@@ -29,7 +29,7 @@ Output: `projects/<id>/ARC-<id>-REUSE-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Legal Framework | Circulaire 2021-1524, Loi 2016-1321 (République Numérique) |
+| Legal Framework | Circulaire PM n°6264/SG (27 April 2021), Loi 2016-1321 (République Numérique) |
 | Component Inventory | Software components needed (COMP-xx identifiers) |
 | code.gouv.fr Results | French public code catalogue search results |
 | SILL Matches | Recommended open source from SILL |
@@ -74,13 +74,13 @@ Output: `projects/<id>/ARC-<id>-REUSE-v1.0.md`
 - Decision matrix produced for each component with justification.
 - Contribution-back plan included for any forked public code.
 - Publication obligation documented for any new code developed.
-- Circulaire 2021-1524 compliance evidence included.
+- Evidence that reuse was assessed before commissioning new development (Circulaire PM n°6264/SG) included.
 
 ---
 
 ## Key Notes
 
-- **Legal obligation**: Circulaire 2021-1524 makes code reuse a legal obligation — not a best practice. Failure to consider existing public code before building is non-compliant.
+- **Policy obligation**: Circulaire PM n°6264/SG (27 April 2021) instructs State administrations to strengthen the opening of public source code and the use of free software. It is an instruction from the Prime Minister, not a statute, and it does not set out a stand-alone "reuse before build" rule; the reuse assessment is the evidence that the project applied this policy before building.
 - **SILL** = Socle Interministériel de Logiciels Libres — the inter-ministerial recommended open source stack, maintained by DINUM. Choosing software on the SILL avoids procurement for approved use cases.
 - **Publication**: New code developed by or for public administrations must be published as open source unless an explicit exemption applies (security, IP rights of third parties).
 - **EUPL-1.2**: The preferred licence for French public code — copyleft that is compatible with most open source licences and legally valid across all EU member states.

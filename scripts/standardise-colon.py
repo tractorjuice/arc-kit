@@ -57,11 +57,18 @@ INCLUDE_FILES = ["README.md", "CLAUDE.md"]
 EXCLUDE_PREFIXES = [
     "CHANGELOG.md",
     "plugins/arckit-claude/CHANGELOG.md",
+    "docs/changelog/",             # older plugin releases moved out of the plugin CHANGELOG
     "docs/articles/",
+    # Pages scripts/generate-site-pages.py renders from docs/articles/ and
+    # docs/guides/: fix the source and regenerate, never edit them here.
+    "docs/share/",
+    "docs/guide/",
     "docs/plans/",                 # planning artefacts; may quote the dot form verbatim
     "docs/proposals/",
     "docs/superpowers/",
     "docs/pitch-decks/",
+    "docs/on-github.json",         # other people's repo text, quoted as the weekly scan found it
+    "docs/on-github.html",         # the same text, which generate-site-pages.py writes into the page
     ".arckit/memory/",
     "node_modules/", ".git/",
     "scripts/converter.py",        # community-rewrite literals patched by hand

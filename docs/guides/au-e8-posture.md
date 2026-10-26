@@ -13,7 +13,7 @@ The Essential Eight is the ASD's prioritised baseline for mitigating cyber secur
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, hosting model, user populations |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Sensitive data categories that drive control intensity |
+| Data model (`ARC-<id>-DATA-v*.md`) | Sensitive data categories that drive control intensity |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, security operations owner |
 
 ---
@@ -34,12 +34,15 @@ Output: `projects/<id>/ARC-<id>-AUE8-v1.0.md`
 |---------|----------|
 | Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
 | Revision History | Version, date, author, changes, approvals |
-| Executive Summary | Current maturity by strategy, gap to target maturity, headline residual risks |
-| Scope | In-scope systems, business units, environments (production / staging / non-production) |
-| Maturity Assessment per Strategy | For each of the 8: current ML, target ML, evidence cited, gap analysis, planned uplift |
-| Uplift Plan | Sequenced remediation with effort, dependencies, and DISP-attestation deadline alignment |
-| Residual Risk Statement | Risks accepted, treatments in flight, escalation path |
-| Maintenance Cadence | Re-assessment frequency, change triggers, ASD update tracking |
+| Executive Summary | System assessed, overall E8 maturity posture, highest-priority gaps, DISP position |
+| System Context | System name, classification, deployment model, IRAP status, cloud providers, data sovereignty, DISP membership, assessment date, assessor |
+| Essential Eight Maturity Assessment | For each of the 8 strategies: current ML, target ML, regulatory driver, evidence of current state, gap analysis by ML1–ML3 sub-control, remediation actions with owner, date and priority |
+| Maturity Summary Matrix | One row per strategy: current ML, target ML, gap count, priority; overall posture as the lowest common level |
+| DISP Compliance Position | Membership, ML2 requirement, current compliance, strategies below ML2, remediation timeline |
+| Cloud-Specific Considerations | Shared-responsibility split per strategy (customer / shared / provider) |
+| Recommendations | Quick Wins / Short-Term / Medium-Term, each naming its strategy and target ML |
+| External References | ArcKit evidence integration (risk, traceability, graph-report, maturity-model), document register, citations, unreferenced documents |
+| Visual Evidence Decision Rule | When a companion diagram is drawn, drafted with `Pending Input` labels, or recorded as a visual evidence gap |
 
 ---
 

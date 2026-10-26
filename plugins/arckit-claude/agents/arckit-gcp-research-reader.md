@@ -2,7 +2,7 @@
 name: arckit-gcp-research-reader
 subagent: true
 maxTurns: 30
-tools: ["Read", "Glob", "Grep", "TodoWrite", "mcp__plugin_arckit_google-developer-knowledge__search_documents", "mcp__plugin_arckit_google-developer-knowledge__get_document", "mcp__plugin_arckit_google-developer-knowledge__batch_get_documents"]
+tools: ["Read", "Glob", "Grep", "TodoWrite", "mcp__plugin_arckit_google-developer-knowledge__search_documents", "mcp__plugin_arckit_google-developer-knowledge__get_documents"]
 effort: high
 description: |
   Reader subagent invoked by /arckit:gcp-research (orchestrator).
@@ -52,7 +52,7 @@ The orchestrator passes you a JSON object in its Agent prompt:
 
 1. **Read the schema.** Open `${CLAUDE_PLUGIN_ROOT}/schemas/cloud-research-handoff.schema.json`.
 
-2. **Discover services** for the category with `search_documents`, and fetch the substantive pages with `get_document`. Prefer the service's own overview, pricing, security and quotas pages over any summary.
+2. **Discover services** for the category with `search_documents`, and fetch the substantive pages with `get_documents` (one call can fetch several pages). Prefer the service's own overview, pricing, security and quotas pages over any summary.
 
 3. **Build one `ServiceRecord` per service**, filling `service_name`, `service_full_name`, `service_category`, `doc_url`, `fetched_from_url`, `fetched_at_iso`, a `citation_id` you generate, and `confidence`.
 
@@ -66,7 +66,7 @@ The orchestrator passes you a JSON object in its Agent prompt:
 
 5. **Check region availability** for each `required_regions` entry, for each service.
 
-   **There is no region-availability tool on this server.** Region evidence comes from the Google Cloud locations documentation, fetched with `mcp__plugin_arckit_google-developer-knowledge__get_document` or `batch_get_documents`. Record a `RegionAvailability` row only for a (service, region) pair the fetched document actually states. Where it does not cover a region you were asked about, omit the row and add an `errors[]` entry — do not emit `unknown` rows for regions you never checked.
+   **There is no region-availability tool on this server.** Region evidence comes from the Google Cloud locations documentation, fetched with `mcp__plugin_arckit_google-developer-knowledge__get_documents`. Record a `RegionAvailability` row only for a (service, region) pair the fetched document actually states. Where it does not cover a region you were asked about, omit the row and add an `errors[]` entry — do not emit `unknown` rows for regions you never checked.
 
 6. **Record failures honestly.** Unfetchable URLs go in `unfetched_urls`; anything that returned nothing usable goes in `errors[]` with a one-sentence reason. A service you could only find a marketing overview for still belongs in the payload with `confidence: low` and thin evidence — the orchestrator can report a gap it is told about.
 

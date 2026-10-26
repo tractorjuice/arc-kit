@@ -42,7 +42,7 @@ $ARGUMENTS
    - **SECD** (Secure by Design) — Extract: security controls for security implementation review
 
    **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/dld-review-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/dld-review-template.md` exists in the project root, then `.arckit/templates/dld-review-template.md`
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/dld-review-template.md` (default)
    - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -154,8 +154,8 @@ $ARGUMENTS
 
 8. **Generate Review Report**:
 
-   **Executive Summary**:
-   - Status: APPROVED / APPROVED WITH CONDITIONS / REJECTED / NEEDS HLD RE-REVIEW
+   **Executive Summary** (section 1, verdict first, as `${CLAUDE_PLUGIN_ROOT}/references/executive-summary-pattern.md` sets out):
+   - Status: APPROVED / APPROVED WITH CONDITIONS / REJECTED / NEEDS HLD RE-REVIEW, stated in the summary's first sentence
    - Implementation readiness score (0-100)
    - Top risks or gaps
 
@@ -194,7 +194,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-DLDR-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Detailed Design Review"
 - `ARC-[PROJECT_ID]-DLDR-v[VERSION]` → Construct using format above
@@ -240,7 +240,7 @@ The footer should be populated with:
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DLDR** per-type checks pass. Fix any failures before proceeding.
 
 9. **Write outputs**:
-   - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-DLDR-v1.0.md` - Full review report
+   - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-DLDR-v{VERSION}.md` - Full review report
    - Update traceability matrix with implementation details
    - Create implementation checklist if approved
 

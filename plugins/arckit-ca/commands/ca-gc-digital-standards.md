@@ -9,6 +9,10 @@ handoffs:
     description: GC Digital Standards conformance feeds the broader service assessment evidence base.
   - command: roadmap
     description: Identified gaps and remediation actions become roadmap milestones.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -36,7 +40,7 @@ You are an enterprise architect generating a Government of Canada Digital Standa
    - **First**, check `.arckit/templates-custom/ca-gc-digital-standards-template.md` (user override)
    - **Then**, `.arckit/templates/ca-gc-digital-standards-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-gc-digital-standards-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> DIGSTD --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> DIGSTD {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **The 10 GC Digital Standards** — name them explicitly so the scorecard can be read without leaving the artefact:

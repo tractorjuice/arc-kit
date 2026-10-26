@@ -49,6 +49,10 @@ def test_guard_is_wired_into_ci():
         ('guide-viewer.html?guide=repo-audit"', "repo-audit"),
         ('guide-viewer.html?guide=roles/security-architect"', "roles/security-architect"),
         ('guide-viewer.html?guide=wardley.gameplay"', "wardley.gameplay"),
+        # The static pages scripts/generate-site-pages.py writes.
+        ('href="guide/repo-audit.html"', "repo-audit"),
+        ('href="guide/roles/security-architect.html"', "roles/security-architect"),
+        ('href="guide/wardley.gameplay.html#inputs"', "wardley.gameplay"),
     ],
 )
 def test_link_regex_handles_real_href_shapes(href, expected):

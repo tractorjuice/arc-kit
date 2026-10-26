@@ -8,9 +8,11 @@ handoffs:
     description: Decide keep/merge/replace/retire for each application
   - command: gap-analysis
     description: Analyze capability coverage from application inventory
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
-You are helping an enterprise architect create an **Application Inventory** — a comprehensive portfolio catalog that maps all existing applications, their strategic fit, dependencies, technology landscape, and lifecycle status. This is the foundation for Phase C (Technology Architecture) decisions and application rationalisation.
+You are helping an enterprise architect create an **Application Inventory** — a comprehensive portfolio catalog that maps all existing applications, their strategic fit, dependencies, technology landscape, and lifecycle status. This is the foundation for TOGAF Phase C (Information Systems Architectures — Application Architecture) decisions and application rationalisation.
 
 ## User Input
 
@@ -66,12 +68,20 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. Clarify Scope with User
 
-Before generating the inventory, ask the user about the scope of this assessment:
+Unless the arguments or the project context already settle it, use the **AskUserQuestion** tool to ask about the scope of this assessment.
 
-**AskUserQuestion**: "What is the scope of this application inventory?"
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Options: `All applications` | `Business Unit` | `Specific Project`
-- Default: `All applications`
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
+
+**Question 1** — header: `Coverage`, multiSelect: false
+> "What is the scope of this application inventory?"
+
+- **All applications (Recommended)**: Every application inside the ADMP scope
+- **Business Unit**: Applications one business unit owns or uses
+- **Specific Project**: Only the applications a single project touches
 
 ### 4. Gather Application Data
 
@@ -225,7 +235,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-APP-v1.0.md
+projects/{P}/ARC-{P}-APP-v{VERSION}.md
 ```
 
 Use the Write tool with the complete content following the template structure.
@@ -235,7 +245,7 @@ Use the Write tool with the complete content following the template structure.
 Before completing the document, populate document information fields:
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001")
-- `[VERSION]` → Start with "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-APP-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Application Inventory"
 - `ARC-[PROJECT_ID]-APP-v[VERSION]` → Generated document ID
@@ -270,8 +280,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Application Inventory Complete
 
-**Document**: `projects/{P}/ARC-{P}-APP-v1.0.md`
-**Document ID**: ARC-{P}-APP-v1.0
+**Document**: `projects/{P}/ARC-{P}-APP-v{VERSION}.md`
+**Document ID**: ARC-{P}-APP-v{VERSION}
 
 ### Inventory Scope
 - **Scope**: [All applications / Business Unit / Project-specific]
@@ -332,7 +342,7 @@ After writing the file, show a concise summary (NOT the full document):
 - [N] risks identified
 - [N] lifecycle actions required
 
-**File location**: `projects/{P}/ARC-{P}-APP-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-APP-v{VERSION}.md`
 ```
 
 ## Important Notes
@@ -351,6 +361,6 @@ After writing the file, show a concise summary (NOT the full document):
    - **Input**: Requires ADMP (scope), uses BPCM (capability mapping), REQ (requirements), PRIN (technology standards)
    - **Output**: Feeds `/arckit-togaf-adm:application-rationalization` (portfolio decisions), `/arckit-togaf-adm:gap-analysis` (capability gaps)
 
-7. **TOGAF Alignment**: This document maps to TOGAF Phase C (Technology Architecture) outputs: existing technology baseline, technology standards, and application portfolio assessment.
+7. **TOGAF Alignment**: This document maps to TOGAF Phase C (Information Systems Architectures — Application Architecture) outputs: the Application Portfolio catalog, Interface catalog and baseline Application Architecture. Its technology-stack and vendor columns are inputs to Phase D (Technology Architecture), not Phase D outputs.
 
 8. **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji.

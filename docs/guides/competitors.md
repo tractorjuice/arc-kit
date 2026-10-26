@@ -58,11 +58,11 @@ Use `--supplier 'Name'` to run a **supplier-focus** query: the named supplier be
 
 You can combine flags: `/arckit:competitors cloud hosting --cpv 72200000 --supplier 'Acme Cloud Ltd'`.
 
-**CPV code format:** eight digits, optionally followed by a division suffix (`NNNNNNNN-N`). Common codes:
+**CPV code format:** eight digits, optionally followed by a hyphen and the check digit (`NNNNNNNN-N`). Common codes:
 
 | Code | Category |
 |------|----------|
-| 72200000 | Software-related services |
+| 72200000 | Software programming and consultancy services |
 | 72300000 | Data services |
 | 72600000 | IT support and consultancy |
 | 48000000 | Software packages and systems |
@@ -148,8 +148,8 @@ The writer performs a bounded section-merge — it updates only the `## Governme
 
 | Property | Detail |
 |----------|--------|
-| **MCP server** | `uk-tenders` (keyless, deferred load, shared with `/arckit:tenders`) |
-| **Coverage** | ~677,000 UK contracting processes across five national portals |
+| **MCP server** | `uk-tenders` (keyless, always loaded, shared with `/arckit:tenders`) |
+| **Coverage** | About 726,000 UK contracting processes across five national portals (25 October 2026) |
 | **Portals covered** | Find a Tender Service (FTS), Contracts Finder, Public Contracts Scotland, Sell2Wales, eTendersNI |
 | **Refresh cadence** | Nightly |
 | **Availability** | Best-effort single Cloud Run instance — no formal SLA. A dead endpoint degrades gracefully (the reader returns partial data and the artefact renders with degraded-source notes). |

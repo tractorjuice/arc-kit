@@ -11,6 +11,10 @@ handoffs:
     description: SOIA-specific residual risks (compartment compromise, suspected unauthorised disclosure) feed the operational risk register.
   - command: adr
     description: Compartment design, MOU choices with CSIS / RCMP, and tier-promotion thresholds warrant Architecture Decision Records.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -43,7 +47,7 @@ You are an enterprise architect generating a Canada Security of Information Act 
    - **First**, check `.arckit/templates-custom/ca-soia-template.md` (user override)
    - **Then**, `.arckit/templates/ca-soia-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-soia-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> SOIA --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> SOIA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed. Note that the artefact itself will frequently warrant a SECRET or higher classification.
 5. Generate the following sections (the template provides skeletons for each):
    - **SOI Inventory** — every dataset, document, or artefact that meets the *Security of Information Act* s.8 definition of *Special Operational Information*. Include intelligence reporting, source-protective material, foreign-government-shared product, methods and techniques, and identities subject to s.8. SOI is a statutory category — material qualifies by meeting the s.8 definition, and departmental designation cannot create or remove SOI status.

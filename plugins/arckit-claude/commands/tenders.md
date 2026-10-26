@@ -117,7 +117,7 @@ market query from your arguments only").
 From `$ARGUMENTS`, after stripping the project hint:
 
 - Free-text (anything not consumed by a flag) → `keywords[]`.
-- `--cpv NNNNNNNN` (optionally `NNNNNNNN-N`, the OCDS division suffix) →
+- `--cpv NNNNNNNN` (optionally `NNNNNNNN-N`, where the ninth digit is the CPV check digit) →
   `cpv`. Must match `^[0-9]{8}(-[0-9])?$`.
 - `--buyer 'Name'` → `buyer`.
 - `--supplier 'Name'` → `supplier`.
@@ -163,7 +163,7 @@ install is incomplete.
 ### Step 4: Dispatch reader subagent + validate
 
 1. Dispatch the reader using the `Agent` tool with
-   `subagent_type: "arckit:arckit-tenders-reader"` and the Step 2 scope JSON as the
+   `subagent_type: "arckit:arckit-tenders-reader"`, `run_in_background: false` and the Step 2 scope JSON as the
    prompt.
 
 2. The reader's final-message string is a single JSON payload (no markdown,
@@ -313,7 +313,7 @@ three groups:
 Omit `data_current_as_of` from the writer input when it is absent from the
 validated payload (the writer renders the freshness-unavailable line in that
 case). Dispatch the writer using the `Agent` tool with
-`subagent_type: "arckit:arckit-tenders-writer"` and this JSON as the prompt. The
+`subagent_type: "arckit:arckit-tenders-writer"`, `run_in_background: false` and this JSON as the prompt. The
 writer renders the TNDR artefact and returns a one-line summary with the
 file path and word count.
 

@@ -1,4 +1,4 @@
-# UK Digital Marketplace: Digital Outcomes and Specialists
+# Digital Outcomes and Specialists 7 (DOS7): Requirements
 
 > **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit:dos`
 
@@ -70,7 +70,7 @@ From Functional Requirements (FR-xxx):
 
 From Non-Functional Requirements (NFR-xxx):
 
-- **Security**: [Skills for NFR-S-xxx requirements, reference security principles]
+- **Security**: [Skills for NFR-SEC-xxx requirements, reference security principles]
 - **Performance**: [Skills for NFR-P-xxx requirements]
 - **Compliance**: [Skills for NFR-C-xxx requirements, reference compliance principles]
 - **Integration**: [Skills for INT-xxx requirements]
@@ -145,7 +145,7 @@ From SHOULD requirements:
 
 - [requirement with measurable targets]
 
-**Security (NFR-S-xxx)**:
+**Security (NFR-SEC-xxx)**:
 
 - [requirement with compliance references]
 
@@ -272,7 +272,7 @@ Reference: `/arckit:traceability` for traceability matrix generation and validat
 
 ## 11. Evaluation Criteria
 
-Suppliers will be evaluated according to Digital Marketplace guidelines:
+Suppliers will be evaluated against these criteria, published on the Contract Award Service with the requirements:
 
 ### 11.1 Technical Capability (40%)
 
@@ -333,7 +333,7 @@ Reference: Generate with `/arckit:diagram`, `/arckit:data-model`
 - [ ] **Test plans** and test cases (linked to requirements)
 - [ ] **Test results** and coverage reports
 - [ ] **Performance test results** (NFR-P-xxx validation)
-- [ ] **Security test results** (NFR-S-xxx validation)
+- [ ] **Security test results** (NFR-SEC-xxx validation)
 - [ ] **Compliance evidence** (NFR-C-xxx validation)
 
 ### 12.4 Documentation
@@ -394,16 +394,19 @@ Vendors must provide:
 
 1. **Review & Refine**: Validate this document with stakeholders
 2. **Budget Approval**: Obtain budget sign-off before publishing
-3. **Publish on Digital Marketplace**:
-   - Go to: https://www.digitalmarketplace.service.gov.uk/
-   - Select "Digital Outcomes and Specialists"
-   - Post requirements (publicly visible)
-   - Set closing date for proposals
-4. **Answer Supplier Questions**: Via Digital Marketplace platform (visible to all)
+3. **Publish on the Contract Award Service (CAS)**:
+   - Sign in to the Public Procurement Gateway (PPG) and open DOS7 (RM1043.9) on CAS
+   - Choose the lot; optionally use the CAS filtering tool to narrow the suppliers
+   - Publish the requirements and assessment criteria (suppliers on the lot who are registered on CAS see them; they are not public)
+   - Choose a single-stage, two-stage or multi-stage competition and set the closing date
+4. **Answer Supplier Questions**: On CAS, sharing each answer with every supplier in the competition
 5. **Evaluate Proposals**: Using criteria in Section 11
 6. **Conduct Assessments**: Interview/technical assessment for shortlisted suppliers
 7. **Award Contract**: To highest-scoring supplier
-8. **Publish Award Details**: On Contracts Finder (legal requirement)
+8. **Publish Award Details**: On Find a Tender (https://www.find-tender.service.gov.uk/), under the Procurement Act 2023:
+   - UK6 contract award notice before entering into the call-off (s.50(1))
+   - UK7 contract details notice within 30 days of entering into it (s.53(1)); over £5 million, also publish the contract within 90 days (s.53(3))
+   - Below-threshold call-off instead: UK7 only, as soon as reasonably practicable, if £12,000+ (central government) or £30,000+ (others) (s.87(3))
 
 ### 14.2 For Architecture Team
 
@@ -423,12 +426,11 @@ Vendors must provide:
 
 ## 15. Resources and References
 
-### 15.1 Digital Marketplace Guidance
+### 15.1 DOS7 Buying Guidance
 
-- **Digital Marketplace**: https://www.digitalmarketplace.service.gov.uk/
+- **DOS7 agreement page** (lots, buying steps, CAS access through PPG): https://www.gca.gov.uk/agreements/RM1043.9
 - **DOS Buyers Guide**: https://www.gov.uk/guidance/digital-outcomes-and-specialists-buyers-guide
-- **General Buying Guide**: https://www.gov.uk/guidance/buying-and-selling-on-the-digital-marketplace
-- **Contracts Finder**: https://www.gov.uk/contracts-finder
+- **Find a Tender** (central digital platform for Procurement Act 2023 notices): https://www.find-tender.service.gov.uk/
 
 ### 15.2 Project Documents
 
@@ -455,17 +457,17 @@ Vendors must provide:
 - Supplier questions and answers must be visible to all bidders
 - Changes to requirements must be published to all suppliers
 
-**GDS Approval**:
+**Approval and Assurance**:
 
-- New or redesigned services may require formal GDS approval
-- Check if spend control process applies to your organisation
+- Follow your organisation's approval and assurance route under the Digital Assurance Playbook, which replaced the digital and technology spend controls on 1 April 2026
+- Spend above the organisation's delegated authority limit, or that HM Treasury judges novel, contentious or repercussive, needs HM Treasury approval, with GDS support
 - Consult with digital/technology leadership before publishing
 
 **Transparency**:
 
-- Requirements are published publicly on Digital Marketplace
+- Requirements are published on the Contract Award Service, where every supplier on the lot who is registered on CAS can see them (they are not public)
 - Evaluation criteria must be published before receiving proposals
-- Award details must be published on Contracts Finder after completion
+- Award notices go on Find a Tender, not Contracts Finder: UK6 before entering into the call-off, UK7 within 30 days after (Procurement Act 2023 s.50(1), s.53(1))
 
 **Fair Competition**:
 

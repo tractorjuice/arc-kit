@@ -19,66 +19,29 @@
 
 ---
 
-## 1. Review Overview
+## 1. Executive Summary
 
-### 1.1 Purpose
-
-This document captures the Architecture Review Board's evaluation of the High-Level Design (HLD) for [PROJECT_NAME]. The HLD must demonstrate architectural soundness, alignment with enterprise principles, and feasibility before proceeding to detailed design.
-
-### 1.2 HLD Document Under Review
-
-**Document**: [Link to HLD document or path]
-**ArcKit Version**: [VERSION]
-**Submitted By**: [VENDOR_NAME]
-**Submission Date**: [DATE]
-
-### 1.3 Review Participants
-
-| Name | Role | Organization | Review Focus |
-|------|------|--------------|--------------|
-| [Name] | Lead Reviewer | Enterprise Architecture | Overall architecture, principle compliance |
-| [Name] | Security Architect | Security | Security architecture, threat model, controls |
-| [Name] | Domain Architect | Domain Team | Domain fit, integration patterns |
-| [Name] | Infrastructure Architect | Cloud/Infra Team | Infrastructure, scalability, resilience |
-| [Name] | Data Architect | Data Governance | Data architecture, privacy, governance |
-| [Name] | SRE Lead | Operations | Operational readiness, observability |
-
-### 1.4 Review Criteria
-
-The HLD will be evaluated against:
-
-- **Architecture Principles**: Compliance with enterprise architecture principles
-- **Requirements Alignment**: Coverage of functional and non-functional requirements
-- **Technical Feasibility**: Soundness and implementability of design
-- **Security & Compliance**: Adequate security controls and regulatory compliance
-- **Scalability & Resilience**: Ability to scale and handle failures gracefully
-- **Operational Readiness**: Observability, supportability, maintainability
-
----
-
-## 2. Executive Summary
-
-### 2.1 Overall Assessment
+### 1.1 Overall Assessment
 
 **Status**: [APPROVED | APPROVED WITH CONDITIONS | REJECTED]
 
-**Summary**: [2-3 paragraph executive summary of the review outcome]
+**Summary**: [2-3 paragraph executive summary of the review outcome. The first sentence states the verdict and what must happen before the design proceeds; the reasons and evidence follow it.]
 
-[Example: "The High-Level Design for the Payment Modernization project demonstrates a well-thought-out microservices architecture leveraging AWS cloud-native services. The design aligns with our API-first and cloud-first principles and adequately addresses most functional and non-functional requirements. However, several conditions must be addressed before proceeding to detailed design, primarily related to disaster recovery strategy and observability instrumentation."]
+[Example: "Approved with conditions: the design can proceed to detailed design once the disaster recovery strategy and observability instrumentation are specified. It demonstrates a well-thought-out microservices architecture leveraging AWS cloud-native services, aligns with our API-first and cloud-first principles, and adequately addresses most functional and non-functional requirements."]
 
-### 2.2 Key Strengths
+### 1.2 Key Strengths
 
 - [Strength 1: e.g., "Modern, cloud-native architecture with appropriate use of managed services"]
 - [Strength 2: e.g., "Comprehensive security controls with defense-in-depth"]
 - [Strength 3: e.g., "Clear service boundaries aligned with domain-driven design principles"]
 
-### 2.3 Key Concerns
+### 1.3 Key Concerns
 
 - [Concern 1: e.g., "Disaster recovery plan lacks detail on failover procedures"]
 - [Concern 2: e.g., "Observability strategy does not specify SLO/SLI definitions"]
 - [Concern 3: e.g., "Integration with legacy system X requires further clarification"]
 
-### 2.4 Conditions for Approval
+### 1.4 Conditions for Approval
 
 **MUST Address Before Detailed Design**:
 
@@ -90,7 +53,7 @@ The HLD will be evaluated against:
 1. [ADVISORY-01]: [Important issue that should be clarified]
 2. [ADVISORY-02]: [Important issue that should be clarified]
 
-### 2.5 Recommendation
+### 1.5 Recommendation
 
 - [ ] **APPROVED**: Proceed to detailed design with no conditions
 - [ ] **APPROVED WITH CONDITIONS**: Proceed after addressing blocking items listed above
@@ -98,6 +61,43 @@ The HLD will be evaluated against:
 - [ ] **REJECTED**: Significant rework required; resubmit revised HLD for review
 
 **Target Resubmission Date** (if rejected or conditional): [DATE]
+
+---
+
+## 2. Review Overview
+
+### 2.1 Purpose
+
+This document captures the Architecture Review Board's evaluation of the High-Level Design (HLD) for [PROJECT_NAME]. The HLD must demonstrate architectural soundness, alignment with enterprise principles, and feasibility before proceeding to detailed design.
+
+### 2.2 HLD Document Under Review
+
+**Document**: [Link to HLD document or path]
+**ArcKit Version**: [VERSION]
+**Submitted By**: [VENDOR_NAME]
+**Submission Date**: [DATE]
+
+### 2.3 Review Participants
+
+| Name | Role | Organization | Review Focus |
+|------|------|--------------|--------------|
+| [Name] | Lead Reviewer | Enterprise Architecture | Overall architecture, principle compliance |
+| [Name] | Security Architect | Security | Security architecture, threat model, controls |
+| [Name] | Domain Architect | Domain Team | Domain fit, integration patterns |
+| [Name] | Infrastructure Architect | Cloud/Infra Team | Infrastructure, scalability, resilience |
+| [Name] | Data Architect | Data Governance | Data architecture, privacy, governance |
+| [Name] | SRE Lead | Operations | Operational readiness, observability |
+
+### 2.4 Review Criteria
+
+The HLD will be evaluated against:
+
+- **Architecture Principles**: Compliance with enterprise architecture principles
+- **Requirements Alignment**: Coverage of functional and non-functional requirements
+- **Technical Feasibility**: Soundness and implementability of design
+- **Security & Compliance**: Adequate security controls and regulatory compliance
+- **Scalability & Resilience**: Ability to scale and handle failures gracefully
+- **Operational Readiness**: Observability, supportability, maintainability
 
 ---
 

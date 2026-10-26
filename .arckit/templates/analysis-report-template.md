@@ -48,9 +48,9 @@
 
 | Requirement ID | Type | Priority | Design Coverage | Tests Coverage | Status |
 |----------------|------|----------|-----------------|----------------|--------|
-| BR-001 | Business | MUST | [✅/❌] | [✅/❌] | [✅/⚠️/❌] |
-| FR-001 | Functional | MUST | [✅/❌] | [✅/❌] | [✅/⚠️/❌] |
-| NFR-S-001 | Security | MUST | [✅/❌] | [✅/❌] | [✅/⚠️/❌] |
+| BR-001 | Business | MUST_HAVE | [✅/❌] | [✅/❌] | [✅/⚠️/❌] |
+| FR-001 | Functional | MUST_HAVE | [✅/❌] | [✅/❌] | [✅/⚠️/❌] |
+| NFR-SEC-001 | Security | MUST_HAVE | [✅/❌] | [✅/❌] | [✅/⚠️/❌] |
 
 **Statistics**:
 
@@ -63,7 +63,7 @@
 
 | Requirement ID | Priority | Description | Why Critical |
 |----------------|----------|-------------|--------------|
-| [REQ-ID] | MUST | [Description] | [Impact] |
+| [REQ-ID] | MUST_HAVE | [Description] | [Impact] |
 
 ---
 

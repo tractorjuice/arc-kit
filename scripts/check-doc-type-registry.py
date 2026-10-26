@@ -73,6 +73,17 @@ NOT_A_CODE_IN_PROSE = {
     # there is nothing to register.
     "CSCR",
     "DSCR",
+    # Placeholders in guides that explain the naming convention itself:
+    # `ARC-NNN-TYPE-vN.N.md`, `ARC-NNN-TYPE-SEQ-vN.N.md`, `ARC-NNN-XXX-vN.M`.
+    "TYPE",
+    "TYPE-SEQ",
+    "XXX",
+    # glossary-template.md's Source Artifact column: `[ARC-PROJECT_ID-ARTIFACT-vN.md]`,
+    # filled with each term's real source document at generation time.
+    "ARTIFACT",
+    # custom-commands.md's worked example: the reader's own /arckit:sla writes
+    # ARC-<id>-SLA-v*, and step 2 of that guide registers SLA.
+    "SLA",
 }
 
 # ARC-<pid-or-placeholder>-<CODE>[-<SEQ>]-v...
@@ -89,11 +100,19 @@ NOT_A_CODE_IN_PROSE = {
 # literal `NN`/`NNN` placeholder form ever matched, and only because CODE
 # swallowed it and the NOT_A_CODE_IN_PROSE fallback split it back off.
 #
+#
+# The project-ID segment also takes the read-glob `*` and the guides' `<id>`
+# placeholder, and SEQ takes `-*`. Without them every `ARC-*-CODE-v*.md` a
+# command reads and every `ARC-<id>-CODE-v1.0.md` a guide lists as an input was
+# invisible, and overlays shipped reads of codes nothing writes (DMOD, ARCH,
+# ANALYZE, FISMA, NIST53; #949). An unregistered read is not blocked by any
+# hook -- it silently finds nothing -- so this gate is the only check.
+#
 # tests/plugin/test_doc_type_registry.py pins the forms that must match.
 COMMAND_CODE_RE = re.compile(
-    r"ARC-[A-Za-z0-9{}\[\]_-]*?-"
+    r"ARC-[A-Za-z0-9{}\[\]<>*_-]*?-"
     r"([A-Z][A-Z0-9]*(?:-[A-Z][A-Z0-9]*)*)"  # CODE
-    r"(?:-(?:\d{1,3}|\{[A-Z]{1,4}\}))?"      # SEQ: -001, -{NNN}, -{NUM}
+    r"(?:-(?:\d{1,3}|\{[A-Z]{1,4}\}|\*))?"   # SEQ: -001, -{NNN}, -{NUM}, -*
     r"-v"
 )
 
@@ -161,16 +180,22 @@ def check_recipe_types(known: set[str]) -> int:
 
 
 def check_command_codes(known: set[str]) -> int:
-    """Every ARC-*-CODE-v filename in a command or agent body resolves.
+    """Every ARC-*-CODE-v filename in a command, agent, template or guide resolves.
 
-    Unregistered codes here are fatal at runtime: validate-arc-filename.mjs
-    blocks the write outright.
+    In a write, an unregistered code is fatal at runtime: validate-arc-filename.mjs
+    blocks the write outright. In a read glob, a template cross-reference or a
+    guide's input table, it names a file nothing ever writes, so the read finds
+    nothing and no hook says so.
     """
     checked = 0
     pat = COMMAND_CODE_RE
     sources = sorted(
         glob.glob(str(ROOT / "plugins/*/commands/*.md"))
         + glob.glob(str(ROOT / "plugins/*/agents/*.md"))
+        + glob.glob(str(ROOT / "plugins/*/templates/*.md"))
+        # docs/guides is canonical; plugins/arckit-claude/docs/guides is its
+        # byte copy (check-guide-parity.py), so scanning both would double-report.
+        + glob.glob(str(ROOT / "docs/guides/**/*.md"), recursive=True)
     )
     for path in sources:
         rel = Path(path).relative_to(ROOT)
@@ -190,8 +215,9 @@ def check_command_codes(known: set[str]) -> int:
                 checked += 1
                 hint = suggest(code, known)
                 errors.append(
-                    f"{rel}:{lineno}: writes ARC-*-{code}-v* but {code!r} is not in "
-                    f"DOC_TYPES -- validate-arc-filename.mjs will BLOCK this write{hint}"
+                    f"{rel}:{lineno}: names ARC-*-{code}-v* but {code!r} is not in "
+                    f"DOC_TYPES -- validate-arc-filename.mjs BLOCKS a write of it, "
+                    f"and a read of it finds nothing{hint}"
                 )
     return checked
 
@@ -344,7 +370,7 @@ def main() -> int:
 
     print(
         f"Doc-type registry OK: {len(known)} registered codes; "
-        f"{n_recipe} recipe output.type, {n_cmd} command/agent filename, "
+        f"{n_recipe} recipe output.type, {n_cmd} command/agent/template/guide filename, "
         f"{n_pages} pages.md table reference(s) all resolve; "
         f"{n_decl} recipe target(s) agree with their command's declared doc-type."
     )

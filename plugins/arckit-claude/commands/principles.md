@@ -18,7 +18,7 @@ $ARGUMENTS
 ## Instructions
 
 1. **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/architecture-principles-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/architecture-principles-template.md` exists in the project root, then `.arckit/templates/architecture-principles-template.md`
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/architecture-principles-template.md` (default)
    - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -70,15 +70,9 @@ $ARGUMENTS
    - **Retail**: Add principles for payment processing, inventory systems, customer data
    - **Government**: Add accessibility (Section 508), public records, security clearances
 
-7. **Detect version**: Before generating the document, check if a previous version exists:
-   - Look for existing `ARC-000-PRIN-v*.md` files in `projects/000-global/`
-   - **If no existing file**: Use VERSION="1.0"
-   - **If existing file found**:
-     - Read the existing document to understand its scope
-     - Compare against current inputs
-     - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed content, updated details, corrections
-     - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new principle categories, removed categories, fundamentally different guidance
-   - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+7. **Detect version**: follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-000-PRIN-v*.md` in `projects/000-global/`. For principles:
+   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed content, updated details, corrections
+   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new principle categories, removed categories, fundamentally different guidance
 
 8. **Write the output**:
 

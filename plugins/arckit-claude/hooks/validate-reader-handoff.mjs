@@ -21,19 +21,24 @@
  *
  *   PreToolUse on SubagentHandback: in auto mode (Claude Code v2.1.271+) a
  *     subagent hands its report back through this tool, and the Agent result
- *     then carries only a note. The hook runs inside the reader, validates
- *     `tool_input.message`, and either replaces it with the sanitised payload
- *     (updatedInput) or denies the hand-back with the errors, so the reader
- *     fixes its own output. A deny is a gate, not a grant: nothing is allowed
- *     that would otherwise have prompted.
+ *     then carries only a note. The hook runs inside the reader and validates
+ *     `tool_input.message`. A hand-back that is already exactly the sanitised
+ *     payload passes untouched; anything else is denied, with the schema
+ *     errors or with the instruction to hand back the bare JSON (no prose, no
+ *     code fence, no invisible characters), so the reader fixes its own
+ *     output. A deny is a gate, not a grant: nothing is allowed that would
+ *     otherwise have prompted, and no tool input is ever rewritten.
  *
- *   PreToolUse on Agent (Task): keeps ArcKit reader and writer dispatches in
- *     the foreground (run_in_background: false) and qualifies a bare agent
- *     name, so the PostToolUse check above always sees the reader's report.
+ * No PreToolUse path rewrites a tool's input. The Claude
+ * plugin directory reads that as the plugin acting on its own behalf, and
+ * declined the core plugin for it. Until 6.17.3 this hook also rewrote Agent
+ * dispatches to run in the foreground and to carry the plugin-qualified name;
+ * the commands now ask for both, Claude Code itself rejects a bare name, and
+ * READER-PATTERN.md has orchestrators wait for a background report.
  *
  * Anything that isn't a known reader passes through with no output.
  *
- * Hook Types: PostToolUse (matcher Agent|Task), PreToolUse (matchers SubagentHandback, Agent|Task)
+ * Hook Types: PostToolUse (matcher Agent|Task), PreToolUse (matcher SubagentHandback)
  * Exit code 0 always.
  */
 
@@ -105,6 +110,16 @@ export function checkReader(reader, text) {
   return { ...checkHandoff(schema, payload), schema: READER_SCHEMAS[reader] };
 }
 
+/** Whether a hand-back message is already the sanitised payload, byte for byte once parsed. */
+function isExactPayload(message, payload) {
+  if (typeof message !== 'string') return false;
+  try {
+    return JSON.stringify(JSON.parse(message)) === JSON.stringify(payload);
+  } catch {
+    return false;
+  }
+}
+
 function formatErrors(errors) {
   const shown = errors.slice(0, 20).map((e) => `- ${e.path}: ${e.msg}`);
   if (errors.length > 20) shown.push(`- … and ${errors.length - 20} more`);
@@ -122,39 +137,20 @@ export function decide(data) {
   const event = data.hook_event_name;
   const tool = data.tool_name;
 
-  // Keep ArcKit's reader and writer dispatches in the foreground. Since Claude
-  // Code v2.1.198 a subagent runs in the background unless told otherwise; its
-  // report then arrives as a notification rather than as the Agent result, so
-  // the PostToolUse check below never sees it, and the notification ends the
-  // command's turn-scoped allowed-tools grants. Also qualify a bare agent name
-  // ("arckit-x-reader" -> "arckit:arckit-x-reader"), which Claude Code rejects
-  // as "not found". This rewrites the tool's arguments; it grants nothing.
-  if (event === 'PreToolUse' && (tool === 'Agent' || tool === 'Task')) {
-    const input = data.tool_input || {};
-    const type = input.subagent_type;
-    if (typeof type !== 'string') return null;
-    const bare = type.slice(type.lastIndexOf(':') + 1);
-    if (!/^arckit-[a-z0-9-]+-(reader|writer)$/.test(bare)) return null;
-    const qualified = type.includes(':') ? type : `arckit:${bare}`;
-    if (input.run_in_background === false && qualified === type) return null;
-    return {
-      hookSpecificOutput: {
-        hookEventName: 'PreToolUse',
-        updatedInput: { ...input, subagent_type: qualified, run_in_background: false },
-      },
-    };
-  }
-
   if (event === 'PreToolUse' && tool === 'SubagentHandback') {
     const reader = readerName(data.agent_type);
     if (!reader) return null;
     const input = data.tool_input || {};
     const result = checkReader(reader, input.message);
     if (result.ok) {
+      if (isExactPayload(input.message, result.payload)) return null;
       return {
         hookSpecificOutput: {
           hookEventName: 'PreToolUse',
-          updatedInput: { ...input, message: JSON.stringify(result.payload) },
+          permissionDecision: 'deny',
+          permissionDecisionReason:
+            `ArcKit handoff check: your report is valid against ${result.schema}, but the hand-back must be the bare JSON payload. ` +
+            'Hand back only the JSON object: no prose around it, no code fence, and no invisible or control characters.',
         },
       };
     }

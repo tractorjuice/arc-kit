@@ -52,6 +52,9 @@ on:
       - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
       - "tests/plugin/**"
+      - "certification/**"
+      - "tests/certification/**"
+      - "docs/certification/**"
   pull_request:
     paths:
       - "**/*.md"
@@ -102,6 +105,9 @@ on:
       - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
       - "tests/plugin/**"
+      - "certification/**"
+      - "tests/certification/**"
+      - "docs/certification/**"
 
 jobs:
   lint:
@@ -150,6 +156,9 @@ jobs:
       - name: Contributor credit check (CHANGELOG credits vs contributors page)
         run: python3 scripts/check-contributor-credits.py
 
+      - name: Plugin CHANGELOG stays small enough for the plugin directory to inspect
+        run: python3 scripts/trim-plugin-changelog.py --check
+
       - name: llms.txt sync check (every command indexed, no dead links)
         run: python3 scripts/check-llms-txt.py
 
@@ -182,7 +191,8 @@ jobs:
 
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
-          node-version: "20"
+          node-version: "24"
+          check-latest: true
 
       - name: Dual-registration test for doc-types
         run: node scripts/tests/test-doc-types-dual-registration.mjs
@@ -236,4 +246,4 @@ jobs:
         # validators are re-run here as well as in their own steps above, which
         # costs a second and cannot go stale.
         shell: bash
-        run: node --test tests/plugin/*.test.mjs tests/plugin/test_*.mjs
+        run: node --test tests/plugin/*.test.mjs tests/plugin/test_*.mjs tests/certification/*.test.mjs

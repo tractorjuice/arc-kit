@@ -11,8 +11,8 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Processing activities and personal-data flows |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Personal-data categories collected |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Personal-data entities and relationships |
+| Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Personal-data categories collected |
+| Data model (`ARC-<id>-DATA-v*.md`) | Personal-data entities and relationships |
 
 ---
 
@@ -67,7 +67,7 @@ Output: `projects/<id>/ARC-<id>-PDPL-v1.0.md`
 
 ## Key Notes
 
-- **Executive Regulation**: PDPL Executive Regulation is flagged as `[NEEDS VERIFICATION]` in the overlay maintenance log — confirm current status before publication.
+- **Executive Regulations**: Federal Decree-Law No. 45 of 2021 was issued on 20 September 2021, published in Official Gazette No. 712 (supplement) on 26 September 2021, and has been in force since 2 January 2022. Its Executive Regulations are a separate Cabinet instrument. The UAE Government portal's data protection page (<https://u.ae/en/about-the-uae/digital-uae/data/data-protection-laws>, updated 4 December 2025) names none, and secondary commentary disagrees on whether they have been issued. The artefact therefore records the status as checked against the UAE Legislation portal (<https://uaelegislation.gov.ae>), with the date of the check, and bases the assessment on the Decree-Law text alone when no Executive Regulations are in force.
 - **Cross-border**: Default position is sovereign UAE residency for Confidential and above; transfers require explicit derogation.
 - **Run order**: Best executed after `/arckit:uae-classification` so PDPL-relevant datasets are already tagged.
 - **Community-contributed**: Output should be reviewed by qualified DPO / federal compliance counsel before reliance.

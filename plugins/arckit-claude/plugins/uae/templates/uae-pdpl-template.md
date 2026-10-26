@@ -83,6 +83,8 @@ Reference the current administrative fines per the applicable Cabinet Resolution
 |--------|-------|-----|---------------|
 | UAE-PDPL-FDL45-2021 | Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data | <https://uaelegislation.gov.ae/en/legislations/1972/download> | [YYYY-MM-DD] |
 
+**PDPL Executive Regulations**: [Cabinet resolution number and date / none located] — verified as of [YYYY-MM-DD] against the UAE Legislation portal.
+
 ### Citations
 
 | Citation | Doc ID | Section | Used in |

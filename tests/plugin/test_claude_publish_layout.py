@@ -136,3 +136,67 @@ def test_root_readme_links_every_plugin_folder(staged):
     for plugin in published["plugins"]:
         folder = plugin["source"].removeprefix("./")
         assert f"]({folder})" in readme, f"root README does not link {folder}"
+
+
+def _limits_module():
+    import importlib.util
+
+    path = REPO_ROOT / "scripts" / "check-plugin-directory-limits.py"
+    spec = importlib.util.spec_from_file_location("check_plugin_directory_limits", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_every_plugin_folder_keeps_to_the_directory_file_rules(staged):
+    """The directory holds a plugin for a reviewer with more than 512 files, a
+    non-image file of 256 KiB or more, or an unreadable binary. Core was held
+    for the first two from 6.17.3 to 6.18.0 (587 files, a 321 KiB CHANGELOG)."""
+    limits = _limits_module()
+    problems = {
+        str(folder.relative_to(staged)): limits.violations(folder)
+        for folder in limits.plugin_folders(staged)
+    }
+    assert {k: v for k, v in problems.items() if v} == {}
+
+
+# Files the source keeps for maintainers that no installed plugin uses.
+MAINTAINER_ONLY = (
+    "hooks/autoresearch-tracer.mjs",
+    "hooks/weakness-miner.mjs",
+    "hooks/harness-proposer.mjs",
+    "hooks/harness-validator.mjs",
+    "skills/.markdownlint-cli2.jsonc",
+    "scripts/bash/check-prerequisites.sh",
+)
+
+
+def test_core_folder_carries_no_maintainer_only_files(staged):
+    core = staged / "plugins" / "arckit"
+    for rel in MAINTAINER_ONLY:
+        assert (CORE_DIR / rel).is_file(), f"the source no longer has {rel}; drop it from this list"
+        assert not (core / rel).exists(), f"{rel} leaked into the published core plugin"
+
+
+def test_core_folder_carries_no_untracked_tooling_output(staged):
+    """tsconfig.json and .claude-plugin/types/ are written locally by plugin
+    tooling. The tar reads the working tree, so only the excludes stop them."""
+    core = staged / "plugins" / "arckit"
+    assert not (core / "tsconfig.json").exists()
+    assert not (core / ".claude-plugin" / "types").exists()
+
+
+def test_overlay_guides_ship_with_their_overlay_not_core(staged):
+    core_guides = {p.stem for p in (staged / "plugins" / "arckit" / "docs" / "guides").glob("*.md")}
+    core_commands = {p.stem for p in (CORE_DIR / "commands").glob("*.md")}
+    published = json.loads((staged / ".claude-plugin" / "marketplace.json").read_text())
+    for plugin in published["plugins"]:
+        if plugin["name"] == "arckit":
+            continue
+        folder = staged / plugin["source"].removeprefix("./")
+        commands = {p.stem for p in (folder / "commands").glob("*.md")}
+        guides = {p.stem for p in (folder / "docs" / "guides").glob("*.md")}
+        stray = (commands - core_commands) & core_guides
+        assert not stray, f"{plugin['name']} guides published in core: {sorted(stray)}"
+        assert guides <= commands | {p.stem for p in (REPO_ROOT / "docs" / "guides").glob("*.md")}
+    assert (staged / "plugins" / "fr" / "docs" / "guides" / "fr-irn.md").is_file()

@@ -17,12 +17,24 @@ $ARGUMENTS
 
 ## Context
 
-**G-Cloud** is the UK Digital Marketplace framework for procuring off-the-shelf cloud services:
+**G-Cloud** is a UK public sector framework agreement for buying cloud hosting, software and support. It is run by the Government Commercial Agency (GCA), which was Crown Commercial Service until 1 April 2026; older documents still use the CCS name. Its services are listed on the Digital Marketplace.
 
-- Cloud hosting, IaaS, PaaS
-- SaaS platforms and tools
-- Cloud support services
-- No custom development - just service procurement
+**G-Cloud 15 (RM1557.15)** started on 6 August 2026 and has replaced G-Cloud 14 (RM1557.14), which ends on 28 October 2026. G-Cloud 15 is an open framework under the Procurement Act 2023. Its lots:
+
+- **Lot 1a**: Infrastructure as a Service (IaaS) and Platform as a Service (PaaS)
+- **Lot 1b**: IaaS and PaaS above OFFICIAL (not in the public Digital Marketplace search)
+- **Lot 2a**: Infrastructure Software as a Service (iSaaS)
+- **Lot 2b**: Other Software as a Service (SaaS)
+- **Lot 3**: Cloud support services
+
+G-Cloud does not cover bespoke design and development (use `/arckit:dos`), contingent labour, co-location, non-cloud services or consultancy, hardware or recruitment.
+
+G-Cloud 15 has two call-off routes:
+
+- **Award without competition**: for a straightforward need that an existing catalogue service meets. The buyer writes a statement of requirements and applies the framework's objective mechanism in order: taxonomy filters, social value filters (if applicable), standardised technical filters, then a review of each remaining supplier's published technical information. The award goes to the lowest price. The buyer cannot add criteria or weightings of their own, and supplier contact is limited to basic clarifications; a request for proposal, request for information, negotiation or invitation to tender breaches the agreement.
+- **Competitive selection** (two-stage or multi-stage): for a complex, high-value or tailored need. The buyer shortlists with the same filters, issues an invitation to tender to every eligible supplier on the shortlist, assesses them against stated criteria and awards on the most advantageous tender. Award criteria weight quality (including social value) and price each between 10% and 90%. The multi-stage process allows demonstrations, site visits or negotiation before the final tender.
+
+Buyers shortlist and award on GCA's Contract Award Service. Source: [G-Cloud 15 agreement page and buyer guides](https://www.gca.gov.uk/agreements/RM1557.15).
 
 This command:
 
@@ -67,16 +79,16 @@ b. **Architecture Principles** (RECOMMENDED):
 - NFR-xxx mentioning: "uptime", "availability", "disaster recovery", "cloud infrastructure"
 - FR-xxx mentioning: "platform", "service", "hosting", "managed service"
 
-**Service categories to identify**:
+**Service categories to identify**, mapped to the G-Cloud 15 lots:
 
-- **Cloud Hosting**: IaaS, VMs, containers, Kubernetes
-- **Cloud Software**: SaaS platforms, tools, applications
-- **Cloud Support**: Managed services, monitoring, backup
-- **Specialized Services**: Email, CDN, databases, analytics
+- **IaaS and PaaS (Lot 1a; Lot 1b above OFFICIAL)**: hosting, VMs, containers, Kubernetes, managed databases and other platform services
+- **Infrastructure software (Lot 2a, iSaaS)**: infrastructure and service management applications, such as IT operations, security and storage management software
+- **Other software (Lot 2b, SaaS)**: other and end-user applications
+- **Cloud support (Lot 3)**: professional services to set up and maintain cloud software, infrastructure and platforms, such as migration
 
 **Determine**:
 
-- Primary service category needed
+- Primary service category needed, and its G-Cloud 15 lot
 - Must-have requirements (from MUST priority)
 - Desirable requirements (from SHOULD priority)
 - Compliance needs (security certifications, data residency)
@@ -96,7 +108,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-GCLD-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "G-Cloud Service Requirements"
 - `ARC-[PROJECT_ID]-GCLD-v[VERSION]` → Construct using format above
@@ -158,7 +170,7 @@ Fill **Sections 1-5** from the analysis in Step 3:
 - **2. Must-Have Requirements** — the functional, performance, security, compliance and integration requirements a service MUST satisfy, each traced to its source requirement ID.
 - **3. Desirable Requirements** — the nice-to-haves, with the weighting they carry in Section 5.
 - **4. Success Criteria** — how the buying team will know the chosen service worked.
-- **5. Evaluation Criteria** — the weighted model. The template ships 50/25/15/10; adjust the weights to the project and say why if you do.
+- **5. Evaluation Criteria** — the weighted model. The template ships 50/25/15/10; adjust the weights to the project and say why if you do. This model can become award criteria only on the competitive selection route, where price and quality must each carry 10% to 90% (the template's default gives price 5%). On the award without competition route the buyer cannot apply their own criteria or weightings: say so in Section 5, and treat the scores as input to the statement of requirements and the choice of route, not as the award decision.
 
 Sections 6-9 are filled in Steps 5-7 below, once the search has run.
 
@@ -207,6 +219,7 @@ Use WebSearch tool to search Digital Marketplace.
 
 For each service found:
 
+- **Check the framework**: shortlist G-Cloud 15 services. Their URLs contain `/g-cloud-15/services/` and the service page shows "Framework: G-Cloud 15". The Digital Marketplace still lists G-Cloud 14 services, but G-Cloud 14 ends on 28 October 2026.
 - **Check MUST requirements**: Does service mention capabilities for MUST requirements?
 - **Score SHOULD requirements**: How many desirable features are mentioned?
 - **Check compliance**: Are required certifications mentioned?
@@ -217,7 +230,7 @@ For each service found:
 
 Fill **Sections 6-8** of the template from what the search returned:
 
-- **6. Service Search Results** — record the search strategy first (queries run, date, filters applied), then one "Service N" block per shortlisted service using the template's block structure: supplier, G-Cloud service ID, service URL, category, pricing model, must-have and desirable match counts, key features, compliance mentions, gaps identified, and a risk level. Keep 3-5 services; the template ships three blocks and says to repeat the structure.
+- **6. Service Search Results** — record the search strategy first (queries run, date, filters applied), then one "Service N" block per shortlisted service using the template's block structure: supplier, G-Cloud service ID, service URL, framework (G-Cloud 15), lot, pricing model, must-have and desirable match counts, key features, compliance mentions, gaps identified, and a risk level. Keep 3-5 services; the template ships three blocks and says to repeat the structure.
 - **7. Service Comparison Matrix** — score every shortlisted service against the weighted criteria. Then complete **Unmet Must-Have Requirements**: any MUST from Section 2 that no shortlisted service clearly meets. Write "No unmet must-have requirements." rather than dropping the section when there are none — an empty heading and a missing heading say different things to whoever reviews the procurement.
 - **8. Recommendation** — the primary recommendation with its justification, plus at least one alternative. Say what would change the recommendation.
 
@@ -246,7 +259,7 @@ Search-result evidence is external content, so follow the citation instructions 
 
 - Explain no results found for this query
 - Suggest alternative search terms (broader)
-- Provide manual search guidance: go to https://www.digitalmarketplace.service.gov.uk/
+- Provide manual search guidance: search G-Cloud 15 by lot at https://www.applytosupply.digitalmarketplace.service.gov.uk/g-cloud-15/choose-lot
 - List specific search terms to try manually
 - Note: Service may exist but not indexed well - encourage direct marketplace search
 
@@ -254,14 +267,14 @@ Search-result evidence is external content, so follow the citation instructions 
 
 Fill the rest of the template, then write the file:
 
-- **9. Next Steps** — immediate actions, supplier engagement, evaluation and contract award. Give each a named owner and a date rather than leaving the template's placeholders in place.
+- **9. Next Steps** — immediate actions, supplier engagement, evaluation and contract award. Give each a named owner and a date rather than leaving the template's placeholders in place. Recommend a call-off route (award without competition or competitive selection) and fit the steps to it: on award without competition, supplier engagement is limited to basic clarifications, so drop demonstrations, reference checks and the weighted scoring; on competitive selection, the multi-stage process is the one that allows demonstrations. Close with the transparency notices the G-Cloud 15 buyer guide sets out, such as the UK6 contract award notice and the UK7 contract details notice, published on Find a Tender.
 - **10. Resources and References** — the template ships the Digital Marketplace guidance links, the G-Cloud framework notes and the related ArcKit commands. Add the project's own documents; keep the framework notes.
 - **Appendix A: Search Methodology** — the queries, filters and exclusions actually used, so the search is reproducible.
 - **Appendix B: Glossary** — expand any G-Cloud or framework term the buying team will not already know.
 - **External References** — the document register, citations and unreferenced documents, per the citation instructions.
 
 **CRITICAL**: Use the **Write tool** to save the completed document to
-`projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md`. Writing it inline
+`projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v{VERSION}.md`. Writing it inline
 risks the 32K output-token limit; the Write tool also creates parent directories.
 
 Before writing, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLD** per-type checks pass. Fix any failures before proceeding.
@@ -289,7 +302,7 @@ Output to user:
 ✅ Generated G-Cloud service search for [PROJECT_NAME]
 
 Framework: G-Cloud
-Document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md
+Document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v{VERSION}.md
 
 Requirements Summary:
 - ✅ Requirements extracted from ARC-*-REQ-*.md
@@ -312,12 +325,12 @@ Alternative Services:
 3. [Service Name] by [Supplier] - [URL]
 
 Next Steps:
-1. Review document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md
+1. Review document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v{VERSION}.md
 2. Visit recommended service page: [Link]
-3. Contact supplier for detailed information
+3. Contact suppliers with clarification questions (basic clarifications only on award without competition)
 4. Validate integration requirements (INT-xxx)
 5. Complete due diligence checklist (Section 9.2)
-6. Award contract via Digital Marketplace
+6. Choose the call-off route (award without competition or competitive selection) and award through the Contract Award Service
 
 Important: All shortlisted services should be validated against MUST requirements before selection.
 ```

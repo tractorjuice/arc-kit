@@ -13,23 +13,23 @@ The Delivery Manager ensures the project is delivered on time and to quality sta
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit:plan` | Create and maintain project plan with timeline and governance gates | [Guide](#docs/guides/plan.md) |
-| `/arckit:risk` | Maintain risk register following HM Treasury Orange Book | [Guide](#docs/guides/risk.md) |
-| `/arckit:backlog` | Generate and review product backlog for sprint planning | [Guide](#docs/guides/backlog.md) |
-| `/arckit:trello` | Export backlog to Trello for team visibility | [Guide](#docs/guides/trello.md) |
-| `/arckit:traceability` | Track requirements through design to tests — identify gaps | [Guide](#docs/guides/traceability.md) |
-| `/arckit:health` | Scan for stale artifacts, orphaned requirements, and version drift | [Guide](#docs/guides/artifact-health.md) |
+| `/arckit:plan` | Create and maintain project plan with timeline and governance gates | [Guide](../plan.md) |
+| `/arckit:risk` | Maintain risk register following HM Treasury Orange Book | [Guide](../risk.md) |
+| `/arckit:backlog` | Generate and review product backlog for sprint planning | [Guide](../backlog.md) |
+| `/arckit:trello` | Export backlog to Trello for team visibility | [Guide](../trello.md) |
+| `/arckit:traceability` | Track requirements through design to tests — identify gaps | [Guide](../traceability.md) |
+| `/arckit:health` | Scan for stale artifacts, orphaned requirements, and version drift | [Guide](../artifact-health.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit:stakeholders` | Review stakeholder map for delivery dependencies | [Guide](#docs/guides/stakeholder-analysis.md) |
-| `/arckit:requirements` | Track requirements completion status | [Guide](#docs/guides/requirements.md) |
-| `/arckit:story` | Generate project narrative for governance reporting | [Guide](#docs/guides/story.md) |
-| `/arckit:operationalize` | Review operational readiness for go-live | [Guide](#docs/guides/operationalize.md) |
-| `/arckit:analyze` | Review governance quality for delivery assurance | [Guide](#docs/guides/analyze.md) |
-| `/arckit:service-assessment` | Prepare evidence for GDS Service Standard gates | [Guide](#docs/guides/service-assessment.md) |
+| `/arckit:stakeholders` | Review stakeholder map for delivery dependencies | [Guide](../stakeholders.md) |
+| `/arckit:requirements` | Track requirements completion status | [Guide](../requirements.md) |
+| `/arckit:story` | Generate project narrative for governance reporting | [Guide](../story.md) |
+| `/arckit:operationalize` | Review operational readiness for go-live | [Guide](../operationalize.md) |
+| `/arckit:analyze` | Review governance quality for delivery assurance | [Guide](../analyze.md) |
+| `/arckit:service-assessment` | Prepare evidence for GDS Service Standard gates | [Guide](../service-assessment.md) |
 
 ## Typical Workflow
 

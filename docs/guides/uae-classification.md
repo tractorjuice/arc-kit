@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:uae-classification` generates a UAE Smart Data Classification Register, mapping every dataset in scope to one of `Open`, `Shared`, `Confidential`, `Secret`, or `Top Secret` with handling rules and a declassification schedule. Anchored on the UAE Smart Data Framework.
+`/arckit:uae-classification` generates a UAE Smart Data Classification Register, mapping every dataset in scope to one of the four UAE Smart Data Framework classes — `Open`, `Confidential`, `Sensitive` or `Secret` — with handling rules and a declassification schedule. Anchored on the UAE Smart Data Framework.
 
 This is the **upstream artefact** for the UAE federal overlay — most other UAE commands consume it.
 
@@ -14,7 +14,7 @@ This is the **upstream artefact** for the UAE federal overlay — most other UAE
 |----------|---------|
 | Architecture principles (`ARC-000-PRIN-*.md`) | Federal principles applied to classification |
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Datasets in scope of the service |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Per-entity sensitivity inputs |
+| Data model (`ARC-<id>-DATA-v*.md`) | Per-entity sensitivity inputs |
 | `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data` user-config |
 
 ---
@@ -33,7 +33,7 @@ Output: `projects/<id>/ARC-<id>-CLAS-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Classification Levels Used | Open / Shared / Confidential / Secret / Top Secret with anchor definitions |
+| Classification Levels Used | Open / Confidential / Sensitive / Secret with anchor definitions |
 | Dataset Register | Per-dataset row with classification, owner, source, and rationale |
 | Handling Rules per Level | Storage, transit, access, retention, declassification |
 | Cross-Reference Index | Links from dataset → data model entity, requirements, residency rule |
@@ -56,7 +56,7 @@ Output: `projects/<id>/ARC-<id>-CLAS-v1.0.md`
 ## Review Checklist
 
 - Every dataset in the service appears in the Dataset Register.
-- Each classification has a documented rationale (not "default to Confidential").
+- Every dataset classified above Open has a documented rationale — Open is the framework's default for non-personal data.
 - Handling rules cover storage, transit, access, retention, and declassification.
 - Cross-references back to data model entities resolve.
 - Confidential and above flagged for sovereign-cloud residency.
@@ -66,7 +66,8 @@ Output: `projects/<id>/ARC-<id>-CLAS-v1.0.md`
 
 ## Key Notes
 
-- **Smart Data level names** `[NEEDS VERIFICATION]`: The overlay uses `Open / Shared / Confidential / Secret / Top Secret` based on the most recent TDRA guidance but these names have not been confirmed in a single authoritative source — verify against the entity's local Data Office guidance before publication. See `uae-overlay-maintenance.md` gap #2.
+- **Four classes**: The UAE Smart Data Framework sets four classes — `Open`, `Confidential`, `Sensitive` and `Secret`. The source is *Part 1: Smart Data Principles and Standards* (v2.0, February 2019), Data Classification Standard DC1, with the criteria and examples for each class in *Part 2: Smart Data Implementation Guide* (v2.0, March 2019), Guidance Note 5.1. Both are published on the UAE Government portal at <https://u.ae/en/about-the-uae/digital-uae/data/data-operability>. In the framework, `Shared` and `Closed` are exchange modes (how data moves between entities), not classes, and there is no `Top Secret` class.
+- **Earlier ArcKit releases** used a five-rung ladder (`Open / Shared / Confidential / Secret / Top Secret`). Nothing blocks a document that still carries those labels. Re-label it when it is next revised: `Shared` usually becomes `Confidential`, `Top Secret` becomes `Secret`, and a dataset labelled `Confidential` under the old ladder, which sat one rung higher, may now be `Sensitive`.
 - **Upstream artefact**: `uae-cloud-residency`, `uae-pdpl`, and `uae-data-sharing` all depend on this register being in place.
 - **userConfig governs the non-UAE artefacts**: The `uae-*` commands write UAE-regime doc-types, and those render the Smart Data ladder whoever runs them — regime beats user config at the marker-resolution step. Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data` so that the jurisdiction-agnostic artefacts produced alongside them (requirements, ADRs, risk register and similar) carry the same ladder rather than the UK one. See `templates/_partials/RENDERING.md` for the full resolution order.
 - **Migration**: To switch an existing UK-classified project, run `arckit migrate-classification --root projects --apply` (see `uae-overlay.md`).

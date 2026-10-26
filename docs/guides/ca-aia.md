@@ -13,8 +13,8 @@ The AIA is mandatory for any federal automated decision-making system that produ
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Decisions automated, NFR-AI / NFR-DEC requirements covering bias, contestability, override |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Training-data lineage and decision boundary inputs |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Entity-level data structures feeding the model |
+| Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Training-data lineage and decision boundary inputs |
+| Data model (`ARC-<id>-DATA-v*.md`) | Entity-level data structures feeding the model |
 | Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Lawful authority and personal-information posture; AIA depth must match PIA depth |
 
 ---

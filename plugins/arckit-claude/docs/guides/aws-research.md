@@ -1,10 +1,39 @@
-# AWS Technology Research Guide
+# AWS Well-Architected Framework: the six pillars and AWS research
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit:aws-research` researches AWS services, architecture patterns, and implementation guidance using the AWS Knowledge MCP server for authoritative documentation.
+The AWS Well-Architected Framework is AWS's guidance for building secure, reliable, efficient, cost-effective and sustainable workloads, in six pillars. This guide lists the pillars and shows how `/arckit:aws-research` uses them to compare AWS services for your project.
 
-> **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent makes 15-30+ MCP calls to gather AWS documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
+The research runs on the AWS Knowledge MCP server: see [AWS documentation MCP servers](aws-documentation-mcp.md) for how it compares with the AWS MCP Server and the AWS Documentation MCP Server.
+
+---
+
+## What the AWS Well-Architected Framework is
+
+The [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) is a set of foundational questions and best practices for checking whether an architecture on AWS follows cloud best practice. AWS describes a review as "a constructive conversation about architectural decisions", not an audit. The current edition was published on 6 November 2024.
+
+AWS also offers the AWS Well-Architected Tool, which reviews workloads against the framework at no charge. In the tool, the framework itself is applied as a lens, and you can add [lenses](https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses.html) from the AWS Lens Catalog or write custom lenses with your own questions.
+
+## The six pillars
+
+| Pillar | What it covers |
+|--------|----------------|
+| [Operational excellence](https://docs.aws.amazon.com/wellarchitected/latest/framework/operational-excellence.html) | Organising your team, designing your workload, operating it at scale and evolving it over time |
+| [Security](https://docs.aws.amazon.com/wellarchitected/latest/framework/security.html) | Protecting data, systems and assets |
+| [Reliability](https://docs.aws.amazon.com/wellarchitected/latest/framework/reliability.html) | A workload doing its intended job correctly and consistently when expected, across its whole lifecycle |
+| [Performance efficiency](https://docs.aws.amazon.com/wellarchitected/latest/framework/performance-efficiency.html) | Using cloud resources efficiently to meet performance requirements, and keeping that efficiency as demand and technology change |
+| [Cost optimization](https://docs.aws.amazon.com/wellarchitected/latest/framework/cost-optimization.html) | Running systems to deliver business value at the lowest price point |
+| [Sustainability](https://docs.aws.amazon.com/wellarchitected/latest/framework/sustainability.html) | Environmental impact, especially energy consumption and efficiency |
+
+Sustainability is the newest pillar. AWS added it in November 2021, which took the framework from five pillars to six.
+
+---
+
+## Using /arckit:aws-research
+
+`/arckit:aws-research` researches AWS services, architecture patterns and implementation guidance for your requirements, using the AWS Knowledge MCP server for authoritative AWS documentation. It rates each candidate service against the six pillars.
+
+> **Agent Architecture**: This command uses a three-tier reader/writer subagent split. The slash command dispatches one **`arckit-aws-research-reader`** subagent per research category; each reader queries the AWS Knowledge MCP and returns evidence as JSON, keeping that I/O out of your main context window. The command validates each payload against the `cloud-research-handoff.schema.json` schema, scores every service against the six pillars from a fixed rubric, and excludes services that are unavailable in a region the project requires. The shared **`arckit-cloud-research-writer`** subagent then renders the artefact. On runtimes without subagent dispatch (Codex, Gemini, OpenCode, Copilot, Paperclip, Vibe, Kimi), the command ships as the equivalent single-agent `arckit-aws-research` prompt instead.
 
 ---
 
@@ -12,11 +41,9 @@
 
 ### AWS Knowledge MCP Server (REQUIRED)
 
-This command **requires** the AWS Knowledge MCP server to be installed. It will not work without it.
+This command **requires** the AWS Knowledge MCP server. It will not work without it.
 
-**Installation**:
-
-Add to your Claude Code MCP configuration (`~/.claude/claude_desktop_config.json` or project `.mcp.json`):
+The ArcKit Claude Code plugin bundles the server (`aws-knowledge`), so there is nothing to install. If your setup doesn't include it, add it to your MCP configuration. For Claude Code, that is the project `.mcp.json` (or `~/.claude.json` for user scope):
 
 ```json
 {
@@ -29,7 +56,7 @@ Add to your Claude Code MCP configuration (`~/.claude/claude_desktop_config.json
 }
 ```
 
-After installation, restart Claude Code to load the MCP server.
+After adding it, restart Claude Code to load the MCP server.
 
 **Slow corporate network?** On TLS-inspecting proxies, VPN tunnels, or congested links, large-scope research prompts can exceed Claude Code's default per-request fetch timeout. Set `MCP_TOOL_TIMEOUT=300000` (5 minutes, in milliseconds) before launching Claude — see [MCP per-request timeout](mcp-servers.md#optional-mcp-per-request-timeout-claude-code-v21142) in the MCP setup guide. Requires Claude Code v2.1.142+.
 
@@ -62,7 +89,7 @@ Add constraints (budget, classification, region) in the prompt for tailored resu
 /arckit:aws-research Research AWS services for <project>
 ```
 
-Outputs: `projects/<id>/research/ARC-<id>-AWRS-v1.0.md`
+Output: `projects/<id>/research/ARC-<id>-AWRS-<NNN>-v1.0.md` (`AWRS` is a multi-instance type, numbered `AWRS-001`, `AWRS-002`, and so on)
 
 > **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
 
@@ -90,9 +117,8 @@ The command uses five AWS Knowledge MCP tools:
 |------|---------|
 | `search_documentation` | Search AWS documentation for services, patterns, best practices |
 | `read_documentation` | Retrieve complete documentation pages for detailed analysis |
-| `get_regional_availability` | Check service/feature availability in eu-west-2 (London) |
+| `get_regional_availability` | Check service/feature availability in the project's required regions (for UK projects, normally eu-west-2 London) |
 | `list_regions` | Get all AWS regions for multi-region planning |
-| `recommend` | Get content recommendations for AWS topics |
 
 ---
 
@@ -100,7 +126,7 @@ The command uses five AWS Knowledge MCP tools:
 
 - **AWS Service Recommendations**: Mapped to specific requirements (FR, NFR, INT, DR)
 - **Architecture Pattern**: Reference architecture from AWS Architecture Center
-- **Well-Architected Assessment**: All 6 pillars evaluated per service (including Sustainability)
+- **Well-Architected Assessment**: Each service scored 0 to 100 on all six pillars (including Sustainability) from a fixed rubric, using only capabilities the AWS documentation states; the star ratings are derived from those scores
 - **AWS Security Hub**: Foundational Security Best Practices mapping
 - **UK Government Compliance**: G-Cloud, eu-west-2 region, NCSC principles
 - **Cost Estimates**: Monthly and 3-year TCO with optimization recommendations
@@ -155,6 +181,7 @@ When UK Government project detected:
 
 - [AWS Knowledge MCP](https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server) - MCP server documentation
 - [AWS Architecture Center](https://aws.amazon.com/architecture/) - Reference architectures
-- [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/) - Design guidance
+- [AWS Well-Architected Framework](https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html) - The framework and its six pillars
+- [AWS Well-Architected](https://aws.amazon.com/architecture/well-architected/) - Tool, lenses and partner reviews
 - [AWS Security Best Practices](https://aws.amazon.com/security/) - Security controls
-- [AWS UK Compliance](https://aws.amazon.com/compliance/uk-data-protection/) - UK Government compliance
+- [Operational Best Practices for NCSC Cloud Security Principles](https://docs.aws.amazon.com/config/latest/developerguide/operational-best-practices-for-ncsc.html) - AWS Config conformance pack mapped to the NCSC principles

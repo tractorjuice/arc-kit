@@ -19,7 +19,7 @@ plugins/arckit-eu/templates/eu-*-template.md              @thomas-jardinet @trac
 plugins/arckit-claude/plugins/eu/**                       @thomas-jardinet @tractorjuice
 .arckit/templates/eu-*-template.md                        @thomas-jardinet @tractorjuice
 docs/guides/eu-*.md                                       @thomas-jardinet @tractorjuice
-plugins/arckit-claude/docs/guides/eu-*.md                 @thomas-jardinet @tractorjuice
+plugins/arckit-eu/docs/guides/eu-*.md                     @thomas-jardinet @tractorjuice
 
 # French government overlay — community-maintained by @thomas-jardinet
 plugins/arckit-fr/commands/fr-*.md                        @thomas-jardinet @tractorjuice
@@ -27,7 +27,7 @@ plugins/arckit-fr/templates/fr-*-template.md              @thomas-jardinet @trac
 plugins/arckit-claude/plugins/fr/**                       @thomas-jardinet @tractorjuice
 .arckit/templates/fr-*-template.md                        @thomas-jardinet @tractorjuice
 docs/guides/fr-*.md                                       @thomas-jardinet @tractorjuice
-plugins/arckit-claude/docs/guides/fr-*.md                 @thomas-jardinet @tractorjuice
+plugins/arckit-fr/docs/guides/fr-*.md                     @thomas-jardinet @tractorjuice
 
 # Netherlands public sector overlay — community-maintained by @umag (see #739)
 plugins/arckit-nl/commands/nl-*.md                        @umag @tractorjuice
@@ -35,7 +35,7 @@ plugins/arckit-nl/templates/nl-*-template.md              @umag @tractorjuice
 plugins/arckit-claude/plugins/nl/**                       @umag @tractorjuice
 .arckit/templates/nl-*-template.md                        @umag @tractorjuice
 docs/guides/nl-*.md                                       @umag @tractorjuice
-plugins/arckit-claude/docs/guides/nl-*.md                 @umag @tractorjuice
+plugins/arckit-nl/docs/guides/nl-*.md                     @umag @tractorjuice
 
 # Austrian government overlay — community-maintained by @gtonic (see #304, #320, #333)
 plugins/arckit-at/commands/at-*.md                        @gtonic @tractorjuice
@@ -43,7 +43,7 @@ plugins/arckit-at/templates/at-*-template.md              @gtonic @tractorjuice
 plugins/arckit-claude/plugins/at/**                       @gtonic @tractorjuice
 .arckit/templates/at-*-template.md                        @gtonic @tractorjuice
 docs/guides/at-*.md                                       @gtonic @tractorjuice
-plugins/arckit-claude/docs/guides/at-*.md                 @gtonic @tractorjuice
+plugins/arckit-at/docs/guides/at-*.md                     @gtonic @tractorjuice
 
 # Canada Federal Overlay — community-contributed, maintained by @tractorjuice (recruiting Canadian federal domain co-maintainer; promotion to official-baseline gated on co-maintainer commitment)
 plugins/arckit-ca/commands/ca-*.md                        @tractorjuice
@@ -51,7 +51,7 @@ plugins/arckit-ca/templates/ca-*-template.md              @tractorjuice
 plugins/arckit-claude/plugins/ca/**                       @tractorjuice
 .arckit/templates/ca-*-template.md                        @tractorjuice
 docs/guides/ca-*.md                                       @tractorjuice
-plugins/arckit-claude/docs/guides/ca-*.md                 @tractorjuice
+plugins/arckit-ca/docs/guides/ca-*.md                     @tractorjuice
 
 # UAE Federal Overlay — community-contributed, maintained by @tractorjuice (recruiting UAE domain co-maintainer; promotion to official-baseline gated on co-maintainer commitment)
 plugins/arckit-uae/commands/uae-*.md                      @tractorjuice
@@ -59,4 +59,4 @@ plugins/arckit-uae/templates/uae-*-template.md            @tractorjuice
 plugins/arckit-claude/plugins/uae/**                      @tractorjuice
 .arckit/templates/uae-*-template.md                       @tractorjuice
 docs/guides/uae-*.md                                      @tractorjuice
-plugins/arckit-claude/docs/guides/uae-*.md                @tractorjuice
+plugins/arckit-uae/docs/guides/uae-*.md                   @tractorjuice

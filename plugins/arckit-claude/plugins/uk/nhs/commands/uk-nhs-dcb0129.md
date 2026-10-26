@@ -15,6 +15,11 @@ handoffs:
     description: Project-level risk register cross-references hazards by H-ID.
   - command: dpia
     description: Privacy hazards in HAZARD-LOG.md cross-reference DPIA risks where they overlap.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output is **not** clinical, legal, or regulatory advice. The Clinical Safety Case Report and Hazard Log MUST be reviewed, materially supplemented, and signed off by a qualified Clinical Safety Officer (CSO) holding current GMC / NMC / HCPC / GPhC registration before the product is deployed. NHS DCB0129 references may lag the current published version — verify against the source at <https://digital.nhs.uk/data-and-information/information-standards>.
@@ -66,14 +71,14 @@ NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of He
    - The project's `ARC-{PID}-DPIA-*.md` if present — privacy hazards may overlap with clinical hazards
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
-2. **Read the templates** (four files):
+2. **Read the templates** (three files):
    - **First**, check `.arckit/templates-custom/uk-nhs-dcb0129-*-template.md` (user overrides)
    - **Then**, `.arckit/templates/uk-nhs-dcb0129-*-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uk-nhs-dcb0129-*-template.md`
 
    Required template files: `uk-nhs-dcb0129-safety-template.md` (root `SAFETY.md` anchor), `uk-nhs-dcb0129-case-template.md` (`SAFETY-CASE.md`), `uk-nhs-dcb0129-hazard-template.md` (`HAZARD-LOG.md`). The wrapper template `uk-nhs-dcb0129-template.md` exists only for `/arckit:customize` listing — do not write its content.
 
-3. **Resolve the project**: use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate `projects/{NNN}-<slug>/`.
+3. **Resolve the project**: use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate `projects/{NNN}-<slug>/`.
 
 4. **Ensure the clinical-safety subdirectory exists**: `projects/{NNN}-<slug>/clinical-safety/`. Use `mkdir -p` via the Bash tool if needed. All three Marcus files land in this directory.
 
@@ -82,7 +87,7 @@ NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of He
 6. **Generate `SAFETY.md`** (front-door anchor) populating these required fields from upstream artefacts where possible:
    - `product-name`, `version` (from REQ / project metadata)
    - `standard` (`DCB0129` for this command's output; `both` if the deployer DCB0160 case will also live in the same repo)
-   - `clinical-safety-officer` — populate as `[PENDING — CSO name and GMC/NMC/HCPC registration number]`; the CSO appoints themselves
+   - `clinical-safety-officer` — populate as `[PENDING — CSO name and GMC/NMC/HCPC/GPhC registration number]`; the CSO appoints themselves
    - `organisation` — manufacturer legal entity (substitute `${user_config.organisation_name}` where appropriate)
    - `safety-case-status` — `draft`
    - `hazard-log-url` — relative link `./HAZARD-LOG.md`
@@ -97,7 +102,7 @@ NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of He
    3. **Safety Argument** — structured argument that the product is acceptably safe. Reference each major safety claim by H-ID from the Hazard Log. Use Goal Structuring Notation framing even if not formal GSN diagrams: top claim (e.g. "The product is acceptably safe for use by NHS clinicians in the intended context") supported by sub-claims, each linked to hazards and controls
    4. **Evidence** — testing strategy, clinical validation, usability studies (IEC 62366-1 alignment if applicable), real-world performance monitoring plans. Cross-reference any V&V artefacts in the project
    5. **Residual Risk** — summary of accepted residual risk after controls applied; explicit justification for each accepted residual risk
-   6. **CSO Sign-off** — name, GMC/NMC/HCPC registration, date, explicit statement of approval (left as `[PENDING]` for the human CSO to complete)
+   6. **CSO Sign-off** — name, GMC/NMC/HCPC/GPhC registration, date, explicit statement of approval (left as `[PENDING]` for the human CSO to complete)
 
 8. **Generate `HAZARD-LOG.md`** with YAML frontmatter + rendered Markdown table. The YAML frontmatter MUST contain:
    - `hazards:` array — at minimum 6 starter hazards drawn from the project's requirements and data model. Realistic starter examples for a typical NHS digital health product:

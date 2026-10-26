@@ -91,7 +91,7 @@ Scans all ArcKit artifacts and automatically:
    - Links to HLD components
    - Maps to epics and business goals
 
-**Output**: `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.md` and `.json` (+ optional CSV)
+**Output**: `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v{VERSION}.md` and `.json` (+ optional CSV)
 
 **Time Savings**: 75%+ reduction (4-6 weeks → 3-5 days)
 
@@ -1289,7 +1289,7 @@ Every story must meet these criteria before marking "Done":
 
 #### 13.1: Write the JSON first, and compute every total from it
 
-Build the complete backlog as the JSON structure shown in 13.4 **before** writing any Markdown, and write it with the **Write tool** to `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.json`.
+Build the complete backlog as the JSON structure shown in 13.4 **before** writing any Markdown, and write it with the **Write tool** to `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v{VERSION}.json`.
 
 Every aggregate in the backlog is **computed from the items, never estimated or carried over**:
 
@@ -1325,7 +1325,7 @@ The template owns the document structure. Populate it from Steps 3-12 — do not
 | **Integration with Other ArcKit Commands** | ships complete |
 | **External References** | the document register, citations and unreferenced documents, per the citation instructions read in Step 2b |
 
-Write it with the **Write tool** to `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.md`. A backlog is long, so writing it inline risks the 32K output-token limit.
+Write it with the **Write tool** to `projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v{VERSION}.md`. A backlog is long, so writing it inline risks the 32K output-token limit.
 
 #### 13.3: CSV Export (if requested)
 
@@ -1466,7 +1466,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-BKLG-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Product Backlog"
 - `ARC-[PROJECT_ID]-BKLG-v[VERSION]` → Construct using format above
@@ -1517,13 +1517,13 @@ Write all files to `projects/{project-dir}/`:
 
 **Always create**:
 
-- `ARC-{PROJECT_ID}-BKLG-v1.0.md` - Primary output
+- `ARC-{PROJECT_ID}-BKLG-v{VERSION}.md` - Primary output
 
-- `ARC-{PROJECT_ID}-BKLG-v1.0.json` - The structured record every total is computed from (written first, Step 13.1)
+- `ARC-{PROJECT_ID}-BKLG-v{VERSION}.json` - The structured record every total is computed from (written first, Step 13.1)
 
 **Create if FORMAT includes**:
 
-- `ARC-{PROJECT_ID}-BKLG-v1.0.csv` - If FORMAT=csv or FORMAT=all
+- `ARC-{PROJECT_ID}-BKLG-v{VERSION}.csv` - If FORMAT=csv or FORMAT=all
 
 **CRITICAL - Show Summary Only**:
 After writing the file(s), show ONLY the confirmation message below. Do NOT output the full backlog content in your response. The backlog document can be 1000+ lines and will exceed token limits.
@@ -1534,9 +1534,9 @@ After writing the file(s), show ONLY the confirmation message below. Do NOT outp
 ✅ Product backlog generated successfully!
 
 📁 Output files:
-  - projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.md ({N} KB)
-  - projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.csv ({N} KB)
-  - projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v1.0.json ({N} KB)
+  - projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v{VERSION}.md ({N} KB)
+  - projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v{VERSION}.csv ({N} KB)
+  - projects/{project-dir}/ARC-{PROJECT_ID}-BKLG-v{VERSION}.json ({N} KB)
 
 📊 Backlog Summary:
   - Total stories: {N}
@@ -1554,8 +1554,8 @@ After writing the file(s), show ONLY the confirmation message below. Do NOT outp
 ⚠️ Important: Story point estimates are AI-generated. Your team should re-estimate based on actual velocity and capacity.
 
 📚 Integration:
-  - Import ARC-{PROJECT_ID}-BKLG-v1.0.csv to Jira, Azure DevOps, or GitHub Projects
-  - Use ARC-{PROJECT_ID}-BKLG-v1.0.json for custom integrations
+  - Import ARC-{PROJECT_ID}-BKLG-v{VERSION}.csv to Jira, Azure DevOps, or GitHub Projects
+  - Use ARC-{PROJECT_ID}-BKLG-v{VERSION}.json for custom integrations
   - Link to /arckit:traceability for requirements tracking
 ```
 
@@ -1642,8 +1642,9 @@ Then re-run /arckit:backlog
 ```text
 ⚠️ Warning: hld-v*.md not found. Stories will not be mapped to components.
 
-For better component mapping, run:
-  /arckit:hld or /arckit:diagram
+For better component mapping, add the vendor's HLD at
+  projects/{project-dir}/vendors/{vendor}/hld-v1.md
+or run /arckit:diagram
 
 Then re-run /arckit:backlog
 ```
@@ -1682,7 +1683,7 @@ Continue with available artifacts, note limitations in output.
 
 Output:
 
-- Creates `ARC-{PROJECT_ID}-BKLG-v1.0.md` with 8 sprints at 20 points/sprint
+- Creates `ARC-{PROJECT_ID}-BKLG-v{VERSION}.md` with 8 sprints at 20 points/sprint
 - Uses multi-factor prioritization
 - Includes all available artifacts
 
@@ -1706,9 +1707,9 @@ Output:
 
 Output:
 
-- `ARC-{PROJECT_ID}-BKLG-v1.0.md` (markdown)
-- `ARC-{PROJECT_ID}-BKLG-v1.0.csv` (Jira import)
-- `ARC-{PROJECT_ID}-BKLG-v1.0.json` (API integration)
+- `ARC-{PROJECT_ID}-BKLG-v{VERSION}.md` (markdown)
+- `ARC-{PROJECT_ID}-BKLG-v{VERSION}.csv` (Jira import)
+- `ARC-{PROJECT_ID}-BKLG-v{VERSION}.json` (API integration)
 
 ### Example 4: Risk-Based Priority Only
 
@@ -1729,18 +1730,17 @@ Output:
 ### Inputs From
 
 - `/arckit:requirements` → All stories
-- `/arckit:hld` → Component mapping
+- `/arckit:hld-review` / `/arckit:dld-review` and the vendor HLD/DLD → Component mapping
 - `/arckit:stakeholders` → User personas
-- `/arckit:risk-register` → Risk priorities
-- `/arckit:threat-model` → Security stories
-- `/arckit:business-case` → Value priorities
+- `/arckit:risk` → Risk priorities and security threats
+- `/arckit:sobc` → Value priorities
 - `/arckit:principles` → Definition of Done
+- `/arckit:dpia` → Privacy-related tasks (optional)
 
 ### Outputs To
 
-- `/arckit:traceability` → Requirements → Stories → Sprints
-- `/arckit:test-strategy` → Test cases from acceptance criteria
-- `/arckit:analyze` → Backlog completeness check
+- `/arckit:trello` → Trello board export (reads `ARC-*-BKLG-*.json`)
+- `/arckit:story` → Delivery narrative
 
 ---
 

@@ -13,6 +13,10 @@ handoffs:
   - command: risk
     description: Reflect the TBB category and any Stg. classification implications in the risk register
     condition: "Risks tied to information classification are not yet reflected in ARC-*-RISK"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 
@@ -70,7 +74,7 @@ Read all documents from Step 0. Extract the information types, users, and existi
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/nl-tbb-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/nl-tbb-template.md` exists in the project root, then `.arckit/templates/nl-tbb-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-tbb-template.md`
 
@@ -152,7 +156,7 @@ State whether the determined TBB category triggers the clause 5.2 public-cloud p
 
 **CRITICAL**: Use the **Write tool** to create the determination document.
 
-1. Use `node scripts/generate-document-id.mjs <PROJECT_ID> TBB --filename` for the artefact filename.
+1. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> TBB {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 2. **Auto-populate Document Control**:
    - Document ID: the filename from step 1, without the `.md` extension

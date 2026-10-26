@@ -44,7 +44,7 @@ Before running the commands, set the plugin userConfig values:
 | `governance_framework` | `UAE Federal` |
 | `classification_scheme` | `UAE Smart Data` |
 | `organisation_name` | the federal entity name |
-| `default_classification` | one of `Open`, `Shared`, `Confidential`, `Secret`, `Top Secret` |
+| `default_classification` | one of `Open`, `Confidential`, `Sensitive`, `Secret` |
 
 The first two values switch the Document Control header into UAE rendering. The third and fourth populate the per-artefact header automatically. With these set, every artefact across the entire toolkit (UAE-specific or otherwise) uses the UAE Smart Data classification ladder.
 
@@ -58,7 +58,7 @@ If you are migrating an existing UK-classified project, run the one-time helper 
 
 #### `/arckit:uae-classification`
 
-Generates a UAE Smart Data Classification Register for the project, mapping every dataset to one of `Open`, `Shared`, `Confidential`, `Secret`, or `Top Secret` with handling rules and a declassification schedule. Anchored on the UAE Smart Data Framework. Handoffs: `data-model` (per-entity sensitivity tags), `uae-cloud-residency` (residency obligations follow from classification), `uae-data-sharing` (per-share sensitivity).
+Generates a UAE Smart Data Classification Register for the project, mapping every dataset to one of the four Smart Data Framework classes — `Open`, `Confidential`, `Sensitive` or `Secret` — with handling rules and a declassification schedule. Anchored on the UAE Smart Data Framework (Part 1, Data Classification Standard DC1; Part 2, Guidance Note 5.1). Handoffs: `data-model` (per-entity sensitivity tags), `uae-cloud-residency` (residency obligations follow from classification), `uae-data-sharing` (per-share sensitivity).
 
 #### `/arckit:uae-pdpl`
 
@@ -151,7 +151,7 @@ Three rendering paths exist:
 |---|---|---|
 | `UK Gov` | (any) | UK Government: PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET / TOP SECRET |
 | `Generic` | (any) | Generic: PUBLIC / INTERNAL / CONFIDENTIAL / RESTRICTED |
-| `UAE Federal` | `UAE Smart Data` | UAE Smart Data: Open / Shared / Confidential / Secret / Top Secret |
+| `UAE Federal` | `UAE Smart Data` | UAE Smart Data: Open / Confidential / Sensitive / Secret |
 
 The conditional means the same template renders correctly across jurisdictions without per-jurisdiction template duplication. Non-UAE projects produce byte-identical output to v4.9.4.
 
@@ -171,27 +171,29 @@ The mapping is:
 | From (UK) | To (UAE Smart Data) |
 |---|---|
 | `PUBLIC` | `Open` |
-| `OFFICIAL` | `Shared` |
-| `OFFICIAL-SENSITIVE` | `Confidential` |
+| `OFFICIAL` | `Confidential` |
+| `OFFICIAL-SENSITIVE` | `Sensitive` |
 | `SECRET` | `Secret` |
-| `TOP SECRET` | `Top Secret` |
+| `TOP SECRET` | `Secret` |
 
-The helper writes a unified diff to stdout. Review it before the `--apply` run. The mapping is intentionally conservative; an architect should verify Confidential and above against the UAE Data Office sensitivity guidance before publication.
+The UAE Smart Data Framework has four classes and nothing above `Secret`, so `TOP SECRET` collapses to `Secret`. The helper writes a unified diff to stdout. Review it before the `--apply` run. The mapping is a starting point: classify each dataset against the framework's own criteria (Part 2, Guidance Note 5.1) before publication.
+
+Earlier ArcKit releases used a five-rung UAE ladder (`Open / Shared / Confidential / Secret / Top Secret`). Nothing blocks a document that still carries those labels, and the helper leaves them alone. Re-label such a document when it is next revised: `Shared` usually becomes `Confidential`, `Top Secret` becomes `Secret`, and a `Confidential` label from the old ladder, which sat one rung higher, may now be `Sensitive`.
 
 ---
 
-## Known Limitations
+## Verified Citations
 
-The maintenance document lists six citations that the overlay flags as not-yet-verified:
+The maintenance document records six citations that earlier releases flagged as not yet verified. Each was checked against its primary source on 18 October 2026 (issue #949):
 
-1. PDPL Executive Regulation status
-2. Smart Data Classifications exact level names
-3. UAE Pass Loa-to-eIDAS mapping
-4. AWS me-south-1 acceptability under the Cloud Security Policy
-5. UAE Central Bank AI guidance
-6. Cabinet Affairs vs National Archives ownership of the Digital Records Policy
+1. **PDPL Executive Regulations**: the Decree-Law has been in force since 2 January 2022; the UAE Government portal names no Executive Regulations, so the PDPL command records the status with the date it was checked.
+2. **Smart Data classes**: four — Open, Confidential, Sensitive, Secret (Smart Data Framework Part 1, DC1).
+3. **UAE Pass and eIDAS**: UAE PASS defines SOP1 / SOP2 / SOP3 account types and publishes no eIDAS mapping.
+4. **AWS `me-south-1`**: Bahrain, not UAE-resident; AWS's UAE Region is `me-central-1`.
+5. **Central Bank AI guidance**: CBUAE Guidance Note on AI and ML for licensed financial institutions, 11 February 2026.
+6. **Digital Records Policy owner**: the Cabinet approved it on 23 April 2026; the announcement names no administering body.
 
-See `uae-overlay-maintenance.md` for the canonical list and the GitHub issues tracking each gap. Commands that touch these citations carry an inline `[NEEDS VERIFICATION]` marker on the affected paragraph until the gap is closed.
+See `uae-overlay-maintenance.md` for the sources and detail.
 
 ---
 

@@ -13,8 +13,8 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | AI use cases and scope |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Model placement and inference path |
-| Security NFRs (`ARC-<id>-NFR-SEC-v1.0.md`) | Confidentiality and integrity requirements |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Model placement and inference path |
+| Security NFRs (`NFR-SEC-*` in `ARC-<id>-REQ-v*.md`) | Confidentiality and integrity requirements |
 | AI Charter assessment (`ARC-<id>-AICH-v*.md`) | Charter posture per use case |
 
 ---
@@ -77,7 +77,7 @@ Output: `projects/<id>/ARC-<id>-AUTI-v1.0.md`
 
 ## Key Notes
 
-- **Central Bank AI guidance** `[NEEDS VERIFICATION]`: The exact citation for UAE Central Bank AI guidance for Tier 3 regulated/financial workloads, and the boundary with Securities and Commodities Authority (SCA) guidance for capital-markets entities, is not yet pinned down — confirm sector-regulator obligations before publication. See `uae-overlay-maintenance.md` gap #5.
+- **Central Bank AI guidance**: For Tier 3 workloads at an institution licensed by the Central Bank of the UAE (CBUAE), including insurance providers, the sector instrument is the CBUAE *Guidance Note on the Consumer Protection and Responsible Adoption and Use of Artificial Intelligence and Machine Learning by Licensed Financial Institutions in the U.A.E.*, issued 11 February 2026 and published in the CBUAE Rulebook under Market Conduct & Consumer Protection. It is to be read with the UAE Charter for the Development and Use of AI and with the *Guidelines for Financial Institutions Adopting Enabling Technologies*, issued 15 November 2021 jointly by CBUAE, the Securities and Commodities Authority (SCA), the DFSA and the ADGM FSRA. For a capital-markets entity supervised by SCA, the joint 2021 Guidelines are the instrument SCA co-issued; the 2026 Guidance Note is a CBUAE instrument. Source: <https://rulebook.centralbank.ae>.
 - **No single regulatory anchor**: The three-tier model is an ArcKit synthesis. Run alongside `/arckit:uae-ai-charter` for the regulatory grounding.
 - **Cabinet 50% mandate**: Federal entities pursuing the 23 April 2026 agentic-AI mandate should keep tier-promotion criteria pre-published — the regulator may request them.
 - **Run after charter**: Charter posture is an input — run `/arckit:uae-ai-charter` first.

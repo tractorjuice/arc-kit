@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:au-ai-assurance` generates an AI assurance baseline against the Digital Transformation Agency's AI Assurance Framework and the Responsible AI Policy v2.0 (effective December 2025). It captures the AI system's risk classification, runs the assurance assessment against the Framework's principles, surfaces the Privacy Act AI-decision notification posture (Tranche 1 reforms, December 2024), captures ISO 42001 readiness, and surfaces the human-oversight and accountability model.
+`/arckit:au-ai-assurance` generates an AI assurance baseline against the Digital Transformation Agency's AI Assurance Framework and the Responsible AI Policy v2.0 (effective December 2025). It describes the AI system, assesses it against the Responsible AI Policy accountabilities, the AU AI Ethics Principles and the Essential AI Practices (AI6), surfaces the Privacy Act AI-decision notification posture (introduced by the Tranche 1 reforms in December 2024, commencing December 2026), captures ISO 42001 readiness, and records fairness, data security, model lifecycle and vendor disclosure.
 
 The AI Assurance Framework is the operational expression of Australia's responsible-AI commitments for Federal entities. For DISP suppliers offering AI-enabled services to Defence, this is the gate artefact alongside the ISM SoA. The Tranche 1 Privacy Act reforms add a discrete obligation around automated decision-making notifications that the assurance baseline must address.
 
@@ -14,9 +14,9 @@ The AI Assurance Framework is the operational expression of Australia's responsi
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | AI system description, intended use, user populations |
 | `/arckit:au-pia` output (`ARC-<id>-AUPIA-v1.0.md`) | Automated decision-making notification posture |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Training, validation, and inference data flows |
+| Data model (`ARC-<id>-DATA-v*.md`) | Training, validation, and inference data flows |
 | Risk register (`ARC-<id>-RISK-v1.0.md`) | AI-specific risks (bias, drift, hallucination, misuse) |
-| HLD (`ARC-<id>-HLD-v1.0.md`) | Model architecture, hosting, monitoring posture |
+| Vendor HLD (`vendors/*/hld-v*.md`) | Model architecture, hosting, monitoring posture |
 
 ---
 
@@ -36,17 +36,20 @@ Output: `projects/<id>/ARC-<id>-AUAIA-v1.0.md`
 |---------|----------|
 | Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
 | Revision History | Version, date, author, changes, approvals |
-| Executive Summary | Risk classification, headline assurance posture, residual issues, decisions for accountable authority |
-| AI System Description | Use case, deployment context, lifecycle stage |
-| Risk Classification | Per the AI Assurance Framework rubric: low / medium / high / unacceptable |
-| Principle-by-Principle Assessment | Each Framework principle: posture, evidence, gaps, mitigations |
-| Responsible AI Policy v2.0 Conformance | Specific obligations: usage register, deployment approval, ministerial visibility |
-| Privacy Act Tranche 1 Notification | Automated decision-making notification posture and pathway |
-| Human Oversight Model | Where humans remain in the loop, escalation criteria, override workflow |
-| ISO 42001 Readiness | Gap analysis against ISO/IEC 42001 (AI management systems) for organisations targeting certification |
-| Monitoring & Drift | Performance metrics, drift detection, retraining triggers |
-| Incident Response | AI-specific incident criteria (hallucination, bias drift, misuse, model compromise) |
-| Maintenance Cadence | Quarterly review minimum; per-release for active development |
+| Executive Summary | AI system, deployment phase, frameworks in scope, overall assurance posture, key gaps |
+| 1. AI System Description | Purpose, capability type, deployment phase, foundation model, training and inference data, decisions affecting individuals, human-in-the-loop posture, population affected, AI accountable officer |
+| 2. DTA Responsible AI Policy v2.0 Compliance | The six accountabilities: status, evidence, gap, mitigation |
+| 3. AU AI Ethics Principles Alignment | The eight principles: status, evidence, gap, mitigation |
+| 4. AU Essential AI Practices (AI6) Alignment | The six National AI Centre practices: status, evidence, gap, action |
+| 5. ISO 42001 Readiness | Readiness by clause 4–10 and certification position |
+| 6. Privacy Act AI-Decision Notification (Dec 2026) | Substantially automated decisions, notification mechanism, what individuals are told, opt-out pathway, PIA cross-reference |
+| 7. Fairness Assessment | Methodology, protected attributes, test segments, metrics and results, residual fairness risks, validator |
+| 8. Security of AI Training + Inference Data | Data classification, prompt-injection and model-extraction defences, training-data sanitisation, E8 and ISM cross-references |
+| 9. Model Lifecycle Governance | Version control, change management, drift detection, retraining cadence, retirement criteria, audit trail |
+| 10. Vendor / Foundation-Model Disclosure | Vendor, model and version, vendor AI policy, training-data provenance, inference region, IP position, data-use policy |
+| 11. Recommendations | Quick Wins / Short-Term / Medium-Term, each tagged to its framework |
+| 12. External References | ArcKit evidence integration, document register, citations, unreferenced documents, verification dates |
+| Visual Evidence Decision Rule | When a companion diagram is drawn, drafted with `Pending Input` labels, or recorded as a visual evidence gap |
 
 ---
 

@@ -12,7 +12,8 @@ ArcKit's Claude Code plugin includes automation hooks across 10 event types. Hoo
 | **Stop** | session-learner | Session ends normally |
 | **StopFailure** | session-learner | Session ends with error |
 | **UserPromptSubmit** | arckit-context, secret-detection, sync-guides, graph-inject | Every user message and matched ArcKit commands |
-| **PreToolUse** | validate-reader-handoff (SubagentHandback), inject-agent-context, validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner | Before selected tool calls |
+| **SubagentStart** | inject-agent-context | An ArcKit subagent starts (not readers or writers) |
+| **PreToolUse** | validate-reader-handoff (SubagentHandback), validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner | Before selected tool calls |
 | **PostToolUse** | update-manifest, provenance-stamp, tidy-wardley-labels, telemetry | After selected tool calls |
 | **TaskCreated** | telemetry | When an agent task is created |
 | **FileChanged** | external-context-watch | Watched external documents change |
@@ -89,7 +90,7 @@ Validates that files written to `projects/` follow the ARC naming convention (`A
 - Multi-instance types (ADR, DIAG, etc.) have sequence numbers
 - File goes in the correct subdirectory (e.g., ADRs in `decisions/`)
 
-Blocks the write with a corrected filename suggestion if invalid.
+Blocks the write if invalid, and the reason names the corrected path, with the next sequence number and the right subfolder already worked out. Claude then writes the same content there. The hook never changes the write itself.
 
 ### score-validator (Write)
 
@@ -102,6 +103,12 @@ Blocks writes to sensitive file paths — environment files (`.env`), credential
 ### secret-file-scanner (Edit | Write)
 
 Scans the content being written for embedded secret patterns. Catches cases where a secret is embedded in an otherwise safe file path. See the [Security Hooks Guide](security-hooks.md) for details.
+
+## SubagentStart Hooks
+
+### inject-agent-context
+
+When an ArcKit subagent starts, such as the framework agent, it gets the same project context your own prompts get: the projects, their artefacts, vendor profiles, external documents and global policies. Reader and writer subagents are left out, because they take strict JSON. Other plugins' agents and Claude Code's own agents are never touched.
 
 ## PostToolUse Hooks
 

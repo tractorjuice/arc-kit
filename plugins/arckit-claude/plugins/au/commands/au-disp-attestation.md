@@ -22,6 +22,13 @@ handoffs:
     description: DISP gaps can seed a security governance, personnel, physical, and cyber maturity uplift model.
   - command: graph-report
     description: Graph reporting should show AUDISP coverage across AU compliance, risk, traceability, and operations artefacts.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a qualified DISP-experienced security officer or DISP advisor before submission to Defence. DISP requirements may be updated — verify against the current DISP Membership Pack before any external use.
@@ -67,9 +74,9 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
    - Then: `.arckit/templates/au-disp-attestation-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-disp-attestation-template.md`
 
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if needed.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if needed.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUDISP --filename` for the artefact filename.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> AUDISP {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the AU regime to `_partials/document-control-au.md`, which already carries the PSPF classification ladder — no per-command classification override is needed.
 

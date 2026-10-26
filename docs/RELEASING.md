@@ -17,15 +17,16 @@ ArcKit ships in multiple formats, each with its own version file. They are all b
 
 1. `plugins/arckit-claude/VERSION` — source of truth
 2. `plugins/arckit-claude/.claude-plugin/plugin.json` — `version` field
+3. Both marketplaces, `.claude-plugin/marketplace.json` and `plugins/arckit-claude/.claude-plugin/marketplace.json` — every plugin entry
+4. Every overlay's `VERSION` and `plugin.json`, including its `=X.Y.Z` pin on `arckit` and on any other ArcKit plugin it depends on
 
 **Extension versions** (track the plugin):
 
 - `extensions/arckit-gemini/VERSION` + `extensions/arckit-gemini/gemini-extension.json`
-- `extensions/arckit-opencode/VERSION`
-- `extensions/arckit-codex/VERSION`
-- `extensions/arckit-copilot/VERSION`
+- `extensions/arckit-paperclip/VERSION` + `extensions/arckit-paperclip/package.json`
+- `extensions/arckit-opencode/VERSION`, `extensions/arckit-codex/VERSION`, `extensions/arckit-copilot/VERSION`, `extensions/arckit-vibe/VERSION` and `extensions/arckit-kimi/VERSION`
 
-`scripts/bump-version.sh <version>` updates all version-bearing locations (VERSION files, manifests, README badges, docs, plugin.json, and standalone marketplace metadata) in one go.
+`scripts/bump-version.sh <version>` updates all of these in one go, plus the README badges, `docs/README.md` and the `softwareVersion` in `docs/index.html`. It does not touch the `=X.Y.Z` core pin written as prose in `README.md` and `plugins/arckit-oaa/README.md`; change those by hand (step 4 below).
 
 ## Release Helpers
 
@@ -34,6 +35,7 @@ ArcKit ships in multiple formats, each with its own version file. They are all b
 | `scripts/bump-version.sh <version>` | Updates all version files in one pass |
 | `scripts/sync-claude-plugin-layout.py [--check]` | Mirrors the Claude overlay plugins into `plugins/arckit-claude/plugins/...`, matching the standalone `tractorjuice/arckit-claude` repository layout used by the local standalone marketplace metadata |
 | `scripts/generate-release-notes.sh [prev-tag]` | Parses `git log` between tags into Keep a Changelog markdown (Added / Fixed / Changed / Breaking Changes), filters out `chore: bump version` commits, auto-detects previous tag if omitted |
+| `scripts/tag-plugins.sh <version>` | Creates and pushes a native `name--vX.Y.Z` tag for every Claude plugin manifest under `plugins/`, skipping tags that already exist. Needs bash ≥ 4 |
 | `scripts/push-extensions.sh [name...]` | Pushes standalone distribution dirs to their separate GitHub repos (`tractorjuice/arckit-claude`, `tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.), then creates or preserves each repo's `vX.Y.Z` tag and GitHub Release. The `claude` target publishes the full Claude Code marketplace repo: the core plugin at `plugins/arckit`, overlays under structured `plugins/...` paths, and only the marketplace, README and LICENSE at the root. Uses `GH_TOKEN`. Skips repos that don't yet exist on GitHub. Set `ARCKIT_SKIP_EXTENSION_RELEASES=1` only for a commit-only sync |
 | `.github/workflows/release.yml` | Creates the GitHub Release automatically on `v*` tag push (tag-push triggered, does not commit back to main) |
 
@@ -56,7 +58,17 @@ Releases were cut on GNU/Linux until v6.13.0, and the helper scripts grew Linux 
   ```
 
 - **If `git push` fails with `protocol error: bad line length` / `unexpected disconnect while reading sideband packet`**, raise the HTTP post buffer: `git config http.postBuffer 157286400`. `push-extensions.sh` pushes from temporary clones that do not see repo-local config — inject it via the environment instead: `GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=http.postBuffer GIT_CONFIG_VALUE_0=157286400 ./scripts/push-extensions.sh`.
-- **`GH_TOKEN` for step 12** can come from an authenticated gh CLI: `GH_TOKEN=$(gh auth token) ./scripts/push-extensions.sh`.
+- **`GH_TOKEN` for step 13** can come from an authenticated gh CLI: `GH_TOKEN=$(gh auth token) ./scripts/push-extensions.sh`.
+- **If your git identity is set only in this repo** (no global `user.name`/`user.email`), `push-extensions.sh` fails on every repo with `Author identity unknown` before it pushes anything: its temporary clones don't see repo-local config. Pass the identity through the environment along with the post buffer. Nothing is pushed on a failed run, so re-running is safe:
+
+  ```bash
+  GH_TOKEN=$(gh auth token) \
+  GIT_CONFIG_COUNT=3 \
+  GIT_CONFIG_KEY_0=http.postBuffer GIT_CONFIG_VALUE_0=157286400 \
+  GIT_CONFIG_KEY_1=user.name GIT_CONFIG_VALUE_1="$(git config user.name)" \
+  GIT_CONFIG_KEY_2=user.email GIT_CONFIG_VALUE_2="$(git config user.email)" \
+  /opt/homebrew/bin/bash scripts/push-extensions.sh
+  ```
 
 ## Development Workflow
 
@@ -84,19 +96,34 @@ After your PR is merged to `main`:
 ```bash
 # 1. Ensure you're on main with latest changes
 git checkout main && git pull
+#    If this checkout has local changes, or main is checked out in another
+#    worktree, release from a clean worktree of main instead:
+#      git worktree add ../arc-kit-release main
+#    That also keeps the session hook's .arckit/memory/sessions.md edits, which
+#    land in whichever checkout Claude Code runs in, out of the release tree.
 
-# 2. Edit CHANGELOGs manually
+# 2. Edit CHANGELOGs manually (bump-version.sh then moves the oldest
+#    plugin releases to docs/changelog/arckit-plugin-archive.md).
+#    CHANGELOG.md lists everything; plugins/arckit-claude/CHANGELOG.md lists
+#    only what core plugin users notice. PRs often merge without an entry, so
+#    check every PR merged since the last tag against [Unreleased], and credit
+#    outside contributors by @handle:
+#      gh pr list --state merged --limit 200 --search "merged:>=YYYY-MM-DD"
 
 # 3. Preview release notes (optional)
 ./scripts/generate-release-notes.sh
 
-# 4. Bump all version files
+# 4. Bump all version files, then the core pins written as prose
+#    (README.md and plugins/arckit-oaa/README.md), which the script skips
+PREV=$(git describe --tags --abbrev=0 --match 'v[0-9]*' | sed 's/^v//')
 ./scripts/bump-version.sh X.Y.Z
+git grep -nF "=$PREV" -- '*.md' ':!**/CHANGELOG.md' ':!docs/changelog/**' ':!plugins/arckit-claude/plugins/**'
 
 # 5. Regenerate Codex/OpenCode/Gemini/Copilot formats
 python scripts/converter.py
 
-# 6. Refresh the local Claude standalone marketplace layout
+# 6. Refresh the local Claude standalone marketplace layout (this also
+#    copies the O-AA README pin into the nested mirror)
 python scripts/sync-claude-plugin-layout.py
 
 # 7. Validate generated extension outputs
@@ -120,6 +147,7 @@ claude plugin validate plugins/arckit-claude/agents
 claude plugin validate plugins/arckit-claude/commands
 
 # 10. Validate plugin/marketplace version agreement (Claude Code v2.1.118+)
+#     for every plugin: see the loop under "v6.0.0+" below
 claude plugin tag plugins/arckit-claude --dry-run
 
 # 11. (optional) Prune orphaned plugin dependencies
@@ -133,7 +161,9 @@ git push && git push origin vX.Y.Z
 
 # 13. Push to standalone repos (Claude, Gemini, Codex, etc.).
 #     This also publishes each standalone repo's vX.Y.Z tag and GitHub Release.
-./scripts/push-extensions.sh
+#     It needs GH_TOKEN and pushes from temporary clones: on a Mac, or with
+#     no global git identity, see "Releasing from macOS" above.
+GH_TOKEN=$(gh auth token) ./scripts/push-extensions.sh
 ```
 
 Use `./scripts/push-extensions.sh claude` when you intentionally need to publish only the
@@ -146,7 +176,7 @@ overlays inside the core. The local marketplace file inside `plugins/arckit-clau
 core as `.`; `push-extensions.sh` rewrites that entry to `./plugins/arckit` when it publishes, and
 `tests/plugin/test_claude_publish_layout.py` runs the staging functions to check the result.
 
-After step 12, verify the umbrella GitHub Release and every standalone GitHub Release exists:
+After step 13, verify the umbrella GitHub Release and every standalone GitHub Release exists:
 
 - `tractorjuice/arc-kit`
 - `tractorjuice/arckit-claude`
@@ -157,6 +187,8 @@ After step 12, verify the umbrella GitHub Release and every standalone GitHub Re
 - `tractorjuice/arckit-paperclip`
 - `tractorjuice/arckit-vibe`
 - `tractorjuice/arckit-kimi`
+
+The Claude plugin directory picks up the new `tractorjuice/arckit-claude` version through its push webhook, usually within minutes, or through its scheduled check about every six hours. Confirm the new version appears in the developer portal at <https://claude.ai/directory/manage>. After 6.18.3 the webhook recorded no delivery at all, so a version that hasn't appeared within the hour is waiting for the scheduled check, or for **Check for new commits** in the portal.
 
 ### Release article
 
@@ -173,13 +205,16 @@ hand-maintained HTML; `scripts/check-article-listing.py` (run by
 no card or the newest is not on the home page — four articles shipped unlisted
 in September 2026 before it existed.
 
-**Generate its share page.** Run `python3 scripts/generate-article-share-pages.py`
-after adding the card, and commit `docs/share/<slug>.html`. When posting to
-LinkedIn, Discord, Medium or Slack, link to `https://arckit.org/share/<slug>.html`,
-not the article viewer: the viewer renders in JavaScript, so link previews only
-ever see its generic "Article - ArcKit" card. The share page carries the
-article's own title, summary and hero, then redirects to the viewer.
-`tests/plugin/test_article_share_pages.py` fails when a page is missing or stale.
+**Generate its page.** Run `uv run scripts/generate-site-pages.py` after adding
+the card, and commit `docs/share/<slug>.html` and `docs/sitemap.xml`. The share
+page is the article itself, rendered from its Markdown with its own title,
+summary, hero, canonical URL and structured data, so search engines and link
+previews both see the article. When posting to LinkedIn, Discord, Medium or
+Slack, link to `https://arckit.org/share/<slug>.html`. The article viewer now
+only redirects old `article-viewer.html?a=<slug>` links there.
+`tests/plugin/test_site_pages.py` fails when a page is missing or stale; the
+same script writes the guide pages under `docs/guide/`, so run it after editing
+a guide too.
 
 **No Markdown tables in articles.** LinkedIn and Medium do not render them —
 a comparison lands as a wall of pipes. Write it as prose instead.
@@ -204,11 +239,11 @@ This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`)
 
 ## v6.0.0+ — single Claude marketplace repo
 
-From v6.0.0 the standalone `tractorjuice/arckit-claude` repo is the preferred Claude Code marketplace. It ships 16 plugins in one repo: the `arckit` core plugin at `plugins/arckit` (at the repo root until 6.16.2) plus regional, sector, method, agent-architecture, tooling, and supplier overlays under structured `plugins/...` paths. All Claude plugins share one version, bumped together. The `arckit-uk-gcloud` overlay is public for installation and inspection but remains proprietary, so the standalone repo license carries an explicit exception for `plugins/uk/gcloud/`.
+From v6.0.0 the standalone `tractorjuice/arckit-claude` repo is the preferred Claude Code marketplace. It ships 18 plugins in one repo: the `arckit` core plugin at `plugins/arckit` (at the repo root until 6.16.2) plus regional, sector, method, agent-architecture, tooling, and supplier overlays under structured `plugins/...` paths. All Claude plugins share one version, bumped together. The `arckit-uk-gcloud` overlay is public for installation and inspection but remains proprietary, so the standalone repo license carries an explicit exception for `plugins/uk/gcloud/`.
 
 The root `.claude-plugin/marketplace.json` in `tractorjuice/arc-kit` remains a compatibility marketplace for existing users who already added the old repo. Keep its `name` as `arc-kit` and its sources pointed at monorepo paths such as `./plugins/arckit-claude` and `./plugins/arckit-uae`. The standalone marketplace metadata lives at `plugins/arckit-claude/.claude-plugin/marketplace.json` and uses `.` plus `./plugins/...` sources for `tractorjuice/arckit-claude`.
 
-Step 8 changes — validate every plugin manifest:
+Step 10 changes — validate every plugin manifest:
 
 ```bash
 mapfile -t manifests < <(find plugins -maxdepth 3 -path '*/.claude-plugin/plugin.json' | sort)
@@ -229,7 +264,7 @@ done
 > `plugins/arckit-claude`, not `arckit` and not a bare `arckit-claude`.
 >
 > **Keep the `-maxdepth 3` and the `plugins` prefix.** Together they select exactly
-> the 16 real plugin directories. Searching from `.` instead pushes the manifests to
+> the 18 real plugin directories. Searching from `.` instead pushes the manifests to
 > depth 4 and matches nothing; raising the depth pulls in the nested publish mirrors
 > under `plugins/arckit-claude/plugins/…`, which are not separately taggable.
 >
@@ -237,7 +272,7 @@ done
 > tags exist the dry-run fails with `Tag "…" already exists locally`, which is not
 > version drift.
 
-After the umbrella tag (step 10), also create native per-plugin tags:
+After the umbrella tag (step 12), and before step 13, also create native per-plugin tags:
 
 ```bash
 ./scripts/tag-plugins.sh X.Y.Z

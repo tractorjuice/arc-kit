@@ -16,7 +16,8 @@ This command does not replace the formal cloud authorisation packages (CSP-level
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | NFR-AVL availability targets, NFR-LOC residency requirements, NFR-SEC data-handling expectations |
 | ITSG-33 SoA (`ARC-<id>-ITSG-v1.0.md`) | System-level categorisation and chosen control profile (PBMM-Cloud, Secret-High) — drives the residency envelope |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Per-element sensitivity, including any Indigenous-data or personal-information flags |
+| Data model (`ARC-<id>-DATA-v*.md`) | Per-element sensitivity, including any Indigenous-data flags from `ca-ocap` |
+| Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Personal-information residency drivers |
 
 ---
 

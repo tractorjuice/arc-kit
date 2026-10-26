@@ -16,7 +16,7 @@ Single artefact `projects/{NNN}-<slug>/ARC-{NNN}-NHSDTAC-v1.0.md` covering five 
 |---|---|---|
 | 1. Clinical Safety | DCB0129 + DCB0160 status, CSO, hazard log open count, highest open risk | `clinical-safety/SAFETY-CASE.md`, `HAZARD-LOG.md` |
 | 2. Data Protection | UK GDPR / DPA 2018 lawful basis, DPIA, DSPT, sub-processors, data-subject rights | `dpia` output |
-| 3. Technical Assurance | Cloud hosting, security certifications (Cyber Essentials, ISO 27001), SDLC, encryption, pen test, BC/DR, vulnerability management | `secure`, `hld`, `dld` |
+| 3. Technical Assurance | Cloud hosting, security certifications (Cyber Essentials, ISO 27001), SDLC, encryption, pen test, BC/DR, vulnerability management | `secure`, `hld-review`, `dld-review` |
 | 4. Interoperability | FHIR UK Core, SNOMED CT, dm+d, NHS Number, NHS APIs (PDS, e-RS, GP Connect, NHS App Connect, NHS login, BARS) | `data-model`, `adr` |
 | 5. Usability + Accessibility | NHS Service Standard, WCAG 2.2 AA, screen-reader / keyboard / contrast evidence, plain English | `service-assessment` |
 

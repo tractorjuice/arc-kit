@@ -85,14 +85,19 @@ This is the most complex update. See [references/dependency-matrix-format.md](re
 
 Steps:
 
-1. **Add column**: Add `| {name}` to the header row (line 20) in alphabetical position among existing commands
+Take every level from the command file's own MANDATORY / RECOMMENDED / OPTIONAL input lists, not from memory.
+
+1. **Add column**: Add `| {name}` to the header row in tier order (columns follow the same order as the rows)
 2. **Add cells**: Add `|  |` (empty cell) to every existing row at the same column position
 3. **Fill dependencies**: In each existing command's row, fill in M/R/O if the new command consumes that command's output
-4. **Add row**: Add a new row for the command with its dependencies on other commands
-5. **Update tier groupings**: Add the command to the appropriate tier section (Tier 0-12)
-6. **Update critical paths**: Add to relevant workflow paths if applicable
-7. **Update version section**: Bump "Commands Documented" count
-8. **Add changelog entry**: Add a dated entry at the top of the Changelog section
+4. **Add row**: Add a new row for the command, in tier order, with its dependencies on other commands
+5. **Check widths**: every grid line must have the same number of `|` as the header row. The old grid drifted because each row was one cell short
+6. **Update tier groupings**: Add the command to the appropriate tier section (Tier 0-15)
+7. **Update critical paths**: Add to relevant workflow paths if applicable
+8. **Update version section**: Bump "Commands Documented" count
+9. **Add changelog entry**: Add a dated entry at the top of the Changelog section
+10. **Sync the copies**: copy everything above `## Changelog` into `plugins/arckit-claude/docs/DEPENDENCY-MATRIX.md` and `extensions/arckit-{codex,copilot,opencode}/docs/DEPENDENCY-MATRIX.md`, keeping their one-paragraph Changelog pointer
+11. **Update the website matrix**: add the same row and column to the `app-dep-matrix` table in `docs/commands.html`
 
 **Changelog entry format**:
 

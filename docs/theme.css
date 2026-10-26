@@ -157,6 +157,17 @@ html.dark-mode .govuk-details__text {
     border-left-color: #555555;
 }
 
+html.dark-mode .govuk-table__header,
+html.dark-mode .govuk-table__cell {
+    color: #f0f0f0;
+    border-bottom-color: #555555;
+}
+
+html.dark-mode .govuk-table code {
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
 html.dark-mode .govuk-warning-text__icon {
     border-color: #f0f0f0;
     color: #f0f0f0;
@@ -491,7 +502,23 @@ html.dark-mode .app-markdown code {
     color: #f0f0f0;
 }
 
-/* pre blocks already dark-themed, no override needed */
+/* pre blocks are already dark; code inside one keeps the block's background, not a box per line */
+html.dark-mode .app-markdown pre code {
+    background: none;
+}
+
+/* A Mermaid diagram (diagrams.js) shows as code until it is drawn, then on the page itself */
+.app-markdown pre.mermaid[data-processed] {
+    background: none;
+    color: inherit;
+    padding: 0;
+    text-align: center;
+}
+
+/* Node labels are paragraphs inside the SVG: they take the diagram's colours, not the page's */
+.app-markdown pre.mermaid[data-processed] p {
+    color: inherit;
+}
 
 html.dark-mode .app-markdown blockquote {
     background: #2a2a2a;
@@ -522,6 +549,7 @@ html.dark-mode .app-error__heading {
    ============================================================ */
 html.dark-mode .app-step__number {
     background: #4da3ff;
+    color: #0b0c0c;
 }
 
 html.dark-mode .app-next-card {
@@ -556,7 +584,7 @@ html.dark-mode .app-platform-tab:hover {
 html.dark-mode .app-platform-tab--active {
     border-color: #4da3ff;
     background: #4da3ff;
-    color: #fff;
+    color: #0b0c0c;
 }
 
 html.dark-mode .app-install-note {
@@ -596,6 +624,10 @@ html.dark-mode .app-page-hero--viewer {
     background: linear-gradient(135deg, #001a40 0%, #000d20 100%);
 }
 
+html.dark-mode .app-page-hero--certification {
+    background: linear-gradient(135deg, #0b4a5a 0%, #07121e 100%);
+}
+
 /* ============================================================
    No-JS Fallback: system dark preference
    ============================================================ */
@@ -612,4 +644,136 @@ html.dark-mode .app-page-hero--viewer {
         background: #1a1a1a;
         color: #f0f0f0;
     }
+}
+
+/* ============================================================
+   Readable text on every page (site audit, 19 October 2026)
+   ============================================================ */
+
+/* Footer: each page gives .app-footer white text on #0b0c0c, but GOV.UK's
+   body, heading and link classes set their own colours on the elements
+   inside it, and those won: black on black, and links at 3.8:1. */
+.app-footer .govuk-body,
+.app-footer .govuk-body-s,
+.app-footer .govuk-heading-m,
+.app-footer .govuk-heading-s,
+.app-footer .govuk-list {
+    color: #ffffff;
+}
+
+.app-footer .govuk-link:link,
+.app-footer .govuk-link:visited {
+    color: #ffffff;
+}
+
+.app-footer .govuk-link:hover {
+    color: #5694ca;
+}
+
+.app-footer .govuk-link:focus {
+    color: #0b0c0c;
+}
+
+/* A focused link gets GOV.UK's yellow highlight. Dark mode's link colours
+   outranked GOV.UK's black focus text and left blue on yellow (1.9:1). */
+html.dark-mode .govuk-link:focus {
+    color: #0b0c0c;
+}
+
+/* Links with no class, such as those in article card summaries and command
+   descriptions, kept the browser's default blue: 1.8:1 on dark. */
+html.dark-mode main a:not([class]) {
+    color: #4da3ff;
+}
+
+/* GOV.UK notification banners kept their white content box under dark
+   mode's light text. */
+html.dark-mode .govuk-notification-banner__content {
+    background: #2a2a2a;
+}
+
+html.dark-mode .govuk-table__caption {
+    color: #f0f0f0;
+}
+
+/* Dependency matrix (commands.html): the dark rule for every cell also
+   replaced the M, R, O and self colours, so the cells no longer matched the
+   legend and O cells were black on black. */
+html.dark-mode .app-dep-matrix__cell--m { background: #003078; color: #ffffff; }
+html.dark-mode .app-dep-matrix__cell--r { background: #1d70b8; color: #ffffff; }
+html.dark-mode .app-dep-matrix__cell--o { background: #b1b4b6; color: #0b0c0c; }
+html.dark-mode .app-dep-matrix__cell--self { background: #0b0c0c; }
+
+/* The legend's external-document asterisk: commands.html darkens the orange
+   to pass on white; on dark the brighter orange passes. */
+html.dark-mode .app-dep-matrix__ext-mark {
+    color: #f47738;
+}
+
+/* ============================================================
+   Page widths (site audit, 19 October 2026)
+   ============================================================ */
+@media (max-width: 40.0625em) {
+    /* A wide table scrolls on its own instead of widening the page, as on the guide pages */
+    .govuk-table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* A table that can be wider than its column at any width (privacy.html's long
+   endpoint names) scrolls inside this region; tabindex lets a keyboard reach it. */
+.app-table-scroll {
+    overflow-x: auto;
+}
+
+.app-table-scroll:focus {
+    outline: 3px solid #ffdd00;
+}
+
+/* Navigation bar: its links and icons need about 1,075px, but each page only
+   switched to the menu button below 768px, so every page scrolled sideways
+   from 769px to about 1,188px. Tighter links fit from 960px; below that the
+   menu button takes over, as on phones. The .app-nav-bar prefix outranks the
+   pages' own nav rules, which load after this file. */
+@media (min-width: 60em) and (max-width: 74.25em) {
+    .app-nav-bar .app-nav-bar__item a {
+        padding-left: 0.625rem;
+        padding-right: 0.625rem;
+    }
+}
+
+@media (min-width: 48.0625em) and (max-width: 59.9375em) {
+    .app-nav-bar .app-nav-bar__toggle { display: block; }
+    .app-nav-bar .app-nav-bar__list { display: none; flex-direction: column; width: 100%; }
+    .app-nav-bar .app-nav-bar__list--open { display: flex; }
+    .app-nav-bar .app-nav-bar__inner { flex-wrap: wrap; }
+    .app-nav-bar .app-nav-bar__item a { padding: 0.75rem 1rem; border-bottom: none; border-left: 3px solid transparent; }
+    .app-nav-bar .app-nav-bar__item a:hover,
+    .app-nav-bar .app-nav-bar__item a:focus { border-left-color: #1d70b8; border-bottom: none; }
+    .app-nav-bar .app-nav-bar__item--active a { border-left-color: #1d70b8; border-bottom: none; }
+}
+
+/* Guide and article tables scroll on their own below 640px (the pages' own
+   rule), but the content column only reaches its full 960px at 1,020px. In
+   between, a table of file paths still ran past the page: the traceability
+   guide's by 120px at 800px. */
+@media (max-width: 1019px) {
+    .app-markdown table {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
+/* Above the guide pages' 640px breakpoint, where their tables stop scrolling
+   on their own, a long URL in a cell set the column's minimum width: the US
+   federal overlay's sources table ran 76px past the page. */
+@media (min-width: 641px) {
+    .app-markdown td a[href^="http"] {
+        overflow-wrap: anywhere;
+    }
+}
+
+li code {
+    overflow-wrap: break-word;
 }

@@ -6,6 +6,8 @@ effort: high
 handoffs:
   - command: architecture-change
     description: Create architecture change requests
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect establish an **Architecture Board Charter** for TOGAF ADM Phase G (Implementation Governance). This document defines the Board's mandate, membership, decision framework, compliance scorecard, and exception processes.
@@ -35,15 +37,13 @@ Identify the target project from the hook context. If the user specifies a proje
 
 **MANDATORY** (warn if missing):
 
-- **PRIN** (Architecture Principles, in `000-global`) — Extract: All principles, governance standards, decision rights, compliance requirements
+- **PRIN** (Architecture Principles, in `000-global`) — Extract: All principles, including any domain-specific ones, governance standards, decision rights, compliance requirements, compliance gates, exception criteria
   - If missing: STOP and ask user to run `/arckit:principles` first. The Architecture Board cannot operate without defined principles.
 
 **RECOMMENDED** (read if available, note if missing):
 
 - **ADMP** (ADM Cycle Plan) — Extract: ADM phase scope, governance model, stakeholder engagement plan, phase sequencing
   - If missing: note in assumptions that ADM governance alignment could not be validated
-- **PRIN** (Architecture Principles) — Extract: Domain-specific principles, compliance gates, exception criteria
-  - If missing: note in assumptions that domain-level principle alignment could not be validated
 - **BPCM** (Business Capability Map) — Extract: Capability maturity, ownership, governance needs
   - If missing: note in assumptions that capability governance could not be assessed
 - **HLD** (High-Level Design) — Extract: Architecture decisions requiring governance review
@@ -73,7 +73,7 @@ Create a comprehensive Architecture Board Charter following the template structu
 
 #### Document Control
 
-- Generate Document ID: `ARC-{P}-BORD-v1.0` (for filename: `ARC-{P}-BORD-v1.0.md`)
+- Generate Document ID: `ARC-{P}-BORD-v{VERSION}` (for filename: `ARC-{P}-BORD-v{VERSION}.md`)
 - Set owner, dates, status, classification
 - Review cycle: Quarterly review of charter, monthly Board meetings
 
@@ -154,7 +154,7 @@ Cross-reference to related documents:
 - Architecture Principles (`ARC-000-PRIN-v[N].md`) — board enforces principles
 - ADM Plan (`ARC-{P}-ADMP-v[N].md`) — board governs Phase G
 - Gap Analysis (`ARC-{P}-GAPA-v[N].md`) — board prioritises gap closure
-- Architecture Change Requests (`ARC-{P}-ACHG-v[N].md`) — board approves changes
+- Architecture Change Requests (`changes/ARC-{P}-ACHG-{NNN}-v[N].md`) — board approves changes
 
 ### 6. UK Government Specifics
 
@@ -206,7 +206,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields*:
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-BORD-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Architecture Board Charter"
 
@@ -251,7 +251,7 @@ The footer should be populated with:
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-BORD-v1.0.md
+projects/{P}/ARC-{P}-BORD-v{VERSION}.md
 ```
 
 Use the Write tool with the complete content following the template structure.
@@ -263,8 +263,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Architecture Board Charter Created
 
-**Document**: `projects/{P}/ARC-{P}-BORD-v1.0.md`
-**Document ID**: ARC-{P}-BORD-v1.0
+**Document**: `projects/{P}/ARC-{P}-BORD-v{VERSION}.md`
+**Document ID**: ARC-{P}-BORD-v{VERSION}
 
 ### Board Charter Summary
 - **Purpose**: [Brief purpose statement]
@@ -305,7 +305,6 @@ After writing the file, show a concise summary (NOT the full document):
 ### Synthesised From
 - ✅ Architecture Principles: ARC-000-PRIN-v[N].md
 - [✅/⚠️] ADM Plan: ARC-{P}-ADMP-v[N].md
-- [✅/⚠️] Architecture Principles (domain): ARC-{P}-APP-v[N].md
 - [✅/⚠️] Business Capability Map: ARC-{P}-BPCM-v[N].md
 
 ### Next Steps
@@ -320,7 +319,7 @@ After writing the file, show a concise summary (NOT the full document):
 - [N] board members defined
 - Decision framework covers [N] decision types
 
-**File location**: `projects/{P}/ARC-{P}-BORD-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-BORD-v{VERSION}.md`
 ```
 
 ## Important Notes

@@ -81,7 +81,7 @@ This glossary was compiled from terms found in the following architecture artifa
 | Requirements Specification | ARC-[PROJECT_ID]-REQ-v[N].md | [COUNT] terms |
 | Stakeholder Analysis | ARC-[PROJECT_ID]-STKE-v[N].md | [COUNT] terms |
 | Risk Register | ARC-[PROJECT_ID]-RISK-v[N].md | [COUNT] terms |
-| Data Model | ARC-[PROJECT_ID]-DMOD-v[N].md | [COUNT] terms |
+| Data Model | ARC-[PROJECT_ID]-DATA-v[N].md | [COUNT] terms |
 | Architecture Principles | ARC-000-PRIN-v[N].md | [COUNT] terms |
 | Architecture Decision Records | ARC-[PROJECT_ID]-ADR-*.md | [COUNT] terms |
 

@@ -35,7 +35,32 @@
 
 ## 1. DPIA Screening Assessment
 
-### 1.1 Screening Criteria (ICO's 9 Criteria)
+### 1.1 Screening Criteria (Article 35(3), ICO List, Nine European Criteria)
+
+**Article 35(3) cases** (any one means a DPIA is required):
+
+| Case | YES/NO | Evidence |
+|------|--------|----------|
+| (a) **Systematic and extensive evaluation** of people based on automated processing, including profiling, with decisions that produce legal or similarly significant effects | [YES/NO] | [Evidence] |
+| (b) **Large-scale processing** of special category data (Article 9) or criminal convictions and offences data (Article 10) | [YES/NO] | [Evidence] |
+| (c) **Systematic monitoring of a publicly accessible area** on a large scale | [YES/NO] | [Evidence] |
+
+**ICO list of processing likely to result in high risk** (published under Article 35(4)):
+
+| Processing type | DPIA needed | YES/NO | Evidence |
+|-----------------|-------------|--------|----------|
+| **Denial of service**: decisions on access to a product, service, opportunity or benefit based to any extent on automated decision-making, or involving special category data | Always | [YES/NO] | [Evidence] |
+| **Large-scale profiling** of individuals | Always | [YES/NO] | [Evidence] |
+| **Data matching**: combining, comparing or matching personal data from multiple sources | Always | [YES/NO] | [Evidence] |
+| **Targeting of children or other vulnerable individuals** for marketing, profiling or other automated decision-making, or offering online services directly to children | Always | [YES/NO] | [Evidence] |
+| **Risk of physical harm**: a personal data breach could jeopardise people's physical health or safety | Always | [YES/NO] | [Evidence] |
+| **Innovative technology**, including AI | When combined with any of the nine criteria | [YES/NO] | [Evidence] |
+| **Biometric data** used to uniquely identify someone | When combined with any of the nine criteria | [YES/NO] | [Evidence] |
+| **Genetic data** (other than by an individual GP or health professional providing direct care) | When combined with any of the nine criteria | [YES/NO] | [Evidence] |
+| **Invisible processing**: relying on the Article 14(5)(b) exception to providing privacy information | When combined with any of the nine criteria | [YES/NO] | [Evidence] |
+| **Tracking** of geolocation or behaviour | When combined with any of the nine criteria | [YES/NO] | [Evidence] |
+
+**Nine screening criteria** from the European DPIA guidelines (Article 29 Working Party WP248, endorsed by the EDPB), which the ICO cites:
 
 | # | Criterion | YES/NO | Evidence |
 |---|-----------|--------|----------|
@@ -57,9 +82,11 @@
 
 **Rationale**:
 
-- If ≥2 criteria met → DPIA REQUIRED
-- If processing involves special category data at scale → DPIA REQUIRED
-- If innovative technology with unknown risks → DPIA REQUIRED
+- If any Article 35(3) case applies → DPIA REQUIRED
+- If any ICO-listed processing applies (on its own, or combined with any of the nine criteria where the ICO list requires a combination) → DPIA REQUIRED
+- If ≥2 of the nine criteria are met → DPIA REQUIRED in most cases (not a strict rule; document the reasons for any decision not to do one)
+- If 1 criterion is met → DPIA RECOMMENDED (one criterion can be enough, and the ICO says doing a DPIA is good practice)
+- If no criterion, Article 35(3) case or ICO-listed processing applies → DPIA NOT REQUIRED on screening (record the decision, the reasons and the DPO's advice; if in doubt, do a DPIA)
 - [Specific rationale based on screening results]
 
 **Decision Authority**: [NAME, ROLE]
@@ -618,6 +645,8 @@ If YES, select condition(s):
 - Residual risk remains **HIGH** after mitigation, AND
 - Processing will go ahead despite the high residual risk
 
+Consultation must happen before processing starts (UK GDPR Article 36). The ICO gives written advice; it does not approve a DPIA. It aims to respond within eight weeks, extendable to 14 weeks in complex cases. See [Do we need to consult the ICO?](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/do-we-need-to-consult-the-ico/)
+
 **ICO Consultation Details** (if required):
 
 | Field | Value |
@@ -627,9 +656,9 @@ If YES, select condition(s):
 | ICO Case Officer | [NAME] |
 | ICO Advice Received | [DATE] |
 | ICO Recommendations | [SUMMARY] |
-| ICO Approval | [APPROVED/APPROVED WITH CONDITIONS/NOT APPROVED] |
-| Conditions | [LIST CONDITIONS] |
-| How Conditions Addressed | [SUMMARY] |
+| ICO Written Advice Outcome | [MAY PROCEED / FURTHER MITIGATION ADVISED / OFFICIAL WARNING ISSUED / LIMITATION OR BAN IMPOSED] |
+| Actions Required by ICO Advice | [LIST ACTIONS, WARNINGS OR LIMITATIONS] |
+| How ICO Advice Addressed | [SUMMARY] |
 
 **ICO Advice Summary**:
 
@@ -675,7 +704,7 @@ If YES, select condition(s):
 
 ### 9.1 Link to Security Controls
 
-**Security Assessment Reference**: `projects/{project_id}/ARC-{PROJECT_ID}-SBD-v*.md`
+**Security Assessment Reference**: `projects/{project_id}/ARC-{PROJECT_ID}-SECD-v*.md`
 
 **DPIA Mitigations → Security Controls Mapping**:
 
@@ -706,6 +735,8 @@ If YES, select condition(s):
 
 ### 10.1 Review Triggers
 
+UK GDPR Article 35(11) requires a review at least when the risk represented by the processing changes. The periodic review below is ArcKit's default, not a legal requirement.
+
 **DPIA must be reviewed when**:
 
 - [ ] Significant change to processing (new data, new purpose, new systems)
@@ -716,7 +747,7 @@ If YES, select condition(s):
 - [ ] Data subjects raise concerns
 - [ ] Periodic review date reached
 
-**Periodic Review Frequency**: Every [6/12/24] months
+**Periodic Review Frequency**: Every [6/12/24] months (ArcKit default: 12 months)
 
 ### 10.2 Review Schedule
 
@@ -1132,9 +1163,9 @@ If YES, also complete `/arckit:ai-playbook` and `/arckit:atrs` assessments.
 
 ---
 
-## Appendix A: ICO DPIA Screening Checklist
+## Appendix A: DPIA Screening Checklist
 
-Full screening questionnaire (9 criteria) with detailed YES/NO/N/A responses:
+Full screening questionnaire for the nine criteria from the European DPIA guidelines (WP248), which the ICO cites, with detailed YES/NO/N/A responses. Record the Article 35(3) cases and the ICO list in Section 1.1:
 
 1. ☐ Evaluation or scoring (including profiling)
 2. ☐ Automated decision-making with legal/significant effect

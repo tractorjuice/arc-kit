@@ -23,7 +23,7 @@
 | 2 | Lawful Basis (Art. 6 / Art. 9) | [Identified / Unclear / Gap] | [Summary] |
 | 3 | Consent Management | [Compliant / Partial / N/A] | [Summary] |
 | 4 | DPIA Screening (Art. 35 + DSB Blacklist) | [Required / Not required] | [Summary] |
-| 5 | Image/Video Processing (GDPR; §§12–13 DSG contested) | [Compliant / Non-compliant / Partial / N/A] | [Summary] |
+| 5 | Image/Video Processing (GDPR; §12 DSG not applied — VwGH Ra 2023/04/0075) | [Compliant / Non-compliant / Partial / N/A] | [Summary] |
 | 6 | Health Data / ELGA | [Compliant / Partial / N/A] | [Summary] |
 | 7 | Employee Data / §96/§96a ArbVG | [Compliant / Gap / N/A] | [Summary] |
 | 8 | Scientific Research (§§7–8 DSG) | [Compliant / Partial / N/A] | [Summary] |
@@ -136,18 +136,19 @@
 
 ---
 
-## 5. §§12–13 DSG — Image and Video Processing
+## 5. Image and Video Processing (GDPR; §§12–13 DSG)
 
 *Complete only if CCTV, bodycams, doorbell cameras, visitor imagery, AI-enabled video analytics, or any other Bildverarbeitung is in scope. Otherwise mark N/A.*
 
-> ⚠️ **Contested applicability**: the BVwG held §§12–13 DSG inapplicable due to the primacy of the GDPR (W256 2214855-1, 20.11.2019; W211 2210458-1, 25.11.2019); the OGH still applies them (6 Ob 150/19f). Assess CCTV **primarily on the GDPR** (Art. 6 lawfulness, Art. 12–14 transparency) and treat the §§12–13 rows below as a contested additional layer.
+> ⚠️ **Assess on the GDPR**: the VwGH has held that where private video surveillance is assessed under Art. 6(1)(f) GDPR, §12 Abs. 2 Z 4 iVm Abs. 3 DSG stays unapplied for want of a GDPR opening clause, and the processing is measured solely against Art. 6(1)(f) GDPR, case by case (VwGH 22.10.2025, Ra 2023/04/0075, confirming BVwG W256 2214855-1, 20.11.2019 and W211 2210458-1, 25.11.2019). The OGH applied §12 DSG in civil proceedings (6 Ob 150/19f). Do not cite §§12–13 DSG as the legal basis or as stricter than the GDPR; the §13 DSG points below are benchmarks only.
 
 | Control | Status | Evidence / Gap |
 |---------|--------|----------------|
 | GDPR Art. 6 lawful ground for the imaging established | [Yes / No / N/A] | |
-| Lawful ground under §12 DSG (contested — additional layer only) | [Yes / No / N/A] | |
-| Labelling (Kennzeichnung) — visible notice with controller (Art. 12–14 GDPR + §13 DSG) | [Yes / No / N/A] | |
-| Retention ≤ 72 hours (§13 DSG) or documented GDPR necessity/proportionality limit | [Yes / No / N/A] | |
+| Art. 6(1)(f) balancing of interests documented on the facts — not pre-empted by §12 Abs. 3 DSG (VwGH Ra 2023/04/0075) | [Yes / No / N/A] | |
+| Labelling (Kennzeichnung) — visible notice naming the controller (Art. 12–14 GDPR; cf. §13 Abs. 5 DSG) | [Yes / No / N/A] | |
+| Retention limited to the purpose (Art. 5(1)(e) GDPR); anything over 72 hours justified and logged (§13 Abs. 3 DSG benchmark) | [Yes / No / N/A] | |
+| No filming of the höchstpersönlicher Lebensbereich and no employee monitoring (weighed in the Art. 6(1)(f) balancing; ArbVG §96 for staff) | [Yes / No / N/A] | |
 | No covert imaging unless narrow statutory ground applies | [Yes / No / N/A] | |
 | DSB-Praxis und EDPB-Leitlinien 3/2019 zur Bildverarbeitung berücksichtigt | [Yes / No / N/A] | |
 | Access control to recordings (who, when, audited) | [Yes / No / N/A] | |
@@ -254,7 +255,7 @@
 | Availability and resilience | Abs 1 lit b | ☐ | |
 | Ability to restore availability after incident | Abs 1 lit c | ☐ | |
 | Regular testing / assessment of effectiveness | Abs 1 lit d | ☐ | |
-| Processor obligations contractually passed down | Abs 4 | ☐ | |
+| Persons acting under the controller's or processor's authority process only on instructions | Abs 4 | ☐ | |
 
 ---
 

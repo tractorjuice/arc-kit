@@ -22,6 +22,19 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Workflow diagrams](https://arckit.org/WORKFLOW-DIAGRAMS.md): Visual flow from project init through procurement.
 - [Guides index](https://arckit.org/guides.html): Per-command usage guides.
 
+## Certification
+
+- [ArcKit certification](https://arckit.org/certification/index.html): Four levels, Awareness, Foundation, Practitioner and Expert, of which Awareness and Foundation are free. Each pass earns an Open Badges 3.0 credential that can be added to LinkedIn.
+- [Awareness quiz](https://arckit.org/certification/awareness.html): 10 questions, 8 right to pass, unlimited attempts. Covers what ArcKit is and why its documents are defensible.
+- [Credential page](https://arckit.org/certification/credential.html): Links take the form `credential.html?id=<12-character ID>`. Credentials are Open Badges 3.0 VC-JWTs signed with RS256. The issuer profile is at [issuer.json](https://arckit.org/certification/issuer.json) and the public keys at [jwks.json](https://arckit.org/certification/jwks.json). A credential confirms that the holder passed the ArcKit assessment at that level; it does not endorse their work or organisation.
+- [Certification policies](https://arckit.org/certification/policies.html): Appeals (a re-check within 10 working days, then an appeal decided by someone not involved), access arrangements (up to 25% extra time, other formats), malpractice and revocation, conflicts of interest, retakes, validity by ArcKit major version, complaints, equality, prior learning and a yearly report.
+
+## Expert help
+
+- [ArcKit FDE](https://arckit.org/fde/): ArcKit Forward Deploy Engineering, the paid service run by ArcKit's creator. A senior architect embeds with a UK public sector team and uses ArcKit to produce a board-ready governance pack in five days: architecture principles, requirements, an Orange Book risk register and a stakeholder map, with evidence shaped around the Green Book, the Orange Book, the GDS Service Standard, the Technology Code of Practice and GovS 005. Fixed price: £25K over five consecutive days, or £35K one day a week for five weeks. Optional embedded follow-on covers ADRs, vendor evaluation, service assessment preparation, and AI and data governance. For programmes heading into a gate, a procurement, an assurance review or a board.
+- [Sample bootstrap pack](https://arckit.org/fde/samples/governance-pack.html): Fictional sample outputs, for a digital licensing service, showing the structure of the principles, requirements, risk and stakeholder documents the five days produce.
+- [ArcKit architects](https://arckit.org/fde/architects.html): Architects who deliver ArcKit engagements, and how to request a referral or join the network.
+
 ## Guides by phase
 
 ### Onboarding and setup
@@ -85,9 +98,9 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 
 ### O-AA overlay (community-contributed)
 
-- [O-AA ADM Lite](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/oaa-adm-lite.md): `/arckit-oaa:oaa-adm-lite` TOGAF ADM cycle mapped to 2-4 week agile sprint windows.
+- [O-AA ADM Lite](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/oaa-adm-lite.md): `/arckit-oaa:oaa-adm-lite` TOGAF ADM cycle mapped onto agile sprints within a 4-8 week engagement window.
 - [O-AA Product Architecture](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/product-architecture.md): `/arckit-oaa:product-architecture` product-centric architecture with cross-functional teams, backlog-driven delivery.
-- [O-AA Agile Strategy](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-strategy.md): `/arckit-oaa:agile-strategy` dual transformation canvas — legacy modernization plus greenfield innovation.
+- [O-AA Agile Strategy](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-strategy.md): `/arckit-oaa:agile-strategy` dual transformation canvas — digital transformation plus agile transformation.
 - [O-AA Agile Security](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-security.md): `/arckit-oaa:agile-security` security embedded in the sprint rhythm — threat modeling, compliance evidence.
 - [O-AA Agile Governance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-governance.md): `/arckit-oaa:agile-governance` lightweight governance cadence aligned to sprint cycles.
 
@@ -120,7 +133,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Secure by Design](https://arckit.org/guides/uk-government/secure-by-design.md): `/arckit:secure`.
 - [DPIA](https://arckit.org/guides/dpia.md): `/arckit:dpia` Data Protection Impact Assessment.
 - [Service Assessment](https://arckit.org/guides/service-assessment.md): `/arckit:service-assessment` GDS.
-- [AI Playbook](https://arckit.org/guides/uk-government/ai-playbook.md): `/arckit:ai-playbook`.
+- [AI Playbook](https://arckit.org/guides/ai-playbook.md): `/arckit:ai-playbook`.
 - [Algorithmic Transparency (ATRS)](https://arckit.org/guides/uk-government/algorithmic-transparency.md): `/arckit:atrs`.
 - [MOD Secure by Design](https://arckit.org/guides/uk-mod/secure-by-design.md): `/arckit:mod-secure`.
 - [JSP 936 AI Assurance](https://arckit.org/guides/jsp-936.md): `/arckit:jsp-936`.
@@ -161,7 +174,7 @@ French government (apply on top of EU baseline):
 
 ### Netherlands public sector compliance (community-contributed)
 
-> ⚠️ Community-maintained by [@umag](https://github.com/umag) — output should be reviewed by qualified Dutch counsel, the departmental CISO, CISO Rijk, and for any rubricering determination the departmental beveiligingsautoriteit / rubriceringsambtenaar before reliance. There is no published Dutch cloud-provider qualification list, so no commercial provider is named as compliant or qualified.
+> ⚠️ Community-maintained by [@umag](https://github.com/umag) — output should be reviewed by qualified Dutch counsel, the departmental CISO, CISO Rijk, and for any TBB category determination the departmental beveiligingsautoriteit / rubriceringsambtenaar before reliance. There is no published Dutch cloud-provider qualification list, so no commercial provider is named as compliant or qualified.
 
 - [Rijksbreed cloudbeleid compliance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-cloud.md): `/arckit:nl-cloud` Herziening rijksbreed cloudbeleid 2026 — materieel publiek cloudgebruik determination, clause 5.2 / 4.5 eligibility, CISO Rijk notification, EEA residency.
 - [Te Beschermen Belangen / VIRBI 2025](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-nl/commands/nl-tbb.md): `/arckit:nl-tbb` TBB category from BIV scoring across the five kernbelangen, with any existing VIRBI 2025 rubricering applied as a floor. Produces no rubricering of its own.
@@ -200,7 +213,7 @@ French government (apply on top of EU baseline):
 
 - [PDPL Compliance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-pdpl.md): `/arckit:uae-pdpl` UAE Personal Data Protection Law (Federal Decree-Law 45/2021) DPIA, lawful basis, cross-border transfers.
 - [IAS Statement of Applicability](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-ias.md): `/arckit:uae-ias` UAE Information Assurance Standard (60 management + 128 technical controls, P1–P4 priority tiers).
-- [Smart Data Classification](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-classification.md): `/arckit:uae-classification` Open / Shared / Confidential / Secret / Top Secret register with handling rules.
+- [Smart Data Classification](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-classification.md): `/arckit:uae-classification` Open / Confidential / Sensitive / Secret register with handling rules.
 - [Sovereign Cloud Residency](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-cloud-residency.md): `/arckit:uae-cloud-residency` UAE National Cloud Security Policy v2 — Core42 / G42 sovereign / Microsoft UAE North + Central, FedNet, Sovereign Launchpad.
 - [UAE Pass Integration](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-uaepass.md): `/arckit:uae-uaepass` OIDC / OAuth flow, claim mapping, Basic vs Verified profile, e-signature audit trail.
 - [Zero Bureaucracy / Service Catalogue](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uae/commands/uae-zero-bureaucracy.md): `/arckit:uae-zero-bureaucracy` UAE Code for Government Services service catalogue review and CX KPIs.
@@ -239,8 +252,8 @@ French government (apply on top of EU baseline):
 
 - [FIPS 199 categorization](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fisma-categorization.md): `/arckit:us-fisma-categorization` FIPS 199 system categorization (Low / Moderate / High water-mark).
 - [NIST SP 800-53 tailoring](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-nist-800-53.md): `/arckit:us-nist-800-53` NIST SP 800-53 Rev 5 control tailoring against the Low / Moderate / High baseline.
-- [FedRAMP System Security Plan](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fedramp-ssp.md): `/arckit:us-fedramp-ssp` FedRAMP SSP (Moderate / High baseline) aligned to the current template.
-- [FedRAMP readiness](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fedramp-readiness.md): `/arckit:us-fedramp-readiness` 3PAO-style Readiness Assessment Report with capability statement and gap analysis.
+- [FedRAMP System Security Plan](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fedramp-ssp.md): `/arckit:us-fedramp-ssp` FedRAMP SSP (Moderate / High baseline) in 14 sections mapped to the FedRAMP Rev 5 SSP template.
+- [FedRAMP readiness](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-fedramp-readiness.md): `/arckit:us-fedramp-readiness` internal readiness self-assessment in the 3PAO Readiness Assessment Report format, with capability statement and gap analysis.
 - [Zero Trust maturity](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-zero-trust.md): `/arckit:us-zero-trust` CISA Zero Trust Maturity Model v2.0 assessment across the five pillars.
 - [ICAM architecture](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-icam.md): `/arckit:us-icam` federal Identity, Credential and Access Management architecture per OMB M-19-17.
 - [NIST AI RMF](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-ai-rmf.md): `/arckit:us-ai-rmf` NIST AI Risk Management Framework 1.0 assessment (Govern / Map / Measure / Manage).
@@ -284,16 +297,22 @@ French government (apply on top of EU baseline):
 
 ### UK G-Cloud supplier overlay
 
-- [G-Cloud Supplier Profile](https://arckit.org/guides/supplier-profile.md): `/arckit:supplier-profile` supplier-wide company, contact, certification, insurance, security, and evidence profile.
-- [G-Cloud Service Design](https://arckit.org/guides/service-design.md): `/arckit:service-design` per-service offer design, project setup, lot selection, features, benefits, and support model.
-- [G-Cloud Lot 1 Service Definition](https://arckit.org/guides/sdd-lot1.md): `/arckit:sdd-lot1` cloud hosting, IaaS, PaaS, regions, tenancy, resilience, support, and security.
-- [G-Cloud Lot 2 Service Definition](https://arckit.org/guides/sdd-lot2.md): `/arckit:sdd-lot2` cloud software and SaaS capability, integrations, data, onboarding, support, and buyer claims.
-- [G-Cloud Lot 3 Service Definition](https://arckit.org/guides/sdd-lot3.md): `/arckit:sdd-lot3` cloud support, migration, consulting, delivery method, roles, outcomes, and handover.
-- [G-Cloud Supplier Declaration](https://arckit.org/guides/declaration.md): `/arckit:declaration` supplier declaration evidence pack for exclusions, insurance, modern slavery, tax, and sign-off.
-- [G-Cloud Pricing](https://arckit.org/guides/pricing.md): `/arckit:pricing` pricing model, tiers, units, discounts, trials, assumptions, and benchmark rationale.
-- [G-Cloud Security Assertions](https://arckit.org/guides/security.md): `/arckit:security` NCSC Cloud Security Principles assertions, evidence, residual risks, and buyer-facing security statements.
-- [G-Cloud Competitor Benchmark](https://arckit.org/guides/gcloud-competitors.md): `/arckit:gcloud-competitors` marketplace rival comparison across features, pricing, differentiation, and improvement actions.
-- [G-Cloud Submission Review](https://arckit.org/guides/review.md): `/arckit:review` completeness, cross-document consistency, marketplace limits, evidence gaps, and readiness actions.
+G-Cloud 15 (RM1557.15), run by the Government Commercial Agency (GCA, formerly CCS). Proprietary, Claude Code only.
+
+- [G-Cloud Supplier Profile](https://arckit.org/guides/supplier-profile.md): `/arckit:supplier-profile` supplier-wide company, CDP and PPON, contacts, certifications by lot, insurance, clearances, and evidence profile.
+- [G-Cloud Social Value](https://arckit.org/guides/social-value.md): `/arckit:social-value` social value sections A–C, missions, policy outcomes and measures, Social Value Contact, and operational readiness.
+- [G-Cloud Lot Questions](https://arckit.org/guides/lot-questions.md): `/arckit:lot-questions` conditions of participation, scored Lot 1a/1b quality answers, Lot 2 and Lot 3 mandatory award criteria, and certifications.
+- [G-Cloud Service Design](https://arckit.org/guides/service-design.md): `/arckit:service-design` per-service offer design, project setup, five-lot choice, features, benefits, supplier type, and support model.
+- [G-Cloud Lot 1a Service Definition](https://arckit.org/guides/sdd-lot1a.md): `/arckit:sdd-lot1a` IaaS and PaaS service questions, categories, scope, support, backups, analytics, scaling, and security.
+- [G-Cloud Lot 1b Service Definition](https://arckit.org/guides/sdd-lot1b.md): `/arckit:sdd-lot1b` IaaS and PaaS above OFFICIAL, with SC or DV staff clearance.
+- [G-Cloud Lot 2a Service Definition](https://arckit.org/guides/sdd-lot2a.md): `/arckit:sdd-lot2a` Infrastructure Software as a Service (iSaaS) service questions.
+- [G-Cloud Lot 2b Service Definition](https://arckit.org/guides/sdd-lot2b.md): `/arckit:sdd-lot2b` Software as a Service (SaaS) service questions.
+- [G-Cloud Lot 3 Service Definition](https://arckit.org/guides/sdd-lot3.md): `/arckit:sdd-lot3` Cloud Support service questions and the DDaT role levels that deliver the service.
+- [G-Cloud Supplier Declaration](https://arckit.org/guides/declaration.md): `/arckit:declaration` Procurement Act 2023 declaration: CDP, PPON, exclusion grounds, debarment list, supply chain payments, modern slavery, and sign-off.
+- [G-Cloud Pricing](https://arckit.org/guides/pricing.md): `/arckit:pricing` the 1a/1b price formula, 2a/2b discount bands, the supplier's one Lot 3 DDaT rate card, and forbidden-pricing checks.
+- [G-Cloud Security Assertions](https://arckit.org/guides/security.md): `/arckit:security` certifications by lot, NCSC Cloud Security Principles, post-quantum cryptography, and buyer-facing security statements.
+- [G-Cloud Competitor Benchmark](https://arckit.org/guides/gcloud-competitors.md): `/arckit:gcloud-competitors` marketplace rival comparison across features, pricing, rate cards, discounts, differentiation, and improvement actions.
+- [G-Cloud Submission Review](https://arckit.org/guides/review.md): `/arckit:review` completeness, lot consistency, G-Cloud 15 limits, pending items, evidence gaps, and readiness actions.
 - [G-Cloud Submission Pack](https://arckit.org/guides/submission-pack.md): `/arckit:submission-pack` export approved supplier and service artefacts into a submission folder with manifest and checklist.
 
 ### FDE site generator
@@ -330,54 +349,54 @@ French government (apply on top of EU baseline):
 
 Published articles, newest first:
 
-- [ArcKit TOGAF ADM: The Method Becomes a Governed Workflow](https://arckit.org/article-viewer.html?a=2026-07-01-arckit-togaf-adm): Release / 1 July 2026.
-- [ArcKit AI Agent Architecture: Governed Design for Autonomous Systems](https://arckit.org/article-viewer.html?a=2026-06-30-arckit-agent-architecture): Release / 30 June 2026.
-- [I Built ArcKit for Myself. Thank You for Using It.](https://arckit.org/article-viewer.html?a=2026-06-29-arckit-usage-signals): Community / 29 June 2026.
-- [ArcKit and OKF: knowledge interoperability without giving up governance](https://arckit.org/article-viewer.html?a=2026-06-19-okf-compatibility-workflows): Analysis / 19 June 2026.
-- [ArcKit Self-Harness: when the governance harness starts improving itself](https://arckit.org/article-viewer.html?a=2026-06-19-self-harness-autoresearch): Technical / 19 June 2026.
-- [ArcKit v5.14: Mistral Vibe joins the harness](https://arckit.org/article-viewer.html?a=2026-06-17-arckit-vibe-extension): Release / 17 June 2026.
-- [Don't Build an AI App. Build an AI CLI Harness.](https://arckit.org/article-viewer.html?a=2026-06-15-ai-cli-harness-not-ai-app): Analysis / 15 June 2026.
-- [The supplier side of G-Cloud: ArcKit's new bid-authoring overlay](https://arckit.org/article-viewer.html?a=2026-06-10-arckit-uk-gcloud-supplier-overlay): Release / 10 June 2026.
-- [ArcKit FDE is now a plugin: generate your own forward deploy site in one command](https://arckit.org/article-viewer.html?a=2026-06-09-arckit-fde-site-generator): Release / 9 June 2026.
-- [Britain's War on Consultants: What the Procurement Data Actually Shows](https://arckit.org/article-viewer.html?a=2026-06-03-uk-government-consulting-spend): Analysis / 3 June 2026.
-- [ArcKit v5.9.0: Procurement Market Intelligence from Real Award Data](https://arckit.org/article-viewer.html?a=2026-06-02-uk-tenders-procurement-intelligence): Release / 2 June 2026.
-- [ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay](https://arckit.org/article-viewer.html?a=2026-05-28-v540-uk-nhs-clinical-safety-overlay): Release / 28 May 2026.
-- [ArcKit v5.3: The First Sector Overlay, for UK Payments](https://arckit.org/article-viewer.html?a=2026-05-27-v530-uk-finance-payments-overlay): Release / 27 May 2026.
-- [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](https://arckit.org/article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay): Release / 24 May 2026.
-- [How ArcKit tidies Wardley Map labels: a deterministic placement engine, stepped through](https://arckit.org/article-viewer.html?a=2026-05-22-tidy-wardley-labels): Technical / 22 May 2026.
-- [The token budget behind ArcKit's plugin split, and how to split a plugin of your own](https://arckit.org/article-viewer.html?a=2026-05-20-plugin-split-token-budget): Technical / 20 May 2026.
-- [The Leaf Node Problem: why your AI pilot is optimising the wrong thing](https://arckit.org/article-viewer.html?a=2026-05-19-leaf-node-problem): Technical / 19 May 2026.
-- [Your Wardley Maps belong in Git: what Mermaid support changes](https://arckit.org/article-viewer.html?a=2026-05-19-wardley-maps-mermaid-github): Technical / 19 May 2026.
-- [ArcKit v5.0.0: one toolkit, seven plugins, install only what you need](https://arckit.org/article-viewer.html?a=2026-05-18-arckit-v5-plugin-split): Release / 18 May 2026.
-- [We are launching ArcKit FDE: embedded architects for UK public sector](https://arckit.org/article-viewer.html?a=2026-05-12-arckit-fde-launch): Launch / 12 May 2026.
-- [Five patterns to steal from anthropics/financial-services](https://arckit.org/article-viewer.html?a=2026-05-06-anthropics-financial-services-architecture-lesson): Technical / 6 May 2026.
-- [Wanted: /arckit:build recipes for your jurisdiction](https://arckit.org/article-viewer.html?a=2026-05-03-community-recipes-wanted): Community / 3 May 2026.
-- [ArcKit v4.13.0: The Build Harness — Building a full architecture in one Claude Code session. AKA The GDS Harness](https://arckit.org/article-viewer.html?a=2026-05-03-build-harness-parallel-architecture-generation): Release / 3 May 2026.
-- [I have saved the UK economy £24 billion. ArcKit is the third time.](https://arckit.org/article-viewer.html?a=2026-05-03-how-open-source-saved-uk-economy-12bn): Essay / 3 May 2026.
-- [Internal Memo, Somewhere in a Big 4 Consulting Company](https://arckit.org/article-viewer.html?a=2026-05-01-consulting-internal-memo): Essay / 1 May 2026.
-- [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](https://arckit.org/article-viewer.html?a=2026-04-30-uae-overlay-launch): Release / 30 April 2026.
-- [How ArcKit v4.10 Accelerates the UAE's Federal Agentic Decree](https://arckit.org/article-viewer.html?a=2026-04-30-uae-agentic-decree-arckit-v4-10): Essay / 30 April 2026.
-- [The CAIO's First 90 Days: Delivering the UAE Cabinet Agentic AI Mandate](https://arckit.org/article-viewer.html?a=2026-04-30-uae-caio-first-90-days): Guide / 30 April 2026.
-- [The UAE Agentic Decree: A 90-Day ArcKit Playbook](https://arckit.org/article-viewer.html?a=2026-04-30-uae-agentic-decree-90-day-playbook): Guide / 30 April 2026.
-- [The Toolkit Drafts. The Architect Judges.](https://arckit.org/article-viewer.html?a=2026-04-30-toolkit-drafts-architect-judges): Essay / 30 April 2026.
-- [Pricing the ArcKit Project: What Would an Investor Actually Pay?](https://arckit.org/article-viewer.html?a=2026-04-28-pricing-arckit-investor): Essay / 28 April 2026.
-- [From ArcKit to McKinsey-Style Infographics in an Afternoon](https://arckit.org/article-viewer.html?a=2026-04-27-mckinsey-decks-from-arckit): Essay / 27 April 2026.
-- [The Five Wardley Commands in ArcKit](https://arckit.org/article-viewer.html?a=2026-04-22-wardley-commands-walkthrough): Guide / 22 April 2026.
-- [ArcKit 4.9.0: Wardley Maps Render Natively](https://arckit.org/article-viewer.html?a=2026-04-22-v490-wardley-mapping-support): Release / 22 April 2026.
-- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](https://arckit.org/article-viewer.html?a=2026-04-20-consulting-deliverable-is-dead): Essay / 20 April 2026.
-- [What You Can Now Do in Austria with ArcKit v4.8](https://arckit.org/article-viewer.html?a=2026-04-20-v480-austrian-overlay): Release / 20 April 2026.
-- [ArcKit v4.7: 18 EU and French Regulatory Commands](https://arckit.org/article-viewer.html?a=2026-04-19-v470-eu-french-regulatory): Release / 19 April 2026.
-- [Why an EA Toolkit is Trending on GitHub in 2026](https://arckit.org/article-viewer.html?a=2026-04-19-arckit-trending-on-github): Milestone / 19 April 2026.
-- [Finding UK Funding for Public Sector Projects](https://arckit.org/article-viewer.html?a=2026-04-07-v464-grants-command-for-companies): Release / 7 April 2026.
-- [Automated UK Funding Research with the Grants Command](https://arckit.org/article-viewer.html?a=2026-04-07-v464-grants-command-funding-research): Release / 7 April 2026.
-- [Discovering What Government Has Already Built](https://arckit.org/article-viewer.html?a=2026-03-23-government-code-discovery-commands): Release / 23 March 2026.
-- [Building ClaudeClaw: Autonomous Agents on Claude Code](https://arckit.org/article-viewer.html?a=2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code): Technical / 18 March 2026.
-- [ArcKit v4.3.0: Complete Wardley Mapping Suite](https://arckit.org/article-viewer.html?a=2026-03-16-wardley-suite-strategic-mapping): Release / 16 March 2026.
-- [Your Architecture Documents Are Connected](https://arckit.org/article-viewer.html?a=2026-03-12-document-map-medium): Release / 12 March 2026.
-- [ArcKit v4.1.1: Copilot, Vendor Scoring, Blast Radius](https://arckit.org/article-viewer.html?a=2026-03-11-v411-copilot-vendor-scoring-impact): Release / 11 March 2026.
-- [ArcKit v4: First-Class Codex and Gemini Support](https://arckit.org/article-viewer.html?a=2026-03-08-v4-codex-gemini-support): Release / 8 March 2026.
-- [The People Behind ArcKit](https://arckit.org/article-viewer.html?a=2026-02-28-arckit-contributors-medium-post): Community / 28 February 2026.
-- [ArcKit Recommends Claude Code v2.1.63+](https://arckit.org/article-viewer.html?a=2026-02-28-arckit-v2163-linkedin-post): Release / 28 February 2026.
+- [ArcKit TOGAF ADM: The Method Becomes a Governed Workflow](https://arckit.org/articles/2026-07-01-arckit-togaf-adm.md): Release / 1 July 2026.
+- [ArcKit AI Agent Architecture: Governed Design for Autonomous Systems](https://arckit.org/articles/2026-06-30-arckit-agent-architecture.md): Release / 30 June 2026.
+- [I Built ArcKit for Myself. Thank You for Using It.](https://arckit.org/articles/2026-06-29-arckit-usage-signals.md): Community / 29 June 2026.
+- [ArcKit and OKF: knowledge interoperability without giving up governance](https://arckit.org/articles/2026-06-19-okf-compatibility-workflows.md): Analysis / 19 June 2026.
+- [ArcKit Self-Harness: when the governance harness starts improving itself](https://arckit.org/articles/2026-06-19-self-harness-autoresearch.md): Technical / 19 June 2026.
+- [ArcKit v5.14: Mistral Vibe joins the harness](https://arckit.org/articles/2026-06-17-arckit-vibe-extension.md): Release / 17 June 2026.
+- [Don't Build an AI App. Build an AI CLI Harness.](https://arckit.org/articles/2026-06-15-ai-cli-harness-not-ai-app.md): Analysis / 15 June 2026.
+- [The supplier side of G-Cloud: ArcKit's new bid-authoring overlay](https://arckit.org/articles/2026-06-10-arckit-uk-gcloud-supplier-overlay.md): Release / 10 June 2026.
+- [ArcKit FDE is now a plugin: generate your own forward deploy site in one command](https://arckit.org/articles/2026-06-09-arckit-fde-site-generator.md): Release / 9 June 2026.
+- [Britain's War on Consultants: What the Procurement Data Actually Shows](https://arckit.org/articles/2026-06-03-uk-government-consulting-spend.md): Analysis / 3 June 2026.
+- [ArcKit v5.9.0: Procurement Market Intelligence from Real Award Data](https://arckit.org/articles/2026-06-02-uk-tenders-procurement-intelligence.md): Release / 2 June 2026.
+- [ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay](https://arckit.org/articles/2026-05-28-v540-uk-nhs-clinical-safety-overlay.md): Release / 28 May 2026.
+- [ArcKit v5.3: The First Sector Overlay, for UK Payments](https://arckit.org/articles/2026-05-27-v530-uk-finance-payments-overlay.md): Release / 27 May 2026.
+- [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](https://arckit.org/articles/2026-05-24-v510-us-federal-civilian-overlay.md): Release / 24 May 2026.
+- [How ArcKit tidies Wardley Map labels: a deterministic placement engine, stepped through](https://arckit.org/articles/2026-05-22-tidy-wardley-labels.md): Technical / 22 May 2026.
+- [The token budget behind ArcKit's plugin split, and how to split a plugin of your own](https://arckit.org/articles/2026-05-20-plugin-split-token-budget.md): Technical / 20 May 2026.
+- [The Leaf Node Problem: why your AI pilot is optimising the wrong thing](https://arckit.org/articles/2026-05-19-leaf-node-problem.md): Technical / 19 May 2026.
+- [Your Wardley Maps belong in Git: what Mermaid support changes](https://arckit.org/articles/2026-05-19-wardley-maps-mermaid-github.md): Technical / 19 May 2026.
+- [ArcKit v5.0.0: one toolkit, seven plugins, install only what you need](https://arckit.org/articles/2026-05-18-arckit-v5-plugin-split.md): Release / 18 May 2026.
+- [We are launching ArcKit FDE: embedded architects for UK public sector](https://arckit.org/articles/2026-05-12-arckit-fde-launch.md): Launch / 12 May 2026.
+- [Five patterns to steal from anthropics/financial-services](https://arckit.org/articles/2026-05-06-anthropics-financial-services-architecture-lesson.md): Technical / 6 May 2026.
+- [Wanted: /arckit:build recipes for your jurisdiction](https://arckit.org/articles/2026-05-03-community-recipes-wanted.md): Community / 3 May 2026.
+- [ArcKit v4.13.0: The Build Harness — Building a full architecture in one Claude Code session. AKA The GDS Harness](https://arckit.org/articles/2026-05-03-build-harness-parallel-architecture-generation.md): Release / 3 May 2026.
+- [I have saved the UK economy £24 billion. ArcKit is the third time.](https://arckit.org/articles/2026-05-03-how-open-source-saved-uk-economy-12bn.md): Essay / 3 May 2026.
+- [Internal Memo, Somewhere in a Big 4 Consulting Company](https://arckit.org/articles/2026-05-01-consulting-internal-memo.md): Essay / 1 May 2026.
+- [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](https://arckit.org/articles/2026-04-30-uae-overlay-launch.md): Release / 30 April 2026.
+- [How ArcKit v4.10 Accelerates the UAE's Federal Agentic Decree](https://arckit.org/articles/2026-04-30-uae-agentic-decree-arckit-v4-10.md): Essay / 30 April 2026.
+- [The CAIO's First 90 Days: Delivering the UAE Cabinet Agentic AI Mandate](https://arckit.org/articles/2026-04-30-uae-caio-first-90-days.md): Guide / 30 April 2026.
+- [The UAE Agentic Decree: A 90-Day ArcKit Playbook](https://arckit.org/articles/2026-04-30-uae-agentic-decree-90-day-playbook.md): Guide / 30 April 2026.
+- [The Toolkit Drafts. The Architect Judges.](https://arckit.org/articles/2026-04-30-toolkit-drafts-architect-judges.md): Essay / 30 April 2026.
+- [Pricing the ArcKit Project: What Would an Investor Actually Pay?](https://arckit.org/articles/2026-04-28-pricing-arckit-investor.md): Essay / 28 April 2026.
+- [From ArcKit to McKinsey-Style Infographics in an Afternoon](https://arckit.org/articles/2026-04-27-mckinsey-decks-from-arckit.md): Essay / 27 April 2026.
+- [The Five Wardley Commands in ArcKit](https://arckit.org/articles/2026-04-22-wardley-commands-walkthrough.md): Guide / 22 April 2026.
+- [ArcKit 4.9.0: Wardley Maps Render Natively](https://arckit.org/articles/2026-04-22-v490-wardley-mapping-support.md): Release / 22 April 2026.
+- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](https://arckit.org/articles/2026-04-20-consulting-deliverable-is-dead.md): Essay / 20 April 2026.
+- [What You Can Now Do in Austria with ArcKit v4.8](https://arckit.org/articles/2026-04-20-v480-austrian-overlay.md): Release / 20 April 2026.
+- [ArcKit v4.7: 18 EU and French Regulatory Commands](https://arckit.org/articles/2026-04-19-v470-eu-french-regulatory.md): Release / 19 April 2026.
+- [Why an EA Toolkit is Trending on GitHub in 2026](https://arckit.org/articles/2026-04-19-arckit-trending-on-github.md): Milestone / 19 April 2026.
+- [Finding UK Funding for Public Sector Projects](https://arckit.org/articles/2026-04-07-v464-grants-command-for-companies.md): Release / 7 April 2026.
+- [Automated UK Funding Research with the Grants Command](https://arckit.org/articles/2026-04-07-v464-grants-command-funding-research.md): Release / 7 April 2026.
+- [Discovering What Government Has Already Built](https://arckit.org/articles/2026-03-23-government-code-discovery-commands.md): Release / 23 March 2026.
+- [Building ClaudeClaw: Autonomous Agents on Claude Code](https://arckit.org/articles/2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code.md): Technical / 18 March 2026.
+- [ArcKit v4.3.0: Complete Wardley Mapping Suite](https://arckit.org/articles/2026-03-16-wardley-suite-strategic-mapping.md): Release / 16 March 2026.
+- [Your Architecture Documents Are Connected](https://arckit.org/articles/2026-03-12-document-map-medium.md): Release / 12 March 2026.
+- [ArcKit v4.1.1: Copilot, Vendor Scoring, Blast Radius](https://arckit.org/articles/2026-03-11-v411-copilot-vendor-scoring-impact.md): Release / 11 March 2026.
+- [ArcKit v4: First-Class Codex and Gemini Support](https://arckit.org/articles/2026-03-08-v4-codex-gemini-support.md): Release / 8 March 2026.
+- [The People Behind ArcKit](https://arckit.org/articles/2026-02-28-arckit-contributors-medium-post.md): Community / 28 February 2026.
+- [ArcKit Recommends Claude Code v2.1.63+](https://arckit.org/articles/2026-02-28-arckit-v2163-linkedin-post.md): Release / 28 February 2026.
 
 ## Roles
 
@@ -419,6 +438,7 @@ The full table of public test repos is in [CLAUDE.md](https://github.com/tractor
 ## Optional
 
 - [Contributors](https://arckit.org/contributors.html): Credits and acknowledgements.
+- [ArcKit on GitHub](https://arckit.org/on-github.html): Public repositories that use or mention ArcKit, updated weekly. Data: https://arckit.org/on-github.json.
 - [Guide viewer](https://arckit.org/guide-viewer.html): Standalone viewer for individual guides.
 - [Knowledge compounding](https://arckit.org/guides/knowledge-compounding.md): Reusable vendor profiles.
 - [Session memory](https://arckit.org/guides/session-memory.md): Cross-session state.

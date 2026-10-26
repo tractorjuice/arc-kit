@@ -20,16 +20,27 @@ $ARGUMENTS
 
 ## Context
 
-The Technology Code of Practice is a set of 13 criteria to help government design, build and buy technology. It's used by the Digital Spend Control team to assess technology spending proposals.
+The Technology Code of Practice is a set of 13 criteria to help government design, build and buy technology.
+
+GOV.UK's TCoP page still describes TCoP as the standard for the Cabinet Office spend control process, but the digital and technology spend controls were removed on 1 April 2026. The Digital Assurance Playbook replaced them:
+
+- Organisations run their own approvals for most digital and technology spend, through an investment board or equivalent, and their own assurers carry out most assurance.
+- Initiatives above the organisation's delegated authority limit (DAL), or that HM Treasury determines are novel, contentious or repercussive, need HM Treasury approval. GDS supports those initiatives through the HM Treasury approval process.
+- Organisations record initiatives on a pipeline that HM Treasury mandates, through Government Assurance Services: cryptographic products at any value, and other digital and technology delivery above £5 million whole-life cost. The playbook notes that an organisation may have set different thresholds of its own.
+- Assurers base their scrutiny on codified best practice, and the playbook lists TCoP among the government digital and technology standards.
+
+Do not describe a "spend control submission" or "GDS spend approval" in the review. Name the approval and assurance route that applies to the project instead.
 
 **TCoP Reference**: https://www.gov.uk/guidance/the-technology-code-of-practice
+
+**Digital Assurance Playbook**: https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook
 
 ## Your Task
 
 Generate a comprehensive TCoP review document by:
 
 1. **Loading the template** (with user override support):
-   - **First**, check if `.arckit/templates/tcop-review-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/tcop-review-template.md` exists in the project root, then `.arckit/templates/tcop-review-template.md`
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/tcop-review-template.md` (default)
    - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -52,7 +63,7 @@ Generate a comprehensive TCoP review document by:
    - **DIAG** (Architecture Diagrams, in diagrams/) — Extract: Deployment topology
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Technology choices
+   - **RSCH** / **AWRS** / **AZRS** / **GCRS** (Research) — Extract: Technology choices
    - **AIPB** (AI Playbook) — Extract: AI/ML system assessments
    - **DPIA** (Data Protection Impact Assessment) — Extract: Data protection context
 
@@ -94,15 +105,9 @@ Generate a comprehensive TCoP review document by:
 
 8. **Prioritize actions**: Identify critical issues requiring immediate attention
 
-9. **Detect version**: Before generating the document ID, check if a previous version exists:
-   - Look for existing `ARC-{PROJECT_ID}-TCOP-v*.md` files in the project directory
-   - **If no existing file**: Use VERSION="1.0"
-   - **If existing file found**:
-     - Read the existing document to understand its scope
-     - Compare against current project state and compliance evidence
-     - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed assessments, updated evidence, corrected details
-     - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new TCoP points assessed, fundamentally different compliance posture, significant project changes
-   - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+9. **Detect version**: follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-{PROJECT_ID}-TCOP-v*.md` in the project directory, comparing against the current project state and compliance evidence. For a TCoP review:
+   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed assessments, updated evidence, corrected details
+   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new TCoP points assessed, fundamentally different compliance posture, significant project changes
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **TCOP** per-type checks pass. Fix any failures before proceeding.
 
@@ -121,7 +126,7 @@ Before completing the document, populate ALL document control fields in the head
 **Auto-populated fields** (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → Determined version from step 8
+- `[VERSION]` → Determined version from step 9
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Technology Code of Practice Review"
 - `ARC-[PROJECT_ID]-TCOP-v[VERSION]` → Construct using format from Step 1
@@ -190,7 +195,7 @@ The document must include:
 - Critical issues list
 - Prioritized recommendations (High/Medium/Low)
 - Next steps with timeline
-- GovS 005 alignment mapping (TCoP-to-GovS 005 principle traceability and governance obligations)
+- GovS 005 alignment mapping (each TCoP point mapped to the GovS 005 v2.2 clauses that cover it, and governance obligations)
 - Approval section
 
 ## Assessment Guidelines
@@ -222,11 +227,17 @@ The document must include:
 
 **For public-facing services**: Point 13 (Service Standard) is mandatory - must pass GDS service assessments
 
-**For Digital Spend Control submissions**: Focus on points most relevant to spending approval:
+**For approval and assurance under the Digital Assurance Playbook**: In the GovS 005 governance obligations, record which route applies:
 
-- Point 5 (Cloud First)
-- Point 11 (Purchasing Strategy)
-- Point 8 (Reuse and Collaboration)
+- Spend within the organisation's delegated authority limit: the organisation's own approval (investment board or equivalent) and the organisation's digital assurance team
+- Spend above the delegated authority limit, or that HM Treasury determines is novel, contentious or repercussive: HM Treasury approval, with GDS support
+- Pipeline entry: required for any cryptographic product and for other digital and technology delivery above £5 million whole-life cost, or at a different threshold the organisation has set
+
+Give particular attention to these points:
+
+- Point 5 (Use cloud first): the playbook asks assurers to check that Cloud First principles are followed
+- Point 8 (Share, reuse and collaborate): the playbook asks assurers to check that duplicative delivery has been avoided
+- Point 11 (Define your purchasing strategy): the commercial case the approval relies on
 
 **Data protection**: If processing personal data, Point 7 is critical - DPIA completion is mandatory before going live
 
@@ -240,7 +251,7 @@ Be aware of:
 - **UK GDPR**: Data protection requirements
 - **Cyber Essentials**: Baseline security certification
 - **Cloud First policy**: Public cloud preferred unless justified otherwise
-- **GovS 005**: TCoP is the implementation guidance for the Government Functional Standard for Digital — include GovS 005 alignment mapping
+- **GovS 005**: the Government Functional Standard for Digital "is supported by" TCoP (GovS 005 §1.3), so a TCoP review is evidence for its technology clauses, not a full GovS 005 assessment — include the mapping of TCoP points to GovS 005 v2.2 clauses (GovS 005 numbers its section 2 principles but does not name them or map them to TCoP)
 
 ## Example Output Structure
 

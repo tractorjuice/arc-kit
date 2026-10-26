@@ -15,25 +15,24 @@
 
 ## Executive Summary
 
-[Two to three paragraphs describing the project's data estate, the proposed classification posture across the UAE Smart Data ladder (Open / Shared / Confidential / Secret / Top Secret), and the residency implications that flow from it.]
+[Two to three paragraphs describing the project's data estate, the proposed classification posture across the four UAE Smart Data Framework classes (Open / Confidential / Sensitive / Secret), and the residency implications that flow from it.]
 
 ## Classification Levels Used
 
-For each Smart Data level (Open, Shared, Confidential, Secret, Top Secret), state whether the project holds data at that level and the count of datasets per level.
+For each Smart Data Framework class (Open, Confidential, Sensitive, Secret), state whether the project holds data at that level and the count of datasets per level.
 
 | Level | Holds data? | Count | Notes |
 |-------|-------------|-------|-------|
 | Open | [Y/N] | [n] | [notes] |
-| Shared | [Y/N] | [n] | [notes] |
 | Confidential | [Y/N] | [n] | [notes] |
+| Sensitive | [Y/N] | [n] | [notes] |
 | Secret | [Y/N] | [n] | [notes] |
-| Top Secret | [Y/N] | [n] | [notes] |
 
 ## Dataset Register
 
 | Dataset ID | Description | Source system | Classification | Handling rules | Storage location | Declassification schedule |
 |------------|-------------|---------------|----------------|----------------|------------------|---------------------------|
-| [DS-001] | [description] | [source] | [Open / Shared / Confidential / Secret / Top Secret] | [rules] | [location] | [schedule] |
+| [DS-001] | [description] | [source] | [Open / Confidential / Sensitive / Secret] | [rules] | [location] | [schedule] |
 
 ## Handling Rules per Level
 
@@ -64,14 +63,14 @@ Map each Dataset ID to:
 
 | Doc ID | Title | URL | Verified date |
 |--------|-------|-----|---------------|
-| UAE-SMARTDATA | UAE Smart Data Classifications | <https://u.ae/en/about-the-uae/digital-uae/data/data-operability> | [YYYY-MM-DD] |
+| UAE-SMARTDATA | UAE Smart Data Framework, Part 1: Smart Data Principles and Standards (v2.0, February 2019) and Part 2: Smart Data Implementation Guide (v2.0, March 2019) | <https://u.ae/en/about-the-uae/digital-uae/data/data-operability> | [YYYY-MM-DD] |
 
 ### Citations
 
 | Citation | Doc ID | Section | Used in |
 |----------|--------|---------|---------|
-| [SDC-1] | UAE-SMARTDATA | Classification levels | Classification Levels Used |
-| [SDC-2] | UAE-SMARTDATA | Handling rules per level | Handling Rules per Level |
+| [SDC-1] | UAE-SMARTDATA | Part 1, Data Classification Standard DC1; Part 2, Guidance Note 5.1 | Classification Levels Used |
+| [SDC-2] | UAE-SMARTDATA | Part 1, DC2 Rules for Opening and Sharing Classified Data | Handling Rules per Level |
 
 ### Unreferenced Documents
 

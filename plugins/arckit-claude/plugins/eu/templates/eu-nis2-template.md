@@ -131,7 +131,8 @@ An incident is **significant** if it causes or could cause:
 | Early warning | **24 hours** from awareness | National CSIRT + Competent Authority | Incident occurred, possibly malicious, possibly cross-border |
 | Incident notification | **72 hours** from awareness | National CSIRT + Competent Authority | Initial assessment, severity, indicators of compromise |
 | Intermediate report (if requested) | On request | Authority | Status update |
-| Final report | **1 month** after submission | National CSIRT + Competent Authority | Full description, type, root cause, applied mitigations, cross-border impact |
+| Final report | No later than **one month** after the incident notification (Art. 23(4)(d)) | National CSIRT + Competent Authority | Full description, type, root cause, applied mitigations, cross-border impact |
+| Progress report (incident ongoing at the final-report deadline) | At the final-report deadline; final report within **one month** of the incident being handled (Art. 23(4)(e)) | National CSIRT + Competent Authority | Status and mitigation to date |
 
 ### 4.3 Reporting Readiness
 

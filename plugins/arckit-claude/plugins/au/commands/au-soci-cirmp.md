@@ -30,6 +30,13 @@ handoffs:
     description: Use CIRMP findings to assess governance and operational maturity across cyber, personnel, supply chain, physical, and natural hazards.
   - command: graph-report
     description: Graph reporting should show AUSOCI coverage alongside AU compliance, architecture, risk, traceability, and operations artefacts.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > WARNING: **Community-contributed command** - not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified legal, regulatory, cyber security, and operational risk advisers before reliance. SOCI obligations vary by asset class and regulator - verify the current Act, Rules, regulator guidance, and entity-specific obligations before external use.
@@ -81,9 +88,9 @@ SOCI is a cross-sector Australian critical-infrastructure regime, not an energy-
    - Then: `.arckit/templates/au-soci-cirmp-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-soci-cirmp-template.md`
 
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUSOCI --filename` for the artefact filename.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> AUSOCI {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the AU regime to `_partials/document-control-au.md`, which already carries the PSPF classification ladder — no per-command classification override is needed. Note that SOCI protected information is not the same as PSPF PROTECTED classification; document both where relevant.
 

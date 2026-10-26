@@ -193,17 +193,18 @@ If **IS** or **IS BORDERLINE**: continue.
 
 ## 6. MHRA SaMD / AIaMD Programme considerations
 
-| MHRA AIaMD Programme Work Package | Applicable to this product? | Status / commitment |
+| MHRA Change Programme Work Package | Applicable to this product? | Status / commitment |
 |---|---|---|
-| WP1 Software | [Yes / N/A] | |
-| WP2 Risk classification | [Yes / N/A] | |
-| WP3 Innovative devices | [Yes / N/A] | |
-| WP4 Cyber Security | [Yes / N/A] | |
-| WP6 AIaMD | [Yes / N/A — if AI/ML] | |
-| WP9 Cyber Security (AI specific) | [Yes / N/A] | |
-| WP11 Best Practice for Manufacturers | [Yes / N/A] | |
+| WP1 Qualification | [Yes / N/A] | |
+| WP2 Classification | [Yes / N/A] | |
+| WP3 Premarket requirements | [Yes / N/A] | |
+| WP4 Post Market | [Yes / N/A] | |
+| WP5 Cyber Secure Medical Devices | [Yes / N/A] | |
+| WP9 AI Rigour | [Yes / N/A — if AI/ML] | |
+| WP10 Project Glass Box (AI interpretability) | [Yes / N/A — if AI/ML] | |
+| WP11 Project Ship of Theseus (AI adaptivity) | [Yes / N/A — if AI/ML] | |
 
-[Update WP list and status from the MHRA SaMD/AIaMD page at assessment date; the programme is publishing incrementally.]
+[Work package names follow the MHRA Software and AI as a Medical Device Change Programme roadmap. WP6–WP8 have no discrete deliverables; their content was absorbed into the others. Update the WP list and status from the roadmap at the assessment date; the programme is publishing incrementally.]
 
 ---
 
@@ -232,17 +233,20 @@ If **IS** or **IS BORDERLINE**: continue.
 
 | Event | Reporting timeline | Recipient |
 |---|---|---|
-| Serious incident (UK) | Within 10 days (15 for non-serious public health concern) | MHRA |
-| Serious incident (EU) | Within 15 days (10 for serious public-health threat; 2 for death/serious deterioration) | Competent Authority via EUDAMED |
+| Serious incident (UK) | No later than 15 days after awareness (10 days for death or unanticipated serious deterioration; 2 days for a serious public health threat) | MHRA |
+| Serious incident (EU) | No later than 15 days after awareness (10 days for death or unanticipated serious deterioration; 2 days for a serious public health threat) — EU MDR Article 87 | Competent Authority via EUDAMED |
 | Field Safety Corrective Action (FSCA) | Without undue delay | MHRA / Competent Authority |
 
 ### 8.3 Periodic Safety Update Report (PSUR)
 
-| Class | Cadence |
+| Class | Cadence (EU MDR Article 86) |
 |---|---|
-| Class III | Annual |
-| Class IIa / IIb | Biennial (Class IIa, on request); biennial (Class IIb) — verify against EU MDR Article 86 |
+| Class III | At least annually |
+| Class IIb | At least annually |
+| Class IIa | When necessary and at least every two years |
 | Class I | Not required (but PMS report under EU MDR Article 85 is) |
+
+[For GB placement, confirm the periodic reporting schedule against the MHRA post-market surveillance requirements in force from 16 June 2025.]
 
 ### 8.4 Trend reporting
 

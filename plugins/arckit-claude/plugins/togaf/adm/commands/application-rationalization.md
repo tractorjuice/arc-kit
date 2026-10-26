@@ -8,6 +8,8 @@ handoffs:
     description: Analyze capability gaps from rationalization decisions
   - command: transition-architecture
     description: Plan migration work packages for rationalized applications
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect rationalise the application portfolio using **keep/merge/replace/retire** decisions. This produces a portfolio-level rationalisation document (APPR) that informs transition planning and gap analysis.
@@ -71,17 +73,34 @@ Identify the target project from the hook context or user input. Extract the pro
 
 ### 4. Gather Context via Questions
 
-**Gathering rules** (apply to all user questions in this command):
+Use the **AskUserQuestion** tool only for what the arguments, the application inventory and the other project artefacts do not already answer.
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions total.** After that, infer the best answer from available context.
-- If still ambiguous after 2 rounds, make a reasonable choice and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-**Key questions** (ask only if context is insufficient):
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
-- What is the target timeframe for portfolio rationalisation? (Default: 24 months)
-- What are the key drivers for rationalisation? (e.g., cost reduction, cloud migration, security compliance)
-- Are there any applications that are non-negotiable (must keep or must retire)?
+**Question 1** — header: `Timeframe`, multiSelect: false
+> "What is the target timeframe for portfolio rationalisation?"
+
+- **24 months (Recommended)**: Time to replace or retire most applications without overloading delivery teams
+- **12 months**: Aggressive — suits a small portfolio or a hard contract or support deadline
+- **36 months**: Gradual — suits a large portfolio with many dependencies
+
+**Question 2** — header: `Drivers`, multiSelect: true
+> "What are the key drivers for rationalisation?"
+
+- **Cost reduction (Recommended)**: Cut licence, support and infrastructure cost
+- **Cloud migration**: Move workloads to cloud platforms and retire on-premises estate
+- **Security and compliance**: Remove unsupported or non-compliant applications
+- **Technical debt**: Replace legacy platforms that are expensive to change
+
+**Question 3** — header: `Fixed apps`, multiSelect: false
+> "Are any applications non-negotiable (must keep or must retire)? Name them under Other."
+
+- **Take them from project records (Recommended)**: Treat keep or retire decisions already recorded in ADRs, the board charter or external documents as fixed; decide every other application on its scores
+- **No fixed decisions**: Decide every application on its scores, including any an earlier decision covered
 
 ### 5. Generate Rationalisation Decisions
 
@@ -169,7 +188,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields*:
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-APPR-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Application Rationalisation"
 - `[COMMAND]` → "arckit.application-rationalization"
@@ -228,7 +247,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-APPR-v1.0.md
+projects/{P}/ARC-{P}-APPR-v{VERSION}.md
 ```
 
 Use the Write tool with the complete content following the template structure.
@@ -240,8 +259,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Application Rationalisation Complete
 
-**Document**: `projects/{P}/ARC-{P}-APPR-v1.0.md`
-**Document ID**: ARC-{P}-APPR-v1.0
+**Document**: `projects/{P}/ARC-{P}-APPR-v{VERSION}.md`
+**Document ID**: ARC-{P}-APPR-v{VERSION}
 
 ### Decision Summary
 | Decision | Count | Applications |
@@ -277,7 +296,7 @@ After writing the file, show a concise summary (NOT the full document):
 3. Begin gap analysis for replaced applications: `/arckit-togaf-adm:gap-analysis`
 4. Plan transition work packages: `/arckit-togaf-adm:transition-architecture`
 
-**File location**: `projects/{P}/ARC-{P}-APPR-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-APPR-v{VERSION}.md`
 ```
 
 ## Important Notes

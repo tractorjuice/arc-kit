@@ -11,6 +11,10 @@ handoffs:
     description: Personal-information processing of Indigenous data inherits the PIA controls plus OCAP-derived restrictions.
   - command: ca-atip
     description: ATIP severance design must reflect OCAP access and control determinations for Indigenous datasets.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -42,14 +46,14 @@ You are an enterprise architect generating a First Nations OCAP® sovereignty as
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, DR, and DMOD artefacts (if present)
+   - The project's REQ (including its `DR-*` data requirements) and DATA (data model) artefacts (if present)
    - The project's `ARC-<id>-PIA-v*.md` if the `ca-pia` command has run
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/ca-ocap-template.md` (user override)
    - **Then**, `.arckit/templates/ca-ocap-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-ocap-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> OCAP --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> OCAP {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed. Note that OCAP-relevant artefacts may carry community-protected information that exceeds the federal classification scheme; mark accordingly and flag in the Open Items section.
 5. Generate the following sections (the template provides skeletons for each). **The FNIGC Pre-Engagement Confirmation gate in step 5.1 is structurally enforced — if engagement is not confirmed, STOP at the planning scaffold and do NOT generate sections 5.2–5.10.**
 
@@ -68,7 +72,7 @@ You are an enterprise architect generating a First Nations OCAP® sovereignty as
         - Flags the assessment header `Status: PLANNING SCAFFOLD — INCOMPLETE`
         - Does **NOT** generate a self-declared OCAP register, DSA terms, or co-governance arrangement
         - Stops generating subsequent sections and surfaces a single Open Item: "FNIGC pre-engagement required before this assessment can be completed."
-      - If the answer is `N/A`, the architect must justify in writing why no Indigenous data is in scope (with cross-reference to DR and DMOD); if justification is sound, the artefact is closed with an N/A finding and no further sections are generated.
+      - If the answer is `N/A`, the architect must justify in writing why no Indigenous data is in scope (with cross-reference to the `DR-*` requirements and the DATA artefact); if justification is sound, the artefact is closed with an N/A finding and no further sections are generated.
 
    2. **Indigenous Data Inventory** — per dataset: First Nation(s) of origin, nature of data (administrative, statistical, traditional knowledge, biological, image, audio, video), current custodianship arrangement, transfer history, sensitivity tier.
 

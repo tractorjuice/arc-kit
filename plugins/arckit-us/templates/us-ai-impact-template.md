@@ -37,7 +37,7 @@
 | **Population Affected** | [Federal employees / public / regulated cohort] |
 | **Build / Buy / GenAI Wrapper** | [In-house / Vendor-built / Off-the-shelf with custom prompts] |
 | **Cross-ref AI RMF** | [ARC-{P}-AIRMF-v*] |
-| **Cross-ref PIA (if PII)** | [ARC-{P}-PIA-v*] |
+| **Cross-ref PIA (if PII)** | [ARC-{P}-USPIA-v*] |
 | **CAIO** | [Name + role] |
 | **Use-Case Owner** | [Name + role] |
 | **Assessment Date** | [YYYY-MM-DD] |
@@ -101,24 +101,38 @@ Per OMB M-24-10 §5 + Appendix II. Required for any AI determined rights-impacti
 
 | # | Practice | Status | Evidence | Action |
 |---|----------|--------|----------|--------|
-| 1 | Complete AI Impact Assessment (this artefact) | [Implemented / Planned / Not Applicable] | [Self-reference] | [N/A] |
-| 2 | Test the AI for performance in a real-world context | [Implemented / Planned / Not Applicable] | [Test report ref] | [Action] |
-| 3 | Independently evaluate the AI | [Implemented / Planned / Not Applicable] | [Evaluator + report ref] | [Action] |
-| 4 | Conduct ongoing monitoring | [Implemented / Planned / Not Applicable] | [Monitoring plan ref] | [Action] |
-| 5 | Regularly evaluate risks from the AI's use | [Implemented / Planned / Not Applicable] | [Reassessment cadence] | [Action] |
-| 6 | Mitigate emerging risks to rights and safety | [Implemented / Planned / Not Applicable] | [Mitigation register] | [Action] |
-| 7 | Ensure adequate human training and assessment for AI use | [Implemented / Planned / Not Applicable] | [Training records] | [Action] |
-| 8 | Provide additional human oversight, intervention, and accountability as part of decisions or actions that could result in a significant impact on rights or safety | [Implemented / Planned / Not Applicable] | [Oversight design] | [Action] |
-| 9 | Provide public notice and plain-language documentation through the agency's AI use-case inventory | [Implemented / Planned / Not Applicable] | [federal.ai.gov entry] | [Action] |
-| 10 | Notify negatively affected individuals — provide a means to opt-out where practicable and a means to access human consideration and remedy | [Implemented / Planned / Not Applicable] | [Notice text + opt-out mechanism] | [Action] |
-| 11 | Maintain options to opt-out from the AI-enabled decision in favour of a human alternative (where practicable) | [Implemented / Planned / Not Applicable] | [Opt-out design] | [Action] |
-| 12 | Provide consultation and feedback opportunities for the public and affected communities | [Implemented / Planned / Not Applicable] | [Consultation record] | [Action] |
-| 13 | Maintain consistency with broader privacy and civil-rights laws (Privacy Act, ADA, Title VI, etc.) | [Implemented / Planned / Not Applicable] | [Legal review] | [Action] |
-| 14 | Conduct an equity assessment for disparate impact on protected populations | [Implemented / Planned / Not Applicable] | [Equity assessment ref] | [Action] |
+| 1 | Complete AI Impact Assessment (this artefact) | [Met / Partial / Not Met / Not Applicable] | [Self-reference] | [N/A] |
+| 2 | Test the AI for performance in a real-world context | [Met / Partial / Not Met / Not Applicable] | [Test report ref] | [Action] |
+| 3 | Independently evaluate the AI | [Met / Partial / Not Met / Not Applicable] | [Evaluator + report ref] | [Action] |
+| 4 | Conduct ongoing monitoring | [Met / Partial / Not Met / Not Applicable] | [Monitoring plan ref] | [Action] |
+| 5 | Regularly evaluate risks from the AI's use | [Met / Partial / Not Met / Not Applicable] | [Reassessment cadence] | [Action] |
+| 6 | Mitigate emerging risks to rights and safety | [Met / Partial / Not Met / Not Applicable] | [Mitigation register] | [Action] |
+| 7 | Ensure adequate human training and assessment for AI use | [Met / Partial / Not Met / Not Applicable] | [Training records] | [Action] |
+| 8 | Provide additional human oversight, intervention, and accountability as part of decisions or actions that could result in a significant impact on rights or safety | [Met / Partial / Not Met / Not Applicable] | [Oversight design] | [Action] |
+| 9 | Provide public notice and plain-language documentation through the agency's AI use-case inventory | [Met / Partial / Not Met / Not Applicable] | [federal.ai.gov entry] | [Action] |
+| 10 | Notify negatively affected individuals — provide a means to opt-out where practicable and a means to access human consideration and remedy | [Met / Partial / Not Met / Not Applicable] | [Notice text + opt-out mechanism] | [Action] |
+| 11 | Maintain options to opt-out from the AI-enabled decision in favour of a human alternative (where practicable) | [Met / Partial / Not Met / Not Applicable] | [Opt-out design] | [Action] |
+| 12 | Provide consultation and feedback opportunities for the public and affected communities | [Met / Partial / Not Met / Not Applicable] | [Consultation record] | [Action] |
+| 13 | Maintain consistency with broader privacy and civil-rights laws (Privacy Act, ADA, Title VI, etc.) | [Met / Partial / Not Met / Not Applicable] | [Legal review] | [Action] |
+| 14 | Conduct an equity assessment for disparate impact on protected populations | [Met / Partial / Not Met / Not Applicable] | [Equity assessment ref] | [Action] |
 
 ---
 
-## 4. M-25-21 Acquisition Controls
+## 4. Waiver Posture
+
+[Complete one row for every Section 3 practice marked Partial or Not Met that the agency intends to proceed without. If none, state "No waivers sought".]
+
+**Basis**: the agency CAIO may waive one or more minimum practices for a specific AI application or component only by a written determination, based on a system-specific and context-specific risk assessment, that meeting the practice would increase risks to safety or rights overall, or would create an unacceptable impediment to critical agency operations. The CAIO may not delegate this. Each waiver is tracked centrally, reassessed when the conditions or context of use change significantly, reported to OMB within 30 days of being granted or revoked, certified as still valid every year, and summarised publicly with its justification. Source: OMB M-24-10 §5(a)(ii) and §5(c)(iii); OMB M-25-21 (April 2025), which rescinded and replaced M-24-10, keeps the same test in §4(a)(ii)–(iv).
+
+**Waivers Sought**: [Yes — N practices / No waivers sought]
+
+| Practice # (Section 3) | Practice Waived | Ground (Increases Risk to Safety or Rights Overall / Unacceptable Impediment to Critical Operations) | Risk Assessment Reference | CAIO Written Determination (Date, Reference) | Compensating Measures | OMB Report Date (≤ 30 Days) | Annual Certification Due | Public Summary | Revocation Triggers |
+|------------------------|-----------------|--------------------------------------------------------------------------------------------------------|---------------------------|----------------------------------------------|-----------------------|------------------------------|--------------------------|----------------|---------------------|
+| [#] | [Practice] | [Ground] | [Ref] | [YYYY-MM-DD, ref] | [Measures that reduce the risk the practice addressed] | [YYYY-MM-DD] | [YYYY-MM-DD] | [URL / Pending] | [Changes in conditions or context that would force reassessment] |
+
+---
+
+## 5. M-25-21 Acquisition Controls
 
 [Applies when the AI system is procured rather than built in-house. Document contract clauses, evaluation criteria, and vendor obligations per OMB M-25-21.]
 
@@ -142,7 +156,7 @@ Per OMB M-24-10 §5 + Appendix II. Required for any AI determined rights-impacti
 
 ---
 
-## 5. Public Disclosure Obligations
+## 6. Public Disclosure Obligations
 
 | Element | Status | Notes |
 |---------|--------|-------|
@@ -168,12 +182,13 @@ Per OMB M-24-10 §5 + Appendix II. Required for any AI determined rights-impacti
 
 ---
 
-## 6. Agency CAIO Sign-Off
+## 7. Agency CAIO Sign-Off
 
 | Sign-Off Item | CAIO Statement |
 |---------------|----------------|
 | Determination of rights-/safety-impacting concurred | [Concur / Concur with conditions / Do not concur] |
 | Minimum risk-management practices reviewed | [Reviewed and approved / Conditional / Returned for revision] |
+| Waivers (Section 4) determined in writing by the CAIO | [None sought / N granted — determination references / Refused] |
 | Acquisition controls (where applicable) reviewed | [Reviewed and approved / Conditional / N/A] |
 | Public disclosure plan reviewed | [Reviewed and approved / Conditional] |
 
@@ -181,7 +196,7 @@ Per OMB M-24-10 §5 + Appendix II. Required for any AI determined rights-impacti
 
 ---
 
-## 7. References
+## 8. References
 
 | Reference | Citation | URL |
 |-----------|----------|-----|
@@ -192,7 +207,7 @@ Per OMB M-24-10 §5 + Appendix II. Required for any AI determined rights-impacti
 
 ---
 
-## 8. Approvals
+## 9. Approvals
 
 | Role | Name | Signature | Date |
 |------|------|-----------|------|

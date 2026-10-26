@@ -96,18 +96,31 @@ Read the DPIA template:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/dpia-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/dpia-template.md` exists in the project root, then `.arckit/templates/dpia-template.md`
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/dpia-template.md` (default)
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
 
 > **Tip**: Users can customize templates with `/arckit:customize dpia`
 
-This template has 16 major sections and uses the ICO's 9-criteria screening checklist.
+This template has 16 major sections. Its screening checklist covers the three Article 35(3) cases, the ICO's list of processing likely to result in high risk (published under Article 35(4)), and the nine screening criteria from the European DPIA guidelines (Article 29 Working Party WP248, endorsed by the EDPB) that the ICO cites. The nine criteria are not the ICO's own.
 
-### Step 4: ICO 9-Criteria Screening (Automated)
+### Step 4: DPIA Screening (Automated)
 
-Based on the data model analysis, automatically score the ICO 9 criteria:
+Based on the data model analysis, screen in three passes, in this order.
+
+**A. Article 35(3) cases** (a DPIA is always required):
+
+- Systematic and extensive evaluation of people based on automated processing, including profiling, with decisions that produce legal or similarly significant effects
+- Large-scale processing of special category data (Article 9) or criminal convictions and offences data (Article 10)
+- Systematic monitoring of a publicly accessible area on a large scale
+
+**B. The ICO's list of processing likely to result in high risk**:
+
+- Always requires a DPIA: denial of service (decisions on access to a product, service, opportunity or benefit based to any extent on automated decision-making or involving special category data); large-scale profiling; data matching from multiple sources; targeting of children or other vulnerable individuals (marketing, profiling or other automated decision-making, or online services offered directly to children); risk of physical harm if the data is breached
+- Requires a DPIA when combined with any of the nine criteria below: innovative technology (including AI); biometric data used to uniquely identify someone; genetic data; invisible processing (relying on the Article 14(5)(b) exception); tracking of geolocation or behaviour
+
+**C. The nine criteria from the European DPIA guidelines** (the detection rules in the right-hand column are ArcKit heuristics; confirm each one against the evidence):
 
 | # | Criterion | Scoring Logic |
 |---|-----------|---------------|
@@ -121,26 +134,32 @@ Based on the data model analysis, automatically score the ICO 9 criteria:
 | 8 | **Innovative technology** | YES if: AI/ML, blockchain, biometrics, new tech mentioned |
 | 9 | **Prevents rights exercise** | YES if: No mechanism for SAR/deletion/portability in data model |
 
-**DPIA Decision Rules**:
+**DPIA Decision Rules** (apply the first that matches):
 
-- **2+ criteria met**: DPIA REQUIRED (UK GDPR Article 35)
-- **1 criterion met**: DPIA RECOMMENDED (good practice)
-- **0 criteria met**: DPIA NOT REQUIRED (but consider Data Privacy Notice)
+- **Any Article 35(3) case applies**: DPIA REQUIRED (UK GDPR Article 35(3))
+- **Any item on the ICO's list applies** (on its own, or combined with a criterion where the ICO requires a combination): DPIA REQUIRED (UK GDPR Article 35, ICO list)
+- **2+ criteria met**: DPIA REQUIRED. In most cases two criteria together mean a DPIA is needed. The ICO says this is not a strict rule: a decision not to do one needs documented reasons
+- **1 criterion met**: DPIA RECOMMENDED. One criterion can be enough to need a DPIA, and the ICO says doing one is good practice. Judge whether the processing is likely to result in a high risk, and record why
+- **0 criteria met, and no Article 35(3) case or ICO-listed processing**: DPIA NOT REQUIRED on screening. The controller still decides whether the processing is likely to result in a high risk, taking into account its nature, scope, context and purposes. Record the decision and the reasons, including the DPO's advice. If in doubt, the ICO recommends doing a DPIA
 
 Show the screening results to the user:
 
 ```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 DPIA Screening Results (ICO 9 Criteria)
+📋 DPIA Screening Results (Article 35(3), ICO list, nine criteria)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+Article 35(3) cases: none detected
+ICO list of high-risk processing: none detected
+
+Nine criteria (European DPIA guidelines):
 [X] Criterion 4: Sensitive data (Special category data found: Health, Ethnicity)
 [X] Criterion 7: Vulnerable subjects (Children identified in stakeholders)
 [ ] Criterion 1: Evaluation/scoring (Not detected)
 ... [continue for all 9 criteria]
 
 **Screening Score**: 2/9 criteria met
-**Decision**: ✅ DPIA REQUIRED under UK GDPR Article 35
+**Decision**: ✅ DPIA REQUIRED under UK GDPR Article 35 (two criteria met)
 
 Proceeding to generate full DPIA...
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -154,15 +173,9 @@ If the screening shows DPIA NOT REQUIRED, ask the user if they want to proceed a
 
 Generate the DPIA by:
 
-1. **Detect version**: Before generating the document ID, check if a previous version exists:
-   - Look for existing `ARC-{PROJECT_ID}-DPIA-v*.md` files in the project directory
-   - **If no existing file**: Use VERSION="1.0"
-   - **If existing file found**:
-     - Read the existing document to understand its scope
-     - Compare against current data model and requirements
-     - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed risk scores, updated mitigations, corrected details
-     - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new data categories, new processing purposes, fundamentally different risk landscape
-   - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+1. **Detect version**: follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-{PROJECT_ID}-DPIA-v*.md` in the project directory, comparing against the current data model and requirements. For a DPIA:
+   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed risk scores, updated mitigations, corrected details
+   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new data categories, new processing purposes, fundamentally different risk landscape
 
 2. **Auto-populate Document Control**:
    - **Document ID**: `ARC-{PROJECT_ID}-DPIA-v{VERSION}` (e.g., `ARC-001-DPIA-v1.0`)
@@ -224,15 +237,17 @@ Generate the DPIA by:
      ```text
      ⚠️  ICO Prior Consultation Required:
      - Risk DPIA-003 (Unauthorized profiling of children) remains HIGH after mitigations
-     - Contact ICO before processing: https://ico.org.uk/make-a-complaint/your-personal-information-concerns/
+     - Consult the ICO before processing starts: https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/do-we-need-to-consult-the-ico/
      ```
+
+   - The ICO gives written advice; it does not approve a DPIA. It aims to respond within eight weeks, extendable to 14 weeks in complex cases. Its response may say the processing can go ahead, advise further mitigation, issue an official warning, or limit or ban the processing. Record the outcome in Section 7 in those terms, never as an ICO approval
 
 10. **Section 8: Sign-off and Approval**:
 
 - Leave signature fields blank (to be signed by Data Controller, DPO, Senior Responsible Owner)
 
 11. **Section 9: Review and Monitoring**:
-    - Set review triggers: 12 months, major system changes, data breaches, ICO guidance updates
+    - Set review triggers: any change in the risk the processing represents (UK GDPR Article 35(11) requires a review at least then), major system changes, data breaches, ICO guidance updates, and ArcKit's default 12-month periodic review
 
 12. **Section 10: Traceability**:
     - Link to all source artifacts (ARC-*-DATA-*.md, ARC-*-REQ-*.md, ARC-*-STKE-*.md, ARC-000-PRIN-*.md, ARC-*-RISK-*.md)
@@ -316,7 +331,7 @@ If YES:
 📊 Assessment Summary
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-**ICO Screening**: {N}/9 criteria met → DPIA REQUIRED
+**DPIA Screening**: {Article 35(3) case or ICO-listed processing, if any}; {N}/9 criteria met → {DPIA REQUIRED / DPIA RECOMMENDED / DPIA NOT REQUIRED}
 
 **Processing Overview**:
 - Data Subjects: {list data subject categories}
@@ -349,7 +364,7 @@ If YES:
 1. Review and approve DPIA (Data Controller, DPO, SRO signatures)
 2. {If ICO consultation needed: Contact ICO before processing}
 3. Implement recommended mitigations
-4. Establish 12-month review cycle
+4. Review the DPIA whenever the risk changes (UK GDPR Article 35(11)), and at least every 12 months (ArcKit's default)
 5. {If children's data: Implement age verification and parental consent}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -372,8 +387,9 @@ If YES:
 📚 References
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-- UK GDPR Article 35: https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/
+- UK GDPR Article 35: https://www.legislation.gov.uk/eur/2016/679/article/35
 - ICO DPIA Guidance: https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/what-is-a-dpia/
+- ICO When do we need to do a DPIA?: https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/when-do-we-need-to-do-a-dpia/
 - ICO Prior Consultation: https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/do-we-need-to-consult-the-ico/
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -381,13 +397,13 @@ If YES:
 
 ## Important Notes
 
-2. **Legal Requirement**: A DPIA is **mandatory** under UK GDPR Article 35 when processing is likely to result in high risk to individuals. Failure to conduct a DPIA when required can result in ICO enforcement action.
+2. **Legal Requirement**: A DPIA is **mandatory** under UK GDPR Article 35 when processing is likely to result in high risk to individuals. Failure to conduct a DPIA when required can result in ICO enforcement action. The ICO says its DPIA guidance is under review because of changes made by the Data (Use and Access) Act 2025: check the ICO pages before relying on a detail.
 
 3. **Use Write Tool**: DPIAs are large documents (typically 3,000-10,000 words). You MUST use the Write tool to create the file. Do NOT output the full DPIA in the chat.
 
 4. **Risk Assessment Focus**: DPIA risks focus on **impact on individuals** (privacy harm, discrimination, physical harm, financial loss, reputational damage), NOT organizational risks. This is different from the risk register.
 
-5. **Screening is Critical**: Always perform the ICO 9-criteria screening first. If the screening shows DPIA not required, don't generate a full DPIA unless the user explicitly requests it.
+5. **Screening is Critical**: Always perform the Step 4 screening first (Article 35(3) cases, the ICO's list, then the nine criteria from the European DPIA guidelines). If the screening shows DPIA not required, don't generate a full DPIA unless the user explicitly requests it.
 
 6. **Data Model Dependency**: A DPIA cannot be generated without a data model. The data model is the source of truth for what personal data is being processed.
 
@@ -395,7 +411,7 @@ If YES:
 
 8. **Mitigation Sources**: Extract security controls from the Secure by Design assessment as DPIA mitigations. This creates traceability from risks → mitigations → security controls.
 
-9. **ICO Consultation Threshold**: If ANY residual risk remains HIGH after mitigations, ICO prior consultation is required before processing can begin.
+9. **ICO Consultation Threshold**: If ANY residual risk remains HIGH after mitigations, ICO prior consultation is required before processing can begin (UK GDPR Article 36). The ICO responds with written advice, not an approval.
 
 10. **Children's Data**: If processing children's data, the DPIA must include additional assessment of age verification, parental consent, best interests, and child-friendly privacy notices.
 
@@ -403,18 +419,19 @@ If YES:
 
 12. **Classification**: DPIAs contain sensitive information about data protection risks and vulnerabilities. Always classify as **OFFICIAL-SENSITIVE** at minimum.
 
-13. **Review Cycle**: DPIAs must be reviewed regularly (recommended: 12 months) and updated when:
+13. **Review Cycle**: UK GDPR Article 35(11) requires a review at least when the risk represented by the processing changes. The 12-month periodic review is ArcKit's default, not a legal requirement. Review and update the DPIA when:
     - New processing activities are added
     - Data protection risks change
     - ICO guidance is updated
     - A data breach occurs
+    - The 12-month review date is reached
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
 
 ## Success Criteria
 
 - ✅ DPIA document created at `projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v${VERSION}.md`
-- ✅ ICO 9-criteria screening performed and documented
+- ✅ DPIA screening (Article 35(3) cases, ICO list, nine criteria) performed and documented
 - ✅ All personal data and special category data from data model included
 - ✅ Processing purposes extracted from requirements
 - ✅ Data subjects and vulnerable groups identified from stakeholders
@@ -428,7 +445,7 @@ If YES:
 - ✅ Traceability links to data model, requirements, stakeholders, principles, risk register
 - ✅ Summary output shows key metrics, risks, and next steps
 - ✅ Document classified as OFFICIAL-SENSITIVE
-- ✅ 12-month review cycle established
+- ✅ Review triggers set (risk change, per Article 35(11)) and ArcKit's default 12-month review date set
 
 ## Example Usage
 

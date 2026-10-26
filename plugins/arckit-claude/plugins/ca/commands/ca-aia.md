@@ -11,6 +11,10 @@ handoffs:
     description: Material AIA outcomes (vendor selection, autonomy tier, recourse design) warrant Architecture Decision Records.
   - command: ca-pia
     description: Personal-information feeding the algorithmic system inherits PIA controls; AIA depth must match PIA depth.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -37,13 +41,13 @@ You are an enterprise architect generating a Canada Algorithmic Impact Assessmen
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
    - The project's REQ artefact (in particular any NFR-AI / NFR-DEC requirements covering automated decision-making, bias, contestability, or human override)
    - The project's `ARC-<id>-PIA-v*.md` (`ca-pia` artefact) where present — AIA depth must match PIA depth
-   - The project's DR and DMOD artefacts (training-data lineage, decision boundary inputs)
+   - The project's REQ (its `DR-*` data requirements) and DATA (data model) artefacts, for training-data lineage and decision boundary inputs
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/ca-aia-template.md` (user override)
    - **Then**, `.arckit/templates/ca-aia-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-aia-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AIA --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> AIA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **System Description** — purpose of the system, the specific decisions automated (or assisted), training-data lineage (sources, vintage, licensing), vendor / open-source provenance (model family, supplier, hosting jurisdiction), and the stewardship chain (owner, operator, accountable executive).

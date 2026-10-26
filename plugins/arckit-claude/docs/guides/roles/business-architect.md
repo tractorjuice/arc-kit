@@ -13,23 +13,23 @@ The Business Architect bridges business strategy and technology architecture. Yo
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit:stakeholders` | Analyse stakeholder drivers, goals, and measurable outcomes | [Guide](#docs/guides/stakeholder-analysis.md) |
-| `/arckit:sobc` | Create Strategic Outline Business Case (Green Book 5-case model) | [Guide](#docs/guides/sobc.md) |
-| `/arckit:strategy` | Synthesise strategic artifacts into executive-level Architecture Strategy | [Guide](#docs/guides/strategy.md) |
-| `/arckit:roadmap` | Create multi-year strategic roadmap with capability evolution | [Guide](#docs/guides/roadmap.md) |
-| `/arckit:platform-design` | Design multi-sided platform strategy (Government as a Platform, marketplaces) | [Guide](#docs/guides/platform-design.md) |
+| `/arckit:stakeholders` | Analyse stakeholder drivers, goals, and measurable outcomes | [Guide](../stakeholders.md) |
+| `/arckit:sobc` | Create Strategic Outline Business Case (Green Book 5-case model) | [Guide](../sobc.md) |
+| `/arckit:strategy` | Synthesise strategic artifacts into executive-level Architecture Strategy | [Guide](../strategy.md) |
+| `/arckit:roadmap` | Create multi-year strategic roadmap with capability evolution | [Guide](../roadmap.md) |
+| `/arckit:platform-design` | Design multi-sided platform strategy (Government as a Platform, marketplaces) | [Guide](../platform-design.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit:plan` | Create or review project plan and timeline | [Guide](#docs/guides/plan.md) |
-| `/arckit:principles` | Contribute business-aligned architecture principles | [Guide](#docs/guides/principles.md) |
-| `/arckit:requirements` | Review business requirements (BR-xxx) for alignment with strategy | [Guide](#docs/guides/requirements.md) |
-| `/arckit:wardley` | Review Wardley Maps for strategic positioning | [Guide](#docs/guides/wardley.md) |
-| `/arckit:risk` | Review business risks and strategic mitigations | [Guide](#docs/guides/risk.md) |
-| `/arckit:presentation` | Present strategic findings to boards | [Guide](#docs/guides/presentation.md) |
-| `/arckit:story` | Review project narrative for business alignment | [Guide](#docs/guides/story.md) |
+| `/arckit:plan` | Create or review project plan and timeline | [Guide](../plan.md) |
+| `/arckit:principles` | Contribute business-aligned architecture principles | [Guide](../principles.md) |
+| `/arckit:requirements` | Review business requirements (BR-xxx) for alignment with strategy | [Guide](../requirements.md) |
+| `/arckit:wardley` | Review Wardley Maps for strategic positioning | [Guide](../wardley.md) |
+| `/arckit:risk` | Review business risks and strategic mitigations | [Guide](../risk.md) |
+| `/arckit:presentation` | Present strategic findings to boards | [Guide](../presentation.md) |
+| `/arckit:story` | Review project narrative for business alignment | [Guide](../story.md) |
 
 ## Typical Workflow
 
@@ -58,7 +58,7 @@ plan → principles → stakeholders → risk → sobc → requirements → plat
 
 - `ARC-{PID}-STKE-v*.md` — Stakeholder analysis
 - `ARC-{PID}-SOBC-v*.md` — Strategic Outline Business Case
-- `ARC-{PID}-STGY-v*.md` — Architecture strategy
+- `ARC-{PID}-STRAT-v*.md` — Architecture strategy
 - `ARC-{PID}-ROAD-v*.md` — Strategic roadmap
 - `ARC-{PID}-PLAT-v*.md` — Platform design (if applicable)
 

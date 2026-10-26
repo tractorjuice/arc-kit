@@ -1,4 +1,4 @@
-# FedRAMP Readiness Assessment Report (3PAO)
+# FedRAMP Readiness Self-Assessment (3PAO RAR Format)
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:us-fedramp-readiness`
 
@@ -17,7 +17,9 @@
 
 ## Executive Summary
 
-[Two to three paragraphs: CSO under assessment, baseline targeted, the 3PAO firm conducting the assessment, the overall readiness recommendation (FedRAMP-Ready / Not Ready / Conditional), and the top three gaps by severity.]
+> **Status of this document**: an internal self-assessment prepared by the CSP in the format of the FedRAMP Readiness Assessment Report (RAR). It is not the official RAR, which a FedRAMP-recognized 3PAO prepares, owns and attests, and it cannot confer FedRAMP Ready or any other FedRAMP status. FedRAMP has accepted no new FedRAMP Ready submissions since 28 July 2026 (FedRAMP Consolidated Rules for 2026).
+
+[Two to three paragraphs: CSO under assessment, baseline targeted, who prepared this self-assessment, the 3PAO engaged or planned (if any), the readiness verdict for 3PAO assessment (Ready / Conditionally Ready / Not Ready), and the top three gaps by severity.]
 
 ---
 
@@ -30,8 +32,9 @@
 | **Service Model** | [IaaS / PaaS / SaaS] |
 | **Baseline Targeted** | [Moderate / High] |
 | **Authorisation Path** | [Agency / JAB / Tailored] |
-| **3PAO Firm** | [3PAO name + A2LA accreditation #] |
-| **Assessment Period** | [YYYY-MM-DD to YYYY-MM-DD] |
+| **Prepared By** | [CSP readiness lead — name + role] |
+| **3PAO Engaged (planned or contracted)** | [3PAO name + A2LA accreditation # / Not yet engaged] |
+| **Self-Assessment Period** | [YYYY-MM-DD to YYYY-MM-DD] |
 | **Sponsoring Agency** (if Agency path) | [Agency] |
 | **Target ATO Date** | [YYYY-MM-DD] |
 
@@ -70,8 +73,8 @@
 
 Gaps identified during the readiness assessment that must be remediated before authorisation.
 
-| Control ID | Gap Description | Severity (High / Mod / Low) | Mitigation Plan | Target Completion (POA&M Target) | Owner |
-|-----------|-----------------|------------------------------|-----------------|----------------------------------|-------|
+| Control ID | Gap Description | Severity (Critical / High / Moderate / Low) | Mitigation Plan | Target Completion (POA&M Target) | Owner |
+|-----------|-----------------|---------------------------------------------|-----------------|----------------------------------|-------|
 | [AC-2] | [Account management process not fully automated; manual provisioning steps remain.] | [Moderate] | [Automate provisioning via IdP workflow; remove manual steps.] | [YYYY-MM-DD] | [Platform team] |
 | [AU-6] | [Audit log review cadence not documented for the application tier.] | [Low] | [Document review SOP; SOC ack daily.] | [YYYY-MM-DD] | [SOC] |
 | [SC-7] | [WAF rule set not validated against OWASP top 10.] | [High] | [Engage AppSec; tune WAF; rerun validation.] | [YYYY-MM-DD] | [AppSec] |
@@ -84,9 +87,9 @@ Gaps identified during the readiness assessment that must be remediated before a
 | Artefact | Control ID(s) | Evidence Status (Complete / Partial / Missing) | Location / Link |
 |----------|---------------|------------------------------------------------|-----------------|
 | System Security Plan (SSP) | [All] | [Complete] | [ARC-{P}-FRSSP-v*] |
-| FIPS 199 Categorization | [RA-2] | [Complete] | [ARC-{P}-FISMA-v*] |
-| Tailored 800-53 Control Set | [All] | [Complete] | [ARC-{P}-NIST53-v*] |
-| Privacy Impact Assessment | [PT family] | [Complete] | [ARC-{P}-PIA-v*] |
+| FIPS 199 Categorization | [RA-2] | [Complete] | [ARC-{P}-FIPS199-v*] |
+| Tailored 800-53 Control Set | [All] | [Complete] | [ARC-{P}-NIST-v*] |
+| Privacy Impact Assessment | [PT family] | [Complete] | [ARC-{P}-USPIA-v*] |
 | Contingency Plan | [CP-2] | [Complete] | [Reference] |
 | Incident Response Plan | [IR-8] | [Complete] | [Reference] |
 | Configuration Management Plan | [CM-9] | [Complete] | [Reference] |
@@ -100,9 +103,24 @@ Gaps identified during the readiness assessment that must be remediated before a
 
 ---
 
-## 5. 3PAO RAR Criteria Checklist
+## 5. Readiness Criteria Checklist
 
-Per the FedRAMP 3PAO Readiness Assessment Report template.
+### 5.1 Federal Mandates (RAR §4.1)
+
+The six Federal Mandates in the FedRAMP Moderate and High RAR templates. Answer Yes only if the mandate is fully and strictly met; an alternative implementation is a No. A 3PAO will not submit a RAR while any answer is No.
+
+| # | Federal Mandate | Fully Met? | Evidence / Notes |
+|---|-----------------|------------|------------------|
+| 1 | FIPS 140-validated cryptographic modules used everywhere cryptography is required (SC-13), including all SC-8, SC-8(1) and SC-28 encryption | [Yes / No] | [Notes] |
+| 2 | System fully supports user authentication with agency PIV or CAC credentials | [Yes / No] | [Notes] |
+| 3 | System operates at Digital Identity Level 2 or higher (Moderate) / Level 3 (High) | [Yes / No] | [Notes] |
+| 4 | CSP consistently remediates High vulnerabilities within 30 days, Moderate within 90 and Low within 180 | [Yes / No] | [Notes] |
+| 5 | CSP and system meet federal records management requirements (record holds, NARA, FOIA) | [Yes / No] | [Notes] |
+| 6 | External DNS supports DNSSEC for origin authentication and integrity (SC-20, SC-21, SC-22) | [Yes / No] | [Notes] |
+
+### 5.2 Further Readiness Checks
+
+ArcKit's pre-assessment checks, covering ground the RAR assesses under FedRAMP Requirements (§4.2) and Additional Capabilities (§4.3), plus federal requirements the RAR does not test (row 13).
 
 | # | Criterion | Status | Notes |
 |---|-----------|--------|-------|
@@ -110,23 +128,23 @@ Per the FedRAMP 3PAO Readiness Assessment Report template.
 | 2 | Authorisation boundary diagram approved | [Met / Not Met] | [Notes] |
 | 3 | Data flow diagram approved | [Met / Not Met] | [Notes] |
 | 4 | All controls implemented or have POA&M target dates | [Met / Not Met] | [Notes] |
-| 5 | FedRAMP-Ready CSP dependencies confirmed | [Met / Not Met] | [Notes] |
-| 6 | FIPS 140-3 validated crypto modules used for all crypto | [Met / Not Met] | [Notes] |
-| 7 | Multi-factor authentication implemented (AAL2 minimum) | [Met / Not Met] | [Notes] |
-| 8 | Continuous monitoring strategy documented | [Met / Not Met] | [Notes] |
-| 9 | Initial vulnerability scan completed; results in evidence | [Met / Not Met] | [Notes] |
-| 10 | Initial penetration test completed; report in evidence | [Met / Not Met] | [Notes] |
-| 11 | Initial POA&M populated | [Met / Not Met] | [Notes] |
-| 12 | Incident response capability validated by tabletop exercise | [Met / Not Met] | [Notes] |
-| 13 | All cryptographic key management implemented per SC-12 | [Met / Not Met] | [Notes] |
-| 14 | CRM completed and signed by CSP | [Met / Not Met] | [Notes] |
-| 15 | SSDF / EO 14028 self-attestation submitted to CISA | [Met / Not Met] | [Notes] |
+| 5 | Leveraged services are FedRAMP Authorized (not In Process or Ready) | [Met / Not Met] | [Notes] |
+| 6 | Multi-factor authentication implemented (AAL2 minimum) | [Met / Not Met] | [Notes] |
+| 7 | Continuous monitoring strategy documented | [Met / Not Met] | [Notes] |
+| 8 | Initial vulnerability scan completed; results in evidence | [Met / Not Met] | [Notes] |
+| 9 | Initial POA&M populated | [Met / Not Met] | [Notes] |
+| 10 | Incident response capability validated by tabletop exercise | [Met / Not Met] | [Notes] |
+| 11 | All cryptographic key management implemented per SC-12 | [Met / Not Met] | [Notes] |
+| 12 | CRM completed and signed by CSP | [Met / Not Met] | [Notes] |
+| 13 | SSDF / EO 14028 self-attestation submitted to CISA | [Met / Not Met] | [Notes] |
 
-**Overall RAR Recommendation**: [FedRAMP-Ready / Not Ready / Conditional]
+**Readiness Verdict for 3PAO Assessment**: [Ready / Conditionally Ready / Not Ready]
 
 ---
 
 ## 6. Penetration Testing Summary
+
+[The RAR does not require a penetration test, though the 3PAO reviews any existing results when it assesses separation measures; the full initial assessment of a Moderate or High system does require one. Record the latest test here, or "None yet" with the planned date.]
 
 | Field | Value |
 |-------|-------|
@@ -160,18 +178,18 @@ Per the FedRAMP 3PAO Readiness Assessment Report template.
 ```text
 Month 1     |================================|  Address all High gaps
 Month 2     |================================|  Address Moderate gaps
-Month 3     |================================|  3PAO retest of remediated items
+Month 3     |================================|  3PAO assessment (official RAR or full initial assessment)
 Month 4     |================================|  Submit package to FedRAMP PMO
 Month 5-6   |================================|  ATO process (Agency or JAB review)
 ```
 
-[Replace with project-specific timeline. Include milestone gates: gap closure → 3PAO retest → package submission → AO review → ATO issued.]
+[Replace with project-specific timeline. Include milestone gates: gap closure → 3PAO assessment → package submission → AO review → ATO issued.]
 
 | Milestone | Target Date | Owner | Status |
 |-----------|-------------|-------|--------|
 | All High gaps closed | [YYYY-MM-DD] | [Owner] | [Open / Done] |
 | All Moderate gaps closed | [YYYY-MM-DD] | [Owner] | [Open / Done] |
-| 3PAO retest complete | [YYYY-MM-DD] | [3PAO] | [Open / Done] |
+| 3PAO assessment complete | [YYYY-MM-DD] | [3PAO] | [Open / Done] |
 | Package submitted to FedRAMP PMO | [YYYY-MM-DD] | [System Owner] | [Open / Done] |
 | ATO issued | [YYYY-MM-DD] | [AO] | [Open / Done] |
 
@@ -181,7 +199,8 @@ Month 5-6   |================================|  ATO process (Agency or JAB revie
 
 | Reference | Citation | URL |
 |-----------|----------|-----|
-| FedRAMP 3PAO RAR Template | Readiness Assessment Report Template | <https://www.fedramp.gov/documents-templates/> |
+| FedRAMP 3PAO RAR Template | Readiness Assessment Report Template (Moderate v2.1, May 2024; High) | <https://www.fedramp.gov/documents-templates/> |
+| FedRAMP Consolidated Rules for 2026 | Important dates — FedRAMP Ready retired 28 July 2026 | <https://www.fedramp.gov/2026/timeline/> |
 | FedRAMP Agency Authorization Playbook | Agency Authorization Playbook | <https://www.fedramp.gov/agency-authorization/> |
 | FedRAMP JAB Prioritisation Criteria | JAB Prioritisation Criteria | <https://www.fedramp.gov/jab-prioritization/> |
 | FedRAMP Continuous Monitoring Strategy Guide | ConMon Strategy Guide | <https://www.fedramp.gov/assets/resources/documents/CSP_Continuous_Monitoring_Strategy_Guide.pdf> |
@@ -191,12 +210,13 @@ Month 5-6   |================================|  ATO process (Agency or JAB revie
 
 ## 10. Approvals
 
+[Internal approval of the self-assessment. A 3PAO signs only the official RAR it prepares, never this document.]
+
 | Role | Name | Signature | Date |
 |------|------|-----------|------|
-| 3PAO Lead Assessor | [Name] | [Signature] | [YYYY-MM-DD] |
+| CSP Readiness Lead (preparer) | [Name] | [Signature] | [YYYY-MM-DD] |
 | CSP System Owner | [Name] | [Signature] | [YYYY-MM-DD] |
 | CSP CISO | [Name] | [Signature] | [YYYY-MM-DD] |
-| Sponsoring Agency AO (Agency path) | [Name] | [Signature] | [YYYY-MM-DD] |
 
 ---
 

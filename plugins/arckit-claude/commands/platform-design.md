@@ -61,11 +61,11 @@ Identify the target project from the hook context. If the user specifies a proje
 
 If the project already exists, check for existing `ARC-{PROJECT_ID}-PLAT-v*.md` files. If found, ask user if they want to overwrite or update.
 
-**Gathering rules** (apply to all user questions in this command):
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions total.** After that, infer the best answer from available context.
-- If still ambiguous after 2 rounds, make a reasonable choice and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
 ---
 
@@ -75,7 +75,7 @@ Read the platform design template:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/platform-design-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/platform-design-template.md` exists in the project root, then `.arckit/templates/platform-design-template.md`
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/platform-design-template.md` (default)
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -195,17 +195,10 @@ Read `projects/000-global/ARC-000-PRIN-*.md`:
 
 ### Step 4: Detect Version
 
-Before generating the document ID, check if a previous version exists:
+Follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-{PROJECT_ID}-PLAT-v*.md` in the project directory. For a platform design:
 
-1. Look for existing `ARC-{PROJECT_ID}-PLAT-v*.md` files in the project directory
-2. **If no existing file**: Use VERSION="1.0"
-3. **If existing file found**:
-   - Read the existing document to understand its scope
-   - Compare against current inputs and requirements
-   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed content, updated entity details, corrected details
-   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new ecosystem entities, fundamentally different platform strategy, significant new canvases
-4. Use the determined version for document ID, filename, Document Control, and Revision History
-5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+- **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed content, updated entity details, corrected details
+- **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new ecosystem entities, fundamentally different platform strategy, significant new canvases
 
 ### Step 5: Construct Document Control Metadata
 
@@ -372,7 +365,7 @@ After writing the file, provide a **concise summary** (NOT the full document):
 ✅ Platform Strategy Design Created
 
 **Project**: {project_name} ({project_id})
-**Document**: projects/{project_id}-{project_name}/ARC-{PROJECT_ID}-PLAT-v1.0.md
+**Document**: projects/{project_id}-{project_name}/ARC-{PROJECT_ID}-PLAT-v{VERSION}.md
 **Document ID**: {document_id}
 
 ## Platform Overview
@@ -493,14 +486,14 @@ After writing the file, provide a **concise summary** (NOT the full document):
 
 ## Files Created
 
-📄 `projects/{project_id}-{project_name}/ARC-{PROJECT_ID}-PLAT-v1.0.md` ({file_size} lines)
+📄 `projects/{project_id}-{project_name}/ARC-{PROJECT_ID}-PLAT-v{VERSION}.md` ({file_size} lines)
 
 ## Related Commands
 
 **Prerequisites** (should run before platform design):
 - `/arckit:principles` - Architecture principles
 - `/arckit:stakeholders` - Stakeholder analysis (highly recommended)
-- `/arckit:requirements` - Platform requirements (recommended)
+- `/arckit:requirements` - Platform requirements (required)
 - `/arckit:wardley` - Value chain analysis (recommended)
 
 **Next Steps** (run after platform design):

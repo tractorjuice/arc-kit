@@ -292,6 +292,9 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | SECA | `ARC-*-SECA-*.md` | Security Assertions |
 | | GCMP | `ARC-*-GCMP-*.md` | G-Cloud Competitor Benchmark |
 | | GCRV | `ARC-*-GCRV-*.md` | G-Cloud Submission Review |
+| | SOCV | `ARC-*-SOCV-*.md` | Social Value Commitments |
+| | LOTQ | `ARC-*-LOTQ-*.md` | G-Cloud Lot Questions |
+| | RATE | `ARC-*-RATE-*.md` | G-Cloud Lot 3 Rate Card |
 | | DMC | `ARC-*-DMC-*.md` | Data Mesh Contract |
 | | VEND | `ARC-*-VEND-*.md` | Vendor Evaluation |
 | | | `vendors/*/*.md` | Vendor Documents |
@@ -410,7 +413,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | FSCTP | `ARC-*-FSCTP-*.md` | UK Critical Third Parties Dependency Assessment |
 | **Compliance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
 | | RBCLOUD | `ARC-*-RBCLOUD-*.md` | Rijksbreed Cloudbeleid Compliance Assessment |
-| | TBB | `ARC-*-TBB-*.md` | Te Beschermen Belangen / VIRBI 2025 Rubricering |
+| | TBB | `ARC-*-TBB-*.md` | Te Beschermen Belangen (TBB) Category Determination |
 | | BIO2 | `ARC-*-BIO2-*.md` | BIO2 Conformance Assessment |
 | **Governance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
 | | NLEXIT | `ARC-*-NLEXIT-*.md` | NL Cloud Exit Plan |

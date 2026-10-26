@@ -241,7 +241,7 @@ Use a narrow pilot before broad installation:
 
 | Version | Enterprise-relevant change | ArcKit impact |
 |---------|----------------------------|---------------|
-| v2.1.287 | Claude mods: a plugin can name a hooks module that observes, rewrites or answers tool calls, prompts and turns, and draws its own interface; plugin SessionStart hooks now run in new cloud sessions; a dangerous `rm` keeps its always-ask safeguard when it also redirects to a `~` or wildcard path; a shell write through a committed symlink onto a sensitive file or out of the working tree now waits for a person | Current floor. ArcKit ships one mod, the status band above the prompt (`hooks/mod/register.mjs`). It only reads `projects/` and passes every tool call on unchanged, so no ArcKit gate depends on it; the classic hooks still enforce everything. Set `ARCKIT_NO_STATUS_BAND` to switch it off. Organisations with managed settings get Anthropic's built-in `sec-default` mod, which keeps their own hooks and deny rules out of reach of installed plugins |
+| v2.1.287 | Claude mods: a plugin can name a hooks module that observes, rewrites or answers tool calls, prompts and turns, and draws its own interface; plugin SessionStart hooks now run in new cloud sessions; a dangerous `rm` keeps its always-ask safeguard when it also redirects to a `~` or wildcard path; a shell write through a committed symlink onto a sensitive file or out of the working tree now waits for a person | Current floor, for the SessionStart fix in new cloud sessions. ArcKit ships no mod: 6.18.1 and earlier carried a status band above the prompt, removed because the Claude plugin directory holds any plugin with a mod for a reviewer. Organisations with managed settings get Anthropic's built-in `sec-default` mod, which keeps their own hooks and deny rules out of reach of installed plugins |
 | v2.1.284 | Claude Sonnet 5.5 (`claude-sonnet-5-5`) added as the default Sonnet model on the Anthropic API — 1M context, $2/$10 per MTok, defaults to `effort: medium`, thinking cannot be turned off; biology-flagged requests end in a refusal (no fallback model); plugins from marketplaces no longer pre-approve their own tools via `allowed-tools` under managed `allowManagedPermissionRulesOnly`; MCP tool calls in a resumed session wait for a still-connecting server instead of failing | Carried into the current floor. Sonnet 5.5 always thinks, so ArcKit's `effort: max` commands run at `max` on it and the provenance Effective Effort row is accurate. Commands without `effort:` run at `medium` on Sonnet 5.5, as on Opus 5.5 |
 | v2.1.280 | Claude Opus 5.5 (`claude-opus-5-5`) added as the default Opus model — 1M context, defaults to `effort: medium`, thinking cannot be turned off, fast mode at $8/$40; an effort level saved before `/effort` became per-model no longer applies to newly released models | Opus 5.5 always thinks, so ArcKit's `effort: max` commands cannot be silently sent as `high` by a thinking-off session and the provenance Effective Effort row is accurate. Commands without `effort:` run at `medium` on Opus 5.5. Carried into the current floor |
 | v2.1.258 | Reviewed release as of 2026-09-02; fixes the macOS 12 launch failure introduced in the unpublished 2.1.255 | Reviewed in the v2.1.236-v2.1.258 triage. Any future floor above v2.1.252 must be v2.1.258, not v2.1.257 |
@@ -274,6 +274,7 @@ Use a narrow pilot before broad installation:
 
 | ArcKit entry | Enterprise impact |
 |--------------|-------------------|
+| Unreleased | The status band mod is removed from core: the Claude plugin directory holds any plugin with a mod for a reviewer. Every gate was always a classic hook, so nothing enforced changes; the v2.1.287 floor stays for the SessionStart fix |
 | Unreleased #580 | Claude Code floor raised to v2.1.287 for Claude mods, which ArcKit uses for an observe-only status band above the prompt; classic hooks still carry every gate |
 | v6.16.5 #580 | Claude Code floor raised to v2.1.284 for Claude Sonnet 5.5, the default Sonnet model on the Anthropic API, which like Opus 5.5 always thinks |
 | v6.15.0 #580 | Claude Code floor raised to v2.1.280 for Claude Opus 5.5, the default Opus model, which always thinks and so keeps `effort: max` and the provenance Effective Effort row honest |
@@ -311,7 +312,7 @@ projects/
 ├── 000-global/
 │   ├── ARC-000-PRIN-v1.0.md      # Enterprise architecture principles
 │   ├── ARC-000-ADR-001-v1.0.md   # Enterprise-wide decisions (e.g. cloud provider)
-│   └── ARC-000-FRAM-v1.0.md      # Reference frameworks (data, security, AI)
+│   └── framework/ARC-000-FWRK-v1.0.md  # Reference framework (from /arckit:framework)
 ├── 001-customer-portal/           # Application project 1
 ├── 002-billing-platform/          # Application project 2
 └── 042-identity-service/          # Application project N
@@ -435,7 +436,7 @@ Downstream artifacts cite the global principle by ID:
 
 > NFR-SEC-012 — Shall comply with enterprise principle `ARC-000-PRIN-v1.0#P-07` (zero-trust network access).
 
-No copy. Just a stable pointer. ArcKit's [Citation Traceability](../../arckit-claude/references/citation-instructions.md) pattern handles this out of the box.
+No copy. Just a stable pointer. ArcKit's [Citation Traceability](../../plugins/arckit-claude/references/citation-instructions.md) pattern handles this out of the box.
 
 ### 2. Git submodule / subtree sync
 
@@ -457,7 +458,7 @@ enterprise_architecture:
   pinned_sha: a3f8b21
   required_artifacts:
     - ARC-000-PRIN-v1.0.md
-    - ARC-000-FRAM-SEC-v1.0.md
+    - framework/ARC-000-FWRK-v1.0.md
 ```
 
 A CI job (in the EA repo) opens PRs downstream whenever the manifest falls behind. Combine with `/arckit:principles-compliance` to prove conformance on every downstream PR.

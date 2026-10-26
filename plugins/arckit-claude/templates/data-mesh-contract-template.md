@@ -22,12 +22,12 @@
 **ODCS Specification:**
 
 ```yaml
-apiVersion: v3.0.2
+apiVersion: v3.2.0
 kind: DataContract
 id: {contract_uuid}
 name: {data_product_name}
 version: {semantic_version}  # e.g., 1.0.0
-status: {active|deprecated|retired}
+status: {proposed|draft|active|deprecated|retired}
 ```
 
 | Field | Value |
@@ -35,8 +35,8 @@ status: {active|deprecated|retired}
 | **Contract ID** | {UUID} (Unique identifier) |
 | **Contract Name** | {data_product_name} |
 | **Semantic Version** | {MAJOR.MINOR.PATCH} (e.g., 1.0.0) |
-| **Status** | ACTIVE / DEPRECATED / RETIRED |
-| **ODCS Compliance** | v3.0.2 |
+| **Status** | proposed / draft / active / deprecated / retired (ODCS's lowercase values) |
+| **ODCS Compliance** | v3.2.0 |
 
 ### 1.2 Domain and Product Context
 
@@ -160,7 +160,7 @@ status: {active|deprecated|retired}
 | Dimension | Target | Measurement | Frequency |
 |-----------|--------|-------------|-----------|
 | **Accuracy** | {≥99%} | {Validation rules passed} | {Hourly/Daily/Weekly} |
-| **Validity** | {≥99.9%} | {Schema compliance rate} | {Every load} |
+| **Conformity** | {≥99.9%} | {Schema compliance rate} | {Every load} |
 | **Completeness** | {≥95%} | {Non-null rate for required fields} | {Daily} |
 | **Consistency** | {≥99%} | {Cross-system reconciliation match rate} | {Daily} |
 | **Timeliness** | {<5min} | {Data freshness from source event} | {Real-time monitoring} |
@@ -168,53 +168,95 @@ status: {active|deprecated|retired}
 
 ### 3.2 Automated Quality Rules
 
-**ODCS-Compatible Rules** (executable by data quality engines):
+**ODCS Quality Rules** (ODCS v3.2.0 `quality` entries, which data quality engines can run):
+
+In ODCS, each rule sits in the `quality` list of the property or object it checks. There is no separate rules section. The two blocks below are fragments, not whole contracts: the first is one `quality` entry, and the second is a cut-down `schema` list. Appendix A shows rules in place in a full contract.
+
+- The pass condition is an operator: `mustBe`, `mustNotBe`, `mustBeGreaterThan`, `mustBeGreaterOrEqualTo`, `mustBeLessThan`, `mustBeLessOrEqualTo`, `mustBeBetween` or `mustNotBeBetween`. Use one operator per rule, and set `unit: rows` or `unit: percent`.
+- What happens on failure goes in `severity` (`info`, `warning` or `error`).
+- A foreign key is a `relationships` entry, not a quality metric. Add a `sql` rule if the link must also be checked.
 
 #### Rule 1: {RULE_NAME}
 
 ```yaml
-rule_type: {row_count / null_check / uniqueness / referential_integrity / regex / range / custom}
-properties: [{property_list}]
-condition: {validation_condition}
-threshold: {acceptable_failure_rate}
-action: {warn / fail / quarantine}
+# Fragment: one entry in the `quality` list of the property it checks
+- id: {rule_id}
+  type: library
+  metric: {nullValues|missingValues|invalidValues|duplicateValues}
+  mustBe: {threshold_count}  # or another operator, e.g. mustBeLessThan
+  unit: {rows|percent}
+  dimension: {accuracy|completeness|conformity|consistency|coverage|timeliness|uniqueness}
+  severity: {info|warning|error}
+  description: {rule_description}
 ```
 
 **Example Rules:**
 
 ```yaml
-# Completeness Rule
-- rule_type: null_check
-  properties: [customer_id, email, created_at]
-  condition: NOT NULL
-  threshold: 0%  # Zero nulls allowed
-  action: fail
-
-# Uniqueness Rule
-- rule_type: uniqueness
-  properties: [customer_id]
-  threshold: 100%  # All must be unique
-  action: fail
-
-# Referential Integrity Rule
-- rule_type: referential_integrity
-  properties: [transaction.customer_id]
-  references: customer.customer_id
-  action: fail
-
-# Format Validation Rule
-- rule_type: regex
-  properties: [email]
-  condition: ^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
-  threshold: 99%
-  action: warn
-
-# Range Validation Rule
-- rule_type: range
-  properties: [transaction_amount]
-  condition: >= 0 AND <= 1000000
-  threshold: 100%
-  action: fail
+# Fragment: the `schema` list of a contract, cut down to show quality rules
+schema:
+  - name: customer
+    logicalType: object
+    properties:
+      - name: customer_id
+        logicalType: string
+        quality:
+          # Completeness: zero nulls allowed
+          - id: customer_id_no_nulls
+            metric: nullValues
+            mustBe: 0
+            dimension: completeness
+            severity: error
+          # Uniqueness: every value must be unique
+          - id: customer_id_unique
+            metric: duplicateValues
+            mustBe: 0
+            dimension: uniqueness
+            severity: error
+      - name: email
+        logicalType: string
+        quality:
+          # Format: fewer than 1% of rows may fail the pattern
+          - id: email_format
+            metric: invalidValues
+            arguments:
+              pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+            mustBeLessThan: 1
+            unit: percent
+            dimension: conformity
+            severity: warning
+  - name: transaction
+    logicalType: object
+    properties:
+      - name: customer_id
+        logicalType: string
+        # Referential integrity: declare the foreign key ...
+        relationships:
+          - type: foreignKey
+            to: customer.customer_id
+        quality:
+          # ... and check it
+          - id: transaction_customer_exists
+            type: sql
+            query: |
+              SELECT COUNT(*) FROM transaction t
+              LEFT JOIN customer c ON t.customer_id = c.customer_id
+              WHERE c.customer_id IS NULL
+            mustBe: 0
+            dimension: consistency
+            severity: error
+      - name: transaction_amount
+        logicalType: number
+        quality:
+          # Range: no amount below 0 or above 1,000,000
+          - id: transaction_amount_range
+            type: sql
+            query: |
+              SELECT COUNT(*) FROM transaction
+              WHERE transaction_amount < 0 OR transaction_amount > 1000000
+            mustBe: 0
+            dimension: accuracy
+            severity: error
 ```
 
 ### 3.3 Quality Monitoring and Alerting
@@ -738,43 +780,50 @@ for i in range(150):  # Exceed 100/min limit
 
 ### Appendix A: ODCS YAML Export
 
-{Full YAML export of this contract in ODCS v3.0.2 format for programmatic consumption}
+{Full YAML export of this contract in ODCS v3.2.0 format for programmatic consumption. It must validate against the ODCS v3.2.0 JSON Schema (https://github.com/bitol-io/open-data-contract-standard/blob/main/schema/odcs-json-schema-v3.2.0.json). The schema rejects keys it does not define at the top level and in schema objects, properties, quality rules and SLA entries, so put anything else in `customProperties`.}
 
 ```yaml
-apiVersion: v3.0.2
+apiVersion: v3.2.0
 kind: DataContract
 id: {contract_uuid}
 name: {data_product_name}
 version: {semantic_version}
-status: active
+status: draft  # proposed, draft, active, deprecated or retired
 domain: {domain_name}
-dataProduct: {product_name}
+dataProduct: {product_name}  # optional; deprecated since ODCS v3.1.0
 tenant: {organization_name}
 
 description:
   purpose: {purpose}
-  businessValue: {business_value}
+  customProperties:
+    - property: businessValue
+      value: {business_value}
 
 schema:
-  objects:
-    - name: {object_name}
-      type: {TABLE|DOCUMENT|FILE|STREAM}
-      properties:
-        - name: {property_name}
-          type: {data_type}
-          required: {true|false}
-          pii: {true|false}
-          description: {description}
+  - name: {object_name}
+    logicalType: object
+    physicalType: {table|view|document|file|topic}
+    properties:
+      - name: {property_name}
+        logicalType: {string|date|timestamp|time|number|integer|boolean}
+        physicalType: {data_type}
+        required: {true|false}
+        description: {description}
+        customProperties:
+          - property: pii
+            value: {true|false}
+        quality:
+          - metric: {nullValues}
+            mustBe: {threshold_count}
+            unit: {rows|percent}
 
-dataQuality:
-  rules:
-    - ruleType: {null_check}
-      properties: [{property_list}]
-      threshold: {percentage}
-
-sla:
-  availability: {99.9%}
-  freshnessTarget: {5min}
+slaProperties:
+  - property: availability
+    value: {99.9}
+    unit: percent
+  - property: latency  # ODCS prefers latency to freshness
+    value: {5}
+    unit: {min}
 
 # ... (truncated for brevity, full export available on request)
 ```

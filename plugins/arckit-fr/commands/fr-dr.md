@@ -16,6 +16,8 @@ handoffs:
   - command: fr-pssi
     description: Incorporate DR handling rules into the organisation's formal security policy
     condition: "Organisation requires a formal PSSI covering DR data handling"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
@@ -86,7 +88,7 @@ Read all documents from Step 0. Extract:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/fr-dr-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/fr-dr-template.md` exists in the project root, then `.arckit/templates/fr-dr-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/fr-dr-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `DR` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.
@@ -164,7 +166,7 @@ Assess the IS against the II 901 requirements for systems processing DR:
    - Existing file → minor increment if refreshed
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-DR-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-DR-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}

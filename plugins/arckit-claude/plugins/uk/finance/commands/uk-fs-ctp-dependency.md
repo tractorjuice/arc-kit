@@ -13,6 +13,13 @@ handoffs:
     description: DR / exit drills evidence the resilience testing plan — assemble runbooks via /arckit:operationalize.
   - command: uk-fs-safeguarding
     description: Safeguarding bank is itself often a CTP-adjacent dependency — cross-reference the safeguarding register.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output is
@@ -48,7 +55,7 @@ $ARGUMENTS
 Run:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<product-context>"
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<product-context>"
 ```
 
 If the project already exists, locate it by scanning `projects/` for the matching numbered directory
@@ -56,13 +63,15 @@ instead of recreating it. Extract `project_dir` and `project_number` from the JS
 
 ### Step 2 — Generate the document ID
 
+Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
+
 Run:
 
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_NUMBER> FSCTP --filename
+node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_NUMBER> FSCTP {VERSION} --filename
 ```
 
-This produces a filename of the form `ARC-NNN-FSCTP-v1.0.md`. FSCTP is the doc-type code for this
+This produces a filename of the form `ARC-NNN-FSCTP-v{VERSION}.md`. FSCTP is the doc-type code for this
 artefact.
 
 ### Step 3 — Read the templates and rendering partials

@@ -12,7 +12,7 @@ Use the overlay if any of the following apply to the project:
 
 - The contracting authority is a Dutch central government body (Rijksoverheid) in scope of the Herziening rijksbreed cloudbeleid 2026 — this excludes the Hoge Colleges van Staat, and the Ministry of Defence is explicitly exempt.
 - A cloud hosting decision is being made or reviewed, and the eligibility of public cloud for the workload needs to be established (clauses 5.2, 4.5, 5.4).
-- The system or dataset needs a formal Te Beschermen Belangen (TBB) category and VIRBI 2025 rubricering before any classification-dependent decision — cloud eligibility, access control, handling rules — can be made.
+- The system or dataset needs a formal Te Beschermen Belangen (TBB) category before any classification-dependent decision — cloud eligibility, access control, handling rules — can be made.
 - An information-security baseline conformance position is needed against BIO2 (built on NEN-EN-ISO/IEC 27001:2023 and 27002:2022).
 - Materieel publiek cloudgebruik has been established and the mandatory clause 3.2 exit plan has not yet been produced or tested.
 
@@ -22,9 +22,11 @@ For non-Dutch projects the overlay is dormant: it adds four new doc-types (RBCLO
 
 ## The Four Commands
 
+In Claude Code the overlay installs as its own plugin, `arckit-nl`, so its commands carry that prefix: `/arckit-nl:nl-tbb`, `/arckit-nl:nl-cloud`, `/arckit-nl:nl-bio` and `/arckit-nl:nl-exit`. Core commands such as `/arckit:requirements` keep the `arckit` prefix.
+
 ### `/arckit:nl-tbb`
 
-Determines the **Te Beschermen Belangen (TBB) category** for a system or dataset using the TBB systematiek's BIV scoring method — Beschikbaarheid, Integriteit, and Vertrouwelijkheid scored independently on a four-point scale, with the **highest** of the three scores (never an average) setting the category. Maps the category to its VIRBI 2025 rubricering (Stg. ZEER GEHEIM down to Departementaal VERTROUWELIJK / ongerubriceerd met merking) and states the mandatory one-way inference warning: a TBB category does not imply the system holds data at the corresponding Stg. classification. Produces `ARC-{id}-TBB-v{version}.md`.
+Determines the **Te Beschermen Belangen (TBB) category** for a system or dataset using the TBB systematiek's BIV scoring method — Beschikbaarheid, Integriteit, and Vertrouwelijkheid scored independently on a four-point scale, with the **highest** of the three scores (never an average) setting the category. It never produces a VIRBI 2025 rubricering: it records any rubricering the information already carries and uses it only as a floor on the category. It states the mandatory one-way inference warning: a TBB category does not imply the system holds data at the corresponding Stg. classification. Produces `ARC-{id}-TBB-v{version}.md`.
 
 ### `/arckit:nl-cloud`
 
@@ -53,7 +55,7 @@ requirements
 
 **Run `nl-tbb` before `nl-cloud`.** The classification drives eligibility, not the other way round: `nl-cloud`'s clause 5.2 prohibition check needs a TBB category to test Te Beschermen Belangen niveau 1–3 against. Running `nl-cloud` first means its eligibility section can only flag the category as pending. The inference between the two commands runs one way only — `nl-tbb` determines the category from BIV scores; `nl-cloud` consumes that category but never derives or overrides it.
 
-`nl-exit` follows `nl-cloud` once materieel cloudgebruik is confirmed (or as one of the three cumulative conditions under clause 4.5(b)). `nl-bio` can run at any point once BIV scores are available to prioritise which control areas matter most, and cross-references `nl-cloud`'s data-location and encryption section for the Technological control theme rather than re-deriving it.
+`nl-exit` follows `nl-cloud` once materieel cloudgebruik is confirmed (or as one of the three cumulative conditions under clause 4.5(b)). `nl-bio` can run at any point; a TBB category, where one exists, helps it prioritise which control areas matter most, and cross-references `nl-cloud`'s data-location and encryption section for the Technological control theme rather than re-deriving it.
 
 ---
 
@@ -61,10 +63,10 @@ requirements
 
 | Core command | Relationship |
 |---|---|
-| `requirements` | Supplies the data sensitivity, hosting requirements, and security NFRs that `nl-tbb` and `nl-cloud` both read as a mandatory prerequisite. |
+| `requirements` | Supplies the data sensitivity, hosting requirements, and security NFRs that all four commands read as a mandatory prerequisite. |
 | `data-model` | Supplies data assets and existing classification markers that `nl-tbb` reads if available. |
 | `risk` | Every NL command's identified risks and gaps (foreign-interference risk, BIO2 control gaps, exit-plan residual risks) are meant to be integrated into the project risk register, not left stranded in the overlay artefact. |
-| `dpia` | `nl-cloud`'s clause 3.1 risk assessment reads an existing DPIA where personal data are processed, and does not re-derive the privacy analysis. |
+| `dpia` | `nl-cloud`'s clause 3.1 risk assessment can draw on an existing DPIA where personal data are processed; it is optional and skipped if absent. |
 | `secure` | BIO2 gaps identified by `nl-bio` feed control implementation the same way any other security-baseline gap would. |
 
 The four commands otherwise stand alongside the core toolkit: they read the project's existing REQ, DATA, and RISK artefacts through the same ArcKit Project Context hook mechanism as every other command, and their Document Control header renders through the same `<!-- DOC-CONTROL-HEADER -->` marker and `templates/_partials/RENDERING.md` partials as the rest of the toolkit — with the VIRBI 2025 rubricering ladder substituted for the standard UK Classification row in each of the four commands' output.
@@ -76,7 +78,7 @@ The four commands otherwise stand alongside the core toolkit: they read the proj
 Two things this overlay will not do, by design:
 
 1. **No published Dutch cloud-provider qualification list.** Unlike France's SecNumCloud regime — which qualifies named providers against a published referential — the Herziening rijksbreed cloudbeleid 2026 has no equivalent register. Eligibility is determined clause-by-clause against the workload and data in scope, not by checking a provider against a list. `/arckit:nl-cloud` never names, shortlists, or implies that any specific commercial cloud provider is compliant or qualified, and this guide does not either.
-2. **No invented clause or BIO2 measure content.** Where a specific VIRBI 2025 provision, Rijksbreed cloudbeleid clause, or BIO2 overheidsmaatregel number and wording is not available in project source material, the commands mark it `[PENDING — cite from current BIO2 text]` (or the clause equivalent) rather than fabricate it. Treat any unmarked clause citation in generated output as something to verify against the primary source before relying on it.
+2. **No invented clause or BIO2 measure content.** Where a specific VIRBI 2025 provision, Rijksbreed cloudbeleid clause, or BIO2 overheidsmaatregel number and wording is not available in project source material, `nl-bio` marks it `[PENDING — cite from current BIO2 text]`, and `nl-cloud` flags any clause it has no text for so the assessor can complete it, rather than fabricate it. Treat any unmarked clause citation in generated output as something to verify against the primary source before relying on it.
 
 ---
 

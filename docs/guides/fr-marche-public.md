@@ -12,7 +12,7 @@
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Technical and functional requirements |
 | Stakeholder analysis | Contracting authority and key stakeholders |
-| Research (`ARC-<id>-RES-v*.md`) | Market analysis and vendor landscape |
+| Research (`research/ARC-<id>-RSCH-*-v*.md`) | Market analysis and vendor landscape |
 
 ---
 
@@ -30,14 +30,14 @@ Output: `projects/<id>/ARC-<id>-MARPUB-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Procurement Strategy | Procedure type, thresholds, UGAP availability |
-| Règlement de la Consultation (RC) | Submission rules, evaluation criteria, deadlines |
-| Cahier des Charges Techniques (CCTP) | Technical specifications from requirements |
-| Cahier des Clauses Administratives (CCAP) | Contract terms, SLAs, penalties |
-| Digital State Doctrine | DINUM obligations, RGAA, RGI, SILL, SecNumCloud |
-| Durabilité | Sustainable procurement clauses (environmental and social) |
-| ANSSI-Qualified Providers | PASSI/PRIS/PDIS/PDCS requirements for cybersecurity services |
-| Evaluation Framework | Technical, financial, quality criteria with weightings |
+| 1. Threshold Analysis and Recommended Procedure | Estimated value, threshold, procedure, BOAMP/JOUE publication, consultation period, State cloud doctrine |
+| 2. Requirements Statement | Subject of the contract, functional and technical requirements (the basis for the CCTP), sovereignty and security requirements |
+| 3. Award Criteria | Weighting (technical value, price, execution conditions) and technical scoring grid |
+| 4. Security and Sovereignty Clauses | Security annex, data localisation, reversibility, open source, GDPR/DPA |
+| 5. UGAP Catalogue | Framework agreements available for call-off |
+| 6. Indicative Timeline | Gantt chart from drafting to contract signature |
+| 7. ANSSI-Qualified Security Provider Selection | ANSSI qualification requirements for cybersecurity services (see below) |
+| 8. Digital State Doctrine Compliance | DINUM checklist (cloud, RGI, RGAA, RGESN, open source, GDPR), PSSIE and RGS target level |
 
 ---
 

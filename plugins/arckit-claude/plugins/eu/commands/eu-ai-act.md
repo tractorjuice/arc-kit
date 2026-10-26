@@ -12,12 +12,14 @@ handoffs:
   - command: traceability
     description: Link AI Act conformity requirements back to functional requirements
     condition: "High-risk AI system classification confirmed"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
-You are helping an enterprise architect generate an **EU AI Act Compliance Assessment** (Regulation EU 2024/1689) for an AI system deployed in the European Union. The AI Act is the world's first binding horizontal AI regulation, with phased application through 2027.
+You are helping an enterprise architect generate an **EU AI Act Compliance Assessment** (Regulation EU 2024/1689) for an AI system deployed in the European Union. The AI Act is the world's first binding horizontal AI regulation. It applies in phases from February 2025 to August 2028, on the dates in Article 113 as amended by Regulation (EU) 2026/1744 (the Digital Omnibus on AI, in force since 27 July 2026).
 
 ## User Input
 
@@ -76,7 +78,7 @@ Read all documents from Step 0. Identify:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/eu-ai-act-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/eu-ai-act-template.md` exists in the project root, then `.arckit/templates/eu-ai-act-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/eu-ai-act-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -85,7 +87,7 @@ Read all documents from Step 0. Identify:
 
 Before generating the assessment, determine risk classification:
 
-**PROHIBITED (Article 5 — applicable February 2025)**:
+**PROHIBITED (Article 5 — applicable since 2 February 2025)**:
 
 - Social scoring by public authorities
 - Subliminal manipulation beyond conscious awareness
@@ -94,6 +96,7 @@ Before generating the assessment, determine risk classification:
 - Emotion recognition in workplace or educational institutions
 - Biometric categorisation for sensitive characteristics
 - Predictive policing based solely on profiling
+- From 2 December 2026 (Article 5(1)(ba)–(bb), added by Regulation (EU) 2026/1744): generating or manipulating realistic intimate imagery of an identifiable person without their explicit consent, or child sexual abuse material
 
 If ANY prohibited practice applies → STOP and flag: the AI system cannot be placed on the EU market.
 
@@ -125,7 +128,7 @@ Show the classification clearly before proceeding.
    - Existing file → minor increment if refreshed, major if scope changed
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-AIACT-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-AIACT-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
@@ -177,11 +180,16 @@ Show the classification clearly before proceeding.
    - Comité de l'IA générale et de l'IA de confiance (CAIIA)
 
 10. **Section 8: Gap Analysis and Application Timeline**
-    - Gap table with AI Act application dates:
-      - February 2025: Prohibited practices
-      - August 2025: GPAI model obligations
-      - August 2026: High-risk (Annex I and III)
-      - August 2027: Full application
+    - Gap table with AI Act application dates (Article 113 as amended by Regulation (EU) 2026/1744):
+      - 2 February 2025: Prohibited practices and AI literacy (Chapters I and II)
+      - 2 August 2025: GPAI model obligations (Chapter V), governance, notified bodies and penalties
+      - 2 August 2026: General application, including the Article 50 transparency obligations
+      - 2 December 2026: The Article 5(1)(ba)–(bb) prohibitions; Article 50(2) marking for generative AI systems placed on the market before 2 August 2026 (Article 111(4))
+      - 2 August 2027: GPAI models placed on the market before 2 August 2025 must comply (Article 111(3))
+      - 2 December 2027: High-risk obligations (Chapter III, Sections 1–3) for Annex III systems (Article 6(2))
+      - 2 August 2028: High-risk obligations for AI systems in Annex I products (Article 6(1))
+      - 2 August 2030: High-risk systems intended for use by public authorities and placed on the market before those dates must comply (Article 111(2))
+    - Check EUR-Lex for any later amendment before relying on a date
     - Mermaid Gantt timeline
     - Priority actions with owners
 
@@ -249,13 +257,14 @@ Next steps:
 | Document | Publisher | URL |
 |----------|-----------|-----|
 | EU AI Act (Regulation 2024/1689) — full text | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2024/1689/oj |
+| Digital Omnibus on AI (Regulation 2026/1744) — amends the Article 113 application dates | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2026/1744/oj |
 | EU AI Office — implementation guidance and GPAI codes of practice | European Commission | https://digital-strategy.ec.europa.eu/en/policies/ai-office |
 | AI Act application timeline and obligations summary | European Commission | https://digital-strategy.ec.europa.eu/en/policies/european-approach-artificial-intelligence |
 | ENISA — AI cybersecurity guidance | ENISA | https://www.enisa.europa.eu/topics/artificial-intelligence |
 | MITRE ATLAS — adversarial ML threat matrix | MITRE | https://atlas.mitre.org/ |
 | ANSSI — AI security guidance (French context) | ANSSI | https://cyber.gouv.fr/publications |
 
-> **Note for reviewers**: The EU AI Act is the world's first comprehensive AI regulation, applying to providers and deployers of AI systems in the EU regardless of where the provider is based. It uses a risk-based approach: prohibited practices (e.g. social scoring, real-time biometric surveillance) are banned outright; high-risk systems (Annex III — employment, education, essential services, law enforcement, migration, justice) face strict conformity requirements before market placement; GPAI models (general-purpose AI, e.g. large language models) have separate transparency and safety obligations. Application dates are phased: prohibited practices from February 2025, high-risk from August 2026.
+> **Note for reviewers**: The EU AI Act is the world's first comprehensive AI regulation, applying to providers and deployers of AI systems in the EU regardless of where the provider is based. It uses a risk-based approach: prohibited practices (e.g. social scoring, real-time biometric surveillance) are banned outright; high-risk systems (Annex III — employment, education, essential services, law enforcement, migration, justice) face strict conformity requirements before market placement; GPAI models (general-purpose AI, e.g. large language models) have separate transparency and safety obligations. Application dates are phased: prohibited practices from February 2025, GPAI obligations from August 2025, general application and transparency from August 2026, and high-risk obligations from 2 December 2027 (Annex III) and 2 August 2028 (Annex I products), as amended by Regulation (EU) 2026/1744.
 
 ## Success Criteria
 

@@ -115,7 +115,7 @@ Ensure `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` exists via `Read`. R
 
    Use `search_limit: 50` for broad domain-level facets and `20` for narrow ones.
 
-2. Dispatch with the `Agent` tool, `subagent_type: "arckit:arckit-gov-landscape-reader"`.
+2. Dispatch with the `Agent` tool, `subagent_type: "arckit:arckit-gov-landscape-reader"`, `run_in_background: false`.
 
 3. Each reader's final message is validated automatically:
 
@@ -162,7 +162,7 @@ Glob `projects/{P}-{NAME}/research/ARC-{P}-GLND-*-v*.md`. If none, `v1.0`; other
 
 ### Step 12: Dispatch the writer
 
-Assemble the writer input documented in `arckit-gov-landscape-writer`'s Input section, including `vulnerability_coverage.scopes_with_no_data`, and dispatch with `subagent_type: "arckit:arckit-gov-landscape-writer"`.
+Assemble the writer input documented in `arckit-gov-landscape-writer`'s Input section, including `vulnerability_coverage.scopes_with_no_data`, and dispatch with `subagent_type: "arckit:arckit-gov-landscape-writer"`, `run_in_background: false`.
 
 ### Step 13: Return summary
 

@@ -14,12 +14,14 @@ handoffs:
     description: Integrate NISG gap findings into the project risk register
   - command: secure
     description: Implement security controls addressing NISG / NIS2 Article 21 ten minimum measures
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
-> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified CISO / Cybersicherheitsbehörde-liaison / Rechtsabteilung before reliance. Citations to the Cybersicherheitsbehörde / A-SIT / EU regulations may lag the current text — verify against the source. Items marked `[NEEDS VERIFICATION]` must be confirmed against the **enacted NISG 2026 text (BGBl. I Nr. 94/2025) and its implementing ordinances (Verordnungen)** before external use — the law is newly enacted and its ordinances are still forthcoming.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified CISO / Cybersicherheitsbehörde-liaison / Rechtsabteilung before reliance. Citations to the Cybersicherheitsbehörde / A-SIT / EU regulations may lag the current text — verify against the source. Items marked `[NEEDS VERIFICATION]` must be confirmed against the **NISG 2026 text (BGBl. I Nr. 94/2025) and its implementing ordinances (Verordnungen)** before external use — the law has applied since 1 October 2026; the first ordinance, the **NISV 2026 (BGBl. II Nr. 290/2026)**, was published the same day, and further ordinances (for example on independent bodies under §7 Abs. 6) may follow, so check RIS for the current set.
 
-You are helping an enterprise architect generate an **Austrian NISG 2026 Compliance Assessment** — the Austrian transposition of NIS2 (EU Directive 2022/2555). The **Netz- und Informationssystemsicherheitsgesetz 2026 (NISG 2026, BGBl. I Nr. 94/2025)** is a **standalone act** (not a mere amendment of the NISG 2018). It was passed on 12 December 2025, published on 23 December 2025, and **enters into force on 1 October 2026 (§51)**; it **replaces the NISG 2018**, which expires on 30 September 2026. Essential/Important entities must register with the Cybersicherheitsbehörde within three months of entry into force — i.e. **by end-December 2026 (§29 Abs. 3)** — and submit the first **Selbstdeklaration** of implemented risk-management measures within twelve months of the registration duty, i.e. by **30 September 2027 (§33 Abs. 1)**. The independent **Wirksamkeitsnachweis** (§33 Abs. 2) is a separate, later obligation: the Cybersicherheitsbehörde may first request it no earlier than **two years after entry into force (from October 2028)**. Once requested, the general window is **two years** to evidence technical, operational and organisational implementation via an independent body — but **Essential entities must evidence the operative and organisational implementation within two months of the request** (§33 Abs. 2 second sentence); for Important entities §38 Abs. 2 applies analogously. Run this after `/arckit:eu-nis2` to add Austrian obligations that go beyond the EU baseline.
+You are helping an enterprise architect generate an **Austrian NISG 2026 Compliance Assessment** — the Austrian transposition of NIS2 (EU Directive 2022/2555). The **Netz- und Informationssystemsicherheitsgesetz 2026 (NISG 2026, BGBl. I Nr. 94/2025)** is a **standalone act** (not a mere amendment of the NISG 2018). It was passed by the Nationalrat on 12 December 2025, published on 23 December 2025, and **has been in force since 1 October 2026** (§51 Abs. 1–2: the first day of the month after nine months from publication); it **replaced the NISG 2018**, whose §§1–31 ceased to apply on the same date, together with the NISV 2019 and the QuaSteV. The **NISV 2026 (BGBl. II Nr. 290/2026)**, issued by the Cybersicherheitsbehörde under §32 Abs. 5 and §35 Abs. 3, has applied since the end of 1 October 2026; it sets the detailed risk-management requirements and further criteria for a significant incident. Essential/Important entities must register with the Cybersicherheitsbehörde within three months of entry into force — i.e. **by end-December 2026 (§29 Abs. 3)** — and submit the first **Selbstdeklaration** of implemented risk-management measures within twelve months of the registration duty, i.e. by **30 September 2027 (§33 Abs. 1)**. The independent **Wirksamkeitsnachweis** (§33 Abs. 2) is a separate, later obligation: the Cybersicherheitsbehörde may first request it no earlier than **two years after entry into force (from October 2028)**. Once requested, the general window is **two years** to evidence technical, operational and organisational implementation via an independent body — but **Essential entities must evidence the operative and organisational implementation within two months of the request** (§33 Abs. 2 second sentence); for Important entities §38 Abs. 2 applies analogously. Run this after `/arckit:eu-nis2` to add Austrian obligations that go beyond the EU baseline.
 
 ## User Input
 
@@ -41,7 +43,7 @@ $ARGUMENTS
 **RECOMMENDED** (read if available, note if missing):
 
 - **NIS2** (EU NIS2 Assessment) — Extract: Annex I / Annex II classification, size threshold results, Article 21 ten-measure status, incident reporting baseline
-  - If missing: warn that `/arckit:at-nisg` should be run after `/arckit:eu-nis2` for best results
+  - If missing: warn that `/arckit:at-nisg` should be run after `/arckit:eu-nis2` for best results, then proceed. The EU baseline is recommended, not required: `eu-nis2` ships in the separate `arckit-eu` overlay, which not every install has
 - **RISK** (Risk Register) — Extract: existing security risks, supply chain risks, third-party risks, business continuity risks
 - **SECD** (Secure by Design) — Extract: existing security controls, maturity assessments, security architecture decisions
 - **PRIN** (Architecture Principles, 000-global) — Extract: security baseline, incident response principles, supply chain policy
@@ -81,7 +83,7 @@ Read all documents from Step 0. Identify:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/at-nisg-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/at-nisg-template.md` exists in the project root, then `.arckit/templates/at-nisg-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/at-nisg-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `ATNISG` carries the Austria regime, which hard-routes to `_partials/document-control-at.md` whatever the operator's user config says.
@@ -98,7 +100,7 @@ Before generating the assessment, determine entity classification:
 
 - Austria may designate additional entities beyond the size thresholds where criticality warrants it — the Cybersicherheitsbehörde issues a Bescheid on the criticality grounds in **§26** (Größenunabhängige Einstufung; §26 Abs. 3: sole national provider of an essential service, material impact on public order / safety / health, systemic risk, or particular national/regional significance for the sector)
 - Public-administration scope: federal bodies are in scope; the treatment of Land-level bodies (federal-only vs opt-in) must be confirmed against the enacted text `[NEEDS VERIFICATION: confirm Länder scope / any Landeshauptmann opt-in and its §]`
-- Transition from NISG 2018: the NISG 2018 expires on 30 September 2026 and entities previously designated as *Betreiber wesentlicher Dienste* must be re-assessed against the new Essential/Important classification; NISG 2026 obligations apply from entry into force (1 October 2026) `[NEEDS VERIFICATION: confirm transitional provisions and their § in the enacted text]`
+- Transition from NISG 2018 (§51 NISG 2026): NISG 2026 obligations have applied since 1 October 2026, when the NISG 2018 ceased to apply. Bescheide identifying *Betreiber wesentlicher Dienste* under §16 Abs. 1 NISG 2018 became void (gegenstandslos) on that date (§51 Abs. 5), so a former BwD must re-assess itself against the new Essential/Important classification and register under §29. The national CSIRT authorised under §15 Abs. 3 NISG 2018 keeps its tasks until a national CSIRT is authorised under §8 Abs. 2, for at most two years (§51 Abs. 6), and qualified bodies (qualifizierte Stellen) under §18 Abs. 1 NISG 2018 count as independent bodies under §7 until twelve months after the §7 Abs. 6 ordinance enters into force (§51 Abs. 7)
 
 **Size thresholds** (NIS2 carried into NISG):
 
@@ -117,7 +119,7 @@ Show entity classification before generating the full document.
    - Existing file → minor increment if refreshed, major if scope changed
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-ATNISG-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-ATNISG-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
@@ -127,7 +129,7 @@ Show entity classification before generating the full document.
 3. **Section 1: Austrian Scope and Designation**
    - Sector classification (sectors in Anlagen 1/2). Competent authority under NISG 2026 is the **Cybersicherheitsbehörde (Bundesamt für Cybersicherheit, §3a)**; note any retained sectoral roles `[NEEDS VERIFICATION]`
    - Entity designation: Essential / Important / Out of scope (§24)
-   - Previous NISG 2018 designation (Betreiber wesentlicher Dienste) and re-assessment against the new classification (NISG 2018 expires 30 Sep 2026)
+   - Previous NISG 2018 designation (Betreiber wesentlicher Dienste) and re-assessment against the new classification (the NISG 2018 ceased to apply on 1 Oct 2026 and its BwD Bescheide became void, §51 Abs. 5)
    - Cross-border operations treatment (main establishment rules from NIS2)
    - Federal vs Land competence — confirm scope for Land-level bodies `[NEEDS VERIFICATION]`
 
@@ -149,6 +151,7 @@ Show entity classification before generating the full document.
      8. Cryptography policy
      9. HR security and access control
      10. MFA and secure communications
+   - Detailed requirements under the **NISV 2026 (BGBl. II Nr. 290/2026)**: §2 applies the technical and methodological requirements of Commission Implementing Regulation (EU) 2024/2690 (Art. 2 and Annex) to every entity type in Anlagen 1 and 2 of the NISG 2026, not only the digital-infrastructure types the Regulation itself covers; §3 requires the risk analysis to address at least technological, human, ICT-supply-chain and site-related risks; §4 requires documented compensating measures, reviewed at least annually, where an entity cannot meet a requirement temporarily or because of its size
    - A-SIT guidance alignment where applicable (A-SIT publishes sector-agnostic security guidance; not a regulatory body but commonly referenced by BMI and sectoral authorities)
    - Proportionality assessment: measures proportionate to entity size and risk
    - Extract existing controls from SECD artifact to pre-populate status
@@ -156,6 +159,7 @@ Show entity classification before generating the full document.
 6. **Section 4: Incident Reporting (§34)**
    - Reporting channel: significant incidents (erhebliche Cybersicherheitsvorfälle, defined in §35) are reported to the **responsible sector-specific CSIRT** — or, absent one, the **national CSIRT** — under §34 Abs. 1 (CSIRTs are established in §8). In practice **CERT.at** acts as national CSIRT and **GovCERT** as the public-administration sectoral CSIRT; the CSIRT forwards the report to the **Cybersicherheitsbehörde without delay (§34 Abs. 1)**
    - Four-stage NIS2 reporting timeline per §34 (24h early warning, 72h notification, intermediate on request, 1-month final report)
+   - Significance test: §35 NISG 2026 plus the further criteria in **§§5–7 NISV 2026** (§5 lists incidents that are significant in any case, such as a direct financial loss above €500,000 or 5% of annual turnover, whichever is lower, death or serious harm to health, or an outage of more than 24 hours affecting more than 100,000 users or 10% of users, or users across at least one Bundesland; §6 excludes planned maintenance; §7 counts recurring incidents with the same cause together). Map the entity's incident classification to these criteria
    - Austrian form and language requirements for reports (German, NIS2-Meldeplattform)
    - Cross-reporting to DSB if personal data breach (Art. 33 GDPR + NISG)
    - National coordination / exercise expectations via the CSS (§12), IKDOK (§13) and OpKoord (§14)
@@ -242,7 +246,7 @@ Next steps:
 ## Important Notes
 
 - **Run after eu-nis2**: This command adds the Austrian layer. For best results, run `/arckit:eu-nis2` first.
-- **NISG 2026 is newly enacted and not yet in force**: The transposition (NISG 2026, BGBl. I Nr. 94/2025) enters into force on **1 October 2026 (§51)** and replaces the NISG 2018 (expires 30 Sep 2026). Implementing ordinances (Verordnungen) are still forthcoming. Key deadlines: registration within three months of entry into force (**§29 Abs. 3**, ~end-December 2026); first **Selbstdeklaration** of implemented measures within twelve months of the registration duty (by **30 September 2027, §33 Abs. 1**); the independent **Wirksamkeitsnachweis** (§33 Abs. 2) is requestable by the authority no earlier than two years after entry into force (from October 2028), and once requested **Essential entities have only two months** to evidence operative and organisational implementation (general window two years for the full technical/operative/organisational proof). An AT cyber practitioner must confirm before external reliance.
+- **NISG 2026 has been in force since 1 October 2026**: The transposition (NISG 2026, BGBl. I Nr. 94/2025) entered into force on **1 October 2026 (§51)** and replaced the NISG 2018, which ceased to apply on the same date. The first implementing ordinance, the **NISV 2026 (BGBl. II Nr. 290/2026)**, has applied since the end of 1 October 2026; further ordinances (for example on independent bodies under §7 Abs. 6) may follow, so check RIS for the current set. Key deadlines: registration within three months of entry into force (**§29 Abs. 3**, ~end-December 2026); first **Selbstdeklaration** of implemented measures within twelve months of the registration duty (by **30 September 2027, §33 Abs. 1**); the independent **Wirksamkeitsnachweis** (§33 Abs. 2) is requestable by the authority no earlier than two years after entry into force (from October 2028), and once requested **Essential entities have only two months** to evidence operative and organisational implementation (general window two years for the full technical/operative/organisational proof). An AT cyber practitioner must confirm before external reliance.
 - **Management body duties (not personal liability)**: NIS2 Art. 20 (transposed in §31) makes the Geschäftsleitung responsible for steering and overseeing cybersecurity measures and requires management-body training. Note that the NISG 2026 does **not** create explicit personal liability of management bodies — administrative fines under §45 are addressed to the entity as a legal person (attribution via §44; §44 Abs. 5 waives §9 VStG personal punishment once the entity is fined). Core-duty ceilings (§45 Abs. 1): Essential up to €10M / 2% turnover (§45 Abs. 2), Important up to €7M / 1.4% (§45 Abs. 3); procedural breaches carry a lower tier of up to €50K (€100K repeat) under §45 Abs. 4.
 - **Public-administration bodies are not fined**: §46 applies "abweichend von § 45" to Behörden and sonstige Stellen der öffentlichen Verwaltung (including Gebietskörperschaften and bodies constituted under private law). The consequence is a Bescheid establishing non-compliance plus a remediation deadline, and — if unremedied once the Bescheid is final — **publication** of the non-compliance (§46 Abs. 2, Verfassungsbestimmung). Never quote the §45 Abs. 2/3 monetary ceilings as a public-administration entity's exposure.
 - **Ne bis in idem with the GDPR**: if the Datenschutzbehörde has already fined the same conduct under Art. 58(2)(i) GDPR, no NISG fine may follow (§44 Abs. 7).

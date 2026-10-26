@@ -37,7 +37,7 @@ $ARGUMENTS
      6. Set `PROJECT_ID` = the 3-digit number, `PROJECT_PATH` = the new directory path
 
 2. **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/stakeholder-drivers-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/stakeholder-drivers-template.md` exists in the project root, then `.arckit/templates/stakeholder-drivers-template.md`
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/stakeholder-drivers-template.md` (default)
    - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -121,12 +121,12 @@ $ARGUMENTS
    - Acknowledge conflicts honestly
    - Provide practical resolution strategies
    - Include both quantitative and qualitative measures
-   - Consider UK Government context if applicable (Minister accountability, public scrutiny, parliamentary questions, transparency requirements, GovS 005 digital governance roles including SRO, Service Owner, CDDO, and DDaT Profession Lead)
+   - Consider UK Government context if applicable (Minister accountability, public scrutiny, parliamentary questions, transparency requirements). Use the organisation-level digital roles that GovS 005 (version 2.2, section 4.6) defines: accounting officer, senior officer accountable for the organisation's digital portfolio, senior officer accountable for data, senior officer accountable for technology, senior officer accountable for service delivery, service owner and digital service manager. Attribute other roles to their own source, not to GovS 005: the Senior Responsible Owner (SRO) to the SRO role guidance and GovS 002, product and delivery managers to the GOV.UK Service Manual, and the organisation's digital assurance team to the Digital Assurance Playbook. The Cabinet Office digital and technology spend controls ended on 31 March 2026, and CDDO became part of GDS in January 2025: do not give any stakeholder a spend control role or list CDDO as a stakeholder
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **STKE** per-type checks pass. Fix any failures before proceeding.
 
 7. **Write the output**:
-   - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-STKE-v1.0.md`
+   - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-STKE-v{VERSION}.md`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier analysis, never over it. Stakeholders added or removed is a major increment
    - Use the exact template structure
    - Fill in ALL sections with realistic, thoughtful analysis
    - DO NOT leave sections as TBD unless genuinely unknown
@@ -138,7 +138,7 @@ Before completing the document, populate document information fields:
 ### Auto-populated fields
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001")
-- `[VERSION]` → Start with "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-STKE-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → Document purpose
 - `ARC-[PROJECT_ID]-STKE-v[VERSION]` → Generated document ID

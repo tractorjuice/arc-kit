@@ -25,7 +25,13 @@ import pytest
 import yaml
 
 PLUGIN = Path(__file__).resolve().parents[2] / "plugins" / "arckit-claude"
-COMMANDS = sorted((PLUGIN / "commands").glob("*.md"))
+# Core's commands and every overlay's. An overlay is its own plugin in Claude
+# Code, so its commands read their templates and run their scripts from their
+# own install folder and need the same native rules (#971). The glob takes the
+# plugins/arckit-*/ sources, not core's nested plugins/ mirror of them.
+COMMANDS = sorted((PLUGIN / "commands").glob("*.md")) + sorted(
+    p for p in PLUGIN.parent.glob("arckit-*/commands/*.md") if not p.is_relative_to(PLUGIN)
+)
 
 # `node|bash [quote]${CLAUDE_PLUGIN_ROOT}/scripts/<file>[quote]`, or the script run directly
 INVOCATION = re.compile(

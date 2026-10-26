@@ -11,6 +11,10 @@ handoffs:
     description: Per-share lawful-basis mapping continues into the data sharing agreement.
   - command: uae-classification
     description: PDPL-relevant datasets must be classified appropriately.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
@@ -27,13 +31,13 @@ You are an enterprise architect generating a UAE PDPL Compliance Assessment for 
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, DR, and DMOD artefacts (if present)
+   - The project's REQ (including its `DR-*` data requirements) and DATA (data model) artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-pdpl-template.md` (user override)
    - **Then**, `.arckit/templates/uae-pdpl-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-pdpl-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> PDPL --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> PDPL {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 5. Generate the following sections:
    - **Scope** — what processing is covered, what carve-outs apply. Note free-zone regimes DIFC DPL and ADGM DPR are out of scope of the federal PDPL; healthcare data may also fall under ADHICS.
@@ -52,10 +56,10 @@ You are an enterprise architect generating a UAE PDPL Compliance Assessment for 
 
 Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data. Authority: UAE Data Office. Primary URL: <https://uaelegislation.gov.ae/en/legislations/1972/download>
 
-The PDPL Executive Regulation status MUST be flagged as "verified as of [date]" in the External References section because publication status changes — see `docs/guides/uae-overlay-maintenance.md` for the current verification date.
+Federal Decree-Law No. 45 of 2021 was issued on 20 September 2021, published in Official Gazette No. 712 (supplement) on 26 September 2021, and has been in force since 2 January 2022. Its Executive Regulations are a separate Cabinet instrument, and the UAE Government portal's data protection page (<https://u.ae/en/about-the-uae/digital-uae/data/data-protection-laws>, updated 4 December 2025) names none. Before writing, check the UAE Legislation portal (<https://uaelegislation.gov.ae>) for a Cabinet resolution issuing them, and record the result in the External References section as "PDPL Executive Regulations: [instrument and date / none located] — verified as of [date]", because publication status changes.
 
 ## Important notes
 
 - Do NOT confuse the federal PDPL with the DIFC DPL or ADGM DPR free-zone regimes — those are separately maintained and out of scope of this command.
 - Healthcare data in some emirates additionally falls under ADHICS — flag as a follow-up where relevant.
-- Where the Executive Regulation is not yet in force at the verification date, treat its provisions as informational only and base the assessment on the primary Decree-Law text.
+- Where no Executive Regulations are in force at the verification date, base the assessment on the Decree-Law text alone, and treat any draft or commentary describing them as informational only.

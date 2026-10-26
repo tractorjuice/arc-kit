@@ -110,23 +110,28 @@ ALLOWED_DIRECTORIES = [
 
 ### Content scanner skip patterns
 
-To prevent `secret-file-scanner.py` from scanning certain files (e.g., documentation that legitimately discusses secret formats), add a regex to `SKIP_PATTERNS`:
+`secret-file-scanner.mjs` skips only ArcKit's own security tooling and documentation, which legitimately discuss secret formats. Paths are resolved (so `..` and symlinks cannot escape) and matched relative to the plugin root, and — when the plugin runs from an ArcKit source checkout (`<repo>/plugins/arckit-claude`) — relative to that repo root. Files in your own projects, including `docs/*.md`, `README.md` and `CHANGELOG.md`, are always scanned.
 
-```python
-SKIP_PATTERNS = [
-    r"\.pre-commit-config\.yaml$",
-    r"secret-detection\.py$",
-    r"secret-file-scanner\.py$",
-    r"file-protection\.py$",
-    r"\.secrets\.baseline$",
-    r"plugins/arckit-claude/commands/.*\.md$",
-    r"plugins/arckit-claude/templates/.*\.md$",
-    r"docs/.*\.md$",
-    r"CHANGELOG\.md$",
-    r"README\.md$",
-    r"your-custom-pattern\.md$",  # Add here
-]
+```js
+// Relative to the plugin root
+const PLUGIN_SKIP_PATTERNS = [
+  /^hooks\/(?:secret-detection|secret-file-scanner|file-protection)\.mjs$/,
+  /^commands\/[^/]+\.md$/,
+  /^templates\/[^/]+\.md$/,
+  /^docs\/(?:[^/]+\/)*[^/]+\.md$/,
+  /^(?:README|CHANGELOG)\.md$/,
+];
+
+// Relative to the ArcKit source repo root
+const SOURCE_REPO_SKIP_PATTERNS = [
+  /^\.pre-commit-config\.yaml$/,
+  /^\.secrets\.baseline$/,
+  /^docs\/(?:[^/]+\/)*[^/]+\.md$/,
+  /^(?:README|CHANGELOG)\.md$/,
+];
 ```
+
+Keep new patterns anchored (`^...$`) to a path relative to one of these roots; an unanchored pattern such as `docs/.*\.md$` would exempt any path containing that substring.
 
 ## Restricting web access for research agents
 

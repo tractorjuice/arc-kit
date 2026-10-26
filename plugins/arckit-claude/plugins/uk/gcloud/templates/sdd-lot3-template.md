@@ -15,521 +15,317 @@
 |---------|------|--------|---------|-------------|---------------|
 | [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.[COMMAND]` command | [PENDING] | [PENDING] |
 
-> G-Cloud 14 Framework - Service Definition Document
-> Based on Crown Commercial Service official question structure
+> G-Cloud 15 (RM1557.15) Service Definition Document for a Lot 3 (Cloud Support) service, run by the Government Commercial Agency (GCA, formerly CCS).
+> Sections 1–10 follow GCA's Lot 3 service questions, in the export's order. Section 11 lists the role levels that deliver the service. The rates are on the supplier's one Lot 3 rate card (`ARC-000-RATE`, set with `/arckit-uk-gcloud:pricing`), which GCA collects on the Digital Platform rather than as a service question.
 
----
-
-## 1. Service Summary
-
-### 1.1 Service Name
-<!-- Max 100 characters -->
-```text
-[SERVICE_NAME]
-```
-
-**Character count:** [X]/100
-
-### 1.2 Service Description
-<!-- Max 50 words, 500 characters. Summary of what the service is for. -->
-```text
-[DESCRIPTION]
-```
-
-**Word count:** [X]/50 | **Character count:** [X]/500
-
-### 1.3 Service Features
-<!-- Up to 10 features, each max 10 words, 100 characters -->
-<!-- Include features like 'system design and assurance' or 'help choosing systems and vendors' -->
-
-| # | Feature | Words | Chars |
-|---|---------|-------|-------|
-| 1 | [Feature 1] | [X]/10 | [X]/100 |
-| 2 | [Feature 2] | [X]/10 | [X]/100 |
-| 3 | [Feature 3] | [X]/10 | [X]/100 |
-| 4 | [Feature 4] | [X]/10 | [X]/100 |
-| 5 | [Feature 5] | [X]/10 | [X]/100 |
-| 6 | [Feature 6] | [X]/10 | [X]/100 |
-| 7 | [Feature 7] | [X]/10 | [X]/100 |
-| 8 | [Feature 8] | [X]/10 | [X]/100 |
-| 9 | [Feature 9] | [X]/10 | [X]/100 |
-| 10 | [Feature 10] | [X]/10 | [X]/100 |
-
-### 1.4 Service Benefits
-<!-- Up to 10 benefits, each max 10 words, 100 characters -->
-
-| # | Benefit | Words | Chars |
-|---|---------|-------|-------|
-| 1 | [Benefit 1] | [X]/10 | [X]/100 |
-| 2 | [Benefit 2] | [X]/10 | [X]/100 |
-| 3 | [Benefit 3] | [X]/10 | [X]/100 |
-| 4 | [Benefit 4] | [X]/10 | [X]/100 |
-| 5 | [Benefit 5] | [X]/10 | [X]/100 |
-| 6 | [Benefit 6] | [X]/10 | [X]/100 |
-| 7 | [Benefit 7] | [X]/10 | [X]/100 |
-| 8 | [Benefit 8] | [X]/10 | [X]/100 |
-| 9 | [Benefit 9] | [X]/10 | [X]/100 |
-| 10 | [Benefit 10] | [X]/10 | [X]/100 |
-
-### 1.5 Service Constraints
-<!-- Max 100 words. Any limitations or constraints on the service. -->
-```text
-[CONSTRAINTS]
-```
-
-**Word count:** [X]/100
-
----
-
-## 2. Service Categories
-<!-- Select up to 6 categories from the official Lot 3 list -->
-
-**Selected Categories:**
-
-- [ ] Planning
-- [ ] Setup and migration
-- [ ] Quality assurance and performance testing
-- [ ] Security services
-- [ ] Training
-- [ ] Ongoing support
-
-**Categories selected:** [X]/6
-
----
-
-## 3. Service Details by Category
-
-### 3.1 Planning Service
-
-**Planning service included:** Yes / No
-
-**Planning service description:**
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
-
-**Compatible with specific services:** Yes / No
-**Compatible services list:** [LIST]
-
-### 3.2 Setup and Migration Service
-
-**Setup/migration service included:** Yes / No
-
-**Setup/migration description:**
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
-
-**Compatible with specific services:** Yes / No
-**Compatible services list:** [LIST]
-
-### 3.3 Quality Assurance and Performance Testing
-
-**QA/testing service included:** Yes / No
-
-**QA/testing description:**
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
-
-### 3.4 Security Services
-
-**Security testing included:** Yes / No
-
-**Security testing accredited:** Yes / No
-
-**Accreditations held:**
-
-- [ ] CREST
-- [ ] CHECK
-- [ ] Tiger Scheme
-- [ ] Cyber Scheme
-- [ ] GBEST
-- [ ] Other: [SPECIFY]
-
-**CCP (Certified Cyber Professional) certified staff:** Yes / No
-
-**Security services provided:**
-<!-- CCS `securityTestingWhat` checkboxes -->
-- [ ] Security strategy
-- [ ] Security risk management
-- [ ] Security design
-- [ ] Cyber security consultancy
-- [ ] Security testing
-- [ ] Security incident management
-- [ ] Security audit services
-- [ ] Other: [SPECIFY]
-
-**Security testing description:**
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
-
-### 3.5 Training
-
-**Training service included:** Yes / No
-
-**Training description:**
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
-
-**Compatible with specific services:** Yes / No
-**Compatible services list:** [LIST]
-
-### 3.6 Ongoing Support
-
-**Ongoing support included:** Yes / No
-
-**Ongoing support description:**
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
-
-**Ongoing support services:**
-
-- [ ] Help desk / Service desk
-- [ ] Technical support
-- [ ] Managed services
-- [ ] 24/7 monitoring
-- [ ] Incident management
-- [ ] Problem management
-- [ ] Change management
-- [ ] Other: [SPECIFY]
-
----
-
-## 4. Pricing
-
-### 4.1 Pricing Model
+## G-Cloud Details
 
 | Field | Value |
 |-------|-------|
-| **Minimum Price** | £[PRICE] |
-| **Maximum Price** | £[PRICE] (if applicable) |
-| **Pricing Unit** | [Person/Day/Hour/Fixed Price/Unit] |
-| **Billing Interval** | [Hour/Day/Month/Project] |
-
-### 4.2 SFIA Rate Card
-
-**SFIA rate card available:** Yes / No
-**SFIA Rate Card URL:** [URL]
-
-### 4.3 Role-Based Pricing
-
-| Role | SFIA Level | Day Rate (£) |
-|------|------------|--------------|
-| [ROLE] | [LEVEL] | £[RATE] |
-| [ROLE] | [LEVEL] | £[RATE] |
-| [ROLE] | [LEVEL] | £[RATE] |
-| [ROLE] | [LEVEL] | £[RATE] |
-| [ROLE] | [LEVEL] | £[RATE] |
-
-### 4.4 Education Pricing
-
-**Education sector discount available:** Yes / No
-**Details:** [DESCRIPTION]
-
-### 4.5 Pricing Document
-
-**URL:** [PRICING_DOCUMENT_URL]
+| Service Name | [SERVICE_NAME] |
+| Supplier | [SUPPLIER_NAME] |
+| Framework | G-Cloud 15 (RM1557.15) |
+| Lot | 3 — Cloud Support |
+| Question source | GCA question export `RM1557.15-G-Cloud-question-export.xlsx`, sheet ‘Services cloud support’ |
+| Listing contact (from the supplier profile; shown on the listing) | [NAME], [EMAIL], [PHONE] |
 
 ---
 
-## 5. SFIA Skills Mapping
+## How to Use This Document
 
-### 5.1 Skills Provided
+This document holds the answers to every Lot 3 service question, ready to enter on GCA's Digital Platform, and the role levels that deliver the service. It is also the source for the service definition document you upload at 10.1.
 
-| SFIA Skill Code | Skill Name | Levels Available |
-|-----------------|------------|------------------|
-| ARCH | Solution Architecture | [LEVELS] |
-| PROG | Programming/Software Development | [LEVELS] |
-| DLMG | Deployment | [LEVELS] |
-| CFMG | Configuration Management | [LEVELS] |
-| TEST | Testing | [LEVELS] |
-| SCTY | Information Security | [LEVELS] |
-| ITOP | IT Operations | [LEVELS] |
-| CNSL | Consultancy | [LEVELS] |
-| PRMG | Project Management | [LEVELS] |
-| [CODE] | [NAME] | [LEVELS] |
-
-### 5.2 Typical Team Composition
-
-| Service Type | Roles | SFIA Levels |
-|--------------|-------|-------------|
-| Cloud Migration | [ROLES] | [LEVELS] |
-| Managed Service | [ROLES] | [LEVELS] |
-| Security Assessment | [ROLES] | [LEVELS] |
-| Architecture Review | [ROLES] | [LEVELS] |
+- Tick the options that apply (`- [x]`) and leave the others unticked. A *choose one* question takes exactly one tick.
+- A question marked ↳ is asked only when its trigger answer is ticked. When it isn't, write `Not applicable` under it.
+- Options are worded as the live G-Cloud 15 listings show them (scraped 7 October 2026), which is what buyers see. Where GCA's Digital Platform words an option differently (the question export), the platform's wording follows in a comment: tick that option when you enter the answer. Never reword an option.
+- Write anything the supplier hasn't confirmed as `[PENDING]`. `/arckit-uk-gcloud:review` treats every `[PENDING]` as blocking.
+- `<!-- GCA guidance -->` comments repeat GCA's help text and can stay in the working copy.
+- **Limits:** service name 100 characters (name only, no extra keywords); description 500 characters; features and benefits at most 10 each, 10 words each; and a word limit on each free-text answer, shown on its `**Words:**` line. GCA's export states none of those, but every live listing keeps within them; `framework-questions.md` in the overlay's `gcloud-framework` skill gives the evidence. Write the count in place of `[X]`.
+- **Uploaded service definition document:** ODF or PDF/A, at most 5 MB, accessible, and **no prices**. Leave out section 11, the support level costs (7.13), Document Control, Revision History, G-Cloud Details, the appendix and External References when you produce it.
+- **Scored answers:** three of the four Lot 3 mandatory award criteria (2.5% each, answered with `/arckit-uk-gcloud:lot-questions`) repeat answers given here: user support availability, staff security clearance checks and clearance level. The sections they mirror are marked.
+- **Changed from G-Cloud 14:** the planning, set-up and migration, QA and testing, security testing, training and ongoing support question sections are gone (those areas are now service categories), and the SFIA rate card is replaced by a DDaT rate card: one per supplier, covering all its Lot 3 services.
 
 ---
 
-## 6. Support
+## 1. Service attributes
 
-### 6.1 Support Levels
-<!-- Max 200 words, 2000 characters -->
+**1.1 Service type**
+
+> GCA's export lists this attribute with no question text or guidance. Record the lot the service is submitted under, and check what the Digital Platform shows here when you enter the service.
+
+[LOT LABEL]
+
+---
+
+## 2. Service name
+
+**2.1 Service name** — What’s your service called?
+<!-- GCA guidance: Include your service name only. Don’t use extra keywords. -->
+
+```text
+[SERVICE NAME]
+```
+
+**Characters:** [X]/100
+
+---
+
+## 3. About your service
+
+**3.1 Service description** — Provide a summary describing what your service is for.
+
 ```text
 [DESCRIPTION]
 ```
 
-**Word count:** [X]/200 | **Character count:** [X]/2000
+**Characters:** [X]/500
 
-### 6.2 Support Channels
+**3.2 Service categories** — Which categories does your service fit under? *(tick all that apply)*
 
-| Channel | Available | Hours |
-|---------|-----------|-------|
-| Email/Ticketing | Yes/No | [HOURS] |
-| Phone | Yes/No | [HOURS] |
-| Web Chat | Yes/No | [HOURS] |
-| Onsite | Yes/No | [AVAILABILITY] |
+<!-- Choose only from the Lot 3 tree in `g-cloud-15/categories.md`. Root: Cloud Support Services, with groups Cloud Migration Planning, Set Up and Migration, Managed Cloud, Cloud Financial Management Services, Security Services, Quality Assurance and Performance Testing, Training and Ongoing Support. Several categories share a name (‘Other’, ‘Application management’), so write each as its full path, for example `Cloud Support Services > Managed Cloud > Managed Public cloud > Managed Public IaaS`.
+     One group per service: every category ticked sits under the same group (`Cloud Support Services > Managed Cloud`, for example). None of the 42,893 live G-Cloud 15 listings scraped on 7 October 2026 has categories in more than one group, although GCA's question export states no rule. A service that spans two groups, such as migration followed by managed cloud, is listed as two services. -->
 
-### 6.3 Support Response Times
+**Category group (one per service):** [ROOT > GROUP]
 
-| Priority | Response Target | Resolution Target |
-|----------|-----------------|-------------------|
-| Critical (P1) | [X] hours | [X] hours |
-| High (P2) | [X] hours | [X] hours |
-| Medium (P3) | [X] hours | [X] days |
-| Low (P4) | [X] hours | [X] days |
+| # | Category (full path, as in the lot's tree) |
+|---|---|
+| 1 | [ROOT > GROUP > CATEGORY] |
 
 ---
 
-## 7. Getting Started
+## 4. Service features and benefits
 
-### 7.1 Onboarding Process
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
+**4.1 Service features** — List the service features.
+<!-- GCA guidance: Include the features that best describe your service, for example ‘system design and assurance’ or ‘help choosing systems and vendors’. 10 words for each feature, 10 features maximum. -->
 
-### 7.2 Typical Engagement Timeline
+| # | Feature | Words |
+|---|---|---|
+| 1 | [FEATURE 1] | [X]/10 |
+| 2 | [FEATURE 2] | [X]/10 |
+| 3 | [FEATURE 3] | [X]/10 |
 
-| Phase | Duration | Activities |
-|-------|----------|------------|
-| Discovery | [X] days/weeks | [ACTIVITIES] |
-| Planning | [X] days/weeks | [ACTIVITIES] |
-| Delivery | [X] days/weeks | [ACTIVITIES] |
-| Handover | [X] days/weeks | [ACTIVITIES] |
+**Count:** [N]/10
 
----
+**4.2 Service benefits** — List the service benefits.
+<!-- GCA guidance: Include the benefits that show how your service helps users improve their working processes. Use active phrases, for example ‘reduces deployment times’ or ‘reduces business risk and costs’. 10 words for each benefit, 10 benefits maximum. -->
 
-## 8. Documentation
+| # | Benefit | Words |
+|---|---|---|
+| 1 | [BENEFIT 1] | [X]/10 |
+| 2 | [BENEFIT 2] | [X]/10 |
+| 3 | [BENEFIT 3] | [X]/10 |
 
-### 8.1 Documentation Available
-
-**Documentation provided:** Yes / No
-
-**Documentation formats:**
-
-- [ ] HTML (online)
-- [ ] PDF
-- [ ] Project documentation templates
-- [ ] Methodology guides
-- [ ] Other: [SPECIFY]
-
-### 8.2 Deliverables
-
-| Service Type | Typical Deliverables |
-|--------------|---------------------|
-| Planning | [DELIVERABLES] |
-| Migration | [DELIVERABLES] |
-| Security | [DELIVERABLES] |
-| Training | [DELIVERABLES] |
-
-### 8.3 Document URLs
-
-| Document | URL |
-|----------|-----|
-| Service Definition Document | [URL] |
-| Terms and Conditions | [URL] |
-| Pricing Document | [URL] |
-| SFIA Rate Card | [URL] |
+**Count:** [N]/10
 
 ---
 
-## 9. Security Clearances
+## 5. Service scope
 
-### 9.1 Government Security Clearances
-<!-- CCS `governmentSecurityClearances` — radio select -->
-**Highest clearance level available:**
+**5.1 Service constraints** — Does your service have any constraints that buyers should know about?
+<!-- GCA guidance: Constraints might include support only being available remotely. -->
 
-- ( ) DV (Developed Vetting)
-- ( ) SC (Security Check)
-- ( ) BPSS (Baseline Personnel Security Standard)
-- ( ) None
+[ANSWER]
 
-### 9.2 Staff Security Clearance Checks
-<!-- CCS `staffSecurityClearanceChecks` — radio select -->
-**Staff security vetting approach:**
-
-- ( ) Staff are vetted to BS7858:2012
-- ( ) Staff are vetted but not to BS7858:2012
-- ( ) Staff are not vetted
+**Words:** [X]/100
 
 ---
 
-## 10. Accreditations & Certifications
+## 6. Reselling
 
-### 10.1 Company Certifications
+<!-- GCA question group: Supplier type -->
 
-| Certification | Status | Expiry Date |
-|---------------|--------|-------------|
-| ISO 27001 | ✅/❌ | [DATE] |
-| ISO 9001 | ✅/❌ | [DATE] |
-| Cyber Essentials Plus | ✅/❌ | [DATE] |
-| [CERTIFICATION] | ✅/❌ | [DATE] |
+**6.1 Supplier type** — Are you reselling another organisation’s services? *(choose one)*
 
-### 10.2 Security Testing Accreditations
+- [ ] Not a reseller <!-- Digital Platform: “I’m not a reseller” -->
+- [ ] Reseller providing extra features and support <!-- Digital Platform: “I’m a reseller providing extra features and support not available from the original supplier” -->
+- [ ] Reseller providing extra support <!-- Digital Platform: “I’m a reseller providing extra support” -->
+- [ ] Reseller (no extras) <!-- Digital Platform: “I’m a reseller not providing extra features or support” -->
 
-| Accreditation | Status | Scope |
-|---------------|--------|-------|
-| CREST | ✅/❌ | [SCOPE] |
-| CHECK | ✅/❌ | [SCOPE] |
-| Tiger Scheme | ✅/❌ | [SCOPE] |
-| Cyber Scheme | ✅/❌ | [SCOPE] |
-| GBEST | ✅/❌ | [SCOPE] |
+**6.2 Organisation whose services are being resold** — Which organisation’s services do you resell? ↳ *Asked if 6.1 is ‘I’m a reseller providing extra features and support not available from the original supplier’, ‘I’m a reseller providing extra support’ or ‘I’m a reseller not providing extra features or support’.*
 
-### 10.3 Partner/Vendor Certifications
-
-| Partner | Certification Level |
-|---------|---------------------|
-| AWS | [LEVEL] |
-| Azure | [LEVEL] |
-| Google Cloud | [LEVEL] |
-| [PARTNER] | [LEVEL] |
+[ANSWER]
 
 ---
 
-## 11. Quality Assurance
+## 7. User support
 
-### 11.1 QA Process
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
+> Lot 3 mandatory award criterion (2.5%, answered with `/arckit-uk-gcloud:lot-questions`): whether you have processes to provide user support, and when it is available. Keep this section consistent with that answer.
 
-### 11.2 Methodologies Used
+<!-- GCA question group: Email or ticketing support -->
 
-- [ ] Agile/Scrum
-- [ ] PRINCE2
-- [ ] SAFe
-- [ ] Waterfall
-- [ ] DevOps
-- [ ] ITIL
-- [ ] Other: [SPECIFY]
+**7.1 Email or online ticketing support** — Do you provide email or online ticketing support? *(choose one)*
 
-### 11.3 Quality Metrics
+- [ ] Yes
+- [ ] Yes, at extra cost
+- [ ] No
 
-| Metric | Target | Measurement |
-|--------|--------|-------------|
-| Customer satisfaction | [X]% | [METHOD] |
-| On-time delivery | [X]% | [METHOD] |
-| First-time resolution | [X]% | [METHOD] |
-| [METRIC] | [TARGET] | [METHOD] |
+**7.2 Support response times** — How quickly do you respond to questions? ↳ *Asked if 7.1 is ‘Yes’ or ‘Yes, at extra cost’.*
+<!-- GCA guidance: Say if response times are different at weekends. -->
+
+[ANSWER]
+
+**Words:** [X]/100
+
+**7.3 User can manage status and priority of support tickets** — Can users manage the status and priority of their support tickets? *(choose one)* ↳ *Asked if 7.1 is ‘Yes’ or ‘Yes, at extra cost’.*
+
+- [ ] Yes
+- [ ] No
+
+**7.4 Online ticketing support accessibility** — What accessibility standards does your online ticketing support management meet? *(choose one)* ↳ *Asked if 7.3 is ‘Yes’.*
+
+- [ ] WCAG 2.2 AAA
+- [ ] WCAG 2.2 AA
+- [ ] WCAG 2.2 A
+- [ ] EN 301 549
+- [ ] None or don’t know
+
+<!-- GCA question group: Phone support -->
+
+**7.5 Phone support** — Do you provide phone support? *(choose one)*
+
+- [ ] Yes
+- [ ] No
+
+**7.6 Phone support availability** — When can users get phone support? *(choose one)* ↳ *Asked if 7.5 is ‘Yes’.*
+<!-- GCA guidance: Choose the closest match to your phone support hours. -->
+
+- [ ] 24 hours, 7 days a week
+- [ ] 9 to 5 (UK time), 7 days a week
+- [ ] 9 to 5 (UK time), Monday to Friday
+
+<!-- GCA question group: Web chat support -->
+
+**7.7 Web chat support** — Do you provide web chat support? *(choose one)*
+
+- [ ] Yes
+- [ ] Yes, at an extra cost
+- [ ] No
+
+**7.8 Web chat support availability** — When can users get web chat support? *(choose one)* ↳ *Asked if 7.7 is ‘Yes’ or ‘Yes, at an extra cost’.*
+<!-- GCA guidance: Choose the closest match to your web chat support hours. -->
+
+- [ ] 24 hours, 7 days a week
+- [ ] 9 to 5 (UK time), 7 days a week
+- [ ] 9 to 5 (UK time), Monday to Friday
+
+**7.9 AI chatbot** — Do you make available an AI driven self service tool (BOT) before you reach an operative? *(choose one)* ↳ *Asked if 7.7 is ‘Yes’ or ‘Yes, at an extra cost’.*
+
+- [ ] Yes
+- [ ] No
+
+**7.10 Web chat support accessibility standard** — What accessibility standards does your web chat meet? *(choose one)* ↳ *Asked if 7.7 is ‘Yes’ or ‘Yes, at an extra cost’.*
+
+- [ ] WCAG 2.2 AAA
+- [ ] WCAG 2.2 AA
+- [ ] WCAG 2.2 A
+- [ ] EN 301 549
+- [ ] None or don’t know
+
+**7.11 How the web chat support is accessible** — Describe how your web chat is accessible. ↳ *Asked if 7.10 is ‘None or don’t know’.*
+<!-- GCA guidance: Include details of what users can and can’t do. -->
+
+[ANSWER]
+
+**Words:** [X]/200
+
+**7.12 Web chat accessibility testing** — Describe any web chat testing that you’ve done with assistive technology users. ↳ *Asked if 7.7 is ‘Yes’ or ‘Yes, at an extra cost’.*
+
+[ANSWER]
+
+**Words:** [X]/200
+
+**7.13 Support levels** — Describe your support levels
+<!-- GCA guidance: Describe: the support levels you provide; how much the different support levels cost; whether you provide a technical account manager or cloud support engineer. -->
+
+[ANSWER]
+
+**Words:** [X]/200
 
 ---
 
-## 12. Reselling
+## 8. Staff security
 
-### 12.1 Reselling Other Services
+> Two Lot 3 mandatory award criteria (2.5% each, answered with `/arckit-uk-gcloud:lot-questions`) mirror this section: whether and how you perform staff security clearance checks, and the level of clearance you are prepared to put in place if a buyer requires it. Keep the answers consistent.
 
-**Reselling other organisations' services:** Yes / No
+**8.1 Staff security clearance** — How do you manage staff security clearance checks? *(choose one)*
+<!-- GCA guidance: NCSC cloud security principle 6: Personnel security. -->
 
-**Reselling type:**
+- [ ] Conforms to BS7858:2019 <!-- Digital Platform: “Staff screening performed which conforms to BS7858:2019” -->
+- [ ] Other security clearance <!-- Digital Platform: “Staff screening performed but doesn’t conform with BS7858:2019” -->
+- [ ] Staff screening not performed
 
-- [ ] Reseller (act as supplier, take contract risk)
-- [ ] Broker (introduce buyer to supplier)
-- [ ] Neither
+**8.2 Government security clearance** — If the role requires it, what level of security clearance are you prepared to make sure your staff have? *(choose one)*
 
-**Organisations resold:**
-| Organisation | Services |
-|--------------|----------|
-| [ORG] | [SERVICES] |
-
----
-
-## 13. Subcontracting
-
-### 13.1 Use of Subcontractors
-
-**Will use subcontractors:** Yes / No
-
-**Subcontracting approach:**
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
-
-**Subcontractor management:**
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
+- [ ] Developed Vetting (DV) <!-- Digital Platform: “Up to Developed Vetting (DV)” -->
+- [ ] Security Clearance (SC) <!-- Digital Platform: “Up to Security Clearance (SC)” -->
+- [ ] Baseline Personnel Security Standard (BPSS) <!-- Digital Platform: “Up to Baseline Personnel Security Standard (BPSS)” -->
+- [ ] None
 
 ---
 
-## 14. Add-On Services
+## 9. Pricing
 
-### 14.1 Service Add-Ons Available
+> Day rates are not answered here: they go on the supplier's one Lot 3 rate card, `ARC-000-RATE`, set with `/arckit-uk-gcloud:pricing` (section 11).
 
-**Add-on services:** Yes / No
+**9.1 Discount for educational organisations** — Do you offer special pricing for educational organisations? *(choose one)*
 
-**Add-on types:**
+- [ ] Yes
+- [ ] No
 
-- [ ] Extended support hours
-- [ ] Additional consultancy days
-- [ ] Training sessions
-- [ ] Documentation
-- [ ] Other: [SPECIFY]
+---
 
-**Add-on details:**
-<!-- Max 200 words -->
-```text
-[DESCRIPTION]
-```
+## 10. Documents
+
+> Upload one terms and conditions document per service. The service definition document must not contain prices. All three documents are uploaded on GCA's Digital Platform and are not indexed by the Digital Marketplace search, so the listing's own answers carry the keywords.
+
+**10.1 Service definition document** — Add your service definition document
+<!-- GCA guidance: Read the suppliers’ guide for guidance on what to include. This document will not be indexed by search on the Digital Marketplace. Your document should: be an Open Document Format (ODF) or PDF/A; have a maximum file size of 5MB; meet accessibility standards. -->
+
+**File:** [FILE NAME] — ODF or PDF/A, [X] MB of 5 MB, accessibility checked: [YES/PENDING]
+
+**10.2 Terms and conditions document** — Add your terms and conditions document
+<!-- GCA guidance: This document will not be indexed by search on the Digital Marketplace. Your document should: be an Open Document Format (ODF) or PDF/A; have a maximum file size of 5MB; meet accessibility standards. -->
+
+**File:** [FILE NAME] — ODF or PDF/A, [X] MB of 5 MB, accessibility checked: [YES/PENDING]
+
+**10.3 Pricing document** — Add your pricing document *(optional on Lot 3: the rate card carries the prices, and 71% of the 27,496 live Lot 3 listings have one)*
+<!-- GCA guidance: This document will not be indexed by search on the Digital Marketplace. Your document should: be an Open Document Format (ODF) or PDF/A; have a maximum file size of 5MB; meet accessibility standards. -->
+
+**File:** [FILE NAME] — ODF or PDF/A, [X] MB of 5 MB, accessibility checked: [YES/PENDING]
+
+---
+
+## 11. Role Levels and the Rate Card
+
+> Not a service question in GCA's export. Lot 3 is priced on **one rate card per supplier**: the maximum UK and offshore day rate for each DDaT role level the supplier offers, entered once on GCA's Digital Platform and shown in full on every one of its Lot 3 listings. On the live listings scraped on 7 October 2026 only 2 of the 1,135 suppliers with more than one Lot 3 service show different cards on different services.
+>
+> The card is the supplier-wide `projects/000-global/supplier/ARC-000-RATE-v*.md`, and only `/arckit-uk-gcloud:pricing` writes it. This section names it and lists the role levels that deliver this service, so the card can be checked to cover them. **Copy no rates here.** Use the exact job family, role and role level names from the overlay's `skills/ddat-rate-card/references/lot-3-rate-card.md` (9 job families, 58 roles, 222 role levels). Leave this section out of the uploaded service definition document.
+
+**Rate card:** `ARC-000-RATE-v[VERSION]` / No rate card yet: run `/arckit-uk-gcloud:pricing`
+
+| # | Job family | Role | Role level | Your role, if it isn't a DDaT role | On the rate card |
+|---|------------|------|------------|------------------------------------|------------------|
+| 1 | [JOB FAMILY] | [ROLE] | [ROLE LEVEL] | [YOUR ROLE / —] | Yes / No: add with `/arckit-uk-gcloud:pricing` |
+
+<!-- Roles outside DDaT (procurement and commercial advisers, trainers, bid and contract managers): list them at the nearest DDaT role and level by the work they do and their seniority, mark the mapping as proposed until the supplier confirms it, and say so in the uploaded service definition document, for example "Our procurement consultants are priced at the DDaT Senior delivery manager level". -->
+
+### 11.1 What Each Role Level Does on This Service
+
+| Role level | What they do on this service |
+|------------|------------------------------|
+| [ROLE LEVEL] | [CONTRIBUTION] |
 
 ---
 
 ## Appendix A: Evidence Register
 
-| Assertion | Evidence Document | Location |
-|-----------|-------------------|----------|
-| ISO 27001 | Certificate | [URL/PATH] |
-| Cyber Essentials Plus | Certificate | [URL/PATH] |
-| CREST Accreditation | Certificate | [URL/PATH] |
-| Staff CVs | Anonymised CVs | [URL/PATH] |
-| Case Studies | Reference documents | [URL/PATH] |
-| [ASSERTION] | [DOCUMENT] | [LOCATION] |
+Evidence for assertions buyers or GCA may ask you to prove. Leave this appendix out of the uploaded document.
+
+| Assertion | Question | Evidence | Location |
+|-----------|----------|----------|----------|
+| [ASSERTION] | [N.N] | [DOCUMENT] | [URL/PATH] |
 
 ---
-
-## Appendix B: Case Studies
-
-### Case Study 1
-
-| Field | Value |
-|-------|-------|
-| Client Sector | [SECTOR] |
-| Project Type | [TYPE] |
-| Duration | [DURATION] |
-| Team Size | [SIZE] |
-| Outcome | [OUTCOME] |
-
-### Case Study 2
-
-| Field | Value |
-|-------|-------|
-| Client Sector | [SECTOR] |
-| Project Type | [TYPE] |
-| Duration | [DURATION] |
-| Team Size | [SIZE] |
-| Outcome | [OUTCOME] |
 
 ## External References
 

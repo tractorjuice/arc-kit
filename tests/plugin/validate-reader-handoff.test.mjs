@@ -13,6 +13,10 @@
  * both paths: the Agent result (PostToolUse) and the auto-mode hand-back
  * (PreToolUse on SubagentHandback).
  *
+ * No path may rewrite a tool's input: the Claude plugin directory declined
+ * the core plugin because it counts a PreToolUse input rewrite as the plugin
+ * approving its own action. A hand-back passes untouched or is denied.
+ *
  * NOTE the filename: CI runs `tests/plugin/*.test.mjs`.
  */
 
@@ -49,7 +53,7 @@ for (const [reader, schema] of Object.entries(READER_SCHEMAS)) {
   const valid = files.filter((f) => f.startsWith('valid-'));
   const invalid = files.filter((f) => /^(invalid|injection)-/.test(f));
 
-  test(`${reader}: every valid fixture is accepted and replaced with its sanitised payload`, () => {
+  test(`${reader}: every valid fixture is accepted, and a hand-back passes only as the bare sanitised JSON`, () => {
     assert.ok(valid.length > 0, `${schema} has no valid fixtures`);
     for (const f of valid) {
       const raw = load(schema, f);
@@ -58,9 +62,23 @@ for (const [reader, schema] of Object.entries(READER_SCHEMAS)) {
       assert.deepEqual(JSON.parse(post.updatedToolOutput.content[0].text), JSON.parse(raw), f);
       assert.equal(post.updatedToolOutput.agentId, 'a1', `${f}: other result fields are kept`);
 
-      const pre = decide(handbackEvent(reader, raw)).hookSpecificOutput;
-      assert.equal(pre.permissionDecision, undefined, `${f}: a valid hand-back is not a permission grant`);
-      assert.deepEqual(JSON.parse(pre.updatedInput.message), JSON.parse(raw), f);
+      // The sanitised payload, handed back as bare JSON, passes untouched.
+      const sanitised = post.updatedToolOutput.content[0].text;
+      assert.equal(decide(handbackEvent(reader, sanitised)), null, `${f}: the bare sanitised JSON passes`);
+
+      // The raw fixture passes only when it already is that payload; otherwise
+      // the reader is told to hand back the bare JSON. It is never rewritten.
+      const pre = decide(handbackEvent(reader, raw));
+      if (pre !== null) {
+        assert.equal(pre.hookSpecificOutput.permissionDecision, 'deny', f);
+        assert.match(pre.hookSpecificOutput.permissionDecisionReason, /bare JSON payload/, f);
+        assert.ok(!('updatedInput' in pre.hookSpecificOutput), `${f}: no input rewrite`);
+      }
+
+      // Wrapped in prose, a valid report is refused, not unwrapped.
+      const wrapped = decide(handbackEvent(reader, `Here is my report:\n${raw}`)).hookSpecificOutput;
+      assert.equal(wrapped.permissionDecision, 'deny', f);
+      assert.ok(!('updatedInput' in wrapped), `${f}: no input rewrite`);
     }
   });
 
@@ -135,30 +153,30 @@ test('hooks.json registers the hook for both paths, and the process exits 0', ()
     && g.hooks.some((h) => (h.args || []).join(' ').includes('validate-reader-handoff.mjs')));
   assert.ok(uses('PostToolUse', 'Agent|Task'));
   assert.ok(uses('PreToolUse', 'SubagentHandback'));
-  assert.ok(uses('PreToolUse', 'Agent|Task'));
+  assert.ok(!uses('PreToolUse', 'Agent|Task'), 'the dispatch rewrite is gone');
   for (const input of ['', 'not json', JSON.stringify(agentEvent('arckit-research-reader', '{"bad": true}'))]) {
     const r = spawnSync('node', [HOOK], { input, encoding: 'utf8' });
     assert.equal(r.status, 0, r.stderr);
   }
 });
 
-test('reader and writer dispatches are kept in the foreground and qualified', () => {
+test('Agent dispatches are never rewritten', () => {
   const pre = (subagent_type, run_in_background) => decide({
     hook_event_name: 'PreToolUse',
     tool_name: 'Agent',
     tool_input: { subagent_type, prompt: 'p', ...(run_in_background === undefined ? {} : { run_in_background }) },
   });
-  // Since Claude Code v2.1.198 an omitted run_in_background means background,
-  // and a background report never reaches the PostToolUse check (seen live on
-  // /arckit:gov-code-search, 29 September).
-  for (const [type, bg] of [['arckit:arckit-research-reader', undefined], ['arckit:arckit-grants-writer', true], ['arckit-tenders-reader', false]]) {
-    const out = pre(type, bg).hookSpecificOutput;
-    assert.equal(out.updatedInput.run_in_background, false, type);
-    assert.match(out.updatedInput.subagent_type, /^arckit:arckit-/, type);
-    assert.equal(out.updatedInput.prompt, 'p', `${type}: other arguments are kept`);
-    assert.equal(out.permissionDecision, undefined, `${type}: an argument rewrite, not a grant`);
+  for (const [type, bg] of [['arckit:arckit-research-reader', undefined], ['arckit:arckit-grants-writer', true], ['arckit-tenders-reader', false], ['Explore', true]]) {
+    assert.equal(pre(type, bg), null, type);
   }
-  assert.equal(pre('arckit:arckit-research-reader', false), null, 'already foreground and qualified');
-  assert.equal(pre('Explore', true), null);
-  assert.equal(pre('arckit:arckit-framework', true), null, 'single-tier agents are left alone');
+});
+
+test('every reader and writer dispatch in the commands asks for the foreground', () => {
+  const dir = resolve(PLUGIN, 'commands');
+  for (const f of readdirSync(dir).filter((n) => n.endsWith('.md'))) {
+    const text = readFileSync(resolve(dir, f), 'utf8');
+    for (const m of text.matchAll(/`subagent_type: "arckit:arckit-[a-z0-9-]+-(?:reader|writer)"`(.{0,40})/g)) {
+      assert.match(m[1], /^, `run_in_background: false`/, `${f}: ${m[0]}`);
+    }
+  }
 });

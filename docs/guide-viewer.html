@@ -13,6 +13,7 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <!-- page:meta -->
     <meta name="description" content="ArcKit Guide Viewer - Read detailed command and role guides for enterprise architecture governance directly in your browser.">
     <meta name="keywords" content="ArcKit guide viewer, architecture guides, command documentation, role guides, UK government architecture">
     <meta name="author" content="ArcKit">
@@ -28,6 +29,7 @@
     <meta name="twitter:description" content="Read detailed ArcKit command and role guides for enterprise architecture governance directly in your browser.">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide-viewer.html">
+    <!-- /page:meta -->
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
@@ -40,9 +42,6 @@
     <link rel="stylesheet" href="theme.css?v=4.12.3">
     <link rel="stylesheet" href="heroes.css?v=4.12.3">
 
-    <!-- marked.js v15.0.6 + DOMPurify -->
-    <script src="https://cdn.jsdelivr.net/npm/marked@15.0.6/marked.min.js" integrity="sha384-b5hg04N6F0rvyz1a/GVoPPY0JcqGTARCmEuFCqwQKX3zq7LsxhV+n+6Ykh2pQOCH" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js" integrity="sha384-eEu5CTj3qGvu9PdJuS+YlkNi7d2XxQROAFYOr59zgObtlcux1ae1Il3u7jvdCSWu" crossorigin="anonymous"></script>
 
     <style>
         body,
@@ -192,6 +191,13 @@
             font-size: 0.9rem;
         }
 
+        /* On a phone a wide table scrolls on its own instead of widening the page,
+           and a long URL wraps. */
+        .app-markdown { overflow-wrap: break-word; }
+        @media (max-width: 640px) {
+            .app-markdown table { display: block; overflow-x: auto; }
+        }
+
         .app-markdown th, .app-markdown td {
             border: 1px solid #b1b4b6;
             padding: 0.75rem;
@@ -264,7 +270,69 @@
 
         .app-footer a { color: white; text-decoration: underline; }
         .app-footer a:hover { color: #5694ca; }
+
+        /* Command films: a click-to-play card; nothing loads from YouTube until it is pressed */
+        .app-films {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .app-film {
+            flex: 1 1 320px;
+            max-width: 560px;
+        }
+        .app-film__play {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            padding: 15px;
+            border: 0;
+            border-radius: 4px;
+            background: #0b1f33;
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 1.1875rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .app-film__play:hover .app-film__icon,
+        .app-film__play:focus .app-film__icon {
+            transform: scale(1.08);
+        }
+        .app-film__play:focus {
+            outline: 3px solid #ffdd00;
+            outline-offset: 0;
+        }
+        .app-film__icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #1ed3c6;
+            color: #0b1f33;
+            font-size: 28px;
+            line-height: 64px;
+            text-align: center;
+            transition: transform 0.15s;
+        }
+        .app-film__frame {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: 0;
+            border-radius: 4px;
+        }
+        .app-film__note {
+            margin: 5px 0 0;
+            font-size: 0.875rem;
+        }
     </style>
+    <!-- page:jsonld -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -287,6 +355,7 @@
         ]
     }
     </script>
+    <!-- /page:jsonld -->
 </head>
 <body class="govuk-template__body">
     <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
@@ -304,7 +373,7 @@
                 <li class="app-nav-bar__item"><a href="articles.html">Articles</a></li>
                 <li class="app-nav-bar__item"><a href="getting-started.html">Getting Started</a></li>
                 <li class="app-nav-bar__item"><a href="contributors.html">Contributors</a></li>
-                <li class="app-nav-bar__item"><a href="https://tractorjuice.github.io/arckit-fde/">FDE</a></li>
+                <li class="app-nav-bar__item"><a href="fde/">FDE</a></li>
             </ul>
             <div class="app-nav-bar__icons">
                 <a href="https://github.com/tractorjuice/arc-kit" class="app-icon-link" aria-label="GitHub repository" title="GitHub repository">
@@ -313,6 +382,9 @@
                 <a href="https://discord.gg/HsA4Y3hQ4" target="_blank" rel="noopener" class="app-icon-link" aria-label="Discord community" title="Discord community">
                     <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/></svg>
                 </a>
+                <a href="https://www.linkedin.com/company/arckit-org/" target="_blank" rel="noopener" class="app-icon-link" aria-label="ArcKit on LinkedIn" title="ArcKit on LinkedIn">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>
+                </a>
                 <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
             </div>
         </div>
@@ -320,14 +392,17 @@
 
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
+            <!-- page:hero -->
             <span class="app-page-hero__stat">Guide Viewer</span>
             <h1 class="app-page-hero__title" id="guide-title">Guide Viewer</h1>
             <p class="app-page-hero__description">Rendered command and role guide documentation.</p>
+            <!-- /page:hero -->
         </div>
     </div>
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-width-container">
+            <!-- page:body -->
             <a id="back-link" href="guides.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Guides</a>
 
             <div id="loading" class="app-loading">
@@ -343,7 +418,10 @@
                 </div>
             </div>
 
+            <div id="films" class="app-films" hidden></div>
+
             <div id="content" class="app-markdown" style="display:none"></div>
+            <!-- /page:body -->
         </div>
     </main>
 
@@ -353,84 +431,21 @@
         </div>
     </footer>
 
+    <!-- viewer-only -->
     <script>
+        // Every guide is published as a static page under guide/ by
+        // scripts/generate-site-pages.py. This viewer only forwards the old
+        // guide-viewer.html?guide=<name> links there, keeping any #anchor.
         (function() {
-            var params = new URLSearchParams(window.location.search);
-            var guide = params.get('guide');
-
-            if (!guide) {
+            var guide = new URLSearchParams(window.location.search).get('guide');
+            if (!guide || !/^[a-z0-9][a-z0-9.\-\/]*$/i.test(guide) || guide.indexOf('..') !== -1) {
                 window.location.replace('guides.html');
                 return;
             }
-
-            // Sanitise: allow only alphanumeric, hyphens, slashes (for roles/)
-            if (!/^[a-z0-9\-\/]+$/.test(guide)) {
-                showError('Invalid guide name.');
-                return;
-            }
-
-            // Set back link: role guides go back to roles.html
-            var backLink = document.getElementById('back-link');
-            if (guide.indexOf('roles/') === 0) {
-                backLink.href = 'roles.html';
-                backLink.textContent = 'Back to Roles';
-            }
-
-            var rawUrl = 'https://raw.githubusercontent.com/tractorjuice/arc-kit/main/docs/guides/' + guide + '.md';
-
-            fetch(rawUrl)
-                .then(function(res) {
-                    if (!res.ok) throw new Error(res.status === 404 ? 'Guide not found' : 'Failed to load guide (HTTP ' + res.status + ')');
-                    return res.text();
-                })
-                .then(function(md) {
-                    // Extract title from first # heading
-                    var titleMatch = md.match(/^#\s+(.+)$/m);
-                    if (titleMatch) {
-                        document.title = titleMatch[1] + ' - ArcKit';
-                    }
-
-                    // Per-guide SEO: self-referential canonical + Open Graph so each
-                    // ?guide=<slug> URL is uniquely indexable instead of collapsing to
-                    // the bare guide-viewer.html shell.
-                    var guideTitle = titleMatch ? titleMatch[1] : 'Guide';
-                    var guideUrl = 'https://arckit.org/guide-viewer.html?guide=' + guide;
-                    var setMeta = function(sel, attr, val) {
-                        var el = document.querySelector(sel);
-                        if (el && val) el.setAttribute(attr, val);
-                    };
-                    setMeta('link[rel="canonical"]', 'href', guideUrl);
-                    setMeta('meta[property="og:url"]', 'content', guideUrl);
-                    setMeta('meta[property="og:title"]', 'content', guideTitle);
-                    setMeta('meta[name="twitter:title"]', 'content', guideTitle);
-                    var gPara = md.split(/\n\n+/).find(function(chunk){
-                        return chunk && !chunk.startsWith('#') && !chunk.startsWith('!') && !chunk.startsWith('---') && !chunk.startsWith('>') && !chunk.startsWith('|');
-                    });
-                    if (gPara) {
-                        var gClean = gPara.replace(/\*\*|__|`/g, '').replace(/\s+/g,' ').trim();
-                        if (gClean.length > 220) gClean = gClean.slice(0, 217) + '…';
-                        setMeta('meta[property="og:description"]', 'content', gClean);
-                        setMeta('meta[name="twitter:description"]', 'content', gClean);
-                    }
-
-                    var rawHtml = marked.parse(md);
-                    var safeHtml = DOMPurify.sanitize(rawHtml);
-                    var contentEl = document.getElementById('content');
-                    contentEl.innerHTML = safeHtml;
-                    document.getElementById('loading').style.display = 'none';
-                    contentEl.style.display = 'block';
-                })
-                .catch(function(err) {
-                    showError(err.message);
-                });
-
-            function showError(msg) {
-                document.getElementById('loading').style.display = 'none';
-                document.getElementById('error-message').textContent = msg;
-                document.getElementById('error').style.display = 'block';
-            }
+            window.location.replace('guide/' + guide + '.html' + window.location.hash);
         })();
     </script>
+    <!-- /viewer-only -->
 <script src="theme.js"></script>
 </body>
 </html>

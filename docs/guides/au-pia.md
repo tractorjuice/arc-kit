@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:au-pia` generates an Australian Privacy Impact Assessment under the Privacy Act 1988 (Cth) and the 13 Australian Privacy Principles. It captures the entity's APP entity status, scopes the personal information lifecycle, runs an APP-by-APP applicability and compliance analysis, registers privacy risks with mitigations, captures cross-border disclosure flows under APP 8, and surfaces the OAIC notification posture under the Notifiable Data Breaches scheme (Privacy Act Part IIIC).
+`/arckit:au-pia` generates an Australian Privacy Impact Assessment under the Privacy Act 1988 (Cth) and the 13 Australian Privacy Principles. It describes the project and the personal information it handles, maps the information flows against the APPs that govern them, runs an APP-by-APP applicability and compliance analysis, registers privacy risks with mitigations, captures cross-border disclosure under APP 8, tests for sensitive information, and records the automated-decision-making position. The breach response itself (Notifiable Data Breaches scheme, Privacy Act Part IIIC) is produced by `/arckit:au-ndb-playbook`.
 
 The PIA is a recognised due diligence artefact for Australian Federal entities and APP entities generally. The Privacy Act Tranche 1 reforms (December 2024) introduced new accountability, consent, and automated-decision-making obligations — the PIA explicitly addresses where these apply. Mark anything dependent on the Tranche 2 reforms as `<PENDING TRANCHE 2>` and revisit when the reforms enter force.
 
@@ -13,8 +13,8 @@ The PIA is a recognised due diligence artefact for Australian Federal entities a
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, decision logic, automated decision-making scope |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Per-element personal information inventory and sensitivity flags |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Entities and relationships carrying personal information |
+| Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Per-element personal information inventory and sensitivity flags |
+| Data model (`ARC-<id>-DATA-v*.md`) | Entities and relationships carrying personal information |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Subject populations, partner agencies, processors, offshore recipients |
 
 ---
@@ -35,16 +35,17 @@ Output: `projects/<id>/ARC-<id>-AUPIA-v1.0.md`
 |---------|----------|
 | Document Control | Australian classification (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) |
 | Revision History | Version, date, author, changes, approvals |
-| Executive Summary | APP entity status, headline privacy risks, OAIC notification posture, Tranche 1 obligations |
-| Programme / System Description | Description, owner, subject populations, lifecycle stage, personal information lifecycle |
-| APP Entity Status | Whether the entity is APP-covered, exemptions claimed, small business operator status |
-| APP-by-APP Analysis | All 13 APPs: applicability, current compliance posture, evidence, gaps |
-| Personal Information Inventory | Per-element: type, sensitivity flag, lawful basis, retention, recipients |
-| Cross-Border Disclosure (APP 8) | Offshore recipients, jurisdictions, enforceability assessment |
-| Automated Decision-Making (Tranche 1) | Where automated decisions affect individuals, notification posture, human-review pathway |
-| Privacy Risk Register | Risks, likelihood, impact, mitigations, residual risk |
-| NDB Posture | Eligible-data-breach assessment criteria, notification decision logic, OAIC reporting workflow |
-| Treatment & Monitoring | Mitigations in flight, review cadence, change triggers |
+| Executive Summary | Project assessed, personal information involved, overall privacy risk posture, key findings and recommendations |
+| Project Description | Project name, owning agency, phase, data subjects, personal information types, sensitive information, data volume, AI or automated decisions, assessment date, Privacy Officer |
+| Information Flows | Diagram of collection, processing, storage and disclosure, with each flow annotated with the APP that governs it |
+| APP Compliance Assessment | All 13 APPs: applies, status, evidence, risk (likelihood × impact), mitigation; APP 8 lists overseas recipients and the compliance mechanism; APP 11 cross-references the E8 posture |
+| APP Compliance Summary | One row per APP: applies, status, risk level |
+| Privacy Risk Register | Risks by APP with likelihood, impact, mitigation and residual risk |
+| Sensitive Information Assessment | Each Privacy Act s 6 sensitive-information category: processed, consent mechanism, notes |
+| AI and Automated Decision-Making | AI use, automated decisions affecting individuals, December 2026 notification status, human review, fairness assessment, AI assurance cross-reference |
+| Recommendations | Prioritised actions by APP with owner and target date |
+| External References | ArcKit evidence integration (DFD, data model, risk, traceability, graph-report), document register, citations, unreferenced documents |
+| Visual Evidence Decision Rule | When a companion diagram is drawn, drafted with `Pending Input` labels, or recorded as a visual evidence gap |
 
 ---
 

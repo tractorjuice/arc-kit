@@ -11,7 +11,7 @@
 | Artefact | Purpose |
 |----------|---------|
 | Smart Data Classification Register (`ARC-<id>-CLAS-v*.md`) | **Required** — drives residency rules per dataset |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Workload topology and components |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Workload topology and components |
 | IAS Statement of Applicability (`ARC-<id>-IAS-v*.md`) | T-family technical controls constrain CSP choice |
 
 > **Run after**: `/arckit:uae-classification` — the command halts if the classification register is missing.
@@ -50,7 +50,7 @@ Output: `projects/<id>/ARC-<id>-CRES-v1.0.md`
 | TDRA FedNet | UAE | Federal government network |
 | e& Sovereign Launchpad on AWS | UAE | Sovereign overlay on AWS |
 
-> AWS me-south-1 acceptability under the Cloud Security Policy is flagged as `[NEEDS VERIFICATION]` in the overlay maintenance log — confirm before relying on AWS-only options.
+> AWS `me-south-1` is the Middle East (Bahrain) Region, so it is not UAE-resident and does not meet the residency rule for Confidential-and-above datasets. AWS's UAE Region is `me-central-1`, Middle East (UAE), open since August 2022 (AWS Availability Zones documentation, <https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-availability-zones.html>; AWS News Blog, <https://aws.amazon.com/blogs/aws/now-open-aws-region-in-the-united-arab-emirates-uae/>). Record the AWS Region for every AWS-hosted dataset. Whether the National Cloud Security Policy v2 permits a non-UAE Region for Open data is a question for the policy text, which the command cites.
 
 ---
 

@@ -5,6 +5,8 @@
 - `/arckit-au-energy:au-aescsf` — Australian Energy Sector Cyber Security Framework (AESCSF) maturity assessment for projects with IT, OT, market, and grid-edge dependencies
 - `/arckit-au-energy:au-energy-compliance` — Australian energy compliance pack covering AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS, privacy/NDB, and SOCI escalation evidence
 
+Run `/arckit-au-energy:au-aescsf` before `/arckit-au-energy:au-energy-compliance`: the compliance pack reads the AESCSF assessment, when there is one, as cyber-posture context. It does not need it.
+
 Recipe: `au-energy` (22 targets) composes the `arckit-au` federal baseline — Essential Eight, ISM, OT security, SOCI/CIRMP, Privacy Act 1988 / OAIC NDB — then layers energy-sector coverage (AESCSF maturity, AER ring-fencing, NER/NGR, AEMO obligations, IT/OT evidence, data flows, traceability, and energy-sector ADRs) on top. It includes an optional default-off `SERVICE_INVENTORY` target (`/arckit:servicenow`) for teams with a CMDB / service-inventory need.
 
 ## First Australian sector overlay
@@ -19,7 +21,7 @@ Rather than introduce a new inventory command, the register/evidence-heavy energ
 claude plugin install arckit arckit-au arckit-au-energy
 ```
 
-The `au-energy` recipe consumes federal-layer targets from `arckit-au` (`AU_E8`, `AU_ISM`, `AU_OT`, `AU_SOCI`, `AU_PIA`, `AU_NDB`). Without `arckit-au`, those foundation steps won't resolve. Without `arckit` (core), recipes won't resolve their base commands (`arckit:principles`, `arckit:requirements`, `risk`, `data-model`, etc.) and `validate-arc-filename` won't recognise the energy doc-type codes (`AUAESCSF`, `AUENERGY`).
+The `au-energy` recipe consumes federal-layer targets from `arckit-au` (`AU_E8`, `AU_ISM`, `AU_OT`, `AU_SOCI`, `AU_PIA`, `AU_NDB`). Without `arckit-au`, those foundation steps won't resolve. Without `arckit` (core), recipes won't resolve their base commands (`arckit:principles`, `arckit:requirements`, `arckit:stakeholders`, `arckit:adr`, `arckit:data-model`, etc.) and `validate-arc-filename` won't recognise the energy doc-type codes (`AUAESCSF`, `AUENERGY`).
 
 ## Regulatory anchors
 

@@ -2,9 +2,9 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-nl",
   "displayName": "ArcKit Netherlands Public Sector Overlay",
-  "version": "6.17.2",
+  "version": "6.18.3",
   "defaultEnabled": false,
-  "description": "Netherlands Public Sector Overlay for ArcKit — 4 commands for Rijksbreed cloudbeleid compliance, VIRBI 2025 Te Beschermen Belangen rubricering, BIO2 conformance, and cloud exit planning. Requires arckit core plugin.",
+  "description": "Netherlands Public Sector Overlay for ArcKit — 4 commands for Rijksbreed cloudbeleid compliance, Te Beschermen Belangen (TBB) category determination under VIRBI 2025, BIO2 conformance, and cloud exit planning. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
@@ -27,7 +27,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.17.2"
+      "version": "=6.18.3"
     }
   ]
 }

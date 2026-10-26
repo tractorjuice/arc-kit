@@ -20,6 +20,8 @@ handoffs:
   - command: eu-nis2
     description: Align PSSI security measures with NIS2 Article 21 obligations
     condition: "Organisation is an OSE under NIS2"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
@@ -91,7 +93,7 @@ Read all documents from Step 0. Extract:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/fr-pssi-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/fr-pssi-template.md` exists in the project root, then `.arckit/templates/fr-pssi-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/fr-pssi-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `PSSI` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.
@@ -162,7 +164,7 @@ List all standards and guides the PSSI references:
 
 #### Step 4g: Security Domains
 
-For each of the seven security domains in the template (access management, network security, workstation security, application security, data protection, physical security, business continuity), define:
+For each of the eight security domains in the template (access management and authentication, network security, workstation and endpoint security, application security, data protection, physical security, business continuity and recovery, vulnerability management and updates), define:
 
 - The principle that applies in this domain
 - The minimum standard required
@@ -185,7 +187,7 @@ Define the incident management process at the PSSI level — who declares, who q
    - Existing file → minor increment if existing PSSI is being refreshed, major if scope changes significantly
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-PSSI-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-PSSI-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 36 months} (PSSI review cycle is typically 3 years or on major change)
@@ -273,7 +275,7 @@ Next steps:
 - ✅ Security objectives defined for each property (C/I/A/T/Authentication) with RGS level if applicable
 - ✅ 8+ security principles defined, consistent with ANSSI recommendations
 - ✅ Organisational structure documented: AA, RSSI, (FSSI,) DPO, DSI, CSSI
-- ✅ All 7 security domains covered with principles and minimum standards
+- ✅ All 8 security domains covered with principles and minimum standards
 - ✅ User obligations defined
 - ✅ Incident management framework defined (roles and escalation)
 - ✅ Applicable standards and baseline documented (RGS, ANSSI hygiene, EBIOS, ISO 27001)

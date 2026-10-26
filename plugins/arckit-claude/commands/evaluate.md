@@ -34,7 +34,7 @@ $ARGUMENTS
    **RECOMMENDED** (read if available, note if missing):
    - **SOW** (Statement of Work) — Extract: Pre-defined evaluation criteria, scope, deliverables
    - **DOS** (DOS Requirements) — Extract: Evaluation criteria, essential/desirable skills, assessment approach
-   - **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Market landscape, vendor options, technology recommendations
+   - **RSCH** / **AWRS** / **AZRS** / **GCRS** (Research) — Extract: Market landscape, vendor options, technology recommendations
    - **GCLD** (G-Cloud Search, in procurement/) — Extract: Shortlisted services, feature comparisons, compliance matches
 
    **OPTIONAL** (read if available, skip silently if missing):
@@ -60,11 +60,11 @@ $ARGUMENTS
    - If no vendor proposals found, ask: "Do you have vendor proposal documents to evaluate? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/vendors/{vendor-name}/` and re-run, or skip to create the evaluation framework only."
    - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
-**Gathering rules** (apply to all user questions in this command):
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions total.** After that, infer the best answer from available context.
-- If still ambiguous after 2 rounds, make a reasonable choice and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
 5. **Determine the task**: The user may want to:
    - **Create evaluation framework** (before receiving proposals)
@@ -128,7 +128,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-EVAL-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Vendor Evaluation Framework"
 - `ARC-[PROJECT_ID]-EVAL-v[VERSION]` → Construct using format above
@@ -173,7 +173,7 @@ The footer should be populated with:
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **EVAL** per-type checks pass. Fix any failures before proceeding.
 
-4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-EVAL-v1.0.md`
+4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-EVAL-v{VERSION}.md`
 
 ### Task B: Score a Vendor Proposal
 
@@ -224,7 +224,7 @@ If comparing vendors:
    - Risk mitigation for chosen vendor
    - Contract negotiation points
 
-4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-VEND-v1.0.md`
+4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-VEND-v{VERSION}.md`, working out `{VERSION}` with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` so a re-run writes the next comparison beside the earlier one
 
 ## Example Usage
 
@@ -268,7 +268,7 @@ You should:
 - Evaluation must be objective and based on documented criteria
 - All scores require specific justification (no arbitrary numbers)
 - Mandatory qualifications are pass/fail (missing any = disqualified)
-- Reference specific requirements (e.g., "Meets NFR-S-001 for PCI-DSS compliance")
+- Reference specific requirements (e.g., "Meets NFR-SEC-001 for PCI-DSS compliance")
 - Document any conflicts of interest or bias
 - Keep vendor proposals confidential (don't commit PDFs to git by default)
 - Final decision authority always stays with the architect/client

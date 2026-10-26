@@ -96,7 +96,7 @@ The orchestrator passes you a JSON object in its Agent prompt:
 
 ### Step A: Render the main RSCH artefact
 
-1. **Read the RSCH template.** Open `${CLAUDE_PLUGIN_ROOT}/templates/research-findings-template.md`. If `.arckit/templates/research-findings-template.md` exists in the project root, prefer that (user override). Then read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in every template you render, including the vendor profiles and tech-notes spawned below — the partial it selects is the only source of the Document Control table's 14 standard fields and of the classification ladder. Do not hand-write that table.
+1. **Read the RSCH template.** Open `${CLAUDE_PLUGIN_ROOT}/templates/research-findings-template.md`. If `.arckit/templates-custom/research-findings-template.md` exists in the project root, prefer that (user override, written by `/arckit:customize`); otherwise, if `.arckit/templates/research-findings-template.md` exists, prefer that. Then read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in every template you render, including the vendor profiles and tech-notes spawned below — the partial it selects is the only source of the Document Control table's 14 standard fields and of the classification ladder. Do not hand-write that table.
 
 2. **Read the project's previous artefact if one exists.** `Glob` for `{project_path}/research/ARC-{project_id}-RSCH-*-v*.md`. If found, read the highest-version file to copy forward the Document Control authorship metadata (Owner, Reviewed By, Approved By).
 
@@ -118,6 +118,8 @@ The orchestrator passes you a JSON object in its Agent prompt:
    - **Lock-in Risk:** derive from the `exit_risk` sub-score, not from opinion — `>= 80` → `LOW`, `50-79` → `MEDIUM`, `< 50` → `HIGH`.
 
    - **Build vs Buy Recommendation:** render `recommendation.verdict` and `recommendation.basis` verbatim. Do not restate it in your own words and do not add a verdict where the payload has none.
+
+   - **Executive Summary:** it opens with the verdict, as `${CLAUDE_PLUGIN_ROOT}/references/executive-summary-pattern.md` sets out. Compose the **Recommendation** sentence from the per-category `recommendation.verdict` counts and the TCO totals you render below it, and nothing else. If no category has a verdict, the sentence says so. Render one Key Findings bullet per category, ordered by `total_score` of the top option, highest first.
 
    - **Currency:** render every figure in GBP and reproduce `fx_note` verbatim in the TCO Assumptions section wherever a converted figure appears.
 

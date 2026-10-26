@@ -1,0 +1,74 @@
+{
+  "articles.html": {
+    "lastmod": "2026-09-30",
+    "text_sha256": "d8ad3de29d4009793bcae5fa677d3d76bcdce36e99caf294da2b59eea5d23263"
+  },
+  "certification/awareness.html": {
+    "lastmod": "2026-10-14",
+    "text_sha256": "5c5834f46a0182f6d68484ffb37737fae72d1a131f4a70231dac757927379486"
+  },
+  "certification/index.html": {
+    "lastmod": "2026-10-14",
+    "text_sha256": "b008712b274f4084cfed24d834387b7786f542b5cea0b98429c2370818d1a1f0"
+  },
+  "certification/policies.html": {
+    "lastmod": "2026-10-14",
+    "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
+  },
+  "commands.html": {
+    "lastmod": "2026-10-26",
+    "text_sha256": "2ca2ed7142fa49361a7787dedc1725855eb6f0fac59741b022b438f222c85dbd"
+  },
+  "contributors.html": {
+    "lastmod": "2026-10-20",
+    "text_sha256": "2d020aeca971f0d8e01506ba86337fcc79d947c8f0057b03023f6b8f4a514995"
+  },
+  "fde/architects.html": {
+    "lastmod": "2026-10-19",
+    "text_sha256": "1140a812550b7586f3f4a7871629963c4f78d09ee9b90fc6408b7dcd9debbbd0"
+  },
+  "fde/index.html": {
+    "lastmod": "2026-10-19",
+    "text_sha256": "6b24f8040aaf59e3ca43f2e42cd4e3fdf39dae0a74e1eaa22310d40c6c5cdd2b"
+  },
+  "fde/samples/governance-pack.html": {
+    "lastmod": "2026-10-19",
+    "text_sha256": "00a39ac1aac6c32fbbf6ef7ae53116933583b0649e92aa2d208b06372f15b813"
+  },
+  "getting-started.html": {
+    "lastmod": "2026-06-30",
+    "text_sha256": "5e90aa4e6e77146237251785c6423b5b21acde85544610597555d710106114db"
+  },
+  "guides.html": {
+    "lastmod": "2026-10-25",
+    "text_sha256": "da2f893a85a0b84416386d6294381c601938a07b83ac9dd6824c56c0f6460c82"
+  },
+  "index.html": {
+    "lastmod": "2026-10-25",
+    "text_sha256": "c6fd0313308b711e59661146c5659e5feeef295a4ae08e4085eed5d3ac7ae1ef"
+  },
+  "llms.txt": {
+    "lastmod": "2026-10-25",
+    "text_sha256": "02b91374642b45cc1ebd63c3164544329d9d629eea9140f4efbde02710e1cb7f"
+  },
+  "on-github.html": {
+    "lastmod": "2026-10-26",
+    "text_sha256": "dece2b08b5eb1b8aec91a432a003014e50fe7bb63669db643de32df3c21d0f12"
+  },
+  "privacy.html": {
+    "lastmod": "2026-10-20",
+    "text_sha256": "1d5c873ffa656a5127a23d096c2df03e6401cfc5df079a8623263c46317d3b4b"
+  },
+  "public-sector.html": {
+    "lastmod": "2026-10-18",
+    "text_sha256": "4b87848402912e00d31bf1ba2d6086bde1573d81eb2f91edebdf55bc84e59cc0"
+  },
+  "roles.html": {
+    "lastmod": "2026-06-15",
+    "text_sha256": "4b2e9a643685a6c0a647720a07fb089f0d4e264038bf02a20e89e6495ede47f5"
+  },
+  "use-cases.html": {
+    "lastmod": "2026-06-15",
+    "text_sha256": "66d18a486b8d8cccbb6879b4b893ddf07dff05974fdde594e90227018defd81c"
+  }
+}

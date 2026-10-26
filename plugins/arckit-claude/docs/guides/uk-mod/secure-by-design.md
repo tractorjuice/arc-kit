@@ -4,6 +4,8 @@
 
 `/arckit:mod-secure` documents MOD-specific Secure by Design requirements, covering JSP 440, JSP 604, HMG SPF, and Defence Cyber Protection Partnership obligations.
 
+> **Full guide**: [MOD Secure by Design](../mod-secure.md) covers who it applies to, MOD's seven principles, this evidence table and the full `/arckit:mod-secure` assessment. This page is the short summary.
+
 ---
 
 ## Command
@@ -12,7 +14,7 @@
 /arckit:mod-secure Assess MOD Secure by Design for <programme>
 ```
 
-Output: `projects/<id>/ARC-<id>-MSBD-v1.0.md`.
+Output: `projects/<id>/ARC-<id>-SECD-MOD-v1.0.md`.
 
 ---
 
@@ -31,6 +33,8 @@ Output: `projects/<id>/ARC-<id>-MSBD-v1.0.md`.
 ---
 
 ## Accreditation Snapshot
+
+> Since August 2023, MOD Secure by Design uses continuous risk management in place of point-in-time accreditation and the RMADS. The stages below describe legacy accreditation.
 
 | Stage | Artefact | Owner |
 |-------|----------|-------|

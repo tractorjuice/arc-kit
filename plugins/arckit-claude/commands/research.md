@@ -165,7 +165,7 @@ For each category:
 
    Include `gov-platform` in `option_types` whenever `jurisdiction` is `uk-gov` — an already-procured GOV.UK platform that covers the capability outranks a procurement exercise, and the UK rubric gives it a fixed bonus in Step 7.
 
-2. Dispatch the reader using the `Agent` tool with `subagent_type: "arckit:arckit-research-reader"` and the input JSON as the prompt.
+2. Dispatch the reader using the `Agent` tool with `subagent_type: "arckit:arckit-research-reader"`, `run_in_background: false` and the input JSON as the prompt.
 
 3. The reader's final-message string is a JSON payload. It is validated automatically:
 
@@ -229,7 +229,7 @@ Glob `projects/{P}-{NAME}/research/ARC-{P}-RSCH-*-v*.md`. If none exists, the do
 
 Assemble the writer input JSON documented in `arckit-research-writer`'s Input section — `project_path`, `project_id`, `project_name`, `document_id`, `version`, `date_iso`, `classification`, `rubric_used`, `fx_note`, `project_profile`, `categories[]` (each with `build_option`, `scored_options[]` and `recommendation`), `gaps`, `traceability`, `citations`, `unfetched_urls`, `reader_errors`.
 
-Dispatch the writer using the `Agent` tool with `subagent_type: "arckit:arckit-research-writer"` and the input JSON as the prompt. The writer creates the RSCH artefact, one `vendors/{vendor-slug}-profile.md` per non-open-source scored option, and one `tech-notes/{topic-slug}.md` per significant technology finding (Created if new, Updated with merge rules if the file already exists). It returns a one-line summary.
+Dispatch the writer using the `Agent` tool with `subagent_type: "arckit:arckit-research-writer"`, `run_in_background: false` and the input JSON as the prompt. The writer creates the RSCH artefact, one `vendors/{vendor-slug}-profile.md` per non-open-source scored option, and one `tech-notes/{topic-slug}.md` per significant technology finding (Created if new, Updated with merge rules if the file already exists). It returns a one-line summary.
 
 ### Step 12: Return summary
 

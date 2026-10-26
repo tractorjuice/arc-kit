@@ -10,6 +10,13 @@ handoffs:
     description: SBOM format choice (CycloneDX vs SPDX), signing strategy (Sigstore, in-toto, SLSA level), and attestation exception requests warrant ADRs.
   - command: risk
     description: Components with known unmitigated vulnerabilities or attestation exceptions feed the risk register.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -55,7 +62,7 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
    - `projects/000-global/ARC-000-PRIN-*.md` (architecture principles, if present)
    - The project's REQ artefact — extract `INT-*` (integration requirements), `NFR-SEC-*`, plus any procurement requirements
    - The project's NIST 800-53 control-tailoring artefact — for SR and SA family implementation evidence
-   - The project's HLD / DLD artefact — for component inventory and build pipeline architecture
+   - Any vendor HLD / DLD documents under `projects/<id>/vendors/` — for component inventory and build pipeline architecture
    - Any vendor / third-party software inventory under `projects/<id>/vendors/`
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
@@ -64,9 +71,9 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
    - **Then**, `.arckit/templates/us-sbom-eo-14028-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-sbom-eo-14028-template.md`
 
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> SBOM --filename` for the artefact filename. The type code for this command is `SBOM`.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> SBOM {VERSION} --filename` for the artefact filename. The type code for this command is `SBOM`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the US regime to `_partials/document-control-us.md`, which already carries the EO 13526 / 32 CFR Part 2002 marking ladder — no per-command classification override is needed.
 

@@ -32,7 +32,7 @@ $ARGUMENTS
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/project-plan-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/project-plan-template.md` exists in the project root, then `.arckit/templates/project-plan-template.md`
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/project-plan-template.md` (default)
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -415,7 +415,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-PLAN-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Project Plan"
 - `ARC-[PROJECT_ID]-PLAN-v[VERSION]` → Construct using format above
@@ -463,7 +463,7 @@ The footer should be populated with:
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **PLAN** per-type checks pass. Fix any failures before proceeding.
 
 1. **Determine output location**:
-   - If project exists: `projects/{project-name}/ARC-{PROJECT_ID}-PLAN-v1.0.md`
+   - If project exists: `projects/{project-name}/ARC-{PROJECT_ID}-PLAN-v{VERSION}.md`
    - If no project: `ARC-XXX-PLAN-v1.0.md` (root directory)
 
 2. **Write comprehensive plan** with ALL sections:
@@ -491,7 +491,7 @@ After writing the plan, provide a summary:
 ```markdown
 ## Project Plan Created ✅
 
-**Location**: `projects/{project-name}/ARC-{PROJECT_ID}-PLAN-v1.0.md`
+**Location**: `projects/{project-name}/ARC-{PROJECT_ID}-PLAN-v{VERSION}.md`
 
 **Timeline**: {X weeks/months} ({Project Complexity})
 - Discovery: Weeks 1-{X}

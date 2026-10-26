@@ -8,6 +8,10 @@ handoffs:
     description: OLA service equivalence is a baseline expectation under the GC Digital Standards conformance scorecard.
   - command: service-assessment
     description: OLA review feeds the service assessment evidence base for bilingualism and active offer.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -35,7 +39,7 @@ You are an enterprise architect generating an Official Languages Act review for 
    - **First**, check `.arckit/templates-custom/ca-ola-template.md` (user override)
    - **Then**, `.arckit/templates/ca-ola-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-ola-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> OLA --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> OLA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **Service Surface Inventory** — every user-facing surface that must be language-equivalent: screens, forms, notifications, error messages, public registers, accessibility statements, printed correspondence, IVR scripts, and social media. Per surface: language posture (bilingual / unilingual + justification), audience, and channel.

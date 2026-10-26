@@ -102,6 +102,15 @@ This ensures no "orphan" design elements or tests that don't trace to requiremen
 
 **Target Coverage**: 100% of BR and FR, 95%+ of NFR
 
+**Coverage by MoSCoW priority** (each requirement's `**Priority**:` value in the requirements document):
+
+| Priority | Total | Covered | Partial | Gap | % Coverage | Target |
+|----------|-------|---------|---------|-----|------------|--------|
+| MUST_HAVE | [X] | [Y] | [Z] | [N] | [Y/X × 100%] | 100% |
+| SHOULD_HAVE | [X] | [Y] | [Z] | [N] | [Y/X × 100%] | > 80% |
+| COULD_HAVE | [X] | [Y] | [Z] | [N] | [Y/X × 100%] | No minimum; may be < 50% |
+| WONT_HAVE | [X] | - | - | - | - | Not delivered this time; excluded from coverage |
+
 **Current Status**: [ON TRACK | AT RISK | BEHIND]
 
 ---
@@ -141,7 +150,7 @@ Requirements that have NOT been addressed in HLD or DLD:
 
 | BR ID | FR ID | Requirement | Priority | Reason for Gap | Target Completion |
 |-------|-------|-------------|----------|----------------|-------------------|
-| [BR-X] | [FR-Y] | [Description] | [HIGH \| MED \| LOW] | [Reason] | [DATE] |
+| [BR-X] | [FR-Y] | [Description] | [MUST_HAVE \| SHOULD_HAVE \| COULD_HAVE] | [Reason] | [DATE] |
 
 **Impact**: [Description of impact if gaps not addressed]
 

@@ -8,6 +8,8 @@ handoffs:
     description: Design integration contracts for multi-agent systems
   - command: agent-security
     description: Design security architecture for agents
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect design an AI agent architecture specification following a structured, traceable framework.
@@ -26,9 +28,9 @@ $ARGUMENTS
 
 **MANDATORY** (warn if missing):
 
-- **AAGI** (Agent Inventory, recommended) — Extract: agent catalogue, current capabilities, lifecycle status, and operational context
+- **AAGI** (Agent Inventory) — Extract: agent catalogue, AGT-xxx IDs, current capabilities, ownership, lifecycle status, and operational context. The Section 7 traceability starts from it (AAGI → AAGR → REQ)
   - If missing: warn user to run `/arckit-agent-architecture:agent-inventory` first
-- **REQ** (Requirements, recommended) — Extract: FR/NFR for agent capabilities, tool requirements, memory requirements, guardrail requirements
+- **REQ** (Requirements) — Extract: FR/NFR for agent capabilities, tool requirements, memory requirements, guardrail requirements
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
@@ -42,7 +44,6 @@ $ARGUMENTS
 
 - **HLDR** (High-Level Design Review) — Extract: existing system architecture the agent will integrate with
 - **SECD** (Secure by Design) — Extract: security controls applicable to agent systems
-- **AAGI** (Agent Inventory) — Extract: existing agents, capability baseline, ownership, and operational status
 
 ### 2. Identify the target project
 
@@ -59,11 +60,11 @@ $ARGUMENTS
 
 Before generating the agent design, use the **AskUserQuestion** tool to gather key parameters. **Skip any question where the user has already provided a clear answer in their arguments.**
 
-**Gathering rules** (apply to all questions in this section):
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
-- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
 **Question 1** — header: `Pattern`, multiSelect: false
 > "What agent architecture pattern best describes this agent?"
@@ -76,7 +77,7 @@ Before generating the agent design, use the **AskUserQuestion** tool to gather k
 **Question 2** — header: `Scope`, multiSelect: false
 > "What is the primary scope of this agent?"
 
-- **Task Automation**: Automating repetitive workflows (data processing, report generation, routine decisions)
+- **Task Automation (Recommended)**: Automating repetitive workflows (data processing, report generation, routine decisions)
 - **Knowledge Work**: Research, analysis, synthesis (document analysis, market research, decision support)
 - **Creative**: Generation and ideation (content creation, design, brainstorming)
 - **Decision Support**: Recommendation and evaluation (risk assessment, prioritization, planning)
@@ -97,7 +98,7 @@ Before generating the agent design, use the **AskUserQuestion** tool to gather k
 **Agent identity and purpose**:
 
 - **Agent name**: Short, descriptive name (e.g., "Research Analyst Agent")
-- **Agent ID**: Unique identifier (e.g., "AGT-001")
+- **Agent ID**: Unique identifier — reuse the agent's AGT-xxx ID from the agent inventory (e.g., "AGT-001")
 - **Purpose**: One-sentence description of what the agent does
 - **Domain**: Domain of expertise (e.g., "financial analysis", "code review")
 
@@ -114,7 +115,7 @@ Extract from REQ artifacts or define new:
 
 - **Tool ID**: Unique identifier (e.g., "T-001")
 - **Tool name**: Descriptive name
-- **Tool type**: MCP / REST / Function / Database
+- **Tool type**: MCP / REST / Function
 - **Permissions**: Read / Write / Execute
 - **Input schema**: Key parameters
 - **Output schema**: Return format
@@ -151,7 +152,7 @@ If `projects/{project_id}/ARC-*-REQ-*.md` exists:
 - **FR (Functional Requirements)** → Map to **Tool Capabilities**
   - Example: "FR-010: Query knowledge base" → Tool T-001 (Knowledge Base MCP)
 - **NFR (Non-Functional Requirements)** → Map to **Guardrails and Memory**
-  - Example: "NFR-S-001: Respond within 5 seconds" → Guardrail: timeout
+  - Example: "NFR-P-001: Respond within 5 seconds" → Guardrail: timeout
   - Example: "NFR-P-002: Remember user preferences" → Memory: Durable layer
 
 #### 6.2 Extract Risks → Guardrail Configuration
@@ -190,7 +191,7 @@ Before generating the document ID, check if a previous version exists:
 
 ### 8. Construct Document Control Metadata
 
-- **Document ID**: `ARC-{PROJECT_ID}-AAGR-v{VERSION}` (e.g., `ARC-001-AAGR-v1.0`)
+- **Document ID**: `ARC-{PROJECT_ID}-AAGR-v{VERSION}` (e.g., `ARC-001-AAGR-v1.0`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 **Populate document control fields**:
 
@@ -327,8 +328,8 @@ The footer should be populated with:
 ## Agent Architecture Specification Created
 
 **Agent**: {agent_name}
-**Document**: projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAGR-v1.0.md
-**Document ID**: ARC-{PROJECT_ID}-AAGR-v1.0
+**Document**: projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAGR-v{VERSION}.md
+**Document ID**: ARC-{PROJECT_ID}-AAGR-v{VERSION}
 
 ### Architecture Pattern
 
@@ -397,7 +398,7 @@ The footer should be populated with:
 
 ### Files Created
 
-📄 `projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAGR-v1.0.md` ({line_count} lines)
+📄 `projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAGR-v{VERSION}.md` ({line_count} lines)
 ```
 
 ## Important Notes

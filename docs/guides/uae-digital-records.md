@@ -11,9 +11,9 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service scope and record-producing flows |
-| Data requirements (`ARC-<id>-DR-v1.0.md`) | Record categories collected |
-| Data model (`ARC-<id>-DMOD-v1.0.md`) | Entity-level ownership inputs |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Storage and lifecycle components |
+| Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Record categories collected |
+| Data model (`ARC-<id>-DATA-v*.md`) | Entity-level ownership inputs |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Storage and lifecycle components |
 | Smart Data Classification Register (`ARC-<id>-CLAS-v*.md`) | Sensitivity → retention rules |
 
 ---
@@ -65,7 +65,7 @@ Output: `projects/<id>/ARC-<id>-DREC-v1.0.md`
 
 ## Key Notes
 
-- **Ownership ambiguity**: Cabinet Affairs vs National Archives ownership of the Digital Records Policy is flagged as `[NEEDS VERIFICATION]` in the overlay maintenance log — confirm the current authority before publication.
+- **Who owns the policy**: The UAE Cabinet approved the Government Services Digital Records Policy on 23 April 2026. The Cabinet's announcement (<https://uaecabinet.ae/en/news/under-directives-of-uae-president-and-in-world-first-mohammed-bin-rashid-reveals-new-uae-government-framework-to-deploy-agentic-ai-across-50-of-government-sectors-operations-within-two-years>) and the Dubai Media Office release carry the same text: the policy sets a national framework for managing government services data, makes digital records the official source of core data, and adds a comprehensive records guide. Neither names the body that owns or administers the policy, and neither names the Ministry of Cabinet Affairs or the National Library and Archives. The command therefore does not attribute it to either. It records the administering body only when the entity has it in writing, and otherwise lists it as an open item for the entity's records or data office.
 - **Source-of-truth conflict**: If multiple systems claim the same record category, this command surfaces the conflict — resolve via ADR before sign-off.
 - **Run order**: Best after data model is stable so entity ownership inputs are available.
 - **Community-contributed**: Output should be reviewed by qualified records-management and federal compliance counsel before reliance.

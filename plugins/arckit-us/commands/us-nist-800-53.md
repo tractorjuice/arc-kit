@@ -13,6 +13,13 @@ handoffs:
     description: Supply-chain controls (SR family) cross-reference the EO 14028 secure-software attestation and SBOM register.
   - command: adr
     description: Significant tailoring decisions (compensating controls, control inheritance boundaries, parameter values) warrant ADRs.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -38,7 +45,7 @@ $ARGUMENTS
 
 NIST SP 800-53 Rev 5 is the federal control catalogue — 20 control families (AC, AT, AU, CA, CM, CP, IA, IR, MA, MP, PE, PL, PM, PS, PT, RA, SA, SC, SI, SR) plus dozens of control enhancements per family. NIST SP 800-53B publishes the three baselines (Low / Moderate / High) and the Privacy Control Baseline. RMF Step 2 (Select) requires choosing the baseline, tailoring it (adding, removing, or scoping controls), assigning organisation-defined parameters, and documenting compensating controls where a primary control cannot be implemented.
 
-For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / Moderate / High / LI-SaaS) extend SP 800-53B with FedRAMP-specific additions and parameter values. As of 2024 FedRAMP no longer accepts Rev 4 packages — all new and continuing authorizations must be Rev 5. Where the system inherits controls from a FedRAMP-authorized Cloud Service Offering (CSO), the tailoring statement records inheritance and customer responsibility per the CSP's Customer Responsibility Matrix (CRM).
+For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / Moderate / High / LI-SaaS) extend SP 800-53B with FedRAMP-specific additions and parameter values. They draw their controls from 18 of the 20 families: they include no PM controls, which FedRAMP treats as an agency responsibility, and no PT controls, which agencies apply according to the data the system holds (FedRAMP Security Controls Baseline workbook). As of 2024 FedRAMP no longer accepts Rev 4 packages — all new and continuing authorizations must be Rev 5. Where the system inherits controls from a FedRAMP-authorized Cloud Service Offering (CSO), the tailoring statement records inheritance and customer responsibility per the CSP's Customer Responsibility Matrix (CRM).
 
 **Authoritative anchors**:
 
@@ -63,9 +70,9 @@ For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / M
    - **Then**, `.arckit/templates/us-nist-800-53-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/us-nist-800-53-template.md`
 
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> NIST --filename` for the artefact filename. The type code for this command is `NIST`.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> NIST {VERSION} --filename` for the artefact filename. The type code for this command is `NIST`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the US regime to `_partials/document-control-us.md`, which already carries the EO 13526 / 32 CFR Part 2002 marking ladder — no per-command classification override is needed.
 
@@ -76,7 +83,7 @@ For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / M
    - **Control Tailoring Matrix** — for every control in the selected baseline, record: Control ID (e.g. `AC-2`, `AC-2(1)`), title, implementation status (`Implemented` / `Inherited` / `Hybrid` / `Planned` / `Not Applicable`), responsible party (System Owner / CSP / Shared), implementation description (1–3 sentences), and assessment objective satisfaction. Group by control family.
    - **Organisation-Defined Parameter (ODP) Assignments** — table of every `[Assignment:` and `[Selection:` parameter with the agency value (e.g. `AC-2.j organization-defined frequency = annually`). FedRAMP-specified parameter values must be honoured where the system is pursuing FedRAMP — call out any deviation with rationale.
    - **Compensating Controls Register** — where a primary control cannot be implemented as written, document the compensating control, the rationale, the residual risk, and the AO acceptance posture.
-   - **Privacy Controls Overlay** — if PII is processed, additionally tailor the SP 800-53B Privacy Control Baseline (PT family + privacy enhancements). Cross-reference the PIA.
+   - **Privacy Controls Overlay** — if PII is processed, additionally tailor the SP 800-53B Privacy Control Baseline (PT family + privacy enhancements). Cross-reference the US PIA (`USPIA`; `PIA` is Canada's code).
    - **CUI Overlay (if applicable)** — for systems handling Controlled Unclassified Information, layer NIST SP 800-171 Rev 3 requirements per 32 CFR Part 2002.
    - **OSCAL Readiness** — note whether the implementation is published in OSCAL machine-readable format (FedRAMP increasingly mandates OSCAL SSP submission); flag as a roadmap item if not yet.
 

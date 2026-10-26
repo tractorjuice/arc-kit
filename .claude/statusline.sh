@@ -19,7 +19,7 @@ FILLED=$((PCT / 10)); EMPTY=$((10 - FILLED))
 BAR=$(printf "%${FILLED}s" | tr ' ' '█')$(printf "%${EMPTY}s" | tr ' ' '░')
 
 BRANCH=""
-git -C "$DIR" rev-parse --git-dir > /dev/null 2>&1 && BRANCH=" | 🌿 $(git -C "$DIR" branch --show-current 2>/dev/null)"
+git --no-optional-locks -C "$DIR" rev-parse --git-dir > /dev/null 2>&1 && BRANCH=" | 🌿 $(git --no-optional-locks -C "$DIR" branch --show-current 2>/dev/null)"
 
 echo -e "${CYAN}[$MODEL]${RESET} 📁 ${DIR##*/}$BRANCH | ${BLUE}v${VERSION}${RESET}"
 CONTEXT_K=$((CONTEXT_SIZE / 1000))
@@ -58,4 +58,5 @@ if [ -n "$WEEK_PCT" ]; then
   RATE_LINE="${RATE_LINE}${MAGENTA}7d:${RESET}${WEEK_COLOR}${WEEK_INT}%${RESET}${WEEK_RESET_FMT}"
 fi
 
-[ -n "$RATE_LINE" ] && echo -e "Rate limits: ${RATE_LINE}"
+if [ -n "$RATE_LINE" ]; then echo -e "Rate limits: ${RATE_LINE}"; fi
+exit 0

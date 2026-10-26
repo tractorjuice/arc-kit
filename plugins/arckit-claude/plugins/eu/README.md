@@ -11,6 +11,8 @@
 - `/arckit-eu:eu-nis2` — NIS2 Directive compliance for essential and important entities
 - `/arckit-eu:eu-rgpd` — GDPR (EU 2016/679) compliance across all member states
 
+In Claude Code the overlay installs as its own plugin, `arckit-eu`, so its commands carry that prefix: `/arckit-eu:eu-ai-act` and so on. Core commands such as `/arckit:requirements` keep the `arckit` prefix.
+
 Recipes: No recipes ship in this overlay yet.
 
 ## Requires arckit core plugin

@@ -13,6 +13,10 @@ handoffs:
     description: Reconciles the public-facing register against the protected investigative dataset; required severance design for hybrid views.
   - command: ca-aia
     description: Triggered when registration triage uses any automated decision-making, scoring, or risk classification.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -37,13 +41,13 @@ You are an enterprise architect generating a Canada FITAA Compliance Assessment 
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, STKE, DR, and DMOD artefacts (if present)
+   - The project's REQ (including its `DR-*` data requirements), STKE and DATA (data model) artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/ca-fitaa-template.md` (user override)
    - **Then**, `.arckit/templates/ca-fitaa-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-fitaa-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> FITAA --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> FITAA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **Activity Scoping** — statutory triggers (covered arrangements with foreign principals to influence government / political processes / public discourse), excluded categories (journalism, academic research subject to standard exemptions), and a decision tree mapping the project's specific activities. Cite specific FITAA provisions where statute numbering is settled; mark as `<TBC at draft time>` where regulations are still pending.

@@ -135,7 +135,7 @@ From `$ARGUMENTS`, after stripping the project hint:
   **focal** supplier — the one you are comparing rivals against.
 - Otherwise, free-text (anything not consumed by a flag) → `keywords[]`, and
   set `focus: capability`.
-- `--cpv NNNNNNNN` (optionally `NNNNNNNN-N`, the OCDS division suffix) →
+- `--cpv NNNNNNNN` (optionally `NNNNNNNN-N`, where the ninth digit is the CPV check digit) →
   `cpv`. Must match `^[0-9]{8}(-[0-9])?$`. Applies under either focus.
 
 If neither `--supplier` nor free-text capability is present but the
@@ -176,7 +176,7 @@ install is incomplete.
 ### Step 4: Dispatch reader subagent + validate
 
 1. Dispatch the reader using the `Agent` tool with
-   `subagent_type: "arckit:arckit-tenders-reader"` and the Step 2 scope JSON as the
+   `subagent_type: "arckit:arckit-tenders-reader"`, `run_in_background: false` and the Step 2 scope JSON as the
    prompt. (This is the **shared** reader — the same one `/arckit:tenders`
    dispatches.)
 
@@ -363,7 +363,7 @@ validated payload (the writer renders the freshness-unavailable line in that
 case). Omit `focal` and leave `head_to_head` as `[]` on a capability-focus
 run (the writer renders the not-applicable head-to-head line). Dispatch the
 writer using the `Agent` tool with
-`subagent_type: "arckit:arckit-competitors-writer"` and this JSON as the prompt. The
+`subagent_type: "arckit:arckit-competitors-writer"`, `run_in_background: false` and this JSON as the prompt. The
 writer renders the CMPT artefact, enriches any matching vendor profile's
 `## Government Award History`, and returns a one-line summary with the file
 path, word count, and number of vendor profiles enriched.

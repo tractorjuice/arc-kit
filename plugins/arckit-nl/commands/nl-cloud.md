@@ -5,7 +5,7 @@ argument-hint: "<project ID or cloud service description, e.g. '001', 'case mana
 effort: high
 handoffs:
   - command: nl-tbb
-    description: Determine the TBB category / VIRBI 2025 rubricering for the data in scope before finalising the clause 5.2 eligibility check
+    description: Determine the TBB category for the data in scope before finalising the clause 5.2 eligibility check
     condition: "TBB category not yet determined for the data processed by this system"
   - command: nl-exit
     description: Produce the mandatory clause 3.2 exit plan once materieel cloudgebruik is confirmed
@@ -16,6 +16,10 @@ handoffs:
   - command: risk
     description: Integrate cloud sovereignty, foreign-interference, and provider-concentration risks into the risk register
     condition: "Risks identified in this assessment are not yet reflected in ARC-*-RISK"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 
@@ -76,7 +80,7 @@ Read all documents from Step 0. Extract and note the TBB category (if determined
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/nl-cloud-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/nl-cloud-template.md` exists in the project root, then `.arckit/templates/nl-cloud-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-cloud-template.md`
 
@@ -102,7 +106,7 @@ If either holds, treat the use as materieel — clauses 3.1 (risk assessment), 3
 
 This is the section a reader of this assessment will look for first — do not leave it implicit.
 
-1. **Clause 5.2 prohibition check**: Pull the TBB category / rubricering for the data in scope. Public cloud is **prohibited** for staatsgeheim gerubriceerde informatie and for Te Beschermen Belangen niveau 1, 2, and 3. If the TBB category is not yet known, state that explicitly and recommend running `/arckit:nl-tbb` before the assessment can be finalised — do not guess a category.
+1. **Clause 5.2 prohibition check**: Pull the TBB category for the data in scope, and any existing rubricering the `/arckit:nl-tbb` determination records (it records a marking; it never assigns one). Public cloud is **prohibited** for staatsgeheim gerubriceerde informatie and for Te Beschermen Belangen niveau 1, 2, and 3. If the TBB category is not yet known, state that explicitly and recommend running `/arckit:nl-tbb` before the assessment can be finalised — do not guess a category.
 2. **Clause 4.5 email/file-storage conditions**: If the service in scope is email or document/workplace/file storage, assess all **three cumulative conditions** individually — (a) it is independently established that continuity of service is otherwise at risk, (b) a risk analysis and exit plan have been produced and tested under this policy, (c) the decision is agreed by the responsible minister in agreement with the bewindspersoon voor digitalisering. All three must hold; do not treat partial satisfaction as eligible.
 3. **Clause 5.4 basisregistraties**: If the system holds or sources basisregistratie data, state that basisregistraties are not (solely) held in public cloud inside or outside the EEA, and that source data are not managed in public cloud.
 4. **No provider qualification list**: State explicitly that, unlike some other jurisdictions, there is no published Dutch cloud-provider qualification list. Do not name, shortlist, or imply that any specific commercial cloud provider is compliant or qualified.
@@ -136,7 +140,7 @@ State that an exit plan is mandatory, documented, self-tested, covers two scenar
 
 **CRITICAL**: Use the **Write tool** to create the assessment document.
 
-1. Use `node scripts/generate-document-id.mjs <PROJECT_ID> RBCLOUD --filename` for the artefact filename.
+1. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> RBCLOUD {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 2. **Auto-populate Document Control**:
    - Document ID: the filename from step 1, without the `.md` extension

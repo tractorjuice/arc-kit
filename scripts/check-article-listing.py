@@ -7,7 +7,7 @@ hand-maintained HTML. Nothing derived them, so four articles (1–3 September
 August until a reader noticed. This guard holds:
 
   1. Every tracked `docs/articles/YYYY-MM-DD-<slug>.md` has a card on
-     `docs/articles.html` (an `article-viewer.html?a=<slug>` link). Files
+     `docs/articles.html` (a `share/<slug>.html` link). Files
      ending `-medium` or `-linkedin` are channel variants and need no card
      of their own, though they may have one.
   2. Every listed article is a tracked file on disk, and the image its card
@@ -59,7 +59,9 @@ def tracked_slugs() -> tuple[list[str], list[str]]:
 
 
 def linked_slugs(html: str) -> list[str]:
-    return re.findall(r'article-viewer\.html\?a=([A-Za-z0-9_-]+)', html)
+    # A card links the article's static page, share/<slug>.html
+    # (scripts/generate-site-pages.py), or the old viewer URL that redirects there.
+    return re.findall(r'(?:article-viewer\.html\?a=|share/)([A-Za-z0-9_-]+)', html)
 
 
 def main() -> int:

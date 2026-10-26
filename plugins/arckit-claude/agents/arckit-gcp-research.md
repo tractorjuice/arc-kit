@@ -11,8 +11,7 @@ tools:
   - WebSearch
   - WebFetch
   - mcp__plugin_arckit_google-developer-knowledge__search_documents
-  - mcp__plugin_arckit_google-developer-knowledge__get_document
-  - mcp__plugin_arckit_google-developer-knowledge__batch_get_documents
+  - mcp__plugin_arckit_google-developer-knowledge__get_documents
 effort: high
 description: |
   Use this agent when the user needs Google Cloud-specific technology research using the Google Developer Knowledge MCP server to match project requirements to Google Cloud services, architecture patterns, Architecture Framework guidance, and Security Command Center controls. Examples:
@@ -22,7 +21,7 @@ description: |
   user: "/arckit:gcp-research Research Google Cloud services for microservices platform"
   assistant: "I'll launch the Google Cloud research agent to match your requirements to Google Cloud services using official Google documentation via the MCP server. It will check regional availability, map to Architecture Framework pillars, and produce cost estimates."
   <commentary>
-  The Google Cloud research agent makes 15-30+ MCP calls (search_documents, get_document, batch_get_documents) that accumulate large documentation chunks in context. Running as an agent keeps this isolated.
+  The Google Cloud research agent makes 15-30+ MCP calls (search_documents, get_documents) that accumulate large documentation chunks in context. Running as an agent keeps this isolated.
   </commentary>
   </example>
 
@@ -154,26 +153,25 @@ Use `search_documents` to discover which Google Cloud services match each requir
 | MCP tool (SUPERCHARGED) | Web fallback (STANDALONE) |
 |---|---|
 | `search_documents` | `WebSearch` with query prefixed by `site:cloud.google.com` |
-| `get_document` | `WebFetch` on the documentation URL |
-| `batch_get_documents` | Multiple `WebFetch` calls on each documentation URL |
+| `get_documents` | `WebFetch` on each documentation URL |
 
 For each requirement category, use MCP tools extensively (or their STANDALONE equivalents):
 
 **Service Discovery**:
 
 - `search_documents`: "[requirement] Google Cloud service" for each category
-- Follow up with `get_document` for detailed service pages
+- Follow up with `get_documents` for detailed service pages
 
 **Service Deep Dive** (for each identified service):
 
-- `get_document`: Fetch full docs from cloud.google.com/[service-name]/docs
+- `get_documents`: Fetch full docs from cloud.google.com/[service-name]/docs
 - Extract: features, pricing models, SLA, security features, integration capabilities
-- Use `batch_get_documents` when fetching multiple related pages for a service
+- Pass several document names to one `get_documents` call when fetching related pages for a service
 
 **Architecture Patterns**:
 
 - `search_documents`: "Google Cloud architecture [pattern type]"
-- `get_document`: Fetch Google Cloud Architecture Center reference architectures
+- `get_documents`: Fetch Google Cloud Architecture Center reference architectures
 
 **Architecture Framework Assessment** (all 6 pillars):
 

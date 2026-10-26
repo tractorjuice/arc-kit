@@ -19,6 +19,8 @@
 
 [Two to three paragraphs: cloud service offering (CSO) being described, baseline being targeted (Moderate / High), authorisation path (Agency / JAB / Tailored), current readiness state, and target ATO timeline.]
 
+> **Structure**: this plan has 14 sections. Each one feeds a section or appendix of the FedRAMP Rev 5 SSP template (12 front-matter sections, Appendices A–Q); Section 14 maps every appendix to its source. FedRAMP marked that template legacy on 23 June 2026 under the FedRAMP Consolidated Rules for 2026 — confirm the template your submission must use on fedramp.gov.
+
 ---
 
 ## Section 1 — System Identification
@@ -34,6 +36,9 @@
 | **Authorisation Path** | [Agency ATO / JAB P-ATO / FedRAMP Tailored Low-Impact SaaS] |
 | **Sponsoring Agency** | [Agency name (Agency path only)] |
 | **Baseline Targeted** | [Moderate / High] |
+| **Digital Identity Level** | [IAL2/AAL2/FAL2 / IAL3/AAL3/FAL3 — from the Digital Identity Worksheet] |
+| **Operational Status** | [Operational / Under Development / Major Modification] |
+| **Fully Operational as of** | [YYYY-MM-DD] |
 | **Authorisation Boundary Diagram** | [Reference: ARC-{P}-DIAG-NNN-v*] |
 | **Data Flow Diagram** | [Reference: ARC-{P}-DIAG-NNN-v*] |
 
@@ -41,7 +46,7 @@
 
 ## Section 2 — System Categorization
 
-[Cross-reference the FIPS 199 categorization artefact (`ARC-{P}-FISMA-v*`). Summarise the high-water mark and the driving information types.]
+[Cross-reference the FIPS 199 categorization artefact (`ARC-{P}-FIPS199-v*`). Summarise the high-water mark and the driving information types.]
 
 | CIA Objective | Impact Level |
 |---------------|--------------|
@@ -64,6 +69,20 @@
 | ISSM | [Name] | [Title] | [Org] | [Email] | [Phone] |
 | CISO | [Name] | [Title] | [Org] | [Email] | [Phone] |
 | 3PAO Lead | [Name] | [Title] | [3PAO firm] | [Email] | [Phone] |
+
+### Separation of Duties
+
+[Security control AC-5. One row per duty, one column per role with access to the system; mark X where a role performs the duty. Add roles and duties as the system requires.]
+
+| Duty | Information Owner | Security Officer | Privacy Officer | System Administrator | Agency Administrator | Agency Customer |
+|------|-------------------|------------------|-----------------|----------------------|----------------------|-----------------|
+| Adds / removes privileged administrators | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Adds / removes non-privileged administrators | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Adds / removes customer administrators | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Enforces physical access authorisations | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Defines least privilege needed to perform tasks | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Reviews / approves policy | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] |
+| Enforces policy | [ ] | [ ] | [ ] | [ ] | [ ] | [ ] |
 
 ---
 
@@ -109,9 +128,27 @@
 
 ## Section 6 — System Interconnections
 
-| Interconnected System | Owning Org | System Type (Internal / External) | Connection Method | Data Exchanged | ISA / MoU Reference | Authorisation Status |
-|----------------------|-----------|------------------------------------|-------------------|----------------|---------------------|---------------------|
-| [System] | [Org] | [Internal / External] | [API / VPN / Direct Connect / Public Internet] | [Data type + classification] | [ISA-NNN / MoU-NNN] | [ATO date / Pending] |
+### 6.1 Leveraged FedRAMP-Authorized Services
+
+[Only services listed as Authorized on the FedRAMP Marketplace belong here; "In Process" and "FedRAMP Ready" are not authorizations. Leverage services at the same or a higher impact level.]
+
+| CSP / CSO Name (as on the Marketplace) | Services and Features Used | Authorization Type and FedRAMP Package ID | Nature of Agreement | Impact Level | Data Types | Authorized Users / Authentication |
+|----------------------------------------|----------------------------|-------------------------------------------|---------------------|--------------|------------|-----------------------------------|
+| [CSP / CSO] | [Services] | [Agency / JAB — FR-NNNNN] | [EULA / SLA / contract] | [High / Moderate / Low / LI-SaaS] | [SP 800-60 data types] | [Roles + authentication method] |
+
+### 6.2 External Systems and Services Without FedRAMP Authorization
+
+[Every connection to a system, service, API or CLI that lacks a FedRAMP authorization at the same or higher impact level, including corporate shared services and update services. No overlap with 6.1.]
+
+| System / Service / API / CLI | Category (Non-FedRAMP Cloud / Corporate Shared / Update Service) | Connection Details (Inbound / Outbound) | Data Types and Categorization | Other Compliance Programs | Risk / Impact / Mitigation |
+|------------------------------|------------------------------------------------------------------|------------------------------------------|-------------------------------|---------------------------|----------------------------|
+| [Name + vendor] | [Category] | [Direction + method] | [Data types — Low / Moderate / High] | [SOC 2 / ISO 27001 / none] | [Risk if its CIA is compromised; mitigation] |
+
+### 6.3 Boundary Interconnections
+
+| Interconnected System | Owning Org | FedRAMP Package ID | Agreement (ICA / MOU / ISA) | Data Direction | Ports / Protocols | Data Exchanged and Sensitivity | Authorisation Status |
+|----------------------|-----------|--------------------|-----------------------------|----------------|-------------------|--------------------------------|----------------------|
+| [System] | [Org] | [FR-NNNNN / N/A] | [ISA-NNN / MOU-NNN] | [Inbound / Outbound / Both] | [TCP 443 / HTTPS] | [Data type + classification] | [ATO date / Pending] |
 
 [List every interconnection that crosses the authorisation boundary.]
 
@@ -138,7 +175,7 @@
 
 ## Section 8 — Minimum Security Controls
 
-[Cross-reference the tailored 800-53 control set artefact (`ARC-{P}-NIST53-v*`). Summarise the baseline selection and the count of controls implemented / inherited / hybrid / not-applicable / planned. The full Tailoring Matrix lives in the 800-53 artefact; do not duplicate it here.]
+[Cross-reference the tailored 800-53 control set artefact (`ARC-{P}-NIST-v*`). Summarise the baseline selection and the count of controls implemented / inherited / hybrid / not-applicable / planned. The full Tailoring Matrix lives in the 800-53 artefact; do not duplicate it here.]
 
 | Source | Count |
 |--------|-------|
@@ -149,16 +186,24 @@
 | Planned (POA&M tracked) | [Count] |
 | Not Applicable | [Count] |
 
+### Control Origination and Customer Responsibility
+
+[One row for every control that is not wholly Service Provider originated. This feeds the FedRAMP CIS/CRM Workbook (Appendix J).]
+
+| Control ID | Implementation Status | Control Origination | Customer Responsibility |
+|------------|-----------------------|---------------------|-------------------------|
+| [AC-2] | [Implemented / Partial / Planned] | [Service Provider Corporate / SP System Specific / Configured by Customer / Provided by Customer / Shared / Inherited] | [What the customer agency must do — required for every Shared control] |
+
 ---
 
 ## Section 9 — Types of Users
 
-| User Role | Description | Internal / External | Privileged? | Authentication Assurance (IAL / AAL / FAL) | Training Required |
-|-----------|-------------|---------------------|-------------|--------------------------------------------|--------------------|
-| [Role] | [Description] | [Internal / External] | [Yes / No] | [IAL2 / AAL2 / FAL2] | [Annual privacy + security] |
-| Administrator | [System administration] | [Internal] | [Yes] | [IAL3 / AAL3 / FAL2] | [Annual + role-specific] |
-| End User | [Customer agency user] | [External] | [No] | [IAL2 / AAL2 / FAL2] | [Agency-managed] |
-| Auditor | [3PAO / IG] | [External] | [Read-only Privileged] | [IAL3 / AAL3 / FAL2] | [Annual] |
+| User Role | Description | Internal / External | Privileged? | Clearance / Citizenship Requirement | Authentication Mechanism | Authentication Assurance (IAL / AAL / FAL) | Training Required |
+|-----------|-------------|---------------------|-------------|-------------------------------------|--------------------------|--------------------------------------------|--------------------|
+| [Role] | [Description] | [Internal / External] | [Yes / No] | [None / Public Trust / US Persons] | [PIV / login.gov / federated] | [IAL2 / AAL2 / FAL2] | [Annual privacy + security] |
+| Administrator | [System administration] | [Internal] | [Yes] | [Per agency requirement] | [PIV / phishing-resistant MFA] | [IAL3 / AAL3 / FAL2] | [Annual + role-specific] |
+| End User | [Customer agency user] | [External] | [No] | [Per agency requirement] | [PIV / federated] | [IAL2 / AAL2 / FAL2] | [Agency-managed] |
+| Auditor | [3PAO / IG] | [External] | [Read-only Privileged] | [Per agency requirement] | [PIV / federated] | [IAL3 / AAL3 / FAL2] | [Annual] |
 
 ---
 
@@ -179,11 +224,29 @@
 
 [Describe encryption-in-transit posture (TLS 1.2 minimum, TLS 1.3 preferred), east-west encryption strategy, and any private-link / service-endpoint configurations.]
 
+### Services, Ports, and Protocols
+
+[Every service, port and transport protocol enabled in the CSO (CM-7, CM-7(1)). Keep it consistent with the diagrams and Section 6.]
+
+| Service Name | Port # | Transport Protocol | Ref # | Purpose | Used By |
+|--------------|--------|--------------------|-------|---------|---------|
+| [HTTPS] | [443] | [TCP] | [Ref # in the cryptographic modules table] | [Web access] | [Components] |
+
+### Cryptographic Modules for Data at Rest and Data in Transit
+
+[Every place cryptography protects federal data: data at rest, data in transit across and within the boundary, remote access and key management (SC-8, SC-8(1), SC-13, SC-28, SC-28(1)). Raise a POA&M item for any area without FIPS 140-validated cryptography. Feeds FedRAMP Appendix Q.]
+
+| Ref # | Data Area or Flow | Source → Destination | Cryptographic Module | FIPS 140 Certificate # | Approved Mode Confirmed? |
+|-------|-------------------|----------------------|----------------------|------------------------|--------------------------|
+| [1] | [Data at rest — database] | [N/A] | [Module name + version] | [CMVP #NNNN] | [Yes / No — POA&M ref] |
+
 ---
 
 ## Section 11 — Control Implementations
 
-For each control family, document implementation narratives. Full control-by-control narrative lives in the OSCAL representation; this section is a per-family summary.
+For each control family, document implementation narratives. Full control-by-control narrative lives in Appendix A or the OSCAL representation; this section is a per-family summary.
+
+NIST SP 800-53 Rev 5 has 20 control families. The FedRAMP Rev 5 baselines draw their controls from 18 of them: they include no PM (Program Management) or PT (PII Processing and Transparency) controls. Complete PM and PT only where the sponsoring agency assigns those controls — FedRAMP treats PM as an agency responsibility and leaves privacy controls to the agency, according to the data the system holds.
 
 ### AC — Access Control
 
@@ -243,7 +306,7 @@ For each control family, document implementation narratives. Full control-by-con
 
 ### PT — PII Processing and Transparency
 
-[Cross-ref PIA artefact (`ARC-{P}-PIA-v*`). Privacy notices, consent, opt-out.]
+[Cross-ref PIA artefact (`ARC-{P}-USPIA-v*`). Privacy notices, consent, opt-out.]
 
 ### RA — Risk Assessment
 
@@ -286,6 +349,9 @@ For each control family, document implementation narratives. Full control-by-con
 |----------|-----------|--------------------|
 | Authenticated vulnerability scan | [Weekly] | [SOC + AO] |
 | External / unauthenticated scan | [Monthly] | [SOC] |
+| Web application scan | [Monthly] | [SOC + AppSec] |
+| Container image scan | [Monthly / every build] | [SOC + Platform team] |
+| Database scan | [Monthly] | [SOC + Data team] |
 | Configuration compliance scan | [Quarterly] | [Platform team + AO] |
 | Penetration test | [Annual] | [AO + FedRAMP PMO] |
 | POA&M review | [Monthly] | [AO + sponsoring agency] |
@@ -296,26 +362,31 @@ For each control family, document implementation narratives. Full control-by-con
 
 ---
 
-## Section 14 — Attachments Inventory
+## Section 14 — Appendices Inventory
 
-| Attachment | Document Title | Location / Reference |
-|-----------|----------------|----------------------|
-| Attachment 1 | Information Security Policies and Procedures | [Reference] |
-| Attachment 2 | User Guide | [Reference] |
-| Attachment 3 | Digital Identity Worksheet | [Reference] |
-| Attachment 4 | Privacy Impact Assessment (PIA) | [ARC-{P}-PIA-v*] |
-| Attachment 5 | Rules of Behavior (RoB) | [Reference] |
-| Attachment 6 | Information System Contingency Plan (ISCP) | [Reference] |
-| Attachment 7 | Configuration Management Plan (CMP) | [Reference] |
-| Attachment 8 | Incident Response Plan (IRP) | [Reference] |
-| Attachment 9 | Continuous Monitoring Plan (ConMon) | [Reference] |
-| Attachment 10 | Plan of Action and Milestones (POA&M) | [Reference] |
-| Attachment 11 | Authenticated Vulnerability Scan Reports | [Reference] |
-| Attachment 12 | Penetration Test Report | [Reference] |
-| Attachment 13 | Customer Responsibility Matrix (CRM) | [Reference] |
-| Attachment 14 | FIPS 199 Categorization | [ARC-{P}-FISMA-v*] |
-| Attachment 15 | Separation of Duties Matrix | [Reference] |
-| Attachment 16 | Training Records | [Reference] |
+The appendices the FedRAMP Rev 5 SSP template lists in its Section 12, with the source of each. Appendices C, D, F, G, H and I are not required for LI-SaaS.
+
+| Appendix | Document Title | Source in This Plan | Location / Reference |
+|----------|----------------|---------------------|----------------------|
+| A | FedRAMP Security Controls (one template per baseline) | Sections 8 and 11 | [ARC-{P}-NIST-v*] + [Appendix A file] |
+| B | Related Acronyms | — | [Reference] |
+| C | Information Security Policies and Procedures | — | [Reference] |
+| D | User Guide | — | [Reference] |
+| E | Digital Identity Worksheet | Section 9 | [ARC-{P}-ICAM-v*] |
+| F | Rules of Behavior (RoB) | — | [Reference] |
+| G | Information System Contingency Plan (ISCP) | — | [Reference] |
+| H | Configuration Management Plan (CMP) | Section 12 | [Reference] |
+| I | Incident Response Plan (IRP) | — | [Reference] |
+| J | Control Implementation Summary (CIS) and Customer Responsibility Matrix (CRM) Workbook | Section 8 | [Reference] |
+| K | FIPS 199 Categorization | Section 2 | [ARC-{P}-FIPS199-v*] |
+| L | CSO-Specific Laws and Regulations | Section 7 | [Reference] |
+| M | Integrated Inventory Workbook (IIW) | Section 5 | [Reference] |
+| N | Continuous Monitoring Plan | Section 13 | [Reference] |
+| O | Plan of Action and Milestones (POA&M) | Section 13 | [Reference] |
+| P | Supply Chain Risk Management Plan (SCRMP) | — | [Reference; SBOM evidence in ARC-{P}-SBOM-v*] |
+| Q | Cryptographic Modules Table | Section 10 | [Reference] |
+
+[The Rev 5 template has no Privacy Impact Assessment appendix. Where the agency requires its E-Government Act §208 PIA alongside the package, reference it separately: ARC-{P}-USPIA-v*.]
 
 ---
 

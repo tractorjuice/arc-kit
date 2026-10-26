@@ -5,13 +5,13 @@ using Open Agile Architecture (C208) — product-driven, sprint-based delivery:
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
-| `/arckit:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (2–4 week engagement windows) |
+| `/arckit:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (4–8 week engagement windows) |
 | `/arckit:product-architecture` | `OAPR` | Product-centric architecture — cross-functional teams, backlog-driven delivery |
-| `/arckit:agile-strategy` | `OASTR` | Dual transformation canvas — legacy modernization + greenfield innovation |
+| `/arckit:agile-strategy` | `OASTR` | Dual transformation canvas — digital transformation + agile transformation |
 | `/arckit:agile-security` | `OASEC` | Security embedded in sprint rhythm — threat modeling, compliance evidence |
 | `/arckit:agile-governance` | `OAGOV` | Lightweight governance cadence aligned to sprint cycles |
 
-Recipe: `oaa-full` — all five O-AA commands (strategy → product → ADM Lite → security → governance) on top of the core `PRIN`/`REQ`/`STKE` foundation.
+Recipe: `oaa-full` — all five O-AA commands (ADM Lite → product → strategy → security → governance) on top of the core `PRIN`/`STKE`/`REQ` foundation.
 
 **Official standard:** <https://publications.opengroup.org/c208> (full text behind Open Group sign-in)
 
@@ -69,7 +69,7 @@ Axioms are cited by their published C208 number (Ch. 9); chapter numbers follow 
 |---------|-------------|--------|
 | `oaa-adm-lite` | C182 ADM phases ↔ sprints; C208 Ch. 3–9 | 1, 3, 5, 6, 7, 10, 14, 15 |
 | `product-architecture` | Ch. 14 | 15, 6 |
-| `agile-strategy` | Ch. 11 | 5 |
+| `agile-strategy` | Ch. 11 | 5 (anchor); the canvas also applies 1, 6, 14, 15 |
 | `agile-security` | Ch. 4.6 + Axiom 16; G216 | 16 |
 | `agile-governance` | Ch. 8 | 7 |
 
@@ -80,10 +80,10 @@ Each command is a **prompt template** — not an interactive questionnaire. The 
 ### Dependency Chain
 
 ```text
-PRIN → REQ/STKE → OASTR/OAPR → OAAL → OASEC → OAGOV
+PRIN → STKE → REQ → OAAL → OAPR → OASTR → OASEC → OAGOV
 ```
 
-Foundation commands (`principles`, `requirements`, `stakeholders`) must run first. Breaking core `arckit` (=6.15.0) breaks doc-type validators.
+Foundation commands (`principles`, `stakeholders`, `requirements`) should run first; each O-AA command reads them when present and notes the gap when they are missing. The O-AA order follows what each command reads: product architecture reads the ADM Lite sprint plan, the strategy canvas reads both, and security and governance read all three. Breaking core `arckit` (=6.18.3) breaks doc-type validators.
 
 ### Artefact Naming
 
@@ -115,8 +115,8 @@ Commands declare explicit next-step targets. Claude Code auto-suggests subsequen
 
 | Section | Fields determined |
 |---------|-------------------|
-| **Sprint 0 (Vision)** | AI workload type, data classification, jurisdiction, user count, latency targets, budget, constraints, stakeholder concerns, regulatory controls |
-| **Sprint 1 (Business + Data)** | Current vs target capability gaps, value streams with SLAs, data asset inventory (classification, volume, encryption), data flows with compliance controls |
+| **Sprint 0 (Vision)** | AI workload type, data classification, jurisdiction, user count, latency targets, budget, constraints, stakeholder concerns, regulatory controls, high-level capabilities in scope (TOGAF Phase A) |
+| **Sprint 1 (Business + Data)** | Baseline and target business capability map with gaps (TOGAF Phase B), value streams with SLAs, data asset inventory (classification, volume, encryption), data flows with compliance controls |
 | **Sprint 2 (Technology)** | Model serving, vector store, database, runtime standards; GPU cluster sizing; network topology; monitoring stack; compliance validation against jurisdiction |
 | **Sprint 3 (Transition)** | Migration waves, strangle pattern vs big-bang, dependency sequencing, rollback criteria |
 | **Sprint 4+ (Governance)** | Ongoing review gates, change velocity thresholds, compliance evidence per sprint |
@@ -137,11 +137,12 @@ Gate criteria at each sprint: artefact matches the inlined template structure, s
 
 | Section | Fields determined |
 |---------|-------------------|
-| **Digital transformation** | Current → target technology stack, migration approach (strangler/dual-run), enabling technologies |
+| **Technology transformation** | Current → target technology stack, migration approach (strangler/dual-run), legacy modernization, enabling technologies |
 | **Product transformation** | Project-based → permanent product teams, measurable outcomes per team |
-| **Operating model** | Functional silos → platform + stream-aligned teams, capability gaps, internal platform strategy |
-| **Organizational agility** | Decision-making speed, cross-functional alignment, cultural change targets |
+| **Operating model** | Functional silos → platform + stream-aligned teams, capability gaps, internal platform strategy, funding model |
+| **Organizational, cultural and team agility** | Decision rights, cultural change initiatives, team topology and flow metrics |
 | **Resilience targets** | Business continuity, disaster recovery, fallback strategies |
+| **Waves and backlog** | Transformation waves with outcome measures; strategy epics mapped to the product backlog |
 
 ### `agile-security` — Security Per Sprint
 
@@ -150,17 +151,19 @@ Gate criteria at each sprint: artefact matches the inlined template structure, s
 | **Security stories** | Risk category per backlog item (data exfiltration, model poisoning, prompt injection, unauthorized access, availability) |
 | **Risk-based testing** | Scan frequency by risk level: critical = every commit, high = every PR, medium = sprint gate, low = weekly |
 | **Compliance-as-code** | Regulatory controls expressed as executable validation rules |
-| **Threat model** | Sprint-specific threat model updates, not one-time |
+| **Threat model** | STRIDE-structured threat model, updated every sprint, not one-time |
+| **Exceptions** | Sign-off by severity for a failing check, accepted risk with a resolution deadline |
 | **AI bias assessment** | Algorithmic transparency checks per sprint |
 
 ### `agile-governance` — Sprint Governance
 
 | Section | Fields determined |
 |---------|-------------------|
-| **Sprint checklist** | Pre-sprint: architecture constraint check, compliance impact scan, model change review. Post-sprint: drift check, compliance verification, debt logging |
+| **Sprint review panel** | 3–5 members from the product team (Product Owner, Lead Architect, AI Safety Engineer, DevOps Lead, Compliance Representative), decision authority matrix, escalation tiers |
+| **Sprint checklist** | Pre-sprint: architecture constraint check, compliance impact scan, model change review. Mid-sprint: pipeline health, in-flight decisions. Post-sprint: drift check, compliance verification, debt logging |
 | **Architecture debt** | Compliance debt, scalability debt, security debt, observability debt, documentation debt — severity, introduced sprint, resolution target |
 | **Quarterly health** | Architecture health score (compliance %, drift score, debt age, test coverage, documentation freshness) |
-| **Change management** | Architecture change requests evaluated within sprint cycles, not quarterly boards |
+| **Change management** | `change-request.yaml` evaluated and decided by the panel within the sprint, not by quarterly boards |
 
 ## Execution Modes
 

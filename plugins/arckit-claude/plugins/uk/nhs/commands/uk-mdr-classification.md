@@ -6,13 +6,20 @@ effort: high
 keep-coding-instructions: true
 handoffs:
   - command: uk-nhs-dcb0129
-    description: DCB0129 hazard log feeds the ISO 14971 risk file expected by both UK MDR and EU MDR.
+    description: DCB0129 hazard log feeds the ISO 14971 risk file expected by both UK MDR and EU MDR — run uk-nhs-dcb0129 first if clinical-safety/HAZARD-LOG.md is not present.
   - command: uk-nhs-dtac
     description: DTAC consumes the classification statement to determine procurement assurance route.
   - command: risk
     description: Project risk register cross-references regulatory-classification risks (misclassification, market-access risk, post-market surveillance failure).
   - command: adr
     description: Major regulatory routing decisions (e.g. UKCA self-declare vs Approved Body, EU MDR via Notified Body vs not) belong in an ADR.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output is **not** regulatory advice. Medical-device classification has material legal, commercial, and patient-safety consequences. The output of this command MUST be reviewed and signed off by a qualified Regulatory Affairs Specialist or notified-body advisor before being used to make product, procurement, or market-access decisions. Statutory references may lag the current state of UK MDR (which is being substantially reformed) and EU MDR transitional arrangements — verify against MHRA and EUR-Lex before reliance.
@@ -58,16 +65,17 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
    - `ARC-{PID}-STKE-*.md` — intended users (clinicians, patients, both)
    - `ARC-{PID}-DATA-*.md` — what clinical data is processed and how
    - `clinical-safety/SAFETY-CASE.md` if present — clinical purpose statement and intended-use scope
+   - `clinical-safety/HAZARD-LOG.md` if present — hazards to cross-reference in the ISO 14971 row and to derive the IEC 62304 software safety class
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
 2. **Read the template**:
-   - `templates-custom/uk-mdr-classification-template.md` → `.arckit/templates/uk-mdr-classification-template.md` → `${CLAUDE_PLUGIN_ROOT}/templates/uk-mdr-classification-template.md`
+   - `.arckit/templates-custom/uk-mdr-classification-template.md` → `.arckit/templates/uk-mdr-classification-template.md` → `${CLAUDE_PLUGIN_ROOT}/templates/uk-mdr-classification-template.md`
 
-3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
+3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
 
-4. **Generate the filename** via `node scripts/generate-document-id.mjs <PROJECT_ID> NHSMDR --filename`.
+4. **Generate the filename** via `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> NHSMDR {VERSION} --filename`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
-5. **Resolve the `<!-- DOC-CONTROL-HEADER -->` marker** per `RENDERING.md`. This is a conventional ArcKit `ARC-{NNN}-NHSMDR-v1.0.md` file.
+5. **Resolve the `<!-- DOC-CONTROL-HEADER -->` marker** per `RENDERING.md`. This is a conventional ArcKit `ARC-{NNN}-NHSMDR-v{VERSION}.md` file.
 
 6. **Generate the assessment sections**:
 
@@ -107,7 +115,7 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
      - Clinical evaluation expectation (literature route, clinical investigation, or post-market clinical follow-up)
 
    - **MHRA SaMD / AIaMD Programme considerations**:
-     - Identify which MHRA AIaMD Programme work packages apply (e.g. WP1 Software, WP6 AIaMD, WP9 Cyber Security, WP11 Best Practice for Manufacturers)
+     - Identify which MHRA Software and AI as a Medical Device Change Programme work packages apply: WP1 Qualification, WP2 Classification, WP3 Premarket requirements, WP4 Post Market, WP5 Cyber Secure Medical Devices, and for AIaMD also WP9 AI Rigour, WP10 Project Glass Box (AI interpretability) and WP11 Project Ship of Theseus (AI adaptivity). WP6–WP8 have no discrete deliverables; their content was absorbed into the others
      - Flag any in-flight regulatory change relevant to the product (the MHRA roadmap is evolving — version-pin the assessment date)
 
    - **Standards alignment**:
@@ -136,7 +144,7 @@ This command focuses on **software-as-medical-device** (SaMD) and **AI-as-medica
 7. **Populate the External References section** per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. UK MDR 2002, EU MDR 2017/745, MHRA AIaMD Programme, MHRA SaMD guidance, and (if cited) the MHRA Borderline Manual MUST appear in the Document Register.
 
 8. **Before writing the file**, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **NHSMDR** per-type checks pass. Fix any failures before proceeding.
-9. **Write the artefact via the Write tool** to `projects/{NNN}-<slug>/ARC-{NNN}-NHSMDR-v1.0.md`.
+9. **Write the artefact via the Write tool** to `projects/{NNN}-<slug>/ARC-{NNN}-NHSMDR-v{VERSION}.md`.
 
 10. **Show only a summary to the user**: scope determination (medical device / not / borderline), UK class, EU class, marking pathway, conformity route, list of `[PENDING]` items requiring qualified Regulatory Affairs review.
 

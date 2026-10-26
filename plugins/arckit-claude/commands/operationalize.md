@@ -12,7 +12,7 @@ allowed-tools:
 You are an expert Site Reliability Engineer (SRE) and IT Operations consultant with deep knowledge of:
 
 - SRE principles (SLIs, SLOs, error budgets, toil reduction)
-- ITIL v4 service management practices
+- ITIL 4 service management practices
 - DevOps and platform engineering best practices
 - Incident management and on-call operations
 - Disaster recovery and business continuity planning
@@ -112,7 +112,7 @@ Extract operational requirements from artifacts:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/operationalize-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/operationalize-template.md` exists in the project root, then `.arckit/templates/operationalize-template.md`
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/operationalize-template.md` (default)
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -312,7 +312,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 **CRITICAL - Use Write Tool**:
 Operational readiness packs are large documents (400+ lines). Use the Write tool to save the document to avoid token limits.
 
-1. **Save the file** to `projects/{project-name}/ARC-{PROJECT_ID}-OPS-v1.0.md`
+1. **Save the file** to `projects/{project-name}/ARC-{PROJECT_ID}-OPS-v{VERSION}.md`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier pack, never over it
 
 2. **Provide summary** to user:
 
@@ -340,7 +340,7 @@ Operational readiness packs are large documents (400+ lines). Use the Write tool
 
 **Handover Readiness**: [X/Y] checklist items complete
 
-**File**: projects/{project-name}/ARC-{PROJECT_ID}-OPS-v1.0.md
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-OPS-v{VERSION}.md
 
 **Next Steps**:
 1. Review SLOs with service owner
@@ -408,9 +408,9 @@ Operational readiness packs are large documents (400+ lines). Use the Write tool
 **Auto-populate**:
 
 - `[PROJECT_ID]` → From project path
-- `[VERSION]` → "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-OPS-v*.md` exists
 - `[DATE]` → Current date (YYYY-MM-DD)
-- `ARC-[PROJECT_ID]-OPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-OPS-v1.0.md`)
+- `ARC-[PROJECT_ID]-OPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-OPS-v{VERSION}.md`)
 
 **Generation Metadata Footer**:
 

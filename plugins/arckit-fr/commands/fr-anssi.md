@@ -16,12 +16,14 @@ handoffs:
   - command: secure
     description: Implement the technical security measures identified in the ANSSI gap analysis
     condition: "ANSSI hygiene gaps require implementation in the codebase or infrastructure"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
-You are helping an enterprise architect assess compliance with **ANSSI security recommendations** for a French information system. ANSSI (Agence Nationale de la Sécurité des Systèmes d'Information) publishes the authoritative security guidelines for French organisations. The primary reference is the **Guide d'hygiène informatique** (42 measures), complemented by the **ANSSI cloud security recommendations** (updated 2024) for cloud-hosted or hybrid systems.
+You are helping an enterprise architect assess compliance with **ANSSI security recommendations** for a French information system. ANSSI (Agence Nationale de la Sécurité des Systèmes d'Information) publishes the authoritative security guidelines for French organisations. The primary reference is the **Guide d'hygiène informatique** (version 2.0, 2017 — 42 measures in 10 chapters), complemented by the ANSSI **Recommandations pour l'hébergement dans le cloud des systèmes d'information sensibles** (version 1.0, July 2024) for cloud-hosted or hybrid systems.
 
 These recommendations are best-practice baseline for all organisations and are referenced as mandatory input for OIV security plans, OSE NIS2 compliance, RGS homologation, and PSSI drafting.
 
@@ -84,7 +86,7 @@ Read all documents from Step 0. From the artifacts, extract:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/fr-anssi-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/fr-anssi-template.md` exists in the project root, then `.arckit/templates/fr-anssi-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/fr-anssi-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `ANSSI` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.
@@ -95,7 +97,7 @@ Read all documents from Step 0. From the artifacts, extract:
 
 1. **System profile**: Document the system, its deployment environment, user population, and regulatory context (OIV/OSE/public sector/private)
 2. **Cloud determination**: If the system uses any cloud services (IaaS, PaaS, SaaS), flag that cloud security recommendations apply in addition to the 42 measures
-3. **Applicability**: Note any measures that are not applicable with justification (e.g. Measure 31 on Wi-Fi if the system has no Wi-Fi)
+3. **Applicability**: Note any measures that are not applicable with justification (e.g. Measure 20 on Wi-Fi if the system has no Wi-Fi)
 
 #### Step 4b: 42 Hygiene Measures Assessment
 
@@ -106,39 +108,46 @@ For each of the 42 measures, assess compliance status based on available artifac
 - **❌ Not implemented**: No evidence of the measure being in place
 - **N/A**: Measure genuinely not applicable — document justification
 
-Assess all seven themes:
+Status is assessed against each measure's *standard* level; where the guide also defines a *renforcé* (reinforced) level, note whether it is met or targeted. Assess all ten chapters of the guide:
 
-**Theme 1 — Know and manage your assets** (Measures 1–5): hardware inventory, software inventory, naming conventions, technical contacts, network map
+**I — Raise awareness and train** (Measures 1–3): train operational teams, raise user awareness, control outsourcing (infogérance) risks
 
-**Theme 2 — Manage user and admin accounts** (Measures 6–13): limit admin accounts, password policy, default credentials, individual accounts, account revocation, access management process, separate privileged accounts, no local admin for standard users
+**II — Know the information system** (Measures 4–7): identify sensitive information and servers and keep a network diagram, inventory privileged accounts, joiner/leaver/change-of-role procedures, only managed devices on the network
 
-**Theme 3 — Authenticate and control access** (Measures 14–20): authentication before access, MFA for remote/admin, least privilege, restrict data access, physical access, authentication logging, remote maintenance security
+**III — Authenticate and control access** (Measures 8–13): named accounts with separate user/administrator roles, rights on sensitive resources, password rules, protection of stored passwords, change default credentials, strong authentication where possible
 
-**Theme 4 — Secure workstations and mobile devices** (Measures 21–27): configuration baseline, full-disk encryption on laptops, endpoint detection, removable media control, autorun disabled, email filtering, web content filtering
+**IV — Secure workstations** (Measures 14–18): minimum security level across all equipment, removable media, centralised management of security policies, local firewall, encryption of sensitive data sent over the Internet
 
-**Theme 5 — Protect your network** (Measures 28–34): network segmentation, inbound/outbound filtering, encrypted protocols, Wi-Fi security, admin interface exposure, intrusion detection, centralised log collection
+**V — Secure the network** (Measures 19–26): segmentation and partitioning, Wi-Fi security and separation of uses, secure protocols, secure Internet gateway, partition Internet-facing services, business email protection, partner interconnections, physical access to server rooms
 
-**Theme 6 — Secure servers and applications** (Measures 35–39): server hardening baseline, unused services disabled, privileged access supervision, backup procedures, backup recovery tests
+**VI — Secure administration** (Measures 27–29): no Internet access from administration devices, dedicated partitioned administration network, admin rights on workstations limited to strict need
 
-**Theme 7 — Manage vulnerabilities and updates** (Measures 40–42): software/firmware updates, CERT-FR subscription, vulnerability management process
+**VII — Manage mobile working** (Measures 30–33): physical security of mobile devices, encryption of data on losable equipment, secure remote network connection, mobile terminal security policies
+
+**VIII — Keep the information system up to date** (Measures 34–35): update policy for all components (including CERT-FR vulnerability monitoring), anticipate end of support and limit software dependencies
+
+**IX — Monitor, audit, respond** (Measures 36–40): logging on the most important components, backup policy for critical components, regular security checks and audits, named IS security lead, security incident procedure
+
+**X — Going further** (Measures 41–42): formal risk analysis, ANSSI-qualified products and services
 
 #### Step 4c: Cloud Security Recommendations (if applicable)
 
-If the system uses cloud services, assess ANSSI cloud security recommendations (updated 2024):
+If the system uses cloud services, assess the ANSSI recommendations for hosting sensitive information systems in the cloud (version 1.0, July 2024):
 
-1. **Cloud provider trust level**: Is the provider SecNumCloud-qualified? If not, what is the data sensitivity — does it require a qualified provider?
-2. **Data sovereignty**: Is data stored exclusively in the EU? Are there extraterritorial law exposure risks (US CLOUD Act, China MLSA)?
-3. **Encryption**: Customer-managed keys (BYOK) for sensitive data?
-4. **Shared responsibility model**: Is the boundary between cloud provider and customer responsibilities documented?
-5. **Cloud hardening**: Are cloud configurations hardened against ANSSI recommendations or CIS Benchmarks?
-6. **Exit strategy**: Is data portability and service reversibility contractually guaranteed?
-7. **Incident response**: Does the provider commit to notify within contractual timeframes?
+1. **IS category**: Which category does the system fall into — DR-level sensitive IS, sensitive IS under the State "cloud au centre" doctrine, sensitive IS of an OIV or OSE, or SIIV? ANSSI recommends the cloud offer types to favour for each.
+2. **Cloud provider trust level**: Is the provider SecNumCloud-qualified? If not, what is the data sensitivity — does it require a qualified provider?
+3. **Data sovereignty**: Is data stored exclusively in the EU? Are there extraterritorial law exposure risks (US CLOUD Act, China MLSA)?
+4. **Encryption**: Customer-managed keys (BYOK) for sensitive data?
+5. **Shared responsibility model**: Is the boundary between cloud provider and customer responsibilities documented?
+6. **Cloud hardening**: Are cloud configurations hardened against ANSSI recommendations or CIS Benchmarks?
+7. **Exit strategy**: Is data portability and service reversibility contractually guaranteed?
+8. **Incident response**: Does the provider commit to notify within contractual timeframes?
 
 #### Step 4d: Gap Analysis and Remediation Plan
 
 For each non-compliant or partial measure:
 
-- Assign priority: 🔴 High (deploy before go-live or OIV obligation), 🟠 Medium (within 90 days), 🟡 Low (within 12 months)
+- Assign priority: 🔴 High (deploy before go-live or within 30 days; always High where an OIV obligation applies), 🟠 Medium (within 90 days), 🟡 Low (within 12 months)
 - Assign owner (role, not individual)
 - Propose a concrete remediation action
 
@@ -151,7 +160,7 @@ For each non-compliant or partial measure:
    - Existing file → minor increment if a refresh, major if scope changed
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-ANSSI-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-ANSSI-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
@@ -218,16 +227,16 @@ Next steps:
 - **OIV / OSE obligations**: For OIV systems (SIIV), the hygiene measures are a baseline minimum. The sectoral arrêté sectoriel may impose additional measures. For OSE under NIS2, Article 21 measures overlap significantly — run `/arckit:eu-nis2` to avoid duplication.
 - **OIV/OSE terminology is being succeeded by EE/EI**: France's NIS2 transposition ("loi Résilience") moves former OIV/OSE entities into two new categories — Entités Essentielles (EE) and Entités Importantes (EI) — with a much larger population in scope than the legacy regime. This command still uses OIV/OSE as the working vocabulary; confirm current terminology and designation with the client's legal/compliance function before relying on it, as the exact transposition timeline was not independently confirmed against a primary source at the time of writing.
 - **ANSSI cloud recommendations are separate from SecNumCloud**: The cloud recommendations assess the security of the architecture; SecNumCloud is a provider qualification programme. Both are relevant for cloud-hosted sensitive systems.
-- **CERT-FR subscription (Measure 41)**: Free subscription at cert.ssi.gouv.fr — flag this if not already done; it costs nothing and provides critical threat intelligence.
+- **CERT-FR monitoring (Measure 34)**: The update policy in Measure 34 relies on tracking new vulnerabilities through CERT-FR. Subscription at cert.ssi.gouv.fr is free — flag it if not already done.
 
 ## Key References
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| Guide d'hygiène informatique (42 measures) | ANSSI | https://messervices.cyber.gouv.fr/guides/guide-dhygiene-informatique |
-| Cloud security recommendations (updated 8 July 2024) | ANSSI | https://cyber.gouv.fr/publications/recommandations-pour-lhebergement-des-si-sensibles-dans-le-cloud |
+| Guide d'hygiène informatique (version 2.0, 2017 — 42 measures) | ANSSI | https://messervices.cyber.gouv.fr/guides/guide-dhygiene-informatique |
+| Recommandations pour l'hébergement dans le cloud des SI sensibles (version 1.0, July 2024) | ANSSI | https://messervices.cyber.gouv.fr/guides/recommandations-pour-lhebergement-des-si-sensibles-dans-le-cloud |
 | ANSSI publications catalogue | ANSSI | https://cyber.gouv.fr/publications |
-| CERT-FR security advisories (Measure 41) | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
+| CERT-FR security advisories (Measure 34) | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
 | ANSSI-qualified provider lists (PASSI/PRIS/PDIS) | ANSSI | https://cyber.gouv.fr/offre-de-service/solutions-certifiees-et-qualifiees/comprendre-levaluation-de-securite/qualification-de-produit-et-services/referentiels-qualification/ |
 | RGS v2.0 (Référentiel Général de Sécurité) | ANSSI | https://cyber.gouv.fr/le-referentiel-general-de-securite-rgs |
 

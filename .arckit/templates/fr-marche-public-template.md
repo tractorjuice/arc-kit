@@ -152,9 +152,22 @@ gantt
     Contract signature           :d1, after c2, 10d
 ```
 
-## 7. Digital State Doctrine Compliance
+## 7. ANSSI-Qualified Security Provider Selection
 
-### 7.1 DINUM Checklist
+[Complete if the procurement includes cybersecurity services — audit, incident response, detection/SOC. Otherwise state "N/A — no cybersecurity services in scope".]
+
+| ANSSI Qualification | Scope | When to Require | Required in this procurement |
+|--------------------|-------|-----------------|------------------------------|
+| PASSI (Prestataires d'Audit de la Sécurité des SI) | Penetration testing, technical audits | Any IS security audit or pentest | [Yes / No] |
+| PRIS (Prestataires de Réponse aux Incidents de Sécurité) | Incident response, forensics | IR retainer or OIV/OSE obligation | [Yes / No] |
+| PDIS (Prestataires de Détection des Incidents de Sécurité) | SOC, threat detection, SIEM management | Managed detection services | [Yes / No] |
+
+- Qualification requirement written into the technical specifications (CCTP), not only as a selection criterion: [Yes / No]
+- Qualification validity to be verified against the ANSSI list at contract signature: [Yes / No]
+
+## 8. Digital State Doctrine Compliance
+
+### 8.1 DINUM Checklist
 
 - [ ] Cloud-first policy applied (Circular 6282/SG)
 - [ ] RGI v2.0 interoperability — open formats specified
@@ -163,7 +176,7 @@ gantt
 - [ ] Open source — publication policy defined
 - [ ] Personal data — DPA/GDPR required from contractor
 
-### 7.2 PSSIE and RGS
+### 8.2 PSSIE and RGS
 
 - Target security level: [RGS * / ** / ***]
 - Security accreditation planned before go-live: [Yes / No]

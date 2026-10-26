@@ -16,7 +16,7 @@ templateVersion: "1.0"
 | Field | Value |
 |-------|-------|
 | **Change ID** | `ACHG-[ACHG_NUM]` |
-| **Change Type** | `[EVOLUTIONARY / TRANSFORMATIONAL / CORRECTIVE]` |
+| **Change Type** | `[SIMPLIFICATION / INCREMENTAL / RE-ARCHITECTING]` |
 | **Priority** | `[CRITICAL / HIGH / MEDIUM / LOW]` |
 
 ### Revision History
@@ -32,7 +32,7 @@ templateVersion: "1.0"
 | Field | Value |
 |-------|-------|
 | Change ID | `ACHG-[ACHG_NUM]` |
-| Change Type | `[EVOLUTIONARY / TRANSFORMATIONAL / CORRECTIVE]` |
+| Change Type | `[SIMPLIFICATION / INCREMENTAL / RE-ARCHITECTING]` |
 | Submitted By | `[NAME]` |
 | Date | `[YYYY-MM-DD]` |
 | Priority | `[CRITICAL / HIGH / MEDIUM / LOW]` |

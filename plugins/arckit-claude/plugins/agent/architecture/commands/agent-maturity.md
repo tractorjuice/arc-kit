@@ -8,6 +8,8 @@ handoffs:
     description: Design improvements based on maturity gaps
   - command: agent-governance
     description: Strengthen governance based on maturity assessment
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create an **AI Agent Program Maturity Model** assessment. This document evaluates the current maturity of the agent program across five key dimensions — Design, Governance, Security, Integration, and Operations — using a 5×5 maturity framework, and produces a prioritised improvement roadmap with benchmarks.
@@ -26,24 +28,21 @@ $ARGUMENTS
 
 **RECOMMENDED** (read if available, note if missing):
 
-- **AAGI** (Agent Inventory, recommended) — Extract: agent inventory, capability baseline, ownership, lifecycle state, current architecture state
-  - If missing: Note that the guide is unavailable; maturity assessment will rely on available evidence
-- **AAGR** (Agent Architecture Specification, recommended) — Extract: architecture decisions, tool contracts, guardrails, orchestration design, current implementation state
+- **AAGI** (Agent Inventory) — Extract: agent inventory, capability baseline, ownership, lifecycle state, current architecture state
+  - If missing: Note that the agent inventory is unavailable; maturity assessment will rely on available evidence
+- **AAGR** (Agent Architecture Specification) — Extract: architecture decisions, tool contracts, guardrails, orchestration design, current implementation state
   - If missing: Note that design specifications are unavailable
-- **maturity-model output from core** (recommended) — Extract: existing enterprise maturity assessments, capability baselines, benchmark data
+- **MMOD** (Maturity Model Assessment, from core `/arckit:maturity-model`) — Extract: existing enterprise maturity assessments, capability baselines, benchmark data
   - If missing: Note that enterprise maturity context is limited
-
-**RECOMMENDED** (read if available, note if missing):
-
 - **PRIN** (Architecture Principles, in 000-global) — Extract: AI/agent principles, governance principles, technology standards
 - **AAOV** (Agent Governance Framework) — Extract: oversight tiers, compliance status, audit program, governance maturity
-- **AASC** (Agent Security Architecture) — Extract: security controls, threat model, security maturity
-- **AAIT** (Agent Integration Design) — Extract: integration patterns, API maturity, interoperability
+- **AASE** (Agent Security Architecture) — Extract: security controls, threat model, security maturity
+- **AAIN** (Agent Integration Architecture) — Extract: integration patterns, API maturity, interoperability
 - **RISK** (Risk Register) — Extract: AI-specific risks, governance gaps, operational risks
 
 **OPTIONAL** (read if available, skip silently if missing):
 
-- **BORD** (Board Review) — Extract: board-approved AI strategy, risk appetite, investment commitments
+- **BORD** (Architecture Board Charter, from `/arckit-togaf-adm:architecture-board` in the TOGAF ADM overlay) — Extract: board-approved AI strategy, risk appetite, investment commitments
 - **AIPB** (AI Playbook) — Extract: AI ethics principles, model governance standards
 - **HLDR** (High-Level Design Review) — Extract: existing system architecture context
 - **SECD** (Secure by Design) — Extract: security control maturity
@@ -100,13 +99,13 @@ For each dimension, determine the current maturity level based on available evid
 
 **C. Security Maturity**
 
-- Evidence sources: AASC, risk register, security controls, guardrail configurations
+- Evidence sources: AASE, risk register, security controls, guardrail configurations
 - Indicators: Threat model coverage, guardrail comprehensiveness, security testing
 - Key questions: Are security controls proactive? Is there automated security testing?
 
 **D. Integration Maturity**
 
-- Evidence sources: AAIT, API documentation, integration test results
+- Evidence sources: AAIN, API documentation, integration test results
 - Indicators: Standardised APIs, interoperability, integration automation
 - Key questions: Are integrations standardised? Is there end-to-end testing?
 
@@ -210,7 +209,7 @@ Before generating the document ID, check if a previous version exists:
 
 1. **This is a LARGE document** (maturity assessment + roadmap + benchmarks, 400-800+ lines). You MUST use the **Write tool** to create the file. DO NOT output the full document to the user (you will exceed token limits).
 
-2. **Follow the template structure** with all 6 sections:
+2. **Follow the template structure** with all 7 sections:
 
    **Section 1: Maturity Model Framework**
    - 5×5 maturity model table (5 dimensions × 5 levels)
@@ -239,9 +238,11 @@ Before generating the document ID, check if a previous version exists:
    - Regulatory alignment assessment
 
    **Section 6: Traceability**
-   - AAGI → AAGR → AAMT links
+   - AAGI → AAGR → AAMT links, plus the AAOV, AASE and AAIN evidence used for the governance, security and integration dimensions
    - Cross-references to related artefacts
-   - Source document citations
+
+   **Section 7: External References**
+   - Document register, citations and unreferenced documents, per the citation instructions in Step 5
 
 3. **Mermaid diagram requirements**:
    - Quadrant chart for maturity heatmap
@@ -279,7 +280,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → Determined from Step 9
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-AAMT-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Agent Program Maturity Model"
 - `ARC-[PROJECT_ID]-AAMT-v[VERSION]` → Construct using format above
@@ -323,8 +324,8 @@ Before completing the document, populate ALL document control fields in the head
 ```markdown
 ## Agent Program Maturity Model Created
 
-**Document**: projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAMT-v1.0.md
-**Document ID**: ARC-{PROJECT_ID}-AAMT-v1.0
+**Document**: projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAMT-v{VERSION}.md
+**Document ID**: ARC-{PROJECT_ID}-AAMT-v{VERSION}
 
 ### Maturity Summary
 
@@ -352,7 +353,7 @@ Before completing the document, populate ALL document control fields in the head
 
 ### Files Created
 
-📄 `projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAMT-v1.0.md` ({line_count} lines)
+📄 `projects/{PROJECT_ID}-{project-name}/ARC-{PROJECT_ID}-AAMT-v{VERSION}.md` ({line_count} lines)
 ```
 
 ## Important Notes

@@ -378,7 +378,7 @@ graph TD
     H -->|Informs| F[ARC-id-BKLG-v1.0.md]
     H -->|Informs| G[ARC-id-SOW-v1.0.md]
 
-    style H fill:#e1f5ff
+    style H fill:#e1f5ff,color:#0b0c0c
 ```
 
 **Input Artifacts**:
@@ -492,7 +492,7 @@ graph TD
 
 - Supply side: Local authorities with datasets, IoT sensor providers
 - Demand side: Local authorities needing data, researchers, urban planners
-- Transaction: Data product licensing (Open Data Contract Standard v3.0.2)
+- Transaction: Data product licensing (Open Data Contract Standard v3.2.0)
 - Network effects: More data sources → richer analytics → more demand → more supply
 
 **Key Canvases**:

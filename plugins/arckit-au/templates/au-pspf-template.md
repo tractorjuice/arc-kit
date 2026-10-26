@@ -17,7 +17,7 @@
 
 ## Executive Summary
 
-[Two to three paragraphs: entity, PSPF applicability, current self-assessment posture, key gaps, AGD reporting status.]
+[Two to three paragraphs: entity, PSPF applicability, release assessed, posture by domain, key gaps, annual protective security report status.]
 
 ---
 
@@ -26,287 +26,144 @@
 | Field | Value |
 |-------|-------|
 | **Entity Name** | [Entity name] |
-| **Entity Type** | [Non-corporate Commonwealth / Corporate Commonwealth / Contractor / Panel Member / State Govt with flow-down] |
-| **PSPF Applicability Driver** | [Direct / Contractual flow-down — cite source] |
+| **Entity Type** | [Non-corporate Commonwealth / Corporate Commonwealth / Wholly-owned Commonwealth company / State or territory agency holding Australian Government classified information / Service provider under deed or agreement] |
+| **PSPF Applicability Driver** | [PGPA Act s 21 (must apply) / Better practice / Intergovernmental arrangement / Deed or agreement — cite clause] |
+| **Applicability Tags** | [All entities / plus any of DOS, TAE, AVA, SSPE, SOGS that apply to this entity] |
 | **Chief Security Officer (CSO)** | [Name + role + clearance] |
+| **Chief Information Security Officer (CISO)** | [Name + role] |
 | **CSO Authority** | [Reporting line, signing authority] |
-| **PSPF Edition Used** | [E.g., PSPF 2024 release] |
-| **Last AGD Self-Assessment Submission** | [YYYY-MM-DD] |
-| **Self-Assessed Maturity Level** | [Compliant / Substantially Compliant / Partly Compliant / Not Compliant] |
+| **PSPF Release Assessed** | [E.g., PSPF Release 2026 — verification date] |
+| **Last Annual Protective Security Report** | [Reporting period + submission date, or N/A] |
 | **Assessment Date** | [YYYY-MM-DD] |
 | **Assessor** | [Name + role] |
 
 ---
 
-## Outcome 1: Security Governance
+## Requirement Scoping
 
-### CR1: Role of accountable authority
+The PSPF sets out policy across six security domains (Governance, Risk, Information, Technology, Personnel, Physical). Requirements are numbered individually and tagged with a domain code and an applicability. Scope from the PSPF List of Requirements for the release assessed.
 
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅ Compliant / ⚠️ Substantially Compliant / ⚠️ Partly Compliant / ❌ Not Compliant] |
-
-**Evidence**: [Accountable authority designated, security leadership, governance documents]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### CR2: Management structures and responsibilities
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
-
-**Evidence**: [CSO designated, security committee, executive structures]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
+| Domain | Code | Requirements in Scope | Requirements Scoped Out | Scoping Notes |
+|--------|------|-----------------------|-------------------------|---------------|
+| Governance | GOV | [n — list numbers] | [n — list numbers + reason] | [Notes] |
+| Risk | RISK | [n] | [n] | [Notes] |
+| Information | INFO | [n] | [n] | [Notes] |
+| Technology | TECH | [n] | [n] | [Notes] |
+| Personnel | PER | [n] | [n] | [Notes] |
+| Physical | PHYS | [n] | [n] | [Notes] |
 
 ---
 
-### CR3: Security planning and risk management
+## Governance Domain (GOV)
 
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
+Release 2026 sections 1–4: whole-of-government and entity protective security roles (Accountable Authority, CSO, CISO, security practitioners, security governance); security planning, practices and procedures, continuous monitoring, positive security culture, awareness training, security incidents and investigations; protective security reporting.
 
-**Evidence**: [Security plan, risk-management plan; cross-ref ARC-{P}-AUISM Domain 1]
+| Req # | Section | Requirement (paraphrased) | Reporting Type | Status | Evidence | Gap | Remediation (owner, date) |
+|-------|---------|---------------------------|----------------|--------|----------|-----|---------------------------|
+| [0000] | [e.g., 2.2 Chief Security Officer] | [Requirement] | [Performance / Yes/No / Yes/No/N/A] | [✅/⚠️/❌/N/A] | [Evidence] | [Gap] | [Action, owner, date] |
 
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
+**Domain notes**: [Security plan currency, incident management process (cross-ref ARC-{P}-AUNDB-v* for personal-information breaches), awareness training coverage]
 
 ---
 
-### CR4: Security maturity monitoring
+## Risk Domain (RISK)
 
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
+Release 2026 sections 5–8: security risk tolerance and management process; third-party risk management (procurement, outsourcing and contract management, lifecycle); countering foreign interference and espionage, including insider threat programs; contingency planning (exceptional circumstances, alternative mitigations, business continuity, emergency management).
 
-**Evidence**: [Annual self-assessment process; AGD reporting submission]
+| Req # | Section | Requirement (paraphrased) | Reporting Type | Status | Evidence | Gap | Remediation (owner, date) |
+|-------|---------|---------------------------|----------------|--------|----------|-----|---------------------------|
+| [0000] | [e.g., 6.1 Procurement, Outsourcing and Contract Management] | [Requirement] | [Type] | [✅/⚠️/❌/N/A] | [Evidence] | [Gap] | [Action, owner, date] |
 
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
+**Domain notes**: [Risk tolerance recorded in the security plan; supplier security clauses; insider threat program; business continuity plan currency]
 
 ---
 
-## Outcome 2: Information Security
+## Information Domain (INFO)
 
-### CR5: Sensitive and classified information
+Release 2026 sections 9–12: originator responsibilities, security classifications and caveats, minimum protections and handling, protective markings; information holdings and asset registers; information disposal; need-to-know and domestic and international information sharing.
 
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
+| Req # | Section | Requirement (paraphrased) | Reporting Type | Status | Evidence | Gap | Remediation (owner, date) |
+|-------|---------|---------------------------|----------------|--------|----------|-----|---------------------------|
+| [0000] | [e.g., 9.2 Security Classifications] | [Requirement] | [Type] | [✅/⚠️/❌/N/A] | [Evidence — cite ARC-{P}-DATA-v* for classification] | [Gap] | [Action, owner, date] |
 
-**Evidence**: [Classification policy, marking + handling procedures, classification training]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
+**Domain notes**: [Classification and marking practice, information asset register, disposal, sharing arrangements]
 
 ---
 
-### CR6: Access to information
+## Technology Domain (TECH)
+
+Release 2026 sections 13–15: technology lifecycle management (the ASD ISM applied; technology estate and asset stocktake; technology system authorisation; asset storage and disposal); cyber security strategy and the Essential Eight to Maturity Level Two; cyber security programs (gateway security, secure cloud, hosting and data centres, Systems of Government Significance).
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅/⚠️/❌] |
-
-**Evidence**: [Need-to-know enforcement; security-clearance verification at point of access]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### CR7: Safeguarding information from cyber threats
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
-| **E8 Cross-Reference** | [ARC-{P}-AUE8-v*] |
 | **ISM Cross-Reference** | [ARC-{P}-AUISM-v*] |
+| **E8 Cross-Reference** | [ARC-{P}-AUE8-v* — current maturity against the Maturity Level Two requirement] |
 
-**Evidence**: [Defer to ISM applicability statement + E8 posture]
+| Req # | Section | Requirement (paraphrased) | Reporting Type | Status | Evidence | Gap | Remediation (owner, date) |
+|-------|---------|---------------------------|----------------|--------|----------|-----|---------------------------|
+| [0000] | [e.g., 13.1 Information Security Manual] | [Requirement] | [Type] | [✅/⚠️/❌/N/A] | [Defer to ISM applicability statement + E8 posture] | [Gap] | [Action, owner, date] |
 
-**Gap**: [Beyond-E8 gaps]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### CR8: Sensitive and classified discussions and communications
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
-
-**Evidence**: [Approved communications channels for classified content; meeting room ratings; encrypted comms]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
+**Domain notes**: [System authorisation status, technology asset stocktake, gateway arrangements]
 
 ---
 
-## Outcome 3: Personnel Security
+## Personnel Domain (PER)
 
-### CR9: Eligibility and suitability
+Release 2026 sections 16–22: pre-employment screening; temporary, ongoing and remote access to resources; security clearances, Authorised Vetting Agencies and sponsorship; the vetting process; Australian officials and office holders; maintenance and ongoing assessment; separation.
 
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
+| Req # | Section | Requirement (paraphrased) | Reporting Type | Status | Evidence | Gap | Remediation (owner, date) |
+|-------|---------|---------------------------|----------------|--------|----------|-----|---------------------------|
+| [0000] | [e.g., 22.1 Debriefing Procedures] | [Requirement] | [Type] | [✅/⚠️/❌/N/A] | [Evidence — clearance levels, not individual identities] | [Gap] | [Action, owner, date] |
 
-**Evidence**: [AGSVA clearance process; vetting workflow; cleared-personnel inventory]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
+**Domain notes**: [Pre-employment screening coverage, clearance maintenance, separation and debrief workflow with named owners]
 
 ---
 
-### CR10: Ongoing assessment
+## Physical Domain (PHYS)
+
+Release 2026 sections 23–25: physical security lifecycle (plan, design and modify, construct or lease, operate and maintain entity facilities); security zones and their certification and accreditation; physical security measures and controls (containers, doors and locks, access control, alarms, guards, technical surveillance countermeasures).
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅/⚠️/❌] |
+| **Inheritance** | [Host-organisation facilities / cloud provider IRAP scope — cite source; or N/A] |
 
-**Evidence**: [Continuous suitability programme, periodic reviews, change-of-circumstance reporting]
+| Req # | Section | Requirement (paraphrased) | Reporting Type | Status | Evidence | Gap | Remediation (owner, date) |
+|-------|---------|---------------------------|----------------|--------|----------|-----|---------------------------|
+| [0000] | [e.g., 24.1 Security Zones] | [Requirement] | [Type] | [✅/⚠️/❌/N/A] | [Evidence] | [Gap] | [Action, owner, date] |
 
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
+**Domain notes**: [Facility security plan, zone certification, inherited controls]
 
 ---
 
-### CR11: Separation of personnel
+## Annual Protective Security Report
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅/⚠️/❌] |
-
-**Evidence**: [Off-boarding clearance debrief, access revocation cadence, return of equipment]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### CR12: Insider threat
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
-
-**Evidence**: [Insider threat programme, detection capability, role-based controls]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-## Outcome 4: Physical Security
-
-### CR13: Entity facilities
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌ / Inherited from cloud provider IRAP] |
-
-**Evidence**: [Physical security zones, facility ratings, access controls]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### CR14: Working off-site
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
-
-**Evidence**: [Remote work policy, travel security, mobile device management]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### CR15: Physical security risk
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
-
-**Evidence**: [Physical risk assessment, treatment plan, incident response]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### CR16: Supporting services
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅/⚠️/❌] |
-
-**Evidence**: [Cleaning, maintenance, contractor access governance, escort policy]
-
-**Gap**: [Description]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-## PSPF Annual Self-Assessment
-
-| Aspect | Detail |
-|--------|--------|
-| **Self-Assessment Cycle** | [Annual; deadline 31 October] |
-| **Last Submission Date** | [YYYY-MM-DD] |
-| **Self-Assessed Levels** | [List per Core Requirement] |
-| **AGD Feedback** | [Notes from last submission] |
-| **Material Improvements Since Last** | [Description] |
+| **Reporting Obligation** | [Required (applicable Commonwealth entity) / Not required — reason] |
+| **Reporting Period** | [Financial year] |
+| **Submission Channel** | [PSPF Reporting Portal (up to PROTECTED) / Offline Reporting Template (SECRET or TOP SECRET)] |
+| **Submitter** | [CSO or delegate] |
+| **Last Submission to Department of Home Affairs** | [YYYY-MM-DD] |
+| **Accountable Authority Approval** | [Name + date] |
+| **Report to Responsible Minister** | [Date provided] |
+| **ASD Cyber Security Survey** | [Submitted / Due — date] |
+| **Material Improvements Since Last Report** | [Description] |
 | **Identified Issues for Next Cycle** | [Description] |
 
 ---
 
 ## Compliance Summary
 
-| Outcome | CR | Title | Status | Gap Count |
-|---------|----|-------|--------|-----------|
-| 1. Governance | CR1 | Role of accountable authority | [✅/⚠️/❌] | [n] |
-| 1. Governance | CR2 | Management structures | [✅/⚠️/❌] | [n] |
-| 1. Governance | CR3 | Security planning + risk | [✅/⚠️/❌] | [n] |
-| 1. Governance | CR4 | Security maturity monitoring | [✅/⚠️/❌] | [n] |
-| 2. Information | CR5 | Sensitive/classified information | [✅/⚠️/❌] | [n] |
-| 2. Information | CR6 | Access to information | [✅/⚠️/❌] | [n] |
-| 2. Information | CR7 | Safeguarding from cyber threats | [✅/⚠️/❌] | [n] |
-| 2. Information | CR8 | Discussions + communications | [✅/⚠️/❌] | [n] |
-| 3. Personnel | CR9 | Eligibility + suitability | [✅/⚠️/❌] | [n] |
-| 3. Personnel | CR10 | Ongoing assessment | [✅/⚠️/❌] | [n] |
-| 3. Personnel | CR11 | Separation of personnel | [✅/⚠️/❌] | [n] |
-| 3. Personnel | CR12 | Insider threat | [✅/⚠️/❌] | [n] |
-| 4. Physical | CR13 | Entity facilities | [✅/⚠️/❌] | [n] |
-| 4. Physical | CR14 | Working off-site | [✅/⚠️/❌] | [n] |
-| 4. Physical | CR15 | Physical security risk | [✅/⚠️/❌] | [n] |
-| 4. Physical | CR16 | Supporting services | [✅/⚠️/❌] | [n] |
+| Domain | Code | In Scope | ✅ Implemented | ⚠️ Partial | ❌ Not Implemented | N/A | Domain Posture |
+|--------|------|----------|---------------|-----------|-------------------|-----|----------------|
+| Governance | GOV | [n] | [n] | [n] | [n] | [n] | [Summary] |
+| Risk | RISK | [n] | [n] | [n] | [n] | [n] | [Summary] |
+| Information | INFO | [n] | [n] | [n] | [n] | [n] | [Summary] |
+| Technology | TECH | [n] | [n] | [n] | [n] | [n] | [Summary] |
+| Personnel | PER | [n] | [n] | [n] | [n] | [n] | [Summary] |
+| Physical | PHYS | [n] | [n] | [n] | [n] | [n] | [Summary] |
 
-**Overall PSPF Maturity**: [Compliant / Substantially Compliant / Partly Compliant / Not Compliant]
+**Overall PSPF posture**: [Statement across the six domains, naming the domains with the most material gaps]
 
 ---
 
@@ -314,21 +171,21 @@
 
 ### Quick Wins ( < 30 days)
 
-| # | Recommendation | Outcome / CR | Effort |
-|---|---------------|--------------|--------|
-| 1 | [Recommendation] | [Outcome.CR] | [Low/Medium] |
+| # | Recommendation | Domain / Req # | Effort |
+|---|---------------|----------------|--------|
+| 1 | [Recommendation] | [Domain code + requirement number] | [Low/Medium] |
 
 ### Short-Term (30–90 days)
 
-| # | Recommendation | Outcome / CR | Effort |
-|---|---------------|--------------|--------|
-| 1 | [Recommendation] | [Outcome.CR] | [Medium/High] |
+| # | Recommendation | Domain / Req # | Effort |
+|---|---------------|----------------|--------|
+| 1 | [Recommendation] | [Domain code + requirement number] | [Medium/High] |
 
 ### Medium-Term (90–180 days)
 
-| # | Recommendation | Outcome / CR | Effort |
-|---|---------------|--------------|--------|
-| 1 | [Recommendation] | [Outcome.CR] | [High] |
+| # | Recommendation | Domain / Req # | Effort |
+|---|---------------|----------------|--------|
+| 1 | [Recommendation] | [Domain code + requirement number] | [High] |
 
 ---
 
@@ -336,11 +193,11 @@
 
 | Evidence Area | ArcKit Artefact | How It Supports PSPF Assessment | Gap / Follow-up |
 |---------------|-----------------|---------------------------------|-----------------|
-| Security boundaries | `/arckit:diagram` / ARC-*-DIAG-* | Deployment, facility, physical/logical boundary, and working-off-site evidence | [Gap / follow-up] |
+| Security boundaries | `/arckit:diagram` / ARC-*-DIAG-* | Deployment, facility, physical/logical boundary, and remote-access evidence | [Gap / follow-up] |
 | Information classification | `/arckit:data-model` / ARC-*-DATA-* | Classification, sensitivity, retention, information ownership, and handling requirements | [Gap / follow-up] |
 | Supporting services | `/arckit:servicenow` / ARC-*-SNOW-* | ServiceNow/CMDB ownership, support groups, supporting services, incident/change workflows | [Gap / follow-up] |
-| PSPF risks | `/arckit:risk` / ARC-*-RISK-* | Core-requirement gaps, annual self-assessment findings, and treatment ownership | [Gap / follow-up] |
-| Core-requirement traceability | `/arckit:traceability` / ARC-*-TRAC-* | PSPF requirements mapped to policies, controls, owners, evidence, and actions | [Gap / follow-up] |
+| PSPF risks | `/arckit:risk` / ARC-*-RISK-* | Requirement gaps, annual reporting findings, and treatment ownership | [Gap / follow-up] |
+| Requirement traceability | `/arckit:traceability` / ARC-*-TRAC-* | PSPF requirements mapped to policies, controls, owners, evidence, and actions | [Gap / follow-up] |
 | Coverage view | `/arckit:graph-report` | AUPSPF coverage across AU compliance, risk, traceability, and operations artefacts | [Gap / follow-up] |
 | Capability uplift | `/arckit:maturity-model` / ARC-*-MMOD-* | Security governance maturity baseline and uplift roadmap | [Gap / follow-up] |
 
@@ -350,10 +207,11 @@
 
 | Doc ID | Filename | Type | Source | Description |
 |--------|----------|------|--------|-------------|
-| PSPF | Protective Security Policy Framework | Standard | protectivesecurity.gov.au | Primary framework |
-| AUE8 | ARC-{P}-AUE8-v* | ArcKit Artefact | projects/ | E8 cross-ref (Outcome 2) |
-| AUISM | ARC-{P}-AUISM-v* | ArcKit Artefact | projects/ | ISM cross-ref (Outcome 2) |
-| AUPIA | ARC-{P}-AUPIA-v* | ArcKit Artefact | projects/ | PIA cross-ref (Outcomes 2 + 3) |
+| PSPF | Protective Security Policy Framework — Release [YEAR] | Standard | protectivesecurity.gov.au | Primary framework |
+| PSPF-LOR | PSPF Release [YEAR] — List of Requirements | Standard | protectivesecurity.gov.au | Requirement numbers, applicability and reporting types |
+| AUE8 | ARC-{P}-AUE8-v* | ArcKit Artefact | projects/ | E8 cross-ref (Technology domain) |
+| AUISM | ARC-{P}-AUISM-v* | ArcKit Artefact | projects/ | ISM cross-ref (Technology domain) |
+| AUPIA | ARC-{P}-AUPIA-v* | ArcKit Artefact | projects/ | PIA cross-ref (Information and Personnel domains) |
 | AUDISP | ARC-{P}-AUDISP-v* | ArcKit Artefact | projects/ | DISP cross-ref where applicable |
 
 ### Citations
@@ -372,7 +230,7 @@
 
 | Standard | URL | Verification Date |
 |----------|-----|-------------------|
-| PSPF | https://www.protectivesecurity.gov.au/ | [YYYY-MM-DD] |
+| PSPF | https://www.protectivesecurity.gov.au/pspf-annual-release | [YYYY-MM-DD] |
 | ASD ISM | https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism | [YYYY-MM-DD] |
 
 ---

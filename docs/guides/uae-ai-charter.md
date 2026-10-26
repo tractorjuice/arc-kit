@@ -11,8 +11,8 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | AI system purpose, users, decisions made |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Model placement, data flow, inference path |
-| Security NFRs (`ARC-<id>-NFR-SEC-v1.0.md`) | Confidentiality and integrity requirements |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Model placement, data flow, inference path |
+| Security NFRs (`NFR-SEC-*` in `ARC-<id>-REQ-v*.md`) | Confidentiality and integrity requirements |
 | DPIA / fairness / bias artefacts (if present) | Existing privacy and bias controls |
 
 ---
@@ -83,7 +83,7 @@ Output: `projects/<id>/ARC-<id>-AICH-v1.0.md`
 
 ## Key Notes
 
-- **Sector regulation**: For Central Bank-regulated workloads the Charter is a floor — the UAE Central Bank AI guidance is flagged as `[NEEDS VERIFICATION]` in the overlay maintenance log.
+- **Sector regulation**: For Central Bank-regulated workloads the Charter is a floor. The Central Bank of the UAE issued its *Guidance Note on the Consumer Protection and Responsible Adoption and Use of Artificial Intelligence and Machine Learning by Licensed Financial Institutions in the U.A.E.* on 11 February 2026, and it states that it is to be read with the Charter. See `uae-ai-autonomy-tier.md` for how it applies to Tier 3 workloads.
 - **Run order**: Run before `/arckit:uae-ai-autonomy-tier` so the Charter posture informs the tier design.
 - **Cross-jurisdiction projects**: For systems also touching the EU, run alongside `/arckit:eu-ai-act`.
 - **Community-contributed**: Output should be reviewed by qualified AI ethics / federal compliance counsel before reliance.

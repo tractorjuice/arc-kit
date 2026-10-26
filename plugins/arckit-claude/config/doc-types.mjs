@@ -145,6 +145,9 @@ export const DOC_TYPES = {
   'SECA':      { name: 'Security Assertions',              category: 'Procurement', regime: 'UK', severity: 'HIGH' },
   'GCMP':      { name: 'G-Cloud Competitor Benchmark',     category: 'Procurement', regime: 'UK' },
   'GCRV':      { name: 'G-Cloud Submission Review',        category: 'Procurement', regime: 'UK' },
+  'SOCV':      { name: 'Social Value Commitments',         category: 'Procurement', regime: 'UK', severity: 'HIGH' },
+  'LOTQ':      { name: 'G-Cloud Lot Questions',            category: 'Procurement', regime: 'UK', severity: 'HIGH' },
+  'RATE':      { name: 'G-Cloud Lot 3 Rate Card',          category: 'Procurement', regime: 'UK' },
   'DMC':       { name: 'Data Mesh Contract',               category: 'Procurement' },
   'VEND':      { name: 'Vendor Evaluation',                category: 'Procurement' },
   // Research
@@ -239,10 +242,12 @@ export const DOC_TYPES = {
   'AUDISP':    { name: 'AU DISP Member Self-Attestation Pack',         category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   // Netherlands Public Sector Overlay (arckit-nl) — community-contributed,
   // EXPERIMENTAL. Outputs require review by qualified NL counsel and, for any
-  // rubricering determination, a departmental beveiligingsautoriteit or
-  // rubriceringsambtenaar before reliance.
+  // TBB category determination, a departmental beveiligingsautoriteit or
+  // rubriceringsambtenaar before reliance. TBB is a category determination
+  // only: /arckit:nl-tbb records an existing rubricering as a floor and never
+  // produces one (TBB systematiek v1.0, §2.1 and §3.1).
   'RBCLOUD':   { name: 'Rijksbreed Cloudbeleid Compliance Assessment',  category: 'Compliance',  regime: 'NL', severity: 'HIGH' },
-  'TBB':       { name: 'Te Beschermen Belangen / VIRBI 2025 Rubricering', category: 'Compliance', regime: 'NL', severity: 'HIGH' },
+  'TBB':       { name: 'Te Beschermen Belangen (TBB) Category Determination', category: 'Compliance', regime: 'NL', severity: 'HIGH' },
   'BIO2':      { name: 'BIO2 Conformance Assessment',                   category: 'Compliance',  regime: 'NL', severity: 'HIGH' },
   'NLEXIT':    { name: 'NL Cloud Exit Plan',                            category: 'Governance',  regime: 'NL' },
   // UK Financial Services Payments Overlay (arckit-uk-finance) — community-contributed,
@@ -358,6 +363,10 @@ export const MULTI_INSTANCE_TYPES = new Set([
   'WGAM', 'WCLM', 'WVCH',
   'GOVR', 'GCSR', 'GLND', 'GRNT',
   'CDAU',
+  // arckit-togaf-adm: /arckit:architecture-change numbers each TOGAF Phase H
+  // change request (ARC-001-ACHG-001-v1.0.md in changes/). Missing from both
+  // lists, the hook read ACHG-001 as the doc-type and blocked every write (#949).
+  'ACHG',
 ]);
 
 // Type code -> required subdirectory
@@ -386,6 +395,16 @@ export const SUBDIR_MAP = {
   'GRNT': 'research',
   'CDAU': 'audits',
   'FWRK': 'framework',
+  'ACHG': 'changes',
+  // /arckit:gcloud-search writes procurement/ARC-001-GCLD-v1.0.md, and
+  // /arckit:evaluate and /arckit:gcloud-clarify look for it there. Unmapped,
+  // the context hook and the manifest never scanned procurement/.
+  'GCLD': 'procurement',
+  // /arckit:dos writes procurement/ARC-001-DOS-v1.0.md and /arckit:gcloud-clarify
+  // writes procurement/ARC-001-GCLC-v1.0.md. Unmapped, the filename hook let
+  // either land in the project root and --relpath dropped procurement/.
+  'DOS':  'procurement',
+  'GCLC': 'procurement',
 };
 
 // Derived: set of all valid type codes

@@ -9,6 +9,10 @@ handoffs:
     description: Sovereign cloud option choices and CLOUD-Act risk acceptance warrant Architecture Decision Records.
   - command: ca-itsg-33
     description: Cloud control-profile selection (PBMM-Cloud, Secret-High) is grounded in the ITSG-33 categorisation.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -30,14 +34,14 @@ You are an enterprise architect generating a Canada sovereign cloud residency as
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
    - The project's REQ artefact, with particular attention to NFR-AVL availability, NFR-LOC residency, and NFR-SEC data-handling requirements
    - The project's ITSG artefact (`ARC-<id>-ITSG-*.md`) for the categorisation and control profile, if present
-   - The project's DR artefact for per-element sensitivity, including any Indigenous-data flags from `ca-ocap`
+   - The project's DATA artefact (data model) for per-element sensitivity, including any Indigenous-data flags from `ca-ocap`
    - The project's PIA artefact (`ARC-<id>-PIA-*.md`) for personal-information residency drivers
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/ca-cloud-residency-template.md` (user override)
    - **Then**, `.arckit/templates/ca-cloud-residency-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-cloud-residency-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> CACR --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> CACR {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **Workload Categorisation** — pull the system-level categorisation and the C / I / A scores from `ca-itsg-33` if that artefact is present. Otherwise, perform the categorisation here using the TBS *Standard on Security Categorization* injury-based matrix and state the resulting Protected level. The categorisation drives every downstream choice; do not skip the working.

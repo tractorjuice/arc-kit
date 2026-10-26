@@ -15,6 +15,13 @@ handoffs:
     condition: cold mode, no existing REQ artefact
   - command: risk
     description: Promote CRITICAL and HIGH findings into the risk register
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 # Codebase Audit
@@ -96,7 +103,7 @@ git -C "<repo>" shortlog -sn --all | wc -l
 
 ## Step 3: Resolve Project and Mode
 
-Use `.arckit/scripts/bash/list-projects.sh --json` to enumerate projects. If that path does not exist, glob `projects/*/` directly rather than failing.
+Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to enumerate projects. If it fails, glob `projects/*/` directly rather than failing.
 
 ### 3a. Pick a candidate project
 
@@ -171,7 +178,7 @@ Run all ten unless focus text narrows the set. Record any dimension skipped, and
 **Generate the document ID:**
 
 ```bash
-.arckit/scripts/generate-document-id.mjs {PID} CDAU --next-num projects/{P}-{NAME}/audits --filename
+node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs {PID} CDAU --next-num projects/{P}-{NAME}/audits --filename
 ```
 
 `CDAU` is multi-instance, so a project can hold audits of several repositories. Create `projects/{P}-{NAME}/audits/` if it does not exist.

@@ -35,7 +35,7 @@
 
 | Share ID | Dataset ID (CLAS ref) | Classification (CLAS) | Direction | Volume | Frequency | Personal data? |
 |----------|------------------------|------------------------|-----------|--------|-----------|-----------------|
-| [SHR-001] | [DS-001] | [Open / Shared / Confidential / Secret / Top Secret] | [provider → consumer / bidirectional] | [n records / GB] | [real-time / hourly / daily] | [Y/N] |
+| [SHR-001] | [DS-001] | [Open / Confidential / Sensitive / Secret] | [provider → consumer / bidirectional] | [n records / GB] | [real-time / hourly / daily] | [Y/N] |
 
 > Cross-reference every Dataset ID to the CLAS register. If a dataset is not yet in CLAS, flag this as a prerequisite.
 

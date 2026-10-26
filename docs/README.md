@@ -119,7 +119,7 @@ See the [full articles index](articles.html) for all ArcKit release notes, analy
 - [National Data Strategy](guides/national-data-strategy.md) - NDS missions and pillars
 - [Codes of Practice](guides/codes-of-practice.md) - Rainbow of Books mapping
 - [Security Hooks](guides/security-hooks.md) - Three-layer secret protection
-- [AI Playbook](guides/uk-government/ai-playbook.md) - `/arckit:ai-playbook`
+- [AI Playbook](guides/ai-playbook.md) - `/arckit:ai-playbook`
 - [Algorithmic Transparency](guides/uk-government/algorithmic-transparency.md) - `/arckit:atrs`
 - [MOD Secure by Design](guides/uk-mod/secure-by-design.md) - `/arckit:mod-secure`
 - [JSP 936 AI Assurance](guides/jsp-936.md) - `/arckit:jsp-936`
@@ -142,10 +142,16 @@ See the [full articles index](articles.html) for all ArcKit release notes, analy
 
 ### UK G-Cloud Supplier Overlay
 
+G-Cloud 15 (RM1557.15). Proprietary, Claude Code only.
+
 - [G-Cloud Supplier Profile](guides/supplier-profile.md) - `/arckit:supplier-profile`
+- [G-Cloud Social Value](guides/social-value.md) - `/arckit:social-value`
+- [G-Cloud Lot Questions](guides/lot-questions.md) - `/arckit:lot-questions`
 - [G-Cloud Service Design](guides/service-design.md) - `/arckit:service-design`
-- [G-Cloud Lot 1 Service Definition](guides/sdd-lot1.md) - `/arckit:sdd-lot1`
-- [G-Cloud Lot 2 Service Definition](guides/sdd-lot2.md) - `/arckit:sdd-lot2`
+- [G-Cloud Lot 1a Service Definition](guides/sdd-lot1a.md) - `/arckit:sdd-lot1a`
+- [G-Cloud Lot 1b Service Definition](guides/sdd-lot1b.md) - `/arckit:sdd-lot1b`
+- [G-Cloud Lot 2a Service Definition](guides/sdd-lot2a.md) - `/arckit:sdd-lot2a`
+- [G-Cloud Lot 2b Service Definition](guides/sdd-lot2b.md) - `/arckit:sdd-lot2b`
 - [G-Cloud Lot 3 Service Definition](guides/sdd-lot3.md) - `/arckit:sdd-lot3`
 - [G-Cloud Supplier Declaration](guides/declaration.md) - `/arckit:declaration`
 - [G-Cloud Pricing](guides/pricing.md) - `/arckit:pricing`
@@ -281,7 +287,7 @@ See the [full index](guides/roles/README.md) for details.
 | `/arckit:conformance` | [conformance.md](guides/conformance.md) | ✅ Complete |
 | `/arckit:service-assessment` | [service-assessment.md](guides/service-assessment.md) | ✅ Complete |
 | `/arckit:tcop` | [technology-code-of-practice.md](guides/uk-government/technology-code-of-practice.md) | ✅ Complete |
-| `/arckit:ai-playbook` | [ai-playbook.md](guides/uk-government/ai-playbook.md) | ✅ Complete |
+| `/arckit:ai-playbook` | [ai-playbook.md](guides/ai-playbook.md) | ✅ Complete |
 | `/arckit:atrs` | [algorithmic-transparency.md](guides/uk-government/algorithmic-transparency.md) | ✅ Complete |
 | `/arckit:secure` | [secure-by-design.md](guides/uk-government/secure-by-design.md) | ✅ Complete |
 | `/arckit:mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
@@ -321,4 +327,4 @@ Found a gap or want to improve documentation?
 ---
 
 **Last updated**: 2026-02-25
-**ArcKit Version**: 6.17.2
+**ArcKit Version**: 6.18.3

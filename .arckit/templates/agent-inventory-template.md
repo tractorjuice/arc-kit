@@ -15,7 +15,7 @@ templateVersion: "1.0"
 
 | Agent ID | Name | Purpose | Model | Deployment | Owner | Risk Level | Oversight |
 |----------|------|---------|-------|-----------|-------|------------|-----------|
-| AGT-001 | [Agent Name] | [Brief purpose description] | [GPT-4/Claude/etc] | [Prod/Staging/Dev/Planned] | [Owner Name/Role] | [Critical/High/Med/Low] | [Human-in-the-loop/on-the-loop/out-of-loop] |
+| AGT-001 | [Agent Name] | [Brief purpose description] | [GPT-4/Claude/etc] | [Prod/Staging/Dev/Planned] | [Owner Name/Role] | [Critical/High/Med/Low] | [Human-in-the-loop/on-the-loop/out-of-the-loop] |
 | AGT-002 | [Agent Name] | [Brief purpose description] | [Model] | [Env] | [Owner] | [Risk] | [Oversight] |
 | AGT-003 | [Agent Name] | [Brief purpose description] | [Model] | [Env] | [Owner] | [Risk] | [Oversight] |
 
@@ -60,9 +60,9 @@ flowchart TD
 
 | Agent ID | Oversight Level | Approval Gates | Monitoring | Escalation |
 |----------|----------------|---------------|------------|------------|
-| AGT-001 | [Human-in-the-loop/on-the-loop/out-of-loop] | [Gate descriptions] | [Dashboard/Alert/Audit] | [Criteria] |
-| AGT-002 | [Human-in-the-loop/on-the-loop/out-of-loop] | [Gate descriptions] | [Dashboard/Alert/Audit] | [Criteria] |
-| AGT-003 | [Human-in-the-loop/on-the-loop/out-of-loop] | [Gate descriptions] | [Dashboard/Alert/Audit] | [Criteria] |
+| AGT-001 | [Human-in-the-loop/on-the-loop/out-of-the-loop] | [Gate descriptions] | [Dashboard/Alert/Audit] | [Criteria] |
+| AGT-002 | [Human-in-the-loop/on-the-loop/out-of-the-loop] | [Gate descriptions] | [Dashboard/Alert/Audit] | [Criteria] |
+| AGT-003 | [Human-in-the-loop/on-the-loop/out-of-the-loop] | [Gate descriptions] | [Dashboard/Alert/Audit] | [Criteria] |
 
 ## 7. Traceability
 

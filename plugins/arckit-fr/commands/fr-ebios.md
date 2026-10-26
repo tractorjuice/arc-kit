@@ -17,6 +17,8 @@ handoffs:
   - command: risk
     description: Import EBIOS residual risks into the project risk register
     condition: "Residual risks from Workshop 5 need to be tracked in the project risk register"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
@@ -84,7 +86,7 @@ Read all documents from Step 0. From the artifacts, extract:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/fr-ebios-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/fr-ebios-template.md` exists in the project root, then `.arckit/templates/fr-ebios-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/fr-ebios-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `EBIOS` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.
@@ -199,7 +201,7 @@ Read all documents from Step 0. From the artifacts, extract:
    - Existing file → minor increment if refreshed (same scope), major if scope changed or new threat landscape
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-EBIOS-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-EBIOS-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}

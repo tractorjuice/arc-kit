@@ -7,8 +7,10 @@ keep-coding-instructions: true
 handoffs:
   - command: evaluate
     description: PSPC route selection feeds the vendor evaluation framework's scoring rubric.
-  - command: sobc
-    description: Procurement strategy feeds the Strategic Outline Business Case's procurement and commercial pillars.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline.
@@ -29,7 +31,7 @@ You are an enterprise architect generating a federal Canadian procurement strate
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
    - The project's REQ artefact (if present) — scope, value drivers, integration surface
-   - The project's SOBC artefact (if present) — affordability envelope, commercial case, route hypothesis
+   - The project's SOBC artefact (if present) — affordability envelope, commercial case, route hypothesis. The business case comes first: it compares the options, and this strategy is written for the option it recommends
    - The project's `ca-itsg-33` artefact if present — security control profile drives clearance posture and supplier security obligations
    - The project's `ca-cloud-residency` artefact if present — sub-processor analysis, residency and CSP shortlist where cloud is in scope of the procurement
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
@@ -37,7 +39,7 @@ You are an enterprise architect generating a federal Canadian procurement strate
    - **First**, check `.arckit/templates-custom/ca-pspc-template.md` (user override)
    - **Then**, `.arckit/templates/ca-pspc-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/ca-pspc-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> PROC --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> PROC {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
    - **Procurement Scope** — what is being procured: goods, professional services, cloud, software licences, managed services. Per item, capture description, estimated value range, term, and any extension options. Aggregate to a single estimated procurement value used downstream for threshold analysis.

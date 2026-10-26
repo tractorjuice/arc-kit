@@ -10,6 +10,10 @@ handoffs:
 
   - command: agile-security
     description: Update security backlog from governance review findings
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 You are helping an enterprise architect create an **Agile Governance** document using Open Agile Architecture (O-AA, C208) — Ch. 8 Agile Governance. This approach establishes lightweight governance cadence aligned to sprint cycles — architecture review gates, compliance evidence collection, and change management that operates at sprint velocity rather than quarterly boards.
@@ -137,7 +141,7 @@ Create the Agile Governance document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAGOV --filename` (canonical form: `ARC-{P}-OAGOV-v1.0`)
+- Generate Document ID with `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs {P} OAGOV {VERSION} --filename` (canonical form: `ARC-{P}-OAGOV-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 
@@ -157,6 +161,10 @@ Create the Agile Governance document following the template structure.
 
 - **Escalation paths**: When issues exceed sprint panel authority
 
+- **Cadence horizons**: Sprint (panel checks), month (debt review), quarter (health assessment) and continuous (compliance monitoring), each event with an input, an output artefact and an owner
+
+- **Distributed duties**: The continuous governance duty each panel member carries between panel checks
+
 #### Architecture Review Gates
 
 - **Pre-sprint gate**: Architecture alignment check before sprint planning
@@ -166,6 +174,12 @@ Create the Agile Governance document following the template structure.
 - **Post-sprint gate**: Compliance evidence review, architecture decision validation
 
 - **Gate criteria**: Pass/fail criteria per gate, remediation paths for failures
+
+#### Architecture Debt and Health
+
+- **Debt register**: Compliance, scalability, security, observability and documentation debt, with severity, status and resolution sprint; review rules by severity
+
+- **Quarterly health assessment**: Scored assessment (alignment, compliance maturity, observability, documentation, security posture, debt burden) feeding `governance-report.yaml`
 
 #### Change Management Process
 
@@ -222,7 +236,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-OAGOV-v1.0.md
+projects/{P}/ARC-{P}-OAGOV-v{VERSION}.md
 ```
 
 ### 9. Show Summary to User
@@ -232,8 +246,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Agile Governance Document Created
 
-**Document**: `projects/{P}/ARC-{P}-OAGOV-v1.0.md`
-**Document ID**: ARC-{P}-OAGOV-v1.0
+**Document**: `projects/{P}/ARC-{P}-OAGOV-v{VERSION}.md`
+**Document ID**: ARC-{P}-OAGOV-v{VERSION}
 
 ### Governance Cadence Profile
 - **Review panel**: [N] members, [Roles]
@@ -287,7 +301,7 @@ After writing the file, show a concise summary (NOT the full document):
 3. Create initial compliance evidence template
 4. Run first sprint review gate at Sprint 0 end
 
-**File location**: `projects/{P}/ARC-{P}-OAGOV-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-OAGOV-v{VERSION}.md`
 ```
 
 ## Important Notes

@@ -4,6 +4,38 @@
 
 ---
 
+## G-Cloud 15 Requirements
+
+What G-Cloud 15 (RM1557.15) requires and asks about certifications and security, by lot. The exact questions are in `../../gcloud-framework/references/g-cloud-15/`. GCA's Updates to Tender Documents made Cyber Essentials mandatory for Lots 2a, 2b and 3, and ISO 27018 mandatory for Lots 1a and 1b when public cloud is offered; the question export still shows the earlier wording.
+
+### Lots 1a and 1b: conditions of participation
+
+- **Cyber Essentials Plus** awarded by an IASME-approved body in the last 12 months, mandatory for call-off contracts (Framework Schedule 1 v2.1). Alternatives at the bid, as the export and the live Lot 1a listings word them: working towards it and certified "by the date of framework award", or an IASME-certified equivalent. Attachment 2 v5.0 doesn't make it a condition of the tender, so a missing certificate is a call-off warning.
+- **ISO certificates** uploaded as conditions of participation: ISO 9001, ISO/IEC 20000-1 and ISO/IEC 27001 always; ISO 14001, ISO/IEC 27017 and, **if the service includes public cloud**, ISO/IEC 27018, unless you resell and rely on your cloud provider's accreditations.
+- **Carbon Reduction Plan** meeting the reporting standard, confirming a commitment to Net Zero, published on your website or uploaded, with steps taken to reduce greenhouse gas emissions.
+- **NCSC guidance and policies:** confirm you adhere to relevant NCSC guidance and have policies and controls in place that buyers can inspect.
+- **Lot 1b staff clearance:** only SC or DV can be offered.
+
+### Lots 2a, 2b and 3
+
+- **Cyber Essentials is mandatory** for call-off contracts under these lots (Framework Schedule 1 v2.1), not for the bid: Attachment 2 v5.0 lists no mandatory certificate for Lots 2a, 2b and 3, and 769 Lot 2b and 1,977 Lot 3 listings are live with "Cyber essentials: No" and "None of the criteria". The live listings word the alternatives "within 12 months of the date of award"; the question export says "by the date of framework award".
+- Also asked, but optional: Cyber Essentials Plus, ISO/IEC 27001, ISO 9001, ISO 28000:2022 (supply chain security), a quality management system (QMS), CSA STAR and PCI DSS.
+- Lot 3's mandatory award criteria also score your Cyber Essentials answer.
+
+### New service questions
+
+| Question | Lots | What it asks |
+|----------|------|--------------|
+| Post-quantum cryptography secure | 1a/1b, 2a/2b | Whether you comply with NCSC guidance on post-quantum cryptography |
+| Software Security Code of Practice | 2a/2b | Whether your organisation complies with the recommendations in the Software Security Code of Practice |
+| AI chatbot | All | Whether an AI self-service tool is available before users reach a person |
+| Web chat accessibility | All | WCAG 2.2 AAA/AA/A or EN 301 549, and assistive technology testing |
+| FOCUS resource tagging | 1a/1b, 2a/2b | Whether the service supports FOCUS (FinOps cost and usage specification) resource tagging |
+
+All lots need a **Technical Ability Certificate**.
+
+---
+
 ## Security Certifications
 
 ### ISO/IEC 27001
@@ -84,7 +116,7 @@
 |---|-----------|----------|
 | 1 | Data in transit protection | Data Protection |
 | 2 | Asset protection and resilience | Data Protection |
-| 3 | Separation between users | Separation |
+| 3 | Separation between customers | Separation |
 | 4 | Governance framework | Governance |
 | 5 | Operational security | Operations |
 | 6 | Personnel security | Personnel |
@@ -94,7 +126,7 @@
 | 10 | Identity and authentication | Access |
 | 11 | External interface protection | Infrastructure |
 | 12 | Secure service administration | Administration |
-| 13 | Audit information for users | Audit |
+| 13 | Audit information and alerting for customers | Audit |
 | 14 | Secure use of the service | Usage |
 
 **G-Cloud Importance:** High - reference framework for assessment
@@ -269,14 +301,15 @@
 |-------|-------|-------------|------|
 | BPSS | Baseline Personnel Security Standard | Standard access | 1-2 weeks |
 | CTC | Counter-Terrorist Check | Airport, defence | 6-8 weeks |
-| SC | Security Check | OFFICIAL-SENSITIVE | 6-8 weeks |
-| DV | Developed Vetting | SECRET | 6-12 months |
+| SC | Security Check | Regular access to SECRET, occasional TOP SECRET | 6-8 weeks |
+| DV | Developed Vetting | Regular access to TOP SECRET | 6-12 months |
 | eDV | Enhanced DV | TOP SECRET | 12+ months |
 
 **G-Cloud Relevance:**
 
-- BPSS minimum for most government work
-- SC required for OFFICIAL-SENSITIVE data
+- BPSS minimum for most government work. BPSS has no fixed expiry: it holds while the person stays with the employer that ran it, and a new employer re-runs it
+- OFFICIAL-SENSITIVE is a handling caveat within OFFICIAL, not a higher classification: BPSS covers it, and it doesn't call for SC. A buyer can still ask for SC in a call-off, and the G-Cloud 15 staff security questions record the level you are prepared to provide
+- SC for SECRET; Lot 1b (above OFFICIAL) allows only SC or DV
 - DV/eDV for classified systems
 
 ---

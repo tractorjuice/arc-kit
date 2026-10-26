@@ -17,7 +17,7 @@
 
 ## Executive Summary
 
-[Two to three paragraphs: service under assessment, current compliance posture against the 13 criteria, key gaps, and assessment readiness for the current phase.]
+[Two to three paragraphs: service under assessment, whether and from when the Standard applies to it, current compliance posture against the 10 criteria, key gaps, exemptions sought, and readiness to report compliance to the DTA.]
 
 ---
 
@@ -27,8 +27,12 @@
 |-------|-------|
 | **Service Name** | [Service name] |
 | **Owning Agency** | [Department / Agency] |
+| **Service Type** | [Informational / Transactional] |
+| **Audience** | [Public-facing / Staff-facing / Both] |
+| **New, Replacement or Existing** | [New / Replacement / Existing] |
+| **Subject to the Investment Oversight Framework (IOF)** | [Yes / No] |
+| **Standard Applies From** | [1 July 2024 (new or replacement service) / 1 July 2025 (existing public-facing service) / Not mandatory — reason] |
 | **Service Phase** | [Discovery / Alpha / Beta / Live] |
-| **User Base** | [Public-facing / Internal / Both] |
 | **Annual Transactions** | [Volume or estimate] |
 | **Assessment Date** | [YYYY-MM-DD] |
 | **Assessor** | [Name and role] |
@@ -37,13 +41,27 @@
 
 ## Digital Service Standard Assessment
 
-### Criterion 1: Understand User Needs
+### Criterion 1: Have a Clear Intent
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
+| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / Exemption sought] |
 
-**Evidence**: [User research conducted, methods used, findings documented, personas created]
+**Evidence**: [Business case for change, survey of the policy and service landscape, understanding of the service lifecycle, agile methodology adopted]
+
+**Gaps**: [Problem not defined, no business case, policy landscape not surveyed]
+
+**Remediation**: [Actions, owners, dates]
+
+---
+
+### Criterion 2: Know Your User
+
+| Aspect | Detail |
+|--------|--------|
+| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / Exemption sought] |
+
+**Evidence**: [Users and their contexts understood, user research methods and findings, designs tested and validated with users]
 
 **Gaps**: [Missing research, unvalidated assumptions, user groups not covered]
 
@@ -51,172 +69,118 @@
 
 ---
 
-### Criterion 2: Have a Multidisciplinary Team
+### Criterion 3: Leave No One Behind
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
+| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / Exemption sought] |
+| **WCAG Version and Level Achieved** | [e.g., WCAG 2.2 AA / below target — state the target from current DTA guidance] |
 
-**Evidence**: [Team composition, DDaT roles covered, decision-making authority]
+**Evidence**: [Diversity of users understood, design for marginalised users, compliance with the Disability Discrimination Act 1992, the latest WCAG version and the Australian Government Style Manual, accessibility testing with assistive technologies, feedback mechanism, non-digital experience considered]
 
-**Gaps**: [Missing roles, capability gaps, external dependencies]
+**Gaps**: [WCAG failures, untested assistive technologies, no feedback mechanism, user groups excluded]
 
 **Remediation**: [Actions, owners, dates]
 
 ---
 
-### Criterion 3: Agile and User-Centred Process
+### Criterion 4: Connect Services
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
+| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / Exemption sought] |
 
-**Evidence**: [Delivery methodology, sprint cadence, user feedback integration, iteration evidence]
+**Evidence**: [Designed for interoperability, related services joined up, integration points and shared identity or data exchanges]
 
-**Gaps**: [Waterfall dependencies, missing feedback loops]
+**Gaps**: [Isolated service, duplicated user steps across services, undocumented integrations]
 
 **Remediation**: [Actions, owners, dates]
 
 ---
 
-### Criterion 4: Understand Tools and Systems
+### Criterion 5: Build Trust in Design
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
-
-**Evidence**: [Technology landscape mapped, integration points, legacy dependencies, vendor dependencies]
-
-**Gaps**: [Unmapped systems, undocumented integrations]
-
-**Remediation**: [Actions, owners, dates]
-
----
-
-### Criterion 5: Make It Secure
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
+| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / Exemption sought] |
 | **E8 Posture Reference** | [ARC-{P}-AUE8-v{V} if available] |
+| **ISM Applicability Reference** | [ARC-{P}-AUISM-v{V} if available] |
 
-**Evidence**: [E8 maturity level, ISM controls, threat assessment, incident response plan, IRAP status]
+**Evidence**: [Transparent data handling, security measures implemented (E8 maturity, ISM controls, IRAP status), reliability and availability, accountable service owner]
 
-**Gaps**: [E8 strategies below target, missing controls, untested DR]
-
-**Remediation**: [Actions, owners, dates]
-
----
-
-### Criterion 6: Consistent and Responsive Design
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
-
-**Evidence**: [Design system used, responsive breakpoints, device testing coverage, brand compliance]
-
-**Gaps**: [Missing breakpoints, untested devices, inconsistent components]
+**Gaps**: [E8 strategies below target, opaque data handling, no reliability targets, unclear accountability]
 
 **Remediation**: [Actions, owners, dates]
 
 ---
 
-### Criterion 7: Protect Users' Privacy
+### Criterion 6: Don't Reinvent the Wheel
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
+| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / Exemption sought] |
+
+**Evidence**: [Common platforms, patterns and standards reused ("build once, use many times"), common and seamless experience with other government services, data reused where possible]
+
+**Gaps**: [Bespoke builds where a common platform exists, inconsistent patterns, data collected again that government already holds]
+
+**Remediation**: [Actions, owners, dates]
+
+---
+
+### Criterion 7: Do No Harm
+
+| Aspect | Detail |
+|--------|--------|
+| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / Exemption sought] |
 | **PIA Reference** | [ARC-{P}-AUPIA-v{V} if available] |
 
-**Evidence**: [PIA completed, APP compliance, data minimisation, consent mechanisms, OAIC notification]
+**Evidence**: [Users' digital rights protected, privacy impacts understood (PIA, APP compliance), limits of the data understood, adverse and unintended consequences assessed]
 
-**Gaps**: [Missing PIA, non-compliant data handling, consent gaps]
-
-**Remediation**: [Actions, owners, dates]
-
----
-
-### Criterion 8: Make Source Code Open
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
-
-**Evidence**: [Code repository, licence, open-source strategy, exemption justification if not open]
-
-**Gaps**: [Proprietary dependencies, missing licence, no public repo]
+**Gaps**: [Missing PIA, unassessed automated decisions, data used beyond its limits]
 
 **Remediation**: [Actions, owners, dates]
 
 ---
 
-### Criterion 9: Make It Accessible
+### Criterion 8: Innovate with Purpose
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
-| **WCAG Level** | [2.2 AA / 2.1 AA / Below AA] |
+| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / Exemption sought] |
+| **AI Assurance Reference** | [ARC-{P}-AUAIA-v{V} if AI is in scope] |
 
-**Evidence**: [Accessibility testing, assistive technology coverage, accessibility statement, audit results]
+**Evidence**: [Clear intent for any new technology, guidance on critical and emerging technologies followed, interoperability maintained, adoption of new technology tracked]
 
-**Gaps**: [WCAG failures, untested assistive technologies, missing accessibility statement]
+**Gaps**: [Technology adopted without a defined purpose, emerging-technology guidance not applied, adoption not measured]
 
 **Remediation**: [Actions, owners, dates]
 
 ---
 
-### Criterion 10: Test the Service
+### Criterion 9: Monitor Your Service
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
+| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / Exemption sought] |
 
-**Evidence**: [Test strategy, test types (unit, integration, UAT, accessibility, performance, security), coverage metrics]
+**Evidence**: [Baseline established, performance indicators identified, measurement tooling, reporting and improvement cadence]
 
-**Gaps**: [Missing test types, low coverage, no performance testing]
+**Gaps**: [No baseline, missing indicators, no reporting]
 
 **Remediation**: [Actions, owners, dates]
 
 ---
 
-### Criterion 11: Measure Performance
+### Criterion 10: Keep It Relevant
 
 | Aspect | Detail |
 |--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
+| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / Exemption sought] |
 
-**Evidence**: [KPIs defined, measurement tools, reporting cadence, baseline metrics]
+**Evidence**: [Improvement across the service's life driven by user feedback, regular assessments scheduled, service upgrades communicated to users]
 
-**Gaps**: [Missing KPIs, no measurement tooling, no baseline]
-
-**Remediation**: [Actions, owners, dates]
-
----
-
-### Criterion 12: Don't Forget the Non-Digital Experience
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
-
-**Evidence**: [Assisted digital channel, phone support, in-person options, channel integration]
-
-**Gaps**: [No assisted digital, missing channels, disconnected experience]
-
-**Remediation**: [Actions, owners, dates]
-
----
-
-### Criterion 13: Encourage Everyone to Use the Digital Service
-
-| Aspect | Detail |
-|--------|--------|
-| **Status** | [✅ Met / ⚠️ Partially Met / ❌ Not Met / N/A] |
-
-**Evidence**: [Channel shift strategy, take-up targets, migration plan from legacy channels]
-
-**Gaps**: [No channel shift plan, no take-up measurement]
+**Gaps**: [No improvement roadmap, no scheduled reassessment, changes not communicated]
 
 **Remediation**: [Actions, owners, dates]
 
@@ -226,25 +190,26 @@
 
 | # | Criterion | Status | Gap Count |
 |---|----------|--------|-----------|
-| 1 | Understand user needs | [✅/⚠️/❌/N/A] | [n] |
-| 2 | Have a multidisciplinary team | [✅/⚠️/❌/N/A] | [n] |
-| 3 | Agile and user-centred process | [✅/⚠️/❌/N/A] | [n] |
-| 4 | Understand tools and systems | [✅/⚠️/❌/N/A] | [n] |
-| 5 | Make it secure | [✅/⚠️/❌/N/A] | [n] |
-| 6 | Consistent and responsive design | [✅/⚠️/❌/N/A] | [n] |
-| 7 | Protect users' privacy | [✅/⚠️/❌/N/A] | [n] |
-| 8 | Make source code open | [✅/⚠️/❌/N/A] | [n] |
-| 9 | Make it accessible | [✅/⚠️/❌/N/A] | [n] |
-| 10 | Test the service | [✅/⚠️/❌/N/A] | [n] |
-| 11 | Measure performance | [✅/⚠️/❌/N/A] | [n] |
-| 12 | Non-digital experience | [✅/⚠️/❌/N/A] | [n] |
-| 13 | Encourage digital use | [✅/⚠️/❌/N/A] | [n] |
+| 1 | Have a clear intent | [✅/⚠️/❌/Exemption] | [n] |
+| 2 | Know your user | [✅/⚠️/❌/Exemption] | [n] |
+| 3 | Leave no one behind | [✅/⚠️/❌/Exemption] | [n] |
+| 4 | Connect services | [✅/⚠️/❌/Exemption] | [n] |
+| 5 | Build trust in design | [✅/⚠️/❌/Exemption] | [n] |
+| 6 | Don't reinvent the wheel | [✅/⚠️/❌/Exemption] | [n] |
+| 7 | Do no harm | [✅/⚠️/❌/Exemption] | [n] |
+| 8 | Innovate with purpose | [✅/⚠️/❌/Exemption] | [n] |
+| 9 | Monitor your service | [✅/⚠️/❌/Exemption] | [n] |
+| 10 | Keep it relevant | [✅/⚠️/❌/Exemption] | [n] |
 
-**Overall**: [n] Met | [n] Partially Met | [n] Not Met | [n] N/A
+**Overall**: [n] Met | [n] Partially Met | [n] Not Met | [n] Exemption sought
+
+**Exemptions sought**: [Criterion, rationale and status under the DTA Compliance, Reporting and Exemption Guide — or "None"]
 
 ---
 
 ## Assessment Readiness
+
+Top risks to meeting all 10 criteria and reporting compliance to the DTA, and to moving to the next Service Design and Delivery Process phase.
 
 | Risk | Criterion | Impact | Mitigation |
 |------|----------|--------|-----------|
@@ -262,7 +227,7 @@
 | Service data flows | `/arckit:dfd` / ARC-*-DFD-* | Privacy, integration, non-digital channel, analytics, and reporting flows | [Gap / follow-up] |
 | Data governance | `/arckit:data-model` / ARC-*-DATA-* | Personal data, analytics, reporting, retention, and data-quality evidence | [Gap / follow-up] |
 | Live operations | `/arckit:servicenow` / ARC-*-SNOW-* | Service ownership, support groups, SLAs, incident routing, and change workflows | [Gap / follow-up] |
-| Delivery and compliance risks | `/arckit:risk` / ARC-*-RISK-* | Assessment gaps, launch risks, and remediation ownership | [Gap / follow-up] |
+| Delivery and compliance risks | `/arckit:risk` / ARC-*-RISK-* | Criteria gaps, launch risks, and remediation ownership | [Gap / follow-up] |
 | Criteria traceability | `/arckit:traceability` / ARC-*-TRAC-* | DSS criteria mapped to requirements, evidence, owners, and remediation actions | [Gap / follow-up] |
 | Coverage view | `/arckit:graph-report` | AUDSS coverage across architecture, privacy, security, risk, and traceability artefacts | [Gap / follow-up] |
 | Capability uplift | `/arckit:maturity-model` / ARC-*-MMOD-* | Service maturity across discovery, delivery, operations, and measurement | [Gap / follow-up] |
@@ -271,7 +236,7 @@
 
 | Doc ID | Filename | Type | Source Location | Description |
 |--------|----------|------|-----------------|-------------|
-| DSS | DTA Digital Service Standard | Standard | dta.gov.au | Primary assessment framework |
+| DSS | DTA Digital Service Standard (10 criteria) | Standard | digital.gov.au | Primary assessment framework |
 
 ### Citations
 

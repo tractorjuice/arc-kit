@@ -1,17 +1,26 @@
 # ArcKit Workflow Diagrams
 
-This document contains Mermaid diagrams for all 5 ArcKit workflow paths based on the Dependency Structure Matrix.
+This document contains Mermaid diagrams for the five ArcKit workflow paths, the Wardley Mapping suite, two community overlays and government code discovery.
+
+Diagrams 1-6 and the Common Variations are drawn from [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md), which takes each dependency from the inputs the command file lists. An arrow points from a document to a command that reads it.
 
 **Legend**:
 
 - **Blue boxes** = Foundation commands (Tier 0-1)
 - **Green boxes** = Core workflow (Tier 2-7)
-- **Orange boxes** = Design & Implementation (Tier 8-9)
-- **Purple boxes** = Quality & Operations (Tier 11-12)
+- **Orange boxes** = Design reviews & implementation (Tier 8-10)
+- **Purple boxes** = Operations & quality (Tier 11-12)
 - **Red boxes** = Compliance (Tier 13)
 - **Gold boxes** = Project Story & Reporting (Tier 14)
-- **Solid arrows (→)** = Mandatory sequential flow
-- **Dotted arrows (-.->)** = Recommended dependencies or optional inputs
+- **Solid arrows (-->)** = the command needs that document (mandatory input)
+- **Dotted arrows (-.->)** = the command works better with it (recommended input)
+
+To keep the diagrams readable:
+
+- Optional inputs aren't drawn.
+- An arrow is left out when a longer route already connects the same two commands.
+- Almost every command from Tier 5 on also reads principles and requirements, and many read stakeholders, risk and the SOBC. Those arrows are drawn only where a command reads nothing else in the diagram.
+- Arrows only point forward. A command that also reads a later document when it exists, such as plan reading the requirements, can be re-run once that document is written.
 
 ---
 
@@ -21,93 +30,139 @@ For private sector and non-UK government projects without AI components.
 
 ```mermaid
 graph TD
-    %% Tier 0-1: Foundation
-    A[plan] --> B[principles]
-    B --> C[stakeholders]
-    C --> D[risk]
+    %% Tier 0
+    principles[principles]
+    plan[plan]
+    %% Tier 1
+    stakeholders[stakeholders]
+    %% Tier 2
+    risk[risk]
+    %% Tier 3
+    sobc[sobc]
+    %% Tier 4
+    requirements[requirements]
+    %% Tier 5
+    platform_design[platform-design]
+    roadmap[roadmap]
+    strategy[strategy]
+    framework[framework]
+    %% Tier 6
+    data_model[data-model]
+    dpia[dpia]
+    research[research]
+    datascout[datascout]
+    wardley[wardley]
+    diagram[diagram]
+    adr[adr]
+    data_mesh_contract[data-mesh-contract]
+    %% Tier 7
+    sow[sow]
+    evaluate[evaluate]
+    %% Tier 8
+    hld_review[hld-review]
+    dld_review[dld-review]
+    %% Tier 9
+    backlog[backlog]
+    %% Tier 10
+    trello[trello]
+    %% Tier 11
+    servicenow[servicenow]
+    devops[devops]
+    finops[finops]
+    operationalize[operationalize]
+    traceability[traceability]
+    %% Tier 12
+    analyze[analyze]
+    %% Tier 13
+    principles_compliance[principles-compliance]
+    conformance[conformance]
+    %% Tier 14
+    story[story]
 
-    %% Tier 2-4: Business Case & Requirements
-    D --> E[sobc]
-    E --> F[requirements]
+    principles -.-> plan
+    principles -.-> stakeholders
+    stakeholders --> risk
+    stakeholders --> sobc
+    risk -.-> sobc
+    stakeholders --> requirements
+    sobc -.-> requirements
+    wardley -.-> platform_design
+    wardley -.-> roadmap
+    roadmap -.-> strategy
+    strategy -.-> framework
+    data_model -.-> framework
+    requirements --> data_model
+    data_model --> dpia
+    requirements --> research
+    data_model -.-> datascout
+    research -.-> wardley
+    requirements -.-> diagram
+    requirements --> adr
+    data_model -.-> data_mesh_contract
+    research -.-> sow
+    sow -.-> evaluate
+    diagram -.-> hld_review
+    sow -.-> hld_review
+    data_model -.-> dld_review
+    hld_review --> dld_review
+    dld_review -.-> backlog
+    backlog --> trello
+    data_model -.-> servicenow
+    diagram --> servicenow
+    research -.-> devops
+    diagram -.-> devops
+    devops -.-> finops
+    diagram --> operationalize
+    servicenow -.-> operationalize
+    adr -.-> traceability
+    dld_review -.-> traceability
+    data_model -.-> analyze
+    traceability -.-> principles_compliance
+    adr --> conformance
+    devops -.-> conformance
+    principles_compliance -.-> conformance
+    roadmap -.-> story
+    dpia -.-> story
+    evaluate -.-> story
+    backlog -.-> story
+    servicenow -.-> story
+    devops -.-> story
+    traceability -.-> story
+    analyze -.-> story
 
-    %% Tier 5-6: Strategy & Design
-    F --> G[platform-design]
-    F --> F1[datascout]
-    F1 -.-> H
-    F --> H[data-model]
-    G -.-> H
-    H --> I[data-mesh-contract]
-    H --> J[dpia]
-    F --> K[research]
-    F1 -.-> K
-    K --> L[wardley]
-    L --> M[roadmap]
-    M --> M1[strategy]
-    M1 -.-> M2[framework]
-    H -.-> N[diagram]
-
-    %% Tier 7: Procurement
-    M --> O[sow]
-    I -.-> O
-    J -.-> O
-    O --> P[evaluate]
-
-    %% Tier 8: Design Reviews
-    P --> Q[hld-review]
-    Q --> R[dld-review]
-    R --> S[adr]
-
-    %% Tier 9: Implementation
-    R --> T[backlog]
-
-    %% Tier 10: Backlog Export
-    T --> T1[trello]
-
-    %% Tier 11-12: Operations & Quality
-    T --> U[servicenow]
-    U --> U1[devops]
-    U1 --> U1a[finops]
-    U1a --> U2[operationalize]
-    U2 --> V[traceability]
-    V --> V1[principles-compliance]
-    V1 --> V2[conformance]
-    V2 --> W[analyze]
-
-    %% Tier 14: Reporting
-    W --> X[story]
-
-    style A fill:#87CEEB
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#87CEEB
-    style E fill:#90EE90
-    style F fill:#90EE90
-    style F1 fill:#90EE90
-    style G fill:#90EE90
-    style H fill:#90EE90
-    style I fill:#90EE90
-    style J fill:#90EE90
-    style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style M1 fill:#90EE90
-    style M2 fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#FFA500
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style T fill:#FFA500
-    style U fill:#9370DB
-    style U1 fill:#9370DB
-    style U1a fill:#9370DB
-    style U2 fill:#9370DB
-    style V fill:#9370DB
-    style V1 fill:#9370DB
-    style V2 fill:#FF6B6B
-    style W fill:#9370DB
-    style X fill:#FFD700
+    style principles fill:#87CEEB
+    style plan fill:#87CEEB
+    style stakeholders fill:#87CEEB
+    style risk fill:#90EE90
+    style sobc fill:#90EE90
+    style requirements fill:#90EE90
+    style platform_design fill:#90EE90
+    style roadmap fill:#90EE90
+    style strategy fill:#90EE90
+    style framework fill:#90EE90
+    style data_model fill:#90EE90
+    style dpia fill:#90EE90
+    style research fill:#90EE90
+    style datascout fill:#90EE90
+    style wardley fill:#90EE90
+    style diagram fill:#90EE90
+    style adr fill:#90EE90
+    style data_mesh_contract fill:#90EE90
+    style sow fill:#90EE90
+    style evaluate fill:#90EE90
+    style hld_review fill:#FFA500
+    style dld_review fill:#FFA500
+    style backlog fill:#FFA500
+    style trello fill:#FFA500
+    style servicenow fill:#9370DB
+    style devops fill:#9370DB
+    style finops fill:#9370DB
+    style operationalize fill:#9370DB
+    style traceability fill:#9370DB
+    style analyze fill:#9370DB
+    style principles_compliance fill:#FF6B6B
+    style conformance fill:#FF6B6B
+    style story fill:#FFD700
 ```
 
 **Duration**: 4-8 months
@@ -121,104 +176,155 @@ For UK Government civilian departments (non-AI projects).
 
 ```mermaid
 graph TD
-    %% Tier 0-1: Foundation
-    A[plan] --> B[principles]
-    B --> C[stakeholders]
-    C --> D[risk]
+    %% Tier 0
+    principles[principles]
+    plan[plan]
+    %% Tier 1
+    stakeholders[stakeholders]
+    %% Tier 2
+    risk[risk]
+    %% Tier 3
+    sobc[sobc]
+    %% Tier 4
+    requirements[requirements]
+    %% Tier 5
+    platform_design[platform-design]
+    roadmap[roadmap]
+    strategy[strategy]
+    %% Tier 6
+    data_model[data-model]
+    dpia[dpia]
+    research[research]
+    datascout[datascout]
+    wardley[wardley]
+    diagram[diagram]
+    adr[adr]
+    data_mesh_contract[data-mesh-contract]
+    %% Tier 7
+    sow[sow]
+    gcloud_search[gcloud-search]
+    gcloud_clarify[gcloud-clarify]
+    evaluate[evaluate]
+    %% Tier 8
+    hld_review[hld-review]
+    dld_review[dld-review]
+    %% Tier 9
+    backlog[backlog]
+    %% Tier 10
+    trello[trello]
+    %% Tier 11
+    servicenow[servicenow]
+    devops[devops]
+    finops[finops]
+    operationalize[operationalize]
+    traceability[traceability]
+    %% Tier 12
+    analyze[analyze]
+    %% Tier 13
+    principles_compliance[principles-compliance]
+    conformance[conformance]
+    service_assessment[service-assessment]
+    tcop[tcop]
+    secure[secure]
+    %% Tier 14
+    story[story]
 
-    %% Tier 2-4: Business Case & Requirements
-    D --> E[sobc]
-    E --> F[requirements]
+    principles -.-> plan
+    principles -.-> stakeholders
+    stakeholders --> risk
+    stakeholders --> sobc
+    risk -.-> sobc
+    stakeholders --> requirements
+    sobc -.-> requirements
+    wardley -.-> platform_design
+    wardley -.-> roadmap
+    roadmap -.-> strategy
+    requirements --> data_model
+    data_model --> dpia
+    requirements --> research
+    data_model -.-> datascout
+    research -.-> wardley
+    requirements -.-> diagram
+    requirements --> adr
+    data_model -.-> data_mesh_contract
+    research -.-> sow
+    requirements --> gcloud_search
+    gcloud_search --> gcloud_clarify
+    sow -.-> evaluate
+    gcloud_search -.-> evaluate
+    diagram -.-> hld_review
+    sow -.-> hld_review
+    data_model -.-> dld_review
+    hld_review --> dld_review
+    dld_review -.-> backlog
+    backlog --> trello
+    data_model -.-> servicenow
+    diagram --> servicenow
+    research -.-> devops
+    diagram -.-> devops
+    devops -.-> finops
+    diagram --> operationalize
+    servicenow -.-> operationalize
+    adr -.-> traceability
+    dld_review -.-> traceability
+    data_model -.-> analyze
+    traceability -.-> principles_compliance
+    tcop -.-> principles_compliance
+    secure -.-> principles_compliance
+    adr --> conformance
+    devops -.-> conformance
+    principles_compliance -.-> conformance
+    devops -.-> service_assessment
+    traceability -.-> service_assessment
+    secure -.-> service_assessment
+    diagram -.-> tcop
+    dpia -.-> secure
+    diagram -.-> secure
+    roadmap -.-> story
+    evaluate -.-> story
+    backlog -.-> story
+    servicenow -.-> story
+    analyze -.-> story
+    service_assessment -.-> story
+    tcop -.-> story
 
-    %% Tier 5-6: Strategy & Design
-    F --> G[platform-design]
-    F --> F1[datascout]
-    F1 -.-> H
-    F --> H[data-model]
-    G -.-> H
-    H --> I[data-mesh-contract]
-    H --> J[dpia]
-    F --> K[research]
-    F1 -.-> K
-    K --> L[wardley]
-    L --> M[roadmap]
-    M --> M1[strategy]
-    H -.-> V[diagram]
-
-    %% Tier 7: UK Gov Procurement
-    B -.-> N[gcloud-search]
-    M --> N
-    N --> O[gcloud-clarify]
-    O --> P[evaluate]
-    M -.-> Q[sow]
-    Q -.-> P
-    J -.-> P
-
-    %% Tier 8: Design Reviews
-    P --> R[hld-review]
-    R --> S[dld-review]
-    S --> T[adr]
-
-    %% Tier 9: Implementation
-    S --> U[backlog]
-
-    %% Tier 10: Backlog Export
-    U --> U1t[trello]
-
-    %% Tier 11-12: Operations & Quality
-    U --> W[servicenow]
-    W --> W1[devops]
-    W1 --> W1a[finops]
-    W1a --> W2[operationalize]
-    W2 --> X[traceability]
-
-    %% Tier 13: UK Gov Compliance
-    X --> X1[tcop]
-    X1 --> X2[secure]
-    X2 --> X3[principles-compliance]
-    X3 --> X4[conformance]
-    X4 --> Y[analyze]
-    Y --> Z[service-assessment]
-
-    %% Tier 14: Reporting
-    Z --> AA[story]
-
-    style A fill:#87CEEB
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#87CEEB
-    style E fill:#90EE90
-    style F fill:#90EE90
-    style F1 fill:#90EE90
-    style G fill:#90EE90
-    style H fill:#90EE90
-    style I fill:#90EE90
-    style J fill:#90EE90
-    style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style M1 fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#90EE90
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style T fill:#FFA500
-    style U fill:#FFA500
-    style V fill:#90EE90
-    style W fill:#9370DB
-    style W1 fill:#9370DB
-    style W1a fill:#9370DB
-    style W2 fill:#9370DB
-    style X fill:#9370DB
-    style X1 fill:#FF6B6B
-    style X2 fill:#FF6B6B
-    style X3 fill:#9370DB
-    style X4 fill:#FF6B6B
-    style Y fill:#9370DB
-    style Z fill:#FF6B6B
-    style AA fill:#FFD700
+    style principles fill:#87CEEB
+    style plan fill:#87CEEB
+    style stakeholders fill:#87CEEB
+    style risk fill:#90EE90
+    style sobc fill:#90EE90
+    style requirements fill:#90EE90
+    style platform_design fill:#90EE90
+    style roadmap fill:#90EE90
+    style strategy fill:#90EE90
+    style data_model fill:#90EE90
+    style dpia fill:#90EE90
+    style research fill:#90EE90
+    style datascout fill:#90EE90
+    style wardley fill:#90EE90
+    style diagram fill:#90EE90
+    style adr fill:#90EE90
+    style data_mesh_contract fill:#90EE90
+    style sow fill:#90EE90
+    style gcloud_search fill:#90EE90
+    style gcloud_clarify fill:#90EE90
+    style evaluate fill:#90EE90
+    style hld_review fill:#FFA500
+    style dld_review fill:#FFA500
+    style backlog fill:#FFA500
+    style trello fill:#FFA500
+    style servicenow fill:#9370DB
+    style devops fill:#9370DB
+    style finops fill:#9370DB
+    style operationalize fill:#9370DB
+    style traceability fill:#9370DB
+    style analyze fill:#9370DB
+    style principles_compliance fill:#FF6B6B
+    style conformance fill:#FF6B6B
+    style service_assessment fill:#FF6B6B
+    style tcop fill:#FF6B6B
+    style secure fill:#FF6B6B
+    style story fill:#FFD700
 ```
 
 **Duration**: 6-12 months
@@ -232,110 +338,165 @@ For UK Government projects with AI/ML components.
 
 ```mermaid
 graph TD
-    %% Tier 0-1: Foundation
-    A[plan] --> B[principles]
-    B --> C[stakeholders]
-    C --> D[risk]
+    %% Tier 0
+    principles[principles]
+    plan[plan]
+    %% Tier 1
+    stakeholders[stakeholders]
+    %% Tier 2
+    risk[risk]
+    %% Tier 3
+    sobc[sobc]
+    %% Tier 4
+    requirements[requirements]
+    %% Tier 5
+    platform_design[platform-design]
+    roadmap[roadmap]
+    strategy[strategy]
+    %% Tier 6
+    data_model[data-model]
+    dpia[dpia]
+    research[research]
+    datascout[datascout]
+    wardley[wardley]
+    diagram[diagram]
+    adr[adr]
+    data_mesh_contract[data-mesh-contract]
+    %% Tier 7
+    sow[sow]
+    gcloud_search[gcloud-search]
+    gcloud_clarify[gcloud-clarify]
+    evaluate[evaluate]
+    %% Tier 8
+    hld_review[hld-review]
+    dld_review[dld-review]
+    %% Tier 9
+    backlog[backlog]
+    %% Tier 10
+    trello[trello]
+    %% Tier 11
+    servicenow[servicenow]
+    devops[devops]
+    mlops[mlops]
+    finops[finops]
+    operationalize[operationalize]
+    traceability[traceability]
+    %% Tier 12
+    analyze[analyze]
+    %% Tier 13
+    principles_compliance[principles-compliance]
+    conformance[conformance]
+    service_assessment[service-assessment]
+    tcop[tcop]
+    ai_playbook[ai-playbook]
+    atrs[atrs]
+    secure[secure]
+    %% Tier 14
+    story[story]
 
-    %% Tier 2-4: Business Case & Requirements
-    D --> E[sobc]
-    E --> F[requirements]
+    principles -.-> plan
+    principles -.-> stakeholders
+    stakeholders --> risk
+    stakeholders --> sobc
+    risk -.-> sobc
+    stakeholders --> requirements
+    sobc -.-> requirements
+    wardley -.-> platform_design
+    wardley -.-> roadmap
+    roadmap -.-> strategy
+    requirements --> data_model
+    data_model --> dpia
+    requirements --> research
+    data_model -.-> datascout
+    research -.-> wardley
+    requirements -.-> diagram
+    requirements --> adr
+    data_model -.-> data_mesh_contract
+    research -.-> sow
+    requirements --> gcloud_search
+    gcloud_search --> gcloud_clarify
+    sow -.-> evaluate
+    gcloud_search -.-> evaluate
+    diagram -.-> hld_review
+    sow -.-> hld_review
+    data_model -.-> dld_review
+    hld_review --> dld_review
+    dld_review -.-> backlog
+    backlog --> trello
+    data_model -.-> servicenow
+    diagram --> servicenow
+    research -.-> devops
+    diagram -.-> devops
+    ai_playbook -.-> mlops
+    devops -.-> finops
+    diagram --> operationalize
+    servicenow -.-> operationalize
+    adr -.-> traceability
+    dld_review -.-> traceability
+    data_model -.-> analyze
+    traceability -.-> principles_compliance
+    tcop -.-> principles_compliance
+    secure -.-> principles_compliance
+    adr --> conformance
+    devops -.-> conformance
+    principles_compliance -.-> conformance
+    devops -.-> service_assessment
+    traceability -.-> service_assessment
+    secure -.-> service_assessment
+    diagram -.-> tcop
+    data_model -.-> ai_playbook
+    ai_playbook -.-> atrs
+    dpia -.-> secure
+    diagram -.-> secure
+    roadmap -.-> story
+    evaluate -.-> story
+    backlog -.-> story
+    servicenow -.-> story
+    analyze -.-> story
+    service_assessment -.-> story
+    tcop -.-> story
+    atrs -.-> story
 
-    %% Tier 5-6: Strategy & Design
-    F --> G[platform-design]
-    F --> F1[datascout]
-    F1 -.-> H
-    F --> H[data-model]
-    G -.-> H
-    H --> I[data-mesh-contract]
-    H --> J[dpia]
-    F --> K[research]
-    F1 -.-> K
-    K --> L[wardley]
-    L --> M[roadmap]
-    M --> M1[strategy]
-    H -.-> W[diagram]
-
-    %% Tier 7: UK Gov Procurement
-    B -.-> N[gcloud-search]
-    M --> N
-    N --> O[gcloud-clarify]
-    O --> P[evaluate]
-    M -.-> Q[sow]
-    Q -.-> P
-    J -.-> P
-
-    %% Tier 8: Design Reviews
-    P --> R[hld-review]
-    R --> S[dld-review]
-    S --> T[adr]
-
-    %% Tier 9: Implementation
-    S --> U[backlog]
-
-    %% Tier 10: Backlog Export
-    U --> U1t[trello]
-
-    %% Tier 11-12: Operations & Quality
-    U --> V[servicenow]
-    V --> V1[devops]
-    V1 --> V1a[finops]
-    V1a --> V2[mlops]
-    V2 --> V3[operationalize]
-    V3 --> X[traceability]
-
-    %% Tier 13: UK Gov + AI Compliance
-    X --> X1[tcop]
-    X1 --> X2[ai-playbook]
-    X2 --> X3[atrs]
-    X3 --> X4[secure]
-    X4 --> X5[principles-compliance]
-    X5 --> X6[conformance]
-    X6 --> Y[analyze]
-    Y --> Z[service-assessment]
-
-    %% Tier 14: Reporting
-    Z --> AA[story]
-
-    style A fill:#87CEEB
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#87CEEB
-    style E fill:#90EE90
-    style F fill:#90EE90
-    style F1 fill:#90EE90
-    style G fill:#90EE90
-    style H fill:#90EE90
-    style I fill:#90EE90
-    style J fill:#90EE90
-    style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style M1 fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#90EE90
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style T fill:#FFA500
-    style U fill:#FFA500
-    style V fill:#9370DB
-    style V1 fill:#9370DB
-    style V1a fill:#9370DB
-    style V2 fill:#9370DB
-    style V3 fill:#9370DB
-    style W fill:#90EE90
-    style X fill:#9370DB
-    style X1 fill:#FF6B6B
-    style X2 fill:#FF6B6B
-    style X3 fill:#FF6B6B
-    style X4 fill:#FF6B6B
-    style X5 fill:#9370DB
-    style X6 fill:#FF6B6B
-    style Y fill:#9370DB
-    style Z fill:#FF6B6B
-    style AA fill:#FFD700
+    style principles fill:#87CEEB
+    style plan fill:#87CEEB
+    style stakeholders fill:#87CEEB
+    style risk fill:#90EE90
+    style sobc fill:#90EE90
+    style requirements fill:#90EE90
+    style platform_design fill:#90EE90
+    style roadmap fill:#90EE90
+    style strategy fill:#90EE90
+    style data_model fill:#90EE90
+    style dpia fill:#90EE90
+    style research fill:#90EE90
+    style datascout fill:#90EE90
+    style wardley fill:#90EE90
+    style diagram fill:#90EE90
+    style adr fill:#90EE90
+    style data_mesh_contract fill:#90EE90
+    style sow fill:#90EE90
+    style gcloud_search fill:#90EE90
+    style gcloud_clarify fill:#90EE90
+    style evaluate fill:#90EE90
+    style hld_review fill:#FFA500
+    style dld_review fill:#FFA500
+    style backlog fill:#FFA500
+    style trello fill:#FFA500
+    style servicenow fill:#9370DB
+    style devops fill:#9370DB
+    style mlops fill:#9370DB
+    style finops fill:#9370DB
+    style operationalize fill:#9370DB
+    style traceability fill:#9370DB
+    style analyze fill:#9370DB
+    style principles_compliance fill:#FF6B6B
+    style conformance fill:#FF6B6B
+    style service_assessment fill:#FF6B6B
+    style tcop fill:#FF6B6B
+    style ai_playbook fill:#FF6B6B
+    style atrs fill:#FF6B6B
+    style secure fill:#FF6B6B
+    style story fill:#FFD700
 ```
 
 **Duration**: 9-18 months
@@ -354,103 +515,151 @@ For Ministry of Defence projects (non-AI).
 
 ```mermaid
 graph TD
-    %% Tier 0-1: Foundation
-    A[plan] --> B[principles]
-    B --> C[stakeholders]
-    C --> D[risk]
+    %% Tier 0
+    principles[principles]
+    plan[plan]
+    %% Tier 1
+    stakeholders[stakeholders]
+    %% Tier 2
+    risk[risk]
+    %% Tier 3
+    sobc[sobc]
+    %% Tier 4
+    requirements[requirements]
+    %% Tier 5
+    platform_design[platform-design]
+    roadmap[roadmap]
+    strategy[strategy]
+    %% Tier 6
+    data_model[data-model]
+    dpia[dpia]
+    research[research]
+    datascout[datascout]
+    wardley[wardley]
+    diagram[diagram]
+    adr[adr]
+    data_mesh_contract[data-mesh-contract]
+    %% Tier 7
+    sow[sow]
+    dos[dos]
+    evaluate[evaluate]
+    %% Tier 8
+    hld_review[hld-review]
+    dld_review[dld-review]
+    %% Tier 9
+    backlog[backlog]
+    %% Tier 10
+    trello[trello]
+    %% Tier 11
+    servicenow[servicenow]
+    devops[devops]
+    finops[finops]
+    operationalize[operationalize]
+    traceability[traceability]
+    %% Tier 12
+    analyze[analyze]
+    %% Tier 13
+    principles_compliance[principles-compliance]
+    conformance[conformance]
+    service_assessment[service-assessment]
+    tcop[tcop]
+    mod_secure[mod-secure]
+    %% Tier 14
+    story[story]
 
-    %% Tier 2-4: Business Case & Requirements
-    D --> E[sobc]
-    E --> F[requirements]
+    principles -.-> plan
+    principles -.-> stakeholders
+    stakeholders --> risk
+    stakeholders --> sobc
+    risk -.-> sobc
+    stakeholders --> requirements
+    sobc -.-> requirements
+    wardley -.-> platform_design
+    wardley -.-> roadmap
+    roadmap -.-> strategy
+    requirements --> data_model
+    data_model --> dpia
+    requirements --> research
+    data_model -.-> datascout
+    research -.-> wardley
+    requirements -.-> diagram
+    requirements --> adr
+    data_model -.-> data_mesh_contract
+    research -.-> sow
+    research -.-> dos
+    sow -.-> evaluate
+    dos -.-> evaluate
+    diagram -.-> hld_review
+    sow -.-> hld_review
+    data_model -.-> dld_review
+    hld_review --> dld_review
+    dld_review -.-> backlog
+    backlog --> trello
+    data_model -.-> servicenow
+    diagram --> servicenow
+    research -.-> devops
+    diagram -.-> devops
+    devops -.-> finops
+    diagram --> operationalize
+    servicenow -.-> operationalize
+    adr -.-> traceability
+    dld_review -.-> traceability
+    data_model -.-> analyze
+    traceability -.-> principles_compliance
+    tcop -.-> principles_compliance
+    adr --> conformance
+    devops -.-> conformance
+    principles_compliance -.-> conformance
+    dpia -.-> service_assessment
+    devops -.-> service_assessment
+    traceability -.-> service_assessment
+    diagram -.-> tcop
+    requirements --> mod_secure
+    roadmap -.-> story
+    evaluate -.-> story
+    backlog -.-> story
+    servicenow -.-> story
+    analyze -.-> story
+    service_assessment -.-> story
+    tcop -.-> story
+    mod_secure -.-> story
 
-    %% Tier 5-6: Strategy & Design
-    F --> G[platform-design]
-    F --> F1[datascout]
-    F1 -.-> H
-    F --> H[data-model]
-    G -.-> H
-    H --> I[data-mesh-contract]
-    H --> J[dpia]
-    F --> K[research]
-    F1 -.-> K
-    K --> L[wardley]
-    L --> M[roadmap]
-    M --> M1[strategy]
-    H -.-> U[diagram]
-
-    %% Tier 7: MOD Procurement
-    B -.-> N[dos]
-    C -.-> N
-    M --> N
-    N --> O[evaluate]
-    M -.-> P[sow]
-    P -.-> O
-    J -.-> O
-
-    %% Tier 8: Design Reviews
-    O --> Q[hld-review]
-    Q --> R[dld-review]
-    R --> S[adr]
-
-    %% Tier 9: Implementation
-    R --> T[backlog]
-
-    %% Tier 10: Backlog Export
-    T --> T1t[trello]
-
-    %% Tier 11-12: Operations & Quality
-    T --> V[servicenow]
-    V --> V1[devops]
-    V1 --> V1a[finops]
-    V1a --> V2[operationalize]
-    V2 --> W[traceability]
-
-    %% Tier 13: MOD Compliance
-    W --> W1[tcop]
-    W1 --> W2[mod-secure]
-    W2 --> W3[principles-compliance]
-    W3 --> W4[conformance]
-    W4 --> X[analyze]
-    X --> Y[service-assessment]
-
-    %% Tier 14: Reporting
-    Y --> Z[story]
-
-    style A fill:#87CEEB
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#87CEEB
-    style E fill:#90EE90
-    style F fill:#90EE90
-    style F1 fill:#90EE90
-    style G fill:#90EE90
-    style H fill:#90EE90
-    style I fill:#90EE90
-    style J fill:#90EE90
-    style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style M1 fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#FFA500
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style T fill:#FFA500
-    style U fill:#90EE90
-    style V fill:#9370DB
-    style V1 fill:#9370DB
-    style V1a fill:#9370DB
-    style V2 fill:#9370DB
-    style W fill:#9370DB
-    style W1 fill:#FF6B6B
-    style W2 fill:#FF6B6B
-    style W3 fill:#9370DB
-    style W4 fill:#FF6B6B
-    style X fill:#9370DB
-    style Y fill:#FF6B6B
-    style Z fill:#FFD700
+    style principles fill:#87CEEB
+    style plan fill:#87CEEB
+    style stakeholders fill:#87CEEB
+    style risk fill:#90EE90
+    style sobc fill:#90EE90
+    style requirements fill:#90EE90
+    style platform_design fill:#90EE90
+    style roadmap fill:#90EE90
+    style strategy fill:#90EE90
+    style data_model fill:#90EE90
+    style dpia fill:#90EE90
+    style research fill:#90EE90
+    style datascout fill:#90EE90
+    style wardley fill:#90EE90
+    style diagram fill:#90EE90
+    style adr fill:#90EE90
+    style data_mesh_contract fill:#90EE90
+    style sow fill:#90EE90
+    style dos fill:#90EE90
+    style evaluate fill:#90EE90
+    style hld_review fill:#FFA500
+    style dld_review fill:#FFA500
+    style backlog fill:#FFA500
+    style trello fill:#FFA500
+    style servicenow fill:#9370DB
+    style devops fill:#9370DB
+    style finops fill:#9370DB
+    style operationalize fill:#9370DB
+    style traceability fill:#9370DB
+    style analyze fill:#9370DB
+    style principles_compliance fill:#FF6B6B
+    style conformance fill:#FF6B6B
+    style service_assessment fill:#FF6B6B
+    style tcop fill:#FF6B6B
+    style mod_secure fill:#FF6B6B
+    style story fill:#FFD700
 ```
 
 **Duration**: 12-24 months
@@ -469,107 +678,158 @@ For Ministry of Defence projects with AI/ML components.
 
 ```mermaid
 graph TD
-    %% Tier 0-1: Foundation
-    A[plan] --> B[principles]
-    B --> C[stakeholders]
-    C --> D[risk]
+    %% Tier 0
+    principles[principles]
+    plan[plan]
+    %% Tier 1
+    stakeholders[stakeholders]
+    %% Tier 2
+    risk[risk]
+    %% Tier 3
+    sobc[sobc]
+    %% Tier 4
+    requirements[requirements]
+    %% Tier 5
+    platform_design[platform-design]
+    roadmap[roadmap]
+    strategy[strategy]
+    %% Tier 6
+    data_model[data-model]
+    dpia[dpia]
+    research[research]
+    datascout[datascout]
+    wardley[wardley]
+    diagram[diagram]
+    adr[adr]
+    data_mesh_contract[data-mesh-contract]
+    %% Tier 7
+    sow[sow]
+    dos[dos]
+    evaluate[evaluate]
+    %% Tier 8
+    hld_review[hld-review]
+    dld_review[dld-review]
+    %% Tier 9
+    backlog[backlog]
+    %% Tier 10
+    trello[trello]
+    %% Tier 11
+    servicenow[servicenow]
+    devops[devops]
+    mlops[mlops]
+    finops[finops]
+    operationalize[operationalize]
+    traceability[traceability]
+    %% Tier 12
+    analyze[analyze]
+    %% Tier 13
+    principles_compliance[principles-compliance]
+    conformance[conformance]
+    service_assessment[service-assessment]
+    tcop[tcop]
+    mod_secure[mod-secure]
+    jsp_936[jsp-936]
+    %% Tier 14
+    story[story]
 
-    %% Tier 2-4: Business Case & Requirements
-    D --> E[sobc]
-    E --> F[requirements]
+    principles -.-> plan
+    principles -.-> stakeholders
+    stakeholders --> risk
+    stakeholders --> sobc
+    risk -.-> sobc
+    stakeholders --> requirements
+    sobc -.-> requirements
+    wardley -.-> platform_design
+    wardley -.-> roadmap
+    roadmap -.-> strategy
+    requirements --> data_model
+    data_model --> dpia
+    requirements --> research
+    data_model -.-> datascout
+    research -.-> wardley
+    requirements -.-> diagram
+    requirements --> adr
+    data_model -.-> data_mesh_contract
+    research -.-> sow
+    research -.-> dos
+    sow -.-> evaluate
+    dos -.-> evaluate
+    diagram -.-> hld_review
+    sow -.-> hld_review
+    data_model -.-> dld_review
+    hld_review --> dld_review
+    dld_review -.-> backlog
+    backlog --> trello
+    data_model -.-> servicenow
+    diagram --> servicenow
+    research -.-> devops
+    diagram -.-> devops
+    data_model -.-> mlops
+    devops -.-> finops
+    diagram --> operationalize
+    servicenow -.-> operationalize
+    adr -.-> traceability
+    dld_review -.-> traceability
+    data_model -.-> analyze
+    traceability -.-> principles_compliance
+    tcop -.-> principles_compliance
+    adr --> conformance
+    devops -.-> conformance
+    principles_compliance -.-> conformance
+    dpia -.-> service_assessment
+    devops -.-> service_assessment
+    traceability -.-> service_assessment
+    diagram -.-> tcop
+    requirements --> mod_secure
+    requirements --> jsp_936
+    roadmap -.-> story
+    evaluate -.-> story
+    backlog -.-> story
+    servicenow -.-> story
+    analyze -.-> story
+    service_assessment -.-> story
+    tcop -.-> story
+    mod_secure -.-> story
+    jsp_936 -.-> story
 
-    %% Tier 5-6: Strategy & Design
-    F --> G[platform-design]
-    F --> F1[datascout]
-    F1 -.-> H
-    F --> H[data-model]
-    G -.-> H
-    H --> I[data-mesh-contract]
-    H --> J[dpia]
-    F --> K[research]
-    F1 -.-> K
-    K --> L[wardley]
-    L --> M[roadmap]
-    M --> M1[strategy]
-    H -.-> V[diagram]
-
-    %% Tier 7: MOD Procurement
-    B -.-> N[dos]
-    C -.-> N
-    M --> N
-    N --> O[evaluate]
-    M -.-> P[sow]
-    P -.-> O
-    J -.-> O
-
-    %% Tier 8: Design Reviews
-    O --> Q[hld-review]
-    Q --> R[dld-review]
-    R --> S[adr]
-
-    %% Tier 9: Implementation
-    R --> T[backlog]
-
-    %% Tier 10: Backlog Export
-    T --> T1t[trello]
-
-    %% Tier 11-12: Operations & Quality
-    T --> W[servicenow]
-    W --> W1[devops]
-    W1 --> W1a[finops]
-    W1a --> W2[mlops]
-    W2 --> W3[operationalize]
-    W3 --> X[traceability]
-
-    %% Tier 13: MOD + AI Compliance
-    X --> X1[tcop]
-    X1 --> X2[mod-secure]
-    X2 --> X3[jsp-936]
-    X3 --> X4[principles-compliance]
-    X4 --> X5[conformance]
-    X5 --> Y[analyze]
-    Y --> Z[service-assessment]
-
-    %% Tier 14: Reporting
-    Z --> AA[story]
-
-    style A fill:#87CEEB
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#87CEEB
-    style E fill:#90EE90
-    style F fill:#90EE90
-    style F1 fill:#90EE90
-    style G fill:#90EE90
-    style H fill:#90EE90
-    style I fill:#90EE90
-    style J fill:#90EE90
-    style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style M1 fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#FFA500
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style T fill:#FFA500
-    style V fill:#90EE90
-    style W fill:#9370DB
-    style W1 fill:#9370DB
-    style W1a fill:#9370DB
-    style W2 fill:#9370DB
-    style W3 fill:#9370DB
-    style X fill:#9370DB
-    style X1 fill:#FF6B6B
-    style X2 fill:#FF6B6B
-    style X3 fill:#FF6B6B
-    style X4 fill:#9370DB
-    style X5 fill:#FF6B6B
-    style Y fill:#9370DB
-    style Z fill:#FF6B6B
-    style AA fill:#FFD700
+    style principles fill:#87CEEB
+    style plan fill:#87CEEB
+    style stakeholders fill:#87CEEB
+    style risk fill:#90EE90
+    style sobc fill:#90EE90
+    style requirements fill:#90EE90
+    style platform_design fill:#90EE90
+    style roadmap fill:#90EE90
+    style strategy fill:#90EE90
+    style data_model fill:#90EE90
+    style dpia fill:#90EE90
+    style research fill:#90EE90
+    style datascout fill:#90EE90
+    style wardley fill:#90EE90
+    style diagram fill:#90EE90
+    style adr fill:#90EE90
+    style data_mesh_contract fill:#90EE90
+    style sow fill:#90EE90
+    style dos fill:#90EE90
+    style evaluate fill:#90EE90
+    style hld_review fill:#FFA500
+    style dld_review fill:#FFA500
+    style backlog fill:#FFA500
+    style trello fill:#FFA500
+    style servicenow fill:#9370DB
+    style devops fill:#9370DB
+    style mlops fill:#9370DB
+    style finops fill:#9370DB
+    style operationalize fill:#9370DB
+    style traceability fill:#9370DB
+    style analyze fill:#9370DB
+    style principles_compliance fill:#FF6B6B
+    style conformance fill:#FF6B6B
+    style service_assessment fill:#FF6B6B
+    style tcop fill:#FF6B6B
+    style mod_secure fill:#FF6B6B
+    style jsp_936 fill:#FF6B6B
+    style story fill:#FFD700
 ```
 
 **Duration**: 18-36 months
@@ -580,8 +840,8 @@ graph TD
 - MOD Secure by Design required before Beta
 - JSP 936 AI assurance required before Beta
 - Risk classification determines approval pathway:
-  - **Critical**: 2PUS/Ministerial approval
-  - **Severe/Major**: Defence-Level JROC/IAC approval
+  - **Critical/Severe**: 2PUS (the Second Permanent Under Secretary), or Ministers by exception
+  - **Major**: Defence-Level approval (e.g. JROC/IAC)
   - **Moderate/Minor**: TLB-Level approval
 
 ---
@@ -592,45 +852,47 @@ The Wardley Mapping suite provides a focused strategic analysis pipeline. Value 
 
 ```mermaid
 graph TD
-    %% Prerequisites
-    A[requirements] --> B[wardley.value-chain]
-    C[principles] -.-> B
-    D[stakeholders] -.-> B
+    %% Tier 0
+    principles[principles]
+    %% Tier 1
+    stakeholders[stakeholders]
+    %% Tier 4
+    requirements[requirements]
+    %% Tier 5
+    roadmap[roadmap]
+    strategy[strategy]
+    %% Tier 6
+    wardley_value_chain[wardley.value-chain]
+    wardley[wardley]
+    wardley_doctrine[wardley.doctrine]
+    wardley_gameplay[wardley.gameplay]
+    wardley_climate[wardley.climate]
 
-    %% Core mapping
-    B --> E[wardley]
+    principles -.-> stakeholders
+    stakeholders --> requirements
+    wardley -.-> roadmap
+    roadmap -.-> strategy
+    requirements --> wardley_value_chain
+    wardley_value_chain -.-> wardley
+    wardley -.-> wardley_doctrine
+    wardley --> wardley_gameplay
+    wardley_doctrine -.-> wardley_gameplay
+    wardley_climate -.-> wardley_gameplay
+    wardley --> wardley_climate
 
-    %% Analysis tracks (parallel after map creation)
-    E --> F[wardley.doctrine]
-    E --> G[wardley.climate]
-    E --> H[wardley.gameplay]
-
-    %% Cross-feed between analysis tracks
-    G -.-> H
-    F -.-> H
-
-    %% Downstream
-    E --> I[roadmap]
-    E --> J[strategy]
-    H -.-> J
-
-    style A fill:#90EE90
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#87CEEB
-    style E fill:#90EE90
-    style F fill:#9370DB
-    style G fill:#9370DB
-    style H fill:#9370DB
-    style I fill:#90EE90
-    style J fill:#90EE90
+    style principles fill:#87CEEB
+    style stakeholders fill:#87CEEB
+    style requirements fill:#90EE90
+    style roadmap fill:#90EE90
+    style strategy fill:#90EE90
+    style wardley_value_chain fill:#90EE90
+    style wardley fill:#90EE90
+    style wardley_doctrine fill:#90EE90
+    style wardley_gameplay fill:#90EE90
+    style wardley_climate fill:#90EE90
 ```
 
-**Key:**
-
-- **Blue boxes** = Foundation inputs and value chain decomposition
-- **Green boxes** = Core workflow (requirements, wardley map, downstream)
-- **Purple boxes** = Wardley analysis tracks (doctrine, climate, gameplay)
+Colours follow the tier legend at the top of this page.
 
 **Duration**: 1-3 weeks (within the Alpha phase)
 
@@ -642,70 +904,80 @@ graph TD
 
 The Canada Federal Overlay ships 12 `ca-*` commands covering FITAA (Bill C-70 2024), Privacy Act PIA, ATIP reconciliation, Algorithmic Impact Assessment, Charter rights, ITSG-33, SOIA classified handling, sovereign cloud residency, GC Digital Standards, Official Languages Act, PSPC procurement, and OCAP® Indigenous data sovereignty. Two canonical execution chains apply depending on whether the system engages FITAA.
 
+Both diagrams show the order the `ca-federal-fitaa` build recipe (`/arckit:build`) runs the commands in: an arrow means the command below runs after the one above. 7b is the same recipe without the FITAA-only commands.
+
 ### 7a. FITAA-class application (full overlay)
 
 For systems that fall in scope of the Foreign Influence Transparency and Accountability Act — registration tooling, foreign-principal exposure, public-office-holder interactions — the canonical chain runs all 12 `ca-*` commands.
 
 ```mermaid
 graph TD
-    %% Foundation
-    A[principles] --> B[requirements]
-    B --> C1[ca-charter]
-    B --> C2[ca-pia]
+    principles[principles]
+    stakeholders[stakeholders]
+    requirements[requirements]
+    ca_charter[ca-charter]
+    ca_pia[ca-pia]
+    ca_fitaa[ca-fitaa]
+    ca_atip[ca-atip]
+    ca_aia[ca-aia]
+    ca_ocap[ca-ocap]
+    ca_itsg_33[ca-itsg-33]
+    ca_soia[ca-soia]
+    ca_cloud_residency[ca-cloud-residency]
+    ca_ola[ca-ola]
+    ca_gc_digital_standards[ca-gc-digital-standards]
+    ca_pspc[ca-pspc]
+    adr[adr]
+    sobc[sobc]
+    risk[risk]
+    framework[framework]
 
-    %% FITAA core path
-    C1 --> D[ca-fitaa]
-    C2 --> D
-    C2 --> E[ca-atip]
-    B --> F[ca-aia]
-    C2 --> F
-    D --> G[ca-ocap]
-    C2 --> G
+    principles --> stakeholders
+    stakeholders --> requirements
+    requirements --> ca_charter
+    requirements --> ca_pia
+    ca_charter --> ca_fitaa
+    ca_atip --> ca_fitaa
+    ca_aia --> ca_fitaa
+    ca_pia --> ca_atip
+    ca_pia --> ca_aia
+    ca_pia --> ca_ocap
+    ca_pia --> ca_itsg_33
+    ca_fitaa --> ca_soia
+    ca_itsg_33 --> ca_soia
+    ca_itsg_33 --> ca_cloud_residency
+    ca_fitaa --> ca_ola
+    requirements --> ca_gc_digital_standards
+    ca_cloud_residency --> ca_pspc
+    ca_ola --> adr
+    ca_pspc --> adr
+    sobc --> ca_pspc
+    risk --> sobc
+    ca_fitaa --> risk
+    ca_itsg_33 --> risk
+    ca_ola --> framework
+    ca_gc_digital_standards --> framework
+    ca_pspc --> framework
 
-    %% Security stream
-    B --> H[ca-itsg-33]
-    C2 --> H
-    D --> I[ca-soia]
-    H --> I
-    H --> J[ca-cloud-residency]
-
-    %% Service-side compliance
-    D --> K[ca-ola]
-    B --> L[ca-gc-digital-standards]
-
-    %% Procurement and cross-cutting
-    H --> M[ca-pspc]
-    J --> M
-    M --> N[adr]
-    D --> N
-    H --> N
-    N --> O[sobc]
-    D --> P[risk]
-    C2 --> P
-    F --> P
-    C1 --> P
-    H --> P
-    O --> Q[framework]
-    P --> Q
-
-    style A fill:#90EE90
-    style B fill:#90EE90
-    style C1 fill:#FFD700
-    style C2 fill:#FFB347
-    style D fill:#FF6961
-    style E fill:#FFB347
-    style F fill:#FFD700
-    style G fill:#9370DB
-    style H fill:#87CEEB
-    style I fill:#87CEEB
-    style J fill:#87CEEB
-    style K fill:#FFA07A
-    style L fill:#FFA07A
-    style M fill:#FFA07A
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#90EE90
+    style principles fill:#90EE90
+    style stakeholders fill:#90EE90
+    style requirements fill:#90EE90
+    style ca_charter fill:#FFD700
+    style ca_pia fill:#FFB347
+    style ca_fitaa fill:#FF6961
+    style ca_atip fill:#FFB347
+    style ca_aia fill:#FFD700
+    style ca_ocap fill:#9370DB
+    style ca_itsg_33 fill:#87CEEB
+    style ca_soia fill:#87CEEB
+    style ca_cloud_residency fill:#87CEEB
+    style ca_ola fill:#FFA07A
+    style ca_gc_digital_standards fill:#FFA07A
+    style ca_pspc fill:#FFA07A
+    style adr fill:#90EE90
+    style sobc fill:#90EE90
+    style risk fill:#90EE90
+    style framework fill:#90EE90
 ```
 
 **Key:**
@@ -724,46 +996,62 @@ For federal Canadian digital services that do not engage FITAA, drop `ca-charter
 
 ```mermaid
 graph TD
-    A[principles] --> B[requirements]
-    B --> C[ca-pia]
-    C --> D[ca-atip]
-    B --> E[ca-aia]
-    C --> E
-    C --> F[ca-ocap]
+    principles[principles]
+    stakeholders[stakeholders]
+    requirements[requirements]
+    ca_pia[ca-pia]
+    ca_atip[ca-atip]
+    ca_aia[ca-aia]
+    ca_ocap[ca-ocap]
+    ca_itsg_33[ca-itsg-33]
+    ca_cloud_residency[ca-cloud-residency]
+    ca_ola[ca-ola]
+    ca_gc_digital_standards[ca-gc-digital-standards]
+    ca_pspc[ca-pspc]
+    adr[adr]
+    sobc[sobc]
+    risk[risk]
+    framework[framework]
 
-    B --> G[ca-itsg-33]
-    C --> G
-    G --> H[ca-cloud-residency]
+    principles --> stakeholders
+    stakeholders --> requirements
+    requirements --> ca_pia
+    ca_pia --> ca_atip
+    ca_pia --> ca_aia
+    ca_pia --> ca_ocap
+    ca_pia --> ca_itsg_33
+    ca_itsg_33 --> ca_cloud_residency
+    ca_atip --> ca_ola
+    ca_aia --> ca_ola
+    requirements --> ca_gc_digital_standards
+    ca_cloud_residency --> ca_pspc
+    ca_ola --> adr
+    ca_pspc --> adr
+    sobc --> ca_pspc
+    risk --> sobc
+    ca_atip --> risk
+    ca_aia --> risk
+    ca_itsg_33 --> risk
+    ca_ola --> framework
+    ca_gc_digital_standards --> framework
+    ca_pspc --> framework
 
-    B --> I[ca-ola]
-    B --> J[ca-gc-digital-standards]
-
-    G --> K[ca-pspc]
-    H --> K
-    K --> L[adr]
-    G --> L
-    L --> M[sobc]
-    C --> N[risk]
-    E --> N
-    G --> N
-    M --> O[framework]
-    N --> O
-
-    style A fill:#90EE90
-    style B fill:#90EE90
-    style C fill:#FFB347
-    style D fill:#FFB347
-    style E fill:#FFD700
-    style F fill:#9370DB
-    style G fill:#87CEEB
-    style H fill:#87CEEB
-    style I fill:#FFA07A
-    style J fill:#FFA07A
-    style K fill:#FFA07A
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
+    style principles fill:#90EE90
+    style stakeholders fill:#90EE90
+    style requirements fill:#90EE90
+    style ca_pia fill:#FFB347
+    style ca_atip fill:#FFB347
+    style ca_aia fill:#FFD700
+    style ca_ocap fill:#9370DB
+    style ca_itsg_33 fill:#87CEEB
+    style ca_cloud_residency fill:#87CEEB
+    style ca_ola fill:#FFA07A
+    style ca_gc_digital_standards fill:#FFA07A
+    style ca_pspc fill:#FFA07A
+    style adr fill:#90EE90
+    style sobc fill:#90EE90
+    style risk fill:#90EE90
+    style framework fill:#90EE90
 ```
 
 **Prerequisites**: Set `governance_framework: Canada Federal` and `classification_scheme: GC Security Categorization` in plugin userConfig before running. Each command's full guide is in [`docs/guides/`](guides/) (`ca-fitaa.md`, `ca-pia.md`, etc.).
@@ -774,71 +1062,65 @@ graph TD
 
 ## 8. UAE Federal Workflow
 
-For UAE federal entities, contracted suppliers, and CII operators, the canonical chain runs the 12 `uae-*` commands in sequence between the standard inputs (requirements, data-model, risk) and the cross-cutting outputs (sobc, wardley, framework).
+For UAE federal entities, contracted suppliers, and CII operators, the `uae-federal-ai` build recipe (`/arckit:build`) runs the 12 `uae-*` commands between the standard inputs (principles, requirements, risk) and the cross-cutting outputs (sobc, wardley). The diagram shows that order: an arrow means the command below runs after the one above.
 
 ```mermaid
 graph TD
-    %% Foundation
-    A[principles] --> B[requirements]
-    A --> C[data-model]
-    B --> C
-    B --> D[risk]
+    principles[principles]
+    requirements[requirements]
+    risk[risk]
+    uae_classification[uae-classification]
+    uae_pdpl[uae-pdpl]
+    uae_ias[uae-ias]
+    uae_cloud_residency[uae-cloud-residency]
+    uae_uaepass[uae-uaepass]
+    uae_zero_bureaucracy[uae-zero-bureaucracy]
+    uae_digital_records[uae-digital-records]
+    uae_data_sharing[uae-data-sharing]
+    uae_priorities_alignment[uae-priorities-alignment]
+    uae_ai_charter[uae-ai-charter]
+    uae_ai_autonomy_tier[uae-ai-autonomy-tier]
+    uae_procurement[uae-procurement]
+    sobc[sobc]
+    wardley[wardley]
 
-    %% UAE federal data + security
-    C --> E[uae-classification]
-    B --> F[uae-pdpl]
-    C --> F
-    D --> F
-    B --> G[uae-ias]
-    D --> G
-    E --> H[uae-cloud-residency]
+    principles --> requirements
+    requirements --> risk
+    uae_priorities_alignment --> uae_classification
+    uae_classification --> uae_pdpl
+    risk --> uae_ias
+    uae_classification --> uae_cloud_residency
+    uae_priorities_alignment --> uae_uaepass
+    uae_ias --> uae_zero_bureaucracy
+    uae_uaepass --> uae_zero_bureaucracy
+    uae_classification --> uae_digital_records
+    uae_pdpl --> uae_data_sharing
+    requirements --> uae_priorities_alignment
+    risk --> uae_ai_charter
+    uae_priorities_alignment --> uae_ai_charter
+    uae_ai_charter --> uae_ai_autonomy_tier
+    risk --> uae_procurement
+    uae_priorities_alignment --> uae_procurement
+    risk --> sobc
+    requirements --> wardley
 
-    %% UAE federal identity
-    B --> I[uae-uaepass]
-
-    %% UAE Cabinet instruments
-    B --> J[uae-zero-bureaucracy]
-    E --> K[uae-digital-records]
-    C --> K
-    E --> L[uae-data-sharing]
-    F --> L
-    J --> M[uae-priorities-alignment]
-    K --> M
-    L --> M
-
-    %% UAE AI governance
-    B --> N[uae-ai-charter]
-    D --> N
-    N --> O[uae-ai-autonomy-tier]
-
-    %% Procurement
-    B --> P[uae-procurement]
-
-    %% Cross-cutting downstream
-    M --> Q[sobc]
-    P --> Q
-    Q --> R[wardley]
-    Q --> S[framework]
-
-    style A fill:#90EE90
-    style B fill:#90EE90
-    style C fill:#90EE90
-    style D fill:#90EE90
-    style E fill:#FFB347
-    style F fill:#FFB347
-    style G fill:#FFB347
-    style H fill:#FFB347
-    style I fill:#87CEEB
-    style J fill:#9370DB
-    style K fill:#9370DB
-    style L fill:#9370DB
-    style M fill:#9370DB
-    style N fill:#FFD700
-    style O fill:#FFD700
-    style P fill:#FFA07A
-    style Q fill:#90EE90
-    style R fill:#90EE90
-    style S fill:#90EE90
+    style principles fill:#90EE90
+    style requirements fill:#90EE90
+    style risk fill:#90EE90
+    style uae_classification fill:#FFB347
+    style uae_pdpl fill:#FFB347
+    style uae_ias fill:#FFB347
+    style uae_cloud_residency fill:#FFB347
+    style uae_uaepass fill:#87CEEB
+    style uae_zero_bureaucracy fill:#9370DB
+    style uae_digital_records fill:#9370DB
+    style uae_data_sharing fill:#9370DB
+    style uae_priorities_alignment fill:#9370DB
+    style uae_ai_charter fill:#FFD700
+    style uae_ai_autonomy_tier fill:#FFD700
+    style uae_procurement fill:#FFA07A
+    style sobc fill:#90EE90
+    style wardley fill:#90EE90
 ```
 
 **Key:**
@@ -862,34 +1144,31 @@ For UK Government projects, run these commands during Alpha/Beta to check for re
 
 ```mermaid
 graph TD
-    %% Prerequisites
-    A[requirements] --> B[gov-reuse]
-    C[gov-code-search] -.-> B
+    principles[principles]
+    stakeholders[stakeholders]
+    requirements[requirements]
+    gov_reuse[gov-reuse]
+    gov_code_search[gov-code-search]
+    gov_landscape[gov-landscape]
 
-    %% Discovery flow
-    B -.-> D[research]
-    B -.-> E[adr]
+    requirements --> gov_reuse
+    principles -.-> gov_reuse
+    stakeholders -.-> gov_reuse
+    requirements -. optional .-> gov_code_search
+    requirements -. optional .-> gov_landscape
 
-    %% Landscape analysis
-    F[gov-landscape] -.-> G[framework]
-    F -.-> H[wardley]
-    C -.-> B
-
-    style A fill:#90EE90
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#90EE90
-    style E fill:#FFA500
-    style F fill:#87CEEB
-    style G fill:#90EE90
-    style H fill:#90EE90
+    style principles fill:#87CEEB
+    style stakeholders fill:#87CEEB
+    style requirements fill:#90EE90
+    style gov_reuse fill:#90EE90
+    style gov_code_search fill:#90EE90
+    style gov_landscape fill:#90EE90
 ```
 
 **Key:**
 
-- **Blue boxes** = Government code discovery commands (use govreposcrape MCP)
-- **Green boxes** = Standard workflow commands that consume discovery outputs
-- **Orange boxes** = Decision records informed by reuse assessment
+- **Dotted arrows marked optional** = the command reads the requirements if they exist
+- No other command reads these reports yet, so carry what they find into research, the ADRs and the Wardley map yourself
 
 **When to use:**
 
@@ -905,21 +1184,21 @@ graph TD
 
 ### Dependency Types in Diagrams
 
-- **Solid arrows (→)**: Mandatory/Recommended sequential flow
-- **Dotted arrows (-.->)**: Optional parallel activities
+- **Solid arrows (-->)**: mandatory input in diagrams 1-6 and the Common Variations; "runs after" in the overlay diagrams (7 and 8), which follow their build recipes
+- **Dotted arrows (-.->)**: recommended input; marked "optional" where a diagram shows an optional input
 
 ### Tier Groupings
 
 | Tier | Phase | Commands |
 |------|-------|----------|
-| 0 | Foundation | plan, principles |
+| 0 | Foundation | start, plan, principles |
 | 1 | Strategic Context | stakeholders |
 | 2 | Risk Assessment | risk |
 | 3 | Business Justification | sobc |
 | 4 | Requirements | requirements |
 | 5 | Strategic Planning & Synthesis | platform-design, roadmap, strategy, framework, glossary |
-| 6 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, gcp-research*, datascout, gov-reuse†, gov-code-search†, gov-landscape†, dfd, wardley, wardley.value-chain, wardley.doctrine, wardley.gameplay, wardley.climate, diagram, adr |
-| 7 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate, score |
+| 6 | Detailed Design | data-model, archify, data-mesh-contract, dpia, research, azure-research*, aws-research*, gcp-research*, datascout, gov-reuse†, gov-code-search†, gov-landscape†, grants, dfd, wardley, wardley.value-chain, wardley.doctrine, wardley.gameplay, wardley.climate, diagram, adr |
+| 7 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate, score, tenders, competitors |
 | 8 | Design Reviews | hld-review, dld-review |
 | 9 | Implementation | backlog |
 | 10 | Backlog Export | trello |
@@ -929,14 +1208,14 @@ graph TD
 | 15 | Publishing | pages |
 
 > **\*** `azure-research` and `aws-research` are alternatives to `research` for cloud-specific projects. Each requires its respective MCP server.
-> **datascout** discovers external data sources (APIs, datasets, open data portals) and feeds into data-model and research.
+> **datascout** discovers external data sources (APIs, datasets, open data portals). It reads the data model; neither data-model nor research reads its report, so carry its findings into them yourself.
 > **†** `gov-reuse`, `gov-code-search`, and `gov-landscape` use the govreposcrape MCP server (no API key required) to search 24,500+ UK government repositories.
 
 ---
 
 ## Alternative View: Gantt Chart Format
 
-For project planning purposes, here's a Gantt chart representation of a typical UK Government AI project:
+For project planning purposes, here's a Gantt chart representation of a typical UK Government AI project. No task starts before a document it needs or recommends, apart from plan, stakeholders and risk, which you can re-run once the requirements exist:
 
 ```mermaid
 gantt
@@ -950,11 +1229,14 @@ gantt
     sobc                    :a5, after a4, 2w
     section Alpha (12 weeks)
     requirements            :b1, after a5, 3w
-    datascout               :b1a, after b1, 1w
-    data-model              :b2, after b1a, 2w
-    research                :b3, after b2, 2w
+    data-model              :b2, after b1, 2w
+    datascout               :b2a, after b2, 1w
+    ai-playbook             :b2b, after b2, 1w
+    research                :b3, after b1, 2w
     wardley                 :b4, after b3, 2w
-    gcloud-search           :b5, after b4, 2w
+    adr                     :b4a, after b4, 1w
+    diagram                 :b4b, after b4, 1w
+    gcloud-search           :b5, after b3, 2w
     evaluate                :b6, after b5, 2w
     section Beta (20 weeks)
     hld-review              :c1, after b6, 2w
@@ -968,16 +1250,15 @@ gantt
     mlops                   :d1c, after d1b, 1w
     operationalize          :d1d, after d1c, 1w
     traceability            :d2, after d1d, 1w
-    analyze                 :d3, after d2, 1w
-    principles-compliance   :d3a, after d3, 1w
-    conformance             :d3b, after d3a, 1w
-    service-assessment      :d4, after d3b, 2w
-    tcop                    :d5, after d4, 1w
-    ai-playbook             :d6, after d5, 1w
-    atrs                    :d7, after d6, 1w
-    secure                  :d8, after d7, 1w
+    tcop                    :d3, after d2, 1w
+    secure                  :d3a, after d3, 1w
+    atrs                    :d3b, after d3a, 1w
+    analyze                 :d3c, after d3b, 1w
+    principles-compliance   :d3d, after d3c, 1w
+    conformance             :d3e, after d3d, 1w
+    service-assessment      :d4, after d3e, 2w
     section Live
-    Go Live                 :milestone, after d8, 0d
+    Go Live                 :milestone, after d4, 0d
 ```
 
 ---
@@ -1024,23 +1305,38 @@ If architecture principles and governance already established:
 
 ```mermaid
 graph LR
-    A[requirements] --> B[data-model]
-    A --> C[research]
-    B -.-> C
-    C --> D[evaluate]
-    D --> E[hld-review]
-    E --> F[dld-review]
-    F --> G[backlog]
-    G --> H[trello]
+    %% Tier 4
+    requirements[requirements]
+    %% Tier 6
+    data_model[data-model]
+    research[research]
+    %% Tier 7
+    evaluate[evaluate]
+    %% Tier 8
+    hld_review[hld-review]
+    dld_review[dld-review]
+    %% Tier 9
+    backlog[backlog]
+    %% Tier 10
+    trello[trello]
 
-    style A fill:#90EE90
-    style B fill:#90EE90
-    style C fill:#90EE90
-    style D fill:#90EE90
-    style E fill:#FFA500
-    style F fill:#FFA500
-    style G fill:#FFA500
-    style H fill:#FFA500
+    requirements --> data_model
+    requirements --> research
+    research -.-> evaluate
+    requirements --> hld_review
+    data_model -.-> dld_review
+    hld_review --> dld_review
+    dld_review -.-> backlog
+    backlog --> trello
+
+    style requirements fill:#90EE90
+    style data_model fill:#90EE90
+    style research fill:#90EE90
+    style evaluate fill:#90EE90
+    style hld_review fill:#FFA500
+    style dld_review fill:#FFA500
+    style backlog fill:#FFA500
+    style trello fill:#FFA500
 ```
 
 **Duration**: 2-4 months
@@ -1052,18 +1348,41 @@ For auditing existing projects:
 
 ```mermaid
 graph LR
-    A[tcop] --> B[secure]
-    B --> C[principles-compliance]
-    C --> D[conformance]
-    D --> E[analyze]
-    E --> F[service-assessment]
+    %% Tier 0
+    principles[principles]
+    %% Tier 4
+    requirements[requirements]
+    %% Tier 6
+    adr[adr]
+    %% Tier 12
+    analyze[analyze]
+    %% Tier 13
+    principles_compliance[principles-compliance]
+    conformance[conformance]
+    service_assessment[service-assessment]
+    tcop[tcop]
+    secure[secure]
 
-    style A fill:#FF6B6B
-    style B fill:#FF6B6B
-    style C fill:#9370DB
-    style D fill:#FF6B6B
-    style E fill:#9370DB
-    style F fill:#FF6B6B
+    principles -.-> requirements
+    requirements --> adr
+    requirements --> analyze
+    tcop -.-> principles_compliance
+    secure -.-> principles_compliance
+    adr --> conformance
+    principles_compliance -.-> conformance
+    secure -.-> service_assessment
+    requirements --> tcop
+    requirements --> secure
+
+    style principles fill:#87CEEB
+    style requirements fill:#90EE90
+    style adr fill:#90EE90
+    style analyze fill:#9370DB
+    style principles_compliance fill:#FF6B6B
+    style conformance fill:#FF6B6B
+    style service_assessment fill:#FF6B6B
+    style tcop fill:#FF6B6B
+    style secure fill:#FF6B6B
 ```
 
 **Duration**: 2-4 weeks
@@ -1073,11 +1392,18 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 1.3.0
-- **Document Date**: 2026-03-16
-- **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
-- **Commands Documented**: 48
+- **ArcKit Version**: 6.18.2
+- **Document Date**: 2026-10-17
+- **Based On**: DEPENDENCY-MATRIX.md (rebuilt 2026-10-17 from the command files) and the `ca-federal-fitaa` and `uae-federal-ai` build recipes
+- **Commands Drawn**: 75
 - **Key Changes**:
+  - Diagrams 1-6 and the Common Variations redrawn from the dependency matrix. The old arrows mostly showed a suggested order: nearly three in four joined commands that don't read each other, or marked an input at the wrong level
+  - Arrows now mean a mandatory input (solid) or a recommended input (dotted); the legend explains what is left out
+  - Canada and UAE diagrams redrawn from their build recipes; the UAE diagram drops data-model and framework, which the recipe doesn't run
+  - Government code discovery shows the commands' real inputs: no other command reads their reports
+  - Gantt chart reordered so no task starts before a document it needs or recommends (apart from plan, stakeholders and risk); adds adr and diagram
+  - Tier table adds start, archify, grants, tenders and competitors
+- **Earlier Changes (1.3.0, 2026-03-16)**:
   - Added Wardley Mapping Suite workflow diagram (wardley.value-chain, wardley.doctrine, wardley.climate, wardley.gameplay)
   - Updated Tier 6 Detailed Design to include 4 new Wardley suite commands
   - Previous: Added conformance node to all 5 workflow paths (between principles-compliance and analyze)

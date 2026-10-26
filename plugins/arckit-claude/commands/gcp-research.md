@@ -37,7 +37,7 @@ You are the **orchestrator tier** of the Google Cloud-research three-tier
 subagent split. You execute in the main session, dispatch the
 **`arckit-gcp-research-reader`** subagent (one call per research
 category) via the `Agent` tool, validate each reader's output against
-the JSON Schema, compute Google Cloud Architecture Framework pillar ratings deterministically
+the JSON Schema, compute Google Cloud Well-Architected Framework pillar ratings deterministically
 from a YAML rubric, apply the region-availability gate, and dispatch
 the shared **`arckit-cloud-research-writer`** subagent to render the
 final artefact.
@@ -59,7 +59,7 @@ main thread, where `Agent` is reliably available) rather than in an
 
 ## What you produce
 
-A DRAFT research artefact at `projects/{P}-{NAME}/research/ARC-{P}-GCRS-NN-vN.N.md`, containing per-category service analysis with Google Cloud Architecture Framework pillar ratings and their evidence, region availability, published pricing with a cost estimate and its assumptions, compliance programme coverage, and the services excluded on region with the reason.
+A DRAFT research artefact at `projects/{P}-{NAME}/research/ARC-{P}-GCRS-NN-vN.N.md`, containing per-category service analysis with Google Cloud Well-Architected Framework pillar ratings and their evidence, region availability, published pricing with a cost estimate and its assumptions, compliance programme coverage, and the services excluded on region with the reason.
 
 ## Process
 
@@ -71,7 +71,7 @@ Read:
 
 **Mandatory:** `projects/{P}-{NAME}/ARC-*-REQ-*.md`. If missing, stop and tell the user to run `/arckit:requirements` first — there is nothing to select services against.
 
-**Recommended if present:** `projects/000-global/ARC-000-PRIN-*.md` (hosting and open-source posture), `ARC-*-STKE-*.md`, `ARC-*-SOBC-*.md` (budget envelope), and any existing `ARC-*-HLD-*.md`.
+**Recommended if present:** `projects/000-global/ARC-000-PRIN-*.md` (hosting and open-source posture), `ARC-*-STKE-*.md`, `ARC-*-SOBC-*.md` (budget envelope), and any vendor HLD (`vendors/*/hld-v*.md`).
 
 ### Step 2: Build the project_profile
 
@@ -91,7 +91,7 @@ Read:
 
 ### Step 3: Detect jurisdiction → choose rubric
 
-Grep requirements and principles for UK-Gov patterns: "UK Government", "Ministry of", "Department for", "NHS", "MOD", "GDS", "TCoP", "Crown Commercial", "OFFICIAL".
+Grep requirements and principles for UK-Gov patterns: "UK Government", "Ministry of", "Department for", "NHS", "MOD", "GDS", "TCoP", "Government Commercial Agency", "Crown Commercial" (the name before 1 April 2026, still found in older documents), "OFFICIAL".
 
 - If matched: rubric = `${CLAUDE_PLUGIN_ROOT}/schemas/scoring-rubrics/cloud-research-uk-gov.yaml`
 - Otherwise: `${CLAUDE_PLUGIN_ROOT}/schemas/scoring-rubrics/cloud-research-generic.yaml`
@@ -126,7 +126,7 @@ At most 6 readers in one wave. Build the input:
 }
 ```
 
-Dispatch with `subagent_type: "arckit:arckit-gcp-research-reader"`.
+Dispatch with `subagent_type: "arckit:arckit-gcp-research-reader"`, `run_in_background: false`.
 
 The Google Developer Knowledge server has no region-availability tool, so the reader takes region evidence from the Cloud locations documentation. Expect fewer rows than you asked for, and treat an absent row as unchecked rather than unavailable.
 
@@ -172,9 +172,9 @@ Assemble the writer input documented in `arckit-cloud-research-writer`'s Input s
 - `provider`: `"gcp"`
 - `provider_label`: `"Google Cloud"`
 - `template_path`: `"${CLAUDE_PLUGIN_ROOT}/templates/gcp-research-template.md"`
-- `framework_label`: `"Google Cloud Architecture Framework"`
+- `framework_label`: `"Google Cloud Well-Architected Framework"`
 
-Dispatch with `subagent_type: "arckit:arckit-cloud-research-writer"`.
+Dispatch with `subagent_type: "arckit:arckit-cloud-research-writer"`, `run_in_background: false`.
 
 ### Step 11: Return summary
 

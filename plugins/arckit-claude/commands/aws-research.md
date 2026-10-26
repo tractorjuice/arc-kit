@@ -71,7 +71,7 @@ Read:
 
 **Mandatory:** `projects/{P}-{NAME}/ARC-*-REQ-*.md`. If missing, stop and tell the user to run `/arckit:requirements` first — there is nothing to select services against.
 
-**Recommended if present:** `projects/000-global/ARC-000-PRIN-*.md` (hosting and open-source posture), `ARC-*-STKE-*.md`, `ARC-*-SOBC-*.md` (budget envelope), and any existing `ARC-*-HLD-*.md`.
+**Recommended if present:** `projects/000-global/ARC-000-PRIN-*.md` (hosting and open-source posture), `ARC-*-STKE-*.md`, `ARC-*-SOBC-*.md` (budget envelope), and any vendor HLD (`vendors/*/hld-v*.md`).
 
 ### Step 2: Build the project_profile
 
@@ -91,7 +91,7 @@ Read:
 
 ### Step 3: Detect jurisdiction → choose rubric
 
-Grep requirements and principles for UK-Gov patterns: "UK Government", "Ministry of", "Department for", "NHS", "MOD", "GDS", "TCoP", "Crown Commercial", "OFFICIAL".
+Grep requirements and principles for UK-Gov patterns: "UK Government", "Ministry of", "Department for", "NHS", "MOD", "GDS", "TCoP", "Government Commercial Agency", "Crown Commercial" (the name before 1 April 2026, still found in older documents), "OFFICIAL".
 
 - If matched: rubric = `${CLAUDE_PLUGIN_ROOT}/schemas/scoring-rubrics/cloud-research-uk-gov.yaml`
 - Otherwise: `${CLAUDE_PLUGIN_ROOT}/schemas/scoring-rubrics/cloud-research-generic.yaml`
@@ -126,7 +126,7 @@ At most 6 readers in one wave. Build the input:
 }
 ```
 
-Dispatch with `subagent_type: "arckit:arckit-aws-research-reader"`.
+Dispatch with `subagent_type: "arckit:arckit-aws-research-reader"`, `run_in_background: false`.
 
 The AWS reader has a dedicated availability tool, so region evidence is authoritative. Pass `required_regions` and it will map `isAvailableIn` / `isNotAvailableIn` / `isPlannedIn` / `Not Found` onto the schema's status enum.
 
@@ -174,7 +174,7 @@ Assemble the writer input documented in `arckit-cloud-research-writer`'s Input s
 - `template_path`: `"${CLAUDE_PLUGIN_ROOT}/templates/aws-research-template.md"`
 - `framework_label`: `"AWS Well-Architected Framework"`
 
-Dispatch with `subagent_type: "arckit:arckit-cloud-research-writer"`.
+Dispatch with `subagent_type: "arckit:arckit-cloud-research-writer"`, `run_in_background: false`.
 
 ### Step 11: Return summary
 

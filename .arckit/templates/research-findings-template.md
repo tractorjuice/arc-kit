@@ -17,19 +17,11 @@
 
 ## Executive Summary
 
-### Research Scope
-
-This document presents research findings for technology, services, and products that can meet the requirements documented in `ARC-{PROJECT_ID}-REQ-v*.md`. It provides build vs buy analysis and vendor recommendations for procurement decisions.
-
-**Requirements Analyzed**: [X] functional, [Y] non-functional, [Z] integration, [W] data requirements
-
-**Research Categories Identified**: [X] categories based on requirement analysis
-
-**Research Approach**: [Market research, vendor evaluation, UK Government Digital Marketplace search, open source assessment]
-
 ### Key Findings
 
-[3-5 bullet points summarizing the most important findings]
+**Recommendation**: [One sentence: the overall build/buy/adopt split and its 3-year TCO, e.g. "Buy for [Y] of [Total] categories and build only [Category], for a blended 3-year TCO of £[TOTAL]."]
+
+[One bullet per research category, most decisive first. As many as there are categories; not a fixed number.]
 
 - **[Category]**: [Recommendation] - [Key reason]
 - **[Category]**: [Recommendation] - [Key reason]
@@ -58,6 +50,16 @@ This document presents research findings for technology, services, and products 
 - ✅ **[X%]** of requirements have identified solutions
 - ⚠️ **[Y]** requirements need custom development (no suitable off-the-shelf)
 - 🔍 **[Z]** requirements need further research or clarification
+
+### Research Scope
+
+This document presents research findings for technology, services, and products that can meet the requirements documented in `ARC-{PROJECT_ID}-REQ-v*.md`. It provides build vs buy analysis and vendor recommendations for procurement decisions.
+
+**Requirements Analyzed**: [X] functional, [Y] non-functional, [Z] integration, [W] data requirements
+
+**Research Categories Identified**: [X] categories based on requirement analysis
+
+**Research Approach**: [Market research, vendor evaluation, UK Government Digital Marketplace search, open source assessment]
 
 ---
 

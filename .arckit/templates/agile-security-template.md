@@ -21,12 +21,8 @@
 | **Framework** | O-AA Security Playbook (G216) + TOGAF ADM |
 | **Parent** | `${user_config.references_dir}` — parent engagement reference, if any |
 | **Organisation** | `${user_config.organisation_name}` |
-| **Issue** | `${user_config.project_issue_prefix}-127` — Agile Security Architecture Template |
-| **Date** | 2026-08-12 |
-| **Status** | Draft |
-| **Author** | Enterprise Architecture Lead |
-| **Prerequisites** | ADR-001 (Executable TOGAF ADM), ADR-003 (AI Governance Framework) |
-| **Integrates with** | `governance-report.yaml`, `compliance-mapping.yaml`, ADR-005 (Compliance Validation Pipeline) |
+| **Prerequisites** | Product architecture (`ARC-[PROJECT_ID]-OAPR`), requirements (`ARC-[PROJECT_ID]-REQ`) and organisation reference documents in `${user_config.references_dir}`, where they exist |
+| **Integrates with** | `governance-report.yaml` and `compliance-evidence.yaml` (shared with `/arckit:agile-governance`) |
 
 ---
 
@@ -44,7 +40,7 @@ Use this template when **any** of the following conditions are met:
 
 **Do NOT use** when:
 
-- Security assessment is a standalone, one-off engagement (use the standalone compliance validation pipeline described in your ADR-005 reference document instead)
+- Security assessment is a standalone, one-off engagement (use a dedicated security assessment instead)
 
 - Client requires traditional waterfall security reviews with formal sign-off gates at each phase
 
@@ -207,7 +203,7 @@ The compliance-as-code pipeline feeds directly into `governance-report.yaml`:
 ```yaml
 # governance-report.yaml — security validation section
 security_validation:
-  timestamp: "2026-08-12T10:00:00Z"
+  timestamp: "[YYYY-MM-DDThh:mm:ssZ]"
   sprint: 4
   scan_results:
     sast:
@@ -338,6 +334,128 @@ security_debt:
 
 ---
 
+## Threat Model Per Sprint (STRIDE)
+
+The threat model is a backlog item every sprint, not a one-off document. Sprint 0 models the product architecture; each later sprint updates the model for the features it delivers, new findings from SAST/DAST tools, and changes in the environment. Each threat is classified by STRIDE category (or an equivalent method named here) and linked to the security story that mitigates it.
+
+| STRIDE category | Question for each component and data flow |
+|---|---|
+| **S**poofing | Can someone pretend to be a user, service or model? |
+| **T**ampering | Can data, prompts, models or configuration be altered? |
+| **R**epudiation | Can an action be denied because it was not logged? |
+| **I**nformation disclosure | Can data, embeddings or model outputs leak? |
+| **D**enial of service | Can the component be exhausted or made unavailable? |
+| **E**levation of privilege | Can a caller gain rights it should not have? |
+
+```yaml
+# threat-model.yaml (sprint 4 update)
+sprint: 4
+method: "STRIDE"
+scope:
+  components: ["api_gateway", "model_serving", "vector_store"]
+  new_since_last_sprint: ["vector_store"]
+threats:
+
+  - id: "TM-012"
+    component: "model_serving"
+    stride: "tampering"
+    threat: "Prompt injection alters the model's instructions"
+    likelihood: high
+    impact: high
+    mitigation_story: "SEC-045"
+    status: "mitigation_in_progress"
+
+  - id: "TM-013"
+    component: "vector_store"
+    stride: "information_disclosure"
+    threat: "Retrieval returns documents above the caller's clearance"
+    likelihood: medium
+    impact: high
+    mitigation_story: "SEC-052"
+    status: "open"
+residual_risks:
+
+  - threat: "TM-012"
+    residual: "Novel injection patterns not covered by the test suite"
+    accepted_by: "[Security Lead]"
+    review_sprint: 6
+
+```
+
+---
+
+## Compliance Evidence Per Sprint
+
+Evidence is produced alongside each sprint's deliverables, so it is always current and never gathered for an audit. The same `compliance-evidence.yaml` structure is used by `/arckit:agile-governance`.
+
+```yaml
+# compliance-evidence.yaml (sprint 4)
+sprint: 4
+owner: "[Security Lead]"
+evidence:
+
+  - control: "APP-11.1 encryption_at_rest"
+    category: "security_control"     # regulatory | security_control | architecture_standard | quality_gate
+    requirement: "NFR-SEC-003"
+    artefact: "CI job storage-encryption-audit, run [RUN_ID]"
+    result: "pass"
+    collected: "[YYYY-MM-DD]"
+
+  - control: "GDPR-32 security_testing"
+    category: "regulatory"
+    requirement: "NFR-SEC-007"
+    artefact: "DAST report, staging, sprint 4"
+    result: "gap"
+    follow_up_story: "SEC-053"
+    collected: "[YYYY-MM-DD]"
+
+```
+
+---
+
+## Security Architecture Guardrails
+
+| Type | Guardrail | Example |
+|---|---|---|
+| Non-negotiable constraint | Encryption at rest and in transit, authentication on every endpoint, security logging standard | AES-256 at rest; TLS 1.3 in transit |
+| Approved building block | Security libraries and services the team must use | Organisation identity provider; approved secrets manager |
+| Anti-pattern | Forbidden security approaches | Rolling your own cryptography; hard-coded credentials |
+| Review gate | Lightweight sprint-level security review | Security validation report at sprint review |
+
+---
+
+## AI/ML Security Considerations
+
+| Concern | Per-sprint activity | Evidence |
+|---|---|---|
+| Algorithmic transparency | Update the transparency record for AI/ML features changed this sprint | Transparency record (for UK public sector, an ATRS record) |
+| Bias and fairness | Automated bias tests in the CI/CD pipeline for model changes | Bias test report per model version |
+| Model security | Tests for model poisoning, data leakage and adversarial inputs | Model safety suite results |
+| Privacy preservation | Apply differential privacy or federated learning where the data warrants it | Design decision recorded as an ADR |
+
+---
+
+## Security Exception Path
+
+When a security check fails and the delivery date cannot move:
+
+1. The team raises the exception in the security backlog, with the failing check, the risk and a proposed resolution sprint
+2. Sign-off depends on severity: Critical and High need the Security Lead and the product owner; Medium needs the Team Architect; Low is logged only
+3. The exception is recorded as accepted risk with a severity and a resolution deadline, and is reviewed at each sprint boundary
+4. An exception that passes its deadline unresolved escalates through the agile governance escalation path
+
+---
+
+## Requirements Traceability (NFR-SEC)
+
+Every security story traces to a security requirement in the requirements artefact (`ARC-[PROJECT_ID]-REQ`) where one exists. A requirement with no story is a gap.
+
+| Requirement | Security stories | Threats mitigated | Status |
+|---|---|---|---|
+| {NFR-SEC-xxx} | {SEC-xxx} | {TM-xxx} | Covered / Gap |
+
+---
+
 ## Security Metrics Dashboard
 
 Continuous validation produces measurable security posture indicators:
@@ -371,27 +489,17 @@ Continuous validation produces measurable security posture indicators:
 
 ## Integration Points
 
-### With ADR-001 (Executable TOGAF ADM Workflow)
+### With TOGAF ADM Phase G
 
 This template replaces the static Phase G governance gate with continuous validation. The `governance-report.yaml` output format remains the same, but it is updated every sprint instead of at project end.
 
-### With ADR-003 (AI Governance Framework)
+### With Organisation Reference Documents
 
-Security stories in sprint backlogs implement the controls defined in ADR-003's governance pillars:
-
-- Model lifecycle management → model safety tests (prompt injection, output filtering)
-
-- Agent orchestration standards → authorization and audit logging tests
-
-- Compliance mapping → compliance-as-code validation rules
-
-### With ADR-005 (Compliance Validation Pipeline)
-
-The compliance-as-code integration point uses the compliance validation pipeline described in ADR-005 as the execution model. Every sprint gate runs the validation stage and feeds results into `governance-report.yaml`.
+Where `${user_config.references_dir}` holds the organisation's own ADRs or frameworks (for example an AI governance framework or a compliance validation pipeline), map the security stories and compliance-as-code rules to the controls they define, and list each document in the External References register. Omit this subsection when no such documents exist.
 
 ### With the Agile Governance Template
 
-The sprint-level security validation report is reviewed during the Sprint Architecture Review Checklist (`agile-governance-template.md`, section 1). Security metrics feed into the quarterly Architecture Health Assessment.
+The sprint-level security validation report is reviewed during the Sprint Architecture Review Checklist (`agile-governance-template.md`, section 2), and the shared `compliance-evidence.yaml` feeds its compliance evidence framework (section 6). Security metrics feed into the quarterly Architecture Health Assessment.
 
 ---
 
@@ -421,19 +529,19 @@ The checks below describe the pipeline shape — ArcKit does not ship these tool
 
 ## Acceptance Criteria
 
-- [ ] Template aligns with O-AA Security Playbook (G216) principles
+- [ ] Security activities sit inside each sprint, each with its trigger stated
 
-- [ ] Security activities embedded in each sprint/iteration, not separate gates
+- [ ] Threat model structured by STRIDE (or a named equivalent) and updated at a named sprint event
 
-- [ ] Risk-based security testing automation defined with clear classification rules
+- [ ] Compliance evidence is a per-sprint output with a named owner
 
-- [ ] Compliance-as-code integration points documented with YAML examples
+- [ ] Continuous validation replaces named phase-gate checkpoints; the gates that remain are named
 
-- [ ] Continuous security validation replaces phase-gate checkpoints with measurable evidence
+- [ ] Exception path defined, with sign-off by severity and a resolution deadline
 
-- [ ] Integration with existing `governance-report.yaml` structure is explicit
+- [ ] Security stories trace to NFR-SEC requirements; untraced requirements listed as gaps
 
-- [ ] Reference to ADR-001, ADR-003, ADR-005, and `agile-governance-template.md`
+- [ ] Findings carry a severity and a resolution deadline
 
 - [ ] Security metrics dashboard with alert thresholds
 
@@ -441,15 +549,9 @@ The checks below describe the pipeline shape — ArcKit does not ship these tool
 
 - O-AA Security Playbook (G216) — The Open Group. Guidelines for addressing security in Agile Architecture. https://publications.opengroup.org/guides/agile-architecture-guides/g216
 
-- ADR-001: Executable TOGAF ADM Workflow
-
-- ADR-003: AI Governance Framework
-
-- ADR-005: Compliance Validation Pipeline
-
 - Agile Governance Template (`agile-governance-template.md`)
 
-- ${user_config.references_dir} — organisation reference documents (e.g. implementation plan); include only documents that exist in the configured directory
+- ${user_config.references_dir} — organisation reference documents (e.g. ADRs, AI governance framework, compliance validation pipeline, implementation plan); include only documents that exist in the configured directory
 
 ---
 

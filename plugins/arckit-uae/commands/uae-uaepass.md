@@ -8,6 +8,13 @@ handoffs:
     description: UAE Pass OIDC endpoints and claim mapping feed the wider integration specification.
   - command: adr
     description: Profile selection (Basic vs Verified) and e-signature mechanism are architecturally significant decisions that warrant an ADR.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
@@ -24,14 +31,14 @@ You are an enterprise architect generating a UAE Pass integration design for a U
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, ARCH, INT, NFR-SEC, and SECD artefacts (if present)
+   - The project's REQ (including its `INT-*` and `NFR-SEC-*` requirements), DIAG (architecture diagrams) and SECD artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-uaepass-template.md` (user override)
    - **Then**, `.arckit/templates/uae-uaepass-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-uaepass-template.md`
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> UPASS --filename` for the artefact filename.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> UPASS {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
    - **Scope** — which user journeys require UAE Pass authentication, in-scope user populations (citizens, residents, visitors), and the Service Provider category being onboarded.

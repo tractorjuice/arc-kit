@@ -1,5 +1,5 @@
 ---
-description: Plan dual transformation with agile strategy canvas — legacy modernization alongside greenfield innovation
+description: Plan dual transformation with agile strategy canvas — digital transformation alongside agile transformation
 doc-type: OASTR
 argument-hint: "<product or programme name, e.g. 'Observability Stack', 'enterprise AI transformation'>"
 effort: high
@@ -10,9 +10,13 @@ handoffs:
 
   - command: agile-governance
     description: Establish governance cadence for the transformation programme
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
-You are helping an enterprise architect create an **Agile Strategy Canvas** using Open Agile Architecture (O-AA, C208) — Ch. 11 Agile Strategy. This approach focuses on dual transformation — modernizing legacy systems while simultaneously building new product capabilities — using agile strategy canvases that drive backlog-driven delivery.
+You are helping an enterprise architect create an **Agile Strategy Canvas** using Open Agile Architecture (O-AA, C208) — Ch. 11 Agile Strategy. This approach plans the dual transformation C208 is written for — the Digital Transformation of the enterprise together with its Agile Transformation — on a canvas that drives backlog-driven delivery.
 
 ## User Input
 
@@ -24,7 +28,7 @@ $ARGUMENTS
 
 Use this command when **any** of the following conditions are met:
 
-- Client is pursuing **dual transformation** (legacy modernization + greenfield innovation simultaneously)
+- Client is pursuing a **dual transformation** in the O-AA sense: digital transformation (technology, product, operating model) together with agile transformation (organizational, cultural, team agility)
 
 - Strategy needs to be **backlog-driven** rather than a static document on a shelf
 
@@ -36,7 +40,7 @@ Use this command when **any** of the following conditions are met:
 
 **Do NOT use** when:
 
-- Purely defensive transformation (no innovation component) — use `/arckit-togaf-adm:transition-architecture` instead
+- Technology migration with no product, operating-model or organizational change — use `/arckit-togaf-adm:transition-architecture` instead
 
 - Client requires a traditional multi-year strategic plan with 200+ page deliverables
 
@@ -59,6 +63,14 @@ Use this command when **any** of the following conditions are met:
 - **OAPR** (Agile Product Architecture) — Extract: Product mission, outcomes, guardrails
 
   - If missing: note that product architecture context is limited
+
+- **STKE** (Stakeholder Analysis) — Extract: Stakeholder drivers, goals and measures the strategy must serve
+
+  - If missing: note that strategy traceability to stakeholder goals is limited, and suggest `/arckit:stakeholders`
+
+- **REQ** (Requirements) — Extract: Business requirements (BR) and the business drivers behind them
+
+  - If missing: note that strategy traceability to business requirements is limited, and suggest `/arckit:requirements`
 
 - **TRANS** (Transition Architecture) — Extract: Legacy systems, migration constraints, transition waves
 
@@ -107,7 +119,9 @@ Identify the target project from the hook context. If the user specifies a proje
 
 O-AA agile strategy practice (C208 Ch. 11) establishes that:
 
-- **Dual transformation**: Simultaneously run legacy modernization (defend) and greenfield innovation (attack) tracks
+- **Dual transformation**: C208 covers the Digital Transformation of the enterprise together with its Agile Transformation (C208 Ch. 1 and Ch. 3). The canvas therefore has two dimensions — digital (technology, product, operating model) and agile (organizational, cultural, team agility) — planned together. Legacy modernization is part of the technology area of the digital dimension, not a separate track
+
+- **Agile strategy tenets**: C208 Ch. 11 frames agile strategy through six tenets — grasp the situation, frame strategy around hard-to-reverse choices, anticipate unintended consequences, strategy is a journey, mix stability and dynamism, and do not deploy strategy in silos — and covers strategy deployment. Use them to test the canvas's choices; cite them by title and do not quote text you cannot verify against C208
 
 - **Strategy canvas**: Condense strategy into 1-2 pages — not a 50-page document nobody reads
 
@@ -121,11 +135,12 @@ O-AA agile strategy practice (C208 Ch. 11) establishes that:
 
 The agile strategy canvas command defines artefacts whose structure is inlined in `agile-strategy-template.md`:
 
-- **`strategy-canvas.yaml`** — the 1-2 page strategy canvas (segments, value proposition, channels, key activities, key resources, partnerships, cost)
+- **`strategy-canvas.yaml`** — the structured canvas: technology, product and operating-model transformation; organizational, cultural and team agility; design principles; resilience mapping; transformation waves; strategy-to-backlog mapping
 
-- **`vision.yaml`** — architecture vision constraints inherited from O-AA Lite or ADM Preliminary (`/arckit-oaa:oaa-adm-lite`, `/arckit-togaf-adm:adm-preliminary`)
+It also reads two artefacts it does not define:
 
-- **`implementation-strategy.yaml`** — transformation waves and sequencing (consistent with `/arckit-togaf-adm:transition-architecture`)
+- **`vision.yaml`** — architecture vision constraints from O-AA ADM Lite (structure inlined in `oaa-adm-lite-template.md`) or the ADM Preliminary
+- **`implementation-strategy.yaml`** — implementation waves from O-AA ADM Lite Sprint 3 (consistent with `/arckit-togaf-adm:transition-architecture`)
 
 ### 5. Generate Agile Strategy Canvas Document
 
@@ -133,65 +148,51 @@ Create the Agile Strategy Canvas document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OASTR --filename` (canonical form: `ARC-{P}-OASTR-v1.0`)
+- Generate Document ID with `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs {P} OASTR {VERSION} --filename` (canonical form: `ARC-{P}-OASTR-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 
 - Review cycle: Per sprint cycle (align with O-AA sprint cadence)
 
-#### Dual Transformation Canvas
+#### Digital Transformation Dimension (template Section 1)
 
-- **Defend track**: Legacy modernization initiatives with clear outcomes
+- **Technology**: Current and target state, migration approach (strangler, dual-run, big-bang), technology risks, enabling technologies. Legacy systems from TRANS sit here, each with a modernization decision (keep/modify/replace/retire)
 
-  - Legacy inventory with modernization priority (keep/modify/replace/retire)
+- **Product**: Current and target product model (project-based to permanent product teams), product outcomes, value streams mapped to product teams
 
-  - Risk assessment for legacy dependencies
+- **Operating model**: Current and target operating model, capability gaps, platform strategy, and the funding model (project budgets to product or value-stream funding)
 
-  - Minimal viable modernization per sprint
+#### Agile Transformation Dimension (template Section 2)
 
-- **Attack track**: Greenfield innovation initiatives
+- **Organizational agility**: Decision rights by level (team, cross-team, executive) and the governance model
 
-  - New product capabilities with outcome targets
+- **Cultural agility**: Target culture, change initiatives, success indicators
 
-  - Innovation backlog items with architecture considerations
+- **Team agility**: Target team topology and composition, agile practices, flow metrics
 
-  - Experimentation framework with fast failure thresholds
+#### Axiom-Based Design Principles and Resilience (template Sections 3-4)
 
-#### Strategy Canvas (1-2 Pages)
+- Design principles, each derived from a published O-AA axiom cited by number and name, with rationale, implications and exceptions
 
-- **Customer segments**: Who are we serving and what do they value?
+- Resilience targets (RTO/RPO) per threat, tagged to the transformation dimension they belong to
 
-- **Value proposition**: What outcome does the product deliver?
+#### Transformation Wave Plan (template Section 5)
 
-- **Channels**: How does value reach the customer?
+- Waves that combine digital and agile activities, run together rather than one after the other
 
-- **Revenue/impact model**: How is value measured and captured?
+- Each wave states the outcome it buys and the measure that would show it worked
 
-- **Key activities**: What must we do to deliver?
+- Resilience milestones and governance gates per wave; dependencies between digital and agile activities
 
-- **Key resources**: What capabilities and platforms do we need?
-
-- **Key partnerships**: What external dependencies exist?
-
-- **Cost structure**: What is the investment profile?
-
-#### Transformation Sequencing
-
-- Wave 1: Quick wins with high impact, low complexity
-
-- Wave 2: Core capability modernization
-
-- Wave 3: Platform foundations for future innovation
-
-- Dependencies between defend and attack tracks
-
-#### Strategy-to-Backlog Mapping
+#### Strategy-to-Backlog Mapping (template Section 6)
 
 - Strategy epics → Features → Stories with architecture considerations
 
 - Architecture guardrails per epic
 
 - O-AA published-axiom compliance per feature (cite number + name)
+
+- Each epic traces to a stakeholder goal (STKE) or business requirement (REQ) where available
 
 ### 6. External References
 
@@ -208,7 +209,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-OASTR-v1.0.md
+projects/{P}/ARC-{P}-OASTR-v{VERSION}.md
 ```
 
 ### 9. Show Summary to User
@@ -218,23 +219,23 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Agile Strategy Canvas Created
 
-**Document**: `projects/{P}/ARC-{P}-OASTR-v1.0.md`
-**Document ID**: ARC-{P}-OASTR-v1.0
+**Document**: `projects/{P}/ARC-{P}-OASTR-v{VERSION}.md`
+**Document ID**: ARC-{P}-OASTR-v{VERSION}
 
 ### Dual Transformation Profile
-- **Defend track**: [N] legacy modernization initiatives
+- **Digital transformation**: [Technology, product and operating-model shifts in brief]
 
-- **Attack track**: [N] greenfield innovation initiatives
+- **Agile transformation**: [Organizational, cultural and team agility shifts in brief]
 
 - **Transformation waves**: [N] waves sequenced
 
 ### Strategy Canvas Highlights
-| Dimension | Summary |
-|-----------|---------|
-| Customer segments | [Brief] |
-| Value proposition | [Brief] |
-| Key activities | [Brief] |
-| Key resources | [Brief] |
+| Area | Summary |
+|------|---------|
+| Technology | [Brief] |
+| Product | [Brief] |
+| Operating model | [Brief] |
+| Organizational, cultural and team agility | [Brief] |
 
 ### Sprint Artifacts
 - ✅ strategy-canvas.yaml
@@ -244,28 +245,34 @@ After writing the file, show a concise summary (NOT the full document):
 ### Synthesised From
 - [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
 
+- [✅/⚠️] Stakeholder Analysis: ARC-{P}-STKE-v[N].md
+
+- [✅/⚠️] Requirements: ARC-{P}-REQ-v[N].md
+
 - [✅/⚠️] O-AA ADM Lite: ARC-{P}-OAAL-v[N].md
 
 - [✅/⚠️] Product Architecture: ARC-{P}-OAPR-v[N].md
 
 - [✅/⚠️] Transition Architecture: ARC-{P}-TRANS-v[N].md
 
+- [✅/⚠️] Business Capability Map: ARC-{P}-BPCM-v[N].md
+
 ### Next Steps
 1. Populate product backlog with strategy epics
 2. Embed security into strategy rhythm: `/arckit-oaa:agile-security`
 3. Establish governance cadence: `/arckit-oaa:agile-governance`
-4. Begin Sprint 1: `/arckit-oaa:product-architecture`
+4. If the canvas changes product outcomes, refresh the product architecture: `/arckit-oaa:product-architecture`
 
-**File location**: `projects/{P}/ARC-{P}-OASTR-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-OASTR-v{VERSION}.md`
 ```
 
 ## Important Notes
 
-1. **Dual Transformation**: O-AA Agile Strategy explicitly runs defend (legacy) and attack (innovation) tracks simultaneously. Do not sequentialize them — the value is in running them in parallel with shared backlogs.
+1. **Dual Transformation**: C208's premise is that organizational agility is a key enabler of digital transformation. Plan the digital and agile dimensions together in each wave; do not defer the agile transformation to a later phase.
 
 2. **Strategy Canvas is Living**: The strategy canvas is not a static document. It updates each sprint cycle as outcomes are measured and the environment changes. Treat it as a backlog item, not a shelf artifact.
 
-3. **Sprint Artefacts**: The `strategy-canvas.yaml` and `vision.yaml` structures are defined inline in `agile-strategy-template.md`. Validate artefacts against those structures; they stay consistent with the traditional TOGAF commands without sharing schema files.
+3. **Sprint Artefacts**: The `strategy-canvas.yaml` structure is defined inline in `agile-strategy-template.md`; `vision.yaml` is defined in `oaa-adm-lite-template.md`. Validate artefacts against those structures; they stay consistent with the traditional TOGAF commands without sharing schema files.
 
 4. **Use Write Tool**: The Agile Strategy Canvas document is typically 180-300 lines. ALWAYS use the Write tool to create it.
 

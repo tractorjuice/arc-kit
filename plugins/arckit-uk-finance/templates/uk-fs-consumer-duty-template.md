@@ -334,7 +334,8 @@ materialised.
 | FCA PS22/9 | A new Consumer Duty — Policy Statement (July 2022) | <https://www.fca.org.uk/publications/policy-statements/ps22-9-new-consumer-duty> |
 | FCA FG22/5 | Guidance for firms on the Consumer Duty (PDF, August 2022) | <https://www.fca.org.uk/publication/finalised-guidance/fg22-5.pdf> |
 | FCA PS22/9 PDF | A new Consumer Duty — Policy Statement PDF | <https://www.fca.org.uk/publication/policy/ps22-9.pdf> |
-| FCA Board Report Observations | Consumer Duty board reports: good practice and areas for improvement (December 2024, updated March 2026) | <https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement> |
+| FCA Board Report Observations | Consumer Duty board reports: good practice and areas for improvement (11 December 2024, last updated 9 March 2026) | <https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement> |
+| FCA Year 2 Board Reports blog | Year 2 Consumer Duty Board Reports: progress and what comes next (16 April 2026) | <https://www.fca.org.uk/news/blogs/year-2-consumer-duty-board-reports-progress-and-what-comes-next> |
 | FCA Consumer Duty — Firms | Consumer Duty information for firms | <https://www.fca.org.uk/firms/consumer-duty/information-firms> |
 | FCA Handbook | FCA Handbook homepage (navigate to PRIN 2A for Consumer Duty rules) | <https://www.handbook.fca.org.uk> |
 | FCA 2022/31 | Consumer Duty instrument — introduces Principle 12 and PRIN 2A | <https://www.fca.org.uk/publication/policy/fca-2022-31.pdf> |

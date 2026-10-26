@@ -29,7 +29,7 @@
 - [Summary of security strengths]
 - [Blocking security issues]
 
-**Accreditation Status**: [Not Started / In Progress / Accredited / Conditional Accreditation]
+**Continuous Assurance Status**: [Not Started / In Progress / Current / Review Overdue]
 
 **Risk Summary**: [Overall security risk level: Low / Medium / High / Very High]
 
@@ -73,18 +73,98 @@
 
 ---
 
-## 2. MOD Security Principles Compliance
+## 2. MOD Secure by Design Principles Compliance
 
-### 2.1 Defence in Depth
+> The seven principles as MOD publishes them at [digital.mod.uk](https://www.digital.mod.uk/policy-rules-standards-and-guidance/secure-by-design). [ISN 2023/09](https://assets.publishing.service.gov.uk/media/64bfb929d4051a00145a9289/ISN_2023-09_Secure_by_Design_Requirements.pdf) sets out the requirements for each; it names Principle 7 "Enable Through Life Management".
 
-**Principle**: Multiple layers of security controls so that if one fails, others continue to protect.
+### 2.1 Understand and Define Context
+
+**Principle**: Understand what the capability does, how it will use and manage MOD data, and how it achieves its primary business or operational outcome.
 
 **Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
 
 **Evidence**:
-[Describe layered security controls implemented]
+[Describe the documented context, risk appetite, initial cyber risk assessment and CAAT registration, citing source documents]
 
-**Security Layers Implemented**:
+**Context Checks**:
+
+- [ ] Context, purpose and mode of operation documented (use, users and operators, support, data access, storage and processing, role of suppliers, end-to-end operation and interdependencies)
+- [ ] Data classification determined (see Section 1)
+- [ ] Operational environment understood
+- [ ] Stakeholder security requirements captured
+- [ ] Capability risk appetite defined and published by the SRO
+- [ ] Initial cyber security risk assessment completed and documented
+- [ ] Capability registered on the Cyber Activity and Assurance Tracker (CAAT)
+
+**Gaps/Actions**:
+
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+
+### 2.2 Plan the Security Activities
+
+**Principle**: Plan the right security activities from the start, including assessment of cyber threat and potential risks.
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe the security plan, Delivery Team Security Lead appointment and threat assessment]
+
+**Planning Checks**:
+
+- [ ] Delivery Team Security Lead appointed and funded, with suitably qualified and experienced (SQEP) security support
+- [ ] Security requirements defined in the initial specifications, with validation and verification planned
+- [ ] Threat assessment conducted in Discovery/Alpha (see Section 4)
+- [ ] Security approach and plan documented (risk assessment method, control framework, assurance and testing approach)
+- [ ] Security costs included in the business case and investment approvals
+- [ ] Security expertise involved from the start
+
+**Gaps/Actions**:
+
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+
+### 2.3 Implement Continuous Risk Management
+
+**Principle**: Make cyber security risk management a continuous process, embedded in programme governance.
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe the risk register, review cadence and vulnerability management, citing source documents]
+
+**Risk Management Checks**:
+
+- [ ] Risk register maintained through life, with an accountable owner and the mitigating controls for each risk
+- [ ] Cyber risk reviewed at least quarterly (ISN 2023/09)
+- [ ] Risks managed within the defined risk appetite
+- [ ] Risks reassessed when the capability, its vulnerabilities or the threats change
+- [ ] Vulnerability management in place, including regular vulnerability scanning (see Section 5.4)
+- [ ] CAAT maturity assessments kept up to date
+
+**Gaps/Actions**:
+
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+
+### 2.4 Define Security Controls
+
+**Principle**: Set up security controls that address the risks identified, or use current services and patterns.
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe the threat model, security architecture, control framework and the layered controls implemented]
+
+**Control Design Checks**:
+
+- [ ] Threat model informs the security architecture and control selection
+- [ ] Security architecture reviewed and approved
+- [ ] Designed in line with NCSC secure design guidance, using MOD approved architectural design patterns and standard tooling where available
+- [ ] Controls selected from a control framework (for example NIST SP 800-53 or the ISO/IEC 27000 series), mapped to the risks and proportionate to the criticality of the capability and its data
+- [ ] Common vulnerabilities (OWASP Top 10) mitigated and secure coding standards followed (see Section 6)
+
+**Defence in Depth** (multiple layers of security controls, so that if one fails others continue to protect):
 
 - [ ] Physical security (data center, building access)
 - [ ] Network security (firewalls, segmentation, IDS/IPS)
@@ -94,45 +174,16 @@
 - [ ] Identity security (MFA, privileged access management)
 - [ ] Monitoring and detection (SIEM, SOC)
 
-**Gaps/Actions**:
-
-- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
-- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
-
-### 2.2 Secure by Default
-
-**Principle**: Systems are secure out-of-the-box with minimal configuration required.
-
-**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
-
-**Evidence**:
-[Describe default security configurations]
-
-**Default Security Configurations**:
+**Secure by Default** (secure out of the box, with minimal configuration required):
 
 - [ ] Strong authentication required by default
 - [ ] Encryption enabled by default
-- [ ] Least privilege access model
 - [ ] Secure protocols only (TLS 1.3, SSH v2)
 - [ ] Security headers configured
 - [ ] Default accounts disabled/removed
 - [ ] Logging enabled by default
 
-**Gaps/Actions**:
-
-- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
-- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
-
-### 2.3 Least Privilege
-
-**Principle**: Users and systems have only the minimum access required to perform their functions.
-
-**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
-
-**Evidence**:
-[Describe access control implementation]
-
-**Access Controls**:
+**Least Privilege** (users and systems have only the minimum access they need):
 
 - [ ] Role-Based Access Control (RBAC) implemented
 - [ ] Principle of least privilege enforced
@@ -141,24 +192,9 @@
 - [ ] Regular access reviews conducted
 - [ ] Separation of duties enforced
 
-**Gaps/Actions**:
-
-- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
-- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
-
-### 2.4 Assume Breach
-
-**Principle**: Design and operate as if compromise has already occurred.
-
-**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
-
-**Evidence**:
-[Describe breach detection and response capabilities]
-
-**Breach Readiness**:
+**Assume Breach** (design and operate as if compromise has already occurred):
 
 - [ ] Security monitoring and alerting
-- [ ] Incident response plan documented and tested
 - [ ] Forensic capabilities available
 - [ ] Network segmentation to limit blast radius
 - [ ] Zero-trust architecture principles applied
@@ -169,36 +205,108 @@
 - [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 - [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
 
----
+### 2.5 Engage and Manage the Supply Chain
 
-## 3. MOD Accreditation Requirements
-
-### 3.1 Security Accreditation Status
+**Principle**: Understand the supply chain, including the risks it poses and how suppliers meet their security responsibilities.
 
 **Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
 
 **Evidence**:
-[Describe accreditation progress to date, citing RMADS, BIA and SAL documents]
+[Describe supply chain risk assessments, contractual security requirements and supplier attestations]
 
-**Accreditation Authority**: [JSP 440 / NCSC / Defence Digital]
+**Supply Chain Checks**:
 
-**Accreditation Type**: [Full Accreditation / Interim Accreditation / Risk Managed Accreditation]
+- [ ] Supply chain risk assessments completed (see Section 7)
+- [ ] Through-life security requirements in contracts, including DEFCON 658 or equivalent
+- [ ] Security approaches evaluated at tender
+- [ ] Defence Cyber Protection Partnership (DCPP) process applied
+- [ ] Software Bill of Materials (SBOM) maintained and open source software vetted
+- [ ] Supplier security attestations obtained (ISN 2023/10)
 
-**Accreditation Progress**:
+**Gaps/Actions**:
 
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+
+### 2.6 Assure, Verify and Test
+
+**Principle**: Get security assurance, testing and validation throughout the capability's lifecycle.
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe security verification, acceptance testing, penetration testing and the security authorisation decision]
+
+**Assurance and Testing Checks**:
+
+- [ ] Security requirements and controls validated and verified at the appropriate design points
+- [ ] Acceptance tests evaluate the security controls and functions
+- [ ] Penetration testing carried out at key milestones
+- [ ] Findings from security tests reviewed, acted on and shared with Cyber Security Assessors
+- [ ] Non-conformances addressed before the capability handles MOD data or goes live
+- [ ] Security authorisation decision made by the SRO, or suitable equivalent, that risks are within the stated risk appetite
+
+**Gaps/Actions**:
+
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+
+### 2.7 Plan the Through-Life Approach
+
+**Principle**: Continuously monitor for through-life security improvements, planning the approach using the Defence Lines of Development.
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe the through-life security plan, monitoring, incident response, patching and decommissioning arrangements]
+
+**Through-Life Checks**:
+
+- [ ] Through-life security approach planned across the Defence Lines of Development
+- [ ] Security monitoring operational, with threat intelligence
+- [ ] Incident response plan documented and tested, with lessons learned applied (see Section 8.2)
+- [ ] Patching and update process defined
+- [ ] Security governance continues through life, including handover to service management
+- [ ] Decommissioning process includes secure data deletion
+
+**Gaps/Actions**:
+
+- [Action 1] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+- [Action 2] — Owner: [Role] — Due: [YYYY-MM-DD] — Priority: [CRITICAL | HIGH | MEDIUM | LOW]
+
+---
+
+## 3. MOD Secure by Design Assurance
+
+Since August 2023, Secure by Design continuous assurance replaces point-in-time accreditation and the RMADS (JSP 440 Leaflet 5C; ISN 2023/10).
+
+### 3.1 Continuous Assurance Status
+
+**Status**: [✅ Compliant | ⚠️ Partially Compliant | ❌ Non-Compliant]
+
+**Evidence**:
+[Describe assurance progress to date: CAAT registration and self-assessment, BIA, Security Aspects Letter (SAL) where issued, supplier attestation]
+
+**Accountable Owner**: [SRO / capability owner]
+**Delivery Team Security Lead (DTSL)**: [Name/Role]
+**Security Assurance Coordinator (SAC)**: [Name/Role, if appointed]
+**Project Security Officer (PSyO)**: [Name/Role — required for SECRET and above]
+
+**Assurance Progress**:
+
+- [ ] Registered on CAAT (Cyber Activity and Assurance Tracker) in Discovery/Alpha
+- [ ] Delivery Team Security Lead appointed
+- [ ] CAAT self-assessment question sets completed and kept up to date
 - [ ] Business Impact Assessment (BIA) completed
-- [ ] Risk Management and Accreditation Documentation Set (RMADS) initiated
-- [ ] Security Aspects Letter (SAL) issued
-- [ ] Accreditation Service engaged
-- [ ] Risk assessment completed
-- [ ] Security controls documented
-- [ ] Residual risks accepted by IAO/IAA
-- [ ] Accreditation granted
+- [ ] Security controls implemented and documented (NIST CSF, NCSC guidance, JSP 440)
+- [ ] Continuous security testing in place (regular scanning, penetration tests at key milestones)
+- [ ] Risk register actively maintained
+- [ ] Supplier attestation obtained under ISN 2023/10 (where a supplier delivers the system)
+- [ ] Security governance reviews scheduled with the Second Line (technical coherence)
 
-**Information Assurance Owner (IAO)**: [Name/Role]
-**Information Assurance Architect (IAA)**: [Name/Role]
+**Legacy Accreditation**: [None / Expired — transitioned to Secure by Design continuous assurance]
 
-**Target Accreditation Date**: [Date]
+**Next Assurance Review**: [Date]
 
 **Gaps/Actions**:
 
@@ -773,11 +881,14 @@
 | Security Domain | Status | Critical Issues | Priority |
 |-----------------|--------|-----------------|----------|
 | Data Classification | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
-| Defence in Depth | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
-| Secure by Default | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
-| Least Privilege | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
-| Assume Breach | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
-| Accreditation | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
+| SbD 1: Understand and Define Context | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
+| SbD 2: Plan the Security Activities | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
+| SbD 3: Implement Continuous Risk Management | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
+| SbD 4: Define Security Controls | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
+| SbD 5: Engage and Manage the Supply Chain | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
+| SbD 6: Assure, Verify and Test | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
+| SbD 7: Plan the Through-Life Approach | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
+| Continuous Assurance | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
 | Threat Modeling | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
 | Cryptography | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
 | Authentication | [✅/⚠️/❌] | [Yes/No] | [High/Med/Low] |
@@ -793,7 +904,7 @@
 
 ### Critical Security Issues Requiring Immediate Action
 
-1. [Issue 1 with domain reference - must be resolved before accreditation]
+1. [Issue 1 with domain reference - must be resolved before the next assurance review or phase gate]
 2. [Issue 2 with domain reference - blocks progression to next phase]
 3. [Issue 3 with domain reference - unacceptable risk level]
 
@@ -882,7 +993,7 @@
 
 ---
 
-**Generated by**: ArcKit `/arckit:secure` command
+**Generated by**: ArcKit `/arckit:mod-secure` command
 **Generated on**: [DATE]
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]

@@ -9,6 +9,13 @@ handoffs:
     description: Source-of-truth designations refine entity ownership in the data model.
   - command: uae-data-sharing
     description: Records designated as the official source feed downstream data-sharing agreements.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
@@ -25,14 +32,14 @@ You are an enterprise architect generating a Digital Records Plan under the UAE 
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, DR, DMOD, ARCH, and CLAS (UAE Smart Data Classification Register) artefacts (if present)
+   - The project's REQ (including its `DR-*` requirements), DATA (data model), DIAG (architecture diagrams) and CLAS (UAE Smart Data Classification Register) artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-digital-records-template.md` (user override)
    - **Then**, `.arckit/templates/uae-digital-records-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-digital-records-template.md`
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> DREC --filename` for the artefact filename.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> DREC {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
    - **Source-of-Truth Register** — for every record type the service produces or consumes, designate the authoritative system, the custodian entity, and a stable record identifier scheme.
@@ -47,10 +54,11 @@ You are an enterprise architect generating a Digital Records Plan under the UAE 
 
 ## Authoritative anchor
 
-UAE Government Services Digital Records Policy — Cabinet decision, 23 April 2026 (Cabinet Affairs). Primary URL: <https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting>
+UAE Government Services Digital Records Policy — approved by the UAE Cabinet on 23 April 2026. Primary URL (UAE Cabinet announcement): <https://uaecabinet.ae/en/news/under-directives-of-uae-president-and-in-world-first-mohammed-bin-rashid-reveals-new-uae-government-framework-to-deploy-agentic-ai-across-50-of-government-sectors-operations-within-two-years>. The Dubai Media Office carries the same text: <https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting>
 
 ## Important notes
 
+- Neither announcement names the federal body that owns or administers the policy, and the policy text was not published with them. Do not attribute it to the Ministry of Cabinet Affairs or to the National Library and Archives. Record the administering body in the artefact only when the entity has it in writing (for example, the comprehensive records guide the announcement mentions); otherwise record it as an open item for the entity's records or data office to confirm.
 - The Cabinet decision designates digital records as the official source — ensure this is reflected explicitly per record type, not merely as a policy aspiration.
 - Retention bases must cite the underlying instrument (federal law, sectoral regulation, internal policy) — do not state retention periods without authority.
 - Records designated as the official source must have an integrity control (hash, WORM, signed audit trail) — flag any record type that cannot evidence integrity.

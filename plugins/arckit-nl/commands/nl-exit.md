@@ -10,6 +10,10 @@ handoffs:
   - command: risk
     description: Integrate residual exit risks (data-format lock-in, provider non-cooperation under disruption) into the risk register
     condition: "Residual risks identified in this plan are not yet reflected in ARC-*-RISK"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 
@@ -67,7 +71,7 @@ Read all documents from Step 0. Extract the hosting model, actual contracted pro
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/nl-exit-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/nl-exit-template.md` exists in the project root, then `.arckit/templates/nl-exit-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/nl-exit-template.md`
 
@@ -107,7 +111,7 @@ Identify residual risks — e.g. data-format lock-in, proprietary managed-servic
 
 **CRITICAL**: Use the **Write tool** to create the exit plan document.
 
-1. Use `node scripts/generate-document-id.mjs <PROJECT_ID> NLEXIT --filename` for the artefact filename.
+1. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> NLEXIT {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 2. **Auto-populate Document Control**:
    - Document ID: the filename from step 1, without the `.md` extension

@@ -9,6 +9,10 @@ handoffs:
     condition: "No CLAS artefact present in the project"
   - command: adr
     description: Capture each material residency decision (chosen CSP, region, derogations) as a formal ADR.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
@@ -26,17 +30,17 @@ You are an enterprise architect assessing UAE sovereign cloud residency under th
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
    - The project's Smart Data Classification Register (`ARC-<project-id>-CLAS-v*.md`). If missing, halt and instruct the user to run `/arckit-uae:uae-classification` first.
-   - The project's REQ, ARCH, and IAS artefacts (if present)
+   - The project's REQ, DIAG (architecture diagrams) and IAS artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-cloud-residency-template.md` (user override)
    - **Then**, `.arckit/templates/uae-cloud-residency-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-cloud-residency-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> CRES --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> CRES {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 5. Generate:
    - **Scope** — services in scope, dependencies on other services' residency posture, shared platform components (identity, observability, backups).
-   - **Per-Dataset Residency Assessment** — for each Dataset ID from the CLAS register, map Classification → Required residency → Chosen CSP → Region → Compliance check. Confidential, Secret, and Top Secret datasets MUST resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2.
+   - **Per-Dataset Residency Assessment** — for each Dataset ID from the CLAS register, map Classification → Required residency → Chosen CSP → Region → Compliance check. Confidential, Sensitive, and Secret datasets MUST resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2.
    - **CSP Due-Diligence Pack** — for each candidate CSP (Core42 / G42 sovereign cloud, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS), record certification posture (DESC for Dubai entities, CSC accreditation), regional footprint, sovereign-data scope, and any documented limitations.
    - **Shared-Responsibility Matrix** — per chosen CSP, division of security responsibilities across infrastructure, platform, application, data, identity, and operational layers.
    - **Exit and Portability Plan** — data egress strategy, format portability, identity migration, key custody on exit, contingency residency on regulatory change.
@@ -51,6 +55,7 @@ UAE National Cloud Security Policy v2, published by the UAE Cybersecurity Counci
 
 ## Important notes
 
-- Confidential / Secret / Top Secret data MUST be hosted on UAE-resident infrastructure. Flag any non-compliant dataset as a critical gap and recommend either re-classification (with rationale) or migration.
+- Confidential / Sensitive / Secret data MUST be hosted on UAE-resident infrastructure. Flag any non-compliant dataset as a critical gap and recommend either re-classification (with rationale) or migration.
+- AWS `me-south-1` is the Middle East (Bahrain) Region, so it is not UAE-resident. AWS's UAE Region is `me-central-1`, Middle East (UAE), open since August 2022. Record the AWS Region per dataset; do not treat an AWS workload as UAE-resident unless it runs in `me-central-1` or another UAE location.
 - DESC accreditation is Dubai-specific; federal entities may rely on CSC accreditation. Both should be recorded where applicable.
 - Each material residency decision (chosen CSP, region, derogation) should be captured as a formal ADR — see the `adr` handoff.

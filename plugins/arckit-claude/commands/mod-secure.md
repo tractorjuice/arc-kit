@@ -48,7 +48,7 @@ Since August 2023, ALL Defence capabilities, technology infrastructure, and digi
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/mod-secure-by-design-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/mod-secure-by-design-template.md` exists in the project root, then `.arckit/templates/mod-secure-by-design-template.md`
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/mod-secure-by-design-template.md` (default)
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -87,78 +87,78 @@ Generate a comprehensive Secure by Design assessment document using the **contin
    - **DIAG** (Architecture Diagrams, in diagrams/) — Extract: Deployment topology, network boundaries, data flows, trust zones
    - Previous SbD self-assessments (if available in project directory)
 
-3. **Assess against the 7 MOD Secure by Design Principles** (ISN 2023/09):
+3. **Assess against the 7 MOD Secure by Design Principles**, using the names MOD publishes at https://www.digital.mod.uk/policy-rules-standards-and-guidance/secure-by-design. ISN 2023/09 sets out the requirements for the same seven principles; it names Principle 7 "Enable Through Life Management", which MOD now publishes as "Plan the through-life approach". Use MOD's current names as headings, and cite ISN 2023/09 for the requirements.
 
-   **Principle 1: Understand and Define Context**
-   - Understand the capability's overall context
-   - How it will use and manage MOD data
-   - How it achieves its primary business/operational outcome
+   **Principle 1: Understand and define context**
+   - Understand what the capability does, how it will use and manage MOD data, and how it achieves its primary business or operational outcome
    - **Assessment**:
-     - Context documented (mission, users, data flows)
+     - Context, purpose and mode of operation documented (use, users and operators, support requirements, data access, storage and processing, role of suppliers, end-to-end operation and interdependencies)
      - Data classification determined
      - Operational environment understood
      - Stakeholder security requirements captured
+     - Capability risk appetite defined and published by the SRO
+     - Initial cyber security risk assessment completed and documented
+     - Capability registered on the Cyber Activity and Assurance Tracker (CAAT)
 
-   **Principle 2: Apply Security from the Start**
-   - Security embedded in design from inception (not bolt-on)
-   - Security requirements defined early
-   - Security architecture designed before build
+   **Principle 2: Plan the security activities**
+   - Establish the capability's security workstream and plan the security activities, including assessment of cyber threat and potential risks, from the start
    - **Assessment**:
-     - Security requirements in initial specifications
-     - Threat model created in Discovery/Alpha
+     - Delivery Team Security Lead appointed and funded, with suitably qualified and experienced (SQEP) security support
+     - Security requirements defined in the initial specifications, with validation and verification planned
+     - Threat assessment conducted in Discovery/Alpha
+     - Security approach and plan documented (risk assessment method, control framework, assurance and testing approach)
+     - Security costs included in the business case and investment approvals
+     - Security expertise involved from the start
+
+   **Principle 3: Implement continuous risk management**
+   - Embed cyber security risk management into programme governance as a continuous process
+   - **Assessment**:
+     - Risk register created and actively maintained through life, with an accountable owner and the mitigating controls for each risk
+     - Cyber risk reviewed regularly, at least quarterly (ISN 2023/09)
+     - Risks managed within the defined risk appetite
+     - Risks reassessed when the capability, its vulnerabilities or the threats change
+     - Vulnerability management in place, including regular vulnerability scanning
+     - CAAT maturity assessments kept up to date
+
+   **Principle 4: Define security controls**
+   - Define, architect and implement security controls that address the risks identified, reusing existing services and patterns where they exist
+   - **Assessment**:
+     - Threat model informs the security architecture and control selection
      - Security architecture reviewed and approved
-     - Security expertise involved from start
+     - Designed in line with NCSC secure design guidance, using MOD approved architectural design patterns and standard tooling where available
+     - Controls selected from a control framework (for example NIST SP 800-53 or the ISO/IEC 27000 series) and mapped to the risks, proportionate to the criticality of the capability and its data
+     - Layered security controls (network, host, application, data), with segmentation and least privilege
+     - Monitoring and detection at each layer, with containment and recovery capabilities
+     - Common vulnerabilities (OWASP Top 10) mitigated and secure coding standards followed
 
-   **Principle 3: Apply Defence in Depth**
-   - Multiple layers of security controls
-   - Fail-safe defaults (secure by default)
-   - Assume breach (design for compromise)
+   **Principle 5: Engage and manage the supply chain**
+   - Understand the supply chain's role and the risks it poses, and make sure suppliers meet their security responsibilities
    - **Assessment**:
-     - Layered security controls (network, host, application, data)
-     - Segmentation and least privilege implemented
-     - Monitoring and detection at each layer
-     - Containment and recovery capabilities
-
-   **Principle 4: Follow Secure Design Patterns**
-   - Use proven secure architectures
-   - Leverage NCSC/NIST guidance
-   - Avoid known insecure patterns
-   - **Assessment**:
-     - NCSC Secure Design Principles applied
-     - NIST CSF controls mapped
-     - Common vulnerabilities (OWASP Top 10) mitigated
-     - Secure coding standards followed
-
-   **Principle 5: Continuously Manage Risk**
-   - Risk assessment is ongoing (not one-time)
-   - Risk register maintained through-life
-   - Security testing continuous
-   - **Assessment**:
-     - Risk register actively maintained
-     - Regular vulnerability scanning and pen testing
-     - Security incidents tracked and lessons learned
-     - Continuous monitoring and threat intelligence
-
-   **Principle 6: Secure the Supply Chain**
-   - Third-party components assessed
-   - Vendor security requirements in contracts
-   - Software supply chain protected
-   - **Assessment**:
-     - Software Bill of Materials (SBOM) maintained
-     - Third-party risk assessments completed
+     - Supply chain risk assessments completed
+     - Through-life security requirements in contracts, including DEFCON 658 or equivalent, and security approaches evaluated at tender
+     - Defence Cyber Protection Partnership (DCPP) process applied
+     - Software Bill of Materials (SBOM) maintained and open source software vetted
      - Supplier security attestations obtained (ISN 2023/10)
-     - Open source software vetted
      - Supply chain attack vectors mitigated
 
-   **Principle 7: Enable Through-Life Assurance**
-   - Security posture maintained post-deployment
-   - Regular security reviews
-   - Capability to respond to new threats
+   **Principle 6: Assure, verify and test**
+   - Work with security experts to gain security assurance, and test and validate security throughout the capability's lifecycle
    - **Assessment**:
-     - Security monitoring operational
-     - Incident response capability proven
+     - Security requirements and controls validated and verified at the appropriate design points
+     - Acceptance tests evaluate the security controls and functions
+     - Penetration testing carried out at key milestones
+     - Findings from security tests reviewed, acted on and shared with Cyber Security Assessors
+     - Non-conformances addressed before the capability handles MOD data or goes live
+     - Security authorisation decision made by the SRO, or suitable equivalent, that risks are within the stated risk appetite
+
+   **Principle 7: Plan the through-life approach**
+   - Continuously monitor for through-life security improvements, planning the approach using the Defence Lines of Development
+   - **Assessment**:
+     - Through-life security approach planned across the Defence Lines of Development
+     - Security monitoring operational, with continuous monitoring and threat intelligence
+     - Incident response capability proven, with incidents tracked and lessons learned applied
      - Patching and update process defined
-     - Security governance continues through-life
+     - Security governance continues through life, including handover to service management
      - Decommissioning process includes secure data deletion
 
 4. **Read external documents and policies**:
@@ -251,7 +251,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-SECD-MOD-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "MOD Secure by Design Assessment"
 - `ARC-[PROJECT_ID]-SECD-MOD-v[VERSION]` → Construct using format above
@@ -296,7 +296,7 @@ The footer should be populated with:
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SECD-MOD** per-type checks pass. Fix any failures before proceeding.
 
-10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-MOD-v1.0.md`
+10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-MOD-v{VERSION}.md`
 
 ## Assessment Guidelines
 
@@ -540,7 +540,7 @@ Target Level 3+ for operational systems.
 - **CAAT** (Cyber Activity and Assurance Tracker): Self-assessment tool available through SbD portal
 - JSP 440: https://www.gov.uk/government/publications/jsp-440-defence-information-assurance
 - JSP 453 (Digital Policies): https://www.digital.mod.uk/policy-rules-standards-and-guidance
-- ISN 2023/09: Industry Security Notice - Secure by Design Requirements
+- ISN 2023/09: Industry Security Notice - Secure by Design Requirements: https://assets.publishing.service.gov.uk/media/64bfb929d4051a00145a9289/ISN_2023-09_Secure_by_Design_Requirements.pdf
 - ISN 2023/10: Industry Security Notice - Supplier attestation
 - NCSC CAF: https://www.ncsc.gov.uk/collection/caf
 - NCSC Secure Design Principles: https://www.ncsc.gov.uk/collection/cyber-security-design-principles

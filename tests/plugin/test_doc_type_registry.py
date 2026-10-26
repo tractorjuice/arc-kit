@@ -7,7 +7,7 @@ conforming name to fall back to. That is how /arckit:glossary (GLOS) and
 /arckit:framework (FWRK) shipped unusable.
 
 Its regex was blind to every multi-instance filename carrying a sequence
-segment, which is the form all 20 MULTI_INSTANCE_TYPES codes are actually
+segment, which is the form all 21 MULTI_INSTANCE_TYPES codes are actually
 written in (#715). The hook strips the sequence before its own KNOWN_TYPES
 lookup, so an unregistered multi-instance code passed the gate and was then
 blocked at runtime. These tests pin the filename forms that must resolve.
@@ -66,6 +66,14 @@ def test_guard_is_wired_into_ci():
         ("ARC-{PROJECT_ID}-WGAM-{NUM}-v{VERSION}.md", "WGAM"),
         ("ARC-{PID}-ADR-001-v1.0.md", "ADR"),
         ("ARC-001-DSCT-002-v2.1.md", "DSCT"),
+        # Read globs and guide placeholders (#949). A command that reads
+        # `ARC-*-ANALYZE-v*.md` or a guide that lists `ARC-<id>-DMOD-v1.0.md` as
+        # an input names a file nothing ever writes, so the read silently finds
+        # nothing. None of these forms matched before.
+        ("ARC-*-ANALYZE-v*.md", "ANALYZE"),
+        ("ARC-<id>-DMOD-v1.0.md", "DMOD"),
+        ("ARC-<project-id>-PIA-v*.md", "PIA"),
+        ("diagrams/ARC-<id>-DIAG-*-v*.md", "DIAG"),
     ],
 )
 def test_command_code_regex_matches_written_filename_forms(filename, expected):
@@ -116,6 +124,28 @@ def test_guard_rejects_unregistered_multi_instance_code(tmp_path):
 
     assert result.returncode == 1, "guard passed on unregistered codes"
     for code in ("BOGUS", "ZZZZ", "QQQQ"):
+        assert code in result.stderr, f"{code} not reported:\n{result.stderr}"
+
+
+@pytest.mark.parametrize(
+    "probe",
+    [
+        REPO_ROOT / "docs/guides/zz-doc-type-registry-probe.md",
+        REPO_ROOT / "plugins/arckit-claude/templates/zz-doc-type-registry-probe-template.md",
+    ],
+    ids=["guide", "template"],
+)
+def test_guard_rejects_unregistered_code_in_guides_and_templates(probe):
+    """#949: overlay guides listed `ARC-<id>-DMOD-v1.0.md` and templates cited
+    `ARC-{P}-FISMA-v*`, codes the registry never had. Guides and templates are
+    read by people and by the model, so the gate covers them too."""
+    probe.write_text("| Data model (`ARC-<id>-BOGUSDM-v1.0.md`) | input |\n[Cross-ref `ARC-{P}-ZZQQ-v*`]\n")
+    try:
+        result = subprocess.run(["python3", str(GUARD)], capture_output=True, text=True, cwd=REPO_ROOT)
+    finally:
+        probe.unlink(missing_ok=True)
+    assert result.returncode == 1, "guard passed on unregistered codes"
+    for code in ("BOGUSDM", "ZZQQ"):
         assert code in result.stderr, f"{code} not reported:\n{result.stderr}"
 
 
@@ -193,3 +223,45 @@ def test_guard_rejects_an_artefact_type_on_a_none_command():
     assert result.returncode == 1, "guard passed on an artefact type for a `none` command"
     assert "doc-type: none" in result.stderr, result.stderr
 
+
+
+# A sequence segment after the code: -001-v, -{NUM}-v, -{NNN}-v, -[ACHG_NUM]-v.
+NUMBERED_RE = re.compile(
+    r"ARC-[A-Za-z0-9{}\[\]<>*_-]*?-"
+    r"([A-Z][A-Z0-9]*(?:-[A-Z][A-Z0-9]*)*)"
+    r"-(?:\d{3}|\{[A-Z_]{1,8}\}|\[[A-Z_]{1,12}\])-v"
+)
+
+
+def multi_instance_codes() -> set[str]:
+    text = (REPO_ROOT / "plugins/arckit-claude/config/doc-types.mjs").read_text()
+    block = text[text.index("export const MULTI_INSTANCE_TYPES"):]
+    block = block[: block.index("]);")]
+    return set(re.findall(r"'([A-Z0-9-]+)'", re.sub(r"//.*", "", block)))
+
+
+def test_a_numbered_filename_names_a_multi_instance_code():
+    """A command that numbers its artefacts needs the code in MULTI_INSTANCE_TYPES.
+
+    validate-arc-filename.mjs only splits `-001` off as a sequence for a
+    multi-instance code. For any other code it reads `ACHG-001` as the doc-type,
+    finds it missing from KNOWN_TYPES and blocks the write, so the command can
+    never save. /arckit:architecture-change shipped that way, numbering change
+    requests ARC-{P}-ACHG-{NUM} in changes/ while the registry held ACHG as a
+    single-instance type (#949).
+    """
+    multi = multi_instance_codes()
+    assert {"ADR", "DIAG"} <= multi, "MULTI_INSTANCE_TYPES parse failed"
+    offenders = []
+    sources = (
+        glob.glob(str(REPO_ROOT / "plugins/*/commands/*.md"))
+        + glob.glob(str(REPO_ROOT / "plugins/*/agents/*.md"))
+        + glob.glob(str(REPO_ROOT / "plugins/*/templates/*.md"))
+        + glob.glob(str(REPO_ROOT / "docs/guides/**/*.md"), recursive=True)
+    )
+    for path in sorted(sources):
+        for lineno, line in enumerate(Path(path).read_text().splitlines(), 1):
+            for code in NUMBERED_RE.findall(line):
+                if code not in multi:
+                    offenders.append(f"{Path(path).relative_to(REPO_ROOT)}:{lineno}: {code}")
+    assert not offenders, "numbered filenames for single-instance codes:\n" + "\n".join(offenders)

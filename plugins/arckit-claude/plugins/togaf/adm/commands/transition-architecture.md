@@ -8,6 +8,8 @@ handoffs:
     description: Present transition plan to Architecture Board for approval
   - command: architecture-change
     description: Create change requests for transition scope changes
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create a **Transition Architecture** for TOGAF ADM Phase F (Migration Planning). This document defines transition architectures (intermediate states between baseline and target), work packages to achieve each transition, migration wave sequencing, resource plans, risk contingencies, and acceptance criteria for every work package.
@@ -69,24 +71,20 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. AskUserQuestion: Number of Transition Architectures
 
-Before generating the transition architecture, use the **AskUserQuestion** tool to determine the number of transition architectures (intermediate states between baseline and target):
+Unless the arguments or the gap analysis already settle it, use the **AskUserQuestion** tool to determine the number of transition architectures (intermediate states between baseline and target).
 
-**AskUserQuestion**: "How many transition architectures (migration waves) should the plan cover?"
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Options: `2 waves` | `3 waves (Recommended)` | `4 waves`
-- Default: `3 waves`
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
-**Wave profiles**:
+**Question 1** — header: `Waves`, multiSelect: false
+> "How many transition architectures (migration waves) should the plan cover?"
 
-- **2 waves**: Simple transition — baseline → intermediate → target. Suitable for focused, short-duration programmes (≤12 months).
 - **3 waves (Recommended)**: Balanced transition — baseline → Architecture 2 → Architecture 3 → target. Most common for enterprise transformations (12–36 months).
+- **2 waves**: Simple transition — baseline → intermediate → target. Suitable for focused, short-duration programmes (≤12 months).
 - **4 waves**: Granular transition — baseline → Architecture 2 → Architecture 3 → Architecture 4 → target. Suitable for complex, long-duration programmes (24–48 months) with many interdependencies.
-
-**Gathering rules** (apply to all questions):
-
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
-- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
 
 ### 4. Gather Transition Context
 
@@ -109,7 +107,7 @@ Create a comprehensive Transition Architecture document following the template s
 
 #### Document Control
 
-- Generate Document ID: `ARC-{P}-TRANS-v1.0` (for filename: `ARC-{P}-TRANS-v1.0.md`)
+- Generate Document ID: `ARC-{P}-TRANS-v{VERSION}` (for filename: `ARC-{P}-TRANS-v{VERSION}.md`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 - Set owner, dates, status, classification
 - Review cycle: Monthly during active migration, quarterly after migration
 
@@ -230,7 +228,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-TRANS-v1.0.md
+projects/{P}/ARC-{P}-TRANS-v{VERSION}.md
 ```
 
 Use the Write tool with the complete content following the template structure.
@@ -242,8 +240,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Transition Architecture Created
 
-**Document**: `projects/{P}/ARC-{P}-TRANS-v1.0.md`
-**Document ID**: ARC-{P}-TRANS-v1.0
+**Document**: `projects/{P}/ARC-{P}-TRANS-v{VERSION}.md`
+**Document ID**: ARC-{P}-TRANS-v{VERSION}
 
 ### Transition Overview
 - **Transition architectures**: [N] intermediate states (Baseline → [A2] → [A3] → Target)
@@ -293,7 +291,7 @@ After writing the file, show a concise summary (NOT the full document):
 - [N] work packages → [N] ROAD themes
 - [N] APPR decisions → work package scope
 
-**File location**: `projects/{P}/ARC-{P}-TRANS-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-TRANS-v{VERSION}.md`
 ```
 
 ## Important Notes

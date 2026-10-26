@@ -6,6 +6,8 @@ effort: high
 handoffs:
   - command: agent-security
     description: Align security controls with governance requirements
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect design an AI agent governance framework that establishes oversight models, approval workflows, audit requirements, and compliance mappings for autonomous AI agent programs.
@@ -36,7 +38,7 @@ $ARGUMENTS
    **RECOMMENDED** (read if available, note if missing):
    - **PRIN** (Architecture Principles) — Extract: Governance principles, human oversight requirements
      - If missing: warn user to run `/arckit:principles` first
-   - **BORD** (Board Review) — Extract: Board-approved policies, risk appetite, compliance mandates
+   - **BORD** (Architecture Board Charter, from `/arckit-togaf-adm:architecture-board` in the TOGAF ADM overlay) — Extract: Board-approved policies, risk appetite, compliance mandates
      - If missing: note that board context is limited
 
    **Read the template** (with user override support):
@@ -61,7 +63,7 @@ $ARGUMENTS
 
    ### A. Oversight Model Design
 
-   Define oversight tiers based on risk assessment:
+   Define the three oversight tiers based on risk assessment (the same names `/arckit-agent-architecture:agent-inventory` records as each agent's oversight level):
    - **Tier 1 (Human-in-the-loop)**: For critical decisions affecting safety, compliance, or significant business impact
    - **Tier 2 (Human-on-the-loop)**: For routine operations with continuous monitoring and intervention capability
    - **Tier 3 (Human-out-of-the-loop)**: For fully automated, auditable tasks with post-facto review
@@ -161,7 +163,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-AAOV-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Agent Governance Framework"
 - `ARC-[PROJECT_ID]-AAOV-v[VERSION]` → Construct using format above
@@ -209,7 +211,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 8. **Quality Checks**:
 
    Verify the governance framework meets minimum standards:
-   - ≥3 oversight tiers defined with clear criteria
+   - The three oversight tiers (Human-in-the-loop, Human-on-the-loop, Human-out-of-the-loop) defined with clear criteria, using the same names as the agent inventory
    - Approval matrix covers ≥3 risk tiers with specific approvers
    - Audit requirements define frequency, scope, and retention
    - ≥3 monitoring KPIs with measurable targets
@@ -219,7 +221,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
    - Traceability links established to AAGI and AAGR documents
 
 9. **Write output**:
-   - `projects/{project-dir}/ARC-{PROJECT_ID}-AAOV-v1.0.md` - Full governance framework
+   - `projects/{project-dir}/ARC-{PROJECT_ID}-AAOV-v{VERSION}.md` - Full governance framework
    - Update traceability matrix with governance references
 
    **CRITICAL - Show Summary Only**:

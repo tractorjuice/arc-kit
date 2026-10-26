@@ -211,7 +211,8 @@
         .app-article-card__tag--guide { background: #00703c; }
         .app-article-card__tag--technical { background: #505a5f; }
         .app-article-card__tag--community { background: #912b88; }
-        .app-article-card__tag--milestone { background: #f47738; }
+        .app-article-card__tag--announcement { background: #4c2c92; }
+        .app-article-card__tag--milestone { background: #f47738; color: #0b0c0c; }
 
         .app-article-card__date {
             color: #505a5f;
@@ -298,7 +299,7 @@
                 <li class="app-nav-bar__item app-nav-bar__item--active"><a href="articles.html">Articles</a></li>
                 <li class="app-nav-bar__item"><a href="getting-started.html">Getting Started</a></li>
                 <li class="app-nav-bar__item"><a href="contributors.html">Contributors</a></li>
-                <li class="app-nav-bar__item"><a href="https://tractorjuice.github.io/arckit-fde/">FDE</a></li>
+                <li class="app-nav-bar__item"><a href="fde/">FDE</a></li>
             </ul>
             <div class="app-nav-bar__icons">
                 <a href="https://github.com/tractorjuice/arc-kit" class="app-icon-link" aria-label="GitHub repository" title="GitHub repository">
@@ -306,6 +307,9 @@
                 </a>
                 <a href="https://discord.gg/HsA4Y3hQ4" target="_blank" rel="noopener" class="app-icon-link" aria-label="Discord community" title="Discord community">
                     <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/arckit-org/" target="_blank" rel="noopener" class="app-icon-link" aria-label="ArcKit on LinkedIn" title="ArcKit on LinkedIn">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>
                 </a>
                 <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
             </div>
@@ -330,7 +334,7 @@
 
                 <!-- 2026-09-29 Is Max Effort Worth It? What 53 Test Runs Taught Us About ArcKit -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-09-29-is-max-effort-worth-it">
+                    <a class="app-article-card__media" href="share/2026-09-29-is-max-effort-worth-it.html">
                         <img src="articles/2026-09-29-is-max-effort-worth-it-hero.png" alt="Hero: requirements on Opus 5.5 at high and max effort, with max costing more than three times as much and taking four times as long for the same 100 requirements, beside the real problem: 13 of 55 templates contradicted their own commands.">
                     </a>
                     <div class="app-article-card__body">
@@ -340,7 +344,7 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Is Max Effort Worth It? What 53 Test Runs Taught Us About ArcKit</h2>
                         <p class="app-article-card__summary">53 test runs, $137 of recorded model time. The highest effort setting mostly bought longer, slower, costlier documents. The real gaps came from templates whose examples contradicted their own instructions, and fixing them was free.</p>
-                        <a href="article-viewer.html?a=2026-09-29-is-max-effort-worth-it" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-09-29-is-max-effort-worth-it.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
@@ -348,7 +352,7 @@
 
                 <article class="app-article-card">
 
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-09-23-show-your-working">
+                    <a class="app-article-card__media" href="share/2026-09-23-show-your-working.html">
 
                         <img src="articles/2026-09-23-show-your-working-hero.png" alt="Show your working hero: three ways to be listed, named, anonymous or not listed, above what adopters get back: office hours, a pilot workshop and a case study.">
 
@@ -368,7 +372,7 @@
 
                         <p class="app-article-card__summary">ArcKit collects no usage data, so the only way to know who uses it is to ask. Tell us, named or anonymously by sector, and get monthly office hours, a free pilot workshop and a say in the roadmap.</p>
 
-                        <a href="article-viewer.html?a=2026-09-23-show-your-working" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-09-23-show-your-working.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
 
                     </div>
 
@@ -377,7 +381,7 @@
 
                 <!-- 2026-09-03 What We Learnt from Claude's Commerce Skills, and What We Left on the Shelf -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-09-03-what-we-learnt-from-claudes-commerce-skills">
+                    <a class="app-article-card__media" href="share/2026-09-03-what-we-learnt-from-claudes-commerce-skills.html">
                         <img src="articles/2026-09-03-what-we-learnt-from-claudes-commerce-skills-hero.png" alt="Hero: Claude's commerce skills on the left, six numbered lessons carried across the middle, and what each means for an ArcKit user on the right.">
                     </a>
                     <div class="app-article-card__body">
@@ -387,13 +391,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">What We Learnt from Claude's Commerce Skills, and What We Left on the Shelf</h2>
                         <p class="app-article-card__summary">Anthropic's retail agents changed six things about ArcKit in a day: one page that says which rules are guaranteed, a checkpoint that stops a poisoned page reaching your document, commands tested on what they write, skills that know when to stay quiet, and questions asked once.</p>
-                        <a href="article-viewer.html?a=2026-09-03-what-we-learnt-from-claudes-commerce-skills" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-09-03-what-we-learnt-from-claudes-commerce-skills.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-09-03 ArcKit v6.14.0: What the Harness Enforces, What It Asks, and What It Now Measures -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-09-03-arckit-v6-14-enforce-ask-measure">
+                    <a class="app-article-card__media" href="share/2026-09-03-arckit-v6-14-enforce-ask-measure.html">
                         <img src="articles/2026-09-03-arckit-v6-14-enforce-ask-measure-hero.png" alt="ArcKit v6.14.0 hero: three tier columns, enforced in code, asked of the model, yours, above a strip of four passing eval cases.">
                     </a>
                     <div class="app-article-card__body">
@@ -403,13 +407,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v6.14.0: What the Harness Enforces, What It Asks, and What It Now Measures</h2>
                         <p class="app-article-card__summary">A one-page statement of which rules hold in code, which are asked of the model and which are yours; a behavioural eval suite with a replay gate; a sanitiser between research readers and writers; questions asked once.</p>
-                        <a href="article-viewer.html?a=2026-09-03-arckit-v6-14-enforce-ask-measure" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-09-03-arckit-v6-14-enforce-ask-measure.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-09-02 ArcKit at OpenAI DevDay 2026: Architecture Governance for Codex CLI, and an Invitation to Meet -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-09-02-arckit-at-openai-devday-2026">
+                    <a class="app-article-card__media" href="share/2026-09-02-arckit-at-openai-devday-2026.html">
                         <img src="articles/2026-09-02-arckit-at-openai-devday-2026-hero.png" alt="ArcKit at OpenAI DevDay 2026 hero.">
                     </a>
                     <div class="app-article-card__body">
@@ -419,13 +423,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit at OpenAI DevDay 2026: Architecture Governance for Codex CLI, and an Invitation to Meet</h2>
                         <p class="app-article-card__summary">DevDay is on 29 September at Fort Mason. ArcKit installs as a Codex plugin from its own marketplace, with 75 governance commands as Agent Skills, lifecycle hooks and six MCP servers. If you are building with Codex, find me.</p>
-                        <a href="article-viewer.html?a=2026-09-02-arckit-at-openai-devday-2026" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-09-02-arckit-at-openai-devday-2026.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-09-01 ArcKit OAA: Open Agile Architecture Becomes a Standalone Plugin -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-09-01-arckit-oaa-standalone-plugin">
+                    <a class="app-article-card__media" href="share/2026-09-01-arckit-oaa-standalone-plugin.html">
                         <img src="articles/2026-09-01-arckit-oaa-standalone-plugin-hero.png" alt="ArcKit OAA hero.">
                     </a>
                     <div class="app-article-card__body">
@@ -435,13 +439,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit OAA: Open Agile Architecture Becomes a Standalone Plugin</h2>
                         <p class="app-article-card__summary">The Open Group's O-AA standard ships as its own plugin: five commands, five document types and a build recipe tuned to two-to-four week sprints rather than quarterly architecture boards.</p>
-                        <a href="article-viewer.html?a=2026-09-01-arckit-oaa-standalone-plugin" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-09-01-arckit-oaa-standalone-plugin.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-08-19 ArcKit v6.11 release round-up -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-08-19-arckit-v611-new-plugins">
+                    <a class="app-article-card__media" href="share/2026-08-19-arckit-v611-new-plugins.html">
                         <img src="articles/2026-08-19-arckit-v611-new-plugins-hero.png" alt="ArcKit v6.11 hero: a row of jurisdiction pack flags for the UK, EU, Netherlands, Austria, France, Canada, USA, Australia and UAE with NEW badges on the EU, Netherlands and Austria, above three panels for the arckit-nl Netherlands pack, the arckit-repo codebase audit plugin, and method packs for TOGAF ADM and AI agent architecture">
                     </a>
                     <div class="app-article-card__body">
@@ -451,13 +455,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v6.11: Four New Plugins, Twenty-Five New Commands</h2>
                         <p class="app-article-card__summary">Everything shipped since the last release write-up: a Netherlands public-sector pack covering BIO2 and Rijksbreed cloudbeleid, an EU Cloud Sovereignty assessment, Austrian accessibility, a codebase audit plugin that checks the architecture you built against the one you intended, TOGAF ADM and AI agent architecture overlays, Open Knowledge Format import and export, and Kimi Code CLI as a ninth distribution format. Document Control also stopped guessing: a Canadian assessment now carries Canadian classification markings.</p>
-                        <a href="article-viewer.html?a=2026-08-19-arckit-v611-new-plugins" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-08-19-arckit-v611-new-plugins.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-07-22 Atomic Task Graphs (arXiv:2607.01942 analysis) -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-07-22-atomic-task-graphs-documents-not-tool-calls">
+                    <a class="app-article-card__media" href="share/2026-07-22-atomic-task-graphs-documents-not-tool-calls.html">
                         <img src="articles/2026-07-22-atomic-task-graphs-documents-not-tool-calls-hero-1200x630.png" alt="Atomic Task Graphs hero: a five-wave dependency graph of ArcKit artefacts from Principles to Requirements and Stakeholders to Risk Register and High-Level Design to Business Case to a stale Traceability Matrix, under the tagline The graph is the product">
                     </a>
                     <div class="app-article-card__body">
@@ -467,13 +471,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Atomic Task Graphs for Documents, Not Tool Calls</h2>
                         <p class="app-article-card__summary">A July 2026 agentic-control paper (arXiv:2607.01942) independently arrives at the same architecture as ArcKit's parallel build harness: an explicit dependency DAG, isolated per-node context, validated incremental state, and localised repair. This piece maps the paper's four mechanisms onto the harness (two already shipped, one roadmapped, one genuinely missing) and lets its ablation numbers reorder what to build next.</p>
-                        <a href="article-viewer.html?a=2026-07-22-atomic-task-graphs-documents-not-tool-calls" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-07-22-atomic-task-graphs-documents-not-tool-calls.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-07-01 TOGAF ADM overlay -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-07-01-arckit-togaf-adm">
+                    <a class="app-article-card__media" href="share/2026-07-01-arckit-togaf-adm.html">
                         <img src="articles/2026-07-01-arckit-togaf-adm-hero.png" alt="ArcKit TOGAF ADM hero showing ADM phases as versioned ArcKit artefacts with 9 command document codes and the togaf-adm-full recipe">
                     </a>
                     <div class="app-article-card__body">
@@ -483,13 +487,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit TOGAF ADM: The Method Becomes a Governed Workflow</h2>
                         <p class="app-article-card__summary"><code>arckit-togaf-adm</code> turns the TOGAF Architecture Development Method into versioned ArcKit artefacts. The new community overlay adds 9 commands for ADM preliminary work, capability mapping, application inventory, rationalization, gap analysis, transition architecture, architecture board, change management and repository synthesis, plus the <code>togaf-adm-full</code> build recipe.</p>
-                        <a href="article-viewer.html?a=2026-07-01-arckit-togaf-adm" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-07-01-arckit-togaf-adm.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-30 AI Agent Architecture overlay -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-30-arckit-agent-architecture">
+                    <a class="app-article-card__media" href="share/2026-06-30-arckit-agent-architecture.html">
                         <img src="articles/2026-06-30-arckit-agent-architecture-hero.png" alt="ArcKit AI Agent Architecture hero showing inventory, design, integration, governance, security and maturity nodes with the 6 agent document codes">
                     </a>
                     <div class="app-article-card__body">
@@ -499,13 +503,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit AI Agent Architecture: Governed Design for Autonomous Systems</h2>
                         <p class="app-article-card__summary"><code>arckit-agent-architecture</code> gives autonomous agent programmes the same governance discipline ArcKit already brings to requirements, risks, decisions and assurance. The overlay adds 6 commands for agent inventory, design, governance, integration, security and maturity, plus the <code>agent-architecture</code> build recipe.</p>
-                        <a href="article-viewer.html?a=2026-06-30-arckit-agent-architecture" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-30-arckit-agent-architecture.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-29 Thank you for using ArcKit -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-29-arckit-usage-signals">
+                    <a class="app-article-card__media" href="share/2026-06-29-arckit-usage-signals.html">
                         <img src="articles/2026-06-29-arckit-usage-signals-hero.png" alt="Thank you for using ArcKit hero - dark data dashboard showing public usage signals from GitHub, Cloudflare and Google Search Console">
                     </a>
                     <div class="app-article-card__body">
@@ -515,13 +519,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">I Built ArcKit for Myself. Thank You for Using It.</h2>
                         <p class="app-article-card__summary">ArcKit started as a personal working method for making architecture governance less wasteful and more traceable. The public signals now show something more: thousands of GitHub clone events, hundreds of daily site visitors, search demand by name, and assistant-specific extension usage. This is a thank-you note to everyone trying it, cloning it, improving it and making it useful beyond its original purpose.</p>
-                        <a href="article-viewer.html?a=2026-06-29-arckit-usage-signals" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-29-arckit-usage-signals.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-25 ArcKit Architects directory -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-25-arckit-architects-directory">
+                    <a class="app-article-card__media" href="share/2026-06-25-arckit-architects-directory.html">
                         <img src="articles/2026-06-25-arckit-architects-directory-hero.png" alt="ArcKit Architects directory hero — dark technical diagram showing ArcKit Architects title, a directory of professionals, with three cards showing Mark Craddock profile, a placeholder for future architects, and a link to all contributors at arckit.org/contributors">
                     </a>
                     <div class="app-article-card__body">
@@ -531,13 +535,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit Architects: A Directory for Enterprise Architecture Professionals</h2>
                         <p class="app-article-card__summary">Introducing the ArcKit Architects directory — a place to find experienced professionals who have proven expertise using ArcKit in real-world engagements. The directory currently features Mark Craddock, the creator of ArcKit, and provides a path for other senior practitioners to join. Organizations can browse the directory to find architects for consulting, training, or embedded architecture support.</p>
-                        <a href="article-viewer.html?a=2026-06-25-arckit-architects-directory" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-25-arckit-architects-directory.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-19 OKF compatibility workflows -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-19-okf-compatibility-workflows">
+                    <a class="app-article-card__media" href="share/2026-06-19-okf-compatibility-workflows.html">
                         <img src="articles/2026-06-19-okf-compatibility-workflows-hero.png" alt="ArcKit OKF compatibility hero - dark technical diagram showing native ArcKit artifacts, document control, traceability hooks and health checks flowing through an OKF boundary with export-okf and import-okf into knowledge catalogues, research agents, static visualizers and other Markdown tools">
                     </a>
                     <div class="app-article-card__body">
@@ -547,13 +551,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit and OKF: knowledge interoperability without giving up governance</h2>
                         <p class="app-article-card__summary">ArcKit now treats Open Knowledge Format as an interoperability boundary. Native ARC artifacts stay canonical, while <code>/arckit:export-okf</code> creates portable bundles, <code>/arckit:import-okf</code> brings outside knowledge through a review gate, and optional OKF frontmatter lets projects opt into wider tool compatibility without weakening document control, provenance or traceability.</p>
-                        <a href="article-viewer.html?a=2026-06-19-okf-compatibility-workflows" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-19-okf-compatibility-workflows.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-19 Self-Harness autoresearch -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-19-self-harness-autoresearch">
+                    <a class="app-article-card__media" href="share/2026-06-19-self-harness-autoresearch.html">
                         <img src="articles/2026-06-19-self-harness-autoresearch-hero.png" alt="ArcKit Self-Harness autoresearch hero - dark technical workflow showing trace, mine, propose, validate and keep stages with an acceptance rule requiring non-degrading held-in and held-out validation before keeping a small reviewable diff">
                     </a>
                     <div class="app-article-card__body">
@@ -563,13 +567,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit Self-Harness: when the governance harness starts improving itself</h2>
                         <p class="app-article-card__summary">ArcKit's original autoresearch loop optimized command prompts. Self-Harness widens the loop to traces, weakness mining, candidate proposals, held-in and held-out validation, and conservative acceptance rules across prompts, agents, hooks, runtime settings and verification criteria. The result is method improvement that stays explicit, bounded and reviewable.</p>
-                        <a href="article-viewer.html?a=2026-06-19-self-harness-autoresearch" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-19-self-harness-autoresearch.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-17 ArcKit Vibe extension -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-17-arckit-vibe-extension">
+                    <a class="app-article-card__media" href="share/2026-06-17-arckit-vibe-extension.html">
                         <img src="articles/2026-06-17-arckit-vibe-extension-hero.png" alt="ArcKit v5.14 Mistral Vibe extension release hero — dark technical diagram showing canonical ArcKit source flowing through the converter into the standalone tractorjuice/arckit-vibe repository with skills, agent TOML, templates and MCP config cards">
                     </a>
                     <div class="app-article-card__body">
@@ -579,13 +583,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v5.14: Mistral Vibe joins the harness</h2>
                         <p class="app-article-card__summary">ArcKit now ships a Mistral Vibe CLI extension, generated from the same canonical plugin sources as Codex, Gemini, OpenCode, Copilot and Paperclip. The Vibe payload includes converted skills, agent TOML, templates, runtime scripts, schemas, references and MCP configuration, and it publishes to the standalone <code>tractorjuice/arckit-vibe</code> repository so users can clone and update it independently of the main ArcKit source tree.</p>
-                        <a href="article-viewer.html?a=2026-06-17-arckit-vibe-extension" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-17-arckit-vibe-extension.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-15 AI CLI harness not AI app -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-15-ai-cli-harness-not-ai-app">
+                    <a class="app-article-card__media" href="share/2026-06-15-ai-cli-harness-not-ai-app.html">
                         <img src="articles/2026-06-15-ai-cli-harness-not-ai-app-hero.png" alt="AI CLI harness article hero — dark technical split-screen with command-line panels labelled CLI, Codex, Claude and Gemini feeding a central governance harness that outputs ADR, Risk, REQ and TRACE documents, divided from a red API cost risk dashboard showing a rising cost meter, token burn bars and cost-over-time chart">
                     </a>
                     <div class="app-article-card__body">
@@ -595,13 +599,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Don't Build an AI App. Build an AI CLI Harness.</h2>
                         <p class="app-article-card__summary">SemiAnalysis' subscription-versus-API thread is a useful reminder that the economic boundary matters. If you build a conventional API-backed AI app, long-running agent work becomes your inference COGS problem: quotas, billing, token overrun risk, abuse controls and margin collapse under heavy users. A CLI harness takes a different path. The user brings Claude Code, Codex CLI, Gemini CLI, OpenCode or Copilot, along with the subscription or provider account they already pay for. The product becomes workflow, governance, templates, traceability, project structure and checks — not inference resale. That is why ArcKit is an AI harness around existing assistants rather than another architecture SaaS app with a chat box.</p>
-                        <a href="article-viewer.html?a=2026-06-15-ai-cli-harness-not-ai-app" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-15-ai-cli-harness-not-ai-app.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-10 arckit-uk-gcloud supplier overlay -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-10-arckit-uk-gcloud-supplier-overlay">
+                    <a class="app-article-card__media" href="share/2026-06-10-arckit-uk-gcloud-supplier-overlay.html">
                         <img src="articles/2026-06-10-arckit-uk-gcloud-supplier-overlay-hero.png" alt="arckit-uk-gcloud launch hero — dark background with the eyebrow NEW ARCKIT PLUGIN, UK G-CLOUD SUPPLIER OVERLAY, a SERVICE SUBMISSION PACK checklist panel ticking off Supplier Profile (SUPP), Service Definition Document Lot 2 (SDD), Pricing (PRIC) and Security Assertions NCSC Cloud Principles (SECA) with a final gold Submission Review row tagged READY TO SUBMIT, a gold callout reading ArcKit governs the buyer now it helps the supplier win the work, the headline From Blank Repo to Submitted Bid, a gold subline arckit-uk-gcloud the supplier-side overlay for the UK Digital Marketplace, a command line /arckit:supplier-profile to service-design to sdd to pricing to security to review to submission-pack, a capability line listing 11 commands including Service Definition Documents for Lots 1 2 3, pricing, NCSC security assertions, competitor benchmark and CCS submission pack, and a footer reading arckit.org, 13th marketplace plugin, requires arckit core, Proprietary, Claude Code only">
                     </a>
                     <div class="app-article-card__body">
@@ -611,13 +615,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">The supplier side of G-Cloud: ArcKit's new bid-authoring overlay</h2>
                         <p class="app-article-card__summary">ArcKit has always governed the buyer; <code>arckit-uk-gcloud</code> turns the harness around to face the supplier. The 13th marketplace plugin (and fourth sector overlay) drives a G-Cloud 14 Digital Marketplace submission end to end with <strong>11 commands</strong> — supplier profile, service design, Service Definition Documents for Lots 1/2/3, pricing, NCSC Cloud Security Principles assertions, a supplier-side competitor benchmark, a completeness review and a CCS submission pack. Each service becomes its own ArcKit project (<code>projects/{NNN}-service/</code>) with supplier-wide docs in <code>projects/000-global/supplier/</code>, so <code>/arckit:diagram</code>, <code>/arckit:dpia</code>, <code>/arckit:health</code> and the governance dashboard all compose for free. Ported from the standalone gcloud-kit plugin; requires arckit core; Proprietary and Claude Code only.</p>
-                        <a href="article-viewer.html?a=2026-06-10-arckit-uk-gcloud-supplier-overlay" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-10-arckit-uk-gcloud-supplier-overlay.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-09 ArcKit FDE is now a plugin -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-09-arckit-fde-site-generator">
+                    <a class="app-article-card__media" href="share/2026-06-09-arckit-fde-site-generator.html">
                         <img src="articles/2026-06-09-arckit-fde-site-generator-hero.png" alt="ArcKit FDE site generator launch hero, dark background with the eyebrow NEW IN ARCKIT, ARCKIT-FDE PLUGIN, the headline Your FDE site in one command, a left wizard input stack listing Brand, Colour #0e7a5f, Pricing GBP 25K / 35K and Contact, a gold arrow labelled /arckit-fde:create, a right rendered FDE site card showing Your FDE, Bootstrap any project in a week, the four artefact chips Principles, Requirements, Risk and Stakeholders, and pricing GBP 25K intensive and GBP 35K spread published to docs and GitHub Pages, with a footer strip reading 1 command, white-label, 2 market presets, Claude Code only, arckit.org">
                     </a>
                     <div class="app-article-card__body">
@@ -627,13 +631,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit FDE is now a plugin: generate your own forward deploy site in one command</h2>
                         <p class="app-article-card__summary">White-label the bootstrap sprint with one command. <code>/arckit-fde:create</code> interviews you for brand, pricing and contact, then renders a GitHub-Pages-ready Forward Deploy Engineering site into <code>docs/</code>.</p>
-                        <a href="article-viewer.html?a=2026-06-09-arckit-fde-site-generator" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-09-arckit-fde-site-generator.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-03 Britain's War on Consultants -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-03-uk-government-consulting-spend">
+                    <a class="app-article-card__media" href="share/2026-06-03-uk-government-consulting-spend.html">
                         <img src="articles/2026-06-03-uk-government-consulting-spend-hero.png" alt="Britain's War on Consultants hero — dark background, the small eyebrow ARCKIT ANALYSIS, the large headline Britain's War on Consultants, a gold subline reading Declared in 2023, the data shows it didn't land until 2025, and a bar chart captioned consulting awarded, £bn per year, framework ceilings stripped, rising from £1.0bn in 2019/20 through grey bars to a gold £2.3bn peak in 2024/25 and then a dashed, dimmed £1.7bn bar for 2025/26 labelled first fall 2025, with a footer reading arckit.org · UK Tenders MCP · awarded value is not actual spend">
                     </a>
                     <div class="app-article-card__body">
@@ -643,13 +647,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Britain's War on Consultants: What the Procurement Data Actually Shows</h2>
                         <p class="app-article-card__summary">We pointed ArcKit's new <code>/arckit:tenders</code> command at 677,000 UK contract notices to settle a contested question: what does UK government really spend on consulting, and did the 2023 cost-cutting drive work? The most-quoted management-consultancy figure, <strong>£18.7bn</strong>, turns out to be roughly 70 percent framework ceilings and mis-codes; the genuine run-rate is about <strong>£0.7bn a year</strong>, or £1.9bn including IT and research advisory, which reconciles with the NAO's £1.36bn central-government figure and Tussell's record £3.7bn whole-public-sector total. The award data shows consulting <em>rose</em> every year through the cost-cutting drive to a 2024/25 peak, then fell for the first time in 2025, with the caveat throughout that awarded value is not actual spend. Three charts, no tables.</p>
-                        <a href="article-viewer.html?a=2026-06-03-uk-government-consulting-spend" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-03-uk-government-consulting-spend.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-06-02 ArcKit v5.9.0 Procurement Market Intelligence -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-06-02-uk-tenders-procurement-intelligence">
+                    <a class="app-article-card__media" href="share/2026-06-02-uk-tenders-procurement-intelligence.html">
                         <img src="articles/2026-06-02-uk-tenders-procurement-intelligence-hero.png" alt="ArcKit v5.9.0 Procurement Market Intelligence hero — dark background with the eyebrow NEW IN ARCKIT v5.9.0 · UK PROCUREMENT MARKET INTELLIGENCE, a bar chart titled AWARDED VALUE BY SUPPLIER showing a dominant 62 percent gold bar tagged HIGH above descending 14, 9, 6 and 4 percent bars indicating supplier concentration, a gold callout POWERED BY THE NEW UK TENDERS MCP with the line Every UK tender notice · 677,000 records · five national portals · keyless · OGL v3.0, the headline Procurement Market Intelligence, the two commands /arckit:tenders and /arckit:competitors, the tagline Award-value benchmarks, incumbency and supplier concentration from real UK contract data, an evidence-flow line reading new tenders and competitors feed risk, sobc, research and score, and the caveat that awarded value is not actual spend, used for market context and benchmarking, never as a costed figure">
                     </a>
                     <div class="app-article-card__body">
@@ -659,13 +663,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v5.9.0: Procurement Market Intelligence from Real Award Data</h2>
                         <p class="app-article-card__summary">ArcKit v5.9.0 adds two commands and a new bundled MCP service that ground procurement and assurance work in real UK contract award data. <code>/arckit:tenders</code> produces a Procurement Market Intelligence artefact (award-value benchmarks, top suppliers, incumbency and supplier concentration) for a capability, CPV code or buyer; <code>/arckit:competitors</code> maps the supplier-rivalry view and writes a government award history into each vendor profile. Both share one secure, untrusted-input reader over the new <strong>UK Tenders MCP</strong>, which indexes around 677,000 UK contracting processes across all five national portals (Find a Tender, Contracts Finder, Public Contracts Scotland, Sell2Wales, eTendersNI) under OGL v3.0, with the official notice URL on every record. The evidence then flows into <code>risk</code> (supplier-concentration risk), <code>sobc</code> (Economic Case market context), <code>research</code> (build vs buy) and <code>score</code> (vendor company experience), carrying the caveat throughout that awarded value is not actual spend.</p>
-                        <a href="article-viewer.html?a=2026-06-02-uk-tenders-procurement-intelligence" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-06-02-uk-tenders-procurement-intelligence.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-28 ArcKit v5.4 NHS Clinical Safety Overlay -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-28-v540-uk-nhs-clinical-safety-overlay">
+                    <a class="app-article-card__media" href="share/2026-05-28-v540-uk-nhs-clinical-safety-overlay.html">
                         <img src="articles/2026-05-28-v540-uk-nhs-clinical-safety-overlay-hero.png" alt="ArcKit v5.4 UK NHS Clinical Safety Overlay launch hero — dark background with the eyebrow ARCKIT V5.4.0 RELEASED 28 MAY 2026 COMMUNITY OVERLAY, the headline The second sector overlay above NHS Clinical Safety in pale blue, a horizontal row of eight jurisdiction-overlay chips (UK, UAE, FR, CA, EU, AT, AU, US), a dashed green branch descending from the UK chip to a dimmed YESTERDAY v5.3.0 arckit-uk-finance card and then a brighter dashed blue SECTOR branch down to a TODAY · SECTOR OVERLAY · EXPERIMENTAL arckit-uk-nhs card (Clinical safety · DCB0129 / 0160 / DTAC / MDR · 4 commands · recipe uk-nhs-clinical-safety · 44 targets · co-maintainer proposed Dr Marcus Baw), and a four-row command panel listing SAFETY uk-nhs-dcb0129 (DCB0129 manufacturer · ISO 14971), SAFETY uk-nhs-dcb0160 (DCB0160 deployer · HSCA s250), NHSDTAC uk-nhs-dtac (DTAC v3 · 5 sections + AI annex), NHSMDR uk-mdr-classification (UK MDR 2002 · EU MDR 2017/745), with a footer stat strip reading 143 commands · 10 marketplace plugins · 8 jurisdictions · 2 sectors">
                     </a>
                     <div class="app-article-card__body">
@@ -675,13 +679,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay</h2>
                         <p class="app-article-card__summary">ArcKit v5.4 ships <code>arckit-uk-nhs</code>, the tenth marketplace plugin, with four commands covering NHS DCB0129 manufacturer clinical safety case + hazard log, NHS DCB0160 deployer clinical safety case, NHS DTAC v3 procurement assurance (5 sections + AI annex), and UK MDR 2002 / EU MDR 2017/745 software-as-medical-device classification. DCB0129 and DCB0160 adopt Dr Marcus Baw's <a href="https://github.com/pacharanero/SAFETY.md"><code>SAFETY.md</code> spec</a> verbatim (three-file output: <code>SAFETY.md</code>, <code>SAFETY-CASE.md</code>, <code>HAZARD-LOG.md</code>) so any existing SAFETY.md tooling reads ArcKit output unmodified. Recipe: <code>uk-nhs-clinical-safety</code> (44 targets across 8 waves, composes with the <code>uk-saas</code> baseline). Second sector overlay after UK Finance Payments (v5.3). Total command count 139 to 143. Ships EXPERIMENTAL with Marcus Baw invited as proposed domain co-maintainer.</p>
-                        <a href="article-viewer.html?a=2026-05-28-v540-uk-nhs-clinical-safety-overlay" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-28-v540-uk-nhs-clinical-safety-overlay.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-27 ArcKit v5.3 UK Finance Payments Overlay -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-27-v530-uk-finance-payments-overlay">
+                    <a class="app-article-card__media" href="share/2026-05-27-v530-uk-finance-payments-overlay.html">
                         <img src="articles/2026-05-27-v530-uk-finance-payments-overlay-hero.png" alt="ArcKit v5.3 UK Finance Payments Overlay launch hero — dark background with the eyebrow ARCKIT V5.3.0 RELEASED 27 MAY 2026 COMMUNITY OVERLAY, the headline The first sector overlay above UK Finance Payments in green, a horizontal row of eight jurisdiction-overlay chips (UK, UAE, FR, CA, EU, AT, AU, US), a dashed green branch descending from the UK chip labelled SECTOR to an arckit-uk-finance card tagged NEW AXIS · SECTOR OVERLAY · EXPERIMENTAL (Payments · PSPs · EMIs · PIs · 4 commands · recipe uk-fs-payments · 11 targets), and a four-row command panel listing FSSCA uk-fs-sca-rts (PSRs 2017 · PS21/19), FSSAFE uk-fs-safeguarding (EMR 2011 · PS24/9 · CRITICAL), FSCD uk-fs-consumer-duty (PS22/9 · FG22/5 · PRIN 2A), FSCTP uk-fs-ctp-dependency (PS24/16 · FSMA 2023), with a footer stat strip reading 139 commands · 9 marketplace plugins · 8 jurisdictions · 1 sector">
                     </a>
                     <div class="app-article-card__body">
@@ -691,13 +695,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v5.3: The First Sector Overlay, for UK Payments</h2>
                         <p class="app-article-card__summary">ArcKit v5.3 introduces a new kind of community overlay. The seven prior community plugins cover legal territories (UAE, France, Canada, EU, Austria, Australia, USA federal civilian); <code>arckit-uk-finance</code> stays inside the UK but narrows to a single industry vertical, payments. Four commands cover the FCA stack for established Payment Service Providers, E-Money Institutions, and Payment Institutions: PSD2 SCA-RTS exemption design under PSRs 2017 + PS21/19, EMI/PI safeguarding under EMR 2011 + PS24/9 (CRITICAL severity), the FCA Consumer Duty annual board report under PS22/9 + FG22/5, and the Critical Third Parties dependency assessment under PS24/16 + FSMA 2023. Recipe: <code>uk-fs-payments</code> (4 waves, 11 targets). Ninth marketplace plugin. Total command count 135 to 139. Ships <code>EXPERIMENTAL</code> while a UK FS domain co-maintainer is recruited.</p>
-                        <a href="article-viewer.html?a=2026-05-27-v530-uk-finance-payments-overlay" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-27-v530-uk-finance-payments-overlay.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-24 ArcKit v5.1 US Federal Civilian Overlay -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay">
+                    <a class="app-article-card__media" href="share/2026-05-24-v510-us-federal-civilian-overlay.html">
                         <img src="articles/2026-05-24-v510-us-federal-civilian-overlay-hero.png" alt="ArcKit v5.1 US Federal Civilian Overlay launch hero — the Stars and Stripes flag centred on a dark background under the label RELEASE · v5.1 · COMMUNITY OVERLAY · UNITED STATES, the title ArcKit v5.1 below, subtitle 10 US Federal Civilian Regulatory Commands, tagline Community-contributed · Recipe: us-federal (5 waves) · Layered on the official baseline, and the ten command names listed at the bottom (us-fisma-categorization, us-nist-800-53, us-fedramp-ssp, us-fedramp-readiness, us-zero-trust, us-icam, us-ai-rmf, us-ai-impact, us-privacy-pia, us-sbom-eo-14028)">
                     </a>
                     <div class="app-article-card__body">
@@ -707,13 +711,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay</h2>
                         <p class="app-article-card__summary">ArcKit v5.1 ships <code>arckit-us</code>, the eighth marketplace plugin, with ten commands covering the US federal civilian regulatory stack: FedRAMP authorisation (SSP and Readiness), FISMA / NIST SP 800-53 Rev 5, the CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, the NIST AI RMF plus the OMB M-24-10 / M-25-21 AI assurance chain, the E-Gov Act §208 PIA, and EO 14028 secure-software self-attestation with SBOM. The <code>us-federal</code> recipe runs the lot in five dependency-ordered waves. Total command count grows from 125 to 135. Ships <code>[COMMUNITY]</code> while a US federal civilian co-maintainer is recruited, with a quarterly citation review cadence (next 2026-08-23) tracking the post-EO-14110 policy landscape.</p>
-                        <a href="article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-24-v510-us-federal-civilian-overlay.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-22 Tidy Wardley labels -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-22-tidy-wardley-labels">
+                    <a class="app-article-card__media" href="share/2026-05-22-tidy-wardley-labels.html">
                         <img src="articles/2026-05-22-tidy-wardley-labels-hero.png" alt="Tidy Wardley labels hero — the heading Untangling the map, two wardley-beta cards side by side: a salmon BEFORE card whose clustered component labels Booking service, Notifications and Case store pile into an unreadable heap, and a green AFTER card with the same labels scored into clean non-overlapping slots, joined by a wardley-tidy pill, with a stats bar reading 32 candidate slots per label, most-constrained-first, weighted collision scoring, idempotent by design">
                     </a>
                     <div class="app-article-card__body">
@@ -723,13 +727,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">How ArcKit tidies Wardley Map labels: a deterministic placement engine, stepped through</h2>
                         <p class="app-article-card__summary">ArcKit renders every Wardley Map as a Mermaid <code>wardley-beta</code> block, and Mermaid draws every component label at the same default offset. On a real strategic map, where related components cluster, those labels land on top of each other and the map becomes correct and unreadable at the same time. ArcKit v5 fixes this with a PostToolUse hook that rewrites the label offsets automatically. This article steps through the algorithm behind it: a pure, deterministic placement engine that projects the map to pixels, generates 32 candidate slots per label, scores each against a weighted collision penalty, places the most-constrained labels first, runs a refinement pass, and converges to an idempotent result a Write hook can run on every save.</p>
-                        <a href="article-viewer.html?a=2026-05-22-tidy-wardley-labels" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-22-tidy-wardley-labels.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-20 Plugin split token budget -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-20-plugin-split-token-budget">
+                    <a class="app-article-card__media" href="share/2026-05-20-plugin-split-token-budget.html">
                         <img src="articles/2026-05-20-plugin-split-token-budget-hero.png" alt="Plugin split token budget hero — the heading One Plugin Became Seven, The Reason Was a Token Count, an arckit core card feeding six opt-in community overlay chips (uae, fr, ca, eu, au, at), and a stats bar reading 15,291 always-on tokens pre-split, 5,249 saved for single-jurisdiction users, 34 percent smaller always-on footprint, 7 marketplace plugins">
                     </a>
                     <div class="app-article-card__body">
@@ -739,13 +743,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">The token budget behind ArcKit's plugin split, and how to split a plugin of your own</h2>
                         <p class="app-article-card__summary">Every architecture decision has a number behind it. The number behind ArcKit v5.0.0 came from one command, <code>claude plugin details</code>, which reported that the old single-plugin ArcKit added roughly 15,000 tokens to every session before the user typed anything. A third of that was jurisdictional compliance for countries the user would never work in. This article reads that receipt in full: where the always-on cost goes, why agents dominate the core figure while overlay command descriptions cost three times what core commands do, and how splitting into seven marketplace plugins cut a single-jurisdiction user's always-on footprint by about 34 percent. It closes with an eight-step guide to splitting a monolithic plugin of your own.</p>
-                        <a href="article-viewer.html?a=2026-05-20-plugin-split-token-budget" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-20-plugin-split-token-budget.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-19 Leaf node problem -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-19-leaf-node-problem">
+                    <a class="app-article-card__media" href="share/2026-05-19-leaf-node-problem.html">
                         <img src="articles/2026-05-19-leaf-node-problem-hero.png" alt="The Leaf Node Problem hero — Wardley-style sketch with an Enterprise anchor and Team manager anchor, an AI deployed at the leaf node trapped low under three inertia chips (Team KPIs, Org chart structure, Siloed data schemas), and a gold LIFT arrow up to a green Strategic AI guidance target on the enterprise chain">
                     </a>
                     <div class="app-article-card__body">
@@ -755,13 +759,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">The Leaf Node Problem: why your AI pilot is optimising the wrong thing</h2>
                         <p class="app-article-card__summary">Most AI pilots in large organisations are funded by a team and accountable to a team. The team has KPIs. Six months later there is a write-up showing local improvement, the pilot is declared a success, and the enterprise outcome the company actually cares about does not move. Valentine et al. (2024) named the pattern; Gonzalez picked it up as Idea 10 of <em>Organizing Intelligence</em> at DeepMind. The architectural shorthand is the leaf node problem &mdash; AI tooling deployed along the org chart inherits the org chart's gravity, with three points of inertia (Team KPIs, the org chart itself, and siloed data schemas) pulling every pilot downward. Mapped on a Wardley Map, the lift is visible, and so is the cost.</p>
-                        <a href="article-viewer.html?a=2026-05-19-leaf-node-problem" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-19-leaf-node-problem.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-19 Wardley Maps in Markdown via Mermaid -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-19-wardley-maps-mermaid-github">
+                    <a class="app-article-card__media" href="share/2026-05-19-wardley-maps-mermaid-github.html">
                         <img src="articles/2026-05-19-wardley-maps-mermaid-github-hero.png" alt="Wardley Maps in Markdown hero — the same Wardley Map rendered side by side inside a GitHub README card and a Claude artifacts panel card, sharing a Mermaid wardley-beta source pill in the middle, with stats Mermaid 11.15.0, 98% render success across 147 real maps, and 100% on ArcKit-generated syntax">
                     </a>
                     <div class="app-article-card__body">
@@ -771,13 +775,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Your Wardley Maps belong in Git: what Mermaid support changes</h2>
                         <p class="app-article-card__summary">For most of the last decade, Wardley Maps lived on a whiteboard, in a PNG screenshot in a deck, or on a third-party site buried in a wiki. Mermaid 11.15.0 finally makes <code>wardley-beta</code> stable enough to use in production, so GitHub renders maps natively in any markdown file and Claude renders them in the artifacts side panel. That combination quietly resolves the biggest practical problem with Wardley Mapping: keeping the map alive after the meeting. Maps go through code review, get versioned alongside the system they describe, appear where the work happens, and read and write the same way AI assistants already do.</p>
-                        <a href="article-viewer.html?a=2026-05-19-wardley-maps-mermaid-github" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-19-wardley-maps-mermaid-github.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-18 ArcKit v5.0.0 plugin split -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-18-arckit-v5-plugin-split">
+                    <a class="app-article-card__media" href="share/2026-05-18-arckit-v5-plugin-split.html">
                         <img src="articles/2026-05-18-arckit-v5-plugin-split-hero.png" alt="ArcKit v5.0.0 hub-and-spoke hero — arckit core in the centre with six community overlay plugins (arckit-uae, arckit-fr, arckit-ca, arckit-eu, arckit-at, arckit-au) connected via dashed dependency lines">
                     </a>
                     <div class="app-article-card__body">
@@ -787,13 +791,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v5.0.0: one toolkit, seven plugins, install only what you need</h2>
                         <p class="app-article-card__summary">ArcKit v5.0.0 splits the monolithic plugin into seven marketplace plugins: an arckit core that ships the seventy-one official UK Government baseline commands plus six per-jurisdiction community overlays for the UAE, France, Canada, the EU, Austria and (new in v5) Australia. UK-only users get back around five thousand tokens of system-reminder bloat at every session start; multi-jurisdiction users install only the overlays they actually need; and the new dependencies field auto-installs core whenever you install an overlay.</p>
-                        <a href="article-viewer.html?a=2026-05-18-arckit-v5-plugin-split" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-18-arckit-v5-plugin-split.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-12 ArcKit FDE launch -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-12-arckit-fde-launch">
+                    <a class="app-article-card__media" href="share/2026-05-12-arckit-fde-launch.html">
                         <img src="articles/2026-05-12-arckit-fde-launch-hero.png" alt="ArcKit FDE launch hero — Forward Deploy Engineering wordmark, £25K per week first sprint, and Principles / Requirements / Risk / Stakeholders artefact pills on a dark background">
                     </a>
                     <div class="app-article-card__body">
@@ -803,13 +807,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">We are launching ArcKit FDE: embedded architects for UK public sector</h2>
                         <p class="app-article-card__summary">Real agentic AI, small teams, accelerated programmes. Bootstrap any UK public sector project in a week, fixed price &pound;25K for the four-artefact governance pack, with optional embedded follow-on after that. The name borrows from a category OpenAI just made explicit when they launched The OpenAI Deployment Company: not consultants, Forward Deployed Engineers. ArcKit FDE applies the model to UK public sector programmes, with 117 agentic AI commands on Claude Code compressing the governance, procurement and assurance evidence work that traditionally takes a Big 4 bench three months.</p>
-                        <a href="article-viewer.html?a=2026-05-12-arckit-fde-launch" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-12-arckit-fde-launch.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-06 five patterns to steal from anthropics/financial-services -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-06-anthropics-financial-services-architecture-lesson">
+                    <a class="app-article-card__media" href="share/2026-05-06-anthropics-financial-services-architecture-lesson.html">
                         <img src="articles/2026-05-06-anthropics-financial-services-architecture-lesson-hero.png" alt="Five patterns to steal from anthropics/financial-services — reader/orchestrator/writer isolation, schema-gated handoffs, output schemas, cross-reference linting, and dual-track shipping">
                     </a>
                     <div class="app-article-card__body">
@@ -819,13 +823,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Five patterns to steal from <code>anthropics/financial-services</code></h2>
                         <p class="app-article-card__summary">Parts of the financial services sector are cooked, and you can date the moment fairly precisely. When Anthropic dropped their FSI reference plugins into a public GitHub repo, two reactions landed in our inbox: panic, and engineering. Here is the engineering read &mdash; reader/orchestrator/writer isolation, schema-gated handoffs, output schemas with regex constraints, cross-reference linting, and the two-ways-from-one-source deployment pattern, all extracted in <a href="https://github.com/tractorjuice/arc-kit/issues/442">arc-kit#442</a>.</p>
-                        <a href="article-viewer.html?a=2026-05-06-anthropics-financial-services-architecture-lesson" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-06-anthropics-financial-services-architecture-lesson.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-03 community recipes call -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-03-community-recipes-wanted">
+                    <a class="app-article-card__media" href="share/2026-05-03-community-recipes-wanted.html">
                         <img src="articles/2026-05-03-community-recipes-wanted-hero.png" alt="WANTED poster style — three shipped ArcKit recipes (uk-saas, uk-mod-sovereign, uae-federal-ai) and ten open slots covering jurisdictions (eu-saas, fr-public, de-bund, au-fed, ca-fed) and consultancies (mckinsey-arch, deloitte-arch, pwc-tech, ey-tech, kpmg-advisory)">
                     </a>
                     <div class="app-article-card__body">
@@ -835,13 +839,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Wanted: <code>/arckit:build</code> recipes for your jurisdiction</h2>
                         <p class="app-article-card__summary">Three recipes ship with v4.13.1: <code>uk-saas</code>, <code>uk-mod-sovereign</code>, <code>uae-federal-ai</code>. That's roughly 0.5 per cent of the world's public sectors. EU, Australia, Canada, Germany, France, Singapore — your jurisdiction's recipe could ship with v4.14. And a separate category: Big 4 / MBB / system integrator firm-style governance bundles (mckinsey-arch, deloitte-arch, pwc-tech, …) — composition, not endorsement.</p>
-                        <a href="article-viewer.html?a=2026-05-03-community-recipes-wanted" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-03-community-recipes-wanted.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-03 /arckit:build harness launch -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-03-build-harness-parallel-architecture-generation">
+                    <a class="app-article-card__media" href="share/2026-05-03-build-harness-parallel-architecture-generation.html">
                         <img src="articles/2026-05-03-build-harness-parallel-architecture-generation-hero.png" alt="ArcKit v4.13.0: The Build Harness — wave plan with 31 artefacts across 9 parallel waves, stamped 'The GDS Harness'">
                     </a>
                     <div class="app-article-card__body">
@@ -851,13 +855,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v4.13.0: The Build Harness &mdash; Building a full architecture in one Claude Code session. AKA The GDS Harness</h2>
                         <p class="app-article-card__summary">A new <code>/arckit:build</code> command orchestrates parallel <code>/arckit:*</code> artefact generation via subagent isolation. YAML recipes drive the wave plan, state.json makes the run resumable, and the validate-arc-filename hook handles path allocation. Thirty-one artefacts in under thirty minutes, one git commit per wave.</p>
-                        <a href="article-viewer.html?a=2026-05-03-build-harness-parallel-architecture-generation" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-03-build-harness-parallel-architecture-generation.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-03 £24bn pattern + ArcKit -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-03-how-open-source-saved-uk-economy-12bn">
+                    <a class="app-article-card__media" href="share/2026-05-03-how-open-source-saved-uk-economy-12bn.html">
                         <img src="articles/2026-05-03-how-open-source-saved-uk-economy-12bn-hero.png" alt="£24bn saved twice. Now ArcKit is going to do it a third time.">
                     </a>
                     <div class="app-article-card__body">
@@ -867,13 +871,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">I have saved the UK economy £24 billion. ArcKit is the third time.</h2>
                         <p class="app-article-card__summary">G-Cloud saved the UK around £12bn in procurement. The UN Global Platform saved another £12bn through real-time COVID economic indicators fed to the Treasury and Bank of England. The same playbook applied to enterprise architecture is the next £12bn.</p>
-                        <a href="article-viewer.html?a=2026-05-03-how-open-source-saved-uk-economy-12bn" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-03-how-open-source-saved-uk-economy-12bn.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-05-01 internal memo -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-01-consulting-internal-memo">
+                    <a class="app-article-card__media" href="share/2026-05-01-consulting-internal-memo.html">
                         <img src="articles/2026-05-01-consulting-internal-memo-hero.png" alt="Internal Memo, Somewhere in a Big 4 — BID/2026/0411 Lessons Learned">
                     </a>
                     <div class="app-article-card__body">
@@ -883,13 +887,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Internal Memo, Somewhere in a Big 4 Consulting Company</h2>
                         <p class="app-article-card__summary">A fictional partner-group memo on a £680k Phase 0 bid lost to two civil servants and a contractor with a long weekend and ArcKit. What the in-house pack contained, why it was good enough, and what the practice should do about it.</p>
-                        <a href="article-viewer.html?a=2026-05-01-consulting-internal-memo" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-05-01-consulting-internal-memo.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-30 v4.10 launch -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-30-uae-overlay-launch">
+                    <a class="app-article-card__media" href="share/2026-04-30-uae-overlay-launch.html">
                         <img src="articles/2026-04-30-uae-overlay-launch-hero.png" alt="ArcKit v4.10 UAE Federal Overlay launch — 12 commands grid">
                     </a>
                     <div class="app-article-card__body">
@@ -899,13 +903,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v4.10: 12 UAE Federal Commands, Community Overlay</h2>
                         <p class="app-article-card__summary">Twelve community-contributed commands covering the UAE federal regulatory and digital-government stack. The release walkthrough: PDPL, IAS, sovereign cloud residency, UAE Pass, the four Cabinet instruments, AI Charter, autonomy tier, federal procurement. Solo-maintained today; recruiting a UAE domain co-maintainer before any official-tier promotion.</p>
-                        <a href="article-viewer.html?a=2026-04-30-uae-overlay-launch" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-30-uae-overlay-launch.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-30 decree operationalisation -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-30-uae-agentic-decree-arckit-v4-10">
+                    <a class="app-article-card__media" href="share/2026-04-30-uae-agentic-decree-arckit-v4-10.html">
                         <img src="articles/2026-04-30-uae-agentic-decree-arckit-v4-10-hero.png" alt="Decree to 4 instruments to 12 commands policy stack">
                     </a>
                     <div class="app-article-card__body">
@@ -915,13 +919,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">How ArcKit v4.10 Accelerates the UAE's Federal Agentic Decree</h2>
                         <p class="app-article-card__summary">Policy-audience essay mapping the 23 April Cabinet decree, the four governance instruments, and the federal regulatory baseline directly onto the 12 new uae-* commands. One command per instrument; eight more for the federal baseline; two for AI governance; one for procurement.</p>
-                        <a href="article-viewer.html?a=2026-04-30-uae-agentic-decree-arckit-v4-10" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-30-uae-agentic-decree-arckit-v4-10.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-30 CAIO 90 days -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-30-uae-caio-first-90-days">
+                    <a class="app-article-card__media" href="share/2026-04-30-uae-caio-first-90-days.html">
                         <img src="articles/2026-04-30-uae-caio-first-90-days-hero.png" alt="UAE CAIO first 90 days four-phase plan">
                     </a>
                     <div class="app-article-card__body">
@@ -931,13 +935,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">The CAIO's First 90 Days: Delivering the UAE Cabinet Agentic AI Mandate</h2>
                         <p class="app-article-card__summary">For UAE Chief AI Officers under the Cabinet's two-year deadline: what to produce, what timeline is achievable, what team and budget you will need, and what architecture stack the artefacts have to fit. Concrete week-one actions and a credible cadence to month twenty-four.</p>
-                        <a href="article-viewer.html?a=2026-04-30-uae-caio-first-90-days" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-30-uae-caio-first-90-days.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-30 90-day playbook -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-30-uae-agentic-decree-90-day-playbook">
+                    <a class="app-article-card__media" href="share/2026-04-30-uae-agentic-decree-90-day-playbook.html">
                         <img src="articles/2026-04-30-uae-agentic-decree-90-day-playbook-hero.png" alt="Conventional vs ArcKit weeks per artefact bar chart">
                     </a>
                     <div class="app-article-card__body">
@@ -947,13 +951,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">The UAE Agentic Decree: A 90-Day ArcKit Playbook</h2>
                         <p class="app-article-card__summary">Command-by-command, calendar-anchored playbook for the first ninety days under the UAE Cabinet's agentic decree. The acceleration ledger comparing conventional architect-weeks against ArcKit-weeks per artefact, with the working that makes the two-year deadline arithmetically possible.</p>
-                        <a href="article-viewer.html?a=2026-04-30-uae-agentic-decree-90-day-playbook" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-30-uae-agentic-decree-90-day-playbook.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-30 drafting to judging -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-30-toolkit-drafts-architect-judges">
+                    <a class="app-article-card__media" href="share/2026-04-30-toolkit-drafts-architect-judges.html">
                         <img src="articles/2026-04-30-toolkit-drafts-architect-judges-hero.png" alt="Conventional vs ArcKit working day comparison — drafting collapses, judging stays constant">
                     </a>
                     <div class="app-article-card__body">
@@ -963,13 +967,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">The Toolkit Drafts. The Architect Judges.</h2>
                         <p class="app-article-card__summary">Why the architect's working day under agentic tooling shifts from drafting to judging, what that does to the architect-to-engineer ratio, and the two failure modes that quietly defeat the productivity case if the calibration is wrong.</p>
-                        <a href="article-viewer.html?a=2026-04-30-toolkit-drafts-architect-judges" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-30-toolkit-drafts-architect-judges.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-28 -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-28-pricing-arckit-investor">
+                    <a class="app-article-card__media" href="share/2026-04-28-pricing-arckit-investor.html">
                         <img src="articles/2026-04-28-pricing-arckit-investor-hero.png" alt="Pricing ArcKit for an investor — financial vs strategic valuation">
                     </a>
                     <div class="app-article-card__body">
@@ -979,13 +983,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Pricing the ArcKit Project: What Would an Investor Actually Pay?</h2>
                         <p class="app-article-card__summary">A defensible valuation range for ArcKit today: ~£20m for a financial investor, ~£80m for a strategic acquirer, with the working from comparables (Vanta, Drata, OneTrust, HashiCorp) shown in full.</p>
-                        <a href="article-viewer.html?a=2026-04-28-pricing-arckit-investor" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-28-pricing-arckit-investor.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-27 -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-27-mckinsey-decks-from-arckit">
+                    <a class="app-article-card__media" href="share/2026-04-27-mckinsey-decks-from-arckit.html">
                         <img src="articles/2026-04-27-mckinsey-decks-from-arckit-hero.png" alt="ArcKit artifacts transformed into McKinsey-style infographics">
                     </a>
                     <div class="app-article-card__body">
@@ -995,13 +999,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">From ArcKit to McKinsey-Style Infographics in an Afternoon</h2>
                         <p class="app-article-card__summary">AntV Infographic and the end of the £200k visual wrap: how ArcKit artifacts become action-titled, Pyramid-Principle decks without the partner-rate consulting layer.</p>
-                        <a href="article-viewer.html?a=2026-04-27-mckinsey-decks-from-arckit" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-27-mckinsey-decks-from-arckit.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-22 -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-22-wardley-commands-walkthrough">
+                    <a class="app-article-card__media" href="share/2026-04-22-wardley-commands-walkthrough.html">
                         <img src="articles/2026-04-22-wardley-commands-walkthrough-hero.png" alt="Five numbered command cards showing the ArcKit Wardley suite pipeline">
                     </a>
                     <div class="app-article-card__body">
@@ -1011,13 +1015,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">The Five Wardley Commands in ArcKit</h2>
                         <p class="app-article-card__summary">A command-by-command walkthrough of ArcKit's Wardley Mapping suite: value-chain, wardley, doctrine, climate, and gameplay — what each does, when to run it, and how they chain.</p>
-                        <a href="article-viewer.html?a=2026-04-22-wardley-commands-walkthrough" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-22-wardley-commands-walkthrough.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-22 v4.9.0 -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-22-v490-wardley-mapping-support">
+                    <a class="app-article-card__media" href="share/2026-04-22-v490-wardley-mapping-support.html">
                         <img src="articles/2026-04-22-v490-wardley-mapping-hero.png" alt="OWM source panel next to a rendered Mermaid wardley-beta Tea Shop map">
                     </a>
                     <div class="app-article-card__body">
@@ -1027,13 +1031,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit 4.9.0: Wardley Maps Render Natively</h2>
                         <p class="app-article-card__summary">Mermaid 11.14.0 brings a wardley-beta diagram type, and ArcKit adopts it everywhere. 100% conversion fidelity across 147 real-world maps, zero evolution drift.</p>
-                        <a href="article-viewer.html?a=2026-04-22-v490-wardley-mapping-support" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-22-v490-wardley-mapping-support.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-20 consulting -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-20-consulting-deliverable-is-dead">
+                    <a class="app-article-card__media" href="share/2026-04-20-consulting-deliverable-is-dead.html">
                         <img src="articles/2026-04-20-consulting-deliverable-is-dead-hero.png" alt="ArcKit displacing Big 4 consulting deliverables">
                     </a>
                     <div class="app-article-card__body">
@@ -1043,13 +1047,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business</h2>
                         <p class="app-article-card__summary">For twenty years UK public-sector transformation has run on a Big 4 / MBB engine that ships a £250k–£2m PDF six months later. ArcKit makes the pipeline that produced it unnecessary — not the work itself, the pipeline.</p>
-                        <a href="article-viewer.html?a=2026-04-20-consulting-deliverable-is-dead" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-20-consulting-deliverable-is-dead.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-20 -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-20-v480-austrian-overlay">
+                    <a class="app-article-card__media" href="share/2026-04-20-v480-austrian-overlay.html">
                         <img src="articles/2026-04-20-v480-austrian-overlay-hero.png" alt="Austrian regulatory overlay hero image">
                     </a>
                     <div class="app-article-card__body">
@@ -1059,13 +1063,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">What You Can Now Do in Austria with ArcKit v4.8</h2>
                         <p class="app-article-card__summary">Three Austrian regulatory commands: DSG / DSGVO assessment, NISG (NIS2) compliance, and BVergG 2018 procurement documentation — a community-maintained overlay.</p>
-                        <a href="article-viewer.html?a=2026-04-20-v480-austrian-overlay" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-20-v480-austrian-overlay.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-19 EU/French -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-19-v470-eu-french-regulatory">
+                    <a class="app-article-card__media" href="share/2026-04-19-v470-eu-french-regulatory.html">
                         <img src="articles/2026-04-19-v470-eu-french-regulatory-hero.png" alt="EU and French regulatory overlay hero">
                     </a>
                     <div class="app-article-card__body">
@@ -1075,13 +1079,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v4.7: 18 EU and French Regulatory Commands</h2>
                         <p class="app-article-card__summary">A community-contributed overlay covering GDPR, NIS2, DORA, EU AI Act, CRA, DSA plus French ANSSI, CNIL, and the aDRI IRN self-assessment.</p>
-                        <a href="article-viewer.html?a=2026-04-19-v470-eu-french-regulatory" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-19-v470-eu-french-regulatory.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-19 Trending -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-19-arckit-trending-on-github">
+                    <a class="app-article-card__media" href="share/2026-04-19-arckit-trending-on-github.html">
                         <img src="articles/2026-04-19-arckit-trending-hero.png" alt="ArcKit trending on GitHub">
                     </a>
                     <div class="app-article-card__body">
@@ -1091,13 +1095,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Why an EA Toolkit is Trending on GitHub in 2026</h2>
                         <p class="app-article-card__summary">Notes on the day ArcKit hit GitHub Trending, what drove it, and what it signals about enterprise architecture tooling in the AI era.</p>
-                        <a href="article-viewer.html?a=2026-04-19-arckit-trending-on-github" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-19-arckit-trending-on-github.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-07 Grants (companies) -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-04-07-v464-grants-command-for-companies">
+                    <a class="app-article-card__media" href="share/2026-04-07-v464-grants-command-for-companies.html">
                         <img src="articles/2026-04-07-v464-grants-command-for-companies-hero.png" alt="UK grants command hero">
                     </a>
                     <div class="app-article-card__body">
@@ -1107,13 +1111,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Finding UK Funding for Public Sector Projects</h2>
                         <p class="app-article-card__summary">How the /arckit:grants command automates UK grant research, innovation funding, and accelerator discovery directly from your architecture context.</p>
-                        <a href="article-viewer.html?a=2026-04-07-v464-grants-command-for-companies" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-07-v464-grants-command-for-companies.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-04-07 Grants (funding research) -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media app-article-card__media--fallback" href="article-viewer.html?a=2026-04-07-v464-grants-command-funding-research">
+                    <a class="app-article-card__media app-article-card__media--fallback" href="share/2026-04-07-v464-grants-command-funding-research.html">
                         <span>ArcKit v4.6.4</span>
                     </a>
                     <div class="app-article-card__body">
@@ -1123,13 +1127,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Automated UK Funding Research with the Grants Command</h2>
                         <p class="app-article-card__summary">A technical look at the /arckit:grants command: how the agent discovers funding sources, scores relevance, and generates the GRNT artefact.</p>
-                        <a href="article-viewer.html?a=2026-04-07-v464-grants-command-funding-research" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-04-07-v464-grants-command-funding-research.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-03-23 Gov Code Discovery -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-03-23-government-code-discovery-commands">
+                    <a class="app-article-card__media" href="share/2026-03-23-government-code-discovery-commands.html">
                         <img src="articles/hero-government-code-discovery.png" alt="Government code discovery commands hero">
                     </a>
                     <div class="app-article-card__body">
@@ -1139,13 +1143,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Discovering What Government Has Already Built</h2>
                         <p class="app-article-card__summary">Three new commands for UK public-sector code reuse using the govreposcrape MCP server: gov-reuse, gov-code-search, and gov-landscape.</p>
-                        <a href="article-viewer.html?a=2026-03-23-government-code-discovery-commands" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-03-23-government-code-discovery-commands.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-03-18 ClaudeClaw -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code">
+                    <a class="app-article-card__media" href="share/2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code.html">
                         <img src="articles/2026-03-18-building-claudeclaw-hero.png" alt="ClaudeClaw autonomous agents hero">
                     </a>
                     <div class="app-article-card__body">
@@ -1155,13 +1159,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Building ClaudeClaw: Autonomous Agents on Claude Code</h2>
                         <p class="app-article-card__summary">Engineering notes on building an OpenClaw-style autonomous agent system on top of Claude Code — agent orchestration, memory, and tool routing.</p>
-                        <a href="article-viewer.html?a=2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-03-16 Wardley Suite -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-03-16-wardley-suite-strategic-mapping">
+                    <a class="app-article-card__media" href="share/2026-03-16-wardley-suite-strategic-mapping.html">
                         <img src="articles/2026-03-16-wardley-suite-hero.png" alt="Wardley Suite command flow hero">
                     </a>
                     <div class="app-article-card__body">
@@ -1171,13 +1175,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v4.3.0: Complete Wardley Mapping Suite</h2>
                         <p class="app-article-card__summary">A five-command pipeline for AI-assisted strategic architecture, distilled from three Wardley Mapping books and 1M+ words of primary source material.</p>
-                        <a href="article-viewer.html?a=2026-03-16-wardley-suite-strategic-mapping" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-03-16-wardley-suite-strategic-mapping.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-03-12 Document Map -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-03-12-document-map-medium">
+                    <a class="app-article-card__media" href="share/2026-03-12-document-map-medium.html">
                         <img src="articles/2026-03-12-document-map-hero.png" alt="Document map hero">
                     </a>
                     <div class="app-article-card__body">
@@ -1187,13 +1191,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">Your Architecture Documents Are Connected</h2>
                         <p class="app-article-card__summary">ArcKit now auto-generates an interactive map showing how your requirements, stakeholders, risks, ADRs, and decisions relate across the artefact chain.</p>
-                        <a href="article-viewer.html?a=2026-03-12-document-map-medium" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-03-12-document-map-medium.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-03-11 v4.1.1 -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-03-11-v411-copilot-vendor-scoring-impact">
+                    <a class="app-article-card__media" href="share/2026-03-11-v411-copilot-vendor-scoring-impact.html">
                         <img src="articles/2026-03-11-v411-article-hero.png" alt="ArcKit v4.1.1 release hero">
                     </a>
                     <div class="app-article-card__body">
@@ -1203,13 +1207,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v4.1.1: Copilot, Vendor Scoring, Blast Radius</h2>
                         <p class="app-article-card__summary">GitHub Copilot extension, weighted vendor-scoring across procurement criteria, and blast-radius analysis for architecture decisions.</p>
-                        <a href="article-viewer.html?a=2026-03-11-v411-copilot-vendor-scoring-impact" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-03-11-v411-copilot-vendor-scoring-impact.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-03-08 v4 -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media" href="article-viewer.html?a=2026-03-08-v4-codex-gemini-support">
+                    <a class="app-article-card__media" href="share/2026-03-08-v4-codex-gemini-support.html">
                         <img src="articles/2026-03-08-v4-article-hero.png" alt="ArcKit v4 Codex and Gemini support hero">
                     </a>
                     <div class="app-article-card__body">
@@ -1219,13 +1223,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit v4: First-Class Codex and Gemini Support</h2>
                         <p class="app-article-card__summary">The v4 release adds native extensions for Codex CLI and Gemini CLI with hooks, MCP servers, policies, and a redesigned converter pipeline.</p>
-                        <a href="article-viewer.html?a=2026-03-08-v4-codex-gemini-support" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-03-08-v4-codex-gemini-support.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-02-28 Contributors -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media app-article-card__media--fallback" href="article-viewer.html?a=2026-02-28-arckit-contributors-medium-post">
+                    <a class="app-article-card__media app-article-card__media--fallback" href="share/2026-02-28-arckit-contributors-medium-post.html">
                         <span>Community</span>
                     </a>
                     <div class="app-article-card__body">
@@ -1235,13 +1239,13 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">The People Behind ArcKit</h2>
                         <p class="app-article-card__summary">How open-source contributors are shaping enterprise-architecture tooling, and how to get involved yourself.</p>
-                        <a href="article-viewer.html?a=2026-02-28-arckit-contributors-medium-post" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-02-28-arckit-contributors-medium-post.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
                 <!-- 2026-02-28 v2.16.3 -->
                 <article class="app-article-card">
-                    <a class="app-article-card__media app-article-card__media--fallback" href="article-viewer.html?a=2026-02-28-arckit-v2163-linkedin-post">
+                    <a class="app-article-card__media app-article-card__media--fallback" href="share/2026-02-28-arckit-v2163-linkedin-post.html">
                         <span>ArcKit v2.16.3</span>
                     </a>
                     <div class="app-article-card__body">
@@ -1251,7 +1255,7 @@
                         </div>
                         <h2 class="govuk-heading-s app-article-card__title">ArcKit Recommends Claude Code v2.1.63+</h2>
                         <p class="app-article-card__summary">Why the plugin now recommends the latest Claude Code runtime, and what changed in the baseline capability set.</p>
-                        <a href="article-viewer.html?a=2026-02-28-arckit-v2163-linkedin-post" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                        <a href="share/2026-02-28-arckit-v2163-linkedin-post.html" class="govuk-link app-article-card__link">Read article &rarr;</a>
                     </div>
                 </article>
 
@@ -1287,12 +1291,6 @@
 
     <script type="module" src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js" integrity="sha384-DwGEYeDIkSBDH4+n4Z+tY7m0/hKLvETQmD6glhDiHn0lFo3hffImqh39zfNvHVrd" crossorigin="anonymous"></script>
     <script type="module">import { initAll } from "https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js"; initAll();</script>
-    <script>
-        function toggleTheme() {
-            var h = document.documentElement;
-            if (h.classList.contains('dark-mode')) { h.classList.remove('dark-mode'); h.classList.add('light-mode'); localStorage.setItem('arckit-theme', 'light'); }
-            else { h.classList.remove('light-mode'); h.classList.add('dark-mode'); localStorage.setItem('arckit-theme', 'dark'); }
-        }
-    </script>
+    <script src="theme.js"></script>
 </body>
 </html>

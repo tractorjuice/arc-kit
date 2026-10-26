@@ -1,81 +1,78 @@
 #!/usr/bin/env node
 /**
- * ArcKit PreToolUse Hook — Inject Project Context on Agent Dispatch
+ * ArcKit SubagentStart Hook — Inject Project Context into ArcKit Subagents
  *
- * UserPromptSubmit hooks fire only on actual user prompts. When the LLM
- * dispatches a subagent via the `Agent` tool, that subagent runs in an
- * isolated context — it does NOT inherit the parent thread's
- * UserPromptSubmit-injected project context. Subagents whose prompt
+ * UserPromptSubmit hooks fire only on actual user prompts. A subagent runs
+ * in an isolated context and does NOT inherit the parent thread's
+ * UserPromptSubmit-injected project context, so a subagent whose prompt
  * assumes "the ArcKit Project Context hook has already detected all
- * projects, artifacts, …" silently lose that context.
+ * projects, artifacts, …" would otherwise work blind.
  *
  * This hook closes that gap for ArcKit-owned subagents:
  *
- *   1. Match PreToolUse against tool_name === 'Agent'.
- *   2. Read tool_input.subagent_type. Skip if:
- *        - The name doesn't start with "arckit-" (we don't want to
- *          spam Plan/Explore/general-purpose agents with ArcKit-
- *          specific context they didn't ask for).
- *        - The name ends with "-reader" or "-writer" (the reader/writer
+ *   1. Fire on SubagentStart and read `agent_type`, plugin-scoped
+ *      ("arckit:arckit-framework") or bare ("arckit-framework"). Skip if:
+ *        - the bare name doesn't start with "arckit-", or the plugin scope
+ *          isn't an ArcKit plugin (Plan, Explore, general-purpose and other
+ *          plugins' agents never get ArcKit context they didn't ask for);
+ *        - the name ends with "-reader" or "-writer" (the reader/writer
  *          tier of the orchestrator pattern takes strict JSON payloads;
- *          prepending prose context would pollute the schema discipline
- *          and confuse the subagent).
- *   3. Build the same project-context block the UserPromptSubmit hook
+ *          prose context would pollute the schema discipline).
+ *   2. Build the same project-context block the UserPromptSubmit hook
  *      builds (shared module — `project-context-builder.mjs`).
- *   4. Emit `updatedInput` with the context prepended to the dispatched
- *      `prompt` field. Per https://code.claude.com/docs/en/hooks.md the
- *      PreToolUse hook's `updatedInput` is the supported mechanism for
- *      mutating tool params before dispatch — `additionalContext` only
- *      lands in the parent thread, not the subagent's context.
+ *   3. Return it as `hookSpecificOutput.additionalContext`, which Claude
+ *      Code adds to the subagent's own conversation before its first prompt.
  *
- * Hook Type: PreToolUse (matcher: Agent)
+ * Until 6.17.3 this was a PreToolUse hook on `Agent` that prepended the
+ * context to the dispatched prompt by rewriting the Agent call. The Claude
+ * plugin directory reads any PreToolUse input rewrite as the plugin acting
+ * on its own behalf and declined the core plugin for it. SubagentStart
+ * delivers the same context without touching the tool call.
+ *
+ * Hook Type: SubagentStart
  * Input (stdin):
- *   { tool_name: "Agent", tool_input: {subagent_type, prompt, ...}, cwd, ... }
+ *   { hook_event_name: "SubagentStart", agent_type, cwd, ... }
  * Output (stdout):
- *   On inject:  {hookSpecificOutput: {hookEventName, updatedInput: {...}}}
+ *   On inject:  {hookSpecificOutput: {hookEventName: "SubagentStart", additionalContext}}
  *   On skip:    silent pass-through (exit 0, no JSON).
  *
  * Exit code 0 always — pass-through is a non-decision, not a failure.
  */
 
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { findRepoRoot, parseHookInput } from './hook-utils.mjs';
 import { buildProjectContext } from './project-context-builder.mjs';
 
-const data = parseHookInput();
+/** Whether a SubagentStart agent_type should receive ArcKit project context. */
+export function wantsContext(agentType) {
+  const name = String(agentType || '');
+  const cut = name.lastIndexOf(':');
+  const scope = cut < 0 ? '' : name.slice(0, cut);
+  const bare = name.slice(cut + 1);
+  if (scope && scope !== 'arckit' && !scope.startsWith('arckit-')) return false;
+  if (!bare.startsWith('arckit-')) return false;
+  return !/-(reader|writer)$/.test(bare);
+}
 
-if (data.tool_name !== 'Agent') process.exit(0);
+/** Decide the hook output for one input. Returns an object to print, or null. */
+export function decide(data, build = buildProjectContext) {
+  if (data.hook_event_name && data.hook_event_name !== 'SubagentStart') return null;
+  if (!wantsContext(data.agent_type)) return null;
+  const repoRoot = findRepoRoot(data.cwd || process.cwd());
+  if (!repoRoot) return null;
+  const contextText = build(repoRoot);
+  if (!contextText) return null;
+  return {
+    hookSpecificOutput: {
+      hookEventName: 'SubagentStart',
+      additionalContext: contextText,
+    },
+  };
+}
 
-const input = data.tool_input || {};
-const subagentType = String(input.subagent_type || '');
-const dispatchedPrompt = String(input.prompt || '');
-
-// Scope: only ArcKit-owned subagents — never spam Plan / Explore /
-// general-purpose / claude-code-guide / etc. with our project context.
-if (!subagentType.startsWith('arckit-')) process.exit(0);
-
-// Skip the strict-payload tier: reader and writer subagents take
-// schema-validated JSON inputs. Injecting prose context would either
-// fail schema validation downstream or, worse, confuse the subagent
-// into treating the context as part of the JSON payload.
-if (/-(reader|writer)$/.test(subagentType)) process.exit(0);
-
-// Build the same context block the UserPromptSubmit hook builds.
-const cwd = data.cwd || process.cwd();
-const repoRoot = findRepoRoot(cwd);
-if (!repoRoot) process.exit(0);
-
-const contextText = buildProjectContext(repoRoot);
-if (!contextText) process.exit(0);
-
-// Prepend the context to the dispatched prompt. Newline pair separates
-// the injected block from the actual instruction so the subagent sees
-// the boundary clearly.
-const newPrompt = `${contextText}\n\n---\n\n${dispatchedPrompt}`;
-
-const output = {
-  hookSpecificOutput: {
-    hookEventName: 'PreToolUse',
-    updatedInput: { ...input, prompt: newPrompt },
-  },
-};
-console.log(JSON.stringify(output));
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const out = decide(parseHookInput());
+  if (out) console.log(JSON.stringify(out));
+  process.exit(0);
+}

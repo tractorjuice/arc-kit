@@ -12,6 +12,8 @@ handoffs:
     condition: "Product with digital elements includes an AI component"
   - command: secure
     description: Implement security controls addressing CRA Annex I essential requirements
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
@@ -76,7 +78,7 @@ Read all documents from Step 0. Identify:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/eu-cra-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/eu-cra-template.md` exists in the project root, then `.arckit/templates/eu-cra-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/eu-cra-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -115,7 +117,7 @@ Show scope determination and classification before proceeding.
    - Existing file → minor increment if refreshed, major if classification changed
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-CRA-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-CRA-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}

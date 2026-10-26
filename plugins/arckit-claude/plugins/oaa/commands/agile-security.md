@@ -9,7 +9,11 @@ handoffs:
     description: Establish governance cadence including security review gates
 
   - command: agile-strategy
-    description: Align security strategy with dual transformation tracks
+    description: Align security strategy with the dual transformation dimensions
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 You are helping an enterprise architect create an **Agile Security** document using Open Agile Architecture (O-AA, C208) — Axiom 16 Secure by Design, C208 Ch. 4.6, and the O-AA Security Playbook (G216). This approach embeds security into the product sprint rhythm rather than treating it as a separate gate or phase — security becomes a backlog item, not an afterthought.
@@ -63,6 +67,10 @@ Use this command when **any** of the following conditions are met:
 - **OASTR** (Agile Strategy Canvas) — Extract: Risk profile, transformation risks, security strategy
 
   - If missing: note that strategy context is limited
+
+- **REQ** (Requirements) — Extract: Security non-functional requirements (NFR-SEC) and any compliance requirements, so every security story traces to a requirement
+
+  - If missing: note that security stories cannot be traced to NFR-SEC requirements, and suggest `/arckit:requirements`
 
 ### Prerequisites 1b: Read external documents and policies
 
@@ -131,7 +139,7 @@ Create the Agile Security document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OASEC --filename` (canonical form: `ARC-{P}-OASEC-v1.0`)
+- Generate Document ID with `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs {P} OASEC {VERSION} --filename` (canonical form: `ARC-{P}-OASEC-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 
@@ -147,9 +155,11 @@ Create the Agile Security document following the template structure.
 
 - **Acceptance criteria**: Each security story includes testable security acceptance criteria
 
+- **Requirements traceability**: Each security story traces to an NFR-SEC requirement from REQ where one exists; NFR-SEC entries with no story are listed as gaps
+
 #### Threat Modeling per Sprint
 
-- **Sprint 0 threat model**: Initial threat model covering product architecture (STRIDE or equivalent)
+- **Sprint 0 threat model**: Initial threat model covering product architecture, structured by STRIDE category (Spoofing, Tampering, Repudiation, Information disclosure, Denial of service, Elevation of privilege) or an equivalent method named in the document
 
 - **Sprint N threat updates**: Each sprint updates threat model based on new features, identified vulnerabilities, and environment changes
 
@@ -177,6 +187,14 @@ Create the Agile Security document following the template structure.
 
 - **Security review gates**: Lightweight sprint-level security reviews, not heavy-gate audits
 
+#### Security Exception Path
+
+- **Trigger**: A security check fails and the delivery date cannot move
+
+- **Decision**: Who may accept the risk at each severity, and who signs the exception off
+
+- **Record**: The exception is logged as accepted risk with a severity and a resolution deadline, and reviewed at each sprint boundary
+
 #### AI/ML Security Considerations
 
 - **Algorithmic transparency**: ATRS compliance per sprint for AI/ML features
@@ -202,7 +220,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-OASEC-v1.0.md
+projects/{P}/ARC-{P}-OASEC-v{VERSION}.md
 ```
 
 ### 9. Show Summary to User
@@ -212,8 +230,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## Agile Security Document Created
 
-**Document**: `projects/{P}/ARC-{P}-OASEC-v1.0.md`
-**Document ID**: ARC-{P}-OASEC-v1.0
+**Document**: `projects/{P}/ARC-{P}-OASEC-v{VERSION}.md`
+**Document ID**: ARC-{P}-OASEC-v{VERSION}
 
 ### Security Backlog Profile
 - **Security epic categories**: [N] categories defined
@@ -252,13 +270,15 @@ After writing the file, show a concise summary (NOT the full document):
 
 - [✅/⚠️] Agile Strategy: ARC-{P}-OASTR-v[N].md
 
+- [✅/⚠️] Requirements: ARC-{P}-REQ-v[N].md
+
 ### Next Steps
 1. Create security epics for Sprint 0
 2. Run initial threat model: STRIDE analysis for product architecture
 3. Establish governance cadence: `/arckit-oaa:agile-governance`
 4. Configure CI/CD security pipeline integration
 
-**File location**: `projects/{P}/ARC-{P}-OASEC-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-OASEC-v{VERSION}.md`
 ```
 
 ## Important Notes

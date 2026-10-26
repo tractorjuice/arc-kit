@@ -12,6 +12,8 @@ handoffs:
     condition: "Data sharing involves public sector bodies or procurement"
   - command: risk
     description: Integrate Data Act compliance gaps and data sharing risks into the risk register
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
@@ -75,7 +77,7 @@ Read all documents from Step 0. Identify:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/eu-data-act-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/eu-data-act-template.md` exists in the project root, then `.arckit/templates/eu-data-act-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/eu-data-act-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -103,7 +105,7 @@ Show role determination before proceeding.
    - Existing file → minor increment if refreshed, major if scope changed
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-DATAACT-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-DATAACT-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
@@ -114,7 +116,7 @@ Show role determination before proceeding.
    - Role determination table with rationale
    - Connected product in-scope assessment
    - Data types: personal data, non-personal data, trade secrets (mixed data sets common in IoT)
-   - GDPR intersection note: Data Act does not affect GDPR — both apply when personal data is involved
+   - GDPR intersection note (Article 1(5)): the Data Act is without prejudice to GDPR, and data protection law prevails where the two conflict — both apply when personal data is involved. Chapter II access rights complement GDPR Articles 15 and 20 for users who are data subjects; Data Act sharing does not override GDPR purpose limitation; GDPR Chapter V still governs personal data transfers. Recommend running `/arckit-eu:eu-rgpd` if personal data is involved
 
 4. **Section 2: User Data Access Rights (Chapter II)** (Manufacturer / Data holder)
    - Pre-purchase disclosure obligation (Article 3): users informed of data generated
@@ -152,21 +154,22 @@ Show role determination before proceeding.
    - Obligation to contest unlawful requests
    - Interaction with DINUM cloud doctrine and SecNumCloud (complements sovereignty requirements)
 
-7. **Section 7: Interoperability (Chapter VII)**
+9. **Section 7: Interoperability (Chapter VII)**
    - Interoperability specifications for data exchange
    - Smart contracts requirements (Article 36) if applicable
    - Open data formats and APIs
 
-8. **Section 8: GDPR Intersection**
-   - Personal data in shared data sets: both Data Act and GDPR apply
-   - Data minimisation: Data Act sharing doesn't override GDPR purpose limitation
-   - Transfer restrictions: GDPR Chapter V applies to personal data transfers
-   - Recommend running `/arckit-eu:eu-rgpd` if personal data is involved
+10. **Section 8: Trade Secret Protection (Articles 4(6)–(9), 5(9)–(11) and 8(6))**
+    - Process to identify data protected as trade secrets, including in the relevant metadata (Articles 4(6), 5(9))
+    - Proportionate technical and organisational measures agreed before disclosure — model contractual terms, confidentiality agreements, strict access protocols
+    - Withholding or suspending sharing where measures are not agreed or not implemented: decision substantiated in writing and the competent authority notified (Articles 4(7), 5(10))
+    - Case-by-case refusal only where serious economic damage is highly likely, demonstrated on objective elements and notified to the competent authority (Articles 4(8), 5(11))
+    - B2B obligations to make data available do not oblige disclosure of trade secrets unless Union or national law provides otherwise (Article 8(6))
 
-9. **Section 9: Gap Analysis and Timeline**
-   - Role-based gaps with Data Act application dates
-   - September 2025: most obligations
-   - September 2027: egress charge elimination
+11. **Section 9: Gap Analysis and Timeline**
+    - Role-based gaps with Data Act application dates
+    - September 2025: most obligations
+    - September 2027: egress charge elimination
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass.
 

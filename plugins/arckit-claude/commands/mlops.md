@@ -11,7 +11,7 @@ allowed-tools:
 
 You are an expert ML Engineer and MLOps architect with deep knowledge of:
 
-- Machine Learning Operations (MLOps) maturity models
+- Machine Learning Operations (MLOps) maturity models, including Google Cloud's three-level and Microsoft's five-level published models
 - Model lifecycle management (training, serving, monitoring, retirement)
 - ML platforms (SageMaker, Vertex AI, Azure ML, MLflow, Kubeflow)
 - Feature engineering and feature stores
@@ -49,7 +49,7 @@ Parse the user input for:
 
 - ML use case (classification, NLP, GenAI, recommendation, etc.)
 - Model type (custom trained, fine-tuned, foundation model, pre-built API)
-- MLOps maturity target (Level 0-4)
+- MLOps maturity target (Level 0-4 on the ArcKit scale below; if the user quotes a level from Google Cloud's or Microsoft's model, record which model it came from)
 - Governance requirements (UK Gov, MOD, commercial)
 - Specific platform preferences
 
@@ -72,9 +72,9 @@ Parse the user input for:
 
 **OPTIONAL** (read if available, skip silently if missing):
 
-- **RSCH** / **AWRS** / **AZRS** (Research) — Extract: ML platform choices, serving infrastructure, cost estimates
+- **RSCH** / **AWRS** / **AZRS** / **GCRS** (Research) — Extract: ML platform choices, serving infrastructure, cost estimates
 - **ATRS** (Algorithmic Transparency) — Extract: Transparency requirements, publication obligations
-- **J936** (JSP 936 AI Assurance) — Extract: Defence AI assurance requirements, risk classification
+- **JSP936** (JSP 936 AI Assurance) — Extract: Defence AI assurance requirements, risk classification
 
 ### Phase 1b: Read external documents and policies
 
@@ -86,6 +86,8 @@ Parse the user input for:
 ### Phase 2: Analysis
 
 **Determine MLOps Maturity Target**:
+
+This is ArcKit's own five-level scale, not a published standard. It does not match Google Cloud's three-level model ([MLOps: continuous delivery and automation pipelines in machine learning](https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning)) or Microsoft's five-level model, Levels 0-4 ([MLOps maturity model](https://learn.microsoft.com/azure/architecture/ai-ml/guide/mlops-maturity-model)), level for level: Google's level 1 already includes continuous training, and Microsoft's level 1 is DevOps without MLOps, with automated training at level 2 and metric-triggered retraining at level 4. Call it the ArcKit scale whenever you quote a level. If the organisation uses one of the published models, also give the nearest level in that model and say it is approximate.
 
 | Level | Characteristics | Automation | When to Use |
 |-------|-----------------|------------|-------------|
@@ -115,7 +117,7 @@ Parse the user input for:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/mlops-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/mlops-template.md` exists in the project root, then `.arckit/templates/mlops-template.md`
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/mlops-template.md` (default)
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -256,7 +258,7 @@ Verify before saving:
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **MLOPS** per-type checks pass. Fix any failures before proceeding.
 
-1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v1.0.md`
+1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v{VERSION}.md`. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier strategy, never over it
 
 2. **Provide summary**:
 
@@ -265,7 +267,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 **ML System**: [Name]
 **Models**: [N] models identified
-**MLOps Maturity**: Level [X] (target: Level [Y])
+**MLOps Maturity**: Level [X] (target: Level [Y], ArcKit scale)
 **Deployment**: [Real-time / Batch / Both]
 
 **Training Pipeline**:
@@ -283,7 +285,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 - Human Oversight: [Required / Advisory]
 - ATRS: [Required / Not Required]
 
-**File**: projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v1.0.md
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v{VERSION}.md
 
 **Next Steps**:
 1. Review model inventory with data science team
@@ -327,7 +329,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 ### 5. UK Government Compliance
 
-- ATRS for algorithmic decision-making
+- ATRS where it applies: it is mandatory for government departments, and for arm's-length bodies that deliver public or frontline services or directly interact with the public, for algorithmic tools that have a significant influence on a decision-making process with public effect or directly interact with the public ([ATRS guidance](https://www.gov.uk/government/publications/guidance-for-organisations-using-the-algorithmic-transparency-recording-standard/algorithmic-transparency-recording-standard-guidance-for-public-sector-bodies))
 - JSP 936 for MOD AI systems
 - AI Playbook principles embedded
 
@@ -336,9 +338,9 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 **Auto-populate**:
 
 - `[PROJECT_ID]` → From project path
-- `[VERSION]` → "1.0" for new documents
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-MLOPS-v*.md` exists
 - `[DATE]` → Current date (YYYY-MM-DD)
-- `ARC-[PROJECT_ID]-MLOPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-MLOPS-v1.0.md`)
+- `ARC-[PROJECT_ID]-MLOPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-MLOPS-v{VERSION}.md`)
 
 **Generation Metadata Footer**:
 

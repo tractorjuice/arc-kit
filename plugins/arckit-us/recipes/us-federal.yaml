@@ -1,7 +1,7 @@
 # ArcKit build recipe — US Federal Civilian
 #
 # Scope: US federal civilian agencies and the vendors that sell to them —
-# FedRAMP authorization (SSP + 3PAO Readiness), FISMA / NIST 800-53 Rev 5
+# FedRAMP authorization (SSP + readiness self-assessment), FISMA / NIST 800-53 Rev 5
 # control tailoring, CISA Zero Trust Maturity Model + OMB M-22-09, OMB M-19-17
 # ICAM (PIV + login.gov), NIST AI RMF + OMB M-24-10/M-25-21 AI assurance,
 # E-Gov Act §208 PIA, and EO 14028 secure-software / SBOM self-attestation.
@@ -74,7 +74,7 @@ targets:
     skill: arckit:requirements
     args: "{NAME}"
     output: { project: "{P}-{NAME}", type: REQ }
-    deps: [PRIN]
+    deps: [PRIN, STKE]
 
   - id: STKE
     skill: arckit:stakeholders

@@ -135,7 +135,7 @@ The Gestalt principle of proximity states that elements placed close together ar
 
 Use dashed borders for trust boundaries and solid borders for system boundaries:
 
-```mermaid
+```text
 %% Trust boundary (dashed)
 subgraph TrustBoundary["DMZ"]
     style TrustBoundary stroke:#1168BD,stroke-dasharray:5 5,fill:none
@@ -186,7 +186,7 @@ This alone resolves most edge crossing issues.
 
 Group related elements using `subgraph` blocks:
 
-```mermaid
+```text
 subgraph Services["Business Services"]
     PaymentService["Payment Service"]
     NotificationService["Notification Service"]

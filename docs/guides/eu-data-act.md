@@ -22,6 +22,8 @@
 /arckit:eu-data-act Assess Data Act compliance for <product/service and role>
 ```
 
+In Claude Code the overlay installs as its own plugin, `arckit-eu`, so the command is `/arckit-eu:eu-data-act`.
+
 Output: `projects/<id>/ARC-<id>-DATAACT-v1.0.md`
 
 ---
@@ -30,13 +32,14 @@ Output: `projects/<id>/ARC-<id>-DATAACT-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Role and Scope | Manufacturer / Data holder / DAPS / Public sector body |
+| Role and Scope | Manufacturer / Data holder / DAPS / Public sector body; GDPR intersection — both apply to personal data, and GDPR prevails in a conflict (Art. 1(5)) |
 | User Data Access (Ch. II) | Pre-purchase disclosure, real-time access, third-party sharing |
 | B2B Data Sharing (Ch. III) | FRAND terms, SME protection, use restrictions, trade secrets |
 | Public Sector Access (Ch. V) | Emergency exceptional access conditions |
 | Cloud Switching (Ch. VI) | Switching process, 180-day completion, egress charges |
 | International Transfers (Art. 27) | Non-EU government access restrictions |
-| GDPR Intersection | Personal data in shared datasets — both GDPR and Data Act apply |
+| Interoperability | Interoperability specifications, smart contracts |
+| Trade Secret Protection (Arts. 4(6)–(9), 5(9)–(11), 8(6)) | Identifying trade secrets, confidentiality measures, withholding or refusing access, notifying the competent authority |
 | Gap Analysis | Gaps with application timeline (Sep 2025 / Sep 2027) |
 
 ---

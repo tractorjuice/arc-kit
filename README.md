@@ -30,6 +30,16 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 > ArcKit produces **DRAFT artefacts for qualified people to review**, not legal, regulatory, clinical, or security advice. See [What ArcKit does not do](#what-arckit-does-not-do).
 
+## Watch first
+
+New to ArcKit, or explaining it to someone who doesn't use a coding assistant? Start with a film:
+
+- [ArcKit explained](https://youtu.be/-oQ5VRpkxp0): what ArcKit is and how it keeps AI-drafted architecture documents reviewable, in under eight minutes.
+- [ArcKit for Beginners](https://www.youtube.com/playlist?list=PLHAFN5RjB5As): one fictional council project, followed from its architecture principles to the release decision. One hour, or four shorter parts.
+- [ArcKit commands](https://www.youtube.com/playlist?list=PLOxB2ULF5XX0): a film of about a minute and a half for each command: what it is for, when to run it and what it produces.
+
+The [ArcKit YouTube channel](https://www.youtube.com/@arckitorg/playlists) also has a playlist for each overlay. The narration is AI-generated and the films are experimental; tell us on [Discord](https://discord.gg/HsA4Y3hQ4) what to cover next.
+
 ---
 
 ## Quick Start
@@ -70,7 +80,37 @@ The standalone `tractorjuice/arckit-claude` marketplace hosts all Claude Code pl
 
 The older `tractorjuice/arc-kit` marketplace remains available for compatibility, but new Claude Code installs should use `tractorjuice/arckit-claude`. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all official commands, autonomous research agents, automation hooks, bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape, uk-tenders), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-> **Why v2.1.287?** v2.1.287 adds **Claude mods**, which ArcKit uses to draw a status line above the prompt: how many projects and artefacts you have, how many are DRAFT, and how many reviews are overdue. It also fixes plugin SessionStart hooks not running in new cloud sessions, which skipped ArcKit's session set-up and version check there. The floor carries v2.1.284, which adds **Claude Sonnet 5.5** (`claude-sonnet-5-5`), the default Sonnet model on the Anthropic API, with 1M context; earlier clients cannot select it. Like Opus 5.5 it always thinks and defaults to `effort: medium`, so ArcKit's `effort: max` commands run at `max` on it. The floor carries v2.1.280, which adds **Claude Opus 5.5** (`claude-opus-5-5`), the default Opus model. Opus 5.5 always thinks, so ArcKit's `effort: max` commands can no longer be quietly sent as `high` by a session with thinking off, and the Effective Effort row in each artefact's Build Provenance is accurate. The floor carries v2.1.251, which stops the file tools (Read, Write, Edit) following a symlink swapped inside the working directory *after* the permission check, and makes Grep and Glob honour `Read()` deny rules through a symlinked search path — the same class of bypass the v2.1.222–v2.1.224 fixes closed for Bash, and the class ArcKit's `file-protection` and `secret-file-scanner` gates sit in front of. The same release sends Opus 5 `effort: xhigh`/`max` as `high` when thinking is off instead of failing, so ArcKit's `effort: max` commands complete on thinking-off sessions. v2.1.246 fixed four plugin-loading bugs that hit ArcKit's exact layout: `/reload-plugins` counted 0 skills for plugins that define skills under `skills/*/SKILL.md`, hook error messages showed a literal `${CLAUDE_PLUGIN_ROOT}` instead of the resolved path, the plugin cache created duplicate SHA-named directories, and `claude plugin update <bare-name>` failed. The floor carries forward v2.1.234, which stops Claude Code's MCP diagnostics printing **resolved secrets** — ArcKit bundles two keyed MCP servers whose `${user_config.*}` API keys sit in request headers, and on a session with no keys configured those connections fail *by design*, so ArcKit routinely produces exactly the diagnostics this fixed. v2.1.221 fixed `WebSearch` returning a 400 at `effort: xhigh`/`max` when thinking is disabled — silently breaking ArcKit's `effort: max` commands and its three max-effort research agents for anyone running with thinking off. v2.1.222 stopped PreToolUse auto-allow hooks bypassing tool restrictions inside background agent tasks, which became load-bearing when v2.1.232 made subagent spawns background by default. v2.1.223 and v2.1.224 close Bash permission-check bypasses, a sandbox `denyRead`/`denyWrite` trailing-slash bypass, and a bug where project paths over 200 characters resolved into another project's session directory; v2.1.224 also surfaces sandbox violation details in Bash results. It also carries v2.1.219's **Claude Opus 5** (`claude-opus-5`), the current default Opus model with 1M context and fast mode, which earlier clients cannot select; v2.1.200's fix for project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility, which makes ArcKit's branch and test-repo workflows reliable; the v2.1.198-v2.1.199 background-subagent reliability, parent error-propagation, and hook stderr-visibility fixes that matter to `/arckit:build`, reader/writer handoffs, and hook diagnosis; v2.1.197's Claude Sonnet 5 default with native 1M context; and v2.1.172's fix for wildcard-domain `WebFetch` rules (`WebFetch(domain:*.gov.uk)`) that never matched subdomains on earlier clients — the exact shape ArcKit recommends for confining research-agent traffic in OFFICIAL-SENSITIVE deployments. It also carries the v2.1.156 Opus 4.8 thinking-block fix, v2.1.154 plugin `defaultEnabled: false`, v2.1.144 session-title and headless Skill tool fixes, v2.1.143 plugin dependency enforcement, v2.1.139 hook `args: string[]`, v2.1.129 monitor layout and prompt-cache fixes, v2.1.121 MCP/provenance hook unlocks, v2.1.118-v2.1.119 release/telemetry unlocks, and the earlier `/context`, Auto mode, plugin update, MCP leak, retry, and subagent working-directory fixes.
+> **Why v2.1.287?** It adds **Claude mods**, which ArcKit uses to draw a status line above the prompt: how many projects and artefacts you have, how many are DRAFT, and how many reviews are overdue. It also fixes plugin SessionStart hooks not running in new cloud sessions, which skipped ArcKit's session set-up and version check there.
+>
+> The floor also carries earlier releases ArcKit depends on:
+>
+> **Models**
+>
+> - **v2.1.284** adds **Claude Sonnet 5.5** (`claude-sonnet-5-5`), the default Sonnet model on the Anthropic API, with 1M context; earlier clients cannot select it. Like Opus 5.5 it always thinks and defaults to `effort: medium`, so ArcKit's `effort: max` commands run at `max` on it.
+> - **v2.1.280** adds **Claude Opus 5.5** (`claude-opus-5-5`), the default Opus model. It always thinks, so ArcKit's `effort: max` commands can no longer be quietly sent as `high` by a session with thinking off, and the Effective Effort row in each artefact's Build Provenance is accurate.
+> - **v2.1.219** adds **Claude Opus 5** (`claude-opus-5`), with 1M context and fast mode, which earlier clients cannot select (superseded as the default by Opus 5.5).
+> - **v2.1.197** makes Claude Sonnet 5 the default, with native 1M context.
+>
+> **Security and permissions**
+>
+> - **v2.1.251** stops the file tools (Read, Write, Edit) following a symlink swapped inside the working directory *after* the permission check, and makes Grep and Glob honour `Read()` deny rules through a symlinked search path. That is the same class of bypass the v2.1.222–v2.1.224 fixes closed for Bash, and the class ArcKit's `file-protection` and `secret-file-scanner` gates sit in front of.
+> - **v2.1.234** stops Claude Code's MCP diagnostics printing **resolved secrets**. ArcKit bundles two keyed MCP servers whose `${user_config.*}` API keys sit in request headers. On a session with no keys configured those connections fail *by design*, so ArcKit routinely produces exactly the diagnostics this fixed.
+> - **v2.1.222** stops PreToolUse auto-allow hooks bypassing tool restrictions inside background agent tasks, which became load-bearing when v2.1.232 made subagent spawns background by default.
+> - **v2.1.223 and v2.1.224** close Bash permission-check bypasses, a sandbox `denyRead`/`denyWrite` trailing-slash bypass, and a bug where project paths over 200 characters resolved into another project's session directory. v2.1.224 also surfaces sandbox violation details in Bash results.
+> - **v2.1.172** fixes wildcard-domain `WebFetch` rules (`WebFetch(domain:*.gov.uk)`) that never matched subdomains on earlier clients. That is the exact shape ArcKit recommends for confining research-agent traffic in OFFICIAL-SENSITIVE deployments.
+>
+> **Effort and thinking**
+>
+> - **v2.1.251** sends Opus 5 `effort: xhigh`/`max` as `high` when thinking is off instead of failing, so ArcKit's `effort: max` commands complete on thinking-off sessions.
+> - **v2.1.221** fixes `WebSearch` returning a 400 at `effort: xhigh`/`max` when thinking is disabled, which silently broke ArcKit's `effort: max` commands and its three max-effort research agents for anyone running with thinking off.
+>
+> **Plugin loading and agents**
+>
+> - **v2.1.246** fixes four plugin-loading bugs that hit ArcKit's exact layout: `/reload-plugins` counted 0 skills for plugins that define skills under `skills/*/SKILL.md`, hook error messages showed a literal `${CLAUDE_PLUGIN_ROOT}` instead of the resolved path, the plugin cache created duplicate SHA-named directories, and `claude plugin update <bare-name>` failed.
+> - **v2.1.200** fixes project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility, which makes ArcKit's branch and test-repo workflows reliable.
+> - **v2.1.198–v2.1.199** fix background-subagent reliability, parent error propagation and hook stderr visibility, which matter to `/arckit:build`, reader/writer handoffs and hook diagnosis.
+>
+> **Older fixes:** v2.1.156 Opus 4.8 thinking-block fix, v2.1.154 plugin `defaultEnabled: false`, v2.1.144 session-title and headless Skill tool fixes, v2.1.143 plugin dependency enforcement, v2.1.139 hook `args: string[]`, v2.1.129 monitor layout and prompt-cache fixes, v2.1.121 MCP/provenance hook unlocks, v2.1.118–v2.1.119 release/telemetry unlocks, and the earlier `/context`, Auto mode, plugin update, MCP leak, retry and subagent working-directory fixes.
 
 **Gemini CLI** — install the ArcKit extension:
 
@@ -127,7 +167,7 @@ Zero-config: 76 official commands as skills, 10 specialized agents, all template
 
 Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
 
-**Latest Release**: [v6.17.2](https://github.com/tractorjuice/arc-kit/releases/tag/v6.17.2)
+**Latest Release**: [v6.18.3](https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.3)
 
 ### OKF Interoperability
 
@@ -417,18 +457,18 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 **Dutch government** (apply on top of the EU baseline for Netherlands central-government deployments — domain-maintained by [@umag](https://github.com/umag)):
 
 - `/arckit:nl-cloud` — Rijksbreed cloudbeleid 2026 compliance (materieel cloudgebruik, exit plan, CISO Rijk notification, EEA residency, staatsgeheim / TBB eligibility)
-- `/arckit:nl-tbb` — Te Beschermen Belangen and VIRBI 2025 rubricering (BIV scoring across five kernbelangen, one-way TBB↔rubricering inference)
+- `/arckit:nl-tbb` — Te Beschermen Belangen (TBB) category determination (BIV scoring across five kernbelangen; any existing VIRBI 2025 rubricering is applied as a floor on the category, never derived from it)
 - `/arckit:nl-bio` — BIO2 conformance (OBDO, on NEN-EN-ISO/IEC 27001:2023 and 27002:2022)
 - `/arckit:nl-exit` — Cloud exit plan under Rijksbreed cloudbeleid clause 3.2 (planned exit and disruptive interruption, annual review)
 
 **Austrian government** (apply on top of the EU baseline for Austrian deployments — domain-maintained by [@gtonic](https://github.com/gtonic)):
 
-- `/arckit:at-dsgvo` — Austrian DSG layer on GDPR (§§12–13 image processing, ELGA/GTelG health, §96a ArbVG employee monitoring, age 14 consent, DSB enforcement)
-- `/arckit:at-nisg` — Austrian NISG 2026 (NIS2 transposition, BGBl. I Nr. 94/2025, in force 1 Oct 2026) — Essential/Important designation, Cybersicherheitsbehörde registration, CSIRT reporting (CERT.at / GovCERT), KSÖ, AT sectoral authorities
+- `/arckit:at-dsgvo` — Austrian DSG layer on GDPR (image processing on the GDPR per the VwGH's §12 DSG ruling, ELGA/GTelG health, §96a ArbVG employee monitoring, age 14 consent, DSB enforcement)
+- `/arckit:at-nisg` — Austrian NISG 2026 (NIS2 transposition, BGBl. I Nr. 94/2025, in force since 1 Oct 2026) — Essential/Important designation, Cybersicherheitsbehörde registration, CSIRT reporting (CERT.at / GovCERT), KSÖ, AT sectoral authorities
 - `/arckit:at-bvergg` — Bundesvergabegesetz 2018 procurement — Oberschwellen/Unterschwellen, ANKÖ publication, Bestbieterprinzip, BVwG review
 - `/arckit:at-barrierefreiheit` — Digital accessibility across both transposition tracks — BaFG (European Accessibility Act, private sector) and WZG (public sector), EN 301 549 / WCAG 2.1 AA, Barrierefreiheitserklärung, SMS and FFG
 
-These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry `[NEEDS VERIFICATION]` markers where a point is genuinely open rather than unreviewed — implementing ordinances not yet issued under the NISG 2026, Länder scope, current guidance versions, and recent DSB case law. `nl-cloud` and `nl-tbb` play the same role for Dutch deployments, with `nl-cloud` keying its public-cloud eligibility off the rubricering determined by `nl-tbb`.
+These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry `[NEEDS VERIFICATION]` markers where a point is genuinely open rather than unreviewed — further implementing ordinances under the NISG 2026, Länder scope, current guidance versions, and recent DSB case law. `nl-cloud` and `nl-tbb` play the same role for Dutch deployments, with `nl-cloud` keying its public-cloud eligibility off the TBB category determined by `nl-tbb`.
 
 ---
 
@@ -463,7 +503,7 @@ Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Da
 
 **Federal data and security**:
 
-- `/arckit:uae-classification` — UAE Smart Data Classification Register (Open / Shared / Confidential / Secret / Top Secret) with handling rules and declassification schedule
+- `/arckit:uae-classification` — UAE Smart Data Classification Register (Open / Confidential / Sensitive / Secret, the four Smart Data Framework classes) with handling rules and declassification schedule
 - `/arckit:uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment — DPIA, lawful-basis register, data-subject-rights procedure, cross-border transfer log
 - `/arckit:uae-ias` — UAE Cybersecurity Council Information Assurance Standard v2 — Statement of Applicability against 188 controls (60 management M1–M6, 128 technical T1–T9), priority-tiered P1–P4
 - `/arckit:uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment — per-classification residency, approved CSPs (Core42 / G42, Microsoft UAE North/Central, TDRA FedNet, e& Sovereign Launchpad on AWS), shared-responsibility matrix, exit/portability plan
@@ -556,25 +596,34 @@ Install: `claude plugin install arckit arckit-uk-finance`. Help wanted: recruiti
 
 ---
 
-## UK G-Cloud Supplier Bid-Authoring Overlay (11 commands) — Proprietary
+## UK G-Cloud Supplier Bid-Authoring Overlay (15 commands) — Proprietary
 
-> **PROPRIETARY, Claude Code only.** The 11 commands below are a supplier-side overlay for authoring UK G-Cloud (Digital Marketplace) framework bids: supplier profile, service design, the three Service Definition Document lots, the supplier declaration, pricing, security assertions, competitor benchmarking, submission review, and a final submission pack. Unlike every other ArcKit plugin, `arckit-uk-gcloud` ships under a **proprietary licence (not MIT)** and is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot) — it runs on Claude Code only. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and requires the `arckit` core plugin.
+> **PROPRIETARY, Claude Code only.** The 15 commands below are a supplier-side overlay for authoring UK G-Cloud 15 (RM1557.15) Digital Marketplace bids, run by the Government Commercial Agency (GCA, formerly CCS): supplier profile, social value, lot questions, the Procurement Act 2023 supplier declaration, service design, a Service Definition Document for each of the five lots (1a, 1b, 2a, 2b, 3), pricing, security evidence, competitor benchmarking, submission review, and a final submission pack. Unlike every other ArcKit plugin, `arckit-uk-gcloud` ships under a **proprietary licence (not MIT)** and is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot) — it runs on Claude Code only. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and requires the `arckit` core plugin.
 
-**G-Cloud bid authoring**:
+**Supplier-wide (once per bid)**:
 
-- `/arckit:supplier-profile` — Supplier profile and company capability statement (SUPP)
-- `/arckit:service-design` — Service design and value proposition (SVCD)
-- `/arckit:sdd-lot1` — Service Definition Document, Lot 1 Cloud Hosting (SDD)
-- `/arckit:sdd-lot2` — Service Definition Document, Lot 2 Cloud Software (SDD)
-- `/arckit:sdd-lot3` — Service Definition Document, Lot 3 Cloud Support (SDD)
-- `/arckit:declaration` — Supplier declaration and framework attestations (DECL)
-- `/arckit:pricing` — Pricing document and SFIA rate card (PRIC)
-- `/arckit:security` — Security assertions and cloud security assessment (SECA)
+- `/arckit:supplier-profile` — Supplier profile: company, CDP and PPON, contacts, certifications, insurance (SUPP)
+- `/arckit:social-value` — Social value commitments, Social Value Contact and operational readiness, 10% pass/fail on every lot (SOCV)
+- `/arckit:lot-questions` — Lot questions per lot group: conditions of participation, scored Lot 1a/1b quality answers, Lot 2 and Lot 3 mandatory award criteria (LOTQ)
+- `/arckit:declaration` — Procurement Act 2023 supplier declaration (DECL)
+
+**Per service**:
+
+- `/arckit:service-design` — Service design, lot choice and value proposition (SVCD)
+- `/arckit:sdd-lot1a` — Service Definition Document, Lot 1a IaaS and PaaS (SDD)
+- `/arckit:sdd-lot1b` — Service Definition Document, Lot 1b IaaS and PaaS above OFFICIAL (SDD)
+- `/arckit:sdd-lot2a` — Service Definition Document, Lot 2a Infrastructure Software as a Service (SDD)
+- `/arckit:sdd-lot2b` — Service Definition Document, Lot 2b Software as a Service (SDD)
+- `/arckit:sdd-lot3` — Service Definition Document, Lot 3 Cloud Support, with the DDaT role levels that deliver it (SDD)
+- `/arckit:pricing` — Pricing by lot: 1a/1b price formula, 2a/2b discount bands; for Lot 3, the supplier's one DDaT rate card, shared by every Lot 3 service (PRIC, RATE)
+- `/arckit:security` — Security evidence: certifications by lot and the NCSC Cloud Security Principles (SECA)
 - `/arckit:gcloud-competitors` — G-Cloud competitor benchmark (GCMP)
 - `/arckit:review` — G-Cloud submission review and gap analysis (GCRV)
 - `/arckit:submission-pack` — Assemble the final G-Cloud submission pack
 
-Skills: `gcloud-framework`, `cloud-security`, `sfia-skills`. Recipe: `uk-gcloud-submission` (end-to-end bid assembly).
+Recommended order: supplier-profile → social-value → service-design → the lot's SDD command → pricing and security → lot-questions → declaration → review → submission-pack. The lot questions come after the SDDs because their award criteria repeat each service's answers.
+
+Skills: `gcloud-framework` (G-Cloud 15 question set, limits and evaluation), `cloud-security`, `ddat-rate-card` (Lot 3 job families, roles and levels; replaces `sfia-skills`). Recipe: `uk-gcloud-submission` (end-to-end bid assembly). G-Cloud 14 is no longer supported: `/arckit:sdd-lot1` is replaced by `sdd-lot1a` and `sdd-lot1b`, and `/arckit:sdd-lot2` by `sdd-lot2a` and `sdd-lot2b`.
 
 Install: `claude plugin install arckit arckit-uk-gcloud`. Proprietary — see the licence-exception note at the foot of this README. Ported from the standalone gcloud-kit plugin.
 
@@ -587,7 +636,7 @@ Enterprise Architecture Development Method — 9 commands covering the full ADM 
 | Command | Doc Type | Phase | Description |
 |---------|----------|-------|-------------|
 | `/arckit:adm-preliminary` | ADMP | Preliminary | Architecture vision, scope, drivers, constraints |
-| `/arckit:business-capability-map` | BPCM | Phase A | Business capability hierarchy, value streams, maturity |
+| `/arckit:business-capability-map` | BPCM | Phase B | Business capability hierarchy, value streams, maturity |
 | `/arckit:application-inventory` | APP | Phase C | Application catalog with strategic fit scoring |
 | `/arckit:application-rationalization` | APPR | Phase C | Keep/merge/replace/retire decisions |
 | `/arckit:gap-analysis` | GAPA | Phase E | Capability gap matrix, workstream mapping |
@@ -607,22 +656,22 @@ Open Agile Architecture (O-AA, standard C208) — agile enterprise architecture 
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
-| `/arckit-oaa:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (2–4 week engagement windows) |
+| `/arckit-oaa:oaa-adm-lite` | `OAAL` | Maps TOGAF ADM cycle to agile sprints (4–8 week engagement windows) |
 | `/arckit-oaa:product-architecture` | `OAPR` | Product-centric architecture — cross-functional teams, backlog-driven delivery |
-| `/arckit-oaa:agile-strategy` | `OASTR` | Dual transformation canvas — legacy modernization + greenfield innovation |
+| `/arckit-oaa:agile-strategy` | `OASTR` | Dual transformation canvas — digital transformation + agile transformation |
 | `/arckit-oaa:agile-security` | `OASEC` | Security embedded in sprint rhythm — threat modeling, compliance evidence |
 | `/arckit-oaa:agile-governance` | `OAGOV` | Lightweight governance cadence aligned to sprint cycles |
 
-Handoff chain: `agile-strategy` → `product-architecture` → `oaa-adm-lite` → `agile-security` → `agile-governance`.
+Handoff chain: `oaa-adm-lite` → `product-architecture` → `agile-strategy` → `agile-security` → `agile-governance`.
 
 **Install:** `claude plugin install arckit arckit-oaa`
-**Recipe:** `oaa-full` — strategy → product → ADM Lite → security → governance
+**Recipe:** `oaa-full` — ADM Lite → product → strategy → security → governance
 
 ---
 
 ## Using TOGAF ADM and O-AA Together
 
-The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.15.0` pin) — neither depends on the other. O-AA maps the ADM cycle to 2–4 week sprints; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.18.3` pin) — neither depends on the other. O-AA maps the ADM cycle onto sprints within a 4–8 week engagement; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Pattern | When to use | Sequence |
 |---------|-------------|----------|
@@ -640,9 +689,9 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 
 **Running both in the same project:**
 
-- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.15.0` pins.
-- Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.json` (architecture-change ↔ agile-governance).
-- Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands do not read TOGAF outputs, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
+- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.18.3` pins.
+- Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.yaml` (architecture-change ↔ agile-governance).
+- Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands read TOGAF outputs when they exist (ADM Preliminary, business capability map, transition architecture) but do not require them, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
 ---
 
@@ -845,7 +894,7 @@ Research available solutions to meet requirements with build vs buy analysis:
 
 Identify and evaluate funding opportunities with eligibility scoring:
 
-- UK Innovate UK grants and R&D funding (e.g. Smart Grants, KTP, SBRI)
+- UK Innovate UK grants and R&D funding (e.g. Knowledge Transfer Partnerships, SBRI)
 - UK Research and Innovation (UKRI) funding calls
 - Charitable foundations and philanthropic funding (e.g. National Lottery Heritage Fund, Wellcome Trust)
 - Accelerator and incubator programmes (e.g. DCMS, DSIT-backed cohorts)
@@ -1177,8 +1226,8 @@ For defence projects using AI/ML systems:
 - JSP 936 (Dependable Artificial Intelligence in Defence)
 - 5 Ethical Principles (Human-Centricity, Responsibility, Understanding, Bias & Harm Mitigation, Reliability)
 - 5 Risk Classification Levels (Critical to Minor)
-- 8 AI Lifecycle Phases (Planning to Quality Assurance)
-- Approval pathways (2PUS/Ministerial → Defence-Level → TLB-Level)
+- 8 AI lifecycle phases (ArcKit's grouping of JSP 936 sections 6 and 7)
+- Approval pathways (2PUS or Ministers by exception → Defence-Level → TLB-Level)
 - RAISOs and Ethics Manager governance
 - Human-AI teaming strategy and continuous monitoring
 
@@ -1282,9 +1331,9 @@ French standard risk analysis for IS homologation:
 
 Assess compliance with ANSSI's foundational hygiene guide:
 
-- 7 themes: administration, authentication, updates, monitoring, backups, network, workstations
-- Cloud security recommendations (ANSSI cloud qualification matrix)
-- Gap analysis with prioritised remediation (P1–P3)
+- 10 chapters: awareness and training, knowing the IS, authentication and access control, workstations, network, administration, mobile working, updates, monitoring/audit/response, going further
+- ANSSI recommendations for hosting sensitive IS in the cloud (July 2024)
+- Gap analysis with prioritised remediation (High / Medium / Low)
 - Integration with EBIOS and PSSI
 
 **`/arckit:fr-anssi-carto`** → ANSSI SI Cartography (4-level IS mapping)
@@ -1320,16 +1369,16 @@ Assess compliance with French digital government doctrine:
 Generate procurement documentation compliant with French public contract law:
 
 - Marché public thresholds and procedures (below/above EU thresholds)
-- CCAP, CCTP, RC documentation templates
+- Requirements statement, award criteria, and security and sovereignty clauses for the consultation file
 - ANSSI-qualified provider requirements (PASSI, PRIS, PDIS)
-- Achat public durable obligations (environmental and social clauses)
+- Digital State doctrine checklist (cloud, RGI, RGAA, RGESN, open source, GDPR)
 
 **`/arckit:fr-pssi`** → PSSI (Politique de Sécurité des Systèmes d'Information)
 
 Generate IS security policy for French public sector entities:
 
 - 9-section structure approved by the Highest Authority (AA)
-- 7 security domains (network, workstations, applications, IS management, physical, personnel, continuity)
+- 8 security domains (access management, network, workstations, applications, data protection, physical, business continuity, vulnerability management)
 - RSSI, DPO, DSI, and FSSI roles
 - Review cycle and integration with EBIOS and homologation
 
@@ -1353,7 +1402,7 @@ Generate mandatory transparency notice under CRPA Art. L311-3-1:
 - EU AI Act flagging for ML-based systems
 - More legally binding than the UK ATRS equivalent
 
-**`/arckit:fr-code-reuse`** → French Public Code Reuse Assessment (Circulaire 2021-1524)
+**`/arckit:fr-code-reuse`** → French Public Code Reuse Assessment (Circulaire PM n°6264/SG, 2021)
 
 Assess code reuse obligations before building or procuring:
 
@@ -1606,6 +1655,7 @@ Core ArcKit commands with maturity status and example outputs from public test r
 | v9 | [arckit-test-project-v9-cabinet-office-genai](https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai) | Cabinet Office GenAI Platform |
 | v10 | [arckit-test-project-v10-training-marketplace](https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace) | UK Government Training Marketplace |
 | v11 | [arckit-test-project-v11-national-highways-data](https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data) | National Highways Data Architecture |
+| v13 | [arckit-test-project-v13-plymouth-research](https://github.com/tractorjuice/arckit-test-project-v13-plymouth-research) | Plymouth Restaurant Web Scraping |
 | v14 | [arckit-test-project-v14-scottish-courts](https://github.com/tractorjuice/arckit-test-project-v14-scottish-courts) | Scottish Courts GenAI Strategy |
 | v16 | [arckit-test-project-v16-doctors-appointment](https://github.com/tractorjuice/arckit-test-project-v16-doctors-appointment) | Doctors Online Appointment System |
 | v17 | [arckit-test-project-v17-fuel-prices](https://github.com/tractorjuice/arckit-test-project-v17-fuel-prices) | UK Government Fuel Price Transparency Service |
@@ -1618,6 +1668,8 @@ Core ArcKit commands with maturity status and example outputs from public test r
 | v46 | [arckit-test-project-v46-sdg](https://github.com/tractorjuice/arckit-test-project-v46-sdg) | ArcKit SDG Mono-Repo (17 UN SDGs, 78 UK Gov projects) |
 | v47 | [arckit-test-project-v47-dft-transforming-city-regions](https://github.com/tractorjuice/arckit-test-project-v47-dft-transforming-city-regions) | DfT Transforming City Regions funding system |
 | v50 | [arckit-test-project-v50-post-office-horizon](https://github.com/tractorjuice/arckit-test-project-v50-post-office-horizon) | Post Office Horizon |
+| v51 | [arckit-test-project-v51-prs-database](https://github.com/tractorjuice/arckit-test-project-v51-prs-database) | UK PRS Database under the Renters' Rights Act 2025 |
+| v52 | [arckit-test-project-v52-uae-caio-playbook](https://github.com/tractorjuice/arckit-test-project-v52-uae-caio-playbook) | UAE CAIO Playbook for the 24-month agentic AI mandate |
 
 ### Foundation
 
@@ -1694,7 +1746,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | `/arckit:tenders` | Procurement market intelligence — award-value benchmarks, top suppliers, incumbency and concentration, from the UK Tenders MCP | — | 🟣 Experimental |
 | `/arckit:competitors` | Competitor landscape — rival suppliers, awarded-value market share, head-to-head and concentration, from the UK Tenders MCP | — | 🟣 Experimental |
 
-> **Note**: `/arckit:tenders` and `/arckit:competitors` both use the bundled `uk-tenders` MCP server (keyless, deferred) via the shared `arckit-tenders-reader` subagent. Data: ~677,000 UK contracting processes across FTS, Contracts Finder, Public Contracts Scotland, Sell2Wales, and eTendersNI; nightly refresh; best-effort availability (no formal SLA). `/arckit:tenders` outputs a `TNDR` artefact (market-wide benchmarks, incumbency, concentration). `/arckit:competitors` outputs a `CMPT` artefact (rival-supplier landscape, market-share ranking, head-to-head).
+> **Note**: `/arckit:tenders` and `/arckit:competitors` both use the bundled `uk-tenders` MCP server (keyless, always loaded) via the shared `arckit-tenders-reader` subagent. Data: more than 700,000 UK contracting processes (October 2026) across FTS, Contracts Finder, Public Contracts Scotland, Sell2Wales, and eTendersNI; nightly refresh; best-effort availability (no formal SLA). `/arckit:tenders` outputs a `TNDR` artefact (market-wide benchmarks, incumbency, concentration). `/arckit:competitors` outputs a `CMPT` artefact (rival-supplier landscape, market-share ranking, head-to-head).
 
 ### Government Code Discovery
 
@@ -1711,7 +1763,7 @@ These commands use the [govreposcrape MCP](https://github.com/chrisns/govreposcr
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
 | `/arckit:sow` | Generate Statement of Work (SOW) / RFP document for vendor procurement | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-SOW-v1.0.md) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-SOW-v1.0.md) [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-SOW-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-SOW-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/ARC-003-SOW-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-SOW-v1.0.md) | 🟢 Live |
-| `/arckit:dos` | Generate Digital Outcomes and Specialists (DOS) procurement documentation for UK Digital Marketplace | — | 🟣 Experimental |
+| `/arckit:dos` | Generate Digital Outcomes and Specialists (DOS7) procurement documentation for the Contract Award Service | — | 🟣 Experimental |
 | `/arckit:gcloud-search` | Find G-Cloud services on UK Digital Marketplace with live search and comparison | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-GCLD-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-GCLD-v1.0.md) | 🟣 Experimental |
 | `/arckit:gcloud-clarify` | Analyze G-Cloud service gaps and generate supplier clarification questions | — | 🟣 Experimental |
 | `/arckit:evaluate` | Create vendor evaluation framework and score vendor proposals | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-EVAL-v1.0.md) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-EVAL-v1.0.md) [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-EVAL-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-EVAL-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/ARC-003-EVAL-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/ARC-005-EVAL-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-EVAL-v1.0.md) | 🟢 Live |
@@ -2016,8 +2068,9 @@ arckit init .
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
+- **Community**: the [ArcKit LinkedIn group](https://www.linkedin.com/groups/17641034/) for worked examples, office hours and questions, and [Discord](https://discord.gg/HsA4Y3hQ4) for chat with other users
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v6.17.2](https://github.com/tractorjuice/arc-kit/releases/tag/v6.17.2)
+- **Latest Version**: [v6.18.3](https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.3)
 
 ---
 

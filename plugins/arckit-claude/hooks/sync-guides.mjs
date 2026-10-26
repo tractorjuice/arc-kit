@@ -34,7 +34,7 @@ import {
 import { spawnSync } from 'node:child_process';
 import {
   isDir, isFile, mtimeMs, readText, listDir,
-  findRepoRoot, parseHookInput,
+  findRepoRoot, overlayGuideDirs, parseHookInput,
 } from './hook-utils.mjs';
 import { scanAllArtifacts } from './graph-utils.mjs';
 import {
@@ -972,7 +972,18 @@ const destDir = join(repoRoot, 'docs', 'guides');
 
 // ── 1. Sync guides + extract titles ──
 
-const sourceFiles = walkMdFiles(sourceDir);
+// Core's own guides, then each installed overlay's: an overlay ships the
+// guides for its own commands. Core wins if two plugins ever share a name.
+const overlayDirs = overlayGuideDirs(pluginRoot, repoRoot);
+const sourceFiles = [];
+const seenGuides = new Set();
+for (const dir of [sourceDir, ...overlayDirs]) {
+  for (const file of walkMdFiles(dir)) {
+    if (seenGuides.has(file.rel)) continue;
+    seenGuides.add(file.rel);
+    sourceFiles.push(file);
+  }
+}
 if (sourceFiles.length === 0) process.exit(0);
 
 let copied = 0;
@@ -1090,8 +1101,10 @@ if (!includeVendorScores) {
 // Classification scan: artefacts whose Document Control marks them above
 // OFFICIAL (or the equivalent in the other classification ladders). Reported
 // to the user every run; nothing is blocked, because docs/ is only published
-// when the user commits and pushes it.
-const SENSITIVE_MARKINGS = /OFFICIAL[-\s]SENSITIVE|\bTOP[-\s]SECRET\b|\bSECRET\b|\bCONFIDENTIAL\b|\bRESTRICTED\b|\bPROTECTED\b|Vertraulich|Geheim|Eingeschr[aä]nkt/i;
+// when the user commits and pushes it. A bare `Sensitive` is the UAE Smart
+// Data Framework class between Confidential and Secret; it is matched only as
+// the whole value so that ordinary prose is not caught.
+const SENSITIVE_MARKINGS = /OFFICIAL[-\s]SENSITIVE|\bTOP[-\s]SECRET\b|\bSECRET\b|\bCONFIDENTIAL\b|\bRESTRICTED\b|\bPROTECTED\b|Vertraulich|Geheim|Eingeschr[aä]nkt|^\W*Sensitive\W*$/i;
 function collectDocPaths(node, out) {
   if (Array.isArray(node)) { for (const item of node) collectDocPaths(item, out); return; }
   if (node && typeof node === 'object') {
@@ -1191,7 +1204,7 @@ const message = [
   `- \`docs/llms.txt\` — ${llmsTxtAction}`,
   ``,
   `### Guide Sync`,
-  `- **${total}** guide files (**${copied}** copied, **${skipped}** up to date)`,
+  `- **${total}** guide files (**${copied}** copied, **${skipped}** up to date)${overlayDirs.length > 0 ? `, including guides from ${overlayDirs.length} installed overlay(s)` : ''}`,
   communityGuideCount > 0 ? `- **${communityGuideCount}** community guide(s) from \`.arckit/guides-custom/\`` : '',
   ``,
   `### Repository Info`,

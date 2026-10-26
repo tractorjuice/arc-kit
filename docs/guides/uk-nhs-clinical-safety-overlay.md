@@ -6,7 +6,7 @@ The UK NHS Clinical Safety Overlay adds 4 community-contributed commands coverin
 
 The DCB0129 and DCB0160 commands adopt Dr Marcus Baw's [SAFETY.md spec v2.0.0-draft](https://github.com/pacharanero/SAFETY.md) verbatim for filenames and YAML-frontmatter hazard log, placed inside an ArcKit project subdirectory rather than the repo root, with an ArcKit Document Control block prepended.
 
-This overlay closes part of [#424](https://github.com/tractorjuice/arc-kit/issues/424). The full design decision log lives at [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](../superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) and was written so the proposed co-maintainer can review and push back on any decision before tagging.
+This overlay closes part of [#424](https://github.com/tractorjuice/arc-kit/issues/424). The full design decision log lives at [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](https://github.com/tractorjuice/arc-kit/blob/469e0b7d/docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) and was written so the proposed co-maintainer can review and push back on any decision before tagging.
 
 ---
 
@@ -89,7 +89,7 @@ Generates `ARC-{NNN}-NHSDTAC-v1.0.md` covering five sections:
 |---|---|---|
 | 1. Clinical Safety | DCB0129 + DCB0160 status, CSO, hazard log | `clinical-safety/SAFETY-CASE.md`, `clinical-safety/HAZARD-LOG.md` |
 | 2. Data Protection | UK GDPR / DPA 2018 lawful basis, DPIA, DSPT, sub-processors, data-subject rights | `dpia` output |
-| 3. Technical Assurance | Cloud hosting, security certifications, SDLC, encryption, pen test, BC/DR, vulnerability management | `secure`, `hld`, `dld` |
+| 3. Technical Assurance | Cloud hosting, security certifications, SDLC, encryption, pen test, BC/DR, vulnerability management | `secure`, `hld-review`, `dld-review` |
 | 4. Interoperability | FHIR UK Core, SNOMED CT, dm+d, NHS Number, NHS APIs (PDS, e-RS, GP Connect, NHS App Connect, NHS login, BARS) | `data-model`, `adr` |
 | 5. Usability + Accessibility | NHS Service Standard, WCAG 2.2 AA, screen-reader / keyboard / contrast evidence, plain English | `service-assessment` |
 
@@ -105,7 +105,7 @@ Generates `ARC-{NNN}-NHSMDR-v1.0.md` covering:
 - **EU MDR 2017/745 classification** — Rule 11 reasoning, divergence from UK class (EU is typically more conservative)
 - **Marking pathway** — UKCA (GB), UKNI (NI), CE (NI under Windsor Framework + EU market), recognition of CE in GB (transitional)
 - **Conformity-assessment route** — self-declaration / Approved Body / Notified Body, with technical documentation and clinical evaluation expectations
-- **MHRA SaMD / AIaMD Programme** alignment — applicable work packages (WP1 Software, WP6 AIaMD, WP9 Cyber Security, WP11 Best Practice for Manufacturers)
+- **MHRA SaMD / AIaMD Programme** alignment — applicable work packages from the MHRA Software and AI as a Medical Device Change Programme roadmap (WP1 Qualification, WP2 Classification, WP3 Premarket requirements, WP4 Post Market, WP5 Cyber Secure Medical Devices; for AIaMD also WP9 AI Rigour, WP10 Project Glass Box, WP11 Project Ship of Theseus)
 - **Standards alignment** — ISO 14971 (risk management), IEC 62304 (software lifecycle), ISO 13485 (QMS, signposted), IEC 62366-1 (usability)
 - **Post-market obligations** — PMS, vigilance reporting timelines, PSUR cadence, FSCA, AIaMD substantial-change handling
 - **Substantial change triggers**, **open regulatory risks**
@@ -211,4 +211,4 @@ before the product is deployed into clinical use, submitted to an NHS buyer, or 
 - Marcus Baw DCB0129 templated — <https://github.com/turva-uk/dcb0129-template>
 - Marcus Baw DCB0129 markdown — <https://github.com/turva-uk/dcb0129-markdown>
 - ArcKit issue [#424](https://github.com/tractorjuice/arc-kit/issues/424) — Community overlay recruitment thread and design context
-- Spec doc [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](../superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) — full design decision log written for @pacharanero review
+- Spec doc [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](https://github.com/tractorjuice/arc-kit/blob/469e0b7d/docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) — full design decision log written for @pacharanero review

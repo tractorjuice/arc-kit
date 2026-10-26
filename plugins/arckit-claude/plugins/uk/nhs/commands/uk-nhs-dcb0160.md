@@ -12,7 +12,12 @@ handoffs:
   - command: risk
     description: Deployment-specific risks (training, business continuity, integration) cross-reference the project risk register.
   - command: operationalize
-    description: Runbooks, on-call, incident response feed the deployer hazard-mitigation plan.
+    description: Build the runbooks, on-call and incident-response procedures that carry out the deployment hazard controls (manual fallback, interface monitoring, local incident reporting).
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output is **not** clinical, legal, or regulatory advice. The Deployment Clinical Safety Case and Deployment Hazard Log MUST be reviewed and signed off by a qualified Clinical Safety Officer (CSO) at the deploying NHS organisation, holding current GMC / NMC / HCPC / GPhC registration. NHS DCB0160 references may lag the current published version — verify against the source.
@@ -62,17 +67,17 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
    - `uk-nhs-dcb0160-deployment-hazard-template.md` (`DEPLOYMENT-HAZARD-LOG.md`)
    Apply the standard `templates-custom/` → `templates/` → `${CLAUDE_PLUGIN_ROOT}/templates/` resolution.
 
-3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
+3. **Resolve the project**: locate the target `projects/{NNN}-<slug>/` from the ArcKit Project Context; only if no project exists, create one with `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"`. `create-project.sh` is create-only — invoked with no `--name` it exits 1 without returning a path.
 
 4. **Ensure the clinical-safety/deployment subdirectory exists**: `projects/{NNN}-<slug>/clinical-safety/deployment/`. Use `mkdir -p` via the Bash tool.
 
-5. **Resolve the Document Control block** for each file per `RENDERING.md`. As with `/arckit-uk-nhs:uk-nhs-dcb0129`, the `Document ID` field is the literal filename (not an `ARC-NNN-DSCR-vX.Y` identifier). Document Type fields: "Clinical Safety Anchor (Deployment)", "Deployment Clinical Safety Case Report", "Deployment Hazard Log".
+5. **Resolve the Document Control block** for each file per `RENDERING.md`. As with `/arckit-uk-nhs:uk-nhs-dcb0129`, the `Document ID` field is the literal filename (not an `ARC-NNN-DSCR-vX.Y` identifier). Document Type fields: "Clinical Safety Anchor (DCB0160 deployer)", "Deployment Clinical Safety Case Report (DCB0160 deployer)", "Deployment Hazard Log (DCB0160 deployer)".
 
 6. **Generate the deployer `SAFETY.md`** with required fields:
    - `product-name` (product being deployed), `version` (product version being deployed)
    - `standard` — `DCB0160`
    - `deployment-organisation` — the deploying NHS Trust / ICS / practice
-   - `clinical-safety-officer` — the **deploying organisation's** CSO (different from the manufacturer's CSO); leave as `[PENDING — deploying-organisation CSO name and GMC/NMC/HCPC registration]`
+   - `clinical-safety-officer` — the **deploying organisation's** CSO (different from the manufacturer's CSO); leave as `[PENDING — deploying-organisation CSO name and GMC/NMC/HCPC/GPhC registration]`
    - `manufacturer-case-url` — relative link to manufacturer's `../SAFETY-CASE.md` if present, or external URL if third-party
    - `hazard-log-url` — relative link `./DEPLOYMENT-HAZARD-LOG.md`
    - `safety-case-status` — `draft`
@@ -85,21 +90,22 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
    1. **Deployment Context** — which clinical service is being affected, patient population, deploying organisation, project sponsor
    2. **Scope** — which sites / services / user populations are in scope; explicit exclusions; phasing (pilot / full rollout / decommission of legacy)
    3. **Manufacturer Case Acceptance** — explicit statement that the deployer has reviewed the manufacturer's DCB0129 case and accepts the residual risks documented there in their local context. Reference manufacturer SAFETY-CASE.md sections by claim
-   4. **Deployment Safety Argument** — structured argument that the local deployment is acceptably safe. Cover: training adequacy, workflow integration, integration with other clinical systems, business continuity / fallback if the new system is unavailable, transition risks (parallel running, data migration), change-management
+   4. **Deployment Safety Argument** — structured argument that the local deployment is acceptably safe, with one sub-claim per area (G1.1–G1.6 in the template), each cross-referencing its D-HAZ-IDs: training adequacy; workflow integration, including integration with other clinical systems; business continuity / fallback if the new system is unavailable; transition risks (parallel running, data migration, change management); local configuration, terminology and role mapping; local incident reporting and post-deployment monitoring
    5. **Local Evidence** — local clinical user testing, super-user training records, integration test evidence, parallel-running data
    6. **Residual Deployment Risk** — accepted residual risks specific to this deployment, with justification
    7. **Deploying-organisation CSO Sign-off** — name, registration, date, statement of approval (left `[PENDING]`)
 
-8. **Generate `DEPLOYMENT-HAZARD-LOG.md`** with YAML frontmatter + rendered Markdown table. Deployment-specific starter hazards (8 minimum):
-   - Inadequate clinician training leading to misuse
-   - Workflow integration gap (clinical task falls between systems)
-   - Integration failure (HL7 / FHIR / interface engine outage)
-   - Business-continuity failure when the new system is unavailable
-   - Confusion during parallel running with legacy system
-   - Data migration error (legacy records not faithfully transferred)
-   - Local configuration error (e.g. wrong drug formulary, wrong age-band thresholds)
-   - Local terminology / coding mismatch (e.g. local SNOMED subset diverges from product expectations)
-   - Authorisation / role-mapping error (local RBAC misaligned with intended product RBAC)
+8. **Generate `DEPLOYMENT-HAZARD-LOG.md`** with YAML frontmatter + rendered Markdown table. Ten deployment-specific starter hazards (D-HAZ-001 to D-HAZ-010 in the template):
+   - D-HAZ-001 Inadequate clinician training leading to misuse
+   - D-HAZ-002 Workflow integration gap (clinical task falls between systems)
+   - D-HAZ-003 Integration failure (HL7 / FHIR / interface engine outage)
+   - D-HAZ-004 Business-continuity failure when the new system is unavailable
+   - D-HAZ-005 Confusion during parallel running with legacy system
+   - D-HAZ-006 Data migration error (legacy records not faithfully transferred)
+   - D-HAZ-007 Local configuration error (e.g. wrong drug formulary, wrong age-band thresholds)
+   - D-HAZ-008 Local terminology / coding mismatch (e.g. local SNOMED subset diverges from product expectations)
+   - D-HAZ-009 Authorisation / role-mapping error (local RBAC misaligned with intended product RBAC)
+   - D-HAZ-010 Failure to capture and act on local incidents involving the product (no local reporting route, no escalation path to the manufacturer)
    Before finalising, walk every hazard-archetype family in `${CLAUDE_PLUGIN_ROOT}/references/hazard-archetypes.md`. For each family, either raise at least one hazard or record in the safety case why the family is not applicable to this product. This makes hazard discovery coverage-led, not example-led.
 
 9. **Adapt to the actual deployment**: starter hazards above are baseline. Add deployment-specific hazards from the project's context — e.g. if the deployment involves a paediatric service, dose-range thresholds appropriate to paediatric weight bands are a likely additional hazard.

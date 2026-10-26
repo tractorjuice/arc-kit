@@ -1,5 +1,5 @@
 ---
-description: Maps TOGAF ADM cycle to agile sprints — rapid architecture delivery in 2-4 week engagement windows
+description: Maps TOGAF ADM cycle to agile sprints — rapid architecture delivery in 4-8 week engagement windows
 doc-type: OAAL
 argument-hint: "<project ID or name, e.g. '001', 'rapid AI architecture vision'>"
 effort: medium
@@ -16,6 +16,10 @@ handoffs:
 
   - command: agile-governance
     description: Establish governance cadence for the programme
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 You are helping an enterprise architect create an **O-AA ADM Lite** architecture using Open Agile Architecture (O-AA, C208) mapped to TOGAF ADM phases across agile sprints. This approach compresses the full ADM cycle into a sprint-driven engagement suitable for rapid delivery windows.
@@ -59,6 +63,14 @@ Use this command when **any** of the following conditions are met:
 - **ADMP** (ADM Preliminary / Architecture Vision) — Extract: Existing scope, drivers, constraints if a preliminary ADM was already done
 
   - If missing: note that Sprint 0 will establish vision from scratch
+
+- **STKE** (Stakeholder Analysis) — Extract: Stakeholder roles, drivers, goals and concerns for the Sprint 0 stakeholder map
+
+  - If missing: note that Sprint 0 builds the stakeholder map from the user input alone, and suggest `/arckit:stakeholders`
+
+- **REQ** (Requirements) — Extract: Business requirements and NFR targets (performance, availability, security) for the Sprint 0 success criteria
+
+  - If missing: note that success criteria are drafted without requirement IDs, and suggest `/arckit:requirements`
 
 ### Prerequisites 1b: Read external documents and policies
 
@@ -147,7 +159,7 @@ Create the O-AA ADM Lite document following the template structure.
 
 #### Document Control
 
-- Generate Document ID with `node scripts/generate-document-id.mjs {P} OAAL --filename` (canonical form: `ARC-{P}-OAAL-v1.0`)
+- Generate Document ID with `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs {P} OAAL {VERSION} --filename` (canonical form: `ARC-{P}-OAAL-v{VERSION}`) Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 - Set owner, dates, status, classification
 
@@ -155,7 +167,9 @@ Create the O-AA ADM Lite document following the template structure.
 
 #### Sprint Plan
 
-- Define sprint duration (default: 2 weeks)
+- Define sprint duration (default: 2 weeks; Sprint 0 is 1 week)
+
+- State the engagement window and keep it consistent with the sprint table: at the default lengths Sprint 0 to Sprint 3 take 7 weeks, inside the 4-8 week window this approach is designed for
 
 - Map each sprint to TOGAF ADM phases
 
@@ -167,15 +181,17 @@ Create the O-AA ADM Lite document following the template structure.
 
 - Use `vision.yaml` schema
 
-- Map stakeholders to concerns and compliance requirements
+- Map stakeholders to concerns and compliance requirements (from STKE where available)
 
-- Define success criteria with measurable targets
+- Define success criteria with measurable targets (trace them to REQ business requirements and NFRs where available)
+
+- Name the high-level business capabilities in scope as part of the vision (TOGAF Phase A); the full capability map follows in Sprint 1
 
 - Architecture contract: deliverable format and handoff process
 
 #### Sprint 1-2: Architecture Design
 
-- Business + Data Architecture (Sprint 1)
+- Business + Data Architecture (Sprint 1): baseline and target business capability map with gap analysis (TOGAF Phase B, refining the high-level capabilities scoped in the Sprint 0 vision), value streams, and the data architecture
 
 - Technology Architecture (Sprint 2)
 
@@ -212,7 +228,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Create the file at:
 
 ```text
-projects/{P}/ARC-{P}-OAAL-v1.0.md
+projects/{P}/ARC-{P}-OAAL-v{VERSION}.md
 ```
 
 ### 10. Show Summary to User
@@ -222,8 +238,8 @@ After writing the file, show a concise summary (NOT the full document):
 ```markdown
 ## O-AA ADM Lite Created
 
-**Document**: `projects/{P}/ARC-{P}-OAAL-v1.0.md`
-**Document ID**: ARC-{P}-OAAL-v1.0
+**Document**: `projects/{P}/ARC-{P}-OAAL-v{VERSION}.md`
+**Document ID**: ARC-{P}-OAAL-v{VERSION}
 
 ### Sprint Plan
 | Sprint | TOGAF Phases | Focus | Duration | Deliverable |
@@ -247,13 +263,17 @@ After writing the file, show a concise summary (NOT the full document):
 
 - [✅/⚠️] ADM Preliminary: ARC-{P}-ADMP-v[N].md
 
+- [✅/⚠️] Stakeholder Analysis: ARC-{P}-STKE-v[N].md
+
+- [✅/⚠️] Requirements: ARC-{P}-REQ-v[N].md
+
 ### Next Steps
 1. Begin Sprint 0: Stakeholder workshops + vision definition
 2. Verify Sprint 0 artefacts: `/arckit:health`
 3. Continue to Sprint 1: `/arckit-oaa:product-architecture`
 4. Plan dual transformation: `/arckit-oaa:agile-strategy`
 
-**File location**: `projects/{P}/ARC-{P}-OAAL-v1.0.md`
+**File location**: `projects/{P}/ARC-{P}-OAAL-v{VERSION}.md`
 ```
 
 ## Important Notes

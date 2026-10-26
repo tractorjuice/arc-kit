@@ -11,9 +11,9 @@
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Citizen-facing flows that need authentication |
-| Architecture (`ARC-<id>-ARCH-v1.0.md`) | Service topology and identity boundaries |
-| Integration spec (`ARC-<id>-INT-v1.0.md`) | Existing integration surface |
-| Security NFRs (`ARC-<id>-NFR-SEC-v1.0.md`) | Authentication / e-signature requirements |
+| Architecture (`diagrams/ARC-<id>-DIAG-*-v*.md`) | Service topology and identity boundaries |
+| Integration spec (`INT-*` in `ARC-<id>-REQ-v*.md`) | Existing integration surface |
+| Security NFRs (`NFR-SEC-*` in `ARC-<id>-REQ-v*.md`) | Authentication / e-signature requirements |
 
 ---
 
@@ -57,7 +57,7 @@ Output: `projects/<id>/ARC-<id>-UPASS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Architecture | Identity boundaries and integration surface | `/arckit:platform-design`, `/arckit:integration` |
+| Architecture | Identity boundaries and integration surface | `/arckit:platform-design`, `/arckit:diagram` |
 | UAE Pass | Integration design + onboarding pack | `/arckit:uae-uaepass` |
 | Decisions | Profile choice and e-signature mechanism as ADRs | `/arckit:adr` |
 | Security | Reconcile with IAS T5 (Access Control) controls | `/arckit:uae-ias` |
@@ -77,7 +77,7 @@ Output: `projects/<id>/ARC-<id>-UPASS-v1.0.md`
 
 ## Key Notes
 
-- **Loa-to-eIDAS mapping**: UAE Pass Loa-to-eIDAS mapping is flagged as `[NEEDS VERIFICATION]` in the overlay maintenance log — confirm before relying on cross-border interoperability claims.
+- **No eIDAS mapping**: The UAE PASS developer documentation (<https://docs.uaepass.ae/quick-start-guide-uae-pass-staging-environment/user-account-types>) defines three account types — SOP1 Basic (unverified), SOP2 Advanced (verified, advanced signature) and SOP3 Qualified (verified with biometrics, qualified signature) — and publishes no mapping to the eIDAS levels of assurance (Low / Substantial / High). Any eIDAS equivalence in a design is the architect's assumption: record it as one, and confirm it with TDRA before relying on it for cross-border identity acceptance.
 - **Non-resident fallback**: UAE Pass is for residents and citizens — non-resident flows need an alternative IdP path.
 - **Sandbox first**: All integration testing must complete in the UAE Pass sandbox before production credentials are issued.
 - **Community-contributed**: Output should be reviewed by qualified federal compliance counsel before reliance.

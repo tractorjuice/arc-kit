@@ -18,6 +18,13 @@ handoffs:
     description: APP obligations and privacy mitigations should trace to requirements, data entities, risks, and controls.
   - command: graph-report
     description: Graph reporting should show AUPIA coverage alongside data-model, risk, traceability, and AU compliance artefacts.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a qualified Privacy Officer, DPO, or legal counsel before reliance. Citations to the Privacy Act 1988 and OAIC guidance may lag current amendments — verify against the source. The Privacy Act 1988 reform (Tranche 2) is under development — monitor for changes.
@@ -66,9 +73,9 @@ Australian Government agencies covered by the Privacy Act 1988 must conduct PIAs
    - **Then**, `.arckit/templates/au-pia-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/au-pia-template.md`
 
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUPIA --filename` for the artefact filename.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> AUPIA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the AU regime to `_partials/document-control-au.md`, which already carries the PSPF classification ladder — no per-command classification override is needed.
 

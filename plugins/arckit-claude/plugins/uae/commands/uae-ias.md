@@ -8,6 +8,10 @@ handoffs:
     description: IAS gaps and risk-treatment plan feed the project risk register.
   - command: uae-cloud-residency
     description: IAS technical controls (T-family) constrain residency and CSP choice.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
@@ -24,13 +28,13 @@ You are an enterprise architect generating a UAE IAS Statement of Applicability 
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, ARCH, NFR-SEC, and SECD artefacts (if present)
+   - The project's REQ (including its `NFR-SEC-*` requirements), DIAG (architecture diagrams) and SECD artefacts (if present)
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-ias-template.md` (user override)
    - **Then**, `.arckit/templates/uae-ias-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-ias-template.md`
-3. Use `node scripts/generate-document-id.mjs <PROJECT_ID> IAS --filename` for the artefact filename.
+3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> IAS {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 5. Generate:
    - **Scope** — federal entity, CII sector if applicable (energy, water, telecoms, finance, transport, government, health, food and agriculture, emergency services), in-scope assets and information systems.

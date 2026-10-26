@@ -58,7 +58,7 @@ $ARGUMENTS
      - Extract: Data protection assessment, lawful basis, privacy risks
 
    **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/uk-gov-atrs-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/uk-gov-atrs-template.md` exists in the project root, then `.arckit/templates/uk-gov-atrs-template.md`
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/uk-gov-atrs-template.md` (default)
    - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -272,7 +272,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-ATRS-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Algorithmic Transparency Record"
 - `ARC-[PROJECT_ID]-ATRS-v[VERSION]` → Construct using format above
@@ -319,7 +319,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 11. **Generate comprehensive ATRS record**:
 
-Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-ATRS-v1.0.md`
+Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-ATRS-v{VERSION}.md`
 
 Use the template structure from `uk-gov-atrs-template.md`
 
@@ -380,7 +380,7 @@ You should:
 - Flag completeness: 95% complete
 - **BLOCKING**: Need to add fallback procedure for system failures
 - **WARNING**: Model card not yet published (recommended)
-- Write to `projects/NNN-benefits-chatbot/ARC-NNN-ATRS-v1.0.md`
+- Write to `projects/NNN-benefits-chatbot/ARC-NNN-ATRS-v{VERSION}.md`
 - Provide next steps: "Complete fallback procedures, then ready for SRO approval and GOV.UK publication"
 
 ## Important Notes

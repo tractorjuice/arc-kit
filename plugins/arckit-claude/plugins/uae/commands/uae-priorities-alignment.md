@@ -9,6 +9,13 @@ handoffs:
     description: The alignment statement and reuse-vs-build justification feed the Strategic Outline Business Case.
   - command: uae-uaepass
     description: Reuse of UAE Pass identified here is detailed in the UAE Pass integration design.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
@@ -31,8 +38,8 @@ You are an enterprise architect generating a National Priorities Alignment State
    - **First**, check `.arckit/templates-custom/uae-priorities-alignment-template.md` (user override)
    - **Then**, `.arckit/templates/uae-priorities-alignment-template.md`
    - **Fallback**, `${CLAUDE_PLUGIN_ROOT}/templates/uae-priorities-alignment-template.md`
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> NPRA --filename` for the artefact filename.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist; otherwise locate it.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> NPRA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
    - **Strategic Alignment Matrix** — for each of the four federal strategies (We the UAE 2031, National Investment Strategy 2031 (NIS 2031), UAE Strategy for Artificial Intelligence 2031, Digital Economy Strategy), state the relevant pillar(s) and the project's contribution.

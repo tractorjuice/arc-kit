@@ -12,6 +12,8 @@ handoffs:
     description: OT security findings provide zone, conduit, connectivity, and remote-access evidence for energy OT environments.
   - command: au-soci-cirmp
     description: SOCI/CIRMP evidence supports critical-infrastructure risk treatment and incident escalation context.
+  - command: au-energy-compliance
+    description: The energy compliance pack reads this AESCSF assessment, when present, as cyber-posture context for its ring-fencing, AEMO interface, and SOCI escalation findings.
   - command: dfd
     description: Data-flow diagrams provide IT/OT, market, DERMS, DOE, CSIP-AUS, and vendor-access evidence.
   - command: diagram
@@ -28,6 +30,13 @@ handoffs:
     description: AESCSF maturity gaps and residual exposures should feed the project risk register.
   - command: graph-report
     description: Governance graph metrics show coverage, cross-reference density, and missing evidence links across registers.
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
+  - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 > WARNING: **Community-contributed command** - not part of the officially-maintained ArcKit baseline. Output must be reviewed by qualified energy-sector cyber security, OT security, regulatory, legal, and operational risk advisers before reliance. Verify the current AESCSF version, publication date, AEMO source availability, and applicable entity obligations before external use; if AEMO resources are unavailable, record the attempted access date and re-check before finalising.
@@ -72,9 +81,9 @@ The Australian Energy Sector Cyber Security Framework is an energy-sector cyber 
    - Then: `.arckit/templates/au-aescsf-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-aescsf-template.md`
 
-3. Use `scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
+3. Use `bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --json --name "<project-name>"` if the project does not yet exist.
 
-4. Use `node scripts/generate-document-id.mjs <PROJECT_ID> AUAESCSF --filename` for the artefact filename.
+4. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> AUAESCSF {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) -- replace the standard UK line in the header.
 
@@ -96,7 +105,7 @@ The Australian Energy Sector Cyber Security Framework is an energy-sector cyber 
 
    - **Asset, Interface, and Evidence Inventory** - identify source-of-truth registers for OT assets, IT systems, DERMS / DOE platforms, market interfaces, APIs, telemetry links, metering assets, vendor remote-access paths, data catalogues, control evidence, owners, criticality, and inventory gaps. Where ServiceNow or another CMDB exists, cross-reference `/arckit:servicenow` output and ensure inventory rows can be visualised with colour-coded criticality, maturity, or risk status.
 
-   - **Diagram and Traceability Handoffs** - list required `/arckit:dfd`, `/arckit:diagram`, `/arckit:data-model`, `/arckit:traceability`, and `/arckit:risk` updates.
+   - **Diagram and Traceability Handoffs** - list required `/arckit:dfd`, `/arckit:diagram`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:traceability`, `/arckit:risk`, and `/arckit:graph-report` updates.
 
    - **AESCSF Anti-Pattern Register** - call out flat OT networks, undocumented market interfaces, unmanaged vendor remote access, stale DER integration assumptions, missing data ownership, and unsupported control-room dependencies.
 

@@ -13,6 +13,8 @@ handoffs:
   - command: fr-marche-public
     description: Include GDPR/DPA obligations in procurement documentation
     condition: "Procurement involves data processors"
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
@@ -79,7 +81,7 @@ Read all documents from Step 0. Identify:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/fr-rgpd-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/fr-rgpd-template.md` exists in the project root, then `.arckit/templates/fr-rgpd-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/fr-rgpd-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `CNIL` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.
@@ -93,7 +95,7 @@ Read all documents from Step 0. Identify:
    - Existing file → minor increment if refreshed, major if scope changed significantly
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-CNIL-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-CNIL-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}

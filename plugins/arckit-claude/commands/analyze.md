@@ -31,7 +31,7 @@ Identify inconsistencies, gaps, ambiguities, and compliance issues across all ar
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/analysis-report-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/analysis-report-template.md` exists in the project root, then `.arckit/templates/analysis-report-template.md`
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/analysis-report-template.md` (default)
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. Do not hand-write the Document Control table: the partial `RENDERING.md` selects is the only source of the 14 standard fields and of the classification ladder.
@@ -153,7 +153,7 @@ Load only minimal necessary context from each artifact:
 - Business requirements (BR-xxx)
 - Functional requirements (FR-xxx)
 - Non-functional requirements (NFR-xxx)
-  - Security (NFR-S-xxx)
+  - Security (NFR-SEC-xxx)
   - Performance (NFR-P-xxx)
   - Compliance (NFR-C-xxx)
   - Accessibility (NFR-A-xxx)
@@ -236,7 +236,7 @@ Create internal representations (do not include raw artifacts in output):
 
 **Requirements Inventory**:
 
-- Each requirement with ID, type, priority (MUST/SHOULD/MAY)
+- Each requirement with ID, type and MoSCoW priority (MUST_HAVE, SHOULD_HAVE, COULD_HAVE or WONT_HAVE; UNSPECIFIED when it has none)
 - Map to principles (which principles does this requirement satisfy?)
 - Map to stakeholder goals (which goals does this requirement address?)
 - Map to success criteria
@@ -297,8 +297,9 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 
 **Priority Issues**:
 
-- All requirements marked as MUST (no prioritization)
-- No MUST requirements (everything is optional)
+- All requirements marked as MUST_HAVE (no prioritization)
+- No MUST_HAVE requirements (everything is optional)
+- Requirements with no priority (UNSPECIFIED in the hook's Requirements Inventory)
 - Conflicting priorities
 
 #### B. Architecture Principles Alignment
@@ -324,8 +325,8 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 **Coverage Gaps**:
 
 - Requirements with zero design coverage (not addressed in HLD/DLD)
-- Critical MUST requirements not covered
-- Security requirements (NFR-S-xxx) not reflected in security architecture
+- MUST_HAVE requirements not covered
+- Security requirements (NFR-SEC-xxx) not reflected in security architecture
 - Performance requirements (NFR-P-xxx) not validated in design
 - Compliance requirements (NFR-C-xxx) not addressed
 
@@ -360,7 +361,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 
 - HLD addresses all SOW requirements?
 - Technology stack matches approved standards?
-- Security architecture meets NFR-S requirements?
+- Security architecture meets NFR-SEC requirements?
 - Performance architecture meets NFR-P requirements?
 
 #### E. Stakeholder Traceability Analysis (if ARC-*-STKE-*.md exists)
@@ -405,7 +406,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 **Risk-Requirements Alignment**:
 
 - Risk mitigation actions translated into requirements?
-- Security risks addressed by NFR-S-xxx requirements?
+- Security risks addressed by NFR-SEC-xxx requirements?
 - Compliance risks addressed by NFR-C-xxx requirements?
 
 **Missing Risk Assessment**:
@@ -600,7 +601,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 
 **Security Coverage**:
 
-- Security requirements (NFR-S-xxx) exist?
+- Security requirements (NFR-SEC-xxx) exist?
 - Threat model documented?
 - Security architecture in HLD?
 - Security implementation in DLD?
@@ -628,7 +629,7 @@ Use this heuristic to prioritise findings:
 
 - Violates architecture principles (MUST)
 - Missing core artifact (no ARC-*-REQ-*.md)
-- MUST requirement with zero design coverage
+- MUST_HAVE requirement with zero design coverage
 - Stakeholder: Orphan requirements (not linked to any stakeholder goal)
 - Risk: High/Very High risks with no mitigation in requirements or design
 - Risk: Risk owners not from stakeholder RACI matrix (governance gap)
@@ -691,7 +692,7 @@ Use this heuristic to prioritise findings:
 
 ### 6. Produce Comprehensive Analysis Report
 
-Generate a comprehensive Markdown report and save it to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md` with the following structure:
+Generate a comprehensive Markdown report and save it to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md` with the following structure:
 
 ```markdown
 # Architecture Governance Analysis Report
@@ -722,7 +723,7 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 
 | ID | Category | Severity | Location(s) | Summary | Recommendation |
 |----|----------|----------|-------------|---------|----------------|
-| R1 | Requirements Quality | HIGH | ARC-*-REQ-*.md:L45-52 | Duplicate security requirements | Merge NFR-S-001 and NFR-S-005 |
+| R1 | Requirements Quality | HIGH | ARC-*-REQ-*.md:L45-52 | Duplicate security requirements | Merge NFR-SEC-001 and NFR-SEC-005 |
 | P1 | Principles Alignment | CRITICAL | ARC-*-REQ-*.md:L120 | Violates Cloud-First principle | Change to cloud-native architecture |
 | T1 | Traceability | HIGH | No HLD coverage | NFR-P-002 (10K TPS) not addressed | Add performance architecture section to HLD |
 | UK1 | UK Gov Compliance | CRITICAL | Missing DPIA | AI system requires DPIA before deployment | Complete DPIA for AI Playbook compliance |
@@ -735,9 +736,9 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 
 | Requirement ID | Type | Priority | Design Coverage | Tests Coverage | Status |
 |----------------|------|----------|-----------------|----------------|--------|
-| BR-001 | Business | MUST | ✅ HLD | ❌ Missing | ⚠️ Partial |
-| FR-001 | Functional | MUST | ✅ HLD, DLD | ✅ Tests | ✅ Complete |
-| NFR-S-001 | Security | MUST | ❌ Missing | ❌ Missing | ❌ Not Covered |
+| BR-001 | Business | MUST_HAVE | ✅ HLD | ❌ Missing | ⚠️ Partial |
+| FR-001 | Functional | MUST_HAVE | ✅ HLD, DLD | ✅ Tests | ✅ Complete |
+| NFR-SEC-001 | Security | MUST_HAVE | ❌ Missing | ❌ Missing | ❌ Not Covered |
 
 **Statistics**:
 - Total Requirements: {count}
@@ -749,8 +750,8 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 
 | Requirement ID | Priority | Description | Why Critical |
 |----------------|----------|-------------|--------------|
-| NFR-S-003 | MUST | Encrypt data at rest | Security requirement |
-| NFR-P-002 | MUST | Support 10K TPS | Performance critical |
+| NFR-SEC-003 | MUST_HAVE | Encrypt data at rest | Security requirement |
+| NFR-P-002 | MUST_HAVE | Support 10K TPS | Performance critical |
 
 ---
 
@@ -1056,7 +1057,7 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 **Evaluation Criteria Defined**: ✅ Yes / ❌ No
 
 **Alignment Check**:
-- All MUST requirements in scoring? ✅ Yes / ❌ No
+- All MUST_HAVE requirements in scoring? ✅ Yes / ❌ No
 - Scoring methodology fair? ✅ Yes / ⚠️ Issues / ❌ No
 - Technical evaluation covers all areas? ✅ Yes / ⚠️ Gaps / ❌ No
 
@@ -1099,7 +1100,7 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 ### Critical Actions (MUST resolve before implementation/procurement)
 
 1. **[P1] Add Cloud-First architecture**: Current design violates Cloud-First principle. Redesign with AWS/Azure/GCP.
-2. **[R1] Cover security requirements**: NFR-S-003, NFR-S-007, NFR-S-012 have no design coverage. Add security architecture to HLD.
+2. **[R1] Cover security requirements**: NFR-SEC-003, NFR-SEC-007, NFR-SEC-012 have no design coverage. Add security architecture to HLD.
 3. **[UK1] Complete DPIA**: HIGH-RISK AI system requires completed DPIA before deployment (AI Playbook MANDATORY).
 
 ### High Priority Actions (SHOULD resolve before implementation/procurement)
@@ -1110,7 +1111,7 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 
 ### Medium Priority Actions (Improve quality)
 
-1. **[Q1] Consolidate duplicate requirements**: Merge NFR-S-001 and NFR-S-005 (identical).
+1. **[Q1] Consolidate duplicate requirements**: Merge NFR-SEC-001 and NFR-SEC-005 (identical).
 2. **[Q2] Fix terminology drift**: "User" vs "Customer" used inconsistently. Standardize.
 3. **[D1] Complete traceability matrix**: Add backward traceability from tests to requirements.
 
@@ -1266,8 +1267,8 @@ Expected improvement in scores after addressing findings.
 **Details**:
 
 ```text
-NFR-S-001: System MUST encrypt data at rest using AES-256
-NFR-S-005: All stored data SHALL be encrypted with AES-256 encryption
+NFR-SEC-001: System MUST encrypt data at rest using AES-256
+NFR-SEC-005: All stored data SHALL be encrypted with AES-256 encryption
 ```
 
 **Issue**: These are duplicate requirements with inconsistent language (MUST vs SHALL).
@@ -1276,8 +1277,8 @@ NFR-S-005: All stored data SHALL be encrypted with AES-256 encryption
 
 **Recommendation**:
 
-1. Keep NFR-S-001 (clearer wording)
-2. Delete NFR-S-005
+1. Keep NFR-SEC-001 (clearer wording)
+2. Delete NFR-SEC-005
 3. Update traceability matrix
 
 **Estimated Effort**: 10 minutes
@@ -1351,7 +1352,7 @@ Before completing the document, populate ALL document control fields in the head
 *Auto-populated fields* (populate these automatically):
 
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[VERSION]` → from `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: "1.0" only when no earlier `ARC-{PROJECT_ID}-ANAL-v*.md` exists
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Governance Analysis Report"
 - `ARC-[PROJECT_ID]-ANAL-v[VERSION]` → Construct using format above
@@ -1400,7 +1401,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 Save the complete analysis report generated in Step 6 to:
 
-**`projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md`**
+**`projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md`**
 
 The saved report must include:
 
@@ -1419,7 +1420,7 @@ After writing the file, provide a summary message to the user:
 ✅ Governance Analysis Complete
 
 **Project**: {project-name}
-**Report Location**: projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md
+**Report Location**: projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md
 
 **Overall Status**: ✅ Ready / ⚠️ Issues Found / ❌ Critical Issues
 **Governance Health Score**: {score}/100 ({grade})
@@ -1451,7 +1452,7 @@ After writing the file, provide a summary message to the user:
 - {action}
 - {action}
 
-📄 Full analysis report saved to: projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md
+📄 Full analysis report saved to: projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md
 ```
 
 ### 8. Provide Remediation Guidance
@@ -1481,7 +1482,7 @@ After outputting the report, ask:
 ### Analysis Guidelines
 
 - **DO NOT modify existing artifacts** (non-destructive analysis)
-- **DO write analysis report** to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md`
+- **DO write analysis report** to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md`
 - **NEVER hallucinate missing sections** (if absent, report them accurately)
 - **Prioritize principle violations** (these are always CRITICAL)
 - **Prioritize UK Gov compliance issues** (mandatory for public sector)
@@ -1553,7 +1554,7 @@ Example output: "Architecture Governance Analysis Report" with 18 findings (3 CR
 ## Important Notes
 
 - This is **non-destructive analysis** - existing artifacts are not modified
-- Analysis report is saved to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md` for audit trail
+- Analysis report is saved to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v{VERSION}.md` for audit trail
 - Run `/arckit:analyze` after major changes to requirements, designs, or assessments
 - Ideal times to run:
   - Before issuing SOW/RFP to vendors

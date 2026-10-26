@@ -9,8 +9,9 @@
  * hook-utils.mjs module as the hook count grows."
  */
 
-import { readFileSync, statSync, readdirSync, writeSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { lstatSync, readFileSync, statSync, readdirSync, writeSync } from 'node:fs';
+import { homedir } from 'node:os';
+import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
 import { DOC_TYPES } from '../config/doc-types.mjs';
 
 // ── File System ──
@@ -31,27 +32,58 @@ export function listDir(p) {
   try { return readdirSync(p).sort(); } catch { return []; }
 }
 
-export function listFilesRecursive(rootDir) {
-  const files = [];
+const MAX_WALK_DEPTH = 16;
+const MAX_WALK_ENTRIES = 2000;
 
-  function walk(dir, parts) {
+function walkEntries(rootDir, onDirectory, onFile) {
+  // The root itself may be a symlink (a project's external/ pointing at a
+  // shared folder); follow it. Entries below it are not followed.
+  let rootStat;
+  try { rootStat = statSync(rootDir); } catch { return; }
+  if (!rootStat.isDirectory()) return;
+
+  const visited = new Set();
+  let entries = 0;
+
+  function walk(dir, parts, depth, stat) {
+    const identity = `${stat.dev}:${stat.ino}`;
+    if (visited.has(identity)) return;
+    visited.add(identity);
+    onDirectory(dir);
+
     for (const entry of listDir(dir)) {
+      if (entries >= MAX_WALK_ENTRIES) break;
+      entries++;
+
       const fullPath = join(dir, entry);
+      let entryStat;
+      try { entryStat = lstatSync(fullPath); } catch { continue; }
+      if (entryStat.isSymbolicLink()) continue;
+
       const nextParts = [...parts, entry];
-      if (isDir(fullPath)) {
-        walk(fullPath, nextParts);
-      } else if (isFile(fullPath)) {
-        files.push({
-          name: entry,
-          path: fullPath,
-          relativePath: nextParts.join('/'),
-        });
+      if (entryStat.isDirectory() && depth < MAX_WALK_DEPTH) {
+        walk(fullPath, nextParts, depth + 1, entryStat);
+      } else if (entryStat.isFile()) {
+        onFile(entry, fullPath, nextParts);
       }
     }
   }
 
-  if (isDir(rootDir)) walk(rootDir, []);
+  walk(rootDir, [], 0, rootStat);
+}
+
+export function listFilesRecursive(rootDir) {
+  const files = [];
+  walkEntries(rootDir, () => {}, (name, path, parts) => {
+    files.push({ name, path, relativePath: parts.join('/') });
+  });
   return files;
+}
+
+export function listDirsRecursive(rootDir) {
+  const dirs = [];
+  walkEntries(rootDir, dir => dirs.push(dir), () => {});
+  return dirs;
 }
 
 export function mtimeMs(p) {
@@ -74,6 +106,83 @@ export function findRepoRoot(cwd) {
 function isArcKitProjectsDir(projectsDir) {
   if (!isDir(projectsDir)) return false;
   return listDir(projectsDir).some((entry) => /^\d{3}(?:-|$)/.test(entry));
+}
+
+// ── Overlay Plugins ──
+
+const OVERLAY_NAME_RE = /^arckit-[a-z0-9-]+$/;
+
+function isWithin(child, parent) {
+  const rel = relative(parent, child);
+  return rel === '' || (!rel.startsWith('..') && !isAbsolute(rel));
+}
+
+function pluginName(dir) {
+  try {
+    return JSON.parse(readFileSync(join(dir, '.claude-plugin', 'plugin.json'), 'utf8')).name;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * The `docs/guides/` folders of the ArcKit overlays available to this repo.
+ * Each overlay ships the guides for its own commands; core ships only core's,
+ * so /arckit:pages lists an overlay's guides only when that overlay is here.
+ *
+ * Two sources, the first found winning for each overlay:
+ *  - Folders beside the core plugin: the source checkout, where core and the
+ *    overlays sit side by side under plugins/ and load with --plugin-dir. In
+ *    the plugin cache the folders beside core are its other versions, all
+ *    named `arckit`, so this finds nothing there.
+ *  - Claude Code's plugins/installed_plugins.json: every installed `arckit-*`
+ *    plugin installed for the user or for this repo (or a folder above it).
+ *    A repo-scoped install wins over a user-scoped one.
+ *
+ * @param {string} pluginRoot - the core plugin's folder (CLAUDE_PLUGIN_ROOT)
+ * @param {string} repoRoot - the repo /arckit:pages runs in
+ * @param {object} env - process.env, or a stand-in in tests
+ * @returns {string[]} existing guide folders, sorted by overlay name
+ */
+export function overlayGuideDirs(pluginRoot, repoRoot, env = process.env) {
+  const found = new Map();
+
+  const core = resolve(pluginRoot);
+  const parent = dirname(core);
+  for (const entry of listDir(parent)) {
+    const dir = join(parent, entry);
+    if (dir === core) continue;
+    const name = pluginName(dir);
+    if (name && OVERLAY_NAME_RE.test(name) && !found.has(name)) found.set(name, dir);
+  }
+
+  const configDir = env.CLAUDE_CONFIG_DIR || join(env.HOME || homedir(), '.claude');
+  let plugins = {};
+  try {
+    plugins = JSON.parse(readFileSync(join(configDir, 'plugins', 'installed_plugins.json'), 'utf8')).plugins || {};
+  } catch {
+    plugins = {};
+  }
+  const repo = resolve(repoRoot);
+  const installed = new Map();
+  for (const [key, installs] of Object.entries(plugins)) {
+    const name = key.split('@')[0];
+    if (!OVERLAY_NAME_RE.test(name) || found.has(name)) continue;
+    for (const install of Array.isArray(installs) ? installs : [installs]) {
+      if (!install || typeof install.installPath !== 'string') continue;
+      if (install.projectPath) {
+        if (isWithin(repo, resolve(install.projectPath))) installed.set(name, install.installPath);
+      } else if (!installed.has(name)) {
+        installed.set(name, install.installPath);
+      }
+    }
+  }
+  for (const [name, dir] of installed) found.set(name, dir);
+
+  return [...found.keys()]
+    .sort()
+    .map((name) => join(found.get(name), 'docs', 'guides'))
+    .filter((dir) => isDir(dir));
 }
 
 // ── Doc Type Extraction ──
@@ -135,10 +244,29 @@ export function extractRequirementIds(content) {
 
 // ── Requirement Detail Extraction ──
 
+/** MoSCoW priorities a requirement can carry, in reporting order. */
+export const REQUIREMENT_PRIORITIES = ['MUST_HAVE', 'SHOULD_HAVE', 'COULD_HAVE', 'WONT_HAVE', 'UNSPECIFIED'];
+
+const MOSCOW = { m: 'MUST_HAVE', s: 'SHOULD_HAVE', c: 'COULD_HAVE', w: 'WONT_HAVE' };
+
+/**
+ * Read a MoSCoW priority from the value of a Priority field: "MUST_HAVE",
+ * "Must Have", "Won't Have", "M", or the older MUST/SHOULD/MAY words (MAY
+ * reads as COULD_HAVE). Anything else, including an unfilled
+ * "[MUST_HAVE | ...]" placeholder, returns null.
+ */
+function parsePriorityValue(value) {
+  const m = value.trim().match(/^(must|should|could|won['’]?t|may|[mscw])(?:[\s_-]*have)?\b/i);
+  if (!m) return null;
+  const word = m[1].toLowerCase();
+  return word === 'may' ? MOSCOW.c : MOSCOW[word[0]];
+}
+
 /**
  * Parse requirement headings and details from a REQ document.
  * Looks for ### ID: Description headings and priority markers.
- * Returns array of { id, category, description, priority }
+ * Returns array of { id, category, description, priority }, where priority
+ * is one of REQUIREMENT_PRIORITIES.
  */
 export function extractRequirementDetails(content) {
   const requirements = [];
@@ -156,8 +284,11 @@ export function extractRequirementDetails(content) {
   // Pattern for requirement headings: ### or #### BR-001: Description text
   // Template uses ### for BR, #### for FR/NFR/INT/DR — match both levels
   const headingRe = /^#{3,4}\s+((?:BR|FR|NFR(?:-[A-Z]+)?|INT|DR)-\d{1,3}):\s*(.+)/;
-  // Priority patterns in table rows or inline markers
-  const priorityRe = /\b(MUST|SHOULD|MAY)\b/;
+  // A Priority field: "**Priority**: MUST_HAVE", "**Priority:** Must Have"
+  // or a "| Priority | MUST |" table row
+  const priorityFieldRe = /^\s*(?:[-*]\s+)?\|?\s*\*{0,2}Priority\*{0,2}\s*(?::\*{0,2}|\|)\s*\*{0,2}\s*(.+)$/i;
+  // Older REQ files with no Priority field: a bare MUST/SHOULD/MAY near the heading
+  const legacyPriorityRe = /\b(MUST|SHOULD|MAY)\b/;
 
   for (let i = 0; i < lines.length; i++) {
     const headingMatch = lines[i].match(headingRe);
@@ -175,17 +306,23 @@ export function extractRequirementDetails(content) {
       }
     }
 
-    // Look for priority in the next ~10 lines (table rows, inline text)
-    let priority = 'SHOULD'; // default
-    for (let j = i + 1; j < Math.min(i + 11, lines.length); j++) {
-      // Stop if we hit another heading (h2, h3, or h4)
+    // The template puts the Priority field 11 to 28 lines below the heading,
+    // so read the whole block, up to the next h2, h3 or h4
+    let priority = null;
+    let legacy = null;
+    for (let j = i + 1; j < lines.length; j++) {
       if (/^#{2,4}\s+/.test(lines[j])) break;
-      const pMatch = lines[j].match(priorityRe);
-      if (pMatch) {
-        priority = pMatch[1];
-        break;
+      const field = lines[j].match(priorityFieldRe);
+      if (field) {
+        priority = parsePriorityValue(field[1]);
+        if (priority) break;
+      }
+      if (!legacy && j <= i + 10) {
+        const word = lines[j].match(legacyPriorityRe);
+        if (word) legacy = parsePriorityValue(word[1]);
       }
     }
+    priority = priority || legacy || 'UNSPECIFIED';
 
     requirements.push({ id, category, description, priority });
   }
@@ -203,7 +340,7 @@ export function extractRequirementDetails(content) {
         break;
       }
     }
-    requirements.push({ id, category, description: '(extracted from content)', priority: 'SHOULD' });
+    requirements.push({ id, category, description: '(extracted from content)', priority: 'UNSPECIFIED' });
   }
 
   return requirements;

@@ -151,7 +151,7 @@ For each capability:
    }
    ```
 
-2. Dispatch the reader using the `Agent` tool with `subagent_type: "arckit:arckit-gov-reuse-reader"` and the input JSON as the prompt.
+2. Dispatch the reader using the `Agent` tool with `subagent_type: "arckit:arckit-gov-reuse-reader"`, `run_in_background: false` and the input JSON as the prompt.
 
 3. The reader's final-message string is a JSON payload. It is validated automatically:
 
@@ -293,7 +293,7 @@ Build the writer's input. Each entry in `scored_candidates` carries the full `ca
 
 `dependency_comparisons` is optional — omit it if no reader returned overlap data. Include only the surviving entries from Step 8 (those relevant to the ranked candidates).
 
-Dispatch the writer using the `Agent` tool with `subagent_type: "arckit:arckit-gov-reuse-writer"` and the input JSON as the prompt. The writer creates the GOVR artefact AND one `tech-notes/{repo-slug}.md` per Fork/Library candidate (Created if new, Updated with merge rules if a tech-note already exists). It returns a one-line summary with file path, word count, and tech-note counts.
+Dispatch the writer using the `Agent` tool with `subagent_type: "arckit:arckit-gov-reuse-writer"`, `run_in_background: false` and the input JSON as the prompt. The writer creates the GOVR artefact AND one `tech-notes/{repo-slug}.md` per Fork/Library candidate (Created if new, Updated with merge rules if a tech-note already exists). It returns a one-line summary with file path, word count, and tech-note counts.
 
 ### Step 11: Return summary
 

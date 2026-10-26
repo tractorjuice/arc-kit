@@ -1,13 +1,15 @@
 ---
 description: Create architecture change request with impact assessment and ADM cycle re-entry
 doc-type: ACHG
-argument-hint: "<project ID, change type, e.g. '001', 'evolutionary', 'new capability'>"
+argument-hint: "<project ID, change type, e.g. '001', 'incremental', 'new capability'>"
 effort: high
 handoffs:
   - command: transition-architecture
     description: Update transition plan for approved changes
   - command: gap-analysis
     description: Re-assess gaps after change implementation
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 You are helping an enterprise architect create an **Architecture Change Request** for TOGAF Phase H (Architecture Change Management). This document captures change requests with full impact assessment across capability, application, technology, and governance domains, plus ADM cycle re-entry points.
@@ -30,10 +32,14 @@ $ARGUMENTS
   - If missing: note that capability impact assessment will be limited
 - **ADMP** (ADM Preliminary) — Extract: Architecture framework, principles, governance structure
   - If missing: note that framework alignment could not be validated
-- **PRIN** (Architecture Principles) — Extract: Principle compliance implications of the change
+- **PRIN** (Architecture Principles, in 000-global) — Extract: Principle compliance implications of the change
   - If missing: note that principle compliance could not be validated
 - **TRANS** (Transition Architecture) — Extract: Current transition plans that may be affected
   - If missing: note that transition plan impact could not be assessed
+
+**OPTIONAL** (read if available, skip silently if missing):
+
+- **APP** (Application Inventory) — Extract: Current application baseline for the application impact assessment
 
 ### Prerequisites 1b: Read external documents and policies
 
@@ -79,18 +85,18 @@ Change requests are **multi-instance** documents (like ADRs). Find the next avai
 
 Before creating the change request, use the **AskUserQuestion** tool to gather key parameters. **Skip any question where the user has already provided a clear answer in their arguments.**
 
-**Gathering rules** (apply to all questions in this section):
+**Gathering rules** — the one-message interview in `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md`:
 
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
-- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+- Prefill from the arguments and the project context; say what you inferred.
+- Ask every remaining question in **one** call. There is no second round.
+- An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
 **Question 1** — header: `Change Type`, multiSelect: false
-> "What type of architecture change is this?"
+> "How does TOGAF Phase H classify this change?"
 
-- **Evolutionary (Recommended)**: Incremental improvement to existing architecture — extends or enhances current capabilities without fundamental change
-- **Transformational**: Fundamental change that restructures significant portions of the architecture — new capabilities, technology platforms, or operating models
-- **Corrective**: Fix for architectural deficiencies, technical debt, or compliance failures — restores intended design
+- **Incremental (Recommended)**: Derives more value from the existing architecture — extends or enhances current capabilities. Handled through change management, or by partial re-architecting where it reaches into a phase's deliverables
+- **Simplification**: Reduces or rationalises the architecture — fewer components, less duplication, lower investment. Normally handled through change management without re-entering the ADM
+- **Re-architecting**: Creates new value through structural change — new capabilities, technology platforms or operating models. The architecture goes back through the ADM cycle
 
 **Question 2** — header: `Priority`, multiSelect: false
 > "What is the priority level of this change?"
@@ -100,19 +106,15 @@ Before creating the change request, use the **AskUserQuestion** tool to gather k
 - **Medium (Recommended)**: Standard change — enhancement or improvement within planned cycles
 - **Low**: Minor refinement — low-risk, low-cost improvements
 
-**Question 3** — header: `ADM Re-Entry`, multiSelect: true
-> "Which ADM phases need to be re-entered for this change?"
+**Question 3** — header: `ADM Re-Entry`, multiSelect: false
+> "Where should the ADM cycle be re-entered for this change?"
 
-- **Phase A (Architecture Vision)**: Change affects overall vision or scope
-- **Phase B (Business Architecture)**: Change affects business processes or organisation
-- **Phase C (Information Systems)**: Change affects data or application architecture
-- **Phase D (Technology Architecture)**: Change affects technology infrastructure
-- **Phase E (Opportunities & Solutions)**: Change affects solution options or migrations
-- **Phase F (Migration Planning)**: Change affects migration sequencing
-- **Phase G (Implementation Governance)**: Change affects implementation oversight
-- **Phase H (Change Management)**: Change affects ongoing change control
+- **Derive from the impact assessment (Recommended)**: Decide each phase (A–H) from the capability, application, technology and governance impact, consistent with the change type
+- **Phase H only**: The change is contained within architecture change management — no earlier phase is re-entered
+- **Phases B–D**: Re-develop the affected Business, Information Systems or Technology Architecture
+- **Phase A (new ADM cycle)**: Re-architect from the Architecture Vision — the usual entry point for a re-architecting change
 
-Apply the user's selections to populate the Change Type, Priority, and ADM Re-Entry sections of the template.
+Apply the user's selections to populate the Change Type, Priority, and ADM Re-Entry sections of the template. An urgent fix or a remedial change for a compliance failure is not a fourth type: classify it by its scope above and record the urgency as its Priority.
 
 ### 5. Gather Change Information from Context
 
@@ -139,7 +141,7 @@ Create a comprehensive Architecture Change Request document following the templa
 #### 1. Change Request Header
 
 - **Change ID**: Sequential ID (ACHG-001, ACHG-002, etc.)
-- **Change Type**: Evolutionary / Transformational / Corrective
+- **Change Type**: Simplification / Incremental / Re-architecting (the TOGAF Phase H classification)
 - **Submitted By**: Extract from context or prompt user
 - **Date**: Current date
 - **Priority**: Critical / High / Medium / Low
@@ -242,7 +244,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 **ACHG-specific quality requirements**:
 
-- Change type is explicitly defined (Evolutionary/Transformational/Corrective)
+- Change type is explicitly defined (Simplification/Incremental/Re-architecting)
 - Impact assessment covers at least 4 categories (capability, application, technology, governance)
 - ADM re-entry mapping is present for all phases
 - Cost/benefit section is populated (even if estimates)
@@ -266,7 +268,7 @@ Use the Write tool with the complete content following the template structure.
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → Use "1.0" for new change requests
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
-- `[CHANGE_TYPE]` → From user input (Evolutionary/Transformational/Corrective)
+- `[CHANGE_TYPE]` → From user input (Simplification/Incremental/Re-architecting)
 - `[ACHG_NUM]` → Next available number (001, 002, etc.)
 - `[COMMAND]` → "arckit.architecture-change"
 
@@ -282,7 +284,7 @@ After writing the file, show a concise summary (NOT the full document):
 **Document ID**: ARC-{P}-ACHG-{NUM}-v1.0
 
 ### Change Overview
-- **Type**: [Evolutionary/Transformational/Corrective]
+- **Type**: [Simplification/Incremental/Re-architecting]
 - **Priority**: [Critical/High/Medium/Low]
 - **Status**: DRAFT
 
@@ -325,7 +327,7 @@ After writing the file, show a concise summary (NOT the full document):
 - [✅/⚠️] Architecture Board Review: ARC-{P}-BORD-v[N].md
 - [✅/⚠️] Business Capability Model: ARC-{P}-BPCM-v[N].md
 - [✅/⚠️] ADM Preliminary: ARC-{P}-ADMP-v[N].md
-- [✅/⚠️] Architecture Principles: ARC-{P}-APP-v[N].md
+- [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
 - [✅/⚠️] Transition Architecture: ARC-{P}-TRANS-v[N].md
 
 ### Next Steps
@@ -350,14 +352,15 @@ After writing the file, show a concise summary (NOT the full document):
 
 2. **Use Write Tool**: The change request document is typically 200-400 lines. ALWAYS use the Write tool to create it. Never output the full content in chat.
 
-3. **Change Types**:
-   - **Evolutionary**: Incremental — extends existing architecture without structural change
-   - **Transformational**: Structural — reorganises significant portions of the architecture
-   - **Corrective**: Remedial — fixes architectural deficiencies or compliance failures
+3. **Change Types**: TOGAF Phase H classifies every architecture change as one of three:
+   - **Simplification**: Reduces or rationalises the architecture, often to reduce investment — normally handled through change management
+   - **Incremental**: Derives more value from existing investment — handled through change management, or by partial re-architecting, depending on the nature of the change
+   - **Re-architecting**: Increases investment to create new value — the whole architecture goes through the ADM cycle again
+   - Urgency is not a type: an emergency or corrective change takes the type its scope implies and a Critical or High Priority
 
 4. **Impact Categories**: All four categories (capability, application, technology, governance) must be assessed even if impact is "None" for some. This ensures comprehensive coverage.
 
-5. **ADM Re-Entry**: Not every change requires full ADM cycle re-entry. Phase H is the most common entry point for evolutionary changes. Transformational changes often require re-entry to Phases A-D.
+5. **ADM Re-Entry**: Not every change requires full ADM cycle re-entry. Simplification changes usually stay within Phase H. Incremental changes stay within Phase H or re-enter the phases whose deliverables they touch (often B–D). Re-architecting changes start a new ADM cycle, usually at Phase A.
 
 6. **Multi-Instance Numbering**: Change requests follow sequential numbering (ACHG-001, ACHG-002, etc.) similar to ADRs. Numbers are never reused — superseded or rejected changes retain their numbers.
 

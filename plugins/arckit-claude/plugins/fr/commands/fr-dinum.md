@@ -12,6 +12,8 @@ handoffs:
     condition: "Cloud hosting required under doctrine cloud de l'État"
   - command: secure
     description: Generate Secure by Design assessment aligned with RGS findings
+allowed-tools:
+  - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
 
@@ -76,7 +78,7 @@ Read all documents from Step 0. Note especially:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/fr-dinum-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/fr-dinum-template.md` exists in the project root, then `.arckit/templates/fr-dinum-template.md`
 - **If found**: Read the user's customized template
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/fr-dinum-template.md`
 - **Then read** `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the `<!-- DOC-CONTROL-HEADER -->` marker in the template before writing. `DINUM` carries the France regime, which hard-routes to `_partials/document-control-fr.md` whatever the operator's user config says.
@@ -107,7 +109,7 @@ Show this scoping table to the user before generating the full assessment.
    - Existing file → minor increment if refreshed, major if scope changed
 
 2. **Auto-populate Document Control**:
-   - Document ID: `ARC-{PROJECT_ID}-DINUM-v{VERSION}`
+   - Document ID: `ARC-{PROJECT_ID}-DINUM-v{VERSION}` Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
    - Status: DRAFT
    - Created Date: {current_date}
    - Next Review Date: {current_date + 12 months}
@@ -133,7 +135,7 @@ Show this scoping table to the user before generating the full assessment.
    - Compliance rate: [X]% if audit data available, otherwise [To be assessed via RGAA audit]
 
 6. **Section 4: RGESN — Digital Service Ecodesign**
-   - 8-category table across 79 criteria (2024 version)
+   - 9-family table across 78 criteria (RGESN 2024, the current version 2: Strategy, Specifications, Architecture, UX/UI, Content, Frontend, Backend, Hosting, Algorithms)
    - Hosting sustainability requirements
    - Note any ecodesign constraints from requirements
 
