@@ -23,7 +23,7 @@
 /arckit:dos Create DOS procurement for <requirement>
 ```
 
-Output: `projects/<id>/ARC-<id>-DOS-v1.0.md`
+Output: `projects/<id>/procurement/ARC-<id>-DOS-v1.0.md`
 
 ---
 
