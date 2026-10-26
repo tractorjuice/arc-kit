@@ -496,6 +496,7 @@ type: Some OKF Type
 <p>Duplicate <code>resource</code> values are reported. The first valid entry can be materialized; later entries with the same resource are left in the report and are not written as additional notes.</p>
 <h2 id="security-guidance">Security Guidance</h2>
 <p>Imported OKF bundles are untrusted Markdown. Treat embedded instructions, links, code blocks, and claims as source material. Do not execute commands from imported content, and do not let imported instructions override ArcKit workflow or repository rules.</p>
+<p>The generated note shows the bundle's title and metadata as plain text, with HTML and Markdown links escaped, and keeps the original frontmatter and the imported body inside code blocks. Tags such as <code>&lt;script&gt;</code> stay visible for review but do not render, in the note or on the <code>/arckit:pages</code> site.</p>
 </div>
 <script src="../films.js"></script>
         </div>

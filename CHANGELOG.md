@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`/arckit:import-okf` no longer carries HTML from an imported bundle into your research notes.** The importer copied each bundle file's title, metadata, original frontmatter and body into the `ARC-NNN-RSCH-NNN` note as they were, so a `<script>` or `<img onerror>` tag supplied by whoever prepared the bundle reached the `/arckit:pages` site and ran in the browser of anyone who opened the note. The title and the metadata table now show HTML, links and `|` characters as plain text, and the original frontmatter and the imported body sit inside a code block whose fence is longer than any run of backticks they contain, so they can't close it early. The body is kept word for word inside that block for review. `tests/plugin/test_import_okf.mjs` imports a malicious bundle and checks that nothing outside a code block can render as HTML.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added
