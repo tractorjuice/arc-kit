@@ -1127,3 +1127,63 @@ def test_codex_skill_rewrite_is_stable():
         plugin_root_prefix=".arckit",
     )
     assert result == expected
+
+
+def test_codex_hook_blocks_write_through_symlink_to_protected_file(tmp_path):
+    (tmp_path / ".git").mkdir()
+    (tmp_path / "docs").mkdir()
+    (tmp_path / "docs" / "notes.md").symlink_to("../.env.staging")
+
+    for tool_name, tool_input in (
+        ("Write", {"file_path": "docs/notes.md", "content": "A=1"}),
+        ("Edit", {"file_path": str(tmp_path / "docs" / "notes.md"), "old_string": "a", "new_string": "b"}),
+    ):
+        output = run_codex_hook(
+            "PreToolUse",
+            {
+                "hook_event_name": "PreToolUse",
+                "cwd": str(tmp_path),
+                "tool_name": tool_name,
+                "tool_input": tool_input,
+            },
+        )
+
+        hook_output = output["hookSpecificOutput"]
+        assert hook_output["permissionDecision"] == "deny"
+        assert "protected credential file" in hook_output["permissionDecisionReason"]
+
+
+def test_codex_hook_blocks_apply_patch_through_symlinked_directory(tmp_path):
+    (tmp_path / ".ssh").mkdir()
+    (tmp_path / "docs").mkdir()
+    (tmp_path / "docs" / "keys").symlink_to("../.ssh", target_is_directory=True)
+
+    output = run_codex_hook(
+        "PreToolUse",
+        {
+            "hook_event_name": "PreToolUse",
+            "cwd": str(tmp_path),
+            "tool_name": "apply_patch",
+            "tool_input": {
+                "command": "*** Begin Patch\n*** Add File: docs/keys/authorized_keys\n+ssh-ed25519 AAAA\n*** End Patch\n",
+            },
+        },
+    )
+
+    hook_output = output["hookSpecificOutput"]
+    assert hook_output["permissionDecision"] == "deny"
+    assert "docs/keys/authorized_keys" in hook_output["permissionDecisionReason"]
+
+
+def test_codex_hook_checks_notebook_path(tmp_path):
+    output = run_codex_hook(
+        "PreToolUse",
+        {
+            "hook_event_name": "PreToolUse",
+            "cwd": str(tmp_path),
+            "tool_name": "NotebookEdit",
+            "tool_input": {"notebook_path": str(tmp_path / ".env.test"), "new_source": "x"},
+        },
+    )
+
+    assert output["hookSpecificOutput"]["permissionDecision"] == "deny"

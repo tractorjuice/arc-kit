@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **The protected-file guard checks the file a write actually lands in.** `hooks/file-protection.mjs` decided on the text of the path alone, so a committed symlink with a harmless name, such as `docs/notes.md` pointing at `../.git/config` or `../.env`, let an Edit or Write through. It now resolves symlinks, including dangling links and links in a parent folder, and blocks if either the requested path or the resolved one is protected; the reason names the resolved target. Every `.env.*` file is now protected, not only `.env.local`, `.env.production` and `.env.development`, so `.env.staging` and `.env.test` are covered; `.env.example`, `.env.sample` and `.env.template` stay editable. The folders where a filename may carry a word like `secret` or `api_key` are now anchored: `docs/`, `projects/` and `.arckit/templates/` at the repository root, and `commands/`, `templates/`, `agents/` and `hooks/` in the plugin itself, so `/tmp/docs/api_key.txt` or `src/docs/secret.txt` is blocked. The hook also runs on `NotebookEdit`, reading its `notebook_path`. The Codex hook resolves symlinks the same way before its protected-file check and reads `notebook_path` too. Regression tests: `tests/plugin/file-protection.test.mjs` and `tests/codex/test_codex_extension.py`.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added
