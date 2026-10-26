@@ -76,8 +76,8 @@ test('project context keeps hostile filesystem names inside the data block', () 
       ['postcompact-rehydrate.mjs', { cwd: root }],
       ['inject-agent-context.mjs', {
         cwd: root,
-        tool_name: 'Agent',
-        tool_input: { subagent_type: 'arckit-framework', prompt: 'Analyze project' },
+        hook_event_name: 'SubagentStart',
+        agent_type: 'arckit-framework',
       }],
     ]) {
       const result = spawnSync(process.execPath, [join(hookDir, hook)], {
@@ -86,7 +86,7 @@ test('project context keeps hostile filesystem names inside the data block', () 
       });
       assert.equal(result.status, 0, `${hook}: ${result.stderr}`);
       const output = JSON.parse(result.stdout).hookSpecificOutput;
-      const injected = output.updatedInput?.prompt || output.additionalContext;
+      const injected = output.additionalContext;
       assert.ok(injected.includes(context), hook);
       assert.equal(injected.match(/```/g).length, 2, hook);
     }
