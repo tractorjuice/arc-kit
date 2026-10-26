@@ -6,9 +6,9 @@ For which rules the hooks enforce in code, which rules are only asked of the mod
 
 ## Project Context and External Document Watches
 
-`project-context-builder.mjs` supplies the project inventory to UserPromptSubmit, Agent dispatch and PostCompact hooks. The inventory marks discovered paths and names as data, strips control characters and backticks, and encloses the inventory in a text block. `external-context-watch.mjs` does the same for changed document paths.
+`project-context-builder.mjs` supplies the project inventory to the UserPromptSubmit, SubagentStart and PostCompact hooks. The inventory marks discovered paths and names as data, strips control characters and backticks, and encloses the inventory in a text block. `external-context-watch.mjs` does the same for changed document paths, and `arckit-session.mjs` strips the same characters from the project and file names in its SessionStart notice.
 
-The shared external directory walker ignores symbolic links, visits directories at most 16 levels deep and scans at most 2,000 entries per external root. These limits also apply to the FileChanged hook's watched directories. Deeper or later entries are omitted from the inventory and watch list.
+The shared external directory walker follows a project's `external/` folder when that folder is itself a symbolic link, but no links inside it. It visits directories at most 16 levels deep and scans at most 2,000 entries per external root. These limits also apply to the FileChanged hook's watched directories. Deeper or later entries are omitted from the inventory and watch list.
 
 ## `args:` Exec Form (v2.1.139+)
 

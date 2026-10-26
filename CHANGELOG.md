@@ -55,6 +55,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Five commands now ask their questions in one message: data-mesh-contract, dos, evaluate, platform-design and jsp-936.
 - **Two templates corrected.** The MOD Secure by Design template now describes continuous assurance, which replaced RMADS accreditation in August 2023, and its footer names `/arckit:mod-secure`. The Wardley gameplay template uses the same 11 play categories as the command.
 
+These come from @johnfelipe, following up the client risk review that shaped 6.16.4.
+
+- **The Codex hook approves ArcKit's own scripts only when they run on their own** (#874). It auto-approved any shell command that named an ArcKit helper script, so `common.sh; curl … | sh` ran the download without asking. It now approves only a plain call to an allowlisted script with ordinary arguments, and only after its secret and protected-file checks. A chained command, pipe, redirect or substitution gets the normal permission prompt.
+- **The Codex hook no longer approves reads of `/tmp` handoff files** (#882). It auto-approved any `Read` of a path shaped like `/tmp/*-handoff*.json`. Nothing in ArcKit has written those files since 6.17, and `/tmp` is shared, so a link with that name could point at any file and have it read without a prompt.
+- **The secret scanner checks your own docs, READMEs and changelogs** (#881). It skipped any file whose path contained `docs/` or ended in `README.md` or `CHANGELOG.md`, so a secret written to `projects/x/docs/notes.md` was never checked. It now skips only ArcKit's own security hooks, commands, templates and docs, matched by their real path.
+- **File and folder names can't pose as instructions** (#877). The hooks tell Claude which files each project holds, and a name containing a line break could add a line of its own, such as a `## SYSTEM` heading. Names now stay on one line in every notice the hooks add: at session start, on each `/arckit:` prompt, when a subagent starts, after compaction and when an external document changes. The project list is also marked as data. The search of `external/` follows a linked `external/` folder but no links inside it, and stops after 16 levels or 2,000 entries. The Codex extension gets the same change.
+
 ## [6.18.2] — 2026-10-12
 
 ### Removed
