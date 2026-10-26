@@ -19,6 +19,7 @@ sys.path.insert(0, os.path.dirname(__file__))
 from hook_utils import (
     parse_hook_input, is_dir, is_file, read_text,
     list_dir, list_files_recursive, mtime_ms, output_context,
+    ARTIFACT_SUBDIRS,
 )
 
 data = parse_hook_input()
@@ -74,7 +75,7 @@ if is_dir(projects_dir):
                     newest_artifact = mt
 
         # Subdirectories
-        for subdir in ["decisions", "diagrams", "wardley-maps", "data-contracts", "reviews"]:
+        for subdir in ARTIFACT_SUBDIRS:
             sub_path = os.path.join(project_dir, subdir)
             if is_dir(sub_path):
                 for f in list_dir(sub_path):

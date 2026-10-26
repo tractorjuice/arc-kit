@@ -77,7 +77,7 @@ gemini
 |---------|-------------|
 | `/arckit:requirements` | Comprehensive requirements (BR/FR/NFR/INT/DR) |
 | `/arckit:data-model` | Data model with ERD, GDPR compliance |
-| `/arckit:data-mesh-contract` | Federated data product contract (ODCS v3.0.2) |
+| `/arckit:data-mesh-contract` | Federated data product contract (ODCS v3.2.0) |
 | `/arckit:dpia` | Data Protection Impact Assessment (GDPR Article 35) |
 | `/arckit:platform-design` | Platform strategy using Platform Design Toolkit |
 | `/arckit:wardley` | Wardley Map with strategic analysis |

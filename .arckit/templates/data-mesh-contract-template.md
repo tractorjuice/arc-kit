@@ -27,7 +27,7 @@ kind: DataContract
 id: {contract_uuid}
 name: {data_product_name}
 version: {semantic_version}  # e.g., 1.0.0
-status: {active|deprecated|retired}
+status: {proposed|draft|active|deprecated|retired}
 ```
 
 | Field | Value |
@@ -35,7 +35,7 @@ status: {active|deprecated|retired}
 | **Contract ID** | {UUID} (Unique identifier) |
 | **Contract Name** | {data_product_name} |
 | **Semantic Version** | {MAJOR.MINOR.PATCH} (e.g., 1.0.0) |
-| **Status** | ACTIVE / DEPRECATED / RETIRED |
+| **Status** | proposed / draft / active / deprecated / retired (ODCS's lowercase values) |
 | **ODCS Compliance** | v3.2.0 |
 
 ### 1.2 Domain and Product Context
@@ -788,7 +788,7 @@ kind: DataContract
 id: {contract_uuid}
 name: {data_product_name}
 version: {semantic_version}
-status: active
+status: draft  # proposed, draft, active, deprecated or retired
 domain: {domain_name}
 dataProduct: {product_name}  # optional; deprecated since ODCS v3.1.0
 tenant: {organization_name}

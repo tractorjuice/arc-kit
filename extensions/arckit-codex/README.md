@@ -167,7 +167,7 @@ $arckit-init           # Initialize project structure
 ```bash
 $arckit-requirements       # Business, functional, non-functional requirements
 $arckit-data-model         # Data model with ERD and GDPR compliance
-$arckit-data-mesh-contract # Federated data product contract (ODCS v3.0.2)
+$arckit-data-mesh-contract # Federated data product contract (ODCS v3.2.0)
 $arckit-dpia               # Data Protection Impact Assessment
 $arckit-platform-design    # Platform Design Toolkit (8 PDT canvases)
 $arckit-glossary           # Domain glossary
