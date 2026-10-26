@@ -69,7 +69,7 @@
 
 **Human Involvement**:
 
-- **Teaming Model**: [Human-in-loop / Human-on-loop / Human-out-of-loop]
+- **Teaming Model**: [Human-in-the-loop / Human-on-the-loop / Human-out-of-the-loop]
 - **Human Control Points**: [Where do humans interact?]
 - **Override Capability**: [Yes / No / Partial]
 
@@ -235,7 +235,7 @@
 
 **Human-AI Interaction**:
 
-- **Interaction Model**: [Human-in-loop / Human-on-loop / Human-out-of-loop]
+- **Interaction Model**: [Human-in-the-loop / Human-on-the-loop / Human-out-of-the-loop]
 - **Control Mechanisms**: [How humans maintain control]
 - **Override Capability**: [Yes / No / Partial - describe]
 - **Transparency to Users**: [What users see/understand about AI decisions]
@@ -537,7 +537,7 @@
 **Key Architectural Decisions**:
 
 - [Decision 1: Model architecture selection and rationale]
-- [Decision 2: Human-in-loop placement]
+- [Decision 2: Human-in-the-loop placement]
 - [Decision 3: Data pipeline design]
 
 **Assurance Activities**:
@@ -643,7 +643,7 @@
 - [ ] Robustness testing results
 - [ ] Adversarial testing results
 - [ ] User acceptance testing (UAT)
-- [ ] Independent V&V report (for Critical/Severe)
+- [ ] Independent verification report: a separate verification team using set-aside verification data (JSP 936 Pt 1 paras 147 and 156c)
 
 **Documentation Location**: [File path or reference]
 
@@ -664,7 +664,7 @@
 
 **Assurance Activities**:
 
-- [ ] Independent V&V conducted (if Critical/Severe)
+- [ ] Independent verification conducted by a team separate from development (JSP 936 Pt 1 para 156c)
 - [ ] Test results review
 - [ ] Requirements traceability verified
 - [ ] UAT sign-off
@@ -857,13 +857,13 @@
 
 **For AI Component 1: [Name]**
 
-**Teaming Model**: [Human-in-loop / Human-on-loop / Human-out-of-loop]
+**Teaming Model**: [Human-in-the-loop / Human-on-the-loop / Human-out-of-the-loop]
 
 **Model Definition**:
 
-- **Human-in-loop**: Human reviews every AI decision before action
-- **Human-on-loop**: Human monitors AI with ability to intervene
-- **Human-out-of-loop**: AI operates autonomously, humans set constraints
+- **Human-in-the-loop**: Human reviews every AI decision before action
+- **Human-on-the-loop**: Human monitors AI with ability to intervene
+- **Human-out-of-the-loop**: AI operates autonomously, humans set constraints
 
 **Rationale**: [Why this teaming model was selected]
 

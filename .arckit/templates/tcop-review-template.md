@@ -492,7 +492,7 @@
 
 ## GovS 005 (Government Functional Standard for Digital) Alignment
 
-> **Note**: The Technology Code of Practice is the **implementation guidance** for [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital). Completing a TCoP review therefore covers the majority of GovS 005 requirements. GovS 005 v2.2 (September 2026) sets out nine numbered principles in section 2, but it does not name them or map them to TCoP points. The table below maps each TCoP point assessed above to the GovS 005 v2.2 clauses that cover the same ground. The mapping is ArcKit's, not part of either standard.
+> **Note**: The Technology Code of Practice **supports** [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital). GovS 005 §1.3 says the standard "is supported by" the Service Standard, which sets expectations for services, and the Technology Code of Practice, which sets expectations for technology decisions; §6.1 lists TCoP among the policies that "should be followed". A TCoP review is therefore evidence for GovS 005's technology clauses, not a GovS 005 assessment in its own right. GovS 005 v2.2 (September 2026) sets out nine numbered principles in section 2, but it does not name them or map them to TCoP points. The table below maps each TCoP point assessed above to the GovS 005 v2.2 clauses that cover the same ground. The mapping is ArcKit's, not part of either standard.
 
 ### TCoP Points Mapped to GovS 005 Clauses
 
