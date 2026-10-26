@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **The Codex hook no longer approves reads of its own files or calls to its own scripts.** It answered `allow` for any `Read` inside the extension's directory and for a plain call to an allowlisted helper script. The script check matched the text `$CODEX_PLUGIN_ROOT/scripts/…` before the shell expanded it, the read check didn't resolve symlinks, and after `arckit init --ai codex` the extension's directory is the project's own `.codex/` folder, which the agent can write to. A script planted at `.codex/scripts/bash/common.sh` therefore ran without a prompt. Like the Claude plugin since 6.17.2, the hook now never approves a tool call: it still blocks credential-file edits, secret writes and bad artefact filenames, and Codex's own approval policy decides the rest. Approval of the bundled knowledge MCP servers is unchanged.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added
