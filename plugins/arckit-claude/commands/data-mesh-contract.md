@@ -255,14 +255,15 @@ Using the template and context gathered, generate a comprehensive data mesh cont
    - Breaking change policy: 90-day deprecation notice
 
 4. **Data Quality (Section 3)**:
-   - Quality dimensions: Accuracy, Validity, Completeness, Consistency, Timeliness, Uniqueness
+   - Quality dimensions: Accuracy, Conformity, Completeness, Consistency, Timeliness, Uniqueness (ODCS calls validity `conformity`)
    - **If ARC-*-REQ-*.md exists**: Map DR-xxx requirements to quality rules
-   - Automated quality rules in ODCS format:
-     - null_check for required fields
-     - uniqueness for primary keys
-     - referential_integrity for foreign keys
-     - regex for format validation (email, phone)
-     - range for numeric constraints
+   - Automated quality rules in ODCS v3.2.0 format. Each rule is an entry in the `quality` list of the property or object it checks, with one operator (`mustBe`, `mustBeLessThan`, ...) and a `severity` (`info`, `warning`, `error`):
+     - `metric: nullValues` for required fields
+     - `metric: duplicateValues` for primary keys
+     - a `relationships` entry (`type: foreignKey`) for foreign keys, plus a `type: sql` rule if the link must be checked
+     - `metric: invalidValues` with `arguments.pattern` for format validation (email, phone)
+     - a `type: sql` rule for numeric ranges (ODCS has no range metric)
+     - `dimension` must be one of `accuracy`, `completeness`, `conformity`, `consistency`, `coverage`, `timeliness`, `uniqueness`
    - Monitoring dashboard (placeholder URL)
    - Alert thresholds
 
@@ -341,7 +342,7 @@ Using the template and context gathered, generate a comprehensive data mesh cont
     - List known downstream consumers (from stakeholders if available)
 
 17. **Appendices (Section 16)**:
-    - ODCS YAML export
+    - ODCS YAML export, following the Appendix A shape in the template: `schema` is a list of objects (`logicalType: object`, `physicalType` such as `table`); each property has `logicalType` and `physicalType`; PII is flagged with a `pii` custom property; quality rules are nested under their property or object; SLAs go in `slaProperties` (`property`, `value`, `unit`). There are no top-level `dataQuality` or `sla` keys
     - Changelog (version history)
     - Glossary
     - Contact information
@@ -458,7 +459,7 @@ After writing the file, show the user a concise summary (do NOT show the full do
 
 ### Quality Rules
 - {N} automated quality rules defined
-- Quality dimensions: Accuracy, Validity, Completeness, Consistency, Timeliness, Uniqueness
+- Quality dimensions: Accuracy, Conformity, Completeness, Consistency, Timeliness, Uniqueness (ODCS calls validity `conformity`)
 
 ### Access Methods
 - REST API: {endpoint}
@@ -543,7 +544,7 @@ Consider running:
 
 1. **Token Limit Handling**: ALWAYS use the Write tool for the full document. NEVER output the complete contract to the user (it's 2000-4000 lines). Only show the summary.
 
-2. **ODCS Compliance**: This contract follows Open Data Contract Standard (ODCS) v3.2.0, released 8 September 2026. In v3.2.0 the required fields are `apiVersion`, `kind`, `id` and `version`; `status` is optional but keep it. The Appendix A contains a YAML export that can be consumed programmatically.
+2. **ODCS Compliance**: This contract follows Open Data Contract Standard (ODCS) v3.2.0, released 8 September 2026. In v3.2.0 the required fields are `apiVersion`, `kind`, `id` and `version`; `status` is optional but keep it. `version` must be a string, so write `1.0.0`, not `1.0` (YAML reads `1.0` as a number). The Appendix A contains a YAML export that can be consumed programmatically, and it must validate against the [ODCS v3.2.0 JSON Schema](https://github.com/bitol-io/open-data-contract-standard/blob/main/schema/odcs-json-schema-v3.2.0.json). That schema rejects keys it does not define at the top level and in schema objects, properties, quality rules and SLA entries, so put anything else in `customProperties`.
 
 3. **UK Government Context**: If this is a UK Government project, ensure:
    - Data stored in UK (London region)

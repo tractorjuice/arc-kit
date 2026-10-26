@@ -38,7 +38,7 @@ A data contract is the formal agreement between the domain team that provides a 
 
 ODCS is an open YAML format from Bitol, a Linux Foundation AI & Data incubation project, released under the Apache 2.0 licence. Its [documentation](https://bitol-io.github.io/open-data-contract-standard/latest/) divides a contract into sections that include fundamentals, schema, data quality, support and communication channels, pricing, team, roles, service-level agreement, and infrastructure and servers. The [ODCS repository](https://github.com/bitol-io/open-data-contract-standard) gives v3.2.0 as the current version.
 
-ArcKit's contract template follows ODCS v3.0.2 and includes an ODCS YAML export (Appendix A). Unlike a traditional data model, a mesh contract treats the data like an API, with an owner, service levels, versioning and support.
+ArcKit's contract template follows ODCS v3.2.0 and includes an ODCS YAML export (Appendix A), written to validate against the [ODCS v3.2.0 JSON Schema](https://github.com/bitol-io/open-data-contract-standard/blob/main/schema/odcs-json-schema-v3.2.0.json). Unlike a traditional data model, a mesh contract treats the data like an API, with an owner, service levels, versioning and support.
 
 ---
 
