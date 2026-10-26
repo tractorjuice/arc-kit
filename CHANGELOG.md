@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **An Awareness quiz attempt can be submitted only once, so the quiz can no longer be used to work out the answers.** The Worker accepted the same attempt as many times as it was sent for three hours and gave the exact score on every fail, so a script could change one answer at a time, watch the score, earn a credential without knowing the material and collect the private question bank from the review shown after a pass. A passed attempt could also be resent under other names to issue more credentials. Each attempt now carries a random nonce and the Worker records it when the attempt is marked, so sending it again gets "This attempt has already been submitted" and a fresh set of questions. A fail now lists the areas to revisit without the score. Attempts expire after an hour instead of three. A submission refused for a mistyped name or a missing answer doesn't use up the attempt. Tests in `tests/certification/` replay a draw, a passed draw under new names, and a draw signed without a nonce.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added
