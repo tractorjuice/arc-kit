@@ -87,7 +87,7 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
    - **If no**: The requirement is likely covered by general design — no action needed
 3. Run `/arckit:traceability` to generate a full traceability matrix showing how requirements connect to designs
 
-**Example scenario**: The project has 45 requirements, but only 8 ADRs exist. Most functional requirements (FR-xxx) are straightforward, but NFR-S-008 (encryption key management) and INT-005 (third-party API authentication) involve significant architectural choices that should be documented as decisions.
+**Example scenario**: The project has 45 requirements, but only 8 ADRs exist. Most functional requirements (FR-xxx) are straightforward, but NFR-SEC-008 (encryption key management) and INT-005 (third-party API authentication) involve significant architectural choices that should be documented as decisions.
 
 ---
 

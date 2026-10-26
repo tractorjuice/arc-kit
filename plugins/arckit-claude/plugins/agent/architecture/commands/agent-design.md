@@ -152,7 +152,7 @@ If `projects/{project_id}/ARC-*-REQ-*.md` exists:
 - **FR (Functional Requirements)** → Map to **Tool Capabilities**
   - Example: "FR-010: Query knowledge base" → Tool T-001 (Knowledge Base MCP)
 - **NFR (Non-Functional Requirements)** → Map to **Guardrails and Memory**
-  - Example: "NFR-S-001: Respond within 5 seconds" → Guardrail: timeout
+  - Example: "NFR-P-001: Respond within 5 seconds" → Guardrail: timeout
   - Example: "NFR-P-002: Remember user preferences" → Memory: Durable layer
 
 #### 6.2 Extract Risks → Guardrail Configuration

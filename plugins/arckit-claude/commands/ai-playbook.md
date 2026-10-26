@@ -300,7 +300,7 @@ Create detailed report with:
 **Link to Requirements**:
 
 - Principle 2 (Lawful) → NFR-C-xxx (GDPR compliance requirements)
-- Principle 3 (Security) → NFR-S-xxx (security requirements)
+- Principle 3 (Security) → NFR-SEC-xxx (security requirements)
 - Principle 4 (Human Control) → FR-xxx (human review features)
 - Theme 3 (Fairness) → NFR-E-xxx (equity/fairness requirements)
 

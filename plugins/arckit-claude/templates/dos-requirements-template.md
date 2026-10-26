@@ -70,7 +70,7 @@ From Functional Requirements (FR-xxx):
 
 From Non-Functional Requirements (NFR-xxx):
 
-- **Security**: [Skills for NFR-S-xxx requirements, reference security principles]
+- **Security**: [Skills for NFR-SEC-xxx requirements, reference security principles]
 - **Performance**: [Skills for NFR-P-xxx requirements]
 - **Compliance**: [Skills for NFR-C-xxx requirements, reference compliance principles]
 - **Integration**: [Skills for INT-xxx requirements]
@@ -145,7 +145,7 @@ From SHOULD requirements:
 
 - [requirement with measurable targets]
 
-**Security (NFR-S-xxx)**:
+**Security (NFR-SEC-xxx)**:
 
 - [requirement with compliance references]
 
@@ -333,7 +333,7 @@ Reference: Generate with `/arckit:diagram`, `/arckit:data-model`
 - [ ] **Test plans** and test cases (linked to requirements)
 - [ ] **Test results** and coverage reports
 - [ ] **Performance test results** (NFR-P-xxx validation)
-- [ ] **Security test results** (NFR-S-xxx validation)
+- [ ] **Security test results** (NFR-SEC-xxx validation)
 - [ ] **Compliance evidence** (NFR-C-xxx validation)
 
 ### 12.4 Documentation
