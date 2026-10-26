@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`/arckit:pages` no longer indexes gitignored files inside a published project.** The publish guard in `hooks/sync-guides.mjs` asked git only about `projects/` and each project directory, so a gitignored `vendors/`, `external/` file or single artefact inside a published project still reached `docs/manifest.json` (path, title, vendor names, and in `dependencyGraph` the full Document Control), and an ignored project still appeared in `projectHealth`. Every candidate path (documents, subfolders, vendor documents and `vendors/scores.json`, external and global files, dependency-graph nodes) now goes through one `git check-ignore --stdin` call; graph edges, `reqIndex` and `projectHealth` are pruned to match. Ignored files are counted in the summary.
+- **Codex `$arckit-pages` gets the same confidentiality defaults as Claude Code.** The hand-maintained `extensions/arckit-codex/hooks/sync-guides.mjs` had none of them: it now skips gitignored paths, leaves the vendor ranking out unless `VENDOR_SCORES=true`, writes `docs/llms.txt` only with `LLMS=true` (removing one an earlier run generated), and reports the CONFIDENTIALITY section naming artefacts marked above OFFICIAL. The guard block is byte-identical in both hooks, checked by `tests/plugin/sync-guides-codex-parity.test.mjs`.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added
