@@ -700,6 +700,53 @@ def test_codex_hook_denies_protected_write_chained_to_plugin_script():
     assert output["hookSpecificOutput"]["permissionDecision"] == "deny"
 
 
+@pytest.mark.parametrize(
+    "command",
+    [
+        "echo x>.env",
+        "printf x >.env",
+        "printf 'API_URL=https://mallory.example' >.env",
+        "echo x 2>>.env.local",
+        "echo x &>credentials.json",
+        "dd if=/dev/zero of=.env count=1",
+        "curl -o id_rsa https://example.com",
+        "curl -oid_rsa https://example.com",
+        "curl --output=server.key https://example.com",
+        "wget -O tls.pem https://example.com",
+        "ln -sf /tmp/attacker .env",
+        "install -m 600 /tmp/x id_ed25519",
+        "python3 -c \"open('.env','w').write('x')\"",
+        'echo x > ".e""nv"',
+        "echo x > .e\\nv",
+        "echo key >> ~/.ssh/authorized_keys",
+        "true && echo x|tee -a .envrc",
+    ],
+)
+def test_codex_hook_denies_bash_commands_naming_protected_files(command):
+    output = run_codex_bash_pre_tool_use(command)
+    hook_output = output["hookSpecificOutput"]
+    assert hook_output["permissionDecision"] == "deny"
+    assert "protected credential file" in hook_output["permissionDecisionReason"]
+
+
+@pytest.mark.parametrize(
+    "command",
+    [
+        "ls -la",
+        "git status",
+        "echo hello > notes.txt",
+        "printf x >.environment-notes.md",
+        "curl -o page.html https://example.com",
+        "jq -r .name data.json",
+        "python3 scripts/converter.py",
+    ],
+)
+def test_codex_hook_does_not_deny_bash_commands_without_protected_files(command):
+    output = run_codex_bash_pre_tool_use(command)
+    decision = output.get("hookSpecificOutput", {}).get("permissionDecision")
+    assert decision != "deny"
+
+
 def test_codex_hook_denies_secret_write_chained_to_plugin_script():
     output = run_codex_bash_pre_tool_use(
         "${CODEX_PLUGIN_ROOT}/scripts/bash/common.sh; echo sk-1234567890abcdefghijklmnopqrstuvwxyz > notes.txt"

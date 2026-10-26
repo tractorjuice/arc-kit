@@ -661,16 +661,38 @@ function extractExplicitPaths(toolInput) {
   ].filter((value) => typeof value === "string" && value.trim());
 }
 
-function commandWritesProtectedPath(command) {
+// Shell text cannot be reliably classified as read or write (`echo x>.env`,
+// `dd of=.env`, `curl -o id_rsa`, `python -c "open('.env','w')"`), so any
+// mention of a protected path in a Bash command is treated as a write.
+const SHELL_TOKEN_SEPARATORS = /[\s<>|;&()=,:`'"{}@[\]]+/;
+const MAX_SHORT_OPTION_PREFIX = 8;
+
+function tokenLooksProtected(token) {
+  if (pathLooksProtected(token)) {
+    return true;
+  }
+  // Attached short-option values such as `-oid_rsa` or `-o.env`.
+  if (/^-[^-]/.test(token)) {
+    const limit = Math.min(token.length - 1, MAX_SHORT_OPTION_PREFIX);
+    for (let start = 2; start <= limit; start += 1) {
+      if (pathLooksProtected(token.slice(start))) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function commandMentionsProtectedPath(command) {
   if (!command || typeof command !== "string") {
     return false;
   }
-  if (!/\b(cp|mv|rm|touch|tee|chmod|chown|printf|echo|cat|sed|perl|python3?|node|openssl)\b/.test(command)) {
-    return false;
-  }
-  return command
-    .split(/\s+/)
-    .some((part) => pathLooksProtected(part.replace(/^['"]|['"]$/g, "")));
+  // Also check the command with shell quoting and escapes removed, so
+  // `".e""nv"` and `.e\nv` are seen as `.env`.
+  const unquoted = command.replace(/\\(.)/g, "$1").replace(/['"]/g, "");
+  return [command, unquoted].some((variant) =>
+    variant.split(SHELL_TOKEN_SEPARATORS).filter(Boolean).some(tokenLooksProtected),
+  );
 }
 
 function handlePreToolUse(data) {
@@ -757,8 +779,8 @@ function handlePreToolUse(data) {
     return;
   }
 
-  if (toolName === "Bash" && commandWritesProtectedPath(command)) {
-    denyTool("ArcKit blocked a shell command that appears to modify protected credential files.");
+  if (toolName === "Bash" && commandMentionsProtectedPath(command)) {
+    denyTool("ArcKit blocked a shell command that references a protected credential file.");
     return;
   }
 

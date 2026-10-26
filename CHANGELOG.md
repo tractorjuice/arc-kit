@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **On Codex, a shell command can no longer write a credential file by dodging the hook's word match.** The Codex hook checked `Bash` commands for protected files such as `.env`, `id_rsa` or `*.pem` only when the command used one of a dozen verbs, and only after splitting it on spaces. A redirection with no space (`echo x>.env`, `printf x >.env`), or a tool outside the list (`dd of=.env`, `curl -o id_rsa`, `ln -sf`), got through. The hook now splits commands on redirections and shell operators as well as spaces, also checks the command with quotes and backslashes removed, and blocks any `Bash` command that names a protected file, whatever the verb. A command that only reads such a file, such as `cat .env`, is blocked too, because the hook can't tell a read from a write in shell text. The Claude Code plugin is unaffected: its file-protection hook doesn't inspect `Bash`.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added

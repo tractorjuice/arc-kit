@@ -116,7 +116,7 @@ The hook wiring in `config.toml` enables:
 - `SessionStart` context injection for ArcKit projects and recent session memory
 - `UserPromptSubmit` secret detection and ArcKit context injection when `$arckit-*` skills are invoked
 - `UserPromptSubmit` artifact graph context for `$arckit-health`, `$arckit-traceability`, `$arckit-analyze`, `$arckit-search`, `$arckit-impact`, `$arckit-navigator`, and `$arckit-graph-report`
-- `PreToolUse` guardrails for `apply_patch`, `Edit`, `Write`, and simple `Bash` writes to credential files
+- `PreToolUse` guardrails for `apply_patch`, `Edit` and `Write` edits to credential files, and for any `Bash` command that names one
 - `PreToolUse` ARC artifact filename enforcement and `vendors/scores.json` validation
 - `PostToolUse` provenance stamping and `docs/manifest.json` maintenance for changed project artifacts
 - `PermissionRequest` auto-approval for ArcKit knowledge MCP servers
