@@ -251,7 +251,7 @@ Be aware of:
 - **UK GDPR**: Data protection requirements
 - **Cyber Essentials**: Baseline security certification
 - **Cloud First policy**: Public cloud preferred unless justified otherwise
-- **GovS 005**: TCoP is the implementation guidance for the Government Functional Standard for Digital — include the mapping of TCoP points to GovS 005 v2.2 clauses (GovS 005 numbers its section 2 principles but does not name them or map them to TCoP)
+- **GovS 005**: the Government Functional Standard for Digital "is supported by" TCoP (GovS 005 §1.3), so a TCoP review is evidence for its technology clauses, not a full GovS 005 assessment — include the mapping of TCoP points to GovS 005 v2.2 clauses (GovS 005 numbers its section 2 principles but does not name them or map them to TCoP)
 
 ## Example Output Structure
 

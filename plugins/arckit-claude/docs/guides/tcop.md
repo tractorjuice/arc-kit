@@ -4,7 +4,7 @@
 
 The Technology Code of Practice (TCoP) is the UK government's 13-point standard for designing, building and buying technology. This guide lists the points, the evidence an assessor looks for, and how `/arckit:tcop` writes a review.
 
-> **Parent standard**: TCoP is the implementation guidance for [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital). A TCoP review satisfies the majority of GovS 005 obligations.
+> **Parent standard**: TCoP supports [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital), which sets expectations for technology decisions through it (GovS 005 §1.3). A TCoP review is evidence for GovS 005's technology clauses; it doesn't assess the rest of the standard.
 
 ---
 
