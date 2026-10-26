@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:data-model transforms Data Requirements (DR-xxx) into an ERD, governance catalogue, and GDPR compliance pack.">
+    <meta name="description" content="A data model describes what a system holds data about, what it records about each thing and how those things relate. This guide covers entity…">
     <meta name="author" content="ArcKit">
-    <title>Data Model Quick Guide | ArcKit</title>
-    <meta property="og:title" content="Data Model Quick Guide">
-    <meta property="og:description" content="/arckit:data-model transforms Data Requirements (DR-xxx) into an ERD, governance catalogue, and GDPR compliance pack.">
+    <title>Data model and entity relationship diagram (ERD) guide | ArcKit</title>
+    <meta property="og:title" content="Data model and entity relationship diagram (ERD) guide">
+    <meta property="og:description" content="A data model describes what a system holds data about, what it records about each thing and how those things relate. This guide covers entity relationship diagrams (ERDs), the conceptual, logical and physical levels of…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/data-model.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Data Model Quick Guide">
-    <meta name="twitter:description" content="/arckit:data-model transforms Data Requirements (DR-xxx) into an ERD, governance catalogue, and GDPR compliance pack.">
+    <meta name="twitter:title" content="Data model and entity relationship diagram (ERD) guide">
+    <meta name="twitter:description" content="A data model describes what a system holds data about, what it records about each thing and how those things relate. This guide covers entity relationship diagrams (ERDs), the conceptual, logical and physical levels of…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/data-model.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/data-model.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/data-model.html",
-                "headline": "Data Model Quick Guide",
-                "description": "/arckit:data-model transforms Data Requirements (DR-xxx) into an ERD, governance catalogue, and GDPR compliance pack.",
+                "headline": "Data model and entity relationship diagram (ERD) guide",
+                "description": "A data model describes what a system holds data about, what it records about each thing and how those things relate. This guide covers entity relationship diagrams (ERDs), the conceptual, logical and physical levels of…",
                 "url": "https://arckit.org/guide/data-model.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Data Model Quick Guide",
+                        "name": "Data model and entity relationship diagram (ERD) guide",
                         "item": "https://arckit.org/guide/data-model.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Data Model Quick Guide</h1>
-            <p class="app-page-hero__description">/arckit:data-model transforms Data Requirements (DR-xxx) into an ERD, governance catalogue, and GDPR compliance pack.</p>
+            <h1 class="app-page-hero__title">Data model: entity relationship diagram (ERD) and logical model</h1>
+            <p class="app-page-hero__description">A data model describes what a system holds data about, what it records about each thing and how those things relate. This guide covers entity relationship diagrams (ERDs), the conceptual, logical and physical levels of…</p>
         </div>
     </div>
 
@@ -439,8 +439,68 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:data-model</code> transforms Data Requirements (DR-xxx) into an ERD, governance catalogue, and GDPR compliance pack.</p>
+<p>A data model describes what a system holds data about, what it records about each thing and how those things relate. This guide covers entity relationship diagrams (ERDs), the conceptual, logical and physical levels of modelling, and how <code>/arckit:data-model</code> builds a model from your data requirements.</p>
 <hr />
+<h2 id="what-a-data-model-is">What a data model is</h2>
+<p>A data model has three building blocks:</p>
+<ul>
+<li><strong>Entities</strong>: the things you hold data about, such as Customer, Order or Payment.</li>
+<li><strong>Attributes</strong>: the facts you record about each entity, with a data type and any keys.</li>
+<li><strong>Relationships</strong>: how entities connect, and how many of one can relate to the other (cardinality).</li>
+</ul>
+<p>The usual picture of a data model is an entity relationship diagram (ERD). Peter Chen proposed the entity-relationship model in <a href="https://doi.org/10.1145/320434.320440">a 1976 paper in ACM Transactions on Database Systems</a>. Its abstract says: &quot;A special diagrammatic technique is introduced as a tool for database design.&quot;</p>
+<p>In an ERD, each box is an entity and each line is a relationship. The symbols at the ends of a line give the cardinality. <a href="https://mermaid.js.org/syntax/entityRelationshipDiagram.html">Mermaid</a>, which ArcKit uses, draws ERDs in crow's foot notation:</p>
+<ul>
+<li><code>|o</code> or <code>o|</code>: zero or one</li>
+<li><code>||</code>: exactly one</li>
+<li><code>}o</code> or <code>o{</code>: zero or more</li>
+<li><code>}|</code> or <code>|{</code>: one or more</li>
+</ul>
+<p>Keys are marked <code>PK</code> (primary key), <code>FK</code> (foreign key) or <code>UK</code> (unique key).</p>
+<hr />
+<h2 id="conceptual-logical-and-physical-data-models">Conceptual, logical and physical data models</h2>
+<p>Data models are usually built at three levels of detail. AWS's <a href="https://aws.amazon.com/what-is/data-modeling/">guide to data modeling</a> describes them like this:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>What it shows</th>
+<th>Usually written by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conceptual</td>
+<td>The big picture: what data the system holds and the business rules it follows</td>
+<td>Business stakeholders and analysts</td>
+</tr>
+<tr>
+<td>Logical</td>
+<td>Entities, attributes with their data types, keys and relationships. It does not depend on any database product</td>
+<td>Data architects and analysts</td>
+</tr>
+<tr>
+<td>Physical</td>
+<td>How the logical model is built in a specific database: its field types, relationships and performance tuning</td>
+<td>Data engineers</td>
+</tr>
+</tbody>
+</table>
+<p>The same guide notes that teams typically choose their database technology after the logical model is done, and that some agile teams skip the logical model and go straight from conceptual to physical.</p>
+<hr />
+<h2 id="what-a-data-model-should-contain">What a data model should contain</h2>
+<p>A data model that others can review and build from records, for each entity:</p>
+<ul>
+<li>a name, a definition and the requirement it comes from</li>
+<li>its attributes, with type, whether each is required, and its keys</li>
+<li>its relationships to other entities, with cardinality</li>
+<li>who owns it and who looks after it day to day</li>
+<li>its classification, retention period and whether it holds personal data</li>
+</ul>
+<p><code>/arckit:data-model</code> produces a logical model in this shape, with some physical detail added: suggested indexes, a database technology recommendation and a schema migration approach.</p>
+<hr />
+<h2 id="using-arckitdata-model">Using /arckit:data-model</h2>
+<p><code>/arckit:data-model</code> transforms Data Requirements (DR-xxx) into an ERD, governance catalogue, and GDPR compliance pack.</p>
 <h2 id="inputs-checklist">Inputs Checklist</h2>
 <table>
 <thead>
@@ -536,7 +596,7 @@
 <li><code>/arckit:traceability</code> - Link entities to requirements and test cases</li>
 </ul>
 <h2 id="uk-government-data-policy">UK Government Data Policy</h2>
-<p>For UK Government data projects, the data model provides evidence for the <a href="https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy">National Data Strategy</a> — particularly the <strong>Data Foundations</strong> pillar (metadata standards, data quality) and <strong>Availability</strong> pillar (data access controls, sharing agreements). The Data Quality Framework section aligns with the <a href="https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework">Government Data Quality Framework</a> (6 dimensions, 5 principles). See <code>docs/guides/national-data-strategy.md</code> and <code>docs/guides/data-quality-framework.md</code> for full mappings.</p>
+<p>For UK Government data projects, the data model provides evidence for the <a href="https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy">National Data Strategy</a> — particularly the <strong>Data foundations</strong> pillar (metadata standards, data quality) and <strong>Data availability</strong> pillar (data access controls, sharing agreements). The Data Quality Framework section aligns with the <a href="https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework">Government Data Quality Framework</a> (6 dimensions, 5 principles). See the <a href="national-data-strategy.html">National Data Strategy guide</a> and the <a href="data-quality-framework.html">Data Quality Framework guide</a> for full mappings.</p>
 </div>
 <script src="../films.js"></script>
         </div>

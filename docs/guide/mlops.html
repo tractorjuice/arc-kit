@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:mlops creates a machine learning operations strategy covering model lifecycle, training pipelines, serving, monitoring, and governance.">
+    <meta name="description" content="MLOps (machine learning operations) is the engineering practice of building, deploying and running machine learning models as one joined-up system, so…">
     <meta name="author" content="ArcKit">
-    <title>MLOps Strategy Playbook | ArcKit</title>
-    <meta property="og:title" content="MLOps Strategy Playbook">
-    <meta property="og:description" content="/arckit:mlops creates a machine learning operations strategy covering model lifecycle, training pipelines, serving, monitoring, and governance.">
+    <title>MLOps framework: lifecycle, maturity and governance | ArcKit</title>
+    <meta property="og:title" content="MLOps framework: lifecycle, maturity and governance">
+    <meta property="og:description" content="MLOps (machine learning operations) is the engineering practice of building, deploying and running machine learning models as one joined-up system, so they can be retrained and monitored reliably. This guide covers…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/mlops.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MLOps Strategy Playbook">
-    <meta name="twitter:description" content="/arckit:mlops creates a machine learning operations strategy covering model lifecycle, training pipelines, serving, monitoring, and governance.">
+    <meta name="twitter:title" content="MLOps framework: lifecycle, maturity and governance">
+    <meta name="twitter:description" content="MLOps (machine learning operations) is the engineering practice of building, deploying and running machine learning models as one joined-up system, so they can be retrained and monitored reliably. This guide covers…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/mlops.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/mlops.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/mlops.html",
-                "headline": "MLOps Strategy Playbook",
-                "description": "/arckit:mlops creates a machine learning operations strategy covering model lifecycle, training pipelines, serving, monitoring, and governance.",
+                "headline": "MLOps framework: lifecycle, maturity and governance",
+                "description": "MLOps (machine learning operations) is the engineering practice of building, deploying and running machine learning models as one joined-up system, so they can be retrained and monitored reliably. This guide covers…",
                 "url": "https://arckit.org/guide/mlops.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "MLOps Strategy Playbook",
+                        "name": "MLOps framework: lifecycle, maturity and governance",
                         "item": "https://arckit.org/guide/mlops.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">MLOps Strategy Playbook</h1>
-            <p class="app-page-hero__description">/arckit:mlops creates a machine learning operations strategy covering model lifecycle, training pipelines, serving, monitoring, and governance.</p>
+            <h1 class="app-page-hero__title">MLOps framework: model lifecycle and maturity guide</h1>
+            <p class="app-page-hero__description">MLOps (machine learning operations) is the engineering practice of building, deploying and running machine learning models as one joined-up system, so they can be retrained and monitored reliably. This guide covers…</p>
         </div>
     </div>
 
@@ -439,9 +439,95 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:mlops</code> creates a machine learning operations strategy covering model lifecycle, training pipelines, serving, monitoring, and governance.</p>
+<p>MLOps (machine learning operations) is the engineering practice of building, deploying and running machine learning models as one joined-up system, so they can be retrained and monitored reliably. This guide covers what MLOps involves, the published maturity models from Google Cloud and Microsoft, and how <code>/arckit:mlops</code> writes an MLOps strategy.</p>
 <hr />
-<h2 id="inputs">Inputs</h2>
+<h2 id="what-mlops-is">What MLOps is</h2>
+<p>Google Cloud's architecture guide to <a href="https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning">MLOps: continuous delivery and automation pipelines in machine learning</a> (last updated August 2024) defines MLOps as &quot;an ML engineering culture and practice that aims at unifying ML system development (Dev) and ML system operation (Ops)&quot;.</p>
+<p>The same guide lists the steps of a machine learning process:</p>
+<ol>
+<li>Data extraction</li>
+<li>Data analysis</li>
+<li>Data preparation</li>
+<li>Model training</li>
+<li>Model evaluation</li>
+<li>Model validation</li>
+<li>Model serving</li>
+<li>Model monitoring</li>
+</ol>
+<p>It also names a property that ordinary software delivery doesn't have: continuous training (CT), which is &quot;concerned with automatically retraining and serving the models&quot;.</p>
+<hr />
+<h2 id="mlops-maturity-models">MLOps maturity models</h2>
+<p>Google Cloud and Microsoft each publish a maturity model that describes how far a team has automated this process. They use different numbers of levels, so say which one you mean when you quote a level.</p>
+<h3 id="google-cloud-three-levels">Google Cloud: three levels</h3>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Name</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Manual process</td>
+<td>Every step is manual, including data analysis, data preparation, model training and validation.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>ML pipeline automation</td>
+<td>The ML pipeline is automated so the model can be trained continuously.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CI/CD pipeline automation</td>
+<td>A robust automated CI/CD system updates the pipelines in production quickly and reliably.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="microsoft-five-levels">Microsoft: five levels</h3>
+<p>Microsoft's <a href="https://learn.microsoft.com/azure/architecture/ai-ml/guide/mlops-maturity-model">MLOps maturity model</a> defines five levels of technical capability:</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Name</th>
+<th>Highlights</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>No MLOps</td>
+<td>Builds, deployments, testing and training are manual.</td>
+</tr>
+<tr>
+<td>1</td>
+<td>DevOps but no MLOps</td>
+<td>Application builds and tests are automated, but releases still rely on data teams for every new model.</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Automated training</td>
+<td>Model training is automated and tracked centrally, and the model is easy to reproduce. Releases are still manual.</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Automated model deployment</td>
+<td>Releases are automatic, with full traceability from deployment back to the original data.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Full MLOps automated operations</td>
+<td>The whole system is automated and monitored. Drift or regression signals trigger retraining automatically.</td>
+</tr>
+</tbody>
+</table>
+<p>Microsoft says an organisation often shows characteristics of more than one level at once, so treat the levels as a continuum. Its model covers predictive and classical machine learning. For generative AI it describes GenAIOps, which adds prompt life cycle, retrieval augmentation, output safety and token cost governance on top of MLOps.</p>
+<hr />
+<h2 id="using-arckitmlops">Using /arckit:mlops</h2>
+<p><code>/arckit:mlops</code> creates a machine learning operations strategy covering model lifecycle, training pipelines, serving, monitoring, and governance.</p>
+<h3 id="inputs">Inputs</h3>
 <table>
 <thead>
 <tr>
@@ -468,13 +554,11 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="command">Command</h2>
+<h3 id="command">Command</h3>
 <pre><code class="language-bash">/arckit:mlops Create MLOps strategy for &lt;initiative&gt;
 </code></pre>
 <p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-MLOPS-v1.0.md</code></p>
-<hr />
-<h2 id="strategy-structure">Strategy Structure</h2>
+<h3 id="strategy-structure">Strategy Structure</h3>
 <table>
 <thead>
 <tr>
@@ -541,8 +625,8 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="mlops-maturity-levels">MLOps Maturity Levels</h2>
+<h3 id="maturity-levels-in-the-strategy">Maturity levels in the strategy</h3>
+<p>The strategy uses its own five-level scale. It doesn't match either published model level for level: Google counts continuous training (automatic retraining) as level 1, where this scale puts automated retraining at level 3, and Microsoft puts automated training at level 2, where this scale puts it at level 1. If you report a level outside the project, map it to the model your organisation uses.</p>
 <table>
 <thead>
 <tr>
@@ -585,8 +669,7 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="model-types">Model Types</h2>
+<h3 id="model-types">Model Types</h3>
 <table>
 <thead>
 <tr>
@@ -618,8 +701,7 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="monitoring-requirements">Monitoring Requirements</h2>
+<h3 id="monitoring-requirements">Monitoring Requirements</h3>
 <table>
 <thead>
 <tr>
@@ -650,8 +732,7 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="one-page-workflow">One-Page Workflow</h2>
+<h3 id="one-page-workflow">One-Page Workflow</h3>
 <table>
 <thead>
 <tr>
@@ -717,7 +798,7 @@
 <tr>
 <td>Algorithmic Transparency</td>
 <td><code>ARC-&lt;id&gt;-ATRS-v1.0.md</code></td>
-<td>Public-facing algorithmic decisions</td>
+<td>Government departments, and arm's-length bodies that deliver public or frontline services or deal directly with the public: tools that significantly influence decisions with public effect, or interact directly with the public (<a href="https://www.gov.uk/government/publications/guidance-for-organisations-using-the-algorithmic-transparency-recording-standard/algorithmic-transparency-recording-standard-guidance-for-public-sector-bodies">ATRS guidance</a>)</td>
 </tr>
 <tr>
 <td>MOD AI Assurance</td>
@@ -740,6 +821,13 @@
 <li><strong>Responsible AI</strong>: Fairness and bias monitoring from day one.</li>
 <li><strong>Human Oversight</strong>: Maintain human oversight where required by risk level.</li>
 </ol>
+<hr />
+<h2 id="useful-links">Useful Links</h2>
+<ul>
+<li><a href="https://docs.cloud.google.com/architecture/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning">MLOps: continuous delivery and automation pipelines in machine learning</a> (Google Cloud)</li>
+<li><a href="https://learn.microsoft.com/azure/architecture/ai-ml/guide/mlops-maturity-model">MLOps maturity model</a> (Microsoft Learn)</li>
+<li><a href="https://learn.microsoft.com/azure/architecture/ai-ml/guide/genaiops-for-mlops">GenAIOps for organisations with MLOps investments</a> (Microsoft Learn)</li>
+</ul>
 </div>
 <script src="../films.js"></script>
         </div>

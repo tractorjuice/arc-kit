@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:aws-research researches AWS services, architecture patterns, and implementation guidance using the AWS Knowledge MCP server for authoritative…">
+    <meta name="description" content="The AWS Well-Architected Framework is AWS&#x27;s guidance for building secure, reliable, efficient, cost-effective and sustainable workloads, in six pillars…">
     <meta name="author" content="ArcKit">
-    <title>AWS Technology Research Guide | ArcKit</title>
-    <meta property="og:title" content="AWS Technology Research Guide">
-    <meta property="og:description" content="/arckit:aws-research researches AWS services, architecture patterns, and implementation guidance using the AWS Knowledge MCP server for authoritative documentation.">
+    <title>AWS Well-Architected Framework: the six pillars | ArcKit</title>
+    <meta property="og:title" content="AWS Well-Architected Framework: the six pillars">
+    <meta property="og:description" content="The AWS Well-Architected Framework is AWS&#x27;s guidance for building secure, reliable, efficient, cost-effective and sustainable workloads, in six pillars. This guide lists the pillars and shows how /arckit:aws-research…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/aws-research.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AWS Technology Research Guide">
-    <meta name="twitter:description" content="/arckit:aws-research researches AWS services, architecture patterns, and implementation guidance using the AWS Knowledge MCP server for authoritative documentation.">
+    <meta name="twitter:title" content="AWS Well-Architected Framework: the six pillars">
+    <meta name="twitter:description" content="The AWS Well-Architected Framework is AWS&#x27;s guidance for building secure, reliable, efficient, cost-effective and sustainable workloads, in six pillars. This guide lists the pillars and shows how /arckit:aws-research…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/aws-research.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/aws-research.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/aws-research.html",
-                "headline": "AWS Technology Research Guide",
-                "description": "/arckit:aws-research researches AWS services, architecture patterns, and implementation guidance using the AWS Knowledge MCP server for authoritative documentation.",
+                "headline": "AWS Well-Architected Framework: the six pillars",
+                "description": "The AWS Well-Architected Framework is AWS's guidance for building secure, reliable, efficient, cost-effective and sustainable workloads, in six pillars. This guide lists the pillars and shows how /arckit:aws-research…",
                 "url": "https://arckit.org/guide/aws-research.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "AWS Technology Research Guide",
+                        "name": "AWS Well-Architected Framework: the six pillars",
                         "item": "https://arckit.org/guide/aws-research.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">AWS Technology Research Guide</h1>
-            <p class="app-page-hero__description">/arckit:aws-research researches AWS services, architecture patterns, and implementation guidance using the AWS Knowledge MCP server for authoritative documentation.</p>
+            <h1 class="app-page-hero__title">AWS Well-Architected Framework: the six pillars and AWS research</h1>
+            <p class="app-page-hero__description">The AWS Well-Architected Framework is AWS&#x27;s guidance for building secure, reliable, efficient, cost-effective and sustainable workloads, in six pillars. This guide lists the pillars and shows how /arckit:aws-research…</p>
         </div>
     </div>
 
@@ -439,16 +439,59 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:aws-research</code> researches AWS services, architecture patterns, and implementation guidance using the AWS Knowledge MCP server for authoritative documentation.</p>
+<p>The AWS Well-Architected Framework is AWS's guidance for building secure, reliable, efficient, cost-effective and sustainable workloads, in six pillars. This guide lists the pillars and shows how <code>/arckit:aws-research</code> uses them to compare AWS services for your project.</p>
+<p>The research runs on the AWS Knowledge MCP server: see <a href="aws-documentation-mcp.html">AWS documentation MCP servers</a> for how it compares with the AWS MCP Server and the AWS Documentation MCP Server.</p>
+<hr />
+<h2 id="what-the-aws-well-architected-framework-is">What the AWS Well-Architected Framework is</h2>
+<p>The <a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html">AWS Well-Architected Framework</a> is a set of foundational questions and best practices for checking whether an architecture on AWS follows cloud best practice. AWS describes a review as &quot;a constructive conversation about architectural decisions&quot;, not an audit. The current edition was published on 6 November 2024.</p>
+<p>AWS also offers the AWS Well-Architected Tool, which reviews workloads against the framework at no charge. In the tool, the framework itself is applied as a lens, and you can add <a href="https://docs.aws.amazon.com/wellarchitected/latest/userguide/lenses.html">lenses</a> from the AWS Lens Catalog or write custom lenses with your own questions.</p>
+<h2 id="the-six-pillars">The six pillars</h2>
+<table>
+<thead>
+<tr>
+<th>Pillar</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/operational-excellence.html">Operational excellence</a></td>
+<td>Organising your team, designing your workload, operating it at scale and evolving it over time</td>
+</tr>
+<tr>
+<td><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/security.html">Security</a></td>
+<td>Protecting data, systems and assets</td>
+</tr>
+<tr>
+<td><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/reliability.html">Reliability</a></td>
+<td>A workload doing its intended job correctly and consistently when expected, across its whole lifecycle</td>
+</tr>
+<tr>
+<td><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/performance-efficiency.html">Performance efficiency</a></td>
+<td>Using cloud resources efficiently to meet performance requirements, and keeping that efficiency as demand and technology change</td>
+</tr>
+<tr>
+<td><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/cost-optimization.html">Cost optimization</a></td>
+<td>Running systems to deliver business value at the lowest price point</td>
+</tr>
+<tr>
+<td><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/sustainability.html">Sustainability</a></td>
+<td>Environmental impact, especially energy consumption and efficiency</td>
+</tr>
+</tbody>
+</table>
+<p>Sustainability is the newest pillar. AWS added it in November 2021, which took the framework from five pillars to six.</p>
+<hr />
+<h2 id="using-arckitaws-research">Using /arckit:aws-research</h2>
+<p><code>/arckit:aws-research</code> researches AWS services, architecture patterns and implementation guidance for your requirements, using the AWS Knowledge MCP server for authoritative AWS documentation. It rates each candidate service against the six pillars.</p>
 <blockquote>
-<p><strong>Agent Architecture</strong>: This command runs as an autonomous agent via the Task tool. The agent makes 15-30+ MCP calls to gather AWS documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.</p>
+<p><strong>Agent Architecture</strong>: This command uses a three-tier reader/writer subagent split. The slash command dispatches one <strong><code>arckit-aws-research-reader</code></strong> subagent per research category; each reader queries the AWS Knowledge MCP and returns evidence as JSON, keeping that I/O out of your main context window. The command validates each payload against the <code>cloud-research-handoff.schema.json</code> schema, scores every service against the six pillars from a fixed rubric, and excludes services that are unavailable in a region the project requires. The shared <strong><code>arckit-cloud-research-writer</code></strong> subagent then renders the artefact. On runtimes without subagent dispatch (Codex, Gemini, OpenCode, Copilot, Paperclip, Vibe, Kimi), the command ships as the equivalent single-agent <code>arckit-aws-research</code> prompt instead.</p>
 </blockquote>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
 <h3 id="aws-knowledge-mcp-server-required">AWS Knowledge MCP Server (REQUIRED)</h3>
-<p>This command <strong>requires</strong> the AWS Knowledge MCP server to be installed. It will not work without it.</p>
-<p><strong>Installation</strong>:</p>
-<p>Add to your Claude Code MCP configuration (<code>~/.claude/claude_desktop_config.json</code> or project <code>.mcp.json</code>):</p>
+<p>This command <strong>requires</strong> the AWS Knowledge MCP server. It will not work without it.</p>
+<p>The ArcKit Claude Code plugin bundles the server (<code>aws-knowledge</code>), so there is nothing to install. If your setup doesn't include it, add it to your MCP configuration. For Claude Code, that is the project <code>.mcp.json</code> (or <code>~/.claude.json</code> for user scope):</p>
 <pre><code class="language-json">{
   &quot;mcpServers&quot;: {
     &quot;aws-knowledge&quot;: {
@@ -458,7 +501,7 @@
   }
 }
 </code></pre>
-<p>After installation, restart Claude Code to load the MCP server.</p>
+<p>After adding it, restart Claude Code to load the MCP server.</p>
 <p><strong>Slow corporate network?</strong> On TLS-inspecting proxies, VPN tunnels, or congested links, large-scope research prompts can exceed Claude Code's default per-request fetch timeout. Set <code>MCP_TOOL_TIMEOUT=300000</code> (5 minutes, in milliseconds) before launching Claude — see <a href="mcp-servers.html#optional-mcp-per-request-timeout-claude-code-v21142">MCP per-request timeout</a> in the MCP setup guide. Requires Claude Code v2.1.142+.</p>
 <h3 id="project-prerequisites">Project Prerequisites</h3>
 <ul>
@@ -514,7 +557,7 @@
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit:aws-research Research AWS services for &lt;project&gt;
 </code></pre>
-<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-AWRS-v1.0.md</code></p>
+<p>Output: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-AWRS-&lt;NNN&gt;-v1.0.md</code> (<code>AWRS</code> is a multi-instance type, numbered <code>AWRS-001</code>, <code>AWRS-002</code>, and so on)</p>
 <blockquote>
 <p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
 </blockquote>
@@ -546,15 +589,11 @@
 </tr>
 <tr>
 <td><code>get_regional_availability</code></td>
-<td>Check service/feature availability in eu-west-2 (London)</td>
+<td>Check service/feature availability in the project's required regions (for UK projects, normally eu-west-2 London)</td>
 </tr>
 <tr>
 <td><code>list_regions</code></td>
 <td>Get all AWS regions for multi-region planning</td>
-</tr>
-<tr>
-<td><code>recommend</code></td>
-<td>Get content recommendations for AWS topics</td>
 </tr>
 </tbody>
 </table>
@@ -563,7 +602,7 @@
 <ul>
 <li><strong>AWS Service Recommendations</strong>: Mapped to specific requirements (FR, NFR, INT, DR)</li>
 <li><strong>Architecture Pattern</strong>: Reference architecture from AWS Architecture Center</li>
-<li><strong>Well-Architected Assessment</strong>: All 6 pillars evaluated per service (including Sustainability)</li>
+<li><strong>Well-Architected Assessment</strong>: Each service scored 0 to 100 on all six pillars (including Sustainability) from a fixed rubric, using only capabilities the AWS documentation states; the star ratings are derived from those scores</li>
 <li><strong>AWS Security Hub</strong>: Foundational Security Best Practices mapping</li>
 <li><strong>UK Government Compliance</strong>: G-Cloud, eu-west-2 region, NCSC principles</li>
 <li><strong>Cost Estimates</strong>: Monthly and 3-year TCO with optimization recommendations</li>
@@ -669,9 +708,10 @@
 <ul>
 <li><a href="https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server">AWS Knowledge MCP</a> - MCP server documentation</li>
 <li><a href="https://aws.amazon.com/architecture/">AWS Architecture Center</a> - Reference architectures</li>
-<li><a href="https://aws.amazon.com/architecture/well-architected/">AWS Well-Architected Framework</a> - Design guidance</li>
+<li><a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html">AWS Well-Architected Framework</a> - The framework and its six pillars</li>
+<li><a href="https://aws.amazon.com/architecture/well-architected/">AWS Well-Architected</a> - Tool, lenses and partner reviews</li>
 <li><a href="https://aws.amazon.com/security/">AWS Security Best Practices</a> - Security controls</li>
-<li><a href="https://aws.amazon.com/compliance/uk-data-protection/">AWS UK Compliance</a> - UK Government compliance</li>
+<li><a href="https://docs.aws.amazon.com/config/latest/developerguide/operational-best-practices-for-ncsc.html">Operational Best Practices for NCSC Cloud Security Principles</a> - AWS Config conformance pack mapped to the NCSC principles</li>
 </ul>
 </div>
 <script src="../films.js"></script>

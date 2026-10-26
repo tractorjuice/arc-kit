@@ -1,12 +1,55 @@
-# ServiceNow Service Design Playbook
+# CMDB and ServiceNow service design: a practical guide
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit:servicenow` creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.
+A configuration management database (CMDB) records the configuration items (CIs) behind a service, such as applications, servers and databases, and how they depend on each other. This guide covers what a CMDB holds, how ServiceNow structures its CMDB, and how `/arckit:servicenow` designs the CMDB, SLAs, incident and change processes for a service.
 
 ---
 
-## Inputs
+## What a CMDB is
+
+In IT service management, a configuration item is any component you need to manage to deliver a service. Configuration management keeps accurate records of those items and the relationships between them. A CMDB is where those records live.
+
+ServiceNow's [CMDB documentation](https://www.servicenow.com/docs/bundle/zurich-servicenow-platform/page/product/configuration-management/concept/c_ITILConfigurationManagement.html) (Zurich release) describes its CMDB application as a way to "build logical representations of assets, services, and the relationships between them that comprise the infrastructure of your organization". Details about these components are stored in the CMDB as configuration items.
+
+The relationships matter as much as the items. They are what let support and change teams see which services a failing server or a planned change could affect.
+
+---
+
+## How the ServiceNow CMDB is structured
+
+| Part | What it does |
+|------|--------------|
+| Configuration Item table (`cmdb_ci`) | The core class, which stores the basic attributes of all CIs. |
+| Class tables | Sets of CIs that share attributes, such as computers, are stored in their own class table. Each class inherits attributes from the one above it, back to the base CI class. |
+| CI Relationship table (`cmdb_rel_ci`) | Defines all relationships between CIs. |
+| CI Class Manager | Manages classes within the CMDB hierarchy: their attributes, identification rules and member CIs. |
+
+The [CMDB schema model](https://www.servicenow.com/docs/bundle/zurich-servicenow-platform/page/product/configuration-management/concept/c_ConfigurationManagementDatabase.html) notes that CIs from tables that do not extend `cmdb_ci` don't appear in Dependency Views maps or CI relation formatters.
+
+### Populating the CMDB
+
+ServiceNow lists four ways to get data in:
+
+- Discovery.
+- IntegrationHub ETL or Import Sets, to import and integrate data from a third-party source.
+- Integrating with an external CMDB.
+- Creating CIs manually.
+
+### Keeping the data healthy
+
+- **CMDB Health** monitors duplicate CIs, required CI fields and audits.
+- **CMDB Identification and Reconciliation** reconciles data integrity issues.
+- **CMDB Data Manager** handles bulk CI life cycle operations such as deletion, archival and attestation.
+- **CMDB Workspace** is where you search the CMDB and reach its dashboards.
+
+---
+
+## Using /arckit:servicenow
+
+`/arckit:servicenow` creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.
+
+### Inputs
 
 | Artefact | Purpose |
 |----------|---------|
@@ -15,9 +58,7 @@
 | Operational readiness | Support model and escalation paths |
 | Stakeholder drivers | Business criticality and service expectations |
 
----
-
-## Command
+### Command
 
 ```bash
 /arckit:servicenow Create ServiceNow service design for <service>
@@ -25,9 +66,7 @@
 
 Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 
----
-
-## Service Design Structure
+### Service Design Structure
 
 | Section | Contents |
 |---------|----------|
@@ -47,9 +86,9 @@ Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 | Automation | Flow Designer, IntegrationHub, auto-assignment |
 | UK Government Considerations | Cross-government ITSM, NCSC alignment |
 
----
+### CMDB CI Classes
 
-## CMDB CI Classes
+These are the logical layers the design maps your architecture onto. Map each one to the CI classes your ServiceNow instance uses.
 
 | CI Class | Examples | Relationships |
 |----------|----------|---------------|
@@ -60,9 +99,7 @@ Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 | Database | "PostgreSQL Cluster" | Stores data for Applications |
 | Network Device | "Load Balancer" | Connects to Servers |
 
----
-
-## Incident Priority Matrix
+### Incident Priority Matrix
 
 | Impact / Urgency | High | Medium | Low |
 |------------------|------|--------|-----|
@@ -70,9 +107,9 @@ Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 | **Medium** | P2 (High) | P3 (Moderate) | P4 (Low) |
 | **Low** | P3 (Moderate) | P4 (Low) | P5 (Planning) |
 
----
+### SLA Response/Resolution Targets
 
-## SLA Response/Resolution Targets
+These are example targets. Set yours from the service's non-functional requirements and support model.
 
 | Priority | Response | Resolution | Support Hours |
 |----------|----------|------------|---------------|
@@ -82,9 +119,7 @@ Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 | P4 | 8 hours | 72 hours | Business hours |
 | P5 | 24 hours | 2 weeks | Business hours |
 
----
-
-## Change Types
+### Change Types
 
 | Change Type | Approval | Lead Time | Example |
 |-------------|----------|-----------|---------|
@@ -92,9 +127,7 @@ Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 | Normal | CAB | 5 days | New feature deployment |
 | Emergency | Emergency CAB | Immediate | Critical security patch |
 
----
-
-## One-Page Workflow
+### One-Page Workflow
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
@@ -104,16 +137,14 @@ Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 | ITSM Design | Create ServiceNow design | `/arckit:servicenow` |
 | Implementation | Configure ServiceNow, populate CMDB | `/arckit:backlog` |
 
----
-
-## Integration Points
+### Integration Points
 
 | System | Integration Type | Purpose |
 |--------|------------------|---------|
 | Monitoring (Prometheus, Datadog) | Event Management | Auto-create incidents from alerts |
 | CI/CD (Jenkins, GitHub Actions) | Change Management | Auto-create change records |
 | Cloud Provider (AWS, Azure) | Discovery | Auto-populate CMDB |
-| Identity Provider (Azure AD) | User Management | SSO, group sync |
+| Identity Provider (Microsoft Entra ID, formerly Azure AD) | User Management | SSO, group sync |
 | Communication (Slack, Teams) | Notifications | Incident updates, approvals |
 
 ---
@@ -146,7 +177,15 @@ Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 ## Key Principles
 
 1. **CMDB as Source of Truth**: All service relationships mapped and maintained.
-2. **ITIL Alignment**: Follow ITIL v4 practices for service management.
+2. **ITIL Alignment**: Follow ITIL practices for service management. The design uses ITIL 4 terms. [ITIL (Version 5)](https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1) is now available from PeopleCert, with a bridge course for ITIL 4 holders.
 3. **Automation First**: Automate ticket creation, routing, and remediation.
 4. **Continuous Improvement**: Regular service reviews and CSI initiatives.
 5. **Integration**: Connect ServiceNow to monitoring, CI/CD, and cloud platforms.
+
+---
+
+## Useful Links
+
+- [Configuration Management Database (CMDB)](https://www.servicenow.com/docs/bundle/zurich-servicenow-platform/page/product/configuration-management/concept/c_ITILConfigurationManagement.html) (ServiceNow docs, Zurich release)
+- [CMDB schema model](https://www.servicenow.com/docs/bundle/zurich-servicenow-platform/page/product/configuration-management/concept/c_ConfigurationManagementDatabase.html) (ServiceNow docs)
+- [Overview of CMDB](https://www.servicenow.com/docs/bundle/zurich-servicenow-platform/page/product/configuration-management/concept/cnfig-mgmt-and-cmdb.html) (ServiceNow docs)

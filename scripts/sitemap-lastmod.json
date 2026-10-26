@@ -41,15 +41,15 @@
   },
   "guides.html": {
     "lastmod": "2026-10-25",
-    "text_sha256": "762428bd2ecc83a3f95c2d7fccd6ca67790b00cc84f9d9dcb7b0c5c758ae1cb8"
+    "text_sha256": "da2f893a85a0b84416386d6294381c601938a07b83ac9dd6824c56c0f6460c82"
   },
   "index.html": {
     "lastmod": "2026-10-25",
     "text_sha256": "c6fd0313308b711e59661146c5659e5feeef295a4ae08e4085eed5d3ac7ae1ef"
   },
   "llms.txt": {
-    "lastmod": "2026-10-20",
-    "text_sha256": "46f1bec7caac8883941b890c920a85bc39e88e992c807ecc42ac1e622d039860"
+    "lastmod": "2026-10-25",
+    "text_sha256": "02b91374642b45cc1ebd63c3164544329d9d629eea9140f4efbde02710e1cb7f"
   },
   "on-github.html": {
     "lastmod": "2026-10-20",
