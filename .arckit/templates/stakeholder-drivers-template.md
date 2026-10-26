@@ -66,17 +66,26 @@ This document identifies key stakeholders, their underlying drivers (motivations
 
 ### UK Government Digital Roles (GovS 005)
 
-> The [Government Functional Standard for Digital (GovS 005)](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital) defines mandatory digital governance roles. Include these when the project sits within a UK Government context.
+> Section 4.6 of the [Government Functional Standard GovS 005: Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital) (version 2.2, October 2026) defines the organisation-level roles and accountabilities below; it also defines one cross-government role, the senior officer accountable for digital strategy and planning across government. Include them when the project sits within a UK Government context. Power/interest values are typical starting points; set them for this project.
 
-| Role | Responsibility | Typical Power/Interest | Engagement Strategy |
+| Role (GovS 005) | Responsibility | Typical Power/Interest | Engagement Strategy |
 |------|---------------|----------------------|---------------------|
-| Senior Responsible Owner (SRO) | Accountable for digital outcomes and spend controls | HIGH / HIGH | Manage Closely — steering board, decision escalation |
-| Service Owner | Owns the end-to-end service and user outcomes | HIGH / HIGH | Manage Closely — regular service reviews |
-| Product Manager | Prioritises features against user needs and policy | MEDIUM / HIGH | Keep Informed — sprint reviews, roadmap input |
-| Delivery Manager | Manages delivery cadence, risks, and dependencies | MEDIUM / HIGH | Keep Informed — stand-ups, risk log |
-| CDDO (Central Digital & Data Office) | Assurance, spend control, and cross-government standards | HIGH / MEDIUM | Keep Satisfied — spend control submissions, assessment gates |
-| CDIO (Chief Digital Information Officer) | Departmental digital strategy and technology oversight | HIGH / MEDIUM | Keep Satisfied — quarterly strategy alignment |
-| DDaT Profession Lead | Digital, Data & Technology capability and career framework | LOW / MEDIUM | Monitor — capability assessments, recruitment support |
+| Accounting officer | Usually the permanent head of the department; accountable to Parliament for the stewardship of public resources and for the organisation's digital and data strategy being appropriate | HIGH / LOW | Keep Satisfied — briefings at major decision points |
+| Senior officer accountable for the organisation's digital portfolio | Often known as the Chief Digital Officer or Chief Digital and Information Officer; leads digital and data transformation, strategy, governance and risk in the organisation | HIGH / MEDIUM | Keep Satisfied — strategy alignment, portfolio and risk reporting |
+| Senior officer accountable for data | Often known as the Chief Data Officer; manages the organisation's data and information assets, including data used by AI-enabled systems | MEDIUM / MEDIUM | Keep Informed — data governance and data sharing decisions |
+| Senior officer accountable for technology | Often known as the Chief Technology Officer, often supported by a Chief Architect; manages the organisation's digital and data solutions and gives technical direction | HIGH / MEDIUM | Keep Satisfied — architecture and technology decisions |
+| Senior officer accountable for service delivery | Directs integrated management of service delivery, digital and non-digital; assigns service owners | HIGH / MEDIUM | Keep Satisfied — service portfolio reviews |
+| Service owner | Accountable for the end-to-end service, digital and non-digital, including approvals, risks, costs and user feedback | HIGH / HIGH | Manage Closely — regular service reviews |
+| Digital service manager | Responsible for developing and running the digital parts of the service day to day; accountable to the service owner | MEDIUM / HIGH | Manage Closely — backlog, performance data and incident reviews |
+
+**Other UK Government delivery roles** (not defined in GovS 005; cite their own source):
+
+| Role | Source | Responsibility | Typical Power/Interest | Engagement Strategy |
+|------|--------|---------------|----------------------|---------------------|
+| Senior Responsible Owner (SRO) | [Role of the senior responsible owner](https://www.gov.uk/government/publications/the-role-of-the-senior-responsible-owner); GovS 002: Project Delivery | Accountable leader of the programme or project | HIGH / HIGH | Manage Closely — steering board, decision escalation |
+| Product manager | [GOV.UK Service Manual: set up a service team](https://www.gov.uk/service-manual/the-team/set-up-a-service-team) | Prioritises work against user needs and policy | MEDIUM / HIGH | Keep Informed — sprint reviews, roadmap input |
+| Delivery manager | [GOV.UK Service Manual: set up a service team](https://www.gov.uk/service-manual/the-team/set-up-a-service-team) | Manages delivery cadence, risks and dependencies | MEDIUM / HIGH | Keep Informed — stand-ups, risk log |
+| Organisation digital assurance team | [Digital Assurance Playbook](https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook) | Carries out most digital and technology assurance since 1 April 2026 and supports teams through the organisation's approval process | HIGH / MEDIUM | Keep Satisfied — pipeline entry, assurance reviews |
 
 ### UK Government Security Roles (GovS 007)
 

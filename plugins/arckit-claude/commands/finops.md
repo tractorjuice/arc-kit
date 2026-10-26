@@ -17,7 +17,7 @@ You are an expert FinOps practitioner and cloud economist with deep knowledge of
 - Showback/chargeback models and unit economics
 - Cloud governance and tagging strategies
 - Budgeting, forecasting, and anomaly detection
-- UK Government spending controls and Treasury Green Book
+- UK Government approval and assurance under the Digital Assurance Playbook (in force from 1 April 2026), HM Treasury delegated authority limits, and the Treasury Green Book
 
 ## Command Purpose
 
@@ -46,7 +46,7 @@ Parse the user input for:
 - Budget constraints or targets
 - Team structure and accountability model
 - Existing cost management tooling
-- Compliance requirements (UK Gov spending controls, etc.)
+- Compliance requirements (UK Gov approval and assurance route under the Digital Assurance Playbook, HM Treasury delegated authority limit, etc.)
 
 ## Instructions
 
@@ -81,13 +81,17 @@ Parse the user input for:
 
 ### Phase 2: Analysis
 
-**Determine FinOps Maturity Target**:
+**Assess FinOps Maturity per Capability**:
 
-| Level | Characteristics | Cost Visibility |
-|-------|-----------------|-----------------|
-| Crawl | Basic tagging, monthly reports | Limited |
-| Walk | Automated reports, budgets, alerts | Moderate |
-| Run | Real-time visibility, optimization automation, forecasting | Full |
+The [FinOps Foundation maturity model](https://www.finops.org/framework/maturity-model/) rates Crawl, Walk or Run for each capability separately, not for the organisation as a whole. Every capability can be at a different level, and the Foundation says the goal should never simply be Run in every capability: set each target by the business value it brings. Rate each capability in scope against the Foundation's characteristics:
+
+| Level | FinOps Foundation characteristics | Sample KPIs from the Foundation |
+|-------|-----------------------------------|---------------------------------|
+| Crawl | Very little reporting and tooling; basic KPIs, processes and policies defined; understood but not followed by all major teams | At least 70% of cost allocated to a known owner; forecast variance below 20% |
+| Walk | Understood and followed within the organisation; automation or processes cover most requirements; difficult edge cases identified | At least 85% of cost allocated; forecast variance below 10% |
+| Run | Understood and followed by all teams; difficult edge cases being addressed; automation is the preferred approach | Over 90% of spend allocated; forecast variance below 5% |
+
+Use the capability names from the [FinOps Framework domains](https://www.finops.org/framework/domains/) (for example Allocation, Reporting & Analytics, Anomaly Management, Forecasting, Budgeting, Unit Economics, Rate Optimization, Usage Optimization, Governance, Policy & Risk, Invoicing & Chargeback). An overall level may be given only as a summary of the per-capability ratings, and must be labelled as a summary.
 
 **Extract from Requirements**:
 
@@ -121,7 +125,7 @@ Generate:
 **Section 1: FinOps Overview**
 
 - Strategic objectives (cost visibility, optimization, governance)
-- FinOps maturity level (current and target)
+- FinOps maturity per capability (current and target for each capability in scope), with an overall level given only as a labelled summary
 - Team structure (FinOps team, cloud teams, finance)
 - Key stakeholders and responsibilities
 
@@ -205,10 +209,11 @@ Generate:
 
 **Section 13: UK Government Compliance** (if applicable)
 
-- Cabinet Office Digital Spend Controls
+- Approval and assurance route under the Digital Assurance Playbook, which replaced the Cabinet Office digital and technology spend controls on 1 April 2026: the organisation's own approval (investment board or equivalent) and assurance for most spend; HM Treasury approval, with GDS support, above the organisation's delegated authority limit or where HM Treasury determines the spend is novel, contentious or repercussive
+- Pipeline entry through Government Assurance Services, mandated by HM Treasury: any cryptographic product, and other digital and technology delivery above £5 million whole-life cost (or a different threshold the organisation has set)
 - Treasury Green Book alignment
 - G-Cloud/Digital Marketplace cost tracking
-- Annual technology spend reporting
+- Technology spend reporting required by the organisation
 
 **Section 14: FinOps Operating Model**
 
@@ -251,7 +256,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 ```text
 ✅ FinOps Strategy generated!
 
-**FinOps Maturity**: [Crawl / Walk / Run] (target: [Level])
+**FinOps Maturity** (summary of per-capability ratings): [Crawl / Walk / Run] (target: [Level])
 **Cloud Provider(s)**: [AWS / Azure / GCP / Multi-cloud]
 **Monthly Spend Baseline**: [£X,XXX]
 
@@ -295,6 +300,17 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 ## Key Principles
 
+These are ArcKit's working principles for the strategy. They are not the FinOps Foundation's principles. The [FinOps Foundation](https://www.finops.org/framework/principles/) publishes six principles of its own, in no particular order:
+
+- Teams need to collaborate
+- Business value drives technology decisions
+- Everyone takes ownership for their technology usage
+- FinOps data should be accessible, timely, and accurate
+- FinOps should be enabled centrally
+- Take advantage of the variable cost model of the cloud
+
+When the strategy cites the FinOps Foundation's principles, use the Foundation's names above, not ArcKit's.
+
 ### 1. Cost Visibility First
 
 - You cannot optimize what you cannot see
@@ -323,7 +339,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 ### 6. UK Government Alignment
 
-- Align with Cabinet Office spending controls
+- Follow the organisation's approval and assurance route under the Digital Assurance Playbook, and HM Treasury approval above the delegated authority limit
 - Support Treasury Green Book business cases
 - Enable G-Cloud/Digital Marketplace reporting
 

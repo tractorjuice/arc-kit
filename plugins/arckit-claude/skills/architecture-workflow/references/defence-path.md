@@ -109,8 +109,8 @@ If the defence project includes AI/ML components, add these commands:
 ### Critical Gates for AI Projects
 
 - JSP 936 risk classification determines approval pathway:
-  - **Critical**: 2PUS/Ministerial approval
-  - **Severe/Major**: Defence-Level JROC/IAC approval
+  - **Critical/Severe**: 2PUS (the Second Permanent Under Secretary), or Ministers by exception
+  - **Major**: Defence-Level approval (e.g. JROC/IAC)
   - **Moderate/Minor**: TLB-Level approval
 
 ## Optional Commands

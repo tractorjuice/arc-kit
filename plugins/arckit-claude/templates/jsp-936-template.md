@@ -117,6 +117,8 @@
 
 ## 2. Ethical Risk Assessment
 
+> The 1-5 scales and score bands in this section are ArcKit's. JSP 936 Part 1 does not publish a scoring matrix: it sets the classification names and their referral levels for approval (Table 1), and requires the rating to assess impact and likelihood together, based on residual risk with controls in place and working as intended (para 88).
+
 ### 2.1 Risk Matrix for AI Component 1: [Name]
 
 #### Impact Assessment (Scale: 1-5)
@@ -181,15 +183,15 @@
 
 **Risk Score**: [Likelihood (Y) × Impact (X) = Z]
 
-**Classification**: [Based on score Z]
+**Classification**: [Based on residual-risk score Z, using ArcKit's score bands; approval routes per JSP 936 Table 1]
 
-- 20-25: **Critical** → 2PUS or Ministerial approval
-- 15-19: **Severe** → Defence-Level (JROC/IAC) approval
-- 10-14: **Major** → Defence-Level (JROC/IAC) approval
+- 20-25: **Critical** → 2PUS (Second Permanent Under Secretary), or Ministers by exception
+- 15-19: **Severe** → 2PUS (Second Permanent Under Secretary), or Ministers by exception
+- 10-14: **Major** → Defence-Level oversight (e.g. JROC/IAC) approval
 - 5-9: **Moderate** → TLB-Level approval (delegated)
 - 1-4: **Minor** → TLB-Level approval (delegated)
 
-**Approval Pathway**: [2PUS/Ministerial / Defence-Level / TLB-Level]
+**Approval Pathway**: [2PUS (Ministers by exception) / Defence-Level / TLB-Level]
 
 #### Unacceptable Risk Check
 
@@ -212,7 +214,7 @@
 
 **Highest Individual Risk Score**: [Maximum score from all AI components]
 **Overall Project Classification**: [Critical / Severe / Major / Moderate / Minor]
-**Required Approval Authority**: [2PUS/Ministerial / Defence-Level / TLB-Level]
+**Required Approval Authority**: [2PUS (Ministers by exception) / Defence-Level / TLB-Level]
 
 ---
 
@@ -444,6 +446,10 @@
 ---
 
 ## 4. AI Lifecycle Phase Documentation
+
+> The 8 phases below are ArcKit's grouping of the JSP 936 section 6 lifecycle-agnostic requirements and section 7 quality, safety and security requirements. JSP 936 does not require or advocate any one lifecycle (Part 1, para 134).
+
+**Lifecycle Followed by This Project**: [e.g. MLOps / DevSecOps / other, and why it suits the context the AI will operate in]
 
 ### Phase 1: Planning
 
@@ -800,11 +806,11 @@
 
 **Risk Classification**: [Critical / Severe / Major / Moderate / Minor]
 
-**Approval Authority**: [Based on classification]
+**Approval Authority**: [Based on classification; referral levels per JSP 936 Table 1, score bands are ArcKit's]
 
-- **Critical (20-25)**: 2PUS or Ministers
-- **Severe (15-19)**: Defence-Level - JROC/IAC
-- **Major (10-14)**: Defence-Level - JROC/IAC
+- **Critical (20-25)**: 2PUS (Second Permanent Under Secretary), or Ministers by exception
+- **Severe (15-19)**: 2PUS (Second Permanent Under Secretary), or Ministers by exception
+- **Major (10-14)**: Defence-Level oversight - e.g. JROC/IAC
 - **Moderate (5-9)**: TLB-Level (delegated)
 - **Minor (1-4)**: TLB-Level (delegated)
 

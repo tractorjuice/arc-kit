@@ -1226,8 +1226,8 @@ For defence projects using AI/ML systems:
 - JSP 936 (Dependable Artificial Intelligence in Defence)
 - 5 Ethical Principles (Human-Centricity, Responsibility, Understanding, Bias & Harm Mitigation, Reliability)
 - 5 Risk Classification Levels (Critical to Minor)
-- 8 AI Lifecycle Phases (Planning to Quality Assurance)
-- Approval pathways (2PUS/Ministerial → Defence-Level → TLB-Level)
+- 8 AI lifecycle phases (ArcKit's grouping of JSP 936 sections 6 and 7)
+- Approval pathways (2PUS or Ministers by exception → Defence-Level → TLB-Level)
 - RAISOs and Ethics Manager governance
 - Human-AI teaming strategy and continuous monitoring
 

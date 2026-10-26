@@ -22,7 +22,7 @@ MOD Secure by Design covers Defence capabilities, technology infrastructure and 
 | 6 | [Assure, verify and test](https://www.digital.mod.uk/policy-rules-standards-and-guidance/secure-by-design/assure-verify-and-test) | Get security assurance, testing and validation throughout the capability's lifecycle |
 | 7 | [Plan the through-life approach](https://www.digital.mod.uk/policy-rules-standards-and-guidance/secure-by-design/plan-through-life-approach) | Continuously monitor for through-life security improvements |
 
-The assessment that `/arckit:mod-secure` writes uses its own wording for the seven principles.
+The assessment that `/arckit:mod-secure` writes has one section for each of these seven principles.
 
 ---
 
