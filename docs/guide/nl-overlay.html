@@ -515,20 +515,20 @@
 </tr>
 </tbody>
 </table>
-<p>Each extract keeps its title as its first line, which is how the commands identify it, and carries a version stamp on its second line: the latest change on NORA Online, or the GEMMA commit. On every run the script compares that stamp with the live source and refreshes the extract only when the source has changed, so an assessment is reproducible against a known source version. The command reports what happened:</p>
+<p>Each extract keeps its title as its first line, which is how the commands identify it, and carries a version stamp on its second line: the latest change on NORA Online and the element count, the GEMMA commit, or, for an offline build, a hash of the file. On every run the script compares that stamp with the live source and refreshes the extract only when the source has changed, so an assessment is reproducible against a known source version. The command reports what happened:</p>
 <ul>
-<li><strong><code>fetched</code>, <code>refreshed</code>, <code>current</code></strong> — the extract matches the live source.</li>
-<li><strong><code>offline</code></strong> — the source, or a local file given with <code>--from-dump</code> or <code>--from-xml</code>, could not be used; the existing extract is used and the artefact notes that a newer version may exist.</li>
+<li><strong><code>fetched</code>, <code>refreshed</code>, <code>current</code></strong> — the extract is up to date with its source: the live source, or the local file an offline build was made from (<code>origin</code> tells which).</li>
+<li><strong><code>offline</code></strong> — the source, or a local file given with <code>--from-dump</code> or <code>--from-xml</code>, could not be used, or the extract could not be written (a file held open by another program, say); the existing extract is used and the artefact notes that a newer version may exist.</li>
 <li><strong><code>manual</code></strong> — the extract was placed by hand or built from a local file. The live source never replaces it unless the script runs with <code>--force</code>, and the artefact notes that its currency was not checked.</li>
 <li><strong><code>missing</code></strong> — no extract, and none could be built: the command stops without writing an artefact.</li>
 </ul>
 <p>Each status line also says where the extract came from (<code>origin</code>: <code>api</code>, <code>file</code> or <code>hand</code>). The script exits with 0 when every requested source has a usable extract, 1 when one has none, and 2 for a usage error; <code>python3 nl-references.py --help</code> lists all of this.</p>
-<p>An extract the script wrote is replaced whenever its source changes, edits included. To keep your own edits, delete the stamp line (line 2): the file then counts as placed by hand. A GEMMA set with a file missing, or with files from different versions (an interrupted refresh), is rebuilt when the source can be reached, and used as it is when it cannot.</p>
+<p>An extract the script wrote is replaced whenever its source changes, edits included. To keep your own edits, delete the stamp line (line 2): the file then counts as placed by hand. A GEMMA set with a file missing, or with files from different versions (an interrupted refresh, a file that could not be written), is rebuilt when the source can be reached, whatever built it, and used as it is when it cannot.</p>
 <p><strong>Working offline.</strong> The script can also build the extracts from files downloaded elsewhere:</p>
 <pre><code class="language-bash">python3 nl-references.py nora  --from-dump &lt;NORA Online XML export&gt; [--from-dump &lt;another export&gt;]
 python3 nl-references.py gemma --from-xml  &quot;&lt;GEMMA release.xml&gt;&quot;
 </code></pre>
-<p>An offline build replaces an extract the script wrote, fetched or built from a file, but not one you placed by hand unless you add <code>--force</code>. <code>--from-dump</code> goes with <code>nora</code> (or <code>all</code>), <code>--from-xml</code> with <code>gemma</code> (or <code>all</code>).</p>
+<p>An offline build replaces an extract the script wrote, fetched or built from a file, but not one you placed by hand unless you add <code>--force</code>; the same file again leaves the extract as it is and reports <code>current</code>. <code>--from-dump</code> goes with <code>nora</code> (or <code>all</code>), <code>--from-xml</code> with <code>gemma</code> (or <code>all</code>).</p>
 <p>Or place extracts in <code>projects/000-global/external/</code> by hand: any Markdown file whose first line matches the titles above is used. The script needs Python 3 and no other packages.</p>
 <p><strong>Licensing.</strong> NORA is © Staat der Nederlanden, licensed CC BY-ND 3.0 NL: verbatim reuse with attribution, no adaptation or translation. That is why the extracts and the artefacts quote NORA text exactly and keep ArcKit's analysis visibly separate. GEMMA's model is EUPL, but the stelling and toelichting of GAP01–GAP17 are NORA text. The extracts carry the attribution in their header; nothing NORA- or GEMMA-derived is part of ArcKit itself.</p>
 <hr />

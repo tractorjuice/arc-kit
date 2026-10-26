@@ -27,7 +27,7 @@
 
 **GEMMA posture** *(GEMMA mode only)*: [N] conformant · [N] partially conformant · [N] not conformant · [N] not applicable · [N] undetermined (of [N] GAPs)
 
-**Kernwaarden at risk**: [Kernwaarden whose kwaliteitsdoelen are realised by one or more principles that are not conformant, or "None"]
+**Kernwaarden at risk**: [Kernwaarden whose kwaliteitsdoelen are realised by one or more principles that are Not conformant or Undetermined, or "None"]
 
 **Key findings**:
 
@@ -156,6 +156,8 @@
 | Kwaliteitsdoel | Realised by | NAPs conformant / partial / not / undetermined | Status |
 |----------------|-------------|-----------------------------------------------|--------|
 | [KD ID] [Name] | [NAP IDs, from the extract's Realiseert relations] | [n / n / n / n] | [At risk / On track / Not applicable] |
+
+A kwaliteitsdoel is *At risk* when any realising NAP is Not conformant or Undetermined. A kernwaarde is *At risk* when any kwaliteitsdoel its **Motiveert** line names is At risk.
 
 ### Kernwaarden
 

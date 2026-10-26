@@ -773,6 +773,7 @@ All artifacts must pass these 10 checks:
 - No overall percentage or single NORA score is reported — the distribution across the 17 NAPs is shown instead
 - Kwaliteitsdoel and kernwaarde roll-ups use only relations stated in the extract; unresolved relations from the extract's Data notes are listed under Source limitations
 - Deviations are separated from gaps, and each deviation has an ADR reference or "ADR required"
+- Every gap has an owner and a target date, *To be assigned* where the input and the project context give none
 - Non-conformance is not described as a legal breach
 - GEMMA mode is recorded with its reason; it is on only for a gemeente (or an explicit override) with a GEMMA principles extract present
 - In GEMMA mode, each GAP is matched to its NAP by title or NORA link, never by number alone, and every GEMMA implicatie is quoted verbatim and numbered `GAPnn.i` in extract order, with that numbering declared in Scope and Source

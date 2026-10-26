@@ -22,8 +22,10 @@ refreshes the extract only when the source has changed. An extract without
 a stamp counts as placed by hand: nothing replaces it, not even --from-dump
 or --from-xml, unless --force is given. One built from a local file
 (origin=file) is not refreshed from the live source unless --force is given,
-but a new --from-* build replaces it. Offline, an existing extract is kept
-and reported as such. Downloads are requested compressed.
+but a new --from-* build replaces it. A set with a file missing, or with
+files from different versions, is rebuilt whatever built it. Offline, an
+existing extract is kept and reported as such. Downloads are requested
+compressed.
 
 Text is copied verbatim (wiki markup stripped, wording untouched). Relations
 that do not resolve are reported in a Data notes section, not corrected.
@@ -38,15 +40,21 @@ Prints one JSON object per source on stdout, for example
 
 status:
     fetched    no extract was there; it has been built
-    refreshed  the source had changed (or --force); the extract has been rebuilt
-    current    the extract matches the live source
+    refreshed  the source (or the local file) had changed, or --force was
+               given; the extract has been rebuilt
+    current    the extract matches the live source, or the local file it was
+               built from
     manual     the extract was placed by hand or built from a local file; not
                replaced (use --force)
-    offline    the source, or the local file, could not be used; the existing
-               extract is kept as it is
+    offline    the source or the local file could not be used, or the extract
+               could not be written; the existing extract files are used as
+               they are
     missing    no extract, and none could be built
 origin: api (fetched by this script), file (built with --from-dump or
 --from-xml), hand (placed by hand), or null when there is no extract.
+version: the latest change on NORA Online plus the element count, or the
+GEMMA commit; for a local build, the latest revision in the dump plus a hash
+of the files (nora), or a hash of the file (gemma).
 A status that is not fetched, refreshed or current carries a note or an error.
 
 Exit code 0 when every requested source has a usable extract, 1 when one has
@@ -115,9 +123,10 @@ CHUNK = 64 * 1024
 def http_get(url, params=None, timeout=60):
     """GET a URL and return the body, unpacked if the server compressed it.
 
-    `timeout` bounds each read; the whole download must also finish within
-    `timeout` seconds of reading, so a server that trickles bytes cannot stall
-    a run."""
+    `timeout` bounds each wait for bytes; the whole download must also finish
+    within `timeout` seconds of the first read. read1() returns as soon as
+    bytes arrive, so a server that trickles them is stopped at the deadline,
+    not after a full chunk has trickled in."""
     if params:
         url += "?" + urllib.parse.urlencode(params)
     where = url.split("?")[0]
@@ -131,7 +140,7 @@ def http_get(url, params=None, timeout=60):
             while True:
                 if time.monotonic() > deadline:
                     raise SourceUnavailable(f"{where}: download took longer than {timeout} s, abandoned")
-                chunk = resp.read(CHUNK)
+                chunk = resp.read1(CHUNK)
                 if not chunk:
                     break
                 chunks.append(chunk)
@@ -250,7 +259,11 @@ def visible_chars(text):
 # extract. Headings are the one structure the script writes itself, so this
 # escape is applied where source text enters (clean()); neutralise() leaves
 # a backslash before `#` as it is, since `\#` can only render a literal `#`.
-HEADING_START = re.compile(r"^([ \t]{0,3})#", re.M)
+# Any indentation counts: four spaces or more after a list item continue
+# that item, two columns in, where `# x` renders as a heading. In a genuine
+# indented code block the escape shows as a stray backslash; the sources
+# write none.
+HEADING_START = re.compile(r"^([ \t]*)#", re.M)
 
 
 def escape_headings(text):
@@ -299,12 +312,14 @@ def neutralise(text):
     invisible characters are removed, every `&` and every `<` is escaped, so
     no entity and no HTML of any kind (comment, tag, CDATA, processing
     instruction, autolink) can form. Below the header every backslash, `[`,
-    backtick and `~` is escaped too, so no link title, image alt text,
-    footnote, reference definition, code span or fenced block (a Mermaid
-    block can carry a `%%` comment) can form, and a blockquote or setext
-    underline at the start of a line is escaped, so source text cannot pose as
-    a section of the extract. The script's own links are bare URLs, which
-    need none of these characters.
+    backtick, `~`, `$` and `|` is escaped too, so no link title, image alt
+    text, footnote, reference definition, code span, fenced block (a Mermaid
+    block can carry a `%%` comment), math (`\\phantom{}` hides text) or table
+    (a renderer drops the cells past the header's columns) can form, and a
+    blockquote or setext underline at the start of a line is escaped, so
+    source text cannot pose as a section of the extract. The script's own
+    links are bare URLs, and its own text below the header uses none of
+    these characters.
 
     Headings are the one structure the script writes itself, so a `#` at the
     start of a source line is escaped where the text enters: clean() for
@@ -324,10 +339,21 @@ def neutralise(text):
     head = text[:split].replace("&", "&amp;").replace("<", "&lt;")
     body = text[split:].replace("&", "&amp;").replace("<", "&lt;")
     body = re.sub(r"\\(?!#)", r"\\\\", body)
-    for ch in "[`~$":   # $ opens math on GitHub, where \phantom{} hides text
+    for ch in "[`~$|":   # $ opens math on GitHub, where \phantom{} hides text; | opens a table cell
         body = body.replace(ch, "\\" + ch)
     body = re.sub(r"^([ \t]*)(>|=+[ \t]*$|-+[ \t]*$)", r"\1\\\2", body, flags=re.M)
     return head + escape_containers(body)
+
+
+def file_mode(path):
+    """The mode for a rewritten extract: that of the file it replaces, or
+    what a new file gets under the umask."""
+    try:
+        return os.stat(path).st_mode & 0o777
+    except OSError:
+        umask = os.umask(0)
+        os.umask(umask)
+        return 0o666 & ~umask
 
 
 def write_extract(path, title, stamp, body):
@@ -344,6 +370,7 @@ def write_extract(path, title, stamp, body):
     try:
         with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
             f.write(text)
+        os.chmod(tmp, file_mode(path))   # mkstemp creates the file owner-only (0600)
         os.replace(tmp, path)
     finally:
         if os.path.exists(tmp):
@@ -365,7 +392,7 @@ def clean(value):
     v = re.sub(r"\[\[(?:[^\]|\n]{0,300}\|)?([^\]\n]{0,300})\]\]", r"\1", v)        # [[target|label]] -> label
     v = re.sub(r"\[(https?://[^\s\]]{1,2000})[ \t]+([^\]\n]{1,500})\]", r"\2 (\1)", v)  # [url label]
     v = re.sub(r"<br\s*/?>", "\n", v, flags=re.I)
-    v = re.sub(r"</?(?:span|div|small|sup|sub|u|s)[^>]*>", "", v, flags=re.I)
+    v = re.sub(r"</?(?:span|div|small|sup|sub|u|s)\b[^>]*>", "", v, flags=re.I)   # \b: not <script>, <style>, <summary>
     # Bullets before bold: once '''x''' is **x**, a line opening in bold
     # would read as a sub-bullet.
     v = re.sub(r"^\*\*\s*", "  - ", v, flags=re.M)              # wiki sub-bullets
@@ -566,8 +593,7 @@ def nora_build(elements, latest, source_desc):
              "an implicatie that serves several principles is listed under each).\n")
 
     L.append("## NORA Vijflaagsmodel\n")
-    L.append("| Laag | Naam |\n|---|---|")
-    L += [f"| {k} | {v} |" for k, v in NORA_LAYERS.items()]
+    L += [f"- {k} {v}" for k, v in NORA_LAYERS.items()]   # a list, not a table: `|` is escaped below the header
     L.append("")
 
     L.append("## Kernwaarden\n")
@@ -613,7 +639,17 @@ def nora_from_api(live=None):
     """(version, texts) from the live source; `live` is a nora_live_version()
     result the caller already has, so the version is not fetched twice."""
     version, titles = live or nora_live_version()
-    elements, latest = nora_load(nora_export(titles))
+    roots = nora_export(titles)
+    # The export must hold exactly the listed pages. One deleted between the
+    # two requests, or a title the export spells differently, would otherwise
+    # leave an extract stamped with the full version and reported current.
+    exported = {one_line(t) for t, _ts, _text in nora_pages(roots)}
+    if exported != set(titles):
+        gone, extra = sorted(set(titles) - exported), sorted(exported - set(titles))
+        raise SourceUnavailable("NORA export does not match the listing"
+                                + (f"; not exported: {', '.join(gone[:5])}" if gone else "")
+                                + (f"; not listed: {', '.join(extra[:5])}" if extra else ""))
+    elements, latest = nora_load(roots)
     return version, {NORA_FILE: nora_build(elements, latest, "NORA Online API export")}
 
 
@@ -627,11 +663,16 @@ def read_local(path):
 
 
 def nora_from_dumps(paths):
-    roots = [parse_xml(read_local(p), p) for p in paths]
+    """(version, texts) from local exports. The version carries the latest
+    revision in them and a hash of the files, so the same files give the
+    same version and a changed file a new one."""
+    blobs = [read_local(p) for p in paths]
+    roots = [parse_xml(data, p) for data, p in zip(blobs, paths)]
     elements, latest = nora_load(roots)
     names = ", ".join(one_line(os.path.basename(p)) for p in paths)
     text = nora_build(elements, latest, f"NORA Online export ({names})")
-    return f"dump-{latest or 'unknown'}", {NORA_FILE: text}
+    digest = hashlib.sha256(b"".join(blobs)).hexdigest()[:12]
+    return f"dump-{latest or 'unknown'}-{digest}", {NORA_FILE: text}
 
 
 # ---------------------------------------------------------------- GEMMA
@@ -976,18 +1017,25 @@ def gemma_from_xml(path):
 # ---------------------------------------------------------------- refresh logic
 
 def existing_state(directory, files):
-    """(state, version) for one source's extract files.
+    """(state, version, origin) for one source's extract files.
 
     missing  none of the files exists
     manual   one of them was placed by hand or is not one of this script's
              extracts: never replaced without --force, not even by --from-*
+    partial  some are missing, or they carry different versions (an
+             interrupted refresh, a failed write): rebuilt when the source
+             or a local file can be used, whatever built the files, and used
+             as they are when it cannot
     file     built from a local file with --from-dump or --from-xml: not
              refreshed from the live source without --force, but a new
              --from-* build replaces it
     api      all of them were fetched by this script, at one version
-    partial  some are missing, or they carry different versions (an
-             interrupted refresh): rebuilt when the source can be reached,
-             used as they are when it cannot
+
+    The origin is hand, file or api, or None without an extract. It is api
+    only when every stamp says so: a stamp without an origin, or with one
+    this script does not write, counts as a local build and is left alone.
+    Completeness is checked before the origin, so an incomplete set built
+    from a local file is rebuilt too.
     """
     versions, origins, present = set(), set(), 0
     for name, title in files.items():
@@ -997,20 +1045,17 @@ def existing_state(directory, files):
         present += 1
         first, stamp = read_stamp(path)
         if first != title or stamp is None:
-            return "manual", None  # unstamped, unreadable or another file: leave it alone
+            return "manual", None, "hand"  # unstamped, unreadable or another file: leave it alone
         origins.add(stamp.get("origin"))
         versions.add(stamp.get("version"))
     if not present:
-        return "missing", None
-    if origins != {"api"}:
-        return "file", versions.pop() if len(versions) == 1 else None
+        return "missing", None, None
+    origin = "api" if origins == {"api"} else "file"
     if present < len(files) or len(versions) > 1:
-        return "partial", None
+        return "partial", None, origin
     (version,) = versions   # exactly one, or the check above is gone
-    return "api", version
+    return origin, version, origin
 
-
-ORIGIN = {"missing": None, "manual": "hand", "file": "file", "api": "api", "partial": "api"}
 
 # A source that answers in a shape this script does not read (a format
 # change) is handled like one that cannot be reached: the existing extract
@@ -1024,13 +1069,15 @@ def describe(exc):
     return str(exc) if isinstance(exc, (SourceUnavailable, OSError)) else f"unexpected response: {exc!r}"
 
 
-def kept_or_missing(result, state, version, note, exc):
-    """The status when no new extract could be built: the existing one is
-    used as it is (offline), or there is none (missing)."""
+def kept_or_missing(result, state, version, origin, why, exc):
+    """The status when no new extract could be written: the existing files
+    are used as they are (offline), or there are none (missing)."""
     if state == "missing":
         return {**result, "status": "missing", "origin": None, "version": None, "error": describe(exc)}
-    return {**result, "status": "offline", "origin": ORIGIN[state], "version": version,
-            "note": note, "error": describe(exc)}
+    kept = ("the existing extract is used as it is" if state != "partial" else
+            "some extract files are missing or from different versions, and the existing ones are used as they are")
+    return {**result, "status": "offline", "origin": origin, "version": version,
+            "note": f"{why}; {kept}", "error": describe(exc)}
 
 
 def write_all(source, directory, origin, version, texts, files):
@@ -1039,17 +1086,32 @@ def write_all(source, directory, origin, version, texts, files):
         write_extract(os.path.join(directory, name), title, stamp_line(source, origin, version), texts[name])
 
 
+def written(result, source, directory, origin, state, new_version, texts, files):
+    """Write the new extract files and report it. When a file cannot be
+    written (held open by a viewer on Windows, a full disk), report what is
+    on disk now instead: a set replaced halfway is partial, and the next run
+    rebuilds it."""
+    try:
+        write_all(source, directory, origin, new_version, texts, files)
+    except OSError as exc:
+        now, version, found = existing_state(directory, files)
+        return kept_or_missing(result, now, version, found, "the extract could not be written", exc)
+    return {**result, "status": "fetched" if state == "missing" else "refreshed",
+            "origin": origin, "version": new_version}
+
+
 def refresh(source, directory, force, live_version, build, files):
     """Bring one source's extracts up to date. Returns the JSON-able status.
 
     live_version() returns (version, ...) for the live source; build(live)
     returns (version, texts), reusing a live result it is given, so a
-    refresh asks the source for its version once."""
-    state, version = existing_state(directory, files)
+    refresh asks the source for its version once. --force rebuilds a current
+    extract, and replaces one placed by hand or built from a local file."""
+    state, version, origin = existing_state(directory, files)
     result = {"source": source, "files": [os.path.join(directory, n) for n in files]}
     if state in ("manual", "file") and not force:
         how = "placed by hand" if state == "manual" else "built from a local file"
-        return {**result, "status": "manual", "origin": ORIGIN[state], "version": version,
+        return {**result, "status": "manual", "origin": origin, "version": version,
                 "note": f"extract was {how}; not refreshed (use --force to replace it)"}
     try:
         live = None
@@ -1059,22 +1121,18 @@ def refresh(source, directory, force, live_version, build, files):
                 return {**result, "status": "current", "origin": "api", "version": version}
         new_version, texts = build(live)
     except SOURCE_ERRORS as exc:
-        note = ("source unreachable; existing extract used as is" if state != "partial" else
-                "source unreachable; some extract files are missing or from different "
-                "versions, and the existing ones are used as they are")
-        return kept_or_missing(result, state, version, note, exc)
-    write_all(source, directory, "api", new_version, texts, files)
-    return {**result, "status": "fetched" if state == "missing" else "refreshed", "origin": "api",
-            "version": new_version}
+        return kept_or_missing(result, state, version, origin, "source unreachable", exc)
+    return written(result, source, directory, "api", state, new_version, texts, files)
 
 
 def from_local(source, directory, force, build, files):
     """Build one source's extracts from local files (--from-dump, --from-xml).
 
     Replaces an extract this script wrote, fetched or built from a file, but
-    not one placed by hand unless --force is given. A local file that cannot
-    be read or used leaves the existing extract as it is."""
-    state, version = existing_state(directory, files)
+    not one placed by hand unless --force is given. The same file again
+    leaves the extract as it is (current). A local file that cannot be read
+    or used leaves the existing extract as it is too (offline)."""
+    state, version, origin = existing_state(directory, files)
     result = {"source": source, "files": [os.path.join(directory, n) for n in files]}
     if state == "manual" and not force:
         return {**result, "status": "manual", "origin": "hand", "version": None,
@@ -1082,18 +1140,19 @@ def from_local(source, directory, force, build, files):
     try:
         new_version, texts = build()
     except (OSError, *SOURCE_ERRORS) as exc:
-        return kept_or_missing(result, state, version,
-                               "local file could not be used; existing extract used as is", exc)
-    write_all(source, directory, "file", new_version, texts, files)
-    return {**result, "status": "fetched" if state == "missing" else "refreshed", "origin": "file",
-            "version": new_version}
+        return kept_or_missing(result, state, version, origin, "local file could not be used", exc)
+    if state == "file" and new_version == version and not force:
+        return {**result, "status": "current", "origin": "file", "version": version}
+    return written(result, source, directory, "file", state, new_version, texts, files)
 
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0],
                                  epilog=__doc__.split("\n\n", 1)[1],
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("source", choices=("nora", "gemma", "all"))
+    ap.add_argument("source", choices=("nora", "gemma", "all"),
+                    help="the extracts to build or refresh: nora (nora-principes.md), "
+                         "gemma (the three gemma-*.md files) or all")
     ap.add_argument("--dir", default=DEFAULT_DIR, help=f"output directory (default: {DEFAULT_DIR})")
     ap.add_argument("--force", action="store_true",
                     help="rebuild even when current, and replace extracts placed by hand")
@@ -1112,25 +1171,26 @@ def main(argv=None):
 
     nora_files = {NORA_FILE: NORA_TITLE}
     results = []
-    # Each source gets its own result, so a failure in one never hides the
-    # other's status.
+
+    def report(result):
+        # Printed as soon as it exists, so a failure in the other source, even
+        # one this script does not expect, never hides it. ASCII only: a
+        # Windows console or pipe may not take UTF-8.
+        print(json.dumps(result), flush=True)
+        results.append(result)
+
     if args.source in ("nora", "all"):
         if args.from_dump:
-            results.append(from_local("nora", args.dir, args.force,
-                                      lambda: nora_from_dumps(args.from_dump), nora_files))
+            report(from_local("nora", args.dir, args.force,
+                              lambda: nora_from_dumps(args.from_dump), nora_files))
         else:
-            results.append(refresh("nora", args.dir, args.force,
-                                   nora_live_version, nora_from_api, nora_files))
+            report(refresh("nora", args.dir, args.force, nora_live_version, nora_from_api, nora_files))
     if args.source in ("gemma", "all"):
         if args.from_xml:
-            results.append(from_local("gemma", args.dir, args.force,
-                                      lambda: gemma_from_xml(args.from_xml), GEMMA_FILES))
+            report(from_local("gemma", args.dir, args.force,
+                              lambda: gemma_from_xml(args.from_xml), GEMMA_FILES))
         else:
-            results.append(refresh("gemma", args.dir, args.force,
-                                   gemma_live_version, gemma_from_api, GEMMA_FILES))
-    for r in results:
-        # ASCII only: a Windows console or pipe may not take UTF-8.
-        print(json.dumps(r), flush=True)
+            report(refresh("gemma", args.dir, args.force, gemma_live_version, gemma_from_api, GEMMA_FILES))
     return 0 if all(r["status"] != "missing" for r in results) else 1
 
 

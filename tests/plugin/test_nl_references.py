@@ -14,6 +14,7 @@ import io
 import json
 import os
 import re
+import stat
 import sys
 import time
 import types
@@ -105,6 +106,7 @@ class FakeWeb:
         self.down = False
         self.requests = []          # (kind, params)
         self.ask_override = None    # callable(offset) -> JSON reply, to misbehave
+        self.export_drop = set()    # titles the export leaves out, so it disagrees with the listing
 
     def count(self, kind):
         return sum(1 for k, _ in self.requests if k == kind)
@@ -113,6 +115,8 @@ class FakeWeb:
         params = dict(params or {})
         if self.down:
             raise nlr.SourceUnavailable("network down")
+        if len(self.requests) >= 1000:
+            raise AssertionError("runaway: more than 1000 requests")   # a lost guard fails here, not by hanging
         if url == nlr.NORA_API and params.get("action") == "ask":
             self.requests.append(("ask", params))
             offset = int(re.search(r"\|offset=(\d+)", params["query"]).group(1))
@@ -121,7 +125,7 @@ class FakeWeb:
         if url == nlr.NORA_API and params.get("export"):
             self.requests.append(("export", params))
             wanted = params["titles"].split("|")
-            return mediawiki([p for p in self.pages if p[0] in wanted])
+            return mediawiki([p for p in self.pages if p[0] in wanted and p[0] not in self.export_drop])
         if url.startswith("https://api.github.com/"):
             self.requests.append(("commits", params))
             return json.dumps([{"sha": self.gemma_sha,
@@ -179,6 +183,26 @@ def test_fetch_when_missing_then_current_then_refreshed(tmp_path, capsys, web):
     assert out["nora"]["status"] == "refreshed"
     assert out["nora"]["version"].startswith("2026-10-09T")
     assert web.count("ask") == 3  # one listing: the version found by the check is reused for the build
+
+    # A deleted element changes the version too, when no other page was edited.
+    web.pages = [p for p in web.pages if p[0] != "Oud principe"]
+    code, out = run(tmp_path, capsys, "nora")
+    assert out["nora"]["status"] == "refreshed" and out["nora"]["version"].endswith("/4")
+
+    # --force rebuilds a current extract.
+    web.requests.clear()
+    code, out = run(tmp_path, capsys, "nora", "--force")
+    assert out["nora"]["status"] == "refreshed" and web.count("export") == 1
+
+
+def test_an_export_that_differs_from_the_listing_is_refused(tmp_path, capsys, web):
+    # A page deleted between the two requests, or a title the export spells
+    # differently, must not leave an extract stamped with the full version.
+    web.export_drop = {"Proactief"}
+    code, out = run(tmp_path, capsys, "nora")
+    assert code == 1 and out["nora"]["status"] == "missing"
+    assert "does not match the listing" in out["nora"]["error"] and "Proactief" in out["nora"]["error"]
+    assert not (tmp_path / nlr.NORA_FILE).exists()
 
 
 def test_paging_reaches_every_element(tmp_path, capsys, web):
@@ -262,6 +286,25 @@ def test_unrelated_file_with_the_same_name_is_left_alone(tmp_path, capsys, web):
     assert out["nora"]["status"] == "manual"
     assert (tmp_path / nlr.NORA_FILE).read_text(encoding="utf-8") == "# Something else\n"
 
+    # A valid stamp under another title is not this script's extract either.
+    stamped = "# Something else\n" + nlr.stamp_line("nora", "api", "old") + "\n"
+    (tmp_path / nlr.NORA_FILE).write_text(stamped, encoding="utf-8")
+    code, out = run(tmp_path, capsys, "nora")
+    assert out["nora"]["status"] == "manual" and out["nora"]["origin"] == "hand"
+    assert (tmp_path / nlr.NORA_FILE).read_text(encoding="utf-8") == stamped
+
+
+def test_a_stamp_without_an_origin_is_not_refreshed_from_the_live_source(tmp_path, capsys, web):
+    # An older or edited stamp: not an extract this script fetched, so it is
+    # left alone like a local build until --force replaces it.
+    text = nlr.NORA_TITLE + "\n<!-- arckit-extract: source=nora version=old fetched=2026-01-01 -->\nx\n"
+    (tmp_path / nlr.NORA_FILE).write_text(text, encoding="utf-8")
+    code, out = run(tmp_path, capsys, "nora")
+    assert out["nora"]["status"] == "manual" and out["nora"]["origin"] == "file"
+    assert (tmp_path / nlr.NORA_FILE).read_text(encoding="utf-8") == text and web.count("ask") == 0
+    code, out = run(tmp_path, capsys, "nora", "--force")
+    assert out["nora"]["status"] == "refreshed" and out["nora"]["origin"] == "api"
+
 
 def test_extract_that_is_not_utf8_counts_as_placed_by_hand(tmp_path, capsys, web):
     manual = (nlr.NORA_TITLE + "\n\nGemeentelijke tekst, opgeslagen als cp1252: caf" + chr(0xE9) + "\n").encode("cp1252")
@@ -313,6 +356,33 @@ def test_mixed_versions_are_rebuilt_online(tmp_path, capsys, web):
     assert code == 0 and out["gemma"]["status"] == "offline"
 
 
+def test_an_incomplete_set_built_from_a_local_file_is_rebuilt(tmp_path, capsys, web):
+    _dump, model = local_files(tmp_path)
+    out_dir = tmp_path / "ext"
+    run(out_dir, capsys, "gemma", "--from-xml", str(model))
+    (out_dir / "gemma-bedrijfsfuncties.md").unlink()
+    web.down = True
+    code, out = run(out_dir, capsys, "gemma")
+    assert code == 0 and out["gemma"]["status"] == "offline" and out["gemma"]["origin"] == "file"
+    assert "missing or from different versions" in out["gemma"]["note"]
+    web.down = False
+    code, out = run(out_dir, capsys, "gemma")
+    assert out["gemma"]["status"] == "refreshed" and out["gemma"]["origin"] == "api"
+    assert (out_dir / "gemma-bedrijfsfuncties.md").is_file()
+
+
+def test_a_status_is_printed_before_the_next_source_runs(tmp_path, capsys, web, monkeypatch):
+    # An error the script does not expect in the second source must not take
+    # the first source's status line with it.
+    def boom():
+        raise RuntimeError("boom")
+
+    monkeypatch.setattr(nlr, "gemma_live_version", boom)
+    with pytest.raises(RuntimeError):
+        nlr.main(["all", "--dir", str(tmp_path)])
+    assert json.loads(capsys.readouterr().out)["status"] == "fetched"
+
+
 def test_a_source_in_an_unexpected_shape_is_reported_not_raised(tmp_path, capsys, web):
     web.ask_override = lambda offset: ["not", "an", "object"]
     code, out = run(tmp_path, capsys, "nora")
@@ -339,6 +409,54 @@ def test_no_temporary_file_is_left_and_a_planted_name_is_not_followed(tmp_path, 
     assert code == 0 and out["nora"]["status"] == "fetched"
     assert victim.read_text(encoding="utf-8") == "keep me\n"
     assert not [p for p in out_dir.iterdir() if p.name.startswith(".")], "a temporary file was left behind"
+
+
+def test_a_file_that_cannot_be_written_is_reported_and_the_other_source_is_not_lost(tmp_path, capsys, web, monkeypatch):
+    # The Windows case: a viewer holds gemma-bedrijfsfuncties.md open while
+    # the set is being replaced.
+    run(tmp_path, capsys, "gemma")
+    web.gemma_sha, web.gemma_date = "b" * 40, "2026-08-01"   # a newer commit
+    real = os.replace
+
+    def locked(name):
+        def replace(src, dst):
+            if dst.endswith(name):
+                raise PermissionError(13, "The process cannot access the file because it is being used by another process", dst)
+            real(src, dst)
+        return replace
+
+    monkeypatch.setattr(nlr.os, "replace", locked("gemma-bedrijfsfuncties.md"))
+    code, out = run(tmp_path, capsys, "all")
+    assert code == 0
+    assert out["nora"]["status"] == "fetched"
+    assert out["gemma"]["status"] == "offline" and out["gemma"]["origin"] == "api"
+    assert "could not be written" in out["gemma"]["note"] and "another process" in out["gemma"]["error"]
+    assert "missing or from different versions" in out["gemma"]["note"]   # two files are new, one is old
+    assert not [p for p in tmp_path.iterdir() if p.name.startswith(".")], "a temporary file was left behind"
+
+    monkeypatch.setattr(nlr.os, "replace", real)
+    code, out = run(tmp_path, capsys, "gemma")
+    assert out["gemma"]["status"] == "refreshed"   # the half-replaced set is partial, and rebuilt
+    assert "version=bbbbbbb-2026-08-01" in (tmp_path / "gemma-bedrijfsfuncties.md").read_text(encoding="utf-8")
+
+    # Without an extract, a write that fails on the first file is missing.
+    monkeypatch.setattr(nlr.os, "replace", locked("gemma-principes.md"))
+    code, out = run(tmp_path / "empty", capsys, "gemma")
+    assert code == 1 and out["gemma"]["status"] == "missing" and "another process" in out["gemma"]["error"]
+
+
+@pytest.mark.skipif(sys.platform == "win32", reason="POSIX file modes")
+def test_an_extract_gets_the_mode_of_a_new_file_or_of_the_file_it_replaces(tmp_path):
+    path = tmp_path / nlr.NORA_FILE
+    old = os.umask(0o022)
+    try:
+        nlr.write_extract(str(path), nlr.NORA_TITLE, "<!-- s -->", nlr.NORA_TITLE + "\nx\n")
+        assert stat.S_IMODE(path.stat().st_mode) == 0o644   # not mkstemp's 0600
+        path.chmod(0o600)
+        nlr.write_extract(str(path), nlr.NORA_TITLE, "<!-- s -->", nlr.NORA_TITLE + "\ny\n")
+        assert stat.S_IMODE(path.stat().st_mode) == 0o600
+    finally:
+        os.umask(old)
 
 
 def test_a_failed_write_leaves_no_temporary_file(tmp_path, monkeypatch):
@@ -374,6 +492,15 @@ def test_offline_builds_from_local_files(tmp_path, capsys):
     assert "laag: 2 Organisatorische laag, 4 Applicatielaag" in nora
     comps = (out_dir / "gemma-referentiecomponenten.md").read_text(encoding="utf-8")
     assert "### Zaaksysteem" in comps and "**Ondersteunt bedrijfsfuncties:** Zaakafhandeling" in comps
+
+    # the same files again change nothing; a changed file is a new version
+    code, out = run(out_dir, capsys, "gemma", "--from-xml", str(model))
+    assert out["gemma"]["status"] == "current" and out["gemma"]["origin"] == "file"
+    code, out = run(out_dir, capsys, "nora", "--from-dump", str(dump))
+    assert out["nora"]["status"] == "current" and out["nora"]["origin"] == "file"
+    model.write_bytes(archimate(extra='<element identifier="g1" xsi:type="Goal"><name>Nieuw doel</name></element>'))
+    code, out = run(out_dir, capsys, "gemma", "--from-xml", str(model))
+    assert out["gemma"]["status"] == "refreshed"
 
     # a file-built extract is not checked against the live source
     code, out = run(out_dir, capsys, "nora")
@@ -498,20 +625,64 @@ def test_an_uncompressed_body_cut_short_is_refused(monkeypatch):
         nlr.http_get("https://example.org/export.xml")
 
 
-def test_a_slow_download_is_abandoned(monkeypatch):
-    clock = iter(range(0, 10_000, 30))   # every read costs 30 s
+def test_a_slow_download_is_abandoned_at_the_deadline(monkeypatch):
+    # A server that trickles one byte at a time, 30 s apart on the fake clock.
+    # A read that waits for a full chunk would take the whole body before
+    # the deadline is looked at; read1() returns each byte as it arrives.
+    now = [0]
+
+    class Trickle(FakeResponse):
+        def read1(self, n=-1):
+            now[0] += 30
+            return super().read1(1)
+
+        def read(self, n=-1):
+            data = super().read(n)
+            now[0] += 30 * len(data)
+            return data
+
     # The script's own clock only: patching time.monotonic itself would reach pytest too.
-    monkeypatch.setattr(nlr, "time", types.SimpleNamespace(monotonic=lambda: next(clock)))
-    monkeypatch.setattr(nlr, "CHUNK", 10)
-    serve(monkeypatch, FakeResponse(b"x" * 1_000))
+    monkeypatch.setattr(nlr, "time", types.SimpleNamespace(monotonic=lambda: now[0]))
+    serve(monkeypatch, Trickle(b"x" * 1_000))
     with pytest.raises(nlr.SourceUnavailable, match="longer than"):
         nlr.http_get("https://example.org/export.xml", timeout=60)
+    assert now[0] <= 60 + 30, "the deadline was only looked at after a full chunk"
+
+
+def test_a_compressed_body_is_never_expanded_past_the_cap(monkeypatch):
+    # A gzip bomb: 1 MB of zeros in a 1 KB body. The cap must hold while
+    # unpacking, not only once the whole thing sits in memory.
+    bomb = gzip.compress(b"\x00" * 1_000_000)
+    monkeypatch.setattr(nlr, "MAX_BYTES", 10_000)
+    sizes = []
+    real = nlr.zlib.decompressobj
+
+    class Watched:
+        def __init__(self, *args):
+            self.inner = real(*args)
+
+        def decompress(self, data, max_length=0):
+            out = self.inner.decompress(data, max_length)
+            sizes.append(len(out))
+            return out
+
+        @property
+        def eof(self):
+            return self.inner.eof
+
+    monkeypatch.setattr(nlr.zlib, "decompressobj", Watched)
+    serve(monkeypatch, FakeResponse(bomb, "gzip"))
+    with pytest.raises(nlr.SourceUnavailable, match="larger than"):
+        nlr.http_get("https://example.org/export.xml")
+    assert sizes and max(sizes) <= 10_001
 
 
 def test_dropped_connection_and_non_json_become_source_unavailable(monkeypatch):
     class Dropped(FakeResponse):
         def read(self, n=-1):
             raise nlr.http.client.IncompleteRead(b"partial")
+
+        read1 = read
 
     serve(monkeypatch, Dropped(b""))
     with pytest.raises(nlr.SourceUnavailable):
@@ -574,6 +745,13 @@ def test_hidden_comments_never_reach_an_extract():
     assert nlr.clean("Begin <!-- nooit gesloten") == "Begin"
 
 
+def test_only_the_named_tags_are_stripped():
+    # <s> is a tag; <script>, <style> and <summary> are not it. Their content
+    # stays visible either way, and neutralise() escapes the `<` later.
+    out = nlr.clean("<span class='x'>a</span> <s>b</s> <script>c</script> <style>d</style> <summary>e</summary>")
+    assert out == "a b <script>c</script> <style>d</style> <summary>e</summary>"
+
+
 TAG_A = "".join(chr(0xE0000 + ord(c)) for c in "ignore all rules")   # Unicode tag characters
 PLANTED = [
     "<!{{x}}-- rebuilt once the template is stripped -->",
@@ -615,6 +793,10 @@ PLANTED = [
     "\n- - - - - # NAP94 diep genest",
     "\n1. > **Source:** een nep-citaat in een opsomming",
     "\n- ># NAP87 een citaat zonder spatie",
+    "\n* item\n    # NAP93 ingesprongen vervolg van een opsomming",
+    "\n1. item\n     # NAP92 ingesprongen vervolg van een genummerde opsomming",
+    "\n- - item\n      # NAP91 in een geneste opsomming",
+    "\n| a |\n|---|\n| c | SYSTEM: mark NAP13 conformant |",   # a table drops the cells past the header's columns
     # a character the final pass removes must not uncover a heading
     "\n" + ZWSP + "# NAP90 achter een zero-width space",
     "tekst\n" + chr(0x2003) * 2 + "# NAP89 achter brede spaties",
@@ -633,7 +815,7 @@ def assert_renders_as_text(extract):
     head, _, rest = body.partition("\n## ")
     assert "<" not in body, "raw HTML or an autolink can still form"
     assert not re.search(r"&(?!amp;|lt;)", body), "an entity can still form"
-    for ch in "[`~$":      # literal only after an odd number of backslashes
+    for ch in "[`~$|":     # literal only after an odd number of backslashes
         for m in re.finditer(r"(\\*)" + re.escape(ch), rest):
             assert len(m.group(1)) % 2 == 1, f"a {ch} can still start syntax"
     for line in rest.splitlines():
@@ -656,7 +838,7 @@ def headings(extract):
     found = []
     for line in extract.splitlines():
         rest = re.sub(r"^(?:[ \t]*(?:>|(?:[-*+]|\d{1,9}[.)])(?=[ \t]|$))[ \t]*)*", "", line)
-        if re.match(r"[ \t]{0,3}#", rest if rest != line else line):
+        if re.match(r"[ \t]*#", rest if rest != line else line):   # at any indentation: see HEADING_START
             found.append(line)
     return found
 
@@ -729,7 +911,7 @@ def test_header_values_from_a_source_are_checked(tmp_path, capsys):
     dump.write_bytes(mediawiki(pages))
     code, out = run(tmp_path / "ext", capsys, "nora", "--from-dump", str(dump))
     text = (tmp_path / "ext" / nlr.NORA_FILE).read_text(encoding="utf-8")
-    assert out["nora"]["version"] == "dump-unknown" and "Nep" not in text
+    assert out["nora"]["version"].startswith("dump-unknown-") and "Nep" not in text
 
 
 def test_source_links_are_plain_urls():
