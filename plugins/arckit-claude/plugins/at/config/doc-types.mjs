@@ -396,6 +396,10 @@ export const SUBDIR_MAP = {
   'CDAU': 'audits',
   'FWRK': 'framework',
   'ACHG': 'changes',
+  // /arckit:gcloud-search writes procurement/ARC-001-GCLD-v1.0.md, and
+  // /arckit:evaluate and /arckit:gcloud-clarify look for it there. Unmapped,
+  // the context hook and the manifest never scanned procurement/.
+  'GCLD': 'procurement',
 };
 
 // Derived: set of all valid type codes

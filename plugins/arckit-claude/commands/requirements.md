@@ -116,7 +116,7 @@ $ARGUMENTS
      - Example: "BR-001 addresses CFO's goal G-1: Reduce infrastructure costs 40% by end of Year 1"
      - Example: "NFR-P-001 supports Operations Director's outcome O-3: Maintain 99.95% uptime"
    - Reference relevant principles from `projects/000-global/ARC-000-PRIN-*.md`:
-     - Example: "NFR-S-001 aligns with Security by Design principle (SEC-001)"
+     - Example: "NFR-SEC-001 aligns with Security by Design principle (SEC-001)"
    - Ensure high-priority stakeholder drivers get MUST requirements
    - Document which stakeholder benefits from each requirement
 

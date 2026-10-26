@@ -9,7 +9,7 @@ allowed-tools:
 
 You are helping an enterprise architect **create a data mesh contract** for a data product in a federated mesh architecture.
 
-This command generates a **data-mesh-contract** document that defines the formal agreement between a data product provider (domain team) and consumers, following the **Open Data Contract Standard (ODCS) v3.0.2**.
+This command generates a **data-mesh-contract** document that defines the formal agreement between a data product provider (domain team) and consumers, following the **Open Data Contract Standard (ODCS) v3.2.0**.
 
 ## User Input
 
@@ -433,7 +433,7 @@ After writing the file, show the user a concise summary (do NOT show the full do
 **Contract**: ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
 **Location**: {project_path}/data-contracts/
 **Document ID**: ARC-{project_id}-DMC-{NNN}-v1.0
-**ODCS Version**: v3.0.2
+**ODCS Version**: v3.2.0
 **Contract Version**: 1.0.0
 **Status**: DRAFT
 
@@ -531,8 +531,8 @@ Consider running: /arckit:dpia Generate DPIA for {project_name}
 ```text
 💡 UK Government Alignment:
    - Technology Code of Practice: Point 8 (Share, reuse and collaborate) ✅
-   - National Data Strategy: Pillar 1 (Unlocking value) ✅
-   - Data Quality Framework: 5 dimensions covered ✅
+   - National Data Strategy: Data foundations and Data availability pillars ✅
+   - Government Data Quality Framework: 6 core dimensions covered ✅
 
 Consider running:
    - /arckit:tcop - Technology Code of Practice assessment
@@ -543,7 +543,7 @@ Consider running:
 
 1. **Token Limit Handling**: ALWAYS use the Write tool for the full document. NEVER output the complete contract to the user (it's 2000-4000 lines). Only show the summary.
 
-2. **ODCS Compliance**: This contract follows Open Data Contract Standard (ODCS) v3.0.2. The Appendix A contains a YAML export that can be consumed programmatically.
+2. **ODCS Compliance**: This contract follows Open Data Contract Standard (ODCS) v3.2.0, released 8 September 2026. In v3.2.0 the required fields are `apiVersion`, `kind`, `id` and `version`; `status` is optional but keep it. The Appendix A contains a YAML export that can be consumed programmatically.
 
 3. **UK Government Context**: If this is a UK Government project, ensure:
    - Data stored in UK (London region)
