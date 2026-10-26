@@ -9,6 +9,26 @@ Releases before 6.13.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+## [6.18.3] — 2026-10-26
+
+### Changed
+
+- **Guides open with the answer.** The TCoP, ATRS and Secure by Design guides and 26 command guides now start with what the standard or document is and who needs it, then the command, with their facts checked at source. Two new guides cover the AWS documentation and Microsoft Learn MCP servers.
+
+### Fixed
+
+- **Re-running a command no longer overwrites your earlier document** (#946). Commands that write one document per project now write the next version beside the earlier one, 1.1 for a refresh or 2.0 when the scope changes, and leave the earlier file as it was.
+- **Commands read the documents they name.** Prompts that named document codes ArcKit never writes, such as AWSR, AZUR and DM, now use the registered codes, so commands no longer miss the AWS or Azure research, the data model or the JSP 936 assessment. Cloud research reads the vendor HLD, and nine commands now read Google Cloud research alongside AWS and Azure.
+- **Bulk builds write requirements after the stakeholder analysis**, which requirements read.
+- **ArcKit's helper scripts work on a Mac**, with its older bash and its own `sed` and `date`.
+- **Google Cloud research reads documentation pages again.** Google replaced its page-fetching tools in March 2026.
+- **Traceability and analysis see each requirement's real priority.** Every requirement used to read as SHOULD. Security requirements are now `NFR-SEC` everywhere.
+- **Documents for assurance boards match their sources:** JSP 936, DPIA, business case, risk, Service Standard, TCoP, FinOps, stakeholder and MOD Secure by Design documents.
+- **DOS7 buying runs on the Contract Award Service**, and DOS and G-Cloud award notices go on Find a Tender.
+- **G-Cloud 15, a valid ODCS export, a working DFD render command and current names** in `/arckit:gcloud-search`, `/arckit:data-mesh-contract`, `/arckit:dfd` and ten other commands.
+- **The secret scanner checks your own docs, READMEs and changelogs** (#881, from @johnfelipe). It skipped any path containing `docs/` or ending in `README.md` or `CHANGELOG.md`.
+- **File and folder names can't pose as instructions** (#877, from @johnfelipe). A name with a line break could add a line of its own to what the hooks tell Claude.
+
 ## [6.18.2] — 2026-10-12
 
 ### Removed
