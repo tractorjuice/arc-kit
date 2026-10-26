@@ -948,7 +948,7 @@ Once you start your AI assistant, you'll have access to these commands:
 
 #### Vendor Procurement
 - `{p}sow` - Generate Statement of Work (RFP)
-- `{p}dos` - Digital Outcomes and Specialists (DOS) procurement (UK Digital Marketplace)
+- `{p}dos` - Digital Outcomes and Specialists (DOS7) procurement (Contract Award Service)
 - `{p}gcloud-search` - Search G-Cloud services on UK Digital Marketplace
 - `{p}gcloud-clarify` - Validate G-Cloud services and generate clarification questions
 - `{p}evaluate` - Create vendor evaluation framework and score vendors

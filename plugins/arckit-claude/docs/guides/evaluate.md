@@ -13,7 +13,7 @@
 | Architecture principles | Governance standards vendors must align with |
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | What you're evaluating vendors against |
 | Statement of Work (`ARC-<id>-SOW-v1.0.md`) | Pre-defined evaluation criteria |
-| DOS documentation | Digital Marketplace procurement criteria |
+| DOS documentation | DOS7 evaluation criteria and lot |
 
 ---
 
