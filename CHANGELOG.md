@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **A research reader's reply that fails the handoff check no longer reaches the orchestrator.** When a reader's reply was invalid against its schema, held no JSON, or came from a reader that did not complete, `hooks/validate-reader-handoff.mjs` only added a warning and left the reply in place, so text copied from a vendor page, README or MCP result — including the `<system-reminder>` markup and forged turn markers the sanitiser had just rejected — sat in the context that holds Write and Bash. The hook now replaces any such reply with a neutral `[ArcKit: reader reply withheld …]` line and lists the errors, each cut to 200 characters, for the single re-dispatch; only a background launch receipt passes untouched. `scripts/validate-handoff.mjs` also reports errors on an object key at its sanitised path, so a key's invisible characters no longer travel inside the error message. `tests/plugin/validate-reader-handoff.test.mjs` and `tests/plugin/sanitize-handoff.test.mjs` cover each branch.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added
