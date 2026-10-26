@@ -133,7 +133,7 @@ Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`
 3. **Cloud First**: Default to cloud unless justified otherwise.
 4. **Security Built-In**: Security from the start, not bolted on.
 5. **Reuse Before Build**: Check for existing solutions first.
-6. **GovS 005 Traceability**: Map each TCoP point back to its parent GovS 005 principle for audit trail.
+6. **GovS 005 Traceability**: Map each TCoP point to the GovS 005 v2.2 clauses that cover the same ground, for the audit trail. GovS 005 numbers nine principles in section 2 but does not name them or map them to TCoP points.
 
 ---
 
