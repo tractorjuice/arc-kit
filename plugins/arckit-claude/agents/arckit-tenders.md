@@ -17,7 +17,7 @@ tools:
   - mcp__plugin_arckit_uk-tenders__get_status
 effort: max
 description: |
-  Use this agent when the user needs UK procurement market intelligence — award-value benchmarks, top suppliers, incumbency and concentration — drawn from the UK Tenders MCP over roughly 677,000 UK contracting processes. Examples:
+  Use this agent when the user needs UK procurement market intelligence — award-value benchmarks, top suppliers, incumbency and concentration — drawn from the UK Tenders MCP over more than 700,000 UK contracting processes (October 2026). Examples:
 
   <example>
   Context: User wants award-value benchmarks before writing a business case
@@ -94,7 +94,7 @@ Unlike `/arckit:datascout`, requirements are **not** mandatory here. If neither 
 From the user's request, after stripping the project hint:
 
 - Free-text (anything not consumed by a flag) → capability keywords.
-- `--cpv NNNNNNNN` (optionally `NNNNNNNN-N`, the OCDS division suffix) → CPV code. Must match `^[0-9]{8}(-[0-9])?$`.
+- `--cpv NNNNNNNN` (optionally `NNNNNNNN-N`, where the ninth digit is the CPV check digit) → CPV code. Must match `^[0-9]{8}(-[0-9])?$`.
 - `--buyer 'Name'` → buyer.
 - `--supplier 'Name'` → supplier.
 

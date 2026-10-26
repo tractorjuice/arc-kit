@@ -1,10 +1,69 @@
-# Google Cloud Technology Research Guide
+# Google Cloud research with the Developer Knowledge MCP server
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit:gcp-research` researches Google Cloud services, architecture patterns, and implementation guidance using the Google Developer Knowledge MCP server for authoritative documentation.
+The Google Developer Knowledge MCP server lets AI assistants search and read Google's official developer documentation, including Google Cloud. This guide covers how to set it up and how `/arckit:gcp-research` uses it to research Google Cloud services, architecture patterns and implementation guidance.
 
-> **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent makes 15-30+ MCP calls to gather Google Cloud documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
+> **How the command runs**: `/arckit:gcp-research` runs in your main session and sends a reader subagent to each research category. Only the readers call the MCP server, so the documentation they gather stays in their own context windows. A writer subagent with no network tools then renders the report.
+
+---
+
+## Google Developer Knowledge MCP server
+
+Google's [Developer Knowledge MCP server page](https://developers.google.com/knowledge/mcp) says it "gives AI-powered development tools direct access to search and retrieve official Google developer documentation". It is the MCP face of the [Developer Knowledge API](https://developers.google.com/knowledge/api). Both entered public preview on 4 February 2026 and became generally available on 16 April 2026 ([release notes](https://developers.google.com/knowledge/release-notes)).
+
+- **What it covers**: public Google developer documentation, in English only. The domains include Google Cloud (`cloud.google.com` and `docs.cloud.google.com`), Firebase, Android, Google Maps Platform, Chrome, Flutter, Dart, Go, Google AI, Google Workspace, web.dev and TensorFlow. GitHub, blogs and YouTube are not included. Google aims to re-index new or updated pages within 48 hours.
+- **Endpoint**: `https://developerknowledge.googleapis.com/mcp` (global, streamable HTTP).
+- **Key**: it needs credentials. For Claude Code, Cursor, GitHub Copilot and Codex, Google recommends an API key sent in the `X-Goog-Api-Key` header. OAuth and Application Default Credentials also work.
+
+### Get an API key
+
+Google's steps, from the MCP server page:
+
+1. In a Google Cloud project, open the [Developer Knowledge API](https://console.cloud.google.com/apis/library/developerknowledge.googleapis.com) page and select **Enable**. Since 17 March 2026, enabling the API also enables the MCP server.
+2. Go to the [Credentials page](https://console.cloud.google.com/apis/credentials), select **Create credentials**, then **API key**.
+3. Edit the key, choose **Restrict key** under API restrictions, and select **Developer Knowledge API**.
+
+With the gcloud CLI:
+
+```bash
+gcloud services enable developerknowledge.googleapis.com --project=PROJECT_ID
+gcloud services api-keys create --project=PROJECT_ID --display-name="DK API Key"
+```
+
+Then restrict the key with `gcloud services api-keys update KEY_NAME --api-target=service=developerknowledge.googleapis.com`.
+
+### Tools
+
+| Tool | What it does |
+|------|--------------|
+| `search_documents` | Searches Google developer documentation and returns the most relevant page excerpts with their document names. |
+| `get_documents` | Retrieves the full Markdown content of up to 20 documents in one call, using the names `search_documents` returns. |
+| `answer_query` | Generates a structured answer drawn from the Developer Knowledge corpus. |
+
+Google removed the earlier `get_document` and `batch_get_documents` tools on 8 March 2026 and replaced them with `get_documents`.
+
+### Quotas
+
+The [default quotas](https://developers.google.com/knowledge/quota) are per Google Cloud project: 100 search requests a minute, 100 document retrieval requests a minute, and 50 generated answers a day. A request over quota returns `429 RESOURCE_EXHAUSTED`.
+
+### Add it to Claude Code on its own
+
+ArcKit users don't need this, because the plugin already includes the server. To add it to Claude Code without ArcKit, Google gives:
+
+```bash
+claude mcp add google-developer-knowledge \
+  --transport http https://developerknowledge.googleapis.com/mcp \
+  --header "X-Goog-Api-Key: YOUR_API_KEY"
+```
+
+Google's page also covers Antigravity, Cursor, GitHub Copilot in VS Code, Codex and other clients.
+
+### How ArcKit uses it
+
+The ArcKit core plugin bundles the server as `google-developer-knowledge` and sends your key in the `X-Goog-Api-Key` header. `/arckit:gcp-research` is the only command that uses it. Each reader subagent can call only this server's tools, plus read-only file tools. The server has no region-availability tool, so readers take region evidence from Google Cloud's locations documentation.
+
+Without a key the server shows as failed in `/mcp`, and the error may mention dynamic client registration. Google's remote MCP servers don't support OAuth Dynamic Client Registration, so a keyless connection has no other way to sign in. Everything else in ArcKit still works.
 
 ---
 
@@ -12,9 +71,9 @@
 
 ### Google Developer Knowledge MCP Server (REQUIRED)
 
-This command **requires** the Google Developer Knowledge MCP server to be installed. It will not work without it.
+This command **requires** the Google Developer Knowledge MCP server. It will not work without it.
 
-**API Key Required**: Unlike AWS Knowledge and Microsoft Learn MCPs (which are free/unauthenticated), the Google Developer Knowledge MCP requires an API key. Get one from [Google AI Studio](https://aistudio.google.com/apikey) or the [Google Cloud Console](https://console.cloud.google.com/apis/credentials).
+**API Key Required**: unlike the AWS Knowledge and Microsoft Learn MCP servers, which need no sign-in, the Google Developer Knowledge MCP server needs an API key. Create one in the Google Cloud console as described in [Get an API key](#get-an-api-key).
 
 **Setup**: the ArcKit plugin already includes this server; you only supply the key.
 
@@ -75,13 +134,14 @@ Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a 
 
 ## MCP Tools Used
 
-The command uses three Google Developer Knowledge MCP tools:
+The research uses the Google Developer Knowledge MCP tools to find and read documentation:
 
 | Tool | Purpose |
 |------|---------|
 | `search_documents` | Search Google Cloud documentation for services, patterns, best practices |
-| `get_document` | Retrieve complete documentation pages for detailed analysis |
-| `batch_get_documents` | Fetch multiple related documentation pages in a single call |
+| `get_documents` | Retrieve complete documentation pages, up to 20 in one call, for detailed analysis |
+
+Google replaced the earlier `get_document` and `batch_get_documents` tools with `get_documents` on 8 March 2026. See [Tools](#tools) for the full list.
 
 ---
 
@@ -89,7 +149,7 @@ The command uses three Google Developer Knowledge MCP tools:
 
 - **Google Cloud Service Recommendations**: Mapped to specific requirements (FR, NFR, INT, DR)
 - **Architecture Pattern**: Reference architecture from Google Cloud Architecture Center
-- **Architecture Framework Assessment**: All 6 pillars evaluated per service
+- **Architecture Framework Assessment**: All 6 pillars evaluated per service. Google now calls this the [Google Cloud Well-Architected Framework](https://docs.cloud.google.com/architecture/framework).
 - **Security Command Center**: Finding categories and CIS Benchmark for GCP
 - **UK Government Compliance**: G-Cloud, europe-west2 region, NCSC principles
 - **Cost Estimates**: Monthly and 3-year TCO with optimization recommendations
@@ -141,8 +201,10 @@ When UK Government project detected:
 
 ## Resources
 
-- [Google Developer Knowledge MCP](https://developerknowledge.googleapis.com/mcp) - MCP server endpoint
+- [Google Developer Knowledge MCP server](https://developers.google.com/knowledge/mcp) - setup, tools and troubleshooting
+- [Developer Knowledge API quotas](https://developers.google.com/knowledge/quota) - default limits
 - [Google Cloud Architecture Center](https://cloud.google.com/architecture) - Reference architectures
-- [Google Cloud Architecture Framework](https://cloud.google.com/architecture/framework) - Design guidance
+- [Google Cloud Well-Architected Framework](https://docs.cloud.google.com/architecture/framework) - Design guidance (formerly the Architecture Framework)
+- [Microsoft Learn MCP server](microsoft-learn-mcp.md) and [AWS documentation MCP servers](aws-documentation-mcp.md) - the other two cloud documentation servers ArcKit bundles
 - [Google Cloud Security Best Practices](https://cloud.google.com/security/best-practices) - Security controls
 - [Google Cloud UK Compliance](https://cloud.google.com/security/compliance/offerings#/regions=Europe) - UK Government compliance

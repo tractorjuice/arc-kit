@@ -2,7 +2,7 @@
 name: arckit-aws-research-reader
 subagent: true
 maxTurns: 30
-tools: ["Read", "Glob", "Grep", "TodoWrite", "mcp__plugin_arckit_aws-knowledge__aws___search_documentation", "mcp__plugin_arckit_aws-knowledge__aws___read_documentation", "mcp__plugin_arckit_aws-knowledge__aws___recommend", "mcp__plugin_arckit_aws-knowledge__aws___get_regional_availability", "mcp__plugin_arckit_aws-knowledge__aws___list_regions"]
+tools: ["Read", "Glob", "Grep", "TodoWrite", "mcp__plugin_arckit_aws-knowledge__aws___search_documentation", "mcp__plugin_arckit_aws-knowledge__aws___read_documentation", "mcp__plugin_arckit_aws-knowledge__aws___get_regional_availability", "mcp__plugin_arckit_aws-knowledge__aws___list_regions"]
 effort: high
 description: |
   Reader subagent invoked by /arckit:aws-research (orchestrator).

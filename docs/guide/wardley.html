@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:wardley creates strategic Wardley Maps for architecture decisions and build vs buy analysis.">
+    <meta name="description" content="A Wardley map shows a user need, the chain of components that meet it, and how evolved each component is, from genesis to commodity. This guide explains…">
     <meta name="author" content="ArcKit">
-    <title>Wardley Mapping Playbook | ArcKit</title>
-    <meta property="og:title" content="Wardley Mapping Playbook">
-    <meta property="og:description" content="/arckit:wardley creates strategic Wardley Maps for architecture decisions and build vs buy analysis.">
+    <title>Wardley mapping: how to draw a Wardley map | ArcKit</title>
+    <meta property="og:title" content="Wardley mapping: how to draw a Wardley map">
+    <meta property="og:description" content="A Wardley map shows a user need, the chain of components that meet it, and how evolved each component is, from genesis to commodity. This guide explains how to draw one, following Simon Wardley&#x27;s own steps, and how…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/wardley.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Wardley Mapping Playbook">
-    <meta name="twitter:description" content="/arckit:wardley creates strategic Wardley Maps for architecture decisions and build vs buy analysis.">
+    <meta name="twitter:title" content="Wardley mapping: how to draw a Wardley map">
+    <meta name="twitter:description" content="A Wardley map shows a user need, the chain of components that meet it, and how evolved each component is, from genesis to commodity. This guide explains how to draw one, following Simon Wardley&#x27;s own steps, and how…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/wardley.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/wardley.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/wardley.html",
-                "headline": "Wardley Mapping Playbook",
-                "description": "/arckit:wardley creates strategic Wardley Maps for architecture decisions and build vs buy analysis.",
+                "headline": "Wardley mapping: how to draw a Wardley map",
+                "description": "A Wardley map shows a user need, the chain of components that meet it, and how evolved each component is, from genesis to commodity. This guide explains how to draw one, following Simon Wardley's own steps, and how…",
                 "url": "https://arckit.org/guide/wardley.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Wardley Mapping Playbook",
+                        "name": "Wardley mapping: how to draw a Wardley map",
                         "item": "https://arckit.org/guide/wardley.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Wardley Mapping Playbook</h1>
-            <p class="app-page-hero__description">/arckit:wardley creates strategic Wardley Maps for architecture decisions and build vs buy analysis.</p>
+            <h1 class="app-page-hero__title">Wardley mapping: value chains, evolution and build vs buy</h1>
+            <p class="app-page-hero__description">A Wardley map shows a user need, the chain of components that meet it, and how evolved each component is, from genesis to commodity. This guide explains how to draw one, following Simon Wardley&#x27;s own steps, and how…</p>
         </div>
     </div>
 
@@ -437,10 +437,82 @@
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:wardley</code> creates strategic Wardley Maps for architecture decisions and build vs buy analysis.</p>
+<p>A Wardley map shows a user need, the chain of components that meet it, and how evolved each component is, from genesis to commodity. This guide explains how to draw one, following Simon Wardley's own steps, and how <code>/arckit:wardley</code> uses a map for build vs buy decisions.</p>
 <hr />
+<h2 id="what-a-wardley-map-is">What a Wardley map is</h2>
+<p>Simon Wardley drew his first map in 2005, for an online photo service he ran. In <a href="https://medium.com/wardleymaps/finding-a-path-cdb1249078c0"><em>Wardley Maps</em>, chapter 2</a>, he says any map has four basic elements: it is visual, it is context specific, it shows the position of components relative to an anchor, and it shows movement.</p>
+<p>On a Wardley map:</p>
+<ul>
+<li><strong>The anchor</strong> is the user and their needs, at the top of the map.</li>
+<li><strong>The vertical axis is the value chain.</strong> Each component needs the components below it. The higher a component sits, the more visible it is to the user.</li>
+<li><strong>The horizontal axis is evolution.</strong> Components move from left to right over time, &quot;driven by supply and demand competition&quot;.</li>
+</ul>
+<p>Wardley calls maps &quot;fundamentally a communication and learning tool&quot;. His book can be read online, and <a href="https://learnwardleymapping.com/book/">Learn Wardley Mapping</a> lists the editions. It is published under the Creative Commons Attribution-ShareAlike 4.0 licence.</p>
+<hr />
+<h2 id="how-to-draw-a-wardley-map">How to draw a Wardley map</h2>
+<p>These steps follow chapter 2 of Wardley's book.</p>
+<h3 id="1-start-with-user-needs">1. Start with user needs</h3>
+<p>Choose a scope, such as a service, a system or a whole organisation, and list the needs of its users. Wardley warns against a common trap: describing your own needs, such as making a profit, instead of your users' needs.</p>
+<h3 id="2-map-the-value-chain">2. Map the value chain</h3>
+<p>For each need, ask what components you need to meet it. Then ask the same question of each component, until you reach things outside your scope, such as power bought from a utility. Write each component once. Put the components the user sees at the top and draw lines to the components they depend on.</p>
+<p>Wardley uses &quot;value chain&quot; to mean a chain of needs, ordered by what the user values. He also warns that a value chain on its own has no movement, so it says little about strategy until you add evolution. In ArcKit, <code>/arckit:wardley.value-chain</code> does this step (<a href="wardley-value-chain.html">guide</a>).</p>
+<h3 id="3-place-each-component-on-the-evolution-axis">3. Place each component on the evolution axis</h3>
+<p>Wardley names four stages of evolution:</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Wardley's description</th>
+<th>Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Genesis</td>
+<td>The unique, the very rare, the uncertain, the constantly changing and the newly discovered</td>
+<td>Exploration</td>
+</tr>
+<tr>
+<td>Custom built</td>
+<td>Very uncommon and still being learned about. Made for a specific environment, and frequently changing</td>
+<td>Learning and craft</td>
+</tr>
+<tr>
+<td>Product (including rental)</td>
+<td>Increasingly common, made through a repeatable process, better understood</td>
+<td>Refining and improving</td>
+</tr>
+<tr>
+<td>Commodity (including utility)</td>
+<td>Highly standardised and undifferentiated, produced at scale and volume</td>
+<td>Industrialisation and operational efficiency</td>
+</tr>
+</tbody>
+</table>
+<p>To place a component, Wardley suggests asking:</p>
+<ul>
+<li>How ubiquitous and well defined is it?</li>
+<li>Do all my competitors use it?</li>
+<li>Is it available as a product or a utility service?</li>
+<li>Is it something new?</li>
+</ul>
+<p>If the group cannot agree where something sits, it may be several components. Break it down.</p>
+<h3 id="4-share-it-and-invite-challenge">4. Share it and invite challenge</h3>
+<p>Share the map with others in your organisation and let them challenge it. Look for unmet needs, missing components, and components you are building that you could buy or rent.</p>
+<hr />
+<h2 id="climate-doctrine-and-gameplay">Climate, doctrine and gameplay</h2>
+<p>Wardley built his <a href="https://medium.com/wardleymaps/on-being-lost-2ef5f05eb1ec">strategy cycle</a> from five factors he took from Sun Tzu (purpose, landscape, climate, doctrine and leadership), joined with John Boyd's OODA loop (observe, orient, decide, act). The map is the landscape. The other factors are:</p>
+<ul>
+<li><strong>Climate</strong>: &quot;the forces that act upon the environment&quot;, including competitors' actions. You don't choose them, but you can discover them.</li>
+<li><strong>Doctrine</strong>: &quot;the universal principles, the set of beliefs that appear to work regardless of the landscape that is faced&quot;.</li>
+<li><strong>Leadership</strong>: the strategy you choose for your context. Wardley calls these context-specific moves gameplay.</li>
+</ul>
+<p>ArcKit has a command for each: <code>/arckit:wardley.climate</code>, <code>/arckit:wardley.doctrine</code> and <code>/arckit:wardley.gameplay</code>.</p>
+<hr />
+<h2 id="using-arckitwardley">Using /arckit:wardley</h2>
+<p><code>/arckit:wardley</code> creates strategic Wardley Maps for architecture decisions and build vs buy analysis.</p>
 <h2 id="wardley-mapping-suite">Wardley Mapping Suite</h2>
 <p>ArcKit provides a full suite of Wardley Mapping commands that work together as a strategic analysis pipeline:</p>
 <table>
@@ -520,7 +592,7 @@
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit:wardley Create Wardley Map for &lt;initiative&gt;
 </code></pre>
-<p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-WARD-001-v1.0.md</code> (uses multi-instance numbering)</p>
+<p>Output: <code>projects/&lt;id&gt;/wardley-maps/ARC-&lt;id&gt;-WARD-001-v1.0.md</code> (uses multi-instance numbering)</p>
 <hr />
 <h2 id="wardley-map-structure">Wardley Map Structure</h2>
 <table>
@@ -698,6 +770,7 @@ deliberately anchored on a different user need is free to position them differen
 </tr>
 </tbody>
 </table>
+<p>Pioneer, settler and town planner are Wardley's names for <a href="https://medium.com/wardleymaps/a-smorgasbord-of-the-slightly-useful-2498a1163dd6">attitudes</a>: the kinds of people and culture suited to each part of the map, rather than patterns of change. In <a href="https://medium.com/wardleymaps/round-round-get-around-i-loop-around-d88e865d4337">his words</a>, &quot;Pioneers eXplore, Settlers eXpand our understanding and Town Planners eXploit by industrialising&quot;.</p>
 <hr />
 <h2 id="build-vs-buy-decision">Build vs Buy Decision</h2>
 <table>
@@ -798,7 +871,7 @@ evolution Genesis-&gt;Custom-&gt;Product-&gt;Commodity
 <hr />
 <h2 id="viewing-your-map">Viewing Your Map</h2>
 <p><strong>OnlineWardleyMaps</strong> (primary): Copy the <code>wardley</code> code block and paste into <a href="https://create.wardleymaps.ai">https://create.wardleymaps.ai</a> for an interactive editor with drag-and-drop repositioning.</p>
-<p><strong>Mermaid</strong> (secondary): Expand the <code>&lt;details&gt;</code> block in your generated artifact to see the Mermaid <code>wardley-beta</code> equivalent. This will render inline in GitHub, VS Code, and other Mermaid-enabled viewers once Mermaid ships <code>wardley-beta</code> in a stable release. The Mermaid version includes sourcing strategy markers (<code>build</code>/<code>buy</code>/<code>outsource</code>/<code>inertia</code>) as visual decorators on each component.</p>
+<p><strong>Mermaid</strong> (secondary): Expand the <code>&lt;details&gt;</code> block in your generated artifact to see the Mermaid <code>wardley-beta</code> equivalent. Mermaid added <a href="https://mermaid.js.org/syntax/wardley.html">Wardley maps</a> in version 11.14.0 (April 2026), still under the beta keyword <code>wardley-beta</code>. The block renders in any viewer running Mermaid 11.14.0 or later; a viewer on an older Mermaid version cannot draw it. The Mermaid version includes sourcing strategy markers (<code>build</code>/<code>buy</code>/<code>outsource</code>/<code>inertia</code>) as visual decorators on each component.</p>
 <hr />
 <h2 id="key-principles">Key Principles</h2>
 <ol>

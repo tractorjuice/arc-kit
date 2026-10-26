@@ -48,9 +48,9 @@ All artifacts must pass these 10 checks:
 - Five Case Model structure present (Strategic, Economic, Commercial, Financial, Management)
 - Cost-benefit analysis with quantified figures and assumptions stated
 - Green Book / Orange Book methodology referenced where applicable
-- Preferred option clearly identified with rationale
+- Preferred way forward (the preferred option, from OBC stage) clearly identified with rationale
 - Executive Summary opens with the Go/No-Go recommendation and the recommended option, and every figure in it appears in the five cases
-- Every option in the options appraisal, including Do Nothing and rejected options, has its own costs, benefits, **Risks** and pros/cons
+- Every option in the options appraisal, including business as usual (BAU) and rejected options, has its own costs, benefits, **Risks** and pros/cons
 
 ### STKE -- Stakeholder Analysis
 
@@ -103,7 +103,7 @@ All artifacts must pass these 10 checks:
 ### GCRS -- GCP Research
 
 - Service comparison table with feature/pricing columns
-- Google Cloud Architecture Framework alignment noted
+- Google Cloud Well-Architected Framework alignment noted
 - Architecture diagram (Mermaid) showing service relationships
 - Pricing tier analysis with estimated monthly costs
 

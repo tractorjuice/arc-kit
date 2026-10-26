@@ -17,17 +17,22 @@ allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
-You are helping an enterprise architect create a comprehensive risk register following the UK Government Orange Book (2023) risk management framework.
+You are helping an enterprise architect create a comprehensive risk register following the principles of HM Treasury's Orange Book (May 2023 edition).
 
 ## About Orange Book Risk Management
 
-The **Orange Book** is HM Treasury's guidance on risk management in government. The 2023 update provides:
+[The Orange Book: Management of Risk – Principles and Concepts](https://www.gov.uk/government/publications/orange-book/the-orange-book-management-of-risk-principles-and-concepts) is HM Treasury's guidance on risk management in government. The current edition (May 2023) builds on the 2020 version and adds Part II. It sets principles: it does not prescribe a register format, a scoring matrix or a set of response labels. It provides:
 
-- **Part I**: 5 Risk Management Principles (Governance, Integration, Collaboration, Risk Processes, Continual Improvement)
-- **Part II**: Risk Control Framework (4-pillar "house" structure)
-- **4Ts Risk Response Framework**: Tolerate, Treat, Transfer, Terminate
-- **Risk Assessment Methodology**: Likelihood × Impact for Inherent and Residual risk
-- **Risk Appetite**: Amount of risk organization is prepared to accept/tolerate
+- **Part I**: five main principles, Sections A to E (Governance and Leadership; Integration; Collaboration and Best Information; Risk Management Processes; Continual Improvement). The main principles are mandatory and the supporting principles advisory: each organisation discloses compliance, or explains its departures, in the governance statement accompanying its annual resource accounts
+- **Part II**: the Risk Control Framework: four pillars (Governance and Management Framework; Roles and Accountabilities; Strategy, Planning and Reporting; Standards, Policies and Procedures) underpinned by the three lines model
+- **Risk analysis (D4, Annex 5)**: a common set of risk criteria, used to assess the likelihood of a risk occurring and its consequences should it happen
+- **Risk evaluation and treatment options (D6)**: compare the analysis with risk appetite, then choose one or more of: avoid the risk by not starting or continuing the activity; take or increase the risk to pursue an opportunity; retain the risk by informed decision; change the likelihood; change the consequences, including planning contingency activities; share the risk, for example through commercial contracts
+- **Treatment plans (D8)**: for each chosen option, the rationale, actions, accountability and responsibility, resources, performance measures and early warning indicators, constraints, timescales, and reporting and monitoring
+- **Risk appetite**: the nature and extent of risk the organisation is willing to take to achieve its objectives
+
+**ArcKit conventions, not Orange Book terms**: the 4Ts response labels (Tolerate, Treat, Transfer, Terminate) and the inherent (before controls) and residual (after controls) scores are ArcKit's register conventions. The Orange Book uses neither. Map each 4Ts response to the D6 option it represents (step 7), and never present the 4Ts or inherent and residual scoring as Orange Book requirements.
+
+**Withdrawn supplementary guidance**: on 29 July 2026 HM Treasury deleted four supplementary documents from the [Orange Book publication page](https://www.gov.uk/government/publications/orange-book) as out of date: the Portfolio Risk Management Guidance Orange Book Annex, the Risk Appetite Guidance Note, the Risk Management Skills and Capabilities Framework, and the Good Practice Guide: Risk Reporting. Do not cite any of them as current guidance.
 
 ## User Input
 
@@ -45,7 +50,7 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
 
 - **After**: `/arckit:stakeholders` (MANDATORY - every risk needs an owner)
 - **Before**: `/arckit:sobc` (SOBC Management Case Part E uses risk register)
-- **Purpose**: Identify, assess, and manage project risks using Orange Book methodology
+- **Purpose**: Identify, assess, and manage project risks following the Orange Book's principles
 
 1. **Read existing artifacts** from the project context:
 
@@ -87,9 +92,9 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
    - Extract stakeholder drivers (drivers under threat = strategic risks)
    - Note: EVERY risk MUST have a risk owner from stakeholder analysis
 
-6. **Identify risks across Orange Book categories**:
+6. **Identify risks across ArcKit's six risk categories**:
 
-   Use these risk categories aligned to Orange Book framework:
+   Use these six categories. They are ArcKit's grouping, not the Orange Book's: Orange Book Annex 4 lists example categories (strategy, governance, operations, legal, property, financial, commercial, people, technology, information, security, project/programme, reputational) and says they are not intended to be comprehensive. Check the Annex 4 list for sources of risk the six categories might miss, and record each such risk under the closest ArcKit category:
 
    **STRATEGIC Risks**:
    - Risks to strategic objectives and organizational goals
@@ -188,23 +193,25 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
 
    **Risk Response (4Ts Framework)**:
 
-   Select ONE primary response:
+   Select ONE primary response. The 4Ts are ArcKit's labels; for each risk, also record the Orange Book D6 treatment option the response represents:
 
-   - **TOLERATE**: Accept the risk (within risk appetite, cost of mitigation exceeds benefit)
+   - **TOLERATE** (Orange Book D6: retain the risk by informed decision): Accept the risk (within risk appetite, cost of mitigation exceeds benefit)
      - When to use: Low residual risk score (1-5), within appetite
      - Example: "Minor UI inconsistency - aesthetic only, no functional impact"
 
-   - **TREAT**: Mitigate or reduce the risk (implement additional controls)
+   - **TREAT** (Orange Book D6: change the likelihood and/or change the consequences, including planning contingency activities): Mitigate or reduce the risk (implement additional controls)
      - When to use: Medium/High risk, can be reduced through actions
      - Example: "Implement automated testing to reduce defect risk"
 
-   - **TRANSFER**: Transfer risk to 3rd party (insurance, outsourcing, contracts)
+   - **TRANSFER** (Orange Book D6: share the risk, for example through commercial contracts): Share the risk with a third party (insurance, outsourcing, contracts)
      - When to use: Low likelihood/high impact, can be insured or contracted out
      - Example: "Purchase cyber insurance for breach liability"
 
-   - **TERMINATE**: Stop the activity creating the risk
+   - **TERMINATE** (Orange Book D6: avoid the risk by not starting or continuing the activity that gives rise to it): Stop the activity creating the risk
      - When to use: High likelihood/high impact, exceeds appetite, cannot be mitigated
      - Example: "Cancel high-risk vendor contract, source alternative"
+
+   The Orange Book also allows **taking or increasing a risk in order to pursue an opportunity**. The 4Ts have no label for it: where that is the decision, say so in the response rationale, name the opportunity, and record the risk appetite assessment that supports it.
 
    **Risk Ownership**:
    - **Risk Owner**: From stakeholder RACI matrix (Accountable role = Risk Owner)
@@ -315,12 +322,12 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
 
    **G. 4Ts Response Summary**:
 
-   | Response | Count | % | Key Examples |
-   |----------|-------|---|--------------|
-   | Tolerate | 5 risks | 25% | R-006, R-010... |
-   | Treat | 12 risks | 60% | R-001, R-002... |
-   | Transfer | 2 risks | 10% | R-005 (insurance) |
-   | Terminate | 1 risk | 5% | R-008 (cancel activity) |
+   | Response | Orange Book option (D6) | Count | % | Key Examples |
+   |----------|-------------------------|-------|---|--------------|
+   | Tolerate | Retain by informed decision | 5 risks | 25% | R-006, R-010... |
+   | Treat | Change the likelihood or the consequences | 12 risks | 60% | R-001, R-002... |
+   | Transfer | Share the risk | 2 risks | 10% | R-005 (insurance) |
+   | Terminate | Avoid the risk | 1 risk | 5% | R-008 (cancel activity) |
 
    **H. Risk Appetite Compliance** (if organizational appetite exists):
 
@@ -429,7 +436,7 @@ Provide:
 
 1. **Location**: `projects/NNN-project-name/ARC-{PROJECT_ID}-RISK-v{VERSION}.md`
 2. **Summary**:
-   - "Created comprehensive risk register following HM Treasury Orange Book"
+   - "Created comprehensive risk register following HM Treasury Orange Book principles"
    - "Identified [X] risks across 6 categories"
    - "Risk profile: [X] Critical, [Y] High, [Z] Medium, [W] Low"
    - "Overall residual risk score: [X]/500 ([Y]% reduction from inherent)"
@@ -450,13 +457,13 @@ Provide:
 
 ## Orange Book Compliance Checklist
 
-Ensure the risk register demonstrates Orange Book compliance:
+Ensure the risk register shows how it supports each of the Orange Book's five main principles. Compliance with the Orange Book belongs to the organisation, which discloses it or explains departures in its governance statement; a project risk register is evidence towards that. Do not describe the register itself as "Orange Book compliant", and do not present the 4Ts or inherent and residual scoring as Orange Book requirements.
 
-- ✅ **Governance and Leadership**: Risk owners assigned from senior stakeholders
-- ✅ **Integration**: Risks linked to objectives, stakeholders, and business case
-- ✅ **Collaboration**: Risks sourced from stakeholder concerns and expert judgment
-- ✅ **Risk Processes**: Systematic identification, assessment, response, monitoring
-- ✅ **Continual Improvement**: Review framework and action plan for ongoing management
+- ✅ **A. Governance and Leadership**: Risk owners assigned from senior stakeholders
+- ✅ **B. Integration**: Risks linked to objectives, stakeholders, and business case
+- ✅ **C. Collaboration and Best Information**: Risks sourced from stakeholder concerns and expert judgment
+- ✅ **D. Risk Management Processes**: Systematic identification, assessment against common criteria for likelihood and consequences, treatment options mapped to D6, treatment plans (D8), monitoring and reporting
+- ✅ **E. Continual Improvement**: Review framework and action plan for ongoing management
 
 ## Common Risk Patterns
 
@@ -493,7 +500,7 @@ For UK Government/public sector projects, include:
 
 **COMPLIANCE/REGULATORY**:
 
-- Spending controls (HMT approval delays)
+- HM Treasury approval delays (Treasury approvals process: spend above the department's delegated authority limit, or novel, contentious or repercussive spend)
 - NAO audit findings
 - PAC scrutiny and recommendations
 - FOI requests reveal sensitive information
@@ -509,7 +516,7 @@ For UK Government/public sector projects, include:
 **OPERATIONAL**:
 
 - GDS Service Assessment failure
-- CDDO digital spend control rejection
+- Adverse digital assurance findings (the Digital Assurance Playbook replaced the digital and technology spend controls on 1 April 2026)
 - Civil service headcount restrictions
 - Security clearance delays
 
@@ -539,7 +546,7 @@ Use the template at `${CLAUDE_PLUGIN_ROOT}/templates/risk-register-template.md` 
 - Industry/sector specific risks
 - UK Government risks (if applicable)
 
-Generate a comprehensive, Orange Book-compliant risk register that enables informed decision-making and effective risk management.
+Generate a comprehensive risk register, aligned with the Orange Book's principles, that enables informed decision-making and effective risk management.
 
 ## Important Notes
 

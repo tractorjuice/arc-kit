@@ -135,7 +135,7 @@ From `$ARGUMENTS`, after stripping the project hint:
   **focal** supplier — the one you are comparing rivals against.
 - Otherwise, free-text (anything not consumed by a flag) → `keywords[]`, and
   set `focus: capability`.
-- `--cpv NNNNNNNN` (optionally `NNNNNNNN-N`, the OCDS division suffix) →
+- `--cpv NNNNNNNN` (optionally `NNNNNNNN-N`, where the ninth digit is the CPV check digit) →
   `cpv`. Must match `^[0-9]{8}(-[0-9])?$`. Applies under either focus.
 
 If neither `--supplier` nor free-text capability is present but the

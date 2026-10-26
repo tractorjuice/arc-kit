@@ -20,13 +20,16 @@ You are helping an enterprise architect create a Strategic Outline Business Case
 
 ## About SOBC
 
-A **Strategic Outline Business Case (SOBC)** is the first stage in the UK Government business case lifecycle:
+HM Treasury's [Guidance on Developing Business Cases](https://www.gov.uk/government/publications/guidance-on-developing-business-cases) (updated 30 June 2026) builds a project business case in stages. The approving authority reviews each stage before the next begins:
 
-- **SOBC**: Strategic Outline (this command) - High-level case for change, done BEFORE detailed requirements
-- **OBC**: Outline Business Case - After some design work, with refined costs
-- **FBC**: Full Business Case - Detailed case with accurate costs, ready for final approval
+- **Stage 0: Strategic assessment** — initial planning: strategic fit and an initial view on feasibility. ArcKit does not generate it
+- **Stage 1: Strategic Outline Case (SOC)** — the scoping phase: the case for change, SMART objectives, and a longlist of options narrowed to a shortlist and a preferred way forward. It focuses mainly on the strategic and economic cases, but must also begin the commercial, financial and management cases. **This command's SOBC is this stage**
+- **Stage 2: Outline Business Case (OBC)** — the planning phase: the shortlist appraised in more detail to identify the preferred option, with the commercial, financial and management arrangements outlined
+- **Stage 3: Full Business Case (FBC)** — the procurement phase: the outcome of procurement and the full commercial, financial and management arrangements. Contracts are signed only after FBC approval
 
-This command creates the **SOBC** - the strategic case to secure approval to proceed with requirements and design.
+ArcKit calls its Stage 1 document a **Strategic Outline Business Case (SOBC)**; HM Treasury calls this stage the **Strategic Outline Case (SOC)**. Keep the SOBC name, doc-type and file name, and state in the document that it is HM Treasury's SOC stage. ArcKit does not generate the strategic assessment, OBC or FBC.
+
+This command creates the **SOBC** - the case for change and preferred way forward, to secure approval to proceed to the OBC stage and, in ArcKit's workflow, to detailed requirements and design.
 
 ## User Input
 
@@ -46,7 +49,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 - **Usually before**: `/arckit:requirements` (SOBC justifies whether to proceed with detailed requirements). Where requirements already exist, for example in a bulk build (`/arckit:build` recipes build REQ first) or a refresh, read them to sharpen the cost estimates; they are an OPTIONAL input below, never a reason to stop
 - **Purpose**: Secure executive approval and funding to proceed to next stage
 
-**Note**: Later stages will create OBC (Outline Business Case) and FBC (Full Business Case) with more accurate costs. This SOBC uses strategic estimates and options analysis.
+**Note**: HM Treasury's later stages, the OBC (Outline Business Case) and FBC (Full Business Case), refine the costs and arrangements; ArcKit does not generate them. This SOBC uses strategic estimates and options analysis.
 
 1. **Read existing artifacts from the project context:**
 
@@ -106,10 +109,10 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - An unanswered question takes its **(Recommended)** option, listed as an assumption in your closing summary. With no question tool available, take every default and never block.
 
    **Question 1** — header: `Options`, multiSelect: false
-   > "How many strategic options should be evaluated in the Economic Case?"
-   - **4 options (Recommended)**: Do Nothing + Minimal + Balanced + Comprehensive — standard Green Book options appraisal
-   - **3 options**: Do Nothing + two alternatives — suitable for straightforward investment decisions
-   - **5 options**: Do Nothing + four alternatives — for complex programmes with multiple viable approaches
+   > "How many shortlisted options should be appraised in the Economic Case?"
+   - **5 options (Recommended)**: Business as usual (BAU) + Do minimum + Preferred way forward + More ambitious + Less ambitious preferred way forward — HM Treasury's shortlist of around five options
+   - **3 options**: BAU + Do minimum (which is also the preferred way forward) + More ambitious preferred way forward — only when the preferred way forward is the do minimum, so the less ambitious version is left out
+   - **More than 5**: the five above plus alternatives that differ in outputs or design choices rather than ambition — for complex proposals; every extra option must still meet the objectives and critical success factors
 
    **Question 2** — header: `Appraisal`, multiSelect: false
    > "What level of economic appraisal should be applied?"
@@ -142,12 +145,15 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - **Why Now?**: Urgency and opportunity cost
 
    **B. Economic Case**:
-   - **Options Analysis** (CRITICAL):
-     - Option 0: Do Nothing (baseline)
-     - Option 1: Minimal viable solution
-     - Option 2: Balanced approach (often recommended)
-     - Option 3: Comprehensive solution
-     - For EACH option, including Do Nothing and any option you recommend rejecting:
+   - **Options Analysis** (CRITICAL) — the shortlist HM Treasury's business case guidance and the Green Book set out (around five options):
+     - Option 0: Business as usual (BAU) — what happens if current arrangements continue and the proposal is not implemented. Always shortlisted, as the benchmark, whether or not it meets the objectives. BAU is not "do nothing": the organisation still acts, and BAU has its own costs, benefits and risks. Never label it "Do Nothing" or cost it at £0 by default
+     - Option 1: Do minimum — the option that just meets the objectives and goes no further. Always shortlisted
+     - Option 2: Preferred way forward — the option that appears best to meet the objectives and critical success factors and offer the best value for money (it may be the same as the do minimum)
+     - Option 3: More ambitious preferred way forward — more social benefits, at higher social costs or with more risk
+     - Option 4: Less ambitious preferred way forward — lower social benefits, with lower social costs or less risk; leave it out if the preferred way forward is the do minimum
+     - Apart from BAU, do not shortlist an option that fails to meet the proposal's objectives
+     - At SOC stage the shortlist leads to a **preferred way forward**; HM Treasury's **preferred option** is identified later, at OBC stage. The recommended option in this SOBC is the preferred way forward: do not call it the preferred option
+     - For EACH option, including BAU and any option you recommend rejecting:
        - High-level costs (rough order of magnitude)
        - Benefits delivered (% of stakeholder goals met)
        - Risks (its own **Risks** list: a rejected option still has risks, and they are part of why it is rejected)
@@ -180,12 +186,15 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    **D. Financial Case**:
    - **Budget Requirement**: How much needed?
    - **Funding Source**: Where does money come from?
-   - **Approval Thresholds**: Who must approve?
-     - UK Gov: HMT approval needed above £X?
-     - Private: Board approval needed?
+   - **Approval Route**: Who must approve, and at which stages?
+     - UK central government (bodies subject to Managing Public Money): the organisation's approving authority (a minister, the accounting officer or an investment committee) approves the business case after the organisation's own assurance. HM Treasury approval is needed as well if the proposal meets any criterion of HM Treasury's [Treasury Approvals Process](https://www.gov.uk/government/publications/treasury-approvals-process-for-programmes-and-projects) (updated 1 April 2026): its whole life costs meet or exceed any of the department's Delegated Authority Limits (DALs); it is novel, contentious or could cause repercussions elsewhere in the public sector; it is likely to breach agreed budget or Supply Estimate limits; it commits significant future spending for which budgets have not been set; it may set a potentially expensive precedent; it requires primary legislation; or statute requires HM Treasury consent. A qualifying project needs HM Treasury approval at each of SOC, OBC and FBC, and should usually have its SOC approved before any public announcement. A project whose costs start below the DAL and later rise above it also qualifies
+     - HM Treasury sets DALs for each department (the department's delegation letter is the reference). Do not invent a £ threshold or attribute one to HM Treasury: quote the DAL only if the project context provides it, otherwise say it must be confirmed with the department's finance team or HM Treasury spending team
+     - Digital and technology spend: the digital and technology spend controls were removed on 1 April 2026 and replaced by the [Digital Assurance Playbook](https://www.gov.uk/government/publications/digital-assurance-playbook). Do not describe a CDDO or GDS spend control approval. Record the organisation's own digital assurance route, and note that HM Treasury requires organisations to maintain and share a pipeline of upcoming spend
+     - Local government and other bodies outside the Treasury Approvals Process: the body's own approving authority (in local government, mayors or councillors, who may delegate to chief executives or other officers)
+     - Private sector: Board approval or the scheme of delegation
    - **Affordability**: Can organization afford this?
    - **Cash Flow**: When do we need money?
-   - **Budget Constraints**: Any spending controls?
+   - **Budget Constraints**: Budget cover, Spending Review settlement, delegated limits, and any conditions set by internal assurance
 
    **E. Management Case**:
    - **Governance**:
@@ -194,7 +203,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
      - Decision authorities
    - **Project Approach**: Agile? Waterfall? Phased?
    - **Key Milestones**:
-     - Approval gates
+     - Business case approval points: SOC (this SOBC), OBC and FBC. HM Treasury's guidance assures them through Gate Reviews held before each approval: Gate 1 (Business Justification) before SOC approval, Gate 2 (Delivery Strategy) before OBC approval, Gate 3 (Investment Decision) before FBC approval, then Gate 4 (Readiness for Service) before going live and Gate 5 (Operational Review and Benefits Realisation). For projects on the Government Major Projects Portfolio (GMPP), the National Infrastructure and Service Transformation Authority (NISTA) arranges independent assurance reviews; NISTA replaced the IPA, so do not name the IPA
      - Major deliverables
      - Go-live target
    - **Resource Requirements**:
@@ -234,7 +243,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - **Go/No-Go Criteria**: Under what conditions do we proceed?
    - **Next Steps**: If approved, what happens next?
      - Typically: `/arckit:requirements` to define detailed requirements
-     - Then: `/arckit:business-case-detailed` with accurate costs
+     - Then: the Outline Business Case (OBC, HM Treasury Stage 2) with refined costs. ArcKit has no OBC command, so name the OBC as a next step without suggesting a command for it
 
 **CRITICAL - Auto-Populate Document Control Fields**:
 
@@ -273,11 +282,11 @@ Follow `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` for `ARC-{PROJECT
 - Create or update `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v${VERSION}.md`
 - Use project directory structure (create if doesn't exist)
 - File name pattern: `ARC-{PROJECT_ID}-SOBC-v{VERSION}.md`
-- Later stages will be: `ARC-{PROJECT_ID}-OBC-v*.md` (Outline Business Case), `ARC-{PROJECT_ID}-FBC-v*.md` (Full Business Case)
+- ArcKit has no OBC or FBC doc-type: never write an `ARC-{PROJECT_ID}-OBC-*` or `ARC-{PROJECT_ID}-FBC-*` file (the filename hook blocks unregistered codes). A refreshed business case is a new SOBC version
 
 11. **Use appropriate language**:
 
-- **UK Government**: Use Green Book terminology (intervention, public value, social benefit, spending controls)
+- **UK Government**: Use Green Book terminology (intervention, public value, social costs and benefits, value for money, business as usual)
 - **Private Sector**: Adapt to commercial language (investment, shareholder value, competitive advantage)
 - **Always**: Link to stakeholder analysis for credibility
 
@@ -299,12 +308,12 @@ Provide:
    - "Estimated investment: £[X]M over 3 years"
    - "Expected benefits: £[X]M over 3 years from [stakeholder goals]"
    - "Payback period: [X] months"
-   - "Business case lifecycle stage: SOBC (strategic outline)"
+   - "Business case stage: SOBC (HM Treasury Stage 1, Strategic Outline Case)"
 3. **Next steps**:
-   - "Present to [approval body] for go/no-go decision"
+   - "Present to [approving authority] for go/no-go decision"
    - "If approved: Run `/arckit:requirements` to define detailed requirements"
-   - "After requirements: Create OBC (Outline Business Case) with refined costs"
-   - "After design: Create FBC (Full Business Case) for final approval"
+   - "Then: Outline Business Case (OBC, HM Treasury Stage 2) to appraise the shortlist in detail and identify the preferred option"
+   - "After procurement: Full Business Case (FBC, HM Treasury Stage 3) for the investment decision, before contracts are signed"
 4. **Traceability note**:
    - "All [X] benefits traced to stakeholder goals in ARC-{PROJECT_ID}-STKE-v*.md"
    - "All [Y] risks linked to stakeholder conflict analysis"
@@ -314,7 +323,7 @@ Provide:
 **Pattern 1: Technology Modernization**:
 
 - Strategic Case: Legacy systems failing, stakeholder frustration high
-- Economic Case: 3-5 options from do-nothing to complete rebuild
+- Economic Case: around five shortlisted options, from business as usual to a more ambitious complete rebuild
 - Commercial Case: Cloud migration, Digital Marketplace G-Cloud
 - Financial Case: £2-5M over 3 years, CFO approval needed
 - Management Case: Phased migration, minimal disruption
@@ -349,8 +358,8 @@ For UK Government/public sector projects, ensure:
 
 2. **Economic Case includes**:
    - Social Cost Benefit Analysis (if required)
-   - Green Book discount rates (3.5% standard)
-   - Optimism bias adjustment (add contingency)
+   - Green Book discount rate: the social time preference rate, 3.5% in real terms for years 1 to 30
+   - Optimism bias adjustment: sized from the organisation's own evidence of past forecast errors or, if it has none, the generic values in the Green Book supplementary guidance on optimism bias. Do not quote a fixed uplift as an HM Treasury standard
    - Wider economic benefits
 
 3. **Commercial Case includes**:
@@ -360,14 +369,15 @@ For UK Government/public sector projects, ensure:
    - Open source consideration
 
 4. **Financial Case includes**:
-   - HM Treasury approval thresholds
+   - Approval route: the organisation's approving authority, and whether the Treasury Approvals Process applies (see the Financial Case Approval Route above)
    - Spending Review settlement alignment
    - Value for money assessment
    - Whole-life costs
 
 5. **Management Case includes**:
    - Service Standard assessment plan
-   - GDS/CDDO engagement
+   - Digital assurance under the Digital Assurance Playbook (in force from 1 April 2026), and early engagement with the Government Digital Service on digital transformation proposals, as the Treasury Approvals Process asks
+   - Assurance plan: Gate Review 1 before SOC approval, and NISTA reviews if the project is on the GMPP
    - Cyber security (NCSC consultation)
    - Accessibility (WCAG 2.2 AA compliance)
    - Data protection (ICO/DPIA requirements)
@@ -381,7 +391,7 @@ If stakeholder analysis doesn't exist:
 
 If user wants detailed business case:
 
-- Tell user: "This command creates SOBC (Strategic Outline Business Case) - the first stage with high-level estimates. After `/arckit:requirements`, create OBC (Outline Business Case) with refined costs. After design, create FBC (Full Business Case) for final approval."
+- Tell user: "This command creates the SOBC (Strategic Outline Business Case), ArcKit's name for HM Treasury's Strategic Outline Case: Stage 1, with high-level estimates. HM Treasury's later stages are the Outline Business Case (Stage 2), which identifies the preferred option, and the Full Business Case (Stage 3), completed after procurement and approved before contracts are signed. ArcKit does not generate the OBC or FBC."
 
 If project seems too small for full 5-case:
 
@@ -474,14 +484,14 @@ After writing the file, show ONLY a concise summary:
 - Management Case: Delivery capability (10-15 pages)
 - Appendices: Stakeholder analysis, risk register, assumptions
 
-**Total Length**: [X] pages (ready for senior leadership and Treasury approval)
+**Total Length**: [X] pages (ready for review by the approving authority)
 
 ### Next Steps
 
 - Review `ARC-{PROJECT_ID}-SOBC-v{VERSION}.md` for full SOBC document
-- Present to Senior Responsible Owner (SRO) for approval
+- Senior Responsible Owner (SRO) to submit it to the approving authority, after Gate Review 1 where it applies, and to HM Treasury if the Treasury Approvals Process applies
 - If approved, run `/arckit:requirements` to define detailed requirements
-- After requirements, refine to Outline Business Case (OBC) with firmer costs
+- Then develop the Outline Business Case (OBC) with firmer costs
 ```
 
 **Statistics to Include**:

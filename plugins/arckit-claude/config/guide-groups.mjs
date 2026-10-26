@@ -208,11 +208,13 @@ add(GUIDE_SECTIONS.PLUGIN, 'Plugin Operations', 'live', [
 ]);
 add(GUIDE_SECTIONS.PLUGIN, 'Plugin Operations', 'beta', [
   'autoresearch',
+  'aws-documentation-mcp',
   'byo-llm',
   'custom-commands',
   'enterprise-scale',
   'hooks',
   'mcp-servers',
+  'microsoft-learn-mcp',
   'productivity',
   'remote-control',
   'security-hooks',

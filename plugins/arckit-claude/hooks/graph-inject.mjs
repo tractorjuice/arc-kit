@@ -36,7 +36,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   isDir, readText, findRepoRoot, parseHookInput,
-  extractRequirementIds,
+  extractRequirementIds, REQUIREMENT_PRIORITIES,
 } from './hook-utils.mjs';
 import { scanAllArtifacts } from './graph-utils.mjs';
 import {
@@ -784,7 +784,7 @@ function formatAnalyzeProject(projectName, graph, arckitVersion) {
 
   // Requirements + coverage (single-project view)
   const allRequirements = (graph.requirements || {})[projectName] || [];
-  const priorityDist = { MUST: 0, SHOULD: 0, MAY: 0 };
+  const priorityDist = Object.fromEntries(REQUIREMENT_PRIORITIES.map((p) => [p, 0]));
   for (const req of allRequirements) {
     if (priorityDist[req.priority] !== undefined) priorityDist[req.priority]++;
   }
@@ -899,9 +899,10 @@ function formatAnalyzeProject(projectName, graph, arckitVersion) {
 
     lines.push('### Priority Distribution');
     lines.push('');
-    lines.push(`- **MUST**: ${priorityDist.MUST}`);
-    lines.push(`- **SHOULD**: ${priorityDist.SHOULD}`);
-    lines.push(`- **MAY**: ${priorityDist.MAY}`);
+    for (const pri of REQUIREMENT_PRIORITIES) {
+      if (pri === 'UNSPECIFIED' && priorityDist[pri] === 0) continue;
+      lines.push(`- **${pri}**: ${priorityDist[pri]}`);
+    }
     lines.push('');
 
     lines.push('### Coverage Summary');
@@ -914,7 +915,7 @@ function formatAnalyzeProject(projectName, graph, arckitVersion) {
       if (!c) continue;
       lines.push(`| ${cat} | ${c.covered} | ${c.total} | ${pct(c.covered, c.total)} |`);
     }
-    for (const pri of ['MUST', 'SHOULD', 'MAY']) {
+    for (const pri of REQUIREMENT_PRIORITIES) {
       const p = coverage.byPriority[pri];
       if (!p) continue;
       lines.push(`| ${pri} priority | ${p.covered} | ${p.total} | ${pct(p.covered, p.total)} |`);
@@ -1524,7 +1525,7 @@ function formatTraceability(graph, prompt) {
     if (!c) continue;
     lines.push(`| ${cat} (${c.prefix}) | ${c.covered} | ${c.total} | ${pct(c.covered, c.total)} |`);
   }
-  for (const pri of ['MUST', 'SHOULD', 'MAY']) {
+  for (const pri of REQUIREMENT_PRIORITIES) {
     const p = coverage.byPriority[pri];
     if (!p) continue;
     lines.push(`| ${pri} priority | ${p.covered} | ${p.total} | ${pct(p.covered, p.total)} |`);

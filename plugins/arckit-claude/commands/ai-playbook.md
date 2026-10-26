@@ -90,6 +90,8 @@ $ARGUMENTS
 
 5. **Assess the 10 Core Principles**:
 
+The headings below are ArcKit's short labels. Each maps, in order, to the playbook's wording, which the template quotes on each **Principle** line: (1) You know what AI is and what its limitations are; (2) You use AI lawfully, ethically and responsibly; (3) You know how to use AI securely; (4) You have meaningful human control at the right stages; (5) You understand how to manage the full AI life cycle; (6) You use the right tool for the job; (7) You are open and collaborative; (8) You work with commercial colleagues from the start; (9) You have the skills and expertise needed to implement and use AI solutions; (10) You use these principles alongside your organisation's policies and have the right assurance in place. Use the playbook's wording when quoting a principle in the document.
+
 ### Principle 1: Understanding AI
 
 - Team understands AI limitations (no reasoning, contextual awareness)
@@ -155,6 +157,8 @@ $ARGUMENTS
 - Academia, industry, civil society engagement
 - Knowledge sharing
 - Contributing to government AI community
+- Openness with the public about where and how AI is used (ATRS record where in mandatory scope, see Theme 2)
+- Automated responses to the public clearly identified (e.g. a chatbot response says it was written by an automated AI chatbot)
 
 ### Principle 8: Commercial Partnership
 
@@ -198,7 +202,7 @@ $ARGUMENTS
 
 ### Theme 2: Transparency and Explainability
 
-- **MANDATORY**: Algorithmic Transparency Recording Standard (ATRS) published
+- **ATRS record published, where in mandatory scope**: the Algorithmic Transparency Recording Standard (ATRS) is mandatory for all government departments, and for arm's length bodies (ALBs) that deliver public or frontline services or directly interact with the general public. Within those organisations it is mandatory for algorithmic tools that have a significant influence on a decision-making process with public effect, or that directly interact with the general public (ATRS guidance, updated May 2025). Outside that scope it is encouraged, not required. State whether the organisation and the tool are in scope, and why, and mark a missing ATRS record as non-compliant only when both are
 - System documented publicly (where appropriate)
 - Decision explanations available to affected persons
 - Model card/factsheet published
@@ -277,7 +281,7 @@ Create detailed report with:
 
 **Mandatory Documentation Checklist**:
 
-- [ ] ATRS (Algorithmic Transparency Recording Standard)
+- [ ] ATRS (Algorithmic Transparency Recording Standard), where in mandatory scope
 - [ ] DPIA (Data Protection Impact Assessment)
 - [ ] EqIA (Equality Impact Assessment)
 - [ ] Human Rights Assessment
@@ -296,7 +300,7 @@ Create detailed report with:
 **Link to Requirements**:
 
 - Principle 2 (Lawful) → NFR-C-xxx (GDPR compliance requirements)
-- Principle 3 (Security) → NFR-S-xxx (security requirements)
+- Principle 3 (Security) → NFR-SEC-xxx (security requirements)
 - Principle 4 (Human Control) → FR-xxx (human review features)
 - Theme 3 (Fairness) → NFR-E-xxx (equity/fairness requirements)
 
@@ -318,7 +322,7 @@ Create detailed report with:
 
 - **STOP**: Do NOT deploy without meeting ALL principles
 - Human-in-the-loop MANDATORY (review every decision)
-- ATRS publication MANDATORY
+- ATRS publication MANDATORY where the organisation and tool are in the ATRS mandatory scope (see step 10); encouraged otherwise
 - DPIA, EqIA, Human Rights assessments MANDATORY
 - Quarterly audits REQUIRED
 - AI Governance Board approval REQUIRED
@@ -328,7 +332,7 @@ Create detailed report with:
 
 - Strong human oversight required
 - Critical principles must be met (2, 3, 4)
-- ATRS recommended
+- ATRS mandatory where the organisation and tool are in the ATRS mandatory scope (see step 10); recommended otherwise
 - DPIA likely required
 - Annual audits
 
@@ -343,14 +347,16 @@ Create detailed report with:
 
 **ATRS (Algorithmic Transparency Recording Standard)**:
 
-- MANDATORY for central government departments
-- MANDATORY for arm's length bodies
-- Publish on department website
+- MANDATORY for all government departments
+- MANDATORY for arm's length bodies that deliver public or frontline services, or directly interact with the general public
+- Within those organisations, MANDATORY for algorithmic tools that have a significant influence on a decision-making process with public effect, or directly interact with the general public
+- Not yet a requirement for other ALBs and public sector organisations, which are encouraged to use it
+- Records are published on the GOV.UK ATRS repository, coordinated through the organisation's ATRS single point of contact (SPOC)
 - Update when system changes significantly
 
 **DPIAs (Data Protection Impact Assessments)**:
 
-- MANDATORY for AI processing personal data
+- MANDATORY where the processing of personal data is likely to result in a high risk (UK GDPR Article 35). AI is "innovative technology" on the ICO's list, so AI processing personal data needs a DPIA whenever it also meets any of the nine screening criteria, as well as in the Article 35(3) cases (run `/arckit:dpia`)
 - Must be completed BEFORE deployment
 - Must be reviewed and updated regularly
 
@@ -462,7 +468,7 @@ You should:
   - 10. Organizational: ✅ COMPLIANT - SRO assigned, governance in place
 - Assess 6 ethical themes:
   - 1. Safety: ⚠️ PARTIAL - content filtering but some harmful outputs in testing
-  - 2. Transparency: ❌ NON-COMPLIANT - ATRS not yet published (MANDATORY)
+  - 2. Transparency: ❌ NON-COMPLIANT - ATRS not yet published (MANDATORY: run by a government department, and the tool interacts directly with the public)
   - 3. Fairness: ⚠️ PARTIAL - bias testing started, gaps in demographic coverage
   - 4. Accountability: ✅ COMPLIANT - clear ownership, audit trail
   - 5. Contestability: ❌ NON-COMPLIANT - no human review process (BLOCKING)
@@ -471,7 +477,7 @@ You should:
 - **CRITICAL ISSUES**:
   - **BLOCKING-01**: No DPIA completed (legal requirement)
   - **BLOCKING-02**: Fully automated advice (high-risk requires human-in-the-loop)
-  - **BLOCKING-03**: No ATRS published (mandatory for central government)
+  - **BLOCKING-03**: No ATRS published (mandatory: government department, public-facing tool)
   - **BLOCKING-04**: No contestability mechanism (right to human review)
 - **DECISION**: ❌ **REJECTED - DO NOT DEPLOY**
 - **Remediation required**:
@@ -485,10 +491,10 @@ You should:
 
 ## Important Notes
 
-- AI Playbook is **MANDATORY** guidance for all UK government AI systems
-- HIGH-RISK AI cannot deploy without meeting ALL principles
-- ATRS publication is MANDATORY for central government
-- DPIAs are MANDATORY for AI processing personal data
+- The AI Playbook is government guidance: its 10 principles are ones civil servants should uphold when using AI, alongside their organisation's own policies. It points to requirements that are mandatory in their own right, such as the ATRS (where in scope), Secure by Design and the Cyber Security Standard, the Service Standard for services, and data protection law
+- HIGH-RISK AI cannot deploy without meeting ALL principles (ArcKit's rule)
+- ATRS publication is MANDATORY for government departments and in-scope ALBs, for tools that significantly influence decisions with public effect or directly interact with the public
+- DPIAs are MANDATORY where AI processing of personal data is likely to result in a high risk (UK GDPR Article 35)
 - Human oversight is REQUIRED for high-risk decisions
 - Non-compliance can result in legal challenges, ICO fines, public backlash
 - "Move fast and break things" does NOT apply to government AI

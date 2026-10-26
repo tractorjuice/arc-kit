@@ -4,6 +4,7 @@
 > **Window:** 1 October – 31 December 2026 (13 weeks). **The launch was brought forward to 23 September**: the adopter form, `ADOPTERS.md`, the landing page and the launch article all went live that day, so the prep-week and week-1 rows below are done.
 > **Budget:** close to zero. Owned and earned channels only. The real constraint is maintainer time, budgeted at about 6 hours a week.
 > **Updated 11 October:** ArcKit was pitched to The Next New Thing's weekly GitHub roundup (§4, §5), and the 10-second intro videos now exist (§6).
+> **Updated 12 October:** a traction snapshot and progress against the KPIs (§7), the first two adopter submissions, and two 60-second videos (§5, §6).
 > **Updated 19 October:** a scan of public UK government code shows where AI coding assistants are already in use, and that controls lag behind them. It changes where to start (§2), adds an audience and a message (§2, §3), and adds a way to find adopters without telemetry (§4–§7). The scan covers public GitHub repositories only, so every figure from it is a lower bound.
 
 ---
@@ -150,6 +151,9 @@ Weeks start on Monday. Status is *Planned* for every row until work starts.
 | 1 (5 Oct) | Pitch to The Next New Thing's GitHub roundup (audience submissions), sent to hi@thenextnewthing.ai on 11 Oct. It opened with Archify and covered enterprise-architecture support and the regional and sector add-ons | Email (earned) | Maintainer. No reply yet | Sent |
 | 1 (5 Oct) | 10-second intro videos: 16:9 and 9:16, each with a fade-in title and with the logo built from its parts | Video | Made with HyperFrames on 11 Oct. Not yet posted | Done |
 | 2 (12 Oct) | Check the Friday 16 Oct episode, and the following Fridays, for ArcKit in audience submissions. If it's featured, post on the page, then the group, then Discord, and offer the 60-second recording | LinkedIn, Discord | Reactive slot. Same channel order as every other post | Planned |
+| 2 (12 Oct) | 60-second video, *"What we can see, and what we can't"*: stars, forks, contributors and releases, arckit.org visitors from 93 countries, where people find ArcKit (Microsoft Teams highlighted), "ArcKit never phones home", then the adopter ask | LinkedIn (4:5), Discord | Made with HyperFrames 12 Oct. Not yet posted | Done |
+| 2 (12 Oct) | 60-second video on the first two adopter use cases (#923 Vpnet Cloud Solutions, #924 Vpnet Consulting): "the AI drafts, people decide" | LinkedIn (4:5), Discord | Made 12 Oct. **Not to be posted until `eoskl` approves the on-screen wording**, as both submissions asked | Waiting on approval |
+| 2 (12 Oct) | Reply to #923 and #924: add both to `ADOPTERS.md` (both asked to be named), ask for wording approval for the video, and offer the case-study conversation and pilot workshop they ticked | GitHub | Maintainer. First candidates for case study #1 and the first pilots | Planned |
 | 2 (12 Oct) | Office hours #1 announced (held week 4) | LinkedIn, community Slack | Book a recurring slot (e.g. first Thursday of the month) | Planned |
 | 2 (12 Oct) | LinkedIn series begins, "One artefact, 20 minutes": SOBC on a public test repo | LinkedIn | 2 posts a week from here, alternating artefact walkthroughs and community posts | Planned |
 | 3 (19 Oct) | Pilot workshop offer: 4 free slots, direct outreach to known forkers, issue filers and article commenters | Email/DM, LinkedIn | Prioritise contacts with a public-sector link, then teams in the departments in §2 whose public code shows an AI coding assistant | Planned |
@@ -202,6 +206,8 @@ About 20% of LinkedIn slots stay open for release news and anything reactive (ne
 | Year-in-review article | Article | Adopter roll-up + 2027 roadmap tease | Must | Week 12 |
 | Intro videos (4) | Video | 10-second silent brand intros on the navy blueprint background. 16:9 (1920×1080) and 9:16 (1080×1920), each in two styles: a fade-in title, and the logo built from its parts (brackets, caret, cursor line, nodes, pin). They open demos and office-hours recordings, and suit LinkedIn, Discord, Shorts and Reels | Nice | Done (11 Oct). Not yet in the repo |
 | 60-second screen recording | Video | One command running end to end on a public test repo, opened by an intro video. Offered in The Next New Thing pitch | Nice | On request |
+| Traction video (60s) | Video | *"What we can see, and what we can't"*: the public numbers, then "we only know who uses it when they tell us", ending on arckit.org/public-sector. 4:5, silent | Nice | Done (12 Oct) |
+| Use-case video (60s) | Video | The first two adopter submissions, "the AI drafts, people decide", with their own words and the endorsement disclaimer. 4:5, silent | Nice | Done (12 Oct), waiting on the adopter's wording approval |
 | Warm-contact list | Internal | Teams in the §2 departments with public `CLAUDE.md`, `AGENTS.md` or Copilot instruction files, plus any repository with ArcKit's traces. Kept out of the public repo | Must | Week 3 |
 | "AI in UK government code" article | Article + LinkedIn | A re-run of the 19 October scan: headline figures, growth by quarter, the tools, and what teams are doing about controls. Method and lower-bound caveat included, and no ranking of low-share departments | Nice (Must if §10 says yes) | Week 4 |
 | AI coding rollout test repo | Public test repo | ArcKit governance pack for a fictional department rolling out an AI coding assistant, built from public sources only | Nice | Week 9 |
@@ -224,6 +230,25 @@ About 20% of LinkedIn slots stay open for release news and anything reactive (ne
 | Star rate outside release weeks | ≥3/day | Monthly traction report |
 | External PR authors | ≥5 in the quarter | Traction report |
 | Public UK government repositories with ArcKit's traces | Baseline from the week-3 search, higher at week 13 | Adopter trace search (monthly) |
+
+**Where we are on 12 October** (week 2):
+
+| KPI | Target | Now | Notes |
+|-----|--------|-----|-------|
+| Organisations publicly confirmed | 10 | 0 listed, 2 named submissions | #923 (Vpnet Cloud Solutions) and #924 (Vpnet Consulting), both from `eoskl` on 9 Oct. Not yet added to `ADOPTERS.md` |
+| Published case studies | 3 | 0 | Both submissions ticked "would consider a short case study" |
+| Adopter-form submissions | 25 | 2 | — |
+| Pilot workshops delivered | 4 | 0 | Both submissions asked for a pilot workshop |
+| Star rate outside release weeks | ≥3/day | about 0.1/day net | 2,252 stars on 1 Oct, 2,253 on 12 Oct. September averaged 1.4/day |
+| External PR authors | ≥5 | 1 | `thomas-jardinet` (#911, merged). Three external issues and proposals since 1 Oct |
+| UK public sector landing-page sessions | 1,500 | Not yet checked | Pull from GA4 at the next snapshot |
+
+**Traction snapshot, 12 October:**
+
+- **arckit.org (GA4, 29 June to 10 October):** 4,806 visitors from 93 countries and 13,911 page views. The most engaged visitors come from the United States, the United Kingdom, Australia, France, the Netherlands, Germany and Canada. Singapore (813 visitors) and China (161) show almost no engagement (2–4%), which looks like automated traffic, so leave them out of public claims. Last 7 days: 318 visitors and 968 page views. The most-read pages after the home page are the guide viewer, the command reference and use cases.
+- **GitHub (last 14 days):** 1,360 repo views from 480 unique visitors, and 3,530 clones by 675 unique cloners. Referrers, in order: Google, github.com, arckit.org, Bing, Medium, LinkedIn, **Microsoft Teams**, Ecosia. Teams also appears among arckit.org's GA4 sources: people are passing ArcKit links around inside organisations, which fits the enterprise and public-sector audience.
+- **Totals:** 2,253 stars, 282 forks, 14 contributors and 240 releases.
+- **Read:** the stars have stalled, but website and clone traffic shows steady use. The first named adopters arrived through the form, which is the campaign's conversion step working. The next job is turning them into a listing, a case study and a pilot.
 
 **Tracking notes:**
 

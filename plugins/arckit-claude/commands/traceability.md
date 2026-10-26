@@ -58,8 +58,9 @@ $ARGUMENTS
    For each requirement (BR, FR, NFR, INT, DR) from the hook's requirements table:
 
    **Step 1: Requirement Details** (pre-extracted by hook)
-   - Requirement ID, description, priority, and category are in the hook's table
+   - Requirement ID, description, and category are in the hook's table
    - The "Covered" and "Referenced By" columns show which design docs already reference each requirement
+   - The Priority column is the MoSCoW value on each requirement's `**Priority**:` line: `MUST_HAVE`, `SHOULD_HAVE`, `COULD_HAVE` or `WONT_HAVE`. `UNSPECIFIED` means the requirement has no priority line, or only the template's unfilled placeholder. Report those as a gap rather than guessing a priority. Use these values in every Priority column of the matrix
 
    **Step 2: Design Mapping**
    - Which HLD components implement this requirement?
@@ -106,21 +107,22 @@ $ARGUMENTS
    Use the hook's **COVERAGE SUMMARY** table directly — it already provides:
    - Overall coverage (covered / total / percentage)
    - Breakdown by category (Business, Functional, Non-Functional, Integration, Data)
-   - Breakdown by priority (MUST, SHOULD, MAY)
+   - Breakdown by MoSCoW priority (`MUST_HAVE`, `SHOULD_HAVE`, `COULD_HAVE`, `WONT_HAVE`, and `UNSPECIFIED` when any requirement has no priority)
 
-   **Do NOT recalculate these metrics.** Enrich them with additional context:
+   **Do NOT recalculate these metrics.** Enrich the metrics with additional context:
    - **Implementation Coverage**: % of requirements with implementation evidence (from vendor HLD/DLD prose)
    - **Test Coverage**: % of requirements with test references (from project artifacts)
 
    Apply these thresholds when flagging gaps:
-   - MUST requirements: Should be 100% covered
-   - SHOULD requirements: Should be > 80% covered
-   - MAY requirements: Can be < 50% covered
+   - MUST_HAVE requirements: Should be 100% covered
+   - SHOULD_HAVE requirements: Should be > 80% covered
+   - COULD_HAVE requirements: Can be < 50% covered
+   - WONT_HAVE requirements: agreed not to be delivered this time, so list them but leave them out of the coverage percentages and do not report them as gaps
 
 6. **Risk Assessment**:
 
    Flag high-risk gaps:
-   - **CRITICAL**: MUST requirements not covered
+   - **CRITICAL**: MUST_HAVE requirements not covered
    - **HIGH**: Security/compliance requirements without tests
    - **MEDIUM**: Performance requirements without validation
    - **LOW**: Optional features not implemented
@@ -148,7 +150,7 @@ $ARGUMENTS
    **Coverage Metrics**:
    - Visual representation (can use markdown tables/charts)
    - Breakdown by requirement type
-   - Breakdown by priority
+   - Breakdown by MoSCoW priority (MUST_HAVE, SHOULD_HAVE, COULD_HAVE, WONT_HAVE), from Step 5
    - Trend over time (if multiple traceability runs)
 
    **Action Items**:
@@ -251,17 +253,18 @@ User: `/arckit:traceability Generate traceability matrix for payment gateway pro
 
 You should:
 
-- Use the hook's requirements table (70 requirements pre-extracted with IDs, categories, priorities, coverage status)
-- Use the hook's coverage summary (by category and priority) as the baseline metrics
+- Use the hook's requirements table (70 requirements pre-extracted with IDs, categories, coverage status)
+- Grep the REQ file's `**Priority**:` lines for each requirement's MoSCoW priority (MUST_HAVE / SHOULD_HAVE / COULD_HAVE / WONT_HAVE)
+- Use the hook's coverage summary (by category) as the baseline metrics, and build the breakdown by MoSCoW priority from the Grep
 - Use the hook's orphan requirements and design-only references for gap analysis
 - Read vendor HLD/DLD files for component/module names (hook only extracted req ID references)
 - Build forward traceability using hook data + vendor prose:
   - FR-001 (Process payment) → PaymentService (HLD) → PaymentController.processPayment() (DLD) → Test: TC-001, TC-002
-  - NFR-S-001 (PCI-DSS) → SecurityArchitecture (HLD) → TokenVault, Encryption (DLD) → Test: SEC-001 to SEC-015
+  - NFR-SEC-001 (PCI-DSS) → SecurityArchitecture (HLD) → TokenVault, Encryption (DLD) → Test: SEC-001 to SEC-015
   - BR-003 (Cost savings) → [NO DESIGN MAPPING] - ORPHAN! (from hook's orphan list)
 - Flag gaps using hook's coverage data:
   - CRITICAL: BR-003 (Cost savings) has no success metrics defined
-  - HIGH: NFR-R-002 (99.99% uptime) has no disaster recovery tests
+  - HIGH: NFR-A-001 (99.99% uptime) has no disaster recovery tests
   - MEDIUM: NFR-P-003 (Database performance) missing load tests
 - **Overall Score**: 85/100 (Good, but gaps must be addressed)
 - **Recommendation**: APPROVED WITH CONDITIONS - address 3 critical gaps
@@ -270,7 +273,7 @@ You should:
 ## Important Notes
 
 - Traceability is required for compliance (ISO, FDA, automotive, etc.)
-- Every MUST requirement MUST be traced to tests (non-negotiable)
+- Every MUST_HAVE requirement MUST be traced to tests (non-negotiable)
 - Orphan design elements may indicate scope creep (investigate!)
 - Orphan requirements may indicate incomplete design (blocking issue!)
 - Traceability matrix should be updated throughout project lifecycle

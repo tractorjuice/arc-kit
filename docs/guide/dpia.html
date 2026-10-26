@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:dpia delivers a GDPR-compliant DPIA whenever processing could present high risk to individuals.">
+    <meta name="description" content="A data protection impact assessment (DPIA) is how you find and reduce the data protection risks of a project. UK GDPR requires one before any processing…">
     <meta name="author" content="ArcKit">
-    <title>Data Protection Impact Assessment (DPIA) Guide | ArcKit</title>
-    <meta property="og:title" content="Data Protection Impact Assessment (DPIA) Guide">
-    <meta property="og:description" content="/arckit:dpia delivers a GDPR-compliant DPIA whenever processing could present high risk to individuals.">
+    <title>DPIA: data protection impact assessment guide and template | ArcKit</title>
+    <meta property="og:title" content="DPIA: data protection impact assessment guide and template">
+    <meta property="og:description" content="A data protection impact assessment (DPIA) is how you find and reduce the data protection risks of a project. UK GDPR requires one before any processing that is likely to result in a high risk to individuals. This…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/dpia.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Data Protection Impact Assessment (DPIA) Guide">
-    <meta name="twitter:description" content="/arckit:dpia delivers a GDPR-compliant DPIA whenever processing could present high risk to individuals.">
+    <meta name="twitter:title" content="DPIA: data protection impact assessment guide and template">
+    <meta name="twitter:description" content="A data protection impact assessment (DPIA) is how you find and reduce the data protection risks of a project. UK GDPR requires one before any processing that is likely to result in a high risk to individuals. This…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/dpia.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/dpia.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/dpia.html",
-                "headline": "Data Protection Impact Assessment (DPIA) Guide",
-                "description": "/arckit:dpia delivers a GDPR-compliant DPIA whenever processing could present high risk to individuals.",
+                "headline": "DPIA: data protection impact assessment guide and template",
+                "description": "A data protection impact assessment (DPIA) is how you find and reduce the data protection risks of a project. UK GDPR requires one before any processing that is likely to result in a high risk to individuals. This…",
                 "url": "https://arckit.org/guide/dpia.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Data Protection Impact Assessment (DPIA) Guide",
+                        "name": "DPIA: data protection impact assessment guide and template",
                         "item": "https://arckit.org/guide/dpia.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Data Protection Impact Assessment (DPIA) Guide</h1>
-            <p class="app-page-hero__description">/arckit:dpia delivers a GDPR-compliant DPIA whenever processing could present high risk to individuals.</p>
+            <h1 class="app-page-hero__title">Data protection impact assessment (DPIA): when you need one and how</h1>
+            <p class="app-page-hero__description">A data protection impact assessment (DPIA) is how you find and reduce the data protection risks of a project. UK GDPR requires one before any processing that is likely to result in a high risk to individuals. This…</p>
         </div>
     </div>
 
@@ -437,11 +437,79 @@
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:dpia</code> delivers a GDPR-compliant DPIA whenever processing could present high risk to individuals.</p>
+<p>A data protection impact assessment (DPIA) is how you find and reduce the data protection risks of a project. UK GDPR requires one before any processing that is likely to result in a high risk to individuals. This guide covers when a DPIA is required, what it must contain, the ICO's steps for doing one, and how <code>/arckit:dpia</code> drafts one.</p>
+<blockquote>
+<p><strong>Guidance under review</strong>: the ICO says its DPIA guidance is under review because of changes made by the Data (Use and Access) Act. Check the ICO pages linked below before you rely on a detail.</p>
+</blockquote>
 <hr />
-<h2 id="minimum-inputs">Minimum Inputs</h2>
+<h2 id="when-a-dpia-is-required">When a DPIA is required</h2>
+<p><a href="https://www.legislation.gov.uk/eur/2016/679/article/35">Article 35 of UK GDPR</a> says the controller must carry out a DPIA before starting processing that is likely to result in a high risk to the rights and freedoms of individuals. This applies to any controller, public or private. Article 35(3) names three cases that always need one:</p>
+<ul>
+<li>A systematic and extensive evaluation of people, based on automated processing (including profiling), that leads to decisions with legal or similarly significant effects.</li>
+<li>Processing special category data, or criminal convictions and offences data, on a large scale.</li>
+<li>Systematic monitoring of a publicly accessible area on a large scale.</li>
+</ul>
+<p>The ICO's page <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/when-do-we-need-to-do-a-dpia/">When do we need to do a DPIA?</a> adds two more tests:</p>
+<ul>
+<li><strong>The ICO's list of high-risk processing</strong>: innovative technology, denial of service, large-scale profiling, biometrics, genetic data, data matching, invisible processing, tracking, targeting of children or other vulnerable individuals, and risk of physical harm. Some of these need a DPIA on their own. Others need one when they are combined with any of the screening criteria below.</li>
+<li><strong>Nine screening criteria from the European guidelines</strong>: evaluation or scoring; automated decision-making with legal or similar significant effect; systematic monitoring; sensitive data or data of a highly personal nature; data processed on a large scale; matching or combining datasets; data concerning vulnerable data subjects; innovative use or applying new technological or organisational solutions; and preventing data subjects from exercising a right or using a service or contract. In most cases two of these together mean you need a DPIA. The ICO says this is not a strict rule, and one may be enough.</li>
+</ul>
+<p>If in doubt, the ICO recommends doing a DPIA. Failing to do one when it is required can lead to enforcement action, including a fine of up to £8.7 million or 2% of global annual turnover if higher (<a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/what-is-a-dpia/">ICO: What is a DPIA?</a>).</p>
+<hr />
+<h2 id="what-a-dpia-must-contain">What a DPIA must contain</h2>
+<p>Article 35(7) sets the minimum content:</p>
+<table>
+<thead>
+<tr>
+<th>Content</th>
+<th>What it covers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Description of the processing</td>
+<td>A systematic description of the processing operations and their purposes, including any legitimate interest pursued</td>
+</tr>
+<tr>
+<td>Necessity and proportionality</td>
+<td>Whether the processing is necessary and proportionate to its purposes</td>
+</tr>
+<tr>
+<td>Risks to individuals</td>
+<td>An assessment of the risks to people's rights and freedoms</td>
+</tr>
+<tr>
+<td>Measures</td>
+<td>The safeguards, security measures and other mechanisms planned to address the risks and show compliance</td>
+</tr>
+</tbody>
+</table>
+<p>Article 35 also requires you to seek the advice of your data protection officer (DPO), where you have one, and to seek the views of the people affected or their representatives where appropriate. The ICO expects the DPIA to record the DPO's advice, the residual risk after mitigation, and whether you need to consult the ICO.</p>
+<hr />
+<div class="govuk-inset-text app-fde-panel">
+<p class="govuk-body"><strong>Heading into a gate, a procurement or a board?</strong> ArcKit FDE puts a senior architect in your team for five days to produce your principles, requirements, risk register and stakeholder map, at a fixed price. <a class="govuk-link" href="../fde/">See how ArcKit FDE works</a>.</p>
+</div>
+<h2 id="how-to-do-a-dpia">How to do a DPIA</h2>
+<p>The ICO's page <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/how-do-we-do-a-dpia/">How do we do a DPIA?</a> sets out seven steps:</p>
+<ol>
+<li>Identify the need for a DPIA.</li>
+<li>Describe the processing.</li>
+<li>Consider consultation.</li>
+<li>Assess necessity and proportionality.</li>
+<li>Identify and assess risks.</li>
+<li>Identify measures to mitigate the risks.</li>
+<li>Sign off and record outcomes.</li>
+</ol>
+<p>Do the DPIA before processing starts, and early enough to shape the design. The ICO publishes a <a href="https://ico.org.uk/media2/migrated/2553993/dpia-template.docx">sample DPIA template</a> (Word). Using it is optional: you can adapt it or use your own format if it covers the same elements.</p>
+<h3 id="if-a-high-risk-remains">If a high risk remains</h3>
+<p>If you cannot reduce a high risk, you must consult the ICO before you start the processing. The ICO's page <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/do-we-need-to-consult-the-ico/">Do we need to consult the ICO?</a> explains what to send. The ICO aims to give written advice within eight weeks, or up to 14 weeks in complex cases. It does not approve a DPIA. Its response can let the processing go ahead, advise further mitigation, issue a warning, or limit or ban the processing.</p>
+<h3 id="keep-it-under-review">Keep it under review</h3>
+<p>A DPIA is not a one-off exercise. Article 35(11) requires a review at least when the risk of the processing changes.</p>
+<hr />
+<h2 id="using-arckitdpia">Using /arckit:dpia</h2>
+<h3 id="minimum-inputs">Minimum Inputs</h3>
 <table>
 <thead>
 <tr>
@@ -464,31 +532,28 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="trigger-checklist">Trigger Checklist</h2>
-<p>Tick any that apply (two or more = DPIA mandatory per ICO):</p>
+<h3 id="screening-checklist">Screening Checklist</h3>
+<p>Tick any of the nine criteria that apply. Two or more usually means a DPIA is needed, and one can be enough. The Article 35(3) cases and some items on the ICO's list need a DPIA regardless (see <a href="#when-a-dpia-is-required">When a DPIA is required</a>).</p>
 <ul>
 <li>Evaluation or scoring (profiling, ranking, credit risk)</li>
 <li>Automated decisions with legal/significant effect</li>
 <li>Systematic monitoring or surveillance</li>
-<li>Special category or criminal offence data</li>
+<li>Sensitive data or data of a highly personal nature (special category, criminal offence data)</li>
 <li>Large scale processing (volume, geography, duration)</li>
 <li>Dataset matching/combining</li>
 <li>Vulnerable data subjects (children, patients, benefit claimants, etc.)</li>
 <li>Innovative technology (AI/ML, biometrics, IoT)</li>
-<li>Restricts ability to exercise data rights</li>
+<li>Prevents people exercising a right or using a service or contract</li>
 </ul>
 <p>ArcKit screens these automatically; use the list to confirm completeness.</p>
-<hr />
-<h2 id="command">Command</h2>
+<h3 id="command">Command</h3>
 <pre><code class="language-bash">/arckit:dpia Generate DPIA for &lt;project&gt;
 </code></pre>
 <p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-DPIA-v1.0.md</code></p>
 <blockquote>
 <p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
 </blockquote>
-<hr />
-<h2 id="action-flow">Action Flow</h2>
+<h3 id="action-flow">Action Flow</h3>
 <pre><code class="language-text">1. Confirm prerequisites (data model + stakeholders + risks)
 2. Run /arckit:dpia
 3. Review:
@@ -496,10 +561,9 @@
    - Risk table and residual scores
    - Mitigation action plan and owners
 4. Log actions in backlog/assurance tracker
-5. Re-run after mitigations; seek ICO consultation if residual risk remains “High”
+5. Re-run after mitigations; if a high risk remains, consult the ICO before processing starts
 </code></pre>
-<hr />
-<h2 id="sections-to-validate">Sections to Validate</h2>
+<h3 id="sections-to-validate">Sections to Validate</h3>
 <table>
 <thead>
 <tr>
@@ -536,12 +600,18 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="linkages">Linkages</h2>
+<h3 id="linkages">Linkages</h3>
 <ul>
 <li>Feed mitigation actions into <code>/arckit:risk</code> and <code>/arckit:servicenow</code>.</li>
 <li>Reference DPIA outcomes in <code>/arckit:ai-playbook</code> and <code>/arckit:secure</code>.</li>
-<li>Store signed versions with review cadence (minimum annual refresh or when processing changes).</li>
+<li>Store signed versions with a review cadence. UK GDPR requires a review at least when the risk changes; the ArcKit DPIA also sets a 12-month review trigger.</li>
+</ul>
+<hr />
+<h2 id="useful-links">Useful Links</h2>
+<ul>
+<li><a href="https://www.legislation.gov.uk/eur/2016/679/article/35">UK GDPR Article 35</a> (<a href="http://legislation.gov.uk">legislation.gov.uk</a>)</li>
+<li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/">ICO guidance on DPIAs</a></li>
+<li><a href="https://ico.org.uk/media2/migrated/2553993/dpia-template.docx">ICO sample DPIA template</a> (Word)</li>
 </ul>
 </div>
 <script src="../films.js"></script>

@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:finops creates a cloud financial management strategy covering cost visibility, optimization, governance, and forecasting.">
+    <meta name="description" content="FinOps is a practice that brings engineering, finance and business teams together to manage the cost and value of cloud and other technology spend. This…">
     <meta name="author" content="ArcKit">
-    <title>FinOps Strategy Playbook | ArcKit</title>
-    <meta property="og:title" content="FinOps Strategy Playbook">
-    <meta property="og:description" content="/arckit:finops creates a cloud financial management strategy covering cost visibility, optimization, governance, and forecasting.">
+    <title>FinOps framework and cloud cost management guide | ArcKit</title>
+    <meta property="og:title" content="FinOps framework and cloud cost management guide">
+    <meta property="og:description" content="FinOps is a practice that brings engineering, finance and business teams together to manage the cost and value of cloud and other technology spend. This guide covers the FinOps Foundation framework (principles, phases…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/finops.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="FinOps Strategy Playbook">
-    <meta name="twitter:description" content="/arckit:finops creates a cloud financial management strategy covering cost visibility, optimization, governance, and forecasting.">
+    <meta name="twitter:title" content="FinOps framework and cloud cost management guide">
+    <meta name="twitter:description" content="FinOps is a practice that brings engineering, finance and business teams together to manage the cost and value of cloud and other technology spend. This guide covers the FinOps Foundation framework (principles, phases…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/finops.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/finops.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/finops.html",
-                "headline": "FinOps Strategy Playbook",
-                "description": "/arckit:finops creates a cloud financial management strategy covering cost visibility, optimization, governance, and forecasting.",
+                "headline": "FinOps framework and cloud cost management guide",
+                "description": "FinOps is a practice that brings engineering, finance and business teams together to manage the cost and value of cloud and other technology spend. This guide covers the FinOps Foundation framework (principles, phases…",
                 "url": "https://arckit.org/guide/finops.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "FinOps Strategy Playbook",
+                        "name": "FinOps framework and cloud cost management guide",
                         "item": "https://arckit.org/guide/finops.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">FinOps Strategy Playbook</h1>
-            <p class="app-page-hero__description">/arckit:finops creates a cloud financial management strategy covering cost visibility, optimization, governance, and forecasting.</p>
+            <h1 class="app-page-hero__title">FinOps framework: a guide to cloud cost management</h1>
+            <p class="app-page-hero__description">FinOps is a practice that brings engineering, finance and business teams together to manage the cost and value of cloud and other technology spend. This guide covers the FinOps Foundation framework (principles, phases…</p>
         </div>
     </div>
 
@@ -437,11 +437,104 @@
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:finops</code> creates a cloud financial management strategy covering cost visibility, optimization, governance, and forecasting.</p>
+<p>FinOps is a practice that brings engineering, finance and business teams together to manage the cost and value of cloud and other technology spend. This guide covers the FinOps Foundation framework (principles, phases, personas and maturity) and how <code>/arckit:finops</code> writes a cloud cost management strategy.</p>
 <hr />
-<h2 id="inputs">Inputs</h2>
+<h2 id="what-finops-is">What FinOps is</h2>
+<p>The <a href="https://www.finops.org/introduction/what-is-finops/">FinOps Foundation</a> (definition updated March 2026) says: &quot;FinOps is an operational framework and cultural practice which maximizes the business value of technology, enables timely data-driven decision making, and creates financial accountability through collaboration between engineering, finance, and business teams.&quot;</p>
+<p>The Foundation applies FinOps beyond public cloud, to other technology spend including SaaS, licensing, data centres and data cloud platforms.</p>
+<hr />
+<h2 id="the-finops-framework">The FinOps framework</h2>
+<p>The <a href="https://www.finops.org/framework/">FinOps Framework</a> sets out principles, phases, personas, domains and a maturity model.</p>
+<h3 id="principles">Principles</h3>
+<p>The Foundation lists six <a href="https://www.finops.org/framework/principles/">principles</a>, in no particular order:</p>
+<ol>
+<li>Teams need to collaborate.</li>
+<li>Business value drives technology decisions.</li>
+<li>Everyone takes ownership for their technology usage.</li>
+<li>FinOps data should be accessible, timely, and accurate.</li>
+<li>FinOps should be enabled centrally.</li>
+<li>Take advantage of the variable cost model of the cloud.</li>
+</ol>
+<h3 id="phases">Phases</h3>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>What happens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Inform</td>
+<td>Examine cost, usage and efficiency data to understand where you are: allocation, reporting, forecasting and unit economics.</td>
+</tr>
+<tr>
+<td>Optimize</td>
+<td>Find ways to improve efficiency and value. Usage changes involve engineering teams; rate changes involve procurement and leadership.</td>
+</tr>
+<tr>
+<td>Operate</td>
+<td>Put the chosen changes into practice, with accountability shared across engineering, finance and business teams.</td>
+</tr>
+</tbody>
+</table>
+<p>The <a href="https://www.finops.org/framework/phases/">phases</a> are a loop, not a sequence. Teams cycle through them quickly and keep going back to Inform to check the effect of what they changed.</p>
+<h3 id="personas">Personas</h3>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Personas</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core (always engaged)</td>
+<td>FinOps Practitioner, Engineering, Finance, Product, Procurement, Leadership</td>
+</tr>
+<tr>
+<td>Allied (support the practice)</td>
+<td>ITAM, ITFM, ITSM, Security, Sustainability</td>
+</tr>
+</tbody>
+</table>
+<h3 id="domains">Domains</h3>
+<p>The framework groups the outcomes of a FinOps practice into four domains: Understand Usage and Cost, Quantify Business Value, Optimize Usage and Cost, and Manage the FinOps Practice.</p>
+<hr />
+<h2 id="finops-maturity-crawl-walk-run">FinOps maturity: crawl, walk, run</h2>
+<p>The <a href="https://www.finops.org/framework/maturity-model/">FinOps maturity model</a> rates each capability separately. An organisation can be at Run for one capability and Crawl for another, and the Foundation says the goal should never be simply to reach Run in every capability. Put the effort where it brings the most business value.</p>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>What it looks like</th>
+<th>Example KPIs from the Foundation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Crawl</td>
+<td>Little reporting and tooling. Basic KPIs, processes and policies are defined. The capability is understood but not followed by every major team.</td>
+<td>At least 70% of cost allocated to a known owner; forecast within 20% of actual</td>
+</tr>
+<tr>
+<td>Walk</td>
+<td>The capability is understood and followed across the organisation. Automation or processes cover most requirements. Hard edge cases are identified.</td>
+<td>At least 85% of cost allocated; forecast within 10% of actual</td>
+</tr>
+<tr>
+<td>Run</td>
+<td>Every team understands and follows the capability. Hard edge cases are being dealt with. Automation is the preferred approach.</td>
+<td>Over 90% of spend allocated; forecast within 5% of actual</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="using-arckitfinops">Using /arckit:finops</h2>
+<p><code>/arckit:finops</code> creates a cloud financial management strategy covering cost visibility, optimization, governance, and forecasting.</p>
+<h3 id="inputs">Inputs</h3>
 <table>
 <thead>
 <tr>
@@ -468,13 +561,11 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="command">Command</h2>
+<h3 id="command">Command</h3>
 <pre><code class="language-bash">/arckit:finops Create FinOps strategy for &lt;initiative&gt;
 </code></pre>
 <p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-FINOPS-v1.0.md</code></p>
-<hr />
-<h2 id="strategy-structure">Strategy Structure</h2>
+<h3 id="strategy-structure">Strategy Structure</h3>
 <table>
 <thead>
 <tr>
@@ -545,8 +636,8 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="finops-maturity-levels">FinOps Maturity Levels</h2>
+<h3 id="maturity-in-the-strategy">Maturity in the strategy</h3>
+<p>The strategy rates the current and target level of each FinOps capability, grouped by the Foundation's domains, as the Foundation does. An overall level, if given, is only a labelled summary of those ratings.</p>
 <table>
 <thead>
 <tr>
@@ -573,8 +664,8 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="tagging-strategy-example">Tagging Strategy Example</h2>
+<p>The table is a rough guide to what each level looks like for cost visibility; the Foundation's own descriptions and sample KPIs per level are on its <a href="https://www.finops.org/framework/maturity-model/">maturity model page</a>.</p>
+<h3 id="tagging-strategy-example">Tagging Strategy Example</h3>
 <table>
 <thead>
 <tr>
@@ -616,8 +707,7 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="one-page-workflow">One-Page Workflow</h2>
+<h3 id="one-page-workflow">One-Page Workflow</h3>
 <table>
 <thead>
 <tr>
@@ -654,6 +744,8 @@
 </tr>
 </tbody>
 </table>
+<h3 id="uk-government-spend-approval">UK government spend approval</h3>
+<p>The UK government's digital and technology spend controls were removed from 1 April 2026 and replaced with a more devolved approach, set out in the <a href="https://www.gov.uk/government/publications/digital-assurance-playbook">Digital Assurance Playbook</a>. If the strategy's UK Government Compliance section refers to Cabinet Office spend controls, replace that with your organisation's own approval and assurance route.</p>
 <hr />
 <h2 id="review-checklist">Review Checklist</h2>
 <ul>
@@ -663,7 +755,7 @@
 <li>Governance framework matches organizational structure.</li>
 <li>Budget alerts configured at 50%, 75%, 90%, 100%.</li>
 <li>Commitment management plan defined (RI/Savings Plans).</li>
-<li>UK Government spending controls addressed (if applicable).</li>
+<li>UK Government spend approval route addressed (if applicable), under the Digital Assurance Playbook rather than the former spend controls.</li>
 </ul>
 <hr />
 <h2 id="key-metrics">Key Metrics</h2>
@@ -705,6 +797,7 @@
 </table>
 <hr />
 <h2 id="key-principles">Key Principles</h2>
+<p>These are the working principles the strategy is written to. The FinOps Foundation's own six principles are listed above.</p>
 <ol>
 <li><strong>Cost Visibility First</strong>: You cannot optimize what you cannot see.</li>
 <li><strong>Shared Accountability</strong>: Engineering teams own their cloud spend.</li>
@@ -712,6 +805,13 @@
 <li><strong>Variable Cost Model</strong>: Cloud spend should scale with business value.</li>
 <li><strong>Continuous Optimization</strong>: Optimization is ongoing, not one-time.</li>
 </ol>
+<hr />
+<h2 id="useful-links">Useful Links</h2>
+<ul>
+<li><a href="https://www.finops.org/introduction/what-is-finops/">What is FinOps?</a> (FinOps Foundation)</li>
+<li><a href="https://www.finops.org/framework/">The FinOps Framework</a>: <a href="https://www.finops.org/framework/principles/">principles</a>, <a href="https://www.finops.org/framework/phases/">phases</a>, <a href="https://www.finops.org/framework/personas/">personas</a> and <a href="https://www.finops.org/framework/maturity-model/">maturity model</a></li>
+<li><a href="https://www.gov.uk/government/publications/digital-assurance-playbook">Digital Assurance Playbook</a> (<a href="http://GOV.UK">GOV.UK</a>, in force from 1 April 2026)</li>
+</ul>
 </div>
 <script src="../films.js"></script>
         </div>

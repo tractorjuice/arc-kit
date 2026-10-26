@@ -214,7 +214,7 @@ From Functional Requirements (FR-xxx):
 ### 3.2 Non-Functional Expertise (MUST Have)
 
 From Non-Functional Requirements (NFR-xxx):
-- **Security**: [Skills for NFR-S-xxx requirements, reference security principles]
+- **Security**: [Skills for NFR-SEC-xxx requirements, reference security principles]
 - **Performance**: [Skills for NFR-P-xxx requirements]
 - **Compliance**: [Skills for NFR-C-xxx requirements, reference compliance principles]
 - **Integration**: [Skills for INT-xxx requirements]
@@ -283,7 +283,7 @@ From SHOULD requirements:
 **Performance (NFR-P-xxx)**:
 - [requirement with measurable targets]
 
-**Security (NFR-S-xxx)**:
+**Security (NFR-SEC-xxx)**:
 - [requirement with compliance references]
 
 **Compliance (NFR-C-xxx)**:
@@ -454,7 +454,7 @@ Reference: Generate with `/arckit:diagram`, `/arckit:data-model`
 - ✅ **Test plans** and test cases (linked to requirements)
 - ✅ **Test results** and coverage reports
 - ✅ **Performance test results** (NFR-P-xxx validation)
-- ✅ **Security test results** (NFR-S-xxx validation)
+- ✅ **Security test results** (NFR-SEC-xxx validation)
 - ✅ **Compliance evidence** (NFR-C-xxx validation)
 
 ### 12.4 Documentation
@@ -524,7 +524,10 @@ Vendors must provide:
 6. **Evaluate Proposals**: Using criteria in Section 11
 7. **Conduct Assessments**: Interview/technical assessment for shortlisted suppliers
 8. **Award Contract**: To highest-scoring supplier
-9. **Publish Award Details**: On Contracts Finder (legal requirement)
+9. **Publish Award Details**: On Find a Tender (https://www.find-tender.service.gov.uk/), under the Procurement Act 2023:
+   - UK6 contract award notice before entering into the call-off (s.50(1))
+   - UK7 contract details notice within 30 days of entering into it (s.53(1)); over £5 million, also publish the contract within 90 days (s.53(3))
+   - Below-threshold call-off instead: UK7 only, as soon as reasonably practicable, if £12,000+ (central government) or £30,000+ (others) (s.87(3))
 
 ### 14.2 For Architecture Team
 
@@ -552,7 +555,7 @@ Vendors must provide:
 - **Digital Marketplace**: https://www.digitalmarketplace.service.gov.uk/
 - **DOS Buyers Guide**: https://www.gov.uk/guidance/digital-outcomes-and-specialists-buyers-guide
 - **General Buying Guide**: https://www.gov.uk/guidance/buying-and-selling-on-the-digital-marketplace
-- **Contracts Finder**: https://www.gov.uk/contracts-finder
+- **Find a Tender** (central digital platform for Procurement Act 2023 notices): https://www.find-tender.service.gov.uk/
 
 ### 15.2 Project Documents
 
@@ -586,7 +589,7 @@ Vendors must provide:
 **Transparency**:
 - ✅ Requirements are published publicly on Digital Marketplace
 - ✅ Evaluation criteria must be published before receiving proposals
-- ✅ Award details must be published on Contracts Finder after completion
+- ✅ Award notices go on Find a Tender, not Contracts Finder: UK6 before entering into the call-off, UK7 within 30 days after (Procurement Act 2023 s.50(1), s.53(1))
 
 **Fair Competition**:
 - ✅ All suppliers have equal access to information

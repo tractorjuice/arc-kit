@@ -4,6 +4,8 @@
 
 `/arckit:tcop` assembles evidence for the 13-point Technology Code of Practice, flagging gaps and recommended actions.
 
+> **Full guide**: [Technology Code of Practice (TCoP)](../tcop.md) covers who TCoP applies to, how it is assessed under the Digital Assurance Playbook since April 2026, each point's GOV.UK guidance and the readiness checklist. This page is the short evidence-matrix summary.
+
 ---
 
 ## Command
@@ -30,7 +32,7 @@ Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`.
 | 8 | Reuse & collaboration | Use of GOV.UK components, shared code, community contributions | `/arckit:research`, `/arckit:story` |
 | 9 | Integrate & adapt | Integration requirements, migration plan, legacy dependencies | `/arckit:requirements`, `/arckit:diagram` |
 | 10 | Use data better | Data strategy, quality metrics, analytics plan | `/arckit:data-model`, `/arckit:story` |
-| 11 | Purchasing strategy | Procurement route, spend control evidence | `/arckit:sow`, `/arckit:evaluate` |
+| 11 | Purchasing strategy | Procurement route, approval evidence | `/arckit:sow`, `/arckit:evaluate` |
 | 12 | Sustainability | Hosting carbon data, efficiency plan, end-of-life strategy | `/arckit:plan`, service design |
 | 13 | Service Standard | Assessment prep doc, metrics, ops model | `/arckit:service-assessment`, `/arckit:servicenow` |
 
@@ -40,9 +42,9 @@ Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`.
 
 - Evidence attached for each point (or gap logged with owner/due date).
 - Deviations justified and escalated where policy allows.
-- Spend control documentation updated with latest TCoP results.
+- Approval and assurance papers updated with the latest TCoP results.
 - Assessment report shared with SRO, Delivery Manager, Service Owner.
-- GovS 005 governance obligations reviewed (SRO appointment, lifecycle stage, spend control).
+- GovS 005 governance obligations reviewed (SRO appointment, lifecycle stage, approvals).
 
 ---
 
@@ -59,5 +61,6 @@ Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`.
 ## Useful Links
 
 - Official guidance: [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice)
+- Assurance and approvals from 1 April 2026: [Digital Assurance Playbook](https://www.gov.uk/government/publications/digital-assurance-playbook)
 - Parent standard: [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital)
 - Align results with `/arckit:plan` gates and `/arckit:story` retrospectives for governance history.

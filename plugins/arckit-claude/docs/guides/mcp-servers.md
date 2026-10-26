@@ -161,7 +161,8 @@ Provides access to official AWS documentation, service details, regional availab
 
 - **Type**: HTTP (remote endpoint)
 - **Commands**: `/arckit:aws-research`
-- **Tools**: `search_documentation`, `read_documentation`, `get_regional_availability`, `list_regions`, `recommend`
+- **Tools**: `search_documentation`, `read_documentation`, `get_regional_availability`, `list_regions`, `retrieve_skill`
+- **Compared with AWS's other documentation servers**: see [AWS documentation MCP servers](aws-documentation-mcp.md)
 - **Setup**: None — works immediately after plugin installation
 
 ### Microsoft Learn
@@ -183,11 +184,11 @@ Provides access to Google Cloud documentation for GCP service research.
 
 - **Type**: HTTP (remote endpoint)
 - **Commands**: `/arckit:gcp-research`
-- **Tools**: `search_documents`, `get_document`, `batch_get_documents`
+- **Tools**: `search_documents`, `get_documents`, `answer_query` (Google replaced `get_document` and `batch_get_documents` with `get_documents` on 8 March 2026)
 
 **Setup**:
 
-1. Get a free API key from [Google AI Studio](https://aistudio.google.com/apikey) or the [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+1. In the [Google Cloud Console](https://console.cloud.google.com/apis/credentials), enable the Developer Knowledge API for your project, create an API key, and restrict the key to that API (see Google's [Developer Knowledge MCP setup](https://developers.google.com/knowledge/mcp))
 2. **Claude Code:** the ArcKit plugin asks for the key when you enable it, as a sensitive setting kept in your system keychain. To add or change it later, open `/plugin`, choose **arckit**, and open its configure screen (or run `claude plugin configure arckit` on Claude Code v2.1.285+). ArcKit passes it to the server in a request header; it isn't written to any file.
 3. **Other assistants** (Codex CLI, Gemini CLI, OpenCode, GitHub Copilot, Kimi, Mistral Vibe) read it from the environment instead:
 
@@ -268,7 +269,7 @@ Invalid MCP server config for 'datacommons-mcp': Missing environment variables: 
 
 ### API key works but commands fail
 
-- **Google**: Ensure the API key has the "Generative Language API" enabled in Google Cloud Console
+- **Google**: Ensure the Developer Knowledge API is enabled for the key's project and included in the key's API restrictions; otherwise requests fail with "403 API target restriction"
 - **Data Commons**: Ensure the key is active and not rate-limited
 
 ---
@@ -371,8 +372,8 @@ For detailed workflows and real-world examples, see the [Architecture Productivi
 ## Resources
 
 - [AWS Knowledge MCP](https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server) — AWS documentation server
-- [Microsoft Learn MCP](https://learn.microsoft.com/api/mcp) — Azure documentation server
-- [Google Developer Knowledge MCP](https://developerknowledge.googleapis.com/mcp) — Google Cloud documentation server
+- [Microsoft Learn MCP](https://learn.microsoft.com/training/support/mcp) — Azure documentation server (see also [Microsoft Learn MCP server](microsoft-learn-mcp.md))
+- [Google Developer Knowledge MCP](https://developers.google.com/knowledge/mcp) — Google Cloud documentation server
 - [Data Commons](https://datacommons.org) — Public statistical data
 - [Model Context Protocol](https://modelcontextprotocol.io/) — MCP specification
 - [Anthropic Skills](https://github.com/anthropics/skills) — Document skills (PDF, DOCX, PPTX, XLSX)

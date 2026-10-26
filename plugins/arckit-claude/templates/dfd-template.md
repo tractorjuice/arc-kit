@@ -30,7 +30,7 @@
 
 ### `data-flow-diagram` Format
 
-Render with: `pip install data-flow-diagram` then `dfd < file.dfd` (produces SVG/PNG with true Yourdon-DeMarco notation)
+Render with the [`data-flow-diagram`](https://github.com/pbauermeister/dfd) tool, which needs [Graphviz](https://graphviz.org/download/): run `pip install data-flow-diagram`, copy the block below into `context.dfd`, then run `data-flow-diagram context.dfd -o context.svg`. The tool's `--markdown` mode only reads `` ```data-flow-diagram OUTFILE `` fences, so it does not render this document directly.
 
 ```dfd
 {dfd_context_code}
@@ -47,6 +47,8 @@ View at [mermaid.live](https://mermaid.live) or in GitHub/VS Code markdown previ
 ---
 
 ## Level 1 DFD
+
+Yourdon calls this diagram, the first breakdown below the context diagram, "Figure 0".
 
 ### `data-flow-diagram` Format
 
@@ -115,7 +117,7 @@ View at [mermaid.live](https://mermaid.live) or in GitHub/VS Code markdown previ
 
 | Tool | Type | Yourdon-DeMarco | How to Use |
 |------|------|-----------------|------------|
-| **data-flow-diagram** | CLI (Python) | True notation | `pip install data-flow-diagram` then `dfd < file.dfd` |
+| **data-flow-diagram** | CLI (Python) | True notation | Install [Graphviz](https://graphviz.org/download/), `pip install data-flow-diagram`, copy a `dfd` block into `file.dfd`, then `data-flow-diagram file.dfd -o file.svg` |
 | **Mermaid** | Text-to-diagram | Approximate | Paste into [mermaid.live](https://mermaid.live) or view in GitHub |
 | **draw.io** | Online editor | True notation | Open [app.diagrams.net](https://app.diagrams.net), enable "Data Flow Diagrams" shapes |
 | **Visual Paradigm** | Online editor | True notation | [online.visual-paradigm.com](https://online.visual-paradigm.com) |

@@ -94,20 +94,75 @@ MERMAID_JS = ('<script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/me
               'crossorigin="anonymous"></script>')
 
 # Site-only additions for the guides UK public sector teams search for
-# (OpenSEO keyword research, 18 October 2026). `title` replaces the guide's
-# H1 in the page title and preview cards; `fde` adds the ArcKit FDE panel.
+# (OpenSEO keyword research, 18 October 2026; site audit, 25 October 2026).
+# `title` replaces the guide's H1 in the page title and preview cards; `fde`
+# adds the ArcKit FDE panel, before the section named by `fde_before` (a heading
+# id) or else before the guide's first rule; `canonical` names the guide whose
+# page is the preferred copy, for a short reference page that the main guide
+# now covers in full, so the two stop competing for the same searches. Such a
+# page keeps its own page but leaves the sitemap.
 # They live here, not in the guide, because docs/guides/ also ships inside the
 # plugins and the CLI, where an offer for a paid service does not belong.
 GUIDE_EXTRAS: dict[str, dict] = {
-    "risk": {"title": "Orange Book risk register: template and playbook", "fde": True},
-    "traceability": {"title": "Requirements traceability matrix guide", "fde": True},
-    "stakeholders": {"title": "Stakeholder map and analysis playbook", "fde": True},
+    # UK public sector standards and documents: the FDE panel sits before the "how to" section.
+    "dpia": {"title": "DPIA: data protection impact assessment guide and template", "fde": True,
+             "fde_before": "how-to-do-a-dpia"},
+    "risk": {"title": "Risk register template: Orange Book guide", "fde": True,
+             "fde_before": "building-and-reviewing-a-risk-register"},
+    "sobc": {"title": "Business case template: Green Book five case model", "fde": True,
+             "fde_before": "business-case-stages"},
+    "requirements": {"title": "Non-functional requirements and requirements documents", "fde": True,
+                     "fde_before": "reviewing-a-requirements-document"},
+    "traceability": {"title": "Requirements traceability matrix: guide and template", "fde": True,
+                     "fde_before": "keeping-the-matrix-current"},
+    "stakeholders": {"title": "Stakeholder mapping and analysis: power/interest grid", "fde": True,
+                     "fde_before": "how-to-map-stakeholders"},
     "principles": {"title": "Architecture principles playbook", "fde": True},
-    "requirements": {"fde": True},
-    "sobc": {"title": "Green Book business case (SOBC) playbook", "fde": True},
-    "tcop": {"title": "Technology Code of Practice (TCoP) review guide", "fde": True},
-    "service-assessment": {"title": "GDS Service Standard assessment preparation", "fde": True},
+    "service-assessment": {"title": "GDS Service Standard assessment: how to prepare", "fde": True,
+                           "fde_before": "preparing-for-an-assessment"},
+    "jsp-936": {"title": "JSP 936: MOD Dependable AI assurance guide", "fde": True,
+                "fde_before": "preparing-jsp-936-evidence"},
+    "ai-playbook": {"title": "AI Playbook for the UK Government: the 10 principles", "fde": True,
+                    "fde_before": "preparing-an-ai-playbook-assessment"},
+    "uk-government/ai-playbook": {"canonical": "ai-playbook"},
+    "tcop": {"title": "Technology Code of Practice (TCoP): 13 points and evidence", "fde": True,
+             "fde_before": "preparing-for-a-tcop-assessment"},
+    "uk-government/technology-code-of-practice": {"canonical": "tcop"},
+    "uk-government/algorithmic-transparency": {"title": "ATRS: who must publish a record, and how", "fde": True,
+                                               "fde_before": "completing-and-publishing-a-record"},
+    "secure": {"title": "UK government Secure by Design: the 10 principles", "fde": True,
+               "fde_before": "evidence-an-assurer-looks-for"},
+    "uk-government/secure-by-design": {"canonical": "secure"},
+    "mod-secure": {"title": "MOD Secure by Design: the 7 principles and assessment", "fde": True,
+                   "fde_before": "evidence-by-theme"},
+    "uk-mod/secure-by-design": {"canonical": "mod-secure"},
+    "tenders": {"title": "Find a Tender and Contracts Finder: award data guide", "fde": True,
+                "fde_before": "using-arckittenders"},
+    "gcloud-search": {"title": "G-Cloud 15 and G-Cloud 14: Digital Marketplace guide", "fde": True,
+                      "fde_before": "how-to-search-and-buy-g-cloud-services"},
+    # Generic architecture and delivery documents: a search-led title, no FDE panel.
+    "data-model": {"title": "Data model and entity relationship diagram (ERD) guide"},
+    "dfd": {"title": "Data flow diagram (DFD): symbols, levels and balancing"},
+    "diagram": {"title": "C4 model diagrams: context, container and component"},
+    "wardley": {"title": "Wardley mapping: how to draw a Wardley map"},
+    "sow": {"title": "Statement of work template: what to include"},
+    "backlog": {"title": "User story template and product backlog guide"},
+    "servicenow": {"title": "CMDB guide: ServiceNow CMDB and service design"},
+    "finops": {"title": "FinOps framework and cloud cost management guide"},
+    "mlops": {"title": "MLOps framework: lifecycle, maturity and governance"},
+    "data-mesh-contract": {"title": "Data mesh and data contracts: data product guide"},
+    "aws-research": {"title": "AWS Well-Architected Framework: the six pillars"},
+    "aws-documentation-mcp": {"title": "AWS Knowledge and AWS Documentation MCP servers compared"},
+    "microsoft-learn-mcp": {"title": "Microsoft Learn MCP server: setup, tools and endpoint"},
+    "gcp-research": {"title": "Google Developer Knowledge MCP server and GCP research"},
+    "grants": {"title": "Innovate UK grants and UK government funding guide"},
 }
+
+# Guides open with "**ArcKit Version**: [VERSION]", a placeholder nothing fills
+# in. The site drops it rather than print the bracket on every page; filling in
+# the release number would rewrite every guide page at every release.
+VERSION_LINE_RE = re.compile(r"^\*\*ArcKit Version\*\*: \[VERSION\]\n", re.M)
+VERSION_TAIL_RE = re.compile(r"\s*\|\s*\*\*ArcKit Version\*\*: \[VERSION\]")
 
 FDE_PANEL = (
     '<div class="govuk-inset-text app-fde-panel">\n'
@@ -401,13 +456,22 @@ def films_block(films: list[dict]) -> str:
     return '<div id="films" class="app-films">\n' + "\n".join(cards) + "\n</div>"
 
 
-def with_fde_panel(body: str, root: str) -> str:
-    """Place the FDE panel after the guide's opening paragraph (before its first rule)."""
+def with_fde_panel(body: str, root: str, before: str = "") -> str:
+    """Place the FDE panel before the named section, or else after the guide's opening paragraph (before its first rule)."""
     panel = FDE_PANEL.format(href=f"{root}fde/")
+    at = body.find(f'<h2 id="{before}"') if before else -1
+    if at != -1:
+        return body[:at] + panel + body[at:]
     at = body.find("<hr />")
     if at == -1:
         at = body.find("</p>\n") + len("</p>\n") if "</p>\n" in body else 0
     return body[:at] + panel + body[at:]
+
+
+def canonical_url(name: str, url: str) -> str:
+    """A guide page's preferred URL: its own, unless GUIDE_EXTRAS names the guide that covers it."""
+    target = GUIDE_EXTRAS.get(name, {}).get("canonical")
+    return f"{SITE}/guide/{target}.html" if target else url
 
 
 def guide_pages(site: Site) -> dict[Path, str]:
@@ -416,7 +480,7 @@ def guide_pages(site: Site) -> dict[Path, str]:
     pages: dict[Path, str] = {}
     for name in sorted(site.guides):
         source = f"docs/guides/{name}.md"
-        md = (REPO / source).read_text(encoding="utf-8")
+        md = VERSION_TAIL_RE.sub("", VERSION_LINE_RE.sub("", (REPO / source).read_text(encoding="utf-8")))
         page = Page("guide", f"guide/{name}.html", source)
         depth = page.out.count("/")
         root = "../" * depth
@@ -430,7 +494,7 @@ def guide_pages(site: Site) -> dict[Path, str]:
 
         body = render_body(md, page, site)
         if extras.get("fde"):
-            body = with_fde_panel(body, root)
+            body = with_fde_panel(body, root, extras.get("fde_before", ""))
         content = [f'<a href="{root}{section_url}" class="govuk-back-link govuk-!-margin-bottom-6">Back to {section}</a>']
         if films.get(name):
             content.append(films_block(films[name]))
@@ -440,7 +504,8 @@ def guide_pages(site: Site) -> dict[Path, str]:
         content += diagram_scripts(body, root)
 
         pages[GUIDE_OUT / f"{name}.html"] = fill(template, depth, {
-            "page:meta": meta_block(title, clip(lead, 155), clip(lead, 220), url, DEFAULT_IMAGE, f"{SITE}/guides/{name}.md"),
+            "page:meta": meta_block(title, clip(lead, 155), clip(lead, 220), canonical_url(name, url), DEFAULT_IMAGE,
+                                    f"{SITE}/guides/{name}.md"),
             "page:jsonld": jsonld_block([
                 {"@type": "TechArticle", "@id": url, "headline": title, "description": clip(lead, 220),
                  "url": url, "inLanguage": "en-GB", "author": ARCKIT, "publisher": ARCKIT,
@@ -751,6 +816,8 @@ def on_github_page(page: str, data: dict) -> str:
 def sitemap_text(current: str, site: Site, listed: list[dict[str, str]]) -> str:
     entries = []
     for name in sorted(site.guides):
+        if GUIDE_EXTRAS.get(name, {}).get("canonical"):
+            continue
         entries.append((f"{SITE}/guide/{name}.html", None, "monthly", "0.7" if name in GUIDE_EXTRAS else "0.6"))
     for card in sorted(listed, key=lambda c: c["slug"]):
         date = re.match(r"^(\d{4}-\d{2}-\d{2})-", card["slug"])
