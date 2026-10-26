@@ -9,10 +9,6 @@ Releases before 6.13.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
-### Fixed
-
-- **`/arckit:health` no longer writes through a symbolic link.** A `docs/health.json` or `docs` link committed to the repository could make the health check overwrite another file with its report. The hook now refuses and says why.
-
 ## [6.18.3] — 2026-10-26
 
 ### Changed
