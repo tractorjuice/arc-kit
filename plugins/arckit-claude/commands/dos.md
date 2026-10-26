@@ -1,5 +1,5 @@
 ---
-description: Generate Digital Outcomes and Specialists (DOS) procurement documentation for UK Digital Marketplace
+description: Generate Digital Outcomes and Specialists (DOS7) procurement documentation for the Contract Award Service
 doc-type: DOS
 argument-hint: "<project ID or title, e.g. '001', 'Data Engineering Specialist'>"
 effort: high
@@ -7,7 +7,7 @@ allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
-You are helping an enterprise architect prepare Digital Outcomes and Specialists (DOS) procurement documentation for the UK Digital Marketplace.
+You are helping an enterprise architect prepare Digital Outcomes and Specialists (DOS7) procurement documentation for a call-off competition on the Government Commercial Agency's Contract Award Service.
 
 ## User Input
 
@@ -17,11 +17,14 @@ $ARGUMENTS
 
 ## Context
 
-**Digital Outcomes and Specialists (DOS)** is the UK Digital Marketplace framework for:
+**Digital Outcomes and Specialists 7 (DOS7, RM1043.9)** is the Government Commercial Agency (GCA) framework for buying digital outcomes, delivery partners and specialists. It started on 30 January 2026, runs for 6 years and reopens every 18 months. Its lots:
 
-- Custom software development
-- Hiring developers, architects, designers, and technical specialists
-- Delivering specific digital project outcomes
+- **Lot 1: Digital Outcomes**: specific, outcome-based digital projects, delivered in line with agile methods and government digital standards
+- **Lot 2: Digital Capability and Delivery Partners**: long-term digital transformation programmes, capability building and strategic resource augmentation
+- **Lot 3: Digital Specialists**: specialists in specific digital roles who join existing teams
+- **Lot 4: User Research Studios and Participants**: studio hire and recruiting user research participants
+
+Buyers reach DOS7 through the Public Procurement Gateway (PPG) and must publish their requirements on GCA's Contract Award Service (CAS). Only suppliers on the lot who are registered on CAS see the requirements; they are not public. DOS7 is further competition only (single-stage, two-stage or multi-stage), with no award without competition, and each procurement goes to a single supplier. The Digital Marketplace holds only DOS 5 and earlier opportunities. Source: [DOS7 agreement page](https://www.gca.gov.uk/agreements/RM1043.9).
 
 This command generates DOS-compliant procurement documentation from your existing arc-kit project requirements.
 
@@ -152,10 +155,10 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 Generate `projects/[project]/procurement/ARC-{PROJECT_ID}-DOS-v{VERSION}.md`:
 
 ```markdown
-# UK Digital Marketplace: Digital Outcomes and Specialists
+# Digital Outcomes and Specialists 7 (DOS7): Requirements
 
-**Framework**: Digital Outcomes and Specialists (DOS)
-**Procurement Type**: [Digital Outcome / Digital Specialists / Outcome + Specialists]
+**Framework**: Digital Outcomes and Specialists 7 (DOS7, RM1043.9)
+**Lot**: [Lot 1 Digital Outcomes / Lot 2 Digital Capability and Delivery Partners / Lot 3 Digital Specialists / Lot 4 User Research Studios and Participants]
 **Generated**: [DATE]
 **Project**: [PROJECT_NAME]
 **Project ID**: [PROJECT_ID]
@@ -395,7 +398,7 @@ Reference: `/arckit:traceability` for traceability matrix generation and validat
 
 ## 11. Evaluation Criteria
 
-Suppliers will be evaluated according to Digital Marketplace guidelines:
+Suppliers will be evaluated against these criteria, published on the Contract Award Service with the requirements:
 
 ### 11.1 Technical Capability (40%)
 
@@ -515,12 +518,12 @@ Vendors must provide:
 
 2. **Review & Refine**: Validate this document with stakeholders
 3. **Budget Approval**: Obtain budget sign-off before publishing
-4. **Publish on Digital Marketplace**:
-   - Go to: https://www.digitalmarketplace.service.gov.uk/
-   - Select "Digital Outcomes and Specialists"
-   - Post requirements (publicly visible)
-   - Set closing date for proposals
-5. **Answer Supplier Questions**: Via Digital Marketplace platform (visible to all)
+4. **Publish on the Contract Award Service (CAS)**:
+   - Sign in to the Public Procurement Gateway (PPG) and open DOS7 (RM1043.9) on CAS
+   - Choose the lot; optionally use the CAS filtering tool to narrow the suppliers
+   - Publish the requirements and assessment criteria (suppliers on the lot who are registered on CAS see them; they are not public)
+   - Choose a single-stage, two-stage or multi-stage competition and set the closing date
+5. **Answer Supplier Questions**: On CAS, sharing each answer with every supplier in the competition
 6. **Evaluate Proposals**: Using criteria in Section 11
 7. **Conduct Assessments**: Interview/technical assessment for shortlisted suppliers
 8. **Award Contract**: To highest-scoring supplier
@@ -547,14 +550,13 @@ Vendors must provide:
 
 ## 15. Resources and References
 
-### 15.1 Digital Marketplace Guidance
+### 15.1 DOS7 Buying Guidance
 
 - **Sourcing Playbook**: https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks (market assessment, should-cost modelling, outcome-based specs, social value)
 - **DDaT Playbook**: https://www.gov.uk/service-manual (open standards, interoperability, modular contracting)
 - **Codes of Practice guide**: See `docs/guides/codes-of-practice.md` for the full Rainbow of Books mapping
-- **Digital Marketplace**: https://www.digitalmarketplace.service.gov.uk/
+- **DOS7 agreement page** (lots, buying steps, CAS access through PPG): https://www.gca.gov.uk/agreements/RM1043.9
 - **DOS Buyers Guide**: https://www.gov.uk/guidance/digital-outcomes-and-specialists-buyers-guide
-- **General Buying Guide**: https://www.gov.uk/guidance/buying-and-selling-on-the-digital-marketplace
 - **Find a Tender** (central digital platform for Procurement Act 2023 notices): https://www.find-tender.service.gov.uk/
 
 ### 15.2 Project Documents
@@ -581,13 +583,13 @@ Vendors must provide:
 - ✅ Supplier questions and answers must be visible to all bidders
 - ✅ Changes to requirements must be published to all suppliers
 
-**GDS Approval**:
-- ⚠️ New or redesigned services may require formal GDS approval
-- ⚠️ Check if spend control process applies to your organisation
+**Approval and Assurance**:
+- ⚠️ Follow your organisation's approval and assurance route under the Digital Assurance Playbook, which replaced the digital and technology spend controls on 1 April 2026
+- ⚠️ Spend above the organisation's delegated authority limit, or that HM Treasury judges novel, contentious or repercussive, needs HM Treasury approval, with GDS support
 - ⚠️ Consult with digital/technology leadership before publishing
 
 **Transparency**:
-- ✅ Requirements are published publicly on Digital Marketplace
+- ✅ Requirements are published on the Contract Award Service, where every supplier on the lot who is registered on CAS can see them (they are not public)
 - ✅ Evaluation criteria must be published before receiving proposals
 - ✅ Award notices go on Find a Tender, not Contracts Finder: UK6 before entering into the call-off, UK7 within 30 days after (Procurement Act 2023 s.50(1), s.53(1))
 
@@ -619,7 +621,7 @@ Output to user:
 ```text
 ✅ Generated DOS procurement documentation for [PROJECT_NAME]
 
-Framework: Digital Outcomes and Specialists (DOS)
+Framework: Digital Outcomes and Specialists 7 (DOS7, RM1043.9)
 Document: projects/[project]/procurement/ARC-{PROJECT_ID}-DOS-v{VERSION}.md
 
 Integration Summary:
@@ -643,7 +645,7 @@ Next Steps:
 1. Review generated documentation with procurement and stakeholder teams
 2. Add budget details if not already specified
 3. Obtain formal approval for procurement
-4. Publish on Digital Marketplace: https://www.digitalmarketplace.service.gov.uk/
+4. Publish the requirements on the Contract Award Service, through your Public Procurement Gateway account: https://www.gca.gov.uk/agreements/RM1043.9
 5. Follow DOS buyers guide: https://www.gov.uk/guidance/digital-outcomes-and-specialists-buyers-guide
 
 Related Arc-kit Commands:
@@ -652,7 +654,7 @@ Related Arc-kit Commands:
 - /arckit:dld-review - Set up DLD review process for vendor deliverables
 - /arckit:traceability - Validate requirements traceability with vendor
 
-Important: Maintain audit trail of all procurement decisions per Digital Marketplace requirements.
+Important: Keep an audit trail of every procurement decision, and publish the award notices on Find a Tender.
 ```
 
 ## Key Principles
@@ -662,7 +664,7 @@ Important: Maintain audit trail of all procurement decisions per Digital Marketp
 4. **Stakeholder Alignment**: Reflect stakeholder priorities in evaluation criteria
 5. **Technology-Agnostic**: Remove all implementation details from procurement docs
 6. **Traceability**: Maintain requirement IDs (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx) throughout
-7. **Audit-Ready**: Structure supports Digital Marketplace audit requirements
+7. **Audit-Ready**: Structure supports procurement audit and the Procurement Act 2023 notices
 8. **Gov.uk Aligned**: Use official terminology and link to authoritative guidance
 9. **DOS-Focused**: This is ONLY for custom development - no G-Cloud content
 

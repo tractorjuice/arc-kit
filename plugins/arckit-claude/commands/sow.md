@@ -7,7 +7,7 @@ handoffs:
   - command: evaluate
     description: Create vendor evaluation framework
   - command: dos
-    description: Generate Digital Marketplace DOS opportunity
+    description: Generate a DOS7 opportunity for the Contract Award Service
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
