@@ -23,7 +23,7 @@
 /arckit:gcloud-clarify Generate clarification questions for <service>
 ```
 
-Output: `projects/<id>/ARC-<id>-GCLC-v1.0.md`
+Output: `projects/<id>/procurement/ARC-<id>-GCLC-v1.0.md`
 
 ---
 
