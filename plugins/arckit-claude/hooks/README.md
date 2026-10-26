@@ -4,6 +4,12 @@ Hook handlers live in this directory and are registered in `hooks.json`. Support
 
 For which rules the hooks enforce in code, which rules are only asked of the model, and what the deploying organisation must supply, see [`docs/ENFORCEMENT.md`](../docs/ENFORCEMENT.md). A change to a gate described there updates that page in the same pull request.
 
+## Project Context and External Document Watches
+
+`project-context-builder.mjs` supplies the project inventory to UserPromptSubmit, Agent dispatch and PostCompact hooks. The inventory marks discovered paths and names as data, strips control characters and backticks, and encloses the inventory in a text block. `external-context-watch.mjs` does the same for changed document paths.
+
+The shared external directory walker ignores symbolic links, visits directories at most 16 levels deep and scans at most 2,000 entries per external root. These limits also apply to the FileChanged hook's watched directories. Deeper or later entries are omitted from the inventory and watch list.
+
 ## `args:` Exec Form (v2.1.139+)
 
 All entries use the **exec form** of the command field — `command` is the executable name and `args: string[]` is the argument list, no shell involved:
