@@ -1950,10 +1950,14 @@
         // ============================================
         // Utilities
         // ============================================
+        // Escapes quotes too, so the result is safe inside attribute values.
         function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
+            return String(text ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
         }
 
         // Render Markdown to sanitised HTML. If DOMPurify failed to load, the
@@ -2914,7 +2918,7 @@
             let coverageBars = '';
             m.projectMetrics.forEach(p => {
                 const barLabel = p.firstDocPath
-                    ? `<a href="#${p.firstDocPath}" class="app-dashboard-link" data-path="${p.firstDocPath}">${escapeHtml(p.name)}</a>`
+                    ? `<a href="#${escapeHtml(p.firstDocPath)}" class="app-dashboard-link" data-path="${escapeHtml(p.firstDocPath)}">${escapeHtml(p.name)}</a>`
                     : escapeHtml(p.name);
                 coverageBars += `
                     <div class="app-dashboard-bar-row">
@@ -2954,7 +2958,7 @@
                 let tableRows = '';
                 m.projectMetrics.forEach(p => {
                     const nameCell = p.firstDocPath
-                        ? `<a href="#${p.firstDocPath}" class="app-dashboard-link" data-path="${p.firstDocPath}">${escapeHtml(p.name)}</a>`
+                        ? `<a href="#${escapeHtml(p.firstDocPath)}" class="app-dashboard-link" data-path="${escapeHtml(p.firstDocPath)}">${escapeHtml(p.name)}</a>`
                         : escapeHtml(p.name);
                     let healthCell = '\u2014';
                     if (healthData) {
@@ -3003,7 +3007,7 @@
                     ? '<span class="app-dashboard-check">&#10003;</span>'
                     : '<span class="app-dashboard-cross">&#10007;</span>';
                 const labelHtml = info.path
-                    ? `<a href="#${info.path}" class="app-dashboard-link" data-path="${info.path}">${escapeHtml(label)}</a>`
+                    ? `<a href="#${escapeHtml(info.path)}" class="app-dashboard-link" data-path="${escapeHtml(info.path)}">${escapeHtml(label)}</a>`
                     : escapeHtml(label);
                 checklistHtml += `<li>${icon} ${labelHtml}</li>`;
             });
