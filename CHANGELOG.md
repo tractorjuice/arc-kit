@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Session history and external file names can't pose as instructions at session start.** The SessionStart hook copied the last three entries of `.arckit/memory/sessions.md`, which holds commit subjects and is committed to the repository, into Claude's context as they were, and listed new files in `projects/*/external/` the same way. Anyone able to push a commit could put text there that read as an instruction. Both now arrive inside a block tagged with a random ID and a note to treat it as data only, as the graph context already does. Control characters, line separators and backticks are removed, each line is capped at 300 characters and each block at 4,000. The Codex hook's session memory gets the same treatment. `tests/plugin/session-start-context.test.mjs` and `tests/codex/test_codex_extension.py` cover a hostile entry.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added
