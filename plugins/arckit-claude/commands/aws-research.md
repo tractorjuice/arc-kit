@@ -91,7 +91,7 @@ Read:
 
 ### Step 3: Detect jurisdiction → choose rubric
 
-Grep requirements and principles for UK-Gov patterns: "UK Government", "Ministry of", "Department for", "NHS", "MOD", "GDS", "TCoP", "Crown Commercial", "OFFICIAL".
+Grep requirements and principles for UK-Gov patterns: "UK Government", "Ministry of", "Department for", "NHS", "MOD", "GDS", "TCoP", "Government Commercial Agency", "Crown Commercial" (the name before 1 April 2026, still found in older documents), "OFFICIAL".
 
 - If matched: rubric = `${CLAUDE_PLUGIN_ROOT}/schemas/scoring-rubrics/cloud-research-uk-gov.yaml`
 - Otherwise: `${CLAUDE_PLUGIN_ROOT}/schemas/scoring-rubrics/cloud-research-generic.yaml`

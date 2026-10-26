@@ -117,7 +117,7 @@ market query from your arguments only").
 From `$ARGUMENTS`, after stripping the project hint:
 
 - Free-text (anything not consumed by a flag) → `keywords[]`.
-- `--cpv NNNNNNNN` (optionally `NNNNNNNN-N`, the OCDS division suffix) →
+- `--cpv NNNNNNNN` (optionally `NNNNNNNN-N`, where the ninth digit is the CPV check digit) →
   `cpv`. Must match `^[0-9]{8}(-[0-9])?$`.
 - `--buyer 'Name'` → `buyer`.
 - `--supplier 'Name'` → `supplier`.

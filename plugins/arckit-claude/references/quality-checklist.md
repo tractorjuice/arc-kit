@@ -103,7 +103,7 @@ All artifacts must pass these 10 checks:
 ### GCRS -- GCP Research
 
 - Service comparison table with feature/pricing columns
-- Google Cloud Architecture Framework alignment noted
+- Google Cloud Well-Architected Framework alignment noted
 - Architecture diagram (Mermaid) showing service relationships
 - Pricing tier analysis with estimated monthly costs
 

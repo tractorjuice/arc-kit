@@ -128,7 +128,7 @@ Triggered by `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landsc
 
 ## uk-tenders
 
-UK Tenders MCP server fronting ~677,000 UK contracting processes across five national portals (Find a Tender Service, Contracts Finder, Public Contracts Scotland, Sell2Wales, eTendersNI). Data is re-published verbatim under the Open Government Licence v3.0. No API key required. Availability: best-effort single Cloud Run instance, nightly refresh, no formal SLA — a dead endpoint degrades gracefully (the reader returns partial data; the artefact renders degraded-source notes instead of failing).
+UK Tenders MCP server fronting more than 700,000 UK contracting processes (October 2026) across five national portals (Find a Tender Service, Contracts Finder, Public Contracts Scotland, Sell2Wales, eTendersNI). Data is re-published verbatim under the Open Government Licence v3.0. No API key required. Availability: best-effort single Cloud Run instance, nightly refresh, no formal SLA — a dead endpoint degrades gracefully (the reader returns partial data; the artefact renders degraded-source notes instead of failing).
 
 | Tool | Purpose | Consumed by ArcKit? |
 |---|---|---|
