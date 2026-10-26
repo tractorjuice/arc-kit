@@ -8,7 +8,7 @@
     </url>
     <url>
         <loc>https://arckit.org/commands.html</loc>
-        <lastmod>2026-10-18</lastmod>
+        <lastmod>2026-10-26</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
@@ -80,13 +80,13 @@
     </url>
     <url>
         <loc>https://arckit.org/privacy.html</loc>
-        <lastmod>2026-10-20</lastmod>
+        <lastmod>2026-10-26</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.3</priority>
     </url>
     <url>
         <loc>https://arckit.org/llms.txt</loc>
-        <lastmod>2026-10-20</lastmod>
+        <lastmod>2026-10-26</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
