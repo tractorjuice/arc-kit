@@ -35,7 +35,6 @@ AWS official Knowledge MCP server (no API key required). Backs all UK and global
 |---|---|
 | `mcp__aws-knowledge__aws___search_documentation` | Free-text search across `docs.aws.amazon.com`, returning ranked chunks |
 | `mcp__aws-knowledge__aws___read_documentation` | Fetch a specific AWS doc URL as markdown for deep reads |
-| `mcp__aws-knowledge__aws___recommend` | Service-recommendation queries by capability or workload |
 | `mcp__aws-knowledge__aws___list_regions` | Enumerate AWS regions |
 | `mcp__aws-knowledge__aws___get_regional_availability` | Per-service regional availability (used for `eu-west-2` / `eu-west-1` / sovereign region gating) |
 | `mcp__aws-knowledge__aws___retrieve_skill` | Pull structured AWS Skill Hub content |
@@ -69,8 +68,7 @@ Google Developer Knowledge MCP. Backs Google Cloud architecture research. Requir
 | Tool | Purpose |
 |---|---|
 | `mcp__google-developer-knowledge__search_documents` | Search Google Cloud and developer documentation |
-| `mcp__google-developer-knowledge__get_document` | Fetch a single document by ID for detail |
-| `mcp__google-developer-knowledge__batch_get_documents` | Fetch multiple documents in one call (used to compare services or hydrate a shortlist) |
+| `mcp__google-developer-knowledge__get_documents` | Fetch one or more documents by name (replaced `get_document` and `batch_get_documents` on 8 March 2026) |
 
 **Consumers** (1): `arckit-gcp-research`.
 
@@ -169,13 +167,11 @@ Reverse lookup, by tool, for the linter to grep against.
 | `mcp__aws-knowledge__aws___get_regional_availability` | `arckit-aws-research` |
 | `mcp__aws-knowledge__aws___list_regions` | `arckit-aws-research` |
 | `mcp__aws-knowledge__aws___read_documentation` | `arckit-aws-research` |
-| `mcp__aws-knowledge__aws___recommend` | `arckit-aws-research` |
 | `mcp__aws-knowledge__aws___retrieve_skill` | `arckit-aws-research` |
 | `mcp__aws-knowledge__aws___search_documentation` | `arckit-aws-research` |
 | `mcp__datacommons-mcp__get_observations` | `arckit-datascout-reader` |
 | `mcp__datacommons-mcp__search_indicators` | `arckit-datascout-reader` |
-| `mcp__google-developer-knowledge__batch_get_documents` | `arckit-gcp-research` |
-| `mcp__google-developer-knowledge__get_document` | `arckit-gcp-research` |
+| `mcp__google-developer-knowledge__get_documents` | `arckit-gcp-research` |
 | `mcp__google-developer-knowledge__search_documents` | `arckit-gcp-research` |
 | `mcp__govreposcrape__dependency_compare` | `arckit-gov-reuse-reader` |
 | `mcp__govreposcrape__search_uk_gov_code` | `arckit-datascout-reader`, `arckit-gov-code-search`, `arckit-gov-landscape`, `arckit-gov-reuse`, `arckit-gov-reuse-reader`, `gov-reuse` |
