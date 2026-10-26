@@ -15,9 +15,12 @@
  *
  *   PostToolUse on Agent (Task): the report comes back as the Agent result's
  *     text. The hook validates it. When valid, it replaces the result with the
- *     sanitised payload (updatedToolOutput) and adds a one-line verdict. When
- *     invalid, it leaves the result alone and adds the errors, which the
- *     orchestrator quotes in its single re-dispatch.
+ *     sanitised payload (updatedToolOutput) and adds a one-line verdict.
+ *     Otherwise (invalid, no JSON, or a reader that did not complete) it
+ *     replaces the result with a neutral "withheld" note and adds the errors,
+ *     which the orchestrator quotes in its single re-dispatch. The reader's
+ *     raw text never reaches the orchestrator; only a launch receipt
+ *     (`async_launched`), which carries no reader output, passes untouched.
  *
  *   PreToolUse on SubagentHandback: in auto mode (Claude Code v2.1.271+) a
  *     subagent hands its report back through this tool, and the Agent result
@@ -120,8 +123,16 @@ function isExactPayload(message, payload) {
   }
 }
 
+// Error paths and messages can echo sanitised source text (a key, an enum
+// value), so each is cut short before it reaches the orchestrator.
+const MAX_ERROR_FIELD = 200;
+const clip = (s) => {
+  const t = String(s);
+  return t.length > MAX_ERROR_FIELD ? `${t.slice(0, MAX_ERROR_FIELD)}…` : t;
+};
+
 function formatErrors(errors) {
-  const shown = errors.slice(0, 20).map((e) => `- ${e.path}: ${e.msg}`);
+  const shown = errors.slice(0, 20).map((e) => `- ${clip(e.path)}: ${clip(e.msg)}`);
   if (errors.length > 20) shown.push(`- … and ${errors.length - 20} more`);
   return shown.join('\n');
 }
@@ -131,6 +142,18 @@ function agentText(toolResponse) {
   const content = toolResponse && Array.isArray(toolResponse.content) ? toolResponse.content : [];
   return content.filter((b) => b && b.type === 'text').map((b) => b.text).join('\n');
 }
+
+/** Replace the reply text of an Agent result, keeping its other fields. */
+function replaceText(response, text) {
+  return typeof response === 'object' && response !== null
+    ? { ...response, content: [{ type: 'text', text }] }
+    : text;
+}
+
+/** A background or teammate launch receipt: Claude Code's own text, no reader output yet. */
+const isLaunchReceipt = (status) => /_(?:launched|spawned)$/.test(status);
+
+export const WITHHELD = '[ArcKit: reader reply withheld because it did not pass the handoff check]';
 
 /** Decide the hook output for one input. Returns an object to print, or null. */
 export function decide(data) {
@@ -169,28 +192,37 @@ export function decide(data) {
     const reader = readerName((data.tool_input || {}).subagent_type);
     if (!reader) return null;
     const response = data.tool_response;
-    if (response && typeof response === 'object' && response.status && response.status !== 'completed') return null;
-    const text = agentText(response);
-    const result = checkReader(reader, text);
-    if (result.ok) {
-      const replaced = typeof response === 'object' && response !== null
-        ? { ...response, content: [{ type: 'text', text: JSON.stringify(result.payload) }] }
-        : JSON.stringify(result.payload);
+    const status = response && typeof response === 'object' ? response.status : undefined;
+    if (status && status !== 'completed') {
+      if (isLaunchReceipt(status)) return null;
       return {
         hookSpecificOutput: {
           hookEventName: 'PostToolUse',
-          updatedToolOutput: replaced,
+          updatedToolOutput: replaceText(response, WITHHELD),
+          additionalContext: `ArcKit handoff check (${reader}): the reader did not complete (status ${clip(JSON.stringify(status))}), so its reply was withheld unvalidated. Re-dispatch the reader once; if that also fails, log the gap.`,
+        },
+      };
+    }
+    const text = agentText(response);
+    const result = checkReader(reader, text);
+    if (result.ok) {
+      return {
+        hookSpecificOutput: {
+          hookEventName: 'PostToolUse',
+          updatedToolOutput: replaceText(response, JSON.stringify(result.payload)),
           additionalContext: `ArcKit handoff check (${reader}, ${result.schema}): valid. The reply above is the sanitised payload; use it as the validated handoff.`,
         },
       };
     }
     const noJson = result.errors.length === 1 && result.errors[0].msg === 'no JSON payload found in the reply';
+    const verdict = noJson
+      ? `ArcKit handoff check (${reader}): no JSON in this reply, so it was withheld. If the reader handed its report back through SubagentHandback, that report was validated and sanitised at hand-back; use it. Otherwise re-dispatch the reader once, asking for the JSON payload only.`
+      : `ArcKit handoff check (${reader}, ${result.schema}): INVALID. The reply was withheld. Re-dispatch the reader once, quoting these errors:\n${formatErrors(result.errors)}`;
     return {
       hookSpecificOutput: {
         hookEventName: 'PostToolUse',
-        additionalContext: noJson
-          ? `ArcKit handoff check (${reader}): no JSON in this reply. If the reader handed its report back through SubagentHandback, that report was validated and sanitised at hand-back; use it. Otherwise re-dispatch the reader once, asking for the JSON payload only.`
-          : `ArcKit handoff check (${reader}, ${result.schema}): INVALID. Re-dispatch the reader once, quoting these errors:\n${formatErrors(result.errors)}`,
+        updatedToolOutput: replaceText(response, WITHHELD),
+        additionalContext: verdict,
       },
     };
   }
