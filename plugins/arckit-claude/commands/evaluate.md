@@ -268,7 +268,7 @@ You should:
 - Evaluation must be objective and based on documented criteria
 - All scores require specific justification (no arbitrary numbers)
 - Mandatory qualifications are pass/fail (missing any = disqualified)
-- Reference specific requirements (e.g., "Meets NFR-S-001 for PCI-DSS compliance")
+- Reference specific requirements (e.g., "Meets NFR-SEC-001 for PCI-DSS compliance")
 - Document any conflicts of interest or bias
 - Keep vendor proposals confidential (don't commit PDFs to git by default)
 - Final decision authority always stays with the architect/client

@@ -85,7 +85,7 @@ $ARGUMENTS
 
    Example:
    - NFR-P-001 (Response time <2s): Does architecture support this? CDN? Caching? Database indexing?
-   - NFR-S-001 (PCI-DSS): Is there a clear security architecture? Token vault? Encryption?
+   - NFR-SEC-001 (PCI-DSS): Is there a clear security architecture? Token vault? Encryption?
 
    ### C. Architecture Quality Assessment
 
@@ -251,7 +251,7 @@ You should:
   - ✅ Security: PCI-DSS compliant architecture with token vault
 - Check requirements coverage:
   - ✅ NFR-P-001 (Response time): CDN + Redis caching supports <2s
-  - ✅ NFR-S-001 (PCI-DSS): Compliant architecture
+  - ✅ NFR-SEC-001 (PCI-DSS): Compliant architecture
   - ⚠️  NFR-R-001 (99.99% uptime): Single region deployment (RISK - needs multi-AZ)
 - Assess quality:
   - Scalability: 7/10 (good horizontal scaling, but monolith limits)

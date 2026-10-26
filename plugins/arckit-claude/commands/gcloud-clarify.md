@@ -34,7 +34,7 @@ This command analyzes gaps between requirements and service descriptions, then g
 
 **MANDATORY** (warn if missing):
 
-- **REQ** (Requirements) — Extract: All MUST requirements (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx), SHOULD requirements, compliance (NFR-C-xxx), integration (INT-xxx), performance (NFR-P-xxx), security (NFR-S-xxx)
+- **REQ** (Requirements) — Extract: All MUST_HAVE requirements (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx), SHOULD_HAVE requirements, compliance (NFR-C-xxx), integration (INT-xxx), performance (NFR-P-xxx), security (NFR-SEC-xxx)
   - If missing: ERROR "Run `/arckit:requirements` first — need source requirements"
 - **GCLD** (G-Cloud Search, in procurement/) — Extract: Shortlisted services (top 3-5), service names, supplier names, service links, key features, Must-Have Match scores, Desirable Features scores, compliance mentions, pricing
   - If missing: ERROR "Run `/arckit:gcloud-search` first — need service search results"

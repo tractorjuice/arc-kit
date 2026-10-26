@@ -60,7 +60,7 @@ $ARGUMENTS
    **Step 1: Requirement Details** (pre-extracted by hook)
    - Requirement ID, description, and category are in the hook's table
    - The "Covered" and "Referenced By" columns show which design docs already reference each requirement
-   - **Priority comes from the REQ file, not the hook.** Requirements carry a MoSCoW priority on a `**Priority**:` line: `MUST_HAVE`, `SHOULD_HAVE`, `COULD_HAVE` or `WONT_HAVE`. The hook's Priority column (and its MUST/SHOULD/MAY distribution) takes the first standalone MUST, SHOULD or MAY word under each heading, which a value such as `MUST_HAVE` never matches, so it is not the requirement's priority. Get the real values with one Grep of the REQ file for `^#{3,4} (BR|FR|NFR|INT|DR)-` and `\*\*Priority\*\*:` lines, which pairs each requirement heading with the priority under it. Use these values in every Priority column of the matrix
+   - The Priority column is the MoSCoW value on each requirement's `**Priority**:` line: `MUST_HAVE`, `SHOULD_HAVE`, `COULD_HAVE` or `WONT_HAVE`. `UNSPECIFIED` means the requirement has no priority line, or only the template's unfilled placeholder. Report those as a gap rather than guessing a priority. Use these values in every Priority column of the matrix
 
    **Step 2: Design Mapping**
    - Which HLD components implement this requirement?
@@ -107,8 +107,9 @@ $ARGUMENTS
    Use the hook's **COVERAGE SUMMARY** table directly — it already provides:
    - Overall coverage (covered / total / percentage)
    - Breakdown by category (Business, Functional, Non-Functional, Integration, Data)
+   - Breakdown by MoSCoW priority (`MUST_HAVE`, `SHOULD_HAVE`, `COULD_HAVE`, `WONT_HAVE`, and `UNSPECIFIED` when any requirement has no priority)
 
-   **Do NOT recalculate these metrics.** Do not use the hook's breakdown by priority (MUST, SHOULD, MAY): build the breakdown by MoSCoW priority yourself, counting for each priority the requirements from Step 1 and how many of them the hook marks Covered. Enrich the metrics with additional context:
+   **Do NOT recalculate these metrics.** Enrich the metrics with additional context:
    - **Implementation Coverage**: % of requirements with implementation evidence (from vendor HLD/DLD prose)
    - **Test Coverage**: % of requirements with test references (from project artifacts)
 

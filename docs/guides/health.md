@@ -216,7 +216,7 @@ PROJECT: 001-payment-gateway
   [MEDIUM] ORPHAN-REQ: ARC-001-REQ-v2.0.md
     Total requirements: 45
     Requirements not referenced by any ADR: 12
-    Examples: FR-015, FR-016, NFR-P-003, NFR-S-008, INT-005
+    Examples: FR-015, FR-016, NFR-P-003, NFR-SEC-008, INT-005
     Action: Review whether these requirements need architectural decisions
 
 PROJECT: 002-data-platform

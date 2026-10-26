@@ -213,10 +213,29 @@ export function extractRequirementIds(content) {
 
 // ── Requirement Detail Extraction ──
 
+/** MoSCoW priorities a requirement can carry, in reporting order. */
+export const REQUIREMENT_PRIORITIES = ['MUST_HAVE', 'SHOULD_HAVE', 'COULD_HAVE', 'WONT_HAVE', 'UNSPECIFIED'];
+
+const MOSCOW = { m: 'MUST_HAVE', s: 'SHOULD_HAVE', c: 'COULD_HAVE', w: 'WONT_HAVE' };
+
+/**
+ * Read a MoSCoW priority from the value of a Priority field: "MUST_HAVE",
+ * "Must Have", "Won't Have", "M", or the older MUST/SHOULD/MAY words (MAY
+ * reads as COULD_HAVE). Anything else, including an unfilled
+ * "[MUST_HAVE | ...]" placeholder, returns null.
+ */
+function parsePriorityValue(value) {
+  const m = value.trim().match(/^(must|should|could|won['’]?t|may|[mscw])(?:[\s_-]*have)?\b/i);
+  if (!m) return null;
+  const word = m[1].toLowerCase();
+  return word === 'may' ? MOSCOW.c : MOSCOW[word[0]];
+}
+
 /**
  * Parse requirement headings and details from a REQ document.
  * Looks for ### ID: Description headings and priority markers.
- * Returns array of { id, category, description, priority }
+ * Returns array of { id, category, description, priority }, where priority
+ * is one of REQUIREMENT_PRIORITIES.
  */
 export function extractRequirementDetails(content) {
   const requirements = [];
@@ -234,8 +253,11 @@ export function extractRequirementDetails(content) {
   // Pattern for requirement headings: ### or #### BR-001: Description text
   // Template uses ### for BR, #### for FR/NFR/INT/DR — match both levels
   const headingRe = /^#{3,4}\s+((?:BR|FR|NFR(?:-[A-Z]+)?|INT|DR)-\d{1,3}):\s*(.+)/;
-  // Priority patterns in table rows or inline markers
-  const priorityRe = /\b(MUST|SHOULD|MAY)\b/;
+  // A Priority field: "**Priority**: MUST_HAVE", "**Priority:** Must Have"
+  // or a "| Priority | MUST |" table row
+  const priorityFieldRe = /^\s*(?:[-*]\s+)?\|?\s*\*{0,2}Priority\*{0,2}\s*(?::\*{0,2}|\|)\s*\*{0,2}\s*(.+)$/i;
+  // Older REQ files with no Priority field: a bare MUST/SHOULD/MAY near the heading
+  const legacyPriorityRe = /\b(MUST|SHOULD|MAY)\b/;
 
   for (let i = 0; i < lines.length; i++) {
     const headingMatch = lines[i].match(headingRe);
@@ -253,17 +275,23 @@ export function extractRequirementDetails(content) {
       }
     }
 
-    // Look for priority in the next ~10 lines (table rows, inline text)
-    let priority = 'SHOULD'; // default
-    for (let j = i + 1; j < Math.min(i + 11, lines.length); j++) {
-      // Stop if we hit another heading (h2, h3, or h4)
+    // The template puts the Priority field 11 to 28 lines below the heading,
+    // so read the whole block, up to the next h2, h3 or h4
+    let priority = null;
+    let legacy = null;
+    for (let j = i + 1; j < lines.length; j++) {
       if (/^#{2,4}\s+/.test(lines[j])) break;
-      const pMatch = lines[j].match(priorityRe);
-      if (pMatch) {
-        priority = pMatch[1];
-        break;
+      const field = lines[j].match(priorityFieldRe);
+      if (field) {
+        priority = parsePriorityValue(field[1]);
+        if (priority) break;
+      }
+      if (!legacy && j <= i + 10) {
+        const word = lines[j].match(legacyPriorityRe);
+        if (word) legacy = parsePriorityValue(word[1]);
       }
     }
+    priority = priority || legacy || 'UNSPECIFIED';
 
     requirements.push({ id, category, description, priority });
   }
@@ -281,7 +309,7 @@ export function extractRequirementDetails(content) {
         break;
       }
     }
-    requirements.push({ id, category, description: '(extracted from content)', priority: 'SHOULD' });
+    requirements.push({ id, category, description: '(extracted from content)', priority: 'UNSPECIFIED' });
   }
 
   return requirements;
