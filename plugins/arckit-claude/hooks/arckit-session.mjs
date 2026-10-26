@@ -16,6 +16,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDir, isFile, listFilesRecursive, mtimeMs, readText, parseHookInput, findRepoRoot } from './hook-utils.mjs';
 import { collectExternalWatchPaths } from './external-context-utils.mjs';
+import { sanitizeContextValue } from './project-context-builder.mjs';
 
 const data = parseHookInput();
 
@@ -42,7 +43,7 @@ let context = `ArcKit Plugin v${arckitVersion} is active.`;
 
 const projectsDir = join(cwd, 'projects');
 if (isDir(projectsDir)) {
-  context += `\n\nProjects directory: found at ${projectsDir}`;
+  context += `\n\nProjects directory: found at ${sanitizeContextValue(projectsDir)}`;
 } else {
   context += '\n\nNo projects/ directory found. Run /arckit:init to scaffold a new project or /arckit:create to add one.';
 }
@@ -97,9 +98,9 @@ if (isDir(projectsDir)) {
     }
 
     if (newExtFiles.length > 0) {
-      extAlerts += `\n[${projectName}] ${newExtFiles.length} external file(s) newer than latest artifact:`;
+      extAlerts += `\n[${sanitizeContextValue(projectName)}] ${newExtFiles.length} external file(s) newer than latest artifact:`;
       for (const ef of newExtFiles) {
-        extAlerts += `\n  - ${ef}`;
+        extAlerts += `\n  - ${sanitizeContextValue(ef)}`;
       }
       process.stderr.write(`[ArcKit] ${projectName}: ${newExtFiles.length} new external file(s) detected\n`);
     }
