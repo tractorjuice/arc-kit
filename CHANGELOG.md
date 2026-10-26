@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Kimi: the protected-file and secret-in-file gates now see Kimi's file tools.** Kimi Code names its file tools `WriteFile` and `StrReplaceFile` and passes the target as `tool_input.path`, with an edit's new text under `edit.new`. The Kimi hook adapter forwarded that payload untouched to hooks that only look at `Write`/`Edit` and `tool_input.file_path`, so `file-protection.mjs` and `secret-file-scanner.mjs` allowed every Kimi write, and `StrReplaceFile` never matched their `Edit|Write` matcher at all. The adapter now rewrites the payload into Claude's shape before running the hook, the Kimi matchers name both tool sets (anchored, so an MCP tool whose name merely contains "Write" is not caught), and those two guards fail closed: an unparseable payload, a write with no target path or with two different ones, or a guard that crashes or times out blocks the write instead of allowing it. Still not smoke-tested against a live Kimi runtime.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added
