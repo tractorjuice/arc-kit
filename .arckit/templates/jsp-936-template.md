@@ -791,7 +791,7 @@
 
 **Independent Ethics Assurance**:
 
-- **Required**: [Yes / No - Required for Critical classification]
+- **Required**: [Yes / No - JSP 936 Part 1 para 105: there should be one (recommended practice, not compulsory) during implementation of large projects, projects where the AI's ethics risk is significant, and where teams produce AI regularly]
 - **Assurance Provider**: [Name/Organization]
 - **Assurance Status**: [Not Started / In Progress / Completed]
 
@@ -819,7 +819,7 @@
 - [ ] Initial ethical screening (Ethics Manager)
 - [ ] Detailed JSP 936 assessment (this document)
 - [ ] RAISO review and endorsement
-- [ ] Independent assurance (if Critical)
+- [ ] Independent Ethics Assurance (if a large project, significant ethics risk, or a team producing AI regularly: JSP 936 para 105)
 - [ ] Ethics Board review
 - [ ] Submission to approval authority
 - [ ] Approval granted / Conditional approval / Rejected
@@ -1262,7 +1262,7 @@
 | **Governance** | | | |
 | RAISO assigned | [✅/⚠️/❌] | Section 5.1 | [Comments] |
 | Ethics Manager assigned | [✅/⚠️/❌] | Section 5.1 | [Comments] |
-| Independent assurance (if Critical) | [✅/⚠️/❌] | Section 5.1 | [Comments] |
+| Independent Ethics Assurance (if a large project, significant ethics risk, or a team producing AI regularly: para 105) | [✅/⚠️/❌] | Section 5.1 | [Comments] |
 | Governance board established | [✅/⚠️/❌] | Section 5.1 | [Comments] |
 | Approval pathway followed | [✅/⚠️/❌] | Section 5.2 | [Comments] |
 | Escalation process defined | [✅/⚠️/❌] | Section 5.3 | [Comments] |
@@ -1349,7 +1349,7 @@
 | Technical Lead | [Name] | | |
 | Ethics Manager | [Name] | | |
 | RAISO | [Name] | | |
-| Independent Assurance (if Critical) | [Name/Org] | | |
+| Independent Ethics Assurance (where JSP 936 para 105 applies) | [Name/Org] | | |
 | Approval Authority | [Name/Position] | | |
 
 ---
