@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **`/arckit:health` no longer writes through a symbolic link.** The hook wrote `docs/health.json` wherever the path pointed, and git recreates symbolic links on clone and pull, so a link committed as `docs/health.json` or `docs` could make the health check overwrite another file you can write, such as `.git/config`, with its JSON report. The hook now refuses when `docs` or `docs/health.json` is a symbolic link, or when `docs` resolves outside the repository, and says so in its report instead of writing. Otherwise it writes a new temporary file inside `docs/` and renames it over `health.json`. The Codex hook has the same fix, and `tests/plugin/test_graph_inject.mjs` and `tests/codex/test_codex_extension.py` cover both kinds of link.
+
 ## [6.18.3] — 2026-10-26
 
 ### Added
