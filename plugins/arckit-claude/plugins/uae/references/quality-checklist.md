@@ -1123,11 +1123,11 @@ All artifacts must pass these 10 checks:
 
 ### PDPL -- UAE Personal Data Protection Law Assessment
 
-- Scope states the carve-outs: DIFC DPL and ADGM DPR free-zone regimes fall outside the federal PDPL, and ADHICS is flagged where healthcare data is in scope
+- Scope tests all seven Article 2(2) exclusions (Government Data; governmental entities; security and judicial authorities; personal purposes; health data, and banking and credit data, with their own protection legislation; free-zone establishments with their own data protection legislation, such as DIFC and ADGM) and records the result; where one applies, the Scope and Executive Summary say the PDPL does not apply to that processing, and any regime named instead cites a primary source; ADHICS is flagged where healthcare data is in scope
 - Every processing activity cites a PDPL Article 5 lawful basis, or Article 6 where consent is relied upon
 - All five Article 21 DPIA triggers assessed (new technology, large-scale processing, profiling or automated decisions, systematic monitoring, Article 7 sensitive categories), each triggered category carrying an impact assessment, residual risk and mitigations
 - Data-subject rights procedure covers all eight rights (access, rectification, erasure, restriction, portability, object, withdraw consent, complain to the Data Office), each with channel, response SLA and operational owner
-- Every cross-border transfer assessed against Article 22 adequacy or Article 23 derogations; transfers to countries with no UAE adequacy designation record both a written agreement and an explicit derogation
+- Every cross-border transfer records its ground: Article 22 (a destination the Data Office approves, with its own data protection legislation and enforcing authority or covered by an agreement the UAE has joined) or one of the six Article 23(1) grounds, with the status of the Article 23(2) Executive Regulations controls
 - Breach notification playbook states the Article 9 obligations to the Data Office and to data subjects, with timelines and a named owner
 - Penalties section marked informational and excluded from compliance scoring
 
@@ -1146,7 +1146,7 @@ All artifacts must pass these 10 checks:
 - Every dataset assessed by its Dataset ID from the CLAS register rather than re-enumerated
 - Smart Data class, National Cloud Security Policy level (Appendix 6.7) with the mapping rationale, required tier, chosen CSP, region and compliance check recorded per dataset
 - Confidential/Restricted datasets on a Partial Sovereign or Sovereign Cloud with data stored in the UAE, and datasets above Confidential/Restricted on a Sovereign Cloud (National Cloud Security Policy v2.0, §2.4.1.4–2.4.1.5); any exception cites a Cyber Security Council approval (§1.4) rather than being left implicit
-- CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS) covering certification posture (DESC for Dubai entities, CSC accreditation), regional footprint, the CSP's list of services meeting the Partial Sovereign or Sovereign Cloud Requirements, and documented limitations
+- CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS; the policy approves no CSPs) covering the Appendix 6.6 minimum certifications with evidence dates (UAE IAS and DESC ISR self-assessments; ISO/IEC 27001, 27017, 27018 and 22301 certificates; SOC 1 and SOC 2 Type II reports; CSA STAR 2), regional footprint, the CSP's list of services meeting the Partial Sovereign or Sovereign Cloud Requirements, and documented limitations
 - Shared-responsibility matrix divides responsibility across infrastructure, platform, application, data, identity and operational layers for each chosen CSP
 - Shared platform components (identity, observability, backups) assessed for residency, not only the primary services
 - Exit and portability plan covers data egress, format portability, identity migration, key custody on exit and contingency residency on regulatory change

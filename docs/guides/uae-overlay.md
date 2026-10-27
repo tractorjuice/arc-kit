@@ -70,7 +70,7 @@ Generates a UAE IAS Statement of Applicability against the 188 controls (60 mana
 
 #### `/arckit:uae-cloud-residency`
 
-Assesses sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, names approved CSP options (Core42 / G42 sovereign, Microsoft UAE North and Central, TDRA FedNet, e& Sovereign Launchpad on AWS), and captures the shared-responsibility matrix and exit/portability plan. Handoffs: `uae-classification` (depends on it), `adr` (residency decisions captured as ADRs).
+Assesses sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, checks candidate CSPs (Core42 / G42 sovereign, Microsoft UAE North and Central, TDRA FedNet, e& Sovereign Launchpad on AWS) against the policy's tiers and minimum certifications (the policy itself approves no CSPs), and captures the shared-responsibility matrix and exit/portability plan. Handoffs: `uae-classification` (depends on it), `adr` (residency decisions captured as ADRs).
 
 ### Federal Identity
 

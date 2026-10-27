@@ -506,7 +506,7 @@ Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Da
 - `/arckit:uae-classification` — UAE Smart Data Classification Register (Open / Confidential / Sensitive / Secret, the four Smart Data Framework classes) with handling rules and declassification schedule
 - `/arckit:uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment — DPIA, lawful-basis register, data-subject-rights procedure, cross-border transfer log
 - `/arckit:uae-ias` — UAE Cybersecurity Council Information Assurance Standard v2 — Statement of Applicability against 188 controls (60 management M1–M6, 128 technical T1–T9), priority-tiered P1–P4
-- `/arckit:uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment — per-classification residency, approved CSPs (Core42 / G42, Microsoft UAE North/Central, TDRA FedNet, e& Sovereign Launchpad on AWS), shared-responsibility matrix, exit/portability plan
+- `/arckit:uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment — per-classification residency, candidate CSPs (Core42 / G42, Microsoft UAE North/Central, TDRA FedNet, e& Sovereign Launchpad on AWS) checked against the policy's tiers and minimum certifications, shared-responsibility matrix, exit/portability plan
 
 **Federal identity**:
 

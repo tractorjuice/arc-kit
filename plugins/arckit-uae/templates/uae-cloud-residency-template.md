@@ -39,7 +39,7 @@ For each Dataset ID from the project's Smart Data Classification Register (`ARC-
 
 ## CSP Due-Diligence Pack
 
-For each candidate CSP, record the diligence posture.
+The policy approves no CSPs: the providers below are candidates. For each, record the certifications Appendix 6.6 requires of every cloud service (§3.1.5.1), with the evidence seen, and the CSP's own list of services that meet the Partial Sovereign or Sovereign Cloud Requirements.
 
 ### Core42 / G42 sovereign cloud
 
@@ -47,8 +47,12 @@ For each candidate CSP, record the diligence posture.
 |------|-------|
 | Sovereign-data scope | [in scope / out of scope] |
 | Regional footprint | [Abu Dhabi / Dubai / other] |
-| DESC accreditation | [Y/N — date] |
-| CSC accreditation | [Y/N — date] |
+| UAE IAS self-assessment (Appendix 6.6) | [Y/N — date] |
+| DESC ISR self-assessment (Appendix 6.6) | [Y/N — date] |
+| ISO/IEC 27001:2022, 27017:2019, 27018:2019, 22301:2019 | [valid certificates seen — expiry dates] |
+| SOC 1 and SOC 2 Type II | [attestation reports seen — period covered] |
+| CSA STAR 2 | [certification or attestation — date] |
+| Services listed as meeting the Partial Sovereign / Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6) | [list reference — date checked] |
 | Documented limitations | [notes] |
 
 ### Microsoft UAE North (Dubai) and UAE Central (Abu Dhabi)
@@ -57,8 +61,12 @@ For each candidate CSP, record the diligence posture.
 |------|-------|
 | Sovereign-data scope | [in scope / out of scope] |
 | Regional footprint | [UAE North / UAE Central / both] |
-| DESC accreditation | [Y/N — date] |
-| CSC accreditation | [Y/N — date] |
+| UAE IAS self-assessment (Appendix 6.6) | [Y/N — date] |
+| DESC ISR self-assessment (Appendix 6.6) | [Y/N — date] |
+| ISO/IEC 27001:2022, 27017:2019, 27018:2019, 22301:2019 | [valid certificates seen — expiry dates] |
+| SOC 1 and SOC 2 Type II | [attestation reports seen — period covered] |
+| CSA STAR 2 | [certification or attestation — date] |
+| Services listed as meeting the Partial Sovereign / Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6) | [list reference — date checked] |
 | Documented limitations | [notes] |
 
 ### TDRA FedNet
@@ -67,7 +75,12 @@ For each candidate CSP, record the diligence posture.
 |------|-------|
 | Sovereign-data scope | [in scope / out of scope] |
 | Regional footprint | [federal data centre] |
-| Accreditation | [TDRA — date] |
+| UAE IAS self-assessment (Appendix 6.6) | [Y/N — date] |
+| DESC ISR self-assessment (Appendix 6.6) | [Y/N — date] |
+| ISO/IEC 27001:2022, 27017:2019, 27018:2019, 22301:2019 | [valid certificates seen — expiry dates] |
+| SOC 1 and SOC 2 Type II | [attestation reports seen — period covered] |
+| CSA STAR 2 | [certification or attestation — date] |
+| Services listed as meeting the Partial Sovereign / Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6) | [list reference — date checked] |
 | Documented limitations | [notes] |
 
 ### e& Sovereign Launchpad on AWS
@@ -76,8 +89,12 @@ For each candidate CSP, record the diligence posture.
 |------|-------|
 | Sovereign-data scope | [in scope / out of scope] |
 | Regional footprint | [me-central-1 / other] |
-| DESC accreditation | [Y/N — date] |
-| CSC accreditation | [Y/N — date] |
+| UAE IAS self-assessment (Appendix 6.6) | [Y/N — date] |
+| DESC ISR self-assessment (Appendix 6.6) | [Y/N — date] |
+| ISO/IEC 27001:2022, 27017:2019, 27018:2019, 22301:2019 | [valid certificates seen — expiry dates] |
+| SOC 1 and SOC 2 Type II | [attestation reports seen — period covered] |
+| CSA STAR 2 | [certification or attestation — date] |
+| Services listed as meeting the Partial Sovereign / Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6) | [list reference — date checked] |
 | Documented limitations | [notes] |
 
 > Add additional candidate CSPs (e.g. Oracle UAE, Google Cloud) using the same pattern.
@@ -122,6 +139,7 @@ For the chosen CSP combination, record the division of security responsibilities
 | [CRES-1] | UAE-NCSP-V2 | §2.4.1, Appendices 6.7–6.9 (classification levels and sovereignty tiers) | Per-Dataset Residency Assessment |
 | [CRES-2] | UAE-NCSP-V2 | §3.4.1.2, §3.4.1.6 (CSP lists of compliant services) | CSP Due-Diligence Pack |
 | [CRES-3] | UAE-NCSP-V2 | §1.2 (responsibilities by service model) | Shared-Responsibility Matrix |
+| [CRES-4] | UAE-NCSP-V2 | §3.1.5.1, Appendix 6.6 (minimum cyber security certifications) | CSP Due-Diligence Pack |
 
 ### Unreferenced Documents
 

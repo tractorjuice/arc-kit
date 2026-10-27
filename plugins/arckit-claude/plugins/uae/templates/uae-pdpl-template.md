@@ -25,8 +25,22 @@
 | Processor(s) | [names] |
 | Joint controllers | [names if applicable] |
 | Categories of data subjects | [employees / citizens / customers / etc.] |
-| Categories of personal data | [identifiers / sensitive (Article 7) / financial / etc.] |
-| Out-of-scope (free zones) | DIFC DPL: [Y/N], ADGM DPR: [Y/N], healthcare under ADHICS: [Y/N] |
+| Categories of personal data | [identifiers / Sensitive Personal Data (defined in Article 1) / financial / etc.] |
+| Healthcare data under ADHICS | [Y/N] |
+
+### PDPL Applicability (Article 2(2))
+
+| Exclusion | Applies? | Reason and evidence | Regime that applies instead (primary source) |
+|-----------|----------|---------------------|----------------------------------------------|
+| (a) Government Data | [Y / N / not determined] | [reason] | [instrument and URL / governing instrument not identified] |
+| (b) Governmental entity controlling or processing the data | [Y / N / not determined] | [reason, including the basis for treating the body as a governmental entity] | [instrument and URL / governing instrument not identified] |
+| (c) Held by the security or judicial authorities | [Y / N / not determined] | [reason] | [instrument and URL / governing instrument not identified] |
+| (d) Data subject's own personal purposes | [Y / N / not determined] | [reason] | [n/a] |
+| (e) Health data with its own protection legislation | [Y / N / not determined] | [reason] | [instrument and URL / governing instrument not identified] |
+| (f) Banking and credit data with its own protection legislation | [Y / N / not determined] | [reason] | [instrument and URL / governing instrument not identified] |
+| (g) Free-zone establishment with its own data protection legislation (e.g. DIFC, ADGM) | [Y / N / not determined] | [free zone] | [e.g. DIFC Law No. 5 of 2020 / ADGM Data Protection Regulations 2021, with URL] |
+
+**PDPL applicability**: [Applies / Does not apply — Article 2(2)(x) / Applies in part — list the excluded processing]. Where the PDPL does not apply, the rest of this assessment for that processing measures alignment with PDPL controls, not statutory compliance.
 
 ## Lawful Basis Register
 
@@ -63,9 +77,9 @@ For each triggered category, document the impact assessment, the residual risk, 
 
 ## Cross-Border Transfers
 
-| Destination | Mechanism (Article 22 / 23) | Review date | Owner |
-|-------------|------------------------------|-------------|-------|
-| [country] | [adequate / written agreement / derogation] | [YYYY-MM-DD] | [owner] |
+| Destination | Ground (Article 22 / 23) | Data Office approval or Executive Regulations status | Review date | Owner |
+|-------------|--------------------------|------------------------------------------------------|-------------|-------|
+| [country] | [22(1) adequate legislation / 22(2) agreement / 23(1)(a) contract / 23(1)(b) explicit consent / 23(1)(c)–(f)] | [approval reference and date checked / controls under Article 23(2): none issued as of YYYY-MM-DD] | [YYYY-MM-DD] | [owner] |
 
 ## Breach Notification Playbook
 
@@ -91,8 +105,9 @@ Reference the current administrative fines per the applicable Cabinet Resolution
 |----------|--------|---------|---------|
 | [PDPL-1] | UAE-PDPL-FDL45-2021 | Article 5 | Lawful Basis Register |
 | [PDPL-2] | UAE-PDPL-FDL45-2021 | Article 21 | DPIA |
-| [PDPL-3] | UAE-PDPL-FDL45-2021 | Article 22 | Cross-Border Transfers |
+| [PDPL-3] | UAE-PDPL-FDL45-2021 | Articles 22–23 | Cross-Border Transfers |
 | [PDPL-4] | UAE-PDPL-FDL45-2021 | Article 9 | Breach Notification Playbook |
+| [PDPL-5] | UAE-PDPL-FDL45-2021 | Article 2 | Scope and PDPL Applicability |
 
 ### Unreferenced Documents
 

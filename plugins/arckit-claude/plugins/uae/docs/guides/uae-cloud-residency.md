@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit-uae:uae-cloud-residency` assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, names approved CSP options, and captures the shared-responsibility matrix and exit / portability plan.
+`/arckit-uae:uae-cloud-residency` assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, checks candidate CSPs against the policy's tiers and minimum certifications, and captures the shared-responsibility matrix and exit / portability plan.
 
 ---
 
@@ -34,7 +34,7 @@ Output: `projects/<id>/ARC-<id>-CRES-v1.0.md`
 |---------|----------|
 | Scope | Workloads in scope, CII status, classification levels involved |
 | Per-Dataset Residency Assessment | Smart Data class, policy level, required tier, actual hosting, gap, exception if any |
-| CSP Due-Diligence Pack | Approved options compared against requirements |
+| CSP Due-Diligence Pack | Candidate CSPs checked against the tier requirements and the Appendix 6.6 minimum certifications |
 | Shared-Responsibility Matrix | Customer / CSP responsibility per IAS control |
 | Exit and Portability Plan | Lock-in mitigations, data egress, rebuild plan |
 | External References | National Cloud Security Policy v2 citations |
@@ -55,7 +55,14 @@ Source: UAE Cyber Security Council, *National Cloud Security Policy*, Version 2.
 
 ---
 
-## Approved CSP Options
+## Candidate CSPs
+
+The policy names no CSPs, keeps no approved-provider list and sets no accreditation scheme. Instead, each CSP keeps an up-to-date list of its services that meet the Partial Sovereign or Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6), and every cloud service must hold the minimum certifications in Appendix 6.6 (§3.1.5.1):
+
+- **UAE-specific**: UAE Information Assurance Standard (self-assessment) and DESC Information Security Regulation (self-assessment).
+- **International**: valid ISO/IEC 27001:2022, ISO/IEC 27017:2019, ISO/IEC 27018:2019 and ISO/IEC 22301:2019 certificates; SOC 1 and SOC 2 Type II attestation reports; CSA STAR 2 certification or attestation.
+
+The providers below are common candidates, not approved ones. Check each service a dataset uses against the CSP's own list and the dataset's tier.
 
 | Provider | Region(s) | Sovereign posture |
 |----------|-----------|-------------------|
@@ -85,6 +92,7 @@ Source: UAE Cyber Security Council, *National Cloud Security Policy*, Version 2.
 - Every dataset carries its Smart Data class, the policy level it maps to and the reason.
 - Every Confidential/Restricted dataset is on a Partial Sovereign or Sovereign Cloud with data stored in the UAE, and every dataset above it is on a Sovereign Cloud.
 - Any exception cites the Cyber Security Council's approval (§1.4 of the policy).
+- Each candidate CSP's Appendix 6.6 certifications recorded with the evidence seen and its date.
 - Shared-responsibility matrix mapped to IAS controls (no orphans).
 - Exit / portability plan covers data extraction format and timeline.
 - Material decisions (CSP, region, derogations) captured as ADRs.

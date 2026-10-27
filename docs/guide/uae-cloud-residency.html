@@ -18,14 +18,14 @@
     <meta name="author" content="ArcKit">
     <title>UAE Sovereign Cloud Residency Playbook | ArcKit</title>
     <meta property="og:title" content="UAE Sovereign Cloud Residency Playbook">
-    <meta property="og:description" content="/arckit:uae-cloud-residency assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, names…">
+    <meta property="og:description" content="/arckit:uae-cloud-residency assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, checks…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/uae-cloud-residency.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="UAE Sovereign Cloud Residency Playbook">
-    <meta name="twitter:description" content="/arckit:uae-cloud-residency assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, names…">
+    <meta name="twitter:description" content="/arckit:uae-cloud-residency assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, checks…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/uae-cloud-residency.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/uae-cloud-residency.md">
@@ -339,7 +339,7 @@
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/uae-cloud-residency.html",
                 "headline": "UAE Sovereign Cloud Residency Playbook",
-                "description": "/arckit:uae-cloud-residency assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, names…",
+                "description": "/arckit:uae-cloud-residency assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, checks…",
                 "url": "https://arckit.org/guide/uae-cloud-residency.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -422,7 +422,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
             <h1 class="app-page-hero__title">UAE Sovereign Cloud Residency Playbook</h1>
-            <p class="app-page-hero__description">/arckit:uae-cloud-residency assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, names…</p>
+            <p class="app-page-hero__description">/arckit:uae-cloud-residency assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, checks…</p>
         </div>
     </div>
 
@@ -439,7 +439,7 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Community</p>
 </blockquote>
-<p><code>/arckit:uae-cloud-residency</code> assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, names approved CSP options, and captures the shared-responsibility matrix and exit / portability plan.</p>
+<p><code>/arckit:uae-cloud-residency</code> assesses sovereign cloud residency under the UAE National Cloud Security Policy, Version 2.0 (UAE Cyber Security Council, September 2025). Validates per-classification residency, checks candidate CSPs against the policy's tiers and minimum certifications, and captures the shared-responsibility matrix and exit / portability plan.</p>
 <hr />
 <h2 id="inputs">Inputs</h2>
 <table>
@@ -492,7 +492,7 @@
 </tr>
 <tr>
 <td>CSP Due-Diligence Pack</td>
-<td>Approved options compared against requirements</td>
+<td>Candidate CSPs checked against the tier requirements and the Appendix 6.6 minimum certifications</td>
 </tr>
 <tr>
 <td>Shared-Responsibility Matrix</td>
@@ -539,7 +539,13 @@
 </table>
 <p>Source: UAE Cyber Security Council, <em>National Cloud Security Policy</em>, Version 2.0, September 2025, policy page <a href="https://csc.gov.ae/en/w/national-cloud-security-policy">https://csc.gov.ae/en/w/national-cloud-security-policy</a>. The UAE Legislation Platform lists it with an issued date of 17 September 2025: <a href="https://uaelegislation.gov.ae/en/policy/details/national-cloud-security-policy">https://uaelegislation.gov.ae/en/policy/details/national-cloud-security-policy</a>.</p>
 <hr />
-<h2 id="approved-csp-options">Approved CSP Options</h2>
+<h2 id="candidate-csps">Candidate CSPs</h2>
+<p>The policy names no CSPs, keeps no approved-provider list and sets no accreditation scheme. Instead, each CSP keeps an up-to-date list of its services that meet the Partial Sovereign or Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6), and every cloud service must hold the minimum certifications in Appendix 6.6 (§3.1.5.1):</p>
+<ul>
+<li><strong>UAE-specific</strong>: UAE Information Assurance Standard (self-assessment) and DESC Information Security Regulation (self-assessment).</li>
+<li><strong>International</strong>: valid ISO/IEC 27001:2022, ISO/IEC 27017:2019, ISO/IEC 27018:2019 and ISO/IEC 22301:2019 certificates; SOC 1 and SOC 2 Type II attestation reports; CSA STAR 2 certification or attestation.</li>
+</ul>
+<p>The providers below are common candidates, not approved ones. Check each service a dataset uses against the CSP's own list and the dataset's tier.</p>
 <table>
 <thead>
 <tr>
@@ -614,6 +620,7 @@
 <li>Every dataset carries its Smart Data class, the policy level it maps to and the reason.</li>
 <li>Every Confidential/Restricted dataset is on a Partial Sovereign or Sovereign Cloud with data stored in the UAE, and every dataset above it is on a Sovereign Cloud.</li>
 <li>Any exception cites the Cyber Security Council's approval (§1.4 of the policy).</li>
+<li>Each candidate CSP's Appendix 6.6 certifications recorded with the evidence seen and its date.</li>
 <li>Shared-responsibility matrix mapped to IAS controls (no orphans).</li>
 <li>Exit / portability plan covers data extraction format and timeline.</li>
 <li>Material decisions (CSP, region, derogations) captured as ADRs.</li>
