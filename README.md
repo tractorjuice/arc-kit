@@ -534,7 +534,7 @@ The commands chain together in a canonical order from `principles → uae-classi
 
 ## UK NHS Clinical Safety Overlay (Community-contributed)
 
-> ⚠️ **Community-contributed overlay — first sector-specific overlay in ArcKit.** The 4 commands below cover NHS clinical safety (DCB0129 manufacturer + DCB0160 deployer), NHS DTAC procurement assurance, and UK MDR 2002 + EU MDR 2017/745 software-as-medical-device classification. Adopts Dr Marcus Baw's [SAFETY.md spec](https://github.com/pacharanero/SAFETY.md) for DCB0129/0160 file naming and YAML-frontmatter hazard log. Output is **not** clinical, legal, or regulatory advice — MUST be reviewed by a qualified Clinical Safety Officer (CSO with appropriate GMC / NMC / HCPC / GPhC registration) and, for MDR classification, by a qualified Regulatory Affairs specialist before reliance.
+> ⚠️ **Community-contributed overlay — second sector-specific overlay in ArcKit, after `arckit-uk-finance`.** The 4 commands below cover NHS clinical safety (DCB0129 manufacturer + DCB0160 deployer), NHS DTAC procurement assurance, and UK MDR 2002 + EU MDR 2017/745 software-as-medical-device classification. Adopts Dr Marcus Baw's [SAFETY.md spec](https://github.com/pacharanero/SAFETY.md) for DCB0129/0160 file naming and YAML-frontmatter hazard log. Output is **not** clinical, legal, or regulatory advice — MUST be reviewed by a qualified Clinical Safety Officer (CSO with appropriate GMC / NMC / HCPC / GPhC registration) and, for MDR classification, by a qualified Regulatory Affairs specialist before reliance.
 
 **Clinical safety (DCB0129 + DCB0160)**:
 
@@ -581,16 +581,16 @@ Install: `claude plugin install arckit arckit-us`. See [`docs/guides/us-federal-
 
 ## UK Finance Payments Overlay (4 commands) — First Sector Overlay
 
-> **EXPERIMENTAL sector overlay.** The 4 commands below cover UK regulated payment system operators scaling operations under PSD2 SCA-RTS, CASS V, FCA Consumer Duty, and CREST protocols. They ship as the **arckit-uk-finance** community-contributed overlay — the first **sector-specific** overlay (distinct from the 8 jurisdictional overlays). Output requires review by qualified UK FS regulatory counsel, MLRO, and the firm's accountable senior managers (SMF holders only where the firm is within SM&CR) before implementation.
+> **EXPERIMENTAL sector overlay.** The 4 commands below cover established UK Payment Service Providers, E-Money Institutions and Payment Institutions working under an FCA authorisation: SCA-RTS exemption design, safeguarding under the EMRs 2011, PSRs 2017 and CASS 15, the FCA Consumer Duty board report, and Critical Third Parties dependencies. They ship as the **arckit-uk-finance** community-contributed overlay — the first **sector-specific** overlay (distinct from the 8 jurisdictional overlays). Output requires review by qualified UK FS regulatory counsel, MLRO, and the firm's accountable senior managers (SMF holders only where the firm is within SM&CR) before implementation.
 
 **Payments architecture and compliance**:
 
-- `/arckit:uk-nhs-dcb0129` — TBD
-- `/arckit:uk-nhs-dcb0160` — TBD
-- `/arckit:uk-nhs-dtac` — TBD
-- `/arckit:uk-mdr-classification` — TBD
+- `/arckit:uk-fs-sca-rts` — SCA-RTS exemption design: the ten exemptions in UK SCA-RTS Articles 10 to 18 (FCA technical standards under PSRs 2017 regulation 106A), TRA reference fraud rates and the Article 20 cessation rule, fraud monitoring (FSSCA)
+- `/arckit:uk-fs-safeguarding` — EMI / PI safeguarding assessment under EMRs 2011 regulations 20 to 22, PSRs 2017 regulation 23 and CASS 15 (from 7 May 2026), including the monthly safeguarding return; **CRITICAL severity** (FSSAFE)
+- `/arckit:uk-fs-consumer-duty` — FCA Consumer Duty annual board report under Principle 12 and PRIN 2A (FSCD)
+- `/arckit:uk-fs-ctp-dependency` — Critical Third Parties dependency register and resilience testing plan under PS24/16 and FSMA 2023 (FSCTP)
 
-Recipe: `uk-fs-payments` (multi-wave payment system modernization).
+Recipe: `uk-fs-payments` (11 targets across baseline and overlay commands).
 
 Install: `claude plugin install arckit arckit-uk-finance`. Help wanted: recruiting a UK financial services domain co-maintainer (CISO / Compliance / Head of Architecture background welcome) to transition to official-baseline status.
 

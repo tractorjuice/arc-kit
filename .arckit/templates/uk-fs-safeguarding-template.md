@@ -330,7 +330,8 @@ period for the other items below is a firm policy aligned to that rule.
 | FCA 2025/38 | Payments and Electronic Money (Safeguarding) Instrument 2025 (in force 7 May 2026) | <https://api-handbook.fca.org.uk/files/instrument/Glossary-GEN-CASS-SUP/FCA%202025/38-2026-05-07.pdf> |
 | FCA CP24/20 | CP24/20 — Changes to the safeguarding regime for payments and e-money firms (September 2024) | <https://www.fca.org.uk/publication/consultation/cp24-20.pdf> |
 | FCA CASS 15 | CASS 15 — Payment services and electronic money: relevant funds | <https://handbook.fca.org.uk/handbook/cass15> |
-| FCA SUP 16 | SUP 16 — Reporting requirements (SUP 16.14A and Annex 29BR, monthly safeguarding return) | <https://handbook.fca.org.uk/handbook/sup16> |
+| FCA SUP 16.14A | SUP 16.14A — Safeguarding return: safeguarding institutions (monthly return, SUP 16.14A.3R) | <https://handbook.fca.org.uk/handbook/sup16/sup16s14a> |
+| FCA SUP 16 Annex 29BR | SUP 16 Annex 29BR — Safeguarding return (content of the return) | <https://handbook.fca.org.uk/handbook/sup16/sup16s154> |
 | FCA key publications | FCA EMI and Payment Institutions — key publications | <https://www.fca.org.uk/firms/emi-payment-institutions-key-publications> |
 
 ## 10. External References

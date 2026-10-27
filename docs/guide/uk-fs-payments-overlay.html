@@ -527,7 +527,7 @@ and a board attestation block for the individuals signing for the governing body
 Doc-type code: <strong>FSCD</strong>. Principal citations:
 FCA PS22/9; FCA FG22/5; FCA &quot;Consumer Duty board reports: good practice and areas for improvement&quot;
 (11 December 2024, last updated 9 March 2026); FCA blog &quot;Year 2 Consumer Duty Board Reports:
-progress and what comes next&quot; (16 April 2026); FCA PRIN 2A via FCA 2022/31.</p>
+progress and what comes next&quot; (16 April 2026); FCA PRIN 2A (FCA Handbook) and FCA 2022/31.</p>
 <h3 id="arckituk-fs-ctp-dependency--critical-third-party-dependency-assessment"><code>/arckit:uk-fs-ctp-dependency</code> — Critical Third Party Dependency Assessment</h3>
 <p>Generates a CTP dependency register and resilience testing plan under the BoE/PRA/FCA CTP regime
 established by PS24/16 (effective January 2025) and grounded in the Financial Services and Markets
@@ -541,20 +541,25 @@ Doc-type code: <strong>FSCTP</strong>. Principal citations: FCA PS24/16; FSMA 20
 instrument; HMT designation approach document (March 2024).</p>
 <hr />
 <h2 id="recipe">Recipe</h2>
-<p>The overlay ships with the <code>uk-fs-payments</code> recipe, which orchestrates 11 build targets across
-baseline and overlay commands in a structured wave sequence:</p>
+<p>The <code>uk-fs-payments</code> recipe orchestrates 11 build targets across baseline and overlay commands.
+The build harness works out the waves from each target's dependencies; from an empty project
+they are:</p>
 <ul>
-<li><strong>Wave 1 (foundation)</strong>: PRIN, STKE</li>
-<li><strong>Wave 2 (requirements + risk)</strong>: REQ, RISK</li>
-<li><strong>Wave 3 (payments overlay — parallel where possible)</strong>: FSSCA, FSSAFE, FSCD, FSCTP</li>
-<li><strong>Wave 4 (cross-cutting)</strong>: DPIA, ADR, traceability</li>
+<li><strong>Wave 1</strong>: PRIN</li>
+<li><strong>Wave 2</strong>: STKE</li>
+<li><strong>Wave 3</strong>: REQ</li>
+<li><strong>Wave 4</strong>: RISK, DATA, ADR, FSCD</li>
+<li><strong>Wave 5</strong>: DPIA, FSSAFE, FSCTP</li>
+<li><strong>Wave 6</strong>: FSSCA (needs ADR and DPIA)</li>
+<li><strong>After the build</strong>: <code>/arckit:traceability</code> and <code>/arckit:health</code></li>
 </ul>
 <p>To run:</p>
 <pre><code class="language-bash"># In a Claude Code session with the ArcKit plugin and UK Finance overlay enabled:
 /arckit:build &lt;project-name&gt; --recipe uk-fs-payments --plan   # wave-plan dry run
 /arckit:build &lt;project-name&gt; --recipe uk-fs-payments          # full build
 </code></pre>
-<p>The recipe is defined in <code>plugins/arckit-uk-finance/recipes/uk-fs-payments.yaml</code>.</p>
+<p>The recipe ships with the <code>arckit</code> core plugin, at
+<code>plugins/arckit-claude/skills/arckit-build/recipes/uk-fs-payments.yaml</code>.</p>
 <hr />
 <h2 id="doc-type-codes">Doc-type Codes</h2>
 <table>
@@ -649,7 +654,8 @@ verified as live at the time the commands were authored.</p>
 <li><a href="https://www.fca.org.uk/firms/strong-customer-authentication">FCA Strong Customer Authentication — firms guidance</a></li>
 <li><a href="https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement">FCA Consumer Duty board reports: good practice and areas for improvement (11 December 2024, last updated 9 March 2026)</a></li>
 <li><a href="https://www.fca.org.uk/news/blogs/year-2-consumer-duty-board-reports-progress-and-what-comes-next">FCA blog — Year 2 Consumer Duty Board Reports: progress and what comes next (16 April 2026)</a></li>
-<li><a href="https://handbook.fca.org.uk/handbook/sup16">FCA Handbook SUP 16 — Reporting requirements (SUP 16.14A and Annex 29BR, monthly safeguarding return)</a></li>
+<li><a href="https://handbook.fca.org.uk/handbook/sup16/sup16s14a">FCA Handbook SUP 16.14A — Safeguarding return: safeguarding institutions (monthly return)</a></li>
+<li><a href="https://handbook.fca.org.uk/handbook/sup16/sup16s154">FCA Handbook SUP 16 Annex 29BR — Safeguarding return</a></li>
 </ul>
 </div>
         </div>

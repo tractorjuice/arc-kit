@@ -109,8 +109,9 @@ The generated artefact contains the following sections:
 **Monthly safeguarding return**: REP027, submitted within 15 business days of each month end
 (SUP 16.14A.3R), with its content set by SUP 16 Annex 29BR. One return covers authorised PIs,
 authorised and small EMIs, credit unions issuing e-money and SPIs that opt in (FCA Approach
-Document, May 2026, Chapter 13). The FCA Handbook is a single-page application: open SUP 16 at
-<https://handbook.fca.org.uk/handbook/sup16> and find SUP 16.14A and Annex 29BR in the chapter.
+Document, May 2026, Chapter 13). The FCA Handbook links to each section:
+SUP 16.14A at <https://handbook.fca.org.uk/handbook/sup16/sup16s14a> and SUP 16 Annex 29BR at
+<https://handbook.fca.org.uk/handbook/sup16/sup16s154>.
 
 **FCA enforcement context**: Two firm failures show why safeguarding is CRITICAL severity:
 
@@ -214,5 +215,6 @@ and 13) is the current primary reference for FCA supervisory expectations.
 | FCA 2025/38 — Payments and Electronic Money (Safeguarding) Instrument 2025 (in force 7 May 2026) | <https://api-handbook.fca.org.uk/files/instrument/Glossary-GEN-CASS-SUP/FCA%202025/38-2026-05-07.pdf> |
 | FCA CP24/20 — Changes to the safeguarding regime for payments and e-money firms (September 2024) | <https://www.fca.org.uk/publication/consultation/cp24-20.pdf> |
 | FCA Handbook CASS 15 — Payment services and electronic money: relevant funds | <https://handbook.fca.org.uk/handbook/cass15> |
-| FCA Handbook SUP 16 — Reporting requirements (SUP 16.14A and Annex 29BR, monthly safeguarding return) | <https://handbook.fca.org.uk/handbook/sup16> |
+| FCA Handbook SUP 16.14A — Safeguarding return: safeguarding institutions (monthly return, SUP 16.14A.3R) | <https://handbook.fca.org.uk/handbook/sup16/sup16s14a> |
+| FCA Handbook SUP 16 Annex 29BR — Safeguarding return (content of the return) | <https://handbook.fca.org.uk/handbook/sup16/sup16s154> |
 | FCA EMI and Payment Institutions — key publications | <https://www.fca.org.uk/firms/emi-payment-institutions-key-publications> |

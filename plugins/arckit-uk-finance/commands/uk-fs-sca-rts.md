@@ -289,10 +289,10 @@ publications are updated without prior notice.
 > which it would take enforcement action on SCA for e-commerce from 14 March 2021 to
 > 14 September 2021. It is historical context only; it does not change any exemption.
 >
-> **Note on the FCA Handbook links**: The FCA Handbook is a single-page application. If a deep
-> link opens the wrong page, go to <https://handbook.fca.org.uk/technical-standards>, expand
-> Payment Services, then Strong Customer Authentication and Common and Secure Methods of
-> Communication.
+> **Note on the FCA Handbook links**: The FCA Handbook has stable links to each technical
+> standard chapter and provision, as in the table above. To browse the SCA-RTS from the top, go to
+> <https://handbook.fca.org.uk/technical-standards>, expand Payment Services, then Strong Customer
+> Authentication and Common and Secure Methods of Communication.
 >
 > **Note on the UK Finance PDF**: The PDF may require an authenticated session to download
 > directly. Use the FCA and legislation.gov.uk URLs as the primary regulatory anchors; the UK Finance

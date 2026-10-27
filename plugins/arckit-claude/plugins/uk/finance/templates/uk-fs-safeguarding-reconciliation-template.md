@@ -72,8 +72,8 @@ its content is set by SUP 16 Annex 29BR. There is one return for authorised PIs,
 small EMIs, credit unions issuing e-money and SPIs that opt in.
 
 <!-- The rows below follow the content list in the FCA Approach Document (May 2026), Chapter 13
-(REP027). Check the current form in SUP 16 Annex 29BR at https://handbook.fca.org.uk/handbook/sup16
-and in RegData before go-live. -->
+(REP027). Check the current form in SUP 16 Annex 29BR at
+https://handbook.fca.org.uk/handbook/sup16/sup16s154 and in RegData before go-live. -->
 
 | Safeguarding return item | Firm source-of-truth field | Source system | Calculation / aggregation |
 |--------------------------|-----------------------------|---------------|----------------------------|

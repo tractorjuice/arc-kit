@@ -112,7 +112,7 @@ and a board attestation block for the individuals signing for the governing body
 Doc-type code: **FSCD**. Principal citations:
 FCA PS22/9; FCA FG22/5; FCA "Consumer Duty board reports: good practice and areas for improvement"
 (11 December 2024, last updated 9 March 2026); FCA blog "Year 2 Consumer Duty Board Reports:
-progress and what comes next" (16 April 2026); FCA PRIN 2A via FCA 2022/31.
+progress and what comes next" (16 April 2026); FCA PRIN 2A (FCA Handbook) and FCA 2022/31.
 
 ### `/arckit:uk-fs-ctp-dependency` — Critical Third Party Dependency Assessment
 
@@ -131,13 +131,17 @@ instrument; HMT designation approach document (March 2024).
 
 ## Recipe
 
-The overlay ships with the `uk-fs-payments` recipe, which orchestrates 11 build targets across
-baseline and overlay commands in a structured wave sequence:
+The `uk-fs-payments` recipe orchestrates 11 build targets across baseline and overlay commands.
+The build harness works out the waves from each target's dependencies; from an empty project
+they are:
 
-- **Wave 1 (foundation)**: PRIN, STKE
-- **Wave 2 (requirements + risk)**: REQ, RISK
-- **Wave 3 (payments overlay — parallel where possible)**: FSSCA, FSSAFE, FSCD, FSCTP
-- **Wave 4 (cross-cutting)**: DPIA, ADR, traceability
+- **Wave 1**: PRIN
+- **Wave 2**: STKE
+- **Wave 3**: REQ
+- **Wave 4**: RISK, DATA, ADR, FSCD
+- **Wave 5**: DPIA, FSSAFE, FSCTP
+- **Wave 6**: FSSCA (needs ADR and DPIA)
+- **After the build**: `/arckit:traceability` and `/arckit:health`
 
 To run:
 
@@ -147,7 +151,8 @@ To run:
 /arckit:build <project-name> --recipe uk-fs-payments          # full build
 ```
 
-The recipe is defined in `plugins/arckit-uk-finance/recipes/uk-fs-payments.yaml`.
+The recipe ships with the `arckit` core plugin, at
+`plugins/arckit-claude/skills/arckit-build/recipes/uk-fs-payments.yaml`.
 
 ---
 
@@ -231,4 +236,5 @@ verified as live at the time the commands were authored.
 - [FCA Strong Customer Authentication — firms guidance](https://www.fca.org.uk/firms/strong-customer-authentication)
 - [FCA Consumer Duty board reports: good practice and areas for improvement (11 December 2024, last updated 9 March 2026)](https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement)
 - [FCA blog — Year 2 Consumer Duty Board Reports: progress and what comes next (16 April 2026)](https://www.fca.org.uk/news/blogs/year-2-consumer-duty-board-reports-progress-and-what-comes-next)
-- [FCA Handbook SUP 16 — Reporting requirements (SUP 16.14A and Annex 29BR, monthly safeguarding return)](https://handbook.fca.org.uk/handbook/sup16)
+- [FCA Handbook SUP 16.14A — Safeguarding return: safeguarding institutions (monthly return)](https://handbook.fca.org.uk/handbook/sup16/sup16s14a)
+- [FCA Handbook SUP 16 Annex 29BR — Safeguarding return](https://handbook.fca.org.uk/handbook/sup16/sup16s154)

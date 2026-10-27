@@ -306,10 +306,11 @@ and legislation.gov.uk publications are updated without prior notice.
 > The current safeguarding expectations are in the Approach Document (May 2026 edition,
 > Chapter 10), PS25/12 and CASS 15.
 >
-> **Note on the FCA Handbook links:** The FCA Handbook is a single-page application. The chapter
-> URLs below (`handbook.fca.org.uk/handbook/sup16`, `handbook.fca.org.uk/handbook/cass15`) open the
-> whole chapter; find SUP 16.14A and SUP 16 Annex 29BR within SUP 16. Older
-> `www.handbook.fca.org.uk/handbook/SUP/16/` links redirect inconsistently.
+> **Note on the FCA Handbook links:** The FCA Handbook at `handbook.fca.org.uk` has stable links
+> to each chapter and section: `handbook.fca.org.uk/handbook/cass15` opens CASS 15,
+> `handbook.fca.org.uk/handbook/sup16/sup16s14a` opens SUP 16.14A and
+> `handbook.fca.org.uk/handbook/sup16/sup16s154` opens SUP 16 Annex 29BR. Cite the section that
+> holds the rule. Older `www.handbook.fca.org.uk/handbook/SUP/16/` links redirect inconsistently.
 
 | Reference | Verified URL |
 |-----------|-------------|
@@ -322,7 +323,8 @@ and legislation.gov.uk publications are updated without prior notice.
 | FCA 2025/38 — Payments and Electronic Money (Safeguarding) Instrument 2025 (in force 7 May 2026) | <https://api-handbook.fca.org.uk/files/instrument/Glossary-GEN-CASS-SUP/FCA%202025/38-2026-05-07.pdf> |
 | FCA CP24/20 — Changes to the safeguarding regime for payments and e-money firms (September 2024) | <https://www.fca.org.uk/publication/consultation/cp24-20.pdf> |
 | FCA Handbook CASS 15 — Payment services and electronic money: relevant funds | <https://handbook.fca.org.uk/handbook/cass15> |
-| FCA Handbook SUP 16 — Reporting requirements (SUP 16.14A and Annex 29BR, monthly safeguarding return) | <https://handbook.fca.org.uk/handbook/sup16> |
+| FCA Handbook SUP 16.14A — Safeguarding return: safeguarding institutions (monthly return, SUP 16.14A.3R) | <https://handbook.fca.org.uk/handbook/sup16/sup16s14a> |
+| FCA Handbook SUP 16 Annex 29BR — Safeguarding return (content of the return) | <https://handbook.fca.org.uk/handbook/sup16/sup16s154> |
 | FCA EMI and Payment Institutions — key publications | <https://www.fca.org.uk/firms/emi-payment-institutions-key-publications> |
 
 ## Output Summary

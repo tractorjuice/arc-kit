@@ -128,10 +128,11 @@ in the attestation block; firms that do not retain the role need not include it.
 implements this update — do not carry over Board Champion language from templates drafted before
 February 2025 without verifying the firm's current governance model.
 
-**PRIN 2A** (the Consumer Duty sourcebook rules) is accessed via the FCA Handbook at
-`https://www.handbook.fca.org.uk`. The Handbook does not support stable deep links to individual
-chapters; navigate via the Handbook homepage or cite FCA 2022/31 (the instrument that introduced
-PRIN 2A) for a stable legislative anchor.
+**PRIN 2A** (the Consumer Duty rules) is in the FCA Handbook, which has stable links to each
+chapter and section: PRIN 2A at <https://handbook.fca.org.uk/handbook/prin2a> and the governing
+body report rules at <https://handbook.fca.org.uk/handbook/prin2a/prin2as8> (PRIN 2A.8). FCA
+2022/31 is the instrument that introduced Principle 12 and PRIN 2A; the Handbook shows the rules
+as amended since.
 
 ---
 
@@ -187,5 +188,8 @@ PRIN 2A) for a stable legislative anchor.
 | FCA Consumer Duty board reports: good practice and areas for improvement (11 December 2024, last updated 9 March 2026) | <https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement> |
 | FCA blog — Year 2 Consumer Duty Board Reports: progress and what comes next (16 April 2026) | <https://www.fca.org.uk/news/blogs/year-2-consumer-duty-board-reports-progress-and-what-comes-next> |
 | FCA Consumer Duty — information for firms | <https://www.fca.org.uk/firms/consumer-duty/information-firms> |
-| FCA Handbook (entry point — navigate to PRIN 2A for Consumer Duty rules) | <https://www.handbook.fca.org.uk> |
-| FCA 2022/31 — Consumer Duty instrument (introduces Principle 12 and PRIN 2A) | <https://www.fca.org.uk/publication/policy/fca-2022-31.pdf> |
+| FCA Handbook PRIN 2A — The Consumer Duty | <https://handbook.fca.org.uk/handbook/prin2a> |
+| FCA Handbook PRIN 2A.8 — Governance and culture (governing body report, PRIN 2A.8.3R to 2A.8.5R) | <https://handbook.fca.org.uk/handbook/prin2a/prin2as8> |
+| FCA Handbook PRIN 2.1 — The Principles (Principle 12) | <https://handbook.fca.org.uk/handbook/prin2/prin2s1> |
+| FCA Handbook PRIN 3.1 — Who? (PRIN 3.1.1AR applies PRIN to EMIs and payment institutions) | <https://handbook.fca.org.uk/handbook/prin3/prin3s1> |
+| FCA 2022/31 — Consumer Duty Instrument 2022 (introduces Principle 12 and PRIN 2A) | <https://api-handbook.fca.org.uk/files/instrument/2022/FCA_2022_31.pdf> |
