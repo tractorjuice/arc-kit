@@ -13,7 +13,7 @@
 |-------|-------|
 | **Firm Authorisation / Registration Type** | {{FIRM_AUTHORISATION_TYPE}} (EMI — authorised / API — authorised / SPI — registered) |
 | **FCA Firm Reference Number** | {{FCA_FRN}} |
-| **SMF Holder (Safeguarding)** | {{SMF_HOLDER_NAME}} — {{SMF_HOLDER_FUNCTION}} |
+| **Safeguarding oversight (CASS 15.2.4R)** | {{SAFEGUARDING_OVERSIGHT_NAME}} — {{SAFEGUARDING_OVERSIGHT_ROLE}} |
 
 ## Revision History
 
@@ -34,12 +34,13 @@
 {{EXECUTIVE_SUMMARY_PARAGRAPH_3}}
 
 > ⚠️ This document is a **working assessment** — not a regulatory submission. All safeguarding
-> arrangements must be reviewed and signed off by qualified UK FS regulatory counsel, the firm's
-> SMF holder for safeguarding (primary accountability — typically SMF1/SMF24 in larger firms), the
-> firm's MLRO (for AML-angle review of the client-money position, not primary safeguarding
-> accountability), and the firm's Compliance Officer before implementation. Regulatory citations
-> reflect the position as at the document creation date; verify against current FCA publications —
-> including the FCA Approach Document (May 2026 edition), PS25/12 and CASS 15 — before reliance.
+> arrangements must be reviewed and signed off by qualified UK FS regulatory counsel, the director
+> or senior manager responsible for safeguarding oversight (CASS 15.2.4R; an SMF holder only if the
+> firm is within SM&CR), the firm's MLRO (for AML-angle review of the client-money position, not
+> primary safeguarding accountability), and the firm's Compliance Officer before implementation.
+> Regulatory citations reflect the position as at the document creation date; verify against
+> current FCA publications — including the FCA Approach Document (May 2026 edition), PS25/12 and
+> CASS 15 — before reliance.
 
 ---
 
@@ -55,7 +56,8 @@
 | **Authorisation / registration date** | {{AUTHORISATION_DATE}} |
 | **Applicable regulation** | {{APPLICABLE_REGULATION}} |
 | **Passporting arrangements** | {{PASSPORTING_ARRANGEMENTS}} |
-| **SMF holder(s) for safeguarding** | {{SMF_HOLDER_LIST}} |
+| **Safeguarding oversight (CASS 15.2.4R)** | {{SAFEGUARDING_OVERSIGHT_NAME}} — {{SAFEGUARDING_OVERSIGHT_ROLE}} |
+| **Within SM&CR?** | {{SMCR_STATUS}} (Yes only if the firm is FSMA-authorised, e.g. it holds a Part 4A permission; a PI or EMI authorised only under the PSRs 2017 or EMRs 2011 is outside SM&CR) |
 
 ### 1.2 In-Scope Payment Services and E-Money Products
 
@@ -269,7 +271,7 @@ period for the other items below is a firm policy aligned to that rule.
 | Daily reconciliation records | {{RECON_FORMAT}} | 5 years (CASS 15.8.8R(3)) | {{RECON_SYSTEM}} |
 | Designated account bank statements | {{STATEMENT_FORMAT}} | 5 years | {{STATEMENT_SYSTEM}} |
 | Shortfall notification log | {{SHORTFALL_LOG_FORMAT}} | 5 years | {{SHORTFALL_LOG_SYSTEM}} |
-| SMF sign-off register | {{SIGNOFF_FORMAT}} | 5 years | {{SIGNOFF_SYSTEM}} |
+| Safeguarding sign-off register | {{SIGNOFF_FORMAT}} | 5 years | {{SIGNOFF_SYSTEM}} |
 | Insurance / guarantee policy documents | {{POLICY_DOC_FORMAT}} | 5 years | {{POLICY_DOC_SYSTEM}} |
 | Monthly safeguarding return (REP027) | SUP 16 Annex 29BR format, submitted via RegData | 5 years | {{MONTHLY_RETURN_SYSTEM}} |
 
@@ -298,7 +300,7 @@ period for the other items below is a firm policy aligned to that rule.
 |---------|--------|
 | **Shortfall detection mechanism** | {{SHORTFALL_DETECTION}} |
 | **Immediate containment action** | {{SHORTFALL_CONTAINMENT}} |
-| **SMF notification trigger** | {{SMF_NOTIFICATION_TRIGGER}} |
+| **Safeguarding oversight notification trigger** | {{OVERSIGHT_NOTIFICATION_TRIGGER}} |
 | **FCA notification trigger** | {{FCA_NOTIFICATION_TRIGGER}} |
 | **Remediation timeline** | {{SHORTFALL_REMEDIATION_TIMELINE}} |
 | **Root cause analysis process** | {{RCA_PROCESS}} |
@@ -309,7 +311,7 @@ period for the other items below is a firm policy aligned to that rule.
 |----------|-------|----------|-------|
 | Sanctions screening freeze | OFAC/OFSI match on safeguarding account | Escalate to MLRO; engage compliance counsel; notify FCA | MLRO |
 | Bank technical outage | Safeguarding bank system failure | Activate backup safeguarding bank; notify clients within {{CLIENT_NOTIFICATION_SLA}} | CFO / Treasurer |
-| Regulatory restriction order | FCA or court order restricting account | Engage legal counsel immediately; notify board | CEO / SMF holder |
+| Regulatory restriction order | FCA or court order restricting account | Engage legal counsel immediately; notify board | CEO / safeguarding oversight (CASS 15.2.4R) |
 
 <!-- Add additional rows as needed -->
 

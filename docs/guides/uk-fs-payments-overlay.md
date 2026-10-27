@@ -2,9 +2,15 @@
 
 > **Status**: EXPERIMENTAL · Community-contributed · No named domain co-maintainer · **Output requires
 > review by qualified UK FS regulatory counsel, the firm's MLRO / Compliance Officer, and the
-> SMF holder with primary accountability for payment services before any reliance on generated
+> senior individual accountable for payment services before any reliance on generated
 > artefacts.** Regulatory citations reflect the position at the time each command was authored;
 > verify against current FCA, BoE, PRA, and legislation.gov.uk publications before reliance.
+>
+> **Senior managers.** SM&CR applies only to FSMA-authorised firms, such as banks and other firms
+> with a Part 4A permission. A PI or EMI authorised only under the PSRs 2017 or EMRs 2011 is
+> outside it; its directors and persons responsible for management are assessed for good repute
+> and knowledge under PSRs 2017 regulation 6(7)(b) or EMRs 2011 regulation 6(6)(b). The commands
+> therefore ask whether the firm is within SM&CR and use SMF titles only when it is.
 
 ## Purpose
 
@@ -102,7 +108,8 @@ anchored on FCA Principle 12 and PRIN 2A. The artefact covers: per-outcome evide
 (Products and Services, Price and Value, Consumer Understanding, Consumer Support); fair-value
 framework; target market assessment; vulnerable customer cohort identification using the FG22/5
 four vulnerability drivers (health, life events, resilience, capability); foreseeable harms register;
-and a board attestation block for SMF holder sign-off. Doc-type code: **FSCD**. Principal citations:
+and a board attestation block for the individuals signing for the governing body (PRIN 2A.8.4R).
+Doc-type code: **FSCD**. Principal citations:
 FCA PS22/9; FCA FG22/5; FCA "Consumer Duty board reports: good practice and areas for improvement"
 (11 December 2024, last updated 9 March 2026); FCA blog "Year 2 Consumer Duty Board Reports:
 progress and what comes next" (16 April 2026); FCA PRIN 2A via FCA 2022/31.
@@ -154,9 +161,10 @@ The recipe is defined in `plugins/arckit-uk-finance/recipes/uk-fs-payments.yaml`
 | FSCTP | CTP Dependency Assessment | Standard |
 
 FSSAFE carries CRITICAL severity because safeguarding failures have led to firm collapse and FCA
-enforcement action — Allied Wallet (2021) and Premier FX (2018) are the documented enforcement
-cases. The CRITICAL marker signals that the artefact requires elevated sign-off and more frequent
-review than standard compliance artefacts.
+action: Allied Wallet (FCA requirements and winding-up petition 2019, winding-up order March 2020)
+and Premier FX (collapsed 2018, publicly censured by the FCA in February 2021). The CRITICAL
+marker signals that the artefact requires elevated sign-off and more frequent review than standard
+compliance artefacts.
 
 ---
 

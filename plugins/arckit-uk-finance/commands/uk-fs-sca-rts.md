@@ -232,10 +232,14 @@ Print the summary per `## Output Summary` below. Do not echo the full artefact.
   exceeds the reference rate; cease TRA for that band immediately if it exceeds the reference rate
   for two consecutive quarters; resume only after one quarter at or below the reference rate and a
   notification to the FCA with evidence.
-- **Soft-decline must be implemented even where an exemption is applied.** An issuer that disagrees
-  with an acquirer-asserted exemption can soft-decline; the design must support automatic fallback to
-  full SCA in that path. Acquirer-only exemption assertions without soft-decline support are not
-  compliant.
+- **Design for soft declines even where an exemption is applied.** The payer's PSP (the card
+  issuer) decides whether an exemption applies and keeps the right to require SCA even when the
+  acquirer requests one (FCA Approach Document para 20.44). Card schemes signal that with a soft
+  decline, so a payment flow that cannot fall back automatically to full SCA will fail those
+  transactions. Where the payee or its PSP does not accept SCA that regulation 100 requires, it
+  must compensate the payer's PSP for refunds of unauthorised transactions (PSRs 2017 reg 77(6)).
+  Neither the PSRs 2017 nor the SCA-RTS mention soft declines: treating soft-decline support as
+  mandatory is this overlay's design recommendation, not a regulatory requirement.
 - **Article 10A and the AISP 90-day reconfirmation are separate rules.** Under Article 10A the
   ASPSP may stop applying SCA to AISP access once SCA has been applied on at least one previous
   occasion when the AISP accessed the information; it sets no periodic ASPSP reauthentication.

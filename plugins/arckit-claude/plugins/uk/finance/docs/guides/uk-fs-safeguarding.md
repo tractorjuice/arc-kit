@@ -3,11 +3,12 @@
 > **Status**: EXPERIMENTAL · Community-contributed · **CRITICAL SEVERITY** · **Output is not
 > regulatory advice.** Safeguarding failures have led to firm collapse and FCA enforcement action.
 > The safeguarding assessment MUST be reviewed, materially supplemented, and signed off by qualified
-> UK FS regulatory counsel, the firm's SMF holder for safeguarding (typically SMF1/SMF24), the
-> firm's MLRO (for AML-angle review of the client-money position), and the firm's Compliance Officer
-> before any production safeguarding arrangement is established. Verify the FCA Approach Document
-> (current edition), PS25/12 (August 2025) and the CASS 15 rules in force from 7 May 2026 for
-> changes introduced since this command was authored.
+> UK FS regulatory counsel, the director or senior manager responsible for safeguarding oversight
+> (CASS 15.2.4R; an SMF holder only if the firm is within SM&CR), the firm's MLRO (for AML-angle
+> review of the client-money position), and the firm's Compliance Officer before any production
+> safeguarding arrangement is established. Verify the FCA Approach Document (current edition),
+> PS25/12 (August 2025) and the CASS 15 rules in force from 7 May 2026 for changes introduced
+> since this command was authored.
 
 ## Purpose
 
@@ -35,7 +36,8 @@ arrangements change.
   relevant funds (as defined in PSRs 2017 Reg 2 / EMR 2011 Reg 2) on behalf of customers requires
   a documented safeguarding arrangement before those funds are received.
 - **After a safeguarding bank change** — if the firm switches or adds a designated safeguarding
-  bank account or insurer, the assessment must be updated and re-signed by the relevant SMF holder.
+  bank account or insurer, the assessment must be updated and re-signed by the individual
+  responsible for safeguarding oversight.
 - **PS25/12 compliance refresh** — the FCA's PS25/12 (August 2025) made the CASS 15 safeguarding
   rules, SUP 3A safeguarding audits and the monthly safeguarding return, in force 7 May 2026
   (FCA 2025/38). If the firm's existing documentation was drafted before then, this command
@@ -78,8 +80,10 @@ artefacts where present, and prompts for it in the output summary where missing.
 
 The generated artefact contains the following sections:
 
-1. Document Control (classification, owner, SMF holder, review cycle)
-2. Firm Authorisation Profile (authorisation type, FCA FRN, products in scope)
+1. Document Control (classification, owner, safeguarding oversight under CASS 15.2.4R, review
+   cycle)
+2. Firm Authorisation Profile (authorisation type, FCA FRN, whether the firm is within SM&CR,
+   products in scope)
 3. Safeguarding Method Statement (chosen method with explicit regulatory justification)
 4. Designated Safeguarding Arrangements (bank account details / insurer / guarantor)
 5. End-to-end Client Funds Flow (Mermaid or ASCII diagram + narrative for each node)
@@ -108,16 +112,29 @@ authorised and small EMIs, credit unions issuing e-money and SPIs that opt in (F
 Document, May 2026, Chapter 13). The FCA Handbook is a single-page application: open SUP 16 at
 <https://handbook.fca.org.uk/handbook/sup16> and find SUP 16.14A and Annex 29BR in the chapter.
 
-**FCA enforcement context**: Two documented enforcement cases provide the sector context for why
-safeguarding is CRITICAL severity:
+**FCA enforcement context**: Two firm failures show why safeguarding is CRITICAL severity:
 
-- **Allied Wallet (2021)** — FCA cancelled authorisation after finding the firm holding client funds
-  in non-compliant accounts and failing to designate accounts correctly.
-- **Premier FX (2018)** — firm failed with a £10 million shortfall in customer funds after
-  inadequate segregation and failure to reconcile promptly.
+- **Allied Wallet (2019–2020)**: an EMI. On 4 June 2019 the FCA imposed requirements stopping it
+  carrying on regulated activities or disposing of the funds it held, then petitioned to wind it up
+  because it appeared to be mixing funds received from merchants and card issuers with its own. The
+  High Court made a winding-up order on 20 March 2020 and later found the FCA's concern
+  well-founded, with significant sums missing
+  ([FCA statement](https://www.fca.org.uk/news/statements/allied-wallet-limited);
+  *Re Allied Wallet Ltd* [2022] EWHC 1877 (Ch),
+  [judgment](https://caselaw.nationalarchives.gov.uk/ewhc/ch/2022/1877)).
+- **Premier FX (collapsed 2018; censured 2021)**: an API providing money remittance. After its
+  sole director died in June 2018 it could not meet customers' claims, and administrators were
+  appointed on the FCA's application on 13 August 2018. The FCA's Final Notice of 23 February 2021
+  publicly censured it for safeguarding and payment-account breaches between 2013 and 2018: only
+  its main sterling account was designated as a client account, and customer funds were
+  commingled with other customers' and the firm's own funds
+  ([Final Notice](https://www.fca.org.uk/publication/final-notices/premier-fx.pdf)). Customers with
+  accepted claims were repaid in full after Barclays, the firm's bank, made a voluntary payment of
+  £10,076,943.75
+  ([FCA, 18 December 2023](https://www.fca.org.uk/news/statements/fca-responds-complaints-commissioners-final-report-premier-fx-limited)).
 
-Both cases demonstrate that safeguarding is not a one-time setup — ongoing reconciliation and
-regular audit are the obligations that failed in practice.
+Both cases show that safeguarding is not a one-time setup: segregation, account designation and
+ongoing reconciliation are the controls that failed in practice.
 
 **PS25/12 (FCA, August 2025)** made the Payments and Electronic Money (Safeguarding) Instrument
 2025 (FCA 2025/38), in force 7 May 2026: CASS 15 (relevant funds), CASS 10A (resolution pack),
@@ -143,7 +160,7 @@ and 13) is the current primary reference for FCA supervisory expectations.
 - **Safeguarding obligations apply from the moment funds are received, not when payment is
   initiated.** The segregation trigger is receipt of funds. Any float period between receipt and
   placement in the designated account must be explicitly documented, minimised, and approved by
-  the relevant SMF holder.
+  the individual responsible for safeguarding oversight.
 - **Insurance and guarantee methods require the policy to be in place BEFORE the relevant funds
   are received.** EMR 2011 Reg 22(1) and PSRs 2017 Reg 23(12) require the funds to be covered, so a
   retroactive arrangement does not satisfy them. From 7 May 2026 the firm must also notify the FCA
@@ -158,7 +175,19 @@ and 13) is the current primary reference for FCA supervisory expectations.
   failure to reconcile or to pay a shortfall into a relevant funds account. "Materially" has no
   numeric threshold: the firm must document its own (e.g., a shortfall exceeding £X or Y% of
   safeguarded funds), have it approved by the Compliance Officer, and ensure it triggers
-  notification to the SMF holder and the FCA.
+  notification to the individual responsible for safeguarding oversight and the FCA.
+- **Name the individual responsible for safeguarding oversight; do not assume SM&CR.** CASS
+  15.2.4R requires every safeguarding institution to allocate to a single director or senior
+  manager responsibility for overseeing operational compliance with the relevant funds regime and
+  reporting on it to the governing body. SM&CR applies only to FSMA-authorised firms (those with a
+  Part 4A permission, such as a bank or building society). A PI or EMI authorised only under the
+  PSRs 2017 or EMRs 2011 is outside it: its directors and persons responsible for management are
+  assessed for good repute and knowledge under PSRs 2017 regulation 6(7)(b) or EMRs 2011
+  regulation 6(6)(b) (the "PSD Individual" or "EMD Individual"; FCA Approach Document, May 2026,
+  paragraphs 3.107 to 3.111). Use SMF titles only for a firm within SM&CR. HM Treasury's
+  Modernising Payment Services Regulation consultation (14 July to 6 October 2026) asked whether
+  senior managers of payment and e-money institutions should carry enhanced accountability; check
+  whether a decision has followed.
 - **The safeguarding bank is itself a critical dependency.** If the safeguarding bank fails, freezes
   the account, or terminates the relationship, the firm may be unable to meet payout obligations
   within the regulatory timeframe. The CTP dependency register must include the safeguarding bank.

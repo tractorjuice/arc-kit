@@ -38,9 +38,10 @@
 > assessments must be reviewed and signed off by qualified UK FS regulatory counsel, the firm's
 > Compliance Officer, the firm's MLRO (where the vulnerable-customer identification methodology or
 > price-personalisation logic intersects with AML risk profiling or customer-onboarding flows), and
-> the SMF holders who will attest the report before Board presentation. Regulatory citations reflect
-> the position as at the document creation date; verify against current FCA publications — including
-> any updated FG22/5 guidance or board-report observations — before reliance.
+> the individuals who will sign the attestation for the governing body (SMF holders only if the firm
+> is within SM&CR) before Board presentation. Regulatory citations reflect the position as at the
+> document creation date; verify against current FCA publications — including any updated FG22/5
+> guidance or board-report observations — before reliance.
 
 ---
 
@@ -54,8 +55,9 @@
 | **FCA Firm Reference Number** | {{FCA_FRN}} |
 | **Authorisation / registration type** | {{FIRM_AUTHORISATION_TYPE}} |
 | **Consumer Duty in-force date** | {{CONSUMER_DUTY_IN_FORCE_DATE}} |
-| **SMF holder (Compliance Oversight)** | {{SMF_COMPLIANCE_NAME}} — {{SMF_COMPLIANCE_FUNCTION}} |
-| **SMF holder (CEO / most senior)** | {{SMF_CEO_NAME}} — {{SMF_CEO_FUNCTION}} |
+| **Within SM&CR?** | {{SMCR_STATUS}} (Yes only if the firm is FSMA-authorised, e.g. it holds a Part 4A permission; a PI or EMI authorised only under the PSRs 2017 or EMRs 2011 is outside SM&CR) |
+| **Compliance oversight** | {{COMPLIANCE_OVERSIGHT_NAME}} — {{COMPLIANCE_OVERSIGHT_ROLE}} (SMF16 if within SM&CR) |
+| **Chief executive / most senior executive** | {{CEO_NAME}} — {{CEO_ROLE}} (SMF1 if within SM&CR) |
 
 ### 1.2 In-Scope Retail Products
 

@@ -24,18 +24,19 @@ allowed-tools:
 
 > ⚠️ **Community-contributed command — CRITICAL SEVERITY** — not part of the officially-maintained
 > ArcKit baseline. Output is **not** regulatory advice. Safeguarding failures have led to firm
-> collapse and FCA enforcement action: **Allied Wallet (2021)** had its authorisation cancelled after
-> the FCA found it holding client funds in non-compliant accounts; **Premier FX (2018)** failed with
-> a £10m shortfall in customer funds after inadequate segregation. The safeguarding assessment
-> produced by this command MUST be reviewed, materially supplemented, and signed off by qualified
-> UK FS regulatory counsel, the firm's SMF holder for safeguarding (primary accountability —
-> typically SMF1/SMF24 in larger firms), the firm's MLRO (for AML-angle review of the client-money
-> position, not primary safeguarding accountability), and the firm's Compliance Officer before any
-> production safeguarding arrangement is established. Regulatory citations reflect the position as
-> at the document creation date; verify against current FCA publications before reliance. The FCA
-> Approach Document (current edition May 2026), PS25/12 (August 2025) and the CASS 15 rules it
-> introduced from 7 May 2026 must be checked for any changes to safeguarding obligations introduced
-> since this command was authored.
+> collapse and FCA action: in 2019 the FCA restricted **Allied Wallet** and petitioned to wind it
+> up, concerned that it was mixing customer funds with its own (winding-up order 20 March 2020);
+> **Premier FX** collapsed in 2018 without segregated client accounts, and the FCA publicly
+> censured it in February 2021. The safeguarding assessment produced by this command MUST be
+> reviewed, materially supplemented, and signed off by qualified UK FS regulatory counsel, the
+> director or senior manager responsible for safeguarding oversight (CASS 15.2.4R; an SMF holder
+> only if the firm is also within SM&CR, see Important Notes), the firm's MLRO (for AML-angle review
+> of the client-money position, not primary safeguarding accountability), and the firm's Compliance
+> Officer before any production safeguarding arrangement is established. Regulatory citations
+> reflect the position as at the document creation date; verify against current FCA publications
+> before reliance. The FCA Approach Document (current edition May 2026), PS25/12 (August 2025) and
+> the CASS 15 rules it introduced from 7 May 2026 must be checked for any changes to safeguarding
+> obligations introduced since this command was authored.
 
 You are a senior payments architect drafting a safeguarding assessment for an authorised UK
 Electronic Money Institution (EMI) or Authorised Payment Institution (API), or a registered Small
@@ -152,7 +153,8 @@ covering:
 - Reconciliation cadence: internal and external safeguarding reconciliations as frequently as
   necessary and at least once each reconciliation day (CASS 15.8.19R and CASS 15.8.42R); any
   intraday reconciliation is a firm decision based on its volumes, not a regulatory threshold
-- The four-tier sign-off chain (operational → senior manager → CFO/Treasurer → SMF holder)
+- The four-tier sign-off chain (operational → senior manager → CFO/Treasurer → the director or
+  senior manager responsible for safeguarding oversight under CASS 15.2.4R)
 - Variance handling protocol (surplus, shortfall, unreconciled position)
 - FCA notification triggers: CASS 15.8.60R requires the firm to inform the FCA in writing without
   delay in the listed cases, including a material failure to reconcile or to pay a shortfall into
@@ -248,7 +250,19 @@ Print the summary per `## Output Summary` below. Do not echo the full artefact.
   unable to, or materially fails to, pay a shortfall into a relevant funds account or conduct its
   reconciliations. "Materially" is not given a numeric threshold; document the firm's own
   definition (e.g., a shortfall exceeding £X or Y% of safeguarded funds), have it approved by the
-  Compliance Officer, and make it trigger notification to the SMF holder and the FCA.
+  Compliance Officer, and make it trigger notification to the individual responsible for
+  safeguarding oversight (CASS 15.2.4R) and the FCA.
+- **Name the individual responsible for safeguarding oversight, and do not assume SM&CR.**
+  CASS 15.2.4R requires every safeguarding institution to allocate to a single director or senior
+  manager responsibility for overseeing operational compliance with the relevant funds regime and
+  for reporting on it to the governing body. SM&CR applies only to FSMA-authorised firms (those
+  with a Part 4A permission, such as a bank or building society). A PI or EMI authorised only
+  under the PSRs 2017 or EMRs 2011 is outside it: record the director or person responsible for
+  management notified to the FCA (PSRs 2017 reg 6(7)(b); EMRs 2011 reg 6(6)(b); the "PSD
+  Individual" or "EMD Individual" in the Approach Document, paras 3.107–3.111). Use an SMF title
+  only if the firm is within SM&CR. HM Treasury's Modernising Payment Services Regulation
+  consultation (14 July to 6 October 2026) asked whether senior managers of payment and e-money
+  institutions should carry enhanced accountability; check whether a decision has followed.
 - **The safeguarding bank itself is a critical dependency.** If the safeguarding bank fails,
   freezes the account, or terminates the relationship, the firm may be unable to meet payout
   obligations within the regulatory timeframe. Feed the safeguarding bank into the firm's CTP
@@ -258,12 +272,16 @@ Print the summary per `## Output Summary` below. Do not echo the full artefact.
   Annex 29BR. Design the reconciliation data flow to produce those fields; retro-fitting reporting
   fields after the system is built is a common and costly error. Do not label it REP-CRIM: REP-CRIM
   is the Annual Financial Crime Report (SUP 16.23, SUP 16 Annex 42AR), not a safeguarding return.
-- **Allied Wallet (2021) and Premier FX (2018) enforcement context.** In both cases the FCA found
-  that firms had either failed to designate accounts correctly, allowed commingling of safeguarded
-  and operational funds, or failed to reconcile promptly. These are not edge-case failures — they
-  are the direct consequence of treating safeguarding as a one-time setup task rather than a
-  continuous operational control. This document must be reviewed at least annually and whenever
-  the firm's products, volumes, or safeguarding bank arrangements change.
+- **Allied Wallet and Premier FX: what went wrong.** The FCA petitioned to wind up Allied Wallet
+  (an EMI) in July 2019 because it appeared to be mixing funds received from merchants and card
+  issuers with its own; the High Court later found that concern well-founded, with significant sums
+  missing (*Re Allied Wallet Ltd* [2022] EWHC 1877 (Ch)). The FCA's Final Notice to Premier FX
+  (an API, 23 February 2021) found that only its main sterling account was designated as a client
+  account, that customer funds were commingled with other customers' and the firm's own funds, and
+  that customers were misled about how their money was held. Both failures came from treating
+  safeguarding as a one-time setup task rather than a continuous operational control. This document
+  must be reviewed at least annually and whenever the firm's products, volumes, or safeguarding bank
+  arrangements change.
 - **PS25/12 safeguarding reform (FCA, August 2025).** PS25/12, following consultation CP24/20
   (September 2024), made the Payments and Electronic Money (Safeguarding) Instrument 2025
   (FCA 2025/38), in force 7 May 2026. It added CASS 15 (safeguarding rules, including daily
@@ -279,12 +297,14 @@ Each of these URLs was verified as live at authoring time. Include all of them i
 section of the generated document. Verify against the source before relying on this output — FCA
 and legislation.gov.uk publications are updated without prior notice.
 
-> **Note on the FCA Dear CEO letter (Jan 2020):** The original PDF URL
-> (`/publication/correspondence/dear-ceo-letter-safeguarding-customers-funds-prudential-risk-management.pdf`)
-> returned HTTP 404 at command-authoring time. The FCA's safeguarding supervisory expectations are
-> now primarily expressed through the Approach Document (May 2026 edition, Chapter 10), PS25/12 and
-> CASS 15. If a current Dear CEO letter on safeguarding is available via the FCA key publications
-> page, cite it in addition to the references below.
+> **Note on the FCA Dear CEO letter on safeguarding:** No January 2020 letter on safeguarding could
+> be found on fca.org.uk. The FCA's safeguarding Dear CEO letter is dated 4 July 2019 ("Non-bank
+> payment service providers – requirements for safeguarding of customer funds",
+> <https://www.fca.org.uk/publication/dear-ceo-letters/dear-ceo-letter-non-bank-payment-service-providers-requirements-for-safeguarding-of-customer-funds.pdf>),
+> followed by the portfolio strategy letter for payment services firms and e-money issuers of
+> 9 July 2020. The FCA marked both letters historical in May 2025, so cite them only as background.
+> The current safeguarding expectations are in the Approach Document (May 2026 edition,
+> Chapter 10), PS25/12 and CASS 15.
 >
 > **Note on the FCA Handbook links:** The FCA Handbook is a single-page application. The chapter
 > URLs below (`handbook.fca.org.uk/handbook/sup16`, `handbook.fca.org.uk/handbook/cass15`) open the
