@@ -17,7 +17,7 @@
   },
   "commands.html": {
     "lastmod": "2026-10-27",
-    "text_sha256": "b01499c041177caa278574c40f2b3960e65682313896a467753e662d7a1bce14"
+    "text_sha256": "4bb4501d63fdf6efef686cd40b7c0b89bf7a1e22ba02f336e897f20ab47c7fb8"
   },
   "contributors.html": {
     "lastmod": "2026-10-20",
@@ -40,12 +40,12 @@
     "text_sha256": "5e90aa4e6e77146237251785c6423b5b21acde85544610597555d710106114db"
   },
   "guides.html": {
-    "lastmod": "2026-10-25",
-    "text_sha256": "da2f893a85a0b84416386d6294381c601938a07b83ac9dd6824c56c0f6460c82"
+    "lastmod": "2026-10-27",
+    "text_sha256": "8acd3ed729192b1fd405037c0646f363eda7840c12b2e89aca2a67d8de5ad020"
   },
   "index.html": {
-    "lastmod": "2026-10-25",
-    "text_sha256": "c6fd0313308b711e59661146c5659e5feeef295a4ae08e4085eed5d3ac7ae1ef"
+    "lastmod": "2026-10-27",
+    "text_sha256": "30b91aa0b4b06862379611e1233952acec42d1db201444c71056da5ab44bf2fd"
   },
   "llms.txt": {
     "lastmod": "2026-10-27",
