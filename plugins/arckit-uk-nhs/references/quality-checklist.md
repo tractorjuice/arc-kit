@@ -1279,8 +1279,9 @@ All artifacts must pass these 10 checks:
 - All six questionnaire dimensions scored with evidence cited: Project, System, Algorithm, Decision, Impact, Data
 - Impact Level (I–IV) computed from the questionnaire per the TBS Directive threshold matrix with the workings shown — never self-declared
 - Mitigations applied match the computed Level rather than a lower one
-- Peer review scoped to the Level (internal at II, external at III/IV) with named reviewers and lead time
-- Transparency notice bilingual per the OLA assessment, published 30 days pre-launch for Level III/IV
+- Peer review scoped to the Level per Appendix C (at least one qualified expert at II and III, at least two at IV) with named reviewers and lead time, and the review or its summary published before production
+- Transparency notice bilingual per the OLA assessment, given through every service delivery channel in use (pointing to the published explanation at III/IV), and the AIA results published before production (6.1.1), without a fixed lead time the Directive does not set
+- Approval to operate obtained before production from the authority the Level requires: ADM at I–II, deputy head at III, Treasury Board at IV
 - Human-in-the-loop design states override paths, escalation thresholds and reviewer training
 - Recourse mechanism provides an appeal path to a human decision-maker and explanation rights for affected individuals
 - Algorithmic risks register covers bias (selection, label, deployment), data and concept drift, proxy variables, contestability gaps and distributional fairness across protected grounds
