@@ -152,7 +152,7 @@ Load only the information needed for assessment. Do NOT read entire files - extr
 - Business requirements (BR-xxx) count and examples
 - Functional requirements (FR-xxx) count and examples
 - Non-functional requirements by category:
-  - Security (NFR-SEC-xxx or NFR-S-xxx)
+  - Security (NFR-SEC-xxx)
   - Performance (NFR-P-xxx)
   - Scalability (NFR-S-xxx)
   - Compliance (NFR-C-xxx)

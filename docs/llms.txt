@@ -133,7 +133,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Secure by Design](https://arckit.org/guides/uk-government/secure-by-design.md): `/arckit:secure`.
 - [DPIA](https://arckit.org/guides/dpia.md): `/arckit:dpia` Data Protection Impact Assessment.
 - [Service Assessment](https://arckit.org/guides/service-assessment.md): `/arckit:service-assessment` GDS.
-- [AI Playbook](https://arckit.org/guides/uk-government/ai-playbook.md): `/arckit:ai-playbook`.
+- [AI Playbook](https://arckit.org/guides/ai-playbook.md): `/arckit:ai-playbook`.
 - [Algorithmic Transparency (ATRS)](https://arckit.org/guides/uk-government/algorithmic-transparency.md): `/arckit:atrs`.
 - [MOD Secure by Design](https://arckit.org/guides/uk-mod/secure-by-design.md): `/arckit:mod-secure`.
 - [JSP 936 AI Assurance](https://arckit.org/guides/jsp-936.md): `/arckit:jsp-936`.

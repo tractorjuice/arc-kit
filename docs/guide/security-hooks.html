@@ -431,7 +431,7 @@
             <a href="../guides.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Guides</a>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
 <p>ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration.</p>
 <h2 id="three-layer-protection-model">Three-Layer Protection Model</h2>
@@ -546,21 +546,25 @@
 ]
 </code></pre>
 <h3 id="content-scanner-skip-patterns">Content scanner skip patterns</h3>
-<p>To prevent <code>secret-file-scanner.py</code> from scanning certain files (e.g., documentation that legitimately discusses secret formats), add a regex to <code>SKIP_PATTERNS</code>:</p>
-<pre><code class="language-python">SKIP_PATTERNS = [
-    r&quot;\.pre-commit-config\.yaml$&quot;,
-    r&quot;secret-detection\.py$&quot;,
-    r&quot;secret-file-scanner\.py$&quot;,
-    r&quot;file-protection\.py$&quot;,
-    r&quot;\.secrets\.baseline$&quot;,
-    r&quot;plugins/arckit-claude/commands/.*\.md$&quot;,
-    r&quot;plugins/arckit-claude/templates/.*\.md$&quot;,
-    r&quot;docs/.*\.md$&quot;,
-    r&quot;CHANGELOG\.md$&quot;,
-    r&quot;README\.md$&quot;,
-    r&quot;your-custom-pattern\.md$&quot;,  # Add here
-]
+<p><code>secret-file-scanner.mjs</code> skips only ArcKit's own security tooling and documentation, which legitimately discuss secret formats. Paths are resolved (so <code>..</code> and symlinks cannot escape) and matched relative to the plugin root, and — when the plugin runs from an ArcKit source checkout (<code>&lt;repo&gt;/plugins/arckit-claude</code>) — relative to that repo root. Files in your own projects, including <code>docs/*.md</code>, <code>README.md</code> and <code>CHANGELOG.md</code>, are always scanned.</p>
+<pre><code class="language-js">// Relative to the plugin root
+const PLUGIN_SKIP_PATTERNS = [
+  /^hooks\/(?:secret-detection|secret-file-scanner|file-protection)\.mjs$/,
+  /^commands\/[^/]+\.md$/,
+  /^templates\/[^/]+\.md$/,
+  /^docs\/(?:[^/]+\/)*[^/]+\.md$/,
+  /^(?:README|CHANGELOG)\.md$/,
+];
+
+// Relative to the ArcKit source repo root
+const SOURCE_REPO_SKIP_PATTERNS = [
+  /^\.pre-commit-config\.yaml$/,
+  /^\.secrets\.baseline$/,
+  /^docs\/(?:[^/]+\/)*[^/]+\.md$/,
+  /^(?:README|CHANGELOG)\.md$/,
+];
 </code></pre>
+<p>Keep new patterns anchored (<code>^...$</code>) to a path relative to one of these roots; an unanchored pattern such as <code>docs/.*\.md$</code> would exempt any path containing that substring.</p>
 <h2 id="restricting-web-access-for-research-agents">Restricting web access for research agents</h2>
 <p>ArcKit's web-research agents (<code>research</code>, <code>datascout</code>, <code>aws-research</code>, <code>azure-research</code>, <code>gcp-research</code>, <code>gov-*</code>, <code>grants</code>) use <code>WebFetch</code>. For a regulated or OFFICIAL-SENSITIVE deployment you may want to confine that traffic to an approved set of domains. As of Claude Code v2.1.162, explicit <code>WebFetch(domain:...)</code> permission rules <strong>take precedence over the built-in preapproved-host auto-allow</strong> (previously the preapproved hosts leaked through), so a deny/allow policy now actually holds.</p>
 <p>Add rules to <code>.claude/settings.json</code> (or org managed settings for fleet-wide enforcement — see <a href="enterprise-scale.html#fleet--version-governance-managed-settings">Fleet &amp; Version Governance</a>):</p>

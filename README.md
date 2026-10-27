@@ -167,7 +167,7 @@ Zero-config: 76 official commands as skills, 10 specialized agents, all template
 
 Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
 
-**Latest Release**: [v6.18.2](https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.2)
+**Latest Release**: [v6.18.3](https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.3)
 
 ### OKF Interoperability
 
@@ -673,7 +673,7 @@ Handoff chain: `oaa-adm-lite` → `product-architecture` → `agile-strategy` �
 
 ## Using TOGAF ADM and O-AA Together
 
-The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.18.2` pin) — neither depends on the other. O-AA maps the ADM cycle onto sprints within a 4–8 week engagement; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.18.3` pin) — neither depends on the other. O-AA maps the ADM cycle onto sprints within a 4–8 week engagement; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Pattern | When to use | Sequence |
 |---------|-------------|----------|
@@ -691,7 +691,7 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 
 **Running both in the same project:**
 
-- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.18.2` pins.
+- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.18.3` pins.
 - Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.yaml` (architecture-change ↔ agile-governance).
 - Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands read TOGAF outputs when they exist (ADM Preliminary, business capability map, transition architecture) but do not require them, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
@@ -896,7 +896,7 @@ Research available solutions to meet requirements with build vs buy analysis:
 
 Identify and evaluate funding opportunities with eligibility scoring:
 
-- UK Innovate UK grants and R&D funding (e.g. Smart Grants, KTP, SBRI)
+- UK Innovate UK grants and R&D funding (e.g. Knowledge Transfer Partnerships, SBRI)
 - UK Research and Innovation (UKRI) funding calls
 - Charitable foundations and philanthropic funding (e.g. National Lottery Heritage Fund, Wellcome Trust)
 - Accelerator and incubator programmes (e.g. DCMS, DSIT-backed cohorts)
@@ -1228,8 +1228,8 @@ For defence projects using AI/ML systems:
 - JSP 936 (Dependable Artificial Intelligence in Defence)
 - 5 Ethical Principles (Human-Centricity, Responsibility, Understanding, Bias & Harm Mitigation, Reliability)
 - 5 Risk Classification Levels (Critical to Minor)
-- 8 AI Lifecycle Phases (Planning to Quality Assurance)
-- Approval pathways (2PUS/Ministerial → Defence-Level → TLB-Level)
+- 8 AI lifecycle phases (ArcKit's grouping of JSP 936 sections 6 and 7)
+- Approval pathways (2PUS or Ministers by exception → Defence-Level → TLB-Level)
 - RAISOs and Ethics Manager governance
 - Human-AI teaming strategy and continuous monitoring
 
@@ -1748,7 +1748,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | `/arckit:tenders` | Procurement market intelligence — award-value benchmarks, top suppliers, incumbency and concentration, from the UK Tenders MCP | — | 🟣 Experimental |
 | `/arckit:competitors` | Competitor landscape — rival suppliers, awarded-value market share, head-to-head and concentration, from the UK Tenders MCP | — | 🟣 Experimental |
 
-> **Note**: `/arckit:tenders` and `/arckit:competitors` both use the bundled `uk-tenders` MCP server (keyless, deferred) via the shared `arckit-tenders-reader` subagent. Data: ~677,000 UK contracting processes across FTS, Contracts Finder, Public Contracts Scotland, Sell2Wales, and eTendersNI; nightly refresh; best-effort availability (no formal SLA). `/arckit:tenders` outputs a `TNDR` artefact (market-wide benchmarks, incumbency, concentration). `/arckit:competitors` outputs a `CMPT` artefact (rival-supplier landscape, market-share ranking, head-to-head).
+> **Note**: `/arckit:tenders` and `/arckit:competitors` both use the bundled `uk-tenders` MCP server (keyless, always loaded) via the shared `arckit-tenders-reader` subagent. Data: more than 700,000 UK contracting processes (October 2026) across FTS, Contracts Finder, Public Contracts Scotland, Sell2Wales, and eTendersNI; nightly refresh; best-effort availability (no formal SLA). `/arckit:tenders` outputs a `TNDR` artefact (market-wide benchmarks, incumbency, concentration). `/arckit:competitors` outputs a `CMPT` artefact (rival-supplier landscape, market-share ranking, head-to-head).
 
 ### Government Code Discovery
 
@@ -1765,7 +1765,7 @@ These commands use the [govreposcrape MCP](https://github.com/chrisns/govreposcr
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
 | `/arckit:sow` | Generate Statement of Work (SOW) / RFP document for vendor procurement | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-SOW-v1.0.md) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-SOW-v1.0.md) [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-SOW-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-SOW-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/ARC-003-SOW-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-SOW-v1.0.md) | 🟢 Live |
-| `/arckit:dos` | Generate Digital Outcomes and Specialists (DOS) procurement documentation for UK Digital Marketplace | — | 🟣 Experimental |
+| `/arckit:dos` | Generate Digital Outcomes and Specialists (DOS7) procurement documentation for the Contract Award Service | — | 🟣 Experimental |
 | `/arckit:gcloud-search` | Find G-Cloud services on UK Digital Marketplace with live search and comparison | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-GCLD-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-GCLD-v1.0.md) | 🟣 Experimental |
 | `/arckit:gcloud-clarify` | Analyze G-Cloud service gaps and generate supplier clarification questions | — | 🟣 Experimental |
 | `/arckit:evaluate` | Create vendor evaluation framework and score vendor proposals | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-EVAL-v1.0.md) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-EVAL-v1.0.md) [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-EVAL-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-EVAL-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/ARC-003-EVAL-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/ARC-005-EVAL-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-EVAL-v1.0.md) | 🟢 Live |
@@ -2072,7 +2072,7 @@ arckit init .
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Community**: the [ArcKit LinkedIn group](https://www.linkedin.com/groups/17641034/) for worked examples, office hours and questions, and [Discord](https://discord.gg/HsA4Y3hQ4) for chat with other users
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v6.18.2](https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.2)
+- **Latest Version**: [v6.18.3](https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.3)
 
 ---
 

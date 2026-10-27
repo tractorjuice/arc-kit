@@ -2,29 +2,30 @@
 
 ## Project Structure & Module Organization
 
-ArcKit is a multi-target architecture governance toolkit. The canonical plugin lives in `plugins/arckit-claude/`; generated or adapted distributions live in `extensions/arckit-codex/`, `extensions/arckit-gemini/`, `extensions/arckit-opencode/`, `extensions/arckit-copilot/`, and `extensions/arckit-paperclip/`. Python CLI source is in `src/arckit_cli/`. Shared release and conversion tooling is in `scripts/`. Documentation and site assets are under `docs/`. Tests are grouped by target in `tests/codex/`, `tests/plugin/`, and `tests/paperclip/`.
+ArcKit is a multi-target architecture governance toolkit. Core plugin source lives in `plugins/arckit-claude/`; jurisdiction and specialist overlays live in sibling `plugins/arckit-*/` directories. Distributions under `extensions/` target Codex, Gemini, OpenCode, Copilot, Paperclip, Vibe, and Kimi. Python CLI source is in `src/arckit_cli/`; tooling is in `scripts/`; documentation and site assets are in `docs/`. Tests live in `tests/` by CLI or target, with script checks in `scripts/tests/`.
 
 ## Build, Test, and Development Commands
 
-- `python scripts/converter.py` regenerates Codex, Gemini, OpenCode, Copilot, and Paperclip outputs from the Claude source commands.
-- `pytest tests/codex/test_codex_extension.py` validates Codex plugin structure, hooks, and skill conversion.
-- `pytest tests/plugin` runs plugin-focused Python tests.
-- `node tests/plugin/test_graph_inject.mjs` and related `.mjs` files run hook utility tests.
+- `python -m pip install -e . pytest pyyaml` installs the CLI and test dependencies; use Python 3.11+ in a virtual environment.
+- `python scripts/converter.py` regenerates all seven extension formats. Edit canonical source before regenerating.
+- `python -m pytest -q` runs the full Python suite used by CI; generate extensions first.
+- `python -m pytest tests/codex/test_codex_extension.py` runs focused Codex checks.
+- `node tests/plugin/test_graph_inject.mjs` runs a hook test; execute other relevant `.mjs` suites similarly.
 - `./scripts/bump-version.sh X.Y.Z` updates version-bearing files for a release.
 - `npx markdownlint-cli2 "**/*.md"` checks Markdown style using `.markdownlint-cli2.jsonc`.
 
 ## Coding Style & Naming Conventions
 
-Use existing patterns before adding new abstractions. Python code uses standard 4-space indentation. JavaScript hook and validator files are ESM `.mjs` modules. Command and skill names use lowercase hyphenated forms. Slash commands use the colon namespace `/arckit:command` (Claude, Gemini, OpenCode); Codex skills use `$arckit-command`; Copilot uses `/arckit-command`. ArcKit artifact filenames must follow `ARC-NNN-TYPE-vN.N.md`; multi-instance artifacts include a sequence, for example `ARC-001-ADR-001-v1.0.md`.
+Follow existing patterns: Python uses four-space indentation; JavaScript hooks and validators use ESM `.mjs`. Write documentation in UK English. Use lowercase hyphenated command names: `/arckit:data-model` for Claude, Gemini, and OpenCode; `$arckit-data-model` for Codex; `/arckit-data-model` for Copilot. Artifact filenames follow `ARC-NNN-TYPE-vN.N.md`, with sequences for multiple instances, e.g. `ARC-001-ADR-001-v1.0.md`.
 
 ## Testing Guidelines
 
-Add focused tests near the affected target. For generated extension changes, test the generated output, not only the converter logic. Hook changes should include direct hook execution tests where possible. Before release or broad conversion changes, run the Codex test file, relevant `tests/plugin/*.mjs` checks, and markdownlint.
+Add focused regression tests near the affected target, using `test_*.py` for pytest and existing `.mjs` naming patterns for Node suites. Test generated output and execute changed hooks directly. Before releases or broad conversion changes, run the full Python suite, relevant Node checks, and Markdown linting.
 
 ## Commit & Pull Request Guidelines
 
-Use conventional commits: `feat:`, `fix:`, `docs:`, `test:`, `refactor:`, or `chore:`. Examples from history include `fix: bring codex hooks to parity` and `chore: bump version to 4.20.1`. Pull requests should describe motivation, list validation commands, link related issues, and include screenshots for UI or documentation-site changes. Update `CHANGELOG.md` and target-specific docs when behaviour changes.
+Use conventional commits (`feat:`, `fix:`, `docs:`, `test:`, `refactor:`, `chore:`), optionally scoped, e.g. `fix(init): correct template file paths`. PRs should explain motivation and resulting behaviour, list validation commands, link issues, and include screenshots for UI changes. Update `CHANGELOG.md` under `Unreleased` and relevant docs. Follow `CONTRIBUTING.md` for new-command, overlay, and doc-type registration.
 
 ## Security & Configuration Tips
 
-Do not commit secrets, local `.env` files, or generated session memory. Keep project-specific template overrides in `.arckit/templates-custom/`. When editing release files, avoid touching unrelated dirty files such as `.arckit/memory/*`.
+Keep secrets, local `.env` files, and generated session memory out of commits. Store template overrides in `.arckit/templates-custom/`. Preserve unrelated local changes, especially `.arckit/memory/*`.

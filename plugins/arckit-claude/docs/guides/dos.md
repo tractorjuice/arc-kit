@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit:dos` generates Digital Outcomes and Specialists (DOS) procurement documentation for the UK Digital Marketplace.
+`/arckit:dos` generates Digital Outcomes and Specialists 7 (DOS7, RM1043.9) procurement documentation. You publish it on the Government Commercial Agency's Contract Award Service (CAS), which you reach through the Public Procurement Gateway (PPG). DOS opportunities stopped going on the Digital Marketplace after DOS 5.
 
 ---
 
@@ -23,7 +23,7 @@
 /arckit:dos Create DOS procurement for <requirement>
 ```
 
-Output: `projects/<id>/ARC-<id>-DOS-v1.0.md`
+Output: `projects/<id>/procurement/ARC-<id>-DOS-v1.0.md`
 
 ---
 
@@ -31,7 +31,7 @@ Output: `projects/<id>/ARC-<id>-DOS-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Opportunity Summary | Brief description for Digital Marketplace |
+| Opportunity Summary | Brief description for the CAS listing |
 | Background | Organisation context and current situation |
 | Problem Statement | What problem needs solving |
 | Outcomes Required | Specific, measurable outcomes expected |
@@ -44,13 +44,14 @@ Output: `projects/<id>/ARC-<id>-DOS-v1.0.md`
 
 ---
 
-## DOS Procurement Types
+## DOS7 Lots
 
-| Type | Description | When to Use |
-|------|-------------|-------------|
-| Digital Outcomes | Buy outcomes (e.g., "improve service") | Don't know solution |
-| Digital Specialists | Buy people (e.g., "3 developers") | Know what skills needed |
-| User Research | Research services | User research projects |
+| Lot | What it buys | When to Use |
+|-----|--------------|-------------|
+| 1. Digital Outcomes | Specific, outcome-based digital projects | You know the outcome, not the solution |
+| 2. Digital Capability and Delivery Partners | Long-term transformation programmes, capability building, resource augmentation | A partner for a programme, not a single project |
+| 3. Digital Specialists | Specialists in specific digital roles who join your team | You know the skills you need |
+| 4. User Research Studios and Participants | Studio hire and research participants | You need a lab or people to test with |
 
 ---
 
@@ -71,7 +72,7 @@ Output: `projects/<id>/ARC-<id>-DOS-v1.0.md`
 |-------|----------------|-----------------|
 | Discovery | Define requirements and outcomes | `/arckit:requirements`, `/arckit:stakeholders` |
 | Preparation | Create DOS documentation | `/arckit:dos` |
-| Publication | Publish on Digital Marketplace | Manual |
+| Publication | Publish on the Contract Award Service (through PPG) | Manual |
 | Evaluation | Score supplier proposals | `/arckit:evaluate` |
 | Award | Contract negotiation | Manual |
 
@@ -89,14 +90,16 @@ Output: `projects/<id>/ARC-<id>-DOS-v1.0.md`
 
 ---
 
-## Digital Marketplace Requirements
+## DOS7 Buying Rules
 
-| Requirement | Description |
-|-------------|-------------|
-| Word Limits | Opportunity summary max 100 words |
-| Evaluation | Must use Digital Marketplace scoring |
-| Questions | Max 5 assessment questions |
-| Publication | Minimum 2 weeks open |
+| Rule | What it means |
+|------|---------------|
+| Further competition only | No award without competition; each procurement goes to a single supplier |
+| Competition stages | Single-stage, two-stage or multi-stage |
+| Where to publish | The Contract Award Service; only suppliers on the lot who are registered on CAS see it |
+| Award notices | Find a Tender under the Procurement Act 2023, not Contracts Finder (see the generated document's Next Steps) |
+
+Source: the [DOS7 agreement page](https://www.gca.gov.uk/agreements/RM1043.9). Check the lot's buyer guidance on CAS for word limits, question limits and how long the opportunity stays open.
 
 ---
 

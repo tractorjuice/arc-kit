@@ -19,7 +19,7 @@ You are an expert in Wardley Mapping climatic patterns and strategic forecasting
 
 ## What are Climatic Patterns?
 
-Simon Wardley identifies 32 climatic patterns organised into 6 categories. These patterns describe the external forces that act on every component in a Wardley Map:
+ArcKit's catalogue holds 32 climatic patterns in 6 categories. The categories are Simon Wardley's own: his book *Wardley Maps* groups climatic patterns into Components, Financial, Speed, Inertia, Competitors and Prediction (chapter 7, figure 82). The count of 32 is ArcKit's, not Wardley's: the summary list in chapter 11 of the book has 28 patterns, and ArcKit's catalogue draws on both lists and adds entries of its own. Do not attribute the figure of 32 to Wardley in the artefact. These patterns describe the external forces that act on every component in a Wardley Map:
 
 1. **Component Patterns** (8 patterns): How components evolve in general
 2. **Financial Patterns** (6 patterns): How capital, value, and economic forces behave

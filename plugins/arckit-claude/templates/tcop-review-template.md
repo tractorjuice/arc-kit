@@ -492,21 +492,25 @@
 
 ## GovS 005 (Government Functional Standard for Digital) Alignment
 
-> **Note**: The Technology Code of Practice is the **implementation guidance** for [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital). Completing a TCoP review therefore covers the majority of GovS 005 requirements. The mapping below shows how each GovS 005 principle traces to TCoP points assessed above.
+> **Note**: The Technology Code of Practice **supports** [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital). GovS 005 §1.3 says the standard "is supported by" the Service Standard, which sets expectations for services, and the Technology Code of Practice, which sets expectations for technology decisions; §6.1 lists TCoP among the policies that "should be followed". A TCoP review is therefore evidence for GovS 005's technology clauses, not a GovS 005 assessment in its own right. GovS 005 v2.2 (September 2026) sets out nine numbered principles in section 2, but it does not name them or map them to TCoP points. The table below maps each TCoP point assessed above to the GovS 005 v2.2 clauses that cover the same ground. The mapping is ArcKit's, not part of either standard.
 
-### TCoP-to-GovS 005 Principle Mapping
+### TCoP Points Mapped to GovS 005 Clauses
 
-| GovS 005 Principle | Description | TCoP Points |
-|---------------------|-------------|-------------|
-| User-centred | Services designed around user needs | 1 (Define user needs), 2 (Accessible & inclusive) |
-| Open | Open source, open standards, transparency | 3 (Open source), 4 (Open standards) |
-| Secure | Proportionate security controls | 6 (Make things secure), 7 (Privacy integral) |
-| Technology | Cloud first, sustainable, integrated | 5 (Cloud first), 9 (Integrate & adapt), 12 (Sustainable) |
-| Data-driven | Evidence-based decisions using data | 10 (Make better use of data) |
-| Inclusive | Accessible to all users and communities | 2 (Accessible & inclusive), 13 (Service Standard) |
-| Collaborative | Share, reuse, work across boundaries | 8 (Share, reuse & collaborate) |
-| Commercially aware | Smart procurement, value for money | 11 (Purchasing strategy) |
-| Sustainable delivery | Lifecycle management, long-term viability | 12 (Sustainable), 9 (Integrate & adapt) |
+| TCoP Point | GovS 005 v2.2 Clause(s) | What the clause says |
+|------------|-------------------------|----------------------|
+| 1. Define user needs | 8.3 User-centred design | User needs should be identified, understood and used to inform design and objectives |
+| 2. Make things accessible and inclusive | 5.7 Accessible and inclusive services; 8.3 User-centred design | Digital services shall be designed and managed to meet defined user abilities and accessibility requirements |
+| 3. Be open and use open source | 6.2 Technology development and maintenance | Solutions should use open standards and open code |
+| 4. Make use of open standards | 6.2 Technology development and maintenance; 7.2 Data management principles | Solutions should use open standards; data architecture should use open standards, common data models and agreed reference data where appropriate |
+| 5. Use cloud first | 6.1 Overview (Technology management) | The Cloud First Strategy is among the standards that should be followed |
+| 6. Make things secure | 1.2 Scope of this standard; 5.3 Service design and development; 6.2 Technology development and maintenance | GovS 007: Security sets cyber security requirements and shall be complied with; solutions should be secure by design and protect data at rest and in transit |
+| 7. Make privacy integral | 7.1 Overview (Data management); 7.2 Data management principles | Data management must be lawful, ethical, secure, transparent and proportionate; security, privacy, access and information assurance controls should let data be shared safely and lawfully |
+| 8. Share, reuse and collaborate | 8.4 System integration and interoperability; 8.12.1 Procurement | Reusing technology, data, standards, patterns and common components reduces duplication; organisations shall decide whether to build, buy or reuse existing government solutions |
+| 9. Integrate and adapt technology | 6.2 Technology development and maintenance; 8.4 System integration and interoperability | Architecture should support current and future service delivery; design for interoperability |
+| 10. Make better use of data | 7 Data management (7.1 to 7.6) | Manage data as a strategic asset, with senior accountability for data |
+| 11. Define your purchasing strategy | 8.12.1 Procurement | Purchasing strategies should support commercial, contractual, technology, data and AI considerations |
+| 12. Make your technology sustainable | 8.7 Sustainability | Digital products and services should be designed, delivered and operated sustainably |
+| 13. Meet the Service Standard | 5.3 Service design and development | Services shall be delivered in accordance with the Service Standard |
 
 ### GovS 005 Governance Obligations
 
@@ -514,7 +518,8 @@
 |------------|--------|------------------|
 | Senior Responsible Owner (SRO) appointed for digital function | [MET / NOT MET / N/A] | [Name or reference] |
 | Lifecycle stage identified (Discovery / Alpha / Beta / Live) | [MET / NOT MET / N/A] | [Current stage] |
-| CDDO digital spend control thresholds met | [MET / NOT MET / N/A] | [Spend amount and control reference] |
+| Approval route identified under the Digital Assurance Playbook (organisation investment board or equivalent; HM Treasury above the delegated authority limit or if novel, contentious or repercussive) | [MET / NOT MET / N/A] | [Whole-life cost, delegated authority limit and approving body] |
+| Initiative recorded on the HM Treasury-mandated pipeline (Government Assurance Services) where required: any cryptographic product, other digital and technology delivery above £5 million whole-life cost, or a different threshold the organisation has set | [MET / NOT MET / N/A] | [Pipeline reference, or why entry is not required] |
 | DDaT capability framework applied to team roles | [MET / NOT MET / N/A] | [Evidence of DDaT role mapping] |
 | Performance and status reported to the Permanent Secretary | [MET / NOT MET / N/A] | [Reporting cadence and method] |
 
@@ -550,7 +555,7 @@
 | Project Lead | [Name] | | |
 | Technical Architect | [Name] | | |
 | Senior Responsible Owner | [Name] | | |
-| Digital Spend Control (if applicable) | [Name] | | |
+| Organisation Digital Assurance (if applicable) | [Name] | | |
 
 ---
 

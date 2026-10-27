@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:secure generates a UK Government Secure by Design assessment for civilian department projects using NCSC CAF principles.">
+    <meta name="description" content="Secure by Design is the UK government&#x27;s approach to building cyber security into digital services from the start and throughout their life. Its 10…">
     <meta name="author" content="ArcKit">
-    <title>Secure by Design Playbook | ArcKit</title>
-    <meta property="og:title" content="Secure by Design Playbook">
-    <meta property="og:description" content="/arckit:secure generates a UK Government Secure by Design assessment for civilian department projects using NCSC CAF principles.">
+    <title>UK government Secure by Design: the 10 principles | ArcKit</title>
+    <meta property="og:title" content="UK government Secure by Design: the 10 principles">
+    <meta property="og:description" content="Secure by Design is the UK government&#x27;s approach to building cyber security into digital services from the start and throughout their life. Its 10 principles are mandatory for government departments and arm&#x27;s-length…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/secure.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Secure by Design Playbook">
-    <meta name="twitter:description" content="/arckit:secure generates a UK Government Secure by Design assessment for civilian department projects using NCSC CAF principles.">
+    <meta name="twitter:title" content="UK government Secure by Design: the 10 principles">
+    <meta name="twitter:description" content="Secure by Design is the UK government&#x27;s approach to building cyber security into digital services from the start and throughout their life. Its 10 principles are mandatory for government departments and arm&#x27;s-length…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/secure.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/secure.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/secure.html",
-                "headline": "Secure by Design Playbook",
-                "description": "/arckit:secure generates a UK Government Secure by Design assessment for civilian department projects using NCSC CAF principles.",
+                "headline": "UK government Secure by Design: the 10 principles",
+                "description": "Secure by Design is the UK government's approach to building cyber security into digital services from the start and throughout their life. Its 10 principles are mandatory for government departments and arm's-length…",
                 "url": "https://arckit.org/guide/secure.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Secure by Design Playbook",
+                        "name": "UK government Secure by Design: the 10 principles",
                         "item": "https://arckit.org/guide/secure.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Secure by Design Playbook</h1>
-            <p class="app-page-hero__description">/arckit:secure generates a UK Government Secure by Design assessment for civilian department projects using NCSC CAF principles.</p>
+            <h1 class="app-page-hero__title">Secure by Design for UK government: the 10 principles and assessment</h1>
+            <p class="app-page-hero__description">Secure by Design is the UK government&#x27;s approach to building cyber security into digital services from the start and throughout their life. Its 10 principles are mandatory for government departments and arm&#x27;s-length…</p>
         </div>
     </div>
 
@@ -437,9 +437,169 @@
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:secure</code> generates a UK Government Secure by Design assessment for civilian department projects using NCSC CAF principles.</p>
+<p>Secure by Design is the UK government's approach to building cyber security into digital services from the start and throughout their life. Its 10 principles are mandatory for government departments and arm's-length bodies. This guide lists them, the evidence an assurer looks for, and how <code>/arckit:secure</code> writes a Secure by Design assessment for a civilian service using the NCSC Cyber Assessment Framework (CAF).</p>
+<hr />
+<h2 id="who-secure-by-design-applies-to">Who Secure by Design applies to</h2>
+<p>The Government Cyber Unit publishes the <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/principles/">Secure by Design principles</a> (updated February 2026). Under the <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/policy/">Secure by Design policy</a>:</p>
+<ul>
+<li>the principles are mandatory for government departments and arm's-length bodies (ALBs), and optional for the rest of the public sector;</li>
+<li>delivery teams meet them with support from security professionals, throughout the service life cycle;</li>
+<li>suppliers to those organisations should check the specific requirements with their security contacts;</li>
+<li>organisations may add principles of their own, provided they still meet the core ten.</li>
+</ul>
+<p>The Ministry of Defence tailors the approach to its own environment: see <a href="mod-secure.html">MOD Secure by Design</a>. The police &quot;Secured by Design&quot; scheme for buildings is unrelated.</p>
+<h2 id="the-10-principles">The 10 principles</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Principle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Create responsibility for cyber security risk</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Source secure technology products</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Adopt a risk-driven approach</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Design usable security controls</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Build in detect and respond security</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Design flexible architectures</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Minimise the attack surface</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Defend in depth</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Embed continuous assurance</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Make changes securely</td>
+</tr>
+</tbody>
+</table>
+<p>Each principle has outcomes and recommended activities on <a href="https://www.security.gov.uk/policy-and-guidance/secure-by-design/principles/">security.gov.uk</a>.</p>
+<hr />
+<div class="govuk-inset-text app-fde-panel">
+<p class="govuk-body"><strong>Heading into a gate, a procurement or a board?</strong> ArcKit FDE puts a senior architect in your team for five days to produce your principles, requirements, risk register and stakeholder map, at a fixed price. <a class="govuk-link" href="../fde/">See how ArcKit FDE works</a>.</p>
+</div>
+<h2 id="evidence-an-assurer-looks-for">Evidence an assurer looks for</h2>
+<table>
+<thead>
+<tr>
+<th>Theme</th>
+<th>Key Questions</th>
+<th>Artefacts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Context &amp; classification</td>
+<td>What data do we hold? Which classification (OFFICIAL / OFFICIAL-SENSITIVE)?</td>
+<td>Data model, DPIA, risk register</td>
+</tr>
+<tr>
+<td>Governance &amp; roles</td>
+<td>Who owns security? Who approves exceptions?</td>
+<td>RACI, project plan, service runbook</td>
+</tr>
+<tr>
+<td>Secure development</td>
+<td>How do we embed security in SDLC?</td>
+<td>CI/CD controls, code review policy, threat model</td>
+</tr>
+<tr>
+<td>Identity &amp; access</td>
+<td>How is privileged access controlled? MFA used?</td>
+<td>IAM documentation, Terraform/PAM configs</td>
+</tr>
+<tr>
+<td>Protection &amp; resilience</td>
+<td>How do we protect data at rest/in transit? Backups? DR?</td>
+<td>Deployment diagrams, recovery runbooks</td>
+</tr>
+<tr>
+<td>Monitoring &amp; response</td>
+<td>What logging/alerting is in place? Incident response plan?</td>
+<td><code>/arckit:servicenow</code>, logging architecture</td>
+</tr>
+<tr>
+<td>Supply chain</td>
+<td>How are suppliers assessed and monitored?</td>
+<td>Procurement docs, contract clauses, assurance</td>
+</tr>
+</tbody>
+</table>
+<h3 id="mapping-to-standards">Mapping to standards</h3>
+<table>
+<thead>
+<tr>
+<th>Control Set</th>
+<th>Covered By</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NCSC Cloud Security Principles (1–14)</td>
+<td>Hosting decision log, architecture diagrams, <code>/arckit:secure</code> output sections</td>
+</tr>
+<tr>
+<td>Cyber Essentials (Firewalls, Configuration, Access, Malware, Patching)</td>
+<td>Infrastructure-as-Code, operations procedures</td>
+</tr>
+<tr>
+<td>GDPR Privacy by Design</td>
+<td><code>/arckit:dpia</code>, data retention, subject rights, encryption</td>
+</tr>
+</tbody>
+</table>
+<h3 id="when-to-review">When to review</h3>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Activity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Discovery / Alpha</td>
+<td>Baseline assessment, identify high-risk gaps</td>
+</tr>
+<tr>
+<td>Beta</td>
+<td>Update with security testing, monitoring plans, operational readiness</td>
+</tr>
+<tr>
+<td>Live</td>
+<td>Review quarterly or after major change / incident</td>
+</tr>
+</tbody>
+</table>
+<p>Link actions into the risk register and backlog, and track completion before passing assurance gates.</p>
 <hr />
 <h2 id="inputs">Inputs</h2>
 <table>

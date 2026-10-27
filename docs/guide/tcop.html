@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:tcop generates a Technology Code of Practice (TCoP) review document for UK Government technology projects.">
+    <meta name="description" content="The Technology Code of Practice (TCoP) is the UK government&#x27;s 13-point standard for designing, building and buying technology. This guide lists the…">
     <meta name="author" content="ArcKit">
-    <title>Technology Code of Practice (TCoP) review guide | ArcKit</title>
-    <meta property="og:title" content="Technology Code of Practice (TCoP) review guide">
-    <meta property="og:description" content="/arckit:tcop generates a Technology Code of Practice (TCoP) review document for UK Government technology projects.">
+    <title>Technology Code of Practice (TCoP): 13 points and evidence | ArcKit</title>
+    <meta property="og:title" content="Technology Code of Practice (TCoP): 13 points and evidence">
+    <meta property="og:description" content="The Technology Code of Practice (TCoP) is the UK government&#x27;s 13-point standard for designing, building and buying technology. This guide lists the points, the evidence an assessor looks for, and how /arckit:tcop…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/tcop.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Technology Code of Practice (TCoP) review guide">
-    <meta name="twitter:description" content="/arckit:tcop generates a Technology Code of Practice (TCoP) review document for UK Government technology projects.">
+    <meta name="twitter:title" content="Technology Code of Practice (TCoP): 13 points and evidence">
+    <meta name="twitter:description" content="The Technology Code of Practice (TCoP) is the UK government&#x27;s 13-point standard for designing, building and buying technology. This guide lists the points, the evidence an assessor looks for, and how /arckit:tcop…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/tcop.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/tcop.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/tcop.html",
-                "headline": "Technology Code of Practice (TCoP) review guide",
-                "description": "/arckit:tcop generates a Technology Code of Practice (TCoP) review document for UK Government technology projects.",
+                "headline": "Technology Code of Practice (TCoP): 13 points and evidence",
+                "description": "The Technology Code of Practice (TCoP) is the UK government's 13-point standard for designing, building and buying technology. This guide lists the points, the evidence an assessor looks for, and how /arckit:tcop…",
                 "url": "https://arckit.org/guide/tcop.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Technology Code of Practice (TCoP) review guide",
+                        "name": "Technology Code of Practice (TCoP): 13 points and evidence",
                         "item": "https://arckit.org/guide/tcop.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Technology Code of Practice Playbook</h1>
-            <p class="app-page-hero__description">/arckit:tcop generates a Technology Code of Practice (TCoP) review document for UK Government technology projects.</p>
+            <h1 class="app-page-hero__title">Technology Code of Practice (TCoP): 13 points and assessment evidence</h1>
+            <p class="app-page-hero__description">The Technology Code of Practice (TCoP) is the UK government&#x27;s 13-point standard for designing, building and buying technology. This guide lists the points, the evidence an assessor looks for, and how /arckit:tcop…</p>
         </div>
     </div>
 
@@ -437,17 +437,194 @@
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:tcop</code> generates a Technology Code of Practice (TCoP) review document for UK Government technology projects.</p>
+<p>The Technology Code of Practice (TCoP) is the UK government's 13-point standard for designing, building and buying technology. This guide lists the points, the evidence an assessor looks for, and how <code>/arckit:tcop</code> writes a review.</p>
 <blockquote>
-<p><strong>Parent standard</strong>: TCoP is the implementation guidance for <a href="https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital">GovS 005 — Government Functional Standard for Digital</a>. A TCoP review satisfies the majority of GovS 005 obligations.</p>
+<p><strong>Parent standard</strong>: TCoP supports <a href="https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital">GovS 005 — Government Functional Standard for Digital</a>, which sets expectations for technology decisions through it (GovS 005 §1.3). A TCoP review is evidence for GovS 005's technology clauses; it doesn't assess the rest of the standard.</p>
 </blockquote>
+<hr />
+<h2 id="who-tcop-applies-to">Who TCoP applies to</h2>
+<p><a href="http://GOV.UK">GOV.UK</a>'s <a href="https://www.gov.uk/guidance/the-technology-code-of-practice">TCoP guidance</a> says: &quot;You should use the TCoP for all of your technology projects or programmes.&quot; Where legacy technology limits a project's ability to meet the code, the guidance says the team must explain this to the GDS Assurance team.</p>
+<h2 id="how-tcop-is-assessed-since-april-2026">How TCoP is assessed since April 2026</h2>
+<p>On 1 April 2026 the <a href="https://www.gov.uk/government/publications/digital-assurance-playbook">Digital Assurance Playbook</a> replaced the Cabinet Office digital and technology spend controls.</p>
+<ul>
+<li>Organisations run their own approvals for most spend, usually through an investment board, and their own assurers carry out most assurance.</li>
+<li>Initiatives above the organisation's delegated authority limit, or that are novel, contentious or repercussive, need HM Treasury approval. GDS supports those reviews.</li>
+<li>Organisations share a pipeline of upcoming spend with HM Treasury: every cryptographic product, and other digital and technology delivery from £5 million whole-life cost.</li>
+<li>Assurers base their scrutiny on codified best practice, and the playbook lists TCoP among the government's digital and technology standards.</li>
+</ul>
+<p><a href="http://GOV.UK">GOV.UK</a>'s TCoP page (last updated July 2025) still describes TCoP as part of the Cabinet Office spend control process. Ask your organisation's assurance team how it applies TCoP under the playbook.</p>
+<hr />
+<h2 id="the-13-points">The 13 points</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Point</th>
+<th>Typical evidence</th>
+<th>ArcKit commands</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><a href="https://www.gov.uk/guidance/define-user-needs">Define user needs</a></td>
+<td>Stakeholder analysis, user research notes</td>
+<td><code>/arckit:stakeholders</code>, <code>/arckit:requirements</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><a href="https://www.gov.uk/guidance/make-things-accessible">Make things accessible and inclusive</a></td>
+<td>NFRs (WCAG), accessibility test results, statement draft</td>
+<td><code>/arckit:requirements</code>, <code>/arckit:service-assessment</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><a href="https://www.gov.uk/guidance/be-open-and-use-open-source">Be open and use open source</a></td>
+<td>Repo links, OSS usage policy, publishing plan</td>
+<td><code>/arckit:research</code>, design reviews</td>
+</tr>
+<tr>
+<td>4</td>
+<td><a href="https://www.gov.uk/guidance/make-use-of-open-standards">Make use of open standards</a></td>
+<td>API specs, schema definitions, <a href="http://GOV.UK">GOV.UK</a> Design System adoption</td>
+<td><code>/arckit:diagram</code>, <code>/arckit:hld-review</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td><a href="https://www.gov.uk/guidance/use-cloud-first">Use cloud first</a></td>
+<td>Deployment diagram, hosting decision log, cost model</td>
+<td><code>/arckit:diagram</code>, <code>/arckit:secure</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="https://www.gov.uk/guidance/make-things-secure">Make things secure</a></td>
+<td>Secure by Design assessment, threat model, cyber assurance</td>
+<td><code>/arckit:secure</code>, <code>/arckit:risk</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td><a href="https://www.gov.uk/guidance/make-privacy-integral">Make privacy integral</a></td>
+<td>DPIA, data model, retention schedule</td>
+<td><code>/arckit:dpia</code>, <code>/arckit:data-model</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><a href="https://www.gov.uk/guidance/share-and-reuse-technology">Share, reuse and collaborate</a></td>
+<td>Use of <a href="http://GOV.UK">GOV.UK</a> components, shared code, community contributions</td>
+<td><code>/arckit:research</code>, <code>/arckit:story</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td><a href="https://www.gov.uk/guidance/integrate-and-adapt-technology">Integrate and adapt technology</a></td>
+<td>Integration requirements, migration plan, legacy dependencies</td>
+<td><code>/arckit:requirements</code>, <code>/arckit:diagram</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td><a href="https://www.gov.uk/guidance/make-better-use-of-data">Make better use of data</a></td>
+<td>Data strategy, quality metrics, analytics plan</td>
+<td><code>/arckit:data-model</code>, <code>/arckit:story</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td><a href="https://www.gov.uk/guidance/define-your-purchasing-strategy">Define your purchasing strategy</a></td>
+<td>Procurement route, approval evidence</td>
+<td><code>/arckit:sow</code>, <code>/arckit:evaluate</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td><a href="https://www.gov.uk/guidance/make-your-technology-sustainable">Make your technology sustainable</a></td>
+<td>Hosting carbon data, efficiency plan, end-of-life strategy</td>
+<td><code>/arckit:plan</code>, service design</td>
+</tr>
+<tr>
+<td>13</td>
+<td><a href="https://www.gov.uk/service-manual/service-standard">Meet the Service Standard</a></td>
+<td>Assessment preparation, metrics, operating model</td>
+<td><code>/arckit:service-assessment</code>, <code>/arckit:servicenow</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
 <div class="govuk-inset-text app-fde-panel">
 <p class="govuk-body"><strong>Heading into a gate, a procurement or a board?</strong> ArcKit FDE puts a senior architect in your team for five days to produce your principles, requirements, risk register and stakeholder map, at a fixed price. <a class="govuk-link" href="../fde/">See how ArcKit FDE works</a>.</p>
 </div>
+<h2 id="preparing-for-a-tcop-assessment">Preparing for a TCoP assessment</h2>
+<h3 id="readiness-checklist">Readiness checklist</h3>
+<ul>
+<li>All 13 points assessed, each with a compliance status and evidence, or a gap logged with an owner and due date.</li>
+<li>User research evidence documented (point 1).</li>
+<li>Accessibility approach defined (point 2).</li>
+<li>Open source preference followed (point 3).</li>
+<li>Cloud-first approach justified (point 5).</li>
+<li>Security assessment completed (point 6).</li>
+<li>DPIA completed if the service handles personal data (point 7).</li>
+<li>Purchasing strategy defined (point 11).</li>
+<li>Sustainability approach recorded (point 12).</li>
+<li>Deviations justified and escalated where policy allows, and legacy constraints explained to the assurance team.</li>
+<li>Approval and assurance papers updated with the latest TCoP results.</li>
+<li>Assessment report shared with the SRO, delivery manager and service owner.</li>
+<li>GovS 005 governance obligations reviewed (SRO appointment, lifecycle stage, approvals).</li>
+</ul>
+<h3 id="compliance-levels">Compliance levels</h3>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Compliant</td>
+<td>Fully meets the point with evidence</td>
+</tr>
+<tr>
+<td>Partially Compliant</td>
+<td>Meets some aspects, gaps identified</td>
+</tr>
+<tr>
+<td>Not Compliant</td>
+<td>Does not meet the point</td>
+</tr>
+<tr>
+<td>Not Applicable</td>
+<td>Point doesn't apply to this project</td>
+</tr>
+</tbody>
+</table>
+<h3 id="when-to-review">When to review</h3>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Frequency</th>
+<th>Focus</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Discovery / Alpha</td>
+<td>Once</td>
+<td>Baseline compliance, identify blockers</td>
+</tr>
+<tr>
+<td>Beta (private/public)</td>
+<td>Quarterly or before assessments</td>
+<td>Track remediation and new gaps</td>
+</tr>
+<tr>
+<td>Live</td>
+<td>Every six months</td>
+<td>Check the service still meets its obligations</td>
+</tr>
+</tbody>
+</table>
 <hr />
-<h2 id="inputs">Inputs</h2>
+<h2 id="using-arckittcop">Using /arckit:tcop</h2>
+<h3 id="inputs">Inputs</h3>
 <table>
 <thead>
 <tr>
@@ -474,16 +651,14 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="command">Command</h2>
+<h3 id="command">Command</h3>
 <pre><code class="language-bash">/arckit:tcop Create TCoP review for &lt;project&gt;
 </code></pre>
 <p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-TCOP-v1.0.md</code></p>
 <blockquote>
 <p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
 </blockquote>
-<hr />
-<h2 id="tcop-review-structure">TCoP Review Structure</h2>
+<h3 id="what-the-review-contains">What the review contains</h3>
 <table>
 <thead>
 <tr>
@@ -514,118 +689,11 @@
 </tr>
 <tr>
 <td>Approval Readiness</td>
-<td>Ready for spend control assessment</td>
+<td>Ready for your organisation's approval and assurance route</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="13-tcop-points">13 TCoP Points</h2>
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Point</th>
-<th>Focus</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>1</td>
-<td>Define user needs</td>
-<td>User research and service design</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Make things accessible</td>
-<td>Accessibility and inclusion</td>
-</tr>
-<tr>
-<td>3</td>
-<td>Be open and use open source</td>
-<td>Open standards, open source</td>
-</tr>
-<tr>
-<td>4</td>
-<td>Make use of open standards</td>
-<td>Interoperability</td>
-</tr>
-<tr>
-<td>5</td>
-<td>Use cloud first</td>
-<td>Cloud hosting preference</td>
-</tr>
-<tr>
-<td>6</td>
-<td>Make things secure</td>
-<td>Security by design</td>
-</tr>
-<tr>
-<td>7</td>
-<td>Make privacy integral</td>
-<td>Privacy and data protection</td>
-</tr>
-<tr>
-<td>8</td>
-<td>Share, reuse and collaborate</td>
-<td>Cross-government sharing</td>
-</tr>
-<tr>
-<td>9</td>
-<td>Integrate and adapt technology</td>
-<td>Legacy integration</td>
-</tr>
-<tr>
-<td>10</td>
-<td>Make better use of data</td>
-<td>Data-driven decisions</td>
-</tr>
-<tr>
-<td>11</td>
-<td>Define your purchasing strategy</td>
-<td>Procurement approach</td>
-</tr>
-<tr>
-<td>12</td>
-<td>Meet the Service Standard</td>
-<td>GDS Service Standard alignment</td>
-</tr>
-<tr>
-<td>13</td>
-<td>Spend controls</td>
-<td>Comply with spending requirements</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="compliance-levels">Compliance Levels</h2>
-<table>
-<thead>
-<tr>
-<th>Level</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Compliant</td>
-<td>Fully meets the point with evidence</td>
-</tr>
-<tr>
-<td>Partially Compliant</td>
-<td>Meets some aspects, gaps identified</td>
-</tr>
-<tr>
-<td>Not Compliant</td>
-<td>Does not meet the point</td>
-</tr>
-<tr>
-<td>Not Applicable</td>
-<td>Point doesn't apply to this project</td>
-</tr>
-</tbody>
-</table>
-<hr />
-<h2 id="one-page-workflow">One-Page Workflow</h2>
+<h3 id="one-page-workflow">One-page workflow</h3>
 <table>
 <thead>
 <tr>
@@ -652,7 +720,7 @@
 </tr>
 <tr>
 <td>Approval</td>
-<td>Submit for spend control</td>
+<td>Submit through your organisation's assurance and approval route (HM Treasury above the delegated authority limit)</td>
 <td>Manual</td>
 </tr>
 <tr>
@@ -663,45 +731,6 @@
 </tbody>
 </table>
 <hr />
-<h2 id="review-checklist">Review Checklist</h2>
-<ul>
-<li>All 13 TCoP points assessed.</li>
-<li>Each point has compliance status with evidence.</li>
-<li>Gaps have remediation actions with owners.</li>
-<li>User research evidence documented (Point 1).</li>
-<li>Accessibility approach defined (Point 2).</li>
-<li>Open source preference followed (Point 3).</li>
-<li>Cloud-first approach justified (Point 5).</li>
-<li>Security assessment completed (Point 6).</li>
-<li>DPIA completed if personal data (Point 7).</li>
-<li>Procurement strategy defined (Point 11).</li>
-</ul>
-<hr />
-<h2 id="spend-control-thresholds">Spend Control Thresholds</h2>
-<table>
-<thead>
-<tr>
-<th>Threshold</th>
-<th>Review Required</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>&lt;£100k</td>
-<td>Departmental only</td>
-</tr>
-<tr>
-<td>£100k-£5m</td>
-<td>CDDO case-by-case</td>
-</tr>
-<tr>
-<td>&gt;£5m</td>
-<td>CDDO mandatory</td>
-</tr>
-</tbody>
-</table>
-<p><em>Note: Thresholds may vary by department</em></p>
-<hr />
 <h2 id="key-principles">Key Principles</h2>
 <ol>
 <li><strong>User First</strong>: Start with user needs, not technology.</li>
@@ -709,8 +738,17 @@
 <li><strong>Cloud First</strong>: Default to cloud unless justified otherwise.</li>
 <li><strong>Security Built-In</strong>: Security from the start, not bolted on.</li>
 <li><strong>Reuse Before Build</strong>: Check for existing solutions first.</li>
-<li><strong>GovS 005 Traceability</strong>: Map each TCoP point back to its parent GovS 005 principle for audit trail.</li>
+<li><strong>GovS 005 Traceability</strong>: Map each TCoP point to the GovS 005 v2.2 clauses that cover the same ground, for the audit trail. GovS 005 numbers nine principles in section 2 but does not name them or map them to TCoP points.</li>
 </ol>
+<hr />
+<h2 id="useful-links">Useful Links</h2>
+<ul>
+<li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice">The Technology Code of Practice</a> (<a href="http://GOV.UK">GOV.UK</a>)</li>
+<li><a href="https://www.gov.uk/government/publications/digital-assurance-playbook">Digital Assurance Playbook</a> (in force from 1 April 2026)</li>
+<li><a href="https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital">GovS 005 — Government Functional Standard for Digital</a></li>
+<li><a href="https://www.gov.uk/service-manual/service-standard">The Service Standard</a></li>
+<li><a href="uk-government/technology-code-of-practice.html">TCoP evidence matrix summary</a>, the short reference version of the table above</li>
+</ul>
 </div>
 <script src="../films.js"></script>
         </div>

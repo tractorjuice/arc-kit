@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:traceability produces a forward/backward traceability matrix linking requirements to design, implementation, tests, and operational artefacts.">
+    <meta name="description" content="A requirements traceability matrix (RTM) links each requirement to the design, code, tests and operational evidence that deliver it. This guide covers…">
     <meta name="author" content="ArcKit">
-    <title>Requirements traceability matrix guide | ArcKit</title>
-    <meta property="og:title" content="Requirements traceability matrix guide">
-    <meta property="og:description" content="/arckit:traceability produces a forward/backward traceability matrix linking requirements to design, implementation, tests, and operational artefacts.">
+    <title>Requirements traceability matrix: guide and template | ArcKit</title>
+    <meta property="og:title" content="Requirements traceability matrix: guide and template">
+    <meta property="og:description" content="A requirements traceability matrix (RTM) links each requirement to the design, code, tests and operational evidence that deliver it. This guide covers what an RTM is for, what goes in one, how to keep it current, and…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/traceability.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Requirements traceability matrix guide">
-    <meta name="twitter:description" content="/arckit:traceability produces a forward/backward traceability matrix linking requirements to design, implementation, tests, and operational artefacts.">
+    <meta name="twitter:title" content="Requirements traceability matrix: guide and template">
+    <meta name="twitter:description" content="A requirements traceability matrix (RTM) links each requirement to the design, code, tests and operational evidence that deliver it. This guide covers what an RTM is for, what goes in one, how to keep it current, and…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/traceability.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/traceability.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/traceability.html",
-                "headline": "Requirements traceability matrix guide",
-                "description": "/arckit:traceability produces a forward/backward traceability matrix linking requirements to design, implementation, tests, and operational artefacts.",
+                "headline": "Requirements traceability matrix: guide and template",
+                "description": "A requirements traceability matrix (RTM) links each requirement to the design, code, tests and operational evidence that deliver it. This guide covers what an RTM is for, what goes in one, how to keep it current, and…",
                 "url": "https://arckit.org/guide/traceability.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Requirements traceability matrix guide",
+                        "name": "Requirements traceability matrix: guide and template",
                         "item": "https://arckit.org/guide/traceability.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Traceability Guide</h1>
-            <p class="app-page-hero__description">/arckit:traceability produces a forward/backward traceability matrix linking requirements to design, implementation, tests, and operational artefacts.</p>
+            <h1 class="app-page-hero__title">Requirements traceability matrix: guide and template</h1>
+            <p class="app-page-hero__description">A requirements traceability matrix (RTM) links each requirement to the design, code, tests and operational evidence that deliver it. This guide covers what an RTM is for, what goes in one, how to keep it current, and…</p>
         </div>
     </div>
 
@@ -437,14 +437,127 @@
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:traceability</code> produces a forward/backward traceability matrix linking requirements to design, implementation, tests, and operational artefacts.</p>
+<p>A requirements traceability matrix (RTM) links each requirement to the design, code, tests and operational evidence that deliver it. This guide covers what an RTM is for, what goes in one, how to keep it current, and how <code>/arckit:traceability</code> builds one from your project's artefacts.</p>
+<hr />
+<h2 id="what-a-traceability-matrix-is-for">What a traceability matrix is for</h2>
+<p>The IIBA's <a href="https://www.iiba.org/globalassets/standards-and-resources/core-standard/iiba-core-standard.pdf">Global Business Analysis Core Standard</a> describes tracing requirements as analysing and maintaining the relationships between requirements, designs, solution components and other work products, for impact analysis, coverage and allocation. Its purpose is to keep requirements and designs at different levels aligned, and to manage the effects of a change at one level on related requirements.</p>
+<p>A traceability matrix is where those links are recorded. It works in two directions:</p>
+<table>
+<thead>
+<tr>
+<th>Direction</th>
+<th>Path</th>
+<th>Question it answers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Forward</td>
+<td>Requirement → design → implementation → tests</td>
+<td>Has everything we committed to been designed, built and tested?</td>
+</tr>
+<tr>
+<td>Backward</td>
+<td>Tests → implementation → design → requirement</td>
+<td>Does everything we built and tested trace to a requirement, or is it scope creep?</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="what-goes-in-a-requirements-traceability-matrix">What goes in a requirements traceability matrix</h2>
+<table>
+<thead>
+<tr>
+<th>Column</th>
+<th>Contents</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Requirement ID and title</td>
+<td>The ID from the requirements document, such as <code>FR-012</code> or <code>NFR-SEC-004</code></td>
+</tr>
+<tr>
+<td>Business requirement</td>
+<td>The <code>BR-###</code> the requirement serves</td>
+</tr>
+<tr>
+<td>Priority</td>
+<td>The requirement's MoSCoW priority</td>
+</tr>
+<tr>
+<td>Design</td>
+<td>The high-level design component and the detailed design module that meet it</td>
+</tr>
+<tr>
+<td>Implementation</td>
+<td>The code, configuration or service that delivers it</td>
+</tr>
+<tr>
+<td>Tests</td>
+<td>The tests that verify it</td>
+</tr>
+<tr>
+<td>Status</td>
+<td>Covered, partially covered, or a gap</td>
+</tr>
+</tbody>
+</table>
+<p>Around the matrix, a useful RTM also reports coverage (the share of requirements with design and test evidence), the gaps, orphan components and tests with no requirement behind them, and the impact of recent requirement changes.</p>
+<h3 id="matrix-snapshot">Matrix Snapshot</h3>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Design</th>
+<th>Implementation</th>
+<th>Tests</th>
+<th>Ops</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-012 Payment approvals</td>
+<td>PaymentService (HLD), Approval Workflow (DLD)</td>
+<td><code>services/payment.py</code></td>
+<td><code>tests/payment/test_approvals.py</code></td>
+<td>Runbook section 3</td>
+</tr>
+<tr>
+<td>NFR-SEC-004 Encryption at rest</td>
+<td>Security architecture</td>
+<td>Terraform KMS module</td>
+<td><code>tests/security/test_kms_rotation.py</code></td>
+<td><code>/arckit:secure</code> evidence</td>
+</tr>
+</tbody>
+</table>
+<p>Gaps appear when any column lacks references.</p>
+<hr />
 <div class="govuk-inset-text app-fde-panel">
 <p class="govuk-body"><strong>Heading into a gate, a procurement or a board?</strong> ArcKit FDE puts a senior architect in your team for five days to produce your principles, requirements, risk register and stakeholder map, at a fixed price. <a class="govuk-link" href="../fde/">See how ArcKit FDE works</a>.</p>
 </div>
+<h2 id="keeping-the-matrix-current">Keeping the matrix current</h2>
+<p>A matrix is only useful while it matches the project. Regenerate it when requirements or designs change, and work through the gaps it reports.</p>
+<h3 id="gap-triage-checklist">Gap Triage Checklist</h3>
+<ul>
+<li>Missing tests? Create stories and flag as release blocker if “MUST” requirement.</li>
+<li>Design mismatch? Update HLD/DLD or retire redundant components.</li>
+<li>Orphan artefacts? Remove or link to new requirements to avoid scope creep.</li>
+<li>Compliance evidence absent? Run relevant commands (<code>/arckit:secure</code>, <code>/arckit:dpia</code>, <code>/arckit:ai-playbook</code>).</li>
+</ul>
+<h3 id="tips">Tips</h3>
+<ul>
+<li>Automate matrix generation in CI to detect regressions.</li>
+<li>Use coverage percentages in governance packs and release go/no-go meetings.</li>
+<li>Keep matrix lightweight by referencing artefact IDs/paths rather than copying content.</li>
+</ul>
 <hr />
-<h2 id="inputs">Inputs</h2>
+<h2 id="using-arckittraceability">Using /arckit:traceability</h2>
+<p><code>/arckit:traceability</code> produces a forward/backward traceability matrix linking requirements to design, implementation, tests, and operational artefacts.</p>
+<h3 id="inputs">Inputs</h3>
 <table>
 <thead>
 <tr>
@@ -472,58 +585,20 @@
 </tbody>
 </table>
 <p>Run after design reviews or at least once per sprint to maintain coverage.</p>
-<hr />
-<h2 id="command">Command</h2>
+<h3 id="command">Command</h3>
 <pre><code class="language-bash">/arckit:traceability Generate traceability matrix for &lt;project&gt;
 </code></pre>
 <p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-TRAC-v1.0.md</code> (traceability matrix with coverage metrics and gap analysis)</p>
 <blockquote>
 <p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
 </blockquote>
+<h3 id="coverage-targets">Coverage targets</h3>
+<p>The command flags gaps against these targets: MUST requirements should be 100% covered, and SHOULD requirements over 80%. Lower-priority requirements can sit below 50%. A MUST requirement with no coverage is a critical gap, and security or compliance requirements without tests are high-risk gaps.</p>
 <hr />
-<h2 id="matrix-snapshot">Matrix Snapshot</h2>
-<table>
-<thead>
-<tr>
-<th>Requirement</th>
-<th>Design</th>
-<th>Implementation</th>
-<th>Tests</th>
-<th>Ops</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>FR-012 Payment approvals</td>
-<td>PaymentService (HLD), Approval Workflow (DLD)</td>
-<td><code>services/payment.py</code></td>
-<td><code>tests/payment/test_approvals.py</code></td>
-<td>Runbook section 3</td>
-</tr>
-<tr>
-<td>NFR-S-004 Encryption at rest</td>
-<td>Security architecture</td>
-<td>Terraform KMS module</td>
-<td><code>tests/security/test_kms_rotation.py</code></td>
-<td><code>/arckit:secure</code> evidence</td>
-</tr>
-</tbody>
-</table>
-<p>Gaps appear when any column lacks references.</p>
-<hr />
-<h2 id="gap-triage-checklist">Gap Triage Checklist</h2>
+<h2 id="useful-links">Useful Links</h2>
 <ul>
-<li>Missing tests? Create stories and flag as release blocker if “MUST” requirement.</li>
-<li>Design mismatch? Update HLD/DLD or retire redundant components.</li>
-<li>Orphan artefacts? Remove or link to new requirements to avoid scope creep.</li>
-<li>Compliance evidence absent? Run relevant commands (<code>/arckit:secure</code>, <code>/arckit:dpia</code>, <code>/arckit:ai-playbook</code>).</li>
-</ul>
-<hr />
-<h2 id="tips">Tips</h2>
-<ul>
-<li>Automate matrix generation in CI to detect regressions.</li>
-<li>Use coverage percentages in governance packs and release go/no-go meetings.</li>
-<li>Keep matrix lightweight by referencing artefact IDs/paths rather than copying content.</li>
+<li><a href="https://www.iiba.org/globalassets/standards-and-resources/core-standard/iiba-core-standard.pdf">IIBA Global Business Analysis Core Standard</a> (PDF), including the Trace Requirements task</li>
+<li><a href="requirements.html">Requirements guide</a>, for the requirement types and ID prefixes</li>
 </ul>
 </div>
 <script src="../films.js"></script>

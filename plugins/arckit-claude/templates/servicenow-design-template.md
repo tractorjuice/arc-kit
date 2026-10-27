@@ -224,7 +224,7 @@
 - **Point 10**: Success metrics in ServiceNow dashboards
 - **Point 13**: Reuse common platforms (GOV.UK Notify, Pay)
 
-### ITIL v4 Practices
+### ITIL 4 Practices
 
 - **Plan**: Change Management (CAB)
 - **Improve**: Post-Incident Reviews

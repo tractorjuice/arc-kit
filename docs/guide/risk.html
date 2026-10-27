@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:risk creates a comprehensive risk register following HM Treasury Orange Book principles for project and operational risk management.">
+    <meta name="description" content="A risk register records the risks to a project&#x27;s objectives, with a score, an owner and a planned response for each. This guide covers what HM Treasury&#x27;s…">
     <meta name="author" content="ArcKit">
-    <title>Orange Book risk register: template and playbook | ArcKit</title>
-    <meta property="og:title" content="Orange Book risk register: template and playbook">
-    <meta property="og:description" content="/arckit:risk creates a comprehensive risk register following HM Treasury Orange Book principles for project and operational risk management.">
+    <title>Risk register template: Orange Book guide | ArcKit</title>
+    <meta property="og:title" content="Risk register template: Orange Book guide">
+    <meta property="og:description" content="A risk register records the risks to a project&#x27;s objectives, with a score, an owner and a planned response for each. This guide covers what HM Treasury&#x27;s Orange Book expects of risk management in government, what a…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/risk.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Orange Book risk register: template and playbook">
-    <meta name="twitter:description" content="/arckit:risk creates a comprehensive risk register following HM Treasury Orange Book principles for project and operational risk management.">
+    <meta name="twitter:title" content="Risk register template: Orange Book guide">
+    <meta name="twitter:description" content="A risk register records the risks to a project&#x27;s objectives, with a score, an owner and a planned response for each. This guide covers what HM Treasury&#x27;s Orange Book expects of risk management in government, what a…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/risk.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/risk.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/risk.html",
-                "headline": "Orange Book risk register: template and playbook",
-                "description": "/arckit:risk creates a comprehensive risk register following HM Treasury Orange Book principles for project and operational risk management.",
+                "headline": "Risk register template: Orange Book guide",
+                "description": "A risk register records the risks to a project's objectives, with a score, an owner and a planned response for each. This guide covers what HM Treasury's Orange Book expects of risk management in government, what a…",
                 "url": "https://arckit.org/guide/risk.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Orange Book risk register: template and playbook",
+                        "name": "Risk register template: Orange Book guide",
                         "item": "https://arckit.org/guide/risk.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Risk Register Playbook</h1>
-            <p class="app-page-hero__description">/arckit:risk creates a comprehensive risk register following HM Treasury Orange Book principles for project and operational risk management.</p>
+            <h1 class="app-page-hero__title">Risk register: template and Orange Book guide</h1>
+            <p class="app-page-hero__description">A risk register records the risks to a project&#x27;s objectives, with a score, an owner and a planned response for each. This guide covers what HM Treasury&#x27;s Orange Book expects of risk management in government, what a…</p>
         </div>
     </div>
 
@@ -437,14 +437,96 @@
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:risk</code> creates a comprehensive risk register following HM Treasury Orange Book principles for project and operational risk management.</p>
+<p>A risk register records the risks to a project's objectives, with a score, an owner and a planned response for each. This guide covers what HM Treasury's Orange Book expects of risk management in government, what a register should contain, and how <code>/arckit:risk</code> builds one.</p>
+<hr />
+<h2 id="the-orange-book-and-who-it-applies-to">The Orange Book and who it applies to</h2>
+<p><a href="https://www.gov.uk/government/publications/orange-book/the-orange-book-management-of-risk-principles-and-concepts">The Orange Book: Management of Risk, Principles and Concepts</a> is the UK government's guidance on risk management, published by HM Treasury and the Government Finance Function. The current edition (May 2023) builds on the 2020 version and adds Part II, the risk control framework.</p>
+<ul>
+<li><strong>Scope</strong>: it applies to all government departments and arm's length public bodies (executive agencies, non-departmental public bodies and non-ministerial departments) with responsibility for public funds derived from central government. The wider UK public sector may also find it useful.</li>
+<li><strong>Comply or explain</strong>: the five main principles are mandatory and the supporting principles are advisory. Each organisation must disclose compliance, or explain why it departs, in the governance statement that accompanies its annual resource accounts.</li>
+<li><strong>Review</strong>: the organisation should review its risk management framework, and the outcomes it achieves, at least annually.</li>
+</ul>
+<p>The five main principles say that risk management shall be:</p>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>Main principle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A</td>
+<td>An essential part of governance and leadership</td>
+</tr>
+<tr>
+<td>B</td>
+<td>An integral part of all organisational activities, to support decision-making</td>
+</tr>
+<tr>
+<td>C</td>
+<td>Collaborative, and informed by the best available information and expertise</td>
+</tr>
+<tr>
+<td>D</td>
+<td>Structured to include identification and assessment, treatment, monitoring and reporting</td>
+</tr>
+<tr>
+<td>E</td>
+<td>Continually improved through learning and experience</td>
+</tr>
+</tbody>
+</table>
+<p>On 29 July 2026 HM Treasury removed four supplementary guides from the <a href="https://www.gov.uk/government/publications/orange-book">Orange Book page</a> as out of date, including the Risk Appetite Guidance Note and the Good Practice Guide on risk reporting.</p>
+<hr />
+<h2 id="what-a-risk-register-should-contain">What a risk register should contain</h2>
+<p>The Orange Book sets principles. It does not prescribe a register format or a scoring matrix. What it does ask for:</p>
+<ul>
+<li><strong>A common set of risk criteria</strong> based on the likelihood of a risk occurring and its consequences, so risks can be compared and prioritised (principle D4).</li>
+<li><strong>Risks stated as cause, event and consequence</strong>, taking care not to record a consequence as if it were the risk itself (Annex 5).</li>
+<li><strong>An evaluation against risk appetite</strong>: the nature and extent of risk the organisation is willing to take (D6).</li>
+<li><strong>A treatment plan</strong> for each chosen option, covering the rationale, the actions, who is accountable and responsible, resources, performance measures and early warning indicators, constraints, timescales, and how it will be reported and monitored (D8).</li>
+</ul>
+<h3 id="treatment-options">Treatment options</h3>
+<p>The current Orange Book does not use the &quot;4Ts&quot;. Principle D6 lists these options, and one or more may apply:</p>
+<ul>
+<li>Avoid the risk, if feasible, by not starting or continuing the activity.</li>
+<li>Take or increase the risk in order to pursue an opportunity.</li>
+<li>Retain the risk by informed decision.</li>
+<li>Change the likelihood, where possible.</li>
+<li>Change the consequences, including planning contingency activities.</li>
+<li>Share the risk, for example through commercial contracts.</li>
+</ul>
+<h3 id="example-risk-categories">Example risk categories</h3>
+<p>Annex 4 of the Orange Book gives example categories. It says they are not meant to be comprehensive: strategy, governance, operations, legal, property, financial, commercial, people, technology, information, security, project/programme, and reputational.</p>
+<hr />
 <div class="govuk-inset-text app-fde-panel">
 <p class="govuk-body"><strong>Heading into a gate, a procurement or a board?</strong> ArcKit FDE puts a senior architect in your team for five days to produce your principles, requirements, risk register and stakeholder map, at a fixed price. <a class="govuk-link" href="../fde/">See how ArcKit FDE works</a>.</p>
 </div>
+<h2 id="building-and-reviewing-a-risk-register">Building and reviewing a risk register</h2>
+<ol>
+<li>Identify risks across the project's objectives, whether or not their sources are under your direct control.</li>
+<li>Analyse each risk for likelihood and impact against your agreed scales.</li>
+<li>Evaluate the results against risk appetite and choose a treatment.</li>
+<li>Assign an owner, actions and dates to each treatment.</li>
+<li>Monitor and report at an agreed frequency, and escalate risks that exceed appetite.</li>
+</ol>
+<h3 id="review-checklist">Review Checklist</h3>
+<ul>
+<li>Risk appetite clearly defined and agreed.</li>
+<li>All risk categories considered.</li>
+<li>Each risk has likelihood, impact, and score.</li>
+<li>All high and critical risks have treatment plans.</li>
+<li>Treatment owners and deadlines assigned.</li>
+<li>Dependencies on other projects captured.</li>
+<li>Review schedule established.</li>
+<li>Escalation thresholds defined.</li>
+</ul>
 <hr />
-<h2 id="inputs">Inputs</h2>
+<h2 id="using-arckitrisk">Using /arckit:risk</h2>
+<h3 id="inputs">Inputs</h3>
 <table>
 <thead>
 <tr>
@@ -471,13 +553,11 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="command">Command</h2>
+<h3 id="command">Command</h3>
 <pre><code class="language-bash">/arckit:risk Create risk register for &lt;project&gt;
 </code></pre>
 <p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-RISK-v1.0.md</code></p>
-<hr />
-<h2 id="risk-register-structure">Risk Register Structure</h2>
+<h3 id="risk-register-structure">Risk Register Structure</h3>
 <table>
 <thead>
 <tr>
@@ -488,42 +568,63 @@
 <tbody>
 <tr>
 <td>Executive Summary</td>
-<td>Overall risk profile and top risks</td>
+<td>Overall risk profile, risks exceeding appetite, top risks</td>
 </tr>
 <tr>
-<td>Risk Appetite</td>
-<td>Organization's tolerance for risk</td>
+<td>Risk Matrix</td>
+<td>Inherent (before controls) and residual (after controls) heat maps</td>
 </tr>
 <tr>
-<td>Risk Categories</td>
-<td>Grouping of risks by type</td>
+<td>Top 10 Risks</td>
+<td>Ranked by residual score</td>
 </tr>
 <tr>
-<td>Risk Register</td>
-<td>Detailed risk entries with scoring</td>
+<td>Detailed Risk Register</td>
+<td>One entry per risk with scoring, controls, response and action plan</td>
 </tr>
 <tr>
-<td>Risk Treatments</td>
-<td>Mitigation actions and owners</td>
+<td>Risk Category Analysis</td>
+<td>Profile for each of the six categories</td>
 </tr>
 <tr>
-<td>Risk Monitoring</td>
-<td>Review schedule and escalation</td>
+<td>Risk Ownership Matrix</td>
+<td>Who owns which risks</td>
 </tr>
 <tr>
-<td>Dependencies</td>
-<td>Cross-project and external risks</td>
+<td>Response Summary</td>
+<td>Count of risks by 4Ts response</td>
+</tr>
+<tr>
+<td>Risk Appetite Compliance</td>
+<td>Risks within and exceeding appetite</td>
+</tr>
+<tr>
+<td>Prioritised Action Plan</td>
+<td>Urgent, high and medium actions</td>
+</tr>
+<tr>
+<td>Integration with SOBC</td>
+<td>What the register feeds into the business case</td>
+</tr>
+<tr>
+<td>Monitoring and Review</td>
+<td>Review schedule, key risk indicators, escalation criteria</td>
+</tr>
+<tr>
+<td>Orange Book Compliance Checklist</td>
+<td>Evidence against the main principles and the risk control framework</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="orange-book-4ts-risk-responses">Orange Book 4Ts Risk Responses</h2>
+<h3 id="risk-responses-4ts">Risk Responses (4Ts)</h3>
+<p>ArcKit records each risk's primary response as one of the 4Ts. They map to the Orange Book's treatment options like this:</p>
 <table>
 <thead>
 <tr>
 <th>Response</th>
 <th>Description</th>
 <th>When to Use</th>
+<th>Orange Book option (D6)</th>
 </tr>
 </thead>
 <tbody>
@@ -531,40 +632,44 @@
 <td>Tolerate</td>
 <td>Accept the risk</td>
 <td>Low impact, low likelihood</td>
+<td>Retain the risk by informed decision</td>
 </tr>
 <tr>
 <td>Treat</td>
 <td>Mitigate the risk</td>
 <td>Reduce likelihood or impact</td>
+<td>Change the likelihood or the consequences</td>
 </tr>
 <tr>
 <td>Transfer</td>
 <td>Share the risk</td>
 <td>Insurance, contracts, third parties</td>
+<td>Share the risk</td>
 </tr>
 <tr>
 <td>Terminate</td>
 <td>Avoid the risk</td>
 <td>Remove the risk source entirely</td>
+<td>Avoid the risk</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="risk-scoring-matrix">Risk Scoring Matrix</h2>
+<p>The Orange Book also allows taking or increasing a risk to pursue an opportunity; record that decision and its rationale in the risk entry.</p>
+<h3 id="risk-scoring-matrix">Risk Scoring Matrix</h3>
 <table>
 <thead>
 <tr>
 <th>Likelihood / Impact</th>
-<th>Very Low (1)</th>
-<th>Low (2)</th>
-<th>Medium (3)</th>
-<th>High (4)</th>
-<th>Very High (5)</th>
+<th>Negligible (1)</th>
+<th>Minor (2)</th>
+<th>Moderate (3)</th>
+<th>Major (4)</th>
+<th>Catastrophic (5)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>Very High (5)</strong></td>
+<td><strong>Almost certain (5)</strong></td>
 <td>5</td>
 <td>10</td>
 <td>15</td>
@@ -572,7 +677,7 @@
 <td>25</td>
 </tr>
 <tr>
-<td><strong>High (4)</strong></td>
+<td><strong>Likely (4)</strong></td>
 <td>4</td>
 <td>8</td>
 <td>12</td>
@@ -580,7 +685,7 @@
 <td>20</td>
 </tr>
 <tr>
-<td><strong>Medium (3)</strong></td>
+<td><strong>Possible (3)</strong></td>
 <td>3</td>
 <td>6</td>
 <td>9</td>
@@ -588,7 +693,7 @@
 <td>15</td>
 </tr>
 <tr>
-<td><strong>Low (2)</strong></td>
+<td><strong>Unlikely (2)</strong></td>
 <td>2</td>
 <td>4</td>
 <td>6</td>
@@ -596,7 +701,7 @@
 <td>10</td>
 </tr>
 <tr>
-<td><strong>Very Low (1)</strong></td>
+<td><strong>Rare (1)</strong></td>
 <td>1</td>
 <td>2</td>
 <td>3</td>
@@ -605,8 +710,8 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="risk-categories">Risk Categories</h2>
+<p>Scores of 1 to 5 are Low, 6 to 12 Medium, 13 to 19 High and 20 to 25 Critical. Replace these scales with your organisation's if it has its own.</p>
+<h3 id="risk-categories">Risk Categories</h3>
 <table>
 <thead>
 <tr>
@@ -617,36 +722,31 @@
 <tbody>
 <tr>
 <td>Strategic</td>
-<td>Business case viability, stakeholder support</td>
-</tr>
-<tr>
-<td>Delivery</td>
-<td>Timeline, resources, dependencies</td>
-</tr>
-<tr>
-<td>Technical</td>
-<td>Technology maturity, integration complexity</td>
-</tr>
-<tr>
-<td>Security</td>
-<td>Data breaches, cyber threats</td>
-</tr>
-<tr>
-<td>Financial</td>
-<td>Budget overrun, funding uncertainty</td>
-</tr>
-<tr>
-<td>Compliance</td>
-<td>Regulatory, legal, policy requirements</td>
+<td>Strategic direction changes, policy changes, stakeholder support</td>
 </tr>
 <tr>
 <td>Operational</td>
-<td>Service availability, support capability</td>
+<td>Service delivery, skills gaps, resources, dependencies</td>
+</tr>
+<tr>
+<td>Financial</td>
+<td>Budget overrun, funding shortfall, cost escalation</td>
+</tr>
+<tr>
+<td>Compliance/Regulatory</td>
+<td>Laws, regulations, data protection, procurement rules</td>
+</tr>
+<tr>
+<td>Reputational</td>
+<td>Public confidence, media scrutiny, visible service failures</td>
+</tr>
+<tr>
+<td>Technology</td>
+<td>Technical failure, cyber security, legacy integration, vendor lock-in</td>
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="one-page-workflow">One-Page Workflow</h2>
+<h3 id="one-page-workflow">One-Page Workflow</h3>
 <table>
 <thead>
 <tr>
@@ -683,20 +783,7 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="review-checklist">Review Checklist</h2>
-<ul>
-<li>Risk appetite clearly defined and agreed.</li>
-<li>All risk categories considered.</li>
-<li>Each risk has likelihood, impact, and score.</li>
-<li>All high/very high risks have treatment plans.</li>
-<li>Treatment owners and deadlines assigned.</li>
-<li>Dependencies on other projects captured.</li>
-<li>Review schedule established.</li>
-<li>Escalation thresholds defined.</li>
-</ul>
-<hr />
-<h2 id="risk-entry-format">Risk Entry Format</h2>
+<h3 id="risk-entry-format">Risk Entry Format</h3>
 <table>
 <thead>
 <tr>
@@ -707,7 +794,7 @@
 <tbody>
 <tr>
 <td>ID</td>
-<td>Unique identifier (RISK-001)</td>
+<td>Unique identifier (R-001)</td>
 </tr>
 <tr>
 <td>Title</td>
@@ -768,6 +855,12 @@
 <li><strong>Regular Review</strong>: Risks change; register must be living document.</li>
 <li><strong>Escalation Culture</strong>: High risks escalate promptly to senior leaders.</li>
 </ol>
+<hr />
+<h2 id="useful-links">Useful Links</h2>
+<ul>
+<li><a href="https://www.gov.uk/government/publications/orange-book/the-orange-book-management-of-risk-principles-and-concepts">The Orange Book: Management of Risk, Principles and Concepts</a> (<a href="http://GOV.UK">GOV.UK</a>)</li>
+<li><a href="https://www.gov.uk/government/publications/orange-book">Orange Book publication page</a>, including the Central Government's Assurance Directory</li>
+</ul>
 </div>
 <script src="../films.js"></script>
         </div>

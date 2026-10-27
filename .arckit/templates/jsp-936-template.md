@@ -69,7 +69,7 @@
 
 **Human Involvement**:
 
-- **Teaming Model**: [Human-in-loop / Human-on-loop / Human-out-of-loop]
+- **Teaming Model**: [Human-in-the-loop / Human-on-the-loop / Human-out-of-the-loop]
 - **Human Control Points**: [Where do humans interact?]
 - **Override Capability**: [Yes / No / Partial]
 
@@ -116,6 +116,8 @@
 ---
 
 ## 2. Ethical Risk Assessment
+
+> The 1-5 scales and score bands in this section are ArcKit's. JSP 936 Part 1 does not publish a scoring matrix: it sets the classification names and their referral levels for approval (Table 1), and requires the rating to assess impact and likelihood together, based on residual risk with controls in place and working as intended (para 88).
 
 ### 2.1 Risk Matrix for AI Component 1: [Name]
 
@@ -181,15 +183,15 @@
 
 **Risk Score**: [Likelihood (Y) × Impact (X) = Z]
 
-**Classification**: [Based on score Z]
+**Classification**: [Based on residual-risk score Z, using ArcKit's score bands; approval routes per JSP 936 Table 1]
 
-- 20-25: **Critical** → 2PUS or Ministerial approval
-- 15-19: **Severe** → Defence-Level (JROC/IAC) approval
-- 10-14: **Major** → Defence-Level (JROC/IAC) approval
+- 20-25: **Critical** → 2PUS (Second Permanent Under Secretary), or Ministers by exception
+- 15-19: **Severe** → 2PUS (Second Permanent Under Secretary), or Ministers by exception
+- 10-14: **Major** → Defence-Level oversight (e.g. JROC/IAC) approval
 - 5-9: **Moderate** → TLB-Level approval (delegated)
 - 1-4: **Minor** → TLB-Level approval (delegated)
 
-**Approval Pathway**: [2PUS/Ministerial / Defence-Level / TLB-Level]
+**Approval Pathway**: [2PUS (Ministers by exception) / Defence-Level / TLB-Level]
 
 #### Unacceptable Risk Check
 
@@ -212,7 +214,7 @@
 
 **Highest Individual Risk Score**: [Maximum score from all AI components]
 **Overall Project Classification**: [Critical / Severe / Major / Moderate / Minor]
-**Required Approval Authority**: [2PUS/Ministerial / Defence-Level / TLB-Level]
+**Required Approval Authority**: [2PUS (Ministers by exception) / Defence-Level / TLB-Level]
 
 ---
 
@@ -233,7 +235,7 @@
 
 **Human-AI Interaction**:
 
-- **Interaction Model**: [Human-in-loop / Human-on-loop / Human-out-of-loop]
+- **Interaction Model**: [Human-in-the-loop / Human-on-the-loop / Human-out-of-the-loop]
 - **Control Mechanisms**: [How humans maintain control]
 - **Override Capability**: [Yes / No / Partial - describe]
 - **Transparency to Users**: [What users see/understand about AI decisions]
@@ -445,6 +447,10 @@
 
 ## 4. AI Lifecycle Phase Documentation
 
+> The 8 phases below are ArcKit's grouping of the JSP 936 section 6 lifecycle-agnostic requirements and section 7 quality, safety and security requirements. JSP 936 does not require or advocate any one lifecycle (Part 1, para 134).
+
+**Lifecycle Followed by This Project**: [e.g. MLOps / DevSecOps / other, and why it suits the context the AI will operate in]
+
 ### Phase 1: Planning
 
 **Status**: [Not Started / In Progress / Completed]
@@ -531,7 +537,7 @@
 **Key Architectural Decisions**:
 
 - [Decision 1: Model architecture selection and rationale]
-- [Decision 2: Human-in-loop placement]
+- [Decision 2: Human-in-the-loop placement]
 - [Decision 3: Data pipeline design]
 
 **Assurance Activities**:
@@ -637,7 +643,7 @@
 - [ ] Robustness testing results
 - [ ] Adversarial testing results
 - [ ] User acceptance testing (UAT)
-- [ ] Independent V&V report (for Critical/Severe)
+- [ ] Independent verification report: a separate verification team using set-aside verification data (JSP 936 Pt 1 paras 147 and 156c)
 
 **Documentation Location**: [File path or reference]
 
@@ -658,7 +664,7 @@
 
 **Assurance Activities**:
 
-- [ ] Independent V&V conducted (if Critical/Severe)
+- [ ] Independent verification conducted by a team separate from development (JSP 936 Pt 1 para 156c)
 - [ ] Test results review
 - [ ] Requirements traceability verified
 - [ ] UAT sign-off
@@ -785,7 +791,7 @@
 
 **Independent Ethics Assurance**:
 
-- **Required**: [Yes / No - Required for Critical classification]
+- **Required**: [Yes / No - JSP 936 Part 1 para 105: there should be one (recommended practice, not compulsory) during implementation of large projects, projects where the AI's ethics risk is significant, and where teams produce AI regularly]
 - **Assurance Provider**: [Name/Organization]
 - **Assurance Status**: [Not Started / In Progress / Completed]
 
@@ -800,11 +806,11 @@
 
 **Risk Classification**: [Critical / Severe / Major / Moderate / Minor]
 
-**Approval Authority**: [Based on classification]
+**Approval Authority**: [Based on classification; referral levels per JSP 936 Table 1, score bands are ArcKit's]
 
-- **Critical (20-25)**: 2PUS or Ministers
-- **Severe (15-19)**: Defence-Level - JROC/IAC
-- **Major (10-14)**: Defence-Level - JROC/IAC
+- **Critical (20-25)**: 2PUS (Second Permanent Under Secretary), or Ministers by exception
+- **Severe (15-19)**: 2PUS (Second Permanent Under Secretary), or Ministers by exception
+- **Major (10-14)**: Defence-Level oversight - e.g. JROC/IAC
 - **Moderate (5-9)**: TLB-Level (delegated)
 - **Minor (1-4)**: TLB-Level (delegated)
 
@@ -813,7 +819,7 @@
 - [ ] Initial ethical screening (Ethics Manager)
 - [ ] Detailed JSP 936 assessment (this document)
 - [ ] RAISO review and endorsement
-- [ ] Independent assurance (if Critical)
+- [ ] Independent Ethics Assurance (if a large project, significant ethics risk, or a team producing AI regularly: JSP 936 para 105)
 - [ ] Ethics Board review
 - [ ] Submission to approval authority
 - [ ] Approval granted / Conditional approval / Rejected
@@ -851,13 +857,13 @@
 
 **For AI Component 1: [Name]**
 
-**Teaming Model**: [Human-in-loop / Human-on-loop / Human-out-of-loop]
+**Teaming Model**: [Human-in-the-loop / Human-on-the-loop / Human-out-of-the-loop]
 
 **Model Definition**:
 
-- **Human-in-loop**: Human reviews every AI decision before action
-- **Human-on-loop**: Human monitors AI with ability to intervene
-- **Human-out-of-loop**: AI operates autonomously, humans set constraints
+- **Human-in-the-loop**: Human reviews every AI decision before action
+- **Human-on-the-loop**: Human monitors AI with ability to intervene
+- **Human-out-of-the-loop**: AI operates autonomously, humans set constraints
 
 **Rationale**: [Why this teaming model was selected]
 
@@ -1256,7 +1262,7 @@
 | **Governance** | | | |
 | RAISO assigned | [✅/⚠️/❌] | Section 5.1 | [Comments] |
 | Ethics Manager assigned | [✅/⚠️/❌] | Section 5.1 | [Comments] |
-| Independent assurance (if Critical) | [✅/⚠️/❌] | Section 5.1 | [Comments] |
+| Independent Ethics Assurance (if a large project, significant ethics risk, or a team producing AI regularly: para 105) | [✅/⚠️/❌] | Section 5.1 | [Comments] |
 | Governance board established | [✅/⚠️/❌] | Section 5.1 | [Comments] |
 | Approval pathway followed | [✅/⚠️/❌] | Section 5.2 | [Comments] |
 | Escalation process defined | [✅/⚠️/❌] | Section 5.3 | [Comments] |
@@ -1343,7 +1349,7 @@
 | Technical Lead | [Name] | | |
 | Ethics Manager | [Name] | | |
 | RAISO | [Name] | | |
-| Independent Assurance (if Critical) | [Name/Org] | | |
+| Independent Ethics Assurance (where JSP 936 para 105 applies) | [Name/Org] | | |
 | Approval Authority | [Name/Position] | | |
 
 ---

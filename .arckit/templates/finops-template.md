@@ -28,11 +28,23 @@
 
 ### FinOps Maturity
 
-| Level | Current | Target | Timeline |
-|-------|---------|--------|----------|
-| Crawl (Basic visibility, reactive) | [Yes/No] | - | - |
-| Walk (Proactive optimization, budgets) | [Yes/No] | [Yes/No] | [Date] |
-| Run (Automated, real-time, predictive) | [Yes/No] | [Yes/No] | [Date] |
+> The [FinOps Foundation maturity model](https://www.finops.org/framework/maturity-model/) rates Crawl, Walk or Run for each capability separately, not for the organisation as a whole. Set each target by the business value it brings: the Foundation says the goal should never simply be Run in every capability.
+
+| Domain | Capability | Current | Target | Timeline | Rationale |
+|--------|------------|---------|--------|----------|-----------|
+| Understand Usage & Cost | Allocation | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Business value of reaching the target] |
+| Understand Usage & Cost | Reporting & Analytics | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Rationale] |
+| Understand Usage & Cost | Anomaly Management | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Rationale] |
+| Quantify Business Value | Forecasting | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Rationale] |
+| Quantify Business Value | Budgeting | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Rationale] |
+| Quantify Business Value | Unit Economics | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Rationale] |
+| Optimize Usage & Cost | Rate Optimization | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Rationale] |
+| Optimize Usage & Cost | Usage Optimization | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Rationale] |
+| Manage the FinOps Practice | Governance, Policy & Risk | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Rationale] |
+| Manage the FinOps Practice | Invoicing & Chargeback | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Rationale] |
+| [Domain] | [Other capability in scope] | [Crawl / Walk / Run] | [Crawl / Walk / Run] | [Date] | [Rationale] |
+
+**Overall maturity (summary only)**: [Mostly Crawl / Walk / Run] — target: [Mostly Crawl / Walk / Run] by [Date]
 
 ### FinOps Team Structure
 
@@ -498,13 +510,17 @@ flowchart TB
 
 ## 13. UK Government Compliance
 
-### Cabinet Office Spend Controls
+### Approval and Assurance (Digital Assurance Playbook)
 
-| Control | Threshold | Requirement |
-|---------|-----------|-------------|
-| Digital spend | >£100k | Cabinet Office approval |
-| Technology spend | >£100k | Cabinet Office approval |
-| External hosting | Any | Justify vs G-Cloud |
+> The [Digital Assurance Playbook](https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook) replaced the Cabinet Office digital and technology spend controls on 1 April 2026. Organisations run their own approvals and assurance for most spend; HM Treasury approves spend above the organisation's delegated authority limit (DAL).
+
+| Route | When it applies | Requirement |
+|-------|-----------------|-------------|
+| Organisation approval | Spend within the organisation's DAL | Approval by the organisation's investment board or equivalent: [Board name] |
+| Organisation assurance | All digital and technology spend | Assurance by the organisation's digital assurance team, proportionate to risk and value: [Team] |
+| HM Treasury approval | Spend above the DAL, or spend HM Treasury determines is novel, contentious or repercussive | HM Treasury approval at desk level or through a Treasury Approval Process panel, with GDS support: [DAL value / Not applicable] |
+| Pipeline entry | Any cryptographic product; other digital and technology delivery above £5 million whole-life cost, or a different threshold the organisation has set | Record the initiative on the pipeline through Government Assurance Services: [Pipeline reference / Not required] |
+| Hosting choice | All hosting decisions | Follow the Cloud First policy or record why not; the playbook asks assurers to check Cloud First: [Decision reference] |
 
 ### Treasury Green Book Alignment
 
@@ -527,7 +543,8 @@ flowchart TB
 
 | Report | Frequency | Recipient |
 |--------|-----------|-----------|
-| Annual technology spend | Annual | Cabinet Office |
+| Digital and technology spend pipeline | When an initiative is identified, then kept up to date | HM Treasury pipeline, through Government Assurance Services |
+| Technology spend reporting | [As the organisation requires] | [Organisation finance or digital assurance team] |
 | Transparency data | Annual | Public |
 | G-Cloud spend | Quarterly | Crown Commercial Service |
 

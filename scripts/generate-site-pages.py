@@ -17,6 +17,9 @@ This script renders the Markdown when the site is built and writes:
   docs/guide/<name>.html   one page per docs/guides/**/*.md
   docs/share/<slug>.html   one page per article card on docs/articles.html,
                            at the URL social posts already link to
+  docs/on-github.html      the numbers and lists from docs/on-github.json, which
+                           the weekly usage scan updates, between the page's
+                           <!-- on-github:* --> markers
   docs/sitemap.xml         the entries between the site-pages markers, and the
                            <lastmod> of each hand-written entry above them
   scripts/sitemap-lastmod.json
@@ -37,8 +40,8 @@ forward old ?guide= and ?a= links to these pages.
 Plain `python3` works when the two pinned packages are installed. The versions
 are pinned here and in .github/workflows/python-tests.yml because --check
 compares bytes. Run it after editing a guide, an article or its card on
-docs/articles.html, docs/assets/guide-films.json, either viewer, or the text of
-a page the sitemap lists by hand, such as docs/index.html or docs/llms.txt.
+docs/articles.html, docs/assets/guide-films.json, either viewer, docs/on-github.json,
+or the text of a page the sitemap lists by hand, such as docs/index.html or docs/llms.txt.
 """
 
 from __future__ import annotations
@@ -52,7 +55,7 @@ import re
 import subprocess
 import sys
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import parse_qsl, unquote, urlencode, urlsplit
 
@@ -74,6 +77,8 @@ LISTING = DOCS / "articles.html"
 FILMS = DOCS / "assets" / "guide-films.json"
 SITEMAP = DOCS / "sitemap.xml"
 LASTMOD = REPO / "scripts" / "sitemap-lastmod.json"
+ON_GITHUB = DOCS / "on-github.html"
+ON_GITHUB_DATA = DOCS / "on-github.json"
 GUIDE_TEMPLATE = DOCS / "guide-viewer.html"
 ARTICLE_TEMPLATE = DOCS / "article-viewer.html"
 
@@ -89,20 +94,75 @@ MERMAID_JS = ('<script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/me
               'crossorigin="anonymous"></script>')
 
 # Site-only additions for the guides UK public sector teams search for
-# (OpenSEO keyword research, 18 October 2026). `title` replaces the guide's
-# H1 in the page title and preview cards; `fde` adds the ArcKit FDE panel.
+# (OpenSEO keyword research, 18 October 2026; site audit, 25 October 2026).
+# `title` replaces the guide's H1 in the page title and preview cards; `fde`
+# adds the ArcKit FDE panel, before the section named by `fde_before` (a heading
+# id) or else before the guide's first rule; `canonical` names the guide whose
+# page is the preferred copy, for a short reference page that the main guide
+# now covers in full, so the two stop competing for the same searches. Such a
+# page keeps its own page but leaves the sitemap.
 # They live here, not in the guide, because docs/guides/ also ships inside the
 # plugins and the CLI, where an offer for a paid service does not belong.
 GUIDE_EXTRAS: dict[str, dict] = {
-    "risk": {"title": "Orange Book risk register: template and playbook", "fde": True},
-    "traceability": {"title": "Requirements traceability matrix guide", "fde": True},
-    "stakeholders": {"title": "Stakeholder map and analysis playbook", "fde": True},
+    # UK public sector standards and documents: the FDE panel sits before the "how to" section.
+    "dpia": {"title": "DPIA: data protection impact assessment guide and template", "fde": True,
+             "fde_before": "how-to-do-a-dpia"},
+    "risk": {"title": "Risk register template: Orange Book guide", "fde": True,
+             "fde_before": "building-and-reviewing-a-risk-register"},
+    "sobc": {"title": "Business case template: Green Book five case model", "fde": True,
+             "fde_before": "business-case-stages"},
+    "requirements": {"title": "Non-functional requirements and requirements documents", "fde": True,
+                     "fde_before": "reviewing-a-requirements-document"},
+    "traceability": {"title": "Requirements traceability matrix: guide and template", "fde": True,
+                     "fde_before": "keeping-the-matrix-current"},
+    "stakeholders": {"title": "Stakeholder mapping and analysis: power/interest grid", "fde": True,
+                     "fde_before": "how-to-map-stakeholders"},
     "principles": {"title": "Architecture principles playbook", "fde": True},
-    "requirements": {"fde": True},
-    "sobc": {"title": "Green Book business case (SOBC) playbook", "fde": True},
-    "tcop": {"title": "Technology Code of Practice (TCoP) review guide", "fde": True},
-    "service-assessment": {"title": "GDS Service Standard assessment preparation", "fde": True},
+    "service-assessment": {"title": "GDS Service Standard assessment: how to prepare", "fde": True,
+                           "fde_before": "preparing-for-an-assessment"},
+    "jsp-936": {"title": "JSP 936: MOD Dependable AI assurance guide", "fde": True,
+                "fde_before": "preparing-jsp-936-evidence"},
+    "ai-playbook": {"title": "AI Playbook for the UK Government: the 10 principles", "fde": True,
+                    "fde_before": "preparing-an-ai-playbook-assessment"},
+    "uk-government/ai-playbook": {"canonical": "ai-playbook"},
+    "tcop": {"title": "Technology Code of Practice (TCoP): 13 points and evidence", "fde": True,
+             "fde_before": "preparing-for-a-tcop-assessment"},
+    "uk-government/technology-code-of-practice": {"canonical": "tcop"},
+    "uk-government/algorithmic-transparency": {"title": "ATRS: who must publish a record, and how", "fde": True,
+                                               "fde_before": "completing-and-publishing-a-record"},
+    "secure": {"title": "UK government Secure by Design: the 10 principles", "fde": True,
+               "fde_before": "evidence-an-assurer-looks-for"},
+    "uk-government/secure-by-design": {"canonical": "secure"},
+    "mod-secure": {"title": "MOD Secure by Design: the 7 principles and assessment", "fde": True,
+                   "fde_before": "evidence-by-theme"},
+    "uk-mod/secure-by-design": {"canonical": "mod-secure"},
+    "tenders": {"title": "Find a Tender and Contracts Finder: award data guide", "fde": True,
+                "fde_before": "using-arckittenders"},
+    "gcloud-search": {"title": "G-Cloud 15 and G-Cloud 14: Digital Marketplace guide", "fde": True,
+                      "fde_before": "how-to-search-and-buy-g-cloud-services"},
+    # Generic architecture and delivery documents: a search-led title, no FDE panel.
+    "data-model": {"title": "Data model and entity relationship diagram (ERD) guide"},
+    "dfd": {"title": "Data flow diagram (DFD): symbols, levels and balancing"},
+    "diagram": {"title": "C4 model diagrams: context, container and component"},
+    "wardley": {"title": "Wardley mapping: how to draw a Wardley map"},
+    "sow": {"title": "Statement of work template: what to include"},
+    "backlog": {"title": "User story template and product backlog guide"},
+    "servicenow": {"title": "CMDB guide: ServiceNow CMDB and service design"},
+    "finops": {"title": "FinOps framework and cloud cost management guide"},
+    "mlops": {"title": "MLOps framework: lifecycle, maturity and governance"},
+    "data-mesh-contract": {"title": "Data mesh and data contracts: data product guide"},
+    "aws-research": {"title": "AWS Well-Architected Framework: the six pillars"},
+    "aws-documentation-mcp": {"title": "AWS Knowledge and AWS Documentation MCP servers compared"},
+    "microsoft-learn-mcp": {"title": "Microsoft Learn MCP server: setup, tools and endpoint"},
+    "gcp-research": {"title": "Google Developer Knowledge MCP server and GCP research"},
+    "grants": {"title": "Innovate UK grants and UK government funding guide"},
 }
+
+# Guides open with "**ArcKit Version**: [VERSION]", a placeholder nothing fills
+# in. The site drops it rather than print the bracket on every page; filling in
+# the release number would rewrite every guide page at every release.
+VERSION_LINE_RE = re.compile(r"^\*\*ArcKit Version\*\*: \[VERSION\]\n", re.M)
+VERSION_TAIL_RE = re.compile(r"\s*\|\s*\*\*ArcKit Version\*\*: \[VERSION\]")
 
 FDE_PANEL = (
     '<div class="govuk-inset-text app-fde-panel">\n'
@@ -396,13 +456,22 @@ def films_block(films: list[dict]) -> str:
     return '<div id="films" class="app-films">\n' + "\n".join(cards) + "\n</div>"
 
 
-def with_fde_panel(body: str, root: str) -> str:
-    """Place the FDE panel after the guide's opening paragraph (before its first rule)."""
+def with_fde_panel(body: str, root: str, before: str = "") -> str:
+    """Place the FDE panel before the named section, or else after the guide's opening paragraph (before its first rule)."""
     panel = FDE_PANEL.format(href=f"{root}fde/")
+    at = body.find(f'<h2 id="{before}"') if before else -1
+    if at != -1:
+        return body[:at] + panel + body[at:]
     at = body.find("<hr />")
     if at == -1:
         at = body.find("</p>\n") + len("</p>\n") if "</p>\n" in body else 0
     return body[:at] + panel + body[at:]
+
+
+def canonical_url(name: str, url: str) -> str:
+    """A guide page's preferred URL: its own, unless GUIDE_EXTRAS names the guide that covers it."""
+    target = GUIDE_EXTRAS.get(name, {}).get("canonical")
+    return f"{SITE}/guide/{target}.html" if target else url
 
 
 def guide_pages(site: Site) -> dict[Path, str]:
@@ -411,7 +480,7 @@ def guide_pages(site: Site) -> dict[Path, str]:
     pages: dict[Path, str] = {}
     for name in sorted(site.guides):
         source = f"docs/guides/{name}.md"
-        md = (REPO / source).read_text(encoding="utf-8")
+        md = VERSION_TAIL_RE.sub("", VERSION_LINE_RE.sub("", (REPO / source).read_text(encoding="utf-8")))
         page = Page("guide", f"guide/{name}.html", source)
         depth = page.out.count("/")
         root = "../" * depth
@@ -425,7 +494,7 @@ def guide_pages(site: Site) -> dict[Path, str]:
 
         body = render_body(md, page, site)
         if extras.get("fde"):
-            body = with_fde_panel(body, root)
+            body = with_fde_panel(body, root, extras.get("fde_before", ""))
         content = [f'<a href="{root}{section_url}" class="govuk-back-link govuk-!-margin-bottom-6">Back to {section}</a>']
         if films.get(name):
             content.append(films_block(films[name]))
@@ -435,7 +504,8 @@ def guide_pages(site: Site) -> dict[Path, str]:
         content += diagram_scripts(body, root)
 
         pages[GUIDE_OUT / f"{name}.html"] = fill(template, depth, {
-            "page:meta": meta_block(title, clip(lead, 155), clip(lead, 220), url, DEFAULT_IMAGE, f"{SITE}/guides/{name}.md"),
+            "page:meta": meta_block(title, clip(lead, 155), clip(lead, 220), canonical_url(name, url), DEFAULT_IMAGE,
+                                    f"{SITE}/guides/{name}.md"),
             "page:jsonld": jsonld_block([
                 {"@type": "TechArticle", "@id": url, "headline": title, "description": clip(lead, 220),
                  "url": url, "inLanguage": "en-GB", "author": ARCKIT, "publisher": ARCKIT,
@@ -549,9 +619,206 @@ def article_pages(site: Site, listed: list[dict[str, str]], tracked: set[str]) -
     return pages
 
 
+# ---- ArcKit on GitHub ---------------------------------------------------------
+# docs/on-github.html lists the public repositories that use or mention ArcKit.
+# The weekly usage scan writes docs/on-github.json; this writes its numbers and
+# lists into the page, so a crawler reads them without running the page's script.
+# Every value is other people's text, so all of it goes through esc(), and only
+# github.com addresses become links. The page's script renders the same rows
+# when a reader sorts or filters, so the two must match.
+
+GITHUB = "https://github.com/"
+ON_GITHUB_URL = f"{SITE}/on-github.html"
+ON_GITHUB_TABLES = ("using", "mentions", "threads", "commits")
+ON_GITHUB_BLOCKS = ("meta", "jsonld", "updated", "stats", "hidden", "trend-note", "history", "tabs", "kinds",
+                    *(f"{part}-{name}" for name in ON_GITHUB_TABLES for part in ("count", "rows")))
+
+
+def gh_date(day: str, long: bool = False) -> str:
+    if not day:
+        return ""
+    d = date.fromisoformat(day)
+    month = MONTHS[d.month - 1]
+    return f"{d.day} {month if long else month[:3]} {d.year}"
+
+
+def plural(n: int, one: str, many: str) -> str:
+    return f"{n} {one if n == 1 else many}"
+
+
+def gh_link(url: object, text: str, cls: str = "") -> str:
+    if not isinstance(url, str) or not url.startswith(GITHUB):
+        return f"<span>{esc(text)}</span>"
+    classes = f"govuk-link {cls}" if cls else "govuk-link"
+    return f'<a href="{esc(url)}" class="{classes}" rel="nofollow noopener">{esc(text)}</a>'
+
+
+def gh_sub(text: str) -> str:
+    return f'<span class="app-gh-sub">{esc(text)}</span>' if text else ""
+
+
+def gh_new(row: dict) -> str:
+    return '<strong class="govuk-tag govuk-tag--green">New</strong>' if row.get("new") else ""
+
+
+def td(content: str, cls: str = "") -> str:
+    return f'<td class="{cls}">{content}</td>' if cls else f"<td>{content}</td>"
+
+
+def gh_types(row: dict) -> str:
+    types = row.get("doc_types") or ""
+    if not types:
+        return td(esc("Set up: " + (row.get("setup") or "plugin settings")), "app-gh-types")
+    names = types.split(", ")
+    if len(names) <= 10:
+        return td(esc(types), "app-gh-types")
+    return f'<td class="app-gh-types" title="{esc(types)}">{esc(", ".join(names[:9]))} and {len(names) - 9} more</td>'
+
+
+def using_cells(r: dict) -> list[str]:
+    files = str(r["arc_files"]) if r["arc_files"] else "None yet"
+    projects = gh_sub(plural(r["projects"], "project", "projects")) if r.get("projects") else ""
+    return [td(gh_link(r["url"], r["repo"]) + gh_new(r) + gh_sub(r.get("description"))),
+            td(esc(r["owner_kind"])), td(files + projects, "num"), gh_types(r),
+            td(gh_date(r["created"]), "nowrap"), td(gh_date(r["last_push"]), "nowrap")]
+
+
+def mention_cells(r: dict) -> list[str]:
+    return [td(gh_link(r["url"], r["repo"]) + gh_new(r) + gh_sub(r.get("description"))),
+            td(esc(r["kind"]), "app-gh-kind"), td(gh_link(r["where_url"], r["where"] or "Repository", "app-gh-where")),
+            td(f"{r['stars']:,}", "num"), td(gh_date(r["last_push"]), "nowrap")]
+
+
+def thread_cells(r: dict) -> list[str]:
+    return [td(gh_date(r["date"]), "nowrap"), td(gh_link(r["url"], r["title"]) + gh_new(r)),
+            td(gh_link(GITHUB + r["repo"], r["repo"], "app-gh-where")),
+            td("Pull request" if r["type"] == "PR" else "Issue"), td("Open" if r["state"] == "open" else "Closed"),
+            td(esc(r["author"]))]
+
+
+def commit_cells(r: dict) -> list[str]:
+    return [td(gh_link(GITHUB + r["repo"], r["repo"]) + gh_new(r)), td(str(r["commits"]), "num"),
+            td(gh_date(r["latest"]), "nowrap"), td(gh_link(r["url"], r["message"], "app-gh-where"))]
+
+
+# Each list's default sort (newest or biggest first, as the page's script sorts
+# it), the noun its count uses, and its cells.
+GH_LISTS = {
+    "using": ("arc_files", ("repo", "repos"), using_cells),
+    "mentions": ("stars", ("repo", "repos"), mention_cells),
+    "threads": ("date", ("issue or PR", "issues and PRs"), thread_cells),
+    "commits": ("latest", ("repo", "repos"), commit_cells),
+}
+
+
+def on_github_blocks(data: dict) -> dict[str, str]:
+    s, week, history = data["summary"], data["week"], data["history"]
+    using = "repository uses" if s["using"] == 1 else "repositories use"
+    description = (f"{s['using']:,} public GitHub {using} ArcKit and {s['mentioning']:,} "
+                   f"{'mentions' if s['mentioning'] == 1 else 'mention'} it. A weekly search lists who has "
+                   "ArcKit documents, who has it set up, and who writes about it.")
+    first, last = history[0]["week"], history[-1]["week"]
+    graph = [
+        {"@type": "WebPage", "@id": ON_GITHUB_URL, "url": ON_GITHUB_URL, "name": "ArcKit on GitHub",
+         "description": description, "inLanguage": "en-GB", "dateModified": week,
+         "isPartOf": {"@type": "WebSite", "name": "ArcKit", "url": SITE}, "mainEntity": {"@id": f"{ON_GITHUB_URL}#data"}},
+        {"@type": "BreadcrumbList", "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Home", "item": f"{SITE}/"},
+            {"@type": "ListItem", "position": 2, "name": "ArcKit on GitHub", "item": ON_GITHUB_URL}]},
+        {"@type": "Dataset", "@id": f"{ON_GITHUB_URL}#data", "name": "ArcKit on GitHub",
+         "description": ("A weekly search of public GitHub for repositories that use or mention ArcKit: repositories "
+                         "with ArcKit documents or ArcKit set up, repositories that mention it, and the issues, pull "
+                         "requests and commits that name it."),
+         "url": ON_GITHUB_URL, "creator": ARCKIT, "dateModified": week, "isAccessibleForFree": True,
+         "temporalCoverage": first if first == last else f"{first}/{last}",
+         "keywords": ["ArcKit", "architecture governance", "GitHub", "open source adoption"],
+         "distribution": {"@type": "DataDownload", "encodingFormat": "application/json",
+                          "contentUrl": f"{SITE}/on-github.json"}},
+    ]
+
+    fresh = s["new"]
+    cards = [
+        ("using", "Using ArcKit", f"repos: {s['artefacts']} with ARC documents, {s['set_up']} set up", fresh["using"]),
+        ("organisations", "Organisations", "own repos using ArcKit", 0),
+        ("mentioning", "Mentioning ArcKit", "repos: lists, articles, docs and code", fresh["mentioning"]),
+        ("issues_prs", "Issues and PRs", "in other people’s repos", fresh["issues_prs"]),
+        ("commits", "Commits", f"naming ArcKit, across {plural(s['commit_repos'], 'repo', 'repos')}", fresh["commit_repos"]),
+    ]
+    stats = ['<div class="app-stats-grid">']
+    for key, label, sub, new in cards:
+        sub += f" · {new} new this week" if new else ""
+        stats += ['    <div class="app-stat-card">',
+                  f'        <div class="app-stat-number">{s[key]:,}</div>',
+                  f'        <div class="app-stat-label">{esc(label)}</div>',
+                  f'        <div class="app-stat-sub">{esc(sub)}</div>',
+                  "    </div>"]
+    stats.append("</div>")
+
+    if len(history) < 2:
+        # The search runs on Mondays; the first one may have been run by hand on another day.
+        start = date.fromisoformat(first)
+        monday = start + timedelta(days=7 - start.weekday())
+        note = f"The charts start after the second weekly search, on {gh_date(monday.isoformat(), long=True)}."
+    else:
+        note = "One chart per measure, each on its own scale. Hover over a chart to see a week."
+    weeks = [f'<tr>{td(gh_date(w["week"]), "nowrap")}'
+             + "".join(td(str(w[k]), "num") for k in ("using", "organisations", "mentioning", "issues_prs", "commit_repos"))
+             + "</tr>" for w in reversed(history)]
+
+    tabs = []
+    for i, (tab, label, key) in enumerate((("using", "Using ArcKit", "using"), ("mentioning", "Mentioning ArcKit", "mentioning"),
+                                           ("threads", "Issues and PRs", "issues_prs"), ("commits", "Commits", "commit_repos"))):
+        state = ('class="app-platform-tab app-platform-tab--active" role="tab"' if i == 0
+                 else 'class="app-platform-tab" role="tab"')
+        selected = 'aria-selected="true"' if i == 0 else 'aria-selected="false" tabindex="-1"'
+        tabs.append(f'<button {state} id="tab-{tab}" aria-controls="panel-{tab}" {selected} data-tab="{tab}">'
+                    f"{label} ({s[key]:,})</button>")
+
+    kinds: dict[str, int] = {}
+    for row in data["mentions"]:
+        kinds[row["kind"]] = kinds.get(row["kind"], 0) + 1
+
+    hidden = ""
+    if s["hidden_rows"]:
+        hidden = " " + plural(s["hidden_rows"], "entry is", "entries are") + " left off this page at the owners’ request."
+
+    blocks = {
+        "meta": "\n    ".join([f'<meta name="description" content="{esc(description)}">',
+                               f'<meta property="og:description" content="{esc(description)}">',
+                               f'<meta name="twitter:description" content="{esc(description)}">']),
+        "jsonld": jsonld_block(graph),
+        "updated": f"Updated {gh_date(week, long=True)}",
+        "stats": "\n".join(stats),
+        "hidden": esc(hidden),
+        "trend-note": esc(note),
+        "history": "\n" + "\n".join(weeks) + "\n",
+        "tabs": "\n".join(tabs),
+        "kinds": "".join(f'<option value="{esc(k)}">{esc(k)} ({n})</option>'
+                         for k, n in sorted(kinds.items(), key=lambda kv: -kv[1])),
+    }
+    for name, (key, noun, cells) in GH_LISTS.items():
+        rows = data[name]
+        ordered = sorted(rows, key=lambda r: r[key].lower() if isinstance(r[key], str) else r[key], reverse=True)
+        blocks[f"count-{name}"] = f"Showing {len(rows)} of {plural(len(rows), *noun)}"
+        blocks[f"rows-{name}"] = "\n" + "\n".join(f"<tr>{''.join(cells(r))}</tr>" for r in ordered) + "\n"
+    return blocks
+
+
+def on_github_page(page: str, data: dict) -> str:
+    """Fill the <!-- on-github:* --> blocks of docs/on-github.html from docs/on-github.json."""
+    for name, value in on_github_blocks(data).items():
+        pattern = block_re(f"on-github:{name}")
+        if len(pattern.findall(page)) != 1:
+            sys.exit(f"docs/on-github.html: needs exactly one <!-- on-github:{name} --> ... <!-- /on-github:{name} --> block")
+        page = pattern.sub(lambda _m, n=name, v=value: f"<!-- on-github:{n} -->{v}<!-- /on-github:{n} -->", page, count=1)
+    return page
+
+
 def sitemap_text(current: str, site: Site, listed: list[dict[str, str]]) -> str:
     entries = []
     for name in sorted(site.guides):
+        if GUIDE_EXTRAS.get(name, {}).get("canonical"):
+            continue
         entries.append((f"{SITE}/guide/{name}.html", None, "monthly", "0.7" if name in GUIDE_EXTRAS else "0.6"))
     for card in sorted(listed, key=lambda c: c["slug"]):
         date = re.match(r"^(\d{4}-\d{2}-\d{2})-", card["slug"])
@@ -572,13 +839,14 @@ def sitemap_text(current: str, site: Site, listed: list[dict[str, str]]) -> str:
     return pattern.sub(lambda _m: "\n".join(lines), current, count=1)
 
 
-def page_text(path: Path) -> str:
+def page_text(path: Path, text: str | None = None) -> str:
     """The text a reader sees change: <main> without its markup and scripts, or a whole non-HTML file.
 
     The menu, footer and <head> are left out, so a link changed on every page
     doesn't re-date them all: Google reads <lastmod> as the date of the content.
     """
-    text = path.read_text(encoding="utf-8")
+    if text is None:
+        text = path.read_text(encoding="utf-8")
     if path.suffix != ".html":
         return text
     main = re.search(r"<main\b.*?</main>", text, re.S)
@@ -586,14 +854,15 @@ def page_text(path: Path) -> str:
     return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", body)).split())
 
 
-def date_hand_entries(head: str, record: dict[str, dict[str, str]],
-                      today: str) -> tuple[str, dict[str, dict[str, str]], list[str]]:
+def date_hand_entries(head: str, record: dict[str, dict[str, str]], today: str,
+                      pending: dict[Path, str] | None = None) -> tuple[str, dict[str, dict[str, str]], list[str]]:
     """Give each hand-written sitemap entry the date its page's text last changed.
 
     CI checks out no history, so git can't date a page. scripts/sitemap-lastmod.json
     instead keeps a fingerprint of each page's text and the date it was taken; a
-    page whose text no longer matches is dated today. Returns the dated entries,
-    the new record and the pages that changed.
+    page whose text no longer matches is dated today. A page this run is about to
+    write (`pending`) is dated by its new text. Returns the dated entries, the new
+    record and the pages that changed.
     """
     dated: dict[str, dict[str, str]] = {}
     changed: list[str] = []
@@ -604,7 +873,7 @@ def date_hand_entries(head: str, record: dict[str, dict[str, str]],
         rel = path + "index.html" if path == "" or path.endswith("/") else path
         if not (DOCS / rel).is_file():
             sys.exit(f"docs/sitemap.xml lists {loc}, but docs/{rel} doesn't exist")
-        fingerprint = hashlib.sha256(page_text(DOCS / rel).encode("utf-8")).hexdigest()
+        fingerprint = hashlib.sha256(page_text(DOCS / rel, (pending or {}).get(DOCS / rel)).encode("utf-8")).hexdigest()
         kept = record.get(rel, {})
         if kept.get("text_sha256") == fingerprint:
             date = kept["lastmod"]
@@ -628,13 +897,15 @@ def build() -> tuple[dict[Path, str], str, str, list[str], Site]:
         sys.exit("Cards on docs/articles.html with no docs/articles/<slug>.md: " + ", ".join(missing))
     tracked = tracked_files()
     pages = {**guide_pages(site), **article_pages(site, listed, tracked)}
+    pages[ON_GITHUB] = on_github_page(ON_GITHUB.read_text(encoding="utf-8"),
+                                      json.loads(ON_GITHUB_DATA.read_text(encoding="utf-8")))
     broken = broken_links(pages, tracked)
     if broken:
         sys.exit("Links to files that are not in git. Commit the file (`git add -f` under the gitignored "
                  "docs/articles/), or fix the link in the Markdown:\n  " + "\n  ".join(broken))
     head, marker, rest = sitemap_text(SITEMAP.read_text(encoding="utf-8"), site, listed).partition(SITEMAP_START)
     record = json.loads(LASTMOD.read_text(encoding="utf-8")) if LASTMOD.is_file() else {}
-    head, dated, changed = date_hand_entries(head, record, datetime.now(timezone.utc).date().isoformat())
+    head, dated, changed = date_hand_entries(head, record, datetime.now(timezone.utc).date().isoformat(), pages)
     lastmod = json.dumps(dated, indent=2, sort_keys=True) + "\n"
     return pages, head + marker + rest, lastmod, changed, site
 

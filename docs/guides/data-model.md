@@ -1,10 +1,63 @@
-# Data Model Quick Guide
+# Data model: entity relationship diagram (ERD) and logical model
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit:data-model` transforms Data Requirements (DR-xxx) into an ERD, governance catalogue, and GDPR compliance pack.
+A data model describes what a system holds data about, what it records about each thing and how those things relate. This guide covers entity relationship diagrams (ERDs), the conceptual, logical and physical levels of modelling, and how `/arckit:data-model` builds a model from your data requirements.
 
 ---
+
+## What a data model is
+
+A data model has three building blocks:
+
+- **Entities**: the things you hold data about, such as Customer, Order or Payment.
+- **Attributes**: the facts you record about each entity, with a data type and any keys.
+- **Relationships**: how entities connect, and how many of one can relate to the other (cardinality).
+
+The usual picture of a data model is an entity relationship diagram (ERD). Peter Chen proposed the entity-relationship model in [a 1976 paper in ACM Transactions on Database Systems](https://doi.org/10.1145/320434.320440). Its abstract says: "A special diagrammatic technique is introduced as a tool for database design."
+
+In an ERD, each box is an entity and each line is a relationship. The symbols at the ends of a line give the cardinality. [Mermaid](https://mermaid.js.org/syntax/entityRelationshipDiagram.html), which ArcKit uses, draws ERDs in crow's foot notation:
+
+- `|o` or `o|`: zero or one
+- `||`: exactly one
+- `}o` or `o{`: zero or more
+- `}|` or `|{`: one or more
+
+Keys are marked `PK` (primary key), `FK` (foreign key) or `UK` (unique key).
+
+---
+
+## Conceptual, logical and physical data models
+
+Data models are usually built at three levels of detail. AWS's [guide to data modeling](https://aws.amazon.com/what-is/data-modeling/) describes them like this:
+
+| Level | What it shows | Usually written by |
+|-------|---------------|--------------------|
+| Conceptual | The big picture: what data the system holds and the business rules it follows | Business stakeholders and analysts |
+| Logical | Entities, attributes with their data types, keys and relationships. It does not depend on any database product | Data architects and analysts |
+| Physical | How the logical model is built in a specific database: its field types, relationships and performance tuning | Data engineers |
+
+The same guide notes that teams typically choose their database technology after the logical model is done, and that some agile teams skip the logical model and go straight from conceptual to physical.
+
+---
+
+## What a data model should contain
+
+A data model that others can review and build from records, for each entity:
+
+- a name, a definition and the requirement it comes from
+- its attributes, with type, whether each is required, and its keys
+- its relationships to other entities, with cardinality
+- who owns it and who looks after it day to day
+- its classification, retention period and whether it holds personal data
+
+`/arckit:data-model` produces a logical model in this shape, with some physical detail added: suggested indexes, a database technology recommendation and a schema migration approach.
+
+---
+
+## Using /arckit:data-model
+
+`/arckit:data-model` transforms Data Requirements (DR-xxx) into an ERD, governance catalogue, and GDPR compliance pack.
 
 ## Inputs Checklist
 
@@ -66,4 +119,4 @@ Use the output to enrich `/arckit:dpia` (automatic when run afterwards).
 
 ## UK Government Data Policy
 
-For UK Government data projects, the data model provides evidence for the [National Data Strategy](https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy) — particularly the **Data Foundations** pillar (metadata standards, data quality) and **Availability** pillar (data access controls, sharing agreements). The Data Quality Framework section aligns with the [Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) (6 dimensions, 5 principles). See `docs/guides/national-data-strategy.md` and `docs/guides/data-quality-framework.md` for full mappings.
+For UK Government data projects, the data model provides evidence for the [National Data Strategy](https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy) — particularly the **Data foundations** pillar (metadata standards, data quality) and **Data availability** pillar (data access controls, sharing agreements). The Data Quality Framework section aligns with the [Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) (6 dimensions, 5 principles). See the [National Data Strategy guide](national-data-strategy.md) and the [Data Quality Framework guide](data-quality-framework.md) for full mappings.

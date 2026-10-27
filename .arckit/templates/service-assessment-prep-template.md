@@ -48,6 +48,20 @@
 
 ---
 
+## Assessment Context
+
+| Item | Value |
+|------|-------|
+| **Assessment** | [Alpha (end of alpha) / Beta (end of private beta, to open as a public beta) / Live (end of public beta)] |
+| **Panel** | [Cross-government (likely to handle more than 100,000 transactions a year, or used by civil servants in more than one organisation) / Departmental / Not applicable (self-assessment, e.g. local government)] |
+| **Result scale** | [Green, amber or red / Met or not met (a departmental panel may use this)] |
+| **Uses AI** | [Yes - how / No] (from September 2026 the service brief must say; if yes, the panel includes an AI specialist) |
+| **Booking** | [Status of booking through the department's assessment team] |
+
+The 🟢/🟡/🔴 readiness ratings in this report are ArcKit's prediction of the panel's view, not the panel's rating.
+
+---
+
 ## Service Standard Assessment (14 Points)
 
 ### 1. Understand Users and Their Needs
@@ -210,22 +224,25 @@ Priority: Strengthens overall case but not blocking
 
 **How to Book**:
 
-1. Contact GDS Central Digital & Data Office assessment team
-2. Book 5 weeks in advance minimum
-3. Assessments typically on Tuesday, Wednesday, or Thursday
-4. Duration: 4 hours
-5. Provide: Service name, department, phase, preferred dates
+1. Check the service against the Service Standard, then meet your department's assessment team to confirm the service is ready and whether a departmental or cross-government panel will assess it (in an agency, your parent department may arrange this)
+2. Your department's assessment team agrees the date with you; if a cross-government panel is needed, it contacts GDS at least 4 weeks before the date you want
+3. Timing: book an alpha assessment within a fortnight of starting alpha; book a beta assessment 6 weeks before the date you want
+4. Duration: usually about 4 hours; most assessments are remote
+5. Provide the service brief the assessment team asks for (see below)
 
 ### Documentation to Share with Panel
 
-**Send 1 week before assessment**:
+**Service brief** (send when the assessment team asks for it):
 
-Required documentation:
+- [ ] Description of the service and its users
+- [ ] Recent prototype or link to a development environment
+- [ ] High-level technical architecture diagram
+- [ ] Whether the service uses AI, and if so how
 
-- [ ] Project overview (1-2 pages)
+Supporting documentation:
+
 - [ ] User research repository or summary
-- [ ] Service architecture diagrams
-- [ ] Prototype/demo environment URL (if applicable)
+- [ ] User journey maps
 
 Recommended documentation:
 
@@ -240,15 +257,17 @@ Optional supplementary:
 
 ### Who Should Attend
 
-**Core Team** (required):
+**Recommended by the Service Manual** (at least):
 
-- ✅ Product Manager / Service Owner
-- ✅ Lead User Researcher
+- ✅ Service Owner
 - ✅ Technical Architect / Lead Developer
-- ✅ Delivery Manager
+- ✅ User Researcher
+- ✅ Designer
+- ✅ Performance Analyst (beta and live assessments)
+- ✅ Someone who can explain the service's use of AI and its risks (if the service uses AI)
 
 **Phase-Specific Additions**:
-[List additional roles needed for this specific phase]
+[List additional roles needed for this specific phase, for example Delivery Manager; your department's assessment team can recommend who to bring]
 
 **Optional Attendees**:
 
@@ -258,40 +277,31 @@ Optional supplementary:
 
 ### Show and Tell Structure
 
-**4-Hour Assessment Timeline**:
+**Assessment Timeline** (usually about 4 hours; the panel leads after the first 30 minutes):
 
-**0:00-0:15 - Introductions and Context**
+**0:00-0:10 - Overview of the Service**
 
-- Team introductions
-- Service overview
-- Project context
+- The problem being solved and what was learnt in discovery and alpha
+- Who the users are and what they are trying to do
+- The user's wider journey, and changes since any previous assessment
 
-**0:15-1:00 - User Research and Needs (Points 1, 2, 3, 4)**
+**0:10-0:30 - Walk the Panel Through the User Journey (Points 2, 3, 4, 5)**
 
-- User Researcher presents research findings and methodology
+- What has been built, including unhappy paths and offline channels
+- At alpha, enough prototype to test the riskiest assumptions
+- If the service uses AI, how it works, why it was chosen and how its risks are managed
 
-**1:00-1:45 - Service Demonstration (Points 2, 3, 4, 5)**
+**0:30 onwards - Questions from the Panel**
 
-- Show the service or prototype
-- End-to-end journey
-- Accessibility features
+- [Named person for users and design (Points 1-5)]
+- [Named person for team, ways of working and performance (Points 6, 7, 8, 10)]
+- [Named person for security, technology and reliability (Points 9, 11, 12, 13, 14)]
+- [Named person for AI, if applicable]
 
-**1:45-2:30 - Technical Architecture and Security (Points 9, 11, 12, 13, 14)**
+**After the Assessment**
 
-- Tech Lead presents architecture and technology choices
-
-**2:30-3:00 - Team and Ways of Working (Points 6, 7, 8, 10)**
-
-- Delivery Manager presents team and agile practices
-
-**3:00-3:45 - Open Q&A**
-
-- Panel asks questions
-- Team responds with evidence
-
-**3:45-4:00 - Panel Deliberation**
-
-- Team steps out
+- Cross-government panel: result in a report within 3 to 5 working days
+- Departmental panel: ask your department's assurance team when to expect the result
 
 ### Tips for Success
 
@@ -324,7 +334,7 @@ Optional supplementary:
 
 ## After the Assessment
 
-### If You Pass (Green)
+### If You Pass (Green, or Met)
 
 **Immediate Actions**:
 
@@ -339,10 +349,13 @@ Optional supplementary:
 
 - [ ] Create "tracking amber evidence" document
 - [ ] Assign owners to each amber point
-- [ ] Set deadlines (within 3 months)
-- [ ] Schedule check-ins with GDS team
+- [ ] Set deadlines (usually within 3 months)
+- [ ] Record progress in the live document, which is visible to the assessments team
+- [ ] Schedule check-ins with your department's assessment team
 
-### If You Fail (Red)
+### If You Get Red (or Not Met)
+
+The service stays in its current phase until the points that did not meet the standard are reassessed. This does not mean the service failed.
 
 **Immediate Actions**:
 
@@ -350,7 +363,7 @@ Optional supplementary:
 - [ ] Identify root causes
 - [ ] Create action plan for each red point
 - [ ] Re-run `/arckit:service-assessment` weekly
-- [ ] Book reassessment (typically 3-6 months)
+- [ ] Book a reassessment through your department's assurance team
 
 ---
 

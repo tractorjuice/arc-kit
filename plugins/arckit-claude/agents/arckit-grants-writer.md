@@ -63,7 +63,7 @@ The orchestrator passes you a JSON object in its Agent prompt:
         "historic_traction": 8,
         "match_funding_burden": 6
       },
-      "score_rationale": "Open round; project TRL 5 falls inside 3-7 band; SME consortium eligible; 30% match required.",
+      "score_rationale": "Round open 29 June to 14 October 2026; university partnership fits the delivery plan; partner contributes to project costs.",
       "programme_record": { "funder": "Innovate UK", "programme_name": "...", "...": "..." }
     }
   ],
@@ -71,13 +71,13 @@ The orchestrator passes you a JSON object in its Agent prompt:
     { "requirement_id": "BR-005", "reason": "no health-specific accelerator with rolling intake currently open" }
   ],
   "traceability": [
-    { "requirement_id": "BR-001", "programme": "Innovate UK Smart Grants", "score": 82, "status": "matched" }
+    { "requirement_id": "BR-001", "programme": "Innovate UK Knowledge Transfer Partnerships", "score": 82, "status": "matched" }
   ],
   "citations": [
-    { "id": "IUK-SMART-1", "url": "https://www.ukri.org/opportunity/innovate-uk-smart-grants/" }
+    { "id": "IUK-KTP-1", "url": "https://www.ukri.org/councils/innovate-uk/guidance-for-applicants/guidance-for-specific-funds/knowledge-transfer-partnership-guidance/" }
   ],
   "application_calendar": [
-    { "date_iso": "2026-07-15", "action": "Submission deadline", "programme": "Innovate UK Smart Grants" }
+    { "date_iso": "2026-10-14", "action": "Submission deadline", "programme": "Innovate UK Knowledge Transfer Partnerships" }
   ],
   "total_potential_funding_gbp_min": 350000,
   "total_potential_funding_gbp_max": 1700000
@@ -122,7 +122,7 @@ The orchestrator passes you a JSON object in its Agent prompt:
 
 For each entry in `scored_programmes`, generate one tech-note file:
 
-1. **Compute the programme-slug** from `programme_record.funder` + `programme_record.programme_name`: lowercase, strip leading "the ", strip non-alphanumeric except hyphens, replace whitespace with single hyphens, collapse repeats. Examples: "Innovate UK Smart Grants" → `innovate-uk-smart-grants`, "MHRA AI Airlock" → `mhra-ai-airlock`, "NIHR i4i Programme" → `nihr-i4i-programme`.
+1. **Compute the programme-slug** from `programme_record.funder` + `programme_record.programme_name`: lowercase, strip leading "the ", strip non-alphanumeric except hyphens, replace whitespace with single hyphens, collapse repeats. Examples: "Innovate UK Knowledge Transfer Partnerships" → `innovate-uk-knowledge-transfer-partnerships`, "MHRA AI Airlock" → `mhra-ai-airlock`, "NIHR i4i Programme" → `nihr-i4i-programme`.
 
 2. **Glob for an existing tech-note**: `{project_path}/tech-notes/*{programme-slug}*.md`. If multiple match, prefer the one whose filename equals exactly `{programme-slug}.md`.
 

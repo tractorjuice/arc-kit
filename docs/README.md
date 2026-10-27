@@ -119,7 +119,7 @@ See the [full articles index](articles.html) for all ArcKit release notes, analy
 - [National Data Strategy](guides/national-data-strategy.md) - NDS missions and pillars
 - [Codes of Practice](guides/codes-of-practice.md) - Rainbow of Books mapping
 - [Security Hooks](guides/security-hooks.md) - Three-layer secret protection
-- [AI Playbook](guides/uk-government/ai-playbook.md) - `/arckit:ai-playbook`
+- [AI Playbook](guides/ai-playbook.md) - `/arckit:ai-playbook`
 - [Algorithmic Transparency](guides/uk-government/algorithmic-transparency.md) - `/arckit:atrs`
 - [MOD Secure by Design](guides/uk-mod/secure-by-design.md) - `/arckit:mod-secure`
 - [JSP 936 AI Assurance](guides/jsp-936.md) - `/arckit:jsp-936`
@@ -287,7 +287,7 @@ See the [full index](guides/roles/README.md) for details.
 | `/arckit:conformance` | [conformance.md](guides/conformance.md) | ✅ Complete |
 | `/arckit:service-assessment` | [service-assessment.md](guides/service-assessment.md) | ✅ Complete |
 | `/arckit:tcop` | [technology-code-of-practice.md](guides/uk-government/technology-code-of-practice.md) | ✅ Complete |
-| `/arckit:ai-playbook` | [ai-playbook.md](guides/uk-government/ai-playbook.md) | ✅ Complete |
+| `/arckit:ai-playbook` | [ai-playbook.md](guides/ai-playbook.md) | ✅ Complete |
 | `/arckit:atrs` | [algorithmic-transparency.md](guides/uk-government/algorithmic-transparency.md) | ✅ Complete |
 | `/arckit:secure` | [secure-by-design.md](guides/uk-government/secure-by-design.md) | ✅ Complete |
 | `/arckit:mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
@@ -327,4 +327,4 @@ Found a gap or want to improve documentation?
 ---
 
 **Last updated**: 2026-02-25
-**ArcKit Version**: 6.18.2
+**ArcKit Version**: 6.18.3

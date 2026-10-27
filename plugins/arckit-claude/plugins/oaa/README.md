@@ -83,7 +83,7 @@ Each command is a **prompt template** — not an interactive questionnaire. The 
 PRIN → STKE → REQ → OAAL → OAPR → OASTR → OASEC → OAGOV
 ```
 
-Foundation commands (`principles`, `stakeholders`, `requirements`) should run first; each O-AA command reads them when present and notes the gap when they are missing. The O-AA order follows what each command reads: product architecture reads the ADM Lite sprint plan, the strategy canvas reads both, and security and governance read all three. Breaking core `arckit` (=6.18.2) breaks doc-type validators.
+Foundation commands (`principles`, `stakeholders`, `requirements`) should run first; each O-AA command reads them when present and notes the gap when they are missing. The O-AA order follows what each command reads: product architecture reads the ADM Lite sprint plan, the strategy canvas reads both, and security and governance read all three. Breaking core `arckit` (=6.18.3) breaks doc-type validators.
 
 ### Artefact Naming
 

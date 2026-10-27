@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:data-mesh-contract creates federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees.">
+    <meta name="description" content="Data mesh is a way of organising analytical data around business domains, with each domain publishing its data as a product under a data contract. This…">
     <meta name="author" content="ArcKit">
-    <title>Data Mesh Contract Quick Guide | ArcKit</title>
-    <meta property="og:title" content="Data Mesh Contract Quick Guide">
-    <meta property="og:description" content="/arckit:data-mesh-contract creates federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees.">
+    <title>Data mesh and data contracts: data product guide | ArcKit</title>
+    <meta property="og:title" content="Data mesh and data contracts: data product guide">
+    <meta property="og:description" content="Data mesh is a way of organising analytical data around business domains, with each domain publishing its data as a product under a data contract. This guide explains data mesh, data products and data contracts, and…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/data-mesh-contract.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Data Mesh Contract Quick Guide">
-    <meta name="twitter:description" content="/arckit:data-mesh-contract creates federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees.">
+    <meta name="twitter:title" content="Data mesh and data contracts: data product guide">
+    <meta name="twitter:description" content="Data mesh is a way of organising analytical data around business domains, with each domain publishing its data as a product under a data contract. This guide explains data mesh, data products and data contracts, and…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/data-mesh-contract.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/data-mesh-contract.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/data-mesh-contract.html",
-                "headline": "Data Mesh Contract Quick Guide",
-                "description": "/arckit:data-mesh-contract creates federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees.",
+                "headline": "Data mesh and data contracts: data product guide",
+                "description": "Data mesh is a way of organising analytical data around business domains, with each domain publishing its data as a product under a data contract. This guide explains data mesh, data products and data contracts, and…",
                 "url": "https://arckit.org/guide/data-mesh-contract.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Data Mesh Contract Quick Guide",
+                        "name": "Data mesh and data contracts: data product guide",
                         "item": "https://arckit.org/guide/data-mesh-contract.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Data Mesh Contract Quick Guide</h1>
-            <p class="app-page-hero__description">/arckit:data-mesh-contract creates federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees.</p>
+            <h1 class="app-page-hero__title">Data mesh and data contracts: a data product contract guide</h1>
+            <p class="app-page-hero__description">Data mesh is a way of organising analytical data around business domains, with each domain publishing its data as a product under a data contract. This guide explains data mesh, data products and data contracts, and…</p>
         </div>
     </div>
 
@@ -437,11 +437,57 @@
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:data-mesh-contract</code> creates federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees.</p>
+<p>Data mesh is a way of organising analytical data around business domains, with each domain publishing its data as a product under a data contract. This guide explains data mesh, data products and data contracts, and how <code>/arckit:data-mesh-contract</code> writes a contract.</p>
 <hr />
-<h2 id="inputs-checklist">Inputs Checklist</h2>
+<h2 id="what-is-data-mesh">What is data mesh?</h2>
+<p>Zhamak Dehghani described data mesh in <a href="https://martinfowler.com/articles/data-monolith-to-mesh.html">How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh</a> (May 2019) and set out its principles in <a href="https://martinfowler.com/articles/data-mesh-principles.html">Data Mesh Principles and Logical Architecture</a> (December 2020). It is about analytical data. The operational data that services run on is outside its focus.</p>
+<p>The four principles:</p>
+<table>
+<thead>
+<tr>
+<th>Principle</th>
+<th>What it means</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Domain-oriented decentralised data ownership and architecture</td>
+<td>The business domains closest to the data own it and serve it</td>
+</tr>
+<tr>
+<td>Data as a product</td>
+<td>Domains treat the people who use their analytical data as customers</td>
+</tr>
+<tr>
+<td>Self-serve data infrastructure as a platform</td>
+<td>A shared platform lets domains build and run their own data products</td>
+</tr>
+<tr>
+<td>Federated computational governance</td>
+<td>Domain and platform owners agree global rules together, and the platform enforces them automatically</td>
+</tr>
+</tbody>
+</table>
+<h2 id="what-is-a-data-product">What is a data product?</h2>
+<p>A data product is the unit a domain publishes on the mesh. The 2020 article says it combines three structural components: code, data and metadata, and infrastructure.</p>
+<p>The 2019 article lists what domain data needs to be useful as a product:</p>
+<ul>
+<li>Discoverable</li>
+<li>Addressable</li>
+<li>Trustworthy and truthful</li>
+<li>Self-describing semantics and syntax</li>
+<li>Interoperable and governed by global standards</li>
+<li>Secure and governed by a global access control</li>
+</ul>
+<h2 id="what-is-a-data-contract">What is a data contract?</h2>
+<p>A data contract is the formal agreement between the domain team that provides a data product and the people who consume it. The <a href="https://bitol.io/">Open Data Contract Standard (ODCS)</a> defines it as &quot;an agreement between a data producer and its consumers&quot;. As well as describing the data, a contract states how the data should behave, through data quality rules, and covers service levels, stakeholders, roles and pricing.</p>
+<p>ODCS is an open YAML format from Bitol, a Linux Foundation AI &amp; Data incubation project, released under the Apache 2.0 licence. Its <a href="https://bitol-io.github.io/open-data-contract-standard/latest/">documentation</a> divides a contract into sections that include fundamentals, schema, data quality, support and communication channels, pricing, team, roles, service-level agreement, and infrastructure and servers. The <a href="https://github.com/bitol-io/open-data-contract-standard">ODCS repository</a> gives v3.2.0 as the current version.</p>
+<p>ArcKit's contract template follows ODCS v3.2.0 and includes an ODCS YAML export (Appendix A), written to validate against the <a href="https://github.com/bitol-io/open-data-contract-standard/blob/main/schema/odcs-json-schema-v3.2.0.json">ODCS v3.2.0 JSON Schema</a>. Unlike a traditional data model, a mesh contract treats the data like an API, with an owner, service levels, versioning and support.</p>
+<hr />
+<h2 id="using-arckitdata-mesh-contract">Using /arckit:data-mesh-contract</h2>
+<h3 id="inputs-checklist">Inputs checklist</h3>
 <table>
 <thead>
 <tr>
@@ -468,23 +514,11 @@
 </tr>
 </tbody>
 </table>
-<hr />
-<h2 id="command">Command</h2>
+<h3 id="command">Command</h3>
 <pre><code class="language-bash">/arckit:data-mesh-contract Create contract for &lt;domain name&gt; data product
 </code></pre>
-<p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-DMC-001-v1.0.md</code> (uses multi-instance numbering)</p>
-<hr />
-<h2 id="what-is-a-data-mesh-contract">What is a Data Mesh Contract?</h2>
-<p>A <strong>data product contract</strong> defines the formal agreement between a data product provider (domain team) and consumers in a federated mesh architecture.</p>
-<p>Unlike traditional data models, mesh contracts emphasize:</p>
-<ul>
-<li><strong>Federated ownership</strong> – Domain teams own their data products end-to-end</li>
-<li><strong>Data as a product</strong> – Treated like APIs with SLAs, versioning, and support</li>
-<li><strong>Self-serve infrastructure</strong> – Standardized access patterns and discovery</li>
-<li><strong>Computational governance</strong> – Automated policy enforcement</li>
-</ul>
-<hr />
-<h2 id="deliverable-snapshot">Deliverable Snapshot</h2>
+<p>Output: <code>projects/&lt;id&gt;/data-contracts/ARC-&lt;id&gt;-DMC-&lt;NNN&gt;-v1.0.md</code> (multi-instance numbering: <code>DMC-001</code>, <code>DMC-002</code>, and so on)</p>
+<h3 id="deliverable-snapshot">Deliverable snapshot</h3>
 <table>
 <thead>
 <tr>
@@ -560,28 +594,53 @@
 <td>PII classification, consent management, and data subject rights</td>
 </tr>
 <tr>
+<td><strong>10. Make better use of data</strong></td>
+<td>Published contracts make data products findable and reusable</td>
+</tr>
+<tr>
 <td><strong>11. Define your purchasing strategy</strong></td>
 <td>Reuse existing mesh products before building new ones</td>
 </tr>
 </tbody>
 </table>
 <h3 id="data-quality-framework">Data Quality Framework</h3>
-<p>Mesh contracts support the <strong>Government Data Quality Framework</strong> five dimensions:</p>
+<p>The <a href="https://www.gov.uk/government/publications/the-government-data-quality-framework">Government Data Quality Framework</a> defines six core data quality dimensions. Mesh contracts cover each one:</p>
 <ol>
 <li><strong>Accuracy</strong> – Validation rules and quality KPIs in contract</li>
 <li><strong>Validity</strong> – Schema constraints and allowed values</li>
 <li><strong>Completeness</strong> – Mandatory field requirements and null handling</li>
 <li><strong>Consistency</strong> – Cross-system reconciliation rules</li>
 <li><strong>Timeliness</strong> – Freshness SLAs and update frequency</li>
+<li><strong>Uniqueness</strong> – Duplicate detection rules</li>
 </ol>
 <h3 id="national-data-strategy-nds">National Data Strategy (NDS)</h3>
-<p>Contracts align with NDS pillars:</p>
-<ul>
-<li><strong>Pillar 1 (Unlocking value)</strong> – Discoverability and self-serve access</li>
-<li><strong>Pillar 2 (Secure and resilient infrastructure)</strong> – Security controls in contract</li>
-<li><strong>Pillar 3 (Transforming capability)</strong> – Federated domain expertise</li>
-<li><strong>Pillar 4 (Ensuring responsible use)</strong> – Governance and ethics policies</li>
-</ul>
+<p>The <a href="https://www.gov.uk/government/publications/uk-national-data-strategy">National Data Strategy</a> (DCMS, 2020) rests on four core pillars. Contracts support each:</p>
+<table>
+<thead>
+<tr>
+<th>NDS pillar</th>
+<th>Mesh contract application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data foundations</td>
+<td>Schema, metadata and quality rules keep data fit for purpose and findable</td>
+</tr>
+<tr>
+<td>Data skills</td>
+<td>Domain teams own, run and support their own data products</td>
+</tr>
+<tr>
+<td>Data availability</td>
+<td>Catalogue registration and self-serve access let others find and reuse the data</td>
+</tr>
+<tr>
+<td>Responsible data</td>
+<td>Access policies, privacy controls and audit hooks</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="mesh-architecture-principles">Mesh Architecture Principles</h2>
 <h3 id="domain-driven-design">Domain-Driven Design</h3>
@@ -688,16 +747,36 @@
 </ul>
 <hr />
 <h2 id="common-pitfalls">Common Pitfalls</h2>
-<p>❌ <strong>Treating contracts as documentation</strong> – They must be enforceable via automation
-✅ <strong>Integrate with governance platform</strong> – Use contracts to drive policy engines</p>
-<p>❌ <strong>Overly rigid schemas</strong> – Allow for evolution with backward compatibility
-✅ <strong>Semantic versioning</strong> – Breaking changes increment major version</p>
-<p>❌ <strong>Vague SLAs</strong> – &quot;High quality&quot; is not measurable
-✅ <strong>Specific KPIs</strong> – &quot;99.5% availability, &lt;5min freshness, &gt;95% completeness&quot;</p>
-<p>❌ <strong>Centralized approval</strong> – Defeats federated mesh model
-✅ <strong>Guardrails + autonomy</strong> – Global policies, local implementation</p>
-<p>❌ <strong>No consumer onboarding</strong> – Great product, no users
-✅ <strong>Self-serve discovery</strong> – Catalogue, examples, sandbox environment</p>
+<table>
+<thead>
+<tr>
+<th>Pitfall</th>
+<th>Do this instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Treating contracts as documentation</strong> – They must be enforceable via automation</td>
+<td><strong>Integrate with governance platform</strong> – Use contracts to drive policy engines</td>
+</tr>
+<tr>
+<td><strong>Overly rigid schemas</strong> – Allow for evolution with backward compatibility</td>
+<td><strong>Semantic versioning</strong> – Breaking changes increment major version</td>
+</tr>
+<tr>
+<td><strong>Vague SLAs</strong> – &quot;High quality&quot; is not measurable</td>
+<td><strong>Specific KPIs</strong> – &quot;99.5% availability, &lt;5min freshness, &gt;95% completeness&quot;</td>
+</tr>
+<tr>
+<td><strong>Centralised approval</strong> – Defeats federated mesh model</td>
+<td><strong>Guardrails + autonomy</strong> – Global policies, local implementation</td>
+</tr>
+<tr>
+<td><strong>No consumer onboarding</strong> – Great product, no users</td>
+<td><strong>Self-serve discovery</strong> – Catalogue, examples, sandbox environment</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="related-commands">Related Commands</h2>
 <ul>
@@ -710,12 +789,14 @@
 <hr />
 <h2 id="references">References</h2>
 <ul>
-<li><strong>PayPal Data Contract Template</strong>: <a href="https://github.com/paypal/data-contract-template">https://github.com/paypal/data-contract-template</a></li>
-<li><strong>Open Data Contract Standard (ODCS)</strong>: <a href="https://github.com/bitol-io/open-data-contract-standard">https://github.com/bitol-io/open-data-contract-standard</a></li>
+<li><a href="https://martinfowler.com/articles/data-mesh-principles.html">Data Mesh Principles and Logical Architecture</a> (Zhamak Dehghani, <a href="http://martinfowler.com">martinfowler.com</a>, 2020)</li>
+<li><a href="https://martinfowler.com/articles/data-monolith-to-mesh.html">How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh</a> (Zhamak Dehghani, <a href="http://martinfowler.com">martinfowler.com</a>, 2019)</li>
 <li><strong>Data Mesh book (Zhamak Dehghani)</strong>: O'Reilly 2022</li>
-<li><strong>UK Government Data Quality Framework</strong>: <a href="https://www.gov.uk/government/publications/the-government-data-quality-framework">https://www.gov.uk/government/publications/the-government-data-quality-framework</a></li>
-<li><strong>National Data Strategy</strong>: <a href="https://www.gov.uk/government/publications/uk-national-data-strategy">https://www.gov.uk/government/publications/uk-national-data-strategy</a></li>
-<li><strong>GovS 005: Data Standards</strong>: <a href="https://www.gov.uk/government/publications/open-standards-for-government">https://www.gov.uk/government/publications/open-standards-for-government</a></li>
+<li><a href="https://github.com/bitol-io/open-data-contract-standard">Open Data Contract Standard (ODCS)</a> and <a href="https://bitol.io/">Bitol</a></li>
+<li><a href="https://github.com/paypal/data-contract-template">PayPal Data Contract Template</a></li>
+<li><a href="https://www.gov.uk/government/publications/the-government-data-quality-framework">UK Government Data Quality Framework</a></li>
+<li><a href="https://www.gov.uk/government/publications/uk-national-data-strategy">National Data Strategy</a></li>
+<li><a href="https://www.gov.uk/government/publications/open-standards-for-government">Open standards for government</a></li>
 </ul>
 </div>
 <script src="../films.js"></script>

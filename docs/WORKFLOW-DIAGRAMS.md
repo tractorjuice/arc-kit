@@ -840,8 +840,8 @@ graph TD
 - MOD Secure by Design required before Beta
 - JSP 936 AI assurance required before Beta
 - Risk classification determines approval pathway:
-  - **Critical**: 2PUS/Ministerial approval
-  - **Severe/Major**: Defence-Level JROC/IAC approval
+  - **Critical/Severe**: 2PUS (the Second Permanent Under Secretary), or Ministers by exception
+  - **Major**: Defence-Level approval (e.g. JROC/IAC)
   - **Moderate/Minor**: TLB-Level approval
 
 ---

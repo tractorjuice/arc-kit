@@ -167,9 +167,9 @@ After writing the main grants report, extract reusable knowledge into standalone
 
 **Slug Generation Rule:**
 
-1. Take the grant programme name (e.g., "Innovate UK Smart Grants")
-2. Convert to lowercase: "innovate uk smart grants"
-3. Replace spaces with hyphens: "innovate-uk-smart-grants"
+1. Take the grant programme name (e.g., "Innovate UK Knowledge Transfer Partnerships")
+2. Convert to lowercase: "innovate uk knowledge transfer partnerships"
+3. Replace spaces with hyphens: "innovate-uk-knowledge-transfer-partnerships"
 4. Remove special characters
 5. Remove leading/trailing hyphens
 6. Collapse multiple consecutive hyphens to single

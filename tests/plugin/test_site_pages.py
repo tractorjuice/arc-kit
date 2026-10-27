@@ -14,6 +14,7 @@ from __future__ import annotations
 import hashlib
 import html
 import importlib.util
+import json
 import os
 import re
 import subprocess
@@ -63,7 +64,9 @@ def test_every_guide_has_its_own_page(name):
     page = DOCS / "guide" / f"{name}.html"
     assert page.is_file(), f"no static page for docs/guides/{name}.md"
     text = page.read_text(encoding="utf-8")
-    assert canonical(page) == f"https://arckit.org/guide/{name}.html"
+    # A reference page the main guide covers in full names that guide's page instead.
+    covered_by = load_generator().GUIDE_EXTRAS.get(name, {}).get("canonical", name)
+    assert canonical(page) == f"https://arckit.org/guide/{covered_by}.html"
     assert "<title>Guide Viewer" not in text
     assert 'class="app-markdown"' in text and "Loading guide" not in text
     assert f'<link rel="alternate" type="text/markdown" href="https://arckit.org/guides/{name}.md">' in text
@@ -297,3 +300,56 @@ def test_every_diagram_names_its_type():
             if not lines or not MERMAID_TYPE.match(lines[0]):
                 problems.append(f"{page.relative_to(REPO)}: {lines[0] if lines else '(empty)'}")
     assert not problems, "Mermaid blocks with no diagram type; fence them as ```text:\n  " + "\n  ".join(problems)
+
+
+def test_on_github_lists_are_in_the_html():
+    # The page used to draw its lists from on-github.json in the browser, so a
+    # crawler saw the headings and nothing else (20 October 2026). Every repo the
+    # data lists is now in the HTML, with the page's numbers and date.
+    data = json.loads((DOCS / "on-github.json").read_text(encoding="utf-8"))
+    page = (DOCS / "on-github.html").read_text(encoding="utf-8")
+    main = re.search(r"<main\b.*?</main>", page, re.S).group(0)
+    for name in ("using", "mentions", "threads", "commits"):
+        missing = [r["repo"] for r in data[name] if f">{html.escape(r['repo'])}</" not in main]
+        assert not missing, f"{name} rows not in docs/on-github.html: {missing[:5]}"
+    assert f"{data['summary']['using']:,} public GitHub" in page
+    assert '<div id="gh-content" hidden>' not in page and "Loading this week" not in page
+
+
+def test_on_github_text_is_escaped_and_links_only_github():
+    # Every value on the page is other people's text.
+    gen = load_generator()
+    data = {
+        "week": "2026-10-26",
+        "summary": {"using": 1, "artefacts": 1, "set_up": 0, "organisations": 0, "mentioning": 1, "issues_prs": 0,
+                    "commit_repos": 0, "commits": 0, "hidden_rows": 2,
+                    "new": {"using": 1, "mentioning": 0, "issues_prs": 0, "commit_repos": 0}},
+        "history": [{"week": "2026-10-20", "using": 1, "organisations": 0, "mentioning": 1, "issues_prs": 0, "commit_repos": 0},
+                    {"week": "2026-10-26", "using": 1, "organisations": 0, "mentioning": 1, "issues_prs": 0, "commit_repos": 0}],
+        "using": [{"repo": "a/b", "url": "https://github.com/a/b", "owner_kind": "Person", "arc_files": 3, "projects": 1,
+                   "doc_types": "REQ", "setup": "", "created": "2026-01-02", "last_push": "2026-10-01", "new": True,
+                   "description": "<script>alert(1)</script>"}],
+        "mentions": [{"repo": "c/d", "url": "javascript:alert(1)", "kind": "<b>Lists</b>", "where": "README",
+                      "where_url": "https://evil.example/x", "stars": 1234, "last_push": "2026-10-01", "new": False,
+                      "description": ""}],
+        "threads": [],
+        "commits": [],
+    }
+    blocks = gen.on_github_blocks(data)
+    rendered = "\n".join(blocks.values())
+    assert "<script>alert" not in rendered and "&lt;script&gt;alert(1)&lt;/script&gt;" in rendered
+    assert "<b>Lists</b>" not in rendered and "javascript:" not in rendered and "evil.example" not in rendered
+    assert '<span>c/d</span>' in blocks["rows-mentions"] and "1,234" in blocks["rows-mentions"]
+    assert "2 entries are left off this page" in blocks["hidden"]
+    assert "1 new this week" in blocks["stats"] and "New</strong>" in blocks["rows-using"]
+    assert blocks["trend-note"].startswith("One chart per measure")
+    assert blocks["updated"] == "Updated 26 October 2026"
+
+
+def test_on_github_charts_start_on_the_next_monday():
+    # The first search was run by hand on a Tuesday; the weekly one runs on Mondays.
+    gen = load_generator()
+    data = json.loads((DOCS / "on-github.json").read_text(encoding="utf-8"))
+    for first, monday in (("2026-10-20", "26 October 2026"), ("2026-10-19", "26 October 2026"), ("2026-10-25", "26 October 2026")):
+        data["history"] = [dict(data["history"][0], week=first)]
+        assert gen.on_github_blocks(data)["trend-note"].endswith(f"on {monday}.")

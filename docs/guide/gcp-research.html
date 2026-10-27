@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:gcp-research researches Google Cloud services, architecture patterns, and implementation guidance using the Google Developer Knowledge MCP server…">
+    <meta name="description" content="The Google Developer Knowledge MCP server lets AI assistants search and read Google&#x27;s official developer documentation, including Google Cloud. This…">
     <meta name="author" content="ArcKit">
-    <title>Google Cloud Technology Research Guide | ArcKit</title>
-    <meta property="og:title" content="Google Cloud Technology Research Guide">
-    <meta property="og:description" content="/arckit:gcp-research researches Google Cloud services, architecture patterns, and implementation guidance using the Google Developer Knowledge MCP server for authoritative documentation.">
+    <title>Google Developer Knowledge MCP server and GCP research | ArcKit</title>
+    <meta property="og:title" content="Google Developer Knowledge MCP server and GCP research">
+    <meta property="og:description" content="The Google Developer Knowledge MCP server lets AI assistants search and read Google&#x27;s official developer documentation, including Google Cloud. This guide covers how to set it up and how /arckit:gcp-research uses it to…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/gcp-research.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Google Cloud Technology Research Guide">
-    <meta name="twitter:description" content="/arckit:gcp-research researches Google Cloud services, architecture patterns, and implementation guidance using the Google Developer Knowledge MCP server for authoritative documentation.">
+    <meta name="twitter:title" content="Google Developer Knowledge MCP server and GCP research">
+    <meta name="twitter:description" content="The Google Developer Knowledge MCP server lets AI assistants search and read Google&#x27;s official developer documentation, including Google Cloud. This guide covers how to set it up and how /arckit:gcp-research uses it to…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/gcp-research.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/gcp-research.md">
@@ -338,8 +338,8 @@
             {
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/gcp-research.html",
-                "headline": "Google Cloud Technology Research Guide",
-                "description": "/arckit:gcp-research researches Google Cloud services, architecture patterns, and implementation guidance using the Google Developer Knowledge MCP server for authoritative documentation.",
+                "headline": "Google Developer Knowledge MCP server and GCP research",
+                "description": "The Google Developer Knowledge MCP server lets AI assistants search and read Google's official developer documentation, including Google Cloud. This guide covers how to set it up and how /arckit:gcp-research uses it to…",
                 "url": "https://arckit.org/guide/gcp-research.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -376,7 +376,7 @@
                     {
                         "@type": "ListItem",
                         "position": 3,
-                        "name": "Google Cloud Technology Research Guide",
+                        "name": "Google Developer Knowledge MCP server and GCP research",
                         "item": "https://arckit.org/guide/gcp-research.html"
                     }
                 ]
@@ -421,8 +421,8 @@
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
-            <h1 class="app-page-hero__title">Google Cloud Technology Research Guide</h1>
-            <p class="app-page-hero__description">/arckit:gcp-research researches Google Cloud services, architecture patterns, and implementation guidance using the Google Developer Knowledge MCP server for authoritative documentation.</p>
+            <h1 class="app-page-hero__title">Google Cloud research with the Developer Knowledge MCP server</h1>
+            <p class="app-page-hero__description">The Google Developer Knowledge MCP server lets AI assistants search and read Google&#x27;s official developer documentation, including Google Cloud. This guide covers how to set it up and how /arckit:gcp-research uses it to…</p>
         </div>
     </div>
 
@@ -437,17 +437,73 @@
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:gcp-research</code> researches Google Cloud services, architecture patterns, and implementation guidance using the Google Developer Knowledge MCP server for authoritative documentation.</p>
+<p>The Google Developer Knowledge MCP server lets AI assistants search and read Google's official developer documentation, including Google Cloud. This guide covers how to set it up and how <code>/arckit:gcp-research</code> uses it to research Google Cloud services, architecture patterns and implementation guidance.</p>
 <blockquote>
-<p><strong>Agent Architecture</strong>: This command runs as an autonomous agent via the Task tool. The agent makes 15-30+ MCP calls to gather Google Cloud documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.</p>
+<p><strong>How the command runs</strong>: <code>/arckit:gcp-research</code> runs in your main session and sends a reader subagent to each research category. Only the readers call the MCP server, so the documentation they gather stays in their own context windows. A writer subagent with no network tools then renders the report.</p>
 </blockquote>
+<hr />
+<h2 id="google-developer-knowledge-mcp-server">Google Developer Knowledge MCP server</h2>
+<p>Google's <a href="https://developers.google.com/knowledge/mcp">Developer Knowledge MCP server page</a> says it &quot;gives AI-powered development tools direct access to search and retrieve official Google developer documentation&quot;. It is the MCP face of the <a href="https://developers.google.com/knowledge/api">Developer Knowledge API</a>. Both entered public preview on 4 February 2026 and became generally available on 16 April 2026 (<a href="https://developers.google.com/knowledge/release-notes">release notes</a>).</p>
+<ul>
+<li><strong>What it covers</strong>: public Google developer documentation, in English only. The domains include Google Cloud (<code>cloud.google.com</code> and <code>docs.cloud.google.com</code>), Firebase, Android, Google Maps Platform, Chrome, Flutter, Dart, Go, Google AI, Google Workspace, web.dev and TensorFlow. GitHub, blogs and YouTube are not included. Google aims to re-index new or updated pages within 48 hours.</li>
+<li><strong>Endpoint</strong>: <code>https://developerknowledge.googleapis.com/mcp</code> (global, streamable HTTP).</li>
+<li><strong>Key</strong>: it needs credentials. For Claude Code, Cursor, GitHub Copilot and Codex, Google recommends an API key sent in the <code>X-Goog-Api-Key</code> header. OAuth and Application Default Credentials also work.</li>
+</ul>
+<h3 id="get-an-api-key">Get an API key</h3>
+<p>Google's steps, from the MCP server page:</p>
+<ol>
+<li>In a Google Cloud project, open the <a href="https://console.cloud.google.com/apis/library/developerknowledge.googleapis.com">Developer Knowledge API</a> page and select <strong>Enable</strong>. Since 17 March 2026, enabling the API also enables the MCP server.</li>
+<li>Go to the <a href="https://console.cloud.google.com/apis/credentials">Credentials page</a>, select <strong>Create credentials</strong>, then <strong>API key</strong>.</li>
+<li>Edit the key, choose <strong>Restrict key</strong> under API restrictions, and select <strong>Developer Knowledge API</strong>.</li>
+</ol>
+<p>With the gcloud CLI:</p>
+<pre><code class="language-bash">gcloud services enable developerknowledge.googleapis.com --project=PROJECT_ID
+gcloud services api-keys create --project=PROJECT_ID --display-name=&quot;DK API Key&quot;
+</code></pre>
+<p>Then restrict the key with <code>gcloud services api-keys update KEY_NAME --api-target=service=developerknowledge.googleapis.com</code>.</p>
+<h3 id="tools">Tools</h3>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>search_documents</code></td>
+<td>Searches Google developer documentation and returns the most relevant page excerpts with their document names.</td>
+</tr>
+<tr>
+<td><code>get_documents</code></td>
+<td>Retrieves the full Markdown content of up to 20 documents in one call, using the names <code>search_documents</code> returns.</td>
+</tr>
+<tr>
+<td><code>answer_query</code></td>
+<td>Generates a structured answer drawn from the Developer Knowledge corpus.</td>
+</tr>
+</tbody>
+</table>
+<p>Google removed the earlier <code>get_document</code> and <code>batch_get_documents</code> tools on 8 March 2026 and replaced them with <code>get_documents</code>.</p>
+<h3 id="quotas">Quotas</h3>
+<p>The <a href="https://developers.google.com/knowledge/quota">default quotas</a> are per Google Cloud project: 100 search requests a minute, 100 document retrieval requests a minute, and 50 generated answers a day. A request over quota returns <code>429 RESOURCE_EXHAUSTED</code>.</p>
+<h3 id="add-it-to-claude-code-on-its-own">Add it to Claude Code on its own</h3>
+<p>ArcKit users don't need this, because the plugin already includes the server. To add it to Claude Code without ArcKit, Google gives:</p>
+<pre><code class="language-bash">claude mcp add google-developer-knowledge \
+  --transport http https://developerknowledge.googleapis.com/mcp \
+  --header &quot;X-Goog-Api-Key: YOUR_API_KEY&quot;
+</code></pre>
+<p>Google's page also covers Antigravity, Cursor, GitHub Copilot in VS Code, Codex and other clients.</p>
+<h3 id="how-arckit-uses-it">How ArcKit uses it</h3>
+<p>The ArcKit core plugin bundles the server as <code>google-developer-knowledge</code> and sends your key in the <code>X-Goog-Api-Key</code> header. <code>/arckit:gcp-research</code> is the only command that uses it. Each reader subagent can call only this server's tools, plus read-only file tools. The server has no region-availability tool, so readers take region evidence from Google Cloud's locations documentation.</p>
+<p>Without a key the server shows as failed in <code>/mcp</code>, and the error may mention dynamic client registration. Google's remote MCP servers don't support OAuth Dynamic Client Registration, so a keyless connection has no other way to sign in. Everything else in ArcKit still works.</p>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
 <h3 id="google-developer-knowledge-mcp-server-required">Google Developer Knowledge MCP Server (REQUIRED)</h3>
-<p>This command <strong>requires</strong> the Google Developer Knowledge MCP server to be installed. It will not work without it.</p>
-<p><strong>API Key Required</strong>: Unlike AWS Knowledge and Microsoft Learn MCPs (which are free/unauthenticated), the Google Developer Knowledge MCP requires an API key. Get one from <a href="https://aistudio.google.com/apikey">Google AI Studio</a> or the <a href="https://console.cloud.google.com/apis/credentials">Google Cloud Console</a>.</p>
+<p>This command <strong>requires</strong> the Google Developer Knowledge MCP server. It will not work without it.</p>
+<p><strong>API Key Required</strong>: unlike the AWS Knowledge and Microsoft Learn MCP servers, which need no sign-in, the Google Developer Knowledge MCP server needs an API key. Create one in the Google Cloud console as described in <a href="#get-an-api-key">Get an API key</a>.</p>
 <p><strong>Setup</strong>: the ArcKit plugin already includes this server; you only supply the key.</p>
 <ul>
 <li><strong>Claude Code:</strong> the plugin asks for the Google API key when you enable it, as a sensitive setting kept in your system keychain. To add or change it later, open <code>/plugin</code>, choose <strong>arckit</strong>, and open its configure screen (or run <code>claude plugin configure arckit</code> on Claude Code v2.1.285+). Without a key the server shows as failed in <code>/mcp</code>, and everything else in ArcKit still works.</li>
@@ -526,7 +582,7 @@
 <p>Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local <code>claude</code> process must keep running.</p>
 <hr />
 <h2 id="mcp-tools-used">MCP Tools Used</h2>
-<p>The command uses three Google Developer Knowledge MCP tools:</p>
+<p>The research uses the Google Developer Knowledge MCP tools to find and read documentation:</p>
 <table>
 <thead>
 <tr>
@@ -540,21 +596,18 @@
 <td>Search Google Cloud documentation for services, patterns, best practices</td>
 </tr>
 <tr>
-<td><code>get_document</code></td>
-<td>Retrieve complete documentation pages for detailed analysis</td>
-</tr>
-<tr>
-<td><code>batch_get_documents</code></td>
-<td>Fetch multiple related documentation pages in a single call</td>
+<td><code>get_documents</code></td>
+<td>Retrieve complete documentation pages, up to 20 in one call, for detailed analysis</td>
 </tr>
 </tbody>
 </table>
+<p>Google replaced the earlier <code>get_document</code> and <code>batch_get_documents</code> tools with <code>get_documents</code> on 8 March 2026. See <a href="#tools">Tools</a> for the full list.</p>
 <hr />
 <h2 id="output-highlights">Output Highlights</h2>
 <ul>
 <li><strong>Google Cloud Service Recommendations</strong>: Mapped to specific requirements (FR, NFR, INT, DR)</li>
 <li><strong>Architecture Pattern</strong>: Reference architecture from Google Cloud Architecture Center</li>
-<li><strong>Architecture Framework Assessment</strong>: All 6 pillars evaluated per service</li>
+<li><strong>Architecture Framework Assessment</strong>: All 6 pillars evaluated per service. Google now calls this the <a href="https://docs.cloud.google.com/architecture/framework">Google Cloud Well-Architected Framework</a>.</li>
 <li><strong>Security Command Center</strong>: Finding categories and CIS Benchmark for GCP</li>
 <li><strong>UK Government Compliance</strong>: G-Cloud, europe-west2 region, NCSC principles</li>
 <li><strong>Cost Estimates</strong>: Monthly and 3-year TCO with optimization recommendations</li>
@@ -653,9 +706,11 @@
 <hr />
 <h2 id="resources">Resources</h2>
 <ul>
-<li><a href="https://developerknowledge.googleapis.com/mcp">Google Developer Knowledge MCP</a> - MCP server endpoint</li>
+<li><a href="https://developers.google.com/knowledge/mcp">Google Developer Knowledge MCP server</a> - setup, tools and troubleshooting</li>
+<li><a href="https://developers.google.com/knowledge/quota">Developer Knowledge API quotas</a> - default limits</li>
 <li><a href="https://cloud.google.com/architecture">Google Cloud Architecture Center</a> - Reference architectures</li>
-<li><a href="https://cloud.google.com/architecture/framework">Google Cloud Architecture Framework</a> - Design guidance</li>
+<li><a href="https://docs.cloud.google.com/architecture/framework">Google Cloud Well-Architected Framework</a> - Design guidance (formerly the Architecture Framework)</li>
+<li><a href="microsoft-learn-mcp.html">Microsoft Learn MCP server</a> and <a href="aws-documentation-mcp.html">AWS documentation MCP servers</a> - the other two cloud documentation servers ArcKit bundles</li>
 <li><a href="https://cloud.google.com/security/best-practices">Google Cloud Security Best Practices</a> - Security controls</li>
 <li><a href="https://cloud.google.com/security/compliance/offerings#/regions=Europe">Google Cloud UK Compliance</a> - UK Government compliance</li>
 </ul>

@@ -20,9 +20,20 @@ $ARGUMENTS
 
 ## Context
 
-The Technology Code of Practice is a set of 13 criteria to help government design, build and buy technology. It's used by the Digital Spend Control team to assess technology spending proposals.
+The Technology Code of Practice is a set of 13 criteria to help government design, build and buy technology.
+
+GOV.UK's TCoP page still describes TCoP as the standard for the Cabinet Office spend control process, but the digital and technology spend controls were removed on 1 April 2026. The Digital Assurance Playbook replaced them:
+
+- Organisations run their own approvals for most digital and technology spend, through an investment board or equivalent, and their own assurers carry out most assurance.
+- Initiatives above the organisation's delegated authority limit (DAL), or that HM Treasury determines are novel, contentious or repercussive, need HM Treasury approval. GDS supports those initiatives through the HM Treasury approval process.
+- Organisations record initiatives on a pipeline that HM Treasury mandates, through Government Assurance Services: cryptographic products at any value, and other digital and technology delivery above £5 million whole-life cost. The playbook notes that an organisation may have set different thresholds of its own.
+- Assurers base their scrutiny on codified best practice, and the playbook lists TCoP among the government digital and technology standards.
+
+Do not describe a "spend control submission" or "GDS spend approval" in the review. Name the approval and assurance route that applies to the project instead.
 
 **TCoP Reference**: https://www.gov.uk/guidance/the-technology-code-of-practice
+
+**Digital Assurance Playbook**: https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook
 
 ## Your Task
 
@@ -184,7 +195,7 @@ The document must include:
 - Critical issues list
 - Prioritized recommendations (High/Medium/Low)
 - Next steps with timeline
-- GovS 005 alignment mapping (TCoP-to-GovS 005 principle traceability and governance obligations)
+- GovS 005 alignment mapping (each TCoP point mapped to the GovS 005 v2.2 clauses that cover it, and governance obligations)
 - Approval section
 
 ## Assessment Guidelines
@@ -216,11 +227,17 @@ The document must include:
 
 **For public-facing services**: Point 13 (Service Standard) is mandatory - must pass GDS service assessments
 
-**For Digital Spend Control submissions**: Focus on points most relevant to spending approval:
+**For approval and assurance under the Digital Assurance Playbook**: In the GovS 005 governance obligations, record which route applies:
 
-- Point 5 (Cloud First)
-- Point 11 (Purchasing Strategy)
-- Point 8 (Reuse and Collaboration)
+- Spend within the organisation's delegated authority limit: the organisation's own approval (investment board or equivalent) and the organisation's digital assurance team
+- Spend above the delegated authority limit, or that HM Treasury determines is novel, contentious or repercussive: HM Treasury approval, with GDS support
+- Pipeline entry: required for any cryptographic product and for other digital and technology delivery above £5 million whole-life cost, or at a different threshold the organisation has set
+
+Give particular attention to these points:
+
+- Point 5 (Use cloud first): the playbook asks assurers to check that Cloud First principles are followed
+- Point 8 (Share, reuse and collaborate): the playbook asks assurers to check that duplicative delivery has been avoided
+- Point 11 (Define your purchasing strategy): the commercial case the approval relies on
 
 **Data protection**: If processing personal data, Point 7 is critical - DPIA completion is mandatory before going live
 
@@ -234,7 +251,7 @@ Be aware of:
 - **UK GDPR**: Data protection requirements
 - **Cyber Essentials**: Baseline security certification
 - **Cloud First policy**: Public cloud preferred unless justified otherwise
-- **GovS 005**: TCoP is the implementation guidance for the Government Functional Standard for Digital — include GovS 005 alignment mapping
+- **GovS 005**: the Government Functional Standard for Digital "is supported by" TCoP (GovS 005 §1.3), so a TCoP review is evidence for its technology clauses, not a full GovS 005 assessment — include the mapping of TCoP points to GovS 005 v2.2 clauses (GovS 005 numbers its section 2 principles but does not name them or map them to TCoP)
 
 ## Example Output Structure
 

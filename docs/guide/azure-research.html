@@ -437,28 +437,18 @@
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Guide Origin</strong>: Official | <strong>ArcKit Version</strong>: [VERSION]</p>
+<p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
 <p><code>/arckit:azure-research</code> researches Azure services, architecture patterns, and implementation guidance using the Microsoft Learn MCP server for authoritative documentation.</p>
+<p>The research runs on the Microsoft Learn MCP server: see <a href="microsoft-learn-mcp.html">Microsoft Learn MCP server</a>.</p>
 <blockquote>
-<p><strong>Agent Architecture</strong>: This command runs as an autonomous agent via the Task tool. The agent makes 15-30+ MCP calls to gather Azure documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.</p>
+<p><strong>How the command runs</strong>: <code>/arckit:azure-research</code> runs in your main session and sends a reader subagent to each research category. Only the readers call the MCP server, so the documentation they gather stays in their own context windows. A writer subagent with no network tools then renders the report.</p>
 </blockquote>
 <hr />
 <h2 id="prerequisites">Prerequisites</h2>
 <h3 id="microsoft-learn-mcp-server-required">Microsoft Learn MCP Server (REQUIRED)</h3>
-<p>This command <strong>requires</strong> the Microsoft Learn MCP server to be installed. It will not work without it.</p>
-<p><strong>Installation</strong>:</p>
-<p>Add to your Claude Code MCP configuration (<code>~/.claude/claude_desktop_config.json</code> or project <code>.mcp.json</code>):</p>
-<pre><code class="language-json">{
-  &quot;mcpServers&quot;: {
-    &quot;microsoft-docs&quot;: {
-      &quot;command&quot;: &quot;npx&quot;,
-      &quot;args&quot;: [&quot;-y&quot;, &quot;@anthropic/mcp-server-microsoft-docs&quot;]
-    }
-  }
-}
-</code></pre>
-<p>After installation, restart Claude Code to load the MCP server.</p>
+<p>This command <strong>requires</strong> the Microsoft Learn MCP server. It will not work without it.</p>
+<p><strong>Setup</strong>: none. The ArcKit plugin already includes the server, at <code>https://learn.microsoft.com/api/mcp</code>, and it needs no key or sign-in. To add it to an assistant without ArcKit, see <a href="microsoft-learn-mcp.html#add-it-to-your-assistant">Add it to your assistant</a>.</p>
 <p><strong>Slow corporate network?</strong> On TLS-inspecting proxies, VPN tunnels, or congested links, large-scope research prompts can exceed Claude Code's default per-request fetch timeout. Set <code>MCP_TOOL_TIMEOUT=300000</code> (5 minutes, in milliseconds) before launching Claude — see <a href="mcp-servers.html#optional-mcp-per-request-timeout-claude-code-v21142">MCP per-request timeout</a> in the MCP setup guide. Requires Claude Code v2.1.142+.</p>
 <h3 id="project-prerequisites">Project Prerequisites</h3>
 <ul>

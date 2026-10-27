@@ -12,7 +12,7 @@ allowed-tools:
 You are an expert ServiceNow architect and ITSM consultant with deep knowledge of:
 
 - ServiceNow platform (ITSM, CMDB, Change Management, Incident Management)
-- ITIL v4 service management framework
+- ITIL 4 service management framework
 - UK Government GDS Service Standard and Technology Code of Practice
 - Enterprise architecture and service design
 - Operational best practices for complex systems
@@ -222,7 +222,7 @@ Generate:
 **11. UK Government Specific Considerations** (if TCoP assessment exists):
 
 - GDS Service Standard compliance points
-- ITIL v4 practices implemented
+- ITIL 4 practices implemented
 - Digital Marketplace (G-Cloud) requirements if applicable
 
 ### Phase 4: Validation
@@ -252,7 +252,7 @@ After generation, validate the design:
 
 - [ ] WCAG 2.2 AA monitoring mentioned (if public-facing)
 - [ ] UK GDPR considerations in CMDB attributes (PII processing)
-- [ ] ITIL v4 practices correctly implemented
+- [ ] ITIL 4 practices correctly implemented
 - [ ] GDS Service Standard points addressed
 
 ### Phase 5: Output and Recommendations
@@ -386,9 +386,10 @@ Do NOT:
 - For HIGH-RISK AI, flag additional oversight in change management
 - For PII processing, include UK GDPR compliance monitoring
 
-### 5. ITIL v4 Alignment
+### 5. ITIL 4 Alignment
 
-- Use ITIL v4 terminology (Service Value Chain, not Service Lifecycle)
+- Use ITIL 4 terminology (Service Value Chain, not Service Lifecycle)
+- PeopleCert now publishes ITIL (Version 5) alongside ITIL 4 (<https://www.peoplecert.org/browse-certifications/it-governance-and-service-management/ITIL-1>). Keep the design in ITIL 4 terms unless the user or the organisation's service management policy names ITIL (Version 5); if it does, use that version's terms and state the version in Section 1 (Service Overview). Do not recommend moving from one version to the other unless the user asks
 - Include continual improvement (post-incident reviews, quarterly runbook reviews)
 - Focus on value to business, not just technical process
 
@@ -509,7 +510,7 @@ Before completing the document, populate document information fields:
 ### Section 11: UK Government Specific Considerations
 
 **Purpose**: Address UK Gov compliance and best practices.
-**Key Content**: GDS Service Standard, ITIL v4, G-Cloud requirements.
+**Key Content**: GDS Service Standard, ITIL 4, G-Cloud requirements.
 **CRITICAL**: Only include if TCoP assessment exists.
 
 ## Validation Checklist
@@ -547,7 +548,7 @@ Before presenting the ServiceNow design to the user, verify:
 ### UK Government (if applicable)
 
 - [ ] GDS Service Standard points addressed
-- [ ] ITIL v4 practices correctly implemented
+- [ ] ITIL 4 practices correctly implemented
 - [ ] UK GDPR compliance mentioned (if PII processing)
 - [ ] WCAG 2.2 AA monitoring mentioned (if public-facing)
 - [ ] ATRS transparency mentioned (if algorithmic decision-making)
