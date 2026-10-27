@@ -1,7 +1,7 @@
 recipe: oaa-full
 schema_version: 1
 description: >
-  Open Agile Architecture (O-AA C208) full lifecycle: ADM Lite sprint
+  Open Agile Architecture (O-AA Standard, Version 2.0) full lifecycle: ADM Lite sprint
   mapping, product-centric architecture, agile strategy canvas, security
   embedded in sprint rhythm, and governance cadence.
 

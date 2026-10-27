@@ -1,7 +1,7 @@
 # ArcKit — Open Agile Architecture (O-AA) Overlay
 
 5 slash commands and the `oaa-full` build recipe for agile enterprise architecture
-using Open Agile Architecture (C208) — product-driven, sprint-based delivery:
+using the Open Agile Architecture™ Standard, Version 2.0 (C262) — product-driven, sprint-based delivery:
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
@@ -13,7 +13,7 @@ using Open Agile Architecture (C208) — product-driven, sprint-based delivery:
 
 Recipe: `oaa-full` — all five O-AA commands (ADM Lite → product → strategy → security → governance) on top of the core `PRIN`/`STKE`/`REQ` foundation.
 
-**Official standard:** <https://publications.opengroup.org/c208> (full text behind Open Group sign-in)
+**Official standard:** <https://publications.opengroup.org/c262> — Open Agile Architecture™ Standard, Version 2.0 (C262, April 2026), which supersedes C208 (full text behind Open Group sign-in)
 
 ## Requires arckit core plugin
 
@@ -57,21 +57,21 @@ Notes:
 
 ## Scope
 
-**In scope (v1)**: C208 content — Part 1 O-AA Core (Ch. 3–9, including the 16 axioms of Ch. 9), Ch. 11 Agile Strategy, Ch. 14 Product Architecture, Security by Design (Ch. 4.6 / Axiom 16 / G216), Ch. 8 Agile Governance. Sprint-driven engagements for rapid architecture delivery.
+**In scope (v1)**: O-AA Standard, Version 2.0 content — Ch. 3 A Dual Transformation, Ch. 5 Agile Strategy, Ch. 7 Agile Governance, Ch. 8 Architecture Development, Ch. 10 Intentional Architecture, Ch. 11 Continuous Architectural Refactoring, Ch. 12 Product Architecture, security (Axiom 16 / §14.6.1 / G216) and the 16 axioms of Appendix A. Sprint-driven engagements for rapid architecture delivery.
 
 **Out of scope**: Full TOGAF ADM (deferred to `arckit-togaf-adm` overlay), traditional stage-gate architecture processes. Each O-AA command is designed to run in 2–4 week sprint windows.
 
-## O-AA Standard (C208) Coverage
+## O-AA Standard, Version 2.0 (C262) Coverage
 
-Axioms are cited by their published C208 number (Ch. 9); chapter numbers follow the C208 table of contents (v3.0, October 2022).
+The overlay cites the Open Agile Architecture™ Standard, Version 2.0 (The Open Group document C262, April 2026), which supersedes C208. Axioms are cited by their published number and name (Appendix A); chapter numbers follow the Version 2.0 table of contents. `references/oaa-reference.md` maps the chapter numbers of the superseded C208 to Version 2.0.
 
-| Command | C208 Chapter | Published axioms applied |
+| Command | O-AA v2.0 coordinate | Published axioms applied |
 |---------|-------------|--------|
-| `oaa-adm-lite` | C182 ADM phases ↔ sprints; C208 Ch. 3–9 | 1, 3, 5, 6, 7, 10, 14, 15 |
-| `product-architecture` | Ch. 14 | 15, 6 |
-| `agile-strategy` | Ch. 11 | 5 (anchor); the canvas also applies 1, 6, 14, 15 |
-| `agile-security` | Ch. 4.6 + Axiom 16; G216 | 16 |
-| `agile-governance` | Ch. 8 | 7 |
+| `oaa-adm-lite` | C182 ADM phases ↔ sprints; Ch. 8, 10–11 and Appendix A | 1, 3, 5, 6, 7, 10, 14, 15 |
+| `product-architecture` | Ch. 12 | 15, 6 |
+| `agile-strategy` | Ch. 5 | 5 (anchor); the canvas also applies 1, 6, 14, 15 |
+| `agile-security` | Axiom 16 + §14.6.1; G216 | 16 |
+| `agile-governance` | Ch. 7 | 7 |
 
 ## How It Works
 
@@ -116,8 +116,8 @@ Commands declare explicit next-step targets. Claude Code auto-suggests subsequen
 | Section | Fields determined |
 |---------|-------------------|
 | **Sprint 0 (Vision)** | AI workload type, data classification, jurisdiction, user count, latency targets, budget, constraints, stakeholder concerns, regulatory controls, high-level capabilities in scope (TOGAF Phase A) |
-| **Sprint 1 (Business + Data)** | Baseline and target business capability map with gaps (TOGAF Phase B), value streams with SLAs, data asset inventory (classification, volume, encryption), data flows with compliance controls |
-| **Sprint 2 (Technology)** | Model serving, vector store, database, runtime standards; GPU cluster sizing; network topology; monitoring stack; compliance validation against jurisdiction |
+| **Sprint 1 (Business + Data + Application)** | Baseline and target business capability map with gaps (TOGAF Phase B), value streams with SLAs, data asset inventory (classification, volume, encryption), data flows with compliance controls, application components with SLAs (TOGAF Phase C) |
+| **Sprint 2 (Technology)** | TOGAF Phase D: model serving, vector store, database, runtime standards; GPU cluster sizing; network topology; monitoring stack; compliance validation against jurisdiction |
 | **Sprint 3 (Transition)** | Migration waves, strangle pattern vs big-bang, dependency sequencing, rollback criteria |
 | **Sprint 4+ (Governance)** | Ongoing review gates, change velocity thresholds, compliance evidence per sprint |
 
@@ -212,7 +212,7 @@ arckit build --recipe oaa-full --base-url http://localhost:8080 --model Qwen3.6-
 
 | Dimension | `arckit-togaf-adm` | `arckit-oaa` |
 |-----------|--------------------|-------------|
-| Standard | TOGAF ADM (traditional) | O-AA C208 (agile) |
+| Standard | TOGAF ADM (traditional) | O-AA Standard, Version 2.0 (C262, agile) |
 | Commands | 9 (Preliminary → Phase H + Repository) | 5 (ADM Lite, Product, Strategy, Security, Governance) |
 | Cadence | Quarterly architecture boards | 2–4 week sprint windows |
 | Artefacts | 200-page deliverables | 1–2 page canvases, max 2/sprint |

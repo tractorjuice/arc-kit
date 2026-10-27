@@ -478,8 +478,8 @@ Continuous validation produces measurable security posture indicators:
 | ADM-P (Preliminary) | Define security risk tolerance, regulatory scope | This template |
 | ADM-A (Architecture Vision) | Security requirements + threat model | `vision.yaml` |
 | ADM-B (Business) | Security business objectives, risk appetite | Embedded in sprint planning |
-| ADM-C (Information Systems) | Security architecture design, data classification | `technology-architecture.yaml`, `data-architecture.yaml` |
-| ADM-D (Technology) | Security controls implementation, infrastructure hardening | Security stories in sprint backlog |
+| ADM-C (Information Systems) | Security architecture design, data classification | `data-architecture.yaml` (data assets, flows and applications) |
+| ADM-D (Technology) | Security controls implementation, infrastructure hardening | `technology-architecture.yaml`; security stories in sprint backlog |
 | ADM-E (Opportunities) | Security backlog prioritization, risk-based sequencing | `security-backlog.yaml` |
 | ADM-F (Migration) | Security testing automation, compliance validation | CI/CD pipeline compliance stage |
 | **ADM-G (Governance)** | **Continuous security validation** | **`governance-report.yaml`** |

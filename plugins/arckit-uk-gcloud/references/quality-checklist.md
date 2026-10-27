@@ -865,12 +865,12 @@ All artifacts must pass these 10 checks:
 
 ### OASTR -- O-AA Agile Strategy
 
-- Dual transformation framed as C208 frames it: both the digital dimension (technology, product, operating model) and the agile dimension (organisational, cultural and team agility) are described, or an area is ruled out with a reason
+- Dual transformation framed as the O-AA Standard, Version 2.0 frames it: both the digital dimension (technology, product, operating model) and the agile dimension (organisational, cultural and team agility) are described, or an area is ruled out with a reason
 - The two dimensions are planned together in each transformation wave, not one after the other
 - Each product outcome and each wave states the outcome it buys and the measure that would show it worked
 - Every value stream is mapped to a product team and a transformation wave, so none is left unassigned
 - Funding and team-topology implications stated, not left as an exercise for delivery
-- Every O-AA axiom cited is quoted from the C208 standard by its published number and name, and is used to justify a specific choice rather than listed decoratively
+- Every O-AA axiom cited is named by its published number and name (O-AA Standard, Version 2.0, Appendix A), and is used to justify a specific choice rather than listed decoratively
 - Strategy traces to stakeholder goals and business drivers from STKE and REQ
 
 ### OAPR -- O-AA Product Architecture

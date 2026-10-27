@@ -652,7 +652,7 @@ Enterprise Architecture Development Method — 9 commands covering the full ADM 
 
 ## O-AA Overlay (`arckit-oaa`) [COMMUNITY]
 
-Open Agile Architecture (O-AA, standard C208) — agile enterprise architecture for product-driven, sprint-based delivery. A standalone overlay alongside `arckit-togaf-adm`; the two are complementary, not competitors — see the [O-AA vs TOGAF ADM decision guide](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+Open Agile Architecture (O-AA Standard, Version 2.0, C262) — agile enterprise architecture for product-driven, sprint-based delivery. A standalone overlay alongside `arckit-togaf-adm`; the two are complementary, not competitors — see the [O-AA vs TOGAF ADM decision guide](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
@@ -690,7 +690,7 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 **Running both in the same project:**
 
 - No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.18.3` pins.
-- Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.yaml` (architecture-change ↔ agile-governance).
+- No schema files are shared between the overlays. The O-AA YAML sprint artefacts are defined in the O-AA templates and kept consistent with the matching TOGAF documents: `vision.yaml` with the ADM Preliminary, which `oaa-adm-lite` reads, and `implementation-strategy.yaml` with the transition architecture. `oaa-adm-lite` sends Sprint 4+ architecture change requests through `/arckit-togaf-adm:architecture-change`. `agile-governance` defines its own `change-request.yaml` and `compliance-evidence.yaml` (the latter shared with `agile-security`) and does not read `architecture-change` output.
 - Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands read TOGAF outputs when they exist (ADM Preliminary, business capability map, transition architecture) but do not require them, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
 ---

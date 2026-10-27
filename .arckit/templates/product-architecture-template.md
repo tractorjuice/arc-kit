@@ -1,6 +1,6 @@
 # Product Architecture Template (O-AA)
 
-> **Standard:** Open Agile Architecture™ (O-AA, C208) — Ch. 14: Product Architecture
+> **Standard:** Open Agile Architecture™ Standard, Version 2.0 (O-AA, C262) — Ch. 12: Product Architecture
 > **Organisation:** ${user_config.organisation_name}
 > **Parent reference:** ${user_config.references_dir} — parent engagement reference, if any
 > **TOGAF Mapping:** ADM Phase B (Business) + Phase C (Information Systems) + Phase E (Opportunities)
@@ -28,7 +28,7 @@
 
 ```
 
-**Example:** `Paperclip: AI-driven project orchestration platform that connects architecture decisions to engineering execution through traceable, automated workflows.`
+**Example:** `Policy Answers: answers staff questions from internal policy documents with cited sources, so decisions rest on current policy.`
 
 ### 1.2 Product Outcome
 
@@ -660,39 +660,39 @@ compliance_gaps:
 ## 10. Worked Sample: Combined `product-architecture.yaml`
 
 ```yaml
-# product-architecture.yaml — worked sample (Paperclip, an agent orchestration product)
+# product-architecture.yaml — worked sample (an illustrative document question-answering product)
 product:
-  name: "Paperclip"
+  name: "[PRODUCT_NAME]"
   version: "0.1.0"
-  mission: "AI-driven project orchestration connecting architecture decisions to engineering execution"
+  mission: "Answer staff questions from internal policy documents with cited sources"
   outcome:
-    value: "Reduce architecture-to-implementation handoff from weeks to hours"
-    adoption: "100% of ${user_config.organisation_name} client engagements use Paperclip within 6 months"
+    value: "Reduce the time to answer a policy question from days to minutes"
+    adoption: "[N]% of target users in ${user_config.organisation_name} use [PRODUCT_NAME] within 6 months"
 
 guardrails:
 
   - id: "GR-001"
-    constraint: "No agent writes to another product's data store directly"
+    constraint: "No component writes to another product's data store directly"
     category: "architecture"
 
   - id: "GR-002"
-    constraint: "All issue payloads encrypted in transit (TLS 1.3)"
+    constraint: "All document and query payloads encrypted in transit (TLS 1.3)"
     category: "compliance"
 
 team:
   roles:
 
     - role: "Product Owner"
-      name: "CEO Agent"
+      name: "[Product Owner]"
 
     - role: "Architect"
-      name: "Enterprise Architecture Lead"
+      name: "[Lead Architect]"
 
     - role: "Lead Engineer"
-      name: "Founding Engineer"
+      name: "[Lead Engineer]"
 
     - role: "AI Safety Engineer"
-      name: "AI Safety Architect"
+      name: "[AI Safety Engineer]"
   cadence:
     sprint_weeks: 1
     architecture_review: "Each sprint planning"
@@ -702,25 +702,25 @@ release_roadmap:
 
   - version: "0.1.0"
     target_date: "[YYYY-MM-DD]"
-    outcome: "Core agent orchestration with Paperclip API"
+    outcome: "Question answering over the pilot document set"
     architecture_items:
 
-      - "Agent heartbeat management"
+      - "Document ingestion pipeline"
 
-      - "Issue assignment and checkout"
+      - "Vector store deployment"
 
-      - "Wake payload delivery"
+      - "Model serving with cited answers"
 
   - version: "0.2.0"
     target_date: "[YYYY-MM-DD]"
-    outcome: "Multi-company support with compliance pipeline"
+    outcome: "Multi-tenant support with compliance pipeline"
     architecture_items:
 
       - "Multi-tenancy isolation"
 
       - "Compliance validation integration"
 
-      - "Cross-agent communication"
+      - "Audit logging"
 
 compliance:
   jurisdiction: "AU"
@@ -746,7 +746,7 @@ compliance:
 
 ## References
 
-- O-AA Standard (C208): The Open Group Agile Architecture — https://publications.opengroup.org/c208 (Ch. 14: Product Architecture)
+- Open Agile Architecture™ Standard, Version 2.0 (C262), The Open Group — https://publications.opengroup.org/c262 (Ch. 12: Product Architecture)
 
 - ${user_config.references_dir} — organisation reference documents (e.g. Executable TOGAF ADM Workflow, OAA Study Notes, Compliance Validation Pipeline, Cross-Border Regulatory Mapping Tool); list only documents that exist in the configured directory, using relative paths
 
