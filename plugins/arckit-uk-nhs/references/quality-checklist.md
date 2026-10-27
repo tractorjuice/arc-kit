@@ -1736,15 +1736,15 @@ All artifacts must pass these 10 checks:
 
 ### NHSDTAC -- NHS Digital Technology Assessment Criteria
 
-- All five DTAC sections assessed, each with an explicit pass, partial or fail status and supporting evidence
-- Clinical safety records DCB0129 manufacturer and DCB0160 deployer case status, CSO name and registration, and hazard log status with open-hazard count and highest open risk level
-- Absent safety case files marked `[PENDING DCB0129/0160]` clearly rather than passed over
-- Data protection states the UK GDPR Article 6 lawful basis, and Article 9 where special-category data is processed
-- Sub-processor list records locations and the SCCs or UK addendum relied upon
-- DSPT submission status stated, marked as an organisation responsibility where external
-- Technical assurance covers cloud hosting and UK region status, Cyber Essentials, software lifecycle including SBOM, encryption in transit and at rest with key management, penetration test status, business continuity with RTO and RPO, and vulnerability management SLAs
+- Follows the DTAC form version 2.0 (24 February 2026) structure and question codes: A and B answered as context, every applicable C1–C4 question given a pass, fail or pending status against the form's pass criterion with evidence, and D1 responses recorded without a pass or fail
+- The form's skip logic applied, with skipped questions marked N/A and the reason given
+- Clinical safety records SaMD / AIaMD status (and the Pre-Acquisition Questionnaire where it applies), DCB0129 scope, the Clinical Safety Case Report and Hazard Log with open-hazard count and highest open risk level, and the CSO's name, profession and registration
+- Absent safety case files marked `[PENDING DCB0129]` clearly rather than passed over; the deployer's DCB0160 case, where recorded, is labelled as outside the DTAC form
+- Data protection records the manufacturer's DSPT status, ICO registration, DPIA coverage of the form's listed items, transparency information, data location, and the safeguard for any transfer outside the UK
+- Technical security covers Cyber Essentials, the Cyber Security Charter, the external penetration test (OWASP Top 10, within 12 months, no CVSS 7.0 or above), the Software Security Code of Practice, multi-factor authentication and logging
+- No AI annex presented as part of DTAC; any AI content sits in the separately labelled ArcKit supplement
 - Every `[PENDING]` item requiring human input surfaced in the summary rather than left in the body
-- Cross-references resolve to the DPIA, DATA and clinical-safety artefacts where they exist
+- Cross-references resolve to the DPIA, DATA, NHSMDR and clinical-safety artefacts where they exist
 
 ### NHSMDR -- UK MDR Classification
 

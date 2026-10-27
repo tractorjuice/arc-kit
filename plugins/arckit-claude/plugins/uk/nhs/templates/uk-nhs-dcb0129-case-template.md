@@ -214,7 +214,7 @@ This safety case must be re-reviewed by the Clinical Safety Officer when a chang
 | Doc ID | Title | Source | Used in |
 |---|---|---|---|
 | DCB0129 | Clinical Risk Management: its Application in the Manufacture of Health IT Systems | NHS England | This document, throughout |
-| SAFETY-MD-SPEC | SAFETY.md spec v2.0.0-draft | Marcus Baw / pacharanero | Document structure, hazard-log YAML format |
+| SAFETY-MD-SPEC | SAFETY.md specification 2.0.0-draft (commit af405498, 22 July 2026) | Marcus Baw / pacharanero | Document structure, hazard-log YAML format |
 | ISO-14971 | Application of risk management to medical devices | BSI | §1, §3, §5 (cross-referenced with `uk-mdr-classification` if applicable) |
 | IEC-62304 | Medical-device software lifecycle processes | BSI | §1, §4 (cross-referenced with `uk-mdr-classification` if applicable) |
 | IEC-62366-1 | Application of usability engineering to medical devices | BSI | §3 G1.5, §4 |
@@ -226,4 +226,4 @@ This safety case must be re-reviewed by the Clinical Safety Officer when a chang
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-**Spec lineage**: [Marcus Baw SAFETY.md v2.0.0-draft](https://github.com/pacharanero/SAFETY.md)
+**Spec lineage**: [SAFETY.md specification 2.0.0-draft, commit af405498 (22 July 2026)](https://github.com/pacharanero/SAFETY.md/blob/af405498/spec/specification.md); [ArcKit deviations](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/README.md#spec-lineage)

@@ -4,7 +4,7 @@
 
 The UK NHS Clinical Safety Overlay adds 4 community-contributed commands covering NHS clinical safety, NHS procurement assurance, and UK/EU medical-device regulation. It is the **first sector-specific** ArcKit overlay (all existing overlays are jurisdiction-specific) and establishes the `uk-{sector}-*` naming precedent for future sector overlays.
 
-The DCB0129 and DCB0160 commands adopt Dr Marcus Baw's [SAFETY.md spec v2.0.0-draft](https://github.com/pacharanero/SAFETY.md) verbatim for filenames and YAML-frontmatter hazard log, placed inside an ArcKit project subdirectory rather than the repo root, with an ArcKit Document Control block prepended.
+The DCB0129 and DCB0160 commands follow Dr Marcus Baw's [SAFETY.md spec 2.0.0-draft](https://github.com/pacharanero/SAFETY.md) for filenames, required fields and the YAML-frontmatter hazard log, placed inside an ArcKit project subdirectory rather than the repo root, with an ArcKit Document Control block prepended. The spec is still a draft, so the overlay names the commit it follows and lists its deliberate deviations under [SAFETY.md spec version and deviations](#safetymd-spec-version-and-deviations).
 
 This overlay closes part of [#424](https://github.com/tractorjuice/arc-kit/issues/424). The full design decision log lives at [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](https://github.com/tractorjuice/arc-kit/blob/469e0b7d/docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) and was written so the proposed co-maintainer can review and push back on any decision before tagging.
 
@@ -15,7 +15,7 @@ This overlay closes part of [#424](https://github.com/tractorjuice/arc-kit/issue
 Four jobs in one overlay:
 
 1. **Make NHS clinical safety a first-class architectural artefact** — DCB0129 manufacturer Clinical Safety Case + Hazard Log and DCB0160 deployer counterpart sit alongside requirements and HLD, in machine-readable form (YAML-frontmatter hazard array + rendered Markdown table) rather than buried in Word documents on Sharepoint.
-2. **Make NHS DTAC v3 reusable across procurement events** — five sections plus AI annex, with explicit cross-references to DCB0129/0160, DPIA, ATRS, and Secure by Design so the assurance evidence trail is one document not a folder structure.
+2. **Make NHS DTAC reusable across procurement events** — every question of the DTAC form version 2.0 (sections A, B, C1–C4 and D1) answered with its evidence, with explicit cross-references to DCB0129, the MDR classification, DPIA and Secure by Design so the assurance evidence trail is one document not a folder structure.
 3. **Disambiguate medical-device regulation for SaMD / AIaMD products** — UK MDR 2002 (as amended) and EU MDR 2017/745 classification with Rule 11 reasoning, UKCA / UKNI / CE marking pathway, Windsor Framework NI handling, MHRA SaMD/AIaMD Programme alignment, and post-market obligations.
 4. **Compose with the existing UK government baseline rather than replace it** — NHS digital products still need TCoP, Secure by Design, DPIA, ATRS, Risk register, and Service Standard. The overlay adds the clinical-safety and medical-device-regulation layer on top.
 
@@ -29,7 +29,7 @@ Use the overlay if any of the following apply to the project:
 - The system handles **clinical data** (patient health information, prescribing data, clinical observations, diagnostic outputs) and is intended to inform or support clinical decisions.
 - The system is being submitted for **NHS DTAC procurement assessment** by an NHS Trust, ICS, or national NHS England buyer.
 - The system is potentially a **medical device** — software intended for diagnostic, therapeutic, monitoring, prevention, or treatment purposes. Borderline determination is supported by the `uk-mdr-classification` command which cites the MHRA Borderline Manual explicitly.
-- The system uses **AI / ML for clinical decision support** — this combines clinical safety (DCB0129 hazards specific to AI), procurement (DTAC AI annex), regulation (UK/EU MDR AIaMD), and the MHRA SaMD/AIaMD Programme work packages.
+- The system uses **AI / ML for clinical decision support** — this combines clinical safety (DCB0129 hazards specific to AI), procurement (DTAC question C1.1.1, plus an ArcKit AI supplement outside DTAC where a buyer asks for one), regulation (UK/EU MDR AIaMD), and the MHRA SaMD/AIaMD Programme work packages.
 
 For non-NHS projects the overlay is dormant: the existing UK, MOD, EU, French, Austrian, UAE, Canada, and Australian overlays are unchanged.
 
@@ -59,7 +59,7 @@ Generates a 3-file output set in `projects/{NNN}-<slug>/clinical-safety/`:
 
 | File | Purpose | Content |
 |---|---|---|
-| `SAFETY.md` | Front-door anchor | Required SAFETY.md fields (product-name, version, standard, CSO, organisation, status, hazard-log-url, last-reviewed) + ArcKit Document Control + Summary |
+| `SAFETY.md` | Front-door anchor | Required SAFETY.md fields (product-name, version, standard, CSO, organisation, role, status, hazard-log-url, applicable-standards, last-reviewed) + ArcKit Document Control + Summary |
 | `SAFETY-CASE.md` | Clinical Safety Case Report | GSN-inspired sections: Intended Use, Scope, Safety Argument (G1.1–G1.6 cross-referencing hazards), Evidence, Residual Risk, CSO Sign-off |
 | `HAZARD-LOG.md` | Hazard Log | YAML frontmatter array of hazards + controls, rendered Markdown table below. 6 starter hazards covering wrong-patient, stale data, audit, authorisation, alert delivery, write integrity |
 
@@ -73,7 +73,7 @@ Generates a 3-file output set in `projects/{NNN}-<slug>/clinical-safety/deployme
 
 | File | Purpose |
 |---|---|
-| `SAFETY.md` | Deployer front-door anchor (deployer adaptation of Marcus's spec) |
+| `SAFETY.md` | Deployer front-door anchor (Marcus's spec for deployer use: `organisation` is the deploying organisation, `role` is `deployer`, plus an ArcKit `manufacturer-case-url` field) |
 | `DEPLOYMENT-SAFETY-CASE.md` | Deployment Context, Scope + Phasing, Manufacturer Case Acceptance, Deployment Safety Argument (G1.1–G1.6 with deployment-specific claims), Local Evidence, Residual Deployment Risk, Deploying-organisation CSO Sign-off |
 | `DEPLOYMENT-HAZARD-LOG.md` | YAML frontmatter array with 10 starter deployment hazards covering training, workflow integration, integration failure, BC, parallel running, migration, local configuration, terminology / coding, RBAC, incident reporting |
 
@@ -81,19 +81,21 @@ The deployer case sits *alongside* the manufacturer case — neither replaces th
 
 **Deploying-organisation CSO**: must be appointed by the deploying organisation, NOT the product manufacturer.
 
-### `/arckit:uk-nhs-dtac` — NHS Digital Technology Assessment Criteria v3
+### `/arckit:uk-nhs-dtac` — NHS Digital Technology Assessment Criteria
 
-Generates `ARC-{NNN}-NHSDTAC-v1.0.md` covering five sections:
+Generates `ARC-{NNN}-NHSDTAC-v1.0.md`, which answers each question of the DTAC form version 2.0 (NHS England, 24 February 2026; required in place of version 1.0 from 6 April 2026):
 
-| Section | Coverage | ArcKit cross-references |
-|---|---|---|
-| 1. Clinical Safety | DCB0129 + DCB0160 status, CSO, hazard log | `clinical-safety/SAFETY-CASE.md`, `clinical-safety/HAZARD-LOG.md` |
-| 2. Data Protection | UK GDPR / DPA 2018 lawful basis, DPIA, DSPT, sub-processors, data-subject rights | `dpia` output |
-| 3. Technical Assurance | Cloud hosting, security certifications, SDLC, encryption, pen test, BC/DR, vulnerability management | `secure`, `hld-review`, `dld-review` |
-| 4. Interoperability | FHIR UK Core, SNOMED CT, dm+d, NHS Number, NHS APIs (PDS, e-RS, GP Connect, NHS App Connect, NHS login, BARS) | `data-model`, `adr` |
-| 5. Usability + Accessibility | NHS Service Standard, WCAG 2.2 AA, screen-reader / keyboard / contrast evidence, plain English | `service-assessment` |
+| Section | Coverage | Assessed? | ArcKit cross-references |
+|---|---|---|---|
+| A. Company information | Company, product, version, product type, contact, registration, CQC | Not assessed — context | Project metadata |
+| B. Value proposition | Intended use, description, users and benefits, data flows and user journey | Not assessed — context | `requirements`, `stakeholders`, `data-model` |
+| C1. Clinical safety | SaMD / AIaMD status and Pre-Acquisition Questionnaire, DCB0129 scope, clinical risk management system, Clinical Safety Case Report and Hazard Log, CSO | Assessed — must pass | `uk-mdr-classification`, `clinical-safety/SAFETY-CASE.md`, `clinical-safety/HAZARD-LOG.md` |
+| C2. Data protection | Manufacturer's DSPT status, ICO registration, DPIA, transparency information, terms of use, data location and transfers | Assessed — must pass | `dpia` output |
+| C3. Technical security | Cyber Essentials, Cyber Security Charter for Suppliers to the NHS, penetration test, Software Security Code of Practice, multi-factor authentication, logging | Assessed — must pass | `secure`, `hld-review`, `dld-review` |
+| C4. Interoperability | APIs and standards, GDS Open API practice, NHS number, PDS, NHS login, DAPB3051 | Assessed — must pass | `data-model`, `adr` |
+| D1. Usability and accessibility | User journey, usability testing, Accessible Information Standard, WCAG 2.2 AA, accessibility statement, service availability | Scored, not pass/fail | `service-assessment` |
 
-Plus an **AI annex** when the product uses AI/ML clinically — model governance, fairness, operational monitoring, transparency, MHRA AIaMD Programme alignment. Cross-references `atrs` output.
+DTAC version 2.0 has no AI section. When the product uses AI/ML clinically and a buyer asks for AI assurance, the artefact adds an **AI and machine learning supplement**, labelled as an ArcKit addition outside DTAC: model governance, fairness, operational monitoring, transparency, MHRA AIaMD Programme alignment. Cross-references `atrs` output. The deploying organisation's DCB0160 case is likewise recorded beside C1 but is not a DTAC question.
 
 ### `/arckit:uk-mdr-classification` — UK + EU MDR SaMD / AIaMD Classification
 
@@ -149,13 +151,31 @@ DTAC and MDR classification *do* follow ArcKit naming (`ARC-{NNN}-NHSDTAC-v1.0.m
 
 ---
 
+## SAFETY.md spec version and deviations
+
+The DCB0129 and DCB0160 commands follow the SAFETY.md specification **version 2.0.0-draft, as at commit [`af405498`](https://github.com/pacharanero/SAFETY.md/blob/af405498/spec/specification.md) (22 July 2026)**. The spec has no tagged release yet, and its required fields changed in July 2026 under the same version label (`role` and `applicable-standards` were added, and `organisation` now means the organisation responsible for the safety file). The `SAFETY.md` required fields and the `HAZARD-LOG.md` YAML schema match that text.
+
+Deliberate deviations from the spec:
+
+| Deviation | What the spec says | What the overlay does |
+|---|---|---|
+| Location | All files live at the root of the repository | Files live in `projects/{NNN}-<slug>/clinical-safety/` (deployer set in `clinical-safety/deployment/`), so one repository can hold several ArcKit projects |
+| Document Control | Not part of the spec | Each file starts with an ArcKit Document Control table and Revision History, with the literal filename as Document ID |
+| Deployer file set | Four files: `SAFETY.md`, `SAFETY-CASE.md`, `HAZARD-LOG.md`, `SAFETY-PLAN.md`; the DCB0160 crosswalk allows a deployment-specific safety case and hazard register | `DEPLOYMENT-SAFETY-CASE.md` and `DEPLOYMENT-HAZARD-LOG.md`, with `D-HAZ-NNN` hazard and `DCNNN` control IDs, so the deployer set sits beside the manufacturer set |
+| Extra field | Not defined | The deployer `SAFETY.md` adds `manufacturer-case-url` |
+| Tier | The CSO chooses the tier | The commands emit the Tier 2 three-file set by default and do not generate `SAFETY-PLAN.md` |
+
+When the spec is tagged, re-check the field list and update the pinned commit.
+
+---
+
 ## Doc-type codes
 
 Two doc-type codes are registered in `plugins/arckit-claude/config/doc-types.mjs`:
 
 | Code | Document type | Regime | Category | Severity |
 |---|---|---|---|---|
-| `NHSDTAC` | NHS Digital Technology Assessment Criteria (DTAC v3) | UK | Compliance | HIGH |
+| `NHSDTAC` | NHS Digital Technology Assessment Criteria (DTAC) | UK | Compliance | HIGH |
 | `NHSMDR` | UK MDR + EU MDR SaMD/AIaMD Classification | UK | Compliance | HIGH |
 
 Hazards do not have a doc-type code because they live in Marcus's `HAZARD-LOG.md` YAML, not as separate ARC files.
@@ -191,8 +211,8 @@ This overlay always emits the Tier 2 three-file set. For Tier 1 products, the CS
 
 **Community-contributed.** Output is **not** clinical, legal, or regulatory advice. The Clinical Safety Case Report, Hazard Log, DTAC assessment, and MDR Classification MUST be reviewed and signed off by:
 
-- A qualified Clinical Safety Officer (CSO) with current GMC / NMC / HCPC / GPhC registration — for DCB0129, DCB0160, DTAC §1
-- A Data Protection Officer or appropriately qualified privacy specialist — for DTAC §2 (and the underlying DPIA)
+- A qualified Clinical Safety Officer (CSO) with current GMC / NMC / HCPC / GPhC registration — for DCB0129, DCB0160, DTAC C1
+- A Data Protection Officer or appropriately qualified privacy specialist — for DTAC C2 (and the underlying DPIA)
 - A qualified Regulatory Affairs Specialist or Notified Body / Approved Body advisor — for UK MDR + EU MDR classification
 
 before the product is deployed into clinical use, submitted to an NHS buyer, or placed on the market as a medical device. Misuse of the generated output has material legal, commercial, and patient-safety consequences.
@@ -203,11 +223,11 @@ before the product is deployed into clinical use, submitted to an NHS buyer, or 
 
 - NHS DCB0129 — <https://digital.nhs.uk/data-and-information/information-standards/information-standards-and-data-collections-including-extractions/publications-and-notifications/standards-and-collections/dcb0129-clinical-risk-management-its-application-in-the-manufacture-of-health-it-systems>
 - NHS DCB0160 — <https://digital.nhs.uk/data-and-information/information-standards/information-standards-and-data-collections-including-extractions/publications-and-notifications/standards-and-collections/dcb0160-clinical-risk-management-its-application-in-the-deployment-and-use-of-health-it-systems>
-- NHS DTAC — <https://transform.england.nhs.uk/key-tools-and-info/digital-technology-assessment-criteria-dtac/>
+- NHS DTAC guidance and form (version 2.0, 24 February 2026) — <https://digital.nhs.uk/services/digital-technology-assessment-criteria-dtac>
 - UK MDR 2002 (as amended) — <https://www.legislation.gov.uk/uksi/2002/618>
 - EU MDR 2017/745 — <https://eur-lex.europa.eu/eli/reg/2017/745>
 - MHRA Software and AI as a Medical Device Programme — <https://www.gov.uk/government/publications/software-and-artificial-intelligence-ai-as-a-medical-device>
-- Marcus Baw SAFETY.md spec — <https://github.com/pacharanero/SAFETY.md>
+- Marcus Baw SAFETY.md spec — <https://github.com/pacharanero/SAFETY.md> (followed at commit [`af405498`](https://github.com/pacharanero/SAFETY.md/blob/af405498/spec/specification.md), 22 July 2026)
 - Marcus Baw DCB0129 templated — <https://github.com/turva-uk/dcb0129-template>
 - Marcus Baw DCB0129 markdown — <https://github.com/turva-uk/dcb0129-markdown>
 - ArcKit issue [#424](https://github.com/tractorjuice/arc-kit/issues/424) — Community overlay recruitment thread and design context

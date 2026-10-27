@@ -543,12 +543,12 @@ The commands chain together in a canonical order from `principles → uae-classi
 
 **Procurement and regulation**:
 
-- `/arckit:uk-nhs-dtac` — NHS Digital Technology Assessment Criteria v3 — 5 sections (Clinical Safety, Data Protection, Technical Assurance, Interoperability, Usability + Accessibility) plus AI annex. Cross-references DCB0129/0160, DPIA, ATRS, Secure by Design
+- `/arckit:uk-nhs-dtac` — NHS Digital Technology Assessment Criteria, following the DTAC form version 2.0 (24 February 2026; required from 6 April 2026): context sections A and B, assessed sections C1–C4 (Clinical safety, Data protection, Technical security, Interoperability) and scored section D1 (Usability and accessibility), plus an optional AI supplement outside DTAC. Cross-references DCB0129, MDR classification, DPIA, ATRS, Secure by Design
 - `/arckit:uk-mdr-classification` — UK MDR 2002 (as amended) + EU MDR 2017/745 software-as-medical-device (SaMD) and AI-as-medical-device (AIaMD) classification. UKCA / UKNI / CE marking pathway, Windsor Framework NI handling, conformity-assessment route, MHRA SaMD/AIaMD Programme alignment, ISO 14971 / IEC 62304 / ISO 13485 standards mapping, post-market obligations
 
 The commands compose with — not replace — the UK government baseline (`tcop`, `secure`, `dpia`, `atrs`, `risk`, `service-assessment`). Recipe: `uk-nhs-clinical-safety` (44 targets across the clinical-safety waves). Proposed domain co-maintainer: Dr Marcus Baw ([@pacharanero](https://github.com/pacharanero)) — clinical informatician at RCPCH, openEHR, NHS England.
 
-The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — they follow Marcus's SAFETY.md spec convention so they remain readable by clinicians, MHRA reviewers, and procurement teams who do not use ArcKit. Other artefacts cross-reference them by relative path. Full design log: [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md).
+The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — they follow Marcus's SAFETY.md spec convention so they remain readable by clinicians, MHRA reviewers, and procurement teams who do not use ArcKit. Other artefacts cross-reference them by relative path. Full design log (as committed in #501): [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](https://github.com/tractorjuice/arc-kit/blob/469e0b7d/docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md).
 
 ---
 
