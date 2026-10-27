@@ -459,6 +459,25 @@ def test_an_extract_gets_the_mode_of_a_new_file_or_of_the_file_it_replaces(tmp_p
         os.umask(old)
 
 
+def test_a_read_only_extract_leaves_no_temporary_file(tmp_path):
+    # Windows refuses to replace a read-only file; POSIX replaces it and keeps
+    # its mode. Either way no temporary file is left, and on Windows the
+    # error is the refused replace, not a failed clean-up.
+    path = tmp_path / nlr.NORA_FILE
+    nlr.write_extract(str(path), nlr.NORA_TITLE, "<!-- s -->", nlr.NORA_TITLE + "\nx\n")
+    path.chmod(stat.S_IREAD)
+    try:
+        nlr.write_extract(str(path), nlr.NORA_TITLE, "<!-- s -->", nlr.NORA_TITLE + "\ny\n")
+    except PermissionError as exc:
+        # os.replace names both files; a failed os.unlink names only the temporary one.
+        assert sys.platform == "win32" and exc.filename2 and Path(exc.filename2) == path
+    finally:
+        left = [p.name for p in tmp_path.iterdir()]
+        for p in tmp_path.iterdir():
+            p.chmod(stat.S_IREAD | stat.S_IWRITE)
+    assert left == [nlr.NORA_FILE], f"a temporary file was left behind: {left}"
+
+
 def test_a_failed_write_leaves_no_temporary_file(tmp_path, monkeypatch):
     def broken(src, dst):
         raise OSError("disk full")

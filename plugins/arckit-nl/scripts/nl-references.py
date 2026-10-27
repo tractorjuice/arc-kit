@@ -346,8 +346,8 @@ def neutralise(text):
 
 
 def file_mode(path):
-    """The mode for a rewritten extract: that of the file it replaces, or
-    what a new file gets under the umask."""
+    """The POSIX mode for a rewritten extract: that of the file it replaces,
+    or what a new file gets under the umask."""
     try:
         return os.stat(path).st_mode & 0o777
     except OSError:
@@ -370,7 +370,11 @@ def write_extract(path, title, stamp, body):
     try:
         with os.fdopen(fd, "w", encoding="utf-8", newline="\n") as f:
             f.write(text)
-        os.chmod(tmp, file_mode(path))   # mkstemp creates the file owner-only (0600)
+        if os.name == "posix":
+            # mkstemp creates the file owner-only (0600). Only POSIX: on
+            # Windows a mode is just the read-only flag, and a temporary file
+            # copied read-only from the extract could not be removed below.
+            os.chmod(tmp, file_mode(path))
         os.replace(tmp, path)
     finally:
         if os.path.exists(tmp):
