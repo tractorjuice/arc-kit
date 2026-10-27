@@ -34,6 +34,10 @@ templates: the parts between their <!-- page:* --> markers are filled in and
 the <!-- viewer-only --> parts dropped. In the browser the viewers now only
 forward old ?guide= and ?a= links to these pages.
 
+The pages show an overlay command as Claude Code names it, `/arckit-uae:uae-pdpl`,
+while the Markdown keeps `/arckit:uae-pdpl` (scripts/site_command_names.py, which
+also rewrites the hand-written pages; run it first).
+
     uv run scripts/generate-site-pages.py          # write the pages
     uv run scripts/generate-site-pages.py --check  # exit 1 if any page is stale
 
@@ -66,6 +70,13 @@ try:
     from markdown_it import MarkdownIt
 except ImportError:
     sys.exit("markdown-it-py is not installed. Run: uv run scripts/generate-site-pages.py")
+
+# Overlay commands appear under their Claude Code names, `/arckit-uae:uae-pdpl`,
+# while the guides and articles keep the source form `/arckit:uae-pdpl`
+# (arc-kit#982). Hand-written pages get the same rewrite from
+# scripts/site_command_names.py.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from site_command_names import claude_code_names  # noqa: E402
 
 REPO = Path(__file__).resolve().parents[1]
 DOCS = REPO / "docs"
@@ -339,6 +350,8 @@ def render_body(md: str, page: Page, site: Site) -> str:
     body = MD.render(md)
     body = re.sub(r"<h1>.*?</h1>\n?", "", body, count=1, flags=re.S)  # the hero shows it
     body = add_heading_ids(body)
+    # After the ids, so a heading keeps the anchor GitHub gives the source and links to it still work.
+    body = claude_code_names(body)
     body = MERMAID_RE.sub(r'<pre class="mermaid">\1</pre>', body)
     return ATTR_RE.sub(lambda m: f'{m.group(1)}="{esc(rewrite_url(html.unescape(m.group(2)), m.group(1), page, site))}"', body)
 
@@ -443,7 +456,7 @@ def hero_block(stat: str, title: str, description: str) -> str:
 def films_block(films: list[dict]) -> str:
     cards = []
     for film in films:
-        fid, label = esc(film["id"]), esc(film["label"])
+        fid, label = esc(film["id"]), esc(claude_code_names(film["label"]))
         cards.append(
             '<div class="app-film">\n'
             f'<button type="button" class="app-film__play" data-film="{fid}" data-label="{label}" aria-label="Play {label}">'
@@ -486,9 +499,9 @@ def guide_pages(site: Site) -> dict[Path, str]:
         root = "../" * depth
         url = f"{SITE}/{page.out}"
         extras = GUIDE_EXTRAS.get(name, {})
-        heading = first_heading(md) or name
+        heading = claude_code_names(first_heading(md)) or name
         title = extras.get("title", heading)
-        lead = first_paragraph(md) or heading
+        lead = claude_code_names(first_paragraph(md)) or heading
         is_role = name.startswith("roles/")
         section, section_url = ("Roles", "roles.html") if is_role else ("Guides", "guides.html")
 
@@ -562,8 +575,8 @@ def cards() -> list[dict[str, str]]:
         img, summary = CARD_IMG_RE.search(block), CARD_SUMMARY_RE.search(block)
         found.append({
             "slug": slug.group(1),
-            "title": strip_tags(title.group(1)),
-            "summary": strip_tags(summary.group(1)) if summary else "",
+            "title": claude_code_names(strip_tags(title.group(1))),
+            "summary": claude_code_names(strip_tags(summary.group(1))) if summary else "",
             "image": img.group(1) if img else "",
             "alt": strip_tags(img.group(2) or "") if img else "",
         })
@@ -579,8 +592,8 @@ def article_pages(site: Site, listed: list[dict[str, str]], tracked: set[str]) -
         md = (REPO / source).read_text(encoding="utf-8")
         page = Page("article", f"share/{slug}.html", source)
         url = f"{SITE}/{page.out}"
-        heading = first_heading(md) or card["title"]
-        lead = first_paragraph(md)
+        heading = claude_code_names(first_heading(md)) or card["title"]
+        lead = claude_code_names(first_paragraph(md))
         summary = card["summary"] or lead
 
         hero = card["image"] if card["image"] and not card["image"].endswith(".svg") else ""
