@@ -307,6 +307,19 @@ function scanGlobalDocs(repoRoot) {
   return { global, globalExternal, globalPolicies };
 }
 
+// Manifest JSON key for a SUBDIR_MAP directory: 'wardley-maps' -> 'wardleyMaps'.
+// Used both to initialise the project's buckets and to route files into them;
+// they must agree, so they share this (as in the Claude plugin's sync-guides.mjs).
+function subdirKey(dir) {
+  return dir.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+}
+
+// Manifest keys of every SUBDIR_MAP bucket, in registry order. llms.txt walks
+// this list; the dashboard template and the DOCUMENT STATS table name each
+// bucket. changes/ (ACHG), audits/ (CDAU), framework/ (FWRK) and procurement/
+// (GCLD, DOS, GCLC) were all routed here but had no bucket (#982).
+const SUBDIR_KEYS = [...new Set(Object.values(SUBDIR_MAP))].map(subdirKey);
+
 function scanProject(repoRoot, projectName) {
   const projectDir = join(repoRoot, 'projects', projectName);
   const projectPath = `projects/${projectName}`;
@@ -322,18 +335,23 @@ function scanProject(repoRoot, projectName) {
     id: projectName,
     name: displayName,
     documents: [],
-    diagrams: [],
-    decisions: [],
-    wardleyMaps: [],
-    dataContracts: [],
     reviews: [],
-    research: [],
     vendors: [],
     vendorProfiles: [],
     techNotes: [],
     dataSourceProfiles: [],
     external: [],
   };
+
+  // One bucket per SUBDIR_MAP destination, DERIVED rather than hand-listed.
+  // The routing loop below keys subdirMap the same way. The hand-written list
+  // stopped at research/, so a repo with changes/, audits/, framework/ or
+  // procurement/ made scanProject push into `undefined` and $arckit-pages died
+  // before it wrote the dashboard (#982). The Claude plugin's hook already
+  // derived its buckets this way.
+  for (const dir of new Set(Object.values(SUBDIR_MAP))) {
+    project[subdirKey(dir)] = [];
+  }
 
   // Core documents in project root — accepts any extension registered in DOC_TYPES
   for (const f of listDir(projectDir)) {
@@ -355,7 +373,7 @@ function scanProject(repoRoot, projectName) {
   // Maps directory name → manifest JSON key (camelCase)
   const subdirMap = {};
   for (const dir of new Set(Object.values(SUBDIR_MAP))) {
-    subdirMap[dir] = dir.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+    subdirMap[dir] = subdirKey(dir);
   }
   subdirMap['reviews'] = 'reviews';
 
@@ -545,9 +563,12 @@ function scanProject(repoRoot, projectName) {
     }
   }
 
-  // Remove empty arrays
-  for (const key of ['diagrams', 'decisions', 'wardleyMaps', 'dataContracts', 'reviews', 'research', 'vendors', 'vendorProfiles', 'techNotes', 'dataSourceProfiles', 'external']) {
-    if (project[key].length === 0) delete project[key];
+  // Remove empty arrays, except documents. Walks the project rather than a
+  // list, so the derived SUBDIR_MAP buckets are cleaned up too.
+  for (const key of Object.keys(project)) {
+    if (key !== 'documents' && Array.isArray(project[key]) && project[key].length === 0) {
+      delete project[key];
+    }
   }
 
   return project;
@@ -641,11 +662,7 @@ function buildLlmsTxt(manifest, repoInfo, version) {
         }
       };
       emit(project.documents);
-      emit(project.diagrams);
-      emit(project.decisions);
-      emit(project.wardleyMaps);
-      emit(project.dataContracts);
-      emit(project.research);
+      for (const key of SUBDIR_KEYS) emit(project[key]);
       emit(project.reviews);
       if (project.vendors) {
         for (const vendor of project.vendors) {
@@ -969,6 +986,10 @@ let wardleyMapCount = 0;
 let dataContractCount = 0;
 let researchCount = 0;
 let reviewCount = 0;
+let changeCount = 0;
+let auditCount = 0;
+let frameworkCount = 0;
+let procurementCount = 0;
 let vendorDocCount = 0;
 let vendorProfileCount = 0;
 let techNoteCount = 0;
@@ -981,6 +1002,10 @@ for (const p of manifest.projects) {
   dataContractCount = dataContractCount + (p.dataContracts ? p.dataContracts.length : 0);
   researchCount = researchCount + (p.research ? p.research.length : 0);
   reviewCount = reviewCount + (p.reviews ? p.reviews.length : 0);
+  changeCount = changeCount + (p.changes ? p.changes.length : 0);
+  auditCount = auditCount + (p.audits ? p.audits.length : 0);
+  frameworkCount = frameworkCount + (p.framework ? p.framework.length : 0);
+  procurementCount = procurementCount + (p.procurement ? p.procurement.length : 0);
   if (p.vendors) for (const v of p.vendors) vendorDocCount = vendorDocCount + v.documents.length;
   vendorProfileCount = vendorProfileCount + (p.vendorProfiles ? p.vendorProfiles.length : 0);
   techNoteCount = techNoteCount + (p.techNotes ? p.techNotes.length : 0);
@@ -1027,6 +1052,10 @@ const message = [
   `| Data Contracts | ${dataContractCount} |`,
   `| Research | ${researchCount} |`,
   `| Reviews | ${reviewCount} |`,
+  `| Change Requests | ${changeCount} |`,
+  `| Audits | ${auditCount} |`,
+  `| Framework | ${frameworkCount} |`,
+  `| Procurement | ${procurementCount} |`,
   `| Vendor Documents | ${vendorDocCount} |`,
   `| Vendor Profiles | ${vendorProfileCount} |`,
   `| Tech Notes | ${techNoteCount} |`,
