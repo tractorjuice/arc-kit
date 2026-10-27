@@ -33,7 +33,7 @@ $ARGUMENTS
 
 - **PRIN** (Architecture Principles, in 000-global) — Extract: Guiding principles, decision framework, compliance requirements, technology standards, design constraints, governance standards
   - If missing: note in assumptions that principle alignment could not be validated
-- **STRAT** (Architecture Strategy) — Extract: Strategic vision, target state description, strategic themes, investment priorities
+- **STRAT** (Architecture Strategy, in this project or in 000-global) — Extract: Strategic vision, target state description, strategic themes, investment priorities
   - If missing: note in assumptions that strategic alignment could not be validated
 - **APP** (Application Inventory) — Extract: Applications in scope (APP-NNN IDs), the capabilities each supports and how fully (application-to-capability mapping), strategic fit, lifecycle phase, status and end-of-life dates, vendor lock-in risk
   - If missing: note in assumptions that application coverage of each capability could not be validated, and suggest `/arckit-togaf-adm:application-inventory`
@@ -263,7 +263,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 ### Synthesised From
 - ✅ Business Capability Model: ARC-{P}-BPCM-v[N].md
-- [✅/⚠️] Architecture Strategy: ARC-{P}-STRAT-v[N].md
+- [✅/⚠️] Architecture Strategy: ARC-{P}-STRAT-v[N].md (or ARC-000-STRAT-v[N].md in 000-global)
 - [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
 - [✅/⚠️] Application Inventory: ARC-{P}-APP-v[N].md
 - [✅/⚠️] Application Rationalisation: ARC-{P}-APPR-v[N].md

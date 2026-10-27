@@ -167,7 +167,7 @@ gantt
 
 | Source Artifact | Document | Link/Reference |
 |-----------------|----------|----------------|
-| Application Portfolio | `ARC-[P]-APP-v[N].md` | [Direct reference] |
+| Application Inventory | `ARC-[P]-APP-v[N].md` | [Direct reference] |
 | Business Capability Model | `ARC-[P]-BPCM-v[N].md` | [Capability alignment] |
 | Architecture Principles | `ARC-000-PRIN-v[N].md` | [Principle references] |
 | Architecture Decisions | `ARC-[P]-ADR-*.md` | [Decision references] |
