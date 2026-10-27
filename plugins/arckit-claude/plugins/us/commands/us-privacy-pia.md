@@ -7,7 +7,7 @@ handoffs:
   - command: us-icam
     description: PII collected by identity proofing (IAL2/IAL3) and authentication processes is documented in the PIA; the ICAM data flows must reconcile with the PIA inventory.
   - command: us-ai-impact
-    description: AI systems processing PII require both the PIA and the M-24-10 rights-impacting determination; the PIA feeds the AI Impact Assessment.
+    description: AI systems processing PII require both the PIA and the M-25-21 high-impact determination; the PIA feeds the AI Impact Assessment.
   - command: data-model
     description: PII fields and lawful authorities surface as data-model attributes and access-control rules.
 allowed-tools:
@@ -25,7 +25,8 @@ allowed-tools:
 > and 3PAO before reliance.
 >
 > **Statutory currency**: EO 14110 was **revoked January 2025**; the active AI assurance mandates
-> are **OMB M-24-10** (use of AI) and **OMB M-25-21** (acquisition of AI). FedRAMP completed the
+> are **OMB M-25-21** (use and governance of AI; it rescinded and replaced M-24-10 on 3 April 2025)
+> and **OMB M-25-22** (acquisition of AI; it replaced M-24-18). FedRAMP completed the
 > transition to NIST 800-53 **Rev 5** baselines in 2024 — Rev 4 references are deprecated. Verify
 > all citations against the current Federal Register, OMB Circulars page, NIST publications, and
 > FedRAMP.gov before relying on this output.
@@ -97,7 +98,7 @@ This US PIA is distinct from the Canadian PIA (`/arckit-ca:ca-pia`), Australian 
 
 ## Handoffs
 
-Identity-proofing PII flows reconcile with `/arckit-us:us-icam`. AI systems processing PII require `/arckit-us:us-ai-impact` for the M-24-10 rights-impacting determination. PII elements, lawful authorities, and retention rules flow into `/arckit:data-model` as data classifications and access-control attributes.
+Identity-proofing PII flows reconcile with `/arckit-us:us-icam`. AI systems processing PII require `/arckit-us:us-ai-impact` for the M-25-21 high-impact determination. PII elements, lawful authorities, and retention rules flow into `/arckit:data-model` as data classifications and access-control attributes.
 
 ## Important Notes
 

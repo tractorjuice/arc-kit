@@ -208,7 +208,7 @@ Map NIST SP 800-53 controls to AI RMF functions.
 | NIST AI RMF 1.0 | Artificial Intelligence Risk Management Framework 1.0 | <https://doi.org/10.6028/NIST.AI.100-1> |
 | AI RMF Playbook | Playbook for the AI RMF | <https://airc.nist.gov/AI_RMF_Knowledge_Base/Playbook> |
 | NIST AI 600-1 | AI RMF: Generative AI Profile | <https://doi.org/10.6028/NIST.AI.600-1> |
-| OMB M-24-10 | Advancing Governance, Innovation, and Risk Management for Agency Use of AI | <https://www.whitehouse.gov/wp-content/uploads/2024/03/M-24-10-Advancing-Governance-Innovation-and-Risk-Management-for-Agency-Use-of-Artificial-Intelligence.pdf> |
+| OMB M-25-21 | Accelerating Federal Use of AI through Innovation, Governance, and Public Trust (rescinded and replaced M-24-10) | <https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-21-Accelerating-Federal-Use-of-AI-through-Innovation-Governance-and-Public-Trust.pdf> |
 
 ---
 

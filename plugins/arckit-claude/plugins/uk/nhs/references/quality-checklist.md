@@ -1025,7 +1025,7 @@ All artifacts must pass these 10 checks:
 - Authorization boundary describes components inside and outside, with explicit in-scope / out-of-scope justification for external services per the ABG
 - Every interconnection records name, FedRAMP package ID, agreement type (ICA / MOU / ISA), data direction, ports and protocols, and sensitivity
 - Types of Users records privilege level, clearance or citizenship requirement, and authentication mechanism per population
-- Applicable laws include FISMA, the Privacy Act and E-Gov Act §208 as a minimum, plus agency-specific statutes, with M-24-10 cited where AI is in scope
+- Applicable laws include FISMA, the Privacy Act and E-Gov Act §208 as a minimum, plus agency-specific statutes, with OMB M-25-21 cited where AI is in scope (and M-25-22 where AI is acquired)
 - ConMon strategy states scan cadence by type (authenticated, unauthenticated, web application, container, database), annual assessment and POA&M cadence
 
 ### FRRR -- FedRAMP Readiness Assessment
@@ -1033,13 +1033,15 @@ All artifacts must pass these 10 checks:
 - The SSP and NIST 800-53 artefacts both exist — the control delta cannot be enumerated without them
 - Capability statement says why a federal agency would use the CSO, not only what it does
 - Ready-capabilities checklist assessed item by item: FIPS 140-3 validated cryptography at rest and in transit, MFA for privileged access, audit logging, vulnerability-management cadence, incident response with US-CERT reporting, supply-chain controls, ConMon, and US-Persons staffing where required
-- Every gap records a severity per the 3PAO RAR rubric (Critical / High / Moderate / Low), an owner and a target date
+- Federal Mandates (RAR §4.1, six questions) each answered Yes or No, Yes only when fully and strictly met; an alternative implementation is a No
+- FedRAMP Requirements (RAR §4.2) answered Yes or No as the RAR asks, with a partly implemented capability answered No and its missing elements described
+- Every gap records a severity (Critical / High / Moderate / Low), an owner and a target date, and the severity is presented as ArcKit's remediation-priority scale: the RAR records Yes / No answers and a 3PAO's overall judgement, not severities
 - Gap register reconciles with the Planned entries in the NIST 800-53 artefact
 - Every gap has a corresponding draft POA&M row in FedRAMP POA&M format
 - Evidence inventory identifies control claims with no supporting artefact, rather than listing only the evidence that exists
 - Customer Responsibility Matrix drafted for SaaS and PaaS offerings
-- Authorization path recommended with rationale against the JAB prioritization criteria
-- Readiness verdict consistent with the gaps — no Ready verdict while Critical or High gaps remain open
+- Certification route recommended (type Rev 5 or 20x, path Agency or Program, class A–D) with rationale, and no JAB P-ATO path offered (OMB M-24-15 ended the JAB)
+- Readiness verdict consistent with the answers and gaps — no Ready verdict while any Federal Mandate is No or Critical or High gaps remain open
 
 ### ZTA -- Zero Trust Architecture Maturity
 
@@ -1092,19 +1094,20 @@ All artifacts must pass these 10 checks:
 - Generative AI addendum present wherever the system uses generative AI, assessing all 12 NIST AI 600-1 risks with applicability, controls, residual risk and actions
 - Absence of the GenAI addendum justified by an explicit not-generative determination, never omitted silently
 - Residual risk register lists risks remaining after Manage actions, each with a target review date
-- Control crosswalk maps AI RMF subcategories to 800-53 Rev 5 controls and to M-24-10 minimum practices
+- Control crosswalk maps AI RMF subcategories to 800-53 Rev 5 controls and to the OMB M-25-21 §4(b) minimum practices
 - Manage function cross-references the IR controls in the NIST 800-53 artefact
 
-### AIIA -- AI Impact Assessment (OMB M-24-10)
+### AIIA -- AI Impact Assessment (OMB M-25-21)
 
-- Appendix I presumed-impacting lists checked for both rights and safety, with matched items quoted verbatim and cited to their M-24-10 section, or an explicit "no Appendix I match"
-- Rights-impacting determination applies the M-24-10 principal-basis test and names both the decision and the affected population
-- Safety-impacting determination names the decision flow, not a verdict alone
-- An Appendix I match not carried through to a Yes verdict recorded as a documented rebuttal of presumption, never as a silent No
-- All eight minimum risk-management practices assessed with status (Met / Partial / Not Met / Not Applicable), evidence reference and action
-- Every practice not Met carries a waiver record with CAIO determination, waiver period and compensating measures
-- M-25-21 acquisition controls documented for vendor-supplied AI: AI RMF alignment, model provenance, training-data disclosure, bias-testing access, fairness reporting, incident reporting, exit and portability
-- AI Use Case Inventory submission confirmed or scheduled, with any law-enforcement or national-security redactions noted
+- Assessed under OMB M-25-21, not the rescinded M-24-10: no rights-impacting or safety-impacting verdicts and no Appendix I lists
+- All fifteen M-25-21 §6 presumed high-impact purposes (a)–(o) checked, with each match cited by letter, or an explicit "no §6 match"
+- High-impact determination applies the §5 test (output is a principal basis for a decision or action with a legal, material, binding or significant effect on one of the six listed areas) and names the decision, the output relied on and the affected population
+- A §6 match determined not high-impact carries the written notice to the CAIO and its justification, never a silent No
+- All seven §4(b) minimum practices assessed with status (Met / Partial / Not Met / Not Applicable), evidence reference and action, and the impact assessment covers all seven §4(b)(ii) elements, including the independent review and the signed risk acceptance
+- Every practice not Met carries a waiver record (CAIO written determination, ground, OMB report within 30 days, annual certification date, public summary, compensating measures) or a plan to discontinue the AI
+- A pilot exemption is claimed only with all four §4(a)(i) conditions recorded
+- M-25-22 acquisition terms documented for vendor-supplied AI: high-impact disclosure in the solicitation, IP rights and use of government data (no training on non-public agency data without consent), privacy, vendor lock-in protections, M-25-21 compliance, and ongoing testing and monitoring; M-26-04 terms added where the AI is a large language model
+- AI Use Case Inventory entry confirmed or scheduled with the high-impact field set, and any withheld details noted with their legal basis
 - CAIO sign-off block present with scope, conditions and next review
 
 ### SBOM -- Software Bill of Materials (EO 14028 / M-22-18)

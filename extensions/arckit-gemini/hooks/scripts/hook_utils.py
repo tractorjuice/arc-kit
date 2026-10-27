@@ -187,7 +187,7 @@ DOC_TYPES = {
     "ZTA":        {"name": "US CISA Zero Trust Maturity Posture",                           "category": "Architecture"},
     "ICAM":       {"name": "US ICAM Architecture (OMB M-19-17 / NIST SP 800-63-3)",         "category": "Architecture"},
     "AIRMF":      {"name": "US NIST AI Risk Management Framework Assessment",               "category": "Compliance"},
-    "AIIA":       {"name": "US AI Impact Assessment (OMB M-24-10 / M-25-21)",               "category": "Compliance"},
+    "AIIA":       {"name": "US AI Impact Assessment (OMB M-25-21 / M-25-22)",               "category": "Compliance"},
     "USPIA":      {"name": "US Privacy Impact Assessment (E-Gov §208)",                     "category": "Compliance"},
     "SBOM":       {"name": "US SBOM + Secure-Software Self-Attestation (EO 14028)",         "category": "Compliance"},
     # Australian Federal Overlay

@@ -17,7 +17,7 @@
 
 ## Executive Summary
 
-[Two to three paragraphs: cloud service offering (CSO) being described, baseline being targeted (Moderate / High), authorisation path (Agency / JAB / Tailored), current readiness state, and target ATO timeline.]
+[Two to three paragraphs: cloud service offering (CSO) being described, baseline being targeted (Moderate / High), certification route (Rev 5 Class C for Moderate or Class D for High; Agency or Program path), current readiness state, and target ATO timeline.]
 
 > **Structure**: this plan has 14 sections. Each one feeds a section or appendix of the FedRAMP Rev 5 SSP template (12 front-matter sections, Appendices A–Q); Section 14 maps every appendix to its source. FedRAMP marked that template legacy on 23 June 2026 under the FedRAMP Consolidated Rules for 2026 — confirm the template your submission must use on fedramp.gov.
 
@@ -33,9 +33,9 @@
 | **FedRAMP Package ID** | [FR-MOD-NNNNN — assigned upon submission] |
 | **CSO Type** | [IaaS / PaaS / SaaS] |
 | **Deployment Model** | [Government Community Cloud / Private Cloud / Hybrid] |
-| **Authorisation Path** | [Agency ATO / JAB P-ATO / FedRAMP Tailored Low-Impact SaaS] |
+| **Certification Path** | [Agency (sponsoring agency ATO, then FedRAMP review) / Program (FedRAMP certifies directly; limited for Rev 5)] — no JAB P-ATO path since OMB M-24-15 |
 | **Sponsoring Agency** | [Agency name (Agency path only)] |
-| **Baseline Targeted** | [Moderate / High] |
+| **Baseline Targeted** | [Moderate (Rev 5 Class C) / High (Rev 5 Class D)] |
 | **Digital Identity Level** | [IAL2/AAL2/FAL2 / IAL3/AAL3/FAL3 — from the Digital Identity Worksheet] |
 | **Operational Status** | [Operational / Under Development / Major Modification] |
 | **Fully Operational as of** | [YYYY-MM-DD] |
@@ -134,7 +134,7 @@
 
 | CSP / CSO Name (as on the Marketplace) | Services and Features Used | Authorization Type and FedRAMP Package ID | Nature of Agreement | Impact Level | Data Types | Authorized Users / Authentication |
 |----------------------------------------|----------------------------|-------------------------------------------|---------------------|--------------|------------|-----------------------------------|
-| [CSP / CSO] | [Services] | [Agency / JAB — FR-NNNNN] | [EULA / SLA / contract] | [High / Moderate / Low / LI-SaaS] | [SP 800-60 data types] | [Roles + authentication method] |
+| [CSP / CSO] | [Services] | [Agency / Program / re-designated former JAB P-ATO — FR-NNNNN] | [EULA / SLA / contract] | [High / Moderate / Low / LI-SaaS] | [SP 800-60 data types] | [Roles + authentication method] |
 
 ### 6.2 External Systems and Services Without FedRAMP Authorization
 
@@ -160,12 +160,13 @@
 |----------|-------|---------------|
 | FISMA 2014 | Federal Information Security Modernization Act | [Applies — all federal info systems] |
 | FedRAMP | Federal Risk and Authorization Management Program | [Applies — CSP authorisation] |
+| OMB M-24-15 | Modernizing the Federal Risk and Authorization Management Program | [Applies — FedRAMP scope, governance and authorization paths] |
 | EO 14028 | Improving the Nation's Cybersecurity | [Applies — secure software, SBOM, EDR] |
 | OMB M-22-09 | Federal Zero Trust Strategy | [Applies — ZTMM uplift required] |
 | OMB M-22-18 | Enhancing the Security of the Software Supply Chain | [Applies — SSDF self-attestation] |
 | OMB M-23-16 | Update on M-22-18 attestation | [Applies — attestation deadlines + CISA form] |
-| OMB M-24-10 | Advancing Governance, Innovation, and Risk Management for Agency Use of AI | [Applies — if AI in use] |
-| OMB M-25-21 | Acquisition of AI in the Federal Government | [Applies — if AI procured] |
+| OMB M-25-21 | Accelerating Federal Use of AI through Innovation, Governance, and Public Trust (replaced M-24-10) | [Applies — if AI in use] |
+| OMB M-25-22 | Driving Efficient Acquisition of Artificial Intelligence in Government (replaced M-24-18) | [Applies — if AI procured] |
 | Privacy Act of 1974 (5 USC §552a) | Privacy Act | [Applies — if SoR triggered] |
 | E-Government Act §208 | Privacy Impact Assessment requirement | [Applies — if PII processed] |
 | FIPS 199 / FIPS 200 | Categorization + Minimum Security Requirements | [Applies] |
@@ -394,7 +395,7 @@ The appendices the FedRAMP Rev 5 SSP template lists in its Section 12, with the 
 
 | Reference | Citation | URL |
 |-----------|----------|-----|
-| FedRAMP SSP Template (Rev 5) | FedRAMP System Security Plan Template | <https://www.fedramp.gov/documents-templates/> |
+| FedRAMP SSP Template (Rev 5) | FedRAMP System Security Plan Template (legacy since 23 June 2026) | <https://www.fedramp.gov/legacy/> |
 | FedRAMP Authorization Boundary Guidance | Authorization Boundary Guidance | <https://www.fedramp.gov/assets/resources/documents/Authorization_Boundary_Guidance.pdf> |
 | NIST SP 800-37 Rev 2 | Risk Management Framework | <https://doi.org/10.6028/NIST.SP.800-37r2> |
 | NIST SP 800-53 Rev 5 | Controls Catalog | <https://doi.org/10.6028/NIST.SP.800-53r5> |
