@@ -29,7 +29,7 @@ This guard blocks that defect class. It checks:
      "Ch. 4.6 Security by Design" section that neither edition has, the
      fabricated pre-C208 map (Ch. 10 Strategy, Ch. 17 Security, Ch. 18
      Governance), and "Chapters 1–9" as an ADM range (ADM Lite is an ArcKit
-     convention over TOGAF ADM, C182)
+     convention over TOGAF ADM, 10th Edition, C220)
   7. the ``oaa-adm-lite`` axiom set is consistent across the three places it
      is stated: the command's Axiom Alignment list, the template's per-sprint
      axiom blocks, and the 16-axiom table's "Applied by" column — a set that
@@ -129,8 +129,8 @@ STALE_CHAPTER_PATTERNS: list[tuple[str, str]] = [
     (_CH + r"10\s?\(Strategy\)", "Agile Strategy is O-AA v2.0 Ch. 5"),
     (_CH + r"17" + _SEP + r"Security", "the standard has no security chapter — use Axiom 16 + §14.6.1 + G216"),
     (_CH + r"18" + _SEP + r"Governance", "Agile Governance is O-AA v2.0 Ch. 7"),
-    (r"Chapters? 1[–\-]9", "the standard does not define an ADM cycle — ADM Lite is an ArcKit convention over TOGAF ADM (C182)"),
-    (r"\bCh\.?\s?1[–\-]9\b", "the standard does not define an ADM cycle — ADM Lite is an ArcKit convention over TOGAF ADM (C182)"),
+    (r"Chapters? 1[–\-]9", "the standard does not define an ADM cycle — ADM Lite is an ArcKit convention over TOGAF ADM (10th Edition, C220)"),
+    (r"\bCh\.?\s?1[–\-]9\b", "the standard does not define an ADM cycle — ADM Lite is an ArcKit convention over TOGAF ADM (10th Edition, C220)"),
 ]
 
 # Check 8: the superseded edition is only named as superseded, and the

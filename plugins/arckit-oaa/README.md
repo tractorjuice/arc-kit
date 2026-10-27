@@ -67,7 +67,7 @@ The overlay cites the Open Agile Architecture™ Standard, Version 2.0 (The Open
 
 | Command | O-AA v2.0 coordinate | Published axioms applied |
 |---------|-------------|--------|
-| `oaa-adm-lite` | C182 ADM phases ↔ sprints; Ch. 8, 10–11 and Appendix A | 1, 3, 5, 6, 7, 10, 14, 15 |
+| `oaa-adm-lite` | TOGAF 10th Edition (C220) ADM phases ↔ sprints; Ch. 8, 10–11 and Appendix A | 1, 3, 5, 6, 7, 10, 14, 15 |
 | `product-architecture` | Ch. 12 | 15, 6 |
 | `agile-strategy` | Ch. 5 | 5 (anchor); the canvas also applies 1, 6, 14, 15 |
 | `agile-security` | Axiom 16 + §14.6.1; G216 | 16 |

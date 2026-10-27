@@ -157,7 +157,7 @@ architecture_items:
         control: "encryption_at_rest"
         status: "required"
 
-      - regulation: "APRA-CPS230"
+      - regulation: "APRA-CPS234"
         control: "access_control"
         status: "required"
     estimation:
@@ -221,7 +221,7 @@ functional_items:
     architecture_dependency: ["ARCH-001", "ARCH-002"]
     compliance:
 
-      - regulation: "GDPR-17"
+      - regulation: "GDPR-13"   # transparency, Arts 12–14
         control: "transparency"
         status: "required"
         notes: "Privacy notice required for document processing"
@@ -347,7 +347,7 @@ releases:
         status: "implemented"
 
       - milestone: "access_logging"
-        regulation: "APRA-CPS230"
+        regulation: "APRA-CPS234"
         status: "implemented"
 
   - version: "0.2.0"
@@ -564,8 +564,8 @@ regulations:
         features: ["ARCH-003"]
         status: "planned"
 
-  - id: "APRA-CPS230"
-    name: "APRA CPS 230 — Information security"
+  - id: "APRA-CPS234"
+    name: "APRA CPS 234 — Information Security"
     scope: "Information security management"
     controls:
 
@@ -575,7 +575,7 @@ regulations:
         status: "planned"
 
       - id: "incident_response"
-        description: "Incident response plan with 1-hour notification"
+        description: "Information security response plan; notify APRA of a material incident within 72 hours (CPS 234 para 35)"
         features: []
         status: "planned"
 
@@ -590,13 +590,19 @@ feature_compliance_matrix:
         status: "implemented"
         evidence: "AES-256 encryption verified in storage layer"
 
-      - regulation: "GDPR-17"
+      - regulation: "GDPR-13"   # transparency, Arts 12–14 (Art. 14 for third parties' data in uploaded documents)
         control: "transparency"
         status: "implemented"
         evidence: "Privacy notice displayed before document upload"
 
-      - regulation: "GDPR-17"
+      - regulation: "GDPR-7.3"   # withdrawal of consent
         control: "right_to_withdraw"
+        status: "planned"
+        evidence: ""
+        notes: "Withdraw-consent option needed in next sprint; it must be as easy as giving consent"
+
+      - regulation: "GDPR-17"   # right to erasure
+        control: "right_to_erasure"
         status: "planned"
         evidence: ""
         notes: "Delete button needed in next sprint"
@@ -733,7 +739,7 @@ compliance:
 
         - "access_logging"
 
-    - id: "APRA-CPS230"
+    - id: "APRA-CPS234"
       controls:
 
         - "information_security_governance"

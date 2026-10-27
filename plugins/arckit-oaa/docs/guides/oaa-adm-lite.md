@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:oaa-adm-lite` creates an O-AA ADM Lite document that maps the TOGAF ADM cycle onto agile sprints, drawing on the Open Agile Architecture™ Standard, Version 2.0 (O-AA, C262). It sets out a sprint plan from Sprint 0 (vision and stakeholders) to Sprint 4+ (governance and change), with the deliverables, go/no-go gate and O-AA axioms for each sprint. The sprint-to-phase mapping is an ArcKit convention over TOGAF ADM (C182); the O-AA standard itself does not define an ADM cycle. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
+`/arckit:oaa-adm-lite` creates an O-AA ADM Lite document that maps the TOGAF ADM cycle onto agile sprints, drawing on the Open Agile Architecture™ Standard, Version 2.0 (O-AA, C262). It sets out a sprint plan from Sprint 0 (vision and stakeholders) to Sprint 4+ (governance and change), with the deliverables, go/no-go gate and O-AA axioms for each sprint. The sprint-to-phase mapping is an ArcKit convention over the TOGAF ADM (The TOGAF Standard, 10th Edition, C220); the O-AA standard itself does not define an ADM cycle. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
 
 ---
 

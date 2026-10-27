@@ -111,9 +111,9 @@ How ArcKit applies it — lightweight governance aligned to sprint cycles:
 
 Used by: `agile-governance` command (OAGOV doc type). Related content: Axiom 7.
 
-## ADM Lite Sprint Mapping (ArcKit convention over TOGAF ADM, C182)
+## ADM Lite Sprint Mapping (ArcKit convention over TOGAF ADM, 10th Edition, C220)
 
-The O-AA standard does **not** define an ADM cycle. The `oaa-adm-lite` command's sprint map (Sprint 0–4+ ↔ ADM-P…H) is an ArcKit convention that maps **TOGAF ADM phases (C182)** onto agile sprints, drawing its agile-architecture substance from Version 2.0 Part 3 (Ch. 8 Architecture Development, Ch. 10 Intentional Architecture, Ch. 11 Continuous Architectural Refactoring) and the 16 axioms of Appendix A:
+The O-AA standard does **not** define an ADM cycle. The `oaa-adm-lite` command's sprint map (Sprint 0–4+ ↔ ADM-P…H) is an ArcKit convention that maps **TOGAF ADM phases (The TOGAF Standard, 10th Edition, C220)** onto agile sprints, drawing its agile-architecture substance from Version 2.0 Part 3 (Ch. 8 Architecture Development, Ch. 10 Intentional Architecture, Ch. 11 Continuous Architectural Refactoring) and the 16 axioms of Appendix A:
 
 - **Sprint Windows**: one sprint (1–2 weeks) per pair of ADM phases, except Sprint 2, which takes Phase D (Technology Architecture) alone because Sprint 1 covers both parts of Phase C (Data and Application Architecture); Sprint 0 to Sprint 3 fit a 4–8 week engagement window
 

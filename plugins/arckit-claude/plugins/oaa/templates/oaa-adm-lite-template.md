@@ -122,7 +122,7 @@ vision:
 
     - metric: "model_accuracy"
       target_percent: 92.5
-  regulatory_controls: ["APP-11.1", "APRA-CPS230"]
+  regulatory_controls: ["APP-11.1", "APRA-CPS230", "APRA-CPS234"]
   risk_profile:
 
     - risk: "GPU procurement delay"
