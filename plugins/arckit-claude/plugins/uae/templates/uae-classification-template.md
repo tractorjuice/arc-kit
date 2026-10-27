@@ -43,7 +43,7 @@ For each level the project uses, state the handling rules:
 - Network controls (private endpoint, VPN, air-gap)
 - Access controls (role, MFA, just-in-time)
 - Audit-log retention
-- Residency obligations (UAE-resident infrastructure required from Confidential upwards under National Cloud Security Policy v2)
+- Residency obligations (under the National Cloud Security Policy v2.0, data from Confidential upwards is stored in the UAE on a Partial Sovereign or Sovereign Cloud; `/arckit-uae:uae-cloud-residency` maps each dataset to the policy's levels and tiers)
 
 ## Cross-Reference Index
 

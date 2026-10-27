@@ -81,6 +81,7 @@ For every share involving personal data, cite the PDPL Article 5 lawful basis (o
 
 | Doc ID | Title | URL | Verified date |
 |--------|-------|-----|---------------|
+| UAE-LEG-DSHR | Government Services Data Sharing Policy — UAE Legislation Platform entry (issued 23 April 2026; lead entity: Prime Minister's Office) | <https://uaelegislation.gov.ae/en/policy/details/government-services-data-sharing-policy> | [YYYY-MM-DD] |
 | UAE-CAB-2026-04-23 | UAE Cabinet meeting — Government Services Data Sharing Policy | <https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting> | [YYYY-MM-DD] |
 | UAE-PDPL-FDL45-2021 | Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data | <https://uaelegislation.gov.ae/en/legislations/1972/download> | [YYYY-MM-DD] |
 
@@ -89,7 +90,7 @@ For every share involving personal data, cite the PDPL Article 5 lawful basis (o
 | Citation | Doc ID | Section | Used in |
 |----------|--------|---------|---------|
 | [DSHR-1] | UAE-CAB-2026-04-23 | "Collect once, use securely" principle | Sharing Parties |
-| [DSHR-2] | UAE-CAB-2026-04-23 | Data Sharing Policy obligations | Information-Security Safeguards |
+| [DSHR-2] | UAE-LEG-DSHR | Priorities & Key Components | Information-Security Safeguards |
 | [DSHR-3] | UAE-PDPL-FDL45-2021 | Article 5 (lawful processing) | Lawful Basis per Share |
 
 ### Unreferenced Documents

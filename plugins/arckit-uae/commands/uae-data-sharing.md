@@ -48,14 +48,14 @@ You are an enterprise architect generating a Data Sharing Agreement under the UA
    - **Federation/API Mechanism** — the technical mechanism per share (REST API, event stream, file drop, federated query). State authentication, integrity, and rate-limiting controls.
    - **Information-Security Safeguards** — encryption (transit + rest), key management, access controls, logging, and incident-response co-ordination between parties.
    - **Data-Subject Rights Implications** — how data subject rights (access, rectification, erasure, restriction, portability, object) flow across the sharing boundary, and which party owns each obligation.
-7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The 23 April 2026 UAE Cabinet meeting announcement (Government Services Data Sharing Policy) MUST appear in the Document Register with its primary URL and the verification date.
+7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The UAE Legislation Platform entry for the Government Services Data Sharing Policy and the 23 April 2026 UAE Cabinet meeting announcement MUST appear in the Document Register with their URLs and the verification date.
 8. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DSHR** per-type checks pass. Fix any failures before proceeding.
 9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 10. Show only a summary to the user (one paragraph plus the count of shares per direction and any unresolved lawful-basis gaps).
 
 ## Authoritative anchor
 
-UAE Government Services Data Sharing Policy ("collect once, use securely") — Cabinet decision, 23 April 2026 (Cabinet Affairs). Primary URL: <https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting>
+UAE Government Services Data Sharing Policy (the "Ask Once" principle: collect data once and share it securely between entities) — approved by the UAE Cabinet on 23 April 2026. Lead entity: Prime Minister's Office. Primary URL (UAE Legislation Platform entry, which names the lead entity): <https://uaelegislation.gov.ae/en/policy/details/government-services-data-sharing-policy>. UAE Cabinet announcement: <https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting>
 
 ## Important notes
 

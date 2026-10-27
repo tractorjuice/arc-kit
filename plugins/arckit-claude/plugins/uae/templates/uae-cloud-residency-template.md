@@ -15,7 +15,7 @@
 
 ## Executive Summary
 
-[Two to three paragraphs describing the residency posture, the chosen sovereign cloud combination, residual non-compliance (if any), and the exit / portability stance under the UAE National Cloud Security Policy v2.]
+[Two to three paragraphs describing the residency posture, the chosen sovereign cloud combination, residual non-compliance (if any), and the exit / portability stance under the UAE National Cloud Security Policy, Version 2.0.]
 
 ## Scope
 
@@ -29,13 +29,13 @@
 
 ## Per-Dataset Residency Assessment
 
-For each Dataset ID from the project's Smart Data Classification Register (`ARC-<project-id>-CLAS-v*.md`), assess required and actual residency.
+For each Dataset ID from the project's Smart Data Classification Register (`ARC-<project-id>-CLAS-v*.md`), map the Smart Data class to the policy's data classification level (Appendix 6.7) and assess required and actual residency.
 
-| Dataset ID | Classification | Required residency | Chosen CSP | Region | Compliance check |
-|------------|----------------|---------------------|------------|--------|-------------------|
-| [DS-001] | [Open / Confidential / Sensitive / Secret] | [UAE-resident / no constraint] | [Core42 / G42 / Microsoft UAE North / UAE Central / FedNet / e& Sovereign Launchpad / etc.] | [region] | [Compliant / Non-compliant — rationale] |
+| Dataset ID | Classification | Policy level (Appendix 6.7) | Required tier | Chosen CSP | Region | Compliance check |
+|------------|----------------|-----------------------------|---------------|------------|--------|-------------------|
+| [DS-001] | [Open / Confidential / Sensitive / Secret] | [Open, Confidential/Restricted, Secret or Top Secret — mapping rationale] | [Baseline Secure Cloud / Partial Sovereign Cloud / Sovereign Cloud] | [Core42 / G42 / Microsoft UAE North / UAE Central / FedNet / e& Sovereign Launchpad / etc.] | [region] | [Compliant / Non-compliant — rationale] |
 
-> Confidential, Sensitive, and Secret datasets MUST resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2. Any non-compliant row is a critical gap.
+> Under the National Cloud Security Policy, Version 2.0: Open data needs only the Baseline Secure Cloud Requirements, with its location known (§2.4.1.1–2.4.1.3); Confidential/Restricted data MUST be stored and processed on a Partial Sovereign or Sovereign Cloud, with the data stored in the UAE (§2.4.1.4, §3.4.1.1); data above Confidential/Restricted MUST be stored and processed on a Sovereign Cloud, with processing and metadata also in the UAE (§2.4.1.5, §3.4.1.4–3.4.1.5). Any non-compliant row is a critical gap unless the Cyber Security Council has granted an exception (§1.4).
 
 ## CSP Due-Diligence Pack
 
@@ -113,15 +113,15 @@ For the chosen CSP combination, record the division of security responsibilities
 
 | Doc ID | Title | URL | Verified date |
 |--------|-------|-----|---------------|
-| UAE-NCSP-V2 | UAE National Cloud Security Policy v2 (Cybersecurity Council) | <https://csc.gov.ae/documents/38662/489552/National+Cloud+Security+Policy_V2.0.pdf> | [YYYY-MM-DD] |
+| UAE-NCSP-V2 | UAE National Cloud Security Policy, Version 2.0, September 2025 (UAE Cyber Security Council) | <https://csc.gov.ae/documents/38662/1042755/National+Cloud+Security+Policy_V2.0.pdf/ee6897fa-943b-8874-d23b-c0ec1608c90f> | [YYYY-MM-DD] |
 
 ### Citations
 
 | Citation | Doc ID | Section | Used in |
 |----------|--------|---------|---------|
-| [CRES-1] | UAE-NCSP-V2 | Per-classification residency obligations | Per-Dataset Residency Assessment |
-| [CRES-2] | UAE-NCSP-V2 | Approved CSP scope | CSP Due-Diligence Pack |
-| [CRES-3] | UAE-NCSP-V2 | Shared responsibility expectations | Shared-Responsibility Matrix |
+| [CRES-1] | UAE-NCSP-V2 | §2.4.1, Appendices 6.7–6.9 (classification levels and sovereignty tiers) | Per-Dataset Residency Assessment |
+| [CRES-2] | UAE-NCSP-V2 | §3.4.1.2, §3.4.1.6 (CSP lists of compliant services) | CSP Due-Diligence Pack |
+| [CRES-3] | UAE-NCSP-V2 | §1.2 (responsibilities by service model) | Shared-Responsibility Matrix |
 
 ### Unreferenced Documents
 

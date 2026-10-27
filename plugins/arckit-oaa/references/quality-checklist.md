@@ -1144,9 +1144,9 @@ All artifacts must pass these 10 checks:
 ### CRES -- UAE Cloud Residency
 
 - Every dataset assessed by its Dataset ID from the CLAS register rather than re-enumerated
-- Classification, required residency, chosen CSP, region and compliance check recorded per dataset
-- Confidential, Sensitive and Secret datasets resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2, with any exception raised rather than left implicit
-- CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS) covering certification posture (DESC for Dubai entities, CSC accreditation), regional footprint, sovereign-data scope and documented limitations
+- Smart Data class, National Cloud Security Policy level (Appendix 6.7) with the mapping rationale, required tier, chosen CSP, region and compliance check recorded per dataset
+- Confidential/Restricted datasets on a Partial Sovereign or Sovereign Cloud with data stored in the UAE, and datasets above Confidential/Restricted on a Sovereign Cloud (National Cloud Security Policy v2.0, §2.4.1.4–2.4.1.5); any exception cites a Cyber Security Council approval (§1.4) rather than being left implicit
+- CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS) covering certification posture (DESC for Dubai entities, CSC accreditation), regional footprint, the CSP's list of services meeting the Partial Sovereign or Sovereign Cloud Requirements, and documented limitations
 - Shared-responsibility matrix divides responsibility across infrastructure, platform, application, data, identity and operational layers for each chosen CSP
 - Shared platform components (identity, observability, backups) assessed for residency, not only the primary services
 - Exit and portability plan covers data egress, format portability, identity migration, key custody on exit and contingency residency on regulatory change
