@@ -32,9 +32,12 @@
 #     ca-ocap                       First Nations OCAP® sovereignty (optional)
 #
 #   Differences from the UAE recipe specifically
-#     - The Charter rights review (ca-charter) runs early because it
-#       informs FITAA, PIA, and AIA design decisions (s.2 freedoms,
-#       s.7 life/liberty/security, s.8 search/seizure, s.15 equality).
+#     - The Charter rights review (ca-charter) runs after the PIA and
+#       FITAA assessments, because it reads both: the s.8 analysis rests
+#       on the PIA's personal-information inventory and the s.2(b)/(d)
+#       analysis on the FITAA registration design. Departmental counsel
+#       is engaged from the concept stage regardless (TBS Directive on
+#       Automated Decision-Making 6.3.12).
 #     - SOIA handling is gated behind ca-itsg-33 because the SOI
 #       register depends on the security categorization output.
 #     - OCAP® is gated behind an optional flag (only when Indigenous
@@ -184,13 +187,6 @@ targets:
     output: { project: "{P}-{NAME}", type: DSCT, subfolder: research, multi_instance: true }
     deps: [REQ, ORG_RESEARCH]
 
-  # --- Charter rights (early — informs FITAA / PIA / AIA design) ---------
-  - id: CA_CHARTER
-    skill: arckit-ca:ca-charter
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: CHRT }
-    deps: [REQ, STKE]
-
   # --- Privacy and access -------------------------------------------------
   # Privacy Act PIA is the foundational privacy artefact — every other
   # Canadian privacy / access / AI artefact builds on it.
@@ -212,15 +208,25 @@ targets:
     output: { project: "{P}-{NAME}", type: AIA }
     deps: [REQ, CA_PIA]
 
-  # --- FITAA flagship (after PIA / Charter / AIA available) --------------
+  # --- FITAA flagship (after PIA / ATIP / AIA available) -----------------
   # FITAA is the apex compliance artefact for this recipe. It depends on
-  # the privacy and Charter outputs so the foreign-influence registration
-  # design can reflect rights-engaging mitigations and PII handling.
+  # the privacy outputs so the foreign-influence registration design can
+  # reflect PII handling, severance and any automated triage.
   - id: CA_FITAA
     skill: arckit-ca:ca-fitaa
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FITAA }
-    deps: [REQ, STKE, CA_CHARTER, CA_PIA, CA_ATIP, CA_AIA]
+    deps: [REQ, STKE, CA_PIA, CA_ATIP, CA_AIA]
+
+  # --- Charter rights (after PIA and FITAA — it reads both) --------------
+  # /arckit-ca:ca-charter grounds its s.8 analysis in the PIA's
+  # personal-information inventory and its s.2(b)/(d) analysis in the
+  # FITAA registration design; FITAA hands off to it unconditionally.
+  - id: CA_CHARTER
+    skill: arckit-ca:ca-charter
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: CHRT }
+    deps: [REQ, STKE, CA_PIA, CA_FITAA]
 
   # --- Indigenous data (optional; only when applicable) -----------------
   # OCAP® First Nations sovereignty is gated behind an optional flag —
@@ -341,7 +347,7 @@ targets:
 
   - id: ADR-006
     skill: arckit:adr
-    topic: "Procurement route — PSPC Supply Manual / Standing Offer / AgileIQ / RFP with PSAB 5% target"
+    topic: "Procurement route — PSPC Supply Manual / Standing Offer / AgileIQ / RFP with PSIB 5% target"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ, CA_PSPC]

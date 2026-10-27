@@ -1363,13 +1363,13 @@ All artifacts must pass these 10 checks:
 
 - Procurement scope aggregates to a single estimated value, used consistently for threshold analysis
 - Thresholds assessed against CFTA, CETA, CPTPP and WTO-AGP, each stating the current threshold, whether the value crosses it, the coverage scope and the open-tendering obligation attaching
-- Route selection assesses every candidate with fit, risk posture and timeline (Standing Offer / Supply Arrangement, AgileIQ, bespoke RFP/RFSO/RFSA, PSAB set-aside)
+- Route selection assesses every candidate with fit, risk posture and timeline (Standing Offer / Supply Arrangement, AgileIQ, bespoke RFP/RFSO/RFSA, PSIB set-aside)
 - Any Standing Offer or Supply Arrangement named is confirmed current and in scope per its scope notice
-- PSAB contribution documented explicitly so the departmental rolling 5% target can roll it up, with the set-aside type stated and the supplier pool identified through the ISC directory
+- PSIB contribution documented explicitly so the departmental rolling 5% target can roll it up, with the set-aside type stated and the supplier pool identified through the ISC directory
 - The 5% treated as a department-level rolling target — no single procurement judged in isolation
 - Security clearance requirements stated per role with level, holder count, PSPC processing lead time, and the operational risk where clearance sits on the critical path
 - Evaluation framework sets mandatory, point-rated and financial dimensions with a weight envelope traceable to requirements, leaving the detailed rubric to the evaluation artefact
-- Bid solicitation schedule runs market notice through award including CanadaBuys posting, standstill periods and post-award PSAB reporting, each with owner and dependency
+- Bid solicitation schedule runs market notice through award including CanadaBuys posting, standstill periods and post-award PSIB reporting, each with owner and dependency
 - Risks cover supplier-pool sufficiency, clearance bottleneck on the critical path, threshold disputes, CFTA Chapter 5 / CITT challenge, sub-processor residency conflict, and supplier-side OLA and accessibility obligations
 
 ### OCAP -- OCAP® Indigenous Data Governance

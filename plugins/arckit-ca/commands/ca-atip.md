@@ -7,8 +7,6 @@ keep-coding-instructions: true
 handoffs:
   - command: data-model
     description: Severance rules in the ATIP reconciliation feed back into the data model's classification flags and access controls.
-  - command: ca-pia
-    description: Personal-information register from the Privacy Impact Assessment is the authoritative source for the §4–§8 use/disclosure register here.
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)

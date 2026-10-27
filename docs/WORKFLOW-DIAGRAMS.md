@@ -934,9 +934,8 @@ graph TD
 
     principles --> stakeholders
     stakeholders --> requirements
-    requirements --> ca_charter
     requirements --> ca_pia
-    ca_charter --> ca_fitaa
+    ca_fitaa --> ca_charter
     ca_atip --> ca_fitaa
     ca_aia --> ca_fitaa
     ca_pia --> ca_atip
@@ -953,7 +952,7 @@ graph TD
     ca_pspc --> adr
     sobc --> ca_pspc
     risk --> sobc
-    ca_fitaa --> risk
+    ca_charter --> risk
     ca_itsg_33 --> risk
     ca_ola --> framework
     ca_gc_digital_standards --> framework

@@ -9,8 +9,6 @@ handoffs:
     description: AIA findings — bias, drift, contestability — feed the operational risk register.
   - command: adr
     description: Material AIA outcomes (vendor selection, autonomy tier, recourse design) warrant Architecture Decision Records.
-  - command: ca-pia
-    description: Personal-information feeding the algorithmic system inherits PIA controls; AIA depth must match PIA depth.
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)

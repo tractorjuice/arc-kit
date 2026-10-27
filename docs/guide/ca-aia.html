@@ -465,7 +465,7 @@
 </tr>
 <tr>
 <td>Privacy Impact Assessment (<code>ARC-&lt;id&gt;-PIA-v1.0.md</code>)</td>
-<td>Lawful authority and personal-information posture; AIA depth must match PIA depth</td>
+<td>Lawful authority and personal-information posture; AIA depth must match PIA depth — a Level III/IV AIA against a thin PIA is a red flag, and vice versa</td>
 </tr>
 </tbody>
 </table>
@@ -555,7 +555,6 @@
 <ul>
 <li><strong><code>risk</code></strong> — AIA findings (bias, drift, contestability, fairness gaps) feed the operational risk register. Each algorithmic risk row in the AIA should map to a project-level risk entry with owner and review cadence.</li>
 <li><strong><code>adr</code></strong> — Material AIA outcomes warrant Architecture Decision Records. Vendor selection of an ML model, autonomy tier (full automation vs decision-support vs human-only), and recourse-mechanism design are all ADR-worthy decisions with options analysis.</li>
-<li><strong><code>ca-pia</code></strong> — Personal-information feeding the algorithmic system inherits the PIA controls. The AIA depth must match the PIA depth: a Level III/IV AIA against a thin PIA is a red flag, and vice versa.</li>
 </ul>
 <hr />
 <h2 id="statutory-currency">Statutory currency</h2>

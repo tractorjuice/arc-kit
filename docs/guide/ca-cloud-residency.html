@@ -470,6 +470,7 @@
 </tr>
 </tbody>
 </table>
+<p>The cloud control-profile selection (PBMM-Cloud for the typical federal Protected B cloud-hosted baseline; Secret-High for higher-categorised workloads) is grounded in the ITSG-33 categorisation, so run <code>/arckit:ca-itsg-33</code> first where possible. Where this assessment is run first to inform a cloud decision, hand the categorisation forward to the SoA and reconcile both artefacts at the same review: SoA tailoring decisions (key custody, network segmentation, audit retention) often have direct cloud-residency implications.</p>
 <hr />
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit:ca-cloud-residency &lt;project ID or service description&gt;
@@ -567,7 +568,7 @@
 <h2 id="handoffs">Handoffs</h2>
 <ul>
 <li><strong><code>adr</code></strong> — Sovereign-cloud option choices (which region, which CSP, which encryption-key custody model) and CLOUD-Act risk acceptances are material architectural decisions. Each warrants an ADR with options analysed, the chosen path justified, and the named accepter recorded against the residual risk.</li>
-<li><strong><code>ca-itsg-33</code></strong> — The cloud control-profile selection (PBMM-Cloud for the typical federal Protected B cloud-hosted baseline; Secret-High for higher-categorised workloads) is grounded in the ITSG-33 categorisation. Run <code>ca-itsg-33</code> before this assessment where possible — the categorisation flows in. Where this assessment is run first to inform a cloud decision, hand the categorisation forward to the SoA and reconcile both artefacts at the same review. Tailoring decisions in the SoA (key-custody parameters, network-segmentation parameters, audit retention) often have direct cloud-residency implications and should be revisited together.</li>
+<li><strong><code>ca-pspc</code></strong> — Where cloud is in scope of the procurement, the federal procurement strategy reads this artefact's sub-processor analysis, residency envelope and CSP shortlist.</li>
 </ul>
 <hr />
 <h2 id="statutory-currency">Statutory currency</h2>

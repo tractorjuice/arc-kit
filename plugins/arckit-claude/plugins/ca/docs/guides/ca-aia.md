@@ -15,7 +15,7 @@ The AIA is mandatory for any federal automated decision-making system that produ
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Decisions automated, NFR-AI / NFR-DEC requirements covering bias, contestability, override |
 | Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Training-data lineage and decision boundary inputs |
 | Data model (`ARC-<id>-DATA-v*.md`) | Entity-level data structures feeding the model |
-| Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Lawful authority and personal-information posture; AIA depth must match PIA depth |
+| Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Lawful authority and personal-information posture; AIA depth must match PIA depth — a Level III/IV AIA against a thin PIA is a red flag, and vice versa |
 
 ---
 
@@ -70,7 +70,6 @@ Output: `projects/<id>/ARC-<id>-AIA-v1.0.md`
 
 - **`risk`** — AIA findings (bias, drift, contestability, fairness gaps) feed the operational risk register. Each algorithmic risk row in the AIA should map to a project-level risk entry with owner and review cadence.
 - **`adr`** — Material AIA outcomes warrant Architecture Decision Records. Vendor selection of an ML model, autonomy tier (full automation vs decision-support vs human-only), and recourse-mechanism design are all ADR-worthy decisions with options analysis.
-- **`ca-pia`** — Personal-information feeding the algorithmic system inherits the PIA controls. The AIA depth must match the PIA depth: a Level III/IV AIA against a thin PIA is a red flag, and vice versa.
 
 ---
 
