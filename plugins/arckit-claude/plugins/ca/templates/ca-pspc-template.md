@@ -99,12 +99,12 @@
 
 | PSIB consideration | Decision | Justification | Departmental 5% contribution |
 |--------------------|----------|---------------|------------------------------|
-| Mandatory set-aside (Indigenous-only competition) | [Applied / Not applied] | [supplier-pool analysis, trade-agreement carve-out] | [contribution to rolling target] |
-| Voluntary set-aside | [Applied / Not applied] | [reasoning] | [contribution to rolling target] |
-| Sub-contracting plan (Indigenous sub-contractors) | [Applied / Not applied] | [reasoning] | [contribution to rolling target] |
+| Mandatory set-aside (Indigenous-only competition) | [Applied / Not applied] | [supplier-pool analysis, trade-agreement carve-out] | [contribution to the fiscal-year target] |
+| Voluntary set-aside | [Applied / Not applied] | [reasoning] | [contribution to the fiscal-year target] |
+| Sub-contracting plan (Indigenous sub-contractors) | [Applied / Not applied] | [reasoning] | [contribution to the fiscal-year target] |
 | No PSIB participation | [Applied / Not applied] | [justification — evidence the supplier pool was assessed] | [zero contribution acknowledged] |
 
-> The PSIB 5% target is a department-level rolling figure, not a per-procurement target. This procurement contributes to that rolling figure; document the contribution explicitly so the departmental return can roll it up. Identify suppliers through Indigenous Services Canada's Indigenous Business Directory (or a modern treaty business list).
+> The 5% target is an annual department-level figure, not a per-procurement target. Appendix E of the TBS Directive on the Management of Procurement counts the value of contracts awarded to Indigenous businesses in the fiscal year (and may count subcontracting to Indigenous businesses committed at award) against the total value of contracts awarded that year, and says the target is not to be applied to each individual contract. Document this procurement's contribution explicitly so the departmental return can count it. Identify suppliers through Indigenous Services Canada's Indigenous Business Directory (or a modern treaty business list).
 
 ## Security Clearance Requirements
 
@@ -187,6 +187,7 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | CA-CETA | Canada–EU Comprehensive Economic and Trade Agreement | <https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/ceta-aecg/index.aspx> | [YYYY-MM-DD] |
 | CA-CPTPP | Comprehensive and Progressive Agreement for Trans-Pacific Partnership | <https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/cptpp-ptpgp/index.aspx> | [YYYY-MM-DD] |
 | CA-WTO-AGP | WTO Agreement on Government Procurement | <https://www.wto.org/english/tratop_e/gproc_e/gp_gpa_e.htm> | [YYYY-MM-DD] |
+| CA-TBS-DMP | TBS Directive on the Management of Procurement — Appendix E: Mandatory Procedures for Contracts Awarded to Indigenous Businesses | <https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32692> | [YYYY-MM-DD] |
 | CA-PSIB | Indigenous Services Canada — Procurement Strategy for Indigenous Business | <https://www.sac-isc.gc.ca/eng/1100100032802/1610723869356> | [YYYY-MM-DD] |
 | CA-CITT | Canadian International Trade Tribunal — procurement complaints | <https://www.citt-tcce.gc.ca/en/procurement> | [YYYY-MM-DD] |
 | CA-CANADABUYS | CanadaBuys — federal tender notice service | <https://canadabuys.canada.ca/en> | [YYYY-MM-DD] |
@@ -203,8 +204,8 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | [CETA-1] | CA-CETA | Government procurement chapter — non-discrimination | Threshold Analysis |
 | [CPTPP-1] | CA-CPTPP | Government procurement chapter — non-discrimination | Threshold Analysis |
 | [WTO-AGP-1] | CA-WTO-AGP | Coverage schedules and thresholds | Threshold Analysis |
-| [PSIB-1] | CA-PSIB | 5% departmental rolling target | Procurement Strategy for Indigenous Business |
-| [PSIB-2] | CA-PSIB | Set-aside criteria and supplier directory | Procurement Strategy for Indigenous Business |
+| [DMP-1] | CA-TBS-DMP | Appendix E — 5% of the total value of contracts per fiscal year, not applied to each contract | Procurement Strategy for Indigenous Business |
+| [PSIB-1] | CA-PSIB | Set-aside criteria and supplier directory | Procurement Strategy for Indigenous Business |
 | [CITT-1] | CA-CITT | Procurement complaint jurisdiction | Risks |
 
 ### Unreferenced Documents

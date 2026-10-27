@@ -11,7 +11,7 @@
 - `/arckit-ca:ca-itsg-33` — ITSG-33 Statement of Applicability with TBS security categorization
 - `/arckit-ca:ca-ocap` — First Nations OCAP® sovereignty assessment (FNIGC pre-engagement)
 - `/arckit-ca:ca-ola` — Official Languages Act review (Parts IV, V, VI)
-- `/arckit-ca:ca-pia` — Privacy Impact Assessment (Privacy Act and TBS Directive on PIA)
+- `/arckit-ca:ca-pia` — Privacy Impact Assessment (Privacy Act and TBS Standard on PIA)
 - `/arckit-ca:ca-pspc` — Federal procurement strategy (PSPC Supply Manual, PSIB 5%)
 - `/arckit-ca:ca-soia` — Security of Information Act handling plan
 

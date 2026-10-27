@@ -1188,7 +1188,7 @@ The 12 commands cover: FITAA (Bill C-70 2024), federal privacy and access (Priva
 
 ```text
 Flow 1 — FITAA-class application (registration scheme, scoring, automated triage):
-principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (if ADM) → ca-fitaa → ca-charter → ca-ocap (if Indigenous data)
+principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (if ADM) → data-model → ca-fitaa → ca-charter → ca-ocap (if Indigenous data)
   → ca-itsg-33 → ca-soia (if classified) → ca-cloud-residency → ca-ola
   → ca-gc-digital-standards → risk → sobc → ca-pspc → adr → framework
 ```
@@ -1205,9 +1205,8 @@ principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (
 | From command | Handoff target | Condition / rationale |
 |---|---|---|
 | `ca-fitaa` | `ca-charter` | Charter §2 (expression / association) review required for any registration scheme touching protected speech |
-| `ca-fitaa` | `ca-pia` | PIA for personal information collected during arrangement registration |
-| `ca-fitaa` | `ca-atip` | Reconciles the public-facing register against the protected investigative dataset (severance design for hybrid views) |
-| `ca-fitaa` | `ca-aia` | Triggered when registration triage uses automated decision-making, scoring, or risk classification |
+| `ca-fitaa` | `ca-soia` | When classified material is in scope: the protected investigative dataset overlaps with Special Operational Information |
+| `ca-fitaa` | `ca-ola` | The public register and registration forms trigger Official Languages Act Part IV obligations |
 | `ca-pia` | `risk` | PIA findings feed privacy and regulatory entries in the risk register |
 | `ca-pia` | `ca-atip` | Personal-information disclosure register continues into ATIP reconciliation |
 | `ca-pia` | `ca-aia` | Required when ADM touches personal information; AIA inherits the PIA inventory |

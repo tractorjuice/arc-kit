@@ -118,10 +118,10 @@ Explicit statutory currency caveats — review and update before publication.
 - FITAA Regulations: status `<TBC at draft time>` — verify against Canada Gazette II at the verification date below.
 - FITAA section numbering for offences and exemptions: marked `<TBC at draft time>` throughout; reconcile against the consolidated Justice Laws text.
 - Commissioner's published guidance: identify any operational guidance issued after the verification date and incorporate.
-- ATIP-Act severance design: pending `ca-atip` artefact.
+- ATIP-Act severance design: see the `ca-atip` artefact.
 - Charter §2 detailed analysis: pending `ca-charter` artefact.
-- Privacy Impact Assessment: pending `ca-pia` artefact.
-- Algorithmic Impact Assessment: required if registration triage uses any automated decision-making — pending `ca-aia` artefact.
+- Privacy Impact Assessment: see the `ca-pia` artefact.
+- Algorithmic Impact Assessment: required if registration triage uses any automated decision-making — see the `ca-aia` artefact.
 - Bilingual content review: pending `ca-ola` artefact.
 - RCMP / CSIS MOU: pending `ca-soia` artefact.
 

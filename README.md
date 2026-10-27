@@ -479,7 +479,7 @@ Federal Canadian regulatory baseline as a `[COMMUNITY]` overlay — covering FIT
 | Command | Type code | Purpose |
 |---|---|---|
 | `/arckit:ca-fitaa` | `FITAA` | Foreign Influence Transparency and Accountability Act compliance assessment |
-| `/arckit:ca-pia` | `PIA` | Privacy Impact Assessment per Privacy Act + TBS Directive on PIA |
+| `/arckit:ca-pia` | `PIA` | Privacy Impact Assessment per Privacy Act + TBS Standard on PIA |
 | `/arckit:ca-atip` | `ATIP` | Access to Information / Privacy Act reconciliation and severance design |
 | `/arckit:ca-aia` | `AIA` | Algorithmic Impact Assessment per TBS Directive on Automated Decision-Making (Levels I–IV) |
 | `/arckit:ca-charter` | `CHRT` | Charter rights design review (s.2 / s.7 / s.8 / s.15) with Oakes proportionality |

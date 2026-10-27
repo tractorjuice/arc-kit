@@ -19,7 +19,7 @@
 #
 #   Twelve ca-* community commands all included
 #     ca-fitaa                      FITAA Bill C-70 2024 registration assessment
-#     ca-pia                        Privacy Act + TBS Directive on PIA
+#     ca-pia                        Privacy Act + TBS Standard on PIA
 #     ca-atip                       Access to Information / Privacy reconciliation
 #     ca-aia                        TBS Directive on Automated Decision-Making
 #     ca-charter                    Charter rights design review
@@ -208,15 +208,17 @@ targets:
     output: { project: "{P}-{NAME}", type: AIA }
     deps: [REQ, CA_PIA]
 
-  # --- FITAA flagship (after PIA / ATIP / AIA available) -----------------
-  # FITAA is the apex compliance artefact for this recipe. It depends on
-  # the privacy outputs so the foreign-influence registration design can
-  # reflect PII handling, severance and any automated triage.
+  # --- FITAA flagship (after the data model) -----------------------------
+  # FITAA is the apex compliance artefact for this recipe. /arckit:ca-fitaa
+  # reads PRIN, REQ, STKE and the data model, and none of the privacy
+  # artefacts, so it waits only for those. The PIA and ATIP still run
+  # first by default, because the data model is built on them; with
+  # DATA_MODEL disabled, FITAA runs straight after REQ and STKE.
   - id: CA_FITAA
     skill: arckit:ca-fitaa
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FITAA }
-    deps: [REQ, STKE, CA_PIA, CA_ATIP, CA_AIA]
+    deps: [REQ, STKE, DATA_MODEL]
 
   # --- Charter rights (after PIA and FITAA — it reads both) --------------
   # /arckit:ca-charter grounds its s.8 analysis in the PIA's

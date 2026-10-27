@@ -1257,8 +1257,8 @@ All artifacts must pass these 10 checks:
 - Necessity and proportionality run as the four-step Oakes-derived analysis: pressing and substantial objective, rational connection, minimal impairment, proportional effects
 - §7 use limited to the purpose of collection or a consistent use; §8 disclosures analysed per routine use, with §8(2)(a)–(m) letters treated individually rather than aggregated
 - Cross-border transfer flags cross-referenced to the cloud-residency assessment
-- Individual rights cover §12 access, §13 PIB registration with TBS InfoSource, correction and annotation, and the OPC complaint pathway
-- OPC notification trigger analysed, honouring the 30-day pre-launch requirement for new programmes and substantial modifications
+- Individual rights cover §12 access, §10 PIB registration (published in TBS InfoSource), correction and annotation, and the OPC complaint pathway
+- OPC notification trigger analysed against the Policy on Privacy Protection (4.2.2: notice early enough for TBS and the OPC to review) and the Standard on Privacy Impact Assessment (completed PIA sent to TBS and the OPC, C.2.2.12), without a fixed notice period the instruments do not set
 - Approval chain named through ATIP coordinator, ADM and head of institution, with TBS notification and OPC consultation at the correct gates
 - Action tracker links every open mitigation back to its privacy-risk register entry
 
@@ -1365,8 +1365,8 @@ All artifacts must pass these 10 checks:
 - Thresholds assessed against CFTA, CETA, CPTPP and WTO-AGP, each stating the current threshold, whether the value crosses it, the coverage scope and the open-tendering obligation attaching
 - Route selection assesses every candidate with fit, risk posture and timeline (Standing Offer / Supply Arrangement, AgileIQ, bespoke RFP/RFSO/RFSA, PSIB set-aside)
 - Any Standing Offer or Supply Arrangement named is confirmed current and in scope per its scope notice
-- PSIB contribution documented explicitly so the departmental rolling 5% target can roll it up, with the set-aside type stated and the supplier pool identified through the ISC directory
-- The 5% treated as a department-level rolling target — no single procurement judged in isolation
+- PSIB contribution documented explicitly so the department's annual 5% target can count it, with the set-aside type stated and the supplier pool identified through the ISC directory
+- The 5% treated as an annual department-level target (Directive on the Management of Procurement, Appendix E) — no single procurement judged in isolation
 - Security clearance requirements stated per role with level, holder count, PSPC processing lead time, and the operational risk where clearance sits on the critical path
 - Evaluation framework sets mandatory, point-rated and financial dimensions with a weight envelope traceable to requirements, leaving the detailed rubric to the evaluation artefact
 - Bid solicitation schedule runs market notice through award including CanadaBuys posting, standstill periods and post-award PSIB reporting, each with owner and dependency
