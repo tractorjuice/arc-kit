@@ -122,14 +122,14 @@ Show role determination before proceeding.
    - Pre-purchase disclosure obligation (Article 3): users informed of data generated
    - Real-time access by users (Article 4): free of charge, machine-readable format
    - Third-party sharing at user instruction (Article 5): FRAND conditions
-   - Contact point for data access requests
+   - Means of contacting the data holder quickly and efficiently, given before the related-service contract (Article 3(3)(e))
    - Trade secret protection when providing access
 
 5. **Section 3: B2B Data Sharing (Chapter III)** (Data holder)
    - Data sharing obligation conditions (Article 8)
    - FRAND terms requirement (fair, reasonable, non-discriminatory)
    - SME protection: compensation capped at cost of sharing (Article 9)
-   - Use restrictions: no re-identification, no use to compete with data holder (Article 8(4))
+   - Use restrictions: data not used to develop a competing connected product (Articles 4(10), 6(2)(e)) or passed to a gatekeeper (Article 6(2)(d)); technical protection measures and remedies for unauthorised use (Article 11)
    - Dispute resolution mechanism (Article 10)
    - Trade secret safeguards (Article 12)
 

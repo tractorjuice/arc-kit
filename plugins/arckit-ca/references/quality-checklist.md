@@ -456,7 +456,7 @@ All artifacts must pass these 10 checks:
 - Personal data vs non-personal data split identified; GDPR intersection documented
 - User data access rights (Chapter II) assessed if manufacturer/data holder: pre-purchase disclosure, real-time access, free of charge, machine-readable format
 - Third-party sharing at user request (Article 5) assessed: FRAND conditions, trade secret protection
-- B2B data sharing obligations (Chapter III) assessed: FRAND terms, SME compensation cap, use restrictions (no re-identification, no use to compete)
+- B2B data sharing obligations (Chapter III) assessed: FRAND terms, SME compensation cap, use restrictions (no use to develop a competing connected product, Articles 4(10) and 6(2)(e))
 - Public sector exceptional access (Chapter V) assessed or explicitly marked N/A
 - Cloud switching obligations (Chapter VI) assessed if DAPS or marked N/A: no obstacles to switching (Art. 23), notice period of at most two months (Art. 25(2)(d)), transitional period of at most 30 calendar days, extendable to at most seven months only where technically unfeasible (Art. 25(2)(a), 25(4)), structured machine-readable export
 - Switching charges assessed (Article 29): only reduced, cost-based charges until 12 January 2027 and none from that date; no "September 2027" egress deadline stated

@@ -108,8 +108,8 @@ A service can score well overall and still be rejected for missing one objective
 
 The eight objectives each carry their own SEAL, but the framework also defines an aggregate across all of them — and it is deliberately a **minimum**, never an average and never a mode. Two levels of the same rule apply, and the command cites them separately:
 
-- **Per-objective SEAL** = the minimum SEAL across every criterion answered within that objective. The Commission's own Annex calculator implements exactly this at cell F2 — `="SEAL-"&MIN(H5:H251)` — the minimum over every answered row.
-- **Overall SEAL** = the minimum SEAL evidenced across all eight objectives. The Implementation guidance states this plainly (p.9): *"The overall SEAL level is the lowest SEAL level achieved in any of the objectives."*
+- **Per-objective SEAL** = the minimum SEAL across every criterion answered within that objective. This is a property of the framework: the Annex calculator has no per-objective SEAL cell.
+- **Overall SEAL** = the minimum SEAL evidenced across all eight objectives. The Implementation guidance states this plainly (p.9): *"The overall SEAL level is the lowest SEAL level achieved in any of the objectives."* The Commission's Annex calculator implements it at cell F2 — `="SEAL-"&MIN(H5:H251)` — the minimum over every answered row across all eight objectives.
 
 Those two levels agree because an objective's own SEAL is already a minimum — the Overall SEAL is a minimum-of-minimums, not a second independent calculation.
 
