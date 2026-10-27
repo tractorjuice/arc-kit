@@ -66,9 +66,12 @@ Since August 2026, at least one award criterion must take account of the environ
 | Qualification | Scope | When to Require |
 |--------------|-------|----------------|
 | PASSI | Penetration testing, security audits | IS audit or pentest |
-| PRIS | Incident response, forensics | IR retainer or OIV/OSE obligation |
-| PDIS | SOC, threat detection, SIEM | Managed detection services |
+| PRIS | Incident response, forensics | IR retainer; recommended for OIV/OSE systems |
+| PDIS | SOC, threat detection, SIEM | Managed detection services; required to operate the detection probes on an OIV's SIIV, unless a State service runs them |
 | PACS | Security consulting: homologation support, risk management, secure architecture, cyber-crisis preparation | Consulting for homologation, risk analysis or crisis preparation |
+| PAMS | Secure administration and maintenance, including outsourced remote administration | Managed services (infogérance) or outsourced administration |
+
+For OIV information systems (SIIV), the sectoral arrêtés under Code de la défense L1332-6-1 make a qualified provider (or a State service) compulsory only for operating the detection probes. The homologation audit and incident handling may be done in house, following the PASSI and PRIS référentiels. The OSE rules (arrêté du 14 septembre 2018) only ask operators to rely on those référentiels. France has not yet transposed NIS2, so it is not a basis for requiring any of these qualifications.
 
 ---
 
@@ -91,7 +94,7 @@ Since August 2026, at least one award criterion must take account of the environ
 - CCTP derived from ARC-*-REQ requirements with traceability.
 - DINUM digital obligations included (RGAA, RGI, SILL, doctrine cloud).
 - At least one environmental award criterion (CCP L2152-7) and an environmental execution condition (L2112-2) included; for contracts at or above the formal-procedure thresholds, a social or employment execution condition, or the reason for leaving it out recorded (L2112-2-1).
-- ANSSI qualification required for cybersecurity services (PACS / PASSI / PRIS / PDIS).
+- ANSSI qualification required for cybersecurity services (PACS / PASSI / PRIS / PDIS / PAMS).
 - SecNumCloud required if sensitive data hosted by provider.
 
 ---

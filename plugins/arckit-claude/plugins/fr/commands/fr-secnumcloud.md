@@ -93,6 +93,8 @@ Before generating the assessment, determine:
    - **Designated public interest groupings (GIP)**
    - A **private-sector supplier** is drawn into scope indirectly: providing cloud to a public body in scope, sitting in that body's sub-contracting chain, responding to a tender that requires this protection level, or processing data under a contract that mandates it
    - This obligation applies independently of OIV/OSE status — do not treat "not OIV/OSE" as "SecNumCloud not required"
+   - **Projects started before 16 April 2026** (décret n° 2026-272 art. 3, in force since 17 April 2026): an administration, State operator or GIP that, before the décret was published (JORF of 16 April 2026), started a project within loi SREN art. 31 on a private cloud service that does not meet the décret's art. 2 requirements must request a derogation from the minister responsible for the project. The minister decides within two months, after validation by the Prime Minister. If a cloud offer acceptable for the project is available in France, the derogation lasts at most 18 months from the date that offer became available; otherwise it is granted for one year, renewable until such an offer exists. An offer is acceptable if it meets art. 2 and the project's functional need, taking its cost into account. The decision and its reasons are published on a Prime Minister website.
+   - The arrêté du 14 avril 2026 (JORF n°0090 of 16 April 2026) sets the procedure: the minister sends the request to DINUM electronically; it names the requesting administration and its representative, describes the project and its constraints, and sets out why no acceptable offer exists on the market. DINUM has two months to examine it, then gives its opinion to the administration and the Prime Minister. Record whether a derogation applies, its expiry date and where the decision is published.
 
 3. **OIV/OSE designation**: Is the entity an OIV (Opérateur d'Importance Vitale) or OSE (Opérateur de Services Essentiels)? This is a **separate, additional** basis for requiring SecNumCloud — not a prerequisite for the obligation in point 2.
    - OIV: obligations under LPM Article 22, ANSSI sector orders (arrêtés sectoriels)
@@ -221,6 +223,8 @@ Next steps:
 |----------|-----------|-----|
 | Arrêté du 12 août 2026 portant approbation du référentiel d'exigences relatif aux prestataires de services d'informatique en nuage (binding legal basis; JORF n°0189 of 14 August 2026, in force since 15 August 2026) | Légifrance | https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054678082 |
 | Décret n° 2026-272 du 14 avril 2026 (JORF n°0090 of 16 April 2026; applies loi SREN art. 31 — underlying basis for the arrêté) | Légifrance | https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053900789 |
+| Décret n° 2026-272 art. 3 — derogation for projects started before 16 April 2026 | Légifrance | https://www.legifrance.gouv.fr/loda/article_lc/LEGIARTI000053901928 |
+| Arrêté du 14 avril 2026 relatif aux modalités de dérogation prévue par l'article 3 du décret n° 2026-272 (JORF n°0090 of 16 April 2026) | Légifrance | https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053900806 |
 | SecNumCloud qualification scheme — official page | ANSSI | https://cyber.gouv.fr/secnumcloud |
 | SecNumCloud 3.2 referential (requirements document) | ANSSI | https://cyber.gouv.fr/enjeux-technologiques/cloud/ |
 | List of SecNumCloud-qualified providers | ANSSI | https://cyber.gouv.fr/offre-de-service/solutions-certifiees-et-qualifiees/services-de-securite-evalue/ |

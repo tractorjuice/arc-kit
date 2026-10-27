@@ -1371,7 +1371,7 @@ Generate procurement documentation compliant with French public contract law:
 - Marché public thresholds and procedures (below/above EU thresholds)
 - Requirements statement, award criteria, and security and sovereignty clauses for the consultation file
 - Environmental award criterion and execution conditions (Code de la commande publique, since August 2026)
-- ANSSI-qualified provider requirements (PACS, PASSI, PRIS, PDIS)
+- ANSSI-qualified provider requirements (PACS, PASSI, PRIS, PDIS, PAMS)
 - Digital State doctrine checklist (cloud, RGI, RGAA, RGESN, open source, GDPR)
 
 **`/arckit:fr-pssi`** → PSSI (Politique de Sécurité des Systèmes d'Information)

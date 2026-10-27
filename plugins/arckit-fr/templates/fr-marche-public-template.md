@@ -166,17 +166,19 @@ gantt
 
 ## 7. ANSSI-Qualified Security Provider Selection
 
-[Complete if the procurement includes cybersecurity services — audit, incident response, detection/SOC. Otherwise state "N/A — no cybersecurity services in scope".]
+[Complete if the procurement includes cybersecurity services — audit, incident response, detection/SOC, security consulting, or outsourced administration and maintenance. Otherwise state "N/A — no cybersecurity services in scope".]
 
 | ANSSI Qualification | Scope | When to Require | Required in this procurement |
 |--------------------|-------|-----------------|------------------------------|
 | PASSI (Prestataires d'Audit de la Sécurité des SI) | Penetration testing, technical audits | Any IS security audit or pentest | [Yes / No] |
-| PRIS (Prestataires de Réponse aux Incidents de Sécurité) | Incident response, forensics | IR retainer or OIV/OSE obligation | [Yes / No] |
-| PDIS (Prestataires de Détection des Incidents de Sécurité) | SOC, threat detection, SIEM management | Managed detection services | [Yes / No] |
+| PRIS (Prestataires de Réponse aux Incidents de Sécurité) | Incident response, forensics | IR retainer; recommended for OIV/OSE systems | [Yes / No] |
+| PDIS (Prestataires de Détection des Incidents de Sécurité) | SOC, threat detection, SIEM management | Managed detection services; required to operate the qualified detection probes on an OIV's SIIV, unless a State service runs them | [Yes / No] |
 | PACS (Prestataires d'Accompagnement et de Conseil en Sécurité des SI) | Security consulting: homologation support, IS risk management, secure architecture, cyber-crisis preparation | Consulting for homologation, risk analysis, security architecture or crisis preparation | [Yes / No] |
+| PAMS (Prestataires d'Administration et de Maintenance Sécurisées) | Secure administration and maintenance of the IS, including remote administration by an outsourced provider | Managed services (infogérance) or outsourced administration and maintenance of the system in scope | [Yes / No] |
 
 - Qualification requirement written into the technical specifications (CCTP), not only as a selection criterion: [Yes / No]
 - Qualification validity to be verified against the ANSSI list at contract signature: [Yes / No]
+- Basis for each qualification required: [Legal duty (cite it, e.g. OIV sectoral arrêté for SIIV detection probes) / Buyer's choice]
 
 ## 8. Digital State Doctrine Compliance
 

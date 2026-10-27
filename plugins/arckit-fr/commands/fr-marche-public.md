@@ -167,16 +167,21 @@ Show threshold determination to the user before generating the full document.
      - Award and contracting: 3-4 weeks
 
 9. **Section 7: ANSSI-Qualified Security Provider Selection**
-   If the procurement includes cybersecurity services (audit, incident response, SOC/detection), include selection criteria requiring ANSSI qualification:
+   If the procurement includes cybersecurity services (audit, incident response, SOC/detection, security consulting, or outsourced administration and maintenance of the system), include selection criteria requiring ANSSI qualification:
 
    | ANSSI Qualification | Scope | When to Require |
    |--------------------|--------------------|----------------|
    | PASSI (Prestataires d'Audit de Sécurité des SI) | Penetration testing, technical audits | Any IS security audit or pentest |
-   | PRIS (Prestataires de Réponse aux Incidents de Sécurité) | Incident response, forensics | IR retainer or OIV/OSE obligation |
-   | PDIS (Prestataires de Détection des Incidents de Sécurité) | SOC, threat detection, SIEM management | Managed detection services |
+   | PRIS (Prestataires de Réponse aux Incidents de Sécurité) | Incident response, forensics | IR retainer; recommended for OIV/OSE systems |
+   | PDIS (Prestataires de Détection des Incidents de Sécurité) | SOC, threat detection, SIEM management | Managed detection services; required to operate the qualified detection probes on an OIV's SIIV, unless a State service runs them |
    | PACS (Prestataires d'Accompagnement et de Conseil en Sécurité des SI) | Security consulting: homologation support, IS risk management, secure architecture, cyber-crisis preparation | Consulting for homologation, risk analysis, security architecture or crisis preparation |
+   | PAMS (Prestataires d'Administration et de Maintenance Sécurisées) | Secure administration and maintenance of the IS, including remote administration by an outsourced provider | Managed services (infogérance) or outsourced administration and maintenance of the system in scope |
 
-   - For OIV/OSE systems: require PASSI qualification for any IS audit; PRIS for incident response services — both are mandatory under the sectoral arrêté or NIS2 obligations
+   - **What the law requires for OIV/OSE systems** (do not call a qualification mandatory beyond this):
+     - **OIV information systems (SIIV)**: the sectoral arrêtés taken under Code de la défense L1332-6-1 (one per sector, e.g. the arrêté du 10 juin 2016 for « Produits de santé ») require qualified detection probes operated by a State service or a qualified provider, so PDIS qualification is compulsory for that service. The homologation audit may be carried out by the operator itself or by a qualified provider, following the PASSI référentiel. Incident handling may be done by the operator or a provider it mandates, following the PRIS référentiel. Controls the Prime Minister orders under L1332-6-3 are carried out by ANSSI, State services or providers the Prime Minister qualifies.
+     - **OSE**: the arrêté du 14 septembre 2018 (under décret n° 2018-384, which applies the 2016 NIS directive) asks the operator or its mandated provider to rely on the PASSI, PDIS and PRIS référentiels for audits, detection and incident handling. It does not require a qualified provider.
+     - **NIS2 is not a basis today**: France has not yet transposed it (the loi Résilience has not been promulgated).
+     - Requiring PASSI for audits and PRIS for incident response on OIV/OSE systems is still recommended. Record it as the buyer's choice, not a legal obligation.
    - Include qualification requirement in the technical specifications (CCTP), not just as selection criterion
    - Qualification lists are published by ANSSI on cyber.gouv.fr — advise buyers to verify currency at contract signature
    - ANSSI qualifications are not certifications: they require reassessment — confirm current validity in tender evaluation
@@ -259,7 +264,7 @@ Next steps:
 | UGAP — Union des Groupements d'Achats Publics (framework catalogue) | UGAP | https://www.ugap.fr/ |
 | BOAMP — Bulletin Officiel des Annonces des Marchés Publics | DILA | https://www.boamp.fr/ |
 | TED / JOUE — EU procurement journal (above EU thresholds) | EU Publications Office | https://ted.europa.eu/ |
-| ANSSI-qualified security providers (PACS, PASSI, PRIS, PDIS) | ANSSI | https://cyber.gouv.fr/offre-de-service/solutions-certifiees-et-qualifiees/comprendre-levaluation-de-securite/qualification-de-produit-et-services/referentiels-qualification/ |
+| ANSSI-qualified security providers (PACS, PASSI, PRIS, PDIS, PAMS) | ANSSI | https://cyber.gouv.fr/offre-de-service/solutions-certifiees-et-qualifiees/comprendre-levaluation-de-securite/qualification-de-produit-et-services/referentiels-qualification/ |
 | DINUM digital doctrine — standards for public IS procurement | DINUM | https://www.numerique.gouv.fr/services/cloud/doctrine/ |
 | Procurement thresholds (EU thresholds revised every two years) | DAJ / Légifrance | https://www.economie.gouv.fr/daj/marches-publics |
 | Avis relatif aux seuils de procédure (13 January 2026, CCP annex 2) | Légifrance | https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053346567 |
