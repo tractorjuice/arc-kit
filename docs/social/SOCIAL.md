@@ -443,3 +443,33 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141776607776858/15
 
 > 🧪 New short film: how ArcKit recipes work. What's inside one, part of the uk-saas recipe, and what to check before /arckit:build drafts the set in waves: https://youtu.be/b1EVJenis0M
 > Which recipe should we look at next?
+
+### Q31. ArcKit 6.18.3 — LinkedIn group (Question voice) — posted 27 October
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-7520736929206820865>. No image: the release link makes GitHub's text-only card. Not on the page: it had *From the Articles* scheduled that day, and *Regulation week* starts on 28 October. The free Awareness certification shipped in the same release but is left for a post of its own.
+
+> How do you show a review board what changed in a risk register since they last saw it?
+>
+> ArcKit 6.18.3 is out, and running a command again now keeps the version you had. Any command that writes one document per project, the risk register, stakeholder analysis and data model among them, writes the next version beside the earlier one: 1.1 for a refresh, 2.0 when the scope has changed. It adds a row to the Revision History and sets the status back to DRAFT, ready for review. ArcKit's overlays for other countries and sectors do the same.
+>
+> Commands also pick up more of what you've already written, such as your cloud research, data model or JSP 936 assessment, and our guides now open with what each standard is and who needs it.
+>
+> How does your team keep earlier versions of its governance documents: in the repository, in SharePoint, or somewhere else?
+>
+> https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.3
+
+### Q32. ArcKit 6.18.3 — Discord #announcements — posted 27 October
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/1564529811697831997>, before Q31. Existing users will notice the versioning change the next time they re-run a command, so it belongs in #announcements. It credits the two contributors by their GitHub names.
+
+> 📄 **ArcKit 6.18.3: run a command again and your earlier version stays**
+> Any command that writes one document per project, such as /arckit:risk, /arckit:stakeholders or /arckit:data-model, now writes the next version beside the earlier one: 1.1 for a refresh, 2.0 when the scope changes. It adds a Revision History row, sets Status back to DRAFT and leaves the earlier file as it was. Overlay commands do the same.
+> Also in 6.18.3:
+> • Commands that rely on your cloud research (AWS, Azure and now Google Cloud), data model or JSP 936 assessment now find it
+> • Traceability and analysis use each requirement's own priority
+> • Guides open with what the standard or document is and who needs it, with their facts checked at source
+> • /arckit:gcloud-search covers G-Cloud 15, and /arckit:dos covers DOS7 on the Contract Award Service
+> • The helper scripts run on a Mac
+> Thanks to @johnfelipe on GitHub for two security fixes: the secret scanner now checks your own docs, READMEs and changelogs, and a file or folder name can't pass itself off as an instruction to Claude. And to @trednets: the EU Cloud Sovereignty scorer now runs in Codex, Gemini and the other AI tools too.
+> Update with `claude plugin update arckit@arckit-claude`, and tell us how it goes in #show-your-working
+> <https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.3>
