@@ -1370,7 +1370,8 @@ Generate procurement documentation compliant with French public contract law:
 
 - Marché public thresholds and procedures (below/above EU thresholds)
 - Requirements statement, award criteria, and security and sovereignty clauses for the consultation file
-- ANSSI-qualified provider requirements (PASSI, PRIS, PDIS)
+- Environmental award criterion and execution conditions (Code de la commande publique, since August 2026)
+- ANSSI-qualified provider requirements (PACS, PASSI, PRIS, PDIS)
 - Digital State doctrine checklist (cloud, RGI, RGAA, RGESN, open source, GDPR)
 
 **`/arckit:fr-pssi`** → PSSI (Politique de Sécurité des Systèmes d'Information)
@@ -1411,7 +1412,7 @@ Assess code reuse obligations before building or procuring:
 - EU public code alternatives (Joinup, European Commission repositories)
 - Licence compatibility matrix (EUPL-1.2 recommended for public code publication)
 - Decision matrix: reuse / fork / SILL adoption / procure / build
-- Circulaire 2021 publication obligation: modified public code must be released back
+- Publication duty for source code (CRPA L300-2 / L312-1-1) and contribution-back for modified public code (Circulaire 2021)
 
 ---
 

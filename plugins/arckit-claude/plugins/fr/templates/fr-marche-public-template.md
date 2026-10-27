@@ -22,9 +22,9 @@
 | Parameter | Value |
 |-----------|-------|
 | Estimated total value (excl. VAT) | [Amount] |
-| Applicable threshold | [< €40k / < €215k / > €215k] |
-| Recommended procedure | [Below-threshold negotiated (MAPA) / Open tender / Restricted] |
-| Publication on BOAMP | [Yes / No] |
+| Applicable threshold | [< €60k supplies/services or < €100k works / MAPA below the formal threshold / ≥ €140k (central government) or ≥ €216k (other authorities) supplies/services / ≥ €5,404k works] |
+| Recommended procedure | [No publicity or competition required / Adapted procedure (MAPA) / Open call for tenders / Restricted call for tenders] |
+| Publication on BOAMP | [Yes / BOAMP or JAL (MAPA from €90k) / No] |
 | Publication on JOUE (EU Official Journal) | [Yes / No] |
 | Minimum consultation period | [X days] |
 
@@ -62,7 +62,7 @@
 | RGS v2.0 compliance | ANSSI | Yes |
 | RGI v2.0 compliance (interoperability) | DINUM | Yes |
 | RGAA 4.1 accessibility | DINUM | Yes (public digital services) |
-| RGESN ecodesign | DINUM | Recommended |
+| RGESN ecodesign | Arcep / Arcom | Recommended (non-binding unless written into the contract) |
 
 ## 3. Award Criteria
 
@@ -70,11 +70,12 @@
 
 | Criterion | Weighting | Sub-criteria |
 |-----------|-----------|-------------|
-| Technical value | 60% | Functional fit (25%), Technical architecture (20%), Security/sovereignty (15%) |
+| Technical value | 50% | Functional fit (20%), Technical architecture (15%), Security/sovereignty (15%) |
+| Environmental characteristics | 10% | [e.g. energy use of the service, hosting efficiency, equipment lifetime, RGESN-based ecodesign commitments] |
 | Price | 30% | Total cost of ownership over [X] years |
 | Execution conditions | 10% | Timelines, reversibility, support |
 
-> Total must equal 100%. Adjust sub-criteria to match project priorities.
+> Total must equal 100%. Adjust sub-criteria to match project priorities. At least one criterion must take account of the environmental characteristics of the offer (CCP L2152-7, since August 2026); do not remove the environmental criterion without replacing it.
 
 ### 3.2 Technical Scoring Grid
 
@@ -82,6 +83,17 @@
 |--------------|---------|---------|---------|---------|
 | Functional fit | No coverage | Partial | Substantial | Full coverage |
 | Security/sovereignty | No compliance | Partial | Substantial | Full SecNumCloud/RGS |
+| Environmental characteristics | No commitment | Partial | Substantial, measured | Measured, with targets and reporting |
+
+### 3.3 Environmental and Social Requirements (Code de la commande publique)
+
+Applies to procurements whose consultation is launched, or whose contract notice is sent for publication, from August 2026 (loi n° 2021-1104 Climat et Résilience, art. 35; décret n° 2022-767).
+
+| Requirement | Reference | Included |
+|-------------|-----------|----------|
+| At least one award criterion takes account of the environmental characteristics of the offer (no single price-only criterion) | CCP L2152-7, R2152-7 | [Yes / No] |
+| At least one execution condition takes account of environmental considerations | CCP L2112-2 | [Yes / No — describe the condition] |
+| Social or employment execution condition (contracts at or above the formal-procedure thresholds), or the L2112-2-1 exception relied on and recorded | CCP L2112-2-1 | [Yes / Exception: ... / N/A — below threshold] |
 
 ## 4. Security and Sovereignty Clauses
 
@@ -161,6 +173,7 @@ gantt
 | PASSI (Prestataires d'Audit de la Sécurité des SI) | Penetration testing, technical audits | Any IS security audit or pentest | [Yes / No] |
 | PRIS (Prestataires de Réponse aux Incidents de Sécurité) | Incident response, forensics | IR retainer or OIV/OSE obligation | [Yes / No] |
 | PDIS (Prestataires de Détection des Incidents de Sécurité) | SOC, threat detection, SIEM management | Managed detection services | [Yes / No] |
+| PACS (Prestataires d'Accompagnement et de Conseil en Sécurité des SI) | Security consulting: homologation support, IS risk management, secure architecture, cyber-crisis preparation | Consulting for homologation, risk analysis, security architecture or crisis preparation | [Yes / No] |
 
 - Qualification requirement written into the technical specifications (CCTP), not only as a selection criterion: [Yes / No]
 - Qualification validity to be verified against the ANSSI list at contract signature: [Yes / No]

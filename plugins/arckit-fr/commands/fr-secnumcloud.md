@@ -86,9 +86,9 @@ Before generating the assessment, determine:
    - Non-sensitive (standard government data) → Standard commercial cloud may be acceptable
    - Sensitive (personal data, health data, administrative data) → SecNumCloud recommended
    - Highly sensitive (national security, OIV SIIV data) → SecNumCloud required, possibly IGI 1300
-   - **Legally "sensitive" per the arrêté du 12 août 2026**: data whose compromise would affect public safety, health, the life of persons, or the protection of intellectual property — this is a distinct, narrower legal test from the OIV/SIIV categories above, and it is the trigger for the binding obligation in point 2
+   - **Legally "sensitive" per the arrêté du 12 août 2026**: data whose compromise would harm public order, public safety, health or the life of persons, or the protection of intellectual property — this is a distinct, narrower legal test from the OIV/SIIV categories above, and it is the trigger for the binding obligation in point 2
 
-2. **Binding legal basis (since 15 August 2026)**: Determine whether the entity falls under the arrêté du 12 août 2026 (JORF, in force since 15 August 2026, taken under décret n° 2026-272 du 14 avril 2026 / loi SREN), which makes SecNumCloud 3.2 qualification (or an ANSSI-recognised equivalent European certification) a **legal requirement** — not a recommendation — for:
+2. **Binding legal basis (since 15 August 2026)**: Determine whether the entity falls under the arrêté du 12 août 2026 (published in JORF n°0189 of 14 August 2026 and in force since 15 August 2026, the day after publication; taken under décret n° 2026-272 du 14 avril 2026, which applies article 31 of loi n° 2024-449 du 21 mai 2024, the loi SREN), which makes SecNumCloud 3.2 qualification (or an ANSSI-recognised equivalent European certification) a **legal requirement** — not a recommendation — for:
    - State administrations and their operators, when processing legally-sensitive data (per point 1) in a private cloud
    - **Designated public interest groupings (GIP)**
    - A **private-sector supplier** is drawn into scope indirectly: providing cloud to a public body in scope, sitting in that body's sub-contracting chain, responding to a tender that requires this protection level, or processing data under a contract that mandates it
@@ -219,8 +219,8 @@ Next steps:
 
 | Document | Publisher | URL |
 |----------|-----------|-----|
-| Arrêté du 12 août 2026 portant approbation du référentiel d'exigences relatif aux prestataires de services d'informatique en nuage (binding legal basis, in force since 15 August 2026) | Légifrance | https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054678082 |
-| Décret n° 2026-272 du 14 avril 2026 (loi SREN — underlying statutory basis for the arrêté) | Légifrance | https://www.legifrance.gouv.fr/ |
+| Arrêté du 12 août 2026 portant approbation du référentiel d'exigences relatif aux prestataires de services d'informatique en nuage (binding legal basis; JORF n°0189 of 14 August 2026, in force since 15 August 2026) | Légifrance | https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000054678082 |
+| Décret n° 2026-272 du 14 avril 2026 (JORF n°0090 of 16 April 2026; applies loi SREN art. 31 — underlying basis for the arrêté) | Légifrance | https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053900789 |
 | SecNumCloud qualification scheme — official page | ANSSI | https://cyber.gouv.fr/secnumcloud |
 | SecNumCloud 3.2 referential (requirements document) | ANSSI | https://cyber.gouv.fr/enjeux-technologiques/cloud/ |
 | List of SecNumCloud-qualified providers | ANSSI | https://cyber.gouv.fr/offre-de-service/solutions-certifiees-et-qualifiees/services-de-securite-evalue/ |

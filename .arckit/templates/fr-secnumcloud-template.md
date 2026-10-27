@@ -39,7 +39,7 @@
 
 | Framework | Applicability | Source |
 |-----------|--------------|--------|
-| Arrêté du 12 août 2026 (approves the SecNumCloud 3.2 requirements; taken under décret n° 2026-272 du 14 avril 2026, loi SREN art. 31) | [In scope / Out of scope — see Section 4.3] | Légifrance |
+| Arrêté du 12 août 2026 (approves the SecNumCloud 3.2 requirements; JORF of 14 August 2026, in force since 15 August 2026; taken under décret n° 2026-272 du 14 avril 2026, loi SREN art. 31) | [In scope / Out of scope — see Section 4.3] | Légifrance |
 | SecNumCloud 3.2 | [Required / Recommended / N/A] | ANSSI |
 | LPM (OIV obligations) | [Yes / No] | SGDSN |
 | NIS2 / OSE designation | [Yes / No] | ANSSI |

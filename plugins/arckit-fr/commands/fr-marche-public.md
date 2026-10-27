@@ -84,14 +84,18 @@ Read all documents from Step 0. Extract key information for the procurement file
 
 Before generating the document, determine the applicable procedure:
 
-| Threshold | Procedure | BOAMP | JOUE | Min. Period |
+| Estimated value (excl. VAT) | Procedure | BOAMP | JOUE | Min. Period |
 |-----------|-----------|-------|------|-------------|
-| < €40,000 | Below-threshold (no formal procedure required) | No | No | Informal |
-| €40,000 – €216,000 (supplies/services) | MAPA (Marché à Procédure Adaptée) | Yes | No | 15 days |
-| > €216,000 (supplies/services) | Open call for tenders (Appel d'Offres Ouvert) | Yes | Yes | 35 days |
-| > €5,404,000 (works) | Open call for tenders | Yes | Yes | 35 days |
+| < €60,000 (supplies/services) or < €100,000 (works) | No publicity or competition required (R2122-8) | No | No | None set |
+| From €60,000 to < €90,000 (supplies/services) | MAPA (Marché à Procédure Adaptée) | Free choice of publicity | No | Set by the buyer (no fixed minimum) |
+| From €90,000 (supplies/services) or €100,000 (works) to below the formal-procedure threshold | MAPA | BOAMP or a legal-notices journal (JAL) | If needed to reach interested bidders | Set by the buyer (no fixed minimum) |
+| ≥ €140,000 (supplies/services, central government authorities) | Formal procedure, e.g. open call for tenders (Appel d'Offres Ouvert) | Yes | Yes | Open call: 35 days (30 if tenders can be sent electronically) |
+| ≥ €216,000 (supplies/services, other contracting authorities) | Formal procedure, e.g. open call for tenders | Yes | Yes | Open call: 35 days (30 if tenders can be sent electronically) |
+| ≥ €5,404,000 (works, all contracting authorities) | Formal procedure, e.g. open call for tenders | Yes | Yes | Open call: 35 days (30 if tenders can be sent electronically) |
 
-> **Note**: EU procurement thresholds are revised on a fixed **biennial cycle** (last revision 1 January 2026, next expected 1 January 2028). The figures above are the 2026–2027 thresholds — verify against the current `réglement délégué` before relying on them near a cycle boundary.
+**Central government authorities** (autorités publiques centrales) are the State (except the armed forces' health-service establishments), State public bodies other than EPIC (except public health establishments), independent administrative authorities with legal personality, the Caisse des dépôts, the Légion d'honneur, UGAP and two foundations. Local authorities and other contracting authorities use €216,000. Contracting entities (entités adjudicatrices, utilities) use €432,000 for supplies and services.
+
+> **Note**: The formal-procedure thresholds are the 2026–2027 EU thresholds (Commission Delegated Regulation (EU) 2025/2152, applicable from 1 January 2026), set out in the French avis of 13 January 2026 that forms annex 2 of the Code de la commande publique. EU thresholds are revised every two years, next on 1 January 2028. The national €60,000 / €100,000 thresholds come from décret n° 2025-1386 (works from 1 January 2026, supplies and services from 1 April 2026). Publicity: CCP R2131-12 (MAPA) and R2131-16 (formal procedures); time limits: R2161-2 and R2161-3.
 
 Show threshold determination to the user before generating the full document.
 
@@ -131,9 +135,11 @@ Show threshold determination to the user before generating the full document.
      - RGESN ecodesign (recommended)
 
 5. **Section 3: Award Criteria**
-   - Suggested weighting: Technical value (60%), Price (30%), Execution conditions (10%)
-   - Sub-criteria breakdown with sovereignty/security sub-criterion (15% of technical value)
-   - Technical scoring grid (0–3 scoring with descriptions)
+   - Suggested weighting: Technical value (50%), Environmental characteristics (10%), Price (30%), Execution conditions (10%)
+   - Sub-criteria breakdown with sovereignty/security sub-criterion (15% of the total)
+   - **Environmental award criterion (mandatory)**: at least one award criterion must take account of the environmental characteristics of the offer (CCP L2152-7, as amended by loi n° 2021-1104 Climat et Résilience, art. 35). A single price-only criterion is no longer allowed: if a single criterion is used, it must be cost on a global approach, such as life-cycle cost, that takes the environmental characteristics into account (R2152-7). This applies to every procurement whose consultation is launched, or whose contract notice is sent for publication, from August 2026: R2152-7 from 21 August 2026 (décret n° 2022-767, art. 11), the amended L2152-7 from 22 August 2026 (Légifrance). Flag it as non-compliant if the user's weighting has no environmental criterion
+   - Technical scoring grid (0–3 scoring with descriptions), including the environmental criterion
+   - **Execution conditions**: include at least one environmental execution condition (CCP L2112-2). For contracts at or above the formal-procedure thresholds, include a social or employment execution condition, or record why one of the L2112-2-1 exceptions applies
    - Note: total must equal 100% — flag if user specifies different weights
 
 6. **Section 4: Security and Sovereignty Clauses**
@@ -168,11 +174,11 @@ Show threshold determination to the user before generating the full document.
    | PASSI (Prestataires d'Audit de Sécurité des SI) | Penetration testing, technical audits | Any IS security audit or pentest |
    | PRIS (Prestataires de Réponse aux Incidents de Sécurité) | Incident response, forensics | IR retainer or OIV/OSE obligation |
    | PDIS (Prestataires de Détection des Incidents de Sécurité) | SOC, threat detection, SIEM management | Managed detection services |
-   | PDCS (Prestataires de Cybersécurité pour les Collectivités) | Local authority-specific cybersecurity | Collectivités territoriales only |
+   | PACS (Prestataires d'Accompagnement et de Conseil en Sécurité des SI) | Security consulting: homologation support, IS risk management, secure architecture, cyber-crisis preparation | Consulting for homologation, risk analysis, security architecture or crisis preparation |
 
    - For OIV/OSE systems: require PASSI qualification for any IS audit; PRIS for incident response services — both are mandatory under the sectoral arrêté or NIS2 obligations
    - Include qualification requirement in the technical specifications (CCTP), not just as selection criterion
-   - Qualification lists are published on ssi.gouv.fr — advise buyers to verify currency at contract signature
+   - Qualification lists are published by ANSSI on cyber.gouv.fr — advise buyers to verify currency at contract signature
    - ANSSI qualifications are not certifications: they require reassessment — confirm current validity in tender evaluation
 
 10. **Section 8: Digital State Doctrine Compliance**
@@ -214,6 +220,7 @@ Min. Consultation Period: {X days}
 🛡️ Mandatory Clauses Included
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+✅ Environmental award criterion and execution condition (CCP L2152-7, L2112-2)
 ✅ Security annex (RGS v2.0, PSSIE)
 ✅ Data localisation clause (EU territory)
 ✅ Reversibility clause (DINUM standards)
@@ -252,11 +259,13 @@ Next steps:
 | UGAP — Union des Groupements d'Achats Publics (framework catalogue) | UGAP | https://www.ugap.fr/ |
 | BOAMP — Bulletin Officiel des Annonces des Marchés Publics | DILA | https://www.boamp.fr/ |
 | TED / JOUE — EU procurement journal (above EU thresholds) | EU Publications Office | https://ted.europa.eu/ |
-| ANSSI-qualified security providers (PASSI, PRIS, PDIS) | ANSSI | https://cyber.gouv.fr/offre-de-service/solutions-certifiees-et-qualifiees/comprendre-levaluation-de-securite/qualification-de-produit-et-services/referentiels-qualification/ |
+| ANSSI-qualified security providers (PACS, PASSI, PRIS, PDIS) | ANSSI | https://cyber.gouv.fr/offre-de-service/solutions-certifiees-et-qualifiees/comprendre-levaluation-de-securite/qualification-de-produit-et-services/referentiels-qualification/ |
 | DINUM digital doctrine — standards for public IS procurement | DINUM | https://www.numerique.gouv.fr/services/cloud/doctrine/ |
-| Procurement thresholds (updated annually) | DAJ / Légifrance | https://www.economie.gouv.fr/daj/marches-publics |
+| Procurement thresholds (EU thresholds revised every two years) | DAJ / Légifrance | https://www.economie.gouv.fr/daj/marches-publics |
+| Avis relatif aux seuils de procédure (13 January 2026, CCP annex 2) | Légifrance | https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000053346567 |
+| CCP L2152-7 — environmental award criterion (loi n° 2021-1104, art. 35) | Légifrance | https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000043975064 |
 
-> **Note for reviewers**: French public procurement is governed by the Code de la commande publique (transposing EU Directives 2014/24 and 2014/25). UGAP is a French central purchasing body — pre-competed framework agreements that public buyers can call off without running a full tender. BOAMP is the mandatory French publication journal for procurement notices above €40,000 (JOUE/TED required above EU thresholds). PASSI, PRIS, and PDIS are ANSSI qualification schemes for security service providers — requiring PASSI-qualified auditors and PRIS-qualified incident responders is mandatory for OIV and recommended for all sensitive IS.
+> **Note for reviewers**: French public procurement is governed by the Code de la commande publique (transposing EU Directives 2014/24 and 2014/25). UGAP is a French central purchasing body — pre-competed framework agreements that public buyers can call off without running a full tender. BOAMP is the French procurement notices bulletin: from €90,000 a MAPA notice goes in the BOAMP or a legal-notices journal (JAL), and at or above the EU thresholds the State, its public bodies other than EPIC and local authorities publish in both the BOAMP and the JOUE/TED. Since August 2026, at least one award criterion must take account of the environmental characteristics of the offer (CCP L2152-7). PACS, PASSI, PRIS and PDIS are ANSSI qualification schemes for security service providers — requiring PASSI-qualified auditors and PRIS-qualified incident responders is mandatory for OIV and recommended for all sensitive IS.
 
 ## Success Criteria
 
@@ -266,6 +275,7 @@ Next steps:
 - ✅ Requirements statement linked to REQ artifact (FR-xxx, NFR-xxx)
 - ✅ Sovereignty and security requirements table populated
 - ✅ Award criteria with weighting defined (total = 100%)
+- ✅ At least one environmental award criterion and an environmental execution condition included (CCP L2152-7, L2112-2)
 - ✅ Security and sovereignty clauses included (data localisation, reversibility, GDPR/DPA)
 - ✅ HDS clause included if health data detected
 - ✅ SecNumCloud clause included if sensitive data and cloud
