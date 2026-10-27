@@ -43,6 +43,8 @@
 
 The PSPF sets out policy across six security domains (Governance, Risk, Information, Technology, Personnel, Physical). Requirements are numbered individually and tagged with a domain code and an applicability. Scope from the PSPF List of Requirements for the release assessed.
 
+**Reporting type and status**: the List of Requirements gives each requirement a reporting question type (Performance, Yes/No, or Yes/No/Not Applicable). It does not give the answer scale behind Performance questions, so the ✅ / ⚠️ / ❌ / N/A statuses in this artefact are an assessment aid on the overlay's own scale, not the official return. Report the entity's own answers in the entity's annual protective security report.
+
 | Domain | Code | Requirements in Scope | Requirements Scoped Out | Scoping Notes |
 |--------|------|-----------------------|-------------------------|---------------|
 | Governance | GOV | [n — list numbers] | [n — list numbers + reason] | [Notes] |

@@ -31,304 +31,414 @@
 | **IRAP Assessment Status** | [Assessed (date) / In Progress / Not Required / Not Started] |
 | **IRAP Scope** | [What's in scope / Cloud provider's IRAP boundary referenced] |
 | **DISP Member** | [Yes (Level 1/2/3) / In Progress / No] |
-| **ISM Edition Used** | [e.g., March 2026 — verification date] |
+| **ISM Edition Used** | [e.g., September 2026 — verification date] |
 | **Sovereignty** | [All data in AU / Some offshore / Sovereign cloud] |
 | **Assessment Date** | [YYYY-MM-DD] |
 | **Assessor** | [Name and role] |
 
 ---
 
-## Control Domain Applicability Matrix
+## Guideline Applicability Matrix
 
-ISM controls are organised into 17 domains. Applicability depends on the system's classification — controls flagged for the system's *highest classification of processed information* apply.
+The ISM sets out cyber security principles and 23 cyber security guidelines. Each security control carries applicability markings — NC (non-classified), OS (OFFICIAL: Sensitive), P (PROTECTED), S (SECRET), TS (TOP SECRET) — and the controls marked for the system's *highest classification of processed information* apply. List all 23 guidelines; give a reason for each one that does not apply.
 
-| # | Domain | Applies | Implementation | Notes |
-|---|--------|---------|----------------|-------|
-| 1 | Cyber Security Governance | [Y/N] | [✅/⚠️/❌] | [Notes] |
-| 2 | Cyber Security Incidents | [Y/N] | [✅/⚠️/❌] | [Cross-ref NDB playbook] |
-| 3 | Outsourced Services | [Y/N] | [✅/⚠️/❌] | [MSP boundary, supply chain] |
-| 4 | Security Documentation | [Y/N] | [✅/⚠️/❌] | [SSP, SRMP] |
-| 5 | Personnel Security | [Y/N] | [✅/⚠️/❌] | [Clearance levels] |
-| 6 | Physical Security | [Y/N] | [✅/⚠️/❌] | [Cloud-only systems may N/A this in part] |
-| 7 | Communications Infrastructure | [Y/N] | [✅/⚠️/❌] | [Often N/A for pure-cloud] |
-| 8 | ICT Equipment Security | [Y/N] | [✅/⚠️/❌] | [Endpoint lifecycle] |
-| 9 | System Hardening | [Y/N] | [✅/⚠️/❌] | [Cross-ref E8] |
-| 10 | System Management | [Y/N] | [✅/⚠️/❌] | [Admin governance, vuln mgmt] |
-| 11 | System Monitoring | [Y/N] | [✅/⚠️/❌] | [SIEM, audit retention] |
-| 12 | Cryptography | [Y/N] | [✅/⚠️/❌] | [ASD-approved algorithms, key mgmt] |
-| 13 | Gateway Security | [Y/N] | [✅/⚠️/❌] | [Content filtering, DLP] |
-| 14 | Data Transfer | [Y/N] | [✅/⚠️/❌] | [Cross-domain, cross-system] |
-| 15 | Cloud and IaaS Considerations | [Y/N] | [✅/⚠️/❌] | [Inherit from IRAP cloud provider where applicable] |
-| 16 | Working-Off-Site Security | [Y/N] | [✅/⚠️/❌] | [Remote work, mobile, BYOD] |
-| 17 | Evaluation Activities | [Y/N] | [✅/⚠️/❌] | [Common Criteria, FIPS] |
+| ISM Guideline | Applies | Implementation | Notes |
+|---------------|---------|----------------|-------|
+| Cyber security roles | [Y/N] | [✅/⚠️/❌] | [Board, CISO and system owner responsibilities] |
+| Cyber security incidents | [Y/N] | [✅/⚠️/❌] | [Cross-ref NDB playbook] |
+| Procurement and outsourcing | [Y/N] | [✅/⚠️/❌] | [Supply chain; managed service and cloud service providers; IRAP inheritance] |
+| Cyber security documentation | [Y/N] | [✅/⚠️/❌] | [SSP, incident response plan, continuous monitoring plan] |
+| Physical security | [Y/N] | [✅/⚠️/❌] | [Cloud-only systems may inherit this in part] |
+| Personnel security | [Y/N] | [✅/⚠️/❌] | [Awareness training, AI and web usage policies] |
+| Communications infrastructure | [Y/N] | [✅/⚠️/❌] | [Cabling and emanation security; often inherited for pure cloud] |
+| Communications systems | [Y/N] | [✅/⚠️/❌] | [Telephony, video conferencing, multifunction devices] |
+| Enterprise mobility | [Y/N] | [✅/⚠️/❌] | [Mobile devices, remote access, overseas travel] |
+| Evaluated products | [Y/N] | [✅/⚠️/❌] | [Evaluated product procurement and usage] |
+| Information technology equipment | [Y/N] | [✅/⚠️/❌] | [Usage, repairs, sanitisation, disposal] |
+| Media | [Y/N] | [✅/⚠️/❌] | [Usage, sanitisation, destruction, disposal] |
+| System hardening | [Y/N] | [✅/⚠️/❌] | [Cross-ref E8] |
+| System access | [Y/N] | [✅/⚠️/❌] | [Identity, MFA, privileged access, credentials] |
+| System management | [Y/N] | [✅/⚠️/❌] | [Administration, patching, backups] |
+| Security assurance | [Y/N] | [✅/⚠️/❌] | [Security monitoring, event logging, vulnerability assessment] |
+| Software development | [Y/N] | [✅/⚠️/❌] | [Secure development, AI and web applications] |
+| Database systems | [Y/N] | [✅/⚠️/❌] | [Database servers and databases] |
+| Email | [Y/N] | [✅/⚠️/❌] | [Email usage, gateways and servers] |
+| Networking | [Y/N] | [✅/⚠️/❌] | [Network design, wired and wireless, service continuity] |
+| Cryptography | [Y/N] | [✅/⚠️/❌] | [ASD-approved algorithms and protocols, key management] |
+| Gateways | [Y/N] | [✅/⚠️/❌] | [Gateways, CDS, firewalls, content filtering] |
+| Data transfers | [Y/N] | [✅/⚠️/❌] | [Import and export between systems and domains] |
 
 ---
 
-## Per-Domain Control Applicability Assessment
+## Per-Guideline Control Applicability Assessment
 
-### Domain 1: Cyber Security Governance
+### Guidelines for cyber security roles
 
 | Aspect | Detail |
 |--------|--------|
-| **Applies** | [Yes / No] |
+| **Applies** | [Yes] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List ISM control identifiers — e.g., ISM-0027, ISM-0714, ISM-1567] |
+| **Applicable Controls** | [ISM control identifiers — e.g., ISM-0714, ISM-0027] |
 
-**Evidence**: [Security risk management plan, security documentation, change management process, accountable security officer]
+**Evidence**: [Board or executive committee oversight, CISO appointment and reporting line, system owner accountability for each system, annual reporting of system security status]
 
 **Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
-**Compensating Controls**: [If any]
-
 ---
 
-### Domain 2: Cyber Security Incidents
+### Guidelines for cyber security incidents
 
 | Aspect | Detail |
 |--------|--------|
-| **Applies** | [Yes / No] |
+| **Applies** | [Yes] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List ISM control identifiers] |
+| **Applicable Controls** | [ISM control identifiers] |
 
-**Evidence**: [Incident response plan, NDB playbook reference (`ARC-{P}-AUNDB-v*`), 24/7 monitoring posture]
+**Evidence**: [Cyber security incident management policy and register, insider threat mitigation program, reporting to the CISO and to ASD, enacting the incident response plan, handling data spills, malicious code and intrusions, NDB playbook reference (`ARC-{P}-AUNDB-v*`)]
 
-**Gaps**: [Specific control IDs not implemented]
+**Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
 ---
 
-### Domain 3: Outsourced Services
+### Guidelines for procurement and outsourcing
 
 | Aspect | Detail |
 |--------|--------|
 | **Applies** | [Yes — MSP / cloud providers in scope] |
-| **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List] |
+| **Implementation** | [✅ / ⚠️ / ❌ / Inherited from IRAP-assessed cloud service] |
+| **Applicable Controls** | [ISM control identifiers] |
+| **IRAP Cloud Provider Inheritance** | [Cloud service provider, IRAP assessment date and scope — cite the IRAP report, not marketing material] |
 
-**Evidence**: [MSP contractual security flow-down, supply-chain attestation review, IRAP-assessed cloud service inheritance, MSP-held admin role inventory]
+**Evidence**: [Cyber supply chain risk management, outsourced cloud service register, IRAP assessment of each outsourced cloud service provider, contractual security requirements with service providers, service-provider access restricted and independently logged]
 
-**Gaps**: [Specific control IDs not implemented]
+**Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
 ---
 
-### Domain 4: Security Documentation
+### Guidelines for cyber security documentation
 
 | Aspect | Detail |
 |--------|--------|
 | **Applies** | [Yes] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List] |
+| **Applicable Controls** | [ISM control identifiers] |
 
-**Evidence**: [System Security Plan (SSP), Security Risk Management Plan (SRMP), Continuous Monitoring Plan, Incident Response Plan]
+**Evidence**: [Cyber security strategy; system security plan, cyber security incident response plan, change and configuration management plan, continuous monitoring plan, security assessment report, plan of action and milestones]
 
-**Gaps**: [Specific control IDs not implemented]
+**Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
 ---
 
-### Domain 5: Personnel Security
+### Guidelines for physical security
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes / Partial — cloud-only systems may inherit from the cloud provider's IRAP assessment] |
+| **Implementation** | [✅ / ⚠️ / ❌ / Inherited] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [Physical access to systems, servers, network devices and cryptographic equipment; securing IT equipment and media; inherited facility controls]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for personnel security
 
 | Aspect | Detail |
 |--------|--------|
 | **Applies** | [Yes] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List — varies by classification + DISP membership] |
+| **Applicable Controls** | [ISM control identifiers] |
 
-**Evidence**: [Security clearance verification process, security awareness training, separation of duties, foreign national handling]
+**Evidence**: [Cyber security awareness training, general-purpose AI and web usage policies, handling requests to change banking details or user accounts (synthetic impersonation), reporting suspicious contact via online services]
 
-**Gaps**: [Specific control IDs]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### Domain 6: Physical Security
-
-| Aspect | Detail |
-|--------|--------|
-| **Applies** | [Yes / Partial — cloud-only systems may inherit from cloud provider's IRAP] |
-| **Implementation** | [✅ / ⚠️ / ❌ / Inherited from IRAP cloud provider] |
-
-**Evidence**: [Facility access controls, ICT equipment lifecycle, media handling]
-
-**Gaps**: [Specific control IDs]
+**Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
 ---
 
-### Domain 7: Communications Infrastructure
+### Guidelines for communications infrastructure
 
 | Aspect | Detail |
 |--------|--------|
-| **Applies** | [Often N/A for pure-cloud systems] |
-| **Implementation** | [Inherited / N/A] |
+| **Applies** | [Often N/A or inherited for pure-cloud systems] |
+| **Implementation** | [✅ / ⚠️ / ❌ / Inherited / N/A] |
+| **Applicable Controls** | [ISM control identifiers] |
 
-**Notes**: For pure-cloud systems (SaaS/PaaS/IaaS), this domain typically inherits from the cloud provider's IRAP attestation.
+**Evidence**: [Cabling infrastructure and emanation security for owned facilities; for pure-cloud systems, the inherited position from the cloud provider's IRAP assessment]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
 
 ---
 
-### Domain 8: ICT Equipment Security
+### Guidelines for communications systems
 
 | Aspect | Detail |
 |--------|--------|
-| **Applies** | [Yes for endpoint estate] |
+| **Applies** | [Yes if telephony, video conferencing, IP telephony, MFDs or fax are in scope] |
+| **Implementation** | [✅ / ⚠️ / ❌ / N/A] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [Telephone systems, video conferencing and IP telephony, multifunction devices, fax machines and services]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for enterprise mobility
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes if mobile devices or remote working are supported] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List] |
+| **Applicable Controls** | [ISM control identifiers] |
 
-**Evidence**: [Endpoint hardening, secure media handling, sanitisation procedures, equipment disposal]
+**Evidence**: [Mobile device management, approved mobile platforms, privately owned device policy, encrypted storage and communications, travelling overseas with mobile devices]
 
-**Gaps**: [Specific control IDs]
+**Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
 ---
 
-### Domain 9: System Hardening
+### Guidelines for evaluated products
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes if evaluated products are required or in use] |
+| **Implementation** | [✅ / ⚠️ / ❌ / N/A] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [Evaluated product selection and delivery, use of evaluated products in their evaluated configuration]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for information technology equipment
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes for the endpoint and server estate] |
+| **Implementation** | [✅ / ⚠️ / ❌ / Inherited] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [IT equipment management policy and registers, labelling and classification, maintenance and repairs, sanitisation, destruction and disposal]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for media
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes if removable or fixed media are in scope] |
+| **Implementation** | [✅ / ⚠️ / ❌ / Inherited] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [Media management and removable media policies, removable media register, media sanitisation, destruction and disposal]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for system hardening
 
 | Aspect | Detail |
 |--------|--------|
 | **Applies** | [Yes] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List] |
+| **Applicable Controls** | [ISM control identifiers] |
 | **E8 Cross-Reference** | [ARC-{P}-AUE8-v*] |
 
-**Evidence**: [Operating system hardening, application hardening, authentication mechanisms, network security] — **defer to E8 posture artefact for E8-mapped controls**.
+**Evidence**: [Operating system, user application, server application and virtualisation hardening, including application control and AI application configuration — **defer to the E8 posture artefact for E8-mapped controls**]
 
-**Gaps**: [Beyond-E8 ISM control gaps]
+**Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
 ---
 
-### Domain 10: System Management
+### Guidelines for system access
 
 | Aspect | Detail |
 |--------|--------|
 | **Applies** | [Yes] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List] |
+| **Applicable Controls** | [ISM control identifiers] |
+| **E8 Cross-Reference** | [ARC-{P}-AUE8-v* — multi-factor authentication, restrict administrative privileges] |
 
-**Evidence**: [Privileged access management, vulnerability management, change management, configuration management]
+**Evidence**: [Identity and access management, multi-factor authentication, privileged access, AI agent identities and register, credential management]
 
-**Gaps**: [Specific control IDs]
+**Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
 ---
 
-### Domain 11: System Monitoring
+### Guidelines for system management
 
 | Aspect | Detail |
 |--------|--------|
 | **Applies** | [Yes] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List] |
+| **Applicable Controls** | [ISM control identifiers] |
+| **E8 Cross-Reference** | [ARC-{P}-AUE8-v* — patching, restrict administrative privileges, regular backups] |
 
-**Evidence**: [Event logging, audit retention (typically 7 years for OFFICIAL+), SIEM integration, security metrics]
+**Evidence**: [System administration and separate privileged operating environments, patch management and cessation of support, data backup and restoration]
 
-**Gaps**: [Specific control IDs]
+**Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
 ---
 
-### Domain 12: Cryptography
+### Guidelines for security assurance
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes] |
+| **Implementation** | [✅ / ⚠️ / ❌] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [Security monitoring policy, centralised event logging, event log monitoring and threat hunting, event log retention (searchable for at least 12 months, then per NAA AFDA Express), vulnerability scanning, vulnerability assessments and penetration tests]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for software development
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes if the project develops or customises software] |
+| **Implementation** | [✅ / ⚠️ / ❌ / N/A] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [Secure software development, software bill of materials, build provenance, security testing, AI application development (model poisoning, excessive agency, prompt injection), web application development]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for database systems
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes if the system includes databases] |
+| **Implementation** | [✅ / ⚠️ / ❌ / Inherited] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [Database register, protecting databases and their contents, separation of database servers from web servers, segregation of development, testing, staging and production, database event logging]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for email
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes if the system sends or receives email] |
+| **Implementation** | [✅ / ⚠️ / ❌ / N/A] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [Email usage policy and protective markings, centralised email gateways, SPF, DKIM and DMARC, transport encryption, email content filtering]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for networking
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes] |
+| **Implementation** | [✅ / ⚠️ / ❌ / Inherited] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [Network documentation, segmentation and segregation, networked management interfaces, 802.1X and MACsec, wireless networks, service continuity for online services]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for cryptography
 
 | Aspect | Detail |
 |--------|--------|
 | **Applies** | [Yes for any encrypted data] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List] |
+| **Applicable Controls** | [ISM control identifiers] |
 
-**Evidence**: [ASD-Approved Cryptographic Algorithms (AACA) used; ASD-Approved Cryptographic Protocols (AACP) used; key lifecycle management; HSM use]
+**Evidence**: [ASD-approved cryptographic algorithms and protocols in use, TLS, SSH and IPsec configuration, key management, transition to post-quantum cryptography]
 
-**Gaps**: [Specific control IDs]
+**Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
 ---
 
-### Domain 13: Gateway Security
+### Guidelines for gateways
 
 | Aspect | Detail |
 |--------|--------|
-| **Applies** | [Yes for systems with internet boundary] |
+| **Applies** | [Yes for systems with an internet or cross-domain boundary] |
+| **Implementation** | [✅ / ⚠️ / ❌ / Inherited] |
+| **Applicable Controls** | [ISM control identifiers] |
+
+**Evidence**: [Gateway architecture, cross domain solutions, firewalls and web application firewalls, web proxies and content filtering]
+
+**Gaps**: [Specific control IDs not implemented + gap description]
+
+**Remediation**: [Actions, owners, target dates]
+
+---
+
+### Guidelines for data transfers
+
+| Aspect | Detail |
+|--------|--------|
+| **Applies** | [Yes if data moves between systems or security domains] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List] |
+| **Applicable Controls** | [ISM control identifiers] |
 
-**Evidence**: [Gateway architecture, content filtering, DLP, certificate management]
+**Evidence**: [Data transfer processes and procedures, accountability for data transfers, authorising export, manual import and export, monitoring data import and export]
 
-**Gaps**: [Specific control IDs]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### Domain 14: Data Transfer
-
-| Aspect | Detail |
-|--------|--------|
-| **Applies** | [Yes if cross-domain or cross-system data movement] |
-| **Implementation** | [✅ / ⚠️ / ❌] |
-| **Applicable Controls** | [List] |
-
-**Evidence**: [Cross-domain solutions, secure file transfer, data import/export controls, sanitisation at boundary]
-
-**Gaps**: [Specific control IDs]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### Domain 15: Cloud and IaaS Considerations
-
-| Aspect | Detail |
-|--------|--------|
-| **Applies** | [Yes for any cloud-hosted system] |
-| **Implementation** | [✅ / ⚠️ / ❌ / Inherited from IRAP cloud provider] |
-| **Applicable Controls** | [List] |
-| **IRAP Cloud Provider Inheritance** | [Microsoft Azure (IRAP PROTECTED date), AWS (IRAP date), GCP (IRAP date) — list applicable] |
-
-**Evidence**: [Cloud provider IRAP scope statements, customer-side responsibility implementation, sovereignty configuration]
-
-**Gaps**: [Specific control IDs not satisfied by inheritance]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### Domain 16: Working-Off-Site Security
-
-| Aspect | Detail |
-|--------|--------|
-| **Applies** | [Yes if remote work supported] |
-| **Implementation** | [✅ / ⚠️ / ❌] |
-
-**Evidence**: [Remote work policy, BYOD posture, mobile device management, secure remote access]
-
-**Gaps**: [Specific control IDs]
-
-**Remediation**: [Actions, owners, target dates]
-
----
-
-### Domain 17: Evaluation Activities
-
-| Aspect | Detail |
-|--------|--------|
-| **Applies** | [Yes if Common Criteria / FIPS-evaluated products in scope] |
-| **Implementation** | [✅ / ⚠️ / ❌] |
-
-**Evidence**: [Common Criteria / FIPS 140-2 product use, evaluated configurations]
-
-**Gaps**: [Specific control IDs]
+**Gaps**: [Specific control IDs not implemented + gap description]
 
 **Remediation**: [Actions, owners, target dates]
 
@@ -336,40 +446,50 @@ ISM controls are organised into 17 domains. Applicability depends on the system'
 
 ## ISM-to-E8 Cross-Reference
 
-| E8 Strategy | Primary ISM Domain(s) | Notes |
-|-------------|-----------------------|-------|
-| Application Control | 9 (System Hardening), 13 (Gateway Security) | App allowlist + boundary control |
-| Patch Applications | 9, 10 (System Management) | Vulnerability + patch management |
-| Configure MS Office Macro Settings | 9 | Application hardening sub-control |
-| User Application Hardening | 9 | Endpoint application configuration |
-| Restrict Administrative Privileges | 5 (Personnel), 10 (System Management) | Privileged access mgmt |
-| Patch Operating Systems | 9, 10 | OS-level patching |
-| Multi-Factor Authentication | 9, 12 (Cryptography) | Authentication mechanism |
-| Regular Backups | 10 (System Management) | The ISM places data backup and restoration controls in its Guidelines for System Management; BCP + restore testing |
+The Essential Eight strategies map to the ISM controls ASD marks with an Essential Eight maturity level. ASD names the strategies; it does not number them.
+
+| E8 Strategy | ISM Guideline(s) | ISM Topics |
+|-------------|------------------|------------|
+| Patch applications | System management; Security assurance | Mitigating known vulnerabilities, cessation of support; vulnerability scanning |
+| Patch operating systems | System management; Security assurance; System hardening | Mitigating known vulnerabilities, cessation of support; vulnerability scanning; operating system releases and versions |
+| Multi-factor authentication | System access | Multi-factor authentication |
+| Restrict administrative privileges | System access; System management | Privileged access to systems, protecting credentials; separate privileged operating environments, administrative infrastructure |
+| Application control | System hardening | Application control (operating system hardening) |
+| Restrict Microsoft Office macros | System hardening | Office productivity suites (user application hardening) |
+| User application hardening | System hardening | Web browsers, Office productivity suites, PDF applications, PowerShell, command shell |
+| Regular backups | System management | Data backup and restoration |
+
+At Maturity Levels Two and Three the strategies also require event logging and incident response, which sit in the ISM's Guidelines for security assurance (security monitoring) and Guidelines for cyber security incidents.
 
 ---
 
 ## Compliance Summary
 
-| Domain | Applies | Status | Applicable Controls | Implemented | Gap Count |
-|--------|---------|--------|---------------------|-------------|-----------|
-| 1. Cyber Security Governance | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 2. Cyber Security Incidents | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 3. Outsourced Services | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 4. Security Documentation | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 5. Personnel Security | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 6. Physical Security | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 7. Communications Infrastructure | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 8. ICT Equipment Security | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 9. System Hardening | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 10. System Management | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 11. System Monitoring | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 12. Cryptography | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 13. Gateway Security | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 14. Data Transfer | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 15. Cloud and IaaS Considerations | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 16. Working-Off-Site Security | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
-| 17. Evaluation Activities | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| ISM Guideline | Applies | Status | Applicable Controls | Implemented | Gap Count |
+|---------------|---------|--------|---------------------|-------------|-----------|
+| Cyber security roles | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Cyber security incidents | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Procurement and outsourcing | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Cyber security documentation | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Physical security | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Personnel security | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Communications infrastructure | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Communications systems | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Enterprise mobility | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Evaluated products | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Information technology equipment | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Media | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| System hardening | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| System access | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| System management | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Security assurance | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Software development | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Database systems | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Email | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Networking | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Cryptography | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Gateways | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
+| Data transfers | [Y/N] | [✅/⚠️/❌] | [n] | [n] | [n] |
 
 **Overall**: [n] Implemented / [n] Applicable = [n]% applicability score.
 
@@ -391,21 +511,21 @@ ISM controls are organised into 17 domains. Applicability depends on the system'
 
 ### Quick Wins ( < 30 days)
 
-| # | Recommendation | ISM Control(s) | Domain | Effort |
-|---|---------------|----------------|--------|--------|
-| 1 | [Recommendation] | [Control IDs] | [#] | [Low/Medium] |
+| # | Recommendation | ISM Control(s) | ISM Guideline | Effort |
+|---|---------------|----------------|---------------|--------|
+| 1 | [Recommendation] | [Control IDs] | [Guideline] | [Low/Medium] |
 
 ### Short-Term (30–90 days)
 
-| # | Recommendation | ISM Control(s) | Domain | Effort |
-|---|---------------|----------------|--------|--------|
-| 1 | [Recommendation] | [Control IDs] | [#] | [Medium/High] |
+| # | Recommendation | ISM Control(s) | ISM Guideline | Effort |
+|---|---------------|----------------|---------------|--------|
+| 1 | [Recommendation] | [Control IDs] | [Guideline] | [Medium/High] |
 
 ### Medium-Term (90–180 days)
 
-| # | Recommendation | ISM Control(s) | Domain | Effort |
-|---|---------------|----------------|--------|--------|
-| 1 | [Recommendation] | [Control IDs] | [#] | [High] |
+| # | Recommendation | ISM Control(s) | ISM Guideline | Effort |
+|---|---------------|----------------|---------------|--------|
+| 1 | [Recommendation] | [Control IDs] | [Guideline] | [High] |
 
 ---
 
@@ -429,7 +549,7 @@ ISM controls are organised into 17 domains. Applicability depends on the system'
 | Doc ID | Filename | Type | Source | Description |
 |--------|----------|------|--------|-------------|
 | ASDISM | ASD Information Security Manual | Standard | cyber.gov.au | Primary control framework — edition [DATE] |
-| AUE8 | ARC-{P}-AUE8-v* | ArcKit Artefact | projects/ | E8 posture cross-reference (Domain 9) |
+| AUE8 | ARC-{P}-AUE8-v* | ArcKit Artefact | projects/ | E8 posture cross-reference (system hardening, system access, system management) |
 
 ### Citations
 

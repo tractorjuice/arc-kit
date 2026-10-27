@@ -1399,11 +1399,11 @@ All artifacts must pass these 10 checks:
 ### AUISM -- ISM Control Applicability
 
 - Applicability driven by system classification — the control set at OFFICIAL:Sensitive is a subset of that at PROTECTED, and the artefact states which classification it is assessing
-- Applicability matrix covers all 17 ISM control areas (the 15 chapter domains plus Cloud/IaaS and Working-Off-Site)
-- Each in-scope domain records applicability rationale, implementation status, evidence, gap with specific ISM control IDs, remediation with owner and date, and any compensating controls
-- Gaps name the specific ISM control IDs not met rather than describing the domain in general terms
+- Applicability matrix covers all 23 cyber security guidelines of the ISM edition assessed (September 2026), with no separate system monitoring, cloud or working-off-site area
+- Each in-scope guideline records applicability rationale, implementation status, evidence, gap with specific ISM control IDs, remediation with owner and date, and any compensating controls
+- Gaps name the specific ISM control IDs not met rather than describing the guideline in general terms
 - ISM-to-E8 cross-reference present, showing E8 as a mitigation subset rather than an alternative
-- Compliance summary states an applicability score as controls implemented over controls applicable, reconciling with the per-domain assessments
+- Compliance summary states an applicability score as controls implemented over controls applicable, reconciling with the per-guideline assessments
 - IRAP position records scope, assessment date, accepted residual risks and re-assessment cadence; inherited posture noted where integrating with IRAP-assessed cloud services
 
 ### AUPIA -- Australian Privacy Impact Assessment

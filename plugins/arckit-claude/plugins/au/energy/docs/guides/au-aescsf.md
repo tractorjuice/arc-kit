@@ -2,7 +2,7 @@
 
 `/arckit-au-energy:au-aescsf` generates an Australian Energy Sector Cyber Security Framework (AESCSF) maturity assessment for Australian electricity, gas, energy-market, DER, OT, or energy-sector supplier projects.
 
-AESCSF is energy-specific, but it should not be run as an isolated cyber checklist. It reads the AU federal community overlay's artefacts when they exist: `au-e8-posture` and `au-ism-controls` provide the ASD cyber baseline, and `au-ot-security` and `au-soci-cirmp` add connected OT and critical-infrastructure evidence where they apply. All four are optional inputs; the `au-energy` recipe runs them first. `au-energy-compliance` reads the finished assessment as cyber-posture context, so run this command before it.
+AESCSF is energy-specific, but it should not be run as an isolated cyber checklist. It reads the AU federal community overlay's artefacts when they exist: `au-e8-posture` and `au-ism-controls` provide the ASD cyber baseline and are recommended inputs; `au-ot-security` and `au-soci-cirmp` add connected OT and critical-infrastructure evidence where they apply and are optional. The `au-energy` recipe runs all four first. `au-energy-compliance` reads the finished assessment as cyber-posture context, so run this command before it.
 
 ## Prerequisites
 
@@ -10,8 +10,8 @@ AESCSF is energy-specific, but it should not be run as an isolated cyber checkli
 |----------|-------------|--------------|
 | `/arckit:requirements` | Recommended | Source for resilience, safety, customer, market, and regulatory requirements |
 | `/arckit:stakeholders` | Recommended | Identifies responsible entity, operator, accountable officer, market participants, suppliers, and regulators |
-| `/arckit-au:au-e8-posture` (`ARC-<id>-AUE8-v1.0.md`) | Optional | Enterprise cyber baseline for AESCSF maturity evidence |
-| `/arckit-au:au-ism-controls` (`ARC-<id>-AUISM-v1.0.md`) | Optional | Broader ASD control evidence and IRAP/cloud inheritance context |
+| `/arckit-au:au-e8-posture` (`ARC-<id>-AUE8-v1.0.md`) | Recommended | Enterprise cyber baseline for AESCSF maturity evidence |
+| `/arckit-au:au-ism-controls` (`ARC-<id>-AUISM-v1.0.md`) | Recommended | Broader ASD control evidence and IRAP/cloud inheritance context |
 | `/arckit-au:au-ot-security` (`ARC-<id>-AUOT-v1.0.md`) | Optional | OT evidence for IT/OT convergence, segmentation, remote access, telemetry, and recovery constraints |
 | `/arckit-au:au-soci-cirmp` (`ARC-<id>-AUSOCI-v1.0.md`) | Optional | SOCI/CIRMP evidence for critical asset and all-hazards governance |
 | `/arckit:dfd` and `/arckit:diagram` | Optional | IT/OT, market, DER, customer, vendor, and telemetry data-flow evidence |

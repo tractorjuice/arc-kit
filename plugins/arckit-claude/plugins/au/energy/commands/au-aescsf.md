@@ -68,8 +68,8 @@ The Australian Energy Sector Cyber Security Framework is an energy-sector cyber 
    - `projects/000-global/ARC-000-PRIN-*.md` if present.
    - The project's REQ artefact - extract energy obligations, cyber objectives, availability, safety, market, DER, customer, metering, and operational requirements.
    - The project's STKE artefact - identify responsible entity, energy business owner, system operator, market participant, control-room, OT, cyber, privacy, risk, and supplier stakeholders.
-   - The project's E8 posture artefact (`ARC-{P}-AUE8-v*`) if available.
-   - The project's ISM applicability artefact (`ARC-{P}-AUISM-v*`) if available.
+   - The project's E8 posture artefact (`ARC-{P}-AUE8-v*`). Recommended input: the `au-energy` recipe builds it before this assessment. If it is missing, continue, record the missing ASD baseline as an evidence gap, and recommend `/arckit-au:au-e8-posture`.
+   - The project's ISM applicability artefact (`ARC-{P}-AUISM-v*`). Recommended input, as for the E8 posture: if it is missing, continue, record the gap, and recommend `/arckit-au:au-ism-controls`.
    - The project's OT security artefact (`ARC-{P}-AUOT-v*`) if available.
    - The project's SOCI/CIRMP artefact (`ARC-{P}-AUSOCI-v*`) if available.
    - Existing DFD, diagram, data-model, traceability, and risk artefacts if available.
