@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:eu-cloud-sovereignty assesses a cloud service against the European Commission&#x27;s Cloud Sovereignty Framework (v1.2.1, October 2025). The framework…">
+    <meta name="description" content="/arckit:eu-cloud-sovereignty assesses a cloud service against the European Commission&#x27;s Cloud Sovereignty Framework (v1.2.1, October 2025), weighted and…">
     <meta name="author" content="ArcKit">
     <title>EU Cloud Sovereignty Framework Playbook | ArcKit</title>
     <meta property="og:title" content="EU Cloud Sovereignty Framework Playbook">
-    <meta property="og:description" content="/arckit:eu-cloud-sovereignty assesses a cloud service against the European Commission&#x27;s Cloud Sovereignty Framework (v1.2.1, October 2025). The framework supplements security assurance schemes — SecNumCloud, EUCS, ISO…">
+    <meta property="og:description" content="/arckit:eu-cloud-sovereignty assesses a cloud service against the European Commission&#x27;s Cloud Sovereignty Framework (v1.2.1, October 2025), weighted and scored per the Commission&#x27;s Implementation guidance and Annex…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/eu-cloud-sovereignty.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="EU Cloud Sovereignty Framework Playbook">
-    <meta name="twitter:description" content="/arckit:eu-cloud-sovereignty assesses a cloud service against the European Commission&#x27;s Cloud Sovereignty Framework (v1.2.1, October 2025). The framework supplements security assurance schemes — SecNumCloud, EUCS, ISO…">
+    <meta name="twitter:description" content="/arckit:eu-cloud-sovereignty assesses a cloud service against the European Commission&#x27;s Cloud Sovereignty Framework (v1.2.1, October 2025), weighted and scored per the Commission&#x27;s Implementation guidance and Annex…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/eu-cloud-sovereignty.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/eu-cloud-sovereignty.md">
@@ -339,7 +339,7 @@
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/eu-cloud-sovereignty.html",
                 "headline": "EU Cloud Sovereignty Framework Playbook",
-                "description": "/arckit:eu-cloud-sovereignty assesses a cloud service against the European Commission's Cloud Sovereignty Framework (v1.2.1, October 2025). The framework supplements security assurance schemes — SecNumCloud, EUCS, ISO…",
+                "description": "/arckit:eu-cloud-sovereignty assesses a cloud service against the European Commission's Cloud Sovereignty Framework (v1.2.1, October 2025), weighted and scored per the Commission's Implementation guidance and Annex…",
                 "url": "https://arckit.org/guide/eu-cloud-sovereignty.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -422,7 +422,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
             <h1 class="app-page-hero__title">EU Cloud Sovereignty Framework Playbook</h1>
-            <p class="app-page-hero__description">/arckit:eu-cloud-sovereignty assesses a cloud service against the European Commission&#x27;s Cloud Sovereignty Framework (v1.2.1, October 2025). The framework supplements security assurance schemes — SecNumCloud, EUCS, ISO…</p>
+            <p class="app-page-hero__description">/arckit:eu-cloud-sovereignty assesses a cloud service against the European Commission&#x27;s Cloud Sovereignty Framework (v1.2.1, October 2025), weighted and scored per the Commission&#x27;s Implementation guidance and Annex…</p>
         </div>
     </div>
 
@@ -439,7 +439,7 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Community</p>
 </blockquote>
-<p><code>/arckit:eu-cloud-sovereignty</code> assesses a cloud service against the European Commission's Cloud Sovereignty Framework (v1.2.1, October 2025). The framework supplements security assurance schemes — SecNumCloud, EUCS, ISO 27001 — with sovereignty-specific safeguards for cloud procurement. It scores eight weighted objectives and expresses the result on a five-level Sovereignty Effectiveness Assurance Level (SEAL) scale.</p>
+<p><code>/arckit:eu-cloud-sovereignty</code> assesses a cloud service against the European Commission's Cloud Sovereignty Framework (v1.2.1, October 2025), weighted and scored per the Commission's Implementation guidance and Annex calculator (1 June 2026). The framework supplements security assurance schemes — SecNumCloud, EUCS, ISO 27001 — with sovereignty-specific safeguards for cloud procurement. It scores eight weighted objectives and expresses the result on a five-level Sovereignty Effectiveness Assurance Level (SEAL) scale.</p>
 <p>Use it when specifying a tender, when evaluating a candidate service against one, or both.</p>
 <hr />
 <h2 id="inputs">Inputs</h2>
@@ -477,7 +477,7 @@
 <p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-EUCSF-v1.0.md</code></p>
 <hr />
 <h2 id="the-eight-sovereignty-objectives">The Eight Sovereignty Objectives</h2>
-<p>Weights are set by the framework and sum to 100%. Treat them as the framework's defaults: ArcKit applies them as published, and the command does not offer a way to re-weight them. If a tender specification states its own weighting, follow the tender and record the deviation.</p>
+<p>ArcKit uses the weights in the Commission's Annex calculator, published with the Implementation guidance on 1 June 2026 (the guidance shows them on p.7 under &quot;Score (examples)&quot;). They sum to 100%. Framework v1.2.1 (October 2025, p.6) weighted three objectives differently: SOV-1 at 15%, SOV-5 at 20% and SOV-7 at 10%. The Commission calls the June 2026 material &quot;an additional clarification&quot; of the framework and has not withdrawn v1.2.1, so the assessment states which weighting it uses. The command does not offer a way to re-weight. If a tender specification states its own weighting, including v1.2.1's, follow the tender and record the deviation.</p>
 <table>
 <thead>
 <tr>
@@ -520,7 +520,7 @@
 </tr>
 </tbody>
 </table>
-<p>Strategic sovereignty carries the heaviest weight, and together with technology and operational sovereignty accounts for 50% — the framework treats dependency as the core sovereignty question, not data location alone.</p>
+<p>In the calculator weighting, strategic sovereignty carries the heaviest weight, and together with technology and operational sovereignty accounts for 50% — dependency, not data location alone, is the core sovereignty question. (In v1.2.1, supply chain sovereignty carried the heaviest weight.)</p>
 <hr />
 <h2 id="the-seal-scale">The SEAL Scale</h2>
 <table>
@@ -606,7 +606,7 @@
 <h2 id="review-checklist">Review Checklist</h2>
 <ul>
 <li>[ ] All eight objectives assessed, none skipped</li>
-<li>[ ] Weights sum to 100% and match the framework's values</li>
+<li>[ ] Weights sum to 100%, match the 1 June 2026 calculator's values, and the document says which weighting it uses</li>
 <li>[ ] SEAL claimed and SEAL evidenced recorded separately per objective</li>
 <li>[ ] Overall SEAL present and computed as a minimum (never an average or mode), with its governing objective/criterion named</li>
 <li>[ ] Minimum SEAL levels attributed to the tender specification, never to the framework</li>

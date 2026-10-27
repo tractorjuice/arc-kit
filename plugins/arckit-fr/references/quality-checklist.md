@@ -458,11 +458,11 @@ All artifacts must pass these 10 checks:
 - Third-party sharing at user request (Article 5) assessed: FRAND conditions, trade secret protection
 - B2B data sharing obligations (Chapter III) assessed: FRAND terms, SME compensation cap, use restrictions (no re-identification, no use to compete)
 - Public sector exceptional access (Chapter V) assessed or explicitly marked N/A
-- Cloud switching obligations (Chapter VI) assessed if DAPS or marked N/A: 30-day notice, 180-day max, no barriers, interoperable export
-- Egress charge elimination by September 2027 (Article 29) assessed
-- International transfer restrictions (Article 27) assessed: technical/organisational measures to prevent unlawful non-EU government access
+- Cloud switching obligations (Chapter VI) assessed if DAPS or marked N/A: no obstacles to switching (Art. 23), notice period of at most two months (Art. 25(2)(d)), transitional period of at most 30 calendar days, extendable to at most seven months only where technically unfeasible (Art. 25(2)(a), 25(4)), structured machine-readable export
+- Switching charges assessed (Article 29): only reduced, cost-based charges until 12 January 2027 and none from that date; no "September 2027" egress deadline stated
+- Unlawful international governmental access (Chapter VII, Article 32) assessed if DAPS: technical, organisational and legal measures to prevent third-country governmental access to non-personal data held in the Union; cited as Article 32, not Article 27 (good faith)
 - Trade secret safeguards documented (process to identify, confidentiality agreement, TOMs)
-- Gap timeline references both key dates: 12 September 2025 and 12 September 2027
+- Gap timeline references the key dates: 12 September 2025 (application), 12 September 2026 (Article 3(1) for newly placed connected products) and 12 January 2027 (no switching charges)
 
 ### EUCSF -- EU Cloud Sovereignty Framework Assessment
 
@@ -475,7 +475,8 @@ All artifacts must pass these 10 checks:
 - A criterion whose every recorded answer is SEAL-4 is not cited as the governing criterion for the Overall SEAL (Implementation guidance p.9: such a criterion "has no impact on the SEAL calculation")
 - The p.10 prevalence statement is honoured: the Overall SEAL, not the Sovereignty Score, is presented as the framework's actual rejection gate
 - All eight objectives (SOV-1 to SOV-8) assessed, none omitted
-- Weight table reproduces the framework weights exactly, checked objective by objective (not only that the column totals 100%, which a permutation of the correct values would also pass): SOV-1 Strategic Sovereignty 20%, SOV-2 Legal & Jurisdictional Sovereignty 10%, SOV-3 Data & AI Sovereignty 10%, SOV-4 Operational Sovereignty 15%, SOV-5 Supply Chain Sovereignty 10%, SOV-6 Technology Sovereignty 15%, SOV-7 Security & Compliance Sovereignty 15%, SOV-8 Environmental Sustainability 5%
+- Document states which weighting it uses — the Commission's 1 June 2026 Annex calculator by default, noting that Framework v1.2.1 (October 2025, p.6) weights SOV-1, SOV-5 and SOV-7 differently, or a tender specification's own weighting recorded as a deviation
+- Weight table reproduces the 1 June 2026 calculator weights exactly, checked objective by objective (not only that the column totals 100%, which a permutation of the correct values would also pass): SOV-1 Strategic Sovereignty 20%, SOV-2 Legal & Jurisdictional Sovereignty 10%, SOV-3 Data & AI Sovereignty 10%, SOV-4 Operational Sovereignty 15%, SOV-5 Supply Chain Sovereignty 10%, SOV-6 Technology Sovereignty 15%, SOV-7 Security & Compliance Sovereignty 15%, SOV-8 Environmental Sustainability 5%
 - All five SEAL definitions (SEAL-0 to SEAL-4) reproduced in full, not paraphrased
 - `Score(SOVn)` and `Max.Score(SOVn)` are defined, not merely named: Score(SOVn) is the sum of selected answer values per the calculator catalogue, and Max.Score(SOVn) is the shared nominal 1000 for every objective, not each objective's own actual maximum
 - Sovereignty Score computed from the stated formula (Score(SOVn) / 1000) × Weight(SOVn); a maximal response is not clamped to 100% — the framework's own 2dp rounding overshoot (100.0756%) is reported faithfully if the assessment reaches it
