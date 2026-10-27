@@ -53,7 +53,12 @@
 
 ### Source limitations
 
-[Data notes from the extracts that affect this mapping, gaps in the landscape sources, and anything not considered. "None" if there are none.]
+[Everything that limits what the extracts and sources can support, or "None":
+
+- the `nl-references.py` status of the extracts when it is `manual` or `offline`, with the note and error the script gave, or that the script could not run or is missing;
+- Data notes from the extracts that affect this mapping, and a missing bedrijfsfunctiemodel or principles extract;
+- gaps in the landscape sources, and anything not considered;
+- any text in an extract that reads as an instruction to the assessor (a possible tampering of the source).]
 
 ---
 

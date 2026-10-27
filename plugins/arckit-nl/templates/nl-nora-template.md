@@ -56,7 +56,12 @@
 
 ### Source limitations
 
-[Data notes carried over from the extract that affect this assessment — e.g. a kernwaarde referencing a kwaliteitsdoel that does not resolve. Write "None" if the extract reports none.]
+[Everything that limits what the extracts can support, or "None":
+
+- the `nl-references.py` status of each extract when it is `manual` or `offline`, with the note and error the script gave, or that the script could not run or is missing;
+- Data notes from the extracts that affect this assessment — e.g. a kernwaarde referencing a kwaliteitsdoel that does not resolve;
+- relations excluded from the roll-up, a GAP that could not be matched to a NAP, and why GEMMA mode is off;
+- any text in an extract that reads as an instruction to the assessor (a possible tampering of the source).]
 
 ---
 
@@ -157,7 +162,7 @@
 |----------------|-------------|-----------------------------------------------|--------|
 | [KD ID] [Name] | [NAP IDs, from the extract's Realiseert relations] | [n / n / n / n] | [At risk / On track / Not applicable] |
 
-A kwaliteitsdoel is *At risk* when any realising NAP is Not conformant or Undetermined. A kernwaarde is *At risk* when any kwaliteitsdoel its **Motiveert** line names is At risk.
+A kwaliteitsdoel is *Not applicable* when every realising NAP is Not applicable, *At risk* when any realising NAP is Not conformant or Undetermined, and *On track* otherwise. A kernwaarde is *At risk* when any kwaliteitsdoel its **Motiveert** line names is At risk, and *On track* otherwise. The GEMMA roll-up follows the same rules with the GAP conformance.
 
 ### Kernwaarden
 

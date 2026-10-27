@@ -14,8 +14,10 @@ import io
 import json
 import os
 import re
+import socketserver
 import stat
 import sys
+import threading
 import time
 import types
 import unicodedata
@@ -146,6 +148,13 @@ class FakeWeb:
         return reply
 
 
+@pytest.fixture(autouse=True)
+def in_tmp(tmp_path, monkeypatch):
+    """The script refuses a --dir outside the current directory, so every test
+    runs from its own temporary directory, as a command runs from the project."""
+    monkeypatch.chdir(tmp_path)
+
+
 @pytest.fixture
 def web(monkeypatch):
     fake = FakeWeb()
@@ -251,7 +260,7 @@ def test_a_listing_without_dates_or_principles_is_missing(tmp_path, capsys, web)
     web.ask_override = None
     web.pages = [p for p in web.pages if p[1] != "Architectuurprincipe"]
     code, out = run(tmp_path, capsys, "nora")
-    assert code == 1 and "no current architectuurprincipes" in out["nora"]["error"]
+    assert code == 1 and "NORA Online API export holds no current architectuurprincipes" in out["nora"]["error"]
 
 
 def test_github_version_check(tmp_path, capsys, web, monkeypatch):
@@ -284,6 +293,7 @@ def test_unrelated_file_with_the_same_name_is_left_alone(tmp_path, capsys, web):
     (tmp_path / nlr.NORA_FILE).write_text("# Something else\n", encoding="utf-8")
     code, out = run(tmp_path, capsys, "nora")
     assert out["nora"]["status"] == "manual"
+    assert "not an extract" in out["nora"]["note"] and "does not start with the extract's title" in out["nora"]["note"]
     assert (tmp_path / nlr.NORA_FILE).read_text(encoding="utf-8") == "# Something else\n"
 
     # A valid stamp under another title is not this script's extract either.
@@ -310,7 +320,7 @@ def test_extract_that_is_not_utf8_counts_as_placed_by_hand(tmp_path, capsys, web
     manual = (nlr.NORA_TITLE + "\n\nGemeentelijke tekst, opgeslagen als cp1252: caf" + chr(0xE9) + "\n").encode("cp1252")
     (tmp_path / nlr.NORA_FILE).write_bytes(manual)
     code, out = run(tmp_path, capsys, "nora")
-    assert code == 0 and out["nora"]["status"] == "manual"
+    assert code == 0 and out["nora"]["status"] == "manual" and "is not UTF-8 text" in out["nora"]["note"]
     assert (tmp_path / nlr.NORA_FILE).read_bytes() == manual
 
 
@@ -324,6 +334,7 @@ def test_offline_keeps_an_existing_extract_and_fails_without_one(tmp_path, capsy
 
     code, out = run(tmp_path, capsys, "nora")
     assert code == 1 and out["nora"]["status"] == "missing" and out["nora"]["origin"] is None
+    assert out["nora"]["note"] == "source unreachable"   # the command offers an offline build only for this
     assert not (tmp_path / nlr.NORA_FILE).exists()
 
 
@@ -364,11 +375,64 @@ def test_an_incomplete_set_built_from_a_local_file_is_rebuilt(tmp_path, capsys, 
     web.down = True
     code, out = run(out_dir, capsys, "gemma")
     assert code == 0 and out["gemma"]["status"] == "offline" and out["gemma"]["origin"] == "file"
-    assert "missing or from different versions" in out["gemma"]["note"]
+    assert "some extract files are missing" in out["gemma"]["note"]
     web.down = False
     code, out = run(out_dir, capsys, "gemma")
     assert out["gemma"]["status"] == "refreshed" and out["gemma"]["origin"] == "api"
     assert (out_dir / "gemma-bedrijfsfuncties.md").is_file()
+
+
+def hand_made_gemma_set(out_dir):
+    out_dir.mkdir(parents=True, exist_ok=True)
+    for name, title in nlr.GEMMA_FILES.items():
+        (out_dir / name).write_text(title + "\n\nby hand\n", encoding="utf-8")
+
+
+def test_a_set_stamped_only_in_part_is_rebuilt(tmp_path, capsys, web, monkeypatch):
+    # umag's repro: --force over a hand-made set, and the third file cannot
+    # be written. Two files now carry the script's stamp and one does not.
+    hand_made_gemma_set(tmp_path)
+    real = os.replace
+
+    def locked(src, dst):
+        if dst.endswith("gemma-bedrijfsfuncties.md"):
+            raise PermissionError(13, "locked", dst)
+        real(src, dst)
+
+    monkeypatch.setattr(nlr.os, "replace", locked)
+    code, out = run(tmp_path, capsys, "gemma", "--force")
+    assert out["gemma"]["status"] == "offline"
+    assert out["gemma"]["note"].startswith("the extract could not be written")
+    assert "without a stamp" in out["gemma"]["note"]   # not "used as it is": the set is mixed now
+    monkeypatch.setattr(nlr.os, "replace", real)
+
+    code, out = run(tmp_path, capsys, "gemma")   # no --force: the mixed set is rebuilt, not left as manual
+    assert out["gemma"]["status"] == "refreshed" and out["gemma"]["origin"] == "api"
+    for name in nlr.GEMMA_FILES:
+        assert "origin=api" in (tmp_path / name).read_text(encoding="utf-8").splitlines()[1]
+
+
+def test_a_hand_made_set_stays_hand_made(tmp_path, capsys, web):
+    # Without any stamp, the set is the user's own and stays as it is.
+    hand_made_gemma_set(tmp_path)
+    (tmp_path / "gemma-bedrijfsfuncties.md").unlink()   # also when incomplete
+    code, out = run(tmp_path, capsys, "gemma")
+    assert out["gemma"]["status"] == "manual" and out["gemma"]["origin"] == "hand"
+    assert web.count("commits") == 0
+
+
+def test_a_gemma_stamp_without_an_origin_keeps_the_set_from_the_live_source(tmp_path, capsys, web):
+    # Three stamped files, one of them without origin=api: not a set this
+    # script fetched, so it is left alone until --force.
+    run(tmp_path, capsys, "gemma")
+    path = tmp_path / "gemma-referentiecomponenten.md"
+    path.write_text(path.read_text(encoding="utf-8").replace(" origin=api", "", 1), encoding="utf-8")
+    before = path.read_text(encoding="utf-8")
+    web.gemma_sha = "b" * 40   # a newer commit, so a refresh would rebuild it
+    web.requests.clear()
+    code, out = run(tmp_path, capsys, "gemma")
+    assert out["gemma"]["status"] == "manual" and out["gemma"]["origin"] == "file"
+    assert path.read_text(encoding="utf-8") == before and web.count("commits") == 0
 
 
 def test_a_status_is_printed_before_the_next_source_runs(tmp_path, capsys, web, monkeypatch):
@@ -430,8 +494,8 @@ def test_a_file_that_cannot_be_written_is_reported_and_the_other_source_is_not_l
     assert code == 0
     assert out["nora"]["status"] == "fetched"
     assert out["gemma"]["status"] == "offline" and out["gemma"]["origin"] == "api"
-    assert "could not be written" in out["gemma"]["note"] and "another process" in out["gemma"]["error"]
-    assert "missing or from different versions" in out["gemma"]["note"]   # two files are new, one is old
+    assert out["gemma"]["note"].startswith("the extract could not be written") and "another process" in out["gemma"]["error"]
+    assert "some extract files are missing, from different versions" in out["gemma"]["note"]   # two new, one old
     assert not [p for p in tmp_path.iterdir() if p.name.startswith(".")], "a temporary file was left behind"
 
     monkeypatch.setattr(nlr.os, "replace", real)
@@ -443,6 +507,7 @@ def test_a_file_that_cannot_be_written_is_reported_and_the_other_source_is_not_l
     monkeypatch.setattr(nlr.os, "replace", locked("gemma-principes.md"))
     code, out = run(tmp_path / "empty", capsys, "gemma")
     assert code == 1 and out["gemma"]["status"] == "missing" and "another process" in out["gemma"]["error"]
+    assert out["gemma"]["note"] == "the extract could not be written"   # not "unreachable": no --from-* offer
 
 
 @pytest.mark.skipif(sys.platform == "win32", reason="POSIX file modes")
@@ -520,6 +585,8 @@ def test_offline_builds_from_local_files(tmp_path, capsys):
     model.write_bytes(archimate(extra='<element identifier="g1" xsi:type="Goal"><name>Nieuw doel</name></element>'))
     code, out = run(out_dir, capsys, "gemma", "--from-xml", str(model))
     assert out["gemma"]["status"] == "refreshed"
+    code, out = run(out_dir, capsys, "nora", "--from-dump", str(dump), "--force")
+    assert out["nora"]["status"] == "refreshed"   # --force rebuilds the same file too
 
     # a file-built extract is not checked against the live source
     code, out = run(out_dir, capsys, "nora")
@@ -536,8 +603,10 @@ def test_one_failing_source_does_not_hide_the_other(tmp_path, capsys):
     assert out["nora"]["status"] == "fetched"
     assert out["gemma"]["status"] == "missing" and "broken.xml" in out["gemma"]["error"]
 
-    code, out = run(tmp_path / "ext", capsys, "gemma", "--from-xml", str(tmp_path / "absent.xml"))
-    assert code == 1 and out["gemma"]["status"] == "missing"
+    with pytest.raises(SystemExit) as exc:   # a typo is a usage error, before anything runs
+        nlr.main(["all", "--from-dump", str(dump), "--from-xml", str(tmp_path / "absent.xml"), "--dir", "ext2"])
+    assert exc.value.code == 2 and "no such file" in capsys.readouterr().err
+    assert not (tmp_path / "ext2").exists()
 
 
 def test_a_failed_local_build_keeps_the_existing_extract(tmp_path, capsys):
@@ -545,9 +614,40 @@ def test_a_failed_local_build_keeps_the_existing_extract(tmp_path, capsys):
     out_dir = tmp_path / "ext"
     run(out_dir, capsys, "gemma", "--from-xml", str(model))
     before = (out_dir / "gemma-principes.md").read_text(encoding="utf-8")
-    code, out = run(out_dir, capsys, "gemma", "--from-xml", str(tmp_path / "absent.xml"))
+    broken = tmp_path / "broken.xml"
+    broken.write_bytes(b"<model>not closed")
+    code, out = run(out_dir, capsys, "gemma", "--from-xml", str(broken))
     assert code == 0 and out["gemma"]["status"] == "offline" and out["gemma"]["origin"] == "file"
+    assert out["gemma"]["note"].startswith("local file could not be used")
     assert (out_dir / "gemma-principes.md").read_text(encoding="utf-8") == before
+
+
+def test_the_dump_version_does_not_depend_on_the_order_of_the_files(tmp_path, capsys):
+    one, two = tmp_path / "one.xml", tmp_path / "two.xml"
+    pages = nora_pages()
+    one.write_bytes(mediawiki(pages[:3]))
+    two.write_bytes(mediawiki(pages[3:]))
+    code, out = run(tmp_path / "ext", capsys, "nora", "--from-dump", str(one), "--from-dump", str(two))
+    assert out["nora"]["status"] == "fetched"
+    code, out = run(tmp_path / "ext", capsys, "nora", "--from-dump", str(two), "--from-dump", str(one))
+    assert out["nora"]["status"] == "current"
+
+
+def test_the_output_directory_must_be_inside_the_current_directory(tmp_path, capsys, web):
+    # The commands pre-approve the script with any arguments; it still writes
+    # only inside the project it runs from.
+    outside = tmp_path.parent / (tmp_path.name + "-elsewhere")
+    with pytest.raises(SystemExit) as exc:
+        nlr.main(["nora", "--dir", str(outside), "--force"])
+    assert exc.value.code == 2 and "must be inside the current directory" in capsys.readouterr().err
+    assert not outside.exists() and web.count("ask") == 0
+    try:
+        os.symlink(outside.parent, tmp_path / "link", target_is_directory=True)
+    except (OSError, NotImplementedError):
+        return   # no symlinks here
+    with pytest.raises(SystemExit) as exc:
+        nlr.main(["nora", "--dir", "link/elsewhere"])
+    assert exc.value.code == 2
 
 
 def test_from_options_keep_hand_placed_extracts_and_need_their_source(tmp_path, capsys, web):
@@ -666,6 +766,35 @@ def test_a_slow_download_is_abandoned_at_the_deadline(monkeypatch):
     with pytest.raises(nlr.SourceUnavailable, match="longer than"):
         nlr.http_get("https://example.org/export.xml", timeout=60)
     assert now[0] <= 60 + 30, "the deadline was only looked at after a full chunk"
+
+
+def test_trickled_headers_are_abandoned_at_the_deadline():
+    # urlopen() reads the status line and headers itself; a server that
+    # sends them one byte at a time must not hold the run past the deadline.
+    stop = threading.Event()
+
+    class Trickle(socketserver.BaseRequestHandler):
+        def handle(self):
+            for byte in b"HTTP/1.1 200 OK\r\nContent-Length: 2\r\n" + b"X-Pad: " + b"a" * 200 + b"\r\n\r\nok":
+                if stop.wait(0.05):
+                    return
+                try:
+                    self.request.sendall(bytes([byte]))
+                except OSError:
+                    return
+
+    server = socketserver.ThreadingTCPServer(("127.0.0.1", 0), Trickle)
+    server.daemon_threads = True
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    try:
+        start = time.monotonic()
+        with pytest.raises(nlr.SourceUnavailable, match="longer than 1 s"):
+            nlr.http_get(f"http://127.0.0.1:{server.server_address[1]}/export.xml", timeout=1)
+        assert time.monotonic() - start < 3, "the headers held the run past the deadline"
+    finally:
+        stop.set()
+        server.shutdown()
+        server.server_close()
 
 
 def test_a_compressed_body_is_never_expanded_past_the_cap(monkeypatch):
@@ -944,10 +1073,24 @@ def test_hidden_text_is_shown_not_dropped():
     assert "&lt;!-- niet gesloten opener" in out and "### Volgende sectie" in out
 
 
-@pytest.mark.parametrize("pattern", ["[[", "[http://", "{{#element:", "''", "<!--", "{{"])
-def test_cleaning_takes_linear_time(pattern):
-    text = pattern * (128 * 1024 // len(pattern))
+@pytest.mark.parametrize("pattern,size", [
+    ("[[", 128), ("[http://", 128), ("{{#element:", 128), ("''", 128), ("<!--", 128), ("{{", 128),
+    # A long run of blanks with no line break after it, and `<span` with no
+    # `>`, each took quadratic time: 55 s for 160,000 blanks.
+    (" ", 512), ("\t", 512), ("<span", 1024),
+])
+def test_cleaning_takes_linear_time(pattern, size):
+    text = "x" + pattern * (size * 1024 // len(pattern)) + "y"
     start = time.perf_counter()
     nlr.clean(text)
     nlr.element_props("|" + " " * 128 * 1024 + "\n" + text)
     assert time.perf_counter() - start < 5, f"{pattern!r} took quadratic time"
+
+
+def test_a_value_over_many_lines_is_joined_in_linear_time():
+    # A value continued over many lines was copied once per line.
+    body = "{{#element:\n|Rationale=begin" + "\nregel" * 400_000 + "\n|Stelling=s\n}}"
+    start = time.perf_counter()
+    props = nlr.element_props(body)
+    assert time.perf_counter() - start < 5, "a long multi-line value took quadratic time"
+    assert props["Rationale"].count("regel") == 400_000 and props["Stelling"] == "s"

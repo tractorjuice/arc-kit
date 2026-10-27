@@ -26,7 +26,7 @@ For non-Dutch projects the overlay is dormant: it adds six new doc-types (RBCLOU
 
 ## The Commands
 
-In Claude Code the overlay installs as its own plugin, `arckit-nl`, so its commands carry that prefix: `/arckit-nl:nl-tbb`, `/arckit-nl:nl-cloud`, `/arckit-nl:nl-bio` and `/arckit-nl:nl-exit`. Core commands such as `/arckit:requirements` keep the `arckit` prefix.
+In Claude Code the overlay installs as its own plugin, `arckit-nl`, so its commands carry that prefix: `/arckit-nl:nl-tbb`, `/arckit-nl:nl-cloud`, `/arckit-nl:nl-bio`, `/arckit-nl:nl-exit`, `/arckit-nl:nl-nora` and `/arckit-nl:nl-gemma`. Core commands such as `/arckit:requirements` keep the `arckit` prefix.
 
 ### `/arckit:nl-tbb`
 
@@ -46,11 +46,11 @@ Produces the mandatory **clause 3.2 cloud exit plan**: Scenario A (planned exit)
 
 ### `/arckit:nl-nora`
 
-Assesses conformance with the **NORA architectuurprincipes** NAP01–NAP17, per implicatie and per layer of the NORA Vijflaagsmodel, rolled up to kwaliteitsdoelen and kernwaarden. Every stelling is quoted verbatim from the extract, never paraphrased. For a gemeente it adds the **GEMMA supplement**: the GEMMA-toelichting and municipal implicaties of each counterpart principle (GAP01–GAP17), and GEMMA's own principles (GAP18 onwards). NORA and GEMMA conformance are reported side by side, never merged, and there is no single score: the result is the distribution across the principles. Produces `ARC-{id}-NORA-v{version}.md`.
+Assesses conformance with the **NORA architectuurprincipes** NAP01–NAP17, per implicatie and per layer of the NORA Vijflaagsmodel, rolled up to kwaliteitsdoelen and kernwaarden. Every stelling is quoted verbatim from the extract, never paraphrased. For a gemeente it adds the **GEMMA supplement**: the GEMMA-toelichting and municipal implicaties of each counterpart principle (GAP01–GAP17), and GEMMA's own principles (GAP18 onwards). NORA and GEMMA conformance are reported side by side, never merged, and there is no single score: the result is the distribution across the principles. Produces `ARC-{id}-NORA-v{version}.md`. See the [NORA conformance guide](nl-nora.md).
 
 ### `/arckit:nl-gemma`
 
-Maps a gemeente's application landscape onto the **GEMMA referentiecomponenten** and **bedrijfsfuncties**: filled and unfilled components, overlap, unsupported bedrijfsfuncties, standards and data exchange, and roadmap candidates. Each mapping carries a confidence (Stated, Inferred, Unmapped), and only component, function and standard names from the extract are used. It never calls a product "GEMMA-compliant" and never recommends products or suppliers. Produces `ARC-{id}-GEMMA-v{version}.md`.
+Maps a gemeente's application landscape onto the **GEMMA referentiecomponenten** and **bedrijfsfuncties**: filled and unfilled components, overlap, unsupported bedrijfsfuncties, standards and data exchange, and roadmap candidates. Each mapping carries a confidence (Stated, Inferred, Unmapped), and only component, function and standard names from the extract are used. It never calls a product "GEMMA-compliant" and never recommends products or suppliers. Produces `ARC-{id}-GEMMA-v{version}.md`. See the [GEMMA alignment guide](nl-gemma.md).
 
 ---
 
@@ -65,16 +65,16 @@ NORA and GEMMA are too large to assess reliably from model knowledge (89 NORA im
 | `gemma-referentiecomponenten.md` | same | `nl-gemma` |
 | `gemma-bedrijfsfuncties.md` | same | `nl-gemma` |
 
-Each extract keeps its title as its first line, which is how the commands identify it, and carries a version stamp on its second line: the latest change on NORA Online and the element count, the GEMMA commit, or, for an offline build, a hash of the file. On every run the script compares that stamp with the live source and refreshes the extract only when the source has changed, so an assessment is reproducible against a known source version. The command reports what happened:
+Each extract keeps its title as its first line, which is how the commands identify it, and carries a version stamp on its second line: the latest change on NORA Online and the element count, or the GEMMA commit. An offline build is versioned by the latest revision in the dump plus a hash of the dump files (NORA), or by a hash of the file (GEMMA). On every run the script compares that stamp with the live source and refreshes the extract only when the source has changed, so an assessment is reproducible against a known source version. The command reports what happened:
 
 - **`fetched`, `refreshed`, `current`** — the extract is up to date with its source: the live source, or the local file an offline build was made from (`origin` tells which).
 - **`offline`** — the source, or a local file given with `--from-dump` or `--from-xml`, could not be used, or the extract could not be written (a file held open by another program, say); the existing extract is used and the artefact notes that a newer version may exist.
-- **`manual`** — the extract was placed by hand or built from a local file. The live source never replaces it unless the script runs with `--force`, and the artefact notes that its currency was not checked.
-- **`missing`** — no extract, and none could be built: the command stops without writing an artefact.
+- **`manual`** — the extract was placed by hand or built from a local file, or a file at the extract's name is not an extract at all (another first line, or not UTF-8). The live source never replaces it unless the script runs with `--force`, and the artefact notes that its currency was not checked.
+- **`missing`** — no extract, and none could be built or written: the command stops without writing an artefact and says why.
 
-Each status line also says where the extract came from (`origin`: `api`, `file` or `hand`). The script exits with 0 when every requested source has a usable extract, 1 when one has none, and 2 for a usage error; `python3 nl-references.py --help` lists all of this.
+Each status line also says where the extract came from (`origin`: `api`, `file` or `hand`), and every status other than `fetched`, `refreshed` or `current` carries a note: what failed (`source unreachable`, `local file could not be used`, `the extract could not be written`) and what is used instead. The commands quote it in the artefact. The script exits with 0 when every requested source has a usable extract, 1 when one has none, and 2 for a usage error; `python3 nl-references.py --help` lists all of this.
 
-An extract the script wrote is replaced whenever its source changes, edits included. To keep your own edits, delete the stamp line (line 2): the file then counts as placed by hand. A GEMMA set with a file missing, or with files from different versions (an interrupted refresh, a file that could not be written), is rebuilt when the source can be reached, whatever built it, and used as it is when it cannot.
+An extract the script wrote is replaced whenever its source changes, edits included. To keep your own edits, delete the stamp line (line 2): the file then counts as placed by hand. The three GEMMA files are built as one set, so delete the stamp from all three. A set with a file missing, with files from different versions, or with a stamp on some files and not on others (an interrupted refresh, a file that could not be written) is rebuilt when the source can be reached, whatever built it, and used as it is when it cannot.
 
 **Working offline.** The script can also build the extracts from files downloaded elsewhere:
 
@@ -84,6 +84,8 @@ python3 nl-references.py gemma --from-xml  "<GEMMA release.xml>"
 ```
 
 An offline build replaces an extract the script wrote, fetched or built from a file, but not one you placed by hand unless you add `--force`; the same file again leaves the extract as it is and reports `current`. `--from-dump` goes with `nora` (or `all`), `--from-xml` with `gemma` (or `all`).
+
+A `--from-*` file that does not exist is a usage error (exit 2), so a typo is not mistaken for an unusable source. The script writes only inside the directory it runs from: a `--dir` outside it is refused, so the commands' pre-approved call cannot write anywhere else.
 
 Or place extracts in `projects/000-global/external/` by hand: any Markdown file whose first line matches the titles above is used. The script needs Python 3 and no other packages.
 
@@ -122,7 +124,7 @@ principles, requirements
 
 | Core command | Relationship |
 |---|---|
-| `requirements` | Supplies the data sensitivity, hosting requirements, and security NFRs that all four commands read as a mandatory prerequisite. |
+| `requirements` | Supplies the data sensitivity, hosting requirements, and security NFRs that `nl-tbb`, `nl-cloud`, `nl-bio` and `nl-exit` read as a mandatory prerequisite. `nl-nora` requires it as the main evidence for its implicaties; `nl-gemma` reads it when present, since its mandatory input is a landscape source. |
 | `data-model` | Supplies data assets and existing classification markers that `nl-tbb` reads if available. |
 | `risk` | Every NL command's identified risks and gaps (foreign-interference risk, BIO2 control gaps, exit-plan residual risks) are meant to be integrated into the project risk register, not left stranded in the overlay artefact. |
 | `dpia` | `nl-cloud`'s clause 3.1 risk assessment can draw on an existing DPIA where personal data are processed; it is optional and skipped if absent. |

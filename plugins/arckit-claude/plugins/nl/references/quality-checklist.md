@@ -764,6 +764,7 @@ All artifacts must pass these 10 checks:
 
 ### NORA -- NORA Conformance Assessment
 
+- `nl-references.py` was run first, and a `manual` or `offline` status is recorded under Source limitations with the note and error the script gave
 - The NORA extract used is named in Scope and Source with its source version, and is registered in External References with the CC BY-ND 3.0 NL licence line
 - All 17 architectuurprincipes (NAP01–NAP17) are assessed in ID order; no retired basisprincipe (BP) or afgeleid principe (AP) is assessed
 - Every stelling is quoted verbatim from the extract with a citation row — no NORA text is paraphrased, summarised or translated
@@ -771,6 +772,7 @@ All artifacts must pass these 10 checks:
 - Every implicatie listed under a NAP in the extract has a status, evidence and gap; missing evidence is recorded as Unknown, never as Implemented
 - Each NAP's conformance follows the stated derivation rule, and *Not applicable* always carries a justification
 - No overall percentage or single NORA score is reported — the distribution across the 17 NAPs is shown instead
+- The Vijflaagsmodel view counts each NORA implicatie once per layer it is tagged with, not once per NAP, and leaves GEMMA implicaties out
 - Kwaliteitsdoel and kernwaarde roll-ups use only relations stated in the extract; unresolved relations from the extract's Data notes are listed under Source limitations
 - Deviations are separated from gaps, and each deviation has an ADR reference or "ADR required"
 - Every gap has an owner and a target date, *To be assigned* where the input and the project context give none
@@ -778,9 +780,11 @@ All artifacts must pass these 10 checks:
 - GEMMA mode is recorded with its reason; it is on only for a gemeente (or an explicit override) with a GEMMA principles extract present
 - In GEMMA mode, each GAP is matched to its NAP by title or NORA link, never by number alone, and every GEMMA implicatie is quoted verbatim and numbered `GAPnn.i` in extract order, with that numbering declared in Scope and Source
 - NAP conformance and GAP conformance are reported separately and never merged into one result
+- In GEMMA mode, Section 3b assesses every principle whose Bron is GEMMA (GAP18 onwards) in ID order; otherwise it says GEMMA mode is off
 
 ### GEMMA -- GEMMA Alignment Assessment
 
+- `nl-references.py` was run first, and a `manual` or `offline` status is recorded under Source limitations with the note and error the script gave
 - The GEMMA referentiecomponenten extract and at least one landscape source are named in Scope and Sources with their versions or dates
 - Every referentiecomponent, bedrijfsfunctie, applicatieservice and standaard name matches the extract exactly — none is invented, merged or renamed
 - Every application carries a confidence: Stated mappings cite their source, Inferred mappings give a rationale, and Unmapped applications are not forced onto a component
@@ -789,6 +793,7 @@ All artifacts must pass these 10 checks:
 - Bedrijfsfunctie coverage distinguishes *Not supported* (landscape gap) from *No GEMMA component* (reference-model property)
 - Standards support and data exchange are evidence-based, with Unknown as the default where evidence is missing
 - Every roadmap candidate traces to a finding in Sections 3–6, and no product or supplier is recommended or called GEMMA-compliant
+- Every roadmap candidate has a priority (High / Medium / Low) with a reason
 
 ### ADMP -- TOGAF ADM Preliminary Phase
 
