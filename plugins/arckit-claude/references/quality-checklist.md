@@ -1388,7 +1388,7 @@ All artifacts must pass these 10 checks:
 
 ### AUE8 -- Essential Eight Maturity Assessment
 
-- All eight mitigation strategies assessed: application control, patch applications, Office macro settings, user application hardening, restrict administrative privileges, patch operating systems, multi-factor authentication, regular backups
+- All eight mitigation strategies assessed under ASD's names, unnumbered: patch applications, patch operating systems, multi-factor authentication, restrict administrative privileges, application control, restrict Microsoft Office macros, user application hardening, regular backups
 - Each strategy records current maturity (ML0 / ML1 / ML2 / ML3) with evidence, target maturity with its regulatory or risk-appetite rationale, gap, remediation with owner and target date, and residual risk
 - Maturity summary matrix carries one row per strategy and reconciles with the per-strategy assessments
 - Where the entity is a DISP member, any strategy below ML2 is flagged as a DISP non-compliance risk rather than reported as a neutral gap

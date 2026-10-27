@@ -306,7 +306,7 @@ The ISM sets out cyber security principles and 23 cyber security guidelines. Eac
 | **Applies** | [Yes] |
 | **Implementation** | [✅ / ⚠️ / ❌] |
 | **Applicable Controls** | [ISM control identifiers] |
-| **E8 Cross-Reference** | [ARC-{P}-AUE8-v* — patching, restrict administrative privileges, regular backups] |
+| **E8 Cross-Reference** | [ARC-{P}-AUE8-v* — patch applications, patch operating systems, restrict administrative privileges, regular backups] |
 
 **Evidence**: [System administration and separate privileged operating environments, patch management and cessation of support, data backup and restoration]
 

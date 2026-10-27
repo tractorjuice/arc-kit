@@ -134,16 +134,16 @@
 
 (Summarised from `ARC-{P}-AUE8-v*` — refer to that artefact for evidence detail.)
 
-| # | Strategy | Current ML | ML2 Evidence | Gap to ML2 | Sign-off |
-|---|----------|-----------|--------------|------------|----------|
-| 1 | Application Control | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 2 | Patch Applications | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 3 | Configure MS Office Macros | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 4 | User Application Hardening | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 5 | Restrict Admin Privileges | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 6 | Patch Operating Systems | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 7 | Multi-Factor Authentication | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 8 | Regular Backups | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Strategy | Current ML | ML2 Evidence | Gap to ML2 | Sign-off |
+|----------|-----------|--------------|------------|----------|
+| Patch applications | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Patch operating systems | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Multi-factor authentication | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Restrict administrative privileges | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Application control | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Restrict Microsoft Office macros | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| User application hardening | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Regular backups | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
 
 ---
 

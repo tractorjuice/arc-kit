@@ -65,7 +65,7 @@ If you are a Defence supplier rather than a Federal entity, set `organisation_na
 
 #### `/arckit:au-e8-posture`
 
-Generates an ASD Essential Eight maturity posture assessment covering all 8 mitigation strategies (Application Control, Patch Applications, Configure MS Office Macro Settings, User Application Hardening, Restrict Administrative Privileges, Patch Operating Systems, Multi-factor Authentication, Regular Backups) at maturity levels ML0 through ML3. Anchored on the ASD Essential Eight Maturity Model. Handoffs: `au-ism-controls` (E8 maturity feeds the ISM Guidelines for system hardening, system access and system management), `au-disp-attestation` (E8 ML2 evidence is primary input to DISP Domain 4 — Information & Cyber Security), and `au-aescsf` in the sibling `au-energy` recipe.
+Generates an ASD Essential Eight maturity posture assessment covering all 8 mitigation strategies (patch applications, patch operating systems, multi-factor authentication, restrict administrative privileges, application control, restrict Microsoft Office macros, user application hardening, regular backups) at maturity levels ML0 through ML3. Anchored on the ASD Essential Eight Maturity Model. Handoffs: `au-ism-controls` (E8 maturity feeds the ISM Guidelines for system hardening, system access and system management), `au-disp-attestation` (E8 ML2 evidence is primary input to DISP Domain 4 — Information & Cyber Security), and `au-aescsf` in the sibling `au-energy` recipe.
 
 #### `/arckit:au-ism-controls`
 

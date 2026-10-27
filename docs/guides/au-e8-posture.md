@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:au-e8-posture` generates an ASD Essential Eight maturity posture against the Australian Signals Directorate's Essential Eight Maturity Model. It scores each of the eight mitigation strategies (application control, patch applications, configure Microsoft Office macro settings, user application hardening, restrict administrative privileges, patch operating systems, multi-factor authentication, regular backups) against maturity levels ML0–ML3, captures the evidence base, identifies the maturity uplift path, and surfaces the DISP-aligned target (ML2 baseline for DISP Level 2 supplier accreditation).
+`/arckit:au-e8-posture` generates an ASD Essential Eight maturity posture against the Australian Signals Directorate's Essential Eight Maturity Model. It scores each of the eight mitigation strategies (patch applications, patch operating systems, multi-factor authentication, restrict administrative privileges, application control, restrict Microsoft Office macros, user application hardening, regular backups) against maturity levels ML0–ML3, captures the evidence base, identifies the maturity uplift path, and surfaces the DISP-aligned target (ML2 baseline for DISP Level 2 supplier accreditation).
 
 The Essential Eight is the ASD's prioritised baseline for mitigating cyber security incidents and is the cyber baseline that DISP, federal entities, and most Commonwealth procurements measure against. The artefact this command produces is therefore a foundational input to almost every other Australian Federal security or assurance artefact — run it early.
 
