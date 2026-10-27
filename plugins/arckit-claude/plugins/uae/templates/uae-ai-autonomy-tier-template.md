@@ -82,7 +82,7 @@ Use-cases may NOT skip tiers. Promotion from Tier 1 to Tier 2, or Tier 2 to Tier
 |----------|--------|---------|---------|
 | [AUTI-1] | UAE-AI-CHARTER | Principle 6 (Human Oversight) | Approval Gates per Tier |
 | [AUTI-2] | UAE-AI-CHARTER | Principle 7 (Governance and Accountability) | Audit Obligations per Tier |
-| [AUTI-3] | UAE-PDPL-FDL45-2021 | Article 7 (sensitive categories) | Per-Tier Guard-Rail Matrix (PII handling) |
+| [AUTI-3] | UAE-PDPL-FDL45-2021 | Article 1 (Sensitive Personal Data definition) | Per-Tier Guard-Rail Matrix (PII handling) |
 
 ### Unreferenced Documents
 

@@ -1124,11 +1124,11 @@ All artifacts must pass these 10 checks:
 ### PDPL -- UAE Personal Data Protection Law Assessment
 
 - Scope tests all seven Article 2(2) exclusions (Government Data; governmental entities; security and judicial authorities; personal purposes; health data, and banking and credit data, with their own protection legislation; free-zone establishments with their own data protection legislation, such as DIFC and ADGM) and records the result; where one applies, the Scope and Executive Summary say the PDPL does not apply to that processing, and any regime named instead cites a primary source; ADHICS is flagged where healthcare data is in scope
-- Every processing activity cites a PDPL Article 5 lawful basis, or Article 6 where consent is relied upon
-- All five Article 21 DPIA triggers assessed (new technology, large-scale processing, profiling or automated decisions, systematic monitoring, Article 7 sensitive categories), each triggered category carrying an impact assessment, residual risk and mitigations
+- Every processing activity records its lawful basis: consent meeting Article 6, or the Article 4 exception relied on (4(1)–(11)); Article 5 processing controls are applied to every activity but not cited as a lawful basis
+- All three Article 21 DPIA cases assessed (high-risk modern technology, 21(1); systematic and comprehensive automated assessment including profiling with legal consequences or serious impact, 21(2)(a); a large volume of Sensitive Personal Data, 21(2)(b)), each case that applies covering the Article 21(3) minimum content, residual risk and mitigations
 - Data-subject rights procedure covers all eight rights (access, rectification, erasure, restriction, portability, object, withdraw consent, complain to the Data Office), each with channel, response SLA and operational owner
 - Every cross-border transfer records its ground: Article 22 (a destination the Data Office approves, with its own data protection legislation and enforcing authority or covered by an agreement the UAE has joined) or one of the six Article 23(1) grounds, with the status of the Article 23(2) Executive Regulations controls
-- Breach notification playbook states the Article 9 obligations to the Data Office and to data subjects, with timelines and a named owner
+- Breach notification playbook states the Article 9 obligations to the Data Office and to data subjects and a named owner, and records that the notification periods are left to the Executive Regulations rather than stating a statutory deadline
 - Penalties section marked informational and excluded from compliance scoring
 
 ### IAS -- UAE Information Assurance Standards
@@ -1193,7 +1193,7 @@ All artifacts must pass these 10 checks:
 
 - Sharing parties identified with joint-controller status and service-level commitments
 - Every shared dataset referenced by its Dataset ID from the CLAS register, with classification level, volume, frequency and direction
-- Every share involving personal data cites its PDPL Article 5 lawful basis (or Article 6 consent) and references the PDPL artefact entry that justifies it
+- Every share involving personal data cites its PDPL lawful basis (consent meeting Article 6, or the Article 4 exception relied on) and references the PDPL artefact entry that justifies it
 - Technical mechanism stated per share (REST API, event stream, file drop, federated query) with authentication, integrity and rate-limiting controls
 - Safeguards cover encryption in transit and at rest, key management, access control, logging, and incident-response co-ordination between the parties
 - All six data-subject rights traced across the sharing boundary (access, rectification, erasure, restriction, portability, object), each with a named owning party

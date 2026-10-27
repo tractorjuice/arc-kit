@@ -31,11 +31,11 @@ Output: `projects/<id>/ARC-<id>-PDPL-v1.0.md`
 | Section | Contents |
 |---------|----------|
 | Scope | Personal-data flows, controllers, processors, data subjects; PDPL applicability against the seven Article 2(2) exclusions |
-| Lawful Basis Register | Per-processing lawful basis (consent, contract, legal obligation, vital interest, public interest, legitimate interest) |
+| Lawful Basis Register | Per-processing lawful basis: consent meeting Article 6, or an Article 4 exception (public interest; data made public by the data subject; legal claims and judicial or security procedures; health and social care; public health; archiving and research; the data subject's interests; employment and social protection; a contract with the data subject; the controller's obligations under other laws; cases in the Executive Regulations) |
 | Data Subject Rights Procedure | Access, rectification, erasure, restriction, portability, objection workflow and SLAs |
-| DPIA | High-risk processing screen, risk identification, mitigations, residual risk |
+| DPIA | Article 21 cases (high-risk modern technology, automated assessment including profiling, a large volume of Sensitive Personal Data), risks, mitigations, residual risk |
 | Cross-Border Transfers | Transfer log with each transfer's Article 22 or Article 23(1) ground |
-| Breach Notification Playbook | Detection, triage, UAE Data Office notification timing, data-subject notification |
+| Breach Notification Playbook | Detection, triage, Article 9 notification content to the UAE Data Office, data-subject notification; periods left to the Executive Regulations |
 | Penalties | Informational summary of PDPL sanctions tier |
 | External References | Decree-Law 45/2021, Executive Regulation status, Data Office guidance |
 
@@ -60,7 +60,7 @@ Output: `projects/<id>/ARC-<id>-PDPL-v1.0.md`
 - Data subject rights workflow has named owner and SLA.
 - DPIA screen completed; high-risk processing has documented mitigations.
 - Each cross-border transfer logged with its Article 22 or Article 23(1) ground.
-- Breach playbook names the UAE Data Office notification window.
+- Breach playbook covers the Article 9 notification content and recipients, and states that the notification periods are set by the Executive Regulations (or that none are in force, with the date checked).
 - DPIA outputs handed off to the project risk register.
 - Smart Data Classification Register reconciled against PDPL-relevant datasets.
 

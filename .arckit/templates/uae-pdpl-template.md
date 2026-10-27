@@ -46,7 +46,7 @@
 
 | Processing activity | Lawful basis (Article) | Justification | Notes |
 |---------------------|------------------------|---------------|-------|
-| [activity] | [Article 5(x) / Article 6 consent] | [justification] | [notes] |
+| [activity] | [Consent (Articles 4 and 6) / Article 4(n) exception] | [justification] | [notes, including how the Article 5 controls are met] |
 
 ## Data Subject Rights Procedure
 
@@ -65,15 +65,13 @@ For each right state the channel, the response SLA, and the operational owner.
 
 ## DPIA
 
-| DPIA trigger (Article 21) | Applies? | Mitigation |
-|---------------------------|----------|------------|
-| New technology | [Y/N] | [mitigation] |
-| Large-scale processing | [Y/N] | [mitigation] |
-| Profiling / automated decisions | [Y/N] | [mitigation] |
-| Systematic monitoring | [Y/N] | [mitigation] |
-| Sensitive categories (Article 7) | [Y/N] | [mitigation] |
+| DPIA case (Article 21) | Applies? | Mitigation |
+|------------------------|----------|------------|
+| Modern technology posing a high risk to privacy and confidentiality (21(1)) | [Y/N] | [mitigation] |
+| Systematic and comprehensive automated assessment of personal aspects, including profiling, with legal consequences or serious impact (21(2)(a)) | [Y/N] | [mitigation] |
+| Large volume of Sensitive Personal Data (21(2)(b)) | [Y/N] | [mitigation] |
 
-For each triggered category, document the impact assessment, the residual risk, and the operational mitigations.
+For each case that applies, record at least what Article 21(3) requires (the processing and its purpose, its necessity and suitability, the risks to privacy and confidentiality, and the measures to reduce them), plus the residual risk, the Data Protection Officer's involvement (21(5)) and the review date (21(7)).
 
 ## Cross-Border Transfers
 
@@ -83,7 +81,7 @@ For each triggered category, document the impact assessment, the residual risk, 
 
 ## Breach Notification Playbook
 
-State the trigger criteria, the Data Office notification SLA, the data-subject notification trigger, and the operational owner for PDPL Article 9 obligations.
+State the trigger criteria, the content of the Data Office notification (Article 9(1)(a)–(f)), the data-subject notification trigger (9(2)), the processor-to-controller notification (9(3)), and the operational owner. Article 9 leaves the notification periods to the Executive Regulations: [period set by the Executive Regulations / none in force as of YYYY-MM-DD; internal target, not statutory: …].
 
 ## Penalties (informational only)
 
@@ -103,7 +101,7 @@ Reference the current administrative fines per the applicable Cabinet Resolution
 
 | Citation | Doc ID | Section | Used in |
 |----------|--------|---------|---------|
-| [PDPL-1] | UAE-PDPL-FDL45-2021 | Article 5 | Lawful Basis Register |
+| [PDPL-1] | UAE-PDPL-FDL45-2021 | Articles 4–6 | Lawful Basis Register |
 | [PDPL-2] | UAE-PDPL-FDL45-2021 | Article 21 | DPIA |
 | [PDPL-3] | UAE-PDPL-FDL45-2021 | Articles 22–23 | Cross-Border Transfers |
 | [PDPL-4] | UAE-PDPL-FDL45-2021 | Article 9 | Breach Notification Playbook |

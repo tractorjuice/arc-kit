@@ -41,11 +41,11 @@
 
 ## Lawful Basis per Share
 
-For every share involving personal data, cite the PDPL Article 5 lawful basis (or Article 6 consent) and the PDPL artefact entry.
+For every share involving personal data, cite the PDPL lawful basis (consent meeting Article 6, or the Article 4 exception relied on) and the PDPL artefact entry.
 
 | Share ID | PDPL lawful basis (Article) | Justification | PDPL artefact ref |
 |----------|------------------------------|---------------|--------------------|
-| [SHR-001] | [Article 5(x) / Article 6 consent] | [justification] | [PDPL artefact + section] |
+| [SHR-001] | [Consent (Articles 4 and 6) / Article 4(n) exception] | [justification] | [PDPL artefact + section] |
 
 ## Federation / API Mechanism
 
@@ -91,7 +91,7 @@ For every share involving personal data, cite the PDPL Article 5 lawful basis (o
 |----------|--------|---------|---------|
 | [DSHR-1] | UAE-CAB-2026-04-23 | "Collect once, use securely" principle | Sharing Parties |
 | [DSHR-2] | UAE-LEG-DSHR | Priorities & Key Components | Information-Security Safeguards |
-| [DSHR-3] | UAE-PDPL-FDL45-2021 | Article 5 (lawful processing) | Lawful Basis per Share |
+| [DSHR-3] | UAE-PDPL-FDL45-2021 | Articles 4 and 6 (lawful basis and consent) | Lawful Basis per Share |
 
 ### Unreferenced Documents
 

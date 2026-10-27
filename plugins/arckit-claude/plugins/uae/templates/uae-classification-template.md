@@ -55,7 +55,7 @@ Map each Dataset ID to:
 
 | Dataset ID | Upstream BR/DR | Downstream INT | PDPL lawful basis (if applicable) |
 |------------|----------------|----------------|------------------------------------|
-| [DS-001] | [BR-xxx, DR-xxx] | [INT-xxx] | [Article 5(x) / N/A] |
+| [DS-001] | [BR-xxx, DR-xxx] | [INT-xxx] | [Consent (Articles 4 and 6) / Article 4(n) exception / N/A] |
 
 ## External References
 

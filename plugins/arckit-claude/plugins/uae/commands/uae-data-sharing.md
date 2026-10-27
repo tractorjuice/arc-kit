@@ -44,7 +44,7 @@ You are an enterprise architect generating a Data Sharing Agreement under the UA
 6. Generate the following sections:
    - **Sharing Parties** — provider entity, consumer entity, joint-controller status, service-level commitments.
    - **Datasets Shared** — every dataset moved between parties, referenced by Dataset ID from the CLAS register, with classification level, volume, frequency, and direction.
-   - **Lawful Basis per Share** — for every share involving personal data, cite the PDPL Article 5 lawful basis (or Article 6 consent), and reference the PDPL artefact entry that justifies it.
+   - **Lawful Basis per Share** — for every share involving personal data, cite the PDPL lawful basis (consent meeting Article 6, or the Article 4 exception relied on), and reference the PDPL artefact entry that justifies it.
    - **Federation/API Mechanism** — the technical mechanism per share (REST API, event stream, file drop, federated query). State authentication, integrity, and rate-limiting controls.
    - **Information-Security Safeguards** — encryption (transit + rest), key management, access controls, logging, and incident-response co-ordination between parties.
    - **Data-Subject Rights Implications** — how data subject rights (access, rectification, erasure, restriction, portability, object) flow across the sharing boundary, and which party owns each obligation.
