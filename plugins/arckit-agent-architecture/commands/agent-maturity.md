@@ -163,7 +163,7 @@ For each gap identified (current → target), define improvement initiatives:
 
 Compare the agent program against industry benchmarks:
 
-- **Industry standards**: CMMI, NIST AI RMF maturity, UK AI Centre maturity model
+- **Industry standards**: CMMI, including its AI extension CMMI AI Maturity (CMMI AIM, CMMI Institute, 2026); the MITRE AI Maturity Model (six pillars, five levels from Initial to Optimized); NIST AI RMF Current and Target Profiles (the AI RMF defines no maturity levels, so compare profiles rather than assign a level)
 - **Peer organisations**: Similar programmes in the sector
 - **Regulatory expectations**: Minimum maturity required for compliance
 
