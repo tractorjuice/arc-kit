@@ -98,7 +98,7 @@ Some questions share an exhibit: a REQ table, a TRAC row, a provenance block or 
   - Each attempt draws 10, two from each domain, in random order. The Worker signs the draw, so a submission is marked against the questions it was given. A draw expires after 1 hour and can be submitted once.
   - Pass at 8 of 10. Attempts are unlimited, and each one is a fresh draw.
   - **On a pass**, the candidate sees every question with the correct answer and a short explanation.
-  - **On a fail**, they see the score and the areas to revisit (the domains where they got a question wrong), but not which questions were wrong.
+  - **On a fail**, they see the areas to revisit (the domains where they got a question wrong), but not the score or which questions were wrong.
 - **Foundation attempts:**
   - Each attempt draws 40 questions from the bank of 160, weighted by domain (§5).
   - Pass at 70%, because most questions are scenarios. GCATI's 80% was set for recall questions.

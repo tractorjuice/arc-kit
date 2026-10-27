@@ -420,6 +420,7 @@ test('the submission rate limit answers 429 and stores nothing', async () => {
   assert.equal(typeof (await res.json()).error, 'string');
   assert.deepEqual(seen, ['203.0.113.7']);
   assert.equal(creds(env), 0);
+  assert.deepEqual(drawMarkers(env), []);
 
   env.SUBMIT_LIMITER = { limit: async () => ({ success: true }) };
   const ok = await pass(env);
