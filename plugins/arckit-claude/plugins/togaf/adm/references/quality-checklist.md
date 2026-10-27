@@ -664,7 +664,7 @@ All artifacts must pass these 10 checks:
 - Emergency communications (Notrufe) flagged as TKG 2021 rather than assessed under the BaFG
 - SMS and FFG exposures stated separately: BaFG administrative penalties up to EUR 80,000 tiered by severity and size; **no fine regime asserted under the WZG**
 - Gap analysis prioritised by user impact first and enforcement exposure second, with owners, target dates and NFR-UX cross-references
-- Items requiring practitioner verification marked `[NEEDS VERIFICATION]`, including the BaFG § numbers
+- Items requiring practitioner verification marked `[NEEDS VERIFICATION]`
 
 ### ATDSG -- Austrian Data Protection Assessment
 
@@ -688,7 +688,7 @@ All artifacts must pass these 10 checks:
 - Competent authority identified (Cybersicherheitsbehörde / Bundesamt für Cybersicherheit)
 - Previous NISG 2018 Betreiber wesentlicher Dienste status captured and re-assessed (NISG 2018 expires 30 Sep 2026)
 - All ten NIS2 Article 21 minimum security measures assessed with maturity and gap (§32)
-- Incident reporting channel established (CSIRT via the NIS2-Meldeplattform, §34)
+- Incident reporting channel established (responsible CSIRT via NIS2-Services on the USP, §34)
 - 24-hour / 72-hour / intermediate / 1-month reporting capability readiness assessed
 - Cross-reporting to DSB for personal data breaches addressed
 - Supply chain security obligations including any AT sectoral secondary rules assessed
