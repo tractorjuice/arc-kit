@@ -1,4 +1,4 @@
-# NHS Digital Technology Assessment Criteria (DTAC v3) — [PRODUCT_NAME]
+# NHS Digital Technology Assessment Criteria (DTAC) — [PRODUCT_NAME]
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit-uk-nhs:uk-nhs-dtac`
 
@@ -17,262 +17,226 @@
 
 ## DTAC Version
 
-DTAC **v3** (current as at 2026-05). Verify against <https://transform.england.nhs.uk/key-tools-and-info/digital-technology-assessment-criteria-dtac/> before submission to an NHS buyer or assurance team — if a newer version is published, the section structure may have changed.
+This assessment follows the **DTAC form version 2.0**, published by NHS England on 24 February 2026. From 6 April 2026 manufacturers must provide version 2.0 in place of the older version 1.0 form. Check <https://digital.nhs.uk/services/digital-technology-assessment-criteria-dtac> for a later form before submission: NHS England asks that the form be downloaded at the point of use.
+
+This artefact prepares the answers and evidence for that form. It does not replace it: NHS buyers are asked to accept the standard NHS England form and not amended versions, so the submission itself is the completed NHS England form plus its supporting documents.
 
 ---
 
 ## Executive Summary
 
-[One to two paragraphs: product under assessment, target NHS context, overall DTAC status (e.g. "passes 4 of 5 sections; Section 1 PENDING DCB0129 sign-off"), key gaps, and the recommended next assurance steps.]
+[One to two paragraphs: product under assessment, target NHS context, overall DTAC position (e.g. "C2–C4 pass; C1 PENDING DCB0129 sign-off; D1 responses recorded"), key gaps, and the recommended next assurance steps.]
 
-### Pass / partial / fail by section
+### Status by section
 
-| Section | Status | Notes |
-|---|---|---|
-| 1. Clinical Safety (DCB0129 / DCB0160) | [PASS / PARTIAL / FAIL / PENDING] | |
-| 2. Data Protection (UK GDPR / DPA 2018 / DSPT) | [PASS / PARTIAL / FAIL / PENDING] | |
-| 3. Technical Assurance (security, lifecycle, BC/DR) | [PASS / PARTIAL / FAIL / PENDING] | |
-| 4. Interoperability (FHIR UK Core, SNOMED, NHS APIs) | [PASS / PARTIAL / FAIL / PENDING] | |
-| 5. Usability and Accessibility (WCAG 2.2 AA) | [PASS / PARTIAL / FAIL / PENDING] | |
-| AI annex (if applicable) | [N/A / PASS / PARTIAL / FAIL / PENDING] | |
+Sections A and B give context and are not assessed. Sections C1–C4 are assessed: the product must meet them to pass. Section D1 is scored to help buyers compare products and does not count towards pass or fail.
+
+| Section | Assessed? | Status | Notes |
+|---|---|---|---|
+| A. Company information | Not assessed | [COMPLETE / PENDING] | |
+| B. Value proposition | Not assessed | [COMPLETE / PENDING] | |
+| C1. Clinical safety | Assessed | [PASS / FAIL / PENDING] | |
+| C2. Data protection | Assessed | [PASS / FAIL / PENDING] | |
+| C3. Technical security | Assessed | [PASS / FAIL / PENDING] | |
+| C4. Interoperability | Assessed | [PASS / FAIL / PENDING] | |
+| D1. Usability and accessibility | Scored, not pass/fail | [Responses recorded / PENDING] | |
+| AI and machine learning (ArcKit supplement, not a DTAC section) | Not part of DTAC | [N/A / COMPLETE / PENDING] | |
+
+A section passes only when every question that applies to the product meets the form's pass criterion.
 
 ---
 
-## Product summary
+## Assessment context
 
 | Field | Value |
 |---|---|
-| **Product Name** | [PRODUCT_NAME] |
-| **Manufacturer** | [MANUFACTURER_LEGAL_ENTITY] |
-| **Product Version** | [VERSION] |
-| **Target NHS Context** | [Primary care / Secondary care / Community / Mental health / ICS / National] |
-| **Intended Users** | [Clinical roles] |
-| **Intended Patient Population** | [Population] |
-| **Medical Device?** | [Yes — Class / No / Borderline — cross-ref `/arckit-uk-nhs:uk-mdr-classification`] |
-| **Uses AI / ML?** | [Yes — describe / No] |
-| **Hosting** | [Cloud provider + region / On-premise] |
-| **Assessment Date** | [YYYY-MM-DD] |
+| **Target NHS context** | [Primary care / Secondary care / Community / Mental health / ICS / National / Adult social care] |
+| **Medical device determination** | [Yes — class / No / Borderline — cross-reference `ARC-{PID}-NHSMDR-*.md`; feeds C1.1.1] |
+| **Uses AI / ML?** | [Yes — describe / No; feeds the AI supplement] |
+| **Where data is stored and processed** | [UK only / Outside UK — feeds C2.2.5] |
+| **Assessment date** | [YYYY-MM-DD] |
 
 ---
 
-## Section 1 — Clinical Safety
+## A. Company information (not assessed)
 
-### 1.1 DCB0129 Manufacturer Case
-
-| Criterion | Status | Evidence / cross-reference |
+| Code | Question | Response |
 |---|---|---|
-| Clinical Safety Officer appointed (named, registered) | [PASS / FAIL / PENDING] | [CSO name + registration in `clinical-safety/SAFETY.md`] |
-| Clinical Risk Management Plan documented | [PASS / FAIL] | [`clinical-safety/SAFETY.md` summary / `SAFETY-PLAN.md` if Tier 3] |
-| Clinical Safety Case Report present and current | [PASS / FAIL / PENDING] | [`clinical-safety/SAFETY-CASE.md`] |
-| Hazard Log maintained | [PASS / FAIL] | [`clinical-safety/HAZARD-LOG.md` — N open hazards, highest open risk: ___] |
-| CSO sign-off in place | [PASS / PENDING] | [Sign-off section in `SAFETY-CASE.md`] |
+| A1 | Name of the company | [MANUFACTURER_LEGAL_ENTITY] |
+| A2 | Name of the product | [PRODUCT_NAME] |
+| A3 | Version number of the product this form corresponds to | [PRODUCT_VERSION] |
+| A4 | Type of product | [Standalone software application or mobile application / Wearable / Software as a Service (SaaS) / Other — describe] |
+| A5 | Key contact: name and job title | [PENDING] |
+| A6 | Key contact: email address | [PENDING] |
+| A7 | Key contact: phone number | [PENDING] |
+| A8 | Registered address of the company | [PENDING] |
+| A9 | Country in which the organisation is registered | [PENDING] |
+| A10 | Companies House number, registered charity number or other organisational reference | [PENDING] |
+| A11 | Date of last CQC assessment, if CQC registration is required | [Date / Not applicable] |
+| A12 | Latest CQC report, if applicable | [Provided / Not applicable] |
 
-### 1.2 DCB0160 Deployer Case (if applicable to assessment context)
+---
 
-| Criterion | Status | Evidence / cross-reference |
-|---|---|---|
-| Deployer CSO appointed at deploying organisation | [PASS / FAIL / N/A — manufacturer assessment only] | |
-| Deployment Clinical Safety Case Report | [PASS / FAIL / N/A] | [`clinical-safety/deployment/DEPLOYMENT-SAFETY-CASE.md`] |
-| Deployment Hazard Log | [PASS / FAIL / N/A] | [`clinical-safety/deployment/DEPLOYMENT-HAZARD-LOG.md`] |
+## B. Value proposition (not assessed)
+
+| Code | Question | Response | Source |
+|---|---|---|---|
+| B1 | Intended use of the product | [Patient care or support / Diagnostics / Clinical support / Workforce support or management / Other] | `ARC-{PID}-REQ-*.md` |
+| B2 | What the product is designed to do and how it is expected to be used (high-level summary) | [Summary] | `ARC-{PID}-REQ-*.md` |
+| B3 | Intended users, intended or proven benefits, and whether and how the benefits have been validated (include evaluations or clinical trials) | [Summary] | `ARC-{PID}-STKE-*.md` |
+| B4 | Flow of data between the product and the Health IT system; a user journey map where applicable | [Provided / Not available] | `ARC-{PID}-DATA-*.md`, DPIA data flows, HLD |
+
+---
+
+## C1. Clinical safety (assessed)
+
+| Code | Question | Response | Status | Evidence / cross-reference |
+|---|---|---|---|---|
+| C1.1.1 | Does the product, or any component within it, qualify as Software or AI as a Medical Device under the UK Medical Devices Regulations 2002? | [Yes / No] | [PASS / FAIL / PENDING] | [`ARC-{PID}-NHSMDR-*.md`. If Yes, a completed Pre-Acquisition Questionnaire (PAQ) must accompany the form] |
+| C1.1.2 | Is the product a standalone medical device? | [Yes / No / N/A] | — | [If Yes, the form moves on to C2] |
+| C1.2 | Is the product designed to provide electronic information to influence, support or manage the real time or near real time direct care of patients or service users (a health IT system in DCB0129 scope)? | [Yes / No] | — | |
+| C1.2.1 | If No: justification for why the product is not in DCB0129 scope | [Free text / N/A] | [PASS / FAIL / N/A] | [Reasoned against the DCB0129 definitions and NHS England applicability guidance; the buyer can challenge it] |
+| C1.2.2 | Have clinical risk management activities been undertaken for this product in compliance with DCB0129? | [Yes / No] | [PASS / FAIL / PENDING] | [`clinical-safety/SAFETY.md`] |
+| C1.2.3 | The clinical risk management system | [Provided / Not provided] | [PASS / FAIL / PENDING] | [`clinical-safety/SAFETY.md` summary; `SAFETY-PLAN.md` if Tier 3] |
+| C1.2.4 | Clinical Safety Case Report and Hazard Log | [Provided / Not provided] | [PASS / FAIL / PENDING] | [`clinical-safety/SAFETY-CASE.md`, `clinical-safety/HAZARD-LOG.md` — N open hazards, highest open risk: ___; risk-scoring scheme declared in the case report] |
+| C1.2.5 | Name of the Clinical Safety Officer (CSO), their profession and registration details | [Free text] | [PASS / FAIL / PENDING] | [`clinical-safety/SAFETY.md` `clinical-safety-officer` field] |
+
+Pass criteria to check against (DTAC form version 2.0):
+
+- **C1.2.4**: the case report and hazard log must meet DCB0129 and be proportionate to the product. There is no NHS-wide risk-scoring scheme, so the case report must declare the scheme it uses.
+- **C1.2.5**: a named CSO, who may be outsourced, who is a suitably qualified and experienced clinician with current registration with an appropriate professional body. The version 1.0 requirement for NHS DTAC-specific CSO training no longer applies.
+- **Hardware**: if the product is supplied with hardware as one health IT system, the DCB0129 documentation must cover the whole system, hardware included.
 
 > If `clinical-safety/SAFETY-CASE.md` or `clinical-safety/HAZARD-LOG.md` are absent, run `/arckit-uk-nhs:uk-nhs-dcb0129` to seed them before completing this section.
 
+### Deploying organisation's DCB0160 case (not part of the DTAC form)
+
+DCB0160 is the deploying organisation's own duty, and the DTAC form does not ask the manufacturer for it. As the form notes, DCB0160 (requirement 2.5.1) requires the deploying organisation to ensure, before deployment, that the manufacturer and the system comply with DCB0129: C1 is the evidence it reviews. Record the deployer case here only when this assessment is prepared by or for the deploying organisation.
+
+| Item | Status | Evidence / cross-reference |
+|---|---|---|
+| Deployer CSO appointed at the deploying organisation | [IN PLACE / PENDING / N/A — manufacturer submission only] | |
+| Deployment Clinical Safety Case Report | [IN PLACE / PENDING / N/A] | [`clinical-safety/deployment/DEPLOYMENT-SAFETY-CASE.md`] |
+| Deployment Hazard Log | [IN PLACE / PENDING / N/A] | [`clinical-safety/deployment/DEPLOYMENT-HAZARD-LOG.md`] |
+
 ---
 
-## Section 2 — Data Protection
+## C2. Data protection (assessed)
 
-### 2.1 UK GDPR / DPA 2018 lawful basis
+| Code | Question | Response | Status | Evidence / cross-reference |
+|---|---|---|---|---|
+| C2.1 | If the manufacturer has, or will have, direct or remote access to patient data or NHS systems: Data Security and Protection Toolkit (DSPT) "Standards Met" or "Standards Exceeded" for the current year (or the previous year if no return has yet been made for the current year) | [Confirmed / Unable to confirm / No access to patient data or national NHS systems] | [PASS / FAIL / PENDING / N/A] | [DSPT organisation code and status; the assessor checks it against the DSPT database] |
+| C2.2 | Does the product or service process personal data, or data about deceased individuals, including through a sub-processor? | [Yes / No] | — | `ARC-{PID}-DATA-*.md` |
+| C2.2.1 | Current registration with the Information Commissioner's Office | [Provided / Not provided] | [PASS / FAIL / PENDING] | [Registration number and expiry date] |
+| C2.2.2 | Data Protection Impact Assessment (DPIA) for the product | [Provided / Not provided] | [PASS / FAIL / PENDING] | [`ARC-{PID}-DPIA-*.md`; coverage checked below] |
+| C2.2.3 | The product's transparency information | [Provided / Not provided] | [PASS / FAIL / PENDING] | [Privacy notice, published DPIA or equivalent] |
+| C2.2.4 | Product terms and conditions on the use of user data, end user licence agreement or equivalent | [Provided / Not provided / Not applicable — explain] | [PASS / FAIL / N/A] | |
+| C2.2.5 | Where the product, including third-party components, stores and processes data | [UK only / Outside of UK] | — | |
+| C2.2.6 | If outside the UK: the countries, and how the arrangements comply with current legislation | [Free text / N/A] | [PASS / FAIL / N/A] | [UK adequacy regulations, or an International Data Transfer Agreement, or binding corporate rules with a transfer risk assessment] |
 
-| Criterion | Status | Evidence |
+### C2.2.2 DPIA coverage
+
+The form lists what the manufacturer's DPIA must cover.
+
+| DPIA content required by the form | Covered? | DPIA section |
 |---|---|---|
-| Article 6 lawful basis identified | [PASS / FAIL] | [Lawful basis + rationale] |
-| Article 9 special-category basis identified (if applicable) | [PASS / N/A] | [Basis + rationale] |
-| Common Law Duty of Confidentiality satisfied | [PASS / FAIL] | [Caldicott / consent / s251 / direct care basis] |
+| Summary of the product, including how it processes data | [YES / NO] | |
+| List of the data fields required | [YES / NO] | |
+| How data flows into, within and out of the product | [YES / NO] | |
+| Security controls for end users (onboarding, offboarding, access limits) | [YES / NO] | |
+| Technical and organisational measures for data in transit and at rest, proportionate to the risk | [YES / NO] | |
+| Countries the data will be stored in or flow through | [YES / NO] | |
+| Whether the manufacturer's staff can access personal data, and the legal basis for doing so | [YES / NO] | |
+| Who is controller for each element of the processing | [YES / NO] | |
+| Retention and disposal arrangements | [YES / NO] | |
+| Processors and sub-processors, with confirmation of a legally binding agreement | [YES / NO] | |
+| Confidentiality, integrity and availability risks, and how the product mitigates them | [YES / NO] | |
+| How the product supports data subject rights | [YES / NO] | |
 
-### 2.2 DPIA
+### Processors, sub-processors and transfers
 
-| Criterion | Status | Evidence |
-|---|---|---|
-| DPIA conducted and current | [PASS / FAIL / PENDING] | [Cross-reference `ARC-{PID}-DPIA-*.md`] |
-| High-risk findings mitigated | [PASS / FAIL] | [Mitigation tracker] |
-
-### 2.3 NHS Data Security and Protection Toolkit (DSPT)
-
-| Criterion | Status | Evidence |
-|---|---|---|
-| DSPT submission in date | [PASS / FAIL / PENDING — organisation responsibility] | [Submission reference + expiry] |
-| DSPT 'Standards Met' status | [PASS / FAIL / PENDING] | |
-
-### 2.4 Sub-processors and cross-border transfers
-
-| Sub-processor | Service | Location | Transfer mechanism | UK addendum / IDTA |
+| Processor / sub-processor | Service | Location | Legally binding agreement | Transfer safeguard |
 |---|---|---|---|---|
 | | | | | |
 
-### 2.5 Data subject rights
+---
 
-| Right | Implementation |
-|---|---|
-| Access (Article 15) | [How exercised] |
-| Rectification (Article 16) | |
-| Erasure (Article 17) | [If applicable — note exemptions for clinical records] |
-| Restriction (Article 18) | |
-| Portability (Article 20) | [If applicable] |
-| Objection (Article 21) | |
+## C3. Technical security (assessed)
+
+| Code | Question | Response | Status | Evidence / cross-reference |
+|---|---|---|---|---|
+| C3.1 | Cyber Essentials certificate | [Provided / Not provided] | [PASS / FAIL / PENDING] | [Certificate number and expiry; certification lasts 12 months; the assessor checks it against the IASME database] |
+| C3.2 | Has the manufacturer signed the Cyber Security Charter for Suppliers to the NHS? | [Yes / No] | — | [If Yes, the remaining C3 questions are skipped] |
+| C3.3 | For internet-based products or products accessible from the internet: summary report of an external penetration test within the previous 12 months that included the OWASP Top 10 | [Provided / Not provided / N/A] | [PASS / FAIL / PENDING / N/A] | [Test date, third-party tester, scope; to pass, no vulnerabilities scoring 7.0 or above on CVSS] |
+| C3.4 | Software produced in adherence to the DSIT / NCSC Software Security Code of Practice, with commitment to its principles of secure design and development, secure build environment, secure deployment and maintenance, and communication with customers | [Confirmed / Unable to confirm] | [PASS / FAIL / PENDING] | |
+| C3.5 | A plan for implementing multi-factor authentication for all account types, preferably through identity federation | [Yes / No] | [PASS / FAIL / PENDING] | |
+| C3.5.1 | Multi-factor authentication enabled on all supplier accounts with privileged access to the product (or applied at the remote end) | [Yes / No / Not applicable — supplier has no access] | [PASS / FAIL / N/A] | |
+| C3.6 | Logging and reporting requirements defined (for example, audit trails of all access) | [Yes / No] | [PASS / FAIL / PENDING] | |
+
+> Hosting, encryption, business continuity and vulnerability management are not DTAC questions. Record them in the Secure by Design assessment (`ARC-{PID}-SECD-*.md`), and put any further buyer requirement as a supplemental request rather than into this form.
 
 ---
 
-## Section 3 — Technical Assurance
+## C4. Interoperability (assessed)
 
-### 3.1 Hosting
+| Code | Question | Response | Status | Evidence / cross-reference |
+|---|---|---|---|---|
+| C4.1 | Does the product expose any APIs or integration channels for other products relevant to the provision or administration of health or social care? | [Yes / No] | — | |
+| C4.1.1 | If Yes: the international or industry interoperability standards the APIs use, and why they are appropriate | [Free text] | [PASS / FAIL / N/A] | [Standards listed below; NHS England Standards Directory] |
+| C4.1.2 | The APIs follow GDS Open API best practice and are openly documented and freely available to third parties | [Confirm / Cannot confirm] | [PASS / FAIL / N/A] | [API documentation URL] |
+| C4.1.3 | If C4.1.2 cannot be confirmed: the basis on which the APIs are documented and made available to third parties | [Free text / N/A] | [PASS / FAIL / N/A] | |
+| C4.2 | Does the product share or receive data with national or local systems for managing or delivering patient care, or for administration where patient identity is relevant? | [Yes / No] | — | |
+| C4.2.1 | Can the product use the NHS number to identify patient data when exchanging data? | [Yes / No] | [PASS / FAIL / N/A] | |
+| C4.2.2 | Does the product integrate with the NHS Personal Demographics Service, or with local record systems, to establish or validate the NHS number? | [Yes / No] | [PASS / FAIL / N/A] | |
+| C4.2.3 | If No to C4.2.1 or C4.2.2: the approach that ensures correct identification of patient records and data quality | [Free text / N/A] | [PASS / FAIL / N/A] | |
+| C4.2.4 | If used directly by patients: is NHS login used to verify identity and authenticate the user? | [Yes / No / Not applicable — not used directly by patients] | [PASS / FAIL / N/A] | |
+| C4.2.5 | If used by public health or adult social care organisations to deliver care services: does the product support compliance with DAPB3051 (Identity Verification and Authentication Standard for Digital Health and Care Services)? | [Yes / No / Not applicable] | [PASS / FAIL / N/A] | |
+| C4.2.6 | If NHS login is not used: the approach to authenticating users and the data protection measures in place | [Free text / N/A] | [PASS / FAIL / N/A] | |
 
-| Criterion | Status | Evidence |
-|---|---|---|
-| Cloud provider | | [AWS / Azure / Google Cloud / UKCloud / Other] |
-| UK region status | [PASS / FAIL] | [Region + data-residency commitment] |
-| Sovereign cloud considerations | [Document if applicable] | |
+### Standards used (supports C4.1.1)
 
-### 3.2 Security certifications
-
-| Criterion | Status | Evidence |
-|---|---|---|
-| Cyber Essentials | [PASS / FAIL / PENDING] | [Certificate + expiry] |
-| Cyber Essentials Plus | [PASS / FAIL / N/A] | |
-| ISO 27001 | [PASS / FAIL / N/A] | [Scope + certifying body] |
-| SOC 2 Type II | [PASS / FAIL / N/A] | |
-
-### 3.3 Software lifecycle
-
-| Criterion | Status | Evidence |
-|---|---|---|
-| Documented SDLC | [PASS / FAIL] | |
-| Code review on every change | [PASS / FAIL] | |
-| Dependency scanning | [PASS / FAIL] | [Tool + cadence] |
-| Software Bill of Materials (SBOM) | [PASS / FAIL] | [Format + accessibility] |
-
-### 3.4 Encryption
-
-| Criterion | Status | Evidence |
-|---|---|---|
-| In transit (TLS 1.2 minimum, TLS 1.3 preferred) | [PASS / FAIL] | |
-| At rest (AES-256 or equivalent) | [PASS / FAIL] | |
-| Key management | [PASS / FAIL] | [KMS / HSM details] |
-
-### 3.5 Penetration testing
-
-| Criterion | Status | Evidence |
-|---|---|---|
-| Independent pen test conducted in last 12 months | [PASS / FAIL / PENDING] | [Test date + scope] |
-| All HIGH findings remediated or risk-accepted | [PASS / FAIL] | [Remediation log] |
-
-### 3.6 Business continuity / disaster recovery
-
-| Criterion | Target | Evidence |
-|---|---|---|
-| Recovery Time Objective (RTO) | [hours] | |
-| Recovery Point Objective (RPO) | [hours] | |
-| BC test cadence | [annual / biannual] | [Last test date + outcome] |
-
-### 3.7 Vulnerability management
-
-| Criterion | Status | Evidence |
-|---|---|---|
-| CVSS-rated SLAs for patching | [PASS / FAIL] | [HIGH within X days, MEDIUM within Y days] |
-| Cross-reference Secure by Design assessment | [PASS / FAIL] | [`ARC-{PID}-SECD-*.md`] |
-
----
-
-## Section 4 — Interoperability
-
-### 4.1 Standards adopted
-
-| Standard | Version / scope | Status |
+| Standard | Version / scope | Use in the product |
 |---|---|---|
 | FHIR UK Core | [version] | [Conformant / Partial / N/A] |
 | SNOMED CT UK Edition | [release] | |
 | dm+d (if prescribing) | [release] | |
 | HL7 v2 (if legacy integration) | [profile] | |
 
-### 4.2 NHS Number handling
+---
 
-| Criterion | Status | Evidence |
-|---|---|---|
-| NHS Number is canonical patient identifier | [PASS / FAIL] | |
-| PDS lookup with demographic trace on new records | [PASS / FAIL] | |
-| NHS Number validation (Mod 11 check) | [PASS / FAIL] | |
+## D1. Usability and accessibility (scored, not pass/fail)
 
-### 4.3 NHS APIs
+This section gives buyers a comparative view of the product. It does not count towards the pass or fail in section C.
 
-| API | Use | Status |
-|---|---|---|
-| Personal Demographics Service (PDS) | [Lookup / trace] | [Live / Pilot / N/A] |
-| e-Referral Service (e-RS) | | |
-| GP Connect | [Access record / Appointments / Send Document] | |
-| NHS App Connect | | |
-| NHS login | [Identity verification] | |
-| BARS (Booking and Referral Standard) | | |
-| IM1 (where applicable) | | |
+| Code | Question | Response | Evidence |
+|---|---|---|---|
+| D1.1 | How the product is used or fits into existing systems such as care pathways (for example a user journey or instructions for use) | [Provided / Not provided] | |
+| D1.2 | Is the product tested with intended users to validate its usability? | [Yes / No] | [User research evidence] |
+| D1.3 | Has the manufacturer read the Accessible Information Standard and considered how its requirements should be reflected in the product's design? | [Confirm / Cannot confirm] | |
+| D1.4 | Is the product a web or mobile application? | [Yes / No] | |
+| D1.4.1 | If Yes: does it comply with WCAG 2.2 at AA or higher? | [Yes / No, but a plan and timeline for AA is in place / No / Not applicable] | [Audit date and auditor] |
+| D1.4.2 | Timescale for reaching WCAG 2.2 AA, if not yet met | [Free text / N/A] | |
+| D1.4.3 | Link to the published accessibility statement | [URL] | |
+| D1.5 | Average service availability over the past 12 months, as a percentage to two decimal places | [NN.NN%] | |
 
-### 4.4 Open standards conformance
-
-| Criterion | Status | Evidence |
-|---|---|---|
-| OpenAPI specification published | [PASS / FAIL] | [URL] |
-| API documentation accessible | [PASS / FAIL] | [URL] |
-| Implementation guide aligned with NHS Interoperability Standards Catalogue | [PASS / FAIL] | [Catalogue reference] |
+> The NHS Service Standard and the GDS Service Standard are not DTAC sections. NHS England says DTAC complements them; assess them with `/arckit:service-assessment`.
 
 ---
 
-## Section 5 — Usability and Accessibility
+## AI and machine learning (ArcKit supplement — not a DTAC section)
 
-### 5.1 NHS Service Standard alignment
+> DTAC form version 2.0 has no AI section. AI appears in it only through C1.1.1 (AI as a Medical Device under UK MDR 2002). NHS England asks buyers with requirements beyond DTAC to raise them as supplemental requests that do not duplicate DTAC. Complete this supplement only if the product uses AI / ML for a clinically relevant function, and present it to buyers as a separate document. Otherwise state: "No AI / ML components — supplement N/A."
 
-| Service Standard point | Status | Evidence |
-|---|---|---|
-| Understand users and their needs | [PASS / FAIL] | [User research evidence] |
-| Solve a whole problem for users | [PASS / FAIL] | |
-| Provide a joined-up experience across channels | [PASS / FAIL] | |
-| Make the service simple to use | [PASS / FAIL] | |
-| Make sure everyone can use the service | [PASS / FAIL] | |
-| Have a multi-disciplinary team | [PASS / FAIL] | |
-| Use agile ways of working | [PASS / FAIL] | |
-| Iterate and improve frequently | [PASS / FAIL] | |
-| Create a secure service which protects users' privacy | [Cross-ref §2 + §3] | |
-| Define what success looks like and publish performance data | [PASS / FAIL] | |
-| Choose the right tools and technology | [Cross-ref §3] | |
-| Make new source code open | [PASS / FAIL / N/A] | |
-| Use and contribute to open standards, common components and patterns | [PASS / FAIL] | |
-| Operate a reliable service | [Cross-ref §3] | |
-
-### 5.2 WCAG 2.2 AA accessibility
-
-| Criterion | Status | Evidence |
-|---|---|---|
-| Independent accessibility audit in last 12 months | [PASS / FAIL / PENDING] | [Audit date + auditor] |
-| All Level A criteria pass | [PASS / FAIL] | |
-| All Level AA criteria pass | [PASS / FAIL] | |
-| Accessibility statement published | [PASS / FAIL] | [URL] |
-| Screen reader tested (NVDA + VoiceOver + JAWS) | [PASS / FAIL] | |
-| Keyboard-only navigation supported | [PASS / FAIL] | |
-| Colour contrast ≥ 4.5:1 for normal text | [PASS / FAIL] | |
-| Plain English / reading age | [Reading age target met] | |
-
----
-
-## AI Annex (DTAC AI Module)
-
-> Complete this annex only if the product uses AI / ML for any clinically-relevant function. Otherwise state: "No AI / ML components — annex N/A."
-
-### A.1 AI usage
+### AI.1 AI usage
 
 | Field | Value |
 |---|---|
-| Uses AI / ML? | [Yes / No — if No, annex is N/A] |
+| Uses AI / ML? | [Yes / No — if No, supplement is N/A] |
 | Model class | [Rule-based / Classical ML / Deep learning / Foundation model / Agentic LLM] |
 | Clinical function performed by AI | [Decision support / triage / risk score / summarisation / etc.] |
 | Vendor of AI component | [In-house / named third party] |
 
-### A.2 Model governance
+### AI.2 Model governance
 
 | Criterion | Status | Evidence |
 |---|---|---|
@@ -282,7 +246,7 @@ DTAC **v3** (current as at 2026-05). Verify against <https://transform.england.n
 | Model card published | [PASS / FAIL] | [URL] |
 | ATRS record published (cross-reference `/arckit:atrs`) | [PASS / FAIL / PENDING] | [`ARC-{PID}-ATRS-*.md`] |
 
-### A.3 Fairness and bias
+### AI.3 Fairness and bias
 
 | Criterion | Status | Evidence |
 |---|---|---|
@@ -290,7 +254,7 @@ DTAC **v3** (current as at 2026-05). Verify against <https://transform.england.n
 | Performance parity across groups | [PASS / FAIL] | [Metrics + thresholds] |
 | Bias mitigation actions documented | [PASS / FAIL] | |
 
-### A.4 Operational monitoring
+### AI.4 Operational monitoring
 
 | Criterion | Status | Evidence |
 |---|---|---|
@@ -298,7 +262,7 @@ DTAC **v3** (current as at 2026-05). Verify against <https://transform.england.n
 | Human-in-the-loop / human-on-the-loop design | [PASS / FAIL] | [Where humans intervene] |
 | Substantial-change handling | [PASS / FAIL] | [What triggers reassessment under MDR if AIaMD] |
 
-### A.5 Transparency
+### AI.5 Transparency
 
 | Criterion | Status | Evidence |
 |---|---|---|
@@ -306,7 +270,7 @@ DTAC **v3** (current as at 2026-05). Verify against <https://transform.england.n
 | Plain-English explanation available to patients | [PASS / FAIL] | |
 | Confidence / uncertainty surfaced in the UI | [PASS / FAIL] | |
 
-### A.6 MHRA AIaMD Programme alignment
+### AI.6 MHRA AIaMD Programme alignment
 
 | MHRA Change Programme WP | Applicability | Status |
 |---|---|---|
@@ -317,22 +281,48 @@ DTAC **v3** (current as at 2026-05). Verify against <https://transform.england.n
 
 ---
 
+## Supporting documentation
+
+The form asks that each document be labelled with the company name, the question number and the date of submission.
+
+| Question | Document | Status | Location |
+|---|---|---|---|
+| A12 | CQC report | [Provided / N/A] | |
+| B4 | User journeys and data flows | [Provided / Not available] | |
+| C1.1.1 | Pre-Acquisition Questionnaire (PAQ) | [Provided / N/A] | |
+| C1.2.3 | Clinical risk management system | [Provided / Not provided] | `clinical-safety/SAFETY.md` |
+| C1.2.4 | Clinical Safety Case Report and Hazard Log | [Provided / Not provided] | `clinical-safety/SAFETY-CASE.md`, `clinical-safety/HAZARD-LOG.md` |
+| C2.2.1 | ICO registration | [Provided / Not provided] | |
+| C2.2.2 | Data Protection Impact Assessment | [Provided / Not provided] | `ARC-{PID}-DPIA-*.md` |
+| C2.2.4 | Terms and conditions on use of user data, EULA or equivalent | [Provided / N/A] | |
+| C3.1 | Cyber Essentials certificate | [Provided / Not provided] | |
+| C3.3 | External penetration test summary report | [Provided / N/A] | |
+| D1.1 | User journeys or how the product fits a care pathway | [Provided / Not provided] | |
+
+---
+
 ## External References
 
 ### Authoritative Sources
 
 | Doc ID | Title | Source | Used in |
 |---|---|---|---|
-| DTAC-V3 | NHS Digital Technology Assessment Criteria v3 | NHS England Transformation Directorate | Throughout |
-| DCB0129 | Clinical Risk Management — Manufacture of Health IT | NHS England | §1 |
-| DCB0160 | Clinical Risk Management — Deployment | NHS England | §1 |
-| UK-GDPR | UK General Data Protection Regulation | Information Commissioner | §2 |
-| DPA-2018 | Data Protection Act 2018 | UK Parliament | §2 |
-| DSPT | NHS Data Security and Protection Toolkit | NHS Digital | §2 |
-| WCAG-2.2 | Web Content Accessibility Guidelines 2.2 | W3C | §5 |
-| NHS-SVC-STD | NHS Service Standard | NHS Service Manual | §5 |
-| ATRS | Algorithmic Transparency Recording Standard | CDEI / DSIT | AI annex |
-| MHRA-AIAMD | MHRA Software and AI as a Medical Device Programme | MHRA | AI annex |
+| DTAC-2.0 | Digital Technology Assessment Criteria for Health and Social Care (DTAC) form, version 2.0 (24 February 2026) | NHS England | Throughout |
+| DTAC-GUIDE | DTAC guidance for buyers and suppliers | NHS England | Throughout |
+| DCB0129 | Clinical Risk Management — Manufacture of Health IT Systems | NHS England | C1 |
+| DCB0160 | Clinical Risk Management — Deployment and Use of Health IT Systems | NHS England | C1 (deployer note) |
+| PAQ | Pre-Acquisition Questionnaire for medical devices | NHS England | C1.1.1 |
+| UK-MDR-2002 | Medical Devices Regulations 2002 (as amended) | legislation.gov.uk | C1.1.1 |
+| UK-GDPR | UK General Data Protection Regulation | Information Commissioner | C2 |
+| DPA-2018 | Data Protection Act 2018 | UK Parliament | C2 |
+| DSPT | Data Security and Protection Toolkit | NHS England | C2.1 |
+| CYBER-ESS | Cyber Essentials | NCSC / IASME | C3.1 |
+| SSCOP | Software Security Code of Practice | DSIT / NCSC | C3.4 |
+| DAPB3051 | Identity Verification and Authentication Standard for Digital Health and Care Services | NHS England | C4.2.5 |
+| AIS | Accessible Information Standard | NHS England | D1.3 |
+| WCAG-2.2 | Web Content Accessibility Guidelines 2.2 | W3C | D1.4.1 |
+| ATRS | Algorithmic Transparency Recording Standard | CDEI / DSIT | AI supplement |
+| MHRA-AIAMD | MHRA Software and AI as a Medical Device Programme | MHRA | AI supplement |
 
 ### Document Register
 

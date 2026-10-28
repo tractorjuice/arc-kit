@@ -437,7 +437,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 |---------|-----------|-----------------|--------------|
 | `/arckit:uk-nhs-dcb0129` | — | data-model, requirements, stakeholders | atrs, dpia, principles, risk |
 | `/arckit:uk-nhs-dcb0160` | — | data-model, principles, requirements, stakeholders, uk-nhs-dcb0129 | operationalize |
-| `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-nhs-dcb0129, uk-nhs-dcb0160 |
+| `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-mdr-classification, uk-nhs-dcb0129, uk-nhs-dcb0160 |
 | `/arckit:uk-mdr-classification` | — | data-model, principles, requirements, stakeholders | secure, uk-nhs-dcb0129 |
 
 ### ArcKit FDE Site Generator (`arckit-fde`)
@@ -1100,13 +1100,14 @@ Added 18 new commands covering EU regulations and French public sector governanc
 - `nl-tbb` → feeds `nl-cloud` (R) — the TBB category, with any existing marking it records, decides the clause 5.2 public-cloud prohibition; without it `nl-cloud` flags the category as pending
 - `nl-cloud` → feeds `nl-exit` (R) — the exit plan is required for material cloud use identified by the assessment
 - `nl-cloud` assesses Cbw essential-entity status itself (clause 4.3); it does not read an `eu-nis2` artefact
+- `nl-tbb`, `nl-cloud`, `nl-exit` and `nl-bio` → feed `risk` — each hands its findings (classification implications, clause 3.1 cloud risks, exit residual risks, BIO2 gaps) to the risk register. Each reads an existing register only as a recommended input, so `risk` runs after them
 
 **Typical Dutch central-government compliance path**:
 
 ```text
-stakeholders → requirements → risk →
+stakeholders → requirements →
 nl-tbb → nl-cloud → nl-exit → nl-bio →
-eu-nis2 → eu-data-act
+risk → eu-nis2 → eu-data-act
 ```
 
 **Key inter-dependencies among EU/FR commands**:

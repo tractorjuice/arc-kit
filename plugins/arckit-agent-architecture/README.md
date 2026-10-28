@@ -11,7 +11,7 @@
 | `/arckit:agent-security` | `AASE` | Agent security hardening, sandboxing, and permission models |
 | `/arckit:agent-maturity` | `AAMT` | Agent maturity model and continuous improvement |
 
-Recipe: `agent-architecture` (foundation artefacts → inventory → design → governance, integration and security in parallel → optional maturity assessment).
+Recipe: `agent-architecture` (foundation artefacts → inventory → design → governance → security → integration → optional maturity assessment). Security reads the governance framework and integration reads both, so the three run in that order.
 
 ## Requires arckit core plugin
 

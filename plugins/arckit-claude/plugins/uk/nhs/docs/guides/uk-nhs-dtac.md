@@ -1,26 +1,30 @@
-# NHS DTAC v3 Assessment Guide
+# NHS DTAC Assessment Guide
 
 > **Command**: `/arckit-uk-nhs:uk-nhs-dtac` | **Overlay**: [UK NHS Clinical Safety Overlay](uk-nhs-clinical-safety-overlay.md) | **Origin**: Community-contributed
 
 ## Purpose
 
-Generates an NHS Digital Technology Assessment Criteria (DTAC) v3 assessment for a digital health product being procured or assured by an NHS organisation. DTAC is the de facto NHS England procurement-assurance baseline used by NHS Trust procurement teams, ICS digital teams, NHS Supply Chain framework buyers, and NHS England innovation pathways.
+Generates an NHS Digital Technology Assessment Criteria (DTAC) assessment for a digital health product being procured or assured by an NHS organisation. DTAC is the NHS England assessment framework that care commissioners and providers use to assure digital health technology products, and they ask manufacturers for a completed DTAC form for each product version.
 
-DTAC overlaps but does not replace MHRA medical-device regulation (run `/arckit-uk-nhs:uk-mdr-classification` if the product is a medical device) or the GDS Service Standard (run `/arckit:service-assessment` if the product is also a GDS-assessed service).
+The command follows the **DTAC form version 2.0**, which NHS England published on 24 February 2026. From 6 April 2026 manufacturers must provide version 2.0 in place of the older version 1.0 form.
+
+DTAC applies alongside, and does not replace, MHRA medical-device regulation (run `/arckit-uk-nhs:uk-mdr-classification` if the product is a medical device), the Data Security and Protection Toolkit, or the NHS and GDS Service Standards (run `/arckit:service-assessment` if the product is also a GDS-assessed service).
 
 ## What it produces
 
-Single artefact `projects/{NNN}-<slug>/ARC-{NNN}-NHSDTAC-v1.0.md` covering five sections plus an optional AI annex:
+Single artefact `projects/{NNN}-<slug>/ARC-{NNN}-NHSDTAC-v1.0.md` that answers each question of the DTAC form, by question code, with its evidence:
 
-| Section | Coverage | ArcKit cross-references |
-|---|---|---|
-| 1. Clinical Safety | DCB0129 + DCB0160 status, CSO, hazard log open count, highest open risk | `clinical-safety/SAFETY-CASE.md`, `HAZARD-LOG.md` |
-| 2. Data Protection | UK GDPR / DPA 2018 lawful basis, DPIA, DSPT, sub-processors, data-subject rights | `dpia` output |
-| 3. Technical Assurance | Cloud hosting, security certifications (Cyber Essentials, ISO 27001), SDLC, encryption, pen test, BC/DR, vulnerability management | `secure`, `hld-review`, `dld-review` |
-| 4. Interoperability | FHIR UK Core, SNOMED CT, dm+d, NHS Number, NHS APIs (PDS, e-RS, GP Connect, NHS App Connect, NHS login, BARS) | `data-model`, `adr` |
-| 5. Usability + Accessibility | NHS Service Standard, WCAG 2.2 AA, screen-reader / keyboard / contrast evidence, plain English | `service-assessment` |
+| Section | Coverage | Assessed? | ArcKit cross-references |
+|---|---|---|---|
+| A. Company information | A1–A12: company, product, version, product type, contact, registration, CQC | Not assessed — context | Project metadata |
+| B. Value proposition | B1–B4: intended use, description, users and benefits, data flows and user journey | Not assessed — context | `requirements`, `stakeholders`, `data-model` |
+| C1. Clinical safety | SaMD / AIaMD status (with a Pre-Acquisition Questionnaire if Yes), DCB0129 scope, clinical risk management system, Clinical Safety Case Report and Hazard Log, Clinical Safety Officer | Assessed — must pass | `uk-mdr-classification`, `clinical-safety/SAFETY-CASE.md`, `HAZARD-LOG.md` |
+| C2. Data protection | Manufacturer's DSPT status, ICO registration, DPIA (with the form's coverage list), transparency information, terms of use, data location and transfers outside the UK | Assessed — must pass | `dpia` output |
+| C3. Technical security | Cyber Essentials, Cyber Security Charter for Suppliers to the NHS, external penetration test (OWASP Top 10, within 12 months, no CVSS 7.0 or above), Software Security Code of Practice, multi-factor authentication, logging | Assessed — must pass | `secure`, `hld-review`, `dld-review` |
+| C4. Interoperability | APIs and the standards they use, GDS Open API practice, NHS number, PDS, NHS login, DAPB3051 | Assessed — must pass | `data-model`, `adr` |
+| D1. Usability and accessibility | User journey, usability testing, Accessible Information Standard, WCAG 2.2 AA, accessibility statement, service availability | Scored, not pass/fail | `service-assessment` |
 
-The **AI annex** is required when the product uses AI/ML for any clinically-relevant function — model class, training-data provenance, ATRS publication, fairness assessment, model drift monitoring, human-in-the-loop / human-on-the-loop design, transparency to clinicians and patients, MHRA AIaMD Programme alignment.
+DTAC version 2.0 has no AI section: AI appears only in C1.1.1, as AI as a Medical Device. Where a buyer asks for AI assurance, the artefact adds an **AI and machine learning supplement**, labelled as an ArcKit addition outside DTAC: model class, training-data provenance, ATRS publication, fairness assessment, model drift monitoring, human-in-the-loop / human-on-the-loop design, transparency to clinicians and patients, MHRA AIaMD Programme alignment.
 
 ## When to use
 
@@ -30,15 +34,19 @@ The **AI annex** is required when the product uses AI/ML for any clinically-rele
 
 ## Prerequisites
 
-The richest output comes when the project already has DPIA, ATRS (if AI), Secure by Design assessment, and DCB0129/0160 cases in place. The DTAC artefact cross-references all of these. The command marks `[PENDING]` for criteria that depend on these missing inputs rather than fabricating compliance.
+The richest output comes when the project already has an MDR classification, DPIA, ATRS (if AI), Secure by Design assessment, and a DCB0129 case in place. The DTAC artefact cross-references all of these. The command marks `[PENDING]` for criteria that depend on these missing inputs rather than fabricating compliance.
+
+## Use the NHS England form
+
+NHS England asks buyers to accept the standard DTAC form and not to make amended versions; additional requirements go in a supplemental request. The ArcKit artefact is the evidence pack behind the completed NHS England form, not a replacement for it.
 
 ## DTAC version pinning
 
-DTAC v3 is current as at 2026-05. Verify against <https://transform.england.nhs.uk/key-tools-and-info/digital-technology-assessment-criteria-dtac/> before submission — if NHS England has published a new version, the section structure may have changed. The artefact carries its source-version reference.
+The command follows the DTAC form version 2.0 (24 February 2026). NHS England has said it will update DTAC again as its review of DCB0129 and DCB0160 and other standards work conclude, and asks that the form be downloaded at the point of use. Check <https://digital.nhs.uk/services/digital-technology-assessment-criteria-dtac> before submission; if a later form is published, the questions may have changed. The artefact records the form version it follows.
 
-## `[PENDING — organisation responsibility]` markers
+## `[PENDING]` markers
 
-Many DTAC items depend on activities the deploying NHS organisation must complete (DSPT submission, local Caldicott Guardian sign-off, organisational pen-test of the integrated solution). The artefact uses `[PENDING — organisation responsibility]` explicitly rather than asserting these are complete from product-side evidence alone.
+The command marks as `[PENDING]` any answer the project evidence does not support, such as DSPT status, ICO registration, certificates, test reports or the CSO's details. `[PENDING — organisation responsibility]` is kept for items the deploying NHS organisation, not the manufacturer, must supply, such as local Caldicott Guardian sign-off or its own DCB0160 case.
 
 ## Important
 
@@ -46,10 +54,10 @@ DTAC pass status does not constitute MHRA medical-device approval, does not cons
 
 ## Related commands
 
-- `/arckit-uk-nhs:uk-nhs-dcb0129` — manufacturer Clinical Safety Case (Section 1 evidence)
-- `/arckit-uk-nhs:uk-nhs-dcb0160` — deployer Clinical Safety Case (Section 1 evidence, deploying-organisation perspective)
-- `/arckit:dpia` — Section 2 evidence
-- `/arckit:atrs` — AI annex evidence
-- `/arckit:secure` — Section 3 evidence
-- `/arckit:service-assessment` — overlapping NHS Service Standard assessment
-- `/arckit-uk-nhs:uk-mdr-classification` — for medical-device determination, parallel to DTAC
+- `/arckit-uk-nhs:uk-nhs-dcb0129` — manufacturer Clinical Safety Case (C1 evidence)
+- `/arckit-uk-nhs:uk-nhs-dcb0160` — deployer Clinical Safety Case (the deploying organisation's own duty, recorded beside C1 but not part of the DTAC form)
+- `/arckit:dpia` — C2 evidence
+- `/arckit:atrs` — AI supplement evidence
+- `/arckit:secure` — C3 evidence
+- `/arckit:service-assessment` — NHS and GDS Service Standard assessment, which DTAC complements
+- `/arckit-uk-nhs:uk-mdr-classification` — medical-device determination for C1.1.1
