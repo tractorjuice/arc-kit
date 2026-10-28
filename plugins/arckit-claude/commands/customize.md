@@ -107,6 +107,7 @@ Then display the core templates as a table:
 | `research-findings` | `/arckit:research` | Technology research findings |
 | `risk-register` | `/arckit:risk` | Risk register (Orange Book) |
 | `roadmap` | `/arckit:roadmap` | Architecture roadmap |
+| `legacy-assessment` | `/arckit:legacy-assessment` | Legacy IT assessment |
 | `service-assessment-prep` | `/arckit:service-assessment` | GDS Service Standard prep |
 | `servicenow-design` | `/arckit:servicenow` | ServiceNow service design |
 | `sobc` | `/arckit:sobc` | Strategic Outline Business Case |

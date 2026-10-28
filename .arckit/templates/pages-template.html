@@ -1961,6 +1961,19 @@
             return CONFIG.contentBaseUrl ? `${CONFIG.contentBaseUrl}/${path}` : null;
         }
 
+        // Resolve image companions beside their source report, not docs/index.html.
+        function documentImagePath(documentPath, src) {
+            if (!src || /^(?:[a-z][a-z0-9+.-]*:|\/|#)/i.test(src) || src.includes('\\')) return null;
+            const parts = documentPath.split('/').slice(0, -1);
+            for (const part of src.split('/')) {
+                if (part === '..') {
+                    if (!parts.length) return null;
+                    parts.pop();
+                } else if (part && part !== '.') parts.push(part);
+            }
+            return parts.join('/');
+        }
+
         function getDocumentId(path) {
             return path.replace(/[^a-zA-Z0-9]/g, '-');
         }
@@ -4500,6 +4513,14 @@
                     </div>
                     <div class="app-markdown">${html}</div>
                 `;
+
+                content.querySelectorAll('.app-markdown img[src]').forEach(img => {
+                    const imagePath = documentImagePath(path, img.getAttribute('src'));
+                    if (!imagePath) return;
+                    const fallback = getFallbackUrl(imagePath);
+                    if (fallback) img.addEventListener('error', () => { img.src = fallback; }, { once: true });
+                    img.src = getRawUrl(imagePath);
+                });
 
                 // Rewrite relative .md links to SPA hash routes
                 const docDir = path.substring(0, path.lastIndexOf('/') + 1);

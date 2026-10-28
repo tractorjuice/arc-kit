@@ -1365,3 +1365,15 @@ Generates: `projects/002-payment-gateway/ARC-002-SVCASS-v1.0.md`
 ## Important Notes
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
+## Legacy assessment evidence (contextual)
+
+When existing systems or modernisation are in scope, read the latest applicable
+`ARC-*-LEGACY-v*.md` and its JSON sidecar if available. Consume the evidenced findings,
+policy approval/provisional status, completeness, dependency paths and remediation
+actions. Keep updated-definition classification separate from numerical prioritisation.
+Do not treat document presence, risk acceptance or planned work as compliance or
+completed remediation. Carry unresolved gaps into this workflow; recommend
+`/arckit:legacy-assessment` when support, contracts, skills, business fit, hardware,
+security or dependencies need assessment. It is not universally mandatory. Planning
+and investment work should use its action owners, funding gaps and dependencies.

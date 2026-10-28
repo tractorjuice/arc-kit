@@ -56,6 +56,8 @@ data/
 # scripts/sync-claude-plugin-layout.py for the standalone arckit-claude repo)
 # needs the same exception, or the standalone publish silently loses the file.
 !plugins/arckit-eu/data/
+# The core legacy framework catalogue is source, not generated assessment data.
+!plugins/arckit-claude/data/
 !plugins/arckit-claude/plugins/eu/data/
 
 # Plugin runtime caches — ephemeral, project-scoped, regenerated each session

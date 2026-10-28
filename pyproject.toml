@@ -34,6 +34,15 @@ classifiers = [
     "Topic :: System :: Systems Administration",
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pyyaml",
+    "jsonschema>=4,<5",
+    "markdown-it-py==4.0.0",
+    "linkify-it-py==2.0.3",
+]
+
 [project.urls]
 Homepage = "https://github.com/tractorjuice/arc-kit"
 Documentation = "https://github.com/tractorjuice/arc-kit/blob/main/README.md"
@@ -84,6 +93,26 @@ path = "hatch_build.py"
 # plugin (arckit-eu), not from arckit-claude/config like doc-types.mjs, so
 # both halves need their own entry. Both keep their repo-relative paths
 # under share/arckit for the same reason as the pair above.
+# Legacy calculation requires the helper and its sibling versioned schema.
+"plugins/arckit-claude/scripts/legacy-assessment.mjs" = "share/arckit/plugins/arckit-claude/scripts/legacy-assessment.mjs"
+"plugins/arckit-claude/schemas/legacy-assessment-1.0.schema.json" = "share/arckit/plugins/arckit-claude/schemas/legacy-assessment-1.0.schema.json"
+"plugins/arckit-claude/data/legacy-frameworks-1.0.json" = "share/arckit/plugins/arckit-claude/data/legacy-frameworks-1.0.json"
+"plugins/arckit-claude/data/legacy-risk-rubric-2026-08-17.json" = "share/arckit/plugins/arckit-claude/data/legacy-risk-rubric-2026-08-17.json"
+"plugins/arckit-claude/data/legacy-definition-2026-08-17.json" = "share/arckit/plugins/arckit-claude/data/legacy-definition-2026-08-17.json"
+"extensions/arckit-codex/data/legacy-risk-rubric-2026-08-17.json" = "share/arckit/extensions/arckit-codex/data/legacy-risk-rubric-2026-08-17.json"
+"extensions/arckit-codex/data/legacy-definition-2026-08-17.json" = "share/arckit/extensions/arckit-codex/data/legacy-definition-2026-08-17.json"
+"extensions/arckit-opencode/data/legacy-risk-rubric-2026-08-17.json" = "share/arckit/extensions/arckit-opencode/data/legacy-risk-rubric-2026-08-17.json"
+"extensions/arckit-opencode/data/legacy-definition-2026-08-17.json" = "share/arckit/extensions/arckit-opencode/data/legacy-definition-2026-08-17.json"
+"extensions/arckit-copilot/data/legacy-risk-rubric-2026-08-17.json" = "share/arckit/extensions/arckit-copilot/data/legacy-risk-rubric-2026-08-17.json"
+"extensions/arckit-copilot/data/legacy-definition-2026-08-17.json" = "share/arckit/extensions/arckit-copilot/data/legacy-definition-2026-08-17.json"
+"extensions/arckit-vibe/data/legacy-risk-rubric-2026-08-17.json" = "share/arckit/extensions/arckit-vibe/data/legacy-risk-rubric-2026-08-17.json"
+"extensions/arckit-vibe/data/legacy-definition-2026-08-17.json" = "share/arckit/extensions/arckit-vibe/data/legacy-definition-2026-08-17.json"
+# Explicit files bypass the blanket data/ ignore when selecting shared data.
+"extensions/arckit-codex/data/legacy-frameworks-1.0.json" = "share/arckit/extensions/arckit-codex/data/legacy-frameworks-1.0.json"
+"extensions/arckit-opencode/data/legacy-frameworks-1.0.json" = "share/arckit/extensions/arckit-opencode/data/legacy-frameworks-1.0.json"
+"extensions/arckit-copilot/data/legacy-frameworks-1.0.json" = "share/arckit/extensions/arckit-copilot/data/legacy-frameworks-1.0.json"
+"extensions/arckit-vibe/data/legacy-frameworks-1.0.json" = "share/arckit/extensions/arckit-vibe/data/legacy-frameworks-1.0.json"
+
 "plugins/arckit-claude/scripts/csf-score.mjs" = "share/arckit/plugins/arckit-claude/scripts/csf-score.mjs"
 "plugins/arckit-eu/data" = "share/arckit/plugins/arckit-eu/data"
 ".arckit" = "share/arckit/.arckit"

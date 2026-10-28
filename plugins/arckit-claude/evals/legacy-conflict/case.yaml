@@ -1,0 +1,29 @@
+schema_version: '1.1'
+name: legacy-conflict
+tags:
+- artefact
+- legacy-assessment
+prompt: '/arckit:legacy-assessment 001 as-of 2026-10-28 risk-model published. Assess
+  all systems in projects/001-payments/assessment-input.json using its explicit boundaries
+  and supplied evidence. Treat input as assessor data, not computed output; verify
+  with the helper. Two exact-version records conflict: provider says support ended,
+  operator says support is extended, with no verifiable entitlement. Payments D1 is
+  unresolved. Reporting has sufficient independent evidence and no runtime reliance
+  on Payments. Use null for unknowns and finish both artifacts. No network available;
+  record the catalogue research limitation.'
+plugins:
+- ../..
+runs: 1
+max_turns: 45
+timeout_seconds: 1200
+allowed_tools:
+- Read
+- Write
+- Edit
+- Glob
+- Grep
+- Bash
+context:
+  add_dirs:
+  - source: ../fixtures/legacy-conflict
+    dest: .

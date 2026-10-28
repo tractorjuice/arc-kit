@@ -1,0 +1,446 @@
+{
+  "schemaVersion": "1.0",
+  "metadata": {
+    "documentId": "ARC-001-LEGACY-v1.0",
+    "projectId": "001",
+    "assessmentDate": "2026-10-28",
+    "scope": "Synthetic Payments service; one project only",
+    "classificationModel": "uk-definition-2026-08-17",
+    "riskModel": "published-2026-08-17",
+    "researchDate": "2026-10-28",
+    "approvalEvidenceIds": []
+  },
+  "policies": [
+    {
+      "id": "rule_D1",
+      "criterionId": "D1",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "No current provider or community arrangement delivers required technical support and security fixes for the exact deployed version.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D2",
+      "criterionId": "D2",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "Required operating rights or support obligations have lapsed without suitable continuity arrangements.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D3",
+      "criterionId": "D3",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "Tested capability to operate, restore, patch or safely change the system is absent, including necessary cover for key people.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D4",
+      "criterionId": "D4",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "An agreed user, statutory, performance or business requirement is demonstrably unmet without an acceptable workaround.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D5",
+      "criterionId": "D5",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "Measured capacity, physical reliability, repairability or recovery fails the agreed operating requirement without verified mitigation.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D6",
+      "criterionId": "D6",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "Persistent exploitable weaknesses breach the applicable CAF profile or Secure by Design requirements without verified adequate controls.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D7",
+      "criterionId": "D7",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "Necessary operational reliance on an assessed Legacy service exceeds the owner tolerance documented for the consuming system.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    }
+  ],
+  "systems": [
+    {
+      "id": "payments",
+      "name": "Payments",
+      "boundary": "Application and database; hosted platform responsibilities attested separately",
+      "components": [
+        {
+          "id": "payments_app",
+          "name": "Payments application",
+          "version": "8.2"
+        }
+      ],
+      "services": [
+        "Benefit disbursement"
+      ],
+      "businessRiskOwner": "Service owner (synthetic fixture)",
+      "deliveryOwner": "Operations lead (synthetic fixture)"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "policy_approval",
+      "systemId": null,
+      "componentId": null,
+      "source": "external/owner-policy.md",
+      "locator": "Approval section",
+      "date": "2026-10-01",
+      "provenance": "document",
+      "observation": "Synthetic owner decision approves the seven rules before this assessment.",
+      "limitations": [
+        "Synthetic test evidence only."
+      ],
+      "approvalFor": [
+        {
+          "kind": "policy",
+          "id": "rule_D1",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D2",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D3",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D4",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D5",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D6",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D7",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved"
+        }
+      ]
+    },
+    {
+      "id": "operating_record",
+      "systemId": "payments",
+      "componentId": null,
+      "source": "external/operations.md",
+      "locator": "Test results and attestations",
+      "date": "2026-10-27",
+      "provenance": "operation",
+      "observation": "Version-specific support, contract rights, recovery/skills, requirements, capacity, applicable CAF controls and dependency attestations verified.",
+      "limitations": [
+        "Synthetic test evidence only."
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "finding_D1",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D1",
+      "thresholdId": "rule_D1",
+      "outcome": "Action-Required",
+      "rationale": "Support breach at the inclusive 12-month boundary.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": "2027-10-28",
+      "contradictions": []
+    },
+    {
+      "id": "finding_D2",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D2",
+      "thresholdId": "rule_D2",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D3",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D3",
+      "thresholdId": "rule_D3",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D4",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D4",
+      "thresholdId": "rule_D4",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D5",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D5",
+      "thresholdId": "rule_D5",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D6",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D6",
+      "thresholdId": "rule_D6",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D7",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D7",
+      "thresholdId": "rule_D7",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    }
+  ],
+  "dependencies": [],
+  "riskInputs": [
+    {
+      "systemId": "payments",
+      "inputs": [
+        {
+          "criterionId": "L1",
+          "value": 5,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Very high likelihood of support ending during the independent three-year horizon."
+        },
+        {
+          "criterionId": "L2",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L3",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L4",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L5",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L6",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L7",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C1",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C2",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C3",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C4",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C5",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C6",
+          "value": 1,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "riskAcceptances": []
+}

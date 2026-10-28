@@ -1,0 +1,382 @@
+{
+  "reviewDate": "2026-10-28",
+  "scope": [
+    "canonical command and templates",
+    "schema and pure ESM helper",
+    "classification, dependency and numerical models",
+    "evidence and approval semantics",
+    "report integrity",
+    "source rubric bundling and offline operation",
+    "all seven generated distributions",
+    "CLI scaffolding and wheel build",
+    "compiled Paperclip handlers",
+    "regression fixtures, behavioural cases and CI"
+  ],
+  "baseline": {
+    "independentAttackTests": 16,
+    "initialFailures": 15,
+    "note": "The first invalid-UTF-8 test was discovered to pass for the wrong reason and was strengthened. Findings include reproduced defects and explicitly labelled preventative review findings; no production impact is claimed."
+  },
+  "findings": [
+    {
+      "id": "R01",
+      "severity": "high",
+      "kind": "reproduced-defect",
+      "before": "Approval could be borrowed from operating evidence or another decision.",
+      "resolution": "Explicit documentary approval targets, exact versions, named approvers, known accountable owners and independent pending report approval.",
+      "regression": "operating evidence cannot approve policy",
+      "status": "addressed"
+    },
+    {
+      "id": "R02",
+      "severity": "high",
+      "kind": "reproduced-defect",
+      "before": "Evidence from another system or an unassessed component could establish system acceptance.",
+      "resolution": "System/component evidence scope and whole-system criterion coverage; unsupported sibling components remain Unknown.",
+      "regression": "a component-only Accepted finding cannot cover an unassessed sibling",
+      "status": "addressed"
+    },
+    {
+      "id": "R03",
+      "severity": "high",
+      "kind": "reproduced-defect",
+      "before": "A D7 assertion could invent a Legacy origin and launder provisional dependency evidence.",
+      "resolution": "Only D1-D6 or dated external attestations originate Legacy; D7 needs an independent qualified path and retains originating provisional status.",
+      "regression": "D7 cannot originate Legacy",
+      "status": "addressed"
+    },
+    {
+      "id": "R04",
+      "severity": "high",
+      "kind": "reproduced-defect",
+      "before": "All-simple-path enumeration is exponential even on a small acyclic graph.",
+      "resolution": "Shortest complete witnesses per origin/system/policy basis, deterministic traversal and explicit witness/segment budgets. A 28-node complete DAG produces 28 witnesses instead of over 67 million routes to its final node.",
+      "regression": "dense acyclic graphs produce bounded witnesses",
+      "status": "addressed"
+    },
+    {
+      "id": "R05",
+      "severity": "high",
+      "kind": "review-finding",
+      "before": "Report/JSON agreement depended on prose instructions and a partial golden-table test.",
+      "resolution": "Authoritative generated block, input digest, calculation version and --check-report; stale, tampered, absent or duplicate blocks fail.",
+      "regression": "report block verification rejects tampering",
+      "status": "addressed"
+    },
+    {
+      "id": "R06",
+      "severity": "high",
+      "kind": "user-reproduced-defect",
+      "before": "Only rubric names and URLs were bundled; blocked network access prevented a full numerical assessment.",
+      "resolution": "All 72 original anchors, original descriptions, quantitative examples, complete dated source snapshots and updated definition are bundled, licensed and integrity-pinned across all targets and installed scaffolds. Network access is optional refresh only.",
+      "regression": "test_calculator_has_no_network_dependency",
+      "status": "addressed"
+    },
+    {
+      "id": "R07",
+      "severity": "medium",
+      "kind": "reproduced-defect",
+      "before": "Dependency uncertainty was hidden at D7 when the consumer already had another gap.",
+      "resolution": "Dependency gaps tracked independently and propagated to a fixed point, even for already-undetermined consumers.",
+      "regression": "a consumer with its own gap still exposes dependency uncertainty",
+      "status": "addressed"
+    },
+    {
+      "id": "R08",
+      "severity": "medium",
+      "kind": "reproduced-defect",
+      "before": "Evidence completeness incorrectly changed a known classification outcome.",
+      "resolution": "Independent outcome, local policy basis, evidence completeness, provisional status and management completeness.",
+      "regression": "evidence completeness is independent of a known outcome",
+      "status": "addressed"
+    },
+    {
+      "id": "R09",
+      "severity": "medium",
+      "kind": "reproduced-defect",
+      "before": "Risk acceptance review dates, explicit evidence expiry, urgent Legacy and numerical red risks could be missed in review recommendations.",
+      "resolution": "Review dates include these events while keeping risk prioritisation separate from classification.",
+      "regression": "risk acceptance review date participates",
+      "status": "addressed"
+    },
+    {
+      "id": "R10",
+      "severity": "medium",
+      "kind": "reproduced-defect",
+      "before": "Proposal evidence could be presented as completion and action dependency cycles were accepted.",
+      "resolution": "Every completion reference must be applicable dated operation/document evidence; iterative topological validation rejects action cycles without rejecting legitimate system cycles.",
+      "regression": "proposal evidence cannot be presented as completed remediation",
+      "status": "addressed"
+    },
+    {
+      "id": "R11",
+      "severity": "medium",
+      "kind": "reproduced-defect",
+      "before": "Duplicate JSON members were silently overwritten and direct scoring API inputs were insufficiently validated.",
+      "resolution": "Bounded duplicate-aware JSON parser, UTF-8/Unicode/number validation and shared schema validation for direct scoring calls.",
+      "regression": "the public scoring API rejects duplicate",
+      "status": "addressed"
+    },
+    {
+      "id": "R12",
+      "severity": "medium",
+      "kind": "review-finding",
+      "before": "File and imported-API complexity were unbounded; named pipes could block before regular-file checking.",
+      "resolution": "Byte/node/depth/text budgets, bounded non-blocking reads, regular-file checks, bounded diagnostics and no partial output on failure.",
+      "regression": "a named pipe cannot hang",
+      "status": "addressed"
+    },
+    {
+      "id": "R13",
+      "severity": "medium",
+      "kind": "reproduced-defect",
+      "before": "Calendar formatting failed early years and tie ordering depended on host locale.",
+      "resolution": "Explicit Gregorian calendar arithmetic and code-point ordering; unsupported anniversary overflow fails explicitly.",
+      "regression": "calendar helpers preserve four-digit years",
+      "status": "addressed"
+    },
+    {
+      "id": "R14",
+      "severity": "high",
+      "kind": "review-finding",
+      "before": "A populated generated tree could ship stale runtime assets, and fresh scaffolds omitted Document Control partials.",
+      "resolution": "Builds regenerate by default, refuse drift when regeneration is skipped, gate required files before scaffolding, and copy rendering partials for every CLI.",
+      "regression": "test_stale_legacy_assets_cannot_pass_the_wheel_guard",
+      "status": "addressed"
+    },
+    {
+      "id": "R15",
+      "severity": "medium",
+      "kind": "reproduced-defect",
+      "before": "The Paperclip tool handler threw on malformed input and interpreted JavaScript replacement tokens in user topics.",
+      "resolution": "Type/length guards, literal callback substitutions before user text, normalized installed paths and compiled-handler tests in CI.",
+      "regression": "user topics preserve JavaScript replacement tokens literally",
+      "status": "addressed"
+    },
+    {
+      "id": "R16",
+      "severity": "medium",
+      "kind": "review-finding",
+      "before": "Missing actions/owners/funding/dates or a red numerical risk could appear as an adequate plan.",
+      "resolution": "Explicit management gaps and action-plan completeness, independent of classification and evidence completeness.",
+      "regression": "an incomplete management plan remains visible",
+      "status": "addressed"
+    },
+    {
+      "id": "R17",
+      "severity": "medium",
+      "kind": "review-finding",
+      "before": "The handwritten schema validator lacked an independent conformance check.",
+      "resolution": "Standard Draft 2020-12 validator tests, structural mutation comparisons, emitted-result validation and fail-closed supported schema formats.",
+      "regression": "test_structural_invalid_cases_fail_both_validators",
+      "status": "addressed"
+    },
+    {
+      "id": "R18",
+      "severity": "medium",
+      "kind": "review-finding",
+      "before": "An artifact filename or report Document Control could contradict identity, version or pending approval.",
+      "resolution": "Artifact identity checks and structured Document Control consistency checks in report verification.",
+      "regression": "report approval claims cannot contradict",
+      "status": "addressed"
+    },
+    {
+      "id": "R19",
+      "severity": "low",
+      "kind": "reproduced-fixture-defect",
+      "before": "The dependency fixture copied an unsupported rationale into a separately supported Reporting finding; one UTF-8 test passed for an unrelated unknown field.",
+      "resolution": "Corrected the fixture, preserved the live run's discovered conflict, and replaced the weak test with malformed bytes in a schema-valid evidence string.",
+      "regression": "invalid UTF-8 is not silently repaired",
+      "status": "addressed"
+    },
+    {
+      "id": "R20",
+      "severity": "medium",
+      "kind": "defence-in-depth",
+      "before": "The command did not clearly distinguish untrusted document instructions from assessor evidence.",
+      "resolution": "Explicit trust boundary, no interpolation/execution of evidence strings, and paired should-serve/injected-source evaluations. The paired live injection evaluation has not been run.",
+      "regression": "legacy-injected-evidence",
+      "status": "guard implemented; paired live injection evaluation pending"
+    }
+  ],
+  "verification": {
+    "status": "passed",
+    "python": {
+      "passed": 4158,
+      "skipped": 231
+    },
+    "node": {
+      "passed": 801,
+      "failed": 0
+    },
+    "focusedCalculatorAndAdversarialTests": 99,
+    "compiledPaperclipTests": {
+      "passed": 3,
+      "failed": 0
+    },
+    "markdownLint": {
+      "issues": 0,
+      "filesChecked": 4535
+    },
+    "releaseGuards": [
+      {
+        "check": "check_doctype_collisions.py",
+        "exitCode": 0
+      },
+      {
+        "check": "check-doc-type-registry.py",
+        "exitCode": 0
+      },
+      {
+        "check": "check-customize-table.py",
+        "exitCode": 0
+      },
+      {
+        "check": "check-citation-section-refs.py",
+        "exitCode": 0
+      },
+      {
+        "check": "check-guide-parity.py",
+        "exitCode": 0
+      },
+      {
+        "check": "check-guide-site-links.py",
+        "exitCode": 0
+      },
+      {
+        "check": "check-quality-checklist-refs.py",
+        "exitCode": 0
+      },
+      {
+        "check": "check-quality-checklist-ladders.py",
+        "exitCode": 0
+      },
+      {
+        "check": "check-doc-control-resolution.py",
+        "exitCode": 0
+      },
+      {
+        "check": "sync-shared-assets.py",
+        "exitCode": 0
+      },
+      {
+        "check": "sync-claude-plugin-layout.py",
+        "exitCode": 0
+      },
+      {
+        "check": "check-llms-txt.py",
+        "exitCode": 0
+      },
+      {
+        "check": "generate-site-pages.py",
+        "exitCode": 0
+      }
+    ],
+    "installedWheel": {
+      "module": "/private/tmp/arckit-legacy-installed/lib/python3.12/site-packages/arckit_cli/__init__.py",
+      "scaffolds": [
+        {
+          "ai": "codex",
+          "fullOfflineAssets": true,
+          "calculation": "26.67",
+          "reportVerified": true,
+          "networkBlocked": true
+        },
+        {
+          "ai": "opencode",
+          "fullOfflineAssets": true,
+          "calculation": "26.67",
+          "reportVerified": true,
+          "networkBlocked": true
+        },
+        {
+          "ai": "copilot",
+          "fullOfflineAssets": true,
+          "calculation": "26.67",
+          "reportVerified": true,
+          "networkBlocked": true
+        },
+        {
+          "ai": "kimi",
+          "fullOfflineAssets": true,
+          "calculation": "26.67",
+          "reportVerified": true,
+          "networkBlocked": true
+        }
+      ]
+    },
+    "codexFullCommand": {
+      "initial": {
+        "exitCode": null,
+        "timeout": true,
+        "seconds": 240.0,
+        "outputs": [
+          "projects/001-payments/ARC-001-LEGACY-v1.0.json"
+        ]
+      },
+      "continuation": {
+        "exitCode": 0,
+        "timeout": false,
+        "seconds": 168.7
+      },
+      "currentHelperIndependentlyVerified": true
+    },
+    "codexOfflineRubricLookup": {
+      "exitCode": 0,
+      "timeout": false,
+      "seconds": 45.9,
+      "scoresMatch": true
+    },
+    "offlineSourceBundle": {
+      "likelihoodAnchors": 42,
+      "impactAnchors": 30,
+      "classificationCriteria": 7,
+      "governmentOutcomes": 3,
+      "allPublicationTextRetainedExceptWhitespace": true,
+      "networkBlockedCalculation": "26.67",
+      "corruptionAndMissingAssetFailureTested": true
+    },
+    "claudeNativeWriteHookIntegration": {
+      "status": "passed",
+      "scope": [
+        "filename validation",
+        "file protection",
+        "provenance stamping",
+        "manifest update",
+        "Markdown and JSON sidecar",
+        "results block survives post-write hooks"
+      ],
+      "liveClaudeCLI": "unavailable"
+    }
+  },
+  "limits": [
+    "The helper validates structure, traceability and arithmetic, not evidence truth, signatures or the authority of a purported approver.",
+    "A matching results block does not validate every free-text recommendation.",
+    "Local owner thresholds remain necessary; the public updated definition supplies no complete quantitative threshold catalogue.",
+    "Full Claude and Gemini runtime checks remain unavailable in this environment.",
+    "The live Codex multi-system run first timed out at 240 seconds, then completed after continuation and was independently checked with the current helper.",
+    "Paired source-injection cases were added but their full live model evaluation remains unrun."
+  ],
+  "runtimeArtifacts": {
+    "codexAssessmentDirectory": "/tmp/arckit-legacy-review-runtime/projects/001-payments",
+    "offlineRubricLookup": "/tmp/arckit-legacy-offline-rubric-smoke/scores.json"
+  },
+  "sourceFingerprints": {
+    "plugins/arckit-claude/scripts/legacy-assessment.mjs": "a919bbc6f6e8f6ca613742f19d6cee98f4ff072d6bc7053594acb41c2f358d55",
+    "plugins/arckit-claude/schemas/legacy-assessment-1.0.schema.json": "6ad29e33c79e418c8ed9c4eae669aeb7ac81a257d1c6f58b1498a5f0e68da59a",
+    "plugins/arckit-claude/data/legacy-frameworks-1.0.json": "7b7da0742688c0bbfc244eefdbc9af110bf6bce5b70d3fcf84292a3185fb0faf",
+    "plugins/arckit-claude/data/legacy-risk-rubric-2026-08-17.json": "24720780035dbd6a97689b3fbe717942d529be523722947a559bd05b3ad8f448",
+    "plugins/arckit-claude/data/legacy-definition-2026-08-17.json": "1608869b63e996a38b35f890180827a49f92dbff078b2142f8248705ac313687"
+  },
+  "disposition": "All reproduced implementation defects addressed. Human evidence/approval authority and the explicitly listed live-model coverage limits remain outside deterministic verification.",
+  "followUpContext": {
+    "source": "https://publications.parliament.uk/pa/cm5902/cmselect/cmsctech/651/report.html",
+    "offlineBrief": "plugins/arckit-claude/references/legacy-parliamentary-context-2026-10-22.md",
+    "recommendations": [
+      13,
+      14,
+      21
+    ],
+    "firecrawl": "Installed but not authenticated; no scrape result produced. Source accessed through web tooling."
+  }
+}

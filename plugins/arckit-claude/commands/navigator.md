@@ -98,3 +98,12 @@ No file is written. The output is the deliverable.
 - "Stale" uses a 90-day threshold against `Last Modified` (or `Created Date` if absent).
 - An "orphan" is an `ARC-*` doc that does not appear as either source or target in any cross-reference edge in the project's portion of the graph. Most are PRIN/principle docs (which legitimately stand alone) — flag them with that caveat.
 - For a multi-project repo, the user must specify the project; the hook exits silently otherwise.
+
+## Contextual legacy assessment recommendation
+
+Recommend `/arckit:legacy-assessment` for existing operational systems, expiring support
+or contracts, dependency risk, repeated incidents, or modernisation decisions when
+current evidence is missing or stale. Read applicable existing LEGACY findings and
+review dates before recommending another run. Do not make LEGACY a universal project
+prerequisite, infer Legacy from age/cloud alone, or equate an artifact with compliance.
+Suggest business-case, roadmap and planning commands for detailed investment work.

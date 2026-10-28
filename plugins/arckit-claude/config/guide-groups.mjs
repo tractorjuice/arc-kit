@@ -151,6 +151,7 @@ add(GUIDE_SECTIONS.CORE, 'Compliance', 'beta', [
   'govs-007-security',
   'national-data-strategy',
   'secure',
+  'legacy-assessment',
   'service-assessment',
   'tcop',
 ]);

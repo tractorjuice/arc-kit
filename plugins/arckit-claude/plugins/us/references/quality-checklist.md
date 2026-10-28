@@ -21,6 +21,24 @@ All artifacts must pass these 10 checks:
 
 ## Per-Type Checks
 
+### LEGACY -- Legacy IT Assessment
+
+- Seven D1–D7 findings per system, with dated evidence, threshold references, rationale and uncertainty
+- Classification, policy basis and evidence completeness are separate; Unknown is internal and draft rules are provisional
+- Approval has documentary evidence or remains pending; missing principles/requirements create gaps, not a blocked assessment
+- D7 reliance is evidenced and qualified under policy; causal paths and provisional origins are retained; cycles invent no Legacy
+- Numerical L1–L7 and C1–C6 inputs are independent; L7 is historical incidents, not D7 dependencies
+- Helper verification succeeds; Markdown decisions/counts/arithmetic match JSON results, or calculations are explicitly unverified
+- Missing numerical inputs stay incomplete; red comparison uses unrounded score; no additional official risk bands
+- Actions trace to findings and include ownership, containment/remediation, funding, milestones, dates and closure evidence; unknowns explicit
+- Risk acceptance/controls do not silently remediate findings; proposed review and reassessment triggers are documented
+- Previous versions preserved; source dates recorded; no current government submission compatibility or universal LEGACY requirement claimed
+- Helper-generated results block appears exactly once and `--check-report` succeeds against the enriched JSON; no hand-written duplicate decision/risk tables
+- When numerical scoring is enabled, the linked versioned `-risk.svg` exists beside the report and passes `--check-report`; only complete unrounded scores are plotted, all systems are keyed, and only the published red-rated boundary at 16 is shown
+- Approval records identify the exact decision/version and named documented approver; operational evidence and another decision's approval cannot approve this one
+- System/component evidence scope and whole-system coverage checked; D7 has an independent causal origin and bounded witness paths
+- Management gaps and action-plan completeness are visible independently of classification and evidence; completion evidence is applicable, dated and not merely proposed
+
 ### REQ -- Requirements
 
 - All requirements have unique IDs with correct prefixes (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx)
