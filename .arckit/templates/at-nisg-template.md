@@ -2,7 +2,7 @@
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:at-nisg`
 >
-> ⚠️ **Community-contributed** — review before relying on output. The **NISG 2026 (BGBl. I Nr. 94/2025)** is a standalone act that replaced the NISG 2018; it has been in force since **1 October 2026 (§51)**, with registration due within three months (§29 Abs. 3). Paragraph (§) references in this template have been checked against the enacted text (BGBl. I Nr. 94/2025). The first implementing ordinance, the **NISV 2026 (BGBl. II Nr. 290/2026)**, has applied since the end of 1 October 2026; further ordinances may follow, so items marked `[NEEDS VERIFICATION]` — chiefly ordinance-dependent detail and operational channel names (e.g. the NIS2-Meldeplattform) — must still be confirmed before external reliance.
+> ⚠️ **Community-contributed** — review before relying on output. The **NISG 2026 (BGBl. I Nr. 94/2025)** is a standalone act that replaced the NISG 2018; it has been in force since **1 October 2026 (§51)**, with registration due within three months (§29 Abs. 3): by 1 January 2027, moved to 4 January 2027 by §33 Abs. 2 AVG, according to the Bundesamt für Cybersicherheit's registration page (its FAQ says 31 December 2026). Paragraph (§) references in this template have been checked against the enacted text (BGBl. I Nr. 94/2025). The first implementing ordinance, the **NISV 2026 (BGBl. II Nr. 290/2026)**, has applied since the end of 1 October 2026; further ordinances (for example on independent bodies under §7 Abs. 6) may follow, so items marked `[NEEDS VERIFICATION]` — chiefly ordinance-dependent detail — must still be confirmed before external reliance.
 
 ## Document Control
 
@@ -32,19 +32,21 @@
 
 ### 1.1 Sector Classification
 
-| NIS2 Annex | Sector / Sub-sector | Applicable | AT Competent Authority |
+> The **Cybersicherheitsbehörde** (§3a) is the competent authority for every sector; no sectoral regulator supervises NIS compliance. The last column gives the responsible CSIRT (§8) and any overlap the Act provides for (§20 cooperation, §24 Abs. 7 DORA, §27 equivalent sector acts).
+
+| NIS2 Annex | Sector / Sub-sector | Applicable | Responsible CSIRT / overlap |
 |------------|---------------------|-----------|------------------------------------------------|
-| I | Energy (Electricity) | ☐ | E-Control |
-| I | Energy (Gas / Oil / Hydrogen) | ☐ | E-Control |
-| I | Transport (Air / Rail / Water / Road) | ☐ | BMK |
-| I | Banking / Financial Market | ☐ | FMA / OeNB |
-| I | Health | ☐ | BMSGPK / ELGA |
-| I | Drinking Water / Wastewater | ☐ | BMK / Land authorities |
-| I | Digital Infrastructure / ICT | ☐ | BMI / RTR |
-| I | Public Administration | ☐ | BMI (federal) / Land |
-| I | Space | ☐ | BMK |
-| II | Postal / Courier / Waste / Chemicals / Food | ☐ | Sectoral |
-| II | Manufacturing / Digital providers / Research | ☐ | Sectoral |
+| I | Energy (Electricity) | ☐ | National CSIRT |
+| I | Energy (Gas / Oil / Hydrogen) | ☐ | National CSIRT |
+| I | Transport (Air / Rail / Water / Road) | ☐ | National CSIRT; air: cooperation with the aviation-security authorities (§20 Abs. 2 Z 2) |
+| I | Banking / Financial Market | ☐ | DORA takes precedence (§24 Abs. 7); registration still required |
+| I | Health | ☐ | HealthCERT |
+| I | Drinking Water / Wastewater | ☐ | National CSIRT |
+| I | Digital Infrastructure / ICT | ☐ | National CSIRT; telecoms regulator (§194 TKG 2021) and KommAustria informed before supervisory measures (§20 Abs. 9); trust services: §12 SVG supervisory body (§20 Abs. 8) |
+| I | Public Administration | ☐ | GovCERT (§8 Abs. 4); federal bodies Essential, Land bodies Important (§24 Abs. 1–5) |
+| I | Space | ☐ | National CSIRT |
+| II | Postal / Courier / Waste / Chemicals / Food | ☐ | National CSIRT |
+| II | Manufacturing / Digital providers / Research | ☐ | National CSIRT |
 
 ### 1.2 Designation
 
@@ -98,14 +100,14 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 
 | Item | Status | Evidence / Gap |
 |------|--------|----------------|
-| Reporting to the responsible sector-specific CSIRT — or the national CSIRT if none — established (§34 Abs. 1; CSIRTs per §8) via the NIS2-Meldeplattform — CERT.at (national CSIRT), GovCERT (public-admin sectoral CSIRT); the CSIRT forwards to the Cybersicherheitsbehörde without delay (§34 Abs. 1) | | |
-| Registration with the Cybersicherheitsbehörde (§3a) completed (§29 Abs. 3) | | |
+| Reporting to the responsible sector-specific CSIRT — or the national CSIRT if none — established (§34 Abs. 1; CSIRTs per §8) via NIS2-Services on the Unternehmensserviceportal (USP; public administration through the Portalverbund) — GovCERT (public administration), HealthCERT (health), national CSIRT CERT.at (all other sectors); the CSIRT forwards to the Cybersicherheitsbehörde without delay (§34 Abs. 1) | | |
+| Registration with the Cybersicherheitsbehörde (§3a) completed (§29 Abs. 3 — by 4 January 2027 at the latest; register by 31 December 2026 to meet the Bundesamt's FAQ date too) | | |
 | Incident classification mapped to §35 NISG 2026 and §§5–7 NISV 2026 significance criteria | | |
 | 24-hour early warning capability (§34) | | |
 | 72-hour notification capability (§34) | | |
 | Intermediate (on request) / 1-month final report process (§34) | | |
 | Cross-reporting to DSB for personal data breach (Art. 33 GDPR) | | |
-| Reporting language / form readiness (German, NIS2-Meldeplattform) | | |
+| Reporting language / form readiness (German, NIS2-Services; the Bundesamt's PDF report forms as fallback when the portal is unavailable) | | |
 | Tabletop exercise in last 12 months | | |
 
 ---
@@ -172,7 +174,7 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 |------|--------|-------|
 | KSÖ membership / participation | [Member / Observer / None] | Voluntary |
 | Cybersicherheitsbehörde contact — competent authority (§3a), zentrale Anlaufstelle/EU SPOC (§5) | [Yes / No] | |
-| CSIRT operative contact (§8) — CERT.at / GovCERT | [Yes / No] | |
+| CSIRT operative contact (§8) — CERT.at / GovCERT / HealthCERT | [Yes / No] | |
 | Information-sharing MoUs | [List] | |
 
 ### 8.1 National coordination structures (§§12–14)
@@ -196,9 +198,9 @@ A-SIT guidance alignment (sector-agnostic security guidance, commonly referenced
 | Bundesamt für Cybersicherheit (single monocratic authority under BMI) | §3a (Aufgaben §4) | Art. 8 competent authority | |
 | Zentrale Anlaufstelle / SPOC + Nationales Koordinierungszentrum | §5, §6 | Art. 8(3) SPOC | |
 | Unabhängige Stellen und unabhängige Prüfer (accredited assessment bodies) | §7 | No direct equivalent (Art. 32(2) allows, not mandates) | |
-| Computer-Notfallteams / CSIRTs — CERT.at (national), GovCERT (public-admin sectoral) | §§8–11 | Art. 10–11 CSIRTs | |
+| Computer-Notfallteams / CSIRTs — CERT.at (national), GovCERT (public administration), HealthCERT (health) | §§8–11 | Art. 10–11 CSIRTs | |
 | National coordination bodies — CSS, IKDOK, OpKoord | §§12–14 | Art. 8/9 (less structured) | |
-| Land-level bodies scope / opt-in mechanism | `[VERIFY §]` (NISG 2026 is federal law) | No equivalent (federal-only in most MS) | |
+| Public administration named in the Act, no opt-in: federal bodies Essential, Land bodies (Ämter der Landesregierungen, Bezirkshauptmannschaften, Land bodies with legal personality) Important, Gemeinden outside the sector | §24 Abs. 1 Z 1 lit. d, Abs. 2 Z 2, Abs. 3–6; §1 (Verfassungsbestimmung) | Art. 2(2)(f): central government, and regional level after a risk-based assessment; the Art. 2(5)(a) local-level option is not used | |
 | Designation beyond size thresholds on criticality (Größenunabhängige Einstufung by Bescheid) | §26 (grounds in §26 Abs. 3) | Art. 2(2)(b–e) similar but EU-level | |
 
 ---
