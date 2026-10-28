@@ -243,7 +243,7 @@
     {
       "name": "arckit-uk-nhs",
       "source": "./plugins/arckit-uk-nhs",
-      "description": "UK NHS Clinical Safety Overlay — 4 commands for NHS DCB0129 (manufacturer), DCB0160 (deployer), DTAC v3, and UK/EU MDR SaMD/AIaMD classification. Adopts Marcus Baw SAFETY.md spec. Second sector-specific overlay.",
+      "description": "UK NHS Clinical Safety Overlay — 4 commands for NHS DCB0129 (manufacturer), DCB0160 (deployer), DTAC (form v2.0), and UK/EU MDR SaMD/AIaMD classification. Adopts Marcus Baw SAFETY.md spec. Second sector-specific overlay.",
       "version": "6.18.3",
       "author": {
         "name": "TractorJuice"
@@ -387,7 +387,7 @@
     {
       "name": "arckit-oaa",
       "source": "./plugins/arckit-oaa",
-      "description": "Open Agile Architecture (O-AA C208) — agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance. [COMMUNITY]",
+      "description": "Open Agile Architecture (O-AA) — agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance. [COMMUNITY]",
       "version": "6.18.3",
       "author": {
         "name": "ArcKit Contributors"

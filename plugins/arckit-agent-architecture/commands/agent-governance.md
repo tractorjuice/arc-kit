@@ -215,7 +215,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
    - Approval matrix covers ≥3 risk tiers with specific approvers
    - Audit requirements define frequency, scope, and retention
    - ≥3 monitoring KPIs with measurable targets
-   - Escalation procedures cover low, medium, and high risk scenarios
+   - Escalation procedures cover low, medium, high, and critical risk scenarios
    - Incident response plan includes all phases (detection through post-mortem)
    - Compliance mapping covers ≥2 regulatory frameworks
    - Traceability links established to AAGI and AAGR documents
@@ -259,5 +259,5 @@ You should:
 - Audit trails must be immutable and cryptographically verifiable
 - Compliance evidence must be traceable to specific governance controls
 - Escalation procedures must be tested regularly (drill schedule recommended)
-- Governance framework feeds into agent security requirements — handoff to `/arckit:agent-security` after completion
+- Governance comes first of the three: `/arckit:agent-security` reads AAOV, and `/arckit:agent-integration` reads both AAOV and AASE, while this command reads neither — handoff to `/arckit:agent-security` after completion
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 5% escalation rate`, `> 95% approval`) to prevent markdown renderers from interpreting them as HTML tags or emoji

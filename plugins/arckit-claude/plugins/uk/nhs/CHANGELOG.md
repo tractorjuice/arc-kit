@@ -40,6 +40,6 @@ Initial release of `arckit-uk-nhs` — UK NHS Clinical Safety + Medical Device R
 
 **Status:** Community-contributed. Output should be reviewed by a qualified CSO and (for MDR classification) by a qualified Regulatory Affairs specialist before reliance. This plugin is not clinical, legal, or regulatory advice.
 
-**Spec doc:** [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](https://github.com/tractorjuice/arc-kit/blob/main/docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) — decision log for review by @pacharanero.
+**Spec doc:** [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](https://github.com/tractorjuice/arc-kit/blob/469e0b7d/docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) — decision log for review by @pacharanero.
 
 **Domain co-maintainer (proposed):** Dr Marcus Baw ([@pacharanero](https://github.com/pacharanero)).

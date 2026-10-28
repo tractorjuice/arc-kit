@@ -128,13 +128,13 @@ targets:
     skill: arckit:agent-security
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AASE }
-    deps: [AAGR, RISK, AIPB]
+    deps: [AAGR, AAOV, RISK, AIPB]
 
   - id: AAIN
     skill: arckit:agent-integration
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AAIN }
-    deps: [AAGR]
+    deps: [AAGR, AAOV, AASE]
 
   - id: ACHG
     skill: arckit:architecture-change
@@ -152,4 +152,4 @@ targets:
     skill: arckit:agent-maturity
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AAMT }
-    deps: [AAGI, AAGR, AAOV, AASE]
+    deps: [AAGI, AAGR, AAOV, AASE, AAIN]
