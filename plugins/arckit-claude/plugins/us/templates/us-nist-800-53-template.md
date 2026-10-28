@@ -197,9 +197,9 @@ When a baseline control cannot be implemented as written, document the alternati
 |-----------|----------|-----|
 | NIST SP 800-53 Rev 5 | Security and Privacy Controls for Information Systems and Organizations | <https://doi.org/10.6028/NIST.SP.800-53r5> |
 | NIST SP 800-53B | Control Baselines for Information Systems and Organizations | <https://doi.org/10.6028/NIST.SP.800-53B> |
-| FedRAMP Rev 5 Baselines | FedRAMP Moderate / High / Low Baselines | <https://www.fedramp.gov/baselines/> |
+| FedRAMP Rev 5 Baselines | FedRAMP Moderate / High / Low Baselines (Full Rev5 Control Reference) | <https://www.fedramp.gov/2026/reference/controls/> |
 | OSCAL | Open Security Controls Assessment Language | <https://pages.nist.gov/OSCAL/> |
-| FedRAMP CRM Template | Customer Responsibility Matrix Template | <https://www.fedramp.gov/documents-templates/> |
+| FedRAMP CRM Template | SSP Appendix J, CSO CIS and CRM Workbook (legacy) | <https://www.fedramp.gov/legacy/> |
 
 ---
 

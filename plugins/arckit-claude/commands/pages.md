@@ -379,7 +379,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | PIA | `ARC-*-PIA-*.md` | Canada Privacy Impact Assessment |
 | | ATIP | `ARC-*-ATIP-*.md` | Canada ATIP Reconciliation |
 | | AIA | `ARC-*-AIA-*.md` | Canada Algorithmic Impact Assessment |
-| | SOIA | `ARC-*-SOIA-*.md` | Canada Security of Information Act Handling Plan |
+| | SOIA | `ARC-*-SOIA-*.md` | Canada Foreign Interference and Security of Information Act Handling Plan |
 | | OLA | `ARC-*-OLA-*.md` | Canada Official Languages Act Review |
 | **Architecture (Community-contributed — Canada Federal Overlay)** | | | |
 | | ITSG | `ARC-*-ITSG-*.md` | Canada ITSG-33 Statement of Applicability |

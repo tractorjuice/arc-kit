@@ -55,8 +55,8 @@ This command produces the **internal self-assessment** that FedRAMP's RAR templa
 - FedRAMP Consolidated Rules for 2026 — important dates (FedRAMP Ready retired 28 July 2026) — <https://www.fedramp.gov/2026/timeline/>
 - FedRAMP Consolidated Rules for 2026 — Choosing a Certification Path — <https://www.fedramp.gov/2026/providers/start/path/>
 - OMB M-24-15 (Modernizing the Federal Risk and Authorization Management Program) — <https://www.whitehouse.gov/wp-content/uploads/2024/07/M-24-15-Modernizing-the-Federal-Risk-and-Authorization-Management-Program.pdf>
-- FedRAMP 3PAO Requirements — <https://www.fedramp.gov/3pao/>
-- FedRAMP Continuous Monitoring Strategy Guide — <https://www.fedramp.gov/assets/resources/documents/CSP_Continuous_Monitoring_Strategy_Guide.pdf>
+- FedRAMP Recognition of Independent Assessment Services (the requirements for assessors, formerly called 3PAOs) — <https://www.fedramp.gov/2026/assessors/rules/fedramp-recognition/>
+- FedRAMP Collaborative Continuous Monitoring rules (Rev 5, Consolidated Rules for 2026) — <https://www.fedramp.gov/2026/providers/rev5/rules/collaborative-continuous-monitoring/>; the Rev 5 Continuous Monitoring Playbook (legacy), which replaced the Continuous Monitoring Strategy Guide v3.2 — <https://www.fedramp.gov/legacy/playbook/csp/continuous-monitoring/intro/>
 
 ## Process
 

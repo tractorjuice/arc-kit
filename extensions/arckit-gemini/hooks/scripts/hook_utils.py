@@ -174,7 +174,7 @@ DOC_TYPES = {
     "AIA":        {"name": "Canada Algorithmic Impact Assessment",                          "category": "Compliance"},
     "CHRT":       {"name": "Canada Charter Rights Design Review",                           "category": "Governance"},
     "ITSG":       {"name": "Canada ITSG-33 Statement of Applicability",                     "category": "Architecture"},
-    "SOIA":       {"name": "Canada Security of Information Act Handling Plan",              "category": "Compliance"},
+    "SOIA":       {"name": "Canada Foreign Interference and Security of Information Act Handling Plan", "category": "Compliance"},
     "CACR":       {"name": "Canada Sovereign Cloud Residency Assessment",                   "category": "Architecture"},
     "DIGSTD":     {"name": "Canada GC Digital Standards Conformance",                       "category": "Governance"},
     "OLA":        {"name": "Canada Official Languages Act Review",                          "category": "Compliance"},

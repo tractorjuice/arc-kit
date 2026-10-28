@@ -1,5 +1,5 @@
 ---
-description: "[COMMUNITY] Generate a Canada Charter rights design review — s.2 (expression and association), s.7 (life, liberty, security of person), s.8 (search and seizure), s.15 (equality) — applying Oakes proportionality framing to system design with mitigation tracker and DOJ counsel sign-off block."
+description: "[COMMUNITY] Generate a Canada Charter rights design review — s.2 (expression and association), s.7 (life, liberty, security of person), s.8 (search and seizure), s.11 (criminal and penal proceedings), s.15 (equality) — applying Oakes proportionality framing to system design with mitigation tracker and DOJ counsel sign-off block."
 doc-type: CHRT
 argument-hint: "<project ID or service name>"
 effort: high
@@ -47,7 +47,7 @@ You are an enterprise architect generating a Canada Charter Rights Design Review
 3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> CHRT {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed.
 5. Generate the following sections (the template provides skeletons for each):
-   - **Charter Engagement Surface** — which sections of the Charter are engaged by the system, with a one-paragraph reasoning per engaged section. The default engaged sections for FITAA-class apps are s.2(b), s.2(d), s.7, s.8, and s.15; mark "Not engaged" only with a stated justification.
+   - **Charter Engagement Surface** — which sections of the Charter are engaged by the system, with a one-paragraph reasoning per engaged section. The default engaged sections for FITAA-class apps are s.2(b), s.2(d), s.7, s.8, s.11 and s.15; mark "Not engaged" only with a stated justification. s.11 applies only to a person "charged with an offence": proceedings that are criminal in nature, or that can lead to true penal consequences (imprisonment, or a fine or penalty punitive in amount or purpose, per *R v Wigglesworth*). For FITAA, that covers any part of the system that supports prosecuting an offence (ss. 23–24) and, depending on the amounts the regulations set, imposing an administrative monetary penalty (s.18(2): "to promote compliance with this Act and not to punish").
    - **s.2 Analysis** (per sub-section where engaged):
      - 2(a) freedom of conscience and religion
      - 2(b) freedom of thought, belief, opinion, and expression — chilling effect on advocacy / journalism / academic inquiry
@@ -55,6 +55,7 @@ You are an enterprise architect generating a Canada Charter Rights Design Review
      - 2(d) freedom of association — disincentive to legitimate civil-society engagement, diaspora communities
    - **s.7 Analysis** (where engaged) — life, liberty, and security of the person; principles of fundamental justice; identify any deprivation and the procedural safeguards in design.
    - **s.8 Analysis** (where engaged) — reasonable expectation of privacy; warrant requirement; production-order interfaces; relationship to the *Hunter v Southam* and *R v Spencer* lines.
+   - **s.11 Analysis** (where engaged) — whether any proceeding the system supports charges a person with an offence or carries true penal consequences; the s.11 rights that then apply (notice of the specific offence, trial within a reasonable time, non-compellability, presumption of innocence, a fair hearing before an independent tribunal) and how evidence, disclosure and records in the system support them.
    - **s.15 Analysis** — equality; protected grounds; differential-impact assessment; substantive equality test.
    - **Oakes Proportionality Analysis** for each engaged right — four-step:
      - Pressing and substantial objective
@@ -70,7 +71,7 @@ You are an enterprise architect generating a Canada Charter Rights Design Review
 
 ## Authoritative anchor
 
-Canadian Charter of Rights and Freedoms, Part I of the *Constitution Act, 1982*, Schedule B to the Canada Act 1982 (UK), c. 11. URL: <https://laws-lois.justice.gc.ca/eng/const/page-12.html>. Authority: Department of Justice (constitutional advisory). Key jurisprudence to cite where applicable: *R v Oakes* [1986] 1 SCR 103 (proportionality); *Hunter v Southam* [1984] 2 SCR 145 (s.8); *R v Spencer* [2014] 2 SCR 212 (s.8 in digital contexts); *Carter v Canada* [2015] 1 SCR 331 (s.7 framework).
+Canadian Charter of Rights and Freedoms, Part I of the *Constitution Act, 1982*, Schedule B to the Canada Act 1982 (UK), c. 11. URL: <https://laws-lois.justice.gc.ca/eng/const/page-12.html>. Authority: Department of Justice (constitutional advisory). Key jurisprudence to cite where applicable: *R v Oakes* [1986] 1 SCR 103 (proportionality); *Hunter v Southam* [1984] 2 SCR 145 (s.8); *R v Spencer* [2014] 2 SCR 212 (s.8 in digital contexts); *Carter v Canada* [2015] 1 SCR 331 (s.7 framework); *R v Wigglesworth* [1987] 2 SCR 541 (when s.11 applies). For FITAA-class apps, the Department of Justice *Charter Statement* for Bill C-70 (<https://www.justice.gc.ca/eng/csj-sjc/pl/charter-charte/c70.html>) analyses Part 4 (FITAA) under s.2(b), s.7, s.8 and s.11.
 
 ## Important notes
 

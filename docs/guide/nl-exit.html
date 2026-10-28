@@ -509,6 +509,36 @@
 </table>
 <p>Both scenarios are mandatory. A plan that only documents a planned, orderly exit does not satisfy clause 3.2. Scenario B assumes the provider may not cooperate, so if its recovery method depends on the provider actively helping, the command flags that as a gap.</p>
 <hr />
+<h2 id="implementatiekader-art-7">Implementatiekader Art. 7</h2>
+<p>The <a href="https://zoek.officielebekendmakingen.nl/blg-1070754.pdf">Implementatiekader risicoafweging cloudgebruik</a> (v1.1, 5 January 2023, CIO Rijk) is mandatory when carrying out the cloud policy, and clause 3.1 of the 2026 policy says it must be followed. Its Art. 7 says the exit strategy is secured through the organisation's own measures, including budget, and through contract terms with the provider. It has four parts, and the plan records each:</p>
+<table>
+<thead>
+<tr>
+<th>Art. 7 part</th>
+<th>Where the plan records it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Conditions on the provider and its sub-suppliers for data portability, service portability and data destruction, including the processes and facilities needed</td>
+<td>Section 4</td>
+</tr>
+<tr>
+<td>2. An alternative provider or an internal landing place</td>
+<td>Sections 2 and 3, by type and capability, not as an endorsement</td>
+</tr>
+<tr>
+<td>3. A strategy, conditions and budget for leaving at once in a crisis or a sudden (geopolitical) development</td>
+<td>Section 3</td>
+</tr>
+<tr>
+<td>4. A strategy and budget for the regular end of the contract</td>
+<td>Section 2</td>
+</tr>
+</tbody>
+</table>
+<p>A cost estimate with no budget reserved behind it leaves parts 3 and 4 open, and the command flags it. The government has announced a revision of the implementatiekader for the 2026 policy; if CIO Rijk has published it, the command uses it and records the version.</p>
+<hr />
 <h2 id="deliverable-snapshot">Deliverable Snapshot</h2>
 <table>
 <thead>
@@ -524,19 +554,19 @@
 </tr>
 <tr>
 <td>1. Obligation Statement</td>
-<td>What clause 3.2 requires</td>
+<td>What clause 3.2 requires, and the four implementatiekader Art. 7 parts with where each is covered</td>
 </tr>
 <tr>
 <td>2. Scenario A — Planned Exit</td>
-<td>Trigger conditions, data export method, target environment, timeline, cost, dependencies, owner</td>
+<td>Trigger conditions, data export method, target environment (alternative provider or internal landing place), timeline, cost, budget for the regular end of the contract, dependencies, owner</td>
 </tr>
 <tr>
 <td>3. Scenario B — Disruptive Interruption of Service</td>
-<td>Trigger conditions, minimum viable continuity path, data recovery method without provider cooperation, RTO, RPO, dependencies, owner</td>
+<td>Trigger conditions (including a crisis that requires leaving at once), the strategy, conditions and budget for leaving at once, landing place, minimum viable continuity path, data recovery method without provider cooperation, RTO, RPO, dependencies, owner</td>
 </tr>
 <tr>
 <td>4. Destruction of Data at the Provider</td>
-<td>Contractual destruction clause, method, verification or attestation, logging</td>
+<td>Contractual destruction clause, portability and destruction conditions that also bind sub-suppliers, method, verification or attestation, logging</td>
 </tr>
 <tr>
 <td>5. Self-Test Plan and Evidence</td>
@@ -552,7 +582,7 @@
 </tr>
 <tr>
 <td>8. External References</td>
-<td>Herziening rijksbreed cloudbeleid 2026, clause 3.2, in the Document Register with its verification date</td>
+<td>Herziening rijksbreed cloudbeleid 2026, clause 3.2, and the implementatiekader version applied, in the Document Register with verification dates</td>
 </tr>
 </tbody>
 </table>
@@ -563,6 +593,7 @@
 <li>Scenario A and Scenario B are both documented.</li>
 <li>Scenario B does not depend on provider cooperation and states a minimum viable continuity path with RTO and RPO.</li>
 <li>Destruction of data at the provider has a verification method for both scenarios.</li>
+<li>All four implementatiekader Art. 7 parts are covered: a landing place, a crisis-departure strategy with conditions and budget, a budget for the regular end of the contract, and portability and destruction conditions that reach the sub-suppliers.</li>
 <li>Self-test evidence is present, or its absence is flagged. A plan with no test evidence is not yet compliant.</li>
 <li>The annual review has a named owner and a next review date.</li>
 <li>Residual risks, including proprietary managed-service coupling, have likelihood, impact and mitigation.</li>

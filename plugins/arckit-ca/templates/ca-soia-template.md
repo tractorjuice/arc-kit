@@ -1,4 +1,4 @@
-# Canada Security of Information Act Handling Plan
+# Canada Foreign Interference and Security of Information Act Handling Plan
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:ca-soia`
 

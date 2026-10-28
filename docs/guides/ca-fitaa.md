@@ -17,7 +17,7 @@ The Office of the Commissioner of Foreign Influence Transparency is newly stood 
 | Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Register data fields, public vs protected flags |
 | Data model (`ARC-<id>-DATA-v*.md`) | Arrangement / registrant / foreign-principal entities |
 
-The privacy and access artefacts are not inputs: this command does not read the PIA, the ATIP reconciliation or the AIA. They still apply to the register. The PIA must be complete before the system collects or processes registrant or foreign-principal personal data, `/arckit:ca-atip` holds the formal severance design for the public and protected views, and `/arckit:ca-aia` is needed if registration triage uses any automated decision-making, scoring or risk classification. The `ca-federal-fitaa` build recipe runs the PIA and ATIP first, because the data model this command reads is built on them.
+The privacy and access artefacts are not inputs: this command does not read the PIA, the ATIP reconciliation or the AIA. They still apply to the register. The PIA must be complete before the system collects or processes registrant or foreign-principal personal data, `/arckit:ca-atip` holds the formal severance design for the public and protected views, and `/arckit:ca-aia` is needed if registration triage uses any automated decision-making, scoring or risk classification. The `ca-federal-fitaa` build recipe runs this command straight after the data model, alongside the PIA.
 
 ---
 

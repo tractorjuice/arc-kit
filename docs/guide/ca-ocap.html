@@ -469,6 +469,7 @@
 </tr>
 </tbody>
 </table>
+<p>The data model is upstream: the <code>ca-federal-fitaa</code> build recipe builds it before this command. OCAP-mapped data classifications and access controls then feed back into its stewardship and access policies. Where a dataset is community-controlled, record the controlling body and the access tier in the data model. <code>/arckit:data-model</code> does not read this artefact, so make that change in the data model directly.</p>
 <hr />
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit-ca:ca-ocap &lt;project ID or service description&gt;
@@ -565,7 +566,6 @@
 <hr />
 <h2 id="handoffs">Handoffs</h2>
 <ul>
-<li><strong><code>data-model</code></strong> — OCAP-mapped data classifications and access controls feed the data model's stewardship and access policies. Where a dataset is community-controlled, the data model must record the controlling body and the access tier.</li>
 <li><strong><code>ca-atip</code></strong> — ATIP severance design must reflect OCAP access and control determinations for Indigenous datasets. Where access is community-controlled, ATIP exemptions and severance must align so federal access requests do not bypass community decision authority.</li>
 </ul>
 <hr />

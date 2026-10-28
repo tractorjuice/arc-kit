@@ -208,7 +208,7 @@ export const DOC_TYPES = {
   'AIA':       { name: 'Canada Algorithmic Impact Assessment',         category: 'Compliance',   regime: 'CA' },
   'CHRT':      { name: 'Canada Charter Rights Design Review',          category: 'Governance',   regime: 'CA' },
   'ITSG':      { name: 'Canada ITSG-33 Statement of Applicability',    category: 'Architecture', regime: 'CA' },
-  'SOIA':      { name: 'Canada Security of Information Act Handling Plan', category: 'Compliance',   regime: 'CA' },
+  'SOIA':      { name: 'Canada Foreign Interference and Security of Information Act Handling Plan', category: 'Compliance',   regime: 'CA' },
   'CACR':      { name: 'Canada Sovereign Cloud Residency Assessment',  category: 'Architecture', regime: 'CA' },
   'DIGSTD':    { name: 'Canada GC Digital Standards Conformance',      category: 'Governance',   regime: 'CA' },
   'OLA':       { name: 'Canada Official Languages Act Review',         category: 'Compliance',   regime: 'CA' },

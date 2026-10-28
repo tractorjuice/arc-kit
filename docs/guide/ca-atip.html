@@ -440,7 +440,7 @@
 <p><strong>Guide Origin</strong>: Community</p>
 </blockquote>
 <p><code>/arckit-ca:ca-atip</code> generates a Canada federal ATIP (Access to Information / Privacy Act) Reconciliation under the Access to Information Act (R.S.C., 1985, c. A-1) and the Privacy Act (R.S.C., 1985, c. P-21). It produces an information holdings inventory categorised Public / Protected / Classified, an exemption mapping per holding under the ATI Act (§13, §14, §15, §16 and §16.1–§16.6, §19, §21, §23, §24), a Privacy Act §4–§8 use and disclosure register with §8(2)(a)–(m) routine-use letters individually analysed, a severance design with field-level rules and an audit log schema, the §7 30-day request workflow with §9 extension and §27 consultation handling, and the annual report mapping for OIC, OPC and TBS InfoSource.</p>
-<p>ATIP reconciliation sits between the Privacy Impact Assessment and the data model. The PIA establishes lawful authority and the personal-information inventory; the data model carries the field-level structure and classification flags. ATIP reconciles the two against the disclosure regime — proving that every disclosure has a Privacy Act §8 basis, every redaction has an ATI Act exemption head, and every hybrid public/protected view has explicit severance rules with a per-field audit trail. Public/protected hybrid systems (e.g. registers carrying both a transparency view and an investigative back-end) are the most common pattern and the most common defect: if you cannot answer &quot;what is suppressed in the public view, under which exemption, and how is the redaction logged?&quot;, you are not ATIP-ready.</p>
+<p>ATIP reconciliation builds on the Privacy Impact Assessment and the data model. The PIA establishes lawful authority and the personal-information inventory; the data model carries the field-level structure and classification flags. ATIP reconciles the two against the disclosure regime — proving that every disclosure has a Privacy Act §8 basis, every redaction has an ATI Act exemption head, and every hybrid public/protected view has explicit severance rules with a per-field audit trail. Public/protected hybrid systems (e.g. registers carrying both a transparency view and an investigative back-end) are the most common pattern and the most common defect: if you cannot answer &quot;what is suppressed in the public view, under which exemption, and how is the redaction logged?&quot;, you are not ATIP-ready.</p>
 <hr />
 <h2 id="inputs">Inputs</h2>
 <table>
@@ -470,6 +470,7 @@
 </tbody>
 </table>
 <p>The PIA is the upstream artefact. If a §8(2) letter is added or a recipient changes during ATIP reconciliation, update the PIA as well rather than letting the two artefacts drift.</p>
+<p>The data model is upstream too: the <code>ca-federal-fitaa</code> build recipe builds it before the PIA and this command. The severance rules in this artefact then feed back into the data model's classification flags, role-based access controls and field-level masking. Add a <code>severance:</code> annotation per field that maps to the rules in the Severance Design section, so runtime enforcement can be audited against the policy. <code>/arckit:data-model</code> does not read this artefact, so make that change in the data model directly.</p>
 <hr />
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit-ca:ca-atip &lt;project ID or service description&gt;
@@ -552,7 +553,7 @@
 <hr />
 <h2 id="handoffs">Handoffs</h2>
 <ul>
-<li><strong><code>data-model</code></strong> — Severance rules in this artefact feed back into the data model's classification flags, role-based access controls, and field-level masking. Update the data model with a <code>severance:</code> annotation per field that maps to the rules in the Severance Design section so the runtime enforcement is auditable against the policy.</li>
+<li><strong><code>adr</code></strong> — Severance design choices for hybrid public/protected views (what the public view suppresses, under which exemption, and how redaction is logged) warrant Architecture Decision Records.</li>
 </ul>
 <hr />
 <h2 id="statutory-currency">Statutory currency</h2>

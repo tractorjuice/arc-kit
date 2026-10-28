@@ -4,7 +4,7 @@
 
 `/arckit-ca:ca-atip` generates a Canada federal ATIP (Access to Information / Privacy Act) Reconciliation under the Access to Information Act (R.S.C., 1985, c. A-1) and the Privacy Act (R.S.C., 1985, c. P-21). It produces an information holdings inventory categorised Public / Protected / Classified, an exemption mapping per holding under the ATI Act (§13, §14, §15, §16 and §16.1–§16.6, §19, §21, §23, §24), a Privacy Act §4–§8 use and disclosure register with §8(2)(a)–(m) routine-use letters individually analysed, a severance design with field-level rules and an audit log schema, the §7 30-day request workflow with §9 extension and §27 consultation handling, and the annual report mapping for OIC, OPC and TBS InfoSource.
 
-ATIP reconciliation sits between the Privacy Impact Assessment and the data model. The PIA establishes lawful authority and the personal-information inventory; the data model carries the field-level structure and classification flags. ATIP reconciles the two against the disclosure regime — proving that every disclosure has a Privacy Act §8 basis, every redaction has an ATI Act exemption head, and every hybrid public/protected view has explicit severance rules with a per-field audit trail. Public/protected hybrid systems (e.g. registers carrying both a transparency view and an investigative back-end) are the most common pattern and the most common defect: if you cannot answer "what is suppressed in the public view, under which exemption, and how is the redaction logged?", you are not ATIP-ready.
+ATIP reconciliation builds on the Privacy Impact Assessment and the data model. The PIA establishes lawful authority and the personal-information inventory; the data model carries the field-level structure and classification flags. ATIP reconciles the two against the disclosure regime — proving that every disclosure has a Privacy Act §8 basis, every redaction has an ATI Act exemption head, and every hybrid public/protected view has explicit severance rules with a per-field audit trail. Public/protected hybrid systems (e.g. registers carrying both a transparency view and an investigative back-end) are the most common pattern and the most common defect: if you cannot answer "what is suppressed in the public view, under which exemption, and how is the redaction logged?", you are not ATIP-ready.
 
 ---
 
@@ -18,6 +18,8 @@ ATIP reconciliation sits between the Privacy Impact Assessment and the data mode
 | Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Authoritative source for the §4–§8 register and PIB references |
 
 The PIA is the upstream artefact. If a §8(2) letter is added or a recipient changes during ATIP reconciliation, update the PIA as well rather than letting the two artefacts drift.
+
+The data model is upstream too: the `ca-federal-fitaa` build recipe builds it before the PIA and this command. The severance rules in this artefact then feed back into the data model's classification flags, role-based access controls and field-level masking. Add a `severance:` annotation per field that maps to the rules in the Severance Design section, so runtime enforcement can be audited against the policy. `/arckit:data-model` does not read this artefact, so make that change in the data model directly.
 
 ---
 
@@ -71,7 +73,7 @@ Output: `projects/<id>/ARC-<id>-ATIP-v1.0.md`
 
 ## Handoffs
 
-- **`data-model`** — Severance rules in this artefact feed back into the data model's classification flags, role-based access controls, and field-level masking. Update the data model with a `severance:` annotation per field that maps to the rules in the Severance Design section so the runtime enforcement is auditable against the policy.
+- **`adr`** — Severance design choices for hybrid public/protected views (what the public view suppresses, under which exemption, and how redaction is logged) warrant Architecture Decision Records.
 
 ---
 
