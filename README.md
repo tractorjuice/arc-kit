@@ -474,7 +474,7 @@ These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `
 
 ## Canada Federal Overlay (12 commands)
 
-Federal Canadian regulatory baseline as a `[COMMUNITY]` overlay — covering FITAA (Bill C-70 2024), federal privacy and access (Privacy Act, ATI Act), Treasury Board Directive on Automated Decision-Making, Charter rights design review, ITSG-33 + Standard on Security Categorization, Security of Information Act handling, GC Cloud sovereign residency, GC Digital Standards conformance, Official Languages Act, federal procurement (PSPC + PSIB), and First Nations OCAP® data sovereignty.
+Federal Canadian regulatory baseline as a `[COMMUNITY]` overlay — covering FITAA (Bill C-70 2024), federal privacy and access (Privacy Act, ATI Act), Treasury Board Directive on Automated Decision-Making, Charter rights design review, ITSG-33 + Standard on Security Categorization, *Foreign Interference and Security of Information Act* handling, GC Cloud sovereign residency, GC Digital Standards conformance, Official Languages Act, federal procurement (PSPC + PSIB), and First Nations OCAP® data sovereignty.
 
 | Command | Type code | Purpose |
 |---|---|---|
@@ -482,9 +482,9 @@ Federal Canadian regulatory baseline as a `[COMMUNITY]` overlay — covering FIT
 | `/arckit:ca-pia` | `PIA` | Privacy Impact Assessment per Privacy Act + TBS Standard on PIA |
 | `/arckit:ca-atip` | `ATIP` | Access to Information / Privacy Act reconciliation and severance design |
 | `/arckit:ca-aia` | `AIA` | Algorithmic Impact Assessment per TBS Directive on Automated Decision-Making (Levels I–IV) |
-| `/arckit:ca-charter` | `CHRT` | Charter rights design review (s.2 / s.7 / s.8 / s.15) with Oakes proportionality |
+| `/arckit:ca-charter` | `CHRT` | Charter rights design review (s.2 / s.7 / s.8 / s.11 / s.15) with Oakes proportionality |
 | `/arckit:ca-itsg-33` | `ITSG` | ITSG-33 Statement of Applicability + Standard on Security Categorization |
-| `/arckit:ca-soia` | `SOIA` | Security of Information Act handling plan for SECRET / TOP SECRET systems |
+| `/arckit:ca-soia` | `SOIA` | *Foreign Interference and Security of Information Act* (formerly the *Security of Information Act*) handling plan for SECRET / TOP SECRET systems |
 | `/arckit:ca-cloud-residency` | `CACR` | GC Cloud sovereign residency assessment with CLOUD-Act analysis |
 | `/arckit:ca-gc-digital-standards` | `DIGSTD` | Government of Canada Digital Standards conformance scorecard |
 | `/arckit:ca-ola` | `OLA` | Official Languages Act review (Parts IV / V / VI) |

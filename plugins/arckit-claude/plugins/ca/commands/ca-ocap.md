@@ -5,8 +5,6 @@ argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true
 handoffs:
-  - command: data-model
-    description: OCAP-mapped data classifications and access controls feed the data model's stewardship and access policies.
   - command: ca-atip
     description: ATIP severance design must reflect OCAP access and control determinations for Indigenous datasets.
 allowed-tools:

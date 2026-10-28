@@ -5,8 +5,8 @@ argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true
 handoffs:
-  - command: data-model
-    description: Severance rules in the ATIP reconciliation feed back into the data model's classification flags and access controls.
+  - command: adr
+    description: Severance design choices for hybrid public/protected views (what the public view suppresses, under which exemption, and how redaction is logged) warrant Architecture Decision Records.
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
