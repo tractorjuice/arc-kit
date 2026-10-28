@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Restored the legacy report template’s Document Register, Citations and Unreferenced Documents tables so its evidence instructions resolve and the CI citation guard passes.
+
 - Draft legacy assessments retain known urgency through unknowns, explain evidence qualification, support lint/explain and content-bound approvals, report exact incomplete-score bounds, link actions to information gaps, and verify generated factual registers with dated review sources. All feedback regressions use independently invented repository fixtures.
 
 - Legacy reports now embed an offline, deterministic likelihood–impact SVG with the published red-rated boundary at 16, a complete system key, and explicit unplotted incomplete scores. Report verification rejects missing, stale or edited companion charts across Claude and all generated targets.
