@@ -176,6 +176,16 @@ projects/
 │   ├── reviews/
 │   │   ├── ARC-001-HLDR-v1.0.md        # HLD Review
 │   │   └── ARC-001-DLDR-v1.0.md        # DLD Review
+│   ├── changes/
+│   │   └── ARC-001-ACHG-{NNN}-v1.0.md  # Architecture Change Requests (TOGAF overlay)
+│   ├── audits/
+│   │   └── ARC-001-CDAU-{NNN}-v1.0.md  # Codebase Audits
+│   ├── framework/
+│   │   └── ARC-001-FWRK-v1.0.md        # Framework Overview
+│   ├── procurement/
+│   │   ├── ARC-001-GCLD-v1.0.md        # G-Cloud Search
+│   │   ├── ARC-001-GCLC-v1.0.md        # G-Cloud Clarifications
+│   │   └── ARC-001-DOS-v1.0.md         # DOS Requirements
 │   ├── vendors/
 │   │   ├── {vendor-slug}-profile.md      # Vendor profiles (flat)
 │   │   └── {vendor-name}/               # Vendor documents (nested)
@@ -384,7 +394,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | FRSSP | `ARC-*-FRSSP-*.md` | US FedRAMP System Security Plan |
 | | FRRR | `ARC-*-FRRR-*.md` | US FedRAMP Readiness Assessment Report |
 | | AIRMF | `ARC-*-AIRMF-*.md` | US NIST AI RMF Assessment |
-| | AIIA | `ARC-*-AIIA-*.md` | US AI Impact Assessment (M-24-10 / M-25-21) |
+| | AIIA | `ARC-*-AIIA-*.md` | US AI Impact Assessment (M-25-21 / M-25-22) |
 | | USPIA | `ARC-*-USPIA-*.md` | US Privacy Impact Assessment (E-Gov §208) |
 | | SBOM | `ARC-*-SBOM-*.md` | US SBOM + Secure-Software Self-Attestation |
 | **Architecture (Community-contributed — USA Federal Civilian Overlay)** | | | |
@@ -418,7 +428,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | **Governance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
 | | NLEXIT | `ARC-*-NLEXIT-*.md` | NL Cloud Exit Plan |
 | **Compliance (Community-contributed — UK NHS Clinical Safety Overlay)** | | | |
-| | NHSDTAC | `ARC-*-NHSDTAC-*.md` | NHS Digital Technology Assessment Criteria (DTAC v3) |
+| | NHSDTAC | `ARC-*-NHSDTAC-*.md` | NHS Digital Technology Assessment Criteria (DTAC) |
 | | NHSMDR | `ARC-*-NHSMDR-*.md` | UK MDR + EU MDR SaMD/AIaMD Classification |
 
 > **Single source of truth**: this table mirrors [`arckit-claude/config/doc-types.mjs`](../config/doc-types.mjs). When adding new commands, register the type code in `doc-types.mjs` first (so the hook resolves category + display name) and then add the row here so `/arckit:pages` includes the artifact in the dashboard.
@@ -552,6 +562,13 @@ The hook generates `docs/manifest.json` with this structure:
           "documentId": "ARC-001-DLDR-v1.0"
         }
       ],
+      "changes": [
+        {
+          "path": "projects/001-project-name/changes/ARC-001-ACHG-001-v1.0.md",
+          "title": "Architecture Change Request: Retire the legacy CRM",
+          "documentId": "ARC-001-ACHG-001-v1.0"
+        }
+      ],
       "vendors": [
         {
           "name": "Acme Corp",
@@ -593,6 +610,8 @@ The hook generates `docs/manifest.json` with this structure:
 }
 ```
 
+Each artefact subdirectory gets its own project key, the camelCase of its directory name: `diagrams`, `decisions`, `wardleyMaps`, `dataContracts`, `research`, `changes`, `audits`, `framework` and `procurement` (one per `SUBDIR_MAP` destination in `config/doc-types.mjs`), plus `reviews`. Empty keys are left out.
+
 ## Step 5: Provide Summary
 
 **First, output the hook's `CONFIDENTIALITY` section verbatim** (it is in the hook context, above "What to do"). Do not shorten it, move it after the summary, or leave it out, even when it reports nothing marked above OFFICIAL.
@@ -622,6 +641,10 @@ Document Breakdown:
 - Data Contracts: {data_contract_count}
 - Research: {research_count}
 - Reviews: {review_count}
+- Change Requests: {change_count}
+- Audits: {audit_count}
+- Framework: {framework_count}
+- Procurement: {procurement_count}
 - Vendor Documents: {vendor_doc_count}
 - Vendor Profiles: {vendor_profile_count}
 - Vendor Scores: {scored_vendor_count} scored across {scored_project_count} project(s)

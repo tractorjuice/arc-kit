@@ -36,11 +36,11 @@ Output: `projects/<id>/ARC-<id>-DATAACT-v1.0.md`
 | User Data Access (Ch. II) | Pre-purchase disclosure, real-time access, third-party sharing |
 | B2B Data Sharing (Ch. III) | FRAND terms, SME protection, use restrictions, trade secrets |
 | Public Sector Access (Ch. V) | Emergency exceptional access conditions |
-| Cloud Switching (Ch. VI) | Switching process, 180-day completion, egress charges |
-| International Transfers (Art. 27) | Non-EU government access restrictions |
-| Interoperability | Interoperability specifications, smart contracts |
+| Cloud Switching (Ch. VI) | No obstacles to switching, notice of at most two months, 30-day transitional period (up to seven months if technically unfeasible), switching charges |
+| International Governmental Access (Ch. VII, Art. 32) | Safeguards against unlawful third-country governmental access to non-personal data |
+| Interoperability (Ch. VIII, Arts. 33–36) | Data-space requirements, in-parallel use, interoperability standards, smart contracts |
 | Trade Secret Protection (Arts. 4(6)–(9), 5(9)–(11), 8(6)) | Identifying trade secrets, confidentiality measures, withholding or refusing access, notifying the competent authority |
-| Gap Analysis | Gaps with application timeline (Sep 2025 / Sep 2027) |
+| Gap Analysis | Gaps with application timeline (12 Sep 2025 / 12 Sep 2026 / 12 Jan 2027) |
 
 ---
 
@@ -50,7 +50,7 @@ Output: `projects/<id>/ARC-<id>-DATAACT-v1.0.md`
 |------|---------|------------|
 | Manufacturer | Makes/imports connected product | Ch. II, III |
 | Data holder | Right/obligation to make data available | Ch. II, III, V |
-| DAPS | IaaS/PaaS/SaaS/edge cloud provider | Ch. VI |
+| DAPS | IaaS/PaaS/SaaS/edge cloud provider | Ch. VI, VII, VIII (Arts. 34–35) |
 | Public sector body | Emergency data access requests | Ch. V |
 
 ---
@@ -74,15 +74,15 @@ Output: `projects/<id>/ARC-<id>-DATAACT-v1.0.md`
 - User data access rights (Ch. II) assessed if manufacturer/data holder.
 - B2B FRAND terms documented.
 - Cloud switching obligations (Ch. VI) assessed if DAPS.
-- Egress charge elimination by September 2027 flagged if DAPS.
-- International transfer restrictions (Art. 27) assessed.
+- Switching charges flagged if DAPS: reduced charges only until 12 January 2027, none from that date (Art. 29).
+- Safeguards against unlawful international governmental access (Ch. VII, Art. 32) assessed if DAPS.
 - GDPR intersection documented.
 
 ---
 
 ## Key Notes
 
-- **Application date**: 12 September 2025 for most obligations; September 2027 for egress charge elimination.
+- **Application dates**: 12 September 2025 for most obligations; 12 September 2026 for the Art. 3(1) design obligation on newly placed connected products (Art. 50); no switching charges from 12 January 2027 (Art. 29).
 - **Data Act ≠ GDPR**: Data Act covers non-personal IoT data. GDPR still applies when personal data is in the dataset.
 - **Trade secrets**: Explicitly protected — manufacturers can refuse sharing if trade secrets at risk, but must document and cannot use this as blanket refusal.
-- **SecNumCloud intersection**: Art. 27 international transfer restrictions reinforce DINUM cloud doctrine.
+- **SecNumCloud intersection**: Chapter VII (Art. 32) safeguards against third-country governmental access reinforce DINUM cloud doctrine.

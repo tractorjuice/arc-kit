@@ -17,6 +17,8 @@ ATIP reconciliation sits between the Privacy Impact Assessment and the data mode
 | Data model (`ARC-<id>-DATA-v*.md`) | Field-level structure that the severance rules act on |
 | Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Authoritative source for the §4–§8 register and PIB references |
 
+The PIA is the upstream artefact. If a §8(2) letter is added or a recipient changes during ATIP reconciliation, update the PIA as well rather than letting the two artefacts drift.
+
 ---
 
 ## Command
@@ -70,7 +72,6 @@ Output: `projects/<id>/ARC-<id>-ATIP-v1.0.md`
 ## Handoffs
 
 - **`data-model`** — Severance rules in this artefact feed back into the data model's classification flags, role-based access controls, and field-level masking. Update the data model with a `severance:` annotation per field that maps to the rules in the Severance Design section so the runtime enforcement is auditable against the policy.
-- **`ca-pia`** — The PIA is the upstream artefact and the authoritative source for the §4–§8 register here. If a §8(2) letter is added or a recipient changes during ATIP reconciliation, push the change back into the PIA rather than letting the two artefacts drift.
 
 ---
 

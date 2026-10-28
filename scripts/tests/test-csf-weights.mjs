@@ -2,21 +2,28 @@
 /**
  * SOV weight guard for the EU Cloud Sovereignty Framework (EUCSF) assessment.
  *
- * Ground truth, verified against the European Commission's primary sources —
- * NOT re-derived here:
- *   - Implementation guidance, p.7:
+ * Ground truth: the weighting the overlay follows, which is the European
+ * Commission's (DG DIGIT) material of 1 June 2026, verified against the
+ * primary sources and NOT re-derived here:
+ *   - Implementation guidance, p.7 (weights shown under "Score (examples)"):
  *     https://commission.europa.eu/document/download/2ad80a48-166f-4c77-a513-80c53ca2a128_en?filename=Cloud+Sovereignty+Framework+-+Implementation+guidance.pdf
  *   - Annex calculator XLSX, cells D4/D45/D76/D102/D133/D169/D195/D231:
  *     https://commission.europa.eu/document/download/3acb8fe8-8a4a-4339-ae74-f56138d913d1_en?filename=Annex+-+Sovereignty+assessment+calculator.xlsx
  *
- * arc-kit previously shipped SOV-1 15%, SOV-5 20%, SOV-7 10% — wrong, but a
- * PERMUTATION of the correct eight values, so it still summed to 100%. Two
- * independent "totals exactly 100%" checks (this guard's predecessor and
- * `quality-checklist.md`'s EUCSF checklist item) both passed against the
- * wrong data, because a permutation of a correct set is invariant to a sum
- * check. This guard exists so that can never happen again: every SOV-N is
- * asserted INDIVIDUALLY against its own known-correct weight, never only as
- * a sum.
+ * Framework v1.2.1 (October 2025, p.6) publishes a different weighting:
+ * SOV-1 15%, SOV-5 20%, SOV-7 10%, the other five the same. The Commission
+ * calls the June 2026 guidance and calculator "an additional clarification"
+ * and has not withdrawn v1.2.1, so the overlay states which weighting it
+ * uses (the calculator's) and notes v1.2.1's in prose. arc-kit first shipped
+ * v1.2.1's weights; #795 moved to the calculator's when the calculator was
+ * adopted for scoring (#797). The two sets are PERMUTATIONS of each other, so
+ * both sum to 100%, and the "totals exactly 100%" checks (this guard's
+ * predecessor and `quality-checklist.md`'s EUCSF checklist item) cannot tell
+ * which one a file carries, or catch a file that mixes them. This guard
+ * asserts every SOV-N INDIVIDUALLY against the calculator weight, never only
+ * as a sum, so every copy carries the same weighting. Prose that
+ * cites v1.2.1's weights without naming the objective (e.g. "SOV-1 at 15%")
+ * is deliberately outside the three shapes below.
  *
  * It globs every file that carries an SOV weight table — the canonical
  * sources AND their generated mirrors — because the defect this guards
@@ -50,13 +57,14 @@
  *
  * Anchoring the prose shape on the name buys a second assertion for free:
  * a code paired with the WRONG objective name is caught too. That is the
- * same defect class as the weights themselves — the shipped weights were a
- * permutation, and `SEAL-3` was shipped under a name ("Digital Resilience")
- * that appears nowhere in the framework.
+ * same defect class as the weights themselves: a permutation. (SEAL level
+ * names are a separate matter and differ by source: v1.2.1 p.3 names SEAL-3
+ * "Digital Resilience", the Implementation guidance pp.2-3 "Technological
+ * Sovereignty". The overlay reproduces the guidance and notes v1.2.1's name.)
  *
  * Exit 0 = every SOV-N weight occurrence found under the guarded roots
- * matches the framework, and no file carrying a weight table is missing an
- * objective. Exit 1 = mismatch.
+ * matches the June 2026 calculator, and no file carrying a weight table is
+ * missing an objective. Exit 1 = mismatch.
  */
 
 import { fileURLToPath } from 'node:url';
@@ -66,8 +74,8 @@ import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
 
-// The eight EUCSF objectives — weight AND name — per the primary sources
-// cited above. The name is ground truth in its own right: it is what the
+// The eight EUCSF objectives — weight AND name — per the June 2026 primary
+// sources cited above. The name is ground truth in its own right: it is what the
 // prose shape matches on, and a code paired with another objective's name is
 // the same permutation defect as a code paired with another's weight.
 const OBJECTIVES = {
@@ -250,7 +258,7 @@ for (const file of [...files].sort()) {
     if (occ.weight !== expected) {
       ok = false;
       console.error(
-        `[FAIL] ${rel}:${occ.lineNo}: ${occ.sov} weight is ${occ.weight}%, the framework says ${expected}%`,
+        `[FAIL] ${rel}:${occ.lineNo}: ${occ.sov} weight is ${occ.weight}%, the June 2026 calculator says ${expected}%`,
       );
     }
     // Only the prose shape carries a name to check. A wrong pairing here is
@@ -258,7 +266,7 @@ for (const file of [...files].sort()) {
     if (occ.name !== undefined && occ.name !== OBJECTIVES[occ.sov].name) {
       ok = false;
       console.error(
-        `[FAIL] ${rel}:${occ.lineNo}: ${occ.sov} is named "${occ.name}", the framework says ` +
+        `[FAIL] ${rel}:${occ.lineNo}: ${occ.sov} is named "${occ.name}", the calculator says ` +
           `"${OBJECTIVES[occ.sov].name}"`,
       );
     }
@@ -296,7 +304,7 @@ if (checklistsFound === 0) {
 if (ok) {
   console.log(
     `[PASS] ${occurrencesChecked} SOV weight occurrence(s) across ${filesChecked} file(s) ` +
-      `(including ${checklistsFound} ${CHECKLIST_BASENAME} copies) all match the framework ` +
+      `(including ${checklistsFound} ${CHECKLIST_BASENAME} copies) all match the June 2026 calculator ` +
       '(SOV-1 20%, SOV-2 10%, SOV-3 10%, SOV-4 15%, SOV-5 10%, SOV-6 15%, SOV-7 15%, SOV-8 5%), ' +
       'and every prose pair names its own objective.',
   );

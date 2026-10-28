@@ -59,7 +59,7 @@
 |-----------|--------|----------|-----|------------|
 | 1. Human, societal and environmental wellbeing | [✅/⚠️/❌] | [Evidence] | [Gap] | [Action] |
 | 2. Human-centred values | [✅/⚠️/❌] | [Evidence] | [Gap] | [Action] |
-| 3. Fairness | [✅/⚠️/❌] | [Cite Fairness Assessment §6] | [Gap] | [Action] |
+| 3. Fairness | [✅/⚠️/❌] | [Cite Fairness Assessment §7] | [Gap] | [Action] |
 | 4. Privacy protection and security | [✅/⚠️/❌] | [Cite PIA + E8 + ISM] | [Gap] | [Action] |
 | 5. Reliability and safety | [✅/⚠️/❌] | [Evidence] | [Gap] | [Action] |
 | 6. Transparency and explainability | [✅/⚠️/❌] | [Evidence] | [Gap] | [Action] |
@@ -135,8 +135,8 @@ National AI Centre (NAIC) operational practices for safe and responsible AI adop
 | **Prompt-Injection Defences** | [Implemented / Planned] |
 | **Model-Extraction Defences** | [Implemented / Planned] |
 | **Training-Data Sanitisation** | [Process description] |
-| **E8 Cross-Reference** | [ARC-{P}-AUE8-v* — Strategies 1, 4, 11 most relevant] |
-| **ISM Cross-Reference** | [ARC-{P}-AUISM-v* Domain 9 + 12] |
+| **E8 Cross-Reference** | [ARC-{P}-AUE8-v* — Multi-factor authentication, Restrict administrative privileges and Regular backups most relevant to training and inference data; Patch applications and Patch operating systems for the hosting environment] |
+| **ISM Cross-Reference** | [ARC-{P}-AUISM-v* — Guidelines for system hardening, system access, software development (AI application development) and cryptography] |
 
 ---
 

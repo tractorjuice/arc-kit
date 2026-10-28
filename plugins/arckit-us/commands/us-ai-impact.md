@@ -1,5 +1,5 @@
 ---
-description: "[COMMUNITY] Determine whether an AI system is rights-impacting or safety-impacting under OMB M-24-10 and document the minimum risk-management practices, M-25-21 acquisition controls, and public disclosure obligations."
+description: "[COMMUNITY] Determine whether an AI use case is high-impact under OMB M-25-21 and document the minimum risk-management practices, waivers, M-25-22 acquisition terms, and public reporting obligations."
 doc-type: AIIA
 argument-hint: "<project ID or AI system, e.g. '001', 'Benefits Eligibility ML Model'>"
 effort: high
@@ -7,9 +7,9 @@ handoffs:
   - command: us-ai-rmf
     description: The minimum-practice gaps surfaced here drive the AI RMF Govern / Map / Measure / Manage uplift backlog.
   - command: us-privacy-pia
-    description: Rights-impacting AI systems handling PII require an E-Gov Act §208 PIA.
+    description: AI systems handling PII require an E-Gov Act §208 PIA, which the M-25-21 impact assessment should reference.
   - command: risk
-    description: Residual M-24-10 risks (especially where minimum practices cannot be met) flow into the risk register.
+    description: Residual M-25-21 risks (especially where minimum practices cannot be met) flow into the risk register.
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
@@ -25,12 +25,13 @@ allowed-tools:
 > and 3PAO before reliance.
 >
 > **Statutory currency**: EO 14110 was **revoked January 2025**; the active AI assurance mandates
-> are **OMB M-24-10** (use of AI) and **OMB M-25-21** (acquisition of AI). FedRAMP completed the
+> are **OMB M-25-21** (use and governance of AI; it rescinded and replaced M-24-10 on 3 April 2025)
+> and **OMB M-25-22** (acquisition of AI; it replaced M-24-18). FedRAMP completed the
 > transition to NIST 800-53 **Rev 5** baselines in 2024 — Rev 4 references are deprecated. Verify
 > all citations against the current Federal Register, OMB Circulars page, NIST publications, and
 > FedRAMP.gov before relying on this output.
 
-You are an enterprise architect producing an **AI Impact Assessment** under **OMB M-24-10** and **OMB M-25-21** for a US federal civilian agency.
+You are an enterprise architect producing an **AI Impact Assessment** under **OMB M-25-21** for a US federal civilian agency, with the **OMB M-25-22** acquisition terms where the AI is procured.
 
 ## User Input
 
@@ -40,22 +41,30 @@ $ARGUMENTS
 
 ## Context
 
-OMB M-24-10 ("Advancing Governance, Innovation, and Risk Management for Agency Use of Artificial Intelligence", March 2024) is the binding policy framework for federal civilian AI use. It defines two impact categories that trigger heightened oversight:
+OMB M-25-21 ("Accelerating Federal Use of AI through Innovation, Governance, and Public Trust", 3 April 2025) is the binding policy for federal civilian agency use of AI. It rescinded and replaced M-24-10, and with it M-24-10's separate "rights-impacting" and "safety-impacting" categories. M-25-21 has one category that triggers the minimum risk-management practices:
 
-- **Rights-impacting AI** — AI whose output serves as a principal basis for a decision or action that has a legal, material, or similarly significant effect on an individual's civil rights, civil liberties, equal opportunity, access to government benefits or services, or privacy.
-- **Safety-impacting AI** — AI whose output controls or significantly influences the outcome of decisions or actions that could meaningfully impact the safety of human life or wellbeing, climate or environment, critical infrastructure, or strategic assets.
+- **High-impact AI** (§5) — AI whose output serves as a principal basis for decisions or actions with a legal, material, binding, or significant effect on (1) an individual's or entity's civil rights, civil liberties, or privacy; (2) their access to education, housing, insurance, credit, employment, and other programs; (3) their access to critical government resources or services; (4) human health and safety; (5) critical infrastructure or public safety; or (6) strategic assets or resources, including high-value property and information marked sensitive or classified. A use case can be high-impact whether or not a human oversees the decision (§4(a)).
 
-Appendix I of M-24-10 lists **presumed-impacting** use cases (those agencies must treat as rights- or safety-impacting unless rebutted). Agencies must implement minimum risk-management practices for each impact category, may not waive them without CAIO documentation, and must publicly inventory AI use cases (federal.ai.gov).
+M-25-21 §6 lists fifteen purposes, (a) to (o), that are **presumed high-impact** when the AI's output is a principal basis for the agency's decision or action. The list is not exhaustive: the §5 definition decides. AI in a §6 category whose output is not a principal basis for the decision is not high-impact (§4(a), footnote 27). If an agency official concludes that a use case in a §6 category is not high-impact, they must notify the CAIO in writing; the CAIO gives these determinations to OMB on request and may revisit any of them at any time (§4(a)).
 
-**OMB M-25-21** ("Accelerating Federal Use of AI through Innovation, Governance, and Public Trust", April 2025) is the acquisition-side companion: it directs agencies to embed AI risk-management requirements in solicitations, contracts, and vendor evaluations, and requires AI RMF alignment from vendors.
+For high-impact AI, agencies had to document implementation of the seven minimum practices in §4(b) within 365 days of the memo, that is by **3 April 2026**, and must safely discontinue any high-impact use that does not comply (§4(a)(i)). The seven practices are: pre-deployment testing; an AI impact assessment (this artefact) with seven required elements; ongoing monitoring; human training and assessment; human oversight, intervention and accountability, with a fail-safe where practicable; consistent remedies or appeals; and consultation with end users and the public. A pilot of limited scale and duration that the CAIO has certified is exempt, subject to the conditions in §4(a)(i). Only the CAIO can waive a practice, by written determination (§4(a)(ii)–(iv)).
+
+The CAIO (§3(a)(i)) must be designated within 60 days of the memo and, in a CFO Act agency, hold a Senior Executive Service, Scientific and Professional, or Senior Leader position, or equivalent. The CAIO's duties include processes to determine and document high-impact use cases, an independent review of high-impact use cases before risk acceptance, and central tracking of high-impact use cases and determinations. Risk is accepted by trained and accountable officials at the lowest appropriate level (§3(b)(i)), and the impact assessment carries their signature (§4(b)(ii)(G)). Agencies inventory their AI use cases at least annually, submit the inventory to OMB and publish it (§3(b)(v)). OMB's reporting guidance for the 2025 inventory has agencies publish it at `[agency.gov]/ai` and record whether each use case is high-impact.
+
+**OMB M-25-22** ("Driving Efficient Acquisition of Artificial Intelligence in Government", 3 April 2025) replaced M-24-18 as the acquisition memo. It applies to contracts awarded under solicitations issued from 30 September 2025 (180 days after the memo) and to options exercised after that date (§2(c)). When practicable, solicitations must say whether a planned use is, or is reasonably likely to become, high-impact, and tell vendors what documentation the agency needs for its impact assessment (§4(c)). Contracts must cover IP rights and use of government data, privacy, vendor lock-in protections, compliance with the M-25-21 minimum practices for high-impact use, and ongoing testing and monitoring (§4(d)). Agencies must ensure contracts permanently prohibit the use of non-public agency inputs and outputs to train publicly or commercially available AI without explicit agency consent (§3(e)). **OMB M-26-04** (11 December 2025), which complements M-25-22, adds contract terms on the Unbiased AI Principles of EO 14319 to every solicitation or order for a large language model issued after that date, with minimum vendor transparency: an acceptable use policy; model, system or data cards; end-user resources; and a feedback mechanism.
+
+Neither M-25-21 nor M-25-22 mentions the NIST AI RMF. ArcKit uses the AI RMF assessment (`/arckit:us-ai-rmf`) as the evidence base for the practices, not as a mandate.
+
+EO 14434 (29 September 2026) tells agencies to use "Super Intelligence" and "SI" in place of "artificial intelligence" and "AI" in non-statutory documents, to the extent the law allows. It changes neither memo and does not require earlier documents to be altered. Follow the agency's own instruction on wording; the requirements in this artefact are unaffected.
 
 **Authoritative anchors**:
 
-- OMB M-24-10 (Advancing Governance, Innovation, and Risk Management for Agency Use of Artificial Intelligence) — <https://www.whitehouse.gov/wp-content/uploads/2024/03/M-24-10-Advancing-Governance-Innovation-and-Risk-Management-for-Agency-Use-of-Artificial-Intelligence.pdf>
-- OMB M-25-21 (Accelerating Federal Use of AI through Innovation, Governance, and Public Trust) — <https://www.whitehouse.gov/omb/management/ofcio/>
+- OMB M-25-21 (Accelerating Federal Use of AI through Innovation, Governance, and Public Trust) — <https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-21-Accelerating-Federal-Use-of-AI-through-Innovation-Governance-and-Public-Trust.pdf>
+- OMB M-25-22 (Driving Efficient Acquisition of Artificial Intelligence in Government) — <https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-22-Driving-Efficient-Acquisition-of-Artificial-Intelligence-in-Government.pdf>
+- OMB M-26-04 (Increasing Public Trust in Artificial Intelligence Through Unbiased AI Principles) — <https://www.whitehouse.gov/wp-content/uploads/2025/12/M-26-04-Increasing-Public-Trust-in-Artificial-Intelligence-Through-Unbiased-AI-Principles-1.pdf>
+- OMB Guidance on 2025 Agency AI Reporting, and OMB's consolidated 2025 Federal Agency AI Use Case Inventory — <https://github.com/ombegov/2025-Federal-Agency-AI-Use-Case-Inventory>
 - NIST AI Risk Management Framework 1.0 — <https://www.nist.gov/itl/ai-risk-management-framework>
 - NIST AI 600-1 (Generative AI Profile) — <https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf>
-- Federal AI Use Case Inventory — <https://ai.gov/ai-use-cases/>
 
 ## Process
 
@@ -79,29 +88,30 @@ Appendix I of M-24-10 lists **presumed-impacting** use cases (those agencies mus
 
 6. Generate the following sections:
 
-   - **AI System Summary** — system name, agency owner, mission served, model type, intended decisions or actions supported, scale (users / decisions per day).
-   - **Appendix I Presumed-Impacting Check** — match the use case against M-24-10 Appendix I's presumed-impacting lists (rights and safety). Record the matched item(s) verbatim with the M-24-10 §X.Y reference, or note "no Appendix I match" if none.
-   - **Rights-Impacting Determination** — apply the M-24-10 definition: does the AI output serve as a principal basis for a decision affecting civil rights, civil liberties, equal opportunity, access to benefits/services, or privacy? Record verdict (Yes / No / Rebuttal-of-presumption) with named decision and affected population.
-   - **Safety-Impacting Determination** — does the AI output meaningfully control or influence decisions affecting human safety, climate / environment, critical infrastructure, or strategic assets? Record verdict and named decision-flow.
-   - **Minimum Risk-Management Practices Checklist** — per M-24-10 §5, document satisfaction of: pre-deployment testing for performance and fairness; impact assessment; ongoing monitoring; risk-based human override and remedy options; consultation with affected communities; AI Use Case Inventory submission; CAIO sign-off; cost-benefit analysis for high-cost systems. For each: status (Met / Partial / Not Met / Not Applicable), evidence reference, action.
-   - **Waiver Posture** — if any minimum practice cannot be met, document the waiver test (M-24-10 §5(c)(iii); M-25-21 §4(a)(ii), which rescinded and replaced M-24-10, keeps it) and the CAIO's written determination record: ground, risk-assessment reference, compensating measures, OMB report date (within 30 days), annual certification date (the waiver period) and public summary.
-   - **M-25-21 Acquisition Controls** — for AI procured from a vendor, document the contract clauses and evaluation criteria implemented: AI RMF alignment requirement, model provenance documentation, training-data disclosure, bias-testing access, fairness reporting, incident-reporting obligations, exit / portability.
-   - **Public Disclosure Obligations** — confirm the entry has been (or will be) submitted to the agency AI Use Case Inventory (federal.ai.gov); note any redactions required for sensitive law-enforcement or national-security carve-outs.
-   - **CAIO Sign-Off Block** — agency Chief AI Officer review and approval section: reviewer, date, scope of approval, conditions, next review.
+   - **AI System Summary** — system name, agency owner, mission served, model type, intended decisions or actions supported, scale (users / decisions per day), stage of development (pre-deployment / pilot / deployed / retired).
+   - **Presumed High-Impact Check** — match the use case against the fifteen M-25-21 §6 purposes, (a) to (o). Record each matched letter with the purpose text, or "no §6 match" if none.
+   - **High-Impact Determination** — apply the §5 definition: does the AI's output serve as a principal basis for a decision or action with a legal, material, binding, or significant effect on any of the six areas? Name the decision or action, the output it relies on, the affected population and the areas affected. Record the verdict in the values OMB's inventory uses: High-impact / Presumed high-impact, but determined not high-impact / Not high-impact. Where a §6 match is determined not high-impact, record the written notice to the CAIO and its justification (§4(a)).
+   - **Pilot Exemption** — only if the use case is a pilot claiming exemption from the minimum practices: record all four §4(a)(i) conditions (limited scale and duration; CAIO certification, tracked centrally; opt-in and opt-out for individuals where possible; practices applied where practicable).
+   - **Minimum Risk-Management Practices Checklist** — the seven M-25-21 §4(b) practices: (i) pre-deployment testing and risk-mitigation plans; (ii) the AI impact assessment; (iii) ongoing monitoring; (iv) human training and assessment; (v) human oversight, intervention and accountability, with a fail-safe where practicable; (vi) consistent remedies or appeals; (vii) consultation and feedback from end users and the public. For each: status (Met / Partial / Not Met / Not Applicable), evidence reference, action. Then cover the seven elements the impact assessment must address under §4(b)(ii): purpose and expected benefit; data quality and model capability; potential impacts on privacy, civil rights and civil liberties; reassessment schedule; costs; results of an independent review; and risk acceptance signed by the accepting official.
+   - **Waiver Posture** — if any minimum practice cannot be met, document the waiver test (M-25-21 §4(a)(ii)–(iv)) and the CAIO's written determination record: ground, risk-assessment reference, compensating measures, OMB report date (within 30 days), annual certification date (the waiver period) and public summary. Without a waiver, a high-impact use case that does not meet a practice must be safely discontinued.
+   - **M-25-22 Acquisition Terms** — for AI procured from a vendor under M-25-22: the solicitation's high-impact disclosure and the vendor documentation it requires (§4(c)); the contract terms §4(d) requires (IP rights and use of government data, including the prohibition on training on non-public agency data; privacy; vendor lock-in protections; M-25-21 compliance requirements; ongoing testing and monitoring) and those it encourages (vendor performance requirements, new-feature notification); the ATO before deployment (§4(e)); and closeout transfer of data and derived assets (§4(f)). For a large language model, add the M-26-04 Unbiased AI Principles terms and minimum vendor transparency.
+   - **Public Reporting Obligations** — confirm the entry has been (or will be) added to the agency AI Use Case Inventory submitted to OMB and published at `[agency.gov]/ai`, with the high-impact field set; that the summary of any not-high-impact determination or waiver is published (§4(a)(iv)); and note any details withheld because sharing them would be inconsistent with law or government-wide policy (for example the 5 U.S.C. §552 exemptions).
+   - **CAIO Sign-Off Block** — agency Chief AI Officer review and approval section: reviewer, date, scope of approval, conditions, next review. Record the independent reviewer and the risk-accepting official separately.
 
 7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AIIA** per-type checks pass. Fix any failures before proceeding.
 8. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-9. Emit a short summary to the user — impact verdict (rights-impacting / safety-impacting / both / neither), Appendix I match (Y/N), minimum-practice satisfaction percentage, waiver count, AI Use Case Inventory ID (or "pending"), and CAIO review status. Do not echo the full artefact.
+9. Emit a short summary to the user — high-impact verdict (high-impact / presumed high-impact, but determined not high-impact / not high-impact), §6 match (Y/N, with letters), minimum-practice satisfaction percentage, waiver count, AI Use Case Inventory ID (or "pending"), and CAIO review status. Do not echo the full artefact.
 
 ## Handoffs
 
-Minimum-practice gaps drive the AI RMF uplift backlog via `/arckit:us-ai-rmf`. PII-handling AI systems require `/arckit:us-privacy-pia`. Any residual M-24-10 risks — particularly waiver scenarios — should be entered into `/arckit:risk` with the next CAIO review date.
+Minimum-practice gaps drive the AI RMF uplift backlog via `/arckit:us-ai-rmf`. PII-handling AI systems require `/arckit:us-privacy-pia`, and the impact assessment should reference the PIA (M-25-21 §4(b)(ii)(C)). Any residual M-25-21 risks — particularly waiver scenarios — should be entered into `/arckit:risk` with the next CAIO review date.
 
 ## Important Notes
 
-- **EO 14110 is revoked** — January 2025. Do not cite EO 14110 as the basis for impact assessment. The active mandates are OMB M-24-10 (use) and OMB M-25-21 (acquisition); NIST AI 600-1 provides the GenAI risk taxonomy.
-- **Appendix I is presumptive, not definitive** — agencies may rebut the presumption that an Appendix I-listed use case is rights- or safety-impacting, but the rebuttal must be documented and signed by the CAIO. Default-deny on rebuttals.
-- **Minimum practices are not optional for impacting AI** — M-24-10 §5 minimum-practice items are mandatory for rights- or safety-impacting AI. Waivers exist but require CAIO determination, time-boxing, and compensating measures; they are not a hidden off-ramp.
-- **M-25-21 binds acquisitions, not just internal builds** — vendor-supplied AI used in agency mission delivery falls under M-25-21. Contract clauses and evaluation criteria must reflect AI RMF alignment and provenance disclosure.
-- **AI Use Case Inventory is public** — submissions appear on federal.ai.gov (subject to law-enforcement and national-security carve-outs). Pre-clear redactions with the agency CAIO and SAOP before submission, not after.
+- **M-24-10 is rescinded** — M-25-21 rescinded and replaced it on 3 April 2025. Do not use M-24-10's rights-impacting and safety-impacting categories, its Appendix I lists, its minimum-practice list or its 1 December 2024 deadline. Use the §5 high-impact definition, the §6 presumed purposes and the §4(b) practices, and re-run any assessment written under M-24-10.
+- **EO 14110 is revoked** — January 2025. Do not cite EO 14110 as the basis for impact assessment. The active mandates are OMB M-25-21 (use) and OMB M-25-22 (acquisition); NIST AI 600-1 provides the GenAI risk taxonomy.
+- **The §6 list is a presumption, not the test** — an agency may conclude that a §6 use case is not high-impact, but only with written notice to the CAIO, who may revisit the conclusion at any time. Where the evidence is unclear, treat the use case as high-impact.
+- **Minimum practices are not optional for high-impact AI** — since 3 April 2026 a high-impact use case that does not meet them must be safely discontinued. A waiver needs a written CAIO determination that the CAIO cannot delegate, a report to OMB within 30 days, annual certification and a public summary; it is not a hidden off-ramp.
+- **M-25-22 binds acquisitions, not just internal builds** — vendor-supplied AI used for a high-impact purpose must still meet the M-25-21 practices, and the contract must give the agency the documentation and testing access to show it.
+- **AI Use Case Inventory is public** — agencies publish their inventories at `[agency.gov]/ai`, and OMB consolidates them on GitHub. Withhold only the details that law or government-wide policy require; pre-clear withheld details with the agency CAIO and SAOP before submission, not after.

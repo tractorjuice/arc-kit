@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:oaa-adm-lite` creates an O-AA ADM Lite document that maps the TOGAF ADM cycle onto agile sprints, drawing on Open Agile Architecture (O-AA, C208). It sets out a sprint plan from Sprint 0 (vision and stakeholders) to Sprint 4+ (governance and change), with the deliverables, go/no-go gate and O-AA axioms for each sprint. The sprint-to-phase mapping is an ArcKit convention over TOGAF ADM (C182); the O-AA standard itself does not define an ADM cycle. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
+`/arckit:oaa-adm-lite` creates an O-AA ADM Lite document that maps the TOGAF ADM cycle onto agile sprints, drawing on the Open Agile Architecture™ Standard, Version 2.0 (O-AA, C262). It sets out a sprint plan from Sprint 0 (vision and stakeholders) to Sprint 4+ (governance and change), with the deliverables, go/no-go gate and O-AA axioms for each sprint. The sprint-to-phase mapping is an ArcKit convention over the TOGAF ADM (The TOGAF Standard, 10th Edition, C220); the O-AA standard itself does not define an ADM cycle. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
 
 ---
 
@@ -47,14 +47,14 @@ If the named project does not exist, the command creates it. If an OAAL document
 | Sprint | TOGAF Phases | Focus | Duration | Key Output |
 |--------|--------------|-------|----------|------------|
 | Sprint 0 | ADM-P + A | Vision + Stakeholders | 1 week | `vision.yaml` |
-| Sprint 1 | ADM-B + C (part) | Business + Data Architecture | 2 weeks | `business-architecture.yaml`, `data-architecture.yaml` |
-| Sprint 2 | ADM-C (part) + D | Technology Architecture | 2 weeks | `technology-architecture.yaml` |
+| Sprint 1 | ADM-B + C | Business + Data + Application Architecture | 2 weeks | `business-architecture.yaml`, `data-architecture.yaml` |
+| Sprint 2 | ADM-D | Technology Architecture | 2 weeks | `technology-architecture.yaml` |
 | Sprint 3 | ADM-E + F | Implementation Wave | 2 weeks | `implementation-strategy.yaml` |
 | Sprint 4+ | ADM-G + H | Governance + Change | Ongoing | `governance-report.yaml`, `change-request.yaml` |
 
-At the default sprint lengths, Sprint 0 to Sprint 3 take 7 weeks, inside the 4-8 week engagement window the approach is designed for. Sprint 0 names the high-level business capabilities in scope as part of the vision (TOGAF Phase A); Sprint 1 develops the baseline and target business capability map, which TOGAF places in Phase B.
+At the default sprint lengths, Sprint 0 to Sprint 3 take 7 weeks, inside the 4-8 week engagement window the approach is designed for. Sprint 0 names the high-level business capabilities in scope as part of the vision (TOGAF Phase A); Sprint 1 develops the baseline and target business capability map, which TOGAF places in Phase B, and covers both parts of TOGAF Phase C (Data and Application Architecture), so Sprint 2 is Phase D (Technology Architecture) alone.
 
-The document cites the published O-AA axioms it applies by number and name: 1 (Customer Experience Focus), 3 (Rapid Feedback Loops), 5 (Value Stream Alignment), 6 (Autonomous Cross-Functional Teams), 7 (Authority, Responsibility, and Accountability Distribution), 10 (Simple Common Operating Principles), 14 (Bias for Change) and 15 (Project to Product Shift). It does not quote axiom text that cannot be checked against C208.
+The document cites the published O-AA axioms it applies by number and name: 1 (Customer Experience Focus), 3 (Rapid Feedback Loops), 5 (Value Stream Alignment), 6 (Autonomous Cross-Functional Teams), 7 (Authority, Responsibility, and Accountability Distribution), 10 (Simple Common Operating Principles), 14 (Bias for Change) and 15 (Project to Product Shift). It does not quote axiom text that cannot be checked against the standard (Version 2.0, Appendix A).
 
 ---
 
@@ -66,14 +66,14 @@ The document cites the published O-AA axioms it applies by number and name: 1 (C
 | Trigger Guidance | When to use ADM Lite and when to use the full ADM instead |
 | Sprint Map | Sprint-to-ADM-phase table with duration and key output |
 | Sprint 0: Vision + Stakeholders (ADM-P + A) | Axiom alignment, activities, high-level capabilities in scope, `vision.yaml` structure (scope, constraints, stakeholders, success criteria, regulatory controls, risks), `stakeholder-map.md`, go/no-go gate |
-| Sprint 1: Business + Data Architecture (ADM-B + C partial) | Baseline and target business capability map with gaps (`business-architecture.yaml`), value streams with SLAs, data assets and data flows with compliance controls, application components |
-| Sprint 2: Technology Architecture (ADM-C continuation + D) | Technology standards, infrastructure and network topology, monitoring stack, compliance validation, architecture freeze |
+| Sprint 1: Business + Data + Application Architecture (ADM-B + C) | Baseline and target business capability map with gaps (`business-architecture.yaml`), value streams with SLAs, data assets and data flows with compliance controls, application components |
+| Sprint 2: Technology Architecture (ADM-D) | Technology standards, infrastructure and network topology, monitoring stack, compliance validation, architecture freeze |
 | Sprint 3: Implementation Wave (ADM-E + F) | Work packages, migration waves and strategy with rollback trigger, risk register |
 | Sprint 4+: Continuous Governance (ADM-G + H) | `governance-report.yaml`, governance cadence, change requests through `/arckit:architecture-change` |
 | Sprint Artefact Traceability | Primary and secondary artefact for each sprint |
-| Paperclip Integration | Issues per sprint, work package, compliance item and phase gate; issue naming convention |
+| Issue Tracker Integration | Issues per sprint, work package, compliance item and phase gate in the team's issue tracker; issue naming convention |
 | Comparison: Full ADM vs ADM Lite | What the lighter cadence trades away against the full ADM |
-| External References | Document Register (C208 with URL and verification date), citations |
+| External References | Document Register (O-AA Standard, Version 2.0, C262, with URL and verification date), citations |
 
 ---
 

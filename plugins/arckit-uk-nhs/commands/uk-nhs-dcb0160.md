@@ -8,7 +8,7 @@ handoffs:
   - command: uk-nhs-dcb0129
     description: Manufacturer-side companion. Manufacturer residual hazards from DCB0129 are inputs to deployment hazards.
   - command: uk-nhs-dtac
-    description: DTAC clinical-safety section may need the deployer case if the deploying NHS organisation is responsible for procurement assurance.
+    description: The deploying organisation assesses the manufacturer's DTAC form, whose section C1 asks for the DCB0129 case; DCB0160 is the deployer's own duty and not a DTAC question.
   - command: risk
     description: Deployment-specific risks (training, business continuity, integration) cross-reference the project risk register.
   - command: operationalize
@@ -26,7 +26,7 @@ You are a clinical informatician and software architect generating a **NHS DCB01
 
 DCB0160 is the deployer-side counterpart to DCB0129. Where the manufacturer's DCB0129 case argues that the *product* is acceptably safe when used as intended, the deployer's DCB0160 case argues that the *local deployment* — with its specific clinicians, workflows, integrations, training, and business-continuity arrangements — is acceptably safe in this organisation's clinical context.
 
-The output adopts Dr Marcus Baw's [SAFETY.md spec v2.0.0-draft](https://github.com/pacharanero/SAFETY.md) — three files (`SAFETY.md`, `DEPLOYMENT-SAFETY-CASE.md`, `DEPLOYMENT-HAZARD-LOG.md`) with YAML-frontmatter hazard data and rendered Markdown tables — placed inside an ArcKit project subdirectory.
+The output follows Dr Marcus Baw's [SAFETY.md spec 2.0.0-draft](https://github.com/pacharanero/SAFETY.md) — three files (`SAFETY.md`, `DEPLOYMENT-SAFETY-CASE.md`, `DEPLOYMENT-HAZARD-LOG.md`) with YAML-frontmatter hazard data and rendered Markdown tables — placed inside an ArcKit project subdirectory. The overlay README lists the deliberate deviations from the spec, including the deployer filenames and the extra `manufacturer-case-url` field.
 
 ## User Input
 
@@ -42,7 +42,7 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
 
 - NHS DCB0160 — <https://digital.nhs.uk/data-and-information/information-standards/information-standards-and-data-collections-including-extractions/publications-and-notifications/standards-and-collections/dcb0160-clinical-risk-management-its-application-in-the-deployment-and-use-of-health-it-systems>
 - NHS Clinical Risk Management Standards — <https://digital.nhs.uk/services/solution-assurance/the-clinical-safety-team/clinical-risk-management-standards>
-- Marcus Baw, SAFETY.md spec v2.0.0-draft — <https://github.com/pacharanero/SAFETY.md/blob/main/spec.md>
+- Marcus Baw, SAFETY.md specification 2.0.0-draft (draft, no tagged release; this command follows commit `af405498`, 22 July 2026) — <https://github.com/pacharanero/SAFETY.md/blob/af405498/spec/specification.md>
 
 **Risk scoring scales** (DCB0160 follows DCB0129 convention):
 
@@ -76,12 +76,14 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
 6. **Generate the deployer `SAFETY.md`** with required fields:
    - `product-name` (product being deployed), `version` (product version being deployed)
    - `standard` — `DCB0160`
-   - `deployment-organisation` — the deploying NHS Trust / ICS / practice
    - `clinical-safety-officer` — the **deploying organisation's** CSO (different from the manufacturer's CSO); leave as `[PENDING — deploying-organisation CSO name and GMC/NMC/HCPC/GPhC registration]`
-   - `manufacturer-case-url` — relative link to manufacturer's `../SAFETY-CASE.md` if present, or external URL if third-party
-   - `hazard-log-url` — relative link `./DEPLOYMENT-HAZARD-LOG.md`
+   - `organisation` — the deploying NHS Trust / ICS / practice (the organisation responsible for this safety file)
+   - `role` — `deployer`, plus any of `operator`, `maintainer`, `relevant-it-provider` or `other` that also apply (consistent with the Roles and responsibilities table)
    - `safety-case-status` — `draft`
+   - `hazard-log-url` — relative link `./DEPLOYMENT-HAZARD-LOG.md`
+   - `applicable-standards` — `DCB0160`, the manufacturer's `DCB0129` evidence, and the other standards and frameworks in scope (consistent with the Applicable standards and assurance domains table)
    - `last-reviewed` — today's date
+   - `manufacturer-case-url` (ArcKit addition, not in the spec) — relative link to manufacturer's `../SAFETY-CASE.md` if present, or external URL if third-party
    - **Summary** section: deployment context, deploying organisation, summary of deployment-specific safety arrangements
    - **Documents** section: relative links to `./DEPLOYMENT-SAFETY-CASE.md`, `./DEPLOYMENT-HAZARD-LOG.md`, and the upstream manufacturer case
    - **Applicable standards and assurance domains** and **Roles and responsibilities** tables: populate using the screening questions in `${CLAUDE_PLUGIN_ROOT}/references/duaa2025.md`. The DCB0160 row is this deployment's own local case; the DCB0129 row references the manufacturer case received from upstream. The deploying organisation's CSO owns only the clinical-safety row; adjacent domains are cross-referenced, not annexed.

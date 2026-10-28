@@ -13,7 +13,7 @@ handoffs:
   - command: au-dss
     description: AI assurance feeds DSS Criterion 7 (privacy) + Criterion 5 (security of training/inference data).
   - command: au-ism-controls
-    description: AI training / inference data security cites ISM Domain 9 (System Hardening) + Domain 12 (Cryptography).
+    description: AI training / inference data security cites the ISM Guidelines for system hardening, system access, software development (AI application development) and cryptography.
   - command: risk
     description: AI-specific risks (bias, drift, prompt injection, training-data exposure) feed the project risk register.
   - command: traceability

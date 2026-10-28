@@ -54,8 +54,8 @@ Use this template when **any** of the following conditions are met:
 | Sprint | TOGAF Phases | Focus | Duration | Key Output |
 |---|---|---|---|---|
 | Sprint 0 | ADM-P + A | Vision + Stakeholders | 1 week | `vision.yaml` |
-| Sprint 1 | ADM-B + C (part) | Business + Data Architecture | 2 weeks | `business-architecture.yaml`, `data-architecture.yaml` |
-| Sprint 2 | ADM-C (part) + D | Technology Architecture | 2 weeks | `technology-architecture.yaml` |
+| Sprint 1 | ADM-B + C | Business + Data + Application Architecture | 2 weeks | `business-architecture.yaml`, `data-architecture.yaml` |
+| Sprint 2 | ADM-D | Technology Architecture | 2 weeks | `technology-architecture.yaml` |
 | Sprint 3 | ADM-E + F | Implementation Wave | 2 weeks | `implementation-strategy.yaml` |
 | Sprint 4+ | ADM-G + H | Governance + Change | Ongoing | `governance-report.yaml`, `change-request.yaml` |
 
@@ -101,7 +101,8 @@ vision:
     user_count: 500
     latency_requirement_ms: 2000
   constraints:
-    budget_aud: 150000
+    budget_amount: 150000
+    budget_currency: "[CURRENCY]"   # ISO 4217 code, e.g. GBP, EUR, USD
     timeline_weeks: 12
     infrastructure: "on_premise" | "private_cloud" | "hybrid" | "multi-region"
     jurisdiction: "AU" | "EU" | "APAC" | "US" | "multi"
@@ -121,7 +122,7 @@ vision:
 
     - metric: "model_accuracy"
       target_percent: 92.5
-  regulatory_controls: ["APP-11.1", "APRA-CPS230"]
+  regulatory_controls: ["APP-11.1", "APRA-CPS230", "APRA-CPS234"]
   risk_profile:
 
     - risk: "GPU procurement delay"
@@ -137,17 +138,17 @@ vision:
 
 - [ ] All stakeholders have signed off on scope
 
-- [ ] Budget and timeline confirmed with CEO
+- [ ] Budget and timeline confirmed with `[Executive Sponsor]`
 
 - [ ] Regulatory baseline identified (jurisdiction → controls mapping)
 
 - [ ] Handoff criteria to Sprint 1 documented
 
-**Trigger to Sprint 1:** Vision gate passes → create Sprint 1 issue, attach `vision.yaml`.
+**Trigger to Sprint 1:** Vision gate passes → create the Sprint 1 issue in `[ISSUE_TRACKER]`, attach `vision.yaml`.
 
 ---
 
-## Sprint 1: Business + Data Architecture (ADM-B + C partial)
+## Sprint 1: Business + Data + Application Architecture (ADM-B + C)
 
 **Duration:** 2 weeks
 
@@ -167,7 +168,7 @@ vision:
 2. **Process mapping:** Value streams with SLA targets
 3. **Data asset inventory (ADM-C):** Classification, volume, retention, encryption
 4. **Data flow definition:** Source → destination with transformation and compliance controls
-5. **Application component mapping:** RAG pipeline / agent workflow components with SLAs
+5. **Application component mapping (ADM-C):** RAG pipeline / agent workflow components with SLAs
 
 ### Deliverables
 
@@ -242,11 +243,11 @@ applications:
 
 - [ ] AI Safety Architect reviewed data architecture (safety sign-off)
 
-**Trigger to Sprint 2:** Sprint 1 gate passes → Founding Engineer receives data architecture for technology design.
+**Trigger to Sprint 2:** Sprint 1 gate passes → `[Lead Engineer]` receives the data and application architecture for technology design.
 
 ---
 
-## Sprint 2: Technology Architecture (ADM-C continuation + D)
+## Sprint 2: Technology Architecture (ADM-D)
 
 **Duration:** 2 weeks
 
@@ -328,7 +329,7 @@ infrastructure:
 
 **Duration:** 2 weeks
 
-**Goal:** Work packages defined, migration strategy selected, risk register populated. Ready for Founding Engineer to execute.
+**Goal:** Work packages defined, migration strategy selected, risk register populated. Ready for `[Lead Engineer]` to execute.
 
 ### O-AA Axiom Alignment
 
@@ -342,7 +343,7 @@ infrastructure:
 2. **Migration wave planning:** Duration, dependencies, sequencing
 3. **Risk register:** Likelihood, impact, mitigation, owner
 4. **Migration strategy:** Big bang vs incremental vs parallel run
-5. **Architecture handoff:** Blueprint package delivered to Founding Engineer
+5. **Architecture handoff:** Blueprint package delivered to `[Lead Engineer]`
 
 ### Deliverables
 
@@ -367,13 +368,13 @@ waves:
         name: "GPU Cluster Setup"
         type: "infrastructure"
         effort_person_weeks: 1
-        assignee_role: "Founding Engineer"
+        assignee_role: "[Lead Engineer]"
 
       - id: "WP-002"
         name: "Model Serving Deployment"
         type: "infrastructure"
         effort_person_weeks: 1
-        assignee_role: "Founding Engineer"
+        assignee_role: "[Lead Engineer]"
 
   - id: "WAVE-002"
     name: "Data Pipeline"
@@ -385,7 +386,7 @@ waves:
         name: "Document Ingestion Pipeline"
         type: "application"
         effort_person_weeks: 1.5
-        assignee_role: "Founding Engineer"
+        assignee_role: "[Lead Engineer]"
 migration:
   strategy: "big_bang" | "incremental" | "parallel_run"
   cutover_window: "weekend"
@@ -403,9 +404,9 @@ migration:
 
 - [ ] Risk register complete — all risks have owners and mitigations
 
-- [ ] Blueprint package attached to Paperclip, assigned to Founding Engineer
+- [ ] Blueprint package attached to the Sprint 3 issue in `[ISSUE_TRACKER]`, assigned to `[Lead Engineer]`
 
-**Trigger to Sprint 4:** Blueprint package delivered → Founding Engineer begins Wave-001 execution.
+**Trigger to Sprint 4:** Blueprint package delivered → `[Lead Engineer]` begins Wave-001 execution.
 
 ---
 
@@ -467,9 +468,9 @@ compliance_artifacts:
 | Frequency | Activity | Owner |
 |---|---|---|
 | Bi-weekly | Compliance checklist review during implementation | Enterprise Architecture Lead |
-| Weekly | Performance metrics review | Founding Engineer |
+| Weekly | Performance metrics review | `[Lead Engineer]` |
 | Monthly | Architecture fitness assessment | Enterprise Architecture Lead + AI Safety Architect |
-| Quarterly | Stakeholder architecture review | CEO + all stakeholders |
+| Quarterly | Stakeholder architecture review | `[Executive Sponsor]` + all stakeholders |
 | Ad-hoc | Change request processing | Enterprise Architecture Lead |
 
 ### Governance Gate (Continuous)
@@ -491,19 +492,19 @@ compliance_artifacts:
 | Sprint | Phase | Primary Artefact | Secondary Artefact |
 |---|---|---|---|
 | 0 | ADM-P + A | `vision.yaml` | `stakeholder-map.md` |
-| 1 | ADM-B + C (data) | `business-architecture.yaml` | `data-architecture.yaml` |
-| 2 | ADM-C (part) + D | `technology-architecture.yaml` | `tech-stack-compliance.md` |
+| 1 | ADM-B + C | `business-architecture.yaml` | `data-architecture.yaml` |
+| 2 | ADM-D | `technology-architecture.yaml` | `tech-stack-compliance.md` |
 | 3 | ADM-E + F | `implementation-strategy.yaml` | `migration-plan.md` |
 | 4+ | ADM-G + H | `governance-report.yaml` | `change-request.yaml` |
 
 ---
 
-## Paperclip Integration
+## Issue Tracker Integration
 
-Each sprint produces Paperclip issues for traceability:
+Each sprint produces issues in the team's issue tracker (`[ISSUE_TRACKER]`, e.g. Jira, GitHub Issues, Azure Boards) for traceability. Engagement and parent issues are referenced as `${user_config.project_issue_prefix}-[NNN]`:
 
 1. **Sprint N issue** — architecture artifacts attached as comments
-2. **Work package issues** — auto-created from `implementation-strategy.yaml` waves, assigned to Founding Engineer
+2. **Work package issues** — created from `implementation-strategy.yaml` waves, assigned to `[Lead Engineer]`
 3. **Compliance issues** — auto-assigned to AI Safety Architect
 4. **Phase gate issues** — block downstream work until the sprint gate criteria pass
 
@@ -537,11 +538,11 @@ Example: [Sprint 3] ADM-E: WAVE-001 Foundation Infrastructure
 
 ## References
 
-- ${user_config.references_dir} — organisation reference documents (ADR-001: Executable TOGAF ADM Workflow, ADR-002: Architecture Handoff Process, ADR-003: AI Governance Framework, O-AA Study Notes); include only documents that exist in the configured directory
+- ${user_config.references_dir} — organisation reference documents (e.g. ADRs, architecture handoff process, AI governance framework, O-AA study notes); include only documents that exist in the configured directory
 
 - Sprint artefact structures: inlined in this template (see each sprint's structure section)
 
-- The Open Group: Open Agile Architecture (O-AA) Standard — https://publications.opengroup.org/c208
+- The Open Group: Open Agile Architecture™ Standard, Version 2.0 (C262) — https://publications.opengroup.org/c262
 
 - The Agile Enterprise Architect Playbook (G226) — TOGAF + Agile integration
 

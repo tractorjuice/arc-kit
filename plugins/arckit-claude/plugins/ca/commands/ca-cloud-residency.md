@@ -7,8 +7,8 @@ keep-coding-instructions: true
 handoffs:
   - command: adr
     description: Sovereign cloud option choices and CLOUD-Act risk acceptance warrant Architecture Decision Records.
-  - command: ca-itsg-33
-    description: Cloud control-profile selection (PBMM-Cloud, Secret-High) is grounded in the ITSG-33 categorisation.
+  - command: ca-pspc
+    description: The residency envelope, sub-processor analysis and CSP shortlist feed the federal procurement strategy where cloud is in scope.
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)

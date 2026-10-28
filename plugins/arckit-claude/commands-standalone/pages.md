@@ -152,9 +152,21 @@ projects/
 │   │   └── ARC-001-WARD-{NNN}-v1.0.md  # Wardley Maps
 │   ├── data-contracts/
 │   │   └── ARC-001-DMC-{NNN}-v1.0.md   # Data Mesh Contracts
+│   ├── research/
+│   │   └── ARC-001-RSCH-{NNN}-v1.0.md  # Research Findings (also AWRS, AZRS, GCRS, DSCT, TNDR, CMPT, GOVR, GCSR, GLND, GRNT)
 │   ├── reviews/
 │   │   ├── ARC-001-HLDR-v1.0.md        # HLD Review
 │   │   └── ARC-001-DLDR-v1.0.md        # DLD Review
+│   ├── changes/
+│   │   └── ARC-001-ACHG-{NNN}-v1.0.md  # Architecture Change Requests (TOGAF overlay)
+│   ├── audits/
+│   │   └── ARC-001-CDAU-{NNN}-v1.0.md  # Codebase Audits
+│   ├── framework/
+│   │   └── ARC-001-FWRK-v1.0.md        # Framework Overview
+│   ├── procurement/
+│   │   ├── ARC-001-GCLD-v1.0.md        # G-Cloud Search
+│   │   ├── ARC-001-GCLC-v1.0.md        # G-Cloud Clarifications
+│   │   └── ARC-001-DOS-v1.0.md         # DOS Requirements
 │   ├── vendors/
 │   │   ├── {vendor-slug}-profile.md      # Vendor profiles (flat)
 │   │   └── {vendor-name}/               # Vendor documents (nested)
@@ -361,6 +373,13 @@ Create `docs/manifest.json` with the discovered structure:
           "documentId": "ARC-001-DLDR-v1.0"
         }
       ],
+      "changes": [
+        {
+          "path": "projects/001-project-name/changes/ARC-001-ACHG-001-v1.0.md",
+          "title": "Architecture Change Request: Retire the legacy CRM",
+          "documentId": "ARC-001-ACHG-001-v1.0"
+        }
+      ],
       "vendors": [
         {
           "name": "Acme Corp",
@@ -395,6 +414,8 @@ Create `docs/manifest.json` with the discovered structure:
   ]
 }
 ```
+
+Put the `ARC-*` files of each artefact subdirectory under its own project key, the camelCase of the directory name: `diagrams`, `decisions`, `wardleyMaps`, `dataContracts`, `research`, `reviews`, `changes`, `audits`, `framework` and `procurement`. The dashboard renders each of these keys as its own sidebar section. Leave out empty keys.
 
 ## Step 3: Generate index.html
 
@@ -452,7 +473,7 @@ Generate `docs/llms.txt` following the [llmstxt.org](https://llmstxt.org/) stand
 - Paragraph: explain the ArcKit traceability chain and artifact layout
 - `## Documentation site` — `./index.html` and `./manifest.json` with descriptions
 - `## Global artifacts` — one `- [Title](url): Category · \`DocId\`.` bullet per entry in `manifest.global`
-- `## Projects` — for each project, an H3 with project name and a bulleted list of all documents, diagrams, decisions, wardley maps, data contracts, research, reviews, vendors, vendor profiles, tech notes
+- `## Projects` — for each project, an H3 with project name and a bulleted list of all documents, diagrams, decisions, wardley maps, data contracts, research, reviews, change requests, audits, framework, procurement, vendors, vendor profiles, tech notes
 - `## ArcKit guides` — grouped by category, bullets linking to `./guides/*.md` (relative paths)
 - `## DDaT role guides` — bullets linking to `./guides/roles/*.md`
 - `## Optional` — source repo URL, arckit.org, GitHub ArcKit repo, and any `external/` files
@@ -492,6 +513,10 @@ Document Breakdown:
 - Project Documents: {project_doc_count}
 - Diagrams: {diagram_count}
 - ADRs: {adr_count}
+- Change Requests: {change_count}
+- Audits: {audit_count}
+- Framework: {framework_count}
+- Procurement: {procurement_count}
 - Vendor Documents: {vendor_doc_count}
 - Vendor Profiles: {vendor_profile_count}
 - Tech Notes: {tech_note_count}
