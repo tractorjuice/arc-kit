@@ -2,7 +2,7 @@
 
 > **Overlay Origin**: Community-contributed | **Domain co-maintainer (proposed)**: [@pacharanero](https://github.com/pacharanero) (Dr Marcus Baw) | **ArcKit Version**: [VERSION]
 
-The UK NHS Clinical Safety Overlay adds 4 community-contributed commands covering NHS clinical safety, NHS procurement assurance, and UK/EU medical-device regulation. It is the **first sector-specific** ArcKit overlay (all existing overlays are jurisdiction-specific) and establishes the `uk-{sector}-*` naming precedent for future sector overlays.
+The UK NHS Clinical Safety Overlay adds 4 community-contributed commands covering NHS clinical safety, NHS procurement assurance, and UK/EU medical-device regulation. It is the **second sector-specific** ArcKit overlay, after the [UK Finance Payments Overlay](uk-fs-payments-overlay.md) (the others are jurisdiction-specific), and follows the `uk-{sector}-*` naming that overlay set.
 
 The DCB0129 and DCB0160 commands follow Dr Marcus Baw's [SAFETY.md spec 2.0.0-draft](https://github.com/pacharanero/SAFETY.md) for filenames, required fields and the YAML-frontmatter hazard log, placed inside an ArcKit project subdirectory rather than the repo root, with an ArcKit Document Control block prepended. The spec is still a draft, so the overlay names the commit it follows and lists its deliberate deviations under [SAFETY.md spec version and deviations](#safetymd-spec-version-and-deviations).
 
