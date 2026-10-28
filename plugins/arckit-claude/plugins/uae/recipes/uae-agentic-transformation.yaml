@@ -204,7 +204,7 @@ targets:
   # --- ADRs (agentic-specific decisions) --------------------------------
   - id: ADR-001
     skill: arckit:adr
-    topic: "Cloud platform and sovereign hosting (Core42, G42 sovereign, Microsoft UAE, e& Sovereign Launchpad on AWS)"
+    topic: "Cloud platform and sovereign hosting (Core42, G42 sovereign, Microsoft UAE, e& Sovereign Launchpad on AWS, du Tech National Hypercloud)"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ, AWS_RESEARCH, AZURE_RESEARCH, UAE_CLOUD_RESIDENCY]

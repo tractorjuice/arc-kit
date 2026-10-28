@@ -15,7 +15,7 @@
 
 ## Executive Summary
 
-[Two to three paragraphs describing the federal entity's service portfolio in scope, the headline reduction commitments under Zero Bureaucracy, and the alignment with the UAE Code for Government Services principles.]
+[Two to three paragraphs describing the federal entity's service portfolio in scope, the headline reduction commitments under Zero Bureaucracy, and the alignment with the eight pillars of the UAE Code for Government Services.]
 
 ## Service Catalogue Mapping
 
@@ -49,13 +49,18 @@ For each service, capture the current state and the committed target across the 
 
 ## Code Compliance Statement
 
-| Code principle | Evidence of compliance | Gap / remediation |
-|----------------|------------------------|-------------------|
-| Proactive (anticipates customer need) | [evidence] | [gap] |
-| Omni-channel (consistent across channels) | [evidence] | [gap] |
-| Personalised (uses known customer context) | [evidence] | [gap] |
-| Simple (minimum effort, plain language) | [evidence] | [gap] |
-| Fast (delivered without delay) | [evidence] | [gap] |
+The Code's general framework has eight pillars (مرتكزات), listed in the Arabic text of the Cabinet's announcement of 23 April 2026 [ZBUR-1]. The English text does not list them, so the English names below are translations.
+
+| Code pillar | Evidence of compliance | Gap / remediation |
+|-------------|------------------------|-------------------|
+| A simpler, easier and faster experience (تجربة أبسط وأسهل وأسرع) | [evidence] | [gap] |
+| Customer first (المتعامل أولاً) | [evidence] | [gap] |
+| Humanising services (أنسنة الخدمات) | [evidence] | [gap] |
+| A consistent experience across all service channels (اتساق التجربة عبر مختلف قنوات الخدمة) | [evidence] | [gap] |
+| Flexible and secure digital systems (أنظمة رقمية مرنة وآمنة) | [evidence] | [gap] |
+| A culture of excellent service (ثقافة الخدمة المتميزة) | [evidence] | [gap] |
+| Participatory design (التصميم التشاركي) | [evidence] | [gap] |
+| Service and systems efficiency (كفاءة الخدمة والأنظمة) | [evidence] | [gap] |
 
 ## External References
 
@@ -64,12 +69,13 @@ For each service, capture the current state and the committed target across the 
 | Doc ID | Title | URL | Verified date |
 |--------|-------|-----|---------------|
 | UAE-CAB-2026-04-23 | UAE Cabinet meeting — Code for Government Services and Zero Bureaucracy | <https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting> | [YYYY-MM-DD] |
+| UAE-CAB-2026-04-23-AR | UAE Cabinet announcement of 23 April 2026, Arabic text (lists the Code's eight pillars) | <https://uaecabinet.ae/ar/news/under-directives-of-uae-president-and-in-world-first-mohammed-bin-rashid-reveals-new-uae-government-framework-to-deploy-agentic-ai-across-50-of-government-sectors-operations-within-two-years> | [YYYY-MM-DD] |
 
 ### Citations
 
 | Citation | Doc ID | Section | Used in |
 |----------|--------|---------|---------|
-| [ZBUR-1] | UAE-CAB-2026-04-23 | Code for Government Services principles | Code Compliance Statement |
+| [ZBUR-1] | UAE-CAB-2026-04-23-AR | The Code's general framework and its eight pillars (مرتكزات) | Code Compliance Statement |
 | [ZBUR-2] | UAE-CAB-2026-04-23 | Zero Bureaucracy programme | Bureaucracy Elimination Baseline |
 
 ### Unreferenced Documents
