@@ -7,7 +7,7 @@
 
 Run `/arckit:au-aescsf` before `/arckit:au-energy-compliance`: the compliance pack reads the AESCSF assessment, when there is one, as cyber-posture context. It does not need it.
 
-Recipe: `au-energy` (22 targets) composes the `arckit-au` federal baseline — Essential Eight, ISM, OT security, SOCI/CIRMP, Privacy Act 1988 / OAIC NDB — then layers energy-sector coverage (AESCSF maturity, AER ring-fencing, NER/NGR, AEMO obligations, IT/OT evidence, data flows, traceability, and energy-sector ADRs) on top. It includes an optional default-off `SERVICE_INVENTORY` target (`/arckit:servicenow`) for teams with a CMDB / service-inventory need.
+Recipe: `au-energy` (23 targets) composes the `arckit-au` federal baseline — Essential Eight, ISM, OT security, SOCI/CIRMP, Privacy Act 1988 / OAIC NDB — then layers energy-sector coverage (AESCSF maturity, AER ring-fencing, NER/NGR, AEMO obligations, IT/OT evidence, data flows, energy-sector ADRs, a risk register fed by the gaps, and traceability) on top. It includes an optional default-off `SERVICE_INVENTORY` target (`/arckit:servicenow`) for teams with a CMDB / service-inventory need.
 
 ## First Australian sector overlay
 

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:agile-security` creates an Agile Security document based on Open Agile Architecture (O-AA, C208) Axiom 16 (Secure by Design), C208 Ch. 4.6 and the O-AA Security Playbook (G216). Security becomes backlog work inside the product sprint rhythm rather than a separate gate or phase: the threat model is updated every sprint, compliance evidence is produced alongside development, testing depth follows risk, and continuous validation replaces phase-gate checkpoints. Security is the team's responsibility, not a separate security team's gate. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
+`/arckit:agile-security` creates an Agile Security document based on the Open Agile Architecture™ Standard, Version 2.0 (O-AA, C262): Axiom 16 (Secure by Design) in Appendix A, §14.6.1 Security, and the O-AA Security Playbook (G216). Security becomes backlog work inside the product sprint rhythm rather than a separate gate or phase: the threat model is updated every sprint, compliance evidence is produced alongside development, testing depth follows risk, and continuous validation replaces phase-gate checkpoints. Security is the team's responsibility, not a separate security team's gate. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
 
 ---
 
@@ -81,7 +81,7 @@ If the named project does not exist, the command creates it. If an OASEC documen
 | Example CI Checks (Illustrative) | Pipeline shape only; ArcKit does not ship these tools |
 | Risk Assessment | Risks of the approach itself and their mitigations |
 | Acceptance Criteria | Checklist for the completed document |
-| External References | Document Register (C208 with URL and verification date), citations |
+| External References | Document Register (O-AA Standard, Version 2.0, C262, with URL and verification date), citations |
 
 ---
 

@@ -434,17 +434,17 @@
 <p><strong>Overlay Origin</strong>: Community-contributed | <strong>Domain co-maintainer</strong>: [recruiting — open call]</p>
 </blockquote>
 <h2 id="purpose">Purpose</h2>
-<p>The USA Federal Civilian Overlay adds 10 community-contributed commands that ground architecture artefacts in the federal civilian regulatory stack — FIPS 199 categorization, NIST SP 800-53 Rev 5 tailoring, FedRAMP authorization (SSP + RAR), CISA Zero Trust Maturity Model v2.0, ICAM under M-19-17, the NIST AI RMF + the OMB M-24-10 / M-25-21 chain, the E-Government Act §208 PIA, and EO 14028 secure-software attestation + SBOM.</p>
+<p>The USA Federal Civilian Overlay adds 10 community-contributed commands that ground architecture artefacts in the federal civilian regulatory stack — FIPS 199 categorization, NIST SP 800-53 Rev 5 tailoring, FedRAMP authorization (SSP + RAR), CISA Zero Trust Maturity Model v2.0, ICAM under M-19-17, the NIST AI RMF + OMB M-25-21 (AI use) and M-25-22 (AI acquisition), the E-Government Act §208 PIA, and EO 14028 secure-software attestation + SBOM.</p>
 <p>The target audience is federal civilian agencies building or procuring information systems, and the vendors who serve them (FedRAMP-pursuing CSPs, system integrators, AI / ML providers). The overlay is positioned for agency System Owners, ISSOs, Authorizing Officials, CAIOs, SAOPs, and the architects supporting them.</p>
-<p>The overlay is shipped as <strong><code>[COMMUNITY]</code></strong> tier rather than official baseline. Federal civilian statutory currency moves faster than a single maintainer can verify with confidence — EO 14110 was issued in October 2023 and revoked in January 2025; M-25-21 superseded the prior acquisition guidance in 2025; FedRAMP Rev 5 completed transition in 2024. A community tier signals: &quot;the regulatory anchors here are the ones the maintainer has verified on the date stamped in the citation register; you must re-verify before relying on them for go-live decisions.&quot;</p>
+<p>The overlay is shipped as <strong><code>[COMMUNITY]</code></strong> tier rather than official baseline. Federal civilian statutory currency moves faster than a single maintainer can verify with confidence — EO 14110 was issued in October 2023 and revoked in January 2025; in April 2025 M-25-21 and M-25-22 replaced the 2024 AI use and acquisition memos (M-24-10 and M-24-18); OMB M-24-15 replaced the JAB with the FedRAMP Board in July 2024; FedRAMP Rev 5 completed transition in 2024, and the Consolidated Rules for 2026 make Rev 5 a legacy certification type. A community tier signals: &quot;the regulatory anchors here are the ones the maintainer has verified on the date stamped in the citation register; you must re-verify before relying on them for go-live decisions.&quot;</p>
 <hr />
 <h2 id="when-to-use-the-overlay">When to Use the Overlay</h2>
 <ul>
 <li>The contracting authority is a <strong>federal civilian agency</strong> (department, independent agency, executive branch entity outside DoD / IC).</li>
 <li>The system handles federal data under <strong>FISMA boundary</strong> (44 U.S.C. §3551 et seq.).</li>
-<li>An <strong>AI use case</strong> is in scope under <strong>OMB M-24-10</strong> (use of AI) or <strong>M-25-21</strong> (acquisition of AI).</li>
-<li>The vendor is <strong>pursuing FedRAMP authorization</strong> (Low / Moderate / High / LI-SaaS) for federal customer adoption.</li>
-<li>The agency <strong>Senior AI Official</strong> or <strong>SAOP</strong> needs artefacts for the <a href="http://federal.ai.gov">federal.ai.gov</a> AI use-case inventory or for the §208 PIA register.</li>
+<li>An <strong>AI use case</strong> is in scope under <strong>OMB M-25-21</strong> (use and governance of AI) or <strong>M-25-22</strong> (acquisition of AI).</li>
+<li>The vendor is <strong>pursuing a FedRAMP Certification</strong> (Rev 5 Class B, C or D, which carry the LI-SaaS / Low, Moderate and High baselines, or FedRAMP 20x) for federal customer adoption.</li>
+<li>The agency <strong>Chief AI Officer</strong> or <strong>SAOP</strong> needs artefacts for the agency AI use-case inventory (published at <code>[agency.gov]/ai</code>) or for the §208 PIA register.</li>
 </ul>
 <hr />
 <h2 id="out-of-scope">Out of Scope</h2>
@@ -561,17 +561,31 @@
 </tr>
 <tr>
 <td>FedRAMP SSP Template Rev 5</td>
-<td><a href="https://www.fedramp.gov/documents-templates/">https://www.fedramp.gov/documents-templates/</a></td>
-<td>2026-05-23</td>
-<td>2026-05-23</td>
-<td>Current template revision</td>
+<td><a href="https://www.fedramp.gov/legacy/">https://www.fedramp.gov/legacy/</a></td>
+<td>2026-10-27</td>
+<td>2026-10-27</td>
+<td>Legacy since 23 June 2026; the old documents-templates page is gone</td>
 </tr>
 <tr>
 <td>FedRAMP RAR Template</td>
-<td><a href="https://www.fedramp.gov/documents-templates/">https://www.fedramp.gov/documents-templates/</a></td>
-<td>2026-05-23</td>
-<td>2026-05-23</td>
-<td>3PAO readiness assessment</td>
+<td><a href="https://www.fedramp.gov/legacy/">https://www.fedramp.gov/legacy/</a></td>
+<td>2026-10-27</td>
+<td>2026-10-27</td>
+<td>Moderate v2.1 (May 2024) and High; legacy since 23 June 2026; FedRAMP Ready retired 28 July 2026</td>
+</tr>
+<tr>
+<td>FedRAMP Consolidated Rules for 2026</td>
+<td><a href="https://www.fedramp.gov/2026/">https://www.fedramp.gov/2026/</a></td>
+<td>2026-10-27</td>
+<td>2026-10-27</td>
+<td>Certification type (Rev 5 / 20x), path (Agency / Program) and class (A–D); mandatory from 1 January 2027</td>
+</tr>
+<tr>
+<td>OMB M-24-15 (Modernizing FedRAMP)</td>
+<td><a href="https://www.whitehouse.gov/wp-content/uploads/2024/07/M-24-15-Modernizing-the-Federal-Risk-and-Authorization-Management-Program.pdf">https://www.whitehouse.gov/wp-content/uploads/2024/07/M-24-15-Modernizing-the-Federal-Risk-and-Authorization-Management-Program.pdf</a></td>
+<td>2026-10-27</td>
+<td>2026-10-27</td>
+<td>Rescinded the 2011 FedRAMP memo; PMO + FedRAMP Board; agency and program authorizations; JAB P-ATOs re-designated</td>
 </tr>
 <tr>
 <td>FedRAMP Authorization Boundary Guidance</td>
@@ -630,18 +644,25 @@
 <td>Timeline + scope clarification</td>
 </tr>
 <tr>
-<td>OMB M-24-10 (Agency Use of AI)</td>
-<td><a href="https://www.whitehouse.gov/wp-content/uploads/2024/03/M-24-10-Advancing-Governance-Innovation-and-Risk-Management-for-Agency-Use-of-Artificial-Intelligence.pdf">https://www.whitehouse.gov/wp-content/uploads/2024/03/M-24-10-Advancing-Governance-Innovation-and-Risk-Management-for-Agency-Use-of-Artificial-Intelligence.pdf</a></td>
-<td>2026-05-23</td>
-<td>2026-05-23</td>
-<td>Active; replaced EO 14110 requirements</td>
+<td>OMB M-25-21 (Agency Use of AI)</td>
+<td><a href="https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-21-Accelerating-Federal-Use-of-AI-through-Innovation-Governance-and-Public-Trust.pdf">https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-21-Accelerating-Federal-Use-of-AI-through-Innovation-Governance-and-Public-Trust.pdf</a></td>
+<td>2026-10-27</td>
+<td>2026-10-27</td>
+<td>Active; rescinded and replaced M-24-10 on 3 April 2025; high-impact AI and seven minimum practices</td>
 </tr>
 <tr>
-<td>OMB M-25-21 (AI Acquisition)</td>
-<td><a href="https://www.whitehouse.gov/omb/management/ofcio/">https://www.whitehouse.gov/omb/management/ofcio/</a></td>
-<td>2026-05-23</td>
-<td>2026-05-23</td>
-<td>AI acquisition clauses</td>
+<td>OMB M-25-22 (AI Acquisition)</td>
+<td><a href="https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-22-Driving-Efficient-Acquisition-of-Artificial-Intelligence-in-Government.pdf">https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-22-Driving-Efficient-Acquisition-of-Artificial-Intelligence-in-Government.pdf</a></td>
+<td>2026-10-27</td>
+<td>2026-10-27</td>
+<td>Active; rescinded and replaced M-24-18 on 3 April 2025; AI contract terms</td>
+</tr>
+<tr>
+<td>OMB M-26-04 (Unbiased AI Principles)</td>
+<td><a href="https://www.whitehouse.gov/wp-content/uploads/2025/12/M-26-04-Increasing-Public-Trust-in-Artificial-Intelligence-Through-Unbiased-AI-Principles-1.pdf">https://www.whitehouse.gov/wp-content/uploads/2025/12/M-26-04-Increasing-Public-Trust-in-Artificial-Intelligence-Through-Unbiased-AI-Principles-1.pdf</a></td>
+<td>2026-10-27</td>
+<td>2026-10-27</td>
+<td>LLM contract terms from 11 December 2025; complements M-25-22; sunsets after two years</td>
 </tr>
 <tr>
 <td>EO 14028 (Improving the Nation's Cybersecurity)</td>
@@ -695,7 +716,8 @@
 <hr />
 <h2 id="statutory-currency-anchor">Statutory Currency Anchor</h2>
 <ul>
-<li><strong>EO 14110 was revoked in January 2025.</strong> The successor anchors for federal AI governance are <strong>OMB M-24-10</strong> (agency use of AI) and <strong>OMB M-25-21</strong> (AI acquisition). The overlay tracks the M-24-10 / M-25-21 chain, not EO 14110.</li>
+<li><strong>EO 14110 was revoked in January 2025.</strong> The anchors for federal AI governance are <strong>OMB M-25-21</strong> (agency use of AI), which rescinded and replaced M-24-10 on 3 April 2025, and <strong>OMB M-25-22</strong> (AI acquisition), which replaced M-24-18 the same day, plus <strong>OMB M-26-04</strong> for large language model procurement. M-25-21 replaced &quot;rights-impacting&quot; and &quot;safety-impacting&quot; AI with &quot;high-impact&quot; AI. Checked on 27 October 2026: no later OMB memo or executive order has amended either memo. EO 14434 (29 September 2026) changes federal terminology from &quot;AI&quot; to &quot;Super Intelligence&quot; but not the requirements.</li>
+<li><strong>The JAB no longer exists.</strong> OMB M-24-15 (25 July 2024) rescinded the 2011 memo that created it; FedRAMP is now the GSA PMO and the FedRAMP Board, and existing JAB P-ATOs were re-designated. Under the FedRAMP Consolidated Rules for 2026, a certification has a type (Rev 5 or 20x), a path (Agency, where a sponsoring agency authorises first, or Program, where FedRAMP certifies directly) and a class (A–D).</li>
 <li><strong>FedRAMP completed the Rev 5 transition in 2024.</strong> Rev 4 is retired for new authorisations; the overlay anchors on Rev 5 throughout.</li>
 <li><strong>OMB M-22-18 / M-23-16 secure-software attestation has been active since 2024.</strong> Agencies have been collecting CISA attestation forms since common-form-availability in March 2024.</li>
 </ul>

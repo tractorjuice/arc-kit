@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Guard: O-AA C208 content integrity for the OAA plugin.
+"""Guard: O-AA Standard content integrity for the OAA plugin.
 
-C208 (The Open Group, "The O-AA Standard", v3.0 Oct 2022) Chapter 9 defines
-16 *named* axioms. The OAA plugin previously shipped fabricated axiom
-quotes ("Axiom 2: Strategy must shape..."), a C208 chapter map that does not
-exist in the standard, and "Learning Unit" scoping that C208 never uses.
+The overlay cites the Open Agile Architecture Standard, Version 2.0 (The Open
+Group document C262, April 2026), which supersedes C208 (2020, re-issued
+October 2022 with Technical Corrigendum U221). Version 2.0 Appendix A defines
+16 *named* axioms, with the same numbers and names as C208 Ch. 9. The OAA
+plugin previously shipped fabricated axiom quotes ("Axiom 2: Strategy must
+shape..."), a chapter map that does not exist in the standard, "Learning
+Unit" scoping that the standard never uses, and an edition label ("v3.0")
+that matches no edition.
 
 This guard blocks that defect class. It checks:
 
@@ -14,20 +18,26 @@ This guard blocks that defect class. It checks:
   3. the 16-axiom table in ``references/oaa-reference.md`` matches the
      canonical name list exactly
   4. no "Learning Unit" phrasing remains (certification-syllabus vocabulary,
-     not C208's — the standard's content is chapters and axioms)
+     not the standard's — its content is chapters and axioms)
   5. G216 (O-AA Security Playbook) and G226 (Agile EA Playbook) are cited in
      the right context
-  6. no stale C208 chapter coordinates remain — the pre-v3.0-era mapping
-     (Chapter 10 = Strategy, 12 = Product Architecture, 17 = Security,
-     18 = Governance, "Chapters 1–9" = ADM) does not exist in C208 v3.0;
-     the verified coordinates are Ch. 11 (Agile Strategy), Ch. 14
-     (Product Architecture), Ch. 4.6 + Axiom 16 + G216 (security),
-     Ch. 8 (Agile Governance), with ADM Lite as an ArcKit convention over
-     TOGAF ADM (C182), not a C208 chapter range
+  6. no stale chapter coordinates remain. Version 2.0 coordinates are
+     Ch. 5 (Agile Strategy), Ch. 7 (Agile Governance), Ch. 12 (Product
+     Architecture), Appendix A (axioms), and Axiom 16 + §14.6.1 + G216
+     (security). Blocked: the C208 coordinates (Ch. 11 Strategy, Ch. 14
+     Product Architecture, Ch. 8 Governance, Ch. 9 / §9.N axioms), the
+     "Ch. 4.6 Security by Design" section that neither edition has, the
+     fabricated pre-C208 map (Ch. 10 Strategy, Ch. 17 Security, Ch. 18
+     Governance), and "Chapters 1–9" as an ADM range (ADM Lite is an ArcKit
+     convention over TOGAF ADM, 10th Edition, C220)
   7. the ``oaa-adm-lite`` axiom set is consistent across the three places it
      is stated: the command's Axiom Alignment list, the template's per-sprint
      axiom blocks, and the 16-axiom table's "Applied by" column — a set that
      is declared but never applied (or applied but never declared) is drift
+  8. the edition is named: ``C208`` appears only where the text says it is
+     superseded, and no "v3.0" edition label is attached to the standard
+  9. each command, and its row in the README coverage table, cites the
+     command's Version 2.0 coordinate
 
 Scanned trees: the canonical source of truth (``plugins/arckit-oaa``), its
 arckit-claude mirror (``plugins/arckit-claude/plugins/oaa``), and the
@@ -45,7 +55,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# The 16 published axioms, C208 Ch. 9 (§9.1-§9.16).
+# The 16 published axioms, O-AA Standard Version 2.0 Appendix A (C208 Ch. 9).
 CANON_AXIOMS: dict[int, str] = {
     1: "Customer Experience Focus",
     2: "Outside-In Thinking",
@@ -95,26 +105,50 @@ ADM_LITE_CITE_RE = re.compile(r"\*\*Axiom\s+(\d{1,2})\s*\(")
 # `| N | Name | applied-by cell |` rows of the 16-axiom table.
 APPLIED_BY_RE = re.compile(r"^\|\s*(\d{1,2})\s*\|[^|]*\|\s*([^|]*)\|", re.MULTILINE)
 
-# Stale C208 chapter coordinates. Each pattern is number+topic (or exact
-# table-cell form) so a legitimate citation of C208's *real* Chapter 10/12
-# (Part 2 building blocks, Ch. 10–22) can never false-positive.
+# Stale chapter coordinates. Each pattern is number+topic (or an exact
+# section number) so a legitimate citation of a Version 2.0 chapter with the
+# same number (Ch. 8 Architecture Development, Ch. 11 Continuous
+# Architectural Refactoring, Ch. 14 Software Architecture) never
+# false-positives. The topic must follow the number with only separators in
+# between, so the C208 column of the reference's migration table is safe.
+_CH = r"(?:Chapter|Ch\.?)\s?"
+_SEP = r"[—–\-:,( ]+"
 STALE_CHAPTER_PATTERNS: list[tuple[str, str]] = [
-    (r"(?:Chapter|Ch\.?)\s?10[—–\- ]+Strategy", "Agile Strategy is C208 Ch. 11"),
-    (r"(?:Chapter|Ch\.?)\s?10\s?\(Strategy\)", "Agile Strategy is C208 Ch. 11"),
+    # C208 coordinates, superseded by Version 2.0 (C262).
+    (_CH + r"11" + _SEP + r"(?:Agile )?Strategy", "Agile Strategy is O-AA v2.0 Ch. 5 (C208 Ch. 11)"),
+    (_CH + r"14" + _SEP + r"Product Architecture", "Product Architecture is O-AA v2.0 Ch. 12 (C208 Ch. 14)"),
+    (_CH + r"8" + _SEP + r"(?:Agile )?Governance", "Agile Governance is O-AA v2.0 Ch. 7 (C208 Ch. 8)"),
+    (_CH + r"9" + _SEP + r"(?:\(?\"?)?Axiom", "the axioms are O-AA v2.0 Appendix A (C208 Ch. 9)"),
+    (r"§\s?9\.\d{1,2}\b", "the axioms are O-AA v2.0 Appendix A, cited by number and name (C208 §9.1–§9.16)"),
     (
-        r"(?:Chapter|Ch\.?)\s?12[—–\- ]+Product Architecture",
-        "Product Architecture is C208 Ch. 14",
+        r"(?:Chapter|Ch\.?|§)\s?4\.6\b",
+        "neither C208 nor v2.0 has a §4.6 — cite Axiom 16 (Appendix A) and §14.6.1 Security",
     ),
-    (r"(?:Chapter|Ch\.?)\s?12\s?\(Product Architecture\)", "Product Architecture is C208 Ch. 14"),
-    (r"(?:Chapter|Ch\.?)\s?17[—–\- ]+Security", "C208 has no dedicated security chapter — use Ch. 4.6 + Axiom 16 + G216"),
-    (r"(?:Chapter|Ch\.?)\s?17\s?\(Security\)", "C208 has no dedicated security chapter — use Ch. 4.6 + Axiom 16 + G216"),
-    (r"(?:Chapter|Ch\.?)\s?18[—–\- ]+Governance", "Agile Governance is C208 Ch. 8"),
-    (r"(?:Chapter|Ch\.?)\s?18\s?\(Governance\)", "Agile Governance is C208 Ch. 8"),
-    (r"\|\s*Ch\.?\s?10\s?\|", "stale C208 chapter cell in the OAA coverage table"),
-    (r"\|\s*Ch\.?\s?1[278]\s?\|", "stale C208 chapter cell in the OAA coverage table"),
-    (r"Chapters? 1[–\-]9", "C208 does not define an ADM cycle — ADM Lite is an ArcKit convention over TOGAF ADM (C182)"),
-    (r"\bCh\.?\s?1[–\-]9\b", "C208 does not define an ADM cycle — ADM Lite is an ArcKit convention over TOGAF ADM (C182)"),
+    # The fabricated pre-C208 map; still wrong in Version 2.0.
+    (_CH + r"10" + _SEP + r"Strategy", "Agile Strategy is O-AA v2.0 Ch. 5"),
+    (_CH + r"10\s?\(Strategy\)", "Agile Strategy is O-AA v2.0 Ch. 5"),
+    (_CH + r"17" + _SEP + r"Security", "the standard has no security chapter — use Axiom 16 + §14.6.1 + G216"),
+    (_CH + r"18" + _SEP + r"Governance", "Agile Governance is O-AA v2.0 Ch. 7"),
+    (r"Chapters? 1[–\-]9", "the standard does not define an ADM cycle — ADM Lite is an ArcKit convention over TOGAF ADM (10th Edition, C220)"),
+    (r"\bCh\.?\s?1[–\-]9\b", "the standard does not define an ADM cycle — ADM Lite is an ArcKit convention over TOGAF ADM (10th Edition, C220)"),
 ]
+
+# Check 8: the superseded edition is only named as superseded, and the
+# non-existent "v3.0" edition label never comes back.
+EDITION_TOKEN_RE = re.compile(r"\bC208\b")
+EDITION_CONTEXT = ("supersed", 120)
+BAD_EDITION_LABEL_RE = re.compile(r"(?:C208|O-AA|Open Agile Architecture)[^\n]{0,60}\bv3\.0\b")
+
+# Check 9: the Version 2.0 coordinate each command must cite, in its command
+# file and in its row of the README coverage table.
+EXPECTED_COORDINATES: dict[str, str] = {
+    "oaa-adm-lite": "Appendix A",
+    "product-architecture": "Ch. 12",
+    "agile-strategy": "Ch. 5",
+    "agile-security": "§14.6.1",
+    "agile-governance": "Ch. 7",
+}
+COVERAGE_ROW_RE = re.compile(r"^\|\s*`([a-z-]+)`\s*\|([^|]*)\|", re.MULTILINE)
 
 
 def norm(s: str) -> str:
@@ -171,7 +205,7 @@ def check_axiom_citations(path: Path, text: str) -> list[str]:
         if number < 1 or number > 16:
             failures.append(
                 f"  {path.relative_to(ROOT)}:{_line_of(text, m.start())} "
-                f"'Axiom {number}' — C208 Ch. 9 defines exactly 16 axioms (§9.1-§9.16)"
+                f"'Axiom {number}' — O-AA v2.0 Appendix A defines exactly 16 axioms"
             )
             continue
         named = NAME_RE.match(text[m.end() :])
@@ -215,7 +249,7 @@ def check_learning_units(path: Path, text: str) -> list[str]:
     for m in re.finditer(r"learning unit", text, re.IGNORECASE):
         failures.append(
             f"  {path.relative_to(ROOT)}:{_line_of(text, m.start())} "
-            f"'Learning Unit' is certification-syllabus vocabulary — cite C208 "
+            f"'Learning Unit' is certification-syllabus vocabulary — cite O-AA v2.0 "
             f"chapters/axioms (and, where useful, 'certification syllabus domain N')"
         )
     return failures
@@ -242,8 +276,57 @@ def check_chapter_citations(path: Path, text: str) -> list[str]:
         for m in re.finditer(pattern, text):
             failures.append(
                 f"  {path.relative_to(ROOT)}:{_line_of(text, m.start())} "
-                f"stale C208 coordinate '{m.group(0).strip()}' — {reason}"
+                f"stale chapter coordinate '{m.group(0).strip()}' — {reason}"
             )
+    return failures
+
+
+def check_edition(path: Path, text: str) -> list[str]:
+    """Check 8: name the edition cited; C208 only as the superseded edition."""
+    failures = []
+    window = EDITION_CONTEXT[1]
+    for m in EDITION_TOKEN_RE.finditer(text):
+        lo = max(0, m.start() - window)
+        hi = min(len(text), m.end() + window)
+        if EDITION_CONTEXT[0] not in text[lo:hi].lower():
+            failures.append(
+                f"  {path.relative_to(ROOT)}:{_line_of(text, m.start())} "
+                f"cites C208 — the overlay cites the O-AA Standard, Version 2.0 (C262), "
+                f"which supersedes C208; name C208 only as the superseded edition"
+            )
+    for m in BAD_EDITION_LABEL_RE.finditer(text):
+        failures.append(
+            f"  {path.relative_to(ROOT)}:{_line_of(text, m.start())} "
+            f"'v3.0' matches no O-AA edition — C208 was re-issued in October 2022 "
+            f"(Technical Corrigendum U221) and Version 2.0 is C262"
+        )
+    return failures
+
+
+def check_command_coordinates(base: Path) -> list[str]:
+    """Check 9: each command and its README coverage row cite the v2.0 coordinate."""
+    failures: list[str] = []
+    label = base.relative_to(ROOT) if base.is_relative_to(ROOT) else Path(str(base))
+    for command, coordinate in EXPECTED_COORDINATES.items():
+        cmd_path = base / "commands" / f"{command}.md"
+        if not cmd_path.is_file():
+            failures.append(f"  {label}/commands/{command}.md missing")
+            continue
+        if coordinate not in cmd_path.read_text(encoding="utf-8"):
+            failures.append(
+                f"  {label}/commands/{command}.md does not cite its O-AA v2.0 "
+                f"coordinate '{coordinate}'"
+            )
+    readme = base / "README.md"
+    if readme.is_file():
+        rows = {m.group(1): m.group(2) for m in COVERAGE_ROW_RE.finditer(readme.read_text(encoding="utf-8"))}
+        for command, coordinate in EXPECTED_COORDINATES.items():
+            cell = rows.get(command)
+            if cell is None or coordinate not in cell:
+                failures.append(
+                    f"  {label}/README.md: coverage table row for `{command}` "
+                    f"must cite '{coordinate}' (O-AA v2.0)"
+                )
     return failures
 
 
@@ -320,6 +403,7 @@ def main() -> int:
         failures.extend(check_learning_units(path, text))
         failures.extend(check_playbook_context(path, text))
         failures.extend(check_chapter_citations(path, text))
+        failures.extend(check_edition(path, text))
 
     if reference is None:
         failures.append("  plugins/arckit-oaa/references/oaa-reference.md not found")
@@ -329,23 +413,27 @@ def main() -> int:
     for base in SOURCE_ROOTS:
         if base.is_dir():
             failures.extend(check_adm_lite_set_consistency(base))
+            failures.extend(check_command_coordinates(base))
 
     if failures:
-        print(f"FAIL: {len(failures)} O-AA C208 integrity problem(s):", file=sys.stderr)
+        print(f"FAIL: {len(failures)} O-AA Standard integrity problem(s):", file=sys.stderr)
         print("\n".join(failures), file=sys.stderr)
         print(
-            "\nFix: cite the 16 published axioms by name (C208 Ch. 9), the verified "
-            "C208 v3.0 chapter coordinates (Ch. 11/14/4.6/8), and drop 'Learning Unit' "
+            "\nFix: cite the O-AA Standard, Version 2.0 (C262): the 16 published "
+            "axioms by number and name (Appendix A) and the v2.0 chapter coordinates "
+            "(Ch. 5 Agile Strategy, Ch. 7 Agile Governance, Ch. 12 Product "
+            "Architecture, Axiom 16 + §14.6.1 security), and drop 'Learning Unit' "
             "phrasing. See plugins/arckit-oaa/references/oaa-reference.md for the "
-            "canonical list.",
+            "canonical list and the C208-to-v2.0 map.",
             file=sys.stderr,
         )
         return 1
 
     print(
-        f"OK: O-AA C208 axiom/chapter integrity — {checked} files checked, "
-        f"{len(CANON_AXIOMS)}-axiom table consistent, no fabricated citations, "
-        f"no stale chapter coordinates, oaa-adm-lite axiom set consistent."
+        f"OK: O-AA Standard v2.0 (C262) axiom/chapter integrity — {checked} files "
+        f"checked, {len(CANON_AXIOMS)}-axiom table consistent, no fabricated citations, "
+        f"no stale chapter coordinates, edition named, command coordinates cited, "
+        f"oaa-adm-lite axiom set consistent."
     )
     return 0
 

@@ -98,7 +98,14 @@ If either holds, treat the use as materieel — clauses 3.1 (risk assessment), 3
 ### Step 5: Risk Assessment (clause 3.1)
 
 1. **Integral risk assessment**, required for materieel cloudgebruik, based on the BIV/TBB classification (pull from `/arckit-nl:nl-tbb` output if available; if not available, warn and proceed on user-supplied classification)
-2. Weigh the aspects the clause requires — the risk of foreign-government interference is explicitly named and must be assessed and mitigated as far as possible; note in the document that clause 3.1 requires five aspects in total and flag any not covered by current guidance for the assessor to complete against the published text
+2. Weigh the five aspects clause 3.1 lists, besides the regular topics of security, continuity and privacy:
+   1. The characteristics of the cloud use — the main provider and any sub-providers, the type of service (public / private / hybrid / community cloud), and the geographic region where data are processed and stored
+   2. The provider's role in security and continuity, and how it is assured
+   3. How it is arranged that the provider admits audit and accountability investigations (controle- en verantwoordingsonderzoeken), or reports on them
+   4. The risk of interference by a foreign government with confidentiality and availability — this must be explicitly weighed and mitigated as far as possible
+   5. The risk that the provider abuses a large supplier dependency, for example by forcing unwanted technology choices or commercial conditions
+
+   Clause 3.1 also requires that the Implementatiekader risicobeheersing cloudgebruik is followed, that residual risk is documented and formally accepted within the organisation, and that mitigations depending on what the provider must do (or not do) are written into the contract
 3. **Pre-scan DPIA / Full DPIA** — required where personal data are processed
 4. **DTIA** — required where data transfer to a third country without an adequacy decision is in scope
 
@@ -220,7 +227,7 @@ Next steps:
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-RBCLOUD-v{VERSION}.md`
 - ✅ Materieel publiek cloudgebruik determination made with rationale (clause 4.1)
-- ✅ Clause 3.1 risk assessment completed, including foreign-government interference and DPIA/DTIA applicability
+- ✅ Clause 3.1 risk assessment completed for all five aspects, including foreign-government interference, with residual-risk acceptance and DPIA/DTIA applicability
 - ✅ Clause 5.2 eligibility explicitly determined using a TBB category (or explicitly flagged as pending `/arckit-nl:nl-tbb`)
 - ✅ Clause 4.5 three cumulative conditions assessed individually where applicable
 - ✅ Clause 5.4 basisregistraties constraint assessed where applicable

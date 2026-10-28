@@ -16,7 +16,7 @@ allowed-tools:
   - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
-You are helping an enterprise architect create an **Agile Strategy Canvas** using Open Agile Architecture (O-AA, C208) — Ch. 11 Agile Strategy. This approach plans the dual transformation C208 is written for — the Digital Transformation of the enterprise together with its Agile Transformation — on a canvas that drives backlog-driven delivery.
+You are helping an enterprise architect create an **Agile Strategy Canvas** using Open Agile Architecture (O-AA Standard, Version 2.0, C262) — Ch. 5 Agile Strategy. This approach plans the dual transformation the standard takes as its starting point — the Digital Transformation of the enterprise together with its Agile Transformation — on a canvas that drives backlog-driven delivery.
 
 ## User Input
 
@@ -117,11 +117,11 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. O-AA Agile Strategy Framework
 
-O-AA agile strategy practice (C208 Ch. 11) establishes that:
+How ArcKit applies O-AA agile strategy (Version 2.0, Ch. 5):
 
-- **Dual transformation**: C208 covers the Digital Transformation of the enterprise together with its Agile Transformation (C208 Ch. 1 and Ch. 3). The canvas therefore has two dimensions — digital (technology, product, operating model) and agile (organizational, cultural, team agility) — planned together. Legacy modernization is part of the technology area of the digital dimension, not a separate track
+- **Dual transformation**: Version 2.0 takes the Digital Transformation of the enterprise, together with its Agile Transformation, as its starting point (Preface; Part 1, Ch. 3). The canvas therefore has two dimensions — digital (technology, product, operating model) and agile (organizational, cultural, team agility) — planned together. Legacy modernization is part of the technology area of the digital dimension, not a separate track
 
-- **Agile strategy tenets**: C208 Ch. 11 frames agile strategy through six tenets — grasp the situation, frame strategy around hard-to-reverse choices, anticipate unintended consequences, strategy is a journey, mix stability and dynamism, and do not deploy strategy in silos — and covers strategy deployment. Use them to test the canvas's choices; cite them by title and do not quote text you cannot verify against C208
+- **Agile strategy tenets**: Ch. 5 frames agile strategy through six tenets — situational awareness, frame strategy around hard-to-reverse choices, managing strategy implementation, strategy is a journey, balance stability and dynamism, and do not deploy strategy in silos — and covers unintended consequences and strategy deployment. Use them to test the canvas's choices; cite them by title and do not quote text you cannot verify against the standard
 
 - **Strategy canvas**: Condense strategy into 1-2 pages — not a 50-page document nobody reads
 
@@ -196,7 +196,7 @@ Create the Agile Strategy Canvas document following the template structure.
 
 ### 6. External References
 
-Populate the `## External References` section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Every claim taken from an `external/` document, a `projects/000-global/external/` policy, or a web source MUST carry an inline `[DOC_ID-CN]` citation marker resolving to a Document Register row. The Open Group *Open Agile Architecture* standard (C208) MUST appear in the Document Register with its primary URL and the verification date.
+Populate the `## External References` section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Every claim taken from an `external/` document, a `projects/000-global/external/` policy, or a web source MUST carry an inline `[DOC_ID-CN]` citation marker resolving to a Document Register row. The Open Group *Open Agile Architecture™ Standard, Version 2.0* (C262, <https://publications.opengroup.org/c262>) MUST appear in the Document Register with its primary URL and the verification date.
 
 ### 7. Quality Gate
 
@@ -268,7 +268,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 ## Important Notes
 
-1. **Dual Transformation**: C208's premise is that organizational agility is a key enabler of digital transformation. Plan the digital and agile dimensions together in each wave; do not defer the agile transformation to a later phase.
+1. **Dual Transformation**: The standard's premise (Part 1) is that organizational agility is a key enabler of digital transformation. Plan the digital and agile dimensions together in each wave; do not defer the agile transformation to a later phase.
 
 2. **Strategy Canvas is Living**: The strategy canvas is not a static document. It updates each sprint cycle as outcomes are measured and the environment changes. Treat it as a backlog item, not a shelf artifact.
 

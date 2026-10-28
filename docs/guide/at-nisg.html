@@ -439,7 +439,7 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Community</p>
 </blockquote>
-<p><code>/arckit:at-nisg</code> assesses Austrian <strong>NISG 2026</strong> obligations (BGBl. I Nr. 94/2025) — the Austrian transposition of NIS2. The NISG 2026 is a standalone act that <strong>replaced the NISG 2018</strong> and has been <strong>in force since 1 October 2026 (§51)</strong>, with registration due within three months, by 31 December 2026 (§29 Abs. 3). The detailed risk-management requirements and significant-incident criteria sit in the <strong>NISV 2026</strong> (BGBl. II Nr. 290/2026). Covers Essential / Important entity classification (§24), Cybersicherheitsbehörde registration, CSIRT incident reporting via the NIS2-Meldeplattform (§34), KSÖ coordination, and Austrian sectoral rules.</p>
+<p><code>/arckit:at-nisg</code> assesses Austrian <strong>NISG 2026</strong> obligations (BGBl. I Nr. 94/2025) — the Austrian transposition of NIS2. The NISG 2026 is a standalone act that <strong>replaced the NISG 2018</strong> and has been <strong>in force since 1 October 2026 (§51)</strong>, with registration due within three months (§29 Abs. 3). The Bundesamt für Cybersicherheit's registration page puts that at 1 January 2027, moved to Monday 4 January 2027 by §33 Abs. 2 AVG because 1 January is a public holiday; its FAQ still says 31 December 2026, so registering by then meets both. The detailed risk-management requirements and significant-incident criteria sit in the <strong>NISV 2026</strong> (BGBl. II Nr. 290/2026). Covers Essential / Important entity classification (§24), Cybersicherheitsbehörde registration, CSIRT incident reporting through the Bundesamt's NIS2-Services application on the Unternehmensserviceportal (§34), KSÖ coordination, and the sectoral overlaps the Act provides for (DORA, equivalent sector-specific EU acts).</p>
 <blockquote>
 <p><strong>Run after</strong> <code>/arckit:eu-nis2</code> where you can — this command supplements the EU NIS2 baseline with Austrian transposition specifics. The baseline is recommended, not required: the command warns if it is missing and carries on. <code>eu-nis2</code> ships in the separate <code>arckit-eu</code> overlay.</p>
 </blockquote>
@@ -497,7 +497,7 @@
 </tr>
 <tr>
 <td>1. Austrian Scope and Designation</td>
-<td>Sector classification (Anlagen 1/2), Essential vs Important (§24), previous NISG 2018 status</td>
+<td>Sector classification (Anlagen 1/2), Essential vs Important (§24, including federal and Land public administration), responsible CSIRT, previous NISG 2018 status</td>
 </tr>
 <tr>
 <td>2. Governance (§31)</td>
@@ -509,7 +509,7 @@
 </tr>
 <tr>
 <td>4. Incident Reporting (§34)</td>
-<td>CSIRT reporting via the NIS2-Meldeplattform, significance criteria (§35, NISV 2026), Cybersicherheitsbehörde registration (§29)</td>
+<td>CSIRT reporting via NIS2-Services on the USP, significance criteria (§35, NISV 2026), Cybersicherheitsbehörde registration (§29)</td>
 </tr>
 <tr>
 <td>5. Supply Chain Security</td>
@@ -637,7 +637,7 @@
 <li>EU NIS2 baseline (<code>ARC-&lt;id&gt;-NIS2-v*.md</code>) completed first, or its absence noted in the assessment.</li>
 <li>Entity classification (Essential vs Important) is explicit with sectoral basis.</li>
 <li>All 10 Article 21 measures assessed (no skipped rows).</li>
-<li>CSIRT reporting pathway (NIS2-Meldeplattform, §34) has named owner and incident-class triggers.</li>
+<li>CSIRT reporting pathway (NIS2-Services, §34) names the responsible CSIRT, an owner and incident-class triggers.</li>
 <li>Cybersicherheitsbehörde registration status and contact maintenance documented (§29).</li>
 <li>Supply-chain clauses fed to procurement (<code>/arckit:at-bvergg</code>).</li>
 <li>Gaps surfaced to project risk register.</li>
@@ -645,8 +645,9 @@
 <hr />
 <h2 id="key-notes">Key Notes</h2>
 <ul>
-<li><strong>In force since 1 October 2026</strong>: NISG 2026 (BGBl. I Nr. 94/2025) entered into force on 1 October 2026 (§51) and replaced the NISG 2018, which ceased to apply on the same date; Betreiber wesentlicher Dienste designations under the NISG 2018 became void (§51 Abs. 5), so former BwDs re-assess and register. The § references have been checked against the enacted text. The first implementing ordinance, the NISV 2026 (BGBl. II Nr. 290/2026), has applied since the end of 1 October 2026; further ordinances may follow, so items marked <code>[NEEDS VERIFICATION]</code> — chiefly ordinance-dependent detail and operational channel names — must be confirmed before external use.</li>
-<li><strong>Sectoral overlay</strong>: Some sectors (energy, transport, finance, health) have additional Austrian rules above NIS2 — confirm sectoral scope.</li>
+<li><strong>In force since 1 October 2026</strong>: NISG 2026 (BGBl. I Nr. 94/2025) entered into force on 1 October 2026 (§51) and replaced the NISG 2018, which ceased to apply on the same date; Betreiber wesentlicher Dienste designations under the NISG 2018 became void (§51 Abs. 5), so former BwDs re-assess and register. The § references have been checked against the enacted text. The first implementing ordinance, the NISV 2026 (BGBl. II Nr. 290/2026), has applied since the end of 1 October 2026; further ordinances (for example on independent bodies under §7 Abs. 6) may follow, so items marked <code>[NEEDS VERIFICATION]</code> — chiefly ordinance-dependent detail — must be confirmed before external use.</li>
+<li><strong>Public administration</strong>: federal bodies are Essential regardless of size and Land-level bodies (Ämter der Landesregierungen, Bezirkshauptmannschaften, Land bodies with legal personality) are Important (§24 Abs. 1–5); there is no opt-in. Gemeinden are outside the public-administration sector (§24 Abs. 3) but can be caught through another sector, such as drinking water or waste.</li>
+<li><strong>Sectoral overlaps</strong>: the Cybersicherheitsbehörde supervises every sector (§3a) and the Bezirksverwaltungsbehörden impose fines (§44); no sectoral regulator runs NIS supervision. DORA takes precedence for financial entities in its scope (§24 Abs. 7), though they still register, and sector-specific EU acts with at least equivalent requirements displace §§32 and 34 to that extent (§27). Health-sector entities report to HealthCERT, public administration to GovCERT, everyone else to the national CSIRT.</li>
 <li><strong>Run order</strong>: Supplements <code>/arckit:eu-nis2</code>. Run that first where the EU overlay is installed; without it the command warns and assesses the Austrian layer on its own.</li>
 <li><strong>Community-contributed</strong>: Output should be reviewed by qualified CISO / Cybersicherheitsbehörde-liaison / Rechtsabteilung before reliance.</li>
 </ul>

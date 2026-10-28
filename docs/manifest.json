@@ -1442,7 +1442,7 @@
     },
     {
       "path": "docs/guides/uk-nhs-dtac.md",
-      "title": "NHS DTAC v3 Assessment Guide",
+      "title": "NHS DTAC Assessment Guide",
       "category": "UK NHS Clinical Safety Overlay",
       "status": "community",
       "section": "Overlay Packs",
@@ -1457,7 +1457,7 @@
     },
     {
       "path": "docs/guides/us-ai-impact.md",
-      "title": "US AI Impact Assessment (OMB M-24-10 / M-25-21)",
+      "title": "US AI Impact Assessment (OMB M-25-21 / M-25-22)",
       "category": "USA Federal Civilian Overlay",
       "status": "community",
       "section": "Overlay Packs",

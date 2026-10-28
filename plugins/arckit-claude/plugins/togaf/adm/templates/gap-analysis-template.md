@@ -173,13 +173,15 @@ flowchart TD
 
 ## 6. Traceability
 
-| Gap | Source Capability (BPCM) | Target State (STRAT) | Principle Alignment (PRIN) | Workstream |
-|-----|--------------------------|---------------------|-------------------------------|------------|
-| G-001 | C1.1.1 (L2 → L4) | STRAT Section 3.2 | PRIN-005 | WS-001 |
-| G-002 | C2.1.1 (L1 → L4) | STRAT Section 4.1 | PRIN-003 | WS-002 |
-| G-003 | C3.1.1 (L3 → L5) | STRAT Section 2.5 | PRIN-007 | WS-002 |
-| G-004 | C4.1.1 (L1 → L3) | STRAT Section 5.3 | PRIN-002 | WS-001 |
-| G-005 | C5.1.1 (L3 → L5) | STRAT Section 3.8 | PRIN-009 | WS-004 |
+| Gap | Source Capability (BPCM) | Applications (APP / APPR) | Target State (STRAT) | Principle Alignment (PRIN) | Workstream |
+|-----|--------------------------|---------------------------|---------------------|-------------------------------|------------|
+| G-001 | C1.1.1 (L2 → L4) | APP-001 (Partial) → REPLACE | STRAT Section 3.2 | PRIN-005 | WS-001 |
+| G-002 | C2.1.1 (L1 → L4) | None (no supporting application) | STRAT Section 4.1 | PRIN-003 | WS-002 |
+| G-003 | C3.1.1 (L3 → L5) | APP-003 (Full) → KEEP | STRAT Section 2.5 | PRIN-007 | WS-002 |
+| G-004 | C4.1.1 (L1 → L3) | APP-004 (Partial) → MERGE | STRAT Section 5.3 | PRIN-002 | WS-001 |
+| G-005 | C5.1.1 (L3 → L5) | APP-002 (Full) → RETIRE | STRAT Section 3.8 | PRIN-009 | WS-004 |
+
+> **Applications**: the APP IDs that support the capability, with their coverage from the Application Inventory's capability mapping, and the Application Rationalisation decision for each. Write "Not assessed" when the APP or APPR document does not exist.
 
 ## 7. External References
 

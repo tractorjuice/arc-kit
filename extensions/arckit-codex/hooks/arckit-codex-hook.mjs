@@ -170,6 +170,10 @@ const DOC_TYPES = {
   OCAP: { name: "Canada First Nations OCAP Sovereignty Assessment", category: "Governance" },
 };
 
+// Mirrors SUBDIR_MAP in config/doc-types.mjs plus reviews, keyed as
+// sync-guides.mjs keys them. Without changes/audits/framework/procurement a
+// write there landed in `documents` until the next full $arckit-pages rebuild
+// moved it (#982).
 const SUBDIR_TO_MANIFEST_KEY = {
   decisions: "decisions",
   diagrams: "diagrams",
@@ -177,6 +181,10 @@ const SUBDIR_TO_MANIFEST_KEY = {
   "data-contracts": "dataContracts",
   reviews: "reviews",
   research: "research",
+  audits: "audits",
+  framework: "framework",
+  changes: "changes",
+  procurement: "procurement",
 };
 
 const ESSENTIAL_DOC_TYPES = ["REQ", "PRIN", "STKE", "RISK", "ADR", "TRAC"];

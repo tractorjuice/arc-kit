@@ -147,7 +147,7 @@ jobs:
       - name: Doc-type registry references (recipes, commands, pages.md)
         run: python3 scripts/check-doc-type-registry.py
 
-      - name: O-AA C208 axiom/chapter integrity guard (PR #825 content review)
+      - name: O-AA axiom/chapter integrity guard (O-AA Standard v2.0, C262)
         run: python3 scripts/check_oaa_axioms.py
 
       - name: Guide site-link check (every guide reachable, no dead links)

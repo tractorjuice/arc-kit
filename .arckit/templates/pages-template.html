@@ -2231,6 +2231,50 @@
                         });
                     }
 
+                    if (project.changes) {
+                        project.changes.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Change Requests',
+                                searchText: `${doc.title} change request architecture ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.audits) {
+                        project.audits.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Audits',
+                                searchText: `${doc.title} audit codebase ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.framework) {
+                        project.framework.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Framework',
+                                searchText: `${doc.title} framework overview ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.procurement) {
+                        project.procurement.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Procurement',
+                                searchText: `${doc.title} procurement g-cloud dos ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
                     if (project.vendors) {
                         project.vendors.forEach(vendor => {
                             if (vendor.documents) {
@@ -2544,9 +2588,14 @@
                 const dataContracts = project.dataContracts || [];
                 const research = project.research || [];
                 const reviews = project.reviews || [];
+                const changes = project.changes || [];
+                const audits = project.audits || [];
+                const framework = project.framework || [];
+                const procurement = project.procurement || [];
                 const vendorProfiles = project.vendorProfiles || [];
                 const techNotes = project.techNotes || [];
-                const allDocs = [...docs, ...diagrams, ...decisions, ...wardleyMaps, ...dataContracts, ...research, ...reviews, ...vendorProfiles, ...techNotes];
+                const allDocs = [...docs, ...diagrams, ...decisions, ...wardleyMaps, ...dataContracts, ...research, ...reviews,
+                    ...changes, ...audits, ...framework, ...procurement, ...vendorProfiles, ...techNotes];
                 vendors.forEach(v => { if (v.documents) allDocs.push(...v.documents); });
 
                 const projectDocCount = allDocs.length;
@@ -2570,7 +2619,8 @@
                 const coverage = CORE_ARTIFACTS.length > 0 ? Math.round((corePresent / CORE_ARTIFACTS.length) * 100) : 0;
 
                 // First document path for linking
-                const firstDoc = docs[0] || diagrams[0] || decisions[0] || wardleyMaps[0] || dataContracts[0] || research[0] || reviews[0];
+                const firstDoc = docs[0] || diagrams[0] || decisions[0] || wardleyMaps[0] || dataContracts[0] || research[0] || reviews[0]
+                    || changes[0] || audits[0] || framework[0] || procurement[0];
 
                 projectMetrics.push({
                     name: project.name || project.id,
@@ -2621,6 +2671,8 @@
                     ...(project.decisions || []), ...(project.wardleyMaps || []),
                     ...(project.dataContracts || []), ...(project.research || []),
                     ...(project.reviews || []),
+                    ...(project.changes || []), ...(project.audits || []),
+                    ...(project.framework || []), ...(project.procurement || []),
                     ...(project.vendorProfiles || []), ...(project.techNotes || [])];
                 allDocs.forEach(doc => {
                     const tc = extractTypeCode(doc.path || '');
@@ -4297,6 +4349,30 @@
             if (project.reviews && project.reviews.length > 0) {
                 listHtml += `<li class="app-nav-category">Reviews</li>`;
                 listHtml += renderVersionedDocList(project.reviews);
+            }
+
+            // Change Requests (changes/, TOGAF Phase H)
+            if (project.changes && project.changes.length > 0) {
+                listHtml += `<li class="app-nav-category">Change Requests</li>`;
+                listHtml += renderVersionedDocList(project.changes);
+            }
+
+            // Audits (audits/, codebase audits)
+            if (project.audits && project.audits.length > 0) {
+                listHtml += `<li class="app-nav-category">Audits</li>`;
+                listHtml += renderVersionedDocList(project.audits);
+            }
+
+            // Framework (framework/, framework overview)
+            if (project.framework && project.framework.length > 0) {
+                listHtml += `<li class="app-nav-category">Framework</li>`;
+                listHtml += renderVersionedDocList(project.framework);
+            }
+
+            // Procurement (procurement/, G-Cloud and DOS)
+            if (project.procurement && project.procurement.length > 0) {
+                listHtml += `<li class="app-nav-category">Procurement</li>`;
+                listHtml += renderVersionedDocList(project.procurement);
             }
 
             // Vendors

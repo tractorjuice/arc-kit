@@ -13,7 +13,7 @@ handoffs:
   - command: au-e8-posture
     description: Essential Eight provides the enterprise cyber baseline; OT controls should document where E8 does not directly fit OT constraints.
   - command: au-ism-controls
-    description: ISM is the broader ASD control set covering IT and OT systems; this assessment maps OT-specific evidence back to ISM domains.
+    description: ISM is the broader ASD control set covering IT and OT systems; this assessment maps OT-specific evidence back to ISM guidelines.
   - command: au-soci-cirmp
     description: OT security evidence may support SOCI CIRMP cyber and information security hazard treatment for critical infrastructure assets.
   - command: servicenow

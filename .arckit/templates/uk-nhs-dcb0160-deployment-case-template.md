@@ -210,7 +210,7 @@ This safety case must be re-reviewed by the Clinical Safety Officer when a chang
 |---|---|---|---|
 | DCB0160 | Clinical Risk Management: its Application in the Deployment and Use of Health IT Systems | NHS England | This document, throughout |
 | DCB0129 | Manufacturer Clinical Risk Management for Health IT (cross-referenced manufacturer case) | NHS England | §3, throughout |
-| SAFETY-MD-SPEC | SAFETY.md spec v2.0.0-draft | Marcus Baw / pacharanero | Document structure |
+| SAFETY-MD-SPEC | SAFETY.md specification 2.0.0-draft (commit af405498, 22 July 2026) | Marcus Baw / pacharanero | Document structure |
 
 ---
 
@@ -219,4 +219,4 @@ This safety case must be re-reviewed by the Clinical Safety Officer when a chang
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-**Spec lineage**: [Marcus Baw SAFETY.md v2.0.0-draft](https://github.com/pacharanero/SAFETY.md)
+**Spec lineage**: [SAFETY.md specification 2.0.0-draft, commit af405498 (22 July 2026)](https://github.com/pacharanero/SAFETY.md/blob/af405498/spec/specification.md); [ArcKit deviations](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/README.md#spec-lineage)

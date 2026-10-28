@@ -22,7 +22,7 @@ allowed-tools:
   - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
-You are helping an enterprise architect create an **O-AA ADM Lite** architecture using Open Agile Architecture (O-AA, C208) mapped to TOGAF ADM phases across agile sprints. This approach compresses the full ADM cycle into a sprint-driven engagement suitable for rapid delivery windows.
+You are helping an enterprise architect create an **O-AA ADM Lite** architecture using Open Agile Architecture (O-AA Standard, Version 2.0, C262) mapped to TOGAF ADM phases across agile sprints. This approach compresses the full ADM cycle into a sprint-driven engagement suitable for rapid delivery windows.
 
 ## User Input
 
@@ -114,14 +114,14 @@ The O-AA ADM Lite maps the TOGAF ADM cycle to agile sprints:
 | Sprint | TOGAF Phases | Focus | Duration | Key Output |
 |--------|-------------|-------|----------|------------|
 | Sprint 0 | ADM-P + A | Vision + Stakeholders | 1 week | `vision.yaml` |
-| Sprint 1 | ADM-B + C (part) | Business + Data Architecture | 2 weeks | `business-architecture.yaml`, `data-architecture.yaml` |
-| Sprint 2 | ADM-C (part) + D | Technology Architecture | 2 weeks | `technology-architecture.yaml` |
+| Sprint 1 | ADM-B + C | Business + Data + Application Architecture | 2 weeks | `business-architecture.yaml`, `data-architecture.yaml` |
+| Sprint 2 | ADM-D | Technology Architecture | 2 weeks | `technology-architecture.yaml` |
 | Sprint 3 | ADM-E + F | Implementation Wave | 2 weeks | `implementation-strategy.yaml` |
 | Sprint 4+ | ADM-G + H | Governance + Change | Ongoing | `governance-report.yaml`, `change-request.yaml` |
 
 ### 4. O-AA Axiom Alignment
 
-Every O-AA deliverable must reference the relevant published O-AA axioms (C208, *Scope and axioms*). The axioms this sprint-mapped engagement applies:
+Every O-AA deliverable must reference the relevant published O-AA axioms (Version 2.0, Appendix A). The axioms this sprint-mapped engagement applies:
 
 - **Axiom 1 (Customer Experience Focus)** — Sprint 0 vision is anchored on customer outcomes, not on artefacts
 
@@ -139,7 +139,7 @@ Every O-AA deliverable must reference the relevant published O-AA axioms (C208, 
 
 - **Axiom 15 (Project to Product Shift)** — the organising principle of the engagement is the product, not a one-off project
 
-Cite axioms by published number and name. Do not quote axiom text you cannot verify against C208 — if a claim cannot be traced to the standard, drop the attribution.
+Cite axioms by published number and name. Do not quote axiom text you cannot verify against the standard — if a claim cannot be traced to the standard, drop the attribution.
 
 ### 5. Sprint Artefact Definitions
 
@@ -171,7 +171,7 @@ Create the O-AA ADM Lite document following the template structure.
 
 - State the engagement window and keep it consistent with the sprint table: at the default lengths Sprint 0 to Sprint 3 take 7 weeks, inside the 4-8 week window this approach is designed for
 
-- Map each sprint to TOGAF ADM phases
+- Map each sprint to TOGAF ADM phases: Sprint 1 covers Phase B and both parts of Phase C (Data and Application Architecture), and Sprint 2 covers Phase D (Technology Architecture)
 
 - Specify deliverables per sprint with acceptance checks
 
@@ -191,9 +191,9 @@ Create the O-AA ADM Lite document following the template structure.
 
 #### Sprint 1-2: Architecture Design
 
-- Business + Data Architecture (Sprint 1): baseline and target business capability map with gap analysis (TOGAF Phase B, refining the high-level capabilities scoped in the Sprint 0 vision), value streams, and the data architecture
+- Business, Data and Application Architecture (Sprint 1, TOGAF Phases B and C): baseline and target business capability map with gap analysis (Phase B, refining the high-level capabilities scoped in the Sprint 0 vision), value streams, the data architecture and the application components (Phase C)
 
-- Technology Architecture (Sprint 2)
+- Technology Architecture (Sprint 2, TOGAF Phase D)
 
 - Each sprint produces YAML artefacts whose structure is defined in the template
 
@@ -215,7 +215,7 @@ Create the O-AA ADM Lite document following the template structure.
 
 ### 7. External References
 
-Populate the `## External References` section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Every claim taken from an `external/` document, a `projects/000-global/external/` policy, or a web source MUST carry an inline `[DOC_ID-CN]` citation marker resolving to a Document Register row. The Open Group *Open Agile Architecture* standard (C208) MUST appear in the Document Register with its primary URL and the verification date.
+Populate the `## External References` section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Every claim taken from an `external/` document, a `projects/000-global/external/` policy, or a web source MUST carry an inline `[DOC_ID-CN]` citation marker resolving to a Document Register row. The Open Group *Open Agile Architecture™ Standard, Version 2.0* (C262, <https://publications.opengroup.org/c262>) MUST appear in the Document Register with its primary URL and the verification date.
 
 ### 8. Quality Gate
 
@@ -245,8 +245,8 @@ After writing the file, show a concise summary (NOT the full document):
 | Sprint | TOGAF Phases | Focus | Duration | Deliverable |
 |--------|-------------|-------|----------|-------------|
 | Sprint 0 | ADM-P + A | Vision + Stakeholders | 1 week | vision.yaml |
-| Sprint 1 | ADM-B + C | Business + Data Arch | 2 weeks | business-architecture.yaml |
-| Sprint 2 | ADM-C + D | Technology Arch | 2 weeks | technology-architecture.yaml |
+| Sprint 1 | ADM-B + C | Business + Data + Application Arch | 2 weeks | business-architecture.yaml |
+| Sprint 2 | ADM-D | Technology Arch | 2 weeks | technology-architecture.yaml |
 | Sprint 3 | ADM-E + F | Implementation | 2 weeks | implementation-strategy.yaml |
 | Sprint 4+ | ADM-G + H | Governance | Ongoing | governance-report.yaml |
 

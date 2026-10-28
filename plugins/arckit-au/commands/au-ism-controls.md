@@ -23,7 +23,7 @@ handoffs:
   - command: traceability
     description: ISM controls should trace to requirements, evidence artefacts, risks, PSPF, and DISP claims.
   - command: maturity-model
-    description: ISM domain findings can seed a security control maturity uplift model.
+    description: ISM guideline findings can seed a security control maturity uplift model.
   - command: graph-report
     description: Graph reporting should show AUISM coverage across AU compliance, architecture, risk, and operations artefacts.
 allowed-tools:
@@ -47,7 +47,7 @@ $ARGUMENTS
 
 ## Context
 
-The Australian Signals Directorate (ASD) Information Security Manual (ISM) is the comprehensive set of cyber-security controls for Australian Government information systems. Where the Essential Eight is a mitigation framework targeting attack-vector defence, the ISM is the comprehensive control set covering governance, personnel, physical, communications, ICT system, networking, cryptography, gateway, data-transfer, evaluation, working-off-site, and incident-response domains. ISM compliance is the core technical-controls evidence for the PSPF Technology domain (which requires the ISM to be applied) and a primary input to DISP attestation.
+The Australian Signals Directorate (ASD) Information Security Manual (ISM) is the comprehensive set of cyber-security controls for Australian Government information systems. Where the Essential Eight is a mitigation framework targeting attack-vector defence, the ISM is the comprehensive control set: cyber security principles plus 23 cyber security guidelines covering roles, incidents, procurement and outsourcing, documentation, physical and personnel security, communications, enterprise mobility, evaluated products, IT equipment, media, system hardening, access and management, security assurance, software development, databases, email, networking, cryptography, gateways and data transfers. ISM compliance is the core technical-controls evidence for the PSPF Technology domain (which requires the ISM to be applied) and a primary input to DISP attestation.
 
 **Authoritative anchor**: ASD Information Security Manual — <https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism>
 
@@ -90,26 +90,34 @@ The Australian Signals Directorate (ASD) Information Security Manual (ISM) is th
 
    - **System Context** — system name, classification level (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET), deployment model, IRAP assessment status, sovereignty position. Classification drives applicability — controls applicable at OFFICIAL:Sensitive are a subset of those at PROTECTED.
 
-   - **Control Domain Applicability Matrix** — table covering all 17 ISM control areas (15 ASD ISM chapter domains plus 2 cross-cutting areas — Cloud/IaaS and Working-Off-Site), marking applicability per system classification:
-     1. **Cyber Security Governance** — security risk management, security documentation, change management
-     2. **Cyber Security Incidents** — detection, reporting, response, business continuity
-     3. **Outsourced Services** — managed service providers, cloud, supply chain
-     4. **Security Documentation** — system security plans, security risk management plans
-     5. **Personnel Security** — clearance levels, awareness training, separation of duties
-     6. **Physical Security** — facilities, equipment, ICT equipment lifecycle
-     7. **Communications Infrastructure** — fibre, cabling, telephony
-     8. **ICT Equipment Security** — hardware lifecycle, media, sanitisation
-     9. **System Hardening** — operating systems, applications, authentication, network
-     10. **System Management** — administration, monitoring, maintenance, vulnerability mgmt
-     11. **System Monitoring** — event logging, audit, security metrics
-     12. **Cryptography** — cryptographic fundamentals, ASD-approved algorithms, key management
-     13. **Gateway Security** — gateway architecture, content filtering, DLP
-     14. **Data Transfer** — between domains, between systems, data import/export
-     15. **Cloud and IaaS Considerations** — IRAP assessment status, sovereign cloud, shared responsibility
-     16. **Working-Off-Site Security** — remote work, mobile devices, BYOD
-     17. **Evaluation Activities** — Common Criteria, FIPS, vendor product testing
+   - **Guideline Applicability Matrix** — table covering all 23 cyber security guidelines in the current ISM (the September 2026 release has 23, alongside the cyber security principles), in ISM order, marking applicability per system classification:
+     - **Cyber security roles** — board and executive committee, chief information security officer, system owners
+     - **Cyber security incidents** — managing and responding to cyber security incidents, reporting to ASD
+     - **Procurement and outsourcing** — cyber supply chain risk management, managed services and cloud services (IRAP assessment of outsourced cloud service providers, shared responsibility)
+     - **Cyber security documentation** — cyber security strategy, system security plan, incident response plan, continuous monitoring plan
+     - **Physical security** — facilities and systems, IT equipment and media
+     - **Personnel security** — cyber security awareness training
+     - **Communications infrastructure** — cabling infrastructure, emanation security
+     - **Communications systems** — telephone systems, video conferencing and IP telephony, multifunction devices, fax
+     - **Enterprise mobility** — mobile device management and usage, privately owned devices, remote access
+     - **Evaluated products** — evaluated product procurement and usage
+     - **Information technology equipment** — usage, maintenance, sanitisation, destruction, disposal
+     - **Media** — usage, sanitisation, destruction, disposal
+     - **System hardening** — operating system, user application, server application and virtualisation hardening
+     - **System access** — identity and access management, multi-factor authentication, privileged access, credential management
+     - **System management** — system administration, system maintenance (patching), data backup and restoration
+     - **Security assurance** — security monitoring (event logging, monitoring, retention, threat hunting), security assessments
+     - **Software development** — secure software development, AI, mobile and web application development
+     - **Database systems** — database servers, databases
+     - **Email** — email usage, email gateways and servers
+     - **Networking** — network design and configuration, wired and wireless networks, service continuity
+     - **Cryptography** — cryptographic fundamentals, ASD-approved algorithms and protocols
+     - **Gateways** — gateways, cross domain solutions, firewalls, web proxies, content filtering
+     - **Data transfers** — data import and export between systems and security domains
 
-   - **Per-Domain Control Applicability Assessment** — for each in-scope domain, document:
+     The ISM has no separate system monitoring, cloud or working-off-site guideline: event logging sits in Guidelines for security assurance, cloud services in Guidelines for procurement and outsourcing, and remote and mobile working in Guidelines for enterprise mobility. If the ISM edition used has a different guideline list, follow that edition and record the difference.
+
+   - **Per-Guideline Control Applicability Assessment** — for each in-scope guideline, document:
      - Applicability rationale (which controls apply at the system's classification level)
      - Current implementation status: ✅ Implemented / ⚠️ Partial / ❌ Not Implemented / N/A
      - Evidence supporting the status (cite E8 posture artefact, IRAP report, vendor attestations)
@@ -117,13 +125,13 @@ The Australian Signals Directorate (ASD) Information Security Manual (ISM) is th
      - Remediation actions with owner and target date
      - Compensating controls if applicable
 
-   - **ISM-to-E8 Cross-Reference** — show which E8 strategies map to which ISM domains. Reinforces the E8-as-mitigation-subset framing for governance audiences.
+   - **ISM-to-E8 Cross-Reference** — show which E8 strategies map to which ISM guidelines, naming the strategies as ASD does (ASD does not number them). Reinforces the E8-as-mitigation-subset framing for governance audiences.
 
-   - **Compliance Summary** — table summarising domain-by-domain compliance posture; overall ISM applicability score (controls implemented / controls applicable).
+   - **Compliance Summary** — table summarising guideline-by-guideline compliance posture; overall ISM applicability score (controls implemented / controls applicable).
 
    - **IRAP Assessment Position** — if the system holds or pursues IRAP assessment, note the IRAP scope, assessment date, residual risks accepted, and re-assessment cadence. For systems integrating with IRAP-assessed cloud services, note the inherited control posture.
 
-   - **ArcKit Evidence Integration** — map `/arckit:diagram`, `/arckit:dfd`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report`, and `/arckit:maturity-model` evidence to ISM domain applicability, CMDB ownership, control gaps, risk treatments, and assurance coverage.
+   - **ArcKit Evidence Integration** — map `/arckit:diagram`, `/arckit:dfd`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report`, and `/arckit:maturity-model` evidence to ISM guideline applicability, CMDB ownership, control gaps, risk treatments, and assurance coverage.
 
    - **Recommendations** — prioritised remediation actions grouped by Quick Wins ( < 30 days), Short-Term (30–90 days), Medium-Term (90–180 days). Each recommendation references the specific ISM control ID(s).
 
@@ -132,15 +140,15 @@ The Australian Signals Directorate (ASD) Information Security Manual (ISM) is th
 8. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AUISM** per-type checks pass. Fix any failures before proceeding.
 9. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 
-10. Show only a summary to the user (one paragraph plus the Compliance Summary table showing per-domain status).
+10. Show only a summary to the user (one paragraph plus the Compliance Summary table showing per-guideline status).
 
 ## Important Notes
 
-- ISM controls are tagged with applicability flags (ALL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET). The applicability statement must select controls appropriate to the *highest classification of information processed*, not the *lowest*.
+- ISM security controls carry applicability markings: NC (non-classified systems, government and non-government), OS (OFFICIAL: Sensitive), P (PROTECTED), S (SECRET) and TS (TOP SECRET). The applicability statement must select controls appropriate to the *highest classification of information processed*, not the *lowest*.
 - ISM is updated quarterly — control IDs and wording can change. The artefact should record the ISM edition / publication date used as a verification anchor.
 - For systems integrating with IRAP-assessed cloud services, note explicit shared-responsibility — many ISM controls inherit from the cloud provider's IRAP attestation. Cite the IRAP scope statement, not the cloud provider's marketing.
 - Cross-reference the E8 posture artefact wherever an ISM control maps to an E8 sub-control — avoids duplication and keeps the two artefacts consistent.
-- For DISP members or systems supporting Defence work, scope the Personnel Security and Physical Security domains carefully — these are commonly under-assessed in cloud-only environments.
-- The Cyber Security Incidents domain should reference the project's NDB playbook (`/arckit:au-ndb-playbook`) for personal-information breach scenarios.
-- The Outsourced Services domain must include MSP-held admin role boundaries, contractual security-control flow-down, and supply-chain attestation review.
+- For DISP members or systems supporting Defence work, scope the Guidelines for personnel security and Guidelines for physical security carefully — these are commonly under-assessed in cloud-only environments.
+- The Guidelines for cyber security incidents assessment should reference the project's NDB playbook (`/arckit:au-ndb-playbook`) for personal-information breach scenarios.
+- The Guidelines for procurement and outsourcing assessment must include MSP-held admin role boundaries, contractual security-control flow-down, and supply-chain attestation review.
 - Use embedded ArcKit artefacts as evidence: diagrams and DFDs for boundaries and data transfer, data models for classification, ServiceNow/CMDB for ownership and operations, risk and traceability for controls, graph-report for coverage, and maturity-model for uplift.

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit-ca:ca-soia` generates a Canada *Security of Information Act* (SOIA) handling plan for a federal information system that processes Special Operational Information (SOI) or other classified material. The artefact captures the SOI inventory under the s.8 statutory definition, the marking and handling matrix, the transmission-channel matrix, the compartment and need-to-know register, destruction and sanitisation routes, the CSIS Act §16 / §19 coordination map, the RCMP National Security Programme liaison points, the breach-response runbook, and the personnel-reliability envelope.
+`/arckit-ca:ca-soia` generates a handling plan under the *Foreign Interference and Security of Information Act* (R.S.C., 1985, c. O-5; the *Security of Information Act*, or SOIA, until Bill C-70 retitled it in 2024) for a federal information system that processes Special Operational Information (SOI) or other classified material. The artefact captures the SOI inventory under the s.8 statutory definition, the marking and handling matrix, the transmission-channel matrix, the compartment and need-to-know register, destruction and sanitisation routes, the CSIS Act §16 / §19 coordination map, the RCMP National Security Programme liaison points, the breach-response runbook, and the personnel-reliability envelope.
 
 SOIA handling sits on top of the ITSG-33 security baseline. The ITSG-33 Statement of Applicability fixes the categorisation, the control profile, and the cryptographic envelope; the SOIA plan layers the statutory handling rules — compartmentation, the Third-Party Rule for foreign-shared product, and the breach-response timing that distinguishes SOI from material that is merely classified. Run `ca-itsg-33` first; the SOIA artefact reads its categorisation as a prerequisite. Note that the SOIA plan itself will frequently warrant a SECRET or higher classification — store, mark, and handle the artefact accordingly.
 
@@ -71,7 +71,6 @@ Output: `projects/<id>/ARC-<id>-SOIA-v1.0.md`
 
 ## Handoffs
 
-- **`ca-itsg-33`** — SOIA handling rules sit on top of the ITSG-33 security baseline. Categorisation and control profile are the prerequisite layer; run `ca-itsg-33` first so the SOIA plan can read the system-level categorisation as an input rather than re-deriving it.
 - **`risk`** — SOIA-specific residual risks (compartment compromise, suspected unauthorised disclosure, supplier-side mishandling, compartment-MOU expiry) flow into the operational risk register. Carry the risk IDs forward so the residual posture is traceable in the same register as the ITSG-33 residuals.
 - **`adr`** — Compartment design, MOU choices with CSIS or RCMP, and tier-promotion thresholds (when does a Protected C system promote to SECRET because the SOI envelope has expanded) warrant Architecture Decision Records. The SOIA plan captures the rule; the ADR captures the architectural rationale and the alternatives considered.
 
@@ -79,7 +78,7 @@ Output: `projects/<id>/ARC-<id>-SOIA-v1.0.md`
 
 ## Statutory currency
 
-The *Security of Information Act* itself is comparatively stable, but the surrounding statutory envelope is not. CSIS Act amendments via Bill C-26 (cyber security) and Bill C-70 (foreign interference) are still settling, and Ministerial Directives shape § 16 collection and § 19 disclosure practice on shorter cycles than the Act. Cite the consolidated Justice Laws Website text and record the verification date in the External References section so a reviewer can audit currency.
+The *Foreign Interference and Security of Information Act* changed substantially in 2024. Part 2 of the *Countering Foreign Interference Act* (Bill C-70, S.C. 2024, c. 16), in force since 19 August 2024, gave it its current title, added foreign-interference offences (ss. 20.1–20.4), extended the s.22 preparatory-acts offence, and widened who is a person permanently bound to secrecy under s.8(1), with a new Schedule 2 for Canadian Forces units. Part 1 amended the CSIS Act from royal assent on 20 June 2024, including § 16 and the § 19 disclosure rules. Ministerial Directives shape § 16 collection and § 19 disclosure practice on shorter cycles than either Act. Cite the consolidated Justice Laws Website text and record the verification date in the External References section so a reviewer can audit currency.
 
 ---
 
