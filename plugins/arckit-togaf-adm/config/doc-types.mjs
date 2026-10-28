@@ -262,7 +262,7 @@ export const DOC_TYPES = {
   // SAFETY-CASE.md / HAZARD-LOG.md) deliberately do NOT carry an ArcKit doc-type code or ARC- prefix — they
   // pass through validate-arc-filename untouched and are cross-referenced by relative path
   // (clinical-safety/SAFETY-CASE.md) rather than document ID.
-  'NHSDTAC':   { name: 'NHS Digital Technology Assessment Criteria (DTAC v3)', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  'NHSDTAC':   { name: 'NHS Digital Technology Assessment Criteria (DTAC)', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
   'NHSMDR':    { name: 'UK MDR + EU MDR SaMD/AIaMD Classification',       category: 'Compliance', regime: 'UK', severity: 'HIGH' },
   'MMOD':      { name: 'Maturity Model Assessment',       category: 'Governance', severity: 'HIGH' },
 };

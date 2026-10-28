@@ -418,7 +418,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | **Governance (Community-contributed — Netherlands Public Sector Overlay)** | | | |
 | | NLEXIT | `ARC-*-NLEXIT-*.md` | NL Cloud Exit Plan |
 | **Compliance (Community-contributed — UK NHS Clinical Safety Overlay)** | | | |
-| | NHSDTAC | `ARC-*-NHSDTAC-*.md` | NHS Digital Technology Assessment Criteria (DTAC v3) |
+| | NHSDTAC | `ARC-*-NHSDTAC-*.md` | NHS Digital Technology Assessment Criteria (DTAC) |
 | | NHSMDR | `ARC-*-NHSMDR-*.md` | UK MDR + EU MDR SaMD/AIaMD Classification |
 
 > **Single source of truth**: this table mirrors [`arckit-claude/config/doc-types.mjs`](../config/doc-types.mjs). When adding new commands, register the type code in `doc-types.mjs` first (so the hook resolves category + display name) and then add the row here so `/arckit:pages` includes the artifact in the dashboard.

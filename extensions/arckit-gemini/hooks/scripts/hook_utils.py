@@ -214,7 +214,7 @@ DOC_TYPES = {
     "FSCD":       {"name": "UK FCA Consumer Duty Board Report",                             "category": "Compliance"},
     "FSCTP":      {"name": "UK Critical Third Parties Dependency Assessment",               "category": "Compliance"},
     # UK NHS Clinical Safety Overlay
-    "NHSDTAC":    {"name": "NHS Digital Technology Assessment Criteria (DTAC v3)",          "category": "Compliance"},
+    "NHSDTAC":    {"name": "NHS Digital Technology Assessment Criteria (DTAC)",             "category": "Compliance"},
     "NHSMDR":     {"name": "UK MDR + EU MDR SaMD/AIaMD Classification",                     "category": "Compliance"},
     "MMOD":       {"name": "Maturity Model Assessment",                                     "category": "Governance"},
 }

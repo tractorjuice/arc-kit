@@ -9,7 +9,8 @@
 # Secure by Design, DPIA, ATRS, Risk register, etc. No swaps from uk-saas; the
 # NHS overlay adds clinical safety and medical-device regulation on top.
 #
-# Spec doc: docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md
+# Design log (docs/superpowers/ is gitignored; this is the copy committed in #501):
+# https://github.com/tractorjuice/arc-kit/blob/469e0b7d/docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md
 # Tracking: https://github.com/tractorjuice/arc-kit/issues/424
 
 recipe: uk-nhs-clinical-safety
@@ -19,7 +20,7 @@ description: >
   UK NHS Clinical Safety + Medical Device Regulation overlay — composes
   with the UK SaaS governance baseline (TCoP, SBD, DPIA, ATRS) and adds
   NHS DCB0129 manufacturer + DCB0160 deployer clinical safety cases
-  (Marcus Baw SAFETY.md 3-file spec), NHS DTAC v3 procurement assurance,
+  (Marcus Baw SAFETY.md 3-file spec), NHS DTAC (form v2.0) procurement assurance,
   and UK MDR 2002 + EU MDR 2017/745 software-as-medical-device
   classification. Suitable for NHS-deployed digital health products
   including SaMD / AIaMD.
@@ -40,7 +41,7 @@ optional_targets:
     description: UK MDR + EU MDR SaMD/AIaMD classification — required if the product may be a medical device (decision-support, monitoring, any diagnostic / therapeutic intent)
     default: true
   SVCASS:
-    description: Service Standard Assessment — NHS Service Standard alignment overlaps DTAC section 5 but is broader
+    description: Service Standard Assessment — NHS and GDS Service Standards, which DTAC complements but does not replace
     default: true
   ORG_RESEARCH:
     description: Target NHS organisation research (Trust / ICS / NHSE). Output to projects/000-global/research/.

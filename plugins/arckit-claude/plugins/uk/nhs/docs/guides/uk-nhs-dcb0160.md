@@ -10,11 +10,11 @@ DCB0160 sits **alongside** DCB0129 — neither replaces the other. The manufactu
 
 ## What it produces
 
-Three files in `projects/{NNN}-<slug>/clinical-safety/deployment/`, following the same Marcus Baw SAFETY.md spec adapted for deployer use:
+Three files in `projects/{NNN}-<slug>/clinical-safety/deployment/`, following the same Marcus Baw SAFETY.md spec for deployer use. The deployer filenames and the extra `manufacturer-case-url` field are ArcKit deviations from the spec: see [SAFETY.md spec version and deviations](uk-nhs-clinical-safety-overlay.md#safetymd-spec-version-and-deviations).
 
 | File | Purpose |
 |---|---|
-| `SAFETY.md` | Deployer anchor: product, version-being-deployed, deploying organisation, deploying-organisation CSO, link to manufacturer case |
+| `SAFETY.md` | Deployer anchor: product, version being deployed, deploying organisation (`organisation`, with `role: deployer`), deploying-organisation CSO, applicable standards, link to manufacturer case |
 | `DEPLOYMENT-SAFETY-CASE.md` | 7 sections: Deployment Context, Scope + Phasing, Manufacturer Case Acceptance, Deployment Safety Argument (G1.1–G1.6 with deployment-specific claims), Local Evidence, Residual Deployment Risk, Deploying-organisation CSO Sign-off |
 | `DEPLOYMENT-HAZARD-LOG.md` | YAML-frontmatter hazard array + controls + rendered Markdown table. 10 starter deployment hazards: inadequate training, workflow integration gap, integration failure, BC failure, parallel-running confusion, data migration error, local configuration error, terminology mismatch, RBAC misalignment, incident-reporting failure |
 
@@ -57,6 +57,6 @@ The deployment safety case is a legal obligation of the deploying NHS organisati
 ## Related commands
 
 - `/arckit-uk-nhs:uk-nhs-dcb0129` — manufacturer-side companion (run first or attach external)
-- `/arckit-uk-nhs:uk-nhs-dtac` — DTAC Section 1 may need the deployer case if the deploying NHS organisation is responsible for procurement assurance
+- `/arckit-uk-nhs:uk-nhs-dtac` — the deploying organisation assesses the manufacturer's DTAC form, whose section C1 asks for the DCB0129 case; this DCB0160 case is the deployer's own duty and not a DTAC question
 - `/arckit:risk` — deployment-specific risks cross-reference the project risk register
 - `/arckit:operationalize` — builds the runbooks, on-call and incident-response procedures that carry out the deployment hazard controls (manual fallback, interface monitoring, local incident reporting)
