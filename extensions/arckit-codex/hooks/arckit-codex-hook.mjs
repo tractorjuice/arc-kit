@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, lstatSync, mkdirSync, readFileSync, readdirSync, readlinkSync, realpathSync, statSync, writeFileSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { basename, dirname, join, relative, resolve } from "node:path";
@@ -328,6 +328,43 @@ function pathLooksProtected(filePath) {
   return [...PROTECTED_EXTENSIONS].some((extension) => lowerName.endsWith(extension));
 }
 
+const MAX_SYMLINK_HOPS = 40;
+
+// Resolves symlinks, including dangling ones and links in missing parents,
+// so the path names the file a write would actually land in.
+function canonicalPath(p, hops = 0) {
+  try {
+    return realpathSync(p);
+  } catch {
+    // missing, dangling or looping
+  }
+  if (hops < MAX_SYMLINK_HOPS) {
+    try {
+      if (lstatSync(p).isSymbolicLink()) {
+        return canonicalPath(resolve(dirname(p), readlinkSync(p)), hops + 1);
+      }
+    } catch {
+      // not on disk
+    }
+  }
+  const parent = dirname(p);
+  if (parent === p) {
+    return p;
+  }
+  return join(canonicalPath(parent, hops), basename(p));
+}
+
+// Checks the path as written and the file it resolves to through symlinks.
+function targetLooksProtected(filePath, cwd) {
+  if (pathLooksProtected(filePath)) {
+    return true;
+  }
+  if (!filePath || typeof filePath !== "string") {
+    return false;
+  }
+  return pathLooksProtected(canonicalPath(resolve(cwd || process.cwd(), filePath)));
+}
+
 function extractPatchDetails(command) {
   const paths = [];
   const addedLines = [];
@@ -489,6 +526,7 @@ function extractExplicitPaths(toolInput) {
     toolInput.path,
     toolInput.absolute_path,
     toolInput.filename,
+    toolInput.notebook_path,
   ].filter((value) => typeof value === "string" && value.trim());
 }
 
@@ -546,7 +584,7 @@ function handlePreToolUse(data) {
       return;
     }
 
-    const protectedPath = [...explicitPaths, ...patch.paths].find(pathLooksProtected);
+    const protectedPath = [...explicitPaths, ...patch.paths].find((path) => targetLooksProtected(path, data.cwd));
     if (protectedPath) {
       denyTool(`ArcKit blocked editing protected credential file: ${protectedPath}`);
       return;
@@ -578,7 +616,7 @@ function handlePreToolUse(data) {
     return;
   }
 
-  const protectedPath = explicitPaths.find(pathLooksProtected);
+  const protectedPath = explicitPaths.find((path) => targetLooksProtected(path, data.cwd));
   if (protectedPath) {
     denyTool(`ArcKit blocked editing protected credential file: ${protectedPath}`);
     return;
