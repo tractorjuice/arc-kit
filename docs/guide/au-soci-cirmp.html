@@ -485,15 +485,28 @@
 <h2 id="what-it-produces">What It Produces</h2>
 <ul>
 <li>Critical asset and responsible entity context.</li>
-<li>SOCI applicability assessment.</li>
+<li>SOCI applicability assessment, including the CIRMP tier (baseline, enhanced or TSRMP).</li>
 <li>CIRMP governance model.</li>
-<li>Hazard-domain assessment across cyber and information security, personnel, supply chain, physical security, and natural hazards.</li>
+<li>Hazard-domain assessment across cyber and information security, personnel, supply chain, physical security, and natural hazards, plus credential compromise and lateral movement for enhanced-tier assets.</li>
+<li>Enhanced CIRMP requirements, each against its compliance date, for enhanced-tier assets.</li>
+<li>The cyber framework the CIRMP complies with (for example the Essential Eight at Maturity Level One for the baseline tier, Level Two for the enhanced tier).</li>
 <li>Incident reporting and protected-information handling pathways.</li>
 <li>Annual report and board/governing-body approval readiness.</li>
 <li>Cross-sector vs sector-specific obligation split.</li>
 </ul>
+<h2 id="enhanced-cirmp">Enhanced CIRMP</h2>
+<p>The <em>Security of Critical Infrastructure Legislation Amendment (Enhanced Critical Infrastructure Risk Management Program) Rules 2026</em> commenced on 10 June 2026. They add enhanced requirements to the <a href="https://www.legislation.gov.au/F2023L00112/latest/text">CIRMP Rules</a> for critical broadcasting, domain name system, electricity, energy market operator, freight infrastructure, freight services, gas, liquid fuel and water assets (s 4A(1)). A CIRMP for those assets must meet both the baseline and the enhanced requirements. The other CIRMP asset classes (data storage or processing, food and grocery, designated hospitals and payment systems) stay on the baseline.</p>
+<p>The enhanced requirements add:</p>
+<ul>
+<li>additional material risks: prejudice to social or economic stability, national security or defence, foreign ownership, control or influence, and offshore or remote access to critical components or business critical data (s 6A)</li>
+<li>cyber material risks such as late patching and legacy systems, and a stronger cyber framework, for example the Essential Eight at Maturity Level Two instead of One (s 8A)</li>
+<li>phishing-resistant multi-factor authentication where the chosen framework does not already require it (s 8B), and network segregation of critical systems (s 8C)</li>
+<li>personnel access management and critical-worker suitability through AusCheck background checks or a Negative Vetting 1 or higher clearance (s 9A)</li>
+<li>supply-chain mapping and major-supplier assessment (s 10A), and central management of physical security and natural hazards (s 11A)</li>
+</ul>
+<p>For an asset that was a critical infrastructure asset before 10 June 2026, the <a href="https://www.cisc.gov.au/resources-subsite/Documents/enhanced-cirmp-implementation-factsheet.pdf">CISC factsheet</a> gives 10 June 2027 for the new material risks (ss 6A, 8A(2) and 9A(2)) and 10 June 2028 for everything else. An asset that becomes one later has 12 and 24 months from that date. The 2025–26 annual report need not cover the enhanced requirements.</p>
 <h2 id="notes">Notes</h2>
-<p>This command covers general SOCI/CIRMP obligations. Sector-specific obligations such as AESCSF, AER ring-fencing, NER/NGR, and AEMO market or system-operator obligations belong in the later <code>au-energy</code> recipe.</p>
+<p>This command covers general SOCI/CIRMP obligations. Sector-specific obligations such as AESCSF, AER ring-fencing, NER/NGR, and AEMO market or system-operator obligations belong in the <code>au-energy</code> recipe (<code>arckit-au-energy</code> overlay).</p>
 </div>
 <script src="../films.js"></script>
         </div>
