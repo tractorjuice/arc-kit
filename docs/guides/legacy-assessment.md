@@ -134,7 +134,7 @@ this command does not submit to a government register.
 
 ## Verification and trust boundaries
 
-The calculator now emits calculation version `1.1.0` and a digest of all assessor input.
+The calculator now emits calculation version `1.2.0` and a digest of all assessor input.
 That digest binds its results and the report block; it is not a signature or evidence
 truth check. The schema remains 1.0 while this feature is unreleased; older enriched
 results must be recalculated, preserving the earlier assessment artifact.
@@ -219,3 +219,40 @@ Maintainers can refresh a frozen bundle from locally saved official HTML using
 `scripts/bundle-legacy-frameworks.py --risk-html risk.html --definition-html definition.html --retrieved-date YYYY-MM-DD`.
 The builder makes no network calls and refuses an unexpected public source version or
 incomplete tables. A newly published model requires deliberate versioning and review.
+
+## Clearer draft assessments
+
+This is an unreleased format: regenerate stale draft results and obtain fresh approval;
+there is no historical verifier or migration layer. Repository regression fixtures live
+under `tests/fixtures/legacy-assessment/`; that test directory is not part of plugin installs.
+
+- `--lint --format text|json` collects independent errors and evidence warnings, with codes, paths, IDs and corrective guidance. Parsing/resource failures stop immediately; dependent graph checks require valid prerequisites.
+- `--explain ID` prints a system, finding, dependency or action with evidence-use diagnostics.
+- `--approval-digest assessment|policy:ID|risk-acceptance:ID` prints the exact canonical content digest for an owner to approve. Printing it is not approval.
+
+Approval targets need documentary `approvedOn` and `approvedDigest` values before they
+verify. Missing binding remains pending; changed content is stale. Policy binding covers
+the policy content and applicability, independently of report version. Assessment binding
+covers assessor input excluding approval envelopes and approval-only records; risk acceptance
+binds its content and assessment document ID. These hashes establish consistency, not authority
+or signatures. Later assessment sign-off does not move the operational evidence cutoff.
+
+`strongestKnown` and `blockers` explain each criterion without promoting Unknown to
+Accepted. Numerical `bounds` show exact possible extrema, not a completed score.
+`thresholdAssessment` describes whether all, none or some possible completions reach 16;
+`redRated` remains null until every input is supported. A single missing input may have
+a `tipping` value; this is sensitivity, not an official finding.
+
+Evidence qualification is recorded per use, with reasons for rejection. An evidence
+record can qualify for one subject/date/purpose and fail another. The generated block
+contains inventory, policy, dependency, finding, evidence and action registers; report
+verification checks those sections as well as the chart. It does not verify evidence truth
+or assessor recommendations. Detailed evidence is in a collapsible appendix.
+
+An action can address an explicit Unknown finding or use `addresses` for missing coverage,
+a dependency or a risk input. Every entry includes `systemId`, plus `criterionId` for
+coverage/risk input or `id` for dependency. An action addresses a planning gap without
+resolving the evidence gap. Dated events retain source IDs; delivery targets and milestones
+are separate from review triggers. Resume from saved draft input when external evidence
+is outstanding. Use independently invented synthetic cases for feedback; no automatic
+anonymisation or safe-sharing guarantee is provided.

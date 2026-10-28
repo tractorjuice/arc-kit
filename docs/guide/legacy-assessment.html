@@ -534,7 +534,7 @@ this command does not submit to a government register.</p>
 <li><a href="https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook">Digital Assurance Playbook</a>: assurance arrangements changed from April 2026.</li>
 </ul>
 <h2 id="verification-and-trust-boundaries">Verification and trust boundaries</h2>
-<p>The calculator now emits calculation version <code>1.1.0</code> and a digest of all assessor input.
+<p>The calculator now emits calculation version <code>1.2.0</code> and a digest of all assessor input.
 That digest binds its results and the report block; it is not a signature or evidence
 truth check. The schema remains 1.0 while this feature is unreleased; older enriched
 results must be recalculated, preserving the earlier assessment artifact.</p>
@@ -605,6 +605,38 @@ and must not override the newer definition or be described as current obligation
 <code>scripts/bundle-legacy-frameworks.py --risk-html risk.html --definition-html definition.html --retrieved-date YYYY-MM-DD</code>.
 The builder makes no network calls and refuses an unexpected public source version or
 incomplete tables. A newly published model requires deliberate versioning and review.</p>
+<h2 id="clearer-draft-assessments">Clearer draft assessments</h2>
+<p>This is an unreleased format: regenerate stale draft results and obtain fresh approval;
+there is no historical verifier or migration layer. Repository regression fixtures live
+under <code>tests/fixtures/legacy-assessment/</code>; that test directory is not part of plugin installs.</p>
+<ul>
+<li><code>--lint --format text|json</code> collects independent errors and evidence warnings, with codes, paths, IDs and corrective guidance. Parsing/resource failures stop immediately; dependent graph checks require valid prerequisites.</li>
+<li><code>--explain ID</code> prints a system, finding, dependency or action with evidence-use diagnostics.</li>
+<li><code>--approval-digest assessment|policy:ID|risk-acceptance:ID</code> prints the exact canonical content digest for an owner to approve. Printing it is not approval.</li>
+</ul>
+<p>Approval targets need documentary <code>approvedOn</code> and <code>approvedDigest</code> values before they
+verify. Missing binding remains pending; changed content is stale. Policy binding covers
+the policy content and applicability, independently of report version. Assessment binding
+covers assessor input excluding approval envelopes and approval-only records; risk acceptance
+binds its content and assessment document ID. These hashes establish consistency, not authority
+or signatures. Later assessment sign-off does not move the operational evidence cutoff.</p>
+<p><code>strongestKnown</code> and <code>blockers</code> explain each criterion without promoting Unknown to
+Accepted. Numerical <code>bounds</code> show exact possible extrema, not a completed score.
+<code>thresholdAssessment</code> describes whether all, none or some possible completions reach 16;
+<code>redRated</code> remains null until every input is supported. A single missing input may have
+a <code>tipping</code> value; this is sensitivity, not an official finding.</p>
+<p>Evidence qualification is recorded per use, with reasons for rejection. An evidence
+record can qualify for one subject/date/purpose and fail another. The generated block
+contains inventory, policy, dependency, finding, evidence and action registers; report
+verification checks those sections as well as the chart. It does not verify evidence truth
+or assessor recommendations. Detailed evidence is in a collapsible appendix.</p>
+<p>An action can address an explicit Unknown finding or use <code>addresses</code> for missing coverage,
+a dependency or a risk input. Every entry includes <code>systemId</code>, plus <code>criterionId</code> for
+coverage/risk input or <code>id</code> for dependency. An action addresses a planning gap without
+resolving the evidence gap. Dated events retain source IDs; delivery targets and milestones
+are separate from review triggers. Resume from saved draft input when external evidence
+is outstanding. Use independently invented synthetic cases for feedback; no automatic
+anonymisation or safe-sharing guarantee is provided.</p>
 </div>
         </div>
     </main>

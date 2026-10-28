@@ -274,6 +274,62 @@
                       },
                       "display": {
                         "type": "null"
+                      },
+                      "bounds": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "minimum": {
+                            "type": "number"
+                          },
+                          "maximum": {
+                            "type": "number"
+                          },
+                          "minimumNumerator": {
+                            "type": "integer"
+                          },
+                          "maximumNumerator": {
+                            "type": "integer"
+                          },
+                          "denominator": {
+                            "enum": [
+                              168
+                            ]
+                          }
+                        },
+                        "required": [
+                          "minimum",
+                          "maximum",
+                          "minimumNumerator",
+                          "maximumNumerator",
+                          "denominator"
+                        ]
+                      },
+                      "thresholdAssessment": {
+                        "type": "string"
+                      },
+                      "tipping": {
+                        "anyOf": [
+                          {
+                            "type": "null"
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "criterionId": {
+                                "type": "string"
+                              },
+                              "lowestRedValue": {
+                                "type": "integer"
+                              }
+                            },
+                            "required": [
+                              "criterionId",
+                              "lowestRedValue"
+                            ]
+                          }
+                        ]
                       }
                     },
                     "required": [
@@ -456,6 +512,18 @@
                         "mixed-policy",
                         "no-policy"
                       ]
+                    },
+                    "strongestKnown": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "blockers": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     }
                   },
                   "required": [
@@ -483,6 +551,34 @@
                 "items": {
                   "type": "string",
                   "maxLength": 20000
+                }
+              },
+              "events": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "kind": {
+                      "type": "string"
+                    },
+                    "sourceId": {
+                      "type": "string"
+                    },
+                    "date": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "reviewTrigger": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "sourceId",
+                    "date",
+                    "reviewTrigger"
+                  ]
                 }
               }
             },
@@ -568,13 +664,74 @@
         },
         "calculationVersion": {
           "enum": [
-            "1.1.0"
+            "1.2.0"
           ]
         },
         "inputDigest": {
           "type": "string",
           "pattern": "^[a-f0-9]{64}$",
           "maxLength": 20000
+        },
+        "evidenceUses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "evidenceId": {
+                "type": "string"
+              },
+              "use": {
+                "type": "string"
+              },
+              "at": {
+                "type": "string",
+                "format": "date"
+              },
+              "reasons": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "evidenceId",
+              "use",
+              "at",
+              "reasons"
+            ]
+          }
+        },
+        "approvals": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "target": {
+                "type": "string"
+              },
+              "digest": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "verified",
+                  "pending",
+                  "stale"
+                ]
+              }
+            },
+            "required": [
+              "target",
+              "digest",
+              "status"
+            ]
+          }
+        },
+        "models": {
+          "type": "object"
         }
       },
       "required": [
@@ -739,6 +896,20 @@
                 "enum": [
                   "approved"
                 ]
+              },
+              "approvedOn": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "format": "date"
+              },
+              "approvedDigest": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "pattern": "^[a-f0-9]{64}$"
               }
             }
           },
@@ -1362,7 +1533,7 @@
             "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
             "maxLength": 96
           },
-          "minItems": 1,
+          "minItems": 0,
           "maxItems": 10000
         },
         "businessRiskOwner": {
@@ -1530,6 +1701,35 @@
               "type": "null"
             }
           ]
+        },
+        "addresses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "kind",
+              "systemId"
+            ],
+            "properties": {
+              "kind": {
+                "enum": [
+                  "coverage",
+                  "dependency",
+                  "riskInput"
+                ]
+              },
+              "systemId": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "criterionId": {
+                "type": "string"
+              }
+            }
+          }
         }
       },
       "required": [

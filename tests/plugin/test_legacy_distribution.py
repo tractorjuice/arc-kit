@@ -61,7 +61,7 @@ def test_golden_report_matches_json_results_and_uk_document_control():
     r = s['risk']
     assert f"| payments | {r['status']} | {r['likelihood']} | {r['impact']} | {r['display']} | {str(r['redRated']).lower()} | L={r['arithmetic']['likelihoodNumerator']}/{r['arithmetic']['likelihoodDenominator']}; C={r['arithmetic']['impactNumerator']}/{r['arithmetic']['impactDenominator']}; risk={r['arithmetic']['riskNumerator']}/{r['arithmetic']['riskDenominator']} |" in report
     for f in a['findings']:
-        assert f"| {f['id']} | {f['criterionId']} | {f['thresholdId']} | {f['outcome']} | approved | {f['completeness']} |" in report
+        assert f"| {f['id']} / {f['systemId']} | {f['criterionId']} / {f['thresholdId']} | {f['outcome']} |" in report
     assert f"{r['arithmetic']['riskNumerator']}/{r['arithmetic']['riskDenominator']}" in report
     assert '<!-- DOC-CONTROL-HEADER -->' not in report
     partial = (CORE / 'templates/_partials/document-control-uk.md').read_text()

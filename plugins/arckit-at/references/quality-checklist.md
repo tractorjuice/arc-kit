@@ -23,6 +23,14 @@ All artifacts must pass these 10 checks:
 
 ### LEGACY -- Legacy IT Assessment
 
+- Strongest known urgency remains visible beside Unknown outcomes and named blockers
+- Evidence qualifications are per use; rejection reasons name records and failed tests
+- Approval is content-bound with a documented decision date or remains pending/stale; later sign-off cannot move the assessment evidence cutoff
+- Bounds on incomplete numerical inputs are mathematical sensitivity, not completed scores or official red-rated findings
+- Generated inventory, policies, dependencies, findings, evidence and action registers pass report verification; narrative claims remain assessor responsibility
+- Actions addressing missing coverage or dependencies do not resolve the underlying evidence gaps
+- Dated review triggers retain source IDs and remain distinct from delivery dates
+
 - Seven D1–D7 findings per system, with dated evidence, threshold references, rationale and uncertainty
 - Classification, policy basis and evidence completeness are separate; Unknown is internal and draft rules are provisional
 - Approval has documentary evidence or remains pending; missing principles/requirements create gaps, not a blocked assessment

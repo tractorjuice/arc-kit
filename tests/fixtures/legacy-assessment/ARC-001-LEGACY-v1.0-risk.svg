@@ -2,7 +2,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" width="1000" height="760" role="img" aria-labelledby="title description">
 <title id="title">Legacy Risk Assessment: likelihood versus impact</title>
 <desc id="description">ARC-001-LEGACY-v1.0. Assessment date 2026-10-28. Published numerical prioritisation, separate from legacy classification. Red-rated means likelihood times impact at least 16. Only complete scores are plotted; all systems appear in the key. Coincident points are grouped without moving their coordinates.</desc>
-<metadata>Input SHA-256: 6bdf070e45c17ec03df0c799353119c3d5b4313c41c984e605d00db93ef9b9ac; calculation version: 1.1.0; chart version: 1</metadata>
+<metadata>Input SHA-256: af2ae97a82a490b3000623dd20b2760e6ce9f6dac3669e8b1883a625980ea89d; calculation version: 1.2.0; chart version: 1</metadata>
 <rect width="100%" height="100%" fill="white"/>
 <g font-family="Arial, sans-serif" fill="#172b4d">
 <text x="100" y="38" font-size="25" font-weight="bold">Legacy Risk Assessment</text>

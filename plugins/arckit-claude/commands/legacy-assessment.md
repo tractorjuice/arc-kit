@@ -101,7 +101,7 @@ its version; risk acceptance uses its ID and this assessment's document ID as ve
 An operational test, unrelated approval or previous report version cannot approve this
 one. Leave approval references empty when this specific decision is not documented.
 Approval records establish the supplied decision trail, not authenticated signatures.
-The model cannot approve anything; leave report approval pending unless documentary
+Approval records require `approvedOn` and `approvedDigest` for a verified decision. Use `--approval-digest assessment`, `--approval-digest policy:ID` or `--approval-digest risk-acceptance:ID` to print the canonical content digest for owner review. The model must never copy that digest into an approval claim without supplied owner approval of that exact content. Missing digests remain pending; changed content makes the approval stale. Policy approval must apply by the assessment date. Assessment sign-off may occur later, but operational evidence still uses the assessment cutoff. The model cannot approve anything; leave report approval pending unless documentary
 approval of this exact version was supplied. A changed policy requires a new version.
 
 ## Assess classification separately
@@ -229,8 +229,8 @@ After writing both files, require successful verification:
 node "${CLAUDE_PLUGIN_ROOT}/scripts/legacy-assessment.mjs" --input assessment-output.json --check-report assessment-report.md
 ```
 
-Use the real versioned project paths in these calls. Verification checks the calculated
-block and, when applicable, the exact companion SVG against the same JSON. A missing,
+Use the real versioned project paths in these calls. Verification checks the generated factual
+block (including inventory, policies, dependencies, findings, evidence and actions) and, when applicable, the exact companion SVG against the same JSON. A missing,
 stale or edited chart fails verification. It does not verify the truth of source
 material or free-text recommendations. A failed check
 must be fixed before claiming the report's results are verified.
@@ -249,7 +249,7 @@ hand-write the standard table. Use unknown and pending explicitly instead of inv
 facts. Preserve all required assessment sections even with a custom template.
 
 Write `projects/{project}/ARC-{PROJECT_ID}-LEGACY-v{VERSION}.md` with the decision
-table, counts by classification/completeness, separate numerical ordering and arithmetic,
+helper-generated factual sections, counts by classification/completeness, separate numerical ordering and arithmetic,
 dependency diagram/causal paths, seven-criterion findings, evidence, conflicts and gaps.
 Do not combine classification, evidence quality and risk into a readiness percentage.
 
@@ -286,7 +286,7 @@ ordering, displayed values and arithmetic match JSON results exactly. Verify all
 findings/actions trace to dated evidence, unknowns remain explicit and approval is
 supported or pending. No document-presence claim proves compliance.
 
-**Finish in this turn**: save the Markdown, JSON and applicable SVG artifacts, verify the enriched JSON with the helper,
+**Complete the requested stage in this turn**: reuse existing draft inputs and evidence when resuming. If evidence collection needs external answers, save a valid incomplete draft, identify blockers and actions, and do not invent answers or approvals. Save the Markdown, JSON and applicable SVG artifacts, verify the enriched JSON with the helper,
 and return links, scope/date, significant findings, gaps and owner-review requirements.
 Disclose any unavailable source/runtime checks. Do not stop at a proposed plan.
 
@@ -303,3 +303,27 @@ Service assessment, TCoP, security, risk and analysis may consume this evidence 
 existing systems are relevant. Planning commands consume actions and dependencies.
 LEGACY is contextual, never universally mandatory. See the legacy-assessment guide
 for single-system, multi-system, incomplete-evidence and draft-policy examples.
+
+## Diagnostics and interpretation
+
+Run `--lint --format json` on draft inputs to collect independent structural, reference
+and evidence problems. Parsing/resource failures stop safely; dependent checks wait
+for valid prerequisites. Fix the underlying facts, never change dates or provenance
+merely to pass a check. `--explain ID` prints the system/finding/dependency/action and
+relevant evidence-use records. Existing calculation modes remain fail-fast.
+
+Use criterion `strongestKnown` and `blockers` alongside outcome. An Unknown finding
+must not hide established urgency. Incomplete numerical inputs remain incomplete:
+`bounds` and `thresholdAssessment` describe mathematical possibilities, not an official
+completed score or red-rated finding. Single-input `tipping` is sensitivity only.
+
+Actions may use `addresses` entries for coverage, dependency or risk-input gaps, with
+a system ID and criterion/dependency ID. Recording an action addresses the planning
+gap; it never resolves missing evidence. Use `events` to explain review triggers;
+delivery targets and milestones are distinct and do not automatically trigger review.
+
+The generated block includes all factual registers and a collapsible evidence appendix.
+Do not duplicate these as manually authored tables. Keep assessor interpretation,
+dependency diagrams and recommendations outside the block and label them as narrative.
+This unreleased draft has one current format. If stored results are stale, preserve
+the old files and generate a new draft from assessor facts with fresh approval pending.

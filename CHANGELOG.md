@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Draft legacy assessments retain known urgency through unknowns, explain evidence qualification, support lint/explain and content-bound approvals, report exact incomplete-score bounds, link actions to information gaps, and verify generated factual registers with dated review sources. All feedback regressions use independently invented repository fixtures.
+
 - Legacy reports now embed an offline, deterministic likelihood–impact SVG with the published red-rated boundary at 16, a complete system key, and explicit unplotted incomplete scores. Report verification rejects missing, stale or edited companion charts across Claude and all generated targets.
 - `/arckit:legacy-assessment` assesses project systems against the August 2026 UK definition, separately calculates the published numerical risk model, and links evidence gaps to remediation actions. Includes a versioned JSON schema, offline deterministic Node helper, dependency paths, provisional policy handling, report template, behavioural cases and installation assets across all seven extension targets. The complete original scoring rubric and updated definition are bundled with dated source snapshots, Open Government Licence attribution and SHA-256 integrity checks, enabling full offline assessments. Government reporting arrangements remain subject to confirmation. Adversarial hardening adds scoped evidence, decision-specific approvals, bounded JSON and graph processing, exact report/JSON verification, visible action-plan gaps, required scaffold partials and stale-build protection.
 
