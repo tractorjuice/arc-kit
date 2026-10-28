@@ -46,19 +46,34 @@ Both scenarios are mandatory. A plan that only documents a planned, orderly exit
 
 ---
 
+## Implementatiekader Art. 7
+
+The [Implementatiekader risicoafweging cloudgebruik](https://zoek.officielebekendmakingen.nl/blg-1070754.pdf) (v1.1, 5 January 2023, CIO Rijk) is mandatory when carrying out the cloud policy, and clause 3.1 of the 2026 policy says it must be followed. Its Art. 7 says the exit strategy is secured through the organisation's own measures, including budget, and through contract terms with the provider. It has four parts, and the plan records each:
+
+| Art. 7 part | Where the plan records it |
+|-------------|---------------------------|
+| 1. Conditions on the provider and its sub-suppliers for data portability, service portability and data destruction, including the processes and facilities needed | Section 4 |
+| 2. An alternative provider or an internal landing place | Sections 2 and 3, by type and capability, not as an endorsement |
+| 3. A strategy, conditions and budget for leaving at once in a crisis or a sudden (geopolitical) development | Section 3 |
+| 4. A strategy and budget for the regular end of the contract | Section 2 |
+
+A cost estimate with no budget reserved behind it leaves parts 3 and 4 open, and the command flags it. The government has announced a revision of the implementatiekader for the 2026 policy; if CIO Rijk has published it, the command uses it and records the version.
+
+---
+
 ## Deliverable Snapshot
 
 | Section | Contents |
 |---------|----------|
 | Scope Statement | System or service, provider(s) as actually contracted (not an endorsement), trigger, twelve-month production deadline |
-| 1. Obligation Statement | What clause 3.2 requires |
-| 2. Scenario A — Planned Exit | Trigger conditions, data export method, target environment, timeline, cost, dependencies, owner |
-| 3. Scenario B — Disruptive Interruption of Service | Trigger conditions, minimum viable continuity path, data recovery method without provider cooperation, RTO, RPO, dependencies, owner |
-| 4. Destruction of Data at the Provider | Contractual destruction clause, method, verification or attestation, logging |
+| 1. Obligation Statement | What clause 3.2 requires, and the four implementatiekader Art. 7 parts with where each is covered |
+| 2. Scenario A — Planned Exit | Trigger conditions, data export method, target environment (alternative provider or internal landing place), timeline, cost, budget for the regular end of the contract, dependencies, owner |
+| 3. Scenario B — Disruptive Interruption of Service | Trigger conditions (including a crisis that requires leaving at once), the strategy, conditions and budget for leaving at once, landing place, minimum viable continuity path, data recovery method without provider cooperation, RTO, RPO, dependencies, owner |
+| 4. Destruction of Data at the Provider | Contractual destruction clause, portability and destruction conditions that also bind sub-suppliers, method, verification or attestation, logging |
 | 5. Self-Test Plan and Evidence | Test cadence, last test date, scope (full dry-run / partial / tabletop), findings, remediation actions |
 | 6. Annual Review | Annual cycle, next review date, review owner |
 | 7. Residual Risk | Risks such as data-format lock-in and provider non-cooperation, with likelihood, impact and mitigation |
-| 8. External References | Herziening rijksbreed cloudbeleid 2026, clause 3.2, in the Document Register with its verification date |
+| 8. External References | Herziening rijksbreed cloudbeleid 2026, clause 3.2, and the implementatiekader version applied, in the Document Register with verification dates |
 
 ---
 
@@ -68,6 +83,7 @@ Both scenarios are mandatory. A plan that only documents a planned, orderly exit
 - Scenario A and Scenario B are both documented.
 - Scenario B does not depend on provider cooperation and states a minimum viable continuity path with RTO and RPO.
 - Destruction of data at the provider has a verification method for both scenarios.
+- All four implementatiekader Art. 7 parts are covered: a landing place, a crisis-departure strategy with conditions and budget, a budget for the regular end of the contract, and portability and destruction conditions that reach the sub-suppliers.
 - Self-test evidence is present, or its absence is flagged. A plan with no test evidence is not yet compliant.
 - The annual review has a named owner and a next review date.
 - Residual risks, including proprietary managed-service coupling, have likelihood, impact and mitigation.

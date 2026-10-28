@@ -15,7 +15,7 @@
 
 ## Executive Summary
 
-[Two to three paragraphs describing the system, the Charter sections engaged (default for FITAA-class apps: s.2(b), s.2(d), s.7, s.8, s.15), the headline risks per right, the Oakes proportionality posture, the residual rating, and the DOJ counsel sign-off status. Note any open items — pending sign-offs, jurisprudence verification, or design changes required to clear residual risk.]
+[Two to three paragraphs describing the system, the Charter sections engaged (default for FITAA-class apps: s.2(b), s.2(d), s.7, s.8, s.11, s.15), the headline risks per right, the Oakes proportionality posture, the residual rating, and the DOJ counsel sign-off status. Note any open items — pending sign-offs, jurisprudence verification, or design changes required to clear residual risk.]
 
 ## Charter Engagement Surface
 
@@ -27,6 +27,7 @@
 | s.2(d) — freedom of association | [Y / N — default Y for FITAA-class apps] | [Identify disincentive surface: civil-society engagement, diaspora communities, political associations.] |
 | s.7 — life, liberty, security of the person | [Y / N — default Y for FITAA-class apps] | [Identify any deprivation: liberty effects of registration, security-of-person effects of disclosure.] |
 | s.8 — search and seizure | [Y / N — default Y for FITAA-class apps] | [Identify reasonable-expectation-of-privacy interests; reference the PIA personal-information inventory.] |
+| s.11 — proceedings in criminal and penal matters | [Y / N — default Y for FITAA-class apps] | [Applies only to a person "charged with an offence": prosecution of an offence, or a penalty with true penal consequences. Identify any offence prosecution or administrative monetary penalty the system supports.] |
 | s.15 — equality | [Y / N — default Y for FITAA-class apps] | [Identify protected-ground populations subject to differential impact.] |
 
 ## s.2 Analysis
@@ -71,6 +72,13 @@
 | [Collection of registrant / foreign-principal personal information] | [REP analysis under *Hunter v Southam*: subjective expectation, objective reasonableness, totality of the circumstances] | [Production-order workflow; warrant requirement for any compelled access beyond statutory authority] | [Low / Med / High] |
 | [Investigative back-end interfaces with RCMP / CSIS] | [Heightened REP for investigative metadata; *R v Spencer* line on subscriber identifiers] | [Severance audit per `ca-atip`; warrant or production-order required for compelled disclosure] | [Low / Med / High] |
 | [Cross-reference to PIA personal-information inventory] | [REP analysis grounded in PIA-classified data elements] | [Lawful-authority chain per Privacy Act §4–§8] | [Low / Med / High] |
+
+## s.11 Analysis
+
+| Proceeding | Charged with an Offence? | s.11 Rights Engaged | Design Safeguard | Residual |
+|------------|--------------------------|---------------------|------------------|----------|
+| [Referral or evidence package for prosecution of an offence, e.g. failing to report an arrangement] | [Yes — criminal in nature] | [11(a) notice of the specific offence; 11(b) trial within a reasonable time; 11(c) non-compellability; 11(d) presumption of innocence and a fair hearing] | [Evidence integrity and chain of custody; disclosure-ready records; compelled statements kept apart from prosecution evidence] | [Low / Med / High] |
+| [Notice of violation and administrative monetary penalty] | [Test for true penal consequences: penalty amount and purpose (compliance, not punishment)] | [s.11 applies only if the penalty is penal in amount or purpose] | [Notice setting out the violation and the amount; right to make representations; review route] | [Low / Med / High] |
 
 ## s.15 Analysis
 
@@ -123,6 +131,15 @@
 | Minimal impairment | [As above] | [Answer] |
 | Proportional effects | [As above] | [Answer] |
 
+### Right: s.11 — Proceedings in Criminal and Penal Matters
+
+| Step | Question | Answer |
+|------|----------|--------|
+| Pressing and substantial objective | [As above for any limit on a s.11 right] | [Answer] |
+| Rational connection | [As above] | [Answer] |
+| Minimal impairment | [As above] | [Answer] |
+| Proportional effects | [As above] | [Answer] |
+
 ### Right: s.15 — Equality
 
 | Step | Question | Answer |
@@ -141,6 +158,7 @@
 | s.7 liberty effect of penal-backed registration | [Notice + representation + appeal to independent decision-maker] | [Departmental Justice Counsel] | [Open / Closed] | [Low / Med / High] |
 | s.7 security-of-person effect of disclosure | [Threat-assessment screen + protective severance] | [DSO + Service Owner] | [Open / Closed] | [Low / Med / High] |
 | s.8 over-collection beyond statutory authority | [Lawful-authority chain per PIA + warrant interface for compelled access] | [Privacy Counsel] | [Open / Closed] | [Low / Med / High] |
+| s.11 penal consequences of an enforcement workflow (prosecution referral or punitive penalty) | [Fair-hearing safeguards + compelled-evidence separation + penalty calibrated to compliance] | [Departmental Justice Counsel] | [Open / Closed] | [Low / Med / High] |
 | s.15 differential impact on protected groups | [Substantive-equality monitoring + targeted accommodation] | [Service Owner + DOJ Counsel] | [Open / Closed] | [Low / Med / High] |
 
 ## DOJ Counsel Sign-Off Block
@@ -167,6 +185,7 @@
 | CA-SPENCER | *R v Spencer* [2014] 2 SCR 212 | <https://scc-csc.lexum.com/scc-csc/scc-csc/en/item/14233/index.do> | [YYYY-MM-DD] |
 | CA-CARTER | *Carter v Canada (AG)* [2015] 1 SCR 331 | <https://scc-csc.lexum.com/scc-csc/scc-csc/en/item/14637/index.do> | [YYYY-MM-DD] |
 | CA-DOJ-CHARTER-STMT | DOJ Charter Statements guidance | <https://www.justice.gc.ca/eng/csj-sjc/pl/charter-charte/index.html> | [YYYY-MM-DD] |
+| CA-DOJ-CS-C70 | DOJ Charter Statement, Bill C-70 (Part 4 analysed under s.2(b), s.7, s.8 and s.11) | <https://www.justice.gc.ca/eng/csj-sjc/pl/charter-charte/c70.html> | [YYYY-MM-DD] |
 
 ### Citations
 
@@ -177,6 +196,8 @@
 | [CHARTER-3] | CA-CHARTER | s.7 — life, liberty, security of the person | s.7 Analysis |
 | [CHARTER-4] | CA-CHARTER | s.8 — search and seizure | s.8 Analysis |
 | [CHARTER-5] | CA-CHARTER | s.15 — equality | s.15 Analysis |
+| [CHARTER-6] | CA-CHARTER | s.11 — proceedings in criminal and penal matters | s.11 Analysis |
+| [DOJ-CS-2] | CA-DOJ-CS-C70 | Part 4: administrative monetary penalties and s.11 | s.11 Analysis |
 | [OAKES-1] | CA-OAKES | Four-step proportionality test | Oakes Proportionality Analysis |
 | [HUNTER-1] | CA-HUNTER | Reasonable expectation of privacy | s.8 Analysis |
 | [SPENCER-1] | CA-SPENCER | Subscriber-identifier REP in digital contexts | s.8 Analysis |

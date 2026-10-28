@@ -1183,20 +1183,20 @@ uae-procurement → sobc → wardley → framework
 
 Added 12 community-overlay commands (`ca-*`) covering federal Canadian regulatory and digital-government instruments. They ship with the `[COMMUNITY]` description prefix and are not part of the officially-maintained baseline. Total command count moves from 104 to 116 (70 official + 46 community).
 
-The 12 commands cover: FITAA (Bill C-70 2024), federal privacy and access (Privacy Act, ATI Act), Treasury Board Directive on Automated Decision-Making, Charter rights design review, ITSG-33 + Standard on Security Categorization, Security of Information Act handling, GC Cloud sovereign residency, GC Digital Standards conformance, Official Languages Act, federal procurement (PSPC + PSIB), and First Nations OCAP® data sovereignty.
+The 12 commands cover: FITAA (Bill C-70 2024), federal privacy and access (Privacy Act, ATI Act), Treasury Board Directive on Automated Decision-Making, Charter rights design review, ITSG-33 + Standard on Security Categorization, *Foreign Interference and Security of Information Act* handling, GC Cloud sovereign residency, GC Digital Standards conformance, Official Languages Act, federal procurement (PSPC + PSIB), and First Nations OCAP® data sovereignty.
 
 **Canonical execution chains**:
 
 ```text
 Flow 1 — FITAA-class application (registration scheme, scoring, automated triage):
-principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (if ADM) → data-model → ca-fitaa → ca-charter → ca-ocap (if Indigenous data)
+principles → stakeholders → requirements → data-model → ca-pia → ca-atip → ca-aia (if ADM) → ca-fitaa → ca-charter → ca-ocap (if Indigenous data)
   → ca-itsg-33 → ca-soia (if classified) → ca-cloud-residency → ca-ola
   → ca-gc-digital-standards → risk → sobc → ca-pspc → adr → framework
 ```
 
 ```text
 Flow 2 — generic federal Canadian application:
-principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (if ADM) → ca-ocap (if Indigenous data)
+principles → stakeholders → requirements → data-model → ca-pia → ca-atip → ca-aia (if ADM) → ca-ocap (if Indigenous data)
   → ca-itsg-33 → ca-cloud-residency → ca-ola
   → ca-gc-digital-standards → risk → sobc → ca-pspc → adr → framework
 ```
@@ -1211,7 +1211,7 @@ principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (
 | `ca-pia` | `risk` | PIA findings feed privacy and regulatory entries in the risk register |
 | `ca-pia` | `ca-atip` | Personal-information disclosure register continues into ATIP reconciliation |
 | `ca-pia` | `ca-aia` | Required when ADM touches personal information; AIA inherits the PIA inventory |
-| `ca-atip` | `data-model` | Severance rules feed back into data-model classification flags and access controls |
+| `ca-atip` | `adr` | Severance design choices for hybrid public/protected views warrant ADRs |
 | `ca-aia` | `risk` | AIA findings — bias, drift, contestability — feed the operational risk register |
 | `ca-aia` | `adr` | Material AIA outcomes (vendor selection, autonomy tier, recourse design) warrant ADRs |
 | `ca-charter` | `risk` | Residual Charter risks per right feed the operational risk register |
@@ -1227,7 +1227,6 @@ principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (
 | `ca-ola` | `ca-gc-digital-standards` | OLA service equivalence is a baseline expectation under the GC Digital Standards scorecard |
 | `ca-ola` | `service-assessment` | OLA review feeds the service-assessment evidence base for bilingualism and active offer |
 | `ca-pspc` | `evaluate` | PSPC route selection feeds the vendor evaluation framework's scoring rubric |
-| `ca-ocap` | `data-model` | OCAP-mapped classifications and access controls feed the data-model stewardship and access policies |
 | `ca-ocap` | `ca-atip` | ATIP severance design must reflect OCAP access and control determinations for Indigenous datasets |
 
 - **Updated**: Total command count from 104 to 116 (70 official + 46 community = 116; community now includes 12 Canada + 12 UAE + 7 EU + 12 FR + 3 Austrian)

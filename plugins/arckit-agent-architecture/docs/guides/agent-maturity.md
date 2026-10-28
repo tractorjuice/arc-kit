@@ -62,7 +62,7 @@ Output: `projects/<id>/ARC-<id>-AAMT-v1.0.md`
 | Current State Assessment | Level, evidence, gaps, and risk per dimension |
 | Target State | Target level and rationale per dimension |
 | Improvement Roadmap | Initiatives, owners, timeline, dependencies, success criteria |
-| Benchmarks | Industry, regulatory, and peer comparisons |
+| Benchmarks | Cited industry, regulatory, and peer comparisons, each on the reference's own scale |
 | Traceability | Links to inventory, design, governance, security, integration, and roadmap artefacts |
 
 ---
@@ -73,6 +73,7 @@ Output: `projects/<id>/ARC-<id>-AAMT-v1.0.md`
 - Target levels are realistic for the investment and timeline.
 - Each improvement initiative has owner, success criteria, and dependency notes.
 - Security and governance maturity are not averaged away by strong design maturity.
+- Every benchmark cites its source, or says "No cited benchmark". NIST AI RMF and the OWASP Top 10 for LLM Applications define no maturity levels, so they are compared by Current and Target Profile and by risk coverage, not given a level.
 - Roadmap actions feed back into `/arckit:agent-design`, `/arckit:agent-governance`, and `/arckit:agent-security`.
 
 ---

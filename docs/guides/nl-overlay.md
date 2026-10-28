@@ -30,7 +30,7 @@ Determines the **Te Beschermen Belangen (TBB) category** for a system or dataset
 
 ### `/arckit:nl-cloud`
 
-Assesses **Rijksbreed Cloudbeleid** compliance: the materieel publiek cloudgebruik determination (clause 4.1), the clause 3.1 risk assessment (including the mandatory foreign-government-interference aspect), and the headline eligibility determination — clause 5.2's prohibition for Te Beschermen Belangen niveau 1–3 and staatsgeheim data, clause 4.5's three cumulative conditions for email/file-storage services, and clause 5.4's basisregistraties constraint. Also covers cybersecurity criteria (clause 4.2), critical/essential-entity discouragement (clause 4.3), Woo publication posture (clause 4.4), data location and encryption (clause 4.6), and the clause 3.3/3.4 governance obligations. Produces `ARC-{id}-RBCLOUD-v{version}.md`.
+Assesses **Rijksbreed Cloudbeleid** compliance: the materieel publiek cloudgebruik determination (clause 4.1), the clause 3.1 risk assessment (including the mandatory foreign-government-interference aspect, and following the Implementatiekader risicoafweging cloudgebruik that clause 3.1 requires), and the headline eligibility determination — clause 5.2's prohibition for Te Beschermen Belangen niveau 1–3 and staatsgeheim data, clause 4.5's three cumulative conditions for email/file-storage services, and clause 5.4's basisregistraties constraint. Also covers cybersecurity criteria (clause 4.2), critical/essential-entity discouragement (clause 4.3), Woo publication posture (clause 4.4), data location and encryption (clause 4.6), and the clause 3.3/3.4 governance obligations. Produces `ARC-{id}-RBCLOUD-v{version}.md`.
 
 ### `/arckit:nl-bio`
 

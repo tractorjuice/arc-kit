@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit-ca:ca-charter` generates a Canada Charter Rights Design Review for a federal system that materially engages Charter-protected interests. It identifies which sections of the Canadian Charter of Rights and Freedoms are engaged (default for FITAA-class apps: s.2(b), s.2(d), s.7, s.8, s.15), runs the *Oakes* four-step proportionality test against each engaged right, registers risks and mitigations with residual posture, and captures the DOJ counsel sign-off block.
+`/arckit-ca:ca-charter` generates a Canada Charter Rights Design Review for a federal system that materially engages Charter-protected interests. It identifies which sections of the Canadian Charter of Rights and Freedoms are engaged (default for FITAA-class apps: s.2(b), s.2(d), s.7, s.8, s.11, s.15), runs the *Oakes* four-step proportionality test against each engaged right, registers risks and mitigations with residual posture, and captures the DOJ counsel sign-off block.
 
 Charter review is mandatory for any federal system that limits a Charter-protected interest. *R v Oakes* structures the analysis: any limit must be prescribed by law and demonstrably justified through (1) a pressing and substantial objective, (2) a rational connection between the means and the objective, (3) minimal impairment of the right, and (4) proportional effects. The artefact this command produces is a design-stage instrument — DOJ counsel sign-off remains a delivery gate, not a sign-off formality.
 
@@ -38,10 +38,11 @@ Output: `projects/<id>/ARC-<id>-CHRT-v1.0.md`
 | Document Control | Canadian classification (UNCLASSIFIED / Protected A–C / CONFIDENTIAL / SECRET / TOP SECRET) |
 | Revision History | Version, date, author, changes, approvals |
 | Executive Summary | Engaged Charter sections, headline risks per right, residual posture, DOJ counsel sign-off status |
-| Charter Engagement Surface | Per-section engagement decision with reasoning; default-engaged for FITAA-class apps: s.2(b), s.2(d), s.7, s.8, s.15 |
+| Charter Engagement Surface | Per-section engagement decision with reasoning; default-engaged for FITAA-class apps: s.2(b), s.2(d), s.7, s.8, s.11, s.15 |
 | s.2 Analysis | Sub-section tables for 2(a) conscience and religion, 2(b) expression, 2(c) peaceful assembly, 2(d) association |
 | s.7 Analysis | Engagement, deprivation, procedural safeguard, residual; principles of fundamental justice per *Carter* |
 | s.8 Analysis | Reasonable-expectation-of-privacy analysis per *Hunter v Southam* and *R v Spencer*; warrant or production-order interface |
+| s.11 Analysis | Whether a proceeding the system supports charges a person with an offence or carries true penal consequences (*R v Wigglesworth*); the s.11 rights engaged and the design safeguards |
 | s.15 Analysis | Protected grounds, differential impact, substantive-equality test, residual |
 | Oakes Proportionality Analysis | Four-step test (pressing-and-substantial, rational connection, minimal impairment, proportional effects) for each engaged right |
 | Mitigation Register | Charter risk, mitigation, owner, status, residual |
@@ -66,6 +67,7 @@ Output: `projects/<id>/ARC-<id>-CHRT-v1.0.md`
 - **Treating s.15 as formal equality.** The substantive-equality test asks whether the design creates or perpetuates disadvantage for a protected group, not whether everyone is treated identically. A facially neutral design that lands harder on a protected group is a s.15 problem regardless of intent.
 - **Under-citing technology-specific jurisprudence.** *R v Spencer* expanded s.8 to digital subscriber identifiers, and the s.8 jurisprudence continues to develop around metadata, cell-tower data, and platform-mediated communications. A Charter review that cites only *Hunter v Southam* without the modern digital line is incomplete.
 - **Sidelining DOJ counsel.** Anything beyond a routine internal-tooling review requires departmental Justice counsel sign-off; constitutional matters route to DOJ HQ constitutional advisors. A Charter design review without named counsel sign-off is a draft, not an artefact.
+- **Leaving s.11 out because the scheme is administrative.** s.11 protects a person "charged with an offence": proceedings that are criminal in nature, or that can lead to true penal consequences (*R v Wigglesworth*). FITAA has offences punishable by imprisonment (ss. 23–25) as well as administrative monetary penalties, and the Department of Justice's Charter Statement for Bill C-70 analyses those penalties under s.11. It found no true penal consequences because their purpose is compliance, not punishment, and there is no mandatory minimum, but said that depends on the amounts the regulations set. Record which proceedings the system supports and re-test once the amounts are known.
 - **Conflating engagement with limitation.** A Charter section can be engaged without being limited; the proportionality analysis only runs where the design imposes a limit. The engagement surface and the Oakes analysis are separate questions and must be answered separately.
 
 ---

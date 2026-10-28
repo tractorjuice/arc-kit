@@ -201,7 +201,7 @@ targets:
   # --- ADRs (UAE-themed, deps include research + classification) ---------
   - id: ADR-001
     skill: arckit:adr
-    topic: "Cloud platform and sovereign hosting (Core42, G42, Microsoft UAE, e& Sovereign)"
+    topic: "Cloud platform and sovereign hosting (Core42, G42, Microsoft UAE, e& Sovereign, du National Hypercloud)"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ, AWS_RESEARCH, AZURE_RESEARCH, UAE_CLOUD_RESIDENCY]
