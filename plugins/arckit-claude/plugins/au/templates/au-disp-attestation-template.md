@@ -252,7 +252,7 @@ I/we attest that the information in this pack is accurate to the best of my/our 
 
 | Artefact | Doc-ID | Cross-Reference |
 |----------|--------|-----------------|
-| ASD Essential Eight Posture | `ARC-{P}-AUE8-v*` | E8 maturity evidence per Strategy in section 6 |
+| ASD Essential Eight Posture | `ARC-{P}-AUE8-v*` | E8 maturity evidence per strategy in section 5 |
 | ASD ISM Applicability | `ARC-{P}-AUISM-v*` | ISM control coverage per guideline in section 6 |
 | Privacy Impact Assessment | `ARC-{P}-AUPIA-v*` | APP 11 personal-information protection evidence |
 | Notifiable Data Breach Playbook | `ARC-{P}-AUNDB-v*` | Incident-response capability evidence |
