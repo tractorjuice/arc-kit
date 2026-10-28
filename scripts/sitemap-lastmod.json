@@ -16,11 +16,11 @@
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
   "commands.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "07e9f5fa20ed4a297dbd64ca40b6ef360c40bab43d836ff003615d2e43b5badb"
+    "lastmod": "2026-10-28",
+    "text_sha256": "b828ab3238c2789a5cd41b22075b79982fc355e098793ab620a5d43d9e35cfa7"
   },
   "contributors.html": {
-    "lastmod": "2026-10-27",
+    "lastmod": "2026-10-28",
     "text_sha256": "8a5a95213e0c1e25e8406395f093bfd081e089a17d4ce74999ea8394412205f0"
   },
   "fde/architects.html": {
@@ -40,16 +40,16 @@
     "text_sha256": "5e90aa4e6e77146237251785c6423b5b21acde85544610597555d710106114db"
   },
   "guides.html": {
-    "lastmod": "2026-10-27",
+    "lastmod": "2026-10-28",
     "text_sha256": "04c040e0a528272f4923a67d096c7a551ef18e7505844008526097b6fce724cf"
   },
   "index.html": {
-    "lastmod": "2026-10-27",
+    "lastmod": "2026-10-28",
     "text_sha256": "2b496727c8e76da7680eea7f98dc651c136653a8a78d789df540f02ad3ff64fa"
   },
   "llms.txt": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "bef7e763b618d93ea656f08b78b92b9a944a72b26043d9fd008d90cb7e4ca90b"
+    "lastmod": "2026-10-28",
+    "text_sha256": "f6b956a3be0bcfa02d94c9bf164df0b78d3bc5d28e343457d37231830183d310"
   },
   "on-github.html": {
     "lastmod": "2026-10-26",

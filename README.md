@@ -436,9 +436,9 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 - `/arckit:eu-ai-act` — EU AI Act (Regulation 2024/1689) — risk classification (prohibited / high-risk / GPAI), conformity routes
 - `/arckit:eu-dora` — Digital Operational Resilience Act (EU 2022/2554) — financial sector ICT risk, TLPT, third-party register
 - `/arckit:eu-cra` — Cyber Resilience Act (Regulation 2024/2847) — products with digital elements, SBOM, VDP, CE marking
-- `/arckit:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework (v1.2.1) — eight weighted sovereignty objectives, SEAL-0 to SEAL-4 assurance levels, minimum-SEAL tender gate
+- `/arckit:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework (v1.2.1, June 2026 calculator weights) — eight weighted sovereignty objectives, SEAL-0 to SEAL-4 assurance levels, minimum-SEAL tender gate
 - `/arckit:eu-dsa` — Digital Services Act (Regulation 2022/2065) — intermediaries, platforms, VLOPs, ARCOM
-- `/arckit:eu-data-act` — Data Act (Regulation 2023/2854) — connected products, B2B FRAND, cloud switching, Article 27
+- `/arckit:eu-data-act` — Data Act (Regulation 2023/2854) — connected products, B2B FRAND, cloud switching, Article 32 international governmental access
 
 **French government** (apply on top of the EU baseline for French deployments):
 
@@ -1262,7 +1262,7 @@ Assess AI system obligations under the EU's risk-based AI framework:
 Assess cybersecurity obligations for essential and important entities:
 
 - Sector classification (Annex I Essential vs Annex II Important)
-- OIV/OSE designation under French transposition (LPM/LCEN)
+- French OIV/OSE designation under current law (OIV: Code de la défense; OSE: loi n° 2018-133, the NIS1 transposition), pending France's NIS2 transposition bill
 - Governance, risk management, and incident reporting obligations
 - Supply chain security and vulnerability disclosure
 - ANSSI notification timeline (24h → 72h → 30-day final report)
@@ -1304,8 +1304,8 @@ Data sharing obligations for connected products and cloud providers:
 
 - Role determination: manufacturer / data holder / DAPS / public sector body
 - User data access rights (Chapter II) and B2B sharing (Chapter III)
-- Cloud switching obligations (Chapter VI) — egress fee elimination by September 2027
-- International data transfer restrictions (Article 27)
+- Cloud switching obligations (Chapter VI) — switching charges withdrawn from 12 January 2027
+- Safeguards against unlawful international governmental access (Chapter VII, Article 32)
 - Application date: 12 September 2025
 
 #### French Public Sector Governance
