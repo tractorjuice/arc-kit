@@ -75,7 +75,7 @@ scanning `projects/`.
 
 The generated artefact contains the following sections:
 
-1. Document Control (classification, owner, SMF holder, review cycle)
+1. Document Control (classification, owner, authorisation type, FCA FRN, review cycle)
 2. Authentication Architecture (factor inventory: knowledge / possession / inherence; dynamic
    linking implementation per PSRs 2017 regulation 100(2) and SCA-RTS Article 5;
    exemption-decision engine architecture)
@@ -158,10 +158,14 @@ assessments.
   exemption is available only while the firm's fraud rate, calculated under Article 19, is at or
   below the reference rate for the ETV band it uses. Design the Article 20 reporting and cessation
   process and the Article 21 monitoring before implementing the exemption, not after.
-- **Soft-decline support is mandatory even where an exemption is applied.** An issuer that
-  disagrees with an acquirer-asserted exemption can soft-decline. The payment flow must support
-  automatic fallback to full SCA on soft-decline. An acquirer-only exemption assertion without
-  soft-decline support is not compliant.
+- **Design for soft declines even where an exemption is applied.** The card issuer decides
+  whether an exemption applies and can still require SCA when the acquirer requests one (FCA
+  Approach Document, May 2026, paragraph 20.44); card schemes signal this with a soft decline. A
+  payment flow without automatic fallback to full SCA will fail those transactions, and a payee or
+  payee's PSP that does not accept SCA where regulation 100 requires it must compensate the
+  issuer for unauthorised-transaction refunds (PSRs 2017 regulation 77(6)). The PSRs 2017 and the
+  SCA-RTS do not mention soft declines: making soft-decline support mandatory is this overlay's
+  design recommendation, not a regulatory requirement.
 - **Article 10A and the AISP 90-day reconfirmation are separate rules.** Article 10A lets the
   ASPSP stop applying SCA to AISP access once SCA has been applied on at least one previous AISP
   access; it sets no periodic ASPSP reauthentication. Article 36(6) separately requires the user to

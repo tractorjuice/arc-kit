@@ -263,7 +263,7 @@ French government (apply on top of EU baseline):
 
 ### UK Finance payments (community-contributed, sector overlay)
 
-> ⚠️ EXPERIMENTAL sector overlay — output requires review by qualified UK FS regulatory counsel, the firm MLRO / Compliance Officer, and relevant SMF holders before reliance.
+> ⚠️ EXPERIMENTAL sector overlay — output requires review by qualified UK FS regulatory counsel, the firm MLRO / Compliance Officer, and the accountable senior managers (SMF holders only where the firm is within SM&CR) before reliance.
 
 - [PSD2 SCA-RTS exemption design](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-sca-rts.md): `/arckit:uk-fs-sca-rts` exemption applicability matrix and transaction risk analysis under the PSRs 2017.
 - [EMI / PI safeguarding](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-safeguarding.md): `/arckit:uk-fs-safeguarding` safeguarding method statement (segregation vs insurance vs guarantee) under the EMRs 2011.

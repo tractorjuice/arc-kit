@@ -440,11 +440,12 @@
 <p><strong>Status</strong>: EXPERIMENTAL · Community-contributed · <strong>CRITICAL SEVERITY</strong> · <strong>Output is not
 regulatory advice.</strong> Safeguarding failures have led to firm collapse and FCA enforcement action.
 The safeguarding assessment MUST be reviewed, materially supplemented, and signed off by qualified
-UK FS regulatory counsel, the firm's SMF holder for safeguarding (typically SMF1/SMF24), the
-firm's MLRO (for AML-angle review of the client-money position), and the firm's Compliance Officer
-before any production safeguarding arrangement is established. Verify the FCA Approach Document
-(current edition), PS25/12 (August 2025) and the CASS 15 rules in force from 7 May 2026 for
-changes introduced since this command was authored.</p>
+UK FS regulatory counsel, the director or senior manager responsible for safeguarding oversight
+(CASS 15.2.4R; an SMF holder only if the firm is within SM&amp;CR), the firm's MLRO (for AML-angle
+review of the client-money position), and the firm's Compliance Officer before any production
+safeguarding arrangement is established. Verify the FCA Approach Document (current edition),
+PS25/12 (August 2025) and the CASS 15 rules in force from 7 May 2026 for changes introduced
+since this command was authored.</p>
 </blockquote>
 <h2 id="purpose">Purpose</h2>
 <p>The <code>/arckit:uk-fs-safeguarding</code> command generates a safeguarding assessment for an authorised UK
@@ -467,7 +468,8 @@ arrangements change.</p>
 relevant funds (as defined in PSRs 2017 Reg 2 / EMR 2011 Reg 2) on behalf of customers requires
 a documented safeguarding arrangement before those funds are received.</li>
 <li><strong>After a safeguarding bank change</strong> — if the firm switches or adds a designated safeguarding
-bank account or insurer, the assessment must be updated and re-signed by the relevant SMF holder.</li>
+bank account or insurer, the assessment must be updated and re-signed by the individual
+responsible for safeguarding oversight.</li>
 <li><strong>PS25/12 compliance refresh</strong> — the FCA's PS25/12 (August 2025) made the CASS 15 safeguarding
 rules, SUP 3A safeguarding audits and the monthly safeguarding return, in force 7 May 2026
 (FCA 2025/38). If the firm's existing documentation was drafted before then, this command
@@ -500,8 +502,10 @@ artefacts where present, and prompts for it in the output summary where missing.
 <p><strong>Output path</strong>: <code>projects/&lt;NNN&gt;-&lt;slug&gt;/payments-compliance/ARC-&lt;NNN&gt;-FSSAFE-v1.0.md</code></p>
 <p>The generated artefact contains the following sections:</p>
 <ol>
-<li>Document Control (classification, owner, SMF holder, review cycle)</li>
-<li>Firm Authorisation Profile (authorisation type, FCA FRN, products in scope)</li>
+<li>Document Control (classification, owner, safeguarding oversight under CASS 15.2.4R, review
+cycle)</li>
+<li>Firm Authorisation Profile (authorisation type, FCA FRN, whether the firm is within SM&amp;CR,
+products in scope)</li>
 <li>Safeguarding Method Statement (chosen method with explicit regulatory justification)</li>
 <li>Designated Safeguarding Arrangements (bank account details / insurer / guarantor)</li>
 <li>End-to-end Client Funds Flow (Mermaid or ASCII diagram + narrative for each node)</li>
@@ -544,18 +548,32 @@ blockage — at minimum three scenarios)</li>
 <p><strong>Monthly safeguarding return</strong>: REP027, submitted within 15 business days of each month end
 (SUP 16.14A.3R), with its content set by SUP 16 Annex 29BR. One return covers authorised PIs,
 authorised and small EMIs, credit unions issuing e-money and SPIs that opt in (FCA Approach
-Document, May 2026, Chapter 13). The FCA Handbook is a single-page application: open SUP 16 at
-<a href="https://handbook.fca.org.uk/handbook/sup16">https://handbook.fca.org.uk/handbook/sup16</a> and find SUP 16.14A and Annex 29BR in the chapter.</p>
-<p><strong>FCA enforcement context</strong>: Two documented enforcement cases provide the sector context for why
-safeguarding is CRITICAL severity:</p>
+Document, May 2026, Chapter 13). The FCA Handbook links to each section:
+SUP 16.14A at <a href="https://handbook.fca.org.uk/handbook/sup16/sup16s14a">https://handbook.fca.org.uk/handbook/sup16/sup16s14a</a> and SUP 16 Annex 29BR at
+<a href="https://handbook.fca.org.uk/handbook/sup16/sup16s154">https://handbook.fca.org.uk/handbook/sup16/sup16s154</a>.</p>
+<p><strong>FCA enforcement context</strong>: Two firm failures show why safeguarding is CRITICAL severity:</p>
 <ul>
-<li><strong>Allied Wallet (2021)</strong> — FCA cancelled authorisation after finding the firm holding client funds
-in non-compliant accounts and failing to designate accounts correctly.</li>
-<li><strong>Premier FX (2018)</strong> — firm failed with a £10 million shortfall in customer funds after
-inadequate segregation and failure to reconcile promptly.</li>
+<li><strong>Allied Wallet (2019–2020)</strong>: an EMI. On 4 June 2019 the FCA imposed requirements stopping it
+carrying on regulated activities or disposing of the funds it held, then petitioned to wind it up
+because it appeared to be mixing funds received from merchants and card issuers with its own. The
+High Court made a winding-up order on 20 March 2020 and later found the FCA's concern
+well-founded, with significant sums missing
+(<a href="https://www.fca.org.uk/news/statements/allied-wallet-limited">FCA statement</a>;
+<em>Re Allied Wallet Ltd</em> [2022] EWHC 1877 (Ch),
+<a href="https://caselaw.nationalarchives.gov.uk/ewhc/ch/2022/1877">judgment</a>).</li>
+<li><strong>Premier FX (collapsed 2018; censured 2021)</strong>: an API providing money remittance. After its
+sole director died in June 2018 it could not meet customers' claims, and administrators were
+appointed on the FCA's application on 13 August 2018. The FCA's Final Notice of 23 February 2021
+publicly censured it for safeguarding and payment-account breaches between 2013 and 2018: only
+its main sterling account was designated as a client account, and customer funds were
+commingled with other customers' and the firm's own funds
+(<a href="https://www.fca.org.uk/publication/final-notices/premier-fx.pdf">Final Notice</a>). Customers with
+accepted claims were repaid in full after Barclays, the firm's bank, made a voluntary payment of
+£10,076,943.75
+(<a href="https://www.fca.org.uk/news/statements/fca-responds-complaints-commissioners-final-report-premier-fx-limited">FCA, 18 December 2023</a>).</li>
 </ul>
-<p>Both cases demonstrate that safeguarding is not a one-time setup — ongoing reconciliation and
-regular audit are the obligations that failed in practice.</p>
+<p>Both cases show that safeguarding is not a one-time setup: segregation, account designation and
+ongoing reconciliation are the controls that failed in practice.</p>
 <p><strong>PS25/12 (FCA, August 2025)</strong> made the Payments and Electronic Money (Safeguarding) Instrument
 2025 (FCA 2025/38), in force 7 May 2026: CASS 15 (relevant funds), CASS 10A (resolution pack),
 SUP 3A (safeguarding audits) and SUP 16.14A (monthly safeguarding return). CP24/20 (September 2024)
@@ -595,7 +613,7 @@ and 13) is the current primary reference for FCA supervisory expectations.</p>
 <li><strong>Safeguarding obligations apply from the moment funds are received, not when payment is
 initiated.</strong> The segregation trigger is receipt of funds. Any float period between receipt and
 placement in the designated account must be explicitly documented, minimised, and approved by
-the relevant SMF holder.</li>
+the individual responsible for safeguarding oversight.</li>
 <li><strong>Insurance and guarantee methods require the policy to be in place BEFORE the relevant funds
 are received.</strong> EMR 2011 Reg 22(1) and PSRs 2017 Reg 23(12) require the funds to be covered, so a
 retroactive arrangement does not satisfy them. From 7 May 2026 the firm must also notify the FCA
@@ -610,7 +628,19 @@ firm to inform the FCA in writing without delay in the cases it lists, including
 failure to reconcile or to pay a shortfall into a relevant funds account. &quot;Materially&quot; has no
 numeric threshold: the firm must document its own (e.g., a shortfall exceeding £X or Y% of
 safeguarded funds), have it approved by the Compliance Officer, and ensure it triggers
-notification to the SMF holder and the FCA.</li>
+notification to the individual responsible for safeguarding oversight and the FCA.</li>
+<li><strong>Name the individual responsible for safeguarding oversight; do not assume SM&amp;CR.</strong> CASS
+15.2.4R requires every safeguarding institution to allocate to a single director or senior
+manager responsibility for overseeing operational compliance with the relevant funds regime and
+reporting on it to the governing body. SM&amp;CR applies only to FSMA-authorised firms (those with a
+Part 4A permission, such as a bank or building society). A PI or EMI authorised only under the
+PSRs 2017 or EMRs 2011 is outside it: its directors and persons responsible for management are
+assessed for good repute and knowledge under PSRs 2017 regulation 6(7)(b) or EMRs 2011
+regulation 6(6)(b) (the &quot;PSD Individual&quot; or &quot;EMD Individual&quot;; FCA Approach Document, May 2026,
+paragraphs 3.107 to 3.111). Use SMF titles only for a firm within SM&amp;CR. HM Treasury's
+Modernising Payment Services Regulation consultation (14 July to 6 October 2026) asked whether
+senior managers of payment and e-money institutions should carry enhanced accountability; check
+whether a decision has followed.</li>
 <li><strong>The safeguarding bank is itself a critical dependency.</strong> If the safeguarding bank fails, freezes
 the account, or terminates the relationship, the firm may be unable to meet payout obligations
 within the regulatory timeframe. The CTP dependency register must include the safeguarding bank.</li>
@@ -669,8 +699,12 @@ reporting fields after go-live is a common and costly error.</li>
 <td><a href="https://handbook.fca.org.uk/handbook/cass15">https://handbook.fca.org.uk/handbook/cass15</a></td>
 </tr>
 <tr>
-<td>FCA Handbook SUP 16 — Reporting requirements (SUP 16.14A and Annex 29BR, monthly safeguarding return)</td>
-<td><a href="https://handbook.fca.org.uk/handbook/sup16">https://handbook.fca.org.uk/handbook/sup16</a></td>
+<td>FCA Handbook SUP 16.14A — Safeguarding return: safeguarding institutions (monthly return, SUP 16.14A.3R)</td>
+<td><a href="https://handbook.fca.org.uk/handbook/sup16/sup16s14a">https://handbook.fca.org.uk/handbook/sup16/sup16s14a</a></td>
+</tr>
+<tr>
+<td>FCA Handbook SUP 16 Annex 29BR — Safeguarding return (content of the return)</td>
+<td><a href="https://handbook.fca.org.uk/handbook/sup16/sup16s154">https://handbook.fca.org.uk/handbook/sup16/sup16s154</a></td>
 </tr>
 <tr>
 <td>FCA EMI and Payment Institutions — key publications</td>

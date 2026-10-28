@@ -3,7 +3,7 @@
 4 slash commands and the `uk-fs-payments` build recipe covering UK Financial Services payments compliance for established Payment Service Providers, E-Money Institutions, and Payment Institutions:
 
 - `/arckit:uk-fs-sca-rts` — UK PSD2 SCA-RTS exemption design (UK SCA-RTS Articles 10-18 under PSRs 2017 Reg 100 and 106A, TRA thresholds, fraud-monitoring framework)
-- `/arckit:uk-fs-safeguarding` — EMI/PI safeguarding assessment (EMR 2011, PSRs 2017, CASS 15 from 7 May 2026, FCA Dear CEO 2020) — **CRITICAL severity**
+- `/arckit:uk-fs-safeguarding` — EMI/PI safeguarding assessment (EMR 2011, PSRs 2017, CASS 15 from 7 May 2026, FCA Dear CEO letter of July 2019) — **CRITICAL severity**
 - `/arckit:uk-fs-consumer-duty` — FCA Consumer Duty annual Board Report (PS22/9, FG22/5)
 - `/arckit:uk-fs-ctp-dependency` — Critical Third Parties dependency assessment (BoE/PRA/FCA PS24/16)
 
@@ -19,13 +19,13 @@ On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy
 
 ## Scope
 
-**In scope (v1)**: Established UK Payment Service Providers (PSPs), E-Money Institutions (EMIs), and Payment Institutions (PIs) scaling regulated operations under FCA authorisation. Day-2 compliance artefacts — not pre-authorisation business-plan preparation.
+**In scope (v1)**: Established UK Payment Service Providers (PSPs), E-Money Institutions (EMIs), and Payment Institutions (PIs) scaling regulated operations under FCA authorisation. Day-2 compliance artefacts — not pre-authorisation business-plan preparation. SM&CR applies only to FSMA-authorised firms (for example banks and other firms with a Part 4A permission); a PI or EMI authorised only under the PSRs 2017 or EMRs 2011 is outside it, so the commands record whether the firm is within SM&CR and use SMF titles only when it is.
 
 **Out of scope**: Banking prudential regulation (ICAAP/ILAAP/MRM SS1/23), insurance, asset management, Open Banking conformance (TPP-side — separate overlay candidate), cryptoasset financial promotions, DORA mapping for UK firms with EU operations. Each is a candidate v2+ command or sibling overlay.
 
 ## Regulatory anchors
 
-FCA PSRs 2017 + UK SCA-RTS (FCA technical standards; PS21/19, FCA 2025/62) · FCA Approach to Payment Services and Electronic Money (May 2026) · UK Finance Industry Guidance on Strong Customer Authentication (2025) · Electronic Money Regulations 2011 · FCA "Dear CEO" letter on safeguarding (Jan 2020) · FCA PS25/12 (safeguarding, August 2025) and CASS 15 (from 7 May 2026) · FCA monthly safeguarding return (SUP 16.14A, SUP 16 Annex 29BR) · FCA PS22/9 (Consumer Duty) · FCA FG22/5 · FCA "Consumer Duty board reports: good practice and areas for improvement" (11 December 2024, last updated 9 March 2026) and FCA blog "Year 2 Consumer Duty Board Reports: progress and what comes next" (16 April 2026) · FCA Principle 12 (PRIN 2A) · BoE/PRA/FCA PS24/16 (Critical Third Parties) · FSMA 2023 · FINOS Common Cloud Controls (referenced as a control-library substrate).
+FCA PSRs 2017 + UK SCA-RTS (FCA technical standards; PS21/19, FCA 2025/62) · FCA Approach to Payment Services and Electronic Money (May 2026) · UK Finance Industry Guidance on Strong Customer Authentication (2025) · Electronic Money Regulations 2011 · FCA "Dear CEO" letter on safeguarding (4 July 2019; marked historical by the FCA in May 2025) · FCA PS25/12 (safeguarding, August 2025) and CASS 15 (from 7 May 2026) · FCA monthly safeguarding return (SUP 16.14A, SUP 16 Annex 29BR) · FCA PS22/9 (Consumer Duty) · FCA FG22/5 · FCA "Consumer Duty board reports: good practice and areas for improvement" (11 December 2024, last updated 9 March 2026) and FCA blog "Year 2 Consumer Duty Board Reports: progress and what comes next" (16 April 2026) · FCA Principle 12 (PRIN 2A) · BoE/PRA/FCA PS24/16 (Critical Third Parties) · FSMA 2023 · FINOS Common Cloud Controls (referenced as a control-library substrate).
 
 ## Statutory currency
 

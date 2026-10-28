@@ -13,7 +13,8 @@
 |-------|-------|
 | **Firm Authorisation / Registration Type** | {{FIRM_AUTHORISATION_TYPE}} |
 | **FCA Firm Reference Number** | {{FCA_FRN}} |
-| **SMF Holder (Operational Resilience)** | {{SMF_HOLDER_NAME}} — {{SMF_HOLDER_FUNCTION}} |
+| **Accountable individual (operational resilience)** | {{ACCOUNTABLE_INDIVIDUAL_NAME}} — {{ACCOUNTABLE_INDIVIDUAL_ROLE}} |
+| **Within SM&CR?** | {{SMCR_STATUS}} (Yes only if the firm is FSMA-authorised, e.g. it holds a Part 4A permission; a PI or EMI authorised only under the PSRs 2017 or EMRs 2011 is outside SM&CR) |
 
 ## Revision History
 
@@ -34,13 +35,14 @@
 {{EXECUTIVE_SUMMARY_PARAGRAPH_3}}
 
 > ⚠️ This document is a **working assessment** — not a regulatory submission. All CTP dependency
-> assessments must be reviewed and signed off by qualified UK FS regulatory counsel, the firm's
-> SMF holder for operational resilience (typically SMF24 — Chief Operations Function — at larger
-> firms; SMF1 — CEO — at smaller firms), and the firm's Compliance Officer before presentation to
-> the Board or submission to regulators. MLRO review is required only where a CTP relationship
-> directly affects AML or sanctions screening capability. Regulatory citations reflect the position
-> as at the document creation date; verify against current BoE, PRA, and FCA publications — in
-> particular the HMT designation list — before reliance.
+> assessments must be reviewed and signed off by qualified UK FS regulatory counsel, the individual
+> accountable for operational resilience (if the firm is within SM&CR, the SMF holder: SMF24 Chief
+> operations function where the firm has one, otherwise SMF1 Chief executive function; if not, the
+> director or person responsible for management notified to the FCA), and the firm's Compliance
+> Officer before presentation to the Board or submission to regulators. MLRO review is required
+> only where a CTP relationship directly affects AML or sanctions screening capability. Regulatory
+> citations reflect the position as at the document creation date; verify against current BoE,
+> PRA, and FCA publications — in particular the HMT designation list — before reliance.
 
 ---
 
@@ -167,10 +169,10 @@ scoring 11 or above are treated as material regardless of formal CTP designation
 Exit drills test whether the firm can substitute a provider within the firm's IBS impact tolerance
 without relying on the provider's own cooperation.
 
-| Provider | Drill type | Planned frequency | Last conducted | Next planned date | Accountable SMF |
-|----------|-----------|-------------------|----------------|-------------------|-----------------|
-| {{EXIT_DRILL_PROVIDER_1}} | Full exit simulation | Annual | {{EXIT_DRILL_PROVIDER_1_LAST_DATE}} | {{EXIT_DRILL_PROVIDER_1_NEXT_DATE}} | {{EXIT_DRILL_PROVIDER_1_SMF}} |
-| {{EXIT_DRILL_PROVIDER_2}} | Tabletop exercise | Annual | {{EXIT_DRILL_PROVIDER_2_LAST_DATE}} | {{EXIT_DRILL_PROVIDER_2_NEXT_DATE}} | {{EXIT_DRILL_PROVIDER_2_SMF}} |
+| Provider | Drill type | Planned frequency | Last conducted | Next planned date | Accountable individual |
+|----------|-----------|-------------------|----------------|-------------------|------------------------|
+| {{EXIT_DRILL_PROVIDER_1}} | Full exit simulation | Annual | {{EXIT_DRILL_PROVIDER_1_LAST_DATE}} | {{EXIT_DRILL_PROVIDER_1_NEXT_DATE}} | {{EXIT_DRILL_PROVIDER_1_ACCOUNTABLE}} |
+| {{EXIT_DRILL_PROVIDER_2}} | Tabletop exercise | Annual | {{EXIT_DRILL_PROVIDER_2_LAST_DATE}} | {{EXIT_DRILL_PROVIDER_2_NEXT_DATE}} | {{EXIT_DRILL_PROVIDER_2_ACCOUNTABLE}} |
 
 <!-- Add additional rows as needed -->
 
@@ -261,9 +263,9 @@ the agreed recovery time objective.
 | Report | Recipient | Frequency | Owner |
 |--------|-----------|-----------|-------|
 | CTP dependency register review | Board / Risk Committee | Annual (minimum) | {{INTERNAL_REPORT_1_OWNER}} |
-| Resilience test outcomes | SMF holder (Operational Resilience) | After each drill | {{INTERNAL_REPORT_2_OWNER}} |
+| Resilience test outcomes | Accountable individual (operational resilience) | After each drill | {{INTERNAL_REPORT_2_OWNER}} |
 | Concentration risk dashboard | Board Risk Committee | Quarterly | {{INTERNAL_REPORT_3_OWNER}} |
-| New HMT designations — impact assessment | Compliance / SMF holder | Within 30 days of new designation | {{INTERNAL_REPORT_4_OWNER}} |
+| New HMT designations — impact assessment | Compliance / accountable individual | Within 30 days of new designation | {{INTERNAL_REPORT_4_OWNER}} |
 
 <!-- Add additional rows as needed -->
 

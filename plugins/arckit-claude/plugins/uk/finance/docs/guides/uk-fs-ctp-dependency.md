@@ -2,9 +2,9 @@
 
 > **Status**: EXPERIMENTAL · Community-contributed · **Output is not regulatory advice.**
 > The CTP dependency assessment MUST be reviewed, materially supplemented, and signed off by
-> qualified UK FS regulatory counsel, the firm's Compliance Officer, and the SMF holder with primary
-> accountability for operational resilience (typically SMF24 at larger firms; SMF1 at smaller firms
-> without a dedicated COO). The CTP regime (BoE/PRA/FCA PS24/16, effective January 2025) is recent
+> qualified UK FS regulatory counsel, the firm's Compliance Officer, and the individual with primary
+> accountability for operational resilience (an SMF holder only if the firm is within SM&CR; see
+> Important Caveats). The CTP regime (BoE/PRA/FCA PS24/16, effective January 2025) is recent
 > and the designated CTP list is still maturing — verify the current HMT designation page before
 > relying on any provider being designated or not designated. Regulatory citations reflect the
 > position at the document creation date; verify against current BoE, PRA, and FCA publications
@@ -76,7 +76,8 @@ to cross-reference the safeguarding bank as a candidate CTP-adjacent dependency.
 
 The generated artefact contains the following sections:
 
-1. Document Control (classification, owner, accountable SMF holder, review cycle)
+1. Document Control (classification, owner, accountable individual, whether the firm is within
+   SM&CR, review cycle)
 2. Scope and Important Business Services (IBS definitions and impact tolerances from the firm's
    operational resilience framework)
 3. Designated CTP Identification (HMT designation list check; provider-by-provider status)
@@ -87,7 +88,8 @@ The generated artefact contains the following sections:
    timeline where no drill has been conducted)
 7. Concentration Risk Analysis (geographic, vendor, functional concentration; maximum correlated
    failure scenario per dimension)
-8. SMF Accountability (named SMF holder with primary accountability; MLRO involvement scope)
+8. Reporting Obligations (regulator notifications; internal reporting, including to the individual
+   accountable for operational resilience)
 9. References (all required citations)
 
 ---
@@ -152,15 +154,23 @@ resilience and CTP dependency assessment does not require MLRO sign-off beyond t
   plan that lists "substitution drill planned for Q3 2025" without a recorded outcome is an audit
   finding. The "last resilience test date" field in the dependency register must contain a date. Where
   no drill has yet been conducted, document this as a gap with a remediation timeline signed off by
-  the accountable SMF holder.
+  the individual accountable for operational resilience.
 - **Concentration risk is an explicit regulator focus.** The BoE/PRA/FCA oversight approach
   accompanying PS24/16 examines whether aggregate CTP dependencies create correlated failure
   exposures. Surface concentration risk explicitly even where each individual provider looks
   acceptable in isolation.
-- **SMF accountability must name an individual, not a team.** Primary accountability for operational
-  resilience sits with SMF24 (Chief Operations Function) at most large firms, and with SMF1 (CEO)
-  at smaller firms. The dependency register must name the accountable SMF holder explicitly — a
-  document listing "Operations Team" is not compliant.
+- **Name an individual, not a team, and do not assume SM&CR.** SYSC 15A (operational resilience)
+  applies to EMIs, payment institutions and RAISPs as well as to banks, building societies and
+  enhanced scope SM&CR firms, and the firm's governing body must approve and regularly review the
+  self-assessment (SYSC 15A.1.1R, SYSC 15A.7.1R). SM&CR applies only to FSMA-authorised firms (for
+  example a bank or a firm with a Part 4A permission). For such a firm, name the SMF holder: SMF24
+  (Chief operations function) where the firm has one, which for an FCA solo-regulated firm means
+  an enhanced scope firm, otherwise SMF1 (Chief executive function). A PI or EMI authorised only
+  under the PSRs 2017 or EMRs 2011 is outside SM&CR: name the director or person responsible for
+  management notified to the FCA (PSRs 2017 regulation 6(7)(b); EMRs 2011 regulation 6(6)(b)).
+  A register that names only "Operations Team" does not show the clear lines of responsibility
+  that SM&CR, or the governance condition in PSRs 2017 regulation 6(6)(a) and EMRs 2011
+  regulation 6(5)(a), expects.
 - **Operational resilience and CTP dependency assessment overlap significantly.** The firm's IBS
   definitions and impact tolerances (set under the FCA/PRA operational resilience framework
   effective March 2022) are the anchor for CTP materiality scoring. Ensure these are documented

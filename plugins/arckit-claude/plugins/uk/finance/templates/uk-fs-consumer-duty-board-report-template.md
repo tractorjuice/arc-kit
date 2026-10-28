@@ -14,10 +14,12 @@ The Board has reviewed the Consumer Duty assessment and confirms that the firm:
 - [ ] Has acted to address harm and improve outcomes where identified
 - [ ] Has met its obligations under Principle 12 and PRIN 2A
 
-**Attested by**: {{SMF3_CEO_NAME}}, {{SMF7_GROUP_ENTITY_SM_NAME}}, {{OTHER_SMF_NAMES}}
+**Signed for the governing body by**: {{CEO_NAME}} ({{CEO_ROLE}}), {{BOARD_CHAIR_NAME}} ({{BOARD_CHAIR_ROLE}}), {{OTHER_ATTESTOR_NAMES}}
 **Date**: {{ATTESTATION_DATE}}
 
-<!-- These placeholders pull from §§2-5 of the master template — keep values consistent. -->
+<!-- These placeholders pull from §§1-5 of the master template — keep values consistent. PRIN 2A.8.4R requires
+the governing body to review and approve this report; it names no signatories. Give SMF titles (e.g. SMF1
+Chief executive, SMF9 Chair, SMF16 Compliance oversight) only if the firm is within SM&CR. -->
 
 ### Outcome Summary Table
 
