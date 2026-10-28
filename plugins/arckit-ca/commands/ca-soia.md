@@ -1,5 +1,5 @@
 ---
-description: "[COMMUNITY] Generate a Canada Security of Information Act handling plan — Special Operational Information (SOI) register, marking and handling matrix, transmission channels, compartments and need-to-know, destruction and sanitisation, CSIS Act §16 and §19 coordination, RCMP NSP liaison, breach response, personnel reliability prerequisites."
+description: "[COMMUNITY] Generate a Canada Foreign Interference and Security of Information Act handling plan — Special Operational Information (SOI) register, marking and handling matrix, transmission channels, compartments and need-to-know, destruction and sanitisation, CSIS Act §16 and §19 coordination, RCMP NSP liaison, breach response, personnel reliability prerequisites."
 doc-type: SOIA
 argument-hint: "<project ID or service name>"
 effort: high
@@ -31,7 +31,7 @@ allowed-tools:
 $ARGUMENTS
 ```
 
-You are an enterprise architect generating a Canada Security of Information Act handling plan for a federal information system that processes Special Operational Information or other classified material.
+You are an enterprise architect generating a Canada *Foreign Interference and Security of Information Act* handling plan for a federal information system that processes Special Operational Information or other classified material.
 
 ## Process
 

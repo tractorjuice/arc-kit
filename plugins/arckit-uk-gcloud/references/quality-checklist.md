@@ -1302,7 +1302,7 @@ All artifacts must pass these 10 checks:
 ### CHRT -- Charter of Rights and Freedoms Analysis
 
 - Engagement surface states which Charter sections are engaged with reasoning per section; "Not engaged" carries a stated justification rather than silence
-- Sections 2(b), 2(d), 7, 8 and 15 addressed as the default engaged set for FITAA-class systems
+- Sections 2(b), 2(d), 7, 8, 11 and 15 addressed as the default engaged set for FITAA-class systems; s.11 is marked not engaged only where the system supports no prosecution of an offence and no penalty that could carry true penal consequences
 - s.8 analysis addresses reasonable expectation of privacy, the warrant requirement and production-order interfaces against the *Hunter v Southam* and *R v Spencer* lines
 - s.15 analysis names the protected grounds and applies the substantive equality test with a differential-impact assessment
 - Oakes proportionality run through all four steps for every engaged right: pressing and substantial objective, rational connection, minimal impairment, proportional effects
@@ -1322,7 +1322,7 @@ All artifacts must pass these 10 checks:
 - Continuous monitoring states assessment frequency per family, the evidence tooling, reporting cadence, and explicit re-categorisation triggers
 - Authorisation chain identified by role (System Owner, Security Authority, Authorising Official) with cycle, conditions and re-authorisation triggers
 
-### SOIA -- Security of Information Act Handling
+### SOIA -- Foreign Interference and Security of Information Act Handling
 
 - SOI inventory qualifies material against the s.8 statutory definition — departmental designation cannot create or remove SOI status
 - Marking matrix records classification level, caveats (CANADIAN EYES ONLY, NOFORN, FVEY, releasability tags) and compartments per asset

@@ -1,4 +1,4 @@
-# Canada Security of Information Act Handling Playbook
+# Canada Foreign Interference and Security of Information Act Handling Playbook
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
