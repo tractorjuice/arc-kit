@@ -3,7 +3,7 @@
   "name": "arckit-oaa",
   "displayName": "ArcKit Open Agile Architecture",
   "version": "6.18.3",
-  "description": "Open Agile Architecture (O-AA C208) — Agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance.",
+  "description": "Open Agile Architecture (O-AA) — Agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance.",
   "author": {
     "name": "ArcKit Contributors",
     "url": "https://github.com/tractorjuice/arckit-claude"

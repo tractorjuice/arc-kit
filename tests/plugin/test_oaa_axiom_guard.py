@@ -1,10 +1,11 @@
-"""Guard test: O-AA C208 axiom integrity (scripts/check_oaa_axioms.py).
+"""Guard test: O-AA Standard axiom and chapter integrity (scripts/check_oaa_axioms.py).
 
-C208 Ch. 9 defines 16 named axioms. The OAA plugin previously shipped
-fabricated axiom quotes, a non-existent C208 chapter map, and "Learning
-Unit" scoping. The guard blocks that defect class; this test keeps it in
-CI (same pattern as the multi-instance parity guard test in
-test_repo_audit.py).
+The overlay cites the O-AA Standard, Version 2.0 (C262, April 2026), which
+supersedes C208. Appendix A defines 16 named axioms. The OAA plugin
+previously shipped fabricated axiom quotes, a non-existent chapter map,
+"Learning Unit" scoping and a "v3.0" edition label that matches no edition.
+The guard blocks that defect class; this test keeps it in CI (same pattern
+as the multi-instance parity guard test in test_repo_audit.py).
 """
 
 import importlib.util
@@ -38,7 +39,7 @@ def test_oaa_axiom_guard_passes():
         [sys.executable, str(GUARD)], capture_output=True, text=True, cwd=REPO_ROOT
     )
     assert result.returncode == 0, (
-        f"O-AA C208 axiom guard failed:\n{result.stdout}\n{result.stderr}"
+        f"O-AA axiom/chapter guard failed:\n{result.stdout}\n{result.stderr}"
     )
 
 
@@ -92,3 +93,48 @@ def test_adm_lite_set_passes_when_aligned(tmp_path):
         "| 5 | Value Stream Alignment | `agile-strategy` |\n",
     )
     assert mod.check_adm_lite_set_consistency(tmp_path) == []
+
+
+def _stale(mod, text: str) -> list[str]:
+    path = mod.ROOT / "plugins" / "arckit-oaa" / "x.md"
+    return mod.check_chapter_citations(path, text)
+
+
+def test_c208_chapter_coordinates_are_stale():
+    """C208 chapter numbers for the five commands are flagged after the v2.0 move."""
+    mod = _load_guard()
+    for text in (
+        "C208 Ch. 11 Agile Strategy",
+        "Ch. 14: Product Architecture",
+        "C208 Ch. 8 Agile Governance",
+        'Ch. 9, "Axioms for the Practice of Agile Architecture"',
+        "Axiom 16 (§9.16)",
+        "C208 Ch. 4.6 Security by Design",
+    ):
+        assert _stale(mod, text), f"not flagged: {text}"
+
+
+def test_v2_chapter_coordinates_pass():
+    """Version 2.0 coordinates, and v2.0 chapters that reuse a C208 number, are clean."""
+    mod = _load_guard()
+    for text in (
+        "Ch. 5 Agile Strategy",
+        "Ch. 7 Agile Governance",
+        "Ch. 12: Product Architecture",
+        "Axiom 16 (Appendix A) and §14.6.1 Security",
+        "Ch. 8 Architecture Development",
+        "Ch. 11 Continuous Architectural Refactoring",
+        "Ch. 14 Software Architecture",
+        "| Agile Strategy | Ch. 11 | Ch. 5 |",
+    ):
+        assert _stale(mod, text) == [], f"flagged: {text}"
+
+
+def test_edition_must_be_named():
+    """C208 is named only as superseded, and the 'v3.0' label is rejected."""
+    mod = _load_guard()
+    path = mod.ROOT / "plugins" / "arckit-oaa" / "x.md"
+    assert mod.check_edition(path, "using Open Agile Architecture (O-AA, C208)")
+    assert mod.check_edition(path, "C262 supersedes C208.") == []
+    assert mod.check_edition(path, "Open Agile Architecture Standard, v3.0, October 2022")
+    assert mod.check_edition(path, "Open Government Licence v3.0") == []

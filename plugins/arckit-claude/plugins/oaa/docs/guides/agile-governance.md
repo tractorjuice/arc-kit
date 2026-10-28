@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit-oaa:agile-governance` creates an Agile Governance document using Open Agile Architecture (O-AA, C208) Ch. 8, Agile Governance. It sets a lightweight governance cadence tied to sprint cycles: review gates at sprint boundaries, compliance evidence produced every sprint, and architecture change requests decided within the sprint rather than held for a quarterly board. Following Axiom 7 (Authority, Responsibility, and Accountability Distribution), decision authority sits with a small cross-functional review panel instead of a top-down board, and governance is treated as a service that gives clear decision paths. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
+`/arckit-oaa:agile-governance` creates an Agile Governance document using the Open Agile Architecture™ Standard, Version 2.0 (O-AA, C262) Ch. 7, Agile Governance. It sets a lightweight governance cadence tied to sprint cycles: review gates at sprint boundaries, compliance evidence produced every sprint, and architecture change requests decided within the sprint rather than held for a quarterly board. Following Axiom 7 (Authority, Responsibility, and Accountability Distribution), decision authority sits with a small cross-functional review panel instead of a top-down board, and governance is treated as a service that gives clear decision paths. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
 
 ---
 
@@ -73,7 +73,7 @@ If the named project does not exist, the command creates it. If an OAGOV documen
 | 7. Distributed Governance Duties | Continuous duties by role, escalation tiers and their decisions, exception handling |
 | 8. Integration with TOGAF ADM | Mapping to ADM Phases G and H |
 | 9. Trigger Guidance | When to use the cadence and when a traditional board fits better |
-| External References | Document Register (C208 with URL and verification date), citations |
+| External References | Document Register (O-AA Standard, Version 2.0, C262, with URL and verification date), citations |
 
 ---
 
