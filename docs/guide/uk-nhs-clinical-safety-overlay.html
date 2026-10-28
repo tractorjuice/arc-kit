@@ -487,7 +487,7 @@
 </blockquote>
 <hr />
 <h2 id="the-4-commands">The 4 Commands</h2>
-<h3 id="arckituk-nhs-dcb0129--manufacturer-clinical-safety-case"><code>/arckit:uk-nhs-dcb0129</code> — Manufacturer Clinical Safety Case</h3>
+<h3 id="arckituk-nhs-dcb0129--manufacturer-clinical-safety-case"><code>/arckit-uk-nhs:uk-nhs-dcb0129</code> — Manufacturer Clinical Safety Case</h3>
 <p>Generates a 3-file output set in <code>projects/{NNN}-&lt;slug&gt;/clinical-safety/</code>:</p>
 <table>
 <thead>
@@ -517,7 +517,7 @@
 </table>
 <p>The 3 files together implement the NHS DCB0129 deliverables (Clinical Risk Management Plan, Hazard Log, Clinical Safety Case Report, Clinical Risk Management File). The repository itself is the Clinical Risk Management File — Git history is the audit trail.</p>
 <p><strong>CSO appointment is non-negotiable</strong>: a named, qualified Clinical Safety Officer (GMC / NMC / HCPC / GPhC registered) must take ownership. The command leaves the CSO name as <code>[PENDING]</code> for the human to populate.</p>
-<h3 id="arckituk-nhs-dcb0160--deployer-clinical-safety-case"><code>/arckit:uk-nhs-dcb0160</code> — Deployer Clinical Safety Case</h3>
+<h3 id="arckituk-nhs-dcb0160--deployer-clinical-safety-case"><code>/arckit-uk-nhs:uk-nhs-dcb0160</code> — Deployer Clinical Safety Case</h3>
 <p>Generates a 3-file output set in <code>projects/{NNN}-&lt;slug&gt;/clinical-safety/deployment/</code>:</p>
 <table>
 <thead>
@@ -543,7 +543,7 @@
 </table>
 <p>The deployer case sits <em>alongside</em> the manufacturer case — neither replaces the other. The deploying NHS organisation has its own legal obligation under DCB0160 even if a complete DCB0129 case exists.</p>
 <p><strong>Deploying-organisation CSO</strong>: must be appointed by the deploying organisation, NOT the product manufacturer.</p>
-<h3 id="arckituk-nhs-dtac--nhs-digital-technology-assessment-criteria"><code>/arckit:uk-nhs-dtac</code> — NHS Digital Technology Assessment Criteria</h3>
+<h3 id="arckituk-nhs-dtac--nhs-digital-technology-assessment-criteria"><code>/arckit-uk-nhs:uk-nhs-dtac</code> — NHS Digital Technology Assessment Criteria</h3>
 <p>Generates <code>ARC-{NNN}-NHSDTAC-v1.0.md</code>, which answers each question of the DTAC form version 2.0 (NHS England, 24 February 2026; required in place of version 1.0 from 6 April 2026):</p>
 <table>
 <thead>
@@ -600,7 +600,7 @@
 </tbody>
 </table>
 <p>DTAC version 2.0 has no AI section. When the product uses AI/ML clinically and a buyer asks for AI assurance, the artefact adds an <strong>AI and machine learning supplement</strong>, labelled as an ArcKit addition outside DTAC: model governance, fairness, operational monitoring, transparency, MHRA AIaMD Programme alignment. Cross-references <code>atrs</code> output. The deploying organisation's DCB0160 case is likewise recorded beside C1 but is not a DTAC question.</p>
-<h3 id="arckituk-mdr-classification--uk--eu-mdr-samd--aiamd-classification"><code>/arckit:uk-mdr-classification</code> — UK + EU MDR SaMD / AIaMD Classification</h3>
+<h3 id="arckituk-mdr-classification--uk--eu-mdr-samd--aiamd-classification"><code>/arckit-uk-nhs:uk-mdr-classification</code> — UK + EU MDR SaMD / AIaMD Classification</h3>
 <p>Generates <code>ARC-{NNN}-NHSMDR-v1.0.md</code> covering:</p>
 <ul>
 <li><strong>Intended-purpose statement</strong> captured verbatim (load-bearing input — small wording changes change the classification)</li>

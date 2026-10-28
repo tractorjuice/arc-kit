@@ -318,17 +318,17 @@ needs to become explicit enough to govern.</p>
 <h2 id="what-the-overlay-adds">What the overlay adds</h2>
 <p>The plugin adds six slash commands:</p>
 <ul>
-<li><code>/arckit:agent-inventory</code> creates an agent register, capability matrix,
+<li><code>/arckit-agent-architecture:agent-inventory</code> creates an agent register, capability matrix,
 dependency map, lifecycle view, risk posture, and oversight classification.</li>
-<li><code>/arckit:agent-design</code> defines the agent architecture: purpose, autonomy
+<li><code>/arckit-agent-architecture:agent-design</code> defines the agent architecture: purpose, autonomy
 boundary, memory model, tool access, failure handling, and design decisions.</li>
-<li><code>/arckit:agent-governance</code> sets out the oversight model, approval workflow,
+<li><code>/arckit-agent-architecture:agent-governance</code> sets out the oversight model, approval workflow,
 audit trail, operating controls, and human intervention points.</li>
-<li><code>/arckit:agent-integration</code> defines agent-to-agent contracts,
+<li><code>/arckit-agent-architecture:agent-integration</code> defines agent-to-agent contracts,
 orchestration, shared state, message protocols, and failure isolation.</li>
-<li><code>/arckit:agent-security</code> covers sandboxing, permissions, data access,
+<li><code>/arckit-agent-architecture:agent-security</code> covers sandboxing, permissions, data access,
 threat paths, isolation, and hardening controls.</li>
-<li><code>/arckit:agent-maturity</code> assesses the maturity of the agent programme and
+<li><code>/arckit-agent-architecture:agent-maturity</code> assesses the maturity of the agent programme and
 produces an improvement roadmap.</li>
 </ul>
 <p>The new ArcKit document codes are <code>AAGI</code>, <code>AAGR</code>, <code>AAOV</code>, <code>AAIN</code>, <code>AASE</code>, and
@@ -343,7 +343,7 @@ structure as every other governed artefact:</p>
   ARC-003-AAMT-v1.0.md   # Agent maturity assessment
 </code></pre>
 <h2 id="inventory-before-design">Inventory before design</h2>
-<p>The foundational command is <code>/arckit:agent-inventory</code>.</p>
+<p>The foundational command is <code>/arckit-agent-architecture:agent-inventory</code>.</p>
 <p>That is deliberate. Agent programmes become risky when nobody can answer basic
 questions:</p>
 <ul>
@@ -365,19 +365,19 @@ work.</p>
 <h2 id="design-integration-governance-and-security">Design, integration, governance, and security</h2>
 <p>Once the inventory exists, the other commands make the agent programme
 reviewable.</p>
-<p><code>/arckit:agent-design</code> turns agent intent into architecture. It records what
+<p><code>/arckit-agent-architecture:agent-design</code> turns agent intent into architecture. It records what
 the agent is for, what autonomy it has, what it can and cannot do, how it uses
 memory, what tools it can invoke, what failures look like, and which design
 decisions need to be traceable.</p>
-<p><code>/arckit:agent-integration</code> handles the point most teams under-specify:
+<p><code>/arckit-agent-architecture:agent-integration</code> handles the point most teams under-specify:
 agent-to-agent and agent-to-system contracts. It asks for protocols, inputs,
 outputs, shared state, orchestration, retries, message delivery, observability,
 and failure isolation. If agents coordinate, the coordination itself needs an
 architecture.</p>
-<p><code>/arckit:agent-governance</code> makes the human control model explicit. That means
+<p><code>/arckit-agent-architecture:agent-governance</code> makes the human control model explicit. That means
 approval paths, audit trails, escalation, review cadence, exception handling,
 and the boundary between assisted, supervised, and autonomous operation.</p>
-<p><code>/arckit:agent-security</code> treats agents as privileged software components. Tool
+<p><code>/arckit-agent-architecture:agent-security</code> treats agents as privileged software components. Tool
 permissions, sandboxing, secrets exposure, data classification, prompt
 injection paths, model/tool boundary controls, and logging all belong in the
 architecture pack.</p>
@@ -407,12 +407,12 @@ design, and security need to agree with each other.</p>
 <pre><code class="language-bash">claude plugin install arckit arckit-agent-architecture
 </code></pre>
 <p>Then run the commands directly:</p>
-<pre><code class="language-text">/arckit:agent-inventory &quot;Casework triage agents&quot;
-/arckit:agent-design 003
-/arckit:agent-integration 003
-/arckit:agent-governance 003
-/arckit:agent-security 003
-/arckit:agent-maturity 003
+<pre><code class="language-text">/arckit-agent-architecture:agent-inventory &quot;Casework triage agents&quot;
+/arckit-agent-architecture:agent-design 003
+/arckit-agent-architecture:agent-integration 003
+/arckit-agent-architecture:agent-governance 003
+/arckit-agent-architecture:agent-security 003
+/arckit-agent-architecture:agent-maturity 003
 </code></pre>
 <p>Or use the build harness:</p>
 <pre><code class="language-text">/arckit:build 003 --recipe agent-architecture --plan

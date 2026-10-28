@@ -491,33 +491,33 @@
 <hr />
 <h2 id="the-12-commands">The 12 Commands</h2>
 <h3 id="federal-data-and-security">Federal Data and Security</h3>
-<h4 id="arckituae-classification"><code>/arckit:uae-classification</code></h4>
+<h4 id="arckituae-classification"><code>/arckit-uae:uae-classification</code></h4>
 <p>Generates a UAE Smart Data Classification Register for the project, mapping every dataset to one of the four Smart Data Framework classes — <code>Open</code>, <code>Confidential</code>, <code>Sensitive</code> or <code>Secret</code> — with handling rules and a declassification schedule. Anchored on the UAE Smart Data Framework (Part 1, Data Classification Standard DC1; Part 2, Guidance Note 5.1). Handoffs: <code>data-model</code> (per-entity sensitivity tags), <code>uae-cloud-residency</code> (residency obligations follow from classification), <code>uae-data-sharing</code> (per-share sensitivity).</p>
-<h4 id="arckituae-pdpl"><code>/arckit:uae-pdpl</code></h4>
+<h4 id="arckituae-pdpl"><code>/arckit-uae:uae-pdpl</code></h4>
 <p>Generates a UAE PDPL (Federal Decree-Law No. 45 of 2021) compliance assessment including DPIA, lawful-basis register, data-subject-rights procedure, and cross-border transfer log. Anchored on the UAE Data Office statutory framework. Handoffs: <code>risks</code> (DPIA into the risk register), <code>uae-data-sharing</code> (lawful basis into shares), <code>uae-classification</code> (PDPL-relevant datasets must be classified).</p>
-<h4 id="arckituae-ias"><code>/arckit:uae-ias</code></h4>
+<h4 id="arckituae-ias"><code>/arckit-uae:uae-ias</code></h4>
 <p>Generates a UAE IAS Statement of Applicability against the 188 controls (60 management M1 to M6 plus 128 technical T1 to T9), priority-tiered P1 to P4. Anchored on the UAE Cybersecurity Council Information Assurance Standard v2. Handoffs: <code>risks</code> (gaps and treatment plan), <code>uae-cloud-residency</code> (T-family controls constrain CSP choice).</p>
-<h4 id="arckituae-cloud-residency"><code>/arckit:uae-cloud-residency</code></h4>
+<h4 id="arckituae-cloud-residency"><code>/arckit-uae:uae-cloud-residency</code></h4>
 <p>Assesses sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, checks candidate CSPs (Core42 / G42 sovereign, Microsoft UAE North and Central, TDRA FedNet, e&amp; Sovereign Launchpad on AWS) against the policy's tiers and minimum certifications (the policy itself approves no CSPs), and captures the shared-responsibility matrix and exit/portability plan. Handoffs: <code>uae-classification</code> (depends on it), <code>adr</code> (residency decisions captured as ADRs).</p>
 <h3 id="federal-identity">Federal Identity</h3>
-<h4 id="arckituae-uaepass"><code>/arckit:uae-uaepass</code></h4>
+<h4 id="arckituae-uaepass"><code>/arckit-uae:uae-uaepass</code></h4>
 <p>Generates a UAE Pass integration design covering the OIDC/OAuth flow, claim mapping, Basic vs Verified profile selection, the Service Provider onboarding pack, and the e-signature audit trail. Handoffs: <code>integration</code> (OIDC endpoints into the integration spec), <code>adr</code> (profile selection and e-signature mechanism are architecturally significant).</p>
 <h3 id="cabinet-instruments">Cabinet Instruments</h3>
-<h4 id="arckituae-zero-bureaucracy"><code>/arckit:uae-zero-bureaucracy</code></h4>
+<h4 id="arckituae-zero-bureaucracy"><code>/arckit-uae:uae-zero-bureaucracy</code></h4>
 <p>Generates a Service Catalogue review under the UAE Code for Government Services and the Zero Bureaucracy programme. Captures service catalogue mapping, bureaucracy-elimination baseline, and customer-experience KPIs. Handoffs: <code>uae-priorities-alignment</code> (service-level outputs feed the alignment statement).</p>
-<h4 id="arckituae-digital-records"><code>/arckit:uae-digital-records</code></h4>
+<h4 id="arckituae-digital-records"><code>/arckit-uae:uae-digital-records</code></h4>
 <p>Generates a Digital Records Plan under the UAE Government Services Digital Records Policy. Captures the source-of-truth register per service, retention schedule, and records-as-official-source designation. Handoffs: <code>data-model</code> (source-of-truth into entity ownership), <code>uae-data-sharing</code> (official-source records feed shares).</p>
-<h4 id="arckituae-data-sharing"><code>/arckit:uae-data-sharing</code></h4>
+<h4 id="arckituae-data-sharing"><code>/arckit-uae:uae-data-sharing</code></h4>
 <p>Generates a Data Sharing Agreement under the UAE Government Services Data Sharing Policy (&quot;collect once, use securely&quot;). Captures collect-once mapping, federation/API plan, and PDPL lawful basis per share. Handoffs: <code>integration</code> (federation mechanisms), <code>uae-pdpl</code> (lawful basis into the PDPL assessment).</p>
-<h4 id="arckituae-priorities-alignment"><code>/arckit:uae-priorities-alignment</code></h4>
+<h4 id="arckituae-priorities-alignment"><code>/arckit-uae:uae-priorities-alignment</code></h4>
 <p>Generates a National Priorities Alignment Statement under the UAE Federal Government Guide. Captures reuse-vs-build justification, capability-reuse register (UAE Pass, FedNet), and strategy alignment to NIS 2031 / AI 2031 / Digital Economy Strategy / We the UAE 2031. Handoffs: <code>sobc</code> (alignment into the business case), <code>uae-uaepass</code> (reuse becomes integration design).</p>
 <h3 id="ai-governance">AI Governance</h3>
-<h4 id="arckituae-ai-charter"><code>/arckit:uae-ai-charter</code></h4>
+<h4 id="arckituae-ai-charter"><code>/arckit-uae:uae-ai-charter</code></h4>
 <p>Generates a UAE Charter for AI compliance assessment against the 12 principles (human-machine ties, safety, bias mitigation, data privacy, transparency, human oversight, governance/accountability, technological excellence, human commitment, peaceful coexistence, inclusive access, lawful compliance). Handoffs: <code>uae-ai-autonomy-tier</code> (charter posture into the per-tier guard-rails), <code>risks</code> (gaps into the risk register).</p>
-<h4 id="arckituae-ai-autonomy-tier"><code>/arckit:uae-ai-autonomy-tier</code></h4>
+<h4 id="arckituae-ai-autonomy-tier"><code>/arckit-uae:uae-ai-autonomy-tier</code></h4>
 <p>Generates a three-tier AI autonomy posture (Tier 1 internal-productivity, Tier 2 investor-facing-with-approval, Tier 3 regulated/financial). Captures per-tier guard-rails, approval gates, audit obligations, and tier-promotion criteria. Handoffs: <code>adr</code> (tier-promotion is architecturally significant), <code>risks</code> (per-tier residual risks).</p>
 <h3 id="procurement">Procurement</h3>
-<h4 id="arckituae-procurement"><code>/arckit:uae-procurement</code></h4>
+<h4 id="arckituae-procurement"><code>/arckit-uae:uae-procurement</code></h4>
 <p>Generates a federal procurement strategy under UAE Federal Decree-Law No. 11 of 2023. Produces ITT/RFP packs against the MoF Digital Procurement Platform templates, an In-Country Value (ICV) plan, the evaluation report structure, and the contract register. Handoffs: <code>evaluate</code> (formal supplier evaluation), <code>sobc</code> (procurement strategy and ICV into the business case).</p>
 <hr />
 <h2 id="the-canonical-chain">The Canonical Chain</h2>

@@ -320,23 +320,23 @@ health checks, and repeatable naming.</p>
 <h2 id="what-the-overlay-adds">What the overlay adds</h2>
 <p>The plugin adds nine slash commands:</p>
 <ul>
-<li><code>/arckit:adm-preliminary</code> for preliminary phase, scope, drivers,
+<li><code>/arckit-togaf-adm:adm-preliminary</code> for preliminary phase, scope, drivers,
 constraints, and architecture vision.</li>
-<li><code>/arckit:business-capability-map</code> for strategy, capabilities, value chains,
+<li><code>/arckit-togaf-adm:business-capability-map</code> for strategy, capabilities, value chains,
 and business architecture.</li>
-<li><code>/arckit:application-inventory</code> for application portfolio assessment,
+<li><code>/arckit-togaf-adm:application-inventory</code> for application portfolio assessment,
 lifecycle, ownership, and integration patterns.</li>
-<li><code>/arckit:application-rationalization</code> for consolidate, retire, replace, or
+<li><code>/arckit-togaf-adm:application-rationalization</code> for consolidate, retire, replace, or
 retain decisions.</li>
-<li><code>/arckit:gap-analysis</code> for target-state gaps, workload prioritization, and
+<li><code>/arckit-togaf-adm:gap-analysis</code> for target-state gaps, workload prioritization, and
 opportunities and solutions.</li>
-<li><code>/arckit:transition-architecture</code> for migration planning, transition states,
+<li><code>/arckit-togaf-adm:transition-architecture</code> for migration planning, transition states,
 work packages, and sequencing.</li>
-<li><code>/arckit:architecture-board</code> for implementation governance, board cadence,
+<li><code>/arckit-togaf-adm:architecture-board</code> for implementation governance, board cadence,
 compliance review, and decision tracking.</li>
-<li><code>/arckit:architecture-change</code> for change requests, impact, approvals, and
+<li><code>/arckit-togaf-adm:architecture-change</code> for change requests, impact, approvals, and
 ADM re-entry.</li>
-<li><code>/arckit:architecture-repository</code> for patterns, standards, reference
+<li><code>/arckit-togaf-adm:architecture-repository</code> for patterns, standards, reference
 architectures, reusable decisions, and lessons learned.</li>
 </ul>
 <p>The document codes are <code>ADMP</code>, <code>BPCM</code>, <code>APP</code>, <code>APPR</code>, <code>GAPA</code>, <code>TRANS</code>,
@@ -356,9 +356,9 @@ architectures, reusable decisions, and lessons learned.</li>
 </code></pre>
 <h2 id="adm-without-a-parallel-document-universe">ADM without a parallel document universe</h2>
 <p>The useful part is composability.</p>
-<p><code>/arckit:adm-preliminary</code> can read principles, stakeholders, and strategy.
-<code>/arckit:business-capability-map</code> can connect back to requirements and drivers.
-<code>/arckit:application-inventory</code> gives gap analysis and rationalization a real
+<p><code>/arckit-togaf-adm:adm-preliminary</code> can read principles, stakeholders, and strategy.
+<code>/arckit-togaf-adm:business-capability-map</code> can connect back to requirements and drivers.
+<code>/arckit-togaf-adm:application-inventory</code> gives gap analysis and rationalization a real
 portfolio baseline. <code>transition-architecture</code> depends on the gap analysis.
 <code>architecture-board</code> ties implementation governance back to principles and ADM
 preliminary work. <code>architecture-repository</code> synthesizes reusable knowledge
@@ -408,15 +408,15 @@ can sit inside it.</p>
 <pre><code class="language-bash">claude plugin install arckit arckit-togaf-adm
 </code></pre>
 <p>Then run the commands directly:</p>
-<pre><code class="language-text">/arckit:adm-preliminary &quot;Casework modernisation&quot;
-/arckit:business-capability-map 003
-/arckit:application-inventory 003
-/arckit:application-rationalization 003
-/arckit:gap-analysis 003
-/arckit:transition-architecture 003
-/arckit:architecture-board 003
-/arckit:architecture-change 003
-/arckit:architecture-repository 000
+<pre><code class="language-text">/arckit-togaf-adm:adm-preliminary &quot;Casework modernisation&quot;
+/arckit-togaf-adm:business-capability-map 003
+/arckit-togaf-adm:application-inventory 003
+/arckit-togaf-adm:application-rationalization 003
+/arckit-togaf-adm:gap-analysis 003
+/arckit-togaf-adm:transition-architecture 003
+/arckit-togaf-adm:architecture-board 003
+/arckit-togaf-adm:architecture-change 003
+/arckit-togaf-adm:architecture-repository 000
 </code></pre>
 <p>Or use the build harness:</p>
 <pre><code class="language-text">/arckit:build 003 --recipe togaf-adm-full --plan

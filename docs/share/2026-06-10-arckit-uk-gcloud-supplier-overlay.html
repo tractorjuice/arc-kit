@@ -306,24 +306,24 @@
 <p><code>arckit-uk-gcloud</code> is the <strong>13th ArcKit marketplace plugin</strong> and the fourth sector-specific overlay, after UK Finance Payments, UK NHS Clinical Safety and Australian Energy. It is the supplier-side counterpart to ArcKit's buyer-side procurement commands: ArcKit governs the buyer; this overlay helps the supplier win the work.</p>
 <p>It ships <strong>eleven commands</strong> that map onto the real shape of a submission:</p>
 <ul>
-<li><code>/arckit:supplier-profile</code> — a reusable company profile, written once and shared across every service you list</li>
-<li><code>/arckit:service-design</code> — design a service offering before you commit it to a Service Definition Document</li>
-<li><code>/arckit:sdd-lot1</code>, <code>/arckit:sdd-lot2</code>, <code>/arckit:sdd-lot3</code> — Service Definition Documents for Cloud Hosting, Cloud Software and Cloud Support, each carrying its lot-specific question set</li>
-<li><code>/arckit:pricing</code> — a G-Cloud-compliant pricing document</li>
-<li><code>/arckit:security</code> — security assertions mapped to the NCSC Cloud Security Principles</li>
-<li><code>/arckit:gcloud-competitors</code> — a supplier-side benchmark of your service against rivals on the Digital Marketplace</li>
-<li><code>/arckit:review</code> — a completeness check across the whole submission before you send it</li>
-<li><code>/arckit:submission-pack</code> — bundles everything for CCS into a single submission folder with a manifest</li>
+<li><code>/arckit-uk-gcloud:supplier-profile</code> — a reusable company profile, written once and shared across every service you list</li>
+<li><code>/arckit-uk-gcloud:service-design</code> — design a service offering before you commit it to a Service Definition Document</li>
+<li><code>/arckit:sdd-lot1</code>, <code>/arckit:sdd-lot2</code>, <code>/arckit-uk-gcloud:sdd-lot3</code> — Service Definition Documents for Cloud Hosting, Cloud Software and Cloud Support, each carrying its lot-specific question set</li>
+<li><code>/arckit-uk-gcloud:pricing</code> — a G-Cloud-compliant pricing document</li>
+<li><code>/arckit-uk-gcloud:security</code> — security assertions mapped to the NCSC Cloud Security Principles</li>
+<li><code>/arckit-uk-gcloud:gcloud-competitors</code> — a supplier-side benchmark of your service against rivals on the Digital Marketplace</li>
+<li><code>/arckit-uk-gcloud:review</code> — a completeness check across the whole submission before you send it</li>
+<li><code>/arckit-uk-gcloud:submission-pack</code> — bundles everything for CCS into a single submission folder with a manifest</li>
 </ul>
 <p>The domain content — the fifty-question SDD sets, the NCSC mappings, the declaration's exclusion grounds — is ported intact from the standalone <a href="https://github.com/tractorjuice/gcloud-kit">gcloud-kit</a> plugin. What is new is that it now runs <em>inside</em> ArcKit, with all the governance machinery that brings.</p>
 <h2 id="how-it-composes-with-arckit">How it composes with ArcKit</h2>
 <p>The overlay does not reinvent the parts ArcKit already does well. It adopts ArcKit's project and document model wholesale, which means everything downstream just works.</p>
-<p><strong>Each G-Cloud service is its own ArcKit project.</strong> Run <code>/arckit:service-design &quot;Secure Case Management&quot;</code> and you get <code>projects/004-secure-case-management/</code>, holding that service's design, Service Definition Document, pricing and security assertions as versioned <code>ARC-</code> documents with full Document Control headers and automatic build provenance. List ten services and you have ten clean projects — &quot;many SDDs&quot; falls out naturally instead of becoming a folder of near-identical files.</p>
+<p><strong>Each G-Cloud service is its own ArcKit project.</strong> Run <code>/arckit-uk-gcloud:service-design &quot;Secure Case Management&quot;</code> and you get <code>projects/004-secure-case-management/</code>, holding that service's design, Service Definition Document, pricing and security assertions as versioned <code>ARC-</code> documents with full Document Control headers and automatic build provenance. List ten services and you have ten clean projects — &quot;many SDDs&quot; falls out naturally instead of becoming a folder of near-identical files.</p>
 <p><strong>Supplier-wide documents live once.</strong> Your supplier profile and declaration are not per-service, so they live in <code>projects/000-global/supplier/</code> as <code>ARC-000-SUPP</code> and <code>ARC-000-DECL</code>, referenced by every service's submission rather than copied into each.</p>
 <p><strong>The rest of ArcKit composes for free.</strong> Because a service is a normal project, you can point <code>/arckit:diagram</code>, <code>/arckit:dpia</code> and <code>/arckit:research</code> at it without any special handling. <code>/arckit:health</code> and <code>/arckit:navigator</code> see your services. Eight new document types (Supplier Profile, Service Design, Service Definition Document, Pricing, Security Assertions, Competitor Benchmark and Submission Review) register in the same governance dashboard as every other artefact, and the high-stakes ones — the SDD, the declaration and the security assertions — count toward the compliance-readiness scorecard.</p>
 <p>There is also a build recipe, <code>uk-gcloud-submission</code>, for the bulk-build harness: it drives one service from profile to a review-ready pack in a single orchestrated run.</p>
 <h2 id="a-competitor-command-this-time-for-the-seller">A competitor command, this time for the seller</h2>
-<p>ArcKit already has <code>/arckit:competitors</code>. That command is a <em>buyer's</em> market-landscape view — rival suppliers, awarded-value market share and concentration, drawn from the UK Tenders MCP. The new <code>/arckit:gcloud-competitors</code> is its mirror image: a <em>supplier's</em> benchmark of their own listed service against the field.</p>
+<p>ArcKit already has <code>/arckit:competitors</code>. That command is a <em>buyer's</em> market-landscape view — rival suppliers, awarded-value market share and concentration, drawn from the UK Tenders MCP. The new <code>/arckit-uk-gcloud:gcloud-competitors</code> is its mirror image: a <em>supplier's</em> benchmark of their own listed service against the field.</p>
 <p>Point it at one of your services and it compares your features, pricing, certifications and support against rivals on the Digital Marketplace, runs a SWOT, plots a market-position quadrant, and recommends pricing and search-keyword changes to strengthen your listing. Where you have already run the buyer-side commands, it reads their output and backs the benchmark with real public-sector award evidence — always carrying ArcKit's standing caveat that awarded value is not actual spend.</p>
 <p>The two commands are deliberately distinct artefacts with distinct codes, so a project can hold both the market view and the supplier view without one overwriting the other.</p>
 <h2 id="what-is-deliberately-left-out">What is deliberately left out</h2>
@@ -332,14 +332,14 @@
 <p>Second, this first release is the <strong>bid-authoring core</strong>. The data-heavy market and sales-intelligence layer from gcloud-kit — sales analysis, marketplace-data extraction, customer URN lookup and target-account identification — is deferred to a second overlay, because it overlaps ArcKit's existing tenders and competitor commands and deserves a proper reconciliation rather than a hasty port.</p>
 <h2 id="getting-started">Getting started</h2>
 <p><code>arckit-uk-gcloud</code> requires the <code>arckit</code> core plugin. Once both are installed:</p>
-<pre><code class="language-text">/arckit:supplier-profile          # write your reusable company profile (once)
-/arckit:service-design &quot;My SaaS&quot;  # create the service project
+<pre><code class="language-text">/arckit-uk-gcloud:supplier-profile          # write your reusable company profile (once)
+/arckit-uk-gcloud:service-design &quot;My SaaS&quot;  # create the service project
 /arckit:sdd-lot2                  # generate the Cloud Software SDD
-/arckit:pricing                   # G-Cloud pricing document
-/arckit:security                  # NCSC Cloud Security Principles assertions
-/arckit:gcloud-competitors        # benchmark against the marketplace
-/arckit:review                    # completeness check
-/arckit:submission-pack           # bundle for CCS
+/arckit-uk-gcloud:pricing                   # G-Cloud pricing document
+/arckit-uk-gcloud:security                  # NCSC Cloud Security Principles assertions
+/arckit-uk-gcloud:gcloud-competitors        # benchmark against the marketplace
+/arckit-uk-gcloud:review                    # completeness check
+/arckit-uk-gcloud:submission-pack           # bundle for CCS
 </code></pre>
 <p>Or hand the whole sequence to the build harness with the <code>uk-gcloud-submission</code> recipe and review the output as it lands.</p>
 <p>ArcKit has spent its life making the buyer's governance legible. This overlay extends the same discipline — templates, traceability, document control, a second pair of eyes before you submit — to the supplier trying to win the work. Same harness, the other side of the table.</p>
