@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit-at:at-bvergg` generates Austrian public procurement documentation aligned with the **Bundesvergabegesetz 2018**, as amended by the **Vergaberechtsgesetz 2026** (BGBl. I Nr. 8/2026, in force 1 March 2026; eForms from 1 October 2026). Covers Oberschwellen / Unterschwellen determination, ANKÖ publication requirements, BVergGVS secondary rules, and the BVwG review pathway.
+`/arckit-at:at-bvergg` generates Austrian public procurement documentation aligned with the **Bundesvergabegesetz 2018**, as amended by the **Vergaberechtsgesetz 2026** (BGBl. I Nr. 8/2026, in force 1 March 2026; eForms from 1 October 2026). Covers Oberschwellen / Unterschwellen determination, ANKÖ publication requirements and the BVwG review pathway, and flags when one of the two separate Acts applies instead: the BVergGVS 2012 for defence and security, the BVergGKonz 2018 for concessions.
 
 ---
 

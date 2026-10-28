@@ -73,15 +73,15 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
 
    - **System Context** — system name, classification level (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET), deployment model (cloud / on-premise / hybrid), IRAP assessment status, data sovereignty position.
 
-   - **Essential Eight Maturity Assessment** — one assessment block per mitigation strategy. For each of the eight strategies:
-     1. **Application Control** — only approved applications execute on systems
-     2. **Patch Applications** — security patches for applications applied within timeframes
-     3. **Configure Microsoft Office Macro Settings** — macros blocked or restricted per policy
-     4. **User Application Hardening** — web browsers, email clients, Office configured to block untrusted content
-     5. **Restrict Administrative Privileges** — admin access validated, separated, and time-limited
-     6. **Patch Operating Systems** — OS patches applied within timeframes, unsupported OS replaced
-     7. **Multi-Factor Authentication** — MFA on all remote access, privileged access, and data repositories
-     8. **Regular Backups** — backups performed, tested, and stored securely per retention schedule
+   - **Essential Eight Maturity Assessment** — one assessment block per mitigation strategy. For each of the eight strategies, using ASD's names and the order of its maturity model (ASD does not number them):
+     - **Patch applications** — security patches for applications applied within timeframes
+     - **Patch operating systems** — OS patches applied within timeframes, unsupported OS replaced
+     - **Multi-factor authentication** — MFA on all remote access, privileged access, and data repositories
+     - **Restrict administrative privileges** — admin access validated, separated, and time-limited
+     - **Application control** — only approved applications execute on systems
+     - **Restrict Microsoft Office macros** — macros blocked or restricted per policy
+     - **User application hardening** — web browsers, email clients, Office configured to block untrusted content
+     - **Regular backups** — backups performed, tested, and stored securely per retention schedule
 
      For each strategy, document:
      - Current maturity level (ML0 / ML1 / ML2 / ML3) with evidence

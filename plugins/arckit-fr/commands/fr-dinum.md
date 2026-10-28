@@ -92,7 +92,7 @@ Before generating the assessment, determine which standards apply:
 | Doctrine cloud de l'État | Any cloud hosting by French State entity | [Yes/No] |
 | RGI v2.0 | Any public digital service | Always Yes |
 | RGAA 4.1 | State / EPA / EIC with > 250 agents, or large private company | [Mandatory/Recommended] |
-| RGESN | Public digital service (2024: legally binding for many entities) | [Mandatory/Recommended] |
+| RGESN | Not binding by law: the RGESN 2024 is a non-binding reference (REEN law art. 25, CPCE L38-5). Required only where the organisation's policy or a contract adopts it | [Recommended / Required by policy or contract] |
 | RGS v2.0 | Any information system operated by the State | Always Yes |
 | FranceConnect | Citizen authentication required | [Yes/No] |
 | ProConnect | Civil servant authentication required | [Yes/No] |
@@ -138,6 +138,7 @@ Show this scoping table to the user before generating the full assessment.
    - 9-family table across 78 criteria (RGESN 2024, the current version 2: Strategy, Specifications, Architecture, UX/UI, Content, Frontend, Backend, Hosting, Algorithms)
    - Hosting sustainability requirements
    - Note any ecodesign constraints from requirements
+   - Record the basis for applying the RGESN (voluntary, organisation policy, or contract clause) and whether an ecodesign declaration is published: the RGESN treats a published declaration as the prerequisite for claiming to apply it
 
 7. **Section 5: RGS v2.0 — Information Systems Security**
    - Determine target RGS level (* / ** / ***) based on service type and data sensitivity
@@ -212,6 +213,7 @@ Next steps:
 ## Important Notes
 
 - **RGAA mandatory threshold**: RGAA 4.1 is legally mandatory for State entities, EPAs, and EICs with more than 250 agents. Always verify entity type and size before marking RGAA as "Recommended."
+- **RGESN is not legally binding**: The REEN law (loi n° 2021-1485, art. 25, codified as CPCE L38-5) only tells Arcep and Arcom, with ADEME, to define the RGESN, and the RGESN 2024 calls itself a non-binding document that supports voluntary ecodesign. Do not mark it "Mandatory" by law. It becomes a requirement when the organisation's policy or a contract adopts it. Separately, the REEN law does bind larger local authorities: communes and EPCI à fiscalité propre with more than 50,000 inhabitants must have a *stratégie numérique responsable* (art. 35, by 1 January 2025).
 - **Homologation**: RGS homologation is mandatory before any new information system goes live. Flag this clearly if no homologation process is documented.
 - **Doctrine cloud hierarchy**: The three-tier cloud evaluation (internal → SecNumCloud → standard) is mandatory to document even if the conclusion is that standard cloud is acceptable. The justification for each tier must be on record.
 - **DSFR and RGAA**: Using DSFR components provides partial RGAA compliance by design. Note this in the assessment — it reduces the audit scope but does not eliminate the obligation.
@@ -222,7 +224,7 @@ Next steps:
 | Document | Publisher | URL |
 |----------|-----------|-----|
 | RGAA 4.1 — Référentiel Général d'Accessibilité pour les Administrations | DINUM | https://accessibilite.numerique.gouv.fr/ |
-| RGESN — Référentiel Général d'Écoconception de Services Numériques | DINUM / MTE | https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/ |
+| RGESN — Référentiel Général d'Écoconception de Services Numériques (2024, non-binding) | Arcep / Arcom, with ADEME | https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/ |
 | RGI 2.0 — Référentiel Général d'Interopérabilité | DINUM | https://www.numerique.gouv.fr/publications/interoperabilite/ |
 | RGS v2.0 — Référentiel Général de Sécurité | ANSSI | https://cyber.gouv.fr/le-referentiel-general-de-securite-rgs |
 | DSFR — Système de Design de l'État | DINUM | https://www.systeme-de-design.gouv.fr/ |
@@ -230,7 +232,7 @@ Next steps:
 | Doctrine cloud de l'État — cloud-first policy | DINUM | https://www.numerique.gouv.fr/services/cloud/doctrine/ |
 | API.gouv.fr — government API catalogue | DINUM | https://api.gouv.fr/ |
 
-> **Note for reviewers**: DINUM (Direction Interministérielle du Numérique) is France's central digital government directorate, equivalent in purpose to the UK's GDS (Government Digital Service). The RGI, RGAA, RGESN, and RGS are mandatory referentiels for French public IS — not voluntary standards. The DSFR (Design System of the French State) is the official component library for all public-facing government digital services, analogous to the GOV.UK Design System.
+> **Note for reviewers**: DINUM (Direction Interministérielle du Numérique) is France's central digital government directorate, equivalent in purpose to the UK's GDS (Government Digital Service). The RGI, RGAA and RGS are mandatory referentiels for French public IS — not voluntary standards. The RGESN is the exception: Arcep and Arcom publish it under the REEN law as a non-binding reference, which a public body can make mandatory through its own policy or its contracts. The DSFR (Design System of the French State) is the official component library for all public-facing government digital services, analogous to the GOV.UK Design System.
 
 ## Success Criteria
 

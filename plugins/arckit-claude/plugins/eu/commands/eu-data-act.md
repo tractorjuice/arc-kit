@@ -47,7 +47,7 @@ $ARGUMENTS
 **OPTIONAL** (read if available, skip silently):
 
 - **RGPD** (GDPR Assessment) — Extract: personal data handling in data sharing — Data Act applies alongside GDPR when data contains personal data
-- **SECNUM** (SecNumCloud) — Extract: cloud provider sovereignty — complements Data Act Article 27 (international transfer restrictions)
+- **SECNUM** (SecNumCloud) — Extract: cloud provider sovereignty — complements Data Act Chapter VII, Article 32 (unlawful international governmental access and transfer)
 
 ### Step 0b: Read external documents and policies
 
@@ -91,7 +91,7 @@ Before generating the assessment, determine applicable roles and chapters:
 | Manufacturer of connected product | Makes/imports product that collects data | Chapter II (user access), Chapter III (B2B sharing) |
 | Provider of related service | Provides digital service linked to connected product | Chapter II, Chapter III |
 | Data holder | Has right/obligation to make data available | Chapter II, III, V |
-| Data processing service provider (DAPS) | IaaS/PaaS/SaaS/edge cloud provider | Chapter VI (switching) |
+| Data processing service provider (DAPS) | IaaS/PaaS/SaaS/edge cloud provider | Chapter VI (switching), Chapter VII (international governmental access), Chapter VIII (Articles 34–35) |
 | Public sector body | Government requesting exceptional data access | Chapter V |
 
 Show role determination before proceeding.
@@ -122,14 +122,14 @@ Show role determination before proceeding.
    - Pre-purchase disclosure obligation (Article 3): users informed of data generated
    - Real-time access by users (Article 4): free of charge, machine-readable format
    - Third-party sharing at user instruction (Article 5): FRAND conditions
-   - Contact point for data access requests
+   - Means of contacting the data holder quickly and efficiently, given before the related-service contract (Article 3(3)(e))
    - Trade secret protection when providing access
 
 5. **Section 3: B2B Data Sharing (Chapter III)** (Data holder)
    - Data sharing obligation conditions (Article 8)
    - FRAND terms requirement (fair, reasonable, non-discriminatory)
    - SME protection: compensation capped at cost of sharing (Article 9)
-   - Use restrictions: no re-identification, no use to compete with data holder (Article 8(4))
+   - Use restrictions: data not used to develop a competing connected product (Articles 4(10), 6(2)(e)) or passed to a gatekeeper (Article 6(2)(d)); technical protection measures and remedies for unauthorised use (Article 11)
    - Dispute resolution mechanism (Article 10)
    - Trade secret safeguards (Article 12)
 
@@ -140,24 +140,25 @@ Show role determination before proceeding.
    - If not applicable: mark section N/A
 
 7. **Section 5: Data Processing Service Switching (Chapter VI)** (DAPS)
-   - Switching process requirements (Article 23)
-   - Maximum timelines: 30-day notice, 180-day completion
-   - No financial or technical barriers to switching
-   - Customer data export in interoperable format (Article 26)
-   - Egress charge elimination by September 2027 (Article 29)
-   - Register of services and interoperability information
+   - Removal of pre-commercial, commercial, technical, contractual and organisational obstacles to switching (Article 23)
+   - Contract terms (Article 25): a notice period of at most two months (Article 25(2)(d)); a mandatory maximum transitional period of 30 calendar days after the notice period (Article 25(2)(a)), which the provider may extend to at most seven months only where 30 days is technically unfeasible, notified and justified within 14 working days (Article 25(4)), and which the customer may extend once (Article 25(5)); a data retrieval period of at least 30 calendar days (Article 25(2)(g))
+   - Information on switching procedures, methods and formats, and an online register of data structures, formats and standards (Article 26)
+   - Export of all exportable data in a structured, commonly used and machine-readable format where no common specifications are published (Article 30(5))
+   - Switching charges: reduced charges capped at directly linked costs until 12 January 2027, and no switching charges at all from 12 January 2027 (Article 29)
    - If not DAPS: mark section N/A
 
-8. **Section 6: International Data Transfer Restrictions (Article 27)**
-   - Non-EU government access without lawful EU/member state basis prohibited
-   - Technical and organisational measures to prevent unlawful transfer
-   - Obligation to contest unlawful requests
-   - Interaction with DINUM cloud doctrine and SecNumCloud (complements sovereignty requirements)
+8. **Section 6: Unlawful International Governmental Access and Transfer (Chapter VII, Article 32)** (DAPS)
+   - Adequate technical, organisational and legal measures, including contracts, to prevent third-country governmental access to or transfer of non-personal data held in the Union where it would conflict with Union or Member State law (Article 32(1))
+   - A third-country decision is recognised or enforced only on the basis of an international agreement (Article 32(2)); otherwise only where the Article 32(3) conditions are met, with the option to ask the competent national body for an opinion and to reject the request
+   - Only the minimum data permissible provided (Article 32(4)); the customer informed before the provider complies, except for law-enforcement requests (Article 32(5))
+   - Website transparency on the jurisdiction of the ICT infrastructure and the measures taken (Article 28)
+   - Personal data stays under GDPR Chapter V; note the interaction with DINUM cloud doctrine and SecNumCloud (complements sovereignty requirements)
 
-9. **Section 7: Interoperability (Chapter VII)**
-   - Interoperability specifications for data exchange
-   - Smart contracts requirements (Article 36) if applicable
-   - Open data formats and APIs
+9. **Section 7: Interoperability (Chapter VIII, Articles 33–36)**
+   - Essential requirements for participants in data spaces (Article 33)
+   - In-parallel use of data processing services; egress charges only to pass on costs incurred (Article 34)
+   - Compatibility with open interoperability specifications or harmonised standards once published (Articles 30(3) and 35)
+   - Smart contracts essential requirements (Article 36) if applicable
 
 10. **Section 8: Trade Secret Protection (Articles 4(6)–(9), 5(9)–(11) and 8(6))**
     - Process to identify data protected as trade secrets, including in the relevant metadata (Articles 4(6), 5(9))
@@ -167,9 +168,10 @@ Show role determination before proceeding.
     - B2B obligations to make data available do not oblige disclosure of trade secrets unless Union or national law provides otherwise (Article 8(6))
 
 11. **Section 9: Gap Analysis and Timeline**
-    - Role-based gaps with Data Act application dates
-    - September 2025: most obligations
-    - September 2027: egress charge elimination
+    - Role-based gaps with Data Act application dates (Article 50, Article 29)
+    - 12 September 2025: most obligations
+    - 12 September 2026: Article 3(1) design obligation for connected products and related services placed on the market after that date
+    - 12 January 2027: no switching charges
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass.
 
@@ -208,7 +210,7 @@ Personal data involved: {Yes — GDPR also applies / No}
 | User data access (Ch.II) | {status}  | {N}  |
 | B2B sharing (Ch.III)    | {status}   | {N}  |
 | Cloud switching (Ch.VI) | {N/A or status} | {N} |
-| Intl. transfer (Art.27) | {status}   | {N}  |
+| Intl. access (Art.32)   | {status}   | {N}  |
 
 Total Gaps: {N} ({N} high)
 
@@ -225,7 +227,8 @@ Next steps:
 - **Data Act ≠ Open Data Directive**: The Data Act concerns privately-generated data (IoT, connected products) and cloud switching. The Open Data Directive covers public sector data. Do not confuse.
 - **GDPR still applies**: Data Act does not override GDPR. When IoT data includes personal data (which is common — usage patterns, location, health data from wearables), both apply simultaneously.
 - **Trade secrets are explicitly protected**: Manufacturers/data holders can refuse sharing if it risks exposing trade secrets — but must prove this and cannot use it as blanket refusal. Document trade secret identification process.
-- **Cloud egress fees**: The September 2027 egress fee elimination is a significant commercial change for cloud providers. If this project involves multi-cloud or cloud switching, flag this in procurement.
+- **Switching charges**: From 12 January 2027 providers may not charge for switching, and until then only reduced charges capped at directly linked costs (Article 29); for in-parallel use, egress charges may only pass on costs incurred (Article 34(2)). If this project involves multi-cloud or cloud switching, flag this in procurement.
+- **Pending amendment (Digital Omnibus)**: the Commission's Digital Omnibus proposal (COM(2025) 837, 19 November 2025) would amend the Data Act: it narrows Chapter V to public emergencies, deletes Article 36 on smart contracts, and disapplies Chapter VI (except Article 29) and Article 34 for services other than IaaS that are custom-made or provided by an SME or small mid-cap, on contracts concluded by 12 September 2025. It had not been adopted as of 27 October 2026 (the Digital Omnibus on AI, Regulation (EU) 2026/1744, does not amend the Data Act). Cite the Regulation as in force, and check the proposal's status before relying on those provisions.
 - **Use Write Tool**: Data Act assessments span multiple roles and chapters. Always use the Write tool.
 
 ## Key References
@@ -236,10 +239,10 @@ Next steps:
 | European Commission — Data Act implementation page | European Commission | https://digital-strategy.ec.europa.eu/en/policies/data-act |
 | European Data Innovation Board (EDIB) — guidance | European Commission | https://digital-strategy.ec.europa.eu/en/policies/european-data-innovation-board |
 | GDPR full text (applies alongside Data Act for personal data) | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2016/679/oj |
-| EUCS — EU cloud certification scheme (complements Art. 27) | ENISA | https://www.enisa.europa.eu/topics/cloud-security |
-| SecNumCloud (French cloud sovereignty — complements Art. 27) | ANSSI | https://cyber.gouv.fr/secnumcloud |
+| EUCS — EU cloud certification scheme (complements Art. 32) | ENISA | https://www.enisa.europa.eu/topics/cloud-security |
+| SecNumCloud (French cloud sovereignty — complements Art. 32) | ANSSI | https://cyber.gouv.fr/secnumcloud |
 
-> **Note for reviewers**: The Data Act (September 2025) is distinct from the GDPR and the Open Data Directive. It governs access to data generated by connected products (IoT, industrial equipment, smart appliances, vehicles) and switching between cloud providers. Key concepts: **data holder** (entity with right/obligation to make data available), **DAPS** (Data Processing Service provider — cloud IaaS/PaaS/SaaS), **FRAND** (fair, reasonable, and non-discriminatory terms for B2B data sharing). Article 27 restricts cloud providers from handing EU data to non-EU governments without a lawful EU/member state basis — directly reinforcing the DINUM cloud doctrine and SecNumCloud requirements in France.
+> **Note for reviewers**: The Data Act (September 2025) is distinct from the GDPR and the Open Data Directive. It governs access to data generated by connected products (IoT, industrial equipment, smart appliances, vehicles) and switching between cloud providers. Key concepts: **data holder** (entity with right/obligation to make data available), **DAPS** (Data Processing Service provider — cloud IaaS/PaaS/SaaS), **FRAND** (fair, reasonable, and non-discriminatory terms for B2B data sharing). Chapter VII (Article 32) requires cloud providers to prevent third-country governmental access to non-personal data held in the Union where it would conflict with EU or Member State law — directly reinforcing the DINUM cloud doctrine and SecNumCloud requirements in France.
 
 ## Success Criteria
 
@@ -251,16 +254,16 @@ Next steps:
 - ✅ B2B data sharing obligations (Chapter III) assessed with FRAND requirements
 - ✅ Public sector exceptional access (Chapter V) assessed or N/A
 - ✅ Cloud switching obligations (Chapter VI) assessed if DAPS or N/A
-- ✅ International transfer restrictions (Article 27) assessed
+- ✅ Unlawful international governmental access safeguards (Chapter VII, Article 32) assessed if DAPS
 - ✅ GDPR intersection documented with recommendation to run `/arckit-eu:eu-rgpd`
-- ✅ Gap analysis with Data Act application timeline (Sep 2025 / Sep 2027)
+- ✅ Gap analysis with Data Act application timeline (12 Sep 2025 / 12 Sep 2026 / 12 Jan 2027)
 
 ## Example Usage
 
 ```text
 /arckit-eu:eu-data-act Assess Data Act compliance for an industrial IoT platform collecting sensor data from 50,000 connected machines in EU factories, selling analytics as SaaS, B2B sharing with factory operators required
 
-/arckit-eu:eu-data-act Data Act scoping for 001 — cloud SaaS provider (IaaS switching obligations focus), assess egress charge elimination timeline and switching process requirements
+/arckit-eu:eu-data-act Data Act scoping for 001 — cloud SaaS provider (IaaS switching obligations focus), assess the switching charge withdrawal timeline and switching process requirements
 
 /arckit-eu:eu-data-act Data Act for a smart home appliance manufacturer (France), connected devices collecting usage data, assess user access rights and B2B sharing with maintenance service providers
 ```

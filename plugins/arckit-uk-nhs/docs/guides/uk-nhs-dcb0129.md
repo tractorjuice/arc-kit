@@ -6,7 +6,7 @@
 
 Generates the **manufacturer-side** clinical safety documentation required under NHS DCB0129 for any health IT product being placed on the NHS market. NHS DCB0129 is mandated under the Health and Social Care Act 2012 s250 and applies to *any* health IT system deployed in the NHS, regardless of whether the product is also a medical device.
 
-The output is a 3-file set that follows Dr Marcus Baw's [SAFETY.md spec v2.0.0-draft](https://github.com/pacharanero/SAFETY.md) verbatim — chosen so the documents remain readable by clinicians, NHS England assessors, MHRA inspectors, and Notified Body reviewers without ArcKit-specific tooling.
+The output is a 3-file set that follows Dr Marcus Baw's [SAFETY.md spec 2.0.0-draft](https://github.com/pacharanero/SAFETY.md) — chosen so the documents remain readable by clinicians, NHS England assessors, MHRA inspectors, and Notified Body reviewers without ArcKit-specific tooling. The spec is a draft with no tagged release, so the overlay follows a named commit and lists its deliberate deviations (file location, Document Control block): see [SAFETY.md spec version and deviations](uk-nhs-clinical-safety-overlay.md#safetymd-spec-version-and-deviations).
 
 ## What it produces
 
@@ -14,7 +14,7 @@ Three files in `projects/{NNN}-<slug>/clinical-safety/`:
 
 | File | Purpose |
 |---|---|
-| `SAFETY.md` | Front-door anchor: required Marcus-spec fields (product-name, version, standard, CSO, organisation, status, hazard-log-url, last-reviewed) + ArcKit Document Control + Summary |
+| `SAFETY.md` | Front-door anchor: required Marcus-spec fields (product-name, version, standard, CSO, organisation, role, status, hazard-log-url, applicable-standards, last-reviewed) + ArcKit Document Control + Summary |
 | `SAFETY-CASE.md` | Clinical Safety Case Report with 6 GSN-inspired sections: Intended Use, Scope, Safety Argument (G1.1–G1.6 cross-referencing hazards), Evidence, Residual Risk, CSO Sign-off |
 | `HAZARD-LOG.md` | YAML-frontmatter hazard array + controls + rendered Markdown table. 6 starter hazards: wrong-patient identity, stale clinical data, audit-trail gap, authorisation bypass, alert delivery failure, write-integrity loss |
 
@@ -58,7 +58,7 @@ This guide and the command's output are **not** clinical, legal, or regulatory a
 ## Related commands
 
 - `/arckit:uk-nhs-dcb0160` — deployer-side companion (DCB0160)
-- `/arckit:uk-nhs-dtac` — NHS DTAC v3 (consumes the SAFETY-CASE.md content in Section 1)
+- `/arckit:uk-nhs-dtac` — NHS DTAC (form version 2.0); section C1 asks for the Clinical Safety Case Report and Hazard Log
 - `/arckit:uk-mdr-classification` — if the product is also a medical device, DCB0129 hazards feed the ISO 14971 risk file
 - `/arckit:risk` — project-level risk register cross-references clinical hazards
 - `/arckit:dpia` — privacy hazards may overlap with clinical hazards

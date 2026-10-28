@@ -8,7 +8,7 @@ handoffs:
   - command: uk-nhs-dcb0160
     description: Deployer-side companion. The DCB0129 manufacturer case feeds the DCB0160 deployment case (manufacturer-residual hazards become deployment hazards).
   - command: uk-nhs-dtac
-    description: DTAC Section 1 (Clinical Safety) consumes the SAFETY-CASE.md and HAZARD-LOG.md outputs.
+    description: DTAC section C1 (Clinical safety) asks for the Clinical Safety Case Report and Hazard Log (C1.2.4), which these SAFETY-CASE.md and HAZARD-LOG.md outputs supply.
   - command: uk-mdr-classification
     description: If the product is a medical device, DCB0129 hazards inform ISO 14971 risk file and classification rationale.
   - command: risk
@@ -26,7 +26,7 @@ allowed-tools:
 
 You are a clinical informatician and software architect generating a **NHS DCB0129 Clinical Safety Case Report + Hazard Log** for a digital health product. The product is being placed on the market by a *manufacturer* (in the DCB0129 sense — the legal entity responsible for the system); this is the **manufacturer-side** clinical safety case. The companion deployer-side case is produced by `/arckit-uk-nhs:uk-nhs-dcb0160`.
 
-The output adopts Dr Marcus Baw's [SAFETY.md spec v2.0.0-draft](https://github.com/pacharanero/SAFETY.md) — three files (`SAFETY.md`, `SAFETY-CASE.md`, `HAZARD-LOG.md`) with YAML-frontmatter hazard data and rendered Markdown tables — placed inside an ArcKit project subdirectory rather than at the repo root.
+The output follows Dr Marcus Baw's [SAFETY.md spec 2.0.0-draft](https://github.com/pacharanero/SAFETY.md) — three files (`SAFETY.md`, `SAFETY-CASE.md`, `HAZARD-LOG.md`) with YAML-frontmatter hazard data and rendered Markdown tables — placed inside an ArcKit project subdirectory rather than at the repo root. The overlay README lists the deliberate deviations from the spec.
 
 ## User Input
 
@@ -47,7 +47,7 @@ NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of He
 
 - NHS DCB0129 — <https://digital.nhs.uk/data-and-information/information-standards/information-standards-and-data-collections-including-extractions/publications-and-notifications/standards-and-collections/dcb0129-clinical-risk-management-its-application-in-the-manufacture-of-health-it-systems>
 - NHS Clinical Risk Management Standards — <https://digital.nhs.uk/services/solution-assurance/the-clinical-safety-team/clinical-risk-management-standards>
-- Marcus Baw, SAFETY.md spec v2.0.0-draft — <https://github.com/pacharanero/SAFETY.md/blob/main/spec.md>
+- Marcus Baw, SAFETY.md specification 2.0.0-draft (draft, no tagged release; this command follows commit `af405498`, 22 July 2026) — <https://github.com/pacharanero/SAFETY.md/blob/af405498/spec/specification.md>
 - ISO 14971:2019 (medical-device risk management) — referenced for severity / likelihood reasoning conventions
 - IEC 62304 (medical-device software lifecycle) — applicable if the product is also a medical device
 
@@ -89,8 +89,10 @@ NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of He
    - `standard` (`DCB0129` for this command's output; `both` if the deployer DCB0160 case will also live in the same repo)
    - `clinical-safety-officer` — populate as `[PENDING — CSO name and GMC/NMC/HCPC/GPhC registration number]`; the CSO appoints themselves
    - `organisation` — manufacturer legal entity (substitute `${user_config.organisation_name}` where appropriate)
+   - `role` — `manufacturer`, plus any of `supplier`, `operator`, `maintainer`, `relevant-it-provider` or `other` that also apply (consistent with the Roles and responsibilities table)
    - `safety-case-status` — `draft`
    - `hazard-log-url` — relative link `./HAZARD-LOG.md`
+   - `applicable-standards` — `DCB0129` plus the other standards and frameworks in scope (consistent with the Applicable standards and assurance domains table)
    - `last-reviewed` — today's date
    - **Summary** section (one to two paragraphs): what the product does, intended clinical context, scope of safety claim, summary of safety approach
    - **Documents** section: relative links to `./SAFETY-CASE.md` and `./HAZARD-LOG.md` (plus `./SAFETY-PLAN.md` if the user explicitly asked for a Tier 3 build)

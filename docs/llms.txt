@@ -155,7 +155,7 @@ EU regulations (member-state-neutral baselines):
 - [EU Cyber Resilience Act (Regulation 2024/2847)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-cra.md): `/arckit:eu-cra` products with digital elements, SBOM, VDP, CE marking.
 - [EU Digital Services Act (Regulation 2022/2065)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-dsa.md): `/arckit:eu-dsa` intermediaries, platforms, VLOPs.
 - [EU Data Act (Regulation 2023/2854)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-data-act.md): `/arckit:eu-data-act` connected products, B2B FRAND, cloud switching.
-- [EU Cloud Sovereignty Framework (v1.2.1)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-cloud-sovereignty.md): `/arckit:eu-cloud-sovereignty` eight weighted sovereignty objectives, SEAL-0 to SEAL-4 assurance levels, Overall SEAL (the minimum across objectives, never an average or mode) as the tender rejection gate, Score/Max.Score defined from the [official Annex calculator](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/data/csf-criteria-calculator-2026-06-01.json) with per-criterion arithmetic checkable without a scorer.
+- [EU Cloud Sovereignty Framework (v1.2.1, June 2026 calculator weights)](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/commands/eu-cloud-sovereignty.md): `/arckit:eu-cloud-sovereignty` eight weighted sovereignty objectives, SEAL-0 to SEAL-4 assurance levels, Overall SEAL (the minimum across objectives, never an average or mode) as the tender rejection gate, Score/Max.Score defined from the [official Annex calculator](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-eu/data/csf-criteria-calculator-2026-06-01.json) with per-criterion arithmetic checkable without a scorer.
 
 French government (apply on top of EU baseline):
 
@@ -276,7 +276,7 @@ French government (apply on top of EU baseline):
 
 - [DCB0129 manufacturer safety case](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/commands/uk-nhs-dcb0129.md): `/arckit:uk-nhs-dcb0129` NHS DCB0129 Clinical Safety Case Report and Hazard Log for manufacturers.
 - [DCB0160 deployer safety case](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/commands/uk-nhs-dcb0160.md): `/arckit:uk-nhs-dcb0160` NHS DCB0160 Clinical Safety Case Report and deployment Hazard Log for NHS organisations.
-- [NHS DTAC assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/commands/uk-nhs-dtac.md): `/arckit:uk-nhs-dtac` Digital Technology Assessment Criteria (DTAC v3) assessment for a digital health product.
+- [NHS DTAC assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/commands/uk-nhs-dtac.md): `/arckit:uk-nhs-dtac` Digital Technology Assessment Criteria (DTAC form version 2.0) assessment for a digital health product.
 - [Medical device classification](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/commands/uk-mdr-classification.md): `/arckit:uk-mdr-classification` SaMD / AIaMD classification under UK MDR 2002 and EU MDR 2017/745.
 
 ### Operations

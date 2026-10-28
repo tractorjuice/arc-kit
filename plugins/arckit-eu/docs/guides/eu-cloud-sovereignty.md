@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:eu-cloud-sovereignty` assesses a cloud service against the European Commission's Cloud Sovereignty Framework (v1.2.1, October 2025). The framework supplements security assurance schemes — SecNumCloud, EUCS, ISO 27001 — with sovereignty-specific safeguards for cloud procurement. It scores eight weighted objectives and expresses the result on a five-level Sovereignty Effectiveness Assurance Level (SEAL) scale.
+`/arckit:eu-cloud-sovereignty` assesses a cloud service against the European Commission's Cloud Sovereignty Framework (v1.2.1, October 2025), weighted and scored per the Commission's Implementation guidance and Annex calculator (1 June 2026). The framework supplements security assurance schemes — SecNumCloud, EUCS, ISO 27001 — with sovereignty-specific safeguards for cloud procurement. It scores eight weighted objectives and expresses the result on a five-level Sovereignty Effectiveness Assurance Level (SEAL) scale.
 
 Use it when specifying a tender, when evaluating a candidate service against one, or both.
 
@@ -33,7 +33,7 @@ Output: `projects/<id>/ARC-<id>-EUCSF-v1.0.md`
 
 ## The Eight Sovereignty Objectives
 
-Weights are set by the framework and sum to 100%. Treat them as the framework's defaults: ArcKit applies them as published, and the command does not offer a way to re-weight them. If a tender specification states its own weighting, follow the tender and record the deviation.
+ArcKit uses the weights in the Commission's Annex calculator, published with the Implementation guidance on 1 June 2026 (the guidance shows them on p.7 under "Score (examples)"). They sum to 100%. Framework v1.2.1 (October 2025, p.6) weighted three objectives differently: SOV-1 at 15%, SOV-5 at 20% and SOV-7 at 10%. The Commission calls the June 2026 material "an additional clarification" of the framework and has not withdrawn v1.2.1, so the assessment states which weighting it uses. The command does not offer a way to re-weight. If a tender specification states its own weighting, including v1.2.1's, follow the tender and record the deviation.
 
 | Objective | Weight |
 |-----------|--------|
@@ -46,7 +46,7 @@ Weights are set by the framework and sum to 100%. Treat them as the framework's 
 | SOV-7 Security & Compliance Sovereignty | 15% |
 | SOV-8 Environmental Sustainability | 5% |
 
-Strategic sovereignty carries the heaviest weight, and together with technology and operational sovereignty accounts for 50% — the framework treats dependency as the core sovereignty question, not data location alone.
+In the calculator weighting, strategic sovereignty carries the heaviest weight, and together with technology and operational sovereignty accounts for 50% — dependency, not data location alone, is the core sovereignty question. (In v1.2.1, supply chain sovereignty carried the heaviest weight.)
 
 ---
 
@@ -108,8 +108,8 @@ A service can score well overall and still be rejected for missing one objective
 
 The eight objectives each carry their own SEAL, but the framework also defines an aggregate across all of them — and it is deliberately a **minimum**, never an average and never a mode. Two levels of the same rule apply, and the command cites them separately:
 
-- **Per-objective SEAL** = the minimum SEAL across every criterion answered within that objective. The Commission's own Annex calculator implements exactly this at cell F2 — `="SEAL-"&MIN(H5:H251)` — the minimum over every answered row.
-- **Overall SEAL** = the minimum SEAL evidenced across all eight objectives. The Implementation guidance states this plainly (p.9): *"The overall SEAL level is the lowest SEAL level achieved in any of the objectives."*
+- **Per-objective SEAL** = the minimum SEAL across every criterion answered within that objective. This is a property of the framework: the Annex calculator has no per-objective SEAL cell.
+- **Overall SEAL** = the minimum SEAL evidenced across all eight objectives. The Implementation guidance states this plainly (p.9): *"The overall SEAL level is the lowest SEAL level achieved in any of the objectives."* The Commission's Annex calculator implements it at cell F2 — `="SEAL-"&MIN(H5:H251)` — the minimum over every answered row across all eight objectives.
 
 Those two levels agree because an objective's own SEAL is already a minimum — the Overall SEAL is a minimum-of-minimums, not a second independent calculation.
 
@@ -138,7 +138,7 @@ One caveat on SEAL-4 itself, from the Commission's own "Lessons learnt" (p.13, p
 ## Review Checklist
 
 - [ ] All eight objectives assessed, none skipped
-- [ ] Weights sum to 100% and match the framework's values
+- [ ] Weights sum to 100%, match the 1 June 2026 calculator's values, and the document says which weighting it uses
 - [ ] SEAL claimed and SEAL evidenced recorded separately per objective
 - [ ] Overall SEAL present and computed as a minimum (never an average or mode), with its governing objective/criterion named
 - [ ] Minimum SEAL levels attributed to the tender specification, never to the framework

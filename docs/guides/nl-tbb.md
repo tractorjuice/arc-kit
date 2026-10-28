@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:nl-tbb` determines the Te Beschermen Belangen (TBB) category for a system or dataset using the TBB systematiek ("Gereedschap: Te Beschermen Belangen", v1.0, 6 June 2026, part of the Toolkit VIRBI 2025), whose legal basis is the Besluit BVA-stelsel Rijksdienst 2021 (BWBR0044617). It assesses the five kernbelangen, scores Beschikbaarheid, Integriteit and Vertrouwelijkheid independently, sets the category from the highest of the three scores, and applies any rubricering the information already carries as a floor on that category. The command produces no rubricering. `/arckit:nl-cloud` and `/arckit:nl-bio` consume the category and BIV scores instead of re-deriving them.
+`/arckit:nl-tbb` determines the Te Beschermen Belangen (TBB) category for a system or dataset using the TBB systematiek ("Gereedschap: Te Beschermen Belangen (TBB) systematiek", v1.0, 6 June 2026), whose legal basis is the Besluit BVA-stelsel Rijksdienst 2021 (BWBR0044617). The systematiek is one of the tools in the toolkit for implementing VIRBI 2025, drawn up by a working group of departmental security (BVA) and CISO teams and published on the Ministry of the Interior's Digitale Overheid site; comments go to CISO Rijk. It assesses the five kernbelangen, scores Beschikbaarheid, Integriteit and Vertrouwelijkheid independently, sets the category from the highest of the three scores, and applies any rubricering the information already carries as a floor on that category. The command produces no rubricering. `/arckit:nl-cloud` and `/arckit:nl-bio` consume the category and BIV scores instead of re-deriving them.
 
 See also: [Netherlands overlay guide](nl-overlay.md)
 

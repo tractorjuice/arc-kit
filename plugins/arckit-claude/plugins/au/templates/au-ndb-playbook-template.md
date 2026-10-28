@@ -134,7 +134,7 @@ R = Responsible · A = Accountable · C = Consulted · I = Informed
 
 ### Detection sources
 
-- SIEM alerts (cross-ref ARC-{P}-AUE8 + ARC-{P}-AUISM Domain 11)
+- SIEM alerts (cross-ref ARC-{P}-AUE8 + ARC-{P}-AUISM Guidelines for security assurance — security monitoring)
 - Customer / data-subject reports (front-line intake to Privacy Officer)
 - Vendor / supply-chain notification (cross-ref AUDISP supply-chain provisions)
 - Insider report
@@ -144,7 +144,7 @@ R = Responsible · A = Accountable · C = Consulted · I = Informed
 ### Immediate containment
 
 - Isolate affected systems (cross-ref ARC-{P}-AUE8 incident response capability)
-- Preserve evidence (logs, system images) per ISM Domain 11 retention
+- Preserve evidence (logs, system images) per the ISM event log retention controls (Guidelines for security assurance)
 - Engage forensic capability (internal SOC + external IR retainer)
 - **Do not** publicly comment until eligibility assessment complete
 
@@ -228,7 +228,7 @@ Conducted within 90 days of incident closure.
 |--------|--------|
 | **Root cause analysis** | [5-whys methodology] |
 | **Control effectiveness review** | [What worked, what didn't] |
-| **Artefact updates triggered** | [AUE8 strategy refresh / AUISM domain refresh / AUPIA APP refresh] |
+| **Artefact updates triggered** | [AUE8 strategy refresh / AUISM guideline refresh / AUPIA APP refresh] |
 | **Lessons learned cycle** | [Action register; review at next risk forum] |
 | **Tabletop exercise refresh** | [Update annual exercise scenario based on incident pattern] |
 
@@ -281,7 +281,7 @@ Conducted within 90 days of incident closure.
 | OAIC-NDB | OAIC NDB scheme guidance | Guidance | oaic.gov.au | Operational guidance |
 | AUPIA | ARC-{P}-AUPIA-v* | ArcKit Artefact | projects/ | APP 11 cross-ref |
 | AUE8 | ARC-{P}-AUE8-v* | ArcKit Artefact | projects/ | Security baseline |
-| AUISM | ARC-{P}-AUISM-v* | ArcKit Artefact | projects/ | Domain 2 (incidents) cross-ref |
+| AUISM | ARC-{P}-AUISM-v* | ArcKit Artefact | projects/ | Guidelines for cyber security incidents cross-ref |
 
 ### Citations
 

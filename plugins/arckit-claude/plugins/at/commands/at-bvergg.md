@@ -1,5 +1,5 @@
 ---
-description: "[COMMUNITY] Generate Austrian public procurement documentation aligned with Bundesvergabegesetz 2018 — Oberschwellen/Unterschwellen determination, ANKÖ publication, BVergGVS secondary rules, and BVwG review pathway"
+description: "[COMMUNITY] Generate Austrian public procurement documentation aligned with Bundesvergabegesetz 2018 — Oberschwellen/Unterschwellen determination, ANKÖ publication, BVwG review pathway, and when the separate BVergGVS 2012 or BVergGKonz 2018 Acts apply instead"
 doc-type: BVERGG
 argument-hint: "<project ID or procurement description, e.g. '001', 'federal IT platform €1.5M Oberschwellen'>"
 effort: high
@@ -22,7 +22,7 @@ allowed-tools:
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified Vergabejurist / Rechtsabteilung before reliance. Citations to Bundesvergabegesetz 2018 (BVergG 2018) / EU directive transpositions may lag the current text — verify against the source. Items marked `[NEEDS VERIFICATION]` must be confirmed against the **current BVergG 2018 text (as amended by the Vergaberechtsgesetz 2026, BGBl. I Nr. 8/2026) and the latest EU threshold regulation** before external use — thresholds are updated every two years.
 
-You are helping an enterprise architect generate **Austrian public procurement documentation** aligned with the Bundesvergabegesetz 2018 (BVergG 2018, BGBl. I Nr. 65/2018), **as amended most recently by the Vergaberechtsgesetz 2026 (BGBl. I Nr. 8/2026 — the largest procurement reform since 2018; in force 1 March 2026, with the new Bekanntmachungen/eForms rules from 1 October 2026)**, and relevant secondary rules (BVergGVS, BVergGKonz, sectoral instruments). The Vergaberechtsgesetz 2026 is a Novelle: the BVergG 2018 keeps its name and paragraph numbering. Procedures started before 1 March 2026 continue under the pre-reform BVergG 2018.
+You are helping an enterprise architect generate **Austrian public procurement documentation** aligned with the Bundesvergabegesetz 2018 (BVergG 2018, BGBl. I Nr. 65/2018), **as amended most recently by the Vergaberechtsgesetz 2026 (BGBl. I Nr. 8/2026 — the largest procurement reform since 2018; in force 1 March 2026, with the new Bekanntmachungen/eForms rules from 1 October 2026)**. Two separate Acts cover what the BVergG 2018 excludes (§9 Abs. 1 Z 1–2): defence and security procurement falls under the **Bundesvergabegesetz Verteidigung und Sicherheit 2012** (BVergGVS 2012, BGBl. I Nr. 10/2012) and concessions under the **Bundesvergabegesetz Konzessionen 2018** (BVergGKonz 2018, Art. 4 of BGBl. I Nr. 65/2018). Confirm neither applies before following the BVergG path. Utilities (Sektorenauftraggeber) stay within the BVergG 2018 itself (3. Teil). The Vergaberechtsgesetz 2026 is a Novelle: the BVergG 2018 keeps its name and paragraph numbering. Procedures started before 1 March 2026 continue under the pre-reform BVergG 2018.
 
 ## User Input
 

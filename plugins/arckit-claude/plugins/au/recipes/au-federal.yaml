@@ -18,7 +18,7 @@
 #   Eight au-* community commands all included (Phase 1 + Phase 2 bundled per
 #   maintainer's "one PR" recommendation matching UAE/Canada precedent):
 #     au-e8-posture                 ASD Essential Eight ML0-ML3 maturity
-#     au-ism-controls               ASD ISM 17-domain Statement of Applicability
+#     au-ism-controls               ASD ISM Statement of Applicability (23 guidelines)
 #     au-pia                        Privacy Act 1988 s33D + 13 APPs assessment
 #     au-ndb-playbook               OAIC Notifiable Data Breach response
 #     au-dss                        DTA Digital Service Standard 10 criteria
@@ -318,7 +318,7 @@ targets:
 
   - id: ADR-005
     skill: arckit:adr
-    topic: "Logging and audit — ISM Domain 11 event logging, audit retention windows, SIEM/Sentinel integration, privileged-event monitoring"
+    topic: "Logging and audit — ISM security monitoring (event logging, event log retention), SIEM/Sentinel integration, privileged-event monitoring"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ, AU_ISM]

@@ -892,6 +892,50 @@ def test_codex_hook_runs_pages_preprocessor_for_namespaced_invocation(tmp_path):
     assert (tmp_path / "docs" / "index.html").is_file()
 
 
+def test_codex_pages_preprocessor_indexes_changes_audits_framework_procurement(tmp_path):
+    """#982: the Codex hook hand-listed its buckets and stopped at research/.
+
+    A repo with changes/, audits/, framework/ or procurement/ made scanProject
+    push into an undefined array, so $arckit-pages failed before it wrote the
+    dashboard. The four directories are SUBDIR_MAP destinations for ACHG,
+    CDAU, FWRK and GCLD/DOS/GCLC.
+    """
+    project_dir = tmp_path / "projects" / "001-demo"
+    files = {
+        "changes": "ARC-001-ACHG-001-v1.0.md",
+        "audits": "ARC-001-CDAU-001-v1.0.md",
+        "framework": "ARC-001-FWRK-v1.0.md",
+        "procurement": "ARC-001-GCLD-v1.0.md",
+    }
+    for subdir, name in files.items():
+        (project_dir / subdir).mkdir(parents=True)
+        (project_dir / subdir / name).write_text(f"# {name}\n", encoding="utf-8")
+
+    output = run_codex_hook(
+        "UserPromptSubmit",
+        {
+            "hook_event_name": "UserPromptSubmit",
+            "cwd": str(tmp_path),
+            "prompt": "$arckit-pages LLMS=true",
+        },
+    )
+
+    context = output["hookSpecificOutput"]["additionalContext"]
+    assert "Pages Pre-processor Complete (hook)" in context
+    for label in ("Change Requests", "Audits", "Framework", "Procurement"):
+        assert f"| {label} | 1 |" in context
+    manifest = json.loads((tmp_path / "docs" / "manifest.json").read_text(encoding="utf-8"))
+    project = next(p for p in manifest["projects"] if p["id"] == "001-demo")
+    llms = (tmp_path / "docs" / "llms.txt").read_text(encoding="utf-8")
+    for subdir, name in files.items():
+        path = f"projects/001-demo/{subdir}/{name}"
+        assert [doc["path"] for doc in project[subdir]] == [path]
+        assert path in llms
+    index_html = (tmp_path / "docs" / "index.html").read_text(encoding="utf-8")
+    for key in files:
+        assert f"project.{key}" in index_html
+
+
 def test_codex_hook_updates_manifest_and_stamps_provenance(tmp_path):
     project_dir = tmp_path / "projects" / "001-demo"
     project_dir.mkdir(parents=True)

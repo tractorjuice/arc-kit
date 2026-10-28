@@ -4,10 +4,8 @@ doc-type: AAIN
 argument-hint: "<project ID or agent group, e.g. '001', 'research swarm'>"
 effort: high
 handoffs:
-  - command: agent-governance
-    description: Apply governance to multi-agent orchestration
-  - command: agent-security
-    description: Secure inter-agent communication
+  - command: agent-maturity
+    description: Assess programme maturity across design, governance, security, integration and operations
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
@@ -29,6 +27,9 @@ $ARGUMENTS
 - **AAGR** (Agent Architecture Specification, mandatory — at least one agent design)
 - **AAGI** (Agent Inventory, recommended)
 - **AAOV** (Agent Governance Framework, recommended)
+- **AASE** (Agent Security Architecture, optional)
+
+Run this command after `/arckit-agent-architecture:agent-governance` and `/arckit-agent-architecture:agent-security`: it reads their AAOV and AASE when they exist, and neither of them reads AAIN.
 
 1. **Determine integration scope**:
 
@@ -190,7 +191,7 @@ User: `/arckit-agent-architecture:agent-integration Design integration for the r
 
 You should:
 
-- Check prerequisites (AAGR mandatory, AAGI recommended)
+- Check prerequisites (AAGR mandatory; AAGI and AAOV recommended; AASE optional)
 - Find project directory (e.g., `projects/003-research-swarm/`)
 - Read agent designs from AAGR documents to identify integration points
 - Generate integration architecture:
@@ -212,7 +213,7 @@ You should:
 - **Sequence diagram is mandatory** — shows message routing and agent interactions
 - **Failure isolation boundaries** must cover agent processes, tool executions, and message delivery
 - **Observability must include alerts** with specific threshold values
-- **Cross-reference AAGR, AAGI, AAOV** to ensure consistency with existing agent definitions
+- **Cross-reference AAGR, AAGI, AAOV and AASE** to ensure consistency with existing agent definitions, oversight requirements and security controls
 - **Traceability**: All integration decisions must link back to AAGR agent designs
 - **Reference agent architecture reference** from `${CLAUDE_PLUGIN_ROOT}/references/agent-architecture-reference.md` for integration patterns and communication models
 
@@ -221,8 +222,8 @@ You should:
 ## Integration with Other Commands
 
 - **Input**: Uses AAGR (agent designs) and AAGI (agent inventory) to identify integration points
-- **Output**: Feeds into `/arckit-agent-architecture:agent-governance` (governance for multi-agent orchestration)
-- **Output**: Feeds into `/arckit-agent-architecture:agent-security` (securing inter-agent communication)
+- **Input**: Uses AAOV from `/arckit-agent-architecture:agent-governance` (oversight, approval and audit requirements the contracts must respect)
+- **Input**: Uses AASE from `/arckit-agent-architecture:agent-security` (security controls and isolation requirements for inter-agent communication)
 - **Output**: Feeds into `/arckit-agent-architecture:agent-maturity` (maturity assessment of integration capabilities)
 
 ## Quality Checks
@@ -285,8 +286,7 @@ After writing the file, show ONLY a concise summary:
 
 ### Next Steps
 
-- Run `/arckit-agent-architecture:agent-governance` to apply governance to multi-agent orchestration
-- Run `/arckit-agent-architecture:agent-security` to secure inter-agent communication
+- Run `/arckit-agent-architecture:agent-maturity` to assess programme maturity across all five dimensions
 ```
 
 **Statistics to Include**:

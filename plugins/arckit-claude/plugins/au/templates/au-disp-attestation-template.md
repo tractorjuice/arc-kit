@@ -68,7 +68,7 @@
 |--------|--------|
 | **Implementation Status** | [✅ / ⚠️ / ❌] |
 
-**Evidence**: [Security policy framework, risk management plan, audit cadence, incident management process, change control. Cite ISM applicability statement [ARC-{P}-AUISM] Domain 1 + 4]
+**Evidence**: [Security policy framework, risk management plan, audit cadence, incident management process, change control. Cite ISM applicability statement [ARC-{P}-AUISM] — Guidelines for cyber security roles and Guidelines for cyber security documentation]
 
 **Gaps**: [List]
 
@@ -86,7 +86,7 @@
 | **Cleared Personnel Count** | [By clearance level — Baseline: n, NV1: n, NV2: n, PV: n] |
 | **Vetting Workflow** | [In-house / outsourced; turnaround time] |
 
-**Evidence**: [Clearance verification process, security awareness training programme, separation of duties model, off-boarding clearance debrief procedure, pre/post-leave briefing for cleared personnel. Cite ISM Domain 5]
+**Evidence**: [Clearance verification process, security awareness training programme, separation of duties model, off-boarding clearance debrief procedure, pre/post-leave briefing for cleared personnel. Cite the ISM Guidelines for personnel security]
 
 **Gaps**: [List]
 
@@ -120,9 +120,9 @@
 | **E8 Posture Reference** | [ARC-{P}-AUE8-v*] |
 | **ISM Applicability Reference** | [ARC-{P}-AUISM-v*] |
 
-**Evidence**: [Defer to E8 posture artefact for E8 ML2 evidence; ISM applicability for additional controls. Specifically address: cryptography (Domain 12), gateway security (Domain 13), monitoring (Domain 11), BCP (cross-references E8 Strategy 8)]
+**Evidence**: [Defer to E8 posture artefact for E8 ML2 evidence; ISM applicability for additional controls. Specifically address the ISM Guidelines for cryptography, Guidelines for gateways and Guidelines for security assurance (security monitoring), and backups and BCP (cross-reference the E8 Regular backups strategy)]
 
-**Gaps**: [Beyond E8 ML2, list ISM-domain-specific gaps]
+**Gaps**: [Beyond E8 ML2, list ISM gaps by guideline]
 
 **Remediation**: [Actions, owners, target dates]
 
@@ -134,16 +134,16 @@
 
 (Summarised from `ARC-{P}-AUE8-v*` — refer to that artefact for evidence detail.)
 
-| # | Strategy | Current ML | ML2 Evidence | Gap to ML2 | Sign-off |
-|---|----------|-----------|--------------|------------|----------|
-| 1 | Application Control | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 2 | Patch Applications | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 3 | Configure MS Office Macros | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 4 | User Application Hardening | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 5 | Restrict Admin Privileges | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 6 | Patch Operating Systems | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 7 | Multi-Factor Authentication | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
-| 8 | Regular Backups | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Strategy | Current ML | ML2 Evidence | Gap to ML2 | Sign-off |
+|----------|-----------|--------------|------------|----------|
+| Patch applications | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Patch operating systems | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Multi-factor authentication | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Restrict administrative privileges | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Application control | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Restrict Microsoft Office macros | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| User application hardening | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
+| Regular backups | [ML0–3] | [Evidence summary] | [Gap] | [Officer + date] |
 
 ---
 
@@ -151,16 +151,16 @@
 
 (Summarised from `ARC-{P}-AUISM-v*`.)
 
-| ISM Domain | Material to DISP | Implementation | Gap |
-|------------|-------------------|----------------|-----|
-| 1. Cyber Security Governance | High | [✅/⚠️/❌] | [Gap] |
-| 3. Outsourced Services (MSP boundary) | High | [✅/⚠️/❌] | [Gap] |
-| 4. Security Documentation (SSP, SRMP) | High | [✅/⚠️/❌] | [Gap] |
-| 5. Personnel Security | High (DISP-specific) | [✅/⚠️/❌] | [Gap] |
-| 10. System Management (privileged access) | High | [✅/⚠️/❌] | [Gap] |
-| 11. System Monitoring (audit retention) | High | [✅/⚠️/❌] | [Gap] |
-| 12. Cryptography | Medium | [✅/⚠️/❌] | [Gap] |
-| 15. Cloud and IaaS Considerations | High (if cloud-only) | [✅/⚠️/❌ / Inherited] | [Gap] |
+| ISM Guideline | Material to DISP | Implementation | Gap |
+|---------------|-------------------|----------------|-----|
+| Cyber security roles | High | [✅/⚠️/❌] | [Gap] |
+| Procurement and outsourcing (MSP boundary; cloud services and IRAP inheritance) | High | [✅/⚠️/❌ / Inherited] | [Gap] |
+| Cyber security documentation (system security plan, incident response plan) | High | [✅/⚠️/❌] | [Gap] |
+| Personnel security | High (DISP-specific) | [✅/⚠️/❌] | [Gap] |
+| System access (privileged access, MFA) | High | [✅/⚠️/❌] | [Gap] |
+| System management (administration, patching, backups) | High | [✅/⚠️/❌] | [Gap] |
+| Security assurance (security monitoring, event log retention) | High | [✅/⚠️/❌] | [Gap] |
+| Cryptography | Medium | [✅/⚠️/❌] | [Gap] |
 
 ---
 
@@ -253,7 +253,7 @@ I/we attest that the information in this pack is accurate to the best of my/our 
 | Artefact | Doc-ID | Cross-Reference |
 |----------|--------|-----------------|
 | ASD Essential Eight Posture | `ARC-{P}-AUE8-v*` | E8 maturity evidence per Strategy in section 6 |
-| ASD ISM Applicability | `ARC-{P}-AUISM-v*` | ISM control coverage per domain in section 6 |
+| ASD ISM Applicability | `ARC-{P}-AUISM-v*` | ISM control coverage per guideline in section 6 |
 | Privacy Impact Assessment | `ARC-{P}-AUPIA-v*` | APP 11 personal-information protection evidence |
 | Notifiable Data Breach Playbook | `ARC-{P}-AUNDB-v*` | Incident-response capability evidence |
 | PSPF Compliance Assessment | `ARC-{P}-AUPSPF-v*` | Physical / personnel / governance security evidence |

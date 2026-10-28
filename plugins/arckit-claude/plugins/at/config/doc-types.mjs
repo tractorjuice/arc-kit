@@ -95,7 +95,7 @@ export const DOC_TYPES = {
   'AAIN':      { name: 'Agent Integration Architecture',   category: 'Architecture' },
   'AASE':      { name: 'Agent Security Architecture',      category: 'Governance', severity: 'HIGH' },
   'AAMT':      { name: 'Agent Maturity Assessment',        category: 'Governance' },
-  // Open Agile Architecture overlay (arckit-oaa, community) — O-AA C208 agile
+  // Open Agile Architecture overlay (arckit-oaa, community) — O-AA v2.0 agile
   // enterprise architecture: strategy canvas, product-centric architecture,
   // ADM Lite sprint mapping, security embedded in sprint rhythm, governance cadence.
   'OASTR':     { name: 'Agile Strategy',                   category: 'Planning' },
@@ -262,7 +262,7 @@ export const DOC_TYPES = {
   // SAFETY-CASE.md / HAZARD-LOG.md) deliberately do NOT carry an ArcKit doc-type code or ARC- prefix — they
   // pass through validate-arc-filename untouched and are cross-referenced by relative path
   // (clinical-safety/SAFETY-CASE.md) rather than document ID.
-  'NHSDTAC':   { name: 'NHS Digital Technology Assessment Criteria (DTAC v3)', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  'NHSDTAC':   { name: 'NHS Digital Technology Assessment Criteria (DTAC)', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
   'NHSMDR':    { name: 'UK MDR + EU MDR SaMD/AIaMD Classification',       category: 'Compliance', regime: 'UK', severity: 'HIGH' },
   'MMOD':      { name: 'Maturity Model Assessment',       category: 'Governance', severity: 'HIGH' },
 };

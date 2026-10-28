@@ -1442,7 +1442,7 @@
     },
     {
       "path": "docs/guides/uk-nhs-dtac.md",
-      "title": "NHS DTAC v3 Assessment Guide",
+      "title": "NHS DTAC Assessment Guide",
       "category": "UK NHS Clinical Safety Overlay",
       "status": "community",
       "section": "Overlay Packs",
