@@ -487,13 +487,13 @@
 <li>Document system architecture, data flows, ports / protocols / services.</li>
 <li>Detail every selected control implementation with parameter values and shared-responsibility split.</li>
 <li>Capture interconnections, system inventory, personnel roles, training.</li>
-<li>Validate against the FedRAMP Authorization Boundary Guidance before publishing.</li>
+<li>Validate the boundary against FedRAMP's Minimum Assessment Scope rules (which replace the Authorization Boundary Guidance) before publishing.</li>
 </ol>
 <hr />
 <h2 id="regulatory-anchors">Regulatory Anchors</h2>
 <ul>
 <li><strong>FedRAMP SSP Template Rev 5</strong> — <a href="https://www.fedramp.gov/legacy/">https://www.fedramp.gov/legacy/</a> (marked legacy on 23 June 2026 under the FedRAMP Consolidated Rules for 2026: <a href="https://www.fedramp.gov/2026/timeline/">https://www.fedramp.gov/2026/timeline/</a>)</li>
-<li><strong>FedRAMP Authorization Boundary Guidance</strong> — <a href="https://www.fedramp.gov/assets/resources/documents/CSP_A_FedRAMP_Authorization_Boundary_Guidance.pdf">https://www.fedramp.gov/assets/resources/documents/CSP_A_FedRAMP_Authorization_Boundary_Guidance.pdf</a></li>
+<li><strong>FedRAMP Minimum Assessment Scope</strong> (formerly the Authorization Boundary Guidance) — <a href="https://www.fedramp.gov/2026/providers/rev5/rules/minimum-assessment-scope/">https://www.fedramp.gov/2026/providers/rev5/rules/minimum-assessment-scope/</a></li>
 <li><strong>NIST SP 800-37 Rev 2</strong> — <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-37r2.pdf">https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-37r2.pdf</a></li>
 </ul>
 <hr />
@@ -503,7 +503,7 @@
 <hr />
 <h2 id="common-pitfalls">Common Pitfalls</h2>
 <ul>
-<li><strong>Misdrawing the authorisation boundary.</strong> Boundaries that exclude services that handle federal data, or include services owned by other parties, are the leading cause of FedRAMP rework. Apply the Boundary Guidance heuristics literally.</li>
+<li><strong>Misdrawing the authorisation boundary.</strong> Boundaries that exclude services that handle federal data, or include services owned by other parties, are the leading cause of FedRAMP rework. Apply the Minimum Assessment Scope rules literally.</li>
 <li><strong>Conflating shared-responsibility controls.</strong> Every shared control must say who does what. &quot;Inherited from AWS&quot; is not an answer; the CRM line must be specific.</li>
 <li><strong>Under-specifying interconnections.</strong> Every external system connection must include the data exchanged, frequency, encryption posture, ICAM, and the agreement (ISA/MOU) reference.</li>
 <li><strong>Treating the SSP as a checkbox.</strong> Narratives must describe <em>how</em> the control is implemented, not restate the control statement.</li>

@@ -1029,7 +1029,7 @@ All artifacts must pass these 10 checks:
 - Control baseline consistent with that categorization — a Moderate system carries the Moderate baseline
 - Every control records a Control Origination from the permitted set (Service Provider Corporate / SP System Specific / Configured by Customer / Provided by Customer / Shared / Inherited)
 - Every Shared control states the customer responsibility
-- Authorization boundary describes components inside and outside, with explicit in-scope / out-of-scope justification for external services per the ABG
+- Authorization boundary describes components inside and outside, with explicit in-scope / out-of-scope justification for external services per FedRAMP's Minimum Assessment Scope rules (formerly the Authorization Boundary Guidance)
 - Every interconnection records name, FedRAMP package ID, agreement type (ICA / MOU / ISA), data direction, ports and protocols, and sensitivity
 - Types of Users records privilege level, clearance or citizenship requirement, and authentication mechanism per population
 - Applicable laws include FISMA, the Privacy Act and E-Gov Act §208 as a minimum, plus agency-specific statutes, with OMB M-25-21 cited where AI is in scope (and M-25-22 where AI is acquired)
@@ -1117,19 +1117,19 @@ All artifacts must pass these 10 checks:
 - AI Use Case Inventory entry confirmed or scheduled with the high-impact field set, and any withheld details noted with their legal basis
 - CAIO sign-off block present with scope, conditions and next review
 
-### SBOM -- Software Bill of Materials (EO 14028 / M-22-18)
+### SBOM -- Software Bill of Materials (EO 14028 / OMB M-26-05)
 
-- Applicability determined against the M-22-18 §2 covered-software definition, citing the post-14-September-2022 development test
-- Producer of record identified for every open-source component
-- Every CISA attestation item recorded with status (Yes / No / Partial), evidence reference and remediation plan
+- Agency requirements recorded under OMB M-26-05: whether the agency's assurance policy or contract asks for the attestation form, an SBOM on request (for a cloud platform, of the runtime production environment), a third-party assessment or an HBOM, each with its source; nothing described as a government-wide requirement, and M-22-18 / M-23-16 cited only as rescinded
+- Where the form is used, scope tested against the form's own conditions and exclusions, and the producer of record identified for every open-source component
+- Every attestation form item (1a–1f, 2, 3, 4a–4c) recorded Yes / No with an evidence reference, and the signatory or the attached 3PAO assessment named
 - Attestation items crosswalked to SP 800-218 SSDF practices (PO, PS, PW, RV) and to 800-53 SR and SA controls
-- SBOM format stated with its version (e.g. CycloneDX 1.6, SPDX 2.3) and the tooling used to generate it
-- All seven NTIA minimum data fields present: supplier name, component name, version, other unique identifiers (PURL / CPE), dependency relationships, author of SBOM data, timestamp
-- NTIA automation and practice elements addressed: machine-readable format, frequency, depth, known unknowns, distribution and delivery, access control, accommodation of mistakes
-- SLSA level claimed with rationale, and a signing strategy stated
+- SBOM format stated with its version (e.g. CycloneDX 1.6, SPDX 2.3), not a deprecated one, and the tooling used to generate it
+- All 17 CISA 2026 minimum data fields present, with any value marked unknown or withheld: SBOM author, author signature, data format name and version, generation context, timestamp, tool name and version, SBOM version; component producer, name, version, identifiers, hash value, hash algorithm, licence, dependency relationship
+- CISA 2026 practices and processes addressed: accommodation of updates, coverage (including transitive dependencies), distribution and delivery, explicitly identifying unknown information, frequency, machine-processable data
+- SLSA v1.2 Build level (L0–L3) claimed with rationale, any Source level (L1–L4) named as a Source track claim, no "SLSA 4" or Build L4 claimed, and a signing strategy stated
 - VEX production cadence, CVE disclosure policy, coordinated-disclosure contact and mean-time-to-patch targets recorded
-- Any item that cannot be attested carries an M-22-18 exception record: which items, rationale, compensating controls, agency CIO and OMB notification status, and expiry
-- Distribution plan names the CISA Repository lodging target and the access-control posture for SBOM consumers
+- Any item that cannot be attested or met carries a gap record: which items, rationale, mitigating practices, POA&M with dates, and the agency's decision
+- Distribution plan states how the attestation (if any) and the SBOM reach the agency, and the access-control posture for SBOM consumers
 
 ### PDPL -- UAE Personal Data Protection Law Assessment
 

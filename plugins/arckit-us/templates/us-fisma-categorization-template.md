@@ -122,7 +122,7 @@ Summarise the per-type CIA scores and the resulting per-type high-water mark.
 | NIST SP 800-60 Vol 1 Rev 1 | Guide for Mapping Types of Information and Information Systems to Security Categories | <https://doi.org/10.6028/NIST.SP.800-60v1r1> |
 | NIST SP 800-60 Vol 2 Rev 1 | Appendices to Guide for Mapping Types of Information | <https://doi.org/10.6028/NIST.SP.800-60v2r1> |
 | NIST SP 800-37 Rev 2 | Risk Management Framework for Information Systems and Organizations | <https://doi.org/10.6028/NIST.SP.800-37r2> |
-| OMB Circular A-130 | Managing Information as a Strategic Resource | <https://www.whitehouse.gov/omb/circulars-a130/> |
+| OMB Circular A-130 | Managing Information as a Strategic Resource | <https://www.whitehouse.gov/wp-content/uploads/legacy_drupal_files/omb/circulars/A130/a130revised.pdf> |
 
 ---
 

@@ -105,7 +105,7 @@ Severity is ArcKit's remediation-priority scale, not a FedRAMP rubric: the RAR a
 | Penetration Test Report | [CA-8] | [Complete — last test YYYY-MM-DD] | [Pentest report ref] |
 | Customer Responsibility Matrix (CRM) | [All inherited] | [Complete] | [Reference] |
 | FIPS 140-3 Validation Certs for crypto modules | [SC-13] | [Complete — CMVP cert NNNN] | [CMVP cert link] |
-| SSDF Self-Attestation (EO 14028) | [SR family] | [Complete] | [ARC-{P}-SBOM-v*] |
+| Secure-software evidence the sponsoring agency asks for (attestation form, SBOM; OMB M-26-05) | [SR family] | [Complete / Not requested] | [ARC-{P}-SBOM-v*] |
 
 ---
 
@@ -126,7 +126,7 @@ The six Federal Mandates in the FedRAMP Moderate and High RAR templates. Answer 
 
 ### 5.2 Further Readiness Checks
 
-ArcKit's pre-assessment checks, covering ground the RAR assesses under FedRAMP Requirements (§4.2) and Additional Capabilities (§4.3), plus federal requirements the RAR does not test (row 13). Answer Met only when the check is fully met. A partly met check is Not Met, with what is missing in Notes, as the RAR instructs for its Yes / No questions.
+ArcKit's pre-assessment checks, covering ground the RAR assesses under FedRAMP Requirements (§4.2) and Additional Capabilities (§4.3), plus an agency requirement the RAR does not test (row 13). Answer Met only when the check is fully met. A partly met check is Not Met, with what is missing in Notes, as the RAR instructs for its Yes / No questions.
 
 | # | Criterion | Status | Notes |
 |---|-----------|--------|-------|
@@ -142,7 +142,7 @@ ArcKit's pre-assessment checks, covering ground the RAR assesses under FedRAMP R
 | 10 | Incident response capability validated by tabletop exercise | [Met / Not Met] | [Notes] |
 | 11 | All cryptographic key management implemented per SC-12 | [Met / Not Met] | [Notes] |
 | 12 | CRM completed and signed by CSP | [Met / Not Met] | [Notes] |
-| 13 | SSDF / EO 14028 self-attestation submitted to CISA | [Met / Not Met] | [Notes] |
+| 13 | Secure-software evidence the sponsoring agency asks for under OMB M-26-05 (attestation form, SBOM) supplied, or recorded as not requested | [Met / Not Met] | [Notes] |
 
 **Readiness Verdict for 3PAO Assessment**: [Ready / Conditionally Ready / Not Ready] — Ready only when every Federal Mandate is Yes and no Critical or High gap is open.
 
@@ -210,7 +210,8 @@ Month 5-6   |================================|  FedRAMP review and certification
 | FedRAMP Consolidated Rules for 2026 | Important dates — FedRAMP Ready retired 28 July 2026 | <https://www.fedramp.gov/2026/timeline/> |
 | FedRAMP Consolidated Rules for 2026 | Choosing a Certification Path (Agency / Program) | <https://www.fedramp.gov/2026/providers/start/path/> |
 | OMB M-24-15 | Modernizing the Federal Risk and Authorization Management Program (25 July 2024) | <https://www.whitehouse.gov/wp-content/uploads/2024/07/M-24-15-Modernizing-the-Federal-Risk-and-Authorization-Management-Program.pdf> |
-| FedRAMP Continuous Monitoring Strategy Guide | ConMon Strategy Guide | <https://www.fedramp.gov/assets/resources/documents/CSP_Continuous_Monitoring_Strategy_Guide.pdf> |
+| FedRAMP Consolidated Rules for 2026 | Collaborative Continuous Monitoring (Rev 5) | <https://www.fedramp.gov/2026/providers/rev5/rules/collaborative-continuous-monitoring/> |
+| FedRAMP Continuous Monitoring Playbook | Rev 5 ConMon Playbook (legacy), which replaced the ConMon Strategy Guide v3.2 | <https://www.fedramp.gov/legacy/playbook/csp/continuous-monitoring/intro/> |
 | A2LA 3PAO Directory | Accredited 3PAO Directory | <https://customer.a2la.org/index.cfm?event=directory.search> |
 
 ---

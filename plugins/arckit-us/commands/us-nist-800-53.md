@@ -53,7 +53,7 @@ For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / M
 - NIST SP 800-53 Rev 5 (Security and Privacy Controls for Information Systems and Organizations) — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf>
 - NIST SP 800-53B (Control Baselines for Information Systems and Organizations) — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53B.pdf>
 - NIST SP 800-53A Rev 5 (Assessment Procedures) — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53Ar5.pdf>
-- FedRAMP Rev 5 Baselines — <https://www.fedramp.gov/rev5/baselines/>
+- FedRAMP Rev 5 Baselines, shown per control in the Full Rev5 Control Reference (Class B = LI-SaaS / Low, C = Moderate, D = High) — <https://www.fedramp.gov/2026/reference/controls/>
 - NIST SP 800-37 Rev 2 (Risk Management Framework) — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-37r2.pdf>
 - NIST OSCAL (Open Security Controls Assessment Language) — <https://pages.nist.gov/OSCAL/>
 
@@ -86,7 +86,7 @@ For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / M
    - **Compensating Controls Register** — where a primary control cannot be implemented as written, document the compensating control, the rationale, the residual risk, and the AO acceptance posture.
    - **Privacy Controls Overlay** — if PII is processed, additionally tailor the SP 800-53B Privacy Control Baseline (PT family + privacy enhancements). Cross-reference the US PIA (`USPIA`; `PIA` is Canada's code).
    - **CUI Overlay (if applicable)** — for systems handling Controlled Unclassified Information, layer NIST SP 800-171 Rev 3 requirements per 32 CFR Part 2002.
-   - **OSCAL Readiness** — note whether the implementation is published in OSCAL machine-readable format (FedRAMP increasingly mandates OSCAL SSP submission); flag as a roadmap item if not yet.
+   - **OSCAL Readiness** — note whether the implementation is published in a machine-readable format (NIST publishes SP 800-53 in OSCAL; for FedRAMP, the Consolidated Rules for 2026 ask for JSON that validates against FedRAMP's own schemas, rule FRC-CSO-JSN); flag as a roadmap item if not yet.
 
 7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **NIST** per-type checks pass. Fix any failures before proceeding.
 8. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
@@ -102,6 +102,6 @@ The tailored control matrix is the source-of-truth for the FedRAMP SSP (`/arckit
 - **Rev 5 is the only acceptable revision for new federal systems** — Rev 4 packages are no longer accepted by FedRAMP and are deprecated by NIST. Do not generate Rev 4 control tailoring under any circumstances.
 - **Inheritance is not "the CSP handles it"** — inheriting a control still requires the system owner to document the customer-side configuration that activates the inherited posture (e.g. inheriting AWS GovCloud's physical-security controls still requires the system owner to document how they consume those controls and configure account-level guardrails).
 - **Privacy controls are not optional for PII systems** — the SP 800-53B Privacy Control Baseline is mandatory whenever PII is processed. Do not omit it on the grounds that "the PIA covers it"; the PIA documents the assessment, the privacy controls implement the safeguards.
-- **OSCAL is the future tense quickly becoming present tense** — FedRAMP is progressively requiring OSCAL machine-readable submission. Track this on the roadmap even if the current submission is still Word-based.
+- **Machine-readable control data is becoming the norm** — FedRAMP is phasing in machine-readable certification data as JSON valid against its own schemas, and NIST publishes the control catalogue in OSCAL. Track this on the roadmap even if the current submission is still Word-based.
 - **CUI overlay is additive** — for CUI systems, NIST SP 800-171 Rev 3 requirements layer on top of SP 800-53 selection; they do not replace it for federal-system contexts.
 - **FedRAMP parameter values bind FedRAMP submissions** — where FedRAMP specifies an ODP value (e.g. specific frequencies, retention periods, encryption strengths), the system must adopt the FedRAMP value or document a deviation with PMO approval. Silent variance is a finding.

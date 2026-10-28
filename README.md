@@ -554,7 +554,7 @@ The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — the
 
 ## USA Federal Civilian Overlay (10 commands)
 
-> ⚠️ **Community-contributed overlay.** The 10 commands below cover US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-25-21/M-25-22 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship as the **arckit-us** community-contributed overlay (not part of the officially-maintained baseline of 72). **EO 14110 was revoked January 2025**; the live AI mandates are **OMB M-25-21** (use of AI; it rescinded and replaced M-24-10 on 3 April 2025) **+ M-25-22** (acquisition of AI; it replaced M-24-18). **FedRAMP completed the Rev 5 transition in 2024**. The overlay is currently solo-maintained by @tractorjuice; a US federal-civilian domain co-maintainer is being recruited (CISO / SAOP / FedRAMP PMO / CAIO backgrounds welcome) before the overlay can be re-evaluated for official-baseline promotion. Output should be reviewed by qualified US federal counsel before reliance.
+> ⚠️ **Community-contributed overlay.** The 10 commands below cover US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-25-21/M-25-22 AI assurance, E-Government Act §208 PIA, EO 14028 secure-software evidence and SBOM under OMB M-26-05). They ship as the **arckit-us** community-contributed overlay (not part of the officially-maintained baseline of 72). **EO 14110 was revoked January 2025**; the live AI mandates are **OMB M-25-21** (use of AI; it rescinded and replaced M-24-10 on 3 April 2025) **+ M-25-22** (acquisition of AI; it replaced M-24-18). **FedRAMP completed the Rev 5 transition in 2024**. The overlay is currently solo-maintained by @tractorjuice; a US federal-civilian domain co-maintainer is being recruited (CISO / SAOP / FedRAMP PMO / CAIO backgrounds welcome) before the overlay can be re-evaluated for official-baseline promotion. Output should be reviewed by qualified US federal counsel before reliance.
 
 **In scope (v1)**: federal civilian agencies and the vendors that sell to them.
 
@@ -571,7 +571,7 @@ The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — the
 | `/arckit:us-ai-rmf` | NIST AI RMF 1.0 + NIST AI 600-1 (Generative AI Profile) | `AIRMF` |
 | `/arckit:us-ai-impact` | OMB M-25-21 + OMB M-25-22 (+ M-26-04 for LLMs) | `AIIA` |
 | `/arckit:us-privacy-pia` | E-Government Act §208 + OMB M-03-22 + Privacy Act §552a + NIST SP 800-122 | `USPIA` |
-| `/arckit:us-sbom-eo-14028` | EO 14028 + OMB M-22-18 + OMB M-23-16 + CISA Self-Attestation Form + NTIA Minimum Elements | `SBOM` |
+| `/arckit:us-sbom-eo-14028` | EO 14028 + OMB M-26-05 (rescinded M-22-18 / M-23-16) + CISA Secure Software Development Attestation Form (agency choice) + CISA 2026 SBOM Minimum Elements | `SBOM` |
 
 Recipe: `us-federal` (5 waves — baseline → controls → posture → ai → authorization).
 
