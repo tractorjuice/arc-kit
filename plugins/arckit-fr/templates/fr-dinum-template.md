@@ -106,6 +106,9 @@ The French cloud-first policy mandates evaluation in order:
 
 ### 4.1 RGESN 2024 — 78 Criteria across 9 Families
 
+- Basis for applying the RGESN: [Voluntary / Organisation policy / Contract clause] — the RGESN itself is non-binding (Arcep / Arcom reference under the REEN law)
+- Ecodesign declaration published: [Yes — URL / No]
+
 | Family | Criteria Count | Status | Key Gaps |
 |---------|--------------|--------|---------|
 | 1. Strategy (Stratégie) | 10 | ☐ | |

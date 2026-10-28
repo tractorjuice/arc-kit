@@ -504,9 +504,10 @@ All artifacts must pass these 10 checks:
 
 ### MARPUB -- French Public Procurement
 
-- Threshold analysis completed (< €40k / < €215k / > €215k) with recommended procedure
+- Threshold analysis completed with recommended procedure, using the 2026–2027 thresholds (no publicity or competition below €60k supplies/services or €100k works; formal procedure from €140k supplies/services for central government authorities or €216k for other contracting authorities; works €5,404k)
 - BOAMP and JOUE publication requirements determined
 - Award criteria weights total exactly 100%
+- At least one award criterion takes account of the environmental characteristics of the offer (CCP L2152-7, since August 2026), and at least one execution condition takes account of environmental considerations (L2112-2)
 - Data localisation clause (EU territory, extraterritorial law prohibition) included
 - Reversibility clause (DINUM standards) included
 - GDPR/DPA clause included if personal data detected
@@ -517,6 +518,7 @@ All artifacts must pass these 10 checks:
 
 - All five referentiels addressed: Doctrine cloud, RGI, RGAA, RGESN, RGS
 - Mandatory vs recommended status correctly assigned per entity type and size
+- RGESN recorded as non-binding (Arcep/Arcom reference under the REEN law) unless the organisation's policy or a contract adopts it
 - RGAA 4.1 compliance rate stated (% or "To be assessed via RGAA audit")
 - RGS target security level determined (*//**/***) with homologation status
 - FranceConnect/ProConnect applicability assessed
@@ -646,7 +648,7 @@ All artifacts must pass these 10 checks:
 - Build-vs-reuse decision made with justification for each component (reuse / fork / SILL assembly / procure / build)
 - Contribution-back plan documented for any forked component
 - Publication obligation assessed: which project code must be published on code.gouv.fr
-- Exceptions to publication obligation documented with justification (security, trade secret, third-party IP)
+- Exceptions to publication obligation documented with justification (CRPA L311-4 to L311-6: third-party IP, security of information systems, trade secret)
 - Reused components register populated (source, version, licence, integration method)
 - Circulaire PM n°6264/SG (27 April 2021) — evidence that reuse was assessed before commissioning new development
 
