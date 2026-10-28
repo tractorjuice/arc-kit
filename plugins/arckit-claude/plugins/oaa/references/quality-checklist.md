@@ -992,6 +992,7 @@ All artifacts must pass these 10 checks:
 - No dimension scored above L3 without documented, repeatable process evidence
 - Improvement actions given per dimension where a gap exists
 - Overall maturity consistent with the dimension scores — not above the lowest scored dimension without justification
+- Every benchmark value cites its source or says "No cited benchmark"; no industry average is estimated, and NIST AI RMF (Current vs Target Profile) and the OWASP LLM Top 10 (coverage) are not given levels
 
 ### FIPS199 -- FISMA Security Categorization
 

@@ -328,13 +328,15 @@ gantt
 
 ### 5.1 Industry Benchmarking
 
-| Benchmark | Standard | Industry Average | Our Position | Gap |
-|-----------|----------|----------------|--------------|-----|
-| Design maturity | CMMI Software | L3 | [L2] | [-1] |
-| Governance maturity | NIST AI RMF | L3 | [L1] | [-2] |
-| Security maturity | OWASP LLM Top 10 | L3 | [L2] | [-1] |
-| Integration maturity | TOGAF | L3 | [L1] | [-2] |
-| Operations maturity | ITIL 4 | L4 | [L2] | [-2] |
+> Fill each benchmark only from a source you can cite, such as published appraisal results, a survey, a peer or regulator benchmark, or an earlier assessment, and add that source to External References. If there is no source, write "No cited benchmark" and leave the gap blank. Do not estimate an industry average. State the benchmark and our position on the reference's own scale, not on this model's L1–L5.
+
+| Dimension | Reference | Scale or comparison method | Benchmark | Source | Our Position | Gap |
+|-----------|-----------|----------------------------|-----------|--------|--------------|-----|
+| Design | CMMI Development (CMMI Institute) | Maturity levels 0–5: Incomplete, Initial, Managed, Defined, Quantitatively Managed, Optimizing | [Cited maturity level, or "No cited benchmark"] | [Citation] | [Maturity level, with evidence] | [Levels] |
+| Governance | NIST AI RMF 1.0 (NIST AI 100-1) | No maturity levels: compare the Current Profile with the Target Profile (§6) | [Target Profile, e.g. the subcategories in scope] | [Citation] | [Current Profile, e.g. subcategories met] | [Target Profile outcomes not yet met] |
+| Security | OWASP Top 10 for LLM Applications (2025) | No maturity levels: coverage of LLM01–LLM10 | [Risks that apply to the programme] | [Citation] | [Risks with implemented and tested controls] | [Risks that apply but lack controls] |
+| Integration | TOGAF Series Guide: Architecture Maturity Models (G203) | Architecture capability maturity, which measures the enterprise architecture practice rather than integration alone: use the levels of the model assessed against, as published | [Cited level, or "No cited benchmark"] | [Citation] | [Level, with evidence] | [Levels] |
+| Operations | ITIL Maturity Model (PeopleCert) | Service value system maturity levels 1–5: Initial, Managed, Defined, Quantitative, Optimizing | [Cited maturity level, or "No cited benchmark"] | [Citation] | [Maturity level, with evidence] | [Levels] |
 
 ### 5.2 Peer Comparison
 

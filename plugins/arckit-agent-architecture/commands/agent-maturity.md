@@ -161,18 +161,27 @@ For each gap identified (current → target), define improvement initiatives:
 
 ### 8. Establish Benchmarks
 
-Compare the agent program against industry benchmarks:
+Compare the agent program against external references, each on its own scale:
 
-- **Industry standards**: CMMI, including its AI extension CMMI AI Maturity (CMMI AIM, CMMI Institute, 2026); the MITRE AI Maturity Model (six pillars, five levels from Initial to Optimized); NIST AI RMF Current and Target Profiles (the AI RMF defines no maturity levels, so compare profiles rather than assign a level)
+- **Industry standards**:
+  - **CMMI** (CMMI Institute): maturity levels 0–5 (Incomplete, Initial, Managed, Defined, Quantitatively Managed, Optimizing). Its AI extension, CMMI AI Maturity (CMMI AIM, 2026), adds AI content to all 31 practice areas and a benchmark view across eight domains. AIM is appraised with CMMI's own appraisal method and publishes no separate level scale, so report AIM results as CMMI maturity levels.
+  - **MITRE AI Maturity Model**: six pillars, five levels from Initial to Optimized.
+  - **NIST AI RMF 1.0**: defines no maturity levels or tiers. Compare the Current Profile with the Target Profile (NIST AI 100-1 §6) and report the outcomes not yet met, rather than assign a level.
+  - **OWASP Top 10 for LLM Applications (2025)**: a list of ten risks (LLM01–LLM10), not a maturity model. Report coverage: which risks apply to the programme and which have implemented and tested controls. If a security level is wanted, the OWASP AI Maturity Assessment (AIMA v1.0, August 2025) scores practices 0–3, following OWASP SAMM.
+  - **TOGAF Series Guide: Architecture Maturity Models (G203)**: architecture capability maturity, which measures the enterprise architecture practice rather than integration alone. Use the levels of the model you assess against, as published.
+  - **ITIL Maturity Model** (PeopleCert): practice capability levels 1–5 and service value system maturity levels 1–5 (Initial, Managed, Defined, Quantitative, Optimizing).
 - **Peer organisations**: Similar programmes in the sector
 - **Regulatory expectations**: Minimum maturity required for compliance
 
+**Do not invent industry averages or peer figures.** Fill a benchmark value only from a source you can cite, such as published appraisal results, a survey, a peer or regulator benchmark, an earlier assessment, or a document the user has provided (Step 5). Cite it with a marker and add it to External References. If no source is available, write "No cited benchmark" and leave the gap blank.
+
 For each benchmark:
 
-- **Metric**: What is being measured
-- **Industry average**: Typical maturity level in the sector
-- **Our position**: Current maturity level
-- **Gap**: Difference from industry average
+- **Reference**: The framework, and its scale or comparison method
+- **Benchmark**: The cited level, profile or coverage figure, on the reference's own scale
+- **Source**: The citation for the benchmark
+- **Our position**: Our level, profile or coverage on the same scale
+- **Gap**: The difference on that scale. Do not compute a gap between this model's L1–L5 and another framework's levels without stating the mapping
 
 ### 9. Detect Version
 
@@ -233,7 +242,7 @@ Before generating the document ID, check if a previous version exists:
    - Success metrics per initiative
 
    **Section 5: Benchmarks**
-   - Comparison against industry standards
+   - Comparison against industry standards, each on its own scale, with every benchmark cited (Step 8)
    - Gap analysis vs peers
    - Regulatory alignment assessment
 
@@ -262,7 +271,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 - **Heatmap present**: Valid Mermaid quadrant chart visualising maturity
 - **Target state defined**: Target level set for each dimension with rationale
 - **Improvement initiatives**: At least 3 initiatives defined in the roadmap
-- **Benchmarks included**: Industry benchmarks with gap analysis
+- **Benchmarks cited**: Every benchmark value names its source or says "No cited benchmark"; NIST AI RMF is compared by Current and Target Profile and the OWASP LLM Top 10 by coverage, not given a level
 - **Traceability links**: AAGI and AAGR references present
 - **No placeholder text**: No remaining `[Dimension]`, `[Level]`, `[Evidence]`, or `[Gaps]` tokens
 
@@ -361,7 +370,7 @@ Before completing the document, populate ALL document control fields in the head
 - **Maturity models are living documents** — review and update quarterly or after significant program changes
 - **Be evidence-based** — every rating must reference concrete evidence, not impressions
 - **Target levels must be achievable** — maximum 2 levels per improvement cycle (6-12 months)
-- **Benchmarks provide context** — use industry standards and peer comparisons to set realistic targets
+- **Benchmarks provide context** — use industry standards and peer comparisons to set realistic targets, cite every benchmark, and never estimate an industry average
 - **Improvement initiatives drive action** — each initiative must be scoped, resourced, and measurable
 - **Traceability is critical** — link back to AAGI, AAGR, and governance artefacts
 - **The heatmap visualises priorities** — use quadrant positioning to show where to focus investment
