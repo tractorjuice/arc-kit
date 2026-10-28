@@ -186,7 +186,7 @@ French government (apply on top of EU baseline):
 > ⚠️ Community-maintained — output should be reviewed by qualified Canadian federal counsel (DOJ), Privacy Officer / ATIP coordinator, and departmental security officer before reliance. Recruiting a Canadian federal domain co-maintainer; promotion to official-baseline gated on co-maintainer commitment.
 
 - [FITAA Compliance Assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-fitaa.md): `/arckit:ca-fitaa` Foreign Influence Transparency and Accountability Act compliance assessment (Bill C-70 2024).
-- [Privacy Act PIA](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-pia.md): `/arckit:ca-pia` Privacy Act + TBS Directive on PIA — personal information inventory, OPC notification trigger, mitigation tracker.
+- [Privacy Act PIA](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-pia.md): `/arckit:ca-pia` Privacy Act + TBS Standard on PIA — personal information inventory, OPC notification trigger, mitigation tracker.
 - [ATIP Reconciliation](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-atip.md): `/arckit:ca-atip` Access to Information / Privacy Act reconciliation, severance design for hybrid public/protected systems.
 - [Algorithmic Impact Assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-aia.md): `/arckit:ca-aia` TBS Directive on Automated Decision-Making — Levels I–IV scoring, transparency notice, human-in-the-loop.
 - [Charter Rights Review](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-charter.md): `/arckit:ca-charter` Charter rights design review (s.2 / s.7 / s.8 / s.15) with Oakes proportionality and DOJ counsel sign-off.
@@ -195,7 +195,7 @@ French government (apply on top of EU baseline):
 - [Sovereign Cloud Residency](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-cloud-residency.md): `/arckit:ca-cloud-residency` GC sovereign cloud residency assessment with CLOUD-Act analysis and exit/portability plan.
 - [GC Digital Standards](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-gc-digital-standards.md): `/arckit:ca-gc-digital-standards` 10 GC Digital Standards conformance scorecard with maturity roadmap.
 - [Official Languages Act](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-ola.md): `/arckit:ca-ola` Official Languages Act review (Parts IV / V / VI) with active offer and Translation Bureau pipeline.
-- [PSPC Procurement](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-pspc.md): `/arckit:ca-pspc` Federal procurement strategy — PSPC Supply Manual, Standing Offer / AgileIQ / RFP, PSAB 5%, CFTA / CETA.
+- [PSPC Procurement](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-pspc.md): `/arckit:ca-pspc` Federal procurement strategy — PSPC Supply Manual, Standing Offer / AgileIQ / RFP, PSIB 5%, CFTA / CETA.
 - [OCAP® Sovereignty Assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-ca/commands/ca-ocap.md): `/arckit:ca-ocap` First Nations OCAP® sovereignty assessment with FNIGC pre-engagement gate.
 
 ### Austrian government compliance (community-contributed)

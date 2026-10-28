@@ -474,12 +474,12 @@ These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `
 
 ## Canada Federal Overlay (12 commands)
 
-Federal Canadian regulatory baseline as a `[COMMUNITY]` overlay — covering FITAA (Bill C-70 2024), federal privacy and access (Privacy Act, ATI Act), Treasury Board Directive on Automated Decision-Making, Charter rights design review, ITSG-33 + Standard on Security Categorization, Security of Information Act handling, GC Cloud sovereign residency, GC Digital Standards conformance, Official Languages Act, federal procurement (PSPC + PSAB), and First Nations OCAP® data sovereignty.
+Federal Canadian regulatory baseline as a `[COMMUNITY]` overlay — covering FITAA (Bill C-70 2024), federal privacy and access (Privacy Act, ATI Act), Treasury Board Directive on Automated Decision-Making, Charter rights design review, ITSG-33 + Standard on Security Categorization, Security of Information Act handling, GC Cloud sovereign residency, GC Digital Standards conformance, Official Languages Act, federal procurement (PSPC + PSIB), and First Nations OCAP® data sovereignty.
 
 | Command | Type code | Purpose |
 |---|---|---|
 | `/arckit:ca-fitaa` | `FITAA` | Foreign Influence Transparency and Accountability Act compliance assessment |
-| `/arckit:ca-pia` | `PIA` | Privacy Impact Assessment per Privacy Act + TBS Directive on PIA |
+| `/arckit:ca-pia` | `PIA` | Privacy Impact Assessment per Privacy Act + TBS Standard on PIA |
 | `/arckit:ca-atip` | `ATIP` | Access to Information / Privacy Act reconciliation and severance design |
 | `/arckit:ca-aia` | `AIA` | Algorithmic Impact Assessment per TBS Directive on Automated Decision-Making (Levels I–IV) |
 | `/arckit:ca-charter` | `CHRT` | Charter rights design review (s.2 / s.7 / s.8 / s.15) with Oakes proportionality |
@@ -488,7 +488,7 @@ Federal Canadian regulatory baseline as a `[COMMUNITY]` overlay — covering FIT
 | `/arckit:ca-cloud-residency` | `CACR` | GC Cloud sovereign residency assessment with CLOUD-Act analysis |
 | `/arckit:ca-gc-digital-standards` | `DIGSTD` | Government of Canada Digital Standards conformance scorecard |
 | `/arckit:ca-ola` | `OLA` | Official Languages Act review (Parts IV / V / VI) |
-| `/arckit:ca-pspc` | `PROC` | Federal procurement strategy (PSPC Supply Manual + PSAB 5%) |
+| `/arckit:ca-pspc` | `PROC` | Federal procurement strategy (PSPC Supply Manual + PSIB 5%) |
 | `/arckit:ca-ocap` | `OCAP` | First Nations OCAP® sovereignty assessment with FNIGC pre-engagement gate |
 
 > **Help wanted**: looking for a Canadian federal enterprise architect to co-maintain this overlay. Open an issue or DM @tractorjuice.

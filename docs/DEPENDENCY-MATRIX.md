@@ -1183,13 +1183,13 @@ uae-procurement → sobc → wardley → framework
 
 Added 12 community-overlay commands (`ca-*`) covering federal Canadian regulatory and digital-government instruments. They ship with the `[COMMUNITY]` description prefix and are not part of the officially-maintained baseline. Total command count moves from 104 to 116 (70 official + 46 community).
 
-The 12 commands cover: FITAA (Bill C-70 2024), federal privacy and access (Privacy Act, ATI Act), Treasury Board Directive on Automated Decision-Making, Charter rights design review, ITSG-33 + Standard on Security Categorization, Security of Information Act handling, GC Cloud sovereign residency, GC Digital Standards conformance, Official Languages Act, federal procurement (PSPC + PSAB), and First Nations OCAP® data sovereignty.
+The 12 commands cover: FITAA (Bill C-70 2024), federal privacy and access (Privacy Act, ATI Act), Treasury Board Directive on Automated Decision-Making, Charter rights design review, ITSG-33 + Standard on Security Categorization, Security of Information Act handling, GC Cloud sovereign residency, GC Digital Standards conformance, Official Languages Act, federal procurement (PSPC + PSIB), and First Nations OCAP® data sovereignty.
 
 **Canonical execution chains**:
 
 ```text
 Flow 1 — FITAA-class application (registration scheme, scoring, automated triage):
-principles → stakeholders → requirements → ca-charter → ca-fitaa → ca-pia → ca-atip → ca-aia (if ADM) → ca-ocap (if Indigenous data)
+principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (if ADM) → data-model → ca-fitaa → ca-charter → ca-ocap (if Indigenous data)
   → ca-itsg-33 → ca-soia (if classified) → ca-cloud-residency → ca-ola
   → ca-gc-digital-standards → risk → sobc → ca-pspc → adr → framework
 ```
@@ -1206,35 +1206,28 @@ principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (
 | From command | Handoff target | Condition / rationale |
 |---|---|---|
 | `ca-fitaa` | `ca-charter` | Charter §2 (expression / association) review required for any registration scheme touching protected speech |
-| `ca-fitaa` | `ca-pia` | PIA for personal information collected during arrangement registration |
-| `ca-fitaa` | `ca-atip` | Reconciles the public-facing register against the protected investigative dataset (severance design for hybrid views) |
-| `ca-fitaa` | `ca-aia` | Triggered when registration triage uses automated decision-making, scoring, or risk classification |
+| `ca-fitaa` | `ca-soia` | When classified material is in scope: the protected investigative dataset overlaps with Special Operational Information |
+| `ca-fitaa` | `ca-ola` | The public register and registration forms trigger Official Languages Act Part IV obligations |
 | `ca-pia` | `risk` | PIA findings feed privacy and regulatory entries in the risk register |
 | `ca-pia` | `ca-atip` | Personal-information disclosure register continues into ATIP reconciliation |
 | `ca-pia` | `ca-aia` | Required when ADM touches personal information; AIA inherits the PIA inventory |
 | `ca-atip` | `data-model` | Severance rules feed back into data-model classification flags and access controls |
-| `ca-atip` | `ca-pia` | PIA personal-information register is the authoritative source for the §4–§8 use/disclosure register |
 | `ca-aia` | `risk` | AIA findings — bias, drift, contestability — feed the operational risk register |
 | `ca-aia` | `adr` | Material AIA outcomes (vendor selection, autonomy tier, recourse design) warrant ADRs |
-| `ca-aia` | `ca-pia` | Personal-information feeding the algorithmic system inherits PIA controls; AIA depth must match PIA depth |
-| `ca-charter` | `ca-fitaa` | Charter §2 expression / association analysis is a mandatory companion to FITAA |
-| `ca-charter` | `ca-pia` | §8 search-and-seizure analysis grounded in the PIA personal-information categories |
 | `ca-charter` | `risk` | Residual Charter risks per right feed the operational risk register |
 | `ca-itsg-33` | `ca-cloud-residency` | Categorisation and control profile feed the sovereign cloud residency assessment |
 | `ca-itsg-33` | `risk` | Residual security risks and tailoring deviations become risk-register entries |
 | `ca-itsg-33` | `adr` | Material control tailoring or compensating-control decisions warrant ADRs |
-| `ca-soia` | `ca-itsg-33` | SOIA handling rules sit on top of the ITSG-33 baseline (categorisation is prerequisite) |
 | `ca-soia` | `risk` | SOIA-specific residual risks (compartment compromise, suspected unauthorised disclosure) |
 | `ca-soia` | `adr` | Compartment design, MOU choices with CSIS / RCMP, and tier-promotion thresholds warrant ADRs |
 | `ca-cloud-residency` | `adr` | Sovereign cloud option choices and CLOUD-Act risk acceptance warrant ADRs |
-| `ca-cloud-residency` | `ca-itsg-33` | Cloud control-profile selection (PBMM-Cloud, Secret-High) grounded in ITSG-33 categorisation |
+| `ca-cloud-residency` | `ca-pspc` | Residency envelope, sub-processor analysis and CSP shortlist feed the procurement strategy where cloud is in scope |
 | `ca-gc-digital-standards` | `service-assessment` | GC Digital Standards conformance feeds the broader service-assessment evidence base |
 | `ca-gc-digital-standards` | `roadmap` | Identified gaps and remediation actions become roadmap milestones |
 | `ca-ola` | `ca-gc-digital-standards` | OLA service equivalence is a baseline expectation under the GC Digital Standards scorecard |
 | `ca-ola` | `service-assessment` | OLA review feeds the service-assessment evidence base for bilingualism and active offer |
 | `ca-pspc` | `evaluate` | PSPC route selection feeds the vendor evaluation framework's scoring rubric |
 | `ca-ocap` | `data-model` | OCAP-mapped classifications and access controls feed the data-model stewardship and access policies |
-| `ca-ocap` | `ca-pia` | Personal-information processing of Indigenous data inherits PIA controls plus OCAP-derived restrictions |
 | `ca-ocap` | `ca-atip` | ATIP severance design must reflect OCAP access and control determinations for Indigenous datasets |
 
 - **Updated**: Total command count from 104 to 116 (70 official + 46 community = 116; community now includes 12 Canada + 12 UAE + 7 EU + 12 FR + 3 Austrian)

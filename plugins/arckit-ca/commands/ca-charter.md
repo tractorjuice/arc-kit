@@ -5,10 +5,6 @@ argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true
 handoffs:
-  - command: ca-fitaa
-    description: Charter §2 expression and association analysis is a mandatory companion to FITAA; the FITAA artefact references this review.
-  - command: ca-pia
-    description: §8 search-and-seizure analysis is grounded in the personal-information categories captured in the Privacy Impact Assessment.
   - command: risk
     description: Residual Charter risks per right feed the operational risk register with appropriate severity.
 allowed-tools:
