@@ -481,7 +481,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:business-capability-map` | adm-preliminary | principles, requirements, stakeholders | application-inventory |
 | `/arckit:application-inventory` | adm-preliminary | business-capability-map, principles, requirements | — |
 | `/arckit:application-rationalization` | application-inventory | adm-preliminary, adr, business-capability-map, principles, transition-architecture | — |
-| `/arckit:gap-analysis` | business-capability-map | principles, strategy | adm-preliminary, risk, stakeholders |
+| `/arckit:gap-analysis` | business-capability-map | application-inventory, application-rationalization, principles, strategy | adm-preliminary, risk, stakeholders |
 | `/arckit:transition-architecture` | gap-analysis | adr, application-rationalization, roadmap | risk, stakeholders |
 | `/arckit:architecture-board` | principles | adm-preliminary, business-capability-map, vendor HLD | — |
 | `/arckit:architecture-change` | — | adm-preliminary, architecture-board, business-capability-map, principles, transition-architecture | application-inventory |
