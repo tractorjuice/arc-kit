@@ -763,6 +763,7 @@ All artifacts must pass these 10 checks:
 - Both Scenario A (planned exit) and Scenario B (disruptive interruption) are covered — a plan documenting only the planned scenario does not satisfy clause 3.2
 - Scenario B does not assume provider cooperation, and states a minimum viable continuity path with RTO and RPO
 - Destruction of data at the provider after migration is addressed with a verification method, for both scenarios
+- All four parts of Art. 7 of the Implementatiekader risicoafweging cloudgebruik are covered, with the version applied stated: an alternative provider or internal landing place (Art. 7.2); a strategy, conditions and budget for leaving at once in a crisis or a sudden (geopolitical) development (Art. 7.3); a strategy and budget for the regular end of the contract (Art. 7.4); and contract conditions on the provider and its sub-suppliers for data portability, service portability and data destruction (Art. 7.1). A missing budget is flagged as a gap
 - Self-test evidence is present, or its absence is flagged explicitly rather than presented as compliant
 - Annual review cycle set with a named owner and next review date
 - Residual risks (data-format lock-in, proprietary managed-service coupling, provider non-cooperation) identified with likelihood, impact, and mitigation
