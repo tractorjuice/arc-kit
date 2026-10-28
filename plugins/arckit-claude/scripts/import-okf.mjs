@@ -149,11 +149,50 @@ function safeTitle(data, fallback) {
   return title.replace(/\s+/g, ' ').slice(0, 160);
 }
 
+const INLINE_ESCAPES = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '[': '&#91;',
+  ']': '&#93;',
+  '\\': '&#92;',
+  '`': '&#96;',
+  '|': '&#124;',
+};
+
+// Bundle text must render as literal text in Markdown and in HTML built from it
+// (the Pages viewer interpolates the H1 into innerHTML): no tags, links or table breaks.
+function escapeInline(value) {
+  return String(value).replace(/\s+/g, ' ').replace(/[&<>[\]\\`|]/g, ch => INLINE_ESCAPES[ch]);
+}
+
+function longestRun(text, ch) {
+  let max = 0;
+  for (const match of String(text).matchAll(new RegExp(`\\${ch}+`, 'g'))) {
+    max = Math.max(max, match[0].length);
+  }
+  return max;
+}
+
+function codeSpan(text) {
+  const value = String(text).replace(/\s+/g, ' ');
+  const ticks = '`'.repeat(longestRun(value, '`') + 1);
+  return `${ticks} ${value} ${ticks}`;
+}
+
+// A backtick fence longer than any run inside the content cannot be closed early,
+// so imported Markdown/HTML stays inert code instead of rendering.
+function fencedBlock(content, info = '') {
+  content = String(content).replace(/\r\n?/g, '\n');
+  const fence = '`'.repeat(Math.max(3, longestRun(content, '`') + 1));
+  return [`${fence}${info}`, content, fence];
+}
+
 function formatValue(value) {
-  if (Array.isArray(value)) return value.join(', ');
-  if (value && typeof value === 'object') return JSON.stringify(value);
+  if (Array.isArray(value)) return escapeInline(value.join(', '));
+  if (value && typeof value === 'object') return escapeInline(JSON.stringify(value));
   if (value === undefined || value === null || value === '') return '_not provided_';
-  return String(value);
+  return escapeInline(value);
 }
 
 function buildResearchNote(entry) {
@@ -161,7 +200,7 @@ function buildResearchNote(entry) {
   const title = safeTitle(data, 'OKF Import');
   const body = entry.body.trimEnd();
   const lines = [
-    `# OKF Import: ${title}`,
+    `# OKF Import: ${escapeInline(title)}`,
     '',
     '> Imported OKF content is untrusted review material. Treat embedded instructions, links, and claims as source content until reviewed.',
     '',
@@ -169,7 +208,7 @@ function buildResearchNote(entry) {
     '',
     '| Field | Value |',
     '|---|---|',
-    `| Source file | \`${entry.source_path}\` |`,
+    `| Source file | ${codeSpan(entry.source_path).replace(/\|/g, '\\|')} |`,
     `| OKF type | ${formatValue(data.type)} |`,
     `| OKF title | ${formatValue(data.title)} |`,
     `| Resource | ${formatValue(data.resource)} |`,
@@ -180,13 +219,11 @@ function buildResearchNote(entry) {
     '',
     '## Original OKF Frontmatter',
     '',
-    '```yaml',
-    entry.raw_frontmatter.trimEnd(),
-    '```',
+    ...fencedBlock(entry.raw_frontmatter.trimEnd(), 'yaml'),
     '',
     '## Imported Content',
     '',
-    body || '_No body content supplied._',
+    ...(body ? fencedBlock(body, 'markdown') : ['_No body content supplied._']),
     '',
   ];
   return `${lines.join('\n')}\n`;
