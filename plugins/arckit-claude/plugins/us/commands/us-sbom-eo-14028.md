@@ -1,5 +1,5 @@
 ---
-description: "[COMMUNITY] Produce an EO 14028 secure-software self-attestation (per OMB M-22-18 / M-23-16) and an accompanying Software Bill of Materials (SBOM) conforming to NTIA Minimum Elements in CycloneDX or SPDX format."
+description: "[COMMUNITY] Record the secure-software evidence a US federal agency asks of a software producer under EO 14028 and OMB M-26-05: what the agency's policy or contract requires, the Secure Software Development Attestation Form where the agency uses it, and an SBOM to the CISA 2026 Minimum Elements in CycloneDX or SPDX."
 doc-type: SBOM
 argument-hint: "<project ID or software product, e.g. '001', 'Agency Citizen Services Portal'>"
 effort: high
@@ -27,11 +27,13 @@ allowed-tools:
 > **Statutory currency**: EO 14110 was **revoked January 2025**; the active AI assurance mandates
 > are **OMB M-25-21** (use and governance of AI; it rescinded and replaced M-24-10 on 3 April 2025)
 > and **OMB M-25-22** (acquisition of AI; it replaced M-24-18). FedRAMP completed the
-> transition to NIST 800-53 **Rev 5** baselines in 2024 — Rev 4 references are deprecated. Verify
+> transition to NIST 800-53 **Rev 5** baselines in 2024 — Rev 4 references are deprecated.
+> **OMB M-26-05** (23 January 2026) rescinded M-22-18 and M-23-16, so the secure-software
+> attestation is no longer a government-wide requirement. Verify
 > all citations against the current Federal Register, OMB Circulars page, NIST publications, and
 > FedRAMP.gov before relying on this output.
 
-You are an enterprise architect producing a software producer **secure-software self-attestation** under EO 14028 and OMB M-22-18 / M-23-16, with an accompanying **Software Bill of Materials (SBOM)**.
+You are an enterprise architect recording the **secure-software evidence** for a software product used by a US federal civilian agency, under EO 14028 §4 and OMB M-26-05: what the agency requires, the **Secure Software Development Attestation Form** where the agency uses it, and an accompanying **Software Bill of Materials (SBOM)**.
 
 ## User Input
 
@@ -41,21 +43,31 @@ $ARGUMENTS
 
 ## Context
 
-Executive Order 14028 ("Improving the Nation's Cybersecurity", May 2021) directs federal civilian agencies to require secure-software practices from their software suppliers. OMB M-22-18 (September 2022) operationalised this by directing agencies to obtain self-attestations from software producers conforming to the NIST Secure Software Development Framework (SSDF, SP 800-218). OMB M-23-16 (June 2023) extended the deadlines and pointed to the **CISA Secure Software Development Attestation Form** as the standard self-attestation instrument; CISA began accepting attestations via its Repository for Software Attestations and Artifacts.
+Executive Order 14028 ("Improving the Nation's Cybersecurity", 12 May 2021) §4 is still in force and has not been amended. It had NIST issue secure software development guidance (SP 800-218, the Secure Software Development Framework or SSDF), had the Department of Commerce publish minimum elements for an SBOM (§4(f)), and directed OMB to require agencies to comply with the NIST guidance (§4(k)). OMB did that through M-22-18 (September 2022) and M-23-16 (June 2023), which required agencies to obtain a self-attestation from each software producer, and CISA published the common Secure Software Development Attestation Form in March 2024.
 
-Alongside the attestation, agencies may require an **SBOM** conforming to the NTIA Minimum Elements (July 2021): a machine-readable inventory of the software components shipped, with relationships and provenance. The two predominant SBOM formats are **CycloneDX** (OWASP) and **SPDX** (Linux Foundation, ISO/IEC 5962). Provenance attestations (in-toto, SLSA level claim, Sigstore signatures) increasingly accompany the SBOM.
+**OMB M-26-05 (23 January 2026) rescinded M-22-18 and M-23-16.** It sets out what is now required and what is the agency's choice:
+
+- **Required of every agency**: "maintain a complete inventory of software and hardware and develop software and hardware assurance policies and processes that match their risk determinations and mission needs". Each agency "should validate provider security utilizing secure development principles and based on a comprehensive risk assessment".
+- **Agency choice**: agencies "may choose to use" the resources developed under M-22-18, such as the Secure Software Development Attestation Form, and "may also choose to adopt contractual terms that require a software producer to provide a current software bill of materials (SBOM) upon request". For a cloud platform, such a term should require an SBOM of the runtime production environment.
+
+No government-wide rule now requires the attestation. EO 14306 (6 June 2025) struck the sections of EO 14144 that would have had attestations lodged with CISA and validated by it. On 6 March 2026 the FAR Council withdrew FAR Case 2023-002 (Supply Chain Software Security), because M-26-05 had rescinded the memoranda it implemented. A software producer therefore owes an attestation, an SBOM or other artefacts only where the agency's assurance policy or the contract asks for them. CISA has archived its attestation-form landing page and the user guide for its online repository (RSAA), and the repository at softwaresecurity.cisa.gov did not resolve when checked on 28 October 2026. The form itself (OMB control number 1670-0052, expiring 31 March 2027) is still published, and its instructions allow a signed PDF to be emailed to the agency.
+
+For SBOM content, CISA's **2026 Minimum Elements for a Software Bill of Materials** (29 July 2026, with NSA, FBI and international partners) "updates and replaces" the NTIA Minimum Elements of July 2021. It sets 17 data fields and 6 practices and processes, and it does not create new requirements: it sets out how organisations should generate and request SBOMs. The two widely used formats are **CycloneDX** (ECMA-424) and **SPDX** (ISO/IEC 5962). Provenance attestations (in-toto, an SLSA level claim, Sigstore signatures) often accompany the SBOM. The SSDF in force is SP 800-218 version 1.1; NIST published version 1.2 (SP 800-218 Rev. 1) as an initial public draft on 17 December 2025, and it is not yet final.
 
 **Authoritative anchors**:
 
 - EO 14028 (Improving the Nation's Cybersecurity) — <https://www.federalregister.gov/documents/2021/05/17/2021-10460/improving-the-nations-cybersecurity>
-- OMB M-22-18 (Enhancing the Security of the Software Supply Chain through Secure Software Development Practices) — <https://www.whitehouse.gov/wp-content/uploads/2022/09/M-22-18.pdf>
-- OMB M-23-16 (Update to M-22-18) — <https://www.whitehouse.gov/wp-content/uploads/2023/06/M-23-16-Update-to-M-22-18-Enhancing-Software-Security-.pdf>
-- CISA Secure Software Development Attestation Form — <https://www.cisa.gov/secure-software-attestation-form>
-- NIST SP 800-218 (Secure Software Development Framework v1.1) — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf>
-- NTIA Minimum Elements for an SBOM — <https://www.ntia.doc.gov/files/ntia/publications/sbom_minimum_elements_report.pdf>
+- OMB M-26-05 (Adopting a Risk-based Approach to Software and Hardware Security, 23 January 2026) — <https://www.whitehouse.gov/wp-content/uploads/2026/01/M-26-05-Adopting-a-Risk-based-Approach-to-Software-and-Hardware-Security.pdf>
+- EO 14306 (6 June 2025; amends EO 14144) — <https://www.federalregister.gov/d/2025-10804>
+- FAR Case 2023-002 withdrawn 6 March 2026 (Unified Agenda, 14 August 2026, entry 345) — <https://www.federalregister.gov/documents/2026/08/14/2026-16612/regulatory-agenda>
+- CISA Secure Software Development Attestation Form (agency choice under M-26-05) — <https://www.cisa.gov/resources-tools/resources/secure-software-development-attestation-form>
+- NIST SP 800-218 (Secure Software Development Framework v1.1) — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-218.pdf>; v1.2 initial public draft (SP 800-218 Rev. 1) — <https://csrc.nist.gov/pubs/sp/800/218/r1/ipd>
+- CISA 2026 Minimum Elements for a Software Bill of Materials — <https://www.cisa.gov/resources-tools/resources/2026-minimum-elements-software-bill-materials-sbom>
+- CISA Hardware Bill of Materials (HBOM) Framework (September 2023) — <https://www.cisa.gov/resources-tools/resources/hardware-bill-materials-hbom-framework-supply-chain-risk-management>
 - CycloneDX specification — <https://cyclonedx.org/specification/overview/>
 - SPDX specification — <https://spdx.dev/specifications/>
 - SLSA (Supply-chain Levels for Software Artifacts) — <https://slsa.dev/>
+- Rescinded by M-26-05, for reference only: OMB M-22-18 — <https://bidenwhitehouse.archives.gov/wp-content/uploads/2022/09/M-22-18.pdf>; OMB M-23-16 — <https://bidenwhitehouse.archives.gov/wp-content/uploads/2023/06/M-23-16-Update-to-M-22-18-Enhancing-Software-Security.pdf> (archived copies)
 
 ## Process
 
@@ -65,6 +77,7 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
    - The project's NIST 800-53 control-tailoring artefact — for SR and SA family implementation evidence
    - Any vendor HLD / DLD documents under `projects/<id>/vendors/` — for component inventory and build pipeline architecture
    - Any vendor / third-party software inventory under `projects/<id>/vendors/`
+   - Any agency software assurance policy, solicitation or contract clauses under `projects/<id>/external/` — these decide what the producer must supply
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -80,30 +93,32 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
 
 6. Generate the following sections:
 
-   - **Software Product Identification** — producer name, product name, version, release date, deployment targets, whether the product is delivered as software, SaaS, IaaS/PaaS-hosted application, or hybrid.
-   - **Applicability Determination** — does M-22-18 apply? Cite the M-22-18 §2 definition of covered software (software developed after 14 September 2022 used by the federal government). Note any open-source components and the producer-of-record for each.
-   - **CISA Self-Attestation Form Content** — populate the CISA attestation form fields per OMB M-22-18 §III: (1) the software is developed and built in secure environments per SSDF PO.5; (2) the producer has documented audit trails / provenance for internal code and third-party components per PS.3, PW.4; (3) the producer employs automated tools to maintain trusted source-code supply chains per PW.4, PW.7, PW.8; (4) the producer maintains provenance for internal code and third-party components consumed; and additional sub-items per the current CISA form. Each item: status (Yes / No / Partial), evidence references, remediation plan.
-   - **SSDF Practice Crosswalk** — table mapping each CISA attestation item to SP 800-218 practices (PO, PS, PW, RV) and to NIST 800-53 SR / SA family controls.
-   - **SBOM Format Choice** — CycloneDX or SPDX, with rationale. Note the version (e.g. CycloneDX 1.6, SPDX 2.3) and the tooling used to generate the SBOM.
-   - **NTIA Minimum Elements Checklist** — for the SBOM artefact confirm presence of: Supplier name; Component name; Version of the component; Other unique identifiers (PURL, CPE); Dependency relationships; Author of SBOM data; Timestamp; plus the data fields, automation support (machine-readable), and practice elements (frequency, depth, known unknowns, distribution and delivery, access control, accommodation of mistakes).
+   - **Software Product Identification** — producer name, product name, version, release date, deployment targets, whether the product is delivered as software, SaaS, IaaS/PaaS-hosted application, or hybrid, and whether it includes hardware components.
+   - **Agency Requirements (OMB M-26-05)** — for each item, record whether the acquiring agency's software assurance policy or the contract requires it, and cite the policy or clause: the attestation form; an SBOM on request (for a cloud platform, of the runtime production environment); a third-party assessment; a hardware bill of materials (HBOM) where the product includes hardware; any other artefacts. Where the agency asks for nothing, say so, and keep the SSDF evidence and SBOM below as the producer's own good practice. Do not describe any item as a government-wide requirement.
+   - **Form Scope** — only where the agency uses the form, apply the form's own scope: software developed after 14 September 2022, software developed earlier but changed by a major version since then, or software delivered by continuous change (such as SaaS) is in scope. Out of scope: software developed by federal agencies, open-source software that an agency obtains freely and directly, third-party open-source and proprietary components incorporated into the product, and software that is freely obtained and publicly available. Note the producer of record for each open-source component.
+   - **Secure Software Development Attestation Form** — only where the agency uses it. Section I: new attestation, attestation following an extension or waiver, or revised attestation; company-wide, individual product, or multiple products or versions, with product names, versions and release dates. Section II: producer information and primary contact. Section III, the four attestation items as the form words them: (1) the software is developed and built in secure environments, secured at a minimum by (a) separating and protecting each development and build environment, (b) regularly logging, monitoring and auditing trust relationships used for access to those environments and among their components, (c) enforcing multi-factor authentication and conditional access, (d) documenting and minimising software products that create undue risk in those environments, (e) encrypting sensitive data such as credentials, to the extent practicable and based on risk, and (f) defensive practices including continuous monitoring and incident response; (2) a good-faith effort to maintain trusted source-code supply chains using automated tools or comparable processes for internal code and third-party components; (3) provenance maintained for internal code and third-party components to the greatest extent feasible; (4) automated tools or comparable processes that check for security vulnerabilities, with (a) checks run on an ongoing basis and before product, version or update releases, (b) a policy or process to address discovered vulnerabilities before release, and (c) a vulnerability disclosure programme. For each item: Yes or No, and the evidence. Record the signatory (the CEO or a designee with authority to bind the company), or the attached assessment by a FedRAMP-certified 3PAO or another 3PAO approved in writing by an agency official, which the form accepts instead of a signature.
+   - **SSDF Practice Crosswalk** — table mapping each form item to its EO 14028 §4(e) clause and the SP 800-218 practices and tasks given in the form's appendix, and to NIST 800-53 SR / SA family controls. Where the form is not used, record the same evidence against the SSDF practice groups (PO, PS, PW, RV).
+   - **SBOM Format Choice** — CycloneDX or SPDX, with rationale. Note the version (e.g. CycloneDX 1.6, SPDX 2.3), avoiding any version the format's maintainers have deprecated, and the tooling used to generate the SBOM.
+   - **SBOM Minimum Elements Checklist (CISA 2026)** — confirm the 17 data fields. SBOM metadata: SBOM Author, SBOM Author Signature, SBOM Data Format Name, SBOM Data Format Version, SBOM Generation Context, SBOM Timestamp (RFC 9557), SBOM Tool Name, SBOM Tool Version, SBOM Version. Component data: Component Producer, Component Name, Component Version, Component Identifiers (CPE, PURL or others), Component Hash Value, Component Hash Algorithm, Component License, Component Dependency Relationship. Then the 6 practices and processes: Accommodation of Updates to SBOM Data, Coverage (all components, including transitive dependencies), Distribution and Delivery, Explicitly Identifying Unknown Information (unknown versus withheld), Frequency (a new SBOM for each build or release), and Machine-Processable Data.
    - **Provenance and Signing** — SLSA level claim (1 / 2 / 3 / 4) with rationale, signing strategy (Sigstore cosign, GPG, vendor key), in-toto attestation layout if used.
-   - **Vulnerability Management Posture** — VEX (Vulnerability Exploitability eXchange) production cadence, CVE disclosure policy, coordinated-disclosure contact, mean-time-to-patch targets.
-   - **Exception Request** — if a self-attestation cannot be made for one or more items, document the M-22-18 exception process: which items, why, compensating controls, agency CIO + OMB notification status, expiry of the exception.
-   - **Distribution Plan** — where the attestation will be lodged (CISA Repository for Software Attestations and Artifacts), where the SBOM will be distributed (agency CSO portal, supplier portal), and the access-control posture for SBOM consumers.
+   - **Vulnerability Management Posture** — VEX (Vulnerability Exploitability eXchange) or CSAF advisory production cadence, CVE disclosure policy, coordinated-disclosure contact, mean-time-to-patch targets.
+   - **Gaps and POA&M** — for any form item that cannot be attested, or any SBOM term the agency asked for that cannot be met: which items, why, the practices in place to mitigate the risk, a plan of action and milestones (POA&M) with dates, and the agency's decision under its own risk-based policy. M-26-05 sets no OMB extension or waiver process; the form's instructions still describe this route.
+   - **Distribution Plan** — how the attestation, if any, reaches the agency (as its policy or contract specifies, for example the signed PDF emailed to the agency's address), how the SBOM is delivered (on request, with the installation, at a version-specific URL or through an API), and the access-control posture for SBOM consumers.
 
 7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SBOM** per-type checks pass. Fix any failures before proceeding.
 8. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-9. Emit a short summary to the user — attestation status (Full / Partial / Exception), SBOM format and component count, SLSA level claim, open exceptions, and the lodging date target. Do not echo the full artefact.
+9. Emit a short summary to the user — what the agency requires (form, SBOM, both or neither), attestation status where the form is used (Full / Gaps with POA&M), SBOM format and component count, SLSA level claim, open POA&M items, and the delivery date target. Do not echo the full artefact.
 
 ## Handoffs
 
-The attestation and SBOM directly evidence NIST 800-53 SR and SA family controls in `/arckit-us:us-nist-800-53`. SBOM-format choice, signing strategy, and any exception requests should be captured as ADRs via `/arckit:adr`. Components with known unmitigated vulnerabilities and any open M-22-18 exceptions feed `/arckit:risk`.
+The attestation and SBOM directly evidence NIST 800-53 SR and SA family controls in `/arckit-us:us-nist-800-53`. SBOM-format choice, signing strategy, and any attestation gaps should be captured as ADRs via `/arckit:adr`. Components with known unmitigated vulnerabilities and any open attestation gaps feed `/arckit:risk`.
 
 ## Important Notes
 
-- **The attestation is from the software producer, not the agency** — if the agency is procuring software, the supplier signs the CISA form. If the agency is producing software (in-house development or as a federal CSO), the agency is the producer and signs the form itself. Identify the producer-of-record before drafting.
+- **Check what the agency actually asks for** — since 23 January 2026 the attestation form and an SBOM are what the agency's policy or contract requires, not a government-wide mandate. Never present them as required by M-22-18, M-23-16 or the FAR.
+- **The attestation is from the software producer, not the agency** — if the agency is procuring software and uses the form, the supplier signs it. Software developed by federal agencies is outside the form's scope: for in-house software, record the agency's own SSDF evidence and SBOM against its assurance policy. Identify the producer of record before drafting.
 - **CycloneDX vs SPDX is not interchangeable per-asset** — pick one format per software product and maintain it consistently across versions. Switching formats mid-lifecycle complicates downstream consumer tooling.
-- **The NTIA Minimum Elements are a floor, not a ceiling** — modern SBOM consumers expect dependency-graph completeness, license metadata, VEX integration, and signed provenance. Treat the NTIA list as the minimum, then exceed it.
+- **The CISA 2026 Minimum Elements are a floor, not a ceiling** — they already add a signed SBOM, component hashes and licences to the 2021 NTIA list. VEX or CSAF advisories and signed provenance go beyond them.
 - **SLSA level claims must be verifiable** — claiming SLSA Level 3 or 4 without the corresponding build-pipeline isolation, hermetic builds, and signed provenance is non-compliant. If you cannot evidence the level, claim one lower.
-- **M-22-18 exceptions are time-bound** — exception requests must specify the period, compensating measures, and remediation plan. Treat the exception as a clock running down, not as a permanent carve-out.
+- **POA&Ms are time-bound** — each gap needs dates, mitigations and a remediation plan, and the agency's decision recorded. Treat it as a clock running down, not as a permanent carve-out.

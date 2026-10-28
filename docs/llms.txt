@@ -259,7 +259,7 @@ French government (apply on top of EU baseline):
 - [NIST AI RMF](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-ai-rmf.md): `/arckit-us:us-ai-rmf` NIST AI Risk Management Framework 1.0 assessment (Govern / Map / Measure / Manage).
 - [AI impact determination](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-ai-impact.md): `/arckit-us:us-ai-impact` high-impact AI determination and minimum practices under OMB M-25-21, with M-25-22 acquisition terms.
 - [Privacy Impact Assessment](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-privacy-pia.md): `/arckit-us:us-privacy-pia` PIA under E-Government Act §208 and OMB M-03-22.
-- [EO 14028 SBOM attestation](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-sbom-eo-14028.md): `/arckit-us:us-sbom-eo-14028` secure-software self-attestation per OMB M-22-18 / M-23-16 with an accompanying SBOM.
+- [EO 14028 SBOM attestation](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-us/commands/us-sbom-eo-14028.md): `/arckit-us:us-sbom-eo-14028` secure-software evidence under OMB M-26-05 (the attestation form is now the agency's choice) with an SBOM to the CISA 2026 Minimum Elements.
 
 ### UK Finance payments (community-contributed, sector overlay)
 

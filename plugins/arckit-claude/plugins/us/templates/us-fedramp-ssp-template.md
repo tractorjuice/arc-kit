@@ -163,8 +163,7 @@
 | OMB M-24-15 | Modernizing the Federal Risk and Authorization Management Program | [Applies — FedRAMP scope, governance and authorization paths] |
 | EO 14028 | Improving the Nation's Cybersecurity | [Applies — secure software, SBOM, EDR] |
 | OMB M-22-09 | Federal Zero Trust Strategy | [Applies — ZTMM uplift required] |
-| OMB M-22-18 | Enhancing the Security of the Software Supply Chain | [Applies — SSDF self-attestation] |
-| OMB M-23-16 | Update on M-22-18 attestation | [Applies — attestation deadlines + CISA form] |
+| OMB M-26-05 | Adopting a Risk-based Approach to Software and Hardware Security (rescinded M-22-18 and M-23-16) | [Applies — the agency's software and hardware assurance policy; the CISA attestation form and an SBOM on request only where the agency asks for them] |
 | OMB M-25-21 | Accelerating Federal Use of AI through Innovation, Governance, and Public Trust (replaced M-24-10) | [Applies — if AI in use] |
 | OMB M-25-22 | Driving Efficient Acquisition of Artificial Intelligence in Government (replaced M-24-18) | [Applies — if AI procured] |
 | Privacy Act of 1974 (5 USC §552a) | Privacy Act | [Applies — if SoR triggered] |
@@ -315,7 +314,7 @@ NIST SP 800-53 Rev 5 has 20 control families. The FedRAMP Rev 5 baselines draw t
 
 ### SA — System and Services Acquisition
 
-[SDLC, secure development, supply-chain risk, EO 14028 SSDF self-attestation.]
+[SDLC, secure development (NIST SSDF), supply-chain risk, and any attestation form or SBOM the agency asks for under OMB M-26-05.]
 
 ### SC — System and Communications Protection
 
@@ -396,7 +395,7 @@ The appendices the FedRAMP Rev 5 SSP template lists in its Section 12, with the 
 | Reference | Citation | URL |
 |-----------|----------|-----|
 | FedRAMP SSP Template (Rev 5) | FedRAMP System Security Plan Template (legacy since 23 June 2026) | <https://www.fedramp.gov/legacy/> |
-| FedRAMP Authorization Boundary Guidance | Authorization Boundary Guidance | <https://www.fedramp.gov/assets/resources/documents/Authorization_Boundary_Guidance.pdf> |
+| FedRAMP Minimum Assessment Scope | Minimum Assessment Scope rules, Consolidated Rules for 2026 (formerly the Authorization Boundary Guidance) | <https://www.fedramp.gov/2026/providers/rev5/rules/minimum-assessment-scope/> |
 | NIST SP 800-37 Rev 2 | Risk Management Framework | <https://doi.org/10.6028/NIST.SP.800-37r2> |
 | NIST SP 800-53 Rev 5 | Controls Catalog | <https://doi.org/10.6028/NIST.SP.800-53r5> |
 | NIST SP 800-18 Rev 1 | Guide for Developing Security Plans | <https://doi.org/10.6028/NIST.SP.800-18r1> |

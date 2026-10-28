@@ -41,7 +41,7 @@ Reviewed by the ISSO, System Owner, Common Control Provider (CCP) representative
 
 - **NIST SP 800-53 Rev 5** — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf>
 - **NIST SP 800-53B (Control Baselines)** — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53B.pdf>
-- **FedRAMP Rev 5 Baselines** — <https://www.fedramp.gov/rev5/baselines/>
+- **FedRAMP Rev 5 Baselines** (per-control applicability for Classes B–D in the Full Rev5 Control Reference) — <https://www.fedramp.gov/2026/reference/controls/>
 
 ---
 

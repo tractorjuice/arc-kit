@@ -35,14 +35,14 @@ Reviewed by the CSP's CISO, the System Owner, ISSO, AO, and the FedRAMP PMO. Man
 2. Document system architecture, data flows, ports / protocols / services.
 3. Detail every selected control implementation with parameter values and shared-responsibility split.
 4. Capture interconnections, system inventory, personnel roles, training.
-5. Validate against the FedRAMP Authorization Boundary Guidance before publishing.
+5. Validate the boundary against FedRAMP's Minimum Assessment Scope rules (which replace the Authorization Boundary Guidance) before publishing.
 
 ---
 
 ## Regulatory Anchors
 
 - **FedRAMP SSP Template Rev 5** — <https://www.fedramp.gov/legacy/> (marked legacy on 23 June 2026 under the FedRAMP Consolidated Rules for 2026: <https://www.fedramp.gov/2026/timeline/>)
-- **FedRAMP Authorization Boundary Guidance** — <https://www.fedramp.gov/assets/resources/documents/CSP_A_FedRAMP_Authorization_Boundary_Guidance.pdf>
+- **FedRAMP Minimum Assessment Scope** (formerly the Authorization Boundary Guidance) — <https://www.fedramp.gov/2026/providers/rev5/rules/minimum-assessment-scope/>
 - **NIST SP 800-37 Rev 2** — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-37r2.pdf>
 
 ---
@@ -57,7 +57,7 @@ Reviewed by the CSP's CISO, the System Owner, ISSO, AO, and the FedRAMP PMO. Man
 
 ## Common Pitfalls
 
-- **Misdrawing the authorisation boundary.** Boundaries that exclude services that handle federal data, or include services owned by other parties, are the leading cause of FedRAMP rework. Apply the Boundary Guidance heuristics literally.
+- **Misdrawing the authorisation boundary.** Boundaries that exclude services that handle federal data, or include services owned by other parties, are the leading cause of FedRAMP rework. Apply the Minimum Assessment Scope rules literally.
 - **Conflating shared-responsibility controls.** Every shared control must say who does what. "Inherited from AWS" is not an answer; the CRM line must be specific.
 - **Under-specifying interconnections.** Every external system connection must include the data exchanged, frequency, encryption posture, ICAM, and the agreement (ISA/MOU) reference.
 - **Treating the SSP as a checkbox.** Narratives must describe *how* the control is implemented, not restate the control statement.
