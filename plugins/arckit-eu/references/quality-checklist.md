@@ -1391,7 +1391,7 @@ All artifacts must pass these 10 checks:
 
 ### AUE8 -- Essential Eight Maturity Assessment
 
-- All eight mitigation strategies assessed: application control, patch applications, Office macro settings, user application hardening, restrict administrative privileges, patch operating systems, multi-factor authentication, regular backups
+- All eight mitigation strategies assessed under ASD's names, unnumbered: patch applications, patch operating systems, multi-factor authentication, restrict administrative privileges, application control, restrict Microsoft Office macros, user application hardening, regular backups
 - Each strategy records current maturity (ML0 / ML1 / ML2 / ML3) with evidence, target maturity with its regulatory or risk-appetite rationale, gap, remediation with owner and target date, and residual risk
 - Maturity summary matrix carries one row per strategy and reconciles with the per-strategy assessments
 - Where the entity is a DISP member, any strategy below ML2 is flagged as a DISP non-compliance risk rather than reported as a neutral gap
@@ -1402,11 +1402,11 @@ All artifacts must pass these 10 checks:
 ### AUISM -- ISM Control Applicability
 
 - Applicability driven by system classification — the control set at OFFICIAL:Sensitive is a subset of that at PROTECTED, and the artefact states which classification it is assessing
-- Applicability matrix covers all 17 ISM control areas (the 15 chapter domains plus Cloud/IaaS and Working-Off-Site)
-- Each in-scope domain records applicability rationale, implementation status, evidence, gap with specific ISM control IDs, remediation with owner and date, and any compensating controls
-- Gaps name the specific ISM control IDs not met rather than describing the domain in general terms
+- Applicability matrix covers all 23 cyber security guidelines of the ISM edition assessed (September 2026), with no separate system monitoring, cloud or working-off-site area
+- Each in-scope guideline records applicability rationale, implementation status, evidence, gap with specific ISM control IDs, remediation with owner and date, and any compensating controls
+- Gaps name the specific ISM control IDs not met rather than describing the guideline in general terms
 - ISM-to-E8 cross-reference present, showing E8 as a mitigation subset rather than an alternative
-- Compliance summary states an applicability score as controls implemented over controls applicable, reconciling with the per-domain assessments
+- Compliance summary states an applicability score as controls implemented over controls applicable, reconciling with the per-guideline assessments
 - IRAP position records scope, assessment date, accepted residual risks and re-assessment cadence; inherited posture noted where integrating with IRAP-assessed cloud services
 
 ### AUPIA -- Australian Privacy Impact Assessment

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit:au-ism-controls` generates a Statement of Applicability against the Australian Signals Directorate's Information Security Manual (ISM). It scopes the system, surveys the 17 ISM control domains for in-scope controls, scores each control's implementation posture with evidence, captures the residual risk, and surfaces the IRAP-assessable posture (Information Security Registered Assessors Program — the Australian government's cloud-inheritance and external-assessment programme).
+`/arckit:au-ism-controls` generates a Statement of Applicability against the Australian Signals Directorate's Information Security Manual (ISM). It scopes the system, surveys the ISM's 23 cyber security guidelines for in-scope controls, scores each control's implementation posture with evidence, captures the residual risk, and surfaces the IRAP-assessable posture (Information Security Registered Assessors Program — the Australian government's cloud-inheritance and external-assessment programme).
 
 The ISM is the authoritative control library for Australian Federal entities and DISP suppliers. The SoA is the gate artefact for IRAP assessment, security accreditation, and the PSPF Technology domain (which requires the ISM to be applied).
 
@@ -37,12 +37,12 @@ Output: `projects/<id>/ARC-<id>-AUISM-v1.0.md`
 | Revision History | Version, date, author, changes, approvals |
 | Executive Summary | System, classification, ISM edition used, overall applicability posture, key gaps, IRAP and DISP position |
 | System Context | System name, classification, deployment model, IRAP status and scope, DISP membership, ISM edition used, sovereignty, assessment date, assessor |
-| Control Domain Applicability Matrix | All 17 control areas: applies, implementation status, notes |
-| Per-Domain Control Applicability Assessment | For each area: applies, implementation, applicable ISM control IDs, evidence, gaps, remediation, compensating controls |
-| ISM-to-E8 Cross-Reference | Which control areas each Essential Eight strategy maps to |
-| Compliance Summary | Per-area applicable, implemented and gap counts; overall applicability score (implemented / applicable) |
+| Guideline Applicability Matrix | All 23 ISM guidelines: applies, implementation status, notes |
+| Per-Guideline Control Applicability Assessment | For each in-scope guideline: applies, implementation, applicable ISM control IDs, evidence, gaps, remediation, compensating controls |
+| ISM-to-E8 Cross-Reference | Which ISM guidelines each Essential Eight strategy maps to |
+| Compliance Summary | Per-guideline applicable, implemented and gap counts; overall applicability score (implemented / applicable) |
 | IRAP Assessment Position | IRAP status and scope, accepted residual risks, re-assessment cadence, cloud provider inheritance |
-| Recommendations | Quick Wins / Short-Term / Medium-Term, each with ISM control IDs and area |
+| Recommendations | Quick Wins / Short-Term / Medium-Term, each with ISM control IDs and guideline |
 | ArcKit Evidence Integration | Diagram, DFD, data model, ServiceNow, risk, traceability, graph-report and maturity-model evidence |
 | External References | Document register (ISM edition), citations, unreferenced documents, verification dates |
 | Visual Evidence Decision Rule | When a companion diagram is drawn, drafted with `Pending Input` labels, or recorded as a visual evidence gap |
@@ -51,7 +51,7 @@ Output: `projects/<id>/ARC-<id>-AUISM-v1.0.md`
 
 ## Regulatory Anchors
 
-- **ASD Information Security Manual (ISM)** — 17 control domains; quarterly-updated control library
+- **ASD Information Security Manual (ISM)** — cyber security principles and 23 cyber security guidelines (September 2026 release); updated quarterly
 - **PSPF Technology domain** — the federal protective security policy requires the ISM's cyber security principles and controls to be applied across the technology lifecycle
 - **IRAP (Information Security Registered Assessors Program)** — primary external-assessment route, especially for cloud inheritance
 - **Cyber Security Act 2024 (Cth)** — incident reporting obligations relevant to security incidents tracked against ISM controls

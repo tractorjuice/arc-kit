@@ -103,7 +103,7 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
 
    - **Essential Eight ML2 Evidence Per Strategy** — for each of the 8 E8 strategies, summarise the current ML position and evidence supporting ML2 attestation. Cite the AUE8 artefact directly.
 
-   - **ISM Applicability Highlights** — beyond E8, summarise which ISM domains apply, current implementation summary, and identify any ISM gaps that materially affect DISP attestation. Cite the AUISM artefact.
+   - **ISM Applicability Highlights** — beyond E8, summarise which ISM guidelines apply, current implementation summary, and identify any ISM gaps that materially affect DISP attestation. Cite the AUISM artefact.
 
    - **Foreign Ownership, Control or Influence (FOCI) Declaration** — disclose any foreign ownership > 5%, foreign-board-member arrangements, foreign-supply-chain dependencies, foreign-personnel access. DISP Level 2 + 3 require FOCI mitigation plans where applicable.
 
