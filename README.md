@@ -464,11 +464,11 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 **Austrian government** (apply on top of the EU baseline for Austrian deployments — domain-maintained by [@gtonic](https://github.com/gtonic)):
 
 - `/arckit:at-dsgvo` — Austrian DSG layer on GDPR (image processing on the GDPR per the VwGH's §12 DSG ruling, ELGA/GTelG health, §96a ArbVG employee monitoring, age 14 consent, DSB enforcement)
-- `/arckit:at-nisg` — Austrian NISG 2026 (NIS2 transposition, BGBl. I Nr. 94/2025, in force since 1 Oct 2026) — Essential/Important designation, Cybersicherheitsbehörde registration, CSIRT reporting (CERT.at / GovCERT), KSÖ, AT sectoral authorities
+- `/arckit:at-nisg` — Austrian NISG 2026 (NIS2 transposition, BGBl. I Nr. 94/2025, in force since 1 Oct 2026) — Essential/Important designation, Cybersicherheitsbehörde registration, CSIRT reporting (CERT.at / GovCERT / HealthCERT), KSÖ, sectoral overlaps (DORA, equivalent sector acts)
 - `/arckit:at-bvergg` — Bundesvergabegesetz 2018 procurement — Oberschwellen/Unterschwellen, ANKÖ publication, Bestbieterprinzip, BVwG review
 - `/arckit:at-barrierefreiheit` — Digital accessibility across both transposition tracks — BaFG (European Accessibility Act, private sector) and WZG (public sector), EN 301 549 / WCAG 2.1 AA, Barrierefreiheitserklärung, SMS and FFG
 
-These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry `[NEEDS VERIFICATION]` markers where a point is genuinely open rather than unreviewed — further implementing ordinances under the NISG 2026, Länder scope, current guidance versions, and recent DSB case law. `nl-cloud` and `nl-tbb` play the same role for Dutch deployments, with `nl-cloud` keying its public-cloud eligibility off the TBB category determined by `nl-tbb`.
+These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry `[NEEDS VERIFICATION]` markers where a point is genuinely open rather than unreviewed — further implementing ordinances under the NISG 2026, the applicable Land accessibility laws, current guidance versions, and recent DSB case law. `nl-cloud` and `nl-tbb` play the same role for Dutch deployments, with `nl-cloud` keying its public-cloud eligibility off the TBB category determined by `nl-tbb`.
 
 ---
 
@@ -652,7 +652,7 @@ Enterprise Architecture Development Method — 9 commands covering the full ADM 
 
 ## O-AA Overlay (`arckit-oaa`) [COMMUNITY]
 
-Open Agile Architecture (O-AA, standard C208) — agile enterprise architecture for product-driven, sprint-based delivery. A standalone overlay alongside `arckit-togaf-adm`; the two are complementary, not competitors — see the [O-AA vs TOGAF ADM decision guide](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+Open Agile Architecture (O-AA Standard, Version 2.0, C262) — agile enterprise architecture for product-driven, sprint-based delivery. A standalone overlay alongside `arckit-togaf-adm`; the two are complementary, not competitors — see the [O-AA vs TOGAF ADM decision guide](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
@@ -690,7 +690,7 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 **Running both in the same project:**
 
 - No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.18.3` pins.
-- Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.yaml` (architecture-change ↔ agile-governance).
+- No schema files are shared between the overlays. The O-AA YAML sprint artefacts are defined in the O-AA templates and kept consistent with the matching TOGAF documents: `vision.yaml` with the ADM Preliminary, which `oaa-adm-lite` reads, and `implementation-strategy.yaml` with the transition architecture. `oaa-adm-lite` sends Sprint 4+ architecture change requests through `/arckit-togaf-adm:architecture-change`. `agile-governance` defines its own `change-request.yaml` and `compliance-evidence.yaml` (the latter shared with `agile-security`) and does not read `architecture-change` output.
 - Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands read TOGAF outputs when they exist (ADM Preliminary, business capability map, transition architecture) but do not require them, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
 ---
@@ -1370,7 +1370,8 @@ Generate procurement documentation compliant with French public contract law:
 
 - Marché public thresholds and procedures (below/above EU thresholds)
 - Requirements statement, award criteria, and security and sovereignty clauses for the consultation file
-- ANSSI-qualified provider requirements (PASSI, PRIS, PDIS)
+- Environmental award criterion and execution conditions (Code de la commande publique, since August 2026)
+- ANSSI-qualified provider requirements (PACS, PASSI, PRIS, PDIS, PAMS)
 - Digital State doctrine checklist (cloud, RGI, RGAA, RGESN, open source, GDPR)
 
 **`/arckit:fr-pssi`** → PSSI (Politique de Sécurité des Systèmes d'Information)
@@ -1411,7 +1412,7 @@ Assess code reuse obligations before building or procuring:
 - EU public code alternatives (Joinup, European Commission repositories)
 - Licence compatibility matrix (EUPL-1.2 recommended for public code publication)
 - Decision matrix: reuse / fork / SILL adoption / procure / build
-- Circulaire 2021 publication obligation: modified public code must be released back
+- Publication duty for source code (CRPA L300-2 / L312-1-1) and contribution-back for modified public code (Circulaire 2021)
 
 ---
 

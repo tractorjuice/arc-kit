@@ -58,6 +58,6 @@ Output: `projects/<id>/ARC-<id>-AASE-v1.0.md`
 
 ## Related Commands
 
-- `/arckit:agent-governance` - Align security controls with oversight model.
+- `/arckit:agent-governance` - Run before this command. Its oversight tiers and compliance requirements inform the controls.
 - `/arckit:secure` - Produce wider Secure by Design evidence.
-- `/arckit:agent-integration` - Secure communication between agents.
+- `/arckit:agent-integration` - Run next. It designs inter-agent communication within these controls.

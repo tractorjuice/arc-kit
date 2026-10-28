@@ -4,8 +4,8 @@ doc-type: AASE
 argument-hint: "<agent or project ID, e.g. 'research-agent', '001'>"
 effort: high
 handoffs:
-  - command: agent-governance
-    description: Align security controls with governance requirements
+  - command: agent-integration
+    description: Design inter-agent contracts within these security controls
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
@@ -303,5 +303,5 @@ You should:
 - Prompt injection defences must cover both direct and indirect attack vectors
 - Output validation must be automated with human review escalation for flagged content
 - Secret management must follow zero-trust principles — no hardcoded credentials
-- Security architecture feeds into governance requirements — handoff to `/arckit-agent-architecture:agent-governance` after completion
+- Security architecture runs after `/arckit-agent-architecture:agent-governance` (it reads AAOV when present) and before `/arckit-agent-architecture:agent-integration`, which reads AASE — handoff to `/arckit-agent-architecture:agent-integration` after completion
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 15 min response`, `> 99% coverage`) to prevent markdown renderers from interpreting them as HTML tags or emoji

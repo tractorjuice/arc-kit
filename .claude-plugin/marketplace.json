@@ -387,7 +387,7 @@
     {
       "name": "arckit-oaa",
       "source": "./plugins/arckit-oaa",
-      "description": "Open Agile Architecture (O-AA C208) — agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance. [COMMUNITY]",
+      "description": "Open Agile Architecture (O-AA) — agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance. [COMMUNITY]",
       "version": "6.18.3",
       "author": {
         "name": "ArcKit Contributors"

@@ -2,7 +2,7 @@
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:at-barrierefreiheit`
 >
-> ⚠️ **Community-contributed** — not yet validated against current BaFG / WZG text. Verify all citations against RIS before relying on output. Paragraph references marked `[NEEDS VERIFICATION]` are drawn from secondary sources and require confirmation by an Austrian accessibility practitioner.
+> ⚠️ **Community-contributed** — review before relying on output. The BaFG paragraph references were checked against the consolidated BaFG in RIS on 27 October 2026 (unamended since BGBl. I Nr. 76/2023); the WZG and EN 301 549 citations were not, so verify them against RIS and the Official Journal. Items marked `[NEEDS VERIFICATION]` require confirmation by an Austrian accessibility practitioner.
 
 ## Document Control
 
@@ -56,9 +56,9 @@
 
 ### 1.4 Microenterprise Exemption — services only
 
-> The exemption at § 6 BaFG covers Kleinstunternehmen **offering or providing services** `[NEEDS VERIFICATION: § 6]`. It does **not** exempt products. A nine-person importer of self-service terminals is fully in scope.
+> The exemption at § 6 Abs. 1 BaFG covers Kleinstunternehmen **offering or providing services**. It does **not** exempt products. A nine-person importer of self-service terminals is fully in scope.
 
-| Criterion (§ 3 Z 19 `[NEEDS VERIFICATION]`) | Value | Met |
+| Criterion (§ 3 Z 19) | Value | Met |
 |---|---|---|
 | Fewer than 10 persons employed | [N] | [Yes / No] |
 | Annual turnover at most EUR 2M **OR** balance-sheet total at most EUR 2M | [EUR] | [Yes / No] |
@@ -180,7 +180,7 @@
 
 | Track | Authority | Powers | Financial exposure |
 |---|---|---|---|
-| BaFG | Sozialministeriumservice (SMS) `[NEEDS VERIFICATION: § 21]` | Proactive monitoring, remediation orders, withdrawal of a product or prohibition of a service in serious cases | Administrative penalties up to **EUR 80,000** `[NEEDS VERIFICATION: § 36 and tier structure]`, tiered by severity and lower for SMEs and microenterprises |
+| BaFG | Sozialministeriumservice (SMS) (§ 21) | Proactive monitoring, remediation orders, withdrawal of a product or prohibition of a service in serious cases (§§ 26, 28) | Administrative penalties up to **EUR 80,000** / 40,000 / 16,000 by type of breach (§ 36 Abs. 1–3); EUR 50,000 / 25,000 / 10,000 for microenterprises and SMEs |
 | WZG | FFG (Österreichische Forschungsförderungsgesellschaft) | Monitoring and complaints handling; triennial reporting to the European Commission | **No administrative fine regime** — finding, complaint and publication |
 
 **Assessed exposure**: [Range against the specific conduct, per applicable track]

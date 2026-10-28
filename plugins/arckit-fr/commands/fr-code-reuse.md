@@ -20,7 +20,7 @@ allowed-tools:
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
-You are helping an enterprise architect assess **public code reuse opportunities** before commissioning new development for a French public administration project. French State administrations are directed by the **Circulaire du Premier ministre n°6264/SG du 27 avril 2021** (politique publique de la donnée, des algorithmes et des codes sources) to strengthen the opening of public source code and the use of free and open source software, and the **Loi pour une République Numérique (2016, Art. 16)** requires administrations to encourage free software and open formats. In practice this means they are expected to:
+You are helping an enterprise architect assess **public code reuse opportunities** before commissioning new development for a French public administration project. French State administrations are directed by the **Circulaire du Premier ministre n°6264/SG du 27 avril 2021** (politique publique de la donnée, des algorithmes et des codes sources) to strengthen the opening of public source code and the use of free and open source software, and the **Loi pour une République Numérique (2016, Art. 16)** requires administrations to encourage free software and open formats. The duty to publish code comes from the **Code des relations entre le public et l'administration (CRPA)**, as amended by the same law: source code is an administrative document (L300-2), communicable on request (L311-1) and, for administrations with 50 or more agents, published online (L312-1-1), subject to the exceptions in L311-4 to L311-6. In practice this means they are expected to:
 
 1. **Search for and reuse existing public code** before building from scratch
 2. **Publish code developed for the administration** as open source (unless exceptions apply)
@@ -176,7 +176,8 @@ For any component that is forked:
 
 Assess which code developed for this project must be published as open source:
 
-- Code developed by or for a public administration must be published unless: national security, trade secrets, third-party intellectual property, or legal prohibition prevents publication
+- Source code produced or received by a public administration is an administrative document (CRPA L300-2). Administrations with 50 or more agents in full-time equivalents (D312-1-1-1), other than local authorities under 3,500 inhabitants, publish it online (L312-1-1)
+- Exceptions: third-party literary and artistic property rights (L311-4); national defence, State security, public safety or the security of the administration's information systems, among other L311-5 grounds; privacy and trade secrets, which make the document communicable only to the person concerned (L311-6)
 - Document exceptions with justification
 - For publishable code: recommend publishing on code.gouv.fr via the DINUM publication process
 
@@ -260,12 +261,14 @@ Next steps:
 | code.gouv.fr — French public administration open source repositories | DINUM | https://code.gouv.fr/sources/ |
 | SILL (Socle Interministériel de Logiciels Libres) — recommended open source software for the French State | DINUM | https://code.gouv.fr/sill/ |
 | Circulaire PM n°6264/SG du 27 avril 2021 — politique publique de la donnée, des algorithmes et des codes sources | Légifrance | https://www.legifrance.gouv.fr/circulaire/id/45162 |
-| Loi République Numérique Art. 16 — code publication obligation | Légifrance | https://www.legifrance.gouv.fr/loda/id/JORFTEXT000033202746 |
+| Loi République Numérique (2016) — Art. 16 (encourage free software and open formats); Arts. 2 and 6 brought source code into the CRPA | Légifrance | https://www.legifrance.gouv.fr/loda/id/JORFTEXT000033202746 |
+| CRPA L300-2 — source code is an administrative document | Légifrance | https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033218936 |
+| CRPA L312-1-1 — online publication of administrative documents | Légifrance | https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033205512 |
 | EUPL-1.2 licence — recommended for French public code | Joinup / EC | https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12 |
 | Joinup — EU public code catalogue | European Commission | https://joinup.ec.europa.eu/ |
 | DINUM mission logiciels libres | DINUM | https://code.gouv.fr/ |
 
-> **Note for reviewers**: French State administrations are instructed to open their source code and favour free software (Circulaire PM n°6264/SG, 2021), which in practice means searching for existing public code before commissioning new development, and to publish code developed for them as open source unless exceptions apply (Loi République Numérique 2016). The SILL is a curated list of recommended free software maintained by an interministerial working group under DINUM — analogous in purpose to the UK's Technology Code of Practice open standards requirement, but with a formal recommended software list.
+> **Note for reviewers**: French State administrations are instructed to open their source code and favour free software (Circulaire PM n°6264/SG, 2021), which in practice means searching for existing public code before commissioning new development, and to publish their source code online unless an exception applies (CRPA L300-2 and L312-1-1, as amended and created by the Loi République Numérique 2016; its Art. 16 only asks administrations to encourage free software). The SILL is a curated list of recommended free software maintained by an interministerial working group under DINUM — analogous in purpose to the UK's Technology Code of Practice open standards requirement, but with a formal recommended software list.
 
 ## Success Criteria
 
