@@ -64,13 +64,15 @@ Required for materieel cloudgebruik, based on the application's BIV/TBB classifi
 
 | Aspect | Assessment | Mitigation |
 |--------|-----------|------------|
-| Risk of foreign-government interference | [Assessment] | [Mitigated as far as possible — describe measures] |
-| [Aspect 2 — per current clause 3.1 text] | [Assessment] | [Mitigation] |
-| [Aspect 3 — per current clause 3.1 text] | [Assessment] | [Mitigation] |
-| [Aspect 4 — per current clause 3.1 text] | [Assessment] | [Mitigation] |
-| [Aspect 5 — per current clause 3.1 text] | [Assessment] | [Mitigation] |
+| 1. Characteristics of the cloud use — main provider and any sub-providers, service type (public / private / hybrid / community cloud), region of processing and storage | [Assessment] | [Mitigation] |
+| 2. The provider's role in security and continuity, and how it is assured | [Assessment] | [Mitigation] |
+| 3. How the provider admits, or reports on, audit and accountability investigations | [Assessment] | [Mitigation] |
+| 4. Risk of foreign-government interference with confidentiality and availability | [Assessment] | [Mitigated as far as possible — describe measures] |
+| 5. Risk of the provider abusing a large supplier dependency (forcing technology choices or commercial conditions) | [Assessment] | [Mitigation] |
 
-> Clause 3.1 requires five aspects to be weighed. This assessment enumerates the aspect specified in current guidance (foreign-government interference); confirm the remaining four against the current published clause 3.1 text before finalising.
+> Clause 3.1 lists these five aspects in addition to the regular topics of security, continuity and privacy. It also requires that the Implementatiekader risicobeheersing cloudgebruik is followed, that residual risk is documented and formally accepted within the organisation, and that mitigations depending on the provider are written into the contract.
+
+**Residual risk accepted by**: [Name / role, date]
 
 ### 2.2 Pre-scan DPIA / Full DPIA
 

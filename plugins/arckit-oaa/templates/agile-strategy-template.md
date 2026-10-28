@@ -3,7 +3,7 @@
 > **Template:** Agile Strategy Canvas (O-AA Dual Transformation Planning)
 > **Command:** `/arckit:agile-strategy`
 > **Structure:** inlined below (YAML example in the YAML Structure section)
-> **O-AA Reference:** Agile Strategy (C208 Ch. 11)
+> **O-AA Reference:** Agile Strategy (O-AA Standard, Version 2.0, C262 — Ch. 5)
 
 ## Document Control
 
@@ -42,7 +42,7 @@ Do NOT use when:
 
 ## Canvas Overview
 
-The Agile Strategy Canvas captures the **dual transformation** agenda. C208 is written to cover the Digital Transformation of the enterprise together with its Agile Transformation, so the canvas plans both dimensions together:
+The Agile Strategy Canvas captures the **dual transformation** agenda. The O-AA Standard, Version 2.0 takes the Digital Transformation of the enterprise, together with its Agile Transformation, as its starting point, so the canvas plans both dimensions together:
 
 | Dimension | Focus Areas |
 |---|---|
@@ -252,7 +252,7 @@ Design principles derived from O-AA guiding axioms. Each principle must be trace
 | Field | Description |
 |---|---|
 | `principle` | Declarative statement of the design principle |
-| `axiom` | Published O-AA axiom (C208) this principle derives from, cited by number and name |
+| `axiom` | Published O-AA axiom (Version 2.0, Appendix A) this principle derives from, cited by number and name |
 | `rationale` | Why this principle matters for this transformation |
 | `implications` | Architectural and organizational implications of following this principle |
 | `exceptions` | Known exceptions or trade-offs |

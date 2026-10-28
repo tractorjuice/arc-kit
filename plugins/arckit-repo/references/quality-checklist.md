@@ -505,9 +505,10 @@ All artifacts must pass these 10 checks:
 
 ### MARPUB -- French Public Procurement
 
-- Threshold analysis completed (< €40k / < €215k / > €215k) with recommended procedure
+- Threshold analysis completed with recommended procedure, using the 2026–2027 thresholds (no publicity or competition below €60k supplies/services or €100k works; formal procedure from €140k supplies/services for central government authorities or €216k for other contracting authorities; works €5,404k)
 - BOAMP and JOUE publication requirements determined
 - Award criteria weights total exactly 100%
+- At least one award criterion takes account of the environmental characteristics of the offer (CCP L2152-7, since August 2026), and at least one execution condition takes account of environmental considerations (L2112-2)
 - Data localisation clause (EU territory, extraterritorial law prohibition) included
 - Reversibility clause (DINUM standards) included
 - GDPR/DPA clause included if personal data detected
@@ -518,6 +519,7 @@ All artifacts must pass these 10 checks:
 
 - All five referentiels addressed: Doctrine cloud, RGI, RGAA, RGESN, RGS
 - Mandatory vs recommended status correctly assigned per entity type and size
+- RGESN recorded as non-binding (Arcep/Arcom reference under the REEN law) unless the organisation's policy or a contract adopts it
 - RGAA 4.1 compliance rate stated (% or "To be assessed via RGAA audit")
 - RGS target security level determined (*//**/***) with homologation status
 - FranceConnect/ProConnect applicability assessed
@@ -647,7 +649,7 @@ All artifacts must pass these 10 checks:
 - Build-vs-reuse decision made with justification for each component (reuse / fork / SILL assembly / procure / build)
 - Contribution-back plan documented for any forked component
 - Publication obligation assessed: which project code must be published on code.gouv.fr
-- Exceptions to publication obligation documented with justification (security, trade secret, third-party IP)
+- Exceptions to publication obligation documented with justification (CRPA L311-4 to L311-6: third-party IP, security of information systems, trade secret)
 - Reused components register populated (source, version, licence, integration method)
 - Circulaire PM n°6264/SG (27 April 2021) — evidence that reuse was assessed before commissioning new development
 
@@ -665,7 +667,7 @@ All artifacts must pass these 10 checks:
 - Emergency communications (Notrufe) flagged as TKG 2021 rather than assessed under the BaFG
 - SMS and FFG exposures stated separately: BaFG administrative penalties up to EUR 80,000 tiered by severity and size; **no fine regime asserted under the WZG**
 - Gap analysis prioritised by user impact first and enforcement exposure second, with owners, target dates and NFR-UX cross-references
-- Items requiring practitioner verification marked `[NEEDS VERIFICATION]`, including the BaFG § numbers
+- Items requiring practitioner verification marked `[NEEDS VERIFICATION]`
 
 ### ATDSG -- Austrian Data Protection Assessment
 
@@ -689,7 +691,7 @@ All artifacts must pass these 10 checks:
 - Competent authority identified (Cybersicherheitsbehörde / Bundesamt für Cybersicherheit)
 - Previous NISG 2018 Betreiber wesentlicher Dienste status captured and re-assessed (NISG 2018 expires 30 Sep 2026)
 - All ten NIS2 Article 21 minimum security measures assessed with maturity and gap (§32)
-- Incident reporting channel established (CSIRT via the NIS2-Meldeplattform, §34)
+- Incident reporting channel established (responsible CSIRT via NIS2-Services on the USP, §34)
 - 24-hour / 72-hour / intermediate / 1-month reporting capability readiness assessed
 - Cross-reporting to DSB for personal data breaches addressed
 - Supply chain security obligations including any AT sectoral secondary rules assessed
@@ -726,7 +728,7 @@ All artifacts must pass these 10 checks:
 - Materieel publiek cloudgebruik determination made with stated rationale (clause 4.1)
 - Every clause 5.2 / 4.5 / 5.4 eligibility conclusion cites the clause number it rests on, and the clause 5.2 conclusion cites the TBB category / rubricering it depends on (or explicitly flags the category as pending `/arckit:nl-tbb`)
 - Clause 4.5 email/file-storage conditions assessed individually — partial satisfaction of the three cumulative conditions is not treated as eligible
-- Clause 3.1 risk assessment covers all five required aspects, with foreign-government interference explicitly assessed and mitigated as far as possible
+- Clause 3.1 risk analysis covers, besides security, continuity and privacy, all five aspects the clause lists: (1) the characteristics of the cloud use (main provider and any sub-providers, public / private / hybrid / community cloud, region of processing and storage); (2) the provider's role in security and continuity and how it is assured; (3) how the provider admits, or reports on, audit and accountability investigations; (4) foreign-government interference with confidentiality and availability, explicitly weighed and mitigated as far as possible; (5) the risk of the provider abusing a large supplier dependency, such as forcing technology choices or commercial conditions. Residual risk is documented and formally accepted within the organisation
 - Clause 4.2 cybersecurity criteria (C2000, ABRO, AIVD/MIVD advice) assessed
 - Clause 4.3 critical/essential-entity discouragement assessed where applicable, with risk-acceptance rationale recorded if proceeding regardless
 - Clause 4.6 data location and encryption posture assessed
@@ -866,12 +868,12 @@ All artifacts must pass these 10 checks:
 
 ### OASTR -- O-AA Agile Strategy
 
-- Dual transformation framed as C208 frames it: both the digital dimension (technology, product, operating model) and the agile dimension (organisational, cultural and team agility) are described, or an area is ruled out with a reason
+- Dual transformation framed as the O-AA Standard, Version 2.0 frames it: both the digital dimension (technology, product, operating model) and the agile dimension (organisational, cultural and team agility) are described, or an area is ruled out with a reason
 - The two dimensions are planned together in each transformation wave, not one after the other
 - Each product outcome and each wave states the outcome it buys and the measure that would show it worked
 - Every value stream is mapped to a product team and a transformation wave, so none is left unassigned
 - Funding and team-topology implications stated, not left as an exercise for delivery
-- Every O-AA axiom cited is quoted from the C208 standard by its published number and name, and is used to justify a specific choice rather than listed decoratively
+- Every O-AA axiom cited is named by its published number and name (O-AA Standard, Version 2.0, Appendix A), and is used to justify a specific choice rather than listed decoratively
 - Strategy traces to stakeholder goals and business drivers from STKE and REQ
 
 ### OAPR -- O-AA Product Architecture
@@ -1737,15 +1739,15 @@ All artifacts must pass these 10 checks:
 
 ### NHSDTAC -- NHS Digital Technology Assessment Criteria
 
-- All five DTAC sections assessed, each with an explicit pass, partial or fail status and supporting evidence
-- Clinical safety records DCB0129 manufacturer and DCB0160 deployer case status, CSO name and registration, and hazard log status with open-hazard count and highest open risk level
-- Absent safety case files marked `[PENDING DCB0129/0160]` clearly rather than passed over
-- Data protection states the UK GDPR Article 6 lawful basis, and Article 9 where special-category data is processed
-- Sub-processor list records locations and the SCCs or UK addendum relied upon
-- DSPT submission status stated, marked as an organisation responsibility where external
-- Technical assurance covers cloud hosting and UK region status, Cyber Essentials, software lifecycle including SBOM, encryption in transit and at rest with key management, penetration test status, business continuity with RTO and RPO, and vulnerability management SLAs
+- Follows the DTAC form version 2.0 (24 February 2026) structure and question codes: A and B answered as context, every applicable C1–C4 question given a pass, fail or pending status against the form's pass criterion with evidence, and D1 responses recorded without a pass or fail
+- The form's skip logic applied, with skipped questions marked N/A and the reason given
+- Clinical safety records SaMD / AIaMD status (and the Pre-Acquisition Questionnaire where it applies), DCB0129 scope, the Clinical Safety Case Report and Hazard Log with open-hazard count and highest open risk level, and the CSO's name, profession and registration
+- Absent safety case files marked `[PENDING DCB0129]` clearly rather than passed over; the deployer's DCB0160 case, where recorded, is labelled as outside the DTAC form
+- Data protection records the manufacturer's DSPT status, ICO registration, DPIA coverage of the form's listed items, transparency information, data location, and the safeguard for any transfer outside the UK
+- Technical security covers Cyber Essentials, the Cyber Security Charter, the external penetration test (OWASP Top 10, within 12 months, no CVSS 7.0 or above), the Software Security Code of Practice, multi-factor authentication and logging
+- No AI annex presented as part of DTAC; any AI content sits in the separately labelled ArcKit supplement
 - Every `[PENDING]` item requiring human input surfaced in the summary rather than left in the body
-- Cross-references resolve to the DPIA, DATA and clinical-safety artefacts where they exist
+- Cross-references resolve to the DPIA, DATA, NHSMDR and clinical-safety artefacts where they exist
 
 ### NHSMDR -- UK MDR Classification
 

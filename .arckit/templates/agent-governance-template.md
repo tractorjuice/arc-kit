@@ -60,7 +60,10 @@ flowchart TD
     B -->|Low| C[Log and continue]
     B -->|Medium| D[Notify human monitor]
     B -->|High| E[Halt and escalate]
+    B -->|Critical| G[Immediate halt and emergency procedures]
     E --> F[Incident response]
+    G --> F
+    G --> H[Regulatory notification]
 ```
 
 ## 6. Incident Response Plan

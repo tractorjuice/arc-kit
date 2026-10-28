@@ -56,6 +56,7 @@ Output: `projects/<id>/ARC-<id>-AAOV-v1.0.md`
 
 ## Related Commands
 
-- `/arckit:agent-security` - Align security controls to governance requirements.
+- `/arckit:agent-security` - Run next. It reads this framework's oversight tiers and compliance requirements.
+- `/arckit:agent-integration` - Runs after security. It reads this framework's oversight, approval and audit requirements.
 - `/arckit:architecture-board` - Route high-impact agent decisions.
 - `/arckit:agent-maturity` - Assess programme maturity and improvement roadmap.
