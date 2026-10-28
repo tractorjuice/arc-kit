@@ -16,7 +16,12 @@
  *   - Corrects project ID to match directory number (ARC-999 in 001-foo/ -> ARC-001)
  *   - Moves multi-instance types to correct subdirectory (ADR -> decisions/)
  *   - Assigns next sequence number for multi-instance types missing one
- *   - Creates subdirectories as needed (mkdir -p)
+ *
+ * The hook only reads the filesystem. It resolves file_path and acts only when the
+ * result lies inside <repo>/projects/<project>/, where <repo> is found from cwd, so a
+ * path that climbs out of projects/ with '..' is neither normalised nor named back to
+ * the model. It never creates directories: it runs before the user approves the
+ * Write, and the Write tool creates missing parents itself.
  *
  * Hook Type: PreToolUse
  * Matcher: Write
@@ -29,9 +34,10 @@
  *                  permission error (which only the user would see).
  */
 
-import { readFileSync, readdirSync, mkdirSync } from 'node:fs';
-import { basename, dirname, join } from 'node:path';
+import { readFileSync, readdirSync } from 'node:fs';
+import { basename, dirname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { KNOWN_TYPES, MULTI_INSTANCE_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
+import { findRepoRoot } from './hook-utils.mjs';
 
 // --- Main ---
 let raw = '';
@@ -49,28 +55,28 @@ try {
   process.exit(0);
 }
 
-let filePath = (data.tool_input || {}).file_path || '';
-if (!filePath) process.exit(0);
+const rawPath = (data.tool_input || {}).file_path || '';
+if (typeof rawPath !== 'string' || !rawPath) process.exit(0);
 
-// Resolve relative paths using cwd
-if (!filePath.startsWith('/')) {
-  const cwd = data.cwd || '';
-  if (cwd) filePath = join(cwd, filePath);
-}
+const cwd = resolve(typeof data.cwd === 'string' && data.cwd ? data.cwd : process.cwd());
+const filePath = resolve(cwd, rawPath);
 
 const filename = basename(filePath);
 const dirpath = dirname(filePath);
 
-// Early exit: only process ARC-*.md files under a projects/ directory
-if (!filePath.includes('/projects/')) process.exit(0);
+// Early exit: only process ARC-*.md files
 if (!filename.startsWith('ARC-')) process.exit(0);
 if (!filename.endsWith('.md')) process.exit(0);
 
-// --- Extract project directory info ---
-// Path format: .../projects/{NNN-name}/[subdir/]ARC-*.md
-const afterProjects = filePath.split('projects/')[1];
-const projectDirName = afterProjects.split('/')[0];
-const projectsBase = filePath.split('projects/')[0] + 'projects';
+// --- Confine to <repo>/projects/<project>/ ---
+// Path format: <repo>/projects/{NNN-name}/[subdir/]ARC-*.md
+const repoRoot = findRepoRoot(cwd) || cwd;
+const projectsBase = join(repoRoot, 'projects');
+const relToProjects = relative(projectsBase, filePath);
+if (!relToProjects || isAbsolute(relToProjects)) process.exit(0);
+const relParts = relToProjects.split(sep);
+if (relParts.length < 2 || relParts.includes('..')) process.exit(0);
+const projectDirName = relParts[0];
 const projectDir = join(projectsBase, projectDirName);
 
 // Extract project number from directory name
@@ -147,7 +153,6 @@ if (MULTI_INSTANCE_TYPES.has(docType)) {
 
   if (!seqNum) {
     // Claude omitted sequence number - scan directory and assign next available
-    mkdirSync(targetDir, { recursive: true });
     let lastNum = 0;
 
     try {
@@ -163,9 +168,6 @@ if (MULTI_INSTANCE_TYPES.has(docType)) {
     } catch { /* directory may not exist yet */ }
 
     seqNum = String(lastNum + 1).padStart(3, '0');
-  } else {
-    // Claude provided a sequence number - keep it, ensure directory exists
-    mkdirSync(targetDir, { recursive: true });
   }
 
   const correctedFilename = `ARC-${paddedPid}-${docType}-${seqNum}-v${normVersion}.md`;
@@ -174,7 +176,6 @@ if (MULTI_INSTANCE_TYPES.has(docType)) {
   // Single-instance type with required subdirectory (e.g. RSCH → research/)
   const requiredSubdir = SUBDIR_MAP[docType];
   const targetDir = join(projectDir, requiredSubdir);
-  mkdirSync(targetDir, { recursive: true });
   const correctedFilename = `ARC-${paddedPid}-${docType}-v${normVersion}.md`;
   correctedPath = join(targetDir, correctedFilename);
 } else {
@@ -186,8 +187,8 @@ if (MULTI_INSTANCE_TYPES.has(docType)) {
 // --- Compare and output ---
 if (correctedPath === filePath) process.exit(0);
 
-// Block and name the corrected path; the directories above already exist, so the
-// retried Write lands first time.
+// Block and name the corrected path; the retried Write creates any missing
+// subdirectory itself once the user approves it.
 console.log(JSON.stringify({
   decision: 'block',
   reason: `ArcKit: '${basename(filePath)}' does not follow the ARC naming convention for this project. Write the same content to ${correctedPath} instead.`,
