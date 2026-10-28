@@ -1152,7 +1152,7 @@ All artifacts must pass these 10 checks:
 - Every dataset assessed by its Dataset ID from the CLAS register rather than re-enumerated
 - Smart Data class, National Cloud Security Policy level (Appendix 6.7) with the mapping rationale, required tier, chosen CSP, region and compliance check recorded per dataset
 - Confidential/Restricted datasets on a Partial Sovereign or Sovereign Cloud with data stored in the UAE, and datasets above Confidential/Restricted on a Sovereign Cloud (National Cloud Security Policy v2.0, §2.4.1.4–2.4.1.5); any exception cites a Cyber Security Council approval (§1.4) rather than being left implicit
-- CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS; the policy approves no CSPs) covering the Appendix 6.6 minimum certifications with evidence dates (UAE IAS and DESC ISR self-assessments; ISO/IEC 27001, 27017, 27018 and 22301 certificates; SOC 1 and SOC 2 Type II reports; CSA STAR 2), regional footprint, the CSP's list of services meeting the Partial Sovereign or Sovereign Cloud Requirements, and documented limitations
+- CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS, du Tech National Hypercloud; the policy approves no CSPs, and any Cyber Security Council certification is recorded with its scope and source) covering the Appendix 6.6 minimum certifications with evidence dates (UAE IAS and DESC ISR self-assessments; ISO/IEC 27001, 27017, 27018 and 22301 certificates; SOC 1 and SOC 2 Type II reports; CSA STAR 2), regional footprint, the CSP's list of services meeting the Partial Sovereign or Sovereign Cloud Requirements, and documented limitations
 - Shared-responsibility matrix divides responsibility across infrastructure, platform, application, data, identity and operational layers for each chosen CSP
 - Shared platform components (identity, observability, backups) assessed for residency, not only the primary services
 - Exit and portability plan covers data egress, format portability, identity migration, key custody on exit and contingency residency on regulatory change
@@ -1184,7 +1184,7 @@ All artifacts must pass these 10 checks:
 - Baseline captures current and target values for all four metrics per service: process steps, customer-supplied fields, end-to-end time to outcome, total customer cost
 - Every metric shows a reduction trajectory — a target equal to or worse than its baseline is flagged rather than recorded silently
 - All five customer-experience KPIs defined with monthly targets: CSAT, NPS, First-Time Right rate, Digital Adoption %, Failure Demand %
-- Compliance stated against each of the five UAE Code for Government Services principles (proactive, omni-channel, personalised, simple, fast), with evidence per principle
+- Compliance stated against each of the eight pillars of the UAE Code for Government Services (a simpler, easier and faster experience; customer first; humanising services; a consistent experience across all service channels; flexible and secure digital systems; a culture of excellent service; participatory design; service and systems efficiency), each with its Arabic term, evidence per pillar, and a citation to the Arabic text of the Cabinet's announcement of 23 April 2026, which lists them
 
 ### DREC -- UAE Digital Records
 

@@ -70,6 +70,9 @@ The providers below are common candidates, not approved ones. Check each service
 | Microsoft Azure | UAE North, UAE Central | Hyperscaler with UAE residency |
 | TDRA FedNet | UAE | Federal government network |
 | e& Sovereign Launchpad on AWS | UAE | Sovereign overlay on AWS |
+| du Tech National Hypercloud | UAE | Sovereign cloud; du announced Cyber Security Council certification for all workloads except those classified Secret and Top Secret (WAM, 5 May 2026) |
+
+> The policy itself sets no accreditation scheme, but the Cyber Security Council does certify some offerings against it. du announced on 5 May 2026 that the Council had certified du Tech's National Hypercloud for all workloads except those classified Secret and Top Secret (WAM, <https://www.wam.ae/en/article/177h4m4-tech%E2%80%99s-national-hypercloud-receives-uae-cyber>). Secret and Top Secret are the policy's levels above Confidential/Restricted (Appendix 6.7), so on that account it covers Open and Confidential/Restricted datasets, not the Sovereign Cloud tier. Record a certification like this, with its scope and source, as additional evidence. It does not replace the Appendix 6.6 certifications or the check of each service against the CSP's own list, and its scope should be confirmed from the certificate itself.
 
 > AWS `me-south-1` is the Middle East (Bahrain) Region, so it is not UAE-resident and does not meet the residency rule for Confidential-and-above datasets. AWS's UAE Region is `me-central-1`, Middle East (UAE), open since August 2022 (AWS Availability Zones documentation, <https://docs.aws.amazon.com/global-infrastructure/latest/regions/aws-availability-zones.html>; AWS News Blog, <https://aws.amazon.com/blogs/aws/now-open-aws-region-in-the-united-arab-emirates-uae/>). Record the AWS Region for every AWS-hosted dataset. The policy sets no UAE-location requirement for Open data, so only an Open dataset may be stored in a non-UAE Region.
 
