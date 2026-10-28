@@ -31,7 +31,9 @@
  */
 
 import { randomBytes } from 'node:crypto';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import {
+  writeFileSync, mkdirSync, lstatSync, realpathSync, renameSync, unlinkSync,
+} from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -51,6 +53,54 @@ import {
   CONTEXTUAL_TYPES,
   STALE_THRESHOLD_DAYS,
 } from './graph-rollups.mjs';
+
+// ── Safe docs/ writes ─────────────────────────────────────────────────────
+
+function lstatOrNull(p) {
+  try { return lstatSync(p); } catch { return null; }
+}
+
+/**
+ * Write `docs/<name>` under repoRoot without following symlinks. git restores
+ * symlinks on checkout, so a committed `docs` or `docs/<name>` link could
+ * otherwise redirect the write onto any file the user can write. The data goes
+ * to a fresh temp file (O_EXCL) inside a real `docs/` directory and is renamed
+ * over the target, which replaces the directory entry rather than writing
+ * through it. Returns null on success, or the reason the write was skipped.
+ */
+function writeDocsFileNoFollow(repoRoot, name, content) {
+  const docsDir = join(repoRoot, 'docs');
+  let st = lstatOrNull(docsDir);
+  if (!st) {
+    try { mkdirSync(docsDir); } catch { /* raced or unwritable; re-checked below */ }
+    st = lstatOrNull(docsDir);
+  }
+  if (!st) return 'docs/ could not be created';
+  if (st.isSymbolicLink()) return 'docs/ is a symbolic link';
+  if (!st.isDirectory()) return 'docs/ is not a directory';
+  try {
+    if (realpathSync(docsDir) !== join(realpathSync(repoRoot), 'docs')) {
+      return 'docs/ resolves outside the repository';
+    }
+  } catch {
+    return 'docs/ could not be resolved';
+  }
+
+  const target = join(docsDir, name);
+  const targetStat = lstatOrNull(target);
+  if (targetStat && targetStat.isSymbolicLink()) return `docs/${name} is a symbolic link`;
+  if (targetStat && !targetStat.isFile()) return `docs/${name} is not a regular file`;
+
+  const tmp = join(docsDir, `.${name}.${process.pid}.${randomBytes(6).toString('hex')}.tmp`);
+  try {
+    writeFileSync(tmp, content, { encoding: 'utf8', flag: 'wx', mode: 0o644 });
+    renameSync(tmp, target);
+  } catch (err) {
+    try { unlinkSync(tmp); } catch { /* already gone */ }
+    return `docs/${name} could not be written (${err.code || 'error'})`;
+  }
+  return null;
+}
 
 // ── Recipe table ───────────────────────────────────────────────────────────
 
@@ -1255,9 +1305,7 @@ function formatHealth(graph, prompt, repoRoot) {
   };
 
   // Write docs/health.json (preserve dashboard side effect)
-  const docsDir = join(repoRoot, 'docs');
-  if (!isDir(docsDir)) mkdirSync(docsDir, { recursive: true });
-  writeFileSync(join(docsDir, 'health.json'), JSON.stringify(jsonData, null, 2), 'utf8');
+  const healthSkip = writeDocsFileNoFollow(repoRoot, 'health.json', JSON.stringify(jsonData, null, 2));
 
   // additionalContext output
   const lines = [];
@@ -1271,7 +1319,9 @@ function formatHealth(graph, prompt, repoRoot) {
   lines.push(`- **Artifacts scanned**: ${jsonData.scanned.artifacts}`);
   lines.push(`- **Severity filter**: ${severityArg}`);
   if (projectArg) lines.push(`- **Project filter**: ${projectArg}`);
-  lines.push(`- **JSON output**: docs/health.json written`);
+  lines.push(healthSkip
+    ? `- **JSON output**: docs/health.json NOT written — ${healthSkip}`
+    : '- **JSON output**: docs/health.json written');
   lines.push('');
   lines.push('### Summary');
   lines.push(`- **HIGH**: ${jsonData.summary.HIGH} findings`);
@@ -1309,7 +1359,9 @@ function formatHealth(graph, prompt, repoRoot) {
   lines.push('- **Skip Steps 1-3** — all metadata has been extracted and rules applied');
   lines.push('- **Format the Step 4 console output** using the findings above');
   lines.push('- **Include the Step 4.3 Recommended Actions** section using finding counts');
-  lines.push('- **Step 5 JSON already written** — docs/health.json is complete');
+  lines.push(healthSkip
+    ? `- **Step 5 JSON was refused** — ${healthSkip}; do not write docs/health.json yourself, tell the user to replace it with a regular file and re-run`
+    : '- **Step 5 JSON already written** — docs/health.json is complete');
 
   return lines.join('\n');
 }

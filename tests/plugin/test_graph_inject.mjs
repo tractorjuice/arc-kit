@@ -8,7 +8,10 @@
  * Run with:  node tests/plugin/test_graph_inject.mjs
  */
 
-import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync, rmSync, utimesSync } from 'node:fs';
+import {
+  mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync, rmSync, utimesSync,
+  symlinkSync, lstatSync, readdirSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
@@ -251,6 +254,75 @@ References BR-001.
     assert.ok(parsed.byType['FORGOTTEN-ADR'] >= 1);
     assert.ok(parsed.byType['STALE-DRAFT'] >= 1);
     assert.ok('REVIEW-OVERDUE' in parsed.byType, 'byType should always include REVIEW-OVERDUE');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+function makeHealthFixture(prefix) {
+  const root = mkdtempSync(join(tmpdir(), prefix));
+  const projectDir = join(root, 'projects', '001-fixture');
+  mkdirSync(projectDir, { recursive: true });
+  writeFileSync(
+    join(projectDir, 'ARC-001-REQ-v1.0.md'),
+    '# REQ\n\n| Field | Value |\n|---|---|\n| **Document ID** | ARC-001-REQ-v1.0 |\n| **Status** | DRAFT |\n\nBR-001 need\n'
+  );
+  return root;
+}
+
+test('graph-inject /arckit:health does not follow a symlinked docs/health.json', () => {
+  const root = makeHealthFixture('arckit-health-symlink-');
+  const outside = mkdtempSync(join(tmpdir(), 'arckit-health-victim-'));
+  const victim = join(outside, 'victim.txt');
+  writeFileSync(victim, 'do not touch\n');
+  try {
+    mkdirSync(join(root, 'docs'));
+    const link = join(root, 'docs', 'health.json');
+    symlinkSync(victim, link);
+
+    const ctx = JSON.parse(runHook('/arckit:health 001', root).stdout)
+      .hookSpecificOutput.additionalContext;
+
+    assert.equal(readFileSync(victim, 'utf8'), 'do not touch\n', 'symlink target must be unchanged');
+    assert.ok(lstatSync(link).isSymbolicLink(), 'the symlink itself is left in place');
+    assert.ok(ctx.includes('docs/health.json NOT written — docs/health.json is a symbolic link'));
+    assert.ok(!ctx.includes('Step 5 JSON already written'));
+    assert.deepEqual(readdirSync(join(root, 'docs')), ['health.json'], 'no temp file left behind');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+    rmSync(outside, { recursive: true, force: true });
+  }
+});
+
+test('graph-inject /arckit:health does not write through a symlinked docs/ directory', () => {
+  const root = makeHealthFixture('arckit-health-docslink-');
+  const outside = mkdtempSync(join(tmpdir(), 'arckit-health-outdir-'));
+  try {
+    symlinkSync(outside, join(root, 'docs'));
+    const ctx = JSON.parse(runHook('/arckit:health 001', root).stdout)
+      .hookSpecificOutput.additionalContext;
+
+    assert.deepEqual(readdirSync(outside), [], 'nothing may be written in the link target');
+    assert.ok(ctx.includes('docs/health.json NOT written — docs/ is a symbolic link'));
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+    rmSync(outside, { recursive: true, force: true });
+  }
+});
+
+test('graph-inject /arckit:health replaces an existing regular docs/health.json', () => {
+  const root = makeHealthFixture('arckit-health-replace-');
+  try {
+    mkdirSync(join(root, 'docs'));
+    writeFileSync(join(root, 'docs', 'health.json'), '{"stale":true}');
+    const ctx = JSON.parse(runHook('/arckit:health 001', root).stdout)
+      .hookSpecificOutput.additionalContext;
+
+    assert.ok(ctx.includes('docs/health.json written'));
+    const parsed = JSON.parse(readFileSync(join(root, 'docs', 'health.json'), 'utf8'));
+    assert.equal(parsed.stale, undefined);
+    assert.equal(parsed.scanned.projects, 1);
+    assert.deepEqual(readdirSync(join(root, 'docs')), ['health.json'], 'no temp file left behind');
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

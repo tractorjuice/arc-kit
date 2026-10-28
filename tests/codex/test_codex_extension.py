@@ -786,6 +786,35 @@ def test_codex_hook_injects_graph_context_for_health(tmp_path):
     assert (tmp_path / "docs" / "health.json").is_file()
 
 
+@pytest.mark.skipif(os.name == "nt", reason="symlinks need privileges on Windows")
+def test_codex_hook_health_does_not_follow_symlinked_health_json(tmp_path):
+    repo = tmp_path / "repo"
+    project_dir = repo / "projects" / "001-demo"
+    project_dir.mkdir(parents=True)
+    (project_dir / "ARC-001-REQ-v1.0.md").write_text(
+        "# Requirements\n\n| Field | Value |\n|-------|-------|\n| Status | Draft |\n\nBR-001 user need\n",
+        encoding="utf-8",
+    )
+    victim = tmp_path / "victim.txt"
+    victim.write_text("do not touch\n", encoding="utf-8")
+    (repo / "docs").mkdir()
+    (repo / "docs" / "health.json").symlink_to(victim)
+
+    output = run_codex_hook(
+        "UserPromptSubmit",
+        {
+            "hook_event_name": "UserPromptSubmit",
+            "cwd": str(repo),
+            "prompt": "$arckit-health 001-demo",
+        },
+    )
+
+    context = output["hookSpecificOutput"]["additionalContext"]
+    assert "docs/health.json NOT written" in context
+    assert victim.read_text(encoding="utf-8") == "do not touch\n"
+    assert (repo / "docs" / "health.json").is_symlink()
+
+
 def test_codex_hook_runs_pages_preprocessor(tmp_path):
     project_dir = tmp_path / "projects" / "001-demo"
     project_dir.mkdir(parents=True)
