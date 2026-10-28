@@ -89,7 +89,7 @@ Generates an ASD operational technology cyber security assessment for connected 
 
 #### `/arckit:au-soci-cirmp`
 
-Generates a SOCI Act / Critical Infrastructure Risk Management Program governance and evidence pack. Covers critical asset and responsible entity context, SOCI applicability, CIRMP governance, cyber and information security hazards, personnel hazards, supply-chain hazards, physical security and natural hazards, protected-information handling, incident reporting, and annual report readiness. It is deliberately separate from `au-ot-security`: some SOCI assets do not include OT, and some OT environments may not trigger SOCI obligations.
+Generates a SOCI Act / Critical Infrastructure Risk Management Program governance and evidence pack. Covers critical asset and responsible entity context, SOCI applicability, CIRMP governance, cyber and information security hazards, personnel hazards, supply-chain hazards, physical security and natural hazards, protected-information handling, incident reporting, and annual report readiness. It records whether the asset is in the baseline or enhanced CIRMP tier. The enhanced requirements, in force since 10 June 2026 for broadcasting, domain name system, electricity, energy market operator, freight, gas, liquid fuel and water assets, are assessed against their compliance dates (10 June 2027 and 10 June 2028 for assets that were already critical infrastructure assets). It is deliberately separate from `au-ot-security`: some SOCI assets do not include OT, and some OT environments may not trigger SOCI obligations.
 
 ### Service + AI compliance
 

@@ -1454,7 +1454,10 @@ All artifacts must pass these 10 checks:
 
 - Critical asset context identifies asset, sector, responsible entity, operator, direct interest holders, regulator, and whether the asset is declared or suspected in scope
 - Applicability assessment covers sector, asset class, thresholds, responsible-entity obligations, register obligations, incident reporting and government assistance, with any uncertainty flagged for legal confirmation rather than resolved by assumption
-- All five CIRMP hazard domains assessed: cyber and information security, personnel, supply chain, physical security, natural hazards — each with material risk, relevant impact, current controls, evidence, gaps and a named risk owner
+- CIRMP tier stated (baseline under CIRMP Rules s 4(1), enhanced under s 4A(1), TSRMP, or not subject), with the date the asset became a CI asset where the tier is enhanced
+- All five CIRMP hazard domains assessed: cyber and information security, personnel, supply chain, physical security, natural hazards — each with material risk, relevant impact, current controls, evidence, gaps and a named risk owner; enhanced-tier assets also cover credential compromise and lateral movement hazards
+- For enhanced-tier assets, each enhanced requirement (ss 6A, 8A, 8B, 8C, 9A, 10A, 11A) assessed against its compliance date (10 June 2027 or 10 June 2028 for assets that were CI assets before 10 June 2026); otherwise the section is marked not applicable
+- CIRMP cyber framework recorded with its condition (baseline s 8(4), e.g. Essential Eight Maturity Level One; enhanced s 8A(3), e.g. Essential Eight Maturity Level Two)
 - Cyber evidence consolidated from the E8, ISM, OT, PIA and NDB artefacts rather than restated
 - Governance model records accountable owner, governing-body oversight, annual report owner, risk committee, review cadence and evidence repository
 - Incident reporting documents the 12-hour and 72-hour pathways where applicable, escalation roles, regulator contact points and record-keeping

@@ -33,6 +33,8 @@
 | **Operator** | [Entity] |
 | **Direct Interest Holders** | [Known / to be confirmed] |
 | **Regulator** | [CISC / sector regulator / other] |
+| **CIRMP Tier** | [Baseline (CIRMP Rules s 4(1)) / Enhanced (s 4A(1)) / TSRMP (critical telecommunications asset) / Not subject / To be confirmed] |
+| **Date Asset Became a CI Asset** | [YYYY-MM-DD / before 10 June 2026 / to be confirmed] |
 | **Board / Governing Body** | [Board / council / governing body] |
 | **Protected Information Handling Required** | [Yes / No / To be confirmed] |
 | **Assessment Date** | [YYYY-MM-DD] |
@@ -45,7 +47,8 @@
 |-----------------|----------|----------|---------------------------------|
 | Critical asset registration | [Yes / No / Unclear] | [Evidence] | [Gap] |
 | Responsible entity obligations | [Yes / No / Unclear] | [Evidence] | [Gap] |
-| Written CIRMP | [Yes / No / Unclear] | [Evidence] | [Gap] |
+| Written CIRMP (baseline requirements, CIRMP Rules Part 2) | [Yes / No / Unclear] | [Evidence] | [Gap] |
+| Enhanced CIRMP requirements (ss 6A, 8A–8C, 9A, 10A, 11A) | [Yes / No / Unclear] | [Asset class in s 4A(1); s 12 declaration exception checked] | [Gap] |
 | Annual CIRMP report | [Yes / No / Unclear] | [Evidence] | [Gap] |
 | Cyber incident reporting | [Yes / No / Unclear] | [Evidence] | [Gap] |
 | Protected information obligations | [Yes / No / Unclear] | [Evidence] | [Gap] |
@@ -90,6 +93,26 @@
 | Supply chain | [Risks] | [Impact] | [Controls] | [Supplier register / contracts / assurance] | [Gap] | [Owner] |
 | Physical security | [Risks] | [Impact] | [Controls] | [Facility controls / access logs] | [Gap] | [Owner] |
 | Natural hazards | [Risks] | [Impact] | [Controls] | [BCP / DR / resilience plan] | [Gap] | [Owner] |
+| Credential compromise (enhanced tier only, s 8B) | [Risks] | [Impact] | [Controls] | [Phishing-resistant MFA coverage / MFA logs] | [Gap] | [Owner] |
+| Lateral movement (enhanced tier only, s 8C) | [Risks] | [Impact] | [Controls] | [Critical-system inventory / segregation design] | [Gap] | [Owner] |
+
+---
+
+## Enhanced CIRMP Requirements
+
+Complete this section for an asset in the enhanced tier (CIRMP Rules s 4A(1): critical broadcasting, domain name system, electricity, energy market operator, freight infrastructure, freight services, gas, liquid fuel and water assets); otherwise mark it Not applicable. The dates apply to an asset that was a CI asset before 10 June 2026. For an asset that became one later, use 12 months (ss 6A, 8A(2), 9A(2)) or 24 months (the rest) from that date (s 4A(6)). The enhanced requirements do not apply to an asset declared under s 51 of the Act before 10 June 2026 while that declaration stays in force (s 12).
+
+| Provision | Requirement | Compliance Due | Current Position | Evidence | Gap | Owner |
+|-----------|-------------|----------------|------------------|----------|-----|-------|
+| s 6A | Additional material risks: prejudice to social or economic stability, national security or defence; foreign ownership, control or influence; offshore or remote access to critical components; offshore or remote access to business critical data | 10 June 2027 | [Met / Partial / Gap / N/A] | [Evidence] | [Gap] | [Owner] |
+| s 8A(2) | Cyber material risks: timely patching of operating and security systems; legacy, unsupported or obsolete components; deploying or hosting advanced, novel or emerging technology; such technology used against the asset | 10 June 2027 | [Met / Partial / Gap / N/A] | [Evidence] | [Gap] | [Owner] |
+| s 8A(3)–(4) | Cyber framework at the enhanced level: AS ISO/IEC 27001:2023, Essential Eight Maturity Level Two, NIST CSF 2.0, C2M2 v2.1 Maturity Indicator Level 2 or 2023 AESCSF Security Profile 2, or an equivalent to the Essential Eight, C2M2 or AESCSF option | 10 June 2028 | [Met / Partial / Gap / N/A] | [Framework chosen / AUE8 reference] | [Gap] | [Owner] |
+| s 8B | Credential compromise: phishing-resistant MFA for internet-connected computers and critical systems, privileged and unprivileged access to critical components, and remote access; successful and unsuccessful MFA attempts centrally logged, monitored and reviewed (where the chosen framework does not already require phishing-resistant MFA) | 10 June 2028 | [Met / Partial / Gap / N/A] | [Evidence] | [Gap] | [Owner] |
+| s 8C | Lateral movement: inventory of critical systems and their connections; recovery and restoration; continued availability while rebuilding; network segregation, including critical systems able to keep operating for at least three months while other computers are restored, logical access controls, central logging of access paths and least privilege | 10 June 2028 | [Met / Partial / Gap / N/A] | [Evidence] | [Gap] | [Owner] |
+| s 9A(2) | Personnel access management: unauthorised or unsupervised access to critical components; compromised or misused credentials and privileged access; access by people who are not critical workers; incoming and outgoing critical workers | 10 June 2027 | [Met / Partial / Gap / N/A] | [Evidence] | [Gap] | [Owner] |
+| s 9A(3)–(6) | Critical-worker suitability: AusCheck background check and suitability assessment (repeated at least every 5 years for ongoing access) or a Negative Vetting 1 or higher clearance revalidated before it lapses, otherwise the risk and actions recorded in the CIRMP; ongoing suitability monitored | 10 June 2028 | [Met / Partial / Gap / N/A] | [Evidence] | [Gap] | [Owner] |
+| s 10A | Supply chain: map major suppliers and critical components; maximum acceptable outage; assessment of each existing or proposed major supplier, including foreign ownership, control or influence, sanctions and the supplier's access, influence and control | 10 June 2028 | [Met / Partial / Gap / N/A] | [Evidence] | [Gap] | [Owner] |
+| s 11A | Physical security and natural hazards: central management; site location, ownership and nature, critical components and areas holding business critical data or critical systems; access control, continuous monitoring, business-hours and out-of-hours measures; physical security consequences of all hazards | 10 June 2028 | [Met / Partial / Gap / N/A] | [Evidence] | [Gap] | [Owner] |
 
 ---
 
@@ -97,6 +120,7 @@
 
 | Evidence Source | Reference | Use in CIRMP |
 |-----------------|-----------|--------------|
+| CIRMP cyber framework | [Framework and condition — baseline s 8(4), e.g. Essential Eight Maturity Level One; enhanced s 8A(3), e.g. Essential Eight Maturity Level Two] | Framework the CIRMP complies with |
 | AUE8 | [ARC-{P}-AUE8-v*] | Essential Eight cyber baseline |
 | AUISM | [ARC-{P}-AUISM-v*] | ISM control applicability and gaps |
 | AUOT | [ARC-{P}-AUOT-v* / N/A] | OT cyber evidence where the asset includes OT |
@@ -138,6 +162,7 @@
 | Material risks reviewed | [Ready / Partial / Gap] | [Evidence] | [Gap] |
 | Board / governing body approval path | [Ready / Partial / Gap] | [Evidence] | [Gap] |
 | Annual report submission owner | [Ready / Partial / Gap] | [Evidence] | [Gap] |
+| Enhanced CIRMP coverage (enhanced tier only) | [Ready / Partial / Gap / N/A] | [The 2025–26 report need not cover the enhanced material risks or measures] | [Gap] |
 
 ---
 
@@ -158,10 +183,10 @@ This artefact covers general SOCI/CIRMP obligations. Record sector-specific over
 
 | Sector-Specific Area | In Scope Here? | Follow-up Artefact |
 |----------------------|----------------|--------------------|
-| AESCSF energy maturity | No | `/arckit-au-energy:au-aescsf` when available |
-| AER ring-fencing | No | `/arckit-au-energy:au-energy-compliance` when available |
-| NER / NGR obligations | No | `/arckit-au-energy:au-energy-compliance` when available |
-| AEMO market/system obligations | No | `/arckit-au-energy:au-energy-compliance` when available |
+| AESCSF energy maturity | No | `/arckit-au-energy:au-aescsf` (`arckit-au-energy`) |
+| AER ring-fencing | No | `/arckit-au-energy:au-energy-compliance` (`arckit-au-energy`) |
+| NER / NGR obligations | No | `/arckit-au-energy:au-energy-compliance` (`arckit-au-energy`) |
+| AEMO market/system obligations | No | `/arckit-au-energy:au-energy-compliance` (`arckit-au-energy`) |
 | Other sector regulator obligations | No | Sector-specific overlay or custom command |
 
 ---
@@ -188,6 +213,8 @@ This artefact covers general SOCI/CIRMP obligations. Record sector-specific over
 | SOCI-3 | CISC Regulatory obligations | [Date verified] | Operational obligation guidance |
 | SOCI-4 | Responsible Entity CIRMP annual report guidance | [Date verified] | Annual reporting and approval expectation |
 | SOCI-5 | Protected information under the SOCI Act | [Date verified] | Protected-information handling |
+| SOCI-6 | Security of Critical Infrastructure (Critical infrastructure risk management program) Rules (LIN 23/006) 2023, Federal Register of Legislation | [Compilation / date verified] | Baseline and enhanced CIRMP requirements |
+| SOCI-7 | CISC enhanced CIRMP implementation factsheet | [Date verified] | Enhanced CIRMP asset classes and compliance dates |
 | AUE8 | ASD Essential Eight | [Version / date verified] | Cyber baseline evidence |
 | AUISM | ASD Information Security Manual | [Edition / date verified] | Control evidence cross-reference |
 
