@@ -1,5 +1,5 @@
 import { drawIds, isDrawable, isWholeDraw, mark, publicDraw, resolveDraw } from './quiz.mjs';
-import { importDrawKey, signDraw, verifyDraw } from './drawsig.mjs';
+import { CLOCK_SKEW_SECONDS, DRAW_TTL_SECONDS, importDrawKey, signDraw, verifyDraw } from './drawsig.mjs';
 import { validateName, validateAnswers } from './validate.mjs';
 import {
   buildCredential, credentialPageUrl, signJws, verifyJws, publicJwkFrom, toJwtPayload, wholeSecondIso, ACHIEVEMENTS,
@@ -11,6 +11,8 @@ const ID_RE = /^\/credentials\/([a-z2-7]{12})$/;
 const ALPHABET = 'abcdefghijklmnopqrstuvwxyz234567';
 const UNAVAILABLE = 'The quiz isn’t available right now. Try again later.';
 const STALE_DRAW = 'The questions have changed or this attempt has expired. Reload the page and try again.';
+const USED_DRAW = 'This attempt has already been submitted. Reload the page for a fresh set of questions.';
+const KV_MIN_TTL_SECONDS = 60;
 
 function corsHeaders(origin, allowed) {
   const list = (allowed || '').split(',').map((s) => s.trim()).filter(Boolean);
@@ -67,6 +69,21 @@ async function serveDraw(env, cors) {
   return json({ level, bankVersion, total, required, drawToken, questions }, 200, cors);
 }
 
+// Marks a verified draw as submitted, so each draw is marked once: replaying
+// one token with an answer changed would otherwise show, through the result,
+// whether that answer was right. False when the draw was already submitted.
+// The marker outlives the draw itself, so it cannot lapse while the token
+// still verifies. KV is eventually consistent across Cloudflare locations, so
+// this stops sequential replays; the fail response carries no score, which
+// leaves a near-simultaneous replay elsewhere little to learn.
+async function claimDraw(env, draw, now = Date.now()) {
+  const key = `draw:${draw.n}`;
+  if (await env.CREDENTIALS.get(key)) return false;
+  const left = draw.iat + DRAW_TTL_SECONDS + CLOCK_SKEW_SECONDS - Math.floor(now / 1000);
+  await env.CREDENTIALS.put(key, '1', { expirationTtl: Math.max(KV_MIN_TTL_SECONDS, left) });
+  return true;
+}
+
 // The current signing key's public half plus every retired key in PUBLIC_KEYS,
 // so credentials signed before a key rotation still verify.
 function verificationKeys(env) {
@@ -100,10 +117,14 @@ async function submit(request, env, cors) {
   if (!name.ok) return json({ error: name.error }, 400, cors);
   const answers = validateAnswers(body.answers, drawn);
   if (!answers.ok) return json({ error: answers.error }, 400, cors);
+  // Only a submission that will be marked uses up the draw, so a typo in the
+  // name doesn't cost the attempt.
+  if (!(await claimDraw(env, draw))) return json({ error: USED_DRAW }, 409, cors);
 
   const { score, total, required, passed, areasToRevisit, review } = mark(bank, draw.ids, answers.value);
-  // A fail names the areas to revisit but never which questions were wrong.
-  if (!passed) return json({ passed: false, score, total, required, areasToRevisit }, 200, cors);
+  // A fail names the areas to revisit but never the score or which questions
+  // were wrong.
+  if (!passed) return json({ passed: false, total, required, areasToRevisit }, 200, cors);
 
   const id = newId();
   const issuedAt = wholeSecondIso();

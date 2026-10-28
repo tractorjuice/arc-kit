@@ -22,8 +22,19 @@ test('a signed draw verifies and gives back its IDs, version and time', async ()
   const { hmacKey, tok } = await setup();
   assert.match(tok, /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]{43}$/);
   const [body] = tok.split('.');
-  assert.deepEqual(JSON.parse(Buffer.from(body, 'base64url').toString()), { ids, bv, iat: T0 / 1000 });
-  assert.deepEqual(await verifyDraw(hmacKey, tok, { bv, now: T0 + 1000 }), { ok: true, ids, bv, iat: T0 / 1000 });
+  const payload = JSON.parse(Buffer.from(body, 'base64url').toString());
+  assert.deepEqual(Object.keys(payload), ['ids', 'bv', 'iat', 'n']);
+  assert.deepEqual({ ...payload, n: undefined }, { ids, bv, iat: T0 / 1000, n: undefined });
+  assert.match(payload.n, /^[A-Za-z0-9_-]{22}$/);
+  assert.deepEqual(await verifyDraw(hmacKey, tok, { bv, now: T0 + 1000 }), { ok: true, ids, bv, iat: T0 / 1000, n: payload.n });
+});
+
+test('every signing gets a fresh nonce, even for the same questions at the same time', async () => {
+  const { hmacKey, tok } = await setup();
+  const again = await signDraw(hmacKey, { ids, bv }, T0);
+  assert.notEqual(again, tok);
+  const nonces = await Promise.all([tok, again].map(async (t) => (await verifyDraw(hmacKey, t, { bv, now: T0 })).n));
+  assert.notEqual(nonces[0], nonces[1]);
 });
 
 test('changing the ID list breaks the signature', async () => {
@@ -57,9 +68,9 @@ test('a draw signed with another key does not verify', async () => {
   assert.deepEqual(await verifyDraw(otherKey, tok, { bv, now: T0 }), { ok: false, reason: 'signature' });
 });
 
-test('a draw lasts three hours', async () => {
+test('a draw lasts an hour', async () => {
   const { hmacKey, tok } = await setup();
-  assert.equal(DRAW_TTL_SECONDS, 10_800);
+  assert.equal(DRAW_TTL_SECONDS, 3600);
   assert.equal((await verifyDraw(hmacKey, tok, { bv, now: T0 + DRAW_TTL_SECONDS * 1000 })).ok, true);
   assert.deepEqual(await verifyDraw(hmacKey, tok, { bv, now: T0 + (DRAW_TTL_SECONDS + 1) * 1000 }), { ok: false, reason: 'expired' });
   // Up to a minute of clock skew is tolerated; more than that is refused.
@@ -96,10 +107,17 @@ test('malformed input is refused without throwing', async () => {
     const raw = new Uint8Array(await crypto.subtle.sign('HMAC', hmacKey, new TextEncoder().encode(part)));
     return `${part}.${Buffer.from(raw).toString('base64url')}`;
   };
+  // A well-formed nonce, so each case below fails on its own field.
+  const n = 'A'.repeat(22);
+  assert.equal((await verifyDraw(hmacKey, await signed(JSON.stringify({ ids, bv, iat: T0 / 1000, n })), { bv, now: T0 })).ok, true);
   for (const text of [
-    'not json', '[]', 'null', '{}', JSON.stringify({ ids: [], bv, iat: T0 / 1000 }), JSON.stringify({ ids: 's01', bv, iat: T0 / 1000 }),
-    JSON.stringify({ ids: [1, 2], bv, iat: T0 / 1000 }), JSON.stringify({ ids, bv: 7, iat: T0 / 1000 }),
-    JSON.stringify({ ids, bv, iat: '1760434200' }), JSON.stringify({ ids, bv, iat: 1.5 }),
+    'not json', '[]', 'null', '{}', JSON.stringify({ ids: [], bv, iat: T0 / 1000, n }), JSON.stringify({ ids: 's01', bv, iat: T0 / 1000, n }),
+    JSON.stringify({ ids: [1, 2], bv, iat: T0 / 1000, n }), JSON.stringify({ ids, bv: 7, iat: T0 / 1000, n }),
+    JSON.stringify({ ids, bv, iat: '1760434200', n }), JSON.stringify({ ids, bv, iat: 1.5, n }),
+    // No nonce (a draw from before nonces), or one of the wrong shape.
+    JSON.stringify({ ids, bv, iat: T0 / 1000 }), JSON.stringify({ ids, bv, iat: T0 / 1000, n: '' }),
+    JSON.stringify({ ids, bv, iat: T0 / 1000, n: 'short' }), JSON.stringify({ ids, bv, iat: T0 / 1000, n: 42 }),
+    JSON.stringify({ ids, bv, iat: T0 / 1000, n: 'a'.repeat(21) + '!' }),
   ]) {
     assert.deepEqual(await verifyDraw(hmacKey, await signed(text), { bv, now: T0 }), { ok: false, reason: 'malformed' }, text);
   }

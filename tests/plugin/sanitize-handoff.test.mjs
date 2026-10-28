@@ -86,6 +86,17 @@ test('normalises object keys too, so a disguised key is checked under its real n
   assert.deepEqual(Object.keys(out), ['id', 'notes']);
 });
 
+test('reports an error on a key at its sanitised path, without the invisible characters', () => {
+  const r = run({ id: 'A', notes: [], ['x\u200B<system-reminder>\u202E']: 1 });
+  assert.equal(r.status, 1);
+  const hit = r.out.errors.find(e => e.msg.includes('transcript-shaped markup'));
+  assert.ok(hit, JSON.stringify(r.out.errors));
+  assert.equal(hit.path, '/x<system-reminder>');
+  const tagged = run({ id: 'A', notes: [], ['n\u{E0041}\u{E0042}']: 1 });
+  const tag = tagged.out.errors.find(e => e.msg.includes('Unicode tag characters'));
+  assert.equal(tag.path, '/n');
+});
+
 test('is the identity on a clean payload', () => {
   const payload = { id: 'CLEAN-1', notes: ['Vendor page lists three tiers.', 'Price: £12/user/month (ex VAT).'] };
   assert.deepEqual(expectPass(payload), payload);
