@@ -224,7 +224,8 @@ Per CISA's "2026 Minimum Elements for a Software Bill of Materials" (29 July 202
 
 | Field | Value |
 |-------|-------|
-| **SLSA Level Achieved** | [SLSA 1 / 2 / 3 / 4] |
+| **SLSA Build Level Achieved (v1.2)** | [Build L0 / L1 / L2 / L3] |
+| **SLSA Source Level (v1.2, if claimed)** | [Not claimed / Source L1 / L2 / L3 / L4] |
 | **SLSA Provenance Format** | [in-toto Statement v1] |
 | **Provenance Signed By** | [Signing identity — Sigstore / GPG key ID] |
 | **Signature Verified** | [Yes — verification command + output] |
@@ -289,7 +290,7 @@ Per CISA's "2026 Minimum Elements for a Software Bill of Materials" (29 July 202
 | CISA HBOM Framework | A Hardware Bill of Materials (HBOM) Framework for Supply Chain Risk Management (September 2023) | <https://www.cisa.gov/resources-tools/resources/hardware-bill-materials-hbom-framework-supply-chain-risk-management> |
 | NIST SP 800-218 | Secure Software Development Framework (SSDF) v1.1 | <https://doi.org/10.6028/NIST.SP.800-218> |
 | NIST SP 800-218 Rev. 1 | SSDF v1.2 — initial public draft (17 December 2025) | <https://csrc.nist.gov/pubs/sp/800/218/r1/ipd> |
-| SLSA | Supply-chain Levels for Software Artifacts | <https://slsa.dev/> |
+| SLSA | Supply-chain Levels for Software Artifacts v1.2 (Build track L0–L3, Source track L1–L4) | <https://slsa.dev/spec/v1.2/> |
 | CycloneDX | CycloneDX SBOM Standard | <https://cyclonedx.org/> |
 | SPDX | SPDX SBOM Standard | <https://spdx.dev/> |
 | OMB M-22-18 (rescinded) | Enhancing the Security of the Software Supply Chain through Secure Software Development Practices — rescinded by M-26-05; archived copy | <https://bidenwhitehouse.archives.gov/wp-content/uploads/2022/09/M-22-18.pdf> |

@@ -1122,7 +1122,7 @@ All artifacts must pass these 10 checks:
 - SBOM format stated with its version (e.g. CycloneDX 1.6, SPDX 2.3), not a deprecated one, and the tooling used to generate it
 - All 17 CISA 2026 minimum data fields present, with any value marked unknown or withheld: SBOM author, author signature, data format name and version, generation context, timestamp, tool name and version, SBOM version; component producer, name, version, identifiers, hash value, hash algorithm, licence, dependency relationship
 - CISA 2026 practices and processes addressed: accommodation of updates, coverage (including transitive dependencies), distribution and delivery, explicitly identifying unknown information, frequency, machine-processable data
-- SLSA level claimed with rationale, and a signing strategy stated
+- SLSA v1.2 Build level (L0–L3) claimed with rationale, any Source level (L1–L4) named as a Source track claim, no "SLSA 4" or Build L4 claimed, and a signing strategy stated
 - VEX production cadence, CVE disclosure policy, coordinated-disclosure contact and mean-time-to-patch targets recorded
 - Any item that cannot be attested or met carries a gap record: which items, rationale, mitigating practices, POA&M with dates, and the agency's decision
 - Distribution plan states how the attestation (if any) and the SBOM reach the agency, and the access-control posture for SBOM consumers
