@@ -4,7 +4,7 @@
 
 `/arckit:us-ai-rmf` produces a NIST AI Risk Management Framework 1.0 assessment for an AI/ML system, scoring the four core functions (Govern, Map, Measure, Manage) and applying the AI RMF Playbook actions. Where generative AI is in scope, the assessment cross-references **NIST AI 600-1 (Generative AI Profile)** to add GenAI-specific risk categories (confabulation, data privacy leakage, harmful bias, value chain risk, dangerous content, IP infringement, etc.).
 
-This artefact is the **AI risk evidence base** that downstream artefacts (`us-ai-impact`, vendor evaluations, ATO packages) cite. It is voluntary at federal level but functionally required: the M-24-10 / M-25-21 chain expects agencies to demonstrate AI risk management, and the AI RMF is the agreed framework.
+This artefact is the **AI risk evidence base** that downstream artefacts (`us-ai-impact`, vendor evaluations, ATO packages) cite. The AI RMF itself is voluntary. OMB M-25-21 requires agencies to manage the risks of high-impact AI through its minimum practices but names no framework (nor does the acquisition memo, M-25-22); the AI RMF gives that evidence a structure.
 
 Reviewed by the agency Chief AI Officer (CAIO), Senior AI Official (SAO), Senior Agency Official for Privacy (SAOP), the System Owner, and the AI safety / model-evaluation function where one exists.
 
@@ -64,7 +64,7 @@ Reviewed by the agency Chief AI Officer (CAIO), Senior AI Official (SAO), Senior
 
 ## Handoffs
 
-- **`us-ai-impact`** — AI RMF feeds the OMB M-24-10 / M-25-21 impact assessment
+- **`us-ai-impact`** — AI RMF feeds the OMB M-25-21 impact assessment
 - **`us-privacy-pia`** — AI-decision logic and training-data PII feed the PIA
 - **`risk`** — high-residual AI risks flow into the project risk register
 - **`adr`** — foundation-model selection, fine-tuning vs. RAG, sovereignty calls warrant ADRs

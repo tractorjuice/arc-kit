@@ -4,11 +4,11 @@
 
 ## Purpose
 
-The USA Federal Civilian Overlay adds 10 community-contributed commands that ground architecture artefacts in the federal civilian regulatory stack — FIPS 199 categorization, NIST SP 800-53 Rev 5 tailoring, FedRAMP authorization (SSP + RAR), CISA Zero Trust Maturity Model v2.0, ICAM under M-19-17, the NIST AI RMF + the OMB M-24-10 / M-25-21 chain, the E-Government Act §208 PIA, and EO 14028 secure-software attestation + SBOM.
+The USA Federal Civilian Overlay adds 10 community-contributed commands that ground architecture artefacts in the federal civilian regulatory stack — FIPS 199 categorization, NIST SP 800-53 Rev 5 tailoring, FedRAMP authorization (SSP + RAR), CISA Zero Trust Maturity Model v2.0, ICAM under M-19-17, the NIST AI RMF + OMB M-25-21 (AI use) and M-25-22 (AI acquisition), the E-Government Act §208 PIA, and EO 14028 secure-software attestation + SBOM.
 
 The target audience is federal civilian agencies building or procuring information systems, and the vendors who serve them (FedRAMP-pursuing CSPs, system integrators, AI / ML providers). The overlay is positioned for agency System Owners, ISSOs, Authorizing Officials, CAIOs, SAOPs, and the architects supporting them.
 
-The overlay is shipped as **`[COMMUNITY]`** tier rather than official baseline. Federal civilian statutory currency moves faster than a single maintainer can verify with confidence — EO 14110 was issued in October 2023 and revoked in January 2025; M-25-21 superseded the prior acquisition guidance in 2025; FedRAMP Rev 5 completed transition in 2024. A community tier signals: "the regulatory anchors here are the ones the maintainer has verified on the date stamped in the citation register; you must re-verify before relying on them for go-live decisions."
+The overlay is shipped as **`[COMMUNITY]`** tier rather than official baseline. Federal civilian statutory currency moves faster than a single maintainer can verify with confidence — EO 14110 was issued in October 2023 and revoked in January 2025; in April 2025 M-25-21 and M-25-22 replaced the 2024 AI use and acquisition memos (M-24-10 and M-24-18); OMB M-24-15 replaced the JAB with the FedRAMP Board in July 2024; FedRAMP Rev 5 completed transition in 2024, and the Consolidated Rules for 2026 make Rev 5 a legacy certification type. A community tier signals: "the regulatory anchors here are the ones the maintainer has verified on the date stamped in the citation register; you must re-verify before relying on them for go-live decisions."
 
 ---
 
@@ -16,9 +16,9 @@ The overlay is shipped as **`[COMMUNITY]`** tier rather than official baseline. 
 
 - The contracting authority is a **federal civilian agency** (department, independent agency, executive branch entity outside DoD / IC).
 - The system handles federal data under **FISMA boundary** (44 U.S.C. §3551 et seq.).
-- An **AI use case** is in scope under **OMB M-24-10** (use of AI) or **M-25-21** (acquisition of AI).
-- The vendor is **pursuing FedRAMP authorization** (Low / Moderate / High / LI-SaaS) for federal customer adoption.
-- The agency **Senior AI Official** or **SAOP** needs artefacts for the federal.ai.gov AI use-case inventory or for the §208 PIA register.
+- An **AI use case** is in scope under **OMB M-25-21** (use and governance of AI) or **M-25-22** (acquisition of AI).
+- The vendor is **pursuing a FedRAMP Certification** (Rev 5 Class B, C or D, which carry the LI-SaaS / Low, Moderate and High baselines, or FedRAMP 20x) for federal customer adoption.
+- The agency **Chief AI Officer** or **SAOP** needs artefacts for the agency AI use-case inventory (published at `[agency.gov]/ai`) or for the §208 PIA register.
 
 ---
 
@@ -50,8 +50,10 @@ Every regulatory anchor used across the overlay's commands, with verification ti
 | NIST AI 600-1 (Generative AI Profile) | <https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf> | 2026-05-23 | 2026-05-23 | GenAI cross-cutting risks |
 | FIPS 201-3 | <https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.201-3.pdf> | 2026-05-23 | 2026-05-23 | PIV for federal employees and contractors |
 | FedRAMP Rev 5 Baselines | <https://www.fedramp.gov/rev5/baselines/> | 2026-05-23 | 2026-05-23 | Low / Moderate / High / LI-SaaS |
-| FedRAMP SSP Template Rev 5 | <https://www.fedramp.gov/documents-templates/> | 2026-05-23 | 2026-05-23 | Current template revision |
-| FedRAMP RAR Template | <https://www.fedramp.gov/documents-templates/> | 2026-05-23 | 2026-05-23 | 3PAO readiness assessment |
+| FedRAMP SSP Template Rev 5 | <https://www.fedramp.gov/legacy/> | 2026-10-27 | 2026-10-27 | Legacy since 23 June 2026; the old documents-templates page is gone |
+| FedRAMP RAR Template | <https://www.fedramp.gov/legacy/> | 2026-10-27 | 2026-10-27 | Moderate v2.1 (May 2024) and High; legacy since 23 June 2026; FedRAMP Ready retired 28 July 2026 |
+| FedRAMP Consolidated Rules for 2026 | <https://www.fedramp.gov/2026/> | 2026-10-27 | 2026-10-27 | Certification type (Rev 5 / 20x), path (Agency / Program) and class (A–D); mandatory from 1 January 2027 |
+| OMB M-24-15 (Modernizing FedRAMP) | <https://www.whitehouse.gov/wp-content/uploads/2024/07/M-24-15-Modernizing-the-Federal-Risk-and-Authorization-Management-Program.pdf> | 2026-10-27 | 2026-10-27 | Rescinded the 2011 FedRAMP memo; PMO + FedRAMP Board; agency and program authorizations; JAB P-ATOs re-designated |
 | FedRAMP Authorization Boundary Guidance | <https://www.fedramp.gov/assets/resources/documents/CSP_A_FedRAMP_Authorization_Boundary_Guidance.pdf> | 2026-05-23 | 2026-05-23 | Boundary heuristics |
 | CISA ZTMM v2.0 | <https://www.cisa.gov/zero-trust-maturity-model> | 2026-05-23 | 2026-05-23 | 5 pillars + 3 cross-cuts, 4 stages |
 | CISA Secure Software Development Attestation Form | <https://www.cisa.gov/secure-software-attestation-form> | 2026-05-23 | 2026-05-23 | EO 14028 attestation vehicle |
@@ -60,8 +62,9 @@ Every regulatory anchor used across the overlay's commands, with verification ti
 | OMB M-22-09 (Federal Zero Trust) | <https://www.whitehouse.gov/wp-content/uploads/2022/01/M-22-09.pdf> | 2026-05-23 | 2026-05-23 | Federal zero-trust strategy |
 | OMB M-22-18 (Secure Software / SBOM) | <https://www.whitehouse.gov/wp-content/uploads/2022/09/M-22-18.pdf> | 2026-05-23 | 2026-05-23 | EO 14028 implementation |
 | OMB M-23-16 (M-22-18 Update) | <https://www.whitehouse.gov/wp-content/uploads/2023/06/M-23-16-Update-to-M-22-18-Enhancing-Software-Security-.pdf> | 2026-05-23 | 2026-05-23 | Timeline + scope clarification |
-| OMB M-24-10 (Agency Use of AI) | <https://www.whitehouse.gov/wp-content/uploads/2024/03/M-24-10-Advancing-Governance-Innovation-and-Risk-Management-for-Agency-Use-of-Artificial-Intelligence.pdf> | 2026-05-23 | 2026-05-23 | Active; replaced EO 14110 requirements |
-| OMB M-25-21 (AI Acquisition) | <https://www.whitehouse.gov/omb/management/ofcio/> | 2026-05-23 | 2026-05-23 | AI acquisition clauses |
+| OMB M-25-21 (Agency Use of AI) | <https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-21-Accelerating-Federal-Use-of-AI-through-Innovation-Governance-and-Public-Trust.pdf> | 2026-10-27 | 2026-10-27 | Active; rescinded and replaced M-24-10 on 3 April 2025; high-impact AI and seven minimum practices |
+| OMB M-25-22 (AI Acquisition) | <https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-22-Driving-Efficient-Acquisition-of-Artificial-Intelligence-in-Government.pdf> | 2026-10-27 | 2026-10-27 | Active; rescinded and replaced M-24-18 on 3 April 2025; AI contract terms |
+| OMB M-26-04 (Unbiased AI Principles) | <https://www.whitehouse.gov/wp-content/uploads/2025/12/M-26-04-Increasing-Public-Trust-in-Artificial-Intelligence-Through-Unbiased-AI-Principles-1.pdf> | 2026-10-27 | 2026-10-27 | LLM contract terms from 11 December 2025; complements M-25-22; sunsets after two years |
 | EO 14028 (Improving the Nation's Cybersecurity) | <https://www.federalregister.gov/documents/2021/05/17/2021-10460/improving-the-nations-cybersecurity> | 2026-05-23 | 2026-05-23 | Secure-software supply chain anchor |
 | E-Government Act 2002 §208 | <https://www.justice.gov/opcl/e-government-act-2002> | 2026-05-23 | 2026-05-23 | PIA statutory authority |
 | Privacy Act of 1974 (5 U.S.C. §552a) | <https://www.justice.gov/opcl/privacy-act-1974> | 2026-05-23 | 2026-05-23 | SoR / SORN statutory authority |
@@ -88,7 +91,8 @@ The citation register above is re-verified every quarter. **Next scheduled revie
 
 ## Statutory Currency Anchor
 
-- **EO 14110 was revoked in January 2025.** The successor anchors for federal AI governance are **OMB M-24-10** (agency use of AI) and **OMB M-25-21** (AI acquisition). The overlay tracks the M-24-10 / M-25-21 chain, not EO 14110.
+- **EO 14110 was revoked in January 2025.** The anchors for federal AI governance are **OMB M-25-21** (agency use of AI), which rescinded and replaced M-24-10 on 3 April 2025, and **OMB M-25-22** (AI acquisition), which replaced M-24-18 the same day, plus **OMB M-26-04** for large language model procurement. M-25-21 replaced "rights-impacting" and "safety-impacting" AI with "high-impact" AI. Checked on 27 October 2026: no later OMB memo or executive order has amended either memo. EO 14434 (29 September 2026) changes federal terminology from "AI" to "Super Intelligence" but not the requirements.
+- **The JAB no longer exists.** OMB M-24-15 (25 July 2024) rescinded the 2011 memo that created it; FedRAMP is now the GSA PMO and the FedRAMP Board, and existing JAB P-ATOs were re-designated. Under the FedRAMP Consolidated Rules for 2026, a certification has a type (Rev 5 or 20x), a path (Agency, where a sponsoring agency authorises first, or Program, where FedRAMP certifies directly) and a class (A–D).
 - **FedRAMP completed the Rev 5 transition in 2024.** Rev 4 is retired for new authorisations; the overlay anchors on Rev 5 throughout.
 - **OMB M-22-18 / M-23-16 secure-software attestation has been active since 2024.** Agencies have been collecting CISA attestation forms since common-form-availability in March 2024.
 

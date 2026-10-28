@@ -394,7 +394,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | FRSSP | `ARC-*-FRSSP-*.md` | US FedRAMP System Security Plan |
 | | FRRR | `ARC-*-FRRR-*.md` | US FedRAMP Readiness Assessment Report |
 | | AIRMF | `ARC-*-AIRMF-*.md` | US NIST AI RMF Assessment |
-| | AIIA | `ARC-*-AIIA-*.md` | US AI Impact Assessment (M-24-10 / M-25-21) |
+| | AIIA | `ARC-*-AIIA-*.md` | US AI Impact Assessment (M-25-21 / M-25-22) |
 | | USPIA | `ARC-*-USPIA-*.md` | US Privacy Impact Assessment (E-Gov §208) |
 | | SBOM | `ARC-*-SBOM-*.md` | US SBOM + Secure-Software Self-Attestation |
 | **Architecture (Community-contributed — USA Federal Civilian Overlay)** | | | |
