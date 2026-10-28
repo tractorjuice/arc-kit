@@ -28,7 +28,8 @@ allowed-tools:
 > and 3PAO before reliance.
 >
 > **Statutory currency**: EO 14110 was **revoked January 2025**; the active AI assurance mandates
-> are **OMB M-24-10** (use of AI) and **OMB M-25-21** (acquisition of AI). FedRAMP completed the
+> are **OMB M-25-21** (use and governance of AI; it rescinded and replaced M-24-10 on 3 April 2025)
+> and **OMB M-25-22** (acquisition of AI; it replaced M-24-18). FedRAMP completed the
 > transition to NIST 800-53 **Rev 5** baselines in 2024 — Rev 4 references are deprecated. Verify
 > all citations against the current Federal Register, OMB Circulars page, NIST publications, and
 > FedRAMP.gov before relying on this output.

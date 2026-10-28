@@ -33,7 +33,7 @@ Output: `projects/<id>/ARC-<id>-NIS2-v1.0.md`
 | Section | Contents |
 |---------|----------|
 | Scope and Classification | Essential (Annex I) vs Important (Annex II) entity |
-| French OIV/OSE Status | LPM designation and ANSSI obligations |
+| French OIV/OSE Status | OIV (Code de la défense) and OSE (loi n° 2018-133) designation, ANSSI obligations, status of France's NIS2 transposition bill |
 | Governance | Management body accountability (Art. 20) |
 | Risk Management | 10 minimum security measures (Art. 21) |
 | Incident Reporting | 24h early warning → 72h notification → final report no later than one month after the notification (Art. 23(4)) |
@@ -79,6 +79,6 @@ Postal/courier services, waste management, chemicals, food, manufacturing, digit
 
 ## Key Notes
 
-- **France**: NIS2 transposed via LPM (Loi de Programmation Militaire). OIV obligations are stricter than NIS2 minimums.
+- **France**: NIS2 is not yet transposed. The transposition bill, the *projet de loi relatif à la résilience des infrastructures critiques et au renforcement de la cybersécurité* ("loi Résilience", which also transposes the CER Directive and DORA), was adopted by the Sénat on 12 March 2025 and by the Assemblée nationale's special committee on 10 September 2025; as of 27 October 2026 it still awaits its Assemblée nationale plenary reading, so it has not been promulgated. Until it is, the existing regimes apply: OIV under the Code de la défense, whose information-system security obligations (articles L. 1332-6-1 ff.) were added by Article 22 of the 2013 LPM (loi n° 2013-1168), and OSE under loi n° 2018-133 of 26 February 2018 (the NIS1 transposition). The bill would replace the OSE designation with essential and important entities (EE/EI). OIV obligations are stricter than NIS2 minimums.
 - **CRA overlap**: For product manufacturers, the CRA incident reporting obligations overlap with NIS2 — run `/arckit:eu-cra`.
 - **DORA for financial entities**: DORA is a sector-specific Union legal act under NIS2 Article 4 (DORA Art. 1(2)). For the financial entities it covers, DORA's ICT risk-management, incident-reporting and supervision rules apply instead of NIS2 Articles 21 and 23 and Chapter VII (NIS2 recital 28) — run `/arckit:eu-dora` for those. NIS2 still applies to group entities or services in a NIS2 sector that DORA does not cover (Art. 4(1)), the entity can still be identified as essential or important under national law, and the DORA authority passes major-incident details to the NIS2 CSIRT, competent authority or single point of contact (DORA Art. 19(6)).

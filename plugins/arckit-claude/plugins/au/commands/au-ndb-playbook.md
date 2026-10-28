@@ -69,7 +69,7 @@ A working NDB playbook is operational — it must be executable under time press
 1. Read prerequisites:
    - The project's PIA (`ARC-{P}-AUPIA-v*`) — APP 11 cross-reference
    - The project's E8 posture (`ARC-{P}-AUE8-v*`) — security baseline
-   - The project's ISM applicability (`ARC-{P}-AUISM-v*`) — Domain 2 (Cyber Security Incidents)
+   - The project's ISM applicability (`ARC-{P}-AUISM-v*`) — Guidelines for cyber security incidents
    - The project's RISK artefact
    - The project's DFD artefacts (`ARC-{P}-DFD-*`) — personal-information flows, disclosure paths, external entities, stores
    - The project's DATA artefact (`ARC-{P}-DATA-v*`) — affected personal-information entities, sensitivity, retention, data owners

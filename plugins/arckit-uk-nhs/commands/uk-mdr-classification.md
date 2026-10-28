@@ -8,7 +8,7 @@ handoffs:
   - command: uk-nhs-dcb0129
     description: DCB0129 hazard log feeds the ISO 14971 risk file expected by both UK MDR and EU MDR — run uk-nhs-dcb0129 first if clinical-safety/HAZARD-LOG.md is not present.
   - command: uk-nhs-dtac
-    description: DTAC consumes the classification statement to determine procurement assurance route.
+    description: DTAC question C1.1.1 asks whether the product is Software or AI as a Medical Device under UK MDR 2002; a Yes needs a completed Pre-Acquisition Questionnaire.
   - command: risk
     description: Project risk register cross-references regulatory-classification risks (misclassification, market-access risk, post-market surveillance failure).
   - command: adr

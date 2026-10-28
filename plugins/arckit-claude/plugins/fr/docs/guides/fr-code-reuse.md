@@ -29,7 +29,7 @@ Output: `projects/<id>/ARC-<id>-REUSE-v1.0.md`
 
 | Section | Contents |
 |---------|----------|
-| Legal Framework | Circulaire PM n°6264/SG (27 April 2021), Loi 2016-1321 (République Numérique) |
+| Legal Framework | Circulaire PM n°6264/SG (27 April 2021), Loi 2016-1321 (République Numérique), CRPA L300-2 and L312-1-1 |
 | Component Inventory | Software components needed (COMP-xx identifiers) |
 | code.gouv.fr Results | French public code catalogue search results |
 | SILL Matches | Recommended open source from SILL |
@@ -82,5 +82,5 @@ Output: `projects/<id>/ARC-<id>-REUSE-v1.0.md`
 
 - **Policy obligation**: Circulaire PM n°6264/SG (27 April 2021) instructs State administrations to strengthen the opening of public source code and the use of free software. It is an instruction from the Prime Minister, not a statute, and it does not set out a stand-alone "reuse before build" rule; the reuse assessment is the evidence that the project applied this policy before building.
 - **SILL** = Socle Interministériel de Logiciels Libres — the inter-ministerial recommended open source stack, maintained by DINUM. Choosing software on the SILL avoids procurement for approved use cases.
-- **Publication**: New code developed by or for public administrations must be published as open source unless an explicit exemption applies (security, IP rights of third parties).
+- **Publication**: Source code is an administrative document (CRPA L300-2, since the Loi République Numérique 2016). Administrations with 50 or more agents, other than local authorities under 3,500 inhabitants, publish it online (L312-1-1), unless an exception applies: third-party IP rights (L311-4), security of information systems and the other L311-5 grounds, or privacy and trade secrets (L311-6). Art. 16 of the same law only asks administrations to encourage free software and open formats.
 - **EUPL-1.2**: The preferred licence for French public code — copyleft that is compatible with most open source licences and legally valid across all EU member states.

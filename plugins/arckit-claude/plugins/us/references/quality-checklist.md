@@ -456,13 +456,13 @@ All artifacts must pass these 10 checks:
 - Personal data vs non-personal data split identified; GDPR intersection documented
 - User data access rights (Chapter II) assessed if manufacturer/data holder: pre-purchase disclosure, real-time access, free of charge, machine-readable format
 - Third-party sharing at user request (Article 5) assessed: FRAND conditions, trade secret protection
-- B2B data sharing obligations (Chapter III) assessed: FRAND terms, SME compensation cap, use restrictions (no re-identification, no use to compete)
+- B2B data sharing obligations (Chapter III) assessed: FRAND terms, SME compensation cap, use restrictions (no use to develop a competing connected product, Articles 4(10) and 6(2)(e))
 - Public sector exceptional access (Chapter V) assessed or explicitly marked N/A
-- Cloud switching obligations (Chapter VI) assessed if DAPS or marked N/A: 30-day notice, 180-day max, no barriers, interoperable export
-- Egress charge elimination by September 2027 (Article 29) assessed
-- International transfer restrictions (Article 27) assessed: technical/organisational measures to prevent unlawful non-EU government access
+- Cloud switching obligations (Chapter VI) assessed if DAPS or marked N/A: no obstacles to switching (Art. 23), notice period of at most two months (Art. 25(2)(d)), transitional period of at most 30 calendar days, extendable to at most seven months only where technically unfeasible (Art. 25(2)(a), 25(4)), structured machine-readable export
+- Switching charges assessed (Article 29): only reduced, cost-based charges until 12 January 2027 and none from that date; no "September 2027" egress deadline stated
+- Unlawful international governmental access (Chapter VII, Article 32) assessed if DAPS: technical, organisational and legal measures to prevent third-country governmental access to non-personal data held in the Union; cited as Article 32, not Article 27 (good faith)
 - Trade secret safeguards documented (process to identify, confidentiality agreement, TOMs)
-- Gap timeline references both key dates: 12 September 2025 and 12 September 2027
+- Gap timeline references the key dates: 12 September 2025 (application), 12 September 2026 (Article 3(1) for newly placed connected products) and 12 January 2027 (no switching charges)
 
 ### EUCSF -- EU Cloud Sovereignty Framework Assessment
 
@@ -475,7 +475,8 @@ All artifacts must pass these 10 checks:
 - A criterion whose every recorded answer is SEAL-4 is not cited as the governing criterion for the Overall SEAL (Implementation guidance p.9: such a criterion "has no impact on the SEAL calculation")
 - The p.10 prevalence statement is honoured: the Overall SEAL, not the Sovereignty Score, is presented as the framework's actual rejection gate
 - All eight objectives (SOV-1 to SOV-8) assessed, none omitted
-- Weight table reproduces the framework weights exactly, checked objective by objective (not only that the column totals 100%, which a permutation of the correct values would also pass): SOV-1 Strategic Sovereignty 20%, SOV-2 Legal & Jurisdictional Sovereignty 10%, SOV-3 Data & AI Sovereignty 10%, SOV-4 Operational Sovereignty 15%, SOV-5 Supply Chain Sovereignty 10%, SOV-6 Technology Sovereignty 15%, SOV-7 Security & Compliance Sovereignty 15%, SOV-8 Environmental Sustainability 5%
+- Document states which weighting it uses — the Commission's 1 June 2026 Annex calculator by default, noting that Framework v1.2.1 (October 2025, p.6) weights SOV-1, SOV-5 and SOV-7 differently, or a tender specification's own weighting recorded as a deviation
+- Weight table reproduces the 1 June 2026 calculator weights exactly, checked objective by objective (not only that the column totals 100%, which a permutation of the correct values would also pass): SOV-1 Strategic Sovereignty 20%, SOV-2 Legal & Jurisdictional Sovereignty 10%, SOV-3 Data & AI Sovereignty 10%, SOV-4 Operational Sovereignty 15%, SOV-5 Supply Chain Sovereignty 10%, SOV-6 Technology Sovereignty 15%, SOV-7 Security & Compliance Sovereignty 15%, SOV-8 Environmental Sustainability 5%
 - All five SEAL definitions (SEAL-0 to SEAL-4) reproduced in full, not paraphrased
 - `Score(SOVn)` and `Max.Score(SOVn)` are defined, not merely named: Score(SOVn) is the sum of selected answer values per the calculator catalogue, and Max.Score(SOVn) is the shared nominal 1000 for every objective, not each objective's own actual maximum
 - Sovereignty Score computed from the stated formula (Score(SOVn) / 1000) × Weight(SOVn); a maximal response is not clamped to 100% — the framework's own 2dp rounding overshoot (100.0756%) is reported faithfully if the assessment reaches it
@@ -504,9 +505,10 @@ All artifacts must pass these 10 checks:
 
 ### MARPUB -- French Public Procurement
 
-- Threshold analysis completed (< €40k / < €215k / > €215k) with recommended procedure
+- Threshold analysis completed with recommended procedure, using the 2026–2027 thresholds (no publicity or competition below €60k supplies/services or €100k works; formal procedure from €140k supplies/services for central government authorities or €216k for other contracting authorities; works €5,404k)
 - BOAMP and JOUE publication requirements determined
 - Award criteria weights total exactly 100%
+- At least one award criterion takes account of the environmental characteristics of the offer (CCP L2152-7, since August 2026), and at least one execution condition takes account of environmental considerations (L2112-2)
 - Data localisation clause (EU territory, extraterritorial law prohibition) included
 - Reversibility clause (DINUM standards) included
 - GDPR/DPA clause included if personal data detected
@@ -517,6 +519,7 @@ All artifacts must pass these 10 checks:
 
 - All five referentiels addressed: Doctrine cloud, RGI, RGAA, RGESN, RGS
 - Mandatory vs recommended status correctly assigned per entity type and size
+- RGESN recorded as non-binding (Arcep/Arcom reference under the REEN law) unless the organisation's policy or a contract adopts it
 - RGAA 4.1 compliance rate stated (% or "To be assessed via RGAA audit")
 - RGS target security level determined (*//**/***) with homologation status
 - FranceConnect/ProConnect applicability assessed
@@ -646,7 +649,7 @@ All artifacts must pass these 10 checks:
 - Build-vs-reuse decision made with justification for each component (reuse / fork / SILL assembly / procure / build)
 - Contribution-back plan documented for any forked component
 - Publication obligation assessed: which project code must be published on code.gouv.fr
-- Exceptions to publication obligation documented with justification (security, trade secret, third-party IP)
+- Exceptions to publication obligation documented with justification (CRPA L311-4 to L311-6: third-party IP, security of information systems, trade secret)
 - Reused components register populated (source, version, licence, integration method)
 - Circulaire PM n°6264/SG (27 April 2021) — evidence that reuse was assessed before commissioning new development
 
@@ -664,7 +667,7 @@ All artifacts must pass these 10 checks:
 - Emergency communications (Notrufe) flagged as TKG 2021 rather than assessed under the BaFG
 - SMS and FFG exposures stated separately: BaFG administrative penalties up to EUR 80,000 tiered by severity and size; **no fine regime asserted under the WZG**
 - Gap analysis prioritised by user impact first and enforcement exposure second, with owners, target dates and NFR-UX cross-references
-- Items requiring practitioner verification marked `[NEEDS VERIFICATION]`, including the BaFG § numbers
+- Items requiring practitioner verification marked `[NEEDS VERIFICATION]`
 
 ### ATDSG -- Austrian Data Protection Assessment
 
@@ -688,7 +691,7 @@ All artifacts must pass these 10 checks:
 - Competent authority identified (Cybersicherheitsbehörde / Bundesamt für Cybersicherheit)
 - Previous NISG 2018 Betreiber wesentlicher Dienste status captured and re-assessed (NISG 2018 expires 30 Sep 2026)
 - All ten NIS2 Article 21 minimum security measures assessed with maturity and gap (§32)
-- Incident reporting channel established (CSIRT via the NIS2-Meldeplattform, §34)
+- Incident reporting channel established (responsible CSIRT via NIS2-Services on the USP, §34)
 - 24-hour / 72-hour / intermediate / 1-month reporting capability readiness assessed
 - Cross-reporting to DSB for personal data breaches addressed
 - Supply chain security obligations including any AT sectoral secondary rules assessed
@@ -725,7 +728,7 @@ All artifacts must pass these 10 checks:
 - Materieel publiek cloudgebruik determination made with stated rationale (clause 4.1)
 - Every clause 5.2 / 4.5 / 5.4 eligibility conclusion cites the clause number it rests on, and the clause 5.2 conclusion cites the TBB category / rubricering it depends on (or explicitly flags the category as pending `/arckit-nl:nl-tbb`)
 - Clause 4.5 email/file-storage conditions assessed individually — partial satisfaction of the three cumulative conditions is not treated as eligible
-- Clause 3.1 risk assessment covers all five required aspects, with foreign-government interference explicitly assessed and mitigated as far as possible
+- Clause 3.1 risk analysis covers, besides security, continuity and privacy, all five aspects the clause lists: (1) the characteristics of the cloud use (main provider and any sub-providers, public / private / hybrid / community cloud, region of processing and storage); (2) the provider's role in security and continuity and how it is assured; (3) how the provider admits, or reports on, audit and accountability investigations; (4) foreign-government interference with confidentiality and availability, explicitly weighed and mitigated as far as possible; (5) the risk of the provider abusing a large supplier dependency, such as forcing technology choices or commercial conditions. Residual risk is documented and formally accepted within the organisation
 - Clause 4.2 cybersecurity criteria (C2000, ABRO, AIVD/MIVD advice) assessed
 - Clause 4.3 critical/essential-entity discouragement assessed where applicable, with risk-acceptance rationale recorded if proceeding regardless
 - Clause 4.6 data location and encryption posture assessed
@@ -865,12 +868,12 @@ All artifacts must pass these 10 checks:
 
 ### OASTR -- O-AA Agile Strategy
 
-- Dual transformation framed as C208 frames it: both the digital dimension (technology, product, operating model) and the agile dimension (organisational, cultural and team agility) are described, or an area is ruled out with a reason
+- Dual transformation framed as the O-AA Standard, Version 2.0 frames it: both the digital dimension (technology, product, operating model) and the agile dimension (organisational, cultural and team agility) are described, or an area is ruled out with a reason
 - The two dimensions are planned together in each transformation wave, not one after the other
 - Each product outcome and each wave states the outcome it buys and the measure that would show it worked
 - Every value stream is mapped to a product team and a transformation wave, so none is left unassigned
 - Funding and team-topology implications stated, not left as an exercise for delivery
-- Every O-AA axiom cited is quoted from the C208 standard by its published number and name, and is used to justify a specific choice rather than listed decoratively
+- Every O-AA axiom cited is named by its published number and name (O-AA Standard, Version 2.0, Appendix A), and is used to justify a specific choice rather than listed decoratively
 - Strategy traces to stakeholder goals and business drivers from STKE and REQ
 
 ### OAPR -- O-AA Product Architecture
@@ -1025,7 +1028,7 @@ All artifacts must pass these 10 checks:
 - Authorization boundary describes components inside and outside, with explicit in-scope / out-of-scope justification for external services per the ABG
 - Every interconnection records name, FedRAMP package ID, agreement type (ICA / MOU / ISA), data direction, ports and protocols, and sensitivity
 - Types of Users records privilege level, clearance or citizenship requirement, and authentication mechanism per population
-- Applicable laws include FISMA, the Privacy Act and E-Gov Act §208 as a minimum, plus agency-specific statutes, with M-24-10 cited where AI is in scope
+- Applicable laws include FISMA, the Privacy Act and E-Gov Act §208 as a minimum, plus agency-specific statutes, with OMB M-25-21 cited where AI is in scope (and M-25-22 where AI is acquired)
 - ConMon strategy states scan cadence by type (authenticated, unauthenticated, web application, container, database), annual assessment and POA&M cadence
 
 ### FRRR -- FedRAMP Readiness Assessment
@@ -1033,13 +1036,15 @@ All artifacts must pass these 10 checks:
 - The SSP and NIST 800-53 artefacts both exist — the control delta cannot be enumerated without them
 - Capability statement says why a federal agency would use the CSO, not only what it does
 - Ready-capabilities checklist assessed item by item: FIPS 140-3 validated cryptography at rest and in transit, MFA for privileged access, audit logging, vulnerability-management cadence, incident response with US-CERT reporting, supply-chain controls, ConMon, and US-Persons staffing where required
-- Every gap records a severity per the 3PAO RAR rubric (Critical / High / Moderate / Low), an owner and a target date
+- Federal Mandates (RAR §4.1, six questions) each answered Yes or No, Yes only when fully and strictly met; an alternative implementation is a No
+- FedRAMP Requirements (RAR §4.2) answered Yes or No as the RAR asks, with a partly implemented capability answered No and its missing elements described
+- Every gap records a severity (Critical / High / Moderate / Low), an owner and a target date, and the severity is presented as ArcKit's remediation-priority scale: the RAR records Yes / No answers and a 3PAO's overall judgement, not severities
 - Gap register reconciles with the Planned entries in the NIST 800-53 artefact
 - Every gap has a corresponding draft POA&M row in FedRAMP POA&M format
 - Evidence inventory identifies control claims with no supporting artefact, rather than listing only the evidence that exists
 - Customer Responsibility Matrix drafted for SaaS and PaaS offerings
-- Authorization path recommended with rationale against the JAB prioritization criteria
-- Readiness verdict consistent with the gaps — no Ready verdict while Critical or High gaps remain open
+- Certification route recommended (type Rev 5 or 20x, path Agency or Program, class A–D) with rationale, and no JAB P-ATO path offered (OMB M-24-15 ended the JAB)
+- Readiness verdict consistent with the answers and gaps — no Ready verdict while any Federal Mandate is No or Critical or High gaps remain open
 
 ### ZTA -- Zero Trust Architecture Maturity
 
@@ -1092,19 +1097,20 @@ All artifacts must pass these 10 checks:
 - Generative AI addendum present wherever the system uses generative AI, assessing all 12 NIST AI 600-1 risks with applicability, controls, residual risk and actions
 - Absence of the GenAI addendum justified by an explicit not-generative determination, never omitted silently
 - Residual risk register lists risks remaining after Manage actions, each with a target review date
-- Control crosswalk maps AI RMF subcategories to 800-53 Rev 5 controls and to M-24-10 minimum practices
+- Control crosswalk maps AI RMF subcategories to 800-53 Rev 5 controls and to the OMB M-25-21 §4(b) minimum practices
 - Manage function cross-references the IR controls in the NIST 800-53 artefact
 
-### AIIA -- AI Impact Assessment (OMB M-24-10)
+### AIIA -- AI Impact Assessment (OMB M-25-21)
 
-- Appendix I presumed-impacting lists checked for both rights and safety, with matched items quoted verbatim and cited to their M-24-10 section, or an explicit "no Appendix I match"
-- Rights-impacting determination applies the M-24-10 principal-basis test and names both the decision and the affected population
-- Safety-impacting determination names the decision flow, not a verdict alone
-- An Appendix I match not carried through to a Yes verdict recorded as a documented rebuttal of presumption, never as a silent No
-- All eight minimum risk-management practices assessed with status (Met / Partial / Not Met / Not Applicable), evidence reference and action
-- Every practice not Met carries a waiver record with CAIO determination, waiver period and compensating measures
-- M-25-21 acquisition controls documented for vendor-supplied AI: AI RMF alignment, model provenance, training-data disclosure, bias-testing access, fairness reporting, incident reporting, exit and portability
-- AI Use Case Inventory submission confirmed or scheduled, with any law-enforcement or national-security redactions noted
+- Assessed under OMB M-25-21, not the rescinded M-24-10: no rights-impacting or safety-impacting verdicts and no Appendix I lists
+- All fifteen M-25-21 §6 presumed high-impact purposes (a)–(o) checked, with each match cited by letter, or an explicit "no §6 match"
+- High-impact determination applies the §5 test (output is a principal basis for a decision or action with a legal, material, binding or significant effect on one of the six listed areas) and names the decision, the output relied on and the affected population
+- A §6 match determined not high-impact carries the written notice to the CAIO and its justification, never a silent No
+- All seven §4(b) minimum practices assessed with status (Met / Partial / Not Met / Not Applicable), evidence reference and action, and the impact assessment covers all seven §4(b)(ii) elements, including the independent review and the signed risk acceptance
+- Every practice not Met carries a waiver record (CAIO written determination, ground, OMB report within 30 days, annual certification date, public summary, compensating measures) or a plan to discontinue the AI
+- A pilot exemption is claimed only with all four §4(a)(i) conditions recorded
+- M-25-22 acquisition terms documented for vendor-supplied AI: high-impact disclosure in the solicitation, IP rights and use of government data (no training on non-public agency data without consent), privacy, vendor lock-in protections, M-25-21 compliance, and ongoing testing and monitoring; M-26-04 terms added where the AI is a large language model
+- AI Use Case Inventory entry confirmed or scheduled with the high-impact field set, and any withheld details noted with their legal basis
 - CAIO sign-off block present with scope, conditions and next review
 
 ### SBOM -- Software Bill of Materials (EO 14028 / M-22-18)
@@ -1389,7 +1395,7 @@ All artifacts must pass these 10 checks:
 
 ### AUE8 -- Essential Eight Maturity Assessment
 
-- All eight mitigation strategies assessed: application control, patch applications, Office macro settings, user application hardening, restrict administrative privileges, patch operating systems, multi-factor authentication, regular backups
+- All eight mitigation strategies assessed under ASD's names, unnumbered: patch applications, patch operating systems, multi-factor authentication, restrict administrative privileges, application control, restrict Microsoft Office macros, user application hardening, regular backups
 - Each strategy records current maturity (ML0 / ML1 / ML2 / ML3) with evidence, target maturity with its regulatory or risk-appetite rationale, gap, remediation with owner and target date, and residual risk
 - Maturity summary matrix carries one row per strategy and reconciles with the per-strategy assessments
 - Where the entity is a DISP member, any strategy below ML2 is flagged as a DISP non-compliance risk rather than reported as a neutral gap
@@ -1400,11 +1406,11 @@ All artifacts must pass these 10 checks:
 ### AUISM -- ISM Control Applicability
 
 - Applicability driven by system classification — the control set at OFFICIAL:Sensitive is a subset of that at PROTECTED, and the artefact states which classification it is assessing
-- Applicability matrix covers all 17 ISM control areas (the 15 chapter domains plus Cloud/IaaS and Working-Off-Site)
-- Each in-scope domain records applicability rationale, implementation status, evidence, gap with specific ISM control IDs, remediation with owner and date, and any compensating controls
-- Gaps name the specific ISM control IDs not met rather than describing the domain in general terms
+- Applicability matrix covers all 23 cyber security guidelines of the ISM edition assessed (September 2026), with no separate system monitoring, cloud or working-off-site area
+- Each in-scope guideline records applicability rationale, implementation status, evidence, gap with specific ISM control IDs, remediation with owner and date, and any compensating controls
+- Gaps name the specific ISM control IDs not met rather than describing the guideline in general terms
 - ISM-to-E8 cross-reference present, showing E8 as a mitigation subset rather than an alternative
-- Compliance summary states an applicability score as controls implemented over controls applicable, reconciling with the per-domain assessments
+- Compliance summary states an applicability score as controls implemented over controls applicable, reconciling with the per-guideline assessments
 - IRAP position records scope, assessment date, accepted residual risks and re-assessment cadence; inherited posture noted where integrating with IRAP-assessed cloud services
 
 ### AUPIA -- Australian Privacy Impact Assessment
@@ -1737,15 +1743,15 @@ All artifacts must pass these 10 checks:
 
 ### NHSDTAC -- NHS Digital Technology Assessment Criteria
 
-- All five DTAC sections assessed, each with an explicit pass, partial or fail status and supporting evidence
-- Clinical safety records DCB0129 manufacturer and DCB0160 deployer case status, CSO name and registration, and hazard log status with open-hazard count and highest open risk level
-- Absent safety case files marked `[PENDING DCB0129/0160]` clearly rather than passed over
-- Data protection states the UK GDPR Article 6 lawful basis, and Article 9 where special-category data is processed
-- Sub-processor list records locations and the SCCs or UK addendum relied upon
-- DSPT submission status stated, marked as an organisation responsibility where external
-- Technical assurance covers cloud hosting and UK region status, Cyber Essentials, software lifecycle including SBOM, encryption in transit and at rest with key management, penetration test status, business continuity with RTO and RPO, and vulnerability management SLAs
+- Follows the DTAC form version 2.0 (24 February 2026) structure and question codes: A and B answered as context, every applicable C1–C4 question given a pass, fail or pending status against the form's pass criterion with evidence, and D1 responses recorded without a pass or fail
+- The form's skip logic applied, with skipped questions marked N/A and the reason given
+- Clinical safety records SaMD / AIaMD status (and the Pre-Acquisition Questionnaire where it applies), DCB0129 scope, the Clinical Safety Case Report and Hazard Log with open-hazard count and highest open risk level, and the CSO's name, profession and registration
+- Absent safety case files marked `[PENDING DCB0129]` clearly rather than passed over; the deployer's DCB0160 case, where recorded, is labelled as outside the DTAC form
+- Data protection records the manufacturer's DSPT status, ICO registration, DPIA coverage of the form's listed items, transparency information, data location, and the safeguard for any transfer outside the UK
+- Technical security covers Cyber Essentials, the Cyber Security Charter, the external penetration test (OWASP Top 10, within 12 months, no CVSS 7.0 or above), the Software Security Code of Practice, multi-factor authentication and logging
+- No AI annex presented as part of DTAC; any AI content sits in the separately labelled ArcKit supplement
 - Every `[PENDING]` item requiring human input surfaced in the summary rather than left in the body
-- Cross-references resolve to the DPIA, DATA and clinical-safety artefacts where they exist
+- Cross-references resolve to the DPIA, DATA, NHSMDR and clinical-safety artefacts where they exist
 
 ### NHSMDR -- UK MDR Classification
 

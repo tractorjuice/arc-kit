@@ -233,7 +233,7 @@ security_validation:
       status: passed
       verification: "encryption audit + network egress test"
 
-    - control: "APRA-CPS230"
+    - control: "APRA-CPS234"
       status: gap
       pending_items: ["network_segmentation", "threat_monitoring"]
 
@@ -310,7 +310,7 @@ security_stories:
     risk: high
     category: network_security
     control: "network_segmentation"
-    compliance: ["APRA-CPS230", "GDPR-32"]
+    compliance: ["APRA-CPS234", "GDPR-32"]
     acceptance: "VPC has no public subnets, egress filtered through approved destinations"
 
   - id: "SEC-051"
@@ -318,7 +318,7 @@ security_stories:
     risk: high
     category: monitoring
     control: "threat_monitoring"
-    compliance: ["APRA-CPS230", "DORA"]
+    compliance: ["APRA-CPS234", "DORA"]
     acceptance: "Prometheus + Grafana alerts for anomalous inference patterns"
 security_debt:
 
@@ -478,8 +478,8 @@ Continuous validation produces measurable security posture indicators:
 | ADM-P (Preliminary) | Define security risk tolerance, regulatory scope | This template |
 | ADM-A (Architecture Vision) | Security requirements + threat model | `vision.yaml` |
 | ADM-B (Business) | Security business objectives, risk appetite | Embedded in sprint planning |
-| ADM-C (Information Systems) | Security architecture design, data classification | `technology-architecture.yaml`, `data-architecture.yaml` |
-| ADM-D (Technology) | Security controls implementation, infrastructure hardening | Security stories in sprint backlog |
+| ADM-C (Information Systems) | Security architecture design, data classification | `data-architecture.yaml` (data assets, flows and applications) |
+| ADM-D (Technology) | Security controls implementation, infrastructure hardening | `technology-architecture.yaml`; security stories in sprint backlog |
 | ADM-E (Opportunities) | Security backlog prioritization, risk-based sequencing | `security-backlog.yaml` |
 | ADM-F (Migration) | Security testing automation, compliance validation | CI/CD pipeline compliance stage |
 | **ADM-G (Governance)** | **Continuous security validation** | **`governance-report.yaml`** |

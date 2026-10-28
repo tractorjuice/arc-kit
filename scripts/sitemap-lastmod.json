@@ -16,12 +16,12 @@
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
   "commands.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "6910ac42f25bcede08cf7e0f5dcc596f8615b1475ee5ec8ea60181f313be5289"
+    "lastmod": "2026-10-28",
+    "text_sha256": "054a53d0b1c5f201d8e975ab9f86d7ef1c55d66005ebd14cb74c20e06604238c"
   },
   "contributors.html": {
-    "lastmod": "2026-10-20",
-    "text_sha256": "2d020aeca971f0d8e01506ba86337fcc79d947c8f0057b03023f6b8f4a514995"
+    "lastmod": "2026-10-28",
+    "text_sha256": "21f43c6f57815228fcfa3c92f5edc8d67be274c7f021a493bacb182d7530796a"
   },
   "fde/architects.html": {
     "lastmod": "2026-10-19",
@@ -40,16 +40,16 @@
     "text_sha256": "5e90aa4e6e77146237251785c6423b5b21acde85544610597555d710106114db"
   },
   "guides.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "e6dc34c651496c54d4e7dfbb9fd1406ef7043806aaa3756638a48971b57052e2"
+    "lastmod": "2026-10-28",
+    "text_sha256": "12328130aaf65587651335645b41774f4bb8d7717c36b0a543f7626bdc7f28cd"
   },
   "index.html": {
-    "lastmod": "2026-10-25",
-    "text_sha256": "c6fd0313308b711e59661146c5659e5feeef295a4ae08e4085eed5d3ac7ae1ef"
+    "lastmod": "2026-10-28",
+    "text_sha256": "2e939680d388a3317867bba96fd8d1461b28ba08c7f6e1084e2f69f077cf06d0"
   },
   "llms.txt": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "bce2bafbc31489ca7fdf182b4ac6690854511cf0d0515f9a567badff34099a1e"
+    "lastmod": "2026-10-28",
+    "text_sha256": "8182ed533946043f93e8dcba8461e27fc5d458c6151eeedbb88a977826dc778c"
   },
   "on-github.html": {
     "lastmod": "2026-10-26",

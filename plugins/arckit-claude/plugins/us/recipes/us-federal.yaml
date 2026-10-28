@@ -3,7 +3,7 @@
 # Scope: US federal civilian agencies and the vendors that sell to them —
 # FedRAMP authorization (SSP + readiness self-assessment), FISMA / NIST 800-53 Rev 5
 # control tailoring, CISA Zero Trust Maturity Model + OMB M-22-09, OMB M-19-17
-# ICAM (PIV + login.gov), NIST AI RMF + OMB M-24-10/M-25-21 AI assurance,
+# ICAM (PIV + login.gov), NIST AI RMF + OMB M-25-21/M-25-22 AI assurance,
 # E-Gov Act §208 PIA, and EO 14028 secure-software / SBOM self-attestation.
 #
 # Out of scope (separate future overlays):
@@ -13,8 +13,11 @@
 #   - Section 508 accessibility (deferred to v5.2)
 #
 # Statutory currency:
-#   - EO 14110 revoked Jan 2025; active AI mandates are OMB M-24-10 + M-25-21
+#   - EO 14110 revoked Jan 2025; active AI mandates are OMB M-25-21 (use;
+#     replaced M-24-10) + M-25-22 (acquisition; replaced M-24-18), Apr 2025
 #   - FedRAMP Rev 5 transition completed 2024 (Rev 4 deprecated)
+#   - OMB M-24-15 (Jul 2024) ended the JAB; the FedRAMP Consolidated Rules for
+#     2026 certify by type (Rev 5 / 20x), path (Agency / Program) and class
 #   - OMB M-22-18 + M-23-16 secure-software attestation active since 2024
 
 recipe: us-federal
@@ -24,7 +27,7 @@ description: >
   US Federal Civilian end-to-end ATO + AI assurance pack. Produces a coherent
   FedRAMP authorization artefact set (FIPS 199 → NIST 800-53 Rev 5 → SSP →
   Readiness), CISA Zero Trust posture, OMB M-19-17 ICAM architecture, NIST
-  AI RMF assessment with OMB M-24-10/M-25-21 impact determination, E-Gov
+  AI RMF assessment with OMB M-25-21 high-impact determination, E-Gov
   §208 PIA, and EO 14028 SBOM self-attestation — plus the core ArcKit
   governance suite tailored for US federal civilian agencies.
 

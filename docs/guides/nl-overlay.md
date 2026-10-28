@@ -57,6 +57,8 @@ requirements
 
 `nl-exit` follows `nl-cloud` once materieel cloudgebruik is confirmed (or as one of the three cumulative conditions under clause 4.5(b)). `nl-bio` can run at any point; a TBB category, where one exists, helps it prioritise which control areas matter most, and cross-references `nl-cloud`'s data-location and encryption section for the Technological control theme rather than re-deriving it.
 
+**Run `risk` after the four.** Each NL command hands its findings to the risk register: the classification implications of the TBB category, the clause 3.1 cloud risks, the exit plan's residual risks and the open BIO2 gaps. Each reads an existing register if there is one, but none requires it, so a register built first would miss everything the overlay finds.
+
 ---
 
 ## Integration with Core ArcKit Commands

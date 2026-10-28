@@ -437,7 +437,7 @@
 </div>
 <div id="content" class="app-markdown">
 <p><code>/arckit:au-aescsf</code> generates an Australian Energy Sector Cyber Security Framework (AESCSF) maturity assessment for Australian electricity, gas, energy-market, DER, OT, or energy-sector supplier projects.</p>
-<p>AESCSF is energy-specific, but it should not be run as an isolated cyber checklist. It reads the AU federal community overlay's artefacts when they exist: <code>au-e8-posture</code> and <code>au-ism-controls</code> provide the ASD cyber baseline, and <code>au-ot-security</code> and <code>au-soci-cirmp</code> add connected OT and critical-infrastructure evidence where they apply. All four are optional inputs; the <code>au-energy</code> recipe runs them first. <code>au-energy-compliance</code> reads the finished assessment as cyber-posture context, so run this command before it.</p>
+<p>AESCSF is energy-specific, but it should not be run as an isolated cyber checklist. It reads the AU federal community overlay's artefacts when they exist: <code>au-e8-posture</code> and <code>au-ism-controls</code> provide the ASD cyber baseline and are recommended inputs; <code>au-ot-security</code> and <code>au-soci-cirmp</code> add connected OT and critical-infrastructure evidence where they apply and are optional. The <code>au-energy</code> recipe runs all four first. <code>au-energy-compliance</code> reads the finished assessment as cyber-posture context, so run this command before it.</p>
 <h2 id="prerequisites">Prerequisites</h2>
 <table>
 <thead>
@@ -460,12 +460,12 @@
 </tr>
 <tr>
 <td><code>/arckit:au-e8-posture</code> (<code>ARC-&lt;id&gt;-AUE8-v1.0.md</code>)</td>
-<td>Optional</td>
+<td>Recommended</td>
 <td>Enterprise cyber baseline for AESCSF maturity evidence</td>
 </tr>
 <tr>
 <td><code>/arckit:au-ism-controls</code> (<code>ARC-&lt;id&gt;-AUISM-v1.0.md</code>)</td>
-<td>Optional</td>
+<td>Recommended</td>
 <td>Broader ASD control evidence and IRAP/cloud inheritance context</td>
 </tr>
 <tr>

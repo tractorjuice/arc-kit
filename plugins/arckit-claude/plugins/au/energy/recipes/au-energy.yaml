@@ -11,7 +11,8 @@ description: >
   Australian energy critical-infrastructure compliance suite covering ASD
   Essential Eight, ASD ISM, Privacy Act PIA, OAIC NDB response, OT security,
   SOCI CIRMP, AESCSF maturity assessment, and energy-market obligations
-  including AER ring-fencing, AEMO interfaces, DERMS / DOE, and CSIP-AUS.
+  including AER ring-fencing, AEMO interfaces, DERMS / DOE, and CSIP-AUS,
+  with maturity and compliance gaps carried into the project risk register.
 
 defaults:
   version: "1.0"
@@ -180,6 +181,15 @@ targets:
     output: { project: "{P}-{NAME}", type: DATA }
     deps: [REQ, AU_PIA, AU_ENERGY]
 
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps:
+      [REQ, STKE, "ADR_*",
+       AU_E8, AU_ISM, AU_PIA, AU_NDB,
+       AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY, DATA_MODEL]
+
   - id: SERVICE_INVENTORY
     skill: arckit:servicenow
     args: "{P}"
@@ -191,6 +201,6 @@ targets:
     args: "{P}"
     output: { project: "{P}-{NAME}", type: TRAC }
     deps:
-      [REQ, STKE, "ADR_*",
+      [REQ, STKE, "ADR_*", RISK,
        AU_E8, AU_ISM, AU_PIA, AU_NDB,
        AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY, DATA_MODEL, SERVICE_INVENTORY]

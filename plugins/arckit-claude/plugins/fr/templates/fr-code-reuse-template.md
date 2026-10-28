@@ -35,8 +35,8 @@ French public administrations are subject to two complementary obligations:
 **1. Reuse before build** (Circulaire PM n°6264/SG, 27 April 2021)
 The circular instructs State administrations to strengthen the opening of public source code and the use of free software. Searching for and reusing existing public code before commissioning new development is how a project applies that policy. The circular is an instruction to State administrations, not a statute.
 
-**2. Publish custom code** (Loi République Numérique, Art. 16; DINUM mission logiciels libres)
-Software developed by or for the administration must be published as open source, except where national security, trade secrets, or third-party rights prevent publication.
+**2. Publish custom code** (CRPA L300-2, L311-1 and L312-1-1, as amended and created by the Loi République Numérique 2016; DINUM mission logiciels libres)
+Source code produced or received by the administration is an administrative document (L300-2). Administrations with 50 or more agents, other than local authorities under 3,500 inhabitants, publish it online (L312-1-1), except where third-party IP rights (L311-4), national defence, State security, public safety or the security of the administration's information systems (L311-5), or privacy and trade secrets (L311-6) prevent it. Art. 16 of the Loi République Numérique only asks administrations to encourage free software and open formats.
 
 | Obligation | Applicable | Rationale |
 |-----------|-----------|-----------|

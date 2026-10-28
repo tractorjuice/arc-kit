@@ -404,7 +404,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 
 | Command | Needs (M) | Recommended (R) | Optional (O) |
 |---------|-----------|-----------------|--------------|
-| `/arckit:au-aescsf` | — | requirements, stakeholders | au-e8-posture, au-ism-controls, au-ot-security, au-soci-cirmp, data-model, dfd, diagram, maturity-model, principles, risk, servicenow, traceability |
+| `/arckit:au-aescsf` | — | au-e8-posture, au-ism-controls, requirements, stakeholders | au-ot-security, au-soci-cirmp, data-model, dfd, diagram, maturity-model, principles, risk, servicenow, traceability |
 | `/arckit:au-energy-compliance` | — | requirements, stakeholders | adr, au-aescsf, au-ndb-playbook, au-ot-security, au-pia, au-soci-cirmp, data-model, dfd, diagram, principles, risk, servicenow, traceability |
 
 ### ArcKit USA Federal Civilian Overlay (`arckit-us`)
@@ -437,7 +437,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 |---------|-----------|-----------------|--------------|
 | `/arckit:uk-nhs-dcb0129` | — | data-model, requirements, stakeholders | atrs, dpia, principles, risk |
 | `/arckit:uk-nhs-dcb0160` | — | data-model, principles, requirements, stakeholders, uk-nhs-dcb0129 | operationalize |
-| `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-nhs-dcb0129, uk-nhs-dcb0160 |
+| `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-mdr-classification, uk-nhs-dcb0129, uk-nhs-dcb0160 |
 | `/arckit:uk-mdr-classification` | — | data-model, principles, requirements, stakeholders | secure, uk-nhs-dcb0129 |
 
 ### ArcKit FDE Site Generator (`arckit-fde`)
@@ -481,7 +481,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:business-capability-map` | adm-preliminary | principles, requirements, stakeholders | application-inventory |
 | `/arckit:application-inventory` | adm-preliminary | business-capability-map, principles, requirements | — |
 | `/arckit:application-rationalization` | application-inventory | adm-preliminary, adr, business-capability-map, principles, transition-architecture | — |
-| `/arckit:gap-analysis` | business-capability-map | principles, strategy | adm-preliminary, risk, stakeholders |
+| `/arckit:gap-analysis` | business-capability-map | application-inventory, application-rationalization, principles, strategy | adm-preliminary, risk, stakeholders |
 | `/arckit:transition-architecture` | gap-analysis | adr, application-rationalization, roadmap | risk, stakeholders |
 | `/arckit:architecture-board` | principles | adm-preliminary, business-capability-map, vendor HLD | — |
 | `/arckit:architecture-change` | — | adm-preliminary, architecture-board, business-capability-map, principles, transition-architecture | application-inventory |
@@ -1100,13 +1100,14 @@ Added 18 new commands covering EU regulations and French public sector governanc
 - `nl-tbb` → feeds `nl-cloud` (R) — the TBB category, with any existing marking it records, decides the clause 5.2 public-cloud prohibition; without it `nl-cloud` flags the category as pending
 - `nl-cloud` → feeds `nl-exit` (R) — the exit plan is required for material cloud use identified by the assessment
 - `nl-cloud` assesses Cbw essential-entity status itself (clause 4.3); it does not read an `eu-nis2` artefact
+- `nl-tbb`, `nl-cloud`, `nl-exit` and `nl-bio` → feed `risk` — each hands its findings (classification implications, clause 3.1 cloud risks, exit residual risks, BIO2 gaps) to the risk register. Each reads an existing register only as a recommended input, so `risk` runs after them
 
 **Typical Dutch central-government compliance path**:
 
 ```text
-stakeholders → requirements → risk →
+stakeholders → requirements →
 nl-tbb → nl-cloud → nl-exit → nl-bio →
-eu-nis2 → eu-data-act
+risk → eu-nis2 → eu-data-act
 ```
 
 **Key inter-dependencies among EU/FR commands**:
@@ -1234,9 +1235,9 @@ principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (
 
 ### 2026-05-23 - USA Federal Civilian Overlay Commands (Community)
 
-Added 10 community-overlay commands (`us-*`) covering US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship with the `[COMMUNITY]` description prefix and are not part of the officially-maintained baseline. Total command count moves to **135** (71 official + 64 community).
+Added 10 community-overlay commands (`us-*`) covering US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-25-21/M-25-22 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship with the `[COMMUNITY]` description prefix and are not part of the officially-maintained baseline. Total command count moves to **135** (71 official + 64 community).
 
-**Statutory currency anchor**: EO 14110 was revoked January 2025; the live AI mandates are OMB M-24-10 + M-25-21. FedRAMP completed the Rev 5 transition in 2024.
+**Statutory currency anchor**: EO 14110 was revoked January 2025; the live AI mandates are OMB M-25-21 (use of AI; it rescinded and replaced M-24-10 on 3 April 2025) + M-25-22 (acquisition of AI; it replaced M-24-18). FedRAMP completed the Rev 5 transition in 2024, and OMB M-24-15 (July 2024) replaced the JAB with the FedRAMP Board.
 
 **Canonical execution chain (us-federal recipe, 5 waves)**:
 
@@ -1272,15 +1273,15 @@ Wave 5 (authorization): us-sbom-eo-14028 → us-fedramp-ssp → us-fedramp-readi
 | `us-icam` | `us-zero-trust` | ICAM is the foundation of the Zero Trust Identity pillar; IAL/AAL/FAL selections directly score ZTMM Identity functions |
 | `us-icam` | `us-privacy-pia` | Identity proofing collects and processes PII (especially IAL2/IAL3); the ICAM data flows feed the PIA personal-information inventory |
 | `us-icam` | `adr` | Identity provider selection (PIV vs login.gov vs agency-specific) and federation pattern decisions warrant ADRs |
-| `us-ai-rmf` | `us-ai-impact` | Translate AI RMF findings into the M-24-10 rights-impacting / safety-impacting determination and the M-25-21 acquisition controls |
+| `us-ai-rmf` | `us-ai-impact` | Translate AI RMF findings into the M-25-21 high-impact determination and minimum practices, and the M-25-22 acquisition terms |
 | `us-ai-rmf` | `us-privacy-pia` | AI systems trained on or inferencing over PII require an E-Gov Act §208 PIA; the AI RMF data inventory seeds the PIA |
 | `us-ai-rmf` | `risk` | Residual AI risks (confabulation, bias, security, value-chain) flow into the project risk register |
 | `us-ai-rmf` | `adr` | Model architecture, hosting, data-governance, and human-oversight decisions made during the RMF process warrant ADRs |
 | `us-ai-impact` | `us-ai-rmf` | The minimum-practice gaps surfaced here drive the AI RMF Govern / Map / Measure / Manage uplift backlog |
-| `us-ai-impact` | `us-privacy-pia` | Rights-impacting AI systems handling PII require an E-Gov Act §208 PIA |
-| `us-ai-impact` | `risk` | Residual M-24-10 risks (especially where minimum practices cannot be met) flow into the risk register |
+| `us-ai-impact` | `us-privacy-pia` | AI systems handling PII require an E-Gov Act §208 PIA, which the M-25-21 impact assessment should reference |
+| `us-ai-impact` | `risk` | Residual M-25-21 risks (especially where minimum practices cannot be met) flow into the risk register |
 | `us-privacy-pia` | `us-icam` | PII collected by identity proofing (IAL2/IAL3) and authentication processes is documented in the PIA; the ICAM data flows must reconcile with the PIA inventory |
-| `us-privacy-pia` | `us-ai-impact` | AI systems processing PII require both the PIA and the M-24-10 rights-impacting determination; the PIA feeds the AI Impact Assessment |
+| `us-privacy-pia` | `us-ai-impact` | AI systems processing PII require both the PIA and the M-25-21 high-impact determination; the PIA feeds the AI Impact Assessment |
 | `us-privacy-pia` | `data-model` | PII fields and lawful authorities surface as data-model attributes and access-control rules |
 | `us-sbom-eo-14028` | `us-nist-800-53` | SR (Supply Chain Risk Management) and SA (System and Services Acquisition) control family implementations must cross-reference the attestation and SBOM |
 | `us-sbom-eo-14028` | `adr` | SBOM format choice (CycloneDX vs SPDX), signing strategy (Sigstore, in-toto, SLSA level), and attestation exception requests warrant ADRs |

@@ -397,6 +397,15 @@ function subdirKey(dir) {
   return dir.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 }
 
+// Manifest keys of every SUBDIR_MAP bucket, in registry order. llms.txt walks
+// this list, so a bucket for a newly registered subdirectory is indexed without
+// another hand edit. The dashboard template and the DOCUMENT STATS table still
+// name each bucket, because each needs a display label;
+// tests/plugin/sync-guides-buckets.test.mjs fails when one of them misses a
+// key. changes/ (ACHG), audits/ (CDAU), framework/ (FWRK) and procurement/
+// (GCLD, DOS, GCLC) were all written to manifest.json but never shown (#982).
+const SUBDIR_KEYS = [...new Set(Object.values(SUBDIR_MAP))].map(subdirKey);
+
 function scanProject(repoRoot, projectName) {
   const projectDir = join(repoRoot, 'projects', projectName);
   const projectPath = `projects/${projectName}`;
@@ -641,9 +650,12 @@ function scanProject(repoRoot, projectName) {
     }
   }
 
-  // Remove empty arrays
-  for (const key of ['diagrams', 'decisions', 'wardleyMaps', 'dataContracts', 'reviews', 'research', 'vendors', 'vendorProfiles', 'techNotes', 'dataSourceProfiles', 'external']) {
-    if (project[key].length === 0) delete project[key];
+  // Remove empty arrays, except documents. Walks the project rather than a
+  // list, so the derived SUBDIR_MAP buckets are cleaned up too.
+  for (const key of Object.keys(project)) {
+    if (key !== 'documents' && Array.isArray(project[key]) && project[key].length === 0) {
+      delete project[key];
+    }
   }
 
   return project;
@@ -737,11 +749,7 @@ function buildLlmsTxt(manifest, repoInfo, version) {
         }
       };
       emit(project.documents);
-      emit(project.diagrams);
-      emit(project.decisions);
-      emit(project.wardleyMaps);
-      emit(project.dataContracts);
-      emit(project.research);
+      for (const key of SUBDIR_KEYS) emit(project[key]);
       emit(project.reviews);
       if (project.vendors) {
         for (const vendor of project.vendors) {
@@ -1165,6 +1173,10 @@ let wardleyMapCount = 0;
 let dataContractCount = 0;
 let researchCount = 0;
 let reviewCount = 0;
+let changeCount = 0;
+let auditCount = 0;
+let frameworkCount = 0;
+let procurementCount = 0;
 let vendorDocCount = 0;
 let vendorProfileCount = 0;
 let techNoteCount = 0;
@@ -1177,6 +1189,10 @@ for (const p of manifest.projects) {
   dataContractCount = dataContractCount + (p.dataContracts ? p.dataContracts.length : 0);
   researchCount = researchCount + (p.research ? p.research.length : 0);
   reviewCount = reviewCount + (p.reviews ? p.reviews.length : 0);
+  changeCount = changeCount + (p.changes ? p.changes.length : 0);
+  auditCount = auditCount + (p.audits ? p.audits.length : 0);
+  frameworkCount = frameworkCount + (p.framework ? p.framework.length : 0);
+  procurementCount = procurementCount + (p.procurement ? p.procurement.length : 0);
   if (p.vendors) for (const v of p.vendors) vendorDocCount = vendorDocCount + v.documents.length;
   vendorProfileCount = vendorProfileCount + (p.vendorProfiles ? p.vendorProfiles.length : 0);
   techNoteCount = techNoteCount + (p.techNotes ? p.techNotes.length : 0);
@@ -1226,6 +1242,10 @@ const message = [
   `| Data Contracts | ${dataContractCount} |`,
   `| Research | ${researchCount} |`,
   `| Reviews | ${reviewCount} |`,
+  `| Change Requests | ${changeCount} |`,
+  `| Audits | ${auditCount} |`,
+  `| Framework | ${frameworkCount} |`,
+  `| Procurement | ${procurementCount} |`,
   `| Vendor Documents | ${vendorDocCount} |`,
   `| Vendor Profiles | ${vendorProfileCount} |`,
   `| Tech Notes | ${techNoteCount} |`,

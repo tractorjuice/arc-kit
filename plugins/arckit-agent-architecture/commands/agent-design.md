@@ -4,10 +4,8 @@ doc-type: AAGR
 argument-hint: "<agent name or project ID, e.g. 'research-agent', '001'>"
 effort: high
 handoffs:
-  - command: agent-integration
-    description: Design integration contracts for multi-agent systems
-  - command: agent-security
-    description: Design security architecture for agents
+  - command: agent-governance
+    description: Set oversight tiers, approvals and audit for the designed agents
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
@@ -393,8 +391,9 @@ The footer should be populated with:
 - [ ] Set up tool contracts and MCP servers
 - [ ] Implement guardrails and safety layer
 - [ ] Develop testing framework
-- [ ] Run `/arckit:agent-integration` for multi-agent coordination
-- [ ] Run `/arckit:agent-security` for security review
+- [ ] Run `/arckit:agent-governance` for oversight, approvals and audit
+- [ ] Run `/arckit:agent-security` for security review (it reads the governance framework)
+- [ ] Run `/arckit:agent-integration` for multi-agent coordination (it reads the governance and security artefacts)
 
 ### Files Created
 

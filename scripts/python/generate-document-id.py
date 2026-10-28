@@ -22,9 +22,21 @@ import os
 import re
 import sys
 
-# Multi-instance document types that require sequence numbers
-# Keep in sync with plugins/arckit-claude/config/doc-types.mjs MULTI_INSTANCE_TYPES
-MULTI_INSTANCE_TYPES = {"ADR", "DIAG", "DFD", "WARD", "DMC", "RSCH", "AWRS", "AZRS", "GCRS", "DSCT"}
+# Multi-instance document types that require sequence numbers.
+# Mirrors MULTI_INSTANCE_TYPES in plugins/arckit-claude/config/doc-types.mjs, in
+# the same order. tests/plugin/test_python_document_id.py fails when the two
+# differ, and when this file and its copy under plugins/arckit-claude/scripts/
+# python/ stop being identical. Before that test the root copy had drifted to 10
+# of 21 codes and the plugin copy to 16; a missing code got an ID with no -NNN-
+# sequence, so each run overwrote the last artefact of its type.
+MULTI_INSTANCE_TYPES = {
+    "ADR", "DIAG", "DFD", "WARD", "DMC",
+    "RSCH", "AWRS", "AZRS", "GCRS", "DSCT", "TNDR", "CMPT",
+    "WGAM", "WCLM", "WVCH",
+    "GOVR", "GCSR", "GLND", "GRNT",
+    "CDAU",
+    "ACHG",
+}
 
 
 def is_multi_instance(doc_type):

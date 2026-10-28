@@ -436,9 +436,9 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 - `/arckit:eu-ai-act` — EU AI Act (Regulation 2024/1689) — risk classification (prohibited / high-risk / GPAI), conformity routes
 - `/arckit:eu-dora` — Digital Operational Resilience Act (EU 2022/2554) — financial sector ICT risk, TLPT, third-party register
 - `/arckit:eu-cra` — Cyber Resilience Act (Regulation 2024/2847) — products with digital elements, SBOM, VDP, CE marking
-- `/arckit:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework (v1.2.1) — eight weighted sovereignty objectives, SEAL-0 to SEAL-4 assurance levels, minimum-SEAL tender gate
+- `/arckit:eu-cloud-sovereignty` — EU Cloud Sovereignty Framework (v1.2.1, June 2026 calculator weights) — eight weighted sovereignty objectives, SEAL-0 to SEAL-4 assurance levels, minimum-SEAL tender gate
 - `/arckit:eu-dsa` — Digital Services Act (Regulation 2022/2065) — intermediaries, platforms, VLOPs, ARCOM
-- `/arckit:eu-data-act` — Data Act (Regulation 2023/2854) — connected products, B2B FRAND, cloud switching, Article 27
+- `/arckit:eu-data-act` — Data Act (Regulation 2023/2854) — connected products, B2B FRAND, cloud switching, Article 32 international governmental access
 
 **French government** (apply on top of the EU baseline for French deployments):
 
@@ -464,11 +464,11 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 **Austrian government** (apply on top of the EU baseline for Austrian deployments — domain-maintained by [@gtonic](https://github.com/gtonic)):
 
 - `/arckit:at-dsgvo` — Austrian DSG layer on GDPR (image processing on the GDPR per the VwGH's §12 DSG ruling, ELGA/GTelG health, §96a ArbVG employee monitoring, age 14 consent, DSB enforcement)
-- `/arckit:at-nisg` — Austrian NISG 2026 (NIS2 transposition, BGBl. I Nr. 94/2025, in force since 1 Oct 2026) — Essential/Important designation, Cybersicherheitsbehörde registration, CSIRT reporting (CERT.at / GovCERT), KSÖ, AT sectoral authorities
+- `/arckit:at-nisg` — Austrian NISG 2026 (NIS2 transposition, BGBl. I Nr. 94/2025, in force since 1 Oct 2026) — Essential/Important designation, Cybersicherheitsbehörde registration, CSIRT reporting (CERT.at / GovCERT / HealthCERT), KSÖ, sectoral overlaps (DORA, equivalent sector acts)
 - `/arckit:at-bvergg` — Bundesvergabegesetz 2018 procurement — Oberschwellen/Unterschwellen, ANKÖ publication, Bestbieterprinzip, BVwG review
 - `/arckit:at-barrierefreiheit` — Digital accessibility across both transposition tracks — BaFG (European Accessibility Act, private sector) and WZG (public sector), EN 301 549 / WCAG 2.1 AA, Barrierefreiheitserklärung, SMS and FFG
 
-These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry `[NEEDS VERIFICATION]` markers where a point is genuinely open rather than unreviewed — further implementing ordinances under the NISG 2026, Länder scope, current guidance versions, and recent DSB case law. `nl-cloud` and `nl-tbb` play the same role for Dutch deployments, with `nl-cloud` keying its public-cloud eligibility off the TBB category determined by `nl-tbb`.
+These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry `[NEEDS VERIFICATION]` markers where a point is genuinely open rather than unreviewed — further implementing ordinances under the NISG 2026, the applicable Land accessibility laws, current guidance versions, and recent DSB case law. `nl-cloud` and `nl-tbb` play the same role for Dutch deployments, with `nl-cloud` keying its public-cloud eligibility off the TBB category determined by `nl-tbb`.
 
 ---
 
@@ -543,18 +543,18 @@ The commands chain together in a canonical order from `principles → uae-classi
 
 **Procurement and regulation**:
 
-- `/arckit:uk-nhs-dtac` — NHS Digital Technology Assessment Criteria v3 — 5 sections (Clinical Safety, Data Protection, Technical Assurance, Interoperability, Usability + Accessibility) plus AI annex. Cross-references DCB0129/0160, DPIA, ATRS, Secure by Design
+- `/arckit:uk-nhs-dtac` — NHS Digital Technology Assessment Criteria, following the DTAC form version 2.0 (24 February 2026; required from 6 April 2026): context sections A and B, assessed sections C1–C4 (Clinical safety, Data protection, Technical security, Interoperability) and scored section D1 (Usability and accessibility), plus an optional AI supplement outside DTAC. Cross-references DCB0129, MDR classification, DPIA, ATRS, Secure by Design
 - `/arckit:uk-mdr-classification` — UK MDR 2002 (as amended) + EU MDR 2017/745 software-as-medical-device (SaMD) and AI-as-medical-device (AIaMD) classification. UKCA / UKNI / CE marking pathway, Windsor Framework NI handling, conformity-assessment route, MHRA SaMD/AIaMD Programme alignment, ISO 14971 / IEC 62304 / ISO 13485 standards mapping, post-market obligations
 
 The commands compose with — not replace — the UK government baseline (`tcop`, `secure`, `dpia`, `atrs`, `risk`, `service-assessment`). Recipe: `uk-nhs-clinical-safety` (44 targets across the clinical-safety waves). Proposed domain co-maintainer: Dr Marcus Baw ([@pacharanero](https://github.com/pacharanero)) — clinical informatician at RCPCH, openEHR, NHS England.
 
-The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — they follow Marcus's SAFETY.md spec convention so they remain readable by clinicians, MHRA reviewers, and procurement teams who do not use ArcKit. Other artefacts cross-reference them by relative path. Full design log: [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md).
+The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — they follow Marcus's SAFETY.md spec convention so they remain readable by clinicians, MHRA reviewers, and procurement teams who do not use ArcKit. Other artefacts cross-reference them by relative path. Full design log (as committed in #501): [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](https://github.com/tractorjuice/arc-kit/blob/469e0b7d/docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md).
 
 ---
 
 ## USA Federal Civilian Overlay (10 commands)
 
-> ⚠️ **Community-contributed overlay.** The 10 commands below cover US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship as the **arckit-us** community-contributed overlay (not part of the officially-maintained baseline of 72). **EO 14110 was revoked January 2025**; the live AI mandates are **OMB M-24-10 + M-25-21**. **FedRAMP completed the Rev 5 transition in 2024**. The overlay is currently solo-maintained by @tractorjuice; a US federal-civilian domain co-maintainer is being recruited (CISO / SAOP / FedRAMP PMO / CAIO backgrounds welcome) before the overlay can be re-evaluated for official-baseline promotion. Output should be reviewed by qualified US federal counsel before reliance.
+> ⚠️ **Community-contributed overlay.** The 10 commands below cover US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-25-21/M-25-22 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship as the **arckit-us** community-contributed overlay (not part of the officially-maintained baseline of 72). **EO 14110 was revoked January 2025**; the live AI mandates are **OMB M-25-21** (use of AI; it rescinded and replaced M-24-10 on 3 April 2025) **+ M-25-22** (acquisition of AI; it replaced M-24-18). **FedRAMP completed the Rev 5 transition in 2024**. The overlay is currently solo-maintained by @tractorjuice; a US federal-civilian domain co-maintainer is being recruited (CISO / SAOP / FedRAMP PMO / CAIO backgrounds welcome) before the overlay can be re-evaluated for official-baseline promotion. Output should be reviewed by qualified US federal counsel before reliance.
 
 **In scope (v1)**: federal civilian agencies and the vendors that sell to them.
 
@@ -569,7 +569,7 @@ The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — the
 | `/arckit:us-zero-trust` | CISA Zero Trust Maturity Model v2.0 + OMB M-22-09 + NIST SP 800-207 | `ZTA` |
 | `/arckit:us-icam` | OMB M-19-17 + NIST SP 800-63-3 (A/B/C) + FIPS 201-3 + login.gov | `ICAM` |
 | `/arckit:us-ai-rmf` | NIST AI RMF 1.0 + NIST AI 600-1 (Generative AI Profile) | `AIRMF` |
-| `/arckit:us-ai-impact` | OMB M-24-10 + OMB M-25-21 | `AIIA` |
+| `/arckit:us-ai-impact` | OMB M-25-21 + OMB M-25-22 (+ M-26-04 for LLMs) | `AIIA` |
 | `/arckit:us-privacy-pia` | E-Government Act §208 + OMB M-03-22 + Privacy Act §552a + NIST SP 800-122 | `USPIA` |
 | `/arckit:us-sbom-eo-14028` | EO 14028 + OMB M-22-18 + OMB M-23-16 + CISA Self-Attestation Form + NTIA Minimum Elements | `SBOM` |
 
@@ -652,7 +652,7 @@ Enterprise Architecture Development Method — 9 commands covering the full ADM 
 
 ## O-AA Overlay (`arckit-oaa`) [COMMUNITY]
 
-Open Agile Architecture (O-AA, standard C208) — agile enterprise architecture for product-driven, sprint-based delivery. A standalone overlay alongside `arckit-togaf-adm`; the two are complementary, not competitors — see the [O-AA vs TOGAF ADM decision guide](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+Open Agile Architecture (O-AA Standard, Version 2.0, C262) — agile enterprise architecture for product-driven, sprint-based delivery. A standalone overlay alongside `arckit-togaf-adm`; the two are complementary, not competitors — see the [O-AA vs TOGAF ADM decision guide](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
@@ -690,7 +690,7 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 **Running both in the same project:**
 
 - No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.18.3` pins.
-- Shared project-local schemas keep artefacts consistent across overlays: `vision.yaml` (ADM Preliminary ↔ O-AA Lite), `implementation-strategy.yaml` (Transition ↔ implementation waves), `change-request.yaml` + `compliance-evidence.yaml` (architecture-change ↔ agile-governance).
+- No schema files are shared between the overlays. The O-AA YAML sprint artefacts are defined in the O-AA templates and kept consistent with the matching TOGAF documents: `vision.yaml` with the ADM Preliminary, which `oaa-adm-lite` reads, and `implementation-strategy.yaml` with the transition architecture. `oaa-adm-lite` sends Sprint 4+ architecture change requests through `/arckit-togaf-adm:architecture-change`. `agile-governance` defines its own `change-request.yaml` and `compliance-evidence.yaml` (the latter shared with `agile-security`) and does not read `architecture-change` output.
 - Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands read TOGAF outputs when they exist (ADM Preliminary, business capability map, transition architecture) but do not require them, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
 ---
@@ -1262,7 +1262,7 @@ Assess AI system obligations under the EU's risk-based AI framework:
 Assess cybersecurity obligations for essential and important entities:
 
 - Sector classification (Annex I Essential vs Annex II Important)
-- OIV/OSE designation under French transposition (LPM/LCEN)
+- French OIV/OSE designation under current law (OIV: Code de la défense; OSE: loi n° 2018-133, the NIS1 transposition), pending France's NIS2 transposition bill
 - Governance, risk management, and incident reporting obligations
 - Supply chain security and vulnerability disclosure
 - ANSSI notification timeline (24h → 72h → 30-day final report)
@@ -1304,8 +1304,8 @@ Data sharing obligations for connected products and cloud providers:
 
 - Role determination: manufacturer / data holder / DAPS / public sector body
 - User data access rights (Chapter II) and B2B sharing (Chapter III)
-- Cloud switching obligations (Chapter VI) — egress fee elimination by September 2027
-- International data transfer restrictions (Article 27)
+- Cloud switching obligations (Chapter VI) — switching charges withdrawn from 12 January 2027
+- Safeguards against unlawful international governmental access (Chapter VII, Article 32)
 - Application date: 12 September 2025
 
 #### French Public Sector Governance
@@ -1370,7 +1370,8 @@ Generate procurement documentation compliant with French public contract law:
 
 - Marché public thresholds and procedures (below/above EU thresholds)
 - Requirements statement, award criteria, and security and sovereignty clauses for the consultation file
-- ANSSI-qualified provider requirements (PASSI, PRIS, PDIS)
+- Environmental award criterion and execution conditions (Code de la commande publique, since August 2026)
+- ANSSI-qualified provider requirements (PACS, PASSI, PRIS, PDIS, PAMS)
 - Digital State doctrine checklist (cloud, RGI, RGAA, RGESN, open source, GDPR)
 
 **`/arckit:fr-pssi`** → PSSI (Politique de Sécurité des Systèmes d'Information)
@@ -1411,7 +1412,7 @@ Assess code reuse obligations before building or procuring:
 - EU public code alternatives (Joinup, European Commission repositories)
 - Licence compatibility matrix (EUPL-1.2 recommended for public code publication)
 - Decision matrix: reuse / fork / SILL adoption / procure / build
-- Circulaire 2021 publication obligation: modified public code must be released back
+- Publication duty for source code (CRPA L300-2 / L312-1-1) and contribution-back for modified public code (Circulaire 2021)
 
 ---
 

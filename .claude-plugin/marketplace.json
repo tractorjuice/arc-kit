@@ -194,7 +194,7 @@
     {
       "name": "arckit-us",
       "source": "./plugins/arckit-us",
-      "description": "USA Federal Civilian Overlay — 10 commands for FedRAMP, FISMA/NIST 800-53, CISA Zero Trust, OMB M-19-17 ICAM, NIST AI RMF, OMB M-24-10/M-25-21 AI assurance, E-Gov §208 PIA, EO 14028 SBOM",
+      "description": "USA Federal Civilian Overlay — 10 commands for FedRAMP, FISMA/NIST 800-53, CISA Zero Trust, OMB M-19-17 ICAM, NIST AI RMF, OMB M-25-21/M-25-22 AI assurance, E-Gov §208 PIA, EO 14028 SBOM",
       "version": "6.18.3",
       "author": {
         "name": "TractorJuice"
@@ -243,7 +243,7 @@
     {
       "name": "arckit-uk-nhs",
       "source": "./plugins/arckit-uk-nhs",
-      "description": "UK NHS Clinical Safety Overlay — 4 commands for NHS DCB0129 (manufacturer), DCB0160 (deployer), DTAC v3, and UK/EU MDR SaMD/AIaMD classification. Adopts Marcus Baw SAFETY.md spec. Second sector-specific overlay.",
+      "description": "UK NHS Clinical Safety Overlay — 4 commands for NHS DCB0129 (manufacturer), DCB0160 (deployer), DTAC (form v2.0), and UK/EU MDR SaMD/AIaMD classification. Adopts Marcus Baw SAFETY.md spec. Second sector-specific overlay.",
       "version": "6.18.3",
       "author": {
         "name": "TractorJuice"
@@ -387,7 +387,7 @@
     {
       "name": "arckit-oaa",
       "source": "./plugins/arckit-oaa",
-      "description": "Open Agile Architecture (O-AA C208) — agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance. [COMMUNITY]",
+      "description": "Open Agile Architecture (O-AA) — agile enterprise architecture for product-driven, sprint-based delivery. 5 commands: ADM Lite, Product Architecture, Agile Strategy, Agile Security, Agile Governance. [COMMUNITY]",
       "version": "6.18.3",
       "author": {
         "name": "ArcKit Contributors"
