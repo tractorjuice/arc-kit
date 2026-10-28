@@ -9,11 +9,17 @@ const bank = JSON.parse(readFileSync(new URL('./fixtures/awareness.sample.json',
 const byId = new Map(bank.questions.map((q) => [q.id, q]));
 const STALE = 'The questions have changed or this attempt has expired. Reload the page and try again.';
 const UNAVAILABLE = 'The quiz isn’t available right now. Try again later.';
+const USED = 'This attempt has already been submitted. Reload the page for a fresh set of questions.';
 
 function fakeKV(initial = {}) {
   const m = new Map(Object.entries(initial));
-  return { get: async (k) => (m.has(k) ? m.get(k) : null), put: async (k, v) => { m.set(k, v); }, map: m };
+  const opts = new Map();
+  return { get: async (k) => (m.has(k) ? m.get(k) : null), put: async (k, v, o) => { m.set(k, v); opts.set(k, o); }, map: m, opts };
 }
+
+// Stored credentials only, not the markers of submitted draws.
+const creds = (env) => [...env.CREDENTIALS.map.keys()].filter((k) => k.startsWith('cred:')).length;
+const drawMarkers = (env) => [...env.CREDENTIALS.map.keys()].filter((k) => k.startsWith('draw:'));
 
 const RSA_GEN = { name: 'RSASSA-PKCS1-v1_5', modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: 'SHA-256' };
 const rsaKeys = new Map();
@@ -144,7 +150,7 @@ test('503, not a crash, when DRAW_HMAC_KEY is missing or too short; the key is n
   assert.equal((await call(env, '/awareness/questions')).status, 503);
   assert.ok(logged.mock.callCount() >= 1);
   for (const c of logged.mock.calls) assert.equal(c.arguments.map(String).join(' ').includes(short), false);
-  assert.equal(env.CREDENTIALS.map.size, 0);
+  assert.equal(creds(env), 0);
 });
 
 test('a bank still in the old v1 shape is treated as unavailable', async (t) => {
@@ -167,7 +173,7 @@ test('a submission with no draw token gets 409 (pages from before v2 send none)'
     assert.equal(res.status, 409);
     assert.deepEqual(await res.json(), { error: STALE });
   }
-  assert.equal(env.CREDENTIALS.map.size, 0);
+  assert.equal(creds(env), 0);
 });
 
 test('a forged ID list, or a draw signed with another key, gets 409', async () => {
@@ -186,7 +192,7 @@ test('a forged ID list, or a draw signed with another key, gets 409', async () =
   const alien = await signDraw(otherKey, { ids: easy, bv: 'sample-2' });
   const res = await submit(env, { name: 'Sam Ng', answers, bankVersion: 'sample-2', drawToken: alien });
   assert.equal(res.status, 409);
-  assert.equal(env.CREDENTIALS.map.size, 0);
+  assert.equal(creds(env), 0);
 });
 
 test('a signed draw naming questions the bank no longer holds gets 409', async () => {
@@ -208,7 +214,7 @@ test('a signed draw of the wrong shape (one ID, or all from one domain) gets 409
   const lopsided = await signDraw(hmacKey, { ids: basics, bv: 'sample-2' });
   const res2 = await submit(env, { name: 'Sam Ng', answers: basics.map((id) => byId.get(id).answer), bankVersion: 'sample-2', drawToken: lopsided });
   assert.equal(res2.status, 409);
-  assert.equal(env.CREDENTIALS.map.size, 0);
+  assert.equal(creds(env), 0);
 });
 
 test('a bank with a null question or a non-string bankVersion is 503, never 500', async (t) => {
@@ -223,17 +229,17 @@ test('a bank with a null question or a non-string bankVersion is 503, never 500'
   }
 });
 
-test('a draw older than three hours gets 409', async () => {
+test('a draw older than an hour gets 409', async () => {
   const env = await makeEnv();
   const hmacKey = await importDrawKey(env.DRAW_HMAC_KEY);
   const ids = ['s01', 's02', 's07', 's08', 's13', 's14', 's19', 's20', 's25', 's26'];
   const answers = ids.map((id) => byId.get(id).answer);
-  const old = await signDraw(hmacKey, { ids, bv: 'sample-2' }, Date.now() - (3 * 3600 + 5) * 1000);
+  const old = await signDraw(hmacKey, { ids, bv: 'sample-2' }, Date.now() - (3600 + 5) * 1000);
   const res = await submit(env, { name: 'Sam Ng', answers, bankVersion: 'sample-2', drawToken: old });
   assert.equal(res.status, 409);
   assert.deepEqual(await res.json(), { error: STALE });
-  // The same draw two hours old is fine.
-  const recent = await signDraw(hmacKey, { ids, bv: 'sample-2' }, Date.now() - 2 * 3600 * 1000);
+  // The same draw 50 minutes old is fine.
+  const recent = await signDraw(hmacKey, { ids, bv: 'sample-2' }, Date.now() - 50 * 60 * 1000);
   const ok = await submit(env, { name: 'Sam Ng', answers, bankVersion: 'sample-2', drawToken: recent });
   assert.equal(ok.status, 200);
   assert.equal((await ok.json()).passed, true);
@@ -262,7 +268,7 @@ test('checks run in the contract order: bank, then draw, then name, then answers
   assert.equal((await submit(env, { name: 'Sam Ng', answers: keyFor(draw) })).status, 503);
 });
 
-test('a fail reports the score and the areas to revisit, never which questions or a review', async () => {
+test('a fail reports the areas to revisit, never the score, which questions or a review', async () => {
   const env = await makeEnv();
   const draw = await getDraw(env);
   const key = keyFor(draw);
@@ -271,8 +277,8 @@ test('a fail reports the score and the areas to revisit, never which questions o
   assert.equal(res.status, 200);
   const missed = new Set(draw.questions.slice(0, 3).map((q) => q.domain));
   const areasToRevisit = Object.keys(bank.domains).filter((d) => missed.has(d)).map((d) => bank.domains[d]);
-  assert.deepEqual(await res.json(), { passed: false, score: 7, total: 10, required: 8, areasToRevisit });
-  assert.equal(env.CREDENTIALS.map.size, 0);
+  assert.deepEqual(await res.json(), { passed: false, total: 10, required: 8, areasToRevisit });
+  assert.equal(creds(env), 0);
 });
 
 test('a pass issues a credential and returns a review with explanations', async () => {
@@ -300,7 +306,7 @@ test('a pass issues a credential and returns a review with explanations', async 
     assert.equal(r.explanation, q.explanation);
     assert.ok(r.explanation.length > 0);
   });
-  assert.equal(env.CREDENTIALS.map.size, 1);
+  assert.equal(creds(env), 1);
   const got = await (await call(env, `/credentials/${out.credentialId}`)).json();
   assert.equal(got.valid, true);
   assert.equal(got.name, 'José María Blázquez');
@@ -313,7 +319,7 @@ test('two passes give two different credentials', async () => {
   const a = await (await pass(env)).json();
   const b = await (await pass(env)).json();
   assert.notEqual(a.credentialId, b.credentialId);
-  assert.equal(env.CREDENTIALS.map.size, 2);
+  assert.equal(creds(env), 2);
 });
 
 test('answers of the wrong length or out of range get 400 with a plain message, nothing stored', async () => {
@@ -329,7 +335,7 @@ test('answers of the wrong length or out of range get 400 with a plain message, 
   assert.equal(badName.status, 400);
   const notJson = await call(env, '/awareness/submit', { method: 'POST', raw: 'name=Sam' });
   assert.equal(notJson.status, 400);
-  assert.equal(env.CREDENTIALS.map.size, 0);
+  assert.equal(creds(env), 0);
 });
 
 test('oversized body gets 413', async () => {
@@ -413,13 +419,14 @@ test('the submission rate limit answers 429 and stores nothing', async () => {
   assert.equal(res.status, 429);
   assert.equal(typeof (await res.json()).error, 'string');
   assert.deepEqual(seen, ['203.0.113.7']);
-  assert.equal(env.CREDENTIALS.map.size, 0);
+  assert.equal(creds(env), 0);
+  assert.deepEqual(drawMarkers(env), []);
 
   env.SUBMIT_LIMITER = { limit: async () => ({ success: true }) };
   const ok = await pass(env);
   assert.equal(ok.status, 200);
   assert.equal((await ok.json()).passed, true);
-  assert.equal(env.CREDENTIALS.map.size, 1);
+  assert.equal(creds(env), 1);
 });
 
 test('a server error is logged without the key or the name', async (t) => {
@@ -431,4 +438,78 @@ test('a server error is logged without the key or the name', async (t) => {
   assert.equal(logged.mock.callCount(), 1);
   const line = logged.mock.calls[0].arguments.map(String).join(' ');
   assert.doesNotMatch(line, /notjson|SECRET|Unique Person Name/); // V8 quotes the start of bad JSON in its message
+});
+
+test('a draw is marked once: resubmitting it gets 409, so a changed answer reveals nothing', async () => {
+  const env = await makeEnv();
+  const draw = await getDraw(env);
+  const key = keyFor(draw);
+  const first = await submit(env, attempt(draw, 'Mallory', key.map(wrong)));
+  assert.equal(first.status, 200);
+  assert.equal((await first.json()).passed, false);
+  // The oracle: the same token, one answer changed each time.
+  for (let i = 0; i < key.length; i++) {
+    const probe = key.map((a, j) => (j === i ? a : wrong(a)));
+    const res = await submit(env, attempt(draw, 'Mallory', probe));
+    assert.equal(res.status, 409);
+    const out = await res.json();
+    assert.deepEqual(out, { error: USED });
+    assert.equal('score' in out || 'areasToRevisit' in out || 'passed' in out, false);
+  }
+  // Even the full answer key on the used draw earns nothing.
+  const res = await submit(env, attempt(draw, 'Mallory', key));
+  assert.equal(res.status, 409);
+  assert.equal(creds(env), 0);
+  // A fresh draw is a fresh attempt.
+  assert.equal((await (await pass(env)).json()).passed, true);
+});
+
+test('a passed draw cannot be replayed under other names to mint more credentials', async () => {
+  const env = await makeEnv();
+  const draw = await getDraw(env);
+  const ok = await submit(env, attempt(draw, 'Alice Smith', keyFor(draw)));
+  assert.equal((await ok.json()).passed, true);
+  for (const name of ['Alice Smith', 'Bob Jones', 'Carol White']) {
+    const res = await submit(env, attempt(draw, name, keyFor(draw)));
+    assert.equal(res.status, 409);
+    assert.deepEqual(await res.json(), { error: USED });
+  }
+  assert.equal(creds(env), 1);
+});
+
+test('a submission refused for its name or answers does not use up the draw', async () => {
+  const env = await makeEnv();
+  const draw = await getDraw(env);
+  assert.equal((await submit(env, attempt(draw, '<b>', keyFor(draw)))).status, 400);
+  assert.equal((await submit(env, attempt(draw, 'Sam Ng', [1]))).status, 400);
+  assert.deepEqual(drawMarkers(env), []);
+  const res = await submit(env, attempt(draw, 'Sam Ng', keyFor(draw)));
+  assert.equal(res.status, 200);
+  assert.equal((await res.json()).passed, true);
+});
+
+test('each draw carries its own nonce, and its marker expires once the draw would', async () => {
+  const env = await makeEnv();
+  const nonce = (d) => JSON.parse(Buffer.from(d.drawToken.split('.')[0], 'base64url').toString()).n;
+  const a = await getDraw(env);
+  const b = await getDraw(env);
+  assert.match(nonce(a), /^[A-Za-z0-9_-]{22}$/);
+  assert.notEqual(nonce(a), nonce(b));
+  await submit(env, attempt(a, 'Sam Ng', keyFor(a)));
+  assert.deepEqual(drawMarkers(env), [`draw:${nonce(a)}`]);
+  const { expirationTtl } = env.CREDENTIALS.opts.get(`draw:${nonce(a)}`);
+  assert.ok(expirationTtl >= 3600 && expirationTtl <= 3660, String(expirationTtl));
+  // Another draw is unaffected.
+  assert.equal((await (await submit(env, attempt(b, 'Sam Ng', keyFor(b)))).json()).passed, true);
+});
+
+test('a draw signed before nonces existed gets 409 and a reload', async () => {
+  const env = await makeEnv();
+  const hmacKey = await importDrawKey(env.DRAW_HMAC_KEY);
+  const ids = ['s01', 's02', 's07', 's08', 's13', 's14', 's19', 's20', 's25', 's26'];
+  const body = Buffer.from(JSON.stringify({ ids, bv: 'sample-2', iat: Math.floor(Date.now() / 1000) })).toString('base64url');
+  const sig = Buffer.from(await crypto.subtle.sign('HMAC', hmacKey, new TextEncoder().encode(body))).toString('base64url');
+  const res = await submit(env, { name: 'Sam Ng', answers: ids.map((id) => byId.get(id).answer), bankVersion: 'sample-2', drawToken: `${body}.${sig}` });
+  assert.equal(res.status, 409);
+  assert.deepEqual(await res.json(), { error: STALE });
 });

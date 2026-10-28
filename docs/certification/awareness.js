@@ -143,7 +143,7 @@ async function onSubmit(ev) {
       $('pass-links').hidden = false;
       renderReview(out.review);
     } else {
-      $('fail-score').textContent = `You scored ${out.score} out of ${out.total}. You need ${out.required} to pass.`;
+      $('fail-score').textContent = `You need ${out.required} out of ${out.total} to pass. Each attempt draws a fresh set of questions.`;
       renderAreas(out.areasToRevisit);
       $('fail-box').hidden = false;
     }
