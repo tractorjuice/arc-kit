@@ -1129,12 +1129,12 @@ All artifacts must pass these 10 checks:
 
 ### PDPL -- UAE Personal Data Protection Law Assessment
 
-- Scope states the carve-outs: DIFC DPL and ADGM DPR free-zone regimes fall outside the federal PDPL, and ADHICS is flagged where healthcare data is in scope
-- Every processing activity cites a PDPL Article 5 lawful basis, or Article 6 where consent is relied upon
-- All five Article 21 DPIA triggers assessed (new technology, large-scale processing, profiling or automated decisions, systematic monitoring, Article 7 sensitive categories), each triggered category carrying an impact assessment, residual risk and mitigations
+- Scope tests all seven Article 2(2) exclusions (Government Data; governmental entities; security and judicial authorities; personal purposes; health data, and banking and credit data, with their own protection legislation; free-zone establishments with their own data protection legislation, such as DIFC and ADGM) and records the result; where one applies, the Scope and Executive Summary say the PDPL does not apply to that processing, and any regime named instead cites a primary source; ADHICS is flagged where healthcare data is in scope
+- Every processing activity records its lawful basis: consent meeting Article 6, or the Article 4 exception relied on (4(1)–(11)); Article 5 processing controls are applied to every activity but not cited as a lawful basis
+- All three Article 21 DPIA cases assessed (high-risk modern technology, 21(1); systematic and comprehensive automated assessment including profiling with legal consequences or serious impact, 21(2)(a); a large volume of Sensitive Personal Data, 21(2)(b)), each case that applies covering the Article 21(3) minimum content, residual risk and mitigations
 - Data-subject rights procedure covers all eight rights (access, rectification, erasure, restriction, portability, object, withdraw consent, complain to the Data Office), each with channel, response SLA and operational owner
-- Every cross-border transfer assessed against Article 22 adequacy or Article 23 derogations; transfers to countries with no UAE adequacy designation record both a written agreement and an explicit derogation
-- Breach notification playbook states the Article 9 obligations to the Data Office and to data subjects, with timelines and a named owner
+- Every cross-border transfer records its ground: Article 22 (a destination the Data Office approves, with its own data protection legislation and enforcing authority or covered by an agreement the UAE has joined) or one of the six Article 23(1) grounds, with the status of the Article 23(2) Executive Regulations controls
+- Breach notification playbook states the Article 9 obligations to the Data Office and to data subjects and a named owner, and records that the notification periods are left to the Executive Regulations rather than stating a statutory deadline
 - Penalties section marked informational and excluded from compliance scoring
 
 ### IAS -- UAE Information Assurance Standards
@@ -1150,9 +1150,9 @@ All artifacts must pass these 10 checks:
 ### CRES -- UAE Cloud Residency
 
 - Every dataset assessed by its Dataset ID from the CLAS register rather than re-enumerated
-- Classification, required residency, chosen CSP, region and compliance check recorded per dataset
-- Confidential, Sensitive and Secret datasets resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2, with any exception raised rather than left implicit
-- CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS) covering certification posture (DESC for Dubai entities, CSC accreditation), regional footprint, sovereign-data scope and documented limitations
+- Smart Data class, National Cloud Security Policy level (Appendix 6.7) with the mapping rationale, required tier, chosen CSP, region and compliance check recorded per dataset
+- Confidential/Restricted datasets on a Partial Sovereign or Sovereign Cloud with data stored in the UAE, and datasets above Confidential/Restricted on a Sovereign Cloud (National Cloud Security Policy v2.0, §2.4.1.4–2.4.1.5); any exception cites a Cyber Security Council approval (§1.4) rather than being left implicit
+- CSP due diligence recorded per candidate (Core42 / G42, Microsoft UAE North and UAE Central, TDRA FedNet, e& Sovereign Launchpad on AWS; the policy approves no CSPs) covering the Appendix 6.6 minimum certifications with evidence dates (UAE IAS and DESC ISR self-assessments; ISO/IEC 27001, 27017, 27018 and 22301 certificates; SOC 1 and SOC 2 Type II reports; CSA STAR 2), regional footprint, the CSP's list of services meeting the Partial Sovereign or Sovereign Cloud Requirements, and documented limitations
 - Shared-responsibility matrix divides responsibility across infrastructure, platform, application, data, identity and operational layers for each chosen CSP
 - Shared platform components (identity, observability, backups) assessed for residency, not only the primary services
 - Exit and portability plan covers data egress, format portability, identity migration, key custody on exit and contingency residency on regulatory change
@@ -1199,7 +1199,7 @@ All artifacts must pass these 10 checks:
 
 - Sharing parties identified with joint-controller status and service-level commitments
 - Every shared dataset referenced by its Dataset ID from the CLAS register, with classification level, volume, frequency and direction
-- Every share involving personal data cites its PDPL Article 5 lawful basis (or Article 6 consent) and references the PDPL artefact entry that justifies it
+- Every share involving personal data cites its PDPL lawful basis (consent meeting Article 6, or the Article 4 exception relied on) and references the PDPL artefact entry that justifies it
 - Technical mechanism stated per share (REST API, event stream, file drop, federated query) with authentication, integrity and rate-limiting controls
 - Safeguards cover encryption in transit and at rest, key management, access control, logging, and incident-response co-ordination between the parties
 - All six data-subject rights traced across the sharing boundary (access, rectification, erasure, restriction, portability, object), each with a named owning party

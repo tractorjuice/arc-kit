@@ -43,7 +43,7 @@ For each level the project uses, state the handling rules:
 - Network controls (private endpoint, VPN, air-gap)
 - Access controls (role, MFA, just-in-time)
 - Audit-log retention
-- Residency obligations (UAE-resident infrastructure required from Confidential upwards under National Cloud Security Policy v2)
+- Residency obligations (under the National Cloud Security Policy v2.0, data from Confidential upwards is stored in the UAE on a Partial Sovereign or Sovereign Cloud; `/arckit:uae-cloud-residency` maps each dataset to the policy's levels and tiers)
 
 ## Cross-Reference Index
 
@@ -55,7 +55,7 @@ Map each Dataset ID to:
 
 | Dataset ID | Upstream BR/DR | Downstream INT | PDPL lawful basis (if applicable) |
 |------------|----------------|----------------|------------------------------------|
-| [DS-001] | [BR-xxx, DR-xxx] | [INT-xxx] | [Article 5(x) / N/A] |
+| [DS-001] | [BR-xxx, DR-xxx] | [INT-xxx] | [Consent (Articles 4 and 6) / Article 4(n) exception / N/A] |
 
 ## External References
 

@@ -1147,7 +1147,7 @@ Added 12 official-baseline commands covering UAE federal regulatory and digital-
 - `/arckit:uae-classification` — UAE Smart Data Classification Register. Depends on: requirements (R), data-model (R). Produces ARC-*-CLAS-*.md
 - `/arckit:uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-PDPL-*.md
 - `/arckit:uae-ias` — UAE Cybersecurity Council IAS v2 Statement of Applicability. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-IAS-*.md
-- `/arckit:uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment. Depends on: uae-classification (M), requirements (R). Produces ARC-*-CLDR-*.md
+- `/arckit:uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment. Depends on: uae-classification (M), requirements (R). Produces ARC-*-CRES-*.md
 - `/arckit:uae-uaepass` — UAE Pass integration design (OIDC/OAuth, claim mapping, profiles, e-signature). Depends on: requirements (M), integration (R). Produces ARC-*-UPASS-*.md
 - `/arckit:uae-zero-bureaucracy` — Service Catalogue review under Code for Government Services. Depends on: requirements (M), user-stories (R), journeys (R). Produces ARC-*-ZBUR-*.md
 - `/arckit:uae-digital-records` — Digital Records Plan (source-of-truth register, retention, official-source). Depends on: requirements (M), data-model (R), uae-classification (R). Produces ARC-*-DREC-*.md

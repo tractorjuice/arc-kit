@@ -60,7 +60,7 @@ sequenceDiagram
 | UAE Pass claim | SP user-record field | Required? | Consent / privacy note |
 |----------------|----------------------|-----------|------------------------|
 | `sub` | `external_subject_id` | Y | Stable subject identifier — primary join key |
-| `idn` (Emirates ID) | `emirates_id` | [Y/N] | Personal data — PDPL Article 5 lawful basis required |
+| `idn` (Emirates ID) | `emirates_id` | [Y/N] | Personal data — PDPL lawful basis required (consent under Articles 4 and 6, or an Article 4 exception) |
 | `fullnameEN` | `name_en` | [Y/N] | [note] |
 | `fullnameAR` | `name_ar` | [Y/N] | [note] |
 | `mobile` | `mobile` | [Y/N] | [note] |
