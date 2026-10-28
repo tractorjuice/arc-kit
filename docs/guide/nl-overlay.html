@@ -485,6 +485,7 @@
 </code></pre>
 <p><strong>Run <code>nl-tbb</code> before <code>nl-cloud</code>.</strong> The classification drives eligibility, not the other way round: <code>nl-cloud</code>'s clause 5.2 prohibition check needs a TBB category to test Te Beschermen Belangen niveau 1–3 against. Running <code>nl-cloud</code> first means its eligibility section can only flag the category as pending. The inference between the two commands runs one way only — <code>nl-tbb</code> determines the category from BIV scores; <code>nl-cloud</code> consumes that category but never derives or overrides it.</p>
 <p><code>nl-exit</code> follows <code>nl-cloud</code> once materieel cloudgebruik is confirmed (or as one of the three cumulative conditions under clause 4.5(b)). <code>nl-bio</code> can run at any point; a TBB category, where one exists, helps it prioritise which control areas matter most, and cross-references <code>nl-cloud</code>'s data-location and encryption section for the Technological control theme rather than re-deriving it.</p>
+<p><strong>Run <code>risk</code> after the four.</strong> Each NL command hands its findings to the risk register: the classification implications of the TBB category, the clause 3.1 cloud risks, the exit plan's residual risks and the open BIO2 gaps. Each reads an existing register if there is one, but none requires it, so a register built first would miss everything the overlay finds.</p>
 <hr />
 <h2 id="integration-with-core-arckit-commands">Integration with Core ArcKit Commands</h2>
 <table>

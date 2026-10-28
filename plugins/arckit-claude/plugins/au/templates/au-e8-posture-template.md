@@ -39,35 +39,9 @@
 
 ## Essential Eight Maturity Assessment
 
-### 1. Application Control
+ASD names the eight mitigation strategies and does not number them. They appear here in the order of ASD's Essential Eight maturity model.
 
-| Aspect | Detail |
-|--------|--------|
-| **Current Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
-| **Target Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
-| **Regulatory Driver** | [DISP ML2 / PSPF / Contractual / Risk appetite] |
-
-**Evidence of Current State**:
-
-[Description of current application control measures — whitelisting tools, policy enforcement, coverage scope.]
-
-**Gap Analysis**:
-
-| ML Level | Sub-Control | Status | Gap Description |
-|----------|------------|--------|-----------------|
-| ML1 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-| ML2 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-| ML3 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-
-**Remediation Actions**:
-
-| Action | Owner | Target Date | Priority |
-|--------|-------|-------------|----------|
-| [Action description] | [Role/Name] | [YYYY-MM-DD] | [Critical / High / Medium / Low] |
-
----
-
-### 2. Patch Applications
+### Patch applications
 
 | Aspect | Detail |
 |--------|--------|
@@ -95,91 +69,7 @@
 
 ---
 
-### 3. Configure Microsoft Office Macro Settings
-
-| Aspect | Detail |
-|--------|--------|
-| **Current Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
-| **Target Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
-| **Regulatory Driver** | [DISP ML2 / PSPF / Contractual / Risk appetite] |
-
-**Evidence of Current State**:
-
-[Description of macro policy — Group Policy settings, trusted locations, signing requirements.]
-
-**Gap Analysis**:
-
-| ML Level | Sub-Control | Status | Gap Description |
-|----------|------------|--------|-----------------|
-| ML1 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-| ML2 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-| ML3 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-
-**Remediation Actions**:
-
-| Action | Owner | Target Date | Priority |
-|--------|-------|-------------|----------|
-| [Action description] | [Role/Name] | [YYYY-MM-DD] | [Critical / High / Medium / Low] |
-
----
-
-### 4. User Application Hardening
-
-| Aspect | Detail |
-|--------|--------|
-| **Current Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
-| **Target Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
-| **Regulatory Driver** | [DISP ML2 / PSPF / Contractual / Risk appetite] |
-
-**Evidence of Current State**:
-
-[Description of browser hardening, email client configuration, Office settings, ad-blocking, Java/Flash removal.]
-
-**Gap Analysis**:
-
-| ML Level | Sub-Control | Status | Gap Description |
-|----------|------------|--------|-----------------|
-| ML1 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-| ML2 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-| ML3 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-
-**Remediation Actions**:
-
-| Action | Owner | Target Date | Priority |
-|--------|-------|-------------|----------|
-| [Action description] | [Role/Name] | [YYYY-MM-DD] | [Critical / High / Medium / Low] |
-
----
-
-### 5. Restrict Administrative Privileges
-
-| Aspect | Detail |
-|--------|--------|
-| **Current Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
-| **Target Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
-| **Regulatory Driver** | [DISP ML2 / PSPF / Contractual / Risk appetite] |
-
-**Evidence of Current State**:
-
-[Description of admin account management — PAM tools, JIT access, separation of duties, regular review cadence.]
-
-**Gap Analysis**:
-
-| ML Level | Sub-Control | Status | Gap Description |
-|----------|------------|--------|-----------------|
-| ML1 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-| ML2 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-| ML3 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
-
-**Remediation Actions**:
-
-| Action | Owner | Target Date | Priority |
-|--------|-------|-------------|----------|
-| [Action description] | [Role/Name] | [YYYY-MM-DD] | [Critical / High / Medium / Low] |
-
----
-
-### 6. Patch Operating Systems
+### Patch operating systems
 
 | Aspect | Detail |
 |--------|--------|
@@ -207,7 +97,7 @@
 
 ---
 
-### 7. Multi-Factor Authentication
+### Multi-factor authentication
 
 | Aspect | Detail |
 |--------|--------|
@@ -235,7 +125,119 @@
 
 ---
 
-### 8. Regular Backups
+### Restrict administrative privileges
+
+| Aspect | Detail |
+|--------|--------|
+| **Current Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
+| **Target Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
+| **Regulatory Driver** | [DISP ML2 / PSPF / Contractual / Risk appetite] |
+
+**Evidence of Current State**:
+
+[Description of admin account management — PAM tools, JIT access, separation of duties, regular review cadence.]
+
+**Gap Analysis**:
+
+| ML Level | Sub-Control | Status | Gap Description |
+|----------|------------|--------|-----------------|
+| ML1 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+| ML2 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+| ML3 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+
+**Remediation Actions**:
+
+| Action | Owner | Target Date | Priority |
+|--------|-------|-------------|----------|
+| [Action description] | [Role/Name] | [YYYY-MM-DD] | [Critical / High / Medium / Low] |
+
+---
+
+### Application control
+
+| Aspect | Detail |
+|--------|--------|
+| **Current Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
+| **Target Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
+| **Regulatory Driver** | [DISP ML2 / PSPF / Contractual / Risk appetite] |
+
+**Evidence of Current State**:
+
+[Description of current application control measures — whitelisting tools, policy enforcement, coverage scope.]
+
+**Gap Analysis**:
+
+| ML Level | Sub-Control | Status | Gap Description |
+|----------|------------|--------|-----------------|
+| ML1 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+| ML2 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+| ML3 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+
+**Remediation Actions**:
+
+| Action | Owner | Target Date | Priority |
+|--------|-------|-------------|----------|
+| [Action description] | [Role/Name] | [YYYY-MM-DD] | [Critical / High / Medium / Low] |
+
+---
+
+### Restrict Microsoft Office macros
+
+| Aspect | Detail |
+|--------|--------|
+| **Current Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
+| **Target Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
+| **Regulatory Driver** | [DISP ML2 / PSPF / Contractual / Risk appetite] |
+
+**Evidence of Current State**:
+
+[Description of macro policy — Group Policy settings, trusted locations, signing requirements.]
+
+**Gap Analysis**:
+
+| ML Level | Sub-Control | Status | Gap Description |
+|----------|------------|--------|-----------------|
+| ML1 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+| ML2 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+| ML3 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+
+**Remediation Actions**:
+
+| Action | Owner | Target Date | Priority |
+|--------|-------|-------------|----------|
+| [Action description] | [Role/Name] | [YYYY-MM-DD] | [Critical / High / Medium / Low] |
+
+---
+
+### User application hardening
+
+| Aspect | Detail |
+|--------|--------|
+| **Current Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
+| **Target Maturity Level** | [ML0 / ML1 / ML2 / ML3] |
+| **Regulatory Driver** | [DISP ML2 / PSPF / Contractual / Risk appetite] |
+
+**Evidence of Current State**:
+
+[Description of browser hardening, email client configuration, Office settings, ad-blocking, Java/Flash removal.]
+
+**Gap Analysis**:
+
+| ML Level | Sub-Control | Status | Gap Description |
+|----------|------------|--------|-----------------|
+| ML1 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+| ML2 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+| ML3 | [Sub-control description] | [Met / Partial / Not Met] | [Gap detail] |
+
+**Remediation Actions**:
+
+| Action | Owner | Target Date | Priority |
+|--------|-------|-------------|----------|
+| [Action description] | [Role/Name] | [YYYY-MM-DD] | [Critical / High / Medium / Low] |
+
+---
+
+### Regular backups
 
 | Aspect | Detail |
 |--------|--------|
@@ -265,16 +267,16 @@
 
 ## Maturity Summary Matrix
 
-| # | Mitigation Strategy | Current ML | Target ML | Gap Count | Priority |
-|---|-------------------|-----------|-----------|-----------|----------|
-| 1 | Application Control | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
-| 2 | Patch Applications | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
-| 3 | Configure MS Office Macros | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
-| 4 | User Application Hardening | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
-| 5 | Restrict Admin Privileges | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
-| 6 | Patch Operating Systems | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
-| 7 | Multi-Factor Authentication | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
-| 8 | Regular Backups | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
+| Mitigation Strategy | Current ML | Target ML | Gap Count | Priority |
+|---------------------|-----------|-----------|-----------|----------|
+| Patch applications | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
+| Patch operating systems | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
+| Multi-factor authentication | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
+| Restrict administrative privileges | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
+| Application control | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
+| Restrict Microsoft Office macros | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
+| User application hardening | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
+| Regular backups | [ML0–3] | [ML0–3] | [n] | [Critical/High/Medium/Low] |
 
 **Overall Posture**: [ML0 / ML1 / ML2 / ML3] (lowest common level across all eight strategies)
 
@@ -296,14 +298,14 @@
 
 | E8 Strategy | Shared Responsibility Model | Notes |
 |------------|---------------------------|-------|
-| Application Control | [Customer / Shared / Provider] | [Cloud-specific notes] |
-| Patch Applications | [Customer / Shared / Provider] | [Cloud-specific notes] |
-| Configure MS Office Macros | [Customer / Shared / Provider] | [Cloud-specific notes] |
-| User Application Hardening | [Customer / Shared / Provider] | [Cloud-specific notes] |
-| Restrict Admin Privileges | [Customer / Shared / Provider] | [Cloud-specific notes] |
-| Patch Operating Systems | [Customer / Shared / Provider] | [Cloud-specific notes] |
-| Multi-Factor Authentication | [Customer / Shared / Provider] | [Cloud-specific notes] |
-| Regular Backups | [Customer / Shared / Provider] | [Cloud-specific notes] |
+| Patch applications | [Customer / Shared / Provider] | [Cloud-specific notes] |
+| Patch operating systems | [Customer / Shared / Provider] | [Cloud-specific notes] |
+| Multi-factor authentication | [Customer / Shared / Provider] | [Cloud-specific notes] |
+| Restrict administrative privileges | [Customer / Shared / Provider] | [Cloud-specific notes] |
+| Application control | [Customer / Shared / Provider] | [Cloud-specific notes] |
+| Restrict Microsoft Office macros | [Customer / Shared / Provider] | [Cloud-specific notes] |
+| User application hardening | [Customer / Shared / Provider] | [Cloud-specific notes] |
+| Regular backups | [Customer / Shared / Provider] | [Cloud-specific notes] |
 
 ---
 

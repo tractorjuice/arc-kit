@@ -443,7 +443,7 @@
 <p>Generates the <strong>deployer-side</strong> clinical safety documentation required under NHS DCB0160 for an NHS organisation (Trust, ICS, GP federation, mental health Trust, ambulance service) deploying or significantly configuring a health IT product into a specific clinical setting.</p>
 <p>DCB0160 sits <strong>alongside</strong> DCB0129 — neither replaces the other. The manufacturer's DCB0129 case argues the product is acceptably safe when used as intended; the deployer's DCB0160 case argues that <em>this specific deployment</em>, with this organisation's clinicians, workflows, integrations, training, and business continuity, is acceptably safe in this clinical context.</p>
 <h2 id="what-it-produces">What it produces</h2>
-<p>Three files in <code>projects/{NNN}-&lt;slug&gt;/clinical-safety/deployment/</code>, following the same Marcus Baw <a href="http://SAFETY.md">SAFETY.md</a> spec adapted for deployer use:</p>
+<p>Three files in <code>projects/{NNN}-&lt;slug&gt;/clinical-safety/deployment/</code>, following the same Marcus Baw <a href="http://SAFETY.md">SAFETY.md</a> spec for deployer use. The deployer filenames and the extra <code>manufacturer-case-url</code> field are ArcKit deviations from the spec: see <a href="uk-nhs-clinical-safety-overlay.html#safetymd-spec-version-and-deviations">SAFETY.md spec version and deviations</a>.</p>
 <table>
 <thead>
 <tr>
@@ -454,7 +454,7 @@
 <tbody>
 <tr>
 <td><code>SAFETY.md</code></td>
-<td>Deployer anchor: product, version-being-deployed, deploying organisation, deploying-organisation CSO, link to manufacturer case</td>
+<td>Deployer anchor: product, version being deployed, deploying organisation (<code>organisation</code>, with <code>role: deployer</code>), deploying-organisation CSO, applicable standards, link to manufacturer case</td>
 </tr>
 <tr>
 <td><code>DEPLOYMENT-SAFETY-CASE.md</code></td>
@@ -498,7 +498,7 @@
 <h2 id="related-commands">Related commands</h2>
 <ul>
 <li><code>/arckit-uk-nhs:uk-nhs-dcb0129</code> — manufacturer-side companion (run first or attach external)</li>
-<li><code>/arckit-uk-nhs:uk-nhs-dtac</code> — DTAC Section 1 may need the deployer case if the deploying NHS organisation is responsible for procurement assurance</li>
+<li><code>/arckit-uk-nhs:uk-nhs-dtac</code> — the deploying organisation assesses the manufacturer's DTAC form, whose section C1 asks for the DCB0129 case; this DCB0160 case is the deployer's own duty and not a DTAC question</li>
 <li><code>/arckit:risk</code> — deployment-specific risks cross-reference the project risk register</li>
 <li><code>/arckit:operationalize</code> — builds the runbooks, on-call and incident-response procedures that carry out the deployment hazard controls (manual fallback, interface monitoring, local incident reporting)</li>
 </ul>

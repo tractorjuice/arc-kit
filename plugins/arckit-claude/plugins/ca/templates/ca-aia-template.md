@@ -103,10 +103,11 @@ Mitigations below reflect the Directive's mandated requirements for the computed
 
 | Mitigation | Required at Level | Implementation status | Owner |
 |------------|-------------------|-----------------------|-------|
-| Peer review — internal | II (and above) | [Planned / In-progress / Complete] | [Architecture lead] |
-| Peer review — external (academic / civil society) | III, IV | [Reviewer named / Reviewer pending / N/A at Level I–II] | [Architecture lead] |
+| Peer review — at least one qualified expert (Appendix C categories) | II, III | [Reviewer named / Reviewer pending / N/A at Level I or IV] | [Architecture lead] |
+| Peer review — at least two qualified experts (Level IV categories: NRC / StatCan / CSE / SSC, academia, NGO, vendor, advisory board) | IV | [Reviewers named / Reviewers pending / N/A below Level IV] | [Architecture lead] |
 | Transparency notice (bilingual per `ca-ola`) | All Levels | [Published / Drafted / Pending] | [Service owner] |
-| Pre-launch publication (≥30 days before launch) | III, IV | [Date scheduled / Pending / N/A at Level I–II] | [Service owner] |
+| Publication before production — AIA results (6.1.1); peer review or its plain-language summary (6.3.7, Level II and above) | All Levels | [Date scheduled / Pending] | [Service owner] |
+| Approval to operate before production (6.3.14) — ADM responsible for the programme (I–II), deputy head (III), Treasury Board (IV) | All Levels | [Approved / Pending] | [Accountable executive] |
 | Human-in-the-loop design — override paths | II, III, IV | [Designed / Implemented / N/A at Level I] | [Service designer] |
 | Human-in-the-loop design — escalation thresholds | II, III, IV | [Designed / Implemented / N/A at Level I] | [Service designer] |
 | Quality assurance — training/test data validation | All Levels | [Complete / In-progress] | [Data steward] |
@@ -146,10 +147,10 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | Audience | Channel | Cadence | Bilingual? | Notes |
 |----------|---------|---------|------------|-------|
 | Public — affected individuals | Transparency notice on service page | At launch and on material change | Yes — per `ca-ola` | Plain-language explanation of decisions automated and recourse path |
-| Public — open-government audience | Open Government portal — AIA publication | At launch (≥30 days pre-launch for Level III/IV) and on reassessment | Yes — per `ca-ola` | Default is open publication; severance only on specific exemption |
-| Internal — peer reviewers | Direct sharing of AIA + supporting evidence | At assessment and on reassessment | Working language | Peer review tier set by computed Level |
+| Public — open-government audience | Open Government portal — AIA publication | Before production (6.1.1) and on each update (6.1.3) | Yes — per `ca-ola` | Default is open publication; severance only on specific exemption |
+| Peer reviewers (qualified experts per Appendix C) | Direct sharing of AIA + supporting evidence | At assessment and on reassessment | Working language | Peer review tier set by computed Level |
 | Internal — Departmental Security Officer | Security review channel | Pre-launch | Working language | Severance review for Protected B/C content |
-| OPC (where personal information is processed) | OPC notification channel | Pre-launch (≥30 days) | Working language | Cross-reference `ca-pia` |
+| OPC (where personal information is processed) | OPC notification channel | Early (Policy on Privacy Protection 4.2.2); completed PIA before launch | Working language | Cross-reference `ca-pia` |
 | National-security exemption holders (if applicable) | Restricted briefing | As required | Working language | Cross-reference `ca-soia`; document the exemption rationale |
 
 ## Reassessment Triggers
@@ -168,7 +169,7 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | Item | Owner | Due | Status |
 |------|-------|-----|--------|
 | Resolve open questionnaire scores marked `<TBC>` | [Architecture lead] | [YYYY-MM-DD] | [Open / Closed] |
-| Nominate external peer reviewers (Level III/IV) | [Architecture lead] | [YYYY-MM-DD] | [Open / Closed / N/A] |
+| Nominate peer reviewers (one at Level II–III, two at Level IV) | [Architecture lead] | [YYYY-MM-DD] | [Open / Closed / N/A] |
 | Publish AIA on Open Government portal | [ATIP coordinator] | [YYYY-MM-DD] | [Open / Closed] |
 | Publish bilingual transparency notice | [Service owner] | [YYYY-MM-DD] | [Open / Closed] |
 | Confirm recourse mechanism implementation and SLA | [Service owner] | [YYYY-MM-DD] | [Open / Closed] |
@@ -191,11 +192,12 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | Citation | Doc ID | Section | Used in |
 |----------|--------|---------|---------|
 | [ADM-1] | CA-TBS-ADM | Levels I–IV threshold matrix | Levels I–IV Questionnaire Scoring |
-| [ADM-2] | CA-TBS-ADM | Peer review obligations by Level | Per-Level Mitigation Requirements |
-| [ADM-3] | CA-TBS-ADM | Notification requirement (≥30 days pre-launch for Level III/IV) | Per-Level Mitigation Requirements |
+| [ADM-2] | CA-TBS-ADM | 6.3.7 and Appendix C — peer review by Level | Per-Level Mitigation Requirements |
+| [ADM-3] | CA-TBS-ADM | 6.1.1, 6.2.1–6.2.2 — AIA published before production; notice before decisions | Per-Level Mitigation Requirements |
 | [ADM-4] | CA-TBS-ADM | Human-in-the-loop and recourse requirements | Per-Level Mitigation Requirements |
 | [ADM-5] | CA-TBS-ADM | Open-publication default | Disclosure Plan |
 | [ADM-6] | CA-TBS-ADM | Reassessment on material change | Reassessment Triggers |
+| [ADM-7] | CA-TBS-ADM | 6.3.14 and Appendix C — approval to operate by Level | Per-Level Mitigation Requirements |
 | [AIA-TOOL-1] | CA-AIA-TOOL | Six-dimension questionnaire | Levels I–IV Questionnaire Scoring |
 | [OLA-1] | CA-OLA | Bilingualism for public-facing services | Disclosure Plan |
 

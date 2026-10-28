@@ -498,7 +498,7 @@
 <h4 id="arckituae-ias"><code>/arckit-uae:uae-ias</code></h4>
 <p>Generates a UAE IAS Statement of Applicability against the 188 controls (60 management M1 to M6 plus 128 technical T1 to T9), priority-tiered P1 to P4. Anchored on the UAE Cybersecurity Council Information Assurance Standard v2. Handoffs: <code>risks</code> (gaps and treatment plan), <code>uae-cloud-residency</code> (T-family controls constrain CSP choice).</p>
 <h4 id="arckituae-cloud-residency"><code>/arckit-uae:uae-cloud-residency</code></h4>
-<p>Assesses sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, names approved CSP options (Core42 / G42 sovereign, Microsoft UAE North and Central, TDRA FedNet, e&amp; Sovereign Launchpad on AWS), and captures the shared-responsibility matrix and exit/portability plan. Handoffs: <code>uae-classification</code> (depends on it), <code>adr</code> (residency decisions captured as ADRs).</p>
+<p>Assesses sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, checks candidate CSPs (Core42 / G42 sovereign, Microsoft UAE North and Central, TDRA FedNet, e&amp; Sovereign Launchpad on AWS) against the policy's tiers and minimum certifications (the policy itself approves no CSPs), and captures the shared-responsibility matrix and exit/portability plan. Handoffs: <code>uae-classification</code> (depends on it), <code>adr</code> (residency decisions captured as ADRs).</p>
 <h3 id="federal-identity">Federal Identity</h3>
 <h4 id="arckituae-uaepass"><code>/arckit-uae:uae-uaepass</code></h4>
 <p>Generates a UAE Pass integration design covering the OIDC/OAuth flow, claim mapping, Basic vs Verified profile selection, the Service Provider onboarding pack, and the e-signature audit trail. Handoffs: <code>integration</code> (OIDC endpoints into the integration spec), <code>adr</code> (profile selection and e-signature mechanism are architecturally significant).</p>
@@ -612,14 +612,14 @@ arckit migrate-classification --root projects --apply  # apply mappings
 <p>Earlier ArcKit releases used a five-rung UAE ladder (<code>Open / Shared / Confidential / Secret / Top Secret</code>). Nothing blocks a document that still carries those labels, and the helper leaves them alone. Re-label such a document when it is next revised: <code>Shared</code> usually becomes <code>Confidential</code>, <code>Top Secret</code> becomes <code>Secret</code>, and a <code>Confidential</code> label from the old ladder, which sat one rung higher, may now be <code>Sensitive</code>.</p>
 <hr />
 <h2 id="verified-citations">Verified Citations</h2>
-<p>The maintenance document records six citations that earlier releases flagged as not yet verified. Each was checked against its primary source on 18 October 2026 (issue #949):</p>
+<p>The maintenance document records six citations that earlier releases flagged as not yet verified. Each was checked against its primary source on 18 October 2026 (issue #949), and items 1, 4 and 6 again on 27 October 2026 (issue #982):</p>
 <ol>
 <li><strong>PDPL Executive Regulations</strong>: the Decree-Law has been in force since 2 January 2022; the UAE Government portal names no Executive Regulations, so the PDPL command records the status with the date it was checked.</li>
 <li><strong>Smart Data classes</strong>: four — Open, Confidential, Sensitive, Secret (Smart Data Framework Part 1, DC1).</li>
 <li><strong>UAE Pass and eIDAS</strong>: UAE PASS defines SOP1 / SOP2 / SOP3 account types and publishes no eIDAS mapping.</li>
-<li><strong>AWS <code>me-south-1</code></strong>: Bahrain, not UAE-resident; AWS's UAE Region is <code>me-central-1</code>.</li>
+<li><strong>AWS <code>me-south-1</code></strong>: Bahrain, not UAE-resident; AWS's UAE Region is <code>me-central-1</code>. The National Cloud Security Policy v2.0 sets no UAE-location requirement for Open data, so only an Open dataset may be stored there.</li>
 <li><strong>Central Bank AI guidance</strong>: CBUAE Guidance Note on AI and ML for licensed financial institutions, 11 February 2026.</li>
-<li><strong>Digital Records Policy owner</strong>: the Cabinet approved it on 23 April 2026; the announcement names no administering body.</li>
+<li><strong>Digital Records Policy owner</strong>: the Cabinet approved it on 23 April 2026; the announcement names no owner, but the UAE Legislation Platform lists the Prime Minister's Office as lead entity.</li>
 </ol>
 <p>See <code>uae-overlay-maintenance.md</code> for the sources and detail.</p>
 <hr />

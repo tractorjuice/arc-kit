@@ -14,8 +14,10 @@ Charter review is mandatory for any federal system that limits a Charter-protect
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Engagement surface — speech, association, liberty, search, equality requirements |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Subject populations, advocacy / journalism / diaspora stakeholders, protected-ground populations |
-| Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | s.8 reasonable-expectation-of-privacy analysis grounded in personal-information categories |
-| FITAA Compliance Assessment (`ARC-<id>-FITAA-v1.0.md`) | s.2 expression and association engagement — Charter review is a mandatory companion to FITAA |
+| Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | s.8 reasonable-expectation-of-privacy analysis grounded in personal-information categories; link to the PIA inventory rather than duplicating it |
+| FITAA Compliance Assessment (`ARC-<id>-FITAA-v1.0.md`) | s.2 expression and association engagement — Charter review is a mandatory companion to FITAA, and the FITAA register's public-vs-protected severance design feeds the s.2 mitigation register |
+
+Both are read where present, so run `/arckit:ca-pia` and, for a FITAA-class system, `/arckit:ca-fitaa` first. The `ca-federal-fitaa` build recipe does the same. Running the review after them does not mean engaging counsel late: bring departmental Justice counsel in from the concept stage, as the TBS *Directive on Automated Decision-Making* (6.3.12) requires for automated systems.
 
 ---
 
@@ -70,8 +72,6 @@ Output: `projects/<id>/ARC-<id>-CHRT-v1.0.md`
 
 ## Handoffs
 
-- **`ca-fitaa`** — Charter §2 expression and association analysis is a mandatory companion to FITAA; the FITAA artefact references this review and the public-vs-protected severance design feeds the s.2 mitigation register. If `/arckit:ca-fitaa` has been run, `/arckit:ca-charter` is not optional.
-- **`ca-pia`** — §8 search-and-seizure analysis is grounded in the personal-information categories captured in the Privacy Impact Assessment. The PIA inventory drives the reasonable-expectation-of-privacy analysis; do not duplicate, link.
 - **`risk`** — Residual Charter risks per right feed the operational risk register with appropriate severity. Carry the Mitigation Register entries forward with the same risk identifiers so the residual posture is traceable.
 
 ---

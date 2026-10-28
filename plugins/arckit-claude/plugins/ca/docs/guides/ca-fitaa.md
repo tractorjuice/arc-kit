@@ -17,6 +17,8 @@ The Office of the Commissioner of Foreign Influence Transparency is newly stood 
 | Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Register data fields, public vs protected flags |
 | Data model (`ARC-<id>-DATA-v*.md`) | Arrangement / registrant / foreign-principal entities |
 
+The privacy and access artefacts are not inputs: this command does not read the PIA, the ATIP reconciliation or the AIA. They still apply to the register. The PIA must be complete before the system collects or processes registrant or foreign-principal personal data, `/arckit-ca:ca-atip` holds the formal severance design for the public and protected views, and `/arckit-ca:ca-aia` is needed if registration triage uses any automated decision-making, scoring or risk classification. The `ca-federal-fitaa` build recipe runs the PIA and ATIP first, because the data model this command reads is built on them.
+
 ---
 
 ## Command
@@ -70,9 +72,8 @@ Output: `projects/<id>/ARC-<id>-FITAA-v1.0.md`
 ## Handoffs
 
 - **`ca-charter`** — Charter §2 expression and association analysis is required for any registration scheme that engages protected speech or association. Treat as unconditional after FITAA.
-- **`ca-pia`** — Privacy Impact Assessment for personal information collected during arrangement registration. Required before the system collects or processes registrant or foreign-principal personal data.
-- **`ca-atip`** — Reconciles the public-facing register against the protected investigative dataset; required severance design for hybrid public / protected views.
-- **`ca-aia`** — Algorithmic Impact Assessment is triggered when registration triage uses any automated decision-making, scoring, or risk classification.
+- **`ca-soia`** — When classified material (PROTECTED C / SECRET / TOP SECRET) is in scope. The protected investigative dataset overlaps with Special Operational Information, and the RCMP / CSIS coordination touchpoints in the Commissioner Liaison Protocol are set out in the handling plan, which reads this assessment.
+- **`ca-ola`** — The public register, registration forms, acknowledgements and notices trigger Official Languages Act Part IV obligations. The OLA review reads this assessment.
 
 ---
 

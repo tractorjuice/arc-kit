@@ -461,14 +461,15 @@
 </tr>
 <tr>
 <td>Privacy Impact Assessment (<code>ARC-&lt;id&gt;-PIA-v1.0.md</code>)</td>
-<td>s.8 reasonable-expectation-of-privacy analysis grounded in personal-information categories</td>
+<td>s.8 reasonable-expectation-of-privacy analysis grounded in personal-information categories; link to the PIA inventory rather than duplicating it</td>
 </tr>
 <tr>
 <td>FITAA Compliance Assessment (<code>ARC-&lt;id&gt;-FITAA-v1.0.md</code>)</td>
-<td>s.2 expression and association engagement — Charter review is a mandatory companion to FITAA</td>
+<td>s.2 expression and association engagement — Charter review is a mandatory companion to FITAA, and the FITAA register's public-vs-protected severance design feeds the s.2 mitigation register</td>
 </tr>
 </tbody>
 </table>
+<p>Both are read where present, so run <code>/arckit-ca:ca-pia</code> and, for a FITAA-class system, <code>/arckit-ca:ca-fitaa</code> first. The <code>ca-federal-fitaa</code> build recipe does the same. Running the review after them does not mean engaging counsel late: bring departmental Justice counsel in from the concept stage, as the TBS <em>Directive on Automated Decision-Making</em> (6.3.12) requires for automated systems.</p>
 <hr />
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit-ca:ca-charter &lt;project ID or service description&gt;
@@ -555,8 +556,6 @@
 <hr />
 <h2 id="handoffs">Handoffs</h2>
 <ul>
-<li><strong><code>ca-fitaa</code></strong> — Charter §2 expression and association analysis is a mandatory companion to FITAA; the FITAA artefact references this review and the public-vs-protected severance design feeds the s.2 mitigation register. If <code>/arckit-ca:ca-fitaa</code> has been run, <code>/arckit-ca:ca-charter</code> is not optional.</li>
-<li><strong><code>ca-pia</code></strong> — §8 search-and-seizure analysis is grounded in the personal-information categories captured in the Privacy Impact Assessment. The PIA inventory drives the reasonable-expectation-of-privacy analysis; do not duplicate, link.</li>
 <li><strong><code>risk</code></strong> — Residual Charter risks per right feed the operational risk register with appropriate severity. Carry the Mitigation Register entries forward with the same risk identifiers so the residual posture is traceable.</li>
 </ul>
 <hr />

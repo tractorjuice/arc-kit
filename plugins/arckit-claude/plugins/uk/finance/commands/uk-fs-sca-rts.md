@@ -232,10 +232,14 @@ Print the summary per `## Output Summary` below. Do not echo the full artefact.
   exceeds the reference rate; cease TRA for that band immediately if it exceeds the reference rate
   for two consecutive quarters; resume only after one quarter at or below the reference rate and a
   notification to the FCA with evidence.
-- **Soft-decline must be implemented even where an exemption is applied.** An issuer that disagrees
-  with an acquirer-asserted exemption can soft-decline; the design must support automatic fallback to
-  full SCA in that path. Acquirer-only exemption assertions without soft-decline support are not
-  compliant.
+- **Design for soft declines even where an exemption is applied.** The payer's PSP (the card
+  issuer) decides whether an exemption applies and keeps the right to require SCA even when the
+  acquirer requests one (FCA Approach Document para 20.44). Card schemes signal that with a soft
+  decline, so a payment flow that cannot fall back automatically to full SCA will fail those
+  transactions. Where the payee or its PSP does not accept SCA that regulation 100 requires, it
+  must compensate the payer's PSP for refunds of unauthorised transactions (PSRs 2017 reg 77(6)).
+  Neither the PSRs 2017 nor the SCA-RTS mention soft declines: treating soft-decline support as
+  mandatory is this overlay's design recommendation, not a regulatory requirement.
 - **Article 10A and the AISP 90-day reconfirmation are separate rules.** Under Article 10A the
   ASPSP may stop applying SCA to AISP access once SCA has been applied on at least one previous
   occasion when the AISP accessed the information; it sets no periodic ASPSP reauthentication.
@@ -285,10 +289,10 @@ publications are updated without prior notice.
 > which it would take enforcement action on SCA for e-commerce from 14 March 2021 to
 > 14 September 2021. It is historical context only; it does not change any exemption.
 >
-> **Note on the FCA Handbook links**: The FCA Handbook is a single-page application. If a deep
-> link opens the wrong page, go to <https://handbook.fca.org.uk/technical-standards>, expand
-> Payment Services, then Strong Customer Authentication and Common and Secure Methods of
-> Communication.
+> **Note on the FCA Handbook links**: The FCA Handbook has stable links to each technical
+> standard chapter and provision, as in the table above. To browse the SCA-RTS from the top, go to
+> <https://handbook.fca.org.uk/technical-standards>, expand Payment Services, then Strong Customer
+> Authentication and Common and Secure Methods of Communication.
 >
 > **Note on the UK Finance PDF**: The PDF may require an authenticated session to download
 > directly. Use the FCA and legislation.gov.uk URLs as the primary regulatory anchors; the UK Finance

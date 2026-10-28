@@ -7,12 +7,11 @@ keep-coding-instructions: true
 handoffs:
   - command: ca-charter
     description: Charter §2 expression and association analysis is required for any registration scheme that engages protected speech or association.
-  - command: ca-pia
-    description: Privacy Impact Assessment for personal information collected during arrangement registration.
-  - command: ca-atip
-    description: Reconciles the public-facing register against the protected investigative dataset; required severance design for hybrid views.
-  - command: ca-aia
-    description: Triggered when registration triage uses any automated decision-making, scoring, or risk classification.
+  - command: ca-soia
+    description: The protected investigative dataset overlaps with Special Operational Information; the RCMP / CSIS coordination touchpoints in the Commissioner Liaison Protocol are set out in the handling plan.
+    condition: "Classified material (PROTECTED C / SECRET / TOP SECRET) is in scope"
+  - command: ca-ola
+    description: The public register, registration forms, acknowledgements and notices trigger Official Languages Act Part IV obligations.
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)

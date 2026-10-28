@@ -440,7 +440,7 @@
 <p><strong>Overlay</strong>: USA Federal Civilian Community Overlay</p>
 </blockquote>
 <p><code>/arckit-us:us-ai-rmf</code> produces a NIST AI Risk Management Framework 1.0 assessment for an AI/ML system, scoring the four core functions (Govern, Map, Measure, Manage) and applying the AI RMF Playbook actions. Where generative AI is in scope, the assessment cross-references <strong>NIST AI 600-1 (Generative AI Profile)</strong> to add GenAI-specific risk categories (confabulation, data privacy leakage, harmful bias, value chain risk, dangerous content, IP infringement, etc.).</p>
-<p>This artefact is the <strong>AI risk evidence base</strong> that downstream artefacts (<code>us-ai-impact</code>, vendor evaluations, ATO packages) cite. It is voluntary at federal level but functionally required: the M-24-10 / M-25-21 chain expects agencies to demonstrate AI risk management, and the AI RMF is the agreed framework.</p>
+<p>This artefact is the <strong>AI risk evidence base</strong> that downstream artefacts (<code>us-ai-impact</code>, vendor evaluations, ATO packages) cite. The AI RMF itself is voluntary. OMB M-25-21 requires agencies to manage the risks of high-impact AI through its minimum practices but names no framework (nor does the acquisition memo, M-25-22); the AI RMF gives that evidence a structure.</p>
 <p>Reviewed by the agency Chief AI Officer (CAIO), Senior AI Official (SAO), Senior Agency Official for Privacy (SAOP), the System Owner, and the AI safety / model-evaluation function where one exists.</p>
 <hr />
 <h2 id="inputs">Inputs</h2>
@@ -503,7 +503,7 @@
 <hr />
 <h2 id="handoffs">Handoffs</h2>
 <ul>
-<li><strong><code>us-ai-impact</code></strong> — AI RMF feeds the OMB M-24-10 / M-25-21 impact assessment</li>
+<li><strong><code>us-ai-impact</code></strong> — AI RMF feeds the OMB M-25-21 impact assessment</li>
 <li><strong><code>us-privacy-pia</code></strong> — AI-decision logic and training-data PII feed the PIA</li>
 <li><strong><code>risk</code></strong> — high-residual AI risks flow into the project risk register</li>
 <li><strong><code>adr</code></strong> — foundation-model selection, fine-tuning vs. RAG, sovereignty calls warrant ADRs</li>

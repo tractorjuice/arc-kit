@@ -50,7 +50,7 @@ trigger (for example a daily relevant-funds volume) and the reason for it. Mark 
 | 1 | {{TIER_1_ROLE}} | Daily close | {{TIER_1_SLA}} |
 | 2 | {{TIER_2_ROLE}} | Variance > {{TIER_2_VARIANCE_THRESHOLD}} | {{TIER_2_SLA}} |
 | 3 | {{TIER_3_ROLE}} | Variance > {{TIER_3_ESCALATION_THRESHOLD}} or repeat pattern | {{TIER_3_SLA}} |
-| 4 | {{TIER_4_SMF_HOLDER}} | Material shortfall (FCA notification triggered) | {{TIER_4_SLA}} |
+| 4 | {{TIER_4_SAFEGUARDING_OVERSIGHT_ROLE}} | Material shortfall (FCA notification triggered) | {{TIER_4_SLA}} |
 
 **Evidence retention**: 5 years (CASS 15.8.8R(3): records made under CASS 15 are kept for 5 years
 unless a CASS 15 rule states otherwise).
@@ -72,8 +72,8 @@ its content is set by SUP 16 Annex 29BR. There is one return for authorised PIs,
 small EMIs, credit unions issuing e-money and SPIs that opt in.
 
 <!-- The rows below follow the content list in the FCA Approach Document (May 2026), Chapter 13
-(REP027). Check the current form in SUP 16 Annex 29BR at https://handbook.fca.org.uk/handbook/sup16
-and in RegData before go-live. -->
+(REP027). Check the current form in SUP 16 Annex 29BR at
+https://handbook.fca.org.uk/handbook/sup16/sup16s154 and in RegData before go-live. -->
 
 | Safeguarding return item | Firm source-of-truth field | Source system | Calculation / aggregation |
 |--------------------------|-----------------------------|---------------|----------------------------|

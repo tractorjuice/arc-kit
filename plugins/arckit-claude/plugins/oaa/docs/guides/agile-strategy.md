@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit-oaa:agile-strategy` creates an Agile Strategy Canvas using Open Agile Architecture (O-AA, C208) Ch. 11, Agile Strategy. It plans the dual transformation C208 is written for: the digital transformation of the enterprise (technology, product, operating model) together with its agile transformation (organisational, cultural and team agility). Legacy modernisation sits inside the technology part of the digital dimension. The strategy is condensed into a canvas whose epics enter the product backlog, and success is measured by outcomes rather than project milestones. The canvas is a living document, updated each sprint cycle. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
+`/arckit-oaa:agile-strategy` creates an Agile Strategy Canvas using the Open Agile Architecture™ Standard, Version 2.0 (O-AA, C262) Ch. 5, Agile Strategy. It plans the dual transformation the standard takes as its starting point: the digital transformation of the enterprise (technology, product, operating model) together with its agile transformation (organisational, cultural and team agility). Legacy modernisation sits inside the technology part of the digital dimension. The strategy is condensed into a canvas whose epics enter the product backlog, and success is measured by outcomes rather than project milestones. The canvas is a living document, updated each sprint cycle. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
 
 ---
 
@@ -56,7 +56,7 @@ If the named project does not exist, the command creates it. If an OASTR documen
 | Wave plan | Waves combining digital and agile activities, each with the outcome it buys, its success measures, resilience milestones and governance gates |
 | Strategy-to-backlog mapping | Epics, features and stories with architecture guardrails per epic, O-AA axiom per feature, and a trace to stakeholder goals or business requirements |
 
-The command anchors the strategy on Axiom 5 (Value Stream Alignment), so strategy and architecture stay in one system. It uses C208's agile strategy tenets, cited by title, to test the canvas's choices.
+The command anchors the strategy on Axiom 5 (Value Stream Alignment), so strategy and architecture stay in one system. It uses the six agile strategy tenets of Ch. 5, cited by title, to test the canvas's choices.
 
 ---
 
@@ -76,7 +76,7 @@ The command anchors the strategy on Axiom 5 (Value Stream Alignment), so strateg
 | YAML Structure | The structured canvas artefact, `strategy-canvas.yaml` |
 | O-AA Axiom Reference | Axioms applied in the canvas |
 | Cross-References | Related O-AA and TOGAF templates |
-| External References | Document Register (C208 with URL and verification date), citations |
+| External References | Document Register (O-AA Standard, Version 2.0, C262, with URL and verification date), citations |
 
 ---
 

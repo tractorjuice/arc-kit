@@ -54,8 +54,11 @@
 | SOCI Topic | Applicability | Evidence | Escalation / Follow-up |
 |------------|---------------|----------|------------------------|
 | Critical asset class | [Position] | [AUSOCI reference] | [Follow-up] |
+| Register reporting (Part 2) | [Position — reporting entity: responsible entity or direct interest holder] | [Register submission; notifiable events reported within 30 days (ss 23–24)] | [Follow-up] |
 | CIRMP hazard | [Position] | [Evidence] | [Follow-up] |
+| CIRMP annual report (Part 2A) | [Position] | [Annual report to the regulator within 90 days after the end of the financial year, approved by the board, council or other governing body (s 30AG)] | [Follow-up] |
 | Protected information | [Position] | [Evidence] | [Follow-up] |
+| Mandatory cyber incident reporting (Part 2B) | [Position — asset class listed in the SOCI (Application) Rules?] | [Report to ASD within 12 hours for a significant impact on availability (s 30BC) or 72 hours for a relevant impact (s 30BD); written record within 84 or 48 hours of an oral report] | [Follow-up] |
 | SOCI incident escalation | [Position] | [Runbook / contact path] | [Follow-up] |
 
 ---

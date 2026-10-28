@@ -927,6 +927,7 @@ graph TD
     ca_ola[ca-ola]
     ca_gc_digital_standards[ca-gc-digital-standards]
     ca_pspc[ca-pspc]
+    data_model[data-model]
     adr[adr]
     sobc[sobc]
     risk[risk]
@@ -934,11 +935,11 @@ graph TD
 
     principles --> stakeholders
     stakeholders --> requirements
-    requirements --> ca_charter
     requirements --> ca_pia
-    ca_charter --> ca_fitaa
-    ca_atip --> ca_fitaa
-    ca_aia --> ca_fitaa
+    ca_fitaa --> ca_charter
+    ca_atip --> data_model
+    data_model --> ca_fitaa
+    ca_aia --> risk
     ca_pia --> ca_atip
     ca_pia --> ca_aia
     ca_pia --> ca_ocap
@@ -953,7 +954,7 @@ graph TD
     ca_pspc --> adr
     sobc --> ca_pspc
     risk --> sobc
-    ca_fitaa --> risk
+    ca_charter --> risk
     ca_itsg_33 --> risk
     ca_ola --> framework
     ca_gc_digital_standards --> framework
@@ -974,6 +975,7 @@ graph TD
     style ca_ola fill:#FFA07A
     style ca_gc_digital_standards fill:#FFA07A
     style ca_pspc fill:#FFA07A
+    style data_model fill:#90EE90
     style adr fill:#90EE90
     style sobc fill:#90EE90
     style risk fill:#90EE90

@@ -29,19 +29,21 @@
 
 ---
 
-## Required SAFETY.md fields (Marcus Baw SAFETY.md spec v2.0.0, deployer adaptation)
+## Required SAFETY.md fields (SAFETY.md spec 2.0.0-draft, deployer use)
 
 | Field | Value |
 |---|---|
 | `product-name` | [PRODUCT_NAME] |
 | `version` | [PRODUCT_VERSION_BEING_DEPLOYED] |
 | `standard` | DCB0160 |
-| `deployment-organisation` | [DEPLOYING_NHS_ORGANISATION] |
 | `clinical-safety-officer` | [PENDING — deploying-organisation CSO name and GMC/NMC/HCPC/GPhC registration] |
-| `manufacturer-case-url` | [../SAFETY-CASE.md](../SAFETY-CASE.md) *(or external URL if third-party product)* |
-| `hazard-log-url` | [./DEPLOYMENT-HAZARD-LOG.md](./DEPLOYMENT-HAZARD-LOG.md) |
+| `organisation` | [DEPLOYING_NHS_ORGANISATION] |
+| `role` | deployer [add `operator`, `maintainer`, `relevant-it-provider` or `other` where they apply — see Roles and responsibilities] |
 | `safety-case-status` | draft |
+| `hazard-log-url` | [./DEPLOYMENT-HAZARD-LOG.md](./DEPLOYMENT-HAZARD-LOG.md) |
+| `applicable-standards` | DCB0160, DCB0129 (manufacturer evidence received) [add DTAC, information standards and others that apply — see Applicable standards and assurance domains] |
 | `last-reviewed` | [YYYY-MM-DD] |
+| `manufacturer-case-url` *(ArcKit addition, not in the spec)* | [../SAFETY-CASE.md](../SAFETY-CASE.md) *(or external URL if third-party product)* |
 
 ---
 
@@ -85,7 +87,7 @@ The Data (Use and Access) Act 2025 "relevant IT provider" concept can bring supp
 | Deployer / health organisation | [YES] | [ORGANISATION] | Deployment safety case |
 | Operator | [YES/NO] | [ORGANISATION] | [TBD] |
 | Maintainer | [YES/NO] | [ORGANISATION] | [TBD] |
-| Relevant IT provider (DUAA 2025) | [YES/NO] | [ORGANISATION] | Evidence pack |
+| Relevant IT provider (DUAA 2025) | [yes / no / unclear / not-assessed] | [ORGANISATION] | Evidence pack |
 
 ---
 
@@ -108,4 +110,4 @@ This document is **not** clinical, legal, or regulatory advice. It is a generate
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-**Spec lineage**: [Marcus Baw SAFETY.md v2.0.0-draft](https://github.com/pacharanero/SAFETY.md)
+**Spec lineage**: [SAFETY.md specification 2.0.0-draft, commit af405498 (22 July 2026)](https://github.com/pacharanero/SAFETY.md/blob/af405498/spec/specification.md); [ArcKit deviations](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/README.md#spec-lineage)

@@ -439,7 +439,7 @@
 <blockquote>
 <p><strong>Overlay</strong>: USA Federal Civilian Community Overlay</p>
 </blockquote>
-<p><code>/arckit-us:us-privacy-pia</code> produces a federal Privacy Impact Assessment under §208 of the E-Government Act of 2002 and OMB M-03-22. It scopes the personal information lifecycle, applies the Fair Information Practice Principles (FIPPs), captures the Privacy Act of 1974 system-of-records analysis (SORN trigger / coverage / amendment), aligns with NIST SP 800-122 PII handling guidance, and surfaces the AI-specific notice obligations introduced by OMB M-24-10.</p>
+<p><code>/arckit-us:us-privacy-pia</code> produces a federal Privacy Impact Assessment under §208 of the E-Government Act of 2002 and OMB M-03-22. It scopes the personal information lifecycle, applies the Fair Information Practice Principles (FIPPs), captures the Privacy Act of 1974 system-of-records analysis (SORN trigger / coverage / amendment), aligns with NIST SP 800-122 PII handling guidance, and, where AI is in scope, links to the OMB M-25-21 AI impact assessment, which assesses impacts on privacy, civil rights and civil liberties and should reference this PIA.</p>
 <p>The PIA is <strong>mandatory</strong> when an agency develops or procures information technology that collects, maintains, or disseminates personally identifiable information, or when it initiates a new electronic collection of PII from 10 or more members of the public. It is the artefact that the agency SAOP signs and that is published for public consumption — a missing or incomplete PIA is a Senior Agency Official for Privacy finding.</p>
 <p>The doc-type code is <strong><code>USPIA</code></strong> because the plain <code>PIA</code> code is taken by the Canadian overlay (<code>ca-pia</code>).</p>
 <p>Reviewed by the SAOP, the System Owner, the agency Privacy Office, General Counsel where SORN triggers are uncertain, and the agency Chief AI Officer where AI is in scope.</p>
@@ -484,7 +484,7 @@
 <li>Build the PII inventory — types, sources, uses, recipients, retention, disposal.</li>
 <li>Apply the FIPPs to the system's data flows.</li>
 <li>Run the Privacy Act SORN analysis — does the system constitute a System of Records? Existing SORN? New / amended SORN required?</li>
-<li>Where AI is in scope, layer the M-24-10 AI-specific notice obligations.</li>
+<li>Where AI is in scope, cross-reference the OMB M-25-21 AI impact assessment (<code>us-ai-impact</code>).</li>
 <li>Route for SAOP signature and public publication.</li>
 </ol>
 <hr />
@@ -504,14 +504,14 @@
 <ul>
 <li><strong>Missing SORN trigger when adding a new System of Records.</strong> If you can retrieve a record by an individual identifier, you have a System of Records — and the Privacy Act requires a SORN. Treat new SoR creation as a delivery gate.</li>
 <li><strong>Failing to publish the PIA.</strong> The PIA is a public document under §208. Internal-only retention is non-compliance.</li>
-<li><strong>Ignoring AI-specific notice obligations.</strong> M-24-10 layers additional notice on top of FIPPs notice where AI is involved — these are not interchangeable.</li>
+<li><strong>Treating the PIA as the AI impact assessment.</strong> Where a use case is high-impact AI, OMB M-25-21 requires a separate AI impact assessment covering privacy, civil rights and civil liberties, which should reference the PIA. The two are not interchangeable.</li>
 <li><strong>Confusing PIA with PTA.</strong> A Privacy Threshold Analysis is a screen; the PIA is the substantive assessment. Stopping at the PTA when the PIA is required is a common shortcut that fails on review.</li>
 </ul>
 <hr />
 <h2 id="handoffs">Handoffs</h2>
 <ul>
 <li><strong><code>us-icam</code></strong> — IAL choice and federation attributes feed PII inventory</li>
-<li><strong><code>us-ai-impact</code></strong> — AI notice obligations carry across both artefacts</li>
+<li><strong><code>us-ai-impact</code></strong> — the AI impact assessment references the PIA for privacy impacts</li>
 <li><strong><code>data-model</code></strong> — PIA PII inventory must reconcile with the data model</li>
 </ul>
 </div>

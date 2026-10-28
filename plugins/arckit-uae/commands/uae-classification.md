@@ -7,7 +7,7 @@ handoffs:
   - command: data-model
     description: The classification register feeds the data model entity-by-entity sensitivity tags.
   - command: uae-cloud-residency
-    description: Residency obligations follow from the classification level (Confidential and above require UAE-resident sovereign cloud).
+    description: Residency obligations follow from the classification level (under the National Cloud Security Policy v2.0, Confidential and above are stored in the UAE on a Partial Sovereign or Sovereign Cloud).
   - command: uae-data-sharing
     description: Data sharing agreements depend on per-dataset classification.
 allowed-tools:

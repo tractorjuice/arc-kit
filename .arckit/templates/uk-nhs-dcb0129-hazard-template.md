@@ -214,4 +214,4 @@ The six hazards above are a **starter set** drawn from common patterns in NHS di
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-**Spec lineage**: [Marcus Baw SAFETY.md v2.0.0-draft](https://github.com/pacharanero/SAFETY.md)
+**Spec lineage**: [SAFETY.md specification 2.0.0-draft, commit af405498 (22 July 2026)](https://github.com/pacharanero/SAFETY.md/blob/af405498/spec/specification.md); [ArcKit deviations](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-nhs/README.md#spec-lineage)

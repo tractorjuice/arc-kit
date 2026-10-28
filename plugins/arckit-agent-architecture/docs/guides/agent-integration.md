@@ -56,5 +56,6 @@ Output: `projects/<id>/ARC-<id>-AAIN-v1.0.md`
 ## Related Commands
 
 - `/arckit:agent-design` - Define individual agent architecture and interfaces.
-- `/arckit:agent-governance` - Apply oversight to multi-agent orchestration.
-- `/arckit:agent-security` - Secure inter-agent communication.
+- `/arckit:agent-governance` - Run before this command. It sets the oversight, approval and audit requirements the contracts must respect.
+- `/arckit:agent-security` - Run before this command. It sets the controls inter-agent communication must follow.
+- `/arckit:agent-maturity` - Run next. It assesses integration alongside the other four dimensions.

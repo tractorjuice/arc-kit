@@ -121,7 +121,7 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | Right | Procedure | Channel | SLA | Owner |
 |-------|-----------|---------|-----|-------|
 | §12 access to own personal information | [request intake → identity verification → retrieval → release with severance where required] | [ATIP portal / paper / email] | 30 days, extendable per §15 | ATIP coordinator |
-| §13 PIB registration in TBS InfoSource | [register / update PIB entry; publish summary in InfoSource] | TBS InfoSource | At launch and on substantial modification | ATIP coordinator |
+| §10 PIB registration with TBS (published in InfoSource, the §11 index) | [register / update PIB entry; publish summary in InfoSource] | TBS InfoSource | Before launch and on substantial modification | ATIP coordinator |
 | Correction and annotation | [correction request → assessment → correction or annotation per §12(2)] | [ATIP portal / paper] | [SLA] | ATIP coordinator |
 | Complaint to OPC | [individual files complaint with OPC; institution responds to OPC investigation] | OPC complaint channel | Per OPC SLA | ATIP coordinator + Privacy Counsel |
 
@@ -135,7 +135,7 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | Automated decision-making touching personal information | [NOTIFY / N/A — also trigger `ca-aia`] | [reasoning] | [YYYY-MM-DD or N/A] |
 | Sensitive categories (health, immigration, criminal record, biometrics) | [NOTIFY / N/A] | [reasoning] | [YYYY-MM-DD or N/A] |
 
-> The TBS Directive on PIA requires notification at least 30 days before launch for new programmes or substantial modifications. Plan accordingly — OPC consultation is not a sign-off formality.
+> There is no fixed notice period. The TBS Policy on Privacy Protection (4.2.2) requires TBS and the OPC to be told about planned initiatives at a sufficiently early stage for them to review and discuss the issues. The TBS Standard on Privacy Impact Assessment requires the PIA to be completed before the programme starts (C.2.2.9), every completed PIA to be sent to TBS and the OPC (C.2.2.12), and their recommendations to be considered and answered (C.2.2.13). Plan accordingly — OPC consultation is not a sign-off formality.
 
 ## PIA Approval Chain
 
@@ -155,7 +155,7 @@ Cross-reference `risk` for the project-level continuation of these entries.
 |--------|-------|-----|--------|
 | Resolve `<TBC>` lawful-authority entries | [Privacy Counsel] | [YYYY-MM-DD] | [Open / Closed] |
 | Register / update PIB in TBS InfoSource | [ATIP coordinator] | [YYYY-MM-DD] | [Open / Closed] |
-| Submit OPC pre-launch notification (≥30 days before launch) | [ATIP coordinator] | [YYYY-MM-DD] | [Open / Closed] |
+| Notify TBS and the OPC early; send them the completed PIA before launch | [ATIP coordinator] | [YYYY-MM-DD] | [Open / Closed] |
 | Cross-border safeguards — see `ca-cloud-residency` | [Architecture lead] | [YYYY-MM-DD] | [Open / Closed] |
 | Trigger `ca-aia` if automated decision-making is in scope | [Architecture lead] | [YYYY-MM-DD] | [Open / Closed] |
 
@@ -166,7 +166,8 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | Doc ID | Title | URL | Verified date |
 |--------|-------|-----|---------------|
 | CA-PRIV-ACT | Privacy Act (R.S.C., 1985, c. P-21) | <https://laws-lois.justice.gc.ca/eng/acts/P-21/> | [YYYY-MM-DD] |
-| CA-TBS-PIA | TBS Directive on Privacy Impact Assessment | <https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=18308> | [YYYY-MM-DD] |
+| CA-TBS-PPP | TBS Policy on Privacy Protection | <https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=12510> | [YYYY-MM-DD] |
+| CA-TBS-PIA | TBS Standard on Privacy Impact Assessment (Directive on Privacy Practices, Appendix C) | <https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=18309> | [YYYY-MM-DD] |
 | CA-OPC | Office of the Privacy Commissioner of Canada — published guidance | <https://www.priv.gc.ca/> | [YYYY-MM-DD] |
 | CA-INFOSOURCE | TBS InfoSource — Personal Information Banks register | <https://www.canada.ca/en/treasury-board-secretariat/services/access-information-privacy/access-information/information-about-programs-information-holdings.html> | [YYYY-MM-DD] |
 | CA-PRIV-REG | Privacy Regulations | <https://laws-lois.justice.gc.ca/eng/regulations/SOR-83-508/> | [YYYY-MM-DD] |
@@ -182,9 +183,10 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | [PRIV-5] | CA-PRIV-ACT | §8 — disclosure restrictions | Transfers and Disclosures |
 | [PRIV-6] | CA-PRIV-ACT | §8(2)(a)–(m) — routine-use disclosure letters | Transfers and Disclosures |
 | [PRIV-7] | CA-PRIV-ACT | §12 — right of access | Individual Rights |
-| [PRIV-8] | CA-PRIV-ACT | §13 — PIB registration | Individual Rights |
-| [TBS-PIA-1] | CA-TBS-PIA | Notification requirement (≥30 days before launch) | OPC Notification Trigger Analysis |
-| [TBS-PIA-2] | CA-TBS-PIA | PIA approval chain | PIA Approval Chain |
+| [PRIV-8] | CA-PRIV-ACT | §10 — personal information banks | Individual Rights |
+| [TBS-PPP-1] | CA-TBS-PPP | 4.2.2 — early notification of planned initiatives | OPC Notification Trigger Analysis |
+| [TBS-PIA-1] | CA-TBS-PIA | C.2.2.9, C.2.2.12–C.2.2.13 — PIA completed before launch, sent to TBS and the OPC | OPC Notification Trigger Analysis |
+| [TBS-PIA-2] | CA-TBS-PIA | C.2.2.14 — PIA approval | PIA Approval Chain |
 
 ### Unreferenced Documents
 

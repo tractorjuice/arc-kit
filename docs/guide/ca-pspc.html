@@ -439,8 +439,8 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Community</p>
 </blockquote>
-<p><code>/arckit-ca:ca-pspc</code> generates a federal Canadian procurement strategy under the Public Services and Procurement Canada (PSPC) <em>Supply Manual</em>. It scopes the procurement, applies the <em>Canadian Free Trade Agreement</em> (CFTA), CETA, CPTPP, and WTO-AGP threshold matrix, evaluates the Standing Offer / Supply Arrangement / AgileIQ / bespoke RFP / set-aside route landscape, captures the Procurement Strategy for Indigenous Business (PSAB) contribution to the departmental 5% rolling target, builds the security-clearance lead-time picture, sets out the evaluation-framework dimensions, and lays a bid-solicitation schedule consistent with Supply Manual standstill and debriefing rules.</p>
-<p>PSPC is the federal contracting authority for most goods and services procurements above departmental delegations. Federal procurement operates under a layered set of trade-agreement obligations — CFTA domestically, CETA / CPTPP / WTO-AGP internationally — and a Procurement Strategy for Indigenous Business that targets a 5% rolling departmental contribution to Indigenous-business procurement. Treat this artefact as a delivery gate: the route, the trade-agreement coverage, the PSAB posture, and the clearance-lead-time picture must be set before market engagement, because reversing them after a posting attracts CITT review and rework cost.</p>
+<p><code>/arckit-ca:ca-pspc</code> generates a federal Canadian procurement strategy under the Public Services and Procurement Canada (PSPC) <em>Supply Manual</em>. It scopes the procurement, applies the <em>Canadian Free Trade Agreement</em> (CFTA), CETA, CPTPP, and WTO-AGP threshold matrix, evaluates the Standing Offer / Supply Arrangement / AgileIQ / bespoke RFP / set-aside route landscape, captures the Procurement Strategy for Indigenous Business (PSIB, formerly the Procurement Strategy for Aboriginal Business) contribution to the department's annual 5% target, builds the security-clearance lead-time picture, sets out the evaluation-framework dimensions, and lays a bid-solicitation schedule consistent with Supply Manual standstill and debriefing rules.</p>
+<p>PSPC is the federal contracting authority for most goods and services procurements above departmental delegations. Federal procurement operates under a layered set of trade-agreement obligations — CFTA domestically, CETA / CPTPP / WTO-AGP internationally — and a mandatory minimum of 5% of the total value of the contracts each department awards in a fiscal year going to Indigenous businesses (Appendix E of the TBS <em>Directive on the Management of Procurement</em>), which the Procurement Strategy for Indigenous Business helps meet. Treat this artefact as a delivery gate: the route, the trade-agreement coverage, the PSIB posture, and the clearance-lead-time picture must be set before market engagement, because reversing them after a posting attracts CITT review and rework cost.</p>
 <hr />
 <h2 id="inputs">Inputs</h2>
 <table>
@@ -494,7 +494,7 @@
 </tr>
 <tr>
 <td>Executive Summary</td>
-<td>Recommended route, binding trade agreements, PSAB posture, longest clearance lead time, blocking open items</td>
+<td>Recommended route, binding trade agreements, PSIB posture, longest clearance lead time, blocking open items</td>
 </tr>
 <tr>
 <td>Procurement Scope</td>
@@ -542,7 +542,7 @@
 <h2 id="when-to-run">When to run</h2>
 <ul>
 <li>After SOBC — once the affordability envelope and commercial case are set, the route and instrument can be sized. Under the TBS <em>Directive on the Management of Projects and Programmes</em> the business case compares the options and the procurement strategy is set out for the recommended one, so run <code>/arckit:sobc</code> first. If the strategy then moves the cost or the route, revisit the business case at the next gate.</li>
-<li>Before market engagement — the route, the trade-agreement coverage, and the PSAB posture must be set before any RFI / Industry Day to avoid contradictory market signals.</li>
+<li>Before market engagement — the route, the trade-agreement coverage, and the PSIB posture must be set before any RFI / Industry Day to avoid contradictory market signals.</li>
 <li>After a material scope or value change — a procurement designed against last quarter's scope can fall on the wrong side of a CFTA / CETA / CPTPP / WTO-AGP threshold when value moves.</li>
 <li>Pre-posting refresh — re-verify thresholds at posting; thresholds adjust biennially and trade-agreement coverage evolves.</li>
 <li>Before contract extension or option exercise — option years roll value past thresholds and may re-trigger trade-agreement obligations even when the base award sat below them.</li>
@@ -595,7 +595,7 @@
 </tr>
 <tr>
 <td>Indigenous-business participation</td>
-<td>PSAB set-aside or sub-contracting plan</td>
+<td>PSIB set-aside or sub-contracting plan</td>
 <td>Validate supplier pool through Indigenous Services Canada directory</td>
 </tr>
 </tbody>
@@ -604,10 +604,10 @@
 <h2 id="common-pitfalls">Common pitfalls</h2>
 <ul>
 <li><strong>Defaulting to a Standing Offer without CFTA analysis.</strong> A Standing Offer is still subject to trade-agreement obligations and CITT review. Choose the instrument by fit to scope, value, and evaluation model, not by the convenience of an existing call-up mechanism.</li>
-<li><strong>Missing PSAB consideration entirely.</strong> Even where a set-aside is not used, the PSAB analysis must be documented — the supplier-pool assessment, the carve-out reasoning, and the contribution to the departmental rolling 5% target. Silence on PSAB reads as oversight.</li>
+<li><strong>Missing PSIB consideration entirely.</strong> Even where a set-aside is not used, the PSIB analysis must be documented — the supplier-pool assessment, the carve-out reasoning, and the contribution to the department's annual 5% target. Silence on PSIB reads as oversight.</li>
 <li><strong>Under-budgeting clearance lead time.</strong> Top Secret and SCI clearances commonly take 6 to 12 or more months for new applicants. A schedule that assumes weeks rather than months attracts a critical-path risk that can reset the whole award timeline.</li>
 <li><strong>Conflating ITQ, ITT, and RFP shapes.</strong> Each solicitation form has different evaluation rules, different bidder rights, and different challenge pathways. Choose the form against the route-selection table; do not mix vocabulary across the artefact.</li>
-<li><strong>Treating PSAB 5% as a per-procurement target.</strong> The 5% is a department-level rolling target. Any one procurement contributes to it; no single procurement is judged against 5% in isolation. Document the contribution explicitly so the departmental return rolls up correctly.</li>
+<li><strong>Treating PSIB 5% as a per-procurement target.</strong> The 5% is an annual department-level target: Appendix E of the TBS Directive on the Management of Procurement measures it against the total value of contracts awarded in the fiscal year and says it is not to be applied to each individual contract. Any one procurement contributes to it; no single procurement is judged against 5% in isolation. Document the contribution explicitly so the departmental return rolls up correctly.</li>
 </ul>
 <hr />
 <h2 id="handoffs">Handoffs</h2>
@@ -616,7 +616,7 @@
 </ul>
 <hr />
 <h2 id="statutory-currency">Statutory currency</h2>
-<p>CFTA thresholds adjust biennially and the international agreements (CETA, CPTPP, WTO-AGP) carry their own coverage schedules and threshold cycles. Re-verify the current thresholds at the verification date in the Document Register; a procurement designed against last year's thresholds can fall on the wrong side of an obligation when posted. PSPC Standing Offers and Supply Arrangements cycle through renewals — re-verify the current instrument numbers (SBIPS, TBIPS, ProServices, SA-AIDP, SA-Cyber, and others) at posting, since a lapsed instrument reference invalidates the call-up. The PSAB is administered by Indigenous Services Canada and the registered supplier directory evolves; check the directory before relying on supplier-pool sufficiency for a set-aside decision.</p>
+<p>CFTA thresholds adjust biennially and the international agreements (CETA, CPTPP, WTO-AGP) carry their own coverage schedules and threshold cycles. Re-verify the current thresholds at the verification date in the Document Register; a procurement designed against last year's thresholds can fall on the wrong side of an obligation when posted. PSPC Standing Offers and Supply Arrangements cycle through renewals — re-verify the current instrument numbers (SBIPS, TBIPS, ProServices, SA-AIDP, SA-Cyber, and others) at posting, since a lapsed instrument reference invalidates the call-up. The PSIB is administered by Indigenous Services Canada and the registered supplier directory evolves; check the directory before relying on supplier-pool sufficiency for a set-aside decision.</p>
 </div>
 <script src="../films.js"></script>
         </div>

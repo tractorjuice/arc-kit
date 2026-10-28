@@ -6,7 +6,7 @@ effort: high
 keep-coding-instructions: true
 handoffs:
   - command: us-ai-impact
-    description: Translate AI RMF findings into the M-24-10 rights-impacting / safety-impacting determination and the M-25-21 acquisition controls.
+    description: Translate AI RMF findings into the M-25-21 high-impact determination and minimum practices, and the M-25-22 acquisition terms.
   - command: us-privacy-pia
     description: AI systems trained on or inferencing over PII require an E-Gov Act §208 PIA; the AI RMF data inventory seeds the PIA.
   - command: risk
@@ -28,7 +28,8 @@ allowed-tools:
 > and 3PAO before reliance.
 >
 > **Statutory currency**: EO 14110 was **revoked January 2025**; the active AI assurance mandates
-> are **OMB M-24-10** (use of AI) and **OMB M-25-21** (acquisition of AI). FedRAMP completed the
+> are **OMB M-25-21** (use and governance of AI; it rescinded and replaced M-24-10 on 3 April 2025)
+> and **OMB M-25-22** (acquisition of AI; it replaced M-24-18). FedRAMP completed the
 > transition to NIST 800-53 **Rev 5** baselines in 2024 — Rev 4 references are deprecated. Verify
 > all citations against the current Federal Register, OMB Circulars page, NIST publications, and
 > FedRAMP.gov before relying on this output.
@@ -47,7 +48,7 @@ The NIST AI RMF 1.0 (January 2023) provides a voluntary, rights-preserving, sect
 
 The **Generative AI Profile (NIST AI 600-1, July 2024)** is a cross-sectoral profile that enumerates twelve distinct GenAI risks and maps each to AI RMF actions. Use the GenAI Profile additionally for any system containing generative components.
 
-The AI RMF underpins the federal policy stack: OMB M-24-10 requires agencies to apply AI RMF practices to AI use cases, and M-25-21 directs agencies to require AI RMF alignment from AI acquisition vendors. NIST AI 600-1 supersedes the now-revoked EO 14110 expectations for the federal GenAI use-case posture.
+The AI RMF is voluntary. OMB M-25-21 (agency use of AI) and OMB M-25-22 (AI acquisition) do not mention it; M-24-10, which M-25-21 rescinded and replaced, only encouraged agencies to draw on it. ArcKit uses the AI RMF to structure the evidence that the M-25-21 minimum practices and AI impact assessment need, and the GenAI Profile for generative risks. NIST is revising AI RMF 1.0 under the July 2025 AI Action Plan; check the NIST page for a newer version before relying on 1.0.
 
 **Authoritative anchors**:
 
@@ -88,21 +89,21 @@ The AI RMF underpins the federal policy stack: OMB M-24-10 requires agencies to 
    - **Manage Function Assessment** — Manage 1–4 categories: prioritisation of risks, decision criteria for deploy / withdraw, third-party risk management, ongoing monitoring (drift, performance, fairness), incident response. Cross-reference the IR controls in the NIST 800-53 artefact.
    - **Generative AI Profile Addendum (NIST AI 600-1)** — required if the system uses generative AI (LLM, diffusion, multi-modal generative). Assess against the 12 GenAI risks: (1) CBRN information or capabilities; (2) Confabulation; (3) Dangerous, violent, or hateful content; (4) Data privacy; (5) Environmental impacts; (6) Harmful bias and homogenisation; (7) Human-AI configuration; (8) Information integrity; (9) Information security; (10) Intellectual property; (11) Obscene, degrading, or abusive content; (12) Value chain and component integration. For each risk: applicability, current controls, residual risk, action items.
    - **Residual Risk Register** — risks remaining after Manage actions, prioritised; each linked to a target review date.
-   - **Control Crosswalk** — table mapping AI RMF subcategories to NIST 800-53 Rev 5 controls and to OMB M-24-10 minimum-practice items, so the assurance posture is traceable.
+   - **Control Crosswalk** — table mapping AI RMF subcategories to NIST 800-53 Rev 5 controls and to the OMB M-25-21 §4(b) minimum practices, so the assurance posture is traceable.
 
 7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AIRMF** per-type checks pass. Fix any failures before proceeding.
 8. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-9. Emit a short summary to the user — AI system type, GenAI in scope (Y/N), top 5 residual risks, M-24-10 impact-class hint (rights-impacting / safety-impacting / neither), and CAIO review status. Do not echo the full artefact.
+9. Emit a short summary to the user — AI system type, GenAI in scope (Y/N), top 5 residual risks, M-25-21 high-impact hint (high-impact / not high-impact), and CAIO review status. Do not echo the full artefact.
 
 ## Handoffs
 
-The RMF findings drive `/arckit:us-ai-impact` — the M-24-10 rights/safety-impacting determination and M-25-21 acquisition controls inherit the RMF risk register. PII-handling AI systems require `/arckit:us-privacy-pia`. Residual risks flow into `/arckit:risk`. Significant model, hosting, data-governance, and human-oversight decisions captured during the RMF process should be recorded as ADRs via `/arckit:adr`.
+The RMF findings drive `/arckit:us-ai-impact` — the M-25-21 high-impact determination and minimum practices, and the M-25-22 acquisition terms, inherit the RMF risk register. PII-handling AI systems require `/arckit:us-privacy-pia`. Residual risks flow into `/arckit:risk`. Significant model, hosting, data-governance, and human-oversight decisions captured during the RMF process should be recorded as ADRs via `/arckit:adr`.
 
 ## Important Notes
 
-- **The AI RMF is voluntary in form, mandatory in effect** — the framework itself is voluntary, but OMB M-24-10 directs federal agencies to apply AI RMF practices and M-25-21 directs them to require AI RMF alignment from vendors. The federal civilian effect is mandatory.
-- **EO 14110 is revoked** — January 2025. Do not cite EO 14110 as the source of GenAI policy. The active anchors are OMB M-24-10, OMB M-25-21, and NIST AI 600-1.
+- **The AI RMF is voluntary** — neither OMB M-25-21 nor M-25-22 requires it, and M-24-10 (now rescinded) only encouraged it. Use it because it gives a structured evidence base for the M-25-21 minimum practices (testing, impact assessment, monitoring, oversight), not because a memo mandates it. An agency's own AI policy may adopt it; record that policy as the source where it does.
+- **EO 14110 is revoked** — January 2025. Do not cite EO 14110 as the source of GenAI policy. The active anchors are OMB M-25-21, OMB M-25-22, and NIST AI 600-1.
 - **Govern is a precondition, not a parallel track** — Map / Measure / Manage cannot satisfy their outcomes if the Govern function is weak. Score Govern honestly even where mission urgency tempts shortcutting.
 - **GenAI Profile is additive, not replacement** — for systems with generative components, run both the full AI RMF and the AI 600-1 Profile. The Profile adds risks not surfaced by the base RMF (confabulation, value-chain integration, information integrity).
 - **Adversarial ML is now in scope** — NIST AI 100-2 E2023 catalogues evasion, poisoning, extraction, and inference attacks. Measure-function security testing must include adversarial-ML threat modelling, not just traditional infosec testing.

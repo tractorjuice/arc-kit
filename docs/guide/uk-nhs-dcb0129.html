@@ -441,7 +441,7 @@
 </blockquote>
 <h2 id="purpose">Purpose</h2>
 <p>Generates the <strong>manufacturer-side</strong> clinical safety documentation required under NHS DCB0129 for any health IT product being placed on the NHS market. NHS DCB0129 is mandated under the Health and Social Care Act 2012 s250 and applies to <em>any</em> health IT system deployed in the NHS, regardless of whether the product is also a medical device.</p>
-<p>The output is a 3-file set that follows Dr Marcus Baw's <a href="https://github.com/pacharanero/SAFETY.md">SAFETY.md spec v2.0.0-draft</a> verbatim — chosen so the documents remain readable by clinicians, NHS England assessors, MHRA inspectors, and Notified Body reviewers without ArcKit-specific tooling.</p>
+<p>The output is a 3-file set that follows Dr Marcus Baw's <a href="https://github.com/pacharanero/SAFETY.md">SAFETY.md spec 2.0.0-draft</a> — chosen so the documents remain readable by clinicians, NHS England assessors, MHRA inspectors, and Notified Body reviewers without ArcKit-specific tooling. The spec is a draft with no tagged release, so the overlay follows a named commit and lists its deliberate deviations (file location, Document Control block): see <a href="uk-nhs-clinical-safety-overlay.html#safetymd-spec-version-and-deviations">SAFETY.md spec version and deviations</a>.</p>
 <h2 id="what-it-produces">What it produces</h2>
 <p>Three files in <code>projects/{NNN}-&lt;slug&gt;/clinical-safety/</code>:</p>
 <table>
@@ -454,7 +454,7 @@
 <tbody>
 <tr>
 <td><code>SAFETY.md</code></td>
-<td>Front-door anchor: required Marcus-spec fields (product-name, version, standard, CSO, organisation, status, hazard-log-url, last-reviewed) + ArcKit Document Control + Summary</td>
+<td>Front-door anchor: required Marcus-spec fields (product-name, version, standard, CSO, organisation, role, status, hazard-log-url, applicable-standards, last-reviewed) + ArcKit Document Control + Summary</td>
 </tr>
 <tr>
 <td><code>SAFETY-CASE.md</code></td>
@@ -499,7 +499,7 @@
 <h2 id="related-commands">Related commands</h2>
 <ul>
 <li><code>/arckit-uk-nhs:uk-nhs-dcb0160</code> — deployer-side companion (DCB0160)</li>
-<li><code>/arckit-uk-nhs:uk-nhs-dtac</code> — NHS DTAC v3 (consumes the <a href="http://SAFETY-CASE.md">SAFETY-CASE.md</a> content in Section 1)</li>
+<li><code>/arckit-uk-nhs:uk-nhs-dtac</code> — NHS DTAC (form version 2.0); section C1 asks for the Clinical Safety Case Report and Hazard Log</li>
 <li><code>/arckit-uk-nhs:uk-mdr-classification</code> — if the product is also a medical device, DCB0129 hazards feed the ISO 14971 risk file</li>
 <li><code>/arckit:risk</code> — project-level risk register cross-references clinical hazards</li>
 <li><code>/arckit:dpia</code> — privacy hazards may overlap with clinical hazards</li>

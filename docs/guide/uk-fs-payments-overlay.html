@@ -433,9 +433,14 @@
 <blockquote>
 <p><strong>Status</strong>: EXPERIMENTAL · Community-contributed · No named domain co-maintainer · <strong>Output requires
 review by qualified UK FS regulatory counsel, the firm's MLRO / Compliance Officer, and the
-SMF holder with primary accountability for payment services before any reliance on generated
+senior individual accountable for payment services before any reliance on generated
 artefacts.</strong> Regulatory citations reflect the position at the time each command was authored;
 verify against current FCA, BoE, PRA, and <a href="http://legislation.gov.uk">legislation.gov.uk</a> publications before reliance.</p>
+<p><strong>Senior managers.</strong> SM&amp;CR applies only to FSMA-authorised firms, such as banks and other firms
+with a Part 4A permission. A PI or EMI authorised only under the PSRs 2017 or EMRs 2011 is
+outside it; its directors and persons responsible for management are assessed for good repute
+and knowledge under PSRs 2017 regulation 6(7)(b) or EMRs 2011 regulation 6(6)(b). The commands
+therefore ask whether the firm is within SM&amp;CR and use SMF titles only when it is.</p>
 </blockquote>
 <h2 id="purpose">Purpose</h2>
 <p>The UK Finance Payments Overlay is the first sector-specific ArcKit overlay. Where the jurisdiction
@@ -518,10 +523,11 @@ anchored on FCA Principle 12 and PRIN 2A. The artefact covers: per-outcome evide
 (Products and Services, Price and Value, Consumer Understanding, Consumer Support); fair-value
 framework; target market assessment; vulnerable customer cohort identification using the FG22/5
 four vulnerability drivers (health, life events, resilience, capability); foreseeable harms register;
-and a board attestation block for SMF holder sign-off. Doc-type code: <strong>FSCD</strong>. Principal citations:
+and a board attestation block for the individuals signing for the governing body (PRIN 2A.8.4R).
+Doc-type code: <strong>FSCD</strong>. Principal citations:
 FCA PS22/9; FCA FG22/5; FCA &quot;Consumer Duty board reports: good practice and areas for improvement&quot;
 (11 December 2024, last updated 9 March 2026); FCA blog &quot;Year 2 Consumer Duty Board Reports:
-progress and what comes next&quot; (16 April 2026); FCA PRIN 2A via FCA 2022/31.</p>
+progress and what comes next&quot; (16 April 2026); FCA PRIN 2A (FCA Handbook) and FCA 2022/31.</p>
 <h3 id="arckituk-fs-ctp-dependency--critical-third-party-dependency-assessment"><code>/arckit-uk-finance:uk-fs-ctp-dependency</code> — Critical Third Party Dependency Assessment</h3>
 <p>Generates a CTP dependency register and resilience testing plan under the BoE/PRA/FCA CTP regime
 established by PS24/16 (effective January 2025) and grounded in the Financial Services and Markets
@@ -535,20 +541,25 @@ Doc-type code: <strong>FSCTP</strong>. Principal citations: FCA PS24/16; FSMA 20
 instrument; HMT designation approach document (March 2024).</p>
 <hr />
 <h2 id="recipe">Recipe</h2>
-<p>The overlay ships with the <code>uk-fs-payments</code> recipe, which orchestrates 11 build targets across
-baseline and overlay commands in a structured wave sequence:</p>
+<p>The <code>uk-fs-payments</code> recipe orchestrates 11 build targets across baseline and overlay commands.
+The build harness works out the waves from each target's dependencies; from an empty project
+they are:</p>
 <ul>
-<li><strong>Wave 1 (foundation)</strong>: PRIN, STKE</li>
-<li><strong>Wave 2 (requirements + risk)</strong>: REQ, RISK</li>
-<li><strong>Wave 3 (payments overlay — parallel where possible)</strong>: FSSCA, FSSAFE, FSCD, FSCTP</li>
-<li><strong>Wave 4 (cross-cutting)</strong>: DPIA, ADR, traceability</li>
+<li><strong>Wave 1</strong>: PRIN</li>
+<li><strong>Wave 2</strong>: STKE</li>
+<li><strong>Wave 3</strong>: REQ</li>
+<li><strong>Wave 4</strong>: RISK, DATA, ADR, FSCD</li>
+<li><strong>Wave 5</strong>: DPIA, FSSAFE, FSCTP</li>
+<li><strong>Wave 6</strong>: FSSCA (needs ADR and DPIA)</li>
+<li><strong>After the build</strong>: <code>/arckit:traceability</code> and <code>/arckit:health</code></li>
 </ul>
 <p>To run:</p>
 <pre><code class="language-bash"># In a Claude Code session with the ArcKit plugin and UK Finance overlay enabled:
 /arckit:build &lt;project-name&gt; --recipe uk-fs-payments --plan   # wave-plan dry run
 /arckit:build &lt;project-name&gt; --recipe uk-fs-payments          # full build
 </code></pre>
-<p>The recipe is defined in <code>plugins/arckit-uk-finance/recipes/uk-fs-payments.yaml</code>.</p>
+<p>The recipe ships with the <code>arckit</code> core plugin, at
+<code>plugins/arckit-claude/skills/arckit-build/recipes/uk-fs-payments.yaml</code>.</p>
 <hr />
 <h2 id="doc-type-codes">Doc-type Codes</h2>
 <table>
@@ -583,9 +594,10 @@ baseline and overlay commands in a structured wave sequence:</p>
 </tbody>
 </table>
 <p>FSSAFE carries CRITICAL severity because safeguarding failures have led to firm collapse and FCA
-enforcement action — Allied Wallet (2021) and Premier FX (2018) are the documented enforcement
-cases. The CRITICAL marker signals that the artefact requires elevated sign-off and more frequent
-review than standard compliance artefacts.</p>
+action: Allied Wallet (FCA requirements and winding-up petition 2019, winding-up order March 2020)
+and Premier FX (collapsed 2018, publicly censured by the FCA in February 2021). The CRITICAL
+marker signals that the artefact requires elevated sign-off and more frequent review than standard
+compliance artefacts.</p>
 <hr />
 <h2 id="v2-candidates">v2 Candidates</h2>
 <p>The following commands were designed during the v1 scoping exercise but deferred to a future
@@ -642,7 +654,8 @@ verified as live at the time the commands were authored.</p>
 <li><a href="https://www.fca.org.uk/firms/strong-customer-authentication">FCA Strong Customer Authentication — firms guidance</a></li>
 <li><a href="https://www.fca.org.uk/publications/good-and-poor-practice/consumer-duty-board-reports-good-practice-areas-improvement">FCA Consumer Duty board reports: good practice and areas for improvement (11 December 2024, last updated 9 March 2026)</a></li>
 <li><a href="https://www.fca.org.uk/news/blogs/year-2-consumer-duty-board-reports-progress-and-what-comes-next">FCA blog — Year 2 Consumer Duty Board Reports: progress and what comes next (16 April 2026)</a></li>
-<li><a href="https://handbook.fca.org.uk/handbook/sup16">FCA Handbook SUP 16 — Reporting requirements (SUP 16.14A and Annex 29BR, monthly safeguarding return)</a></li>
+<li><a href="https://handbook.fca.org.uk/handbook/sup16/sup16s14a">FCA Handbook SUP 16.14A — Safeguarding return: safeguarding institutions (monthly return)</a></li>
+<li><a href="https://handbook.fca.org.uk/handbook/sup16/sup16s154">FCA Handbook SUP 16 Annex 29BR — Safeguarding return</a></li>
 </ul>
 </div>
         </div>

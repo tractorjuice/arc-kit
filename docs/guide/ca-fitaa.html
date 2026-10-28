@@ -469,6 +469,7 @@
 </tr>
 </tbody>
 </table>
+<p>The privacy and access artefacts are not inputs: this command does not read the PIA, the ATIP reconciliation or the AIA. They still apply to the register. The PIA must be complete before the system collects or processes registrant or foreign-principal personal data, <code>/arckit-ca:ca-atip</code> holds the formal severance design for the public and protected views, and <code>/arckit-ca:ca-aia</code> is needed if registration triage uses any automated decision-making, scoring or risk classification. The <code>ca-federal-fitaa</code> build recipe runs the PIA and ATIP first, because the data model this command reads is built on them.</p>
 <hr />
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit-ca:ca-fitaa &lt;project ID or service description&gt;
@@ -555,9 +556,8 @@
 <h2 id="handoffs">Handoffs</h2>
 <ul>
 <li><strong><code>ca-charter</code></strong> — Charter §2 expression and association analysis is required for any registration scheme that engages protected speech or association. Treat as unconditional after FITAA.</li>
-<li><strong><code>ca-pia</code></strong> — Privacy Impact Assessment for personal information collected during arrangement registration. Required before the system collects or processes registrant or foreign-principal personal data.</li>
-<li><strong><code>ca-atip</code></strong> — Reconciles the public-facing register against the protected investigative dataset; required severance design for hybrid public / protected views.</li>
-<li><strong><code>ca-aia</code></strong> — Algorithmic Impact Assessment is triggered when registration triage uses any automated decision-making, scoring, or risk classification.</li>
+<li><strong><code>ca-soia</code></strong> — When classified material (PROTECTED C / SECRET / TOP SECRET) is in scope. The protected investigative dataset overlaps with Special Operational Information, and the RCMP / CSIS coordination touchpoints in the Commissioner Liaison Protocol are set out in the handling plan, which reads this assessment.</li>
+<li><strong><code>ca-ola</code></strong> — The public register, registration forms, acknowledgements and notices trigger Official Languages Act Part IV obligations. The OLA review reads this assessment.</li>
 </ul>
 <hr />
 <h2 id="statutory-currency">Statutory currency</h2>

@@ -39,7 +39,7 @@
 
 | Framework | Applicability | Source |
 |-----------|--------------|--------|
-| Arrêté du 12 août 2026 (approves the SecNumCloud 3.2 requirements; taken under décret n° 2026-272 du 14 avril 2026, loi SREN art. 31) | [In scope / Out of scope — see Section 4.3] | Légifrance |
+| Arrêté du 12 août 2026 (approves the SecNumCloud 3.2 requirements; JORF of 14 August 2026, in force since 15 August 2026; taken under décret n° 2026-272 du 14 avril 2026, loi SREN art. 31) | [In scope / Out of scope — see Section 4.3] | Légifrance |
 | SecNumCloud 3.2 | [Required / Recommended / N/A] | ANSSI |
 | LPM (OIV obligations) | [Yes / No] | SGDSN |
 | NIS2 / OSE designation | [Yes / No] | ANSSI |
@@ -123,6 +123,8 @@ Legend: ✅ Confirmed | ⚠️ Residual risk | 🔄 In progress | ❌ Not met
 | Is the entity a State administration, a State operator or a designated GIP — or a supplier / sub-contractor to one? | [Yes/No] | |
 | Does the system process data of particular sensitivity within the arrêté's scope? | [Yes/No] | |
 | Outcome: SecNumCloud 3.2 qualification (or an ANSSI-recognised equivalent European certification) legally required? | [Yes/No] | |
+| Was the project started before 16 April 2026 on a private cloud service that does not meet décret n° 2026-272 art. 2? | [Yes/No] | |
+| If yes: derogation requested from the responsible minister (décret n° 2026-272 art. 3; arrêté du 14 avril 2026)? Record the decision date, expiry (at most 18 months from when an acceptable offer is available in France, or one year renewable while none is) and where the decision is published | [Yes/No/N/A] | |
 
 ## 5. Architecture Recommendations
 

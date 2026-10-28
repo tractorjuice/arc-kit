@@ -8,7 +8,13 @@
     "publicationDate": "2026-06-01",
     "publicationDateSource": "The Commission's download page for the artefact. Neither file's own metadata states it and the two disagree: the workbook's docProps give created 2026-05-28T09:59:55Z, and the guidance PDF's CreationDate is 2026-06-03. Recorded explicitly because this file is NAMED by publication date -- the calculator and the framework version (v1.2.1, October 2025) disagree on the question count, so the version could not serve as the identifier.",
     "retrievedDate": "2026-08-14",
-    "frameworkVersion": "EU Cloud Sovereignty Framework v1.2.1 (October 2025)",
+    "frameworkVersion": "EU Cloud Sovereignty Framework v1.2.1 (October 2025), weighted and scored per the Implementation guidance and this Annex calculator (1 June 2026)",
+    "weightsSource": {
+      "followed": "Annex calculator (1 June 2026), cells D4/D45/D76/D102/D133/D169/D195/D231 = 0.2/0.1/0.1/0.15/0.1/0.15/0.15/0.05, the objectives[].weight values below; the Implementation guidance (p.7) shows the same weights under the caption 'Score (examples)'.",
+      "framework121": "Cloud Sovereignty Framework v1.2.1 (October 2025), p.6 'Weight in Scoring': SOV-1 15%, SOV-2 10%, SOV-3 10%, SOV-4 15%, SOV-5 20%, SOV-6 15%, SOV-7 10%, SOV-8 5%. It differs from the calculator for SOV-1, SOV-5 and SOV-7.",
+      "status": "The Commission (DG DIGIT) published the guidance and calculator on 1 June 2026 as 'an additional clarification' of the framework, its latest material on it; it has not withdrawn v1.2.1, and the guidance (p.11) says answer values reflect the return of experience from the first tender and can be adapted by contracting authorities. ArcKit follows the 1 June 2026 calculator and says so; a tender specification that sets its own weighting governs.",
+      "checked": "2026-10-27"
+    },
     "questionCount": {
       "guidanceDocumented": 43,
       "calculatorActual": 48,
@@ -41,7 +47,7 @@
     "sealNote": "SEAL is NOT an input to the Score, and the Score does not determine SEAL. Per the Implementation guidance (p.9): 'The same answers are used to determine the SEAL of each row, with each answer defining the SEAL level of the question.' Score and SEAL are two independent readings of the SAME 48 answers -- neither is derived from the other. Overall SEAL (calculator F2) = \"SEAL-\" & MIN(seal value across every ANSWERED criterion) -- a minimum across the whole assessment, not an average, and not a function of the weighted Score.",
     "adaptabilityCaveats": [
       "The guidance states answer values 'can be adapted by contracting authorities' -- this transcription is the Commission's own worked scale, not an immutable constant.",
-      "The calculator's weight column (header row, column D) is captioned 'Score (examples)', not a mandated regulatory weighting.",
+      "The Implementation guidance (p.7) captions the calculator's weights 'Score (examples)' (the workbook's own column D header is 'Value'), not a mandated regulatory weighting.",
       "The calculator's own worked example (column E) is described in the guidance as holding 'fictitious values that do not refer to any specific example for the sole purpose of exemplification' -- never present a computed score against these example values as a real provider assessment."
     ]
   },

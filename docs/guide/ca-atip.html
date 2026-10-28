@@ -469,6 +469,7 @@
 </tr>
 </tbody>
 </table>
+<p>The PIA is the upstream artefact. If a §8(2) letter is added or a recipient changes during ATIP reconciliation, update the PIA as well rather than letting the two artefacts drift.</p>
 <hr />
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit-ca:ca-atip &lt;project ID or service description&gt;
@@ -552,7 +553,6 @@
 <h2 id="handoffs">Handoffs</h2>
 <ul>
 <li><strong><code>data-model</code></strong> — Severance rules in this artefact feed back into the data model's classification flags, role-based access controls, and field-level masking. Update the data model with a <code>severance:</code> annotation per field that maps to the rules in the Severance Design section so the runtime enforcement is auditable against the policy.</li>
-<li><strong><code>ca-pia</code></strong> — The PIA is the upstream artefact and the authoritative source for the §4–§8 register here. If a §8(2) letter is added or a recipient changes during ATIP reconciliation, push the change back into the PIA rather than letting the two artefacts drift.</li>
 </ul>
 <hr />
 <h2 id="statutory-currency">Statutory currency</h2>

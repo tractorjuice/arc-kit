@@ -161,7 +161,7 @@ The severance regime governs every transition from a Protected or Classified hol
 | CA-OIC | Office of the Information Commissioner of Canada — published guidance | <https://www.oic-ci.gc.ca/> | [YYYY-MM-DD] |
 | CA-OPC | Office of the Privacy Commissioner of Canada — published guidance | <https://www.priv.gc.ca/> | [YYYY-MM-DD] |
 | CA-TBS-ATI | TBS Directive on Access to Information Requests | <https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=18310> | [YYYY-MM-DD] |
-| CA-TBS-PIA | TBS Directive on Privacy Impact Assessment | <https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=18308> | [YYYY-MM-DD] |
+| CA-TBS-PIA | TBS Standard on Privacy Impact Assessment (Directive on Privacy Practices, Appendix C) | <https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=18309> | [YYYY-MM-DD] |
 | CA-INFOSOURCE | TBS InfoSource — Personal Information Banks register | <https://www.canada.ca/en/treasury-board-secretariat/services/access-information-privacy/access-information/information-about-programs-information-holdings.html> | [YYYY-MM-DD] |
 
 ### Citations

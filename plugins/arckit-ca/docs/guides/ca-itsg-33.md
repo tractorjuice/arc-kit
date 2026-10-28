@@ -15,7 +15,7 @@ The TBS *Standard on Security Categorization* sits upstream of ITSG-33 — it is
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Functional context and NFR-SEC-* security requirements |
 | Data model (`ARC-<id>-DATA-v*.md`) | Per-element sensitivity classifications feeding categorisation |
 | Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Personal-information drivers for the categorisation, especially Confidentiality scoring |
-| *Security of Information Act* handling plan (`ARC-<id>-SOIA-v1.0.md`, if classified) | Classified-information envelope and lawful-handling chain |
+| *Foreign Interference and Security of Information Act* handling plan (`ARC-<id>-SOIA-v1.0.md`, if classified) | Classified-information envelope and lawful-handling chain |
 
 ---
 
