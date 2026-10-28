@@ -56,7 +56,7 @@ There is no published Dutch cloud-provider qualification list. The assessment ne
 |---------|----------|
 | Executive Summary | Scope, materieel determination, overall eligibility, key findings |
 | 1. Context and Scope | System and hosting scenario; clause 4.1 tests (primary or core task, large-scale personal data); applicable regulatory framework |
-| 2. Risk Assessment (clause 3.1) | Integral risk assessment, including foreign-government interference, with the remaining aspects to confirm against the published clause 3.1 text; pre-scan or full DPIA; DTIA |
+| 2. Risk Assessment (clause 3.1) | Integral risk assessment of the five clause 3.1 aspects (characteristics of the cloud use, the provider's security and continuity role, audit and accountability, foreign-government interference, supplier-dependency abuse) and residual-risk acceptance; pre-scan or full DPIA; DTIA |
 | 3. Eligibility Determination | Clause 5.2 prohibition check, clause 4.5 cumulative conditions, clause 5.4 basisregistraties |
 | 4. Cybersecurity Requirements (clause 4.2) | C2000 criteria, ABRO, AIVD and/or MIVD threat and security advice |
 | 5. Critical or Essential Entity Considerations (clause 4.3) | Vitale aanbieder, Wwke and Cbw status, and non-EU/EEA supplier jurisdiction; public cloud "afgeraden" (discouraged, not prohibited) where these hold |
@@ -73,7 +73,7 @@ There is no published Dutch cloud-provider qualification list. The assessment ne
 
 - The materieel publiek cloudgebruik determination has a stated rationale, including when the answer is no.
 - Every clause 5.2, 4.5 and 5.4 conclusion cites its clause, and the clause 5.2 conclusion cites the TBB category it depends on or flags it as pending `/arckit:nl-tbb`.
-- Foreign-government interference is assessed and mitigated as far as possible, and any clause 3.1 aspect not yet covered is flagged for the assessor.
+- All five clause 3.1 aspects are assessed, foreign-government interference is mitigated as far as possible, and residual risk is formally accepted within the organisation.
 - Where the organisation proceeds despite the clause 4.3 discouragement, the risk-acceptance rationale is recorded.
 - The clause 3.2 exit plan and the clause 3.3 CISO Rijk notification both appear as actions.
 - No commercial cloud provider is named as compliant or qualified.
