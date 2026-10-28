@@ -728,7 +728,9 @@ All artifacts must pass these 10 checks:
 - Materieel publiek cloudgebruik determination made with stated rationale (clause 4.1)
 - Every clause 5.2 / 4.5 / 5.4 eligibility conclusion cites the clause number it rests on, and the clause 5.2 conclusion cites the TBB category / rubricering it depends on (or explicitly flags the category as pending `/arckit-nl:nl-tbb`)
 - Clause 4.5 email/file-storage conditions assessed individually — partial satisfaction of the three cumulative conditions is not treated as eligible
-- Clause 3.1 risk analysis covers, besides security, continuity and privacy, all five aspects the clause lists: (1) the characteristics of the cloud use (main provider and any sub-providers, public / private / hybrid / community cloud, region of processing and storage); (2) the provider's role in security and continuity and how it is assured; (3) how the provider admits, or reports on, audit and accountability investigations; (4) foreign-government interference with confidentiality and availability, explicitly weighed and mitigated as far as possible; (5) the risk of the provider abusing a large supplier dependency, such as forcing technology choices or commercial conditions. Residual risk is documented and formally accepted within the organisation
+- Clause 3.1 risk analysis covers, besides security, continuity and privacy, all five aspects the clause lists: (1) the characteristics of the cloud use (main provider and any sub-providers, public / private / hybrid / community cloud, region of processing and storage); (2) the provider's role in security and continuity and how it is assured; (3) how the provider admits, or reports on, audit and accountability investigations; (4) foreign-government interference with confidentiality and availability, explicitly weighed and mitigated as far as possible; (5) the risk of the provider abusing a large supplier dependency, such as forcing technology choices or commercial conditions. Residual risk is documented and formally accepted within the organisation, and the decision is recorded so it can be traced and audited
+- The clause 3.1 risk analysis follows the Implementatiekader risicoafweging cloudgebruik (v1.1, 5 January 2023, unless CIO Rijk has published the announced revision), and the assessment states the version applied. It shows the Art. 4.3 contents: context and characteristics, including the service model; the C2000 criteria, the NBV public-cloud risk scenarios (Bijlage 2) and a comparison with on-premise processing; the measures against the information-security requirements, including the provider's own supplier checks; the design, existence and, from the first update, effectiveness of the measures; residual risks. It names the Responsible process owner and the Accountable Bestuursraad or delegate (Art. 3a), records formal adoption under the departmental mandateringsregeling (Art. 4.4), and sets a review at material change and at least every three years (Art. 9)
+- Where personal data are processed, the pre-scan DPIA shows the implementatiekader Art. 8.1 elements and a reasoned conclusion on whether a formal DPIA is needed, and a formal DPIA uses the government-wide model
 - Clause 4.2 cybersecurity criteria (C2000, ABRO, AIVD/MIVD advice) assessed
 - Clause 4.3 critical/essential-entity discouragement assessed where applicable, with risk-acceptance rationale recorded if proceeding regardless
 - Clause 4.6 data location and encryption posture assessed
@@ -761,6 +763,7 @@ All artifacts must pass these 10 checks:
 - Both Scenario A (planned exit) and Scenario B (disruptive interruption) are covered — a plan documenting only the planned scenario does not satisfy clause 3.2
 - Scenario B does not assume provider cooperation, and states a minimum viable continuity path with RTO and RPO
 - Destruction of data at the provider after migration is addressed with a verification method, for both scenarios
+- All four parts of Art. 7 of the Implementatiekader risicoafweging cloudgebruik are covered, with the version applied stated: an alternative provider or internal landing place (Art. 7.2); a strategy, conditions and budget for leaving at once in a crisis or a sudden (geopolitical) development (Art. 7.3); a strategy and budget for the regular end of the contract (Art. 7.4); and contract conditions on the provider and its sub-suppliers for data portability, service portability and data destruction (Art. 7.1). A missing budget is flagged as a gap
 - Self-test evidence is present, or its absence is flagged explicitly rather than presented as compliant
 - Annual review cycle set with a named owner and next review date
 - Residual risks (data-format lock-in, proprietary managed-service coupling, provider non-cooperation) identified with likelihood, impact, and mitigation
@@ -992,6 +995,7 @@ All artifacts must pass these 10 checks:
 - No dimension scored above L3 without documented, repeatable process evidence
 - Improvement actions given per dimension where a gap exists
 - Overall maturity consistent with the dimension scores — not above the lowest scored dimension without justification
+- Every benchmark value cites its source or says "No cited benchmark"; no industry average is estimated, and NIST AI RMF (Current vs Target Profile) and the OWASP LLM Top 10 (coverage) are not given levels
 
 ### FIPS199 -- FISMA Security Categorization
 
@@ -1454,7 +1458,10 @@ All artifacts must pass these 10 checks:
 
 - Critical asset context identifies asset, sector, responsible entity, operator, direct interest holders, regulator, and whether the asset is declared or suspected in scope
 - Applicability assessment covers sector, asset class, thresholds, responsible-entity obligations, register obligations, incident reporting and government assistance, with any uncertainty flagged for legal confirmation rather than resolved by assumption
-- All five CIRMP hazard domains assessed: cyber and information security, personnel, supply chain, physical security, natural hazards — each with material risk, relevant impact, current controls, evidence, gaps and a named risk owner
+- CIRMP tier stated (baseline under CIRMP Rules s 4(1), enhanced under s 4A(1), TSRMP, or not subject), with the date the asset became a CI asset where the tier is enhanced
+- All five CIRMP hazard domains assessed: cyber and information security, personnel, supply chain, physical security, natural hazards — each with material risk, relevant impact, current controls, evidence, gaps and a named risk owner; enhanced-tier assets also cover credential compromise and lateral movement hazards
+- For enhanced-tier assets, each enhanced requirement (ss 6A, 8A, 8B, 8C, 9A, 10A, 11A) assessed against its compliance date (10 June 2027 or 10 June 2028 for assets that were CI assets before 10 June 2026); otherwise the section is marked not applicable
+- CIRMP cyber framework recorded with its condition (baseline s 8(4), e.g. Essential Eight Maturity Level One; enhanced s 8A(3), e.g. Essential Eight Maturity Level Two)
 - Cyber evidence consolidated from the E8, ISM, OT, PIA and NDB artefacts rather than restated
 - Governance model records accountable owner, governing-body oversight, annual report owner, risk committee, review cadence and evidence repository
 - Incident reporting documents the 12-hour and 72-hour pathways where applicable, escalation roles, regulator contact points and record-keeping
