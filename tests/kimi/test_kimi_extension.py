@@ -302,3 +302,25 @@ def test_generate_kimi_hooks_scopes_project_hooks_with_a_guard():
     assert guarded.get("validate-backlog-totals.mjs") == "-BKLG-"
     assert guarded.get("provenance-stamp.mjs") == "/projects/"
     assert guarded.get("update-manifest.mjs") == "/projects/"
+
+
+def test_generate_kimi_hooks_matches_kimi_file_tool_names():
+    """Kimi names its file tools WriteFile and StrReplaceFile; matchers are
+    re.search regexes, so both must reach the security guards, and an MCP tool
+    that merely contains "Write" must not."""
+    import re
+
+    converter = _load_converter()
+    hooks = converter.generate_kimi_hooks()
+    by_target = {}
+    for h in hooks:
+        if h["event"] == "PreToolUse":
+            by_target[h["command"].split()[2]] = h["matcher"]
+    for guard in ("file-protection.mjs", "secret-file-scanner.mjs"):
+        matcher = by_target[guard]
+        for tool in ("WriteFile", "StrReplaceFile", "Write", "Edit"):
+            assert re.search(matcher, tool), f"{guard} matcher {matcher!r} misses {tool}"
+        assert not re.search(matcher, "mcp__notion__WritePage"), matcher
+    write_only = by_target["validate-arc-filename.mjs"]
+    assert re.search(write_only, "WriteFile")
+    assert not re.search(write_only, "StrReplaceFile")
