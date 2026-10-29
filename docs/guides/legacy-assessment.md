@@ -187,8 +187,11 @@ There are no invented official Medium/High bands. Being below 16 does not establ
 Accepted classification under the updated definition.
 
 Every fully scored system is plotted using unrounded calculated values. The system key
-shows names, IDs, displayed scores and red-rated flags. Missing inputs leave a system
-unplotted and explicitly listed; `risk-model none` omits the report image entirely.
+shows names, IDs, displayed scores and red-rated flags. Missing inputs draw a dashed purple bounding envelope (or a range bar if one axis
+is fixed), labelled with ? and the missing criteria. With no inputs, it spans the whole
+domain. These are mathematical bounds, not estimates, confidence intervals or completed
+scores; not every interior position is necessarily attainable. No midpoint or zero is
+substituted; `risk-model none` omits the report image entirely.
 Coincident scores share a marker without moving coordinates, and each system remains
 in the key. Long names are shortened in the visible key, with full names in SVG titles
 and the report inventory. The chart contains no scripts, remote resources or sensitive

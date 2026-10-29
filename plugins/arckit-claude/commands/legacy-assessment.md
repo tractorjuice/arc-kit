@@ -213,7 +213,7 @@ The chart uses unrounded calculated coordinates, likelihood 1–6 and impact 1�
 with the published curved `likelihood × impact = 16` boundary. Red diamonds mark
 red-rated scores; blue circles mark scores below that threshold. Do not invent
 official Medium/High bands or use point colour for updated-definition classification.
-Missing scores are listed as unplotted, never placed at zero. Coincident scores share
+Incomplete inputs draw dashed purple bounding envelopes, or range bars when one axis is fixed, labelled with ? and the missing criteria. With no numerical inputs, the entire domain remains possible. These are not estimates, confidence intervals or completed scores; interior positions need not all be attainable. Never substitute zero or a midpoint. Coincident scores share
 a marker without moving coordinates; the key lists every system. No network,
 plotting package or image service is required. For `risk-model none`, omit the image.
 

@@ -545,6 +545,10 @@ export function score(inputs) {
       display: null,
       bounds: {
         minimum: low.risk,
+        likelihoodMinimum: low.likelihood,
+        likelihoodMaximum: high.likelihood,
+        impactMinimum: low.impact,
+        impactMaximum: high.impact,
         maximum: high.risk,
         minimumNumerator: low.arithmetic.riskNumerator,
         maximumNumerator: high.arithmetic.riskNumerator,
@@ -1791,7 +1795,9 @@ export function renderRiskChart(input) {
     const details =
       risk.status === 'complete'
         ? `L=${risk.likelihood.toFixed(2)}, impact=${risk.impact.toFixed(2)}, risk=${risk.display}; ${risk.redRated ? 'RED-RATED' : 'below red-rated threshold'}`
-        : `NOT PLOTTED: ${risk.status}${risk.missing?.length ? `; missing ${risk.missing.join(', ')}` : ''}`;
+        : risk.status === 'incomplete'
+          ? `INCOMPLETE: possible L=${risk.bounds.likelihoodMinimum.toFixed(2)}–${risk.bounds.likelihoodMaximum.toFixed(2)}, impact=${risk.bounds.impactMinimum.toFixed(2)}–${risk.bounds.impactMaximum.toFixed(2)}; missing ${risk.missing.join(', ')}; not an estimate`
+          : 'Numerical model omitted';
     const label = `P${i + 1}: ${names.get(s.systemId)} (${s.systemId}) | ${details}`;
     const name = names.get(s.systemId);
     const namePoints = [...name];
@@ -1823,8 +1829,9 @@ export function renderRiskChart(input) {
     '<?xml version="1.0" encoding="UTF-8"?>',
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 ${730 + legendHeight}" width="1000" height="${730 + legendHeight}" role="img" aria-labelledby="title description">`,
     '<title id="title">Legacy Risk Assessment: likelihood versus impact</title>',
-    `<desc id="description">${xml(a.metadata.documentId)}. Assessment date ${xml(a.metadata.assessmentDate)}. Published numerical prioritisation, separate from legacy classification. Red-rated means likelihood times impact at least 16. Only complete scores are plotted; all systems appear in the key. Coincident points are grouped without moving their coordinates.</desc>`,
-    `<metadata>Input SHA-256: ${r.inputDigest}; calculation version: ${r.calculationVersion}; chart version: 1</metadata>`,
+    `<desc id="description">${xml(a.metadata.documentId)}. Assessment date ${xml(a.metadata.assessmentDate)}. Published numerical prioritisation, separate from legacy classification. Red-rated means likelihood times impact at least 16. Complete scores are precise points. Dashed purple envelopes or range bars bound possible positions for incomplete inputs; not estimates or confidence intervals. Interior positions need not be attainable. All systems appear in the key. Coincident points are grouped without moving their coordinates.</desc>`,
+    `<metadata>Input SHA-256: ${r.inputDigest}; calculation version: ${r.calculationVersion}; chart version: 2</metadata>`,
+    '<defs><pattern id="uncertainty-hatch" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M 0 9 L 9 0" stroke="#7e22ce" stroke-width="1" opacity="0.22"/></pattern></defs>',
     '<rect width="100%" height="100%" fill="white"/>',
     '<g font-family="Arial, sans-serif" fill="#172b4d">',
     '<text x="100" y="38" font-size="25" font-weight="bold">Legacy Risk Assessment</text>',
@@ -1858,6 +1865,50 @@ export function renderRiskChart(input) {
     '<text x="500" y="575" text-anchor="middle" font-size="18" font-weight="bold">Likelihood score</text>',
     '<text transform="translate(35 320) rotate(-90)" text-anchor="middle" font-size="18" font-weight="bold">Impact score</text>'
   );
+  // L and C depend on disjoint inputs. Their extrema give a bounding
+  // envelope, not a probability distribution or an invented midpoint score.
+  const uncertain = new Map();
+  for (const row of rows.filter((row) => row.s.risk.status === 'incomplete')) {
+    const b = row.s.risk.bounds;
+    const key = [
+      b.likelihoodMinimum,
+      b.likelihoodMaximum,
+      b.impactMinimum,
+      b.impactMaximum
+    ].join(':');
+    if (!uncertain.has(key)) uncertain.set(key, []);
+    uncertain.get(key).push(row);
+  }
+  for (const group of uncertain.values()) {
+    const b = group[0].s.risk.bounds;
+    const x1 = x(b.likelihoodMinimum),
+      x2 = x(b.likelihoodMaximum);
+    const y1 = y(b.impactMaximum),
+      y2 = y(b.impactMinimum);
+    const label =
+      group.length === 1
+        ? `${group[0].id}?`
+        : `${group[0].id}? (+${group.length - 1})`;
+    lines.push(
+      `<g data-uncertain-system-ids="${xml(group.map((row) => row.s.systemId).join(' '))}"><title>${xml(group.map((row) => row.label).join('; '))}. Bounding envelope only; not every interior position is attainable.</title>`
+    );
+    if (x1 === x2) {
+      lines.push(
+        `<path d="M ${n(x1)} ${n(y1)} V ${n(y2)} M ${n(x1 - 5)} ${n(y1)} H ${n(x1 + 5)} M ${n(x1 - 5)} ${n(y2)} H ${n(x1 + 5)}" fill="none" stroke="#7e22ce" stroke-width="3" stroke-dasharray="5 4"/>`
+      );
+    } else if (y1 === y2) {
+      lines.push(
+        `<path d="M ${n(x1)} ${n(y1)} H ${n(x2)} M ${n(x1)} ${n(y1 - 5)} V ${n(y1 + 5)} M ${n(x2)} ${n(y1 - 5)} V ${n(y1 + 5)}" fill="none" stroke="#7e22ce" stroke-width="3" stroke-dasharray="5 4"/>`
+      );
+    } else {
+      lines.push(
+        `<rect x="${n(x1)}" y="${n(y1)}" width="${n(x2 - x1)}" height="${n(y2 - y1)}" fill="url(#uncertainty-hatch)" stroke="#7e22ce" stroke-width="2" stroke-dasharray="6 4"/>`
+      );
+    }
+    lines.push(
+      `<text x="${n(Math.min(x1 + 8, left + width - 100))}" y="${n(Math.max(top + 18, y1 + 18))}" font-size="13" font-weight="bold" fill="#6b21a8" stroke="white" stroke-width="3" paint-order="stroke">${label}</text></g>`
+    );
+  }
   for (const group of groups.values()) {
     const v = group[0].s.risk,
       px = x(v.likelihood),
@@ -1881,9 +1932,9 @@ export function renderRiskChart(input) {
   lines.push(
     '<text x="100" y="610" font-size="14">◆ Red-rated (≥16)   ● Below threshold. Below threshold does not mean Accepted.</text>',
     '<text x="100" y="633" font-size="14">Unrounded coordinates; displayed scores rounded. Coincident points grouped; no jitter.</text>',
-    '<text x="100" y="656" font-size="14">Missing scores are unplotted, never zero. No additional official overall risk bands.</text>'
+    '<text x="100" y="656" font-size="14">Purple dashed ranges (?): incomplete inputs; not estimates or confidence intervals.</text>'
   );
-  if (!groups.size)
+  if (!groups.size && !uncertain.size)
     lines.push(
       `<text x="500" y="315" text-anchor="middle" font-size="19" font-weight="bold">${a.metadata.riskModel === 'none' ? 'Numerical risk model omitted' : 'No complete numerical scores to plot'}</text>`
     );
@@ -1952,7 +2003,7 @@ export function renderResults(input) {
   if (a.metadata.riskModel !== 'none') {
     lines.push(
       '',
-      `![Legacy numerical risk chart: likelihood 1–6 versus impact 1–5; red-rated at 16. Complete scores only; system key in SVG.](${chartFilename(a)})`,
+      `![Legacy numerical risk chart: likelihood 1–6 versus impact 1–5; red-rated at 16. Points are complete scores; dashed envelopes show incomplete-score uncertainty. System key in SVG.](${chartFilename(a)})`,
       '',
       '| System | Risk criterion | Supplied score | Evidence | Rationale |',
       '|--------|----------------|----------------|----------|-----------|'

@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Legacy risk charts show incomplete numerical inputs as annotated purple dashed envelopes or range bars, with exact axis bounds and missing criteria. Complete scores remain precise points; uncertainty is not presented as an estimate or confidence interval.
+
 - Restored the legacy report template’s Document Register, Citations and Unreferenced Documents tables so its evidence instructions resolve and the CI citation guard passes.
 
 - Draft legacy assessments retain known urgency through unknowns, explain evidence qualification, support lint/explain and content-bound approvals, report exact incomplete-score bounds, link actions to information gaps, and verify generated factual registers with dated review sources. All feedback regressions use independently invented repository fixtures.

@@ -42,7 +42,7 @@ All artifacts must pass these 10 checks:
 - Risk acceptance/controls do not silently remediate findings; proposed review and reassessment triggers are documented
 - Previous versions preserved; source dates recorded; no current government submission compatibility or universal LEGACY requirement claimed
 - Helper-generated results block appears exactly once and `--check-report` succeeds against the enriched JSON; no hand-written duplicate decision/risk tables
-- When numerical scoring is enabled, the linked versioned `-risk.svg` exists beside the report and passes `--check-report`; only complete unrounded scores are plotted, all systems are keyed, and only the published red-rated boundary at 16 is shown
+- When numerical scoring is enabled, the linked versioned `-risk.svg` exists beside the report and passes `--check-report`; complete scores use unrounded points, incomplete scores use annotated bounding envelopes/range bars rather than estimated points, and all systems are keyed, and only the published red-rated boundary at 16 is shown
 - Approval records identify the exact decision/version and named documented approver; operational evidence and another decision's approval cannot approve this one
 - System/component evidence scope and whole-system coverage checked; D7 has an independent causal origin and bounded witness paths
 - Management gaps and action-plan completeness are visible independently of classification and evidence; completion evidence is applicable, dated and not merely proposed

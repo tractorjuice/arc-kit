@@ -60,7 +60,7 @@ Published numerical prioritisation (separate from classification):
 |--------|--------|------------|--------|------|-----------|-------------------------------------|
 | payments | complete | 5.714285714285714 | 4.666666666666667 | 26.67 | true | L=80/14; C=56/12; risk=4480/168 |
 
-![Legacy numerical risk chart: likelihood 1–6 versus impact 1–5; red-rated at 16. Complete scores only; system key in SVG.](ARC-001-LEGACY-v1.0-risk.svg)
+![Legacy numerical risk chart: likelihood 1–6 versus impact 1–5; red-rated at 16. Points are complete scores; dashed envelopes show incomplete-score uncertainty. System key in SVG.](ARC-001-LEGACY-v1.0-risk.svg)
 
 | System | Risk criterion | Supplied score | Evidence | Rationale |
 |--------|----------------|----------------|----------|-----------|

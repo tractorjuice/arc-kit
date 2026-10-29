@@ -17,3 +17,8 @@ Seven behavioural cases live in `plugins/arckit-claude/evals/legacy-*`. They tes
 supported, unsupported, expiring, dependent, sparse, conflicting and incomplete-risk
 scenarios. Live evaluation requires the relevant authenticated runtime; structural
 case validation does not establish model behaviour. See the command guide for sources.
+
+`uncertainty-example.svg` is an independently synthetic chart: set the existing
+published-example fixture’s numerical inputs to 4, then make L1 and C1 null. The
+chart regression reproduces it byte-for-byte and enumerates all completions to check
+its envelope. It illustrates a range crossing 16 without assigning a completed score.

@@ -295,6 +295,26 @@
                             "enum": [
                               168
                             ]
+                          },
+                          "likelihoodMinimum": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 6
+                          },
+                          "likelihoodMaximum": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 6
+                          },
+                          "impactMinimum": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 5
+                          },
+                          "impactMaximum": {
+                            "type": "number",
+                            "minimum": 1,
+                            "maximum": 5
                           }
                         },
                         "required": [
@@ -302,7 +322,11 @@
                           "maximum",
                           "minimumNumerator",
                           "maximumNumerator",
-                          "denominator"
+                          "denominator",
+                          "likelihoodMinimum",
+                          "likelihoodMaximum",
+                          "impactMinimum",
+                          "impactMaximum"
                         ]
                       },
                       "thresholdAssessment": {
