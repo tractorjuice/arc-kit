@@ -28,6 +28,7 @@ def test_schema_is_valid_and_fixtures_validate_independently():
     lambda a: a['systems'][0].update(boundary='   '),
     lambda a: a['evidence'][0]['approvalFor'][0].update(decision='rejected'),
     lambda a: a['systems'].extend([copy.deepcopy(a['systems'][0])] * 256),
+    lambda a: a['riskInputs'][0].update(chartAnnotation={'confidence': 'certain', 'suspectedPosition': None, 'rationale': 'Synthetic invalid confidence'}),
 ])
 def test_structural_invalid_cases_fail_both_validators(tmp_path, mutate):
     assessment = copy.deepcopy(BASE)

@@ -47,11 +47,15 @@ test('chart uses exact calculated coordinates, published axes and only the red-r
     svg = renderRiskChart(a);
   const px = (100 + (v.likelihood - 1) * 160).toFixed(3);
   const py = (120 + (5 - v.impact) * 100).toFixed(3);
-  assert.ok(marker(svg).includes(`M ${px} ${(Number(py) - 7).toFixed(3)}`));
+  assert.ok(
+    marker(svg).includes(
+      `x="${(Number(px) - 6).toFixed(3)}" y="${(Number(py) - 6).toFixed(3)}"`
+    )
+  );
   assert.match(svg, /risk=26\.67; RED-RATED/);
   assert.match(svg, /Likelihood score/);
   assert.match(svg, /Impact score/);
-  assert.match(svg, /Red-rated: risk ≥ 16/);
+  assert.match(svg, /Red-rated: risk 16 or more/);
   assert.match(svg, /452\.000,120\.000/); // 16 / 5 = 3.2
   assert.match(svg, /900\.000,353\.333/); // 16 / 6, not a diagonal or square cell boundary
   assert.doesNotMatch(svg, />Medium<|>High<|Example/);
@@ -61,13 +65,13 @@ test('chart uses exact calculated coordinates, published axes and only the red-r
 
 test('minimum, maximum and exactly-16 scores keep true boundary coordinates and distinct shapes', () => {
   const minimum = renderRiskChart(constantScores(fresh(), 1, 1));
-  assert.match(marker(minimum), /cx="100\.000" cy="520\.000"/);
+  assert.match(marker(minimum), /x="94\.000" y="514\.000"/);
   assert.match(minimum, /risk=1\.00; below red-rated/);
   const maximum = renderRiskChart(constantScores(fresh(), 6, 5));
-  assert.match(marker(maximum), /M 900\.000 113\.000/);
+  assert.match(marker(maximum), /x="894\.000" y="114\.000"/);
   assert.match(maximum, /risk=30\.00; RED-RATED/);
   const boundary = renderRiskChart(constantScores(fresh(), 4, 4));
-  assert.match(marker(boundary), /M 580\.000 213\.000/);
+  assert.match(marker(boundary), /x="574\.000" y="214\.000"/);
   assert.match(boundary, /risk=16\.00; RED-RATED/);
 });
 
@@ -75,7 +79,7 @@ test('scores immediately below 16 stay blue and are never promoted by display ro
   const a = constantScores(fresh(), 4, 4);
   a.riskInputs[0].inputs.find((i) => i.criterionId === 'C1').value = 3;
   const svg = renderRiskChart(a);
-  assert.match(marker(svg), /<circle/);
+  assert.match(marker(svg), /data-role="scored-inputs"/);
   assert.match(svg, /risk=15\.67; below red-rated/);
 });
 
@@ -232,7 +236,7 @@ test('uncertain envelopes bound every completion without adding a precise marker
     b = r.bounds;
   assert.equal(r.redRated, null);
   assert.equal(marker(svg), undefined);
-  assert.match(svg, /fill="url\(#uncertainty-hatch\)"/);
+  assert.match(svg, /rx="6" fill="#3e438e" fill-opacity="0.07"/);
   assert.match(svg, /P1\?/);
   for (let l = 1; l <= 6; l++)
     for (let c = 1; c <= 5; c++) {
@@ -250,7 +254,13 @@ test('uncertain envelopes bound every completion without adding a precise marker
     }
   const geometry = `x="${(100 + (b.likelihoodMinimum - 1) * 160).toFixed(3)}" y="${(120 + (5 - b.impactMaximum) * 100).toFixed(3)}" width="${((b.likelihoodMaximum - b.likelihoodMinimum) * 160).toFixed(3)}" height="${((b.impactMaximum - b.impactMinimum) * 100).toFixed(3)}"`;
   assert.ok(svg.includes(geometry));
-  assert.equal(svg, readFileSync('tests/fixtures/legacy-assessment/uncertainty-example.svg', 'utf8'));
+  assert.equal(
+    svg,
+    readFileSync(
+      'tests/fixtures/legacy-assessment/uncertainty-example.svg',
+      'utf8'
+    )
+  );
 });
 
 test('one unknown axis draws a range bar; no inputs draw the whole domain', () => {
@@ -258,11 +268,11 @@ test('one unknown axis draws a range bar; no inputs draw the whole domain', () =
   a.riskInputs[0].inputs[0].value = null;
   let svg = renderRiskChart(a);
   assert.match(svg, /data-uncertain-system-ids="payments"/);
-  assert.match(svg, /stroke-width="3" stroke-dasharray="5 4"/);
+  assert.match(svg, /stroke-width="2" stroke-dasharray="2 4"/);
   a.riskInputs[0].inputs[0].value = 5;
   a.riskInputs[0].inputs.find((i) => i.criterionId === 'C1').value = null;
   svg = renderRiskChart(a);
-  assert.match(svg, /stroke-width="3" stroke-dasharray="5 4"/);
+  assert.match(svg, /stroke-width="2" stroke-dasharray="2 4"/);
   a.riskInputs = [];
   svg = renderRiskChart(a);
   assert.match(svg, /x="100.000" y="120.000" width="800.000" height="400.000"/);
@@ -301,4 +311,58 @@ test('chart verification rejects an altered uncertainty envelope', () => {
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test('legend uses separate symbols and never invents judgement or confidence', () => {
+  const a = fresh();
+  a.riskInputs[0].inputs[0].value = null;
+  const svg = renderRiskChart(a);
+  assert.match(svg, /Solid box: scored inputs/);
+  assert.match(svg, /Dotted outline: plausible range/);
+  assert.match(svg, /Circle: where the assessor suspects it sits/);
+  assert.match(svg, /confidence not recorded/);
+  assert.doesNotMatch(svg, /data-suspected-system-id=/);
+  assert.doesNotMatch(svg, /medium confidence/);
+  assert.doesNotMatch(svg, /uncertainty-hatch/);
+});
+
+test('supplied confidence and suspected position render without changing calculated decisions', () => {
+  const a = constantScores(fresh(), 4, 4);
+  for (const id of ['L1', 'C1'])
+    a.riskInputs[0].inputs.find((i) => i.criterionId === id).value = null;
+  const before = assess(a).results;
+  a.riskInputs[0].chartAnnotation = {
+    confidence: 'medium',
+    suspectedPosition: { likelihood: 4.5, impact: 4 },
+    rationale:
+      'Invented assessor judgement for a chart legend regression fixture; not operational evidence.'
+  };
+  const after = assess(a).results,
+    svg = renderRiskChart(a);
+  assert.deepEqual(before.systems, after.systems);
+  assert.deepEqual(before.counts, after.counts);
+  assert.deepEqual(before.riskOrdering, after.riskOrdering);
+  assert.notEqual(before.inputDigest, after.inputDigest);
+  assert.equal(after.systems[0].risk.redRated, null);
+  assert.match(svg, /medium confidence/);
+  assert.doesNotMatch(
+    svg,
+    /Invented assessor judgement for a chart legend regression fixture/
+  );
+  assert.match(svg, /data-suspected-system-id="payments"/);
+  assert.match(svg, /cx="660.000" cy="220.000" r="8"/);
+  assert.match(svg, /suspected: risk ~18.00 \(not scored\)/);
+  assert.equal(
+    svg,
+    readFileSync(
+      'tests/fixtures/legacy-assessment/chart-legend-example.svg',
+      'utf8'
+    )
+  );
+  assert.match(renderResults(a), /Chart annotations — assessor judgement/);
+  a.riskInputs[0].chartAnnotation.suspectedPosition.likelihood = 1;
+  assert.throws(() => assess(a), /outside the input bounds/);
+  a.riskInputs[0].chartAnnotation.suspectedPosition = null;
+  a.riskInputs[0].chartAnnotation.confidence = 'certain';
+  assert.throws(() => assess(a), /unsupported/);
 });

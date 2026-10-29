@@ -1534,6 +1534,58 @@
             "$ref": "#/$defs/riskInput"
           },
           "maxItems": 10000
+        },
+        "chartAnnotation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "confidence",
+            "suspectedPosition",
+            "rationale"
+          ],
+          "properties": {
+            "confidence": {
+              "enum": [
+                "low",
+                "medium",
+                "high",
+                null
+              ]
+            },
+            "suspectedPosition": {
+              "anyOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "likelihood",
+                    "impact"
+                  ],
+                  "properties": {
+                    "likelihood": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 6
+                    },
+                    "impact": {
+                      "type": "number",
+                      "minimum": 1,
+                      "maximum": 5
+                    }
+                  }
+                }
+              ]
+            },
+            "rationale": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20000,
+              "pattern": "\\S"
+            }
+          }
         }
       },
       "required": [

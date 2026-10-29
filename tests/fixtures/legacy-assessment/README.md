@@ -22,3 +22,8 @@ case validation does not establish model behaviour. See the command guide for so
 published-example fixture’s numerical inputs to 4, then make L1 and C1 null. The
 chart regression reproduces it byte-for-byte and enumerates all completions to check
 its envelope. It illustrates a range crossing 16 without assigning a completed score.
+
+`chart-legend-example.svg` uses the same synthetic incomplete inputs with explicitly
+invented medium confidence and a suspected aggregate position of likelihood 4.5 and
+impact 4. Its test proves that these annotations leave the calculated system results
+and risk ordering unchanged. The picture is not derived from a source project.

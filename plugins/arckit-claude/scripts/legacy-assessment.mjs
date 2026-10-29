@@ -950,6 +950,24 @@ export function assess(input) {
           `Risk ${r.systemId}/${i.criterionId}: requires current dated evidence; ${rejectionDetail()}`
         );
       else ev(i.evidenceIds);
+    if (r.chartAnnotation) {
+      const calculated = score(r.inputs),
+        annotation = r.chartAnnotation;
+      if (calculated.status !== 'incomplete')
+        fail(`Risk ${r.systemId}: chart annotations require incomplete inputs`);
+      const point = annotation.suspectedPosition,
+        b = calculated.bounds;
+      if (
+        point &&
+        (point.likelihood < b.likelihoodMinimum ||
+          point.likelihood > b.likelihoodMaximum ||
+          point.impact < b.impactMinimum ||
+          point.impact > b.impactMaximum)
+      )
+        fail(
+          `Risk ${r.systemId}: suspected position lies outside the input bounds`
+        );
+    }
     riskInputs.set(r.systemId, r.inputs);
   }
   if (a.metadata.riskModel === 'none' && a.riskInputs.length)
@@ -1792,11 +1810,19 @@ export function renderRiskChart(input) {
   const names = new Map(a.systems.map((s) => [s.id, s.name]));
   const rows = r.systems.map((s, i) => {
     const risk = s.risk;
+    const annotation = a.riskInputs.find(
+      (r) => r.systemId === s.systemId
+    )?.chartAnnotation;
+    const confidence = annotation?.confidence
+      ? `${annotation.confidence} confidence (assessor supplied)`
+      : 'confidence not recorded';
+    const position = annotation?.suspectedPosition;
+
     const details =
       risk.status === 'complete'
         ? `L=${risk.likelihood.toFixed(2)}, impact=${risk.impact.toFixed(2)}, risk=${risk.display}; ${risk.redRated ? 'RED-RATED' : 'below red-rated threshold'}`
         : risk.status === 'incomplete'
-          ? `INCOMPLETE: possible L=${risk.bounds.likelihoodMinimum.toFixed(2)}–${risk.bounds.likelihoodMaximum.toFixed(2)}, impact=${risk.bounds.impactMinimum.toFixed(2)}–${risk.bounds.impactMaximum.toFixed(2)}; missing ${risk.missing.join(', ')}; not an estimate`
+          ? `INCOMPLETE: possible L=${risk.bounds.likelihoodMinimum.toFixed(2)}–${risk.bounds.likelihoodMaximum.toFixed(2)}, impact=${risk.bounds.impactMinimum.toFixed(2)}–${risk.bounds.impactMaximum.toFixed(2)}; missing ${risk.missing.join(', ')}; ${confidence}; ${position ? `suspected L=${position.likelihood.toFixed(2)}, impact=${position.impact.toFixed(2)} (judgement only)` : 'no suspected position supplied'}`
           : 'Numerical model omitted';
     const label = `P${i + 1}: ${names.get(s.systemId)} (${s.systemId}) | ${details}`;
     const name = names.get(s.systemId);
@@ -1808,6 +1834,7 @@ export function renderRiskChart(input) {
     const visible = `P${i + 1}: ${shortName} (${s.systemId}) | ${details}`;
     return {
       s,
+      annotation,
       id: `P${i + 1}`,
       label,
       lines: visible.match(/[\s\S]{1,112}/gu) ?? []
@@ -1827,17 +1854,16 @@ export function renderRiskChart(input) {
   );
   const lines = [
     '<?xml version="1.0" encoding="UTF-8"?>',
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 ${730 + legendHeight}" width="1000" height="${730 + legendHeight}" role="img" aria-labelledby="title description">`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 ${770 + legendHeight}" width="1000" height="${770 + legendHeight}" role="img" aria-labelledby="title description">`,
     '<title id="title">Legacy Risk Assessment: likelihood versus impact</title>',
-    `<desc id="description">${xml(a.metadata.documentId)}. Assessment date ${xml(a.metadata.assessmentDate)}. Published numerical prioritisation, separate from legacy classification. Red-rated means likelihood times impact at least 16. Complete scores are precise points. Dashed purple envelopes or range bars bound possible positions for incomplete inputs; not estimates or confidence intervals. Interior positions need not be attainable. All systems appear in the key. Coincident points are grouped without moving their coordinates.</desc>`,
-    `<metadata>Input SHA-256: ${r.inputDigest}; calculation version: ${r.calculationVersion}; chart version: 2</metadata>`,
-    '<defs><pattern id="uncertainty-hatch" width="9" height="9" patternUnits="userSpaceOnUse"><path d="M 0 9 L 9 0" stroke="#7e22ce" stroke-width="1" opacity="0.22"/></pattern></defs>',
+    `<desc id="description">${xml(a.metadata.documentId)}. Assessment date ${xml(a.metadata.assessmentDate)}. Published numerical prioritisation, separate from legacy classification. Red-rated means likelihood times impact at least 16. Solid boxes are complete scores. Dotted indigo envelopes or range bars bound possible positions for incomplete inputs; not estimates or confidence intervals. Optional hollow circles are supplied assessor judgements, not completed scores. Confidence labels are supplied judgements, not statistical intervals. Interior positions need not be attainable. All systems appear in the key. Coincident points are grouped without moving their coordinates.</desc>`,
+    `<metadata>Input SHA-256: ${r.inputDigest}; calculation version: ${r.calculationVersion}; chart version: 3</metadata>`,
     '<rect width="100%" height="100%" fill="white"/>',
-    '<g font-family="Arial, sans-serif" fill="#172b4d">',
+    '<g font-family="Arial, sans-serif" fill="#1e2549">',
     '<text x="100" y="38" font-size="25" font-weight="bold">Legacy Risk Assessment</text>',
     `<text x="100" y="66" font-size="15">${xml(a.metadata.documentId)} | ${xml(a.metadata.assessmentDate)}</text>`,
     '<text x="100" y="91" font-size="14">Published numerical model; separate from updated-definition classification</text>',
-    `<rect x="${left}" y="${top}" width="${width}" height="${height}" fill="#f1f5f9" stroke="#475569"/>`
+    `<rect x="${left}" y="${top}" width="${width}" height="${height}" fill="#f4f5f9" stroke="#a3a8b6"/>`
   ];
   // The only published overall band is red-rated (>=16). No invented Medium/High bands.
   const curve = Array.from({ length: 141 }, (_, i) => {
@@ -1845,25 +1871,25 @@ export function renderRiskChart(input) {
     return `${n(x(likelihood))},${n(y(16 / likelihood))}`;
   });
   lines.push(
-    `<polygon points="${n(x(3.2))},${top} ${left + width},${top} ${[...curve].reverse().join(' ')}" fill="#fee2e2"/>`
+    `<polygon points="${n(x(3.2))},${top} ${left + width},${top} ${[...curve].reverse().join(' ')}" fill="#f3e5e3"/>`
   );
-  for (let tick = 1; tick <= 6; tick++) {
+  for (let tick = 1; tick <= 6; tick += 0.5) {
     lines.push(
-      `<path d="M ${x(tick)} ${top} V ${top + height}" stroke="#cbd5e1"/>`,
+      `<path d="M ${x(tick)} ${top} V ${top + height}" stroke="#d9dce5"/>`,
       `<text x="${x(tick)}" y="${top + height + 25}" text-anchor="middle" font-size="15">${tick}</text>`
     );
   }
-  for (let tick = 1; tick <= 5; tick++) {
+  for (let tick = 1; tick <= 5; tick += 0.5) {
     lines.push(
-      `<path d="M ${left} ${y(tick)} H ${left + width}" stroke="#cbd5e1"/>`,
+      `<path d="M ${left} ${y(tick)} H ${left + width}" stroke="#d9dce5"/>`,
       `<text x="${left - 17}" y="${y(tick) + 5}" text-anchor="end" font-size="15">${tick}</text>`
     );
   }
   lines.push(
-    `<polyline points="${curve.join(' ')}" fill="none" stroke="#991b1b" stroke-width="2" stroke-dasharray="6 4"/>`,
-    '<text x="730" y="111" font-size="14" font-weight="bold" fill="#991b1b">Red-rated: risk ≥ 16</text>',
-    '<text x="500" y="575" text-anchor="middle" font-size="18" font-weight="bold">Likelihood score</text>',
-    '<text transform="translate(35 320) rotate(-90)" text-anchor="middle" font-size="18" font-weight="bold">Impact score</text>'
+    `<polyline points="${curve.join(' ')}" fill="none" stroke="#8a3b2d" stroke-width="1.75"/>`,
+    '<text x="730" y="111" font-size="14" font-weight="bold" fill="#8a3b2d">Red-rated: risk 16 or more</text>',
+    '<text x="500" y="575" text-anchor="middle" font-size="18" font-weight="bold">Likelihood score (mean L + max L) / 2</text>',
+    '<text transform="translate(35 320) rotate(-90)" text-anchor="middle" font-size="18" font-weight="bold">Impact score (mean C + max C) / 2</text>'
   );
   // L and C depend on disjoint inputs. Their extrema give a bounding
   // envelope, not a probability distribution or an invented midpoint score.
@@ -1894,19 +1920,39 @@ export function renderRiskChart(input) {
     );
     if (x1 === x2) {
       lines.push(
-        `<path d="M ${n(x1)} ${n(y1)} V ${n(y2)} M ${n(x1 - 5)} ${n(y1)} H ${n(x1 + 5)} M ${n(x1 - 5)} ${n(y2)} H ${n(x1 + 5)}" fill="none" stroke="#7e22ce" stroke-width="3" stroke-dasharray="5 4"/>`
+        `<path d="M ${n(x1)} ${n(y1)} V ${n(y2)} M ${n(x1 - 5)} ${n(y1)} H ${n(x1 + 5)} M ${n(x1 - 5)} ${n(y2)} H ${n(x1 + 5)}" fill="none" stroke="#3e438e" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/>`
       );
     } else if (y1 === y2) {
       lines.push(
-        `<path d="M ${n(x1)} ${n(y1)} H ${n(x2)} M ${n(x1)} ${n(y1 - 5)} V ${n(y1 + 5)} M ${n(x2)} ${n(y1 - 5)} V ${n(y1 + 5)}" fill="none" stroke="#7e22ce" stroke-width="3" stroke-dasharray="5 4"/>`
+        `<path d="M ${n(x1)} ${n(y1)} H ${n(x2)} M ${n(x1)} ${n(y1 - 5)} V ${n(y1 + 5)} M ${n(x2)} ${n(y1 - 5)} V ${n(y1 + 5)}" fill="none" stroke="#3e438e" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/>`
       );
     } else {
       lines.push(
-        `<rect x="${n(x1)}" y="${n(y1)}" width="${n(x2 - x1)}" height="${n(y2 - y1)}" fill="url(#uncertainty-hatch)" stroke="#7e22ce" stroke-width="2" stroke-dasharray="6 4"/>`
+        `<rect x="${n(x1)}" y="${n(y1)}" width="${n(x2 - x1)}" height="${n(y2 - y1)}" rx="6" fill="#3e438e" fill-opacity="0.07" stroke="#3e438e" stroke-width="1.5" stroke-dasharray="3 4"/>`
       );
     }
+    const confidences = new Set(
+      group.map((row) => row.annotation?.confidence ?? null)
+    );
+    const confidence =
+      confidences.size === 1
+        ? group[0].annotation?.confidence
+          ? `${group[0].annotation.confidence} confidence`
+          : 'confidence not recorded'
+        : 'confidence varies; see key';
+    const labelX = n(Math.min(x1 + 4, left + width - 290)),
+      labelY = n(Math.max(top + 16, y1 - 22));
     lines.push(
-      `<text x="${n(Math.min(x1 + 8, left + width - 100))}" y="${n(Math.max(top + 18, y1 + 18))}" font-size="13" font-weight="bold" fill="#6b21a8" stroke="white" stroke-width="3" paint-order="stroke">${label}</text></g>`
+      `<text x="${labelX}" y="${labelY}" font-size="12" fill="#30367c" stroke="white" stroke-width="2" paint-order="stroke"><tspan x="${labelX}">${label} plausible range: risk ${b.minimum.toFixed(2)}–${b.maximum.toFixed(2)}</tspan><tspan x="${labelX}" dy="15">${confidence}</tspan></text></g>`
+    );
+  }
+  for (const row of rows.filter((row) => row.annotation?.suspectedPosition)) {
+    const point = row.annotation.suspectedPosition,
+      px = x(point.likelihood),
+      py = y(point.impact);
+    const right = px < left + width - 240;
+    lines.push(
+      `<g data-suspected-system-id="${xml(row.s.systemId)}"><title>${xml(row.label)}. Assessor judgement; see the report for rationale. Not a completed score.</title><circle cx="${n(px)}" cy="${n(py)}" r="8" fill="white" stroke="#3e438e" stroke-width="2.5"/><text x="${n(px + (right ? 15 : -15))}" y="${n(py + 5)}" text-anchor="${right ? 'start' : 'end'}" font-size="12" fill="#1e2549" stroke="white" stroke-width="2" paint-order="stroke">${row.id} suspected: risk ~${(point.likelihood * point.impact).toFixed(2)} (not scored)</text></g>`
     );
   }
   for (const group of groups.values()) {
@@ -1921,24 +1967,23 @@ export function renderRiskChart(input) {
       `<g data-system-ids="${xml(group.map((row) => row.s.systemId).join(' '))}"><title>${xml(group.map((row) => row.label).join('; '))}</title>`
     );
     lines.push(
-      v.redRated
-        ? `<path d="M ${n(px)} ${n(py - 7)} L ${n(px + 7)} ${n(py)} L ${n(px)} ${n(py + 7)} L ${n(px - 7)} ${n(py)} Z" fill="#b91c1c" stroke="white" stroke-width="2"/>`
-        : `<circle cx="${n(px)}" cy="${n(py)}" r="6" fill="#1d4ed8" stroke="white" stroke-width="2"/>`
+      `<rect data-role="scored-inputs" x="${n(px - 6)}" y="${n(py - 6)}" width="12" height="12" fill="white" stroke="${v.redRated ? '#8a3b2d' : '#475569'}" stroke-width="2"/>`
     );
     lines.push(
       `<text x="${n(px + (px > 820 ? -12 : 12))}" y="${n(Math.max(top + 18, py - 10))}" text-anchor="${px > 820 ? 'end' : 'start'}" font-size="13" font-weight="bold" stroke="white" stroke-width="3" paint-order="stroke">${label}</text></g>`
     );
   }
   lines.push(
-    '<text x="100" y="610" font-size="14">◆ Red-rated (≥16)   ● Below threshold. Below threshold does not mean Accepted.</text>',
-    '<text x="100" y="633" font-size="14">Unrounded coordinates; displayed scores rounded. Coincident points grouped; no jitter.</text>',
-    '<text x="100" y="656" font-size="14">Purple dashed ranges (?): incomplete inputs; not estimates or confidence intervals.</text>'
+    '<g aria-label="Chart legend" font-size="14"><rect x="100" y="601" width="12" height="12" fill="white" stroke="#475569" stroke-width="2"/><text x="132" y="613">Solid box: scored inputs (complete numerical score)</text>',
+    '<rect x="100" y="626" width="20" height="12" rx="3" fill="#3e438e" fill-opacity="0.07" stroke="#3e438e" stroke-dasharray="3 4"/><text x="132" y="638">Dotted outline: plausible range; confidence shown per system when supplied</text>',
+    '<circle cx="110" cy="657" r="7" fill="white" stroke="#3e438e" stroke-width="2.5"/><text x="132" y="662">Circle: where the assessor suspects it sits (only when supplied)</text>',
+    '<text x="100" y="687" font-size="13">Ranges are mathematical bounds, not confidence intervals. No estimated position is invented.</text></g>'
   );
   if (!groups.size && !uncertain.size)
     lines.push(
       `<text x="500" y="315" text-anchor="middle" font-size="19" font-weight="bold">${a.metadata.riskModel === 'none' ? 'Numerical risk model omitted' : 'No complete numerical scores to plot'}</text>`
     );
-  let rowY = 692;
+  let rowY = 724;
   for (const row of rows) {
     lines.push(`<g><title>${xml(row.label)}</title>`);
     for (const line of row.lines) {
@@ -2003,7 +2048,7 @@ export function renderResults(input) {
   if (a.metadata.riskModel !== 'none') {
     lines.push(
       '',
-      `![Legacy numerical risk chart: likelihood 1–6 versus impact 1–5; red-rated at 16. Points are complete scores; dashed envelopes show incomplete-score uncertainty. System key in SVG.](${chartFilename(a)})`,
+      `![Legacy numerical risk chart: likelihood 1–6 versus impact 1–5; red-rated at 16. Solid boxes are complete scores; dotted outlines show incomplete ranges; hollow circles are supplied assessor judgement. System key in SVG.](${chartFilename(a)})`,
       '',
       '| System | Risk criterion | Supplied score | Evidence | Rationale |',
       '|--------|----------------|----------------|----------|-----------|'
@@ -2208,6 +2253,25 @@ export function renderResults(input) {
         s.risk.tipping
           ? `${s.risk.tipping.criterionId}: red threshold from ${s.risk.tipping.lowestRedValue}`
           : 'No single crossing value'
+      ])
+  );
+  table(
+    'Chart annotations — assessor judgement',
+    [
+      'System',
+      'Range confidence',
+      'Suspected position (not scored)',
+      'Rationale'
+    ],
+    a.riskInputs
+      .filter((r) => r.chartAnnotation)
+      .map((r) => [
+        r.systemId,
+        r.chartAnnotation.confidence ?? 'Not recorded',
+        r.chartAnnotation.suspectedPosition
+          ? `L=${r.chartAnnotation.suspectedPosition.likelihood}; impact=${r.chartAnnotation.suspectedPosition.impact}`
+          : 'Not supplied',
+        r.chartAnnotation.rationale
       ])
   );
   table(

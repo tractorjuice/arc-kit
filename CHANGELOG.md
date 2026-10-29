@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Legacy risk charts show incomplete numerical inputs as annotated purple dashed envelopes or range bars, with exact axis bounds and missing criteria. Complete scores remain precise points; uncertainty is not presented as an estimate or confidence interval.
+- Legacy charts use a muted background, a solid threshold curve and an explicit three-symbol legend: dotted plausible ranges with supplied confidence, solid boxes for complete scored inputs, and hollow circles for supplied suspected positions. Optional chart annotations remain assessor judgement and never affect calculated classification, score completeness or prioritisation.
+
+- Legacy risk charts show incomplete numerical inputs as annotated dotted indigo envelopes or range bars, with exact axis bounds and missing criteria. Complete scores remain precise points; uncertainty is not presented as an estimate or confidence interval.
 
 - Restored the legacy report template’s Document Register, Citations and Unreferenced Documents tables so its evidence instructions resolve and the CI citation guard passes.
 

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 818" width="1000" height="818" role="img" aria-labelledby="title description">
+<title id="title">Legacy Risk Assessment: likelihood versus impact</title>
+<desc id="description">ARC-001-LEGACY-v1.0. Assessment date 2026-10-28. Published numerical prioritisation, separate from legacy classification. Red-rated means likelihood times impact at least 16. Solid boxes are complete scores. Dotted indigo envelopes or range bars bound possible positions for incomplete inputs; not estimates or confidence intervals. Optional hollow circles are supplied assessor judgements, not completed scores. Confidence labels are supplied judgements, not statistical intervals. Interior positions need not be attainable. All systems appear in the key. Coincident points are grouped without moving their coordinates.</desc>
+<metadata>Input SHA-256: 6dfbc31825e3855092cfd824451f133abe153dde3a9c6dab605dc98d8176cbc5; calculation version: 1.2.0; chart version: 3</metadata>
+<rect width="100%" height="100%" fill="white"/>
+<g font-family="Arial, sans-serif" fill="#1e2549">
+<text x="100" y="38" font-size="25" font-weight="bold">Legacy Risk Assessment</text>
+<text x="100" y="66" font-size="15">ARC-001-LEGACY-v1.0 | 2026-10-28</text>
+<text x="100" y="91" font-size="14">Published numerical model; separate from updated-definition classification</text>
+<rect x="100" y="120" width="800" height="400" fill="#f4f5f9" stroke="#a3a8b6"/>
+<polygon points="452.000,120 900,120 900.000,353.333 896.800,352.441 893.600,351.544 890.400,350.640 887.200,349.730 884.000,348.814 880.800,347.891 877.600,346.962 874.400,346.027 871.200,345.086 868.000,344.138 864.800,343.183 861.600,342.222 858.400,341.254 855.200,340.280 852.000,339.298 848.800,338.310 845.600,337.314 842.400,336.312 839.200,335.302 836.000,334.286 832.800,333.262 829.600,332.230 826.400,331.191 823.200,330.145 820.000,329.091 816.800,328.029 813.600,326.960 810.400,325.882 807.200,324.797 804.000,323.704 800.800,322.602 797.600,321.493 794.400,320.375 791.200,319.248 788.000,318.113 784.800,316.970 781.600,315.817 778.400,314.656 775.200,313.487 772.000,312.308 768.800,311.120 765.600,309.922 762.400,308.716 759.200,307.500 756.000,306.275 752.800,305.039 749.600,303.794 746.400,302.540 743.200,301.275 740.000,300.000 736.800,298.715 733.600,297.419 730.400,296.113 727.200,294.797 724.000,293.469 720.800,292.131 717.600,290.782 714.400,289.421 711.200,288.050 708.000,286.667 704.800,285.272 701.600,283.866 698.400,282.447 695.200,281.017 692.000,279.574 688.800,278.120 685.600,276.652 682.400,275.172 679.200,273.680 676.000,272.174 672.800,270.655 669.600,269.123 666.400,267.577 663.200,266.018 660.000,264.444 656.800,262.857 653.600,261.256 650.400,259.640 647.200,258.009 644.000,256.364 640.800,254.703 637.600,253.028 634.400,251.336 631.200,249.630 628.000,247.907 624.800,246.168 621.600,244.413 618.400,242.642 615.200,240.853 612.000,239.048 608.800,237.225 605.600,235.385 602.400,233.527 599.200,231.650 596.000,229.756 592.800,227.843 589.600,225.911 586.400,223.960 583.200,221.990 580.000,220.000 576.800,217.990 573.600,215.960 570.400,213.909 567.200,211.837 564.000,209.744 560.800,207.629 557.600,205.492 554.400,203.333 551.200,201.152 548.000,198.947 544.800,196.720 541.600,194.468 538.400,192.193 535.200,189.892 532.000,187.568 528.800,185.217 525.600,182.842 522.400,180.440 519.200,178.011 516.000,175.556 512.800,173.073 509.600,170.562 506.400,168.023 503.200,165.455 500.000,162.857 496.800,160.230 493.600,157.572 490.400,154.884 487.200,152.164 484.000,149.412 480.800,146.627 477.600,143.810 474.400,140.958 471.200,138.072 468.000,135.152 464.800,132.195 461.600,129.202 458.400,126.173 455.200,123.106 452.000,120.000" fill="#f3e5e3"/>
+<path d="M 100 120 V 520" stroke="#d9dce5"/>
+<text x="100" y="545" text-anchor="middle" font-size="15">1</text>
+<path d="M 180 120 V 520" stroke="#d9dce5"/>
+<text x="180" y="545" text-anchor="middle" font-size="15">1.5</text>
+<path d="M 260 120 V 520" stroke="#d9dce5"/>
+<text x="260" y="545" text-anchor="middle" font-size="15">2</text>
+<path d="M 340 120 V 520" stroke="#d9dce5"/>
+<text x="340" y="545" text-anchor="middle" font-size="15">2.5</text>
+<path d="M 420 120 V 520" stroke="#d9dce5"/>
+<text x="420" y="545" text-anchor="middle" font-size="15">3</text>
+<path d="M 500 120 V 520" stroke="#d9dce5"/>
+<text x="500" y="545" text-anchor="middle" font-size="15">3.5</text>
+<path d="M 580 120 V 520" stroke="#d9dce5"/>
+<text x="580" y="545" text-anchor="middle" font-size="15">4</text>
+<path d="M 660 120 V 520" stroke="#d9dce5"/>
+<text x="660" y="545" text-anchor="middle" font-size="15">4.5</text>
+<path d="M 740 120 V 520" stroke="#d9dce5"/>
+<text x="740" y="545" text-anchor="middle" font-size="15">5</text>
+<path d="M 820 120 V 520" stroke="#d9dce5"/>
+<text x="820" y="545" text-anchor="middle" font-size="15">5.5</text>
+<path d="M 900 120 V 520" stroke="#d9dce5"/>
+<text x="900" y="545" text-anchor="middle" font-size="15">6</text>
+<path d="M 100 520 H 900" stroke="#d9dce5"/>
+<text x="83" y="525" text-anchor="end" font-size="15">1</text>
+<path d="M 100 470 H 900" stroke="#d9dce5"/>
+<text x="83" y="475" text-anchor="end" font-size="15">1.5</text>
+<path d="M 100 420 H 900" stroke="#d9dce5"/>
+<text x="83" y="425" text-anchor="end" font-size="15">2</text>
+<path d="M 100 370 H 900" stroke="#d9dce5"/>
+<text x="83" y="375" text-anchor="end" font-size="15">2.5</text>
+<path d="M 100 320 H 900" stroke="#d9dce5"/>
+<text x="83" y="325" text-anchor="end" font-size="15">3</text>
+<path d="M 100 270 H 900" stroke="#d9dce5"/>
+<text x="83" y="275" text-anchor="end" font-size="15">3.5</text>
+<path d="M 100 220 H 900" stroke="#d9dce5"/>
+<text x="83" y="225" text-anchor="end" font-size="15">4</text>
+<path d="M 100 170 H 900" stroke="#d9dce5"/>
+<text x="83" y="175" text-anchor="end" font-size="15">4.5</text>
+<path d="M 100 120 H 900" stroke="#d9dce5"/>
+<text x="83" y="125" text-anchor="end" font-size="15">5</text>
+<polyline points="452.000,120.000 455.200,123.106 458.400,126.173 461.600,129.202 464.800,132.195 468.000,135.152 471.200,138.072 474.400,140.958 477.600,143.810 480.800,146.627 484.000,149.412 487.200,152.164 490.400,154.884 493.600,157.572 496.800,160.230 500.000,162.857 503.200,165.455 506.400,168.023 509.600,170.562 512.800,173.073 516.000,175.556 519.200,178.011 522.400,180.440 525.600,182.842 528.800,185.217 532.000,187.568 535.200,189.892 538.400,192.193 541.600,194.468 544.800,196.720 548.000,198.947 551.200,201.152 554.400,203.333 557.600,205.492 560.800,207.629 564.000,209.744 567.200,211.837 570.400,213.909 573.600,215.960 576.800,217.990 580.000,220.000 583.200,221.990 586.400,223.960 589.600,225.911 592.800,227.843 596.000,229.756 599.200,231.650 602.400,233.527 605.600,235.385 608.800,237.225 612.000,239.048 615.200,240.853 618.400,242.642 621.600,244.413 624.800,246.168 628.000,247.907 631.200,249.630 634.400,251.336 637.600,253.028 640.800,254.703 644.000,256.364 647.200,258.009 650.400,259.640 653.600,261.256 656.800,262.857 660.000,264.444 663.200,266.018 666.400,267.577 669.600,269.123 672.800,270.655 676.000,272.174 679.200,273.680 682.400,275.172 685.600,276.652 688.800,278.120 692.000,279.574 695.200,281.017 698.400,282.447 701.600,283.866 704.800,285.272 708.000,286.667 711.200,288.050 714.400,289.421 717.600,290.782 720.800,292.131 724.000,293.469 727.200,294.797 730.400,296.113 733.600,297.419 736.800,298.715 740.000,300.000 743.200,301.275 746.400,302.540 749.600,303.794 752.800,305.039 756.000,306.275 759.200,307.500 762.400,308.716 765.600,309.922 768.800,311.120 772.000,312.308 775.200,313.487 778.400,314.656 781.600,315.817 784.800,316.970 788.000,318.113 791.200,319.248 794.400,320.375 797.600,321.493 800.800,322.602 804.000,323.704 807.200,324.797 810.400,325.882 813.600,326.960 816.800,328.029 820.000,329.091 823.200,330.145 826.400,331.191 829.600,332.230 832.800,333.262 836.000,334.286 839.200,335.302 842.400,336.312 845.600,337.314 848.800,338.310 852.000,339.298 855.200,340.280 858.400,341.254 861.600,342.222 864.800,343.183 868.000,344.138 871.200,345.086 874.400,346.027 877.600,346.962 880.800,347.891 884.000,348.814 887.200,349.730 890.400,350.640 893.600,351.544 896.800,352.441 900.000,353.333" fill="none" stroke="#8a3b2d" stroke-width="1.75"/>
+<text x="730" y="111" font-size="14" font-weight="bold" fill="#8a3b2d">Red-rated: risk 16 or more</text>
+<text x="500" y="575" text-anchor="middle" font-size="18" font-weight="bold">Likelihood score (mean L + max L) / 2</text>
+<text transform="translate(35 320) rotate(-90)" text-anchor="middle" font-size="18" font-weight="bold">Impact score (mean C + max C) / 2</text>
+<g data-uncertain-system-ids="payments"><title>P1: Payments (payments) | INCOMPLETE: possible L=3.79–5.14, impact=3.75–4.58; missing L1, C1; medium confidence (assessor supplied); suspected L=4.50, impact=4.00 (judgement only). Bounding envelope only; not every interior position is attainable.</title>
+<rect x="545.714" y="161.667" width="217.143" height="83.333" rx="6" fill="#3e438e" fill-opacity="0.07" stroke="#3e438e" stroke-width="1.5" stroke-dasharray="3 4"/>
+<text x="549.714" y="139.667" font-size="12" fill="#30367c" stroke="white" stroke-width="2" paint-order="stroke"><tspan x="549.714">P1? plausible range: risk 14.20–23.57</tspan><tspan x="549.714" dy="15">medium confidence</tspan></text></g>
+<g data-suspected-system-id="payments"><title>P1: Payments (payments) | INCOMPLETE: possible L=3.79–5.14, impact=3.75–4.58; missing L1, C1; medium confidence (assessor supplied); suspected L=4.50, impact=4.00 (judgement only). Assessor judgement; see the report for rationale. Not a completed score.</title><circle cx="660.000" cy="220.000" r="8" fill="white" stroke="#3e438e" stroke-width="2.5"/><text x="645.000" y="225.000" text-anchor="end" font-size="12" fill="#1e2549" stroke="white" stroke-width="2" paint-order="stroke">P1 suspected: risk ~18.00 (not scored)</text></g>
+<g aria-label="Chart legend" font-size="14"><rect x="100" y="601" width="12" height="12" fill="white" stroke="#475569" stroke-width="2"/><text x="132" y="613">Solid box: scored inputs (complete numerical score)</text>
+<rect x="100" y="626" width="20" height="12" rx="3" fill="#3e438e" fill-opacity="0.07" stroke="#3e438e" stroke-dasharray="3 4"/><text x="132" y="638">Dotted outline: plausible range; confidence shown per system when supplied</text>
+<circle cx="110" cy="657" r="7" fill="white" stroke="#3e438e" stroke-width="2.5"/><text x="132" y="662">Circle: where the assessor suspects it sits (only when supplied)</text>
+<text x="100" y="687" font-size="13">Ranges are mathematical bounds, not confidence intervals. No estimated position is invented.</text></g>
+<g><title>P1: Payments (payments) | INCOMPLETE: possible L=3.79–5.14, impact=3.75–4.58; missing L1, C1; medium confidence (assessor supplied); suspected L=4.50, impact=4.00 (judgement only)</title>
+<text x="100" y="724" font-size="13">P1: Payments (payments) | INCOMPLETE: possible L=3.79–5.14, impact=3.75–4.58; missing L1, C1; medium confidence </text>
+<text x="100" y="742" font-size="13">(assessor supplied); suspected L=4.50, impact=4.00 (judgement only)</text>
+</g>
+</g></svg>

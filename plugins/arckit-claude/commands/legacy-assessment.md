@@ -210,10 +210,10 @@ Save successful SVG stdout beside the report as
 on success. Preserve previous chart versions. The generated Markdown embeds this
 relative image automatically; keep all three files together when sharing the report.
 The chart uses unrounded calculated coordinates, likelihood 1–6 and impact 1–5,
-with the published curved `likelihood × impact = 16` boundary. Red diamonds mark
-red-rated scores; blue circles mark scores below that threshold. Do not invent
+with the published curved `likelihood × impact = 16` boundary. Solid outlined boxes mark complete numerical scores, with the threshold curve and
+key showing their risk status. Hollow circles are reserved for supplied suspected positions. Do not invent
 official Medium/High bands or use point colour for updated-definition classification.
-Incomplete inputs draw dashed purple bounding envelopes, or range bars when one axis is fixed, labelled with ? and the missing criteria. With no numerical inputs, the entire domain remains possible. These are not estimates, confidence intervals or completed scores; interior positions need not all be attainable. Never substitute zero or a midpoint. Coincident scores share
+Incomplete inputs draw dotted indigo bounding envelopes, or range bars when one axis is fixed, labelled with ? and the missing criteria. With no numerical inputs, the entire domain remains possible. These are not estimates, confidence intervals or completed scores; interior positions need not all be attainable. Never substitute zero or a midpoint. Coincident scores share
 a marker without moving coordinates; the key lists every system. No network,
 plotting package or image service is required. For `risk-model none`, omit the image.
 
@@ -327,3 +327,21 @@ Do not duplicate these as manually authored tables. Keep assessor interpretation
 dependency diagrams and recommendations outside the block and label them as narrative.
 This unreleased draft has one current format. If stored results are stale, preserve
 the old files and generate a new draft from assessor facts with fresh approval pending.
+
+## Optional chart judgement
+
+For an incomplete system, a `riskInputs` entry may include `chartAnnotation` with
+`confidence` (`low`, `medium`, `high` or null), `suspectedPosition` (null or an object
+with aggregate `likelihood` and `impact` factors), and a non-empty `rationale`. All three
+fields are required when the annotation is supplied. Confidence and suspected position
+must come from supplied assessor judgement; never infer medium confidence or choose
+a midpoint to fill the picture. These are separate from supported L/C criterion inputs.
+
+The suspected factors must lie inside the calculated axis bounds. Use the plotted
+aggregate factors, not a raw guessed criterion value. They do not complete the score,
+alter classification, create an official red-rated flag or change numerical ordering.
+The chart shows a dotted plausible range with confidence when supplied, a solid box
+for scored inputs, and a hollow circle where the assessor suspects it sits. Unknown
+confidence and absent suspected positions remain explicit in the key. Rationale stays
+in the verified report register, not the SVG. Complete scores cannot carry this
+incomplete-score annotation. No source-project information may be used in examples.
