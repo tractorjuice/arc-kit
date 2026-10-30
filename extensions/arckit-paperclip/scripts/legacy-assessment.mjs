@@ -1423,6 +1423,7 @@ export function assess(input) {
       provisional,
       completeness,
       criterionResults: criteria,
+      componentResults: deriveComponents(s, fs, policies, evidence, date),
       events: [
         {
           kind: 'review-horizon',
@@ -1776,6 +1777,183 @@ export function lint(input) {
   return diagnostics;
 }
 
+const rangePrecision = (relativeWidth) => {
+  const percent =
+    Math.round(Math.max(0, Math.min(100, 100 * (1 - relativeWidth))) * 1e8) /
+    1e8;
+  return {
+    percent,
+    label: percent >= 80 ? 'high' : percent >= 50 ? 'medium' : 'low'
+  };
+};
+const headlinePrecision = (risk) =>
+  risk.status === 'complete'
+    ? rangePrecision(0)
+    : risk.status === 'incomplete'
+      ? rangePrecision(
+          Math.max(
+            (risk.bounds.likelihoodMaximum - risk.bounds.likelihoodMinimum) / 5,
+            (risk.bounds.impactMaximum - risk.bounds.impactMinimum) / 4
+          )
+        )
+      : null;
+
+/** ArcKit local plotting convention, not a government numerical classification. */
+export function componentMeasure(measurements = [], context = null) {
+  jsonTree(measurements);
+  validate(
+    measurements,
+    loadSchema().$defs.system.properties.components.items.properties
+      .measurements,
+    '$.component.measurements'
+  );
+  const ids = new Set(),
+    normalized = [];
+  for (const m of measurements) {
+    if (ids.has(m.criterionId))
+      fail(`Duplicate component measurement: ${m.criterionId}`);
+    ids.add(m.criterionId);
+    if (
+      m.lower > m.upper ||
+      (m.estimate !== null && (m.estimate < m.lower || m.estimate > m.upper))
+    )
+      fail(`Measurement ${m.criterionId}: expected lower <= estimate <= upper`);
+    const sign = m.calibration.direction === 'higher-is-worse' ? 1 : -1;
+    const b = sign * m.calibration.baseline,
+      w = sign * m.calibration.actionRequired,
+      l = sign * m.calibration.legacy;
+    if (!(b < w && w < l) || !Number.isFinite(w - b) || !Number.isFinite(l - w))
+      fail(
+        `Measurement ${m.criterionId}: calibration anchors must progress from baseline through action-required to legacy`
+      );
+    const convert = (value) => {
+      const v = sign * value;
+      return v <= b
+        ? 0
+        : v < w
+          ? (v - b) / (w - b)
+          : v < l
+            ? 1 + (v - w) / (l - w)
+            : Math.min(3, 2 + (v - l) / (l - w));
+    };
+    if (context) {
+      if (new Set(m.evidenceIds).size !== m.evidenceIds.length)
+        fail(`Measurement ${m.criterionId}: duplicate evidence`);
+      const support = m.evidenceIds.map((id) => {
+        const e = context.evidence.get(id);
+        if (!e) fail(`Measurement ${m.criterionId}: broken evidence ${id}`);
+        const reasons = evidenceReasons(
+          e,
+          context.date,
+          [context.systemId],
+          context.componentId
+        );
+        if (reasons.some((r) => r.endsWith('-scope')))
+          fail(
+            `Measurement ${m.criterionId}: evidence ${id} outside component scope`
+          );
+        return reasons.length === 0;
+      });
+      if (m.basis === 'measured' && !support.some(Boolean))
+        fail(
+          `Measurement ${m.criterionId}: measured values require current scoped evidence`
+        );
+    }
+    normalized.push({
+      criterionId: m.criterionId,
+      lower: Math.min(convert(m.lower), convert(m.upper)),
+      estimate: m.estimate === null ? null : convert(m.estimate),
+      upper: Math.max(convert(m.lower), convert(m.upper)),
+      basis: m.basis
+    });
+  }
+  const missing = CRITERIA.filter((id) => !ids.has(id));
+  const minimum = Math.max(0, ...normalized.map((m) => m.lower));
+  const maximum = missing.length
+    ? 3
+    : Math.max(0, ...normalized.map((m) => m.upper));
+  const position =
+    missing.length || normalized.some((m) => m.estimate === null)
+      ? null
+      : Math.max(...normalized.map((m) => m.estimate));
+  const confidencePercent =
+    Math.round(
+      Math.max(0, Math.min(100, 100 * (1 - (maximum - minimum) / 3))) * 1e8
+    ) / 1e8;
+  return {
+    method: 'arckit-component-index-1',
+    position,
+    minimum,
+    maximum,
+    confidencePercent,
+    confidence: measurements.length
+      ? confidencePercent >= 80
+        ? 'high'
+        : confidencePercent >= 50
+          ? 'medium'
+          : 'low'
+      : null,
+    measurementCoverage: measurements.length,
+    estimatedInputCount: normalized.filter((m) => m.basis === 'estimated')
+      .length,
+    missingCriteria: missing,
+    indicators: normalized
+  };
+}
+
+const OUTCOMES = ['Accepted', 'Action-Required', 'Legacy'];
+/** Component classifications require component-scoped findings, never a system-wide inference. */
+function deriveComponents(system, findings, policies, evidence, date) {
+  return system.components.map((component) => {
+    const fs = findings.filter((f) => f.componentId === component.id);
+    const strongestKnown =
+      [...OUTCOMES].reverse().find((o) => fs.some((f) => f.outcome === o)) ??
+      null;
+    const unknown = CRITERIA.some(
+      (c) =>
+        !fs.some((f) => f.criterionId === c) ||
+        fs.some((f) => f.criterionId === c && f.outcome === 'Unknown')
+    );
+    const outcome =
+      strongestKnown === 'Legacy'
+        ? 'Legacy'
+        : unknown
+          ? 'Undetermined'
+          : (strongestKnown ?? 'Undetermined');
+    const provisional =
+      outcome === 'Legacy'
+        ? !fs.some(
+            (f) =>
+              f.outcome === 'Legacy' &&
+              policies.get(f.thresholdId)?.status === 'approved'
+          )
+        : fs.some(
+            (f) =>
+              f.thresholdId &&
+              policies.get(f.thresholdId)?.status !== 'approved'
+          );
+    const numerical = componentMeasure(component.measurements ?? [], {
+      evidence,
+      date,
+      systemId: system.id,
+      componentId: component.id
+    });
+    return {
+      componentId: component.id,
+      outcome,
+      strongestKnown,
+      provisional,
+      completeness:
+        unknown || fs.some((f) => f.completeness === 'incomplete')
+          ? 'incomplete'
+          : 'complete',
+      findingIds: fs.map((f) => f.id),
+      confidence: numerical.confidence,
+      numerical
+    };
+  });
+}
+
 const escapeCell = (value) =>
   String(value ?? 'Unknown')
     .replaceAll('&', '&amp;')
@@ -1787,6 +1965,25 @@ const escapeCell = (value) =>
 const START = '<!-- legacy-results:start -->',
   END = '<!-- legacy-results:end -->';
 const chartFilename = (a) => `${a.metadata.documentId}-risk.svg`;
+const componentChartFilename = (a) => `${a.metadata.documentId}-components.svg`;
+const hasComponents = (a) => a.systems.some((s) => s.components.length);
+const wrapChartText = (text, width = 112) => {
+  const lines = [];
+  let line = '';
+  for (const word of String(text).split(/\s+/u)) {
+    let chars = [...word];
+    if (line && [...line].length + chars.length + 1 > width) {
+      lines.push(line);
+      line = '';
+    }
+    while (chars.length > width) {
+      lines.push(chars.splice(0, width).join(''));
+    }
+    if (chars.length) line += (line ? ' ' : '') + chars.join('');
+  }
+  if (line) lines.push(line);
+  return lines;
+};
 const xml = (value) =>
   String(value)
     .replace(/[\u0000-\u001f\u007f-\u009f\ufffe\uffff]/g, ' ')
@@ -1804,8 +2001,45 @@ export function renderRiskChart(input) {
     top = 120,
     width = 800,
     height = 400;
-  const x = (v) => left + ((v - 1) * width) / 5;
-  const y = (v) => top + ((5 - v) * height) / 4;
+  const numerical = r.systems.filter((s) => s.risk.status !== 'omitted');
+  const xMin = Math.max(
+    1,
+    Math.min(
+      3,
+      Math.floor(
+        Math.min(
+          ...numerical.map((s) =>
+            s.risk.status === 'complete'
+              ? s.risk.likelihood
+              : s.risk.bounds.likelihoodMinimum
+          ),
+          6
+        ) * 2
+      ) /
+        2 -
+        0.5
+    )
+  );
+  const yMin = Math.max(
+    1,
+    Math.min(
+      2,
+      Math.floor(
+        Math.min(
+          ...numerical.map((s) =>
+            s.risk.status === 'complete'
+              ? s.risk.impact
+              : s.risk.bounds.impactMinimum
+          ),
+          5
+        ) * 2
+      ) /
+        2 -
+        0.5
+    )
+  );
+  const x = (v) => left + ((v - xMin) * width) / (6 - xMin);
+  const y = (v) => top + ((5 - v) * height) / (5 - yMin);
   const n = (v) => v.toFixed(3);
   const names = new Map(a.systems.map((s) => [s.id, s.name]));
   const rows = r.systems.map((s, i) => {
@@ -1813,9 +2047,10 @@ export function renderRiskChart(input) {
     const annotation = a.riskInputs.find(
       (r) => r.systemId === s.systemId
     )?.chartAnnotation;
-    const confidence = annotation?.confidence
-      ? `${annotation.confidence} confidence (assessor supplied)`
-      : 'confidence not recorded';
+    const precision = headlinePrecision(risk);
+    const confidence = precision
+      ? `${precision.label} confidence (${precision.percent.toFixed(0)}% range precision)`
+      : 'numerical model omitted';
     const position = annotation?.suspectedPosition;
 
     const details =
@@ -1835,9 +2070,10 @@ export function renderRiskChart(input) {
     return {
       s,
       annotation,
+      precision,
       id: `P${i + 1}`,
       label,
-      lines: visible.match(/[\s\S]{1,112}/gu) ?? []
+      lines: wrapChartText(visible)
     };
   });
   const groups = new Map();
@@ -1854,10 +2090,10 @@ export function renderRiskChart(input) {
   );
   const lines = [
     '<?xml version="1.0" encoding="UTF-8"?>',
-    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 ${770 + legendHeight}" width="1000" height="${770 + legendHeight}" role="img" aria-labelledby="title description">`,
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 ${Math.max(780, 740 + legendHeight)}" width="1000" height="${Math.max(780, 740 + legendHeight)}" role="img" aria-labelledby="title description" data-likelihood-min="${xMin}" data-impact-min="${yMin}">`,
     '<title id="title">Legacy Risk Assessment: likelihood versus impact</title>',
-    `<desc id="description">${xml(a.metadata.documentId)}. Assessment date ${xml(a.metadata.assessmentDate)}. Published numerical prioritisation, separate from legacy classification. Red-rated means likelihood times impact at least 16. Solid boxes are complete scores. Dotted indigo envelopes or range bars bound possible positions for incomplete inputs; not estimates or confidence intervals. Optional hollow circles are supplied assessor judgements, not completed scores. Confidence labels are supplied judgements, not statistical intervals. Interior positions need not be attainable. All systems appear in the key. Coincident points are grouped without moving their coordinates.</desc>`,
-    `<metadata>Input SHA-256: ${r.inputDigest}; calculation version: ${r.calculationVersion}; chart version: 3</metadata>`,
+    `<desc id="description">${xml(a.metadata.documentId)}. Assessment date ${xml(a.metadata.assessmentDate)}. Published numerical prioritisation, separate from legacy classification. Red-rated means likelihood times impact at least 16. Solid boxes show complete scores or bounded one-axis ranges; ranges remain incomplete. Dotted indigo envelopes or range bars bound possible positions for incomplete inputs; not estimates or confidence intervals. Optional hollow circles are supplied assessor judgements, not completed scores. Confidence is range precision calculated from the widest normalized axis span, not a probability or statistical interval. Interior positions need not be attainable. All systems appear in the key. Coincident points are grouped without moving their coordinates.</desc>`,
+    `<metadata>Input SHA-256: ${r.inputDigest}; calculation version: ${r.calculationVersion}; chart version: 5</metadata>`,
     '<rect width="100%" height="100%" fill="white"/>',
     '<g font-family="Arial, sans-serif" fill="#1e2549">',
     '<text x="100" y="38" font-size="25" font-weight="bold">Legacy Risk Assessment</text>',
@@ -1873,13 +2109,13 @@ export function renderRiskChart(input) {
   lines.push(
     `<polygon points="${n(x(3.2))},${top} ${left + width},${top} ${[...curve].reverse().join(' ')}" fill="#f3e5e3"/>`
   );
-  for (let tick = 1; tick <= 6; tick += 0.5) {
+  for (let tick = xMin; tick <= 6; tick += 0.5) {
     lines.push(
       `<path d="M ${x(tick)} ${top} V ${top + height}" stroke="#d9dce5"/>`,
       `<text x="${x(tick)}" y="${top + height + 25}" text-anchor="middle" font-size="15">${tick}</text>`
     );
   }
-  for (let tick = 1; tick <= 5; tick += 0.5) {
+  for (let tick = yMin; tick <= 5; tick += 0.5) {
     lines.push(
       `<path d="M ${left} ${y(tick)} H ${left + width}" stroke="#d9dce5"/>`,
       `<text x="${left - 17}" y="${y(tick) + 5}" text-anchor="end" font-size="15">${tick}</text>`
@@ -1888,8 +2124,8 @@ export function renderRiskChart(input) {
   lines.push(
     `<polyline points="${curve.join(' ')}" fill="none" stroke="#8a3b2d" stroke-width="1.75"/>`,
     '<text x="730" y="111" font-size="14" font-weight="bold" fill="#8a3b2d">Red-rated: risk 16 or more</text>',
-    '<text x="500" y="575" text-anchor="middle" font-size="18" font-weight="bold">Likelihood score (mean L + max L) / 2</text>',
-    '<text transform="translate(35 320) rotate(-90)" text-anchor="middle" font-size="18" font-weight="bold">Impact score (mean C + max C) / 2</text>'
+    `<text x="500" y="575" text-anchor="middle" font-size="15">Likelihood score (mean L + max L) / 2 — axis starts at ${xMin}</text>`,
+    `<text transform="translate(35 320) rotate(-90)" text-anchor="middle" font-size="15">Impact score (mean C + max C) / 2 — axis starts at ${yMin}</text>`
   );
   // L and C depend on disjoint inputs. Their extrema give a bounding
   // envelope, not a probability distribution or an invented midpoint score.
@@ -1920,9 +2156,15 @@ export function renderRiskChart(input) {
     );
     if (x1 === x2) {
       lines.push(
+        `<rect data-role="scored-range" x="${n(x1 - 8)}" y="${n(y1)}" width="16" height="${n(y2 - y1)}" rx="8" fill="#1e3a8a" fill-opacity="0.18" stroke="#1e3a8a"/><rect x="${n(x1 - 16)}" y="${n(y1 - 8)}" width="32" height="${n(y2 - y1 + 16)}" rx="6" fill="none" stroke="#1e3a8a" stroke-dasharray="4 4"/>`
+      );
+      lines.push(
         `<path d="M ${n(x1)} ${n(y1)} V ${n(y2)} M ${n(x1 - 5)} ${n(y1)} H ${n(x1 + 5)} M ${n(x1 - 5)} ${n(y2)} H ${n(x1 + 5)}" fill="none" stroke="#3e438e" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/>`
       );
     } else if (y1 === y2) {
+      lines.push(
+        `<rect data-role="scored-range" x="${n(x1)}" y="${n(y1 - 8)}" width="${n(x2 - x1)}" height="16" rx="8" fill="#1e3a8a" fill-opacity="0.18" stroke="#1e3a8a"/><rect x="${n(x1 - 8)}" y="${n(y1 - 16)}" width="${n(x2 - x1 + 16)}" height="32" rx="6" fill="none" stroke="#1e3a8a" stroke-dasharray="4 4"/>`
+      );
       lines.push(
         `<path d="M ${n(x1)} ${n(y1)} H ${n(x2)} M ${n(x1)} ${n(y1 - 5)} V ${n(y1 + 5)} M ${n(x2)} ${n(y1 - 5)} V ${n(y1 + 5)}" fill="none" stroke="#3e438e" stroke-width="2" stroke-dasharray="2 4" stroke-linecap="round"/>`
       );
@@ -1931,19 +2173,11 @@ export function renderRiskChart(input) {
         `<rect x="${n(x1)}" y="${n(y1)}" width="${n(x2 - x1)}" height="${n(y2 - y1)}" rx="6" fill="#3e438e" fill-opacity="0.07" stroke="#3e438e" stroke-width="1.5" stroke-dasharray="3 4"/>`
       );
     }
-    const confidences = new Set(
-      group.map((row) => row.annotation?.confidence ?? null)
-    );
-    const confidence =
-      confidences.size === 1
-        ? group[0].annotation?.confidence
-          ? `${group[0].annotation.confidence} confidence`
-          : 'confidence not recorded'
-        : 'confidence varies; see key';
+    const confidence = `${group[0].precision.label} confidence (${group[0].precision.percent.toFixed(0)}% range precision)`;
     const labelX = n(Math.min(x1 + 4, left + width - 290)),
       labelY = n(Math.max(top + 16, y1 - 22));
     lines.push(
-      `<text x="${labelX}" y="${labelY}" font-size="12" fill="#30367c" stroke="white" stroke-width="2" paint-order="stroke"><tspan x="${labelX}">${label} plausible range: risk ${b.minimum.toFixed(2)}–${b.maximum.toFixed(2)}</tspan><tspan x="${labelX}" dy="15">${confidence}</tspan></text></g>`
+      `<text x="${labelX}" y="${labelY}" font-size="12" fill="#30367c" stroke="white" stroke-width="2" paint-order="stroke"><tspan x="${labelX}">${label} plausible range: risk ${b.minimum.toFixed(2)}–${b.maximum.toFixed(2)}</tspan><tspan x="${labelX}" dy="15">${confidence}${x1 === x2 ? '; likelihood fixed at ' + b.likelihoodMinimum.toFixed(2) : y1 === y2 ? '; impact fixed at ' + b.impactMinimum.toFixed(2) : ''}</tspan></text></g>`
     );
   }
   for (const row of rows.filter((row) => row.annotation?.suspectedPosition)) {
@@ -1974,8 +2208,8 @@ export function renderRiskChart(input) {
     );
   }
   lines.push(
-    '<g aria-label="Chart legend" font-size="14"><rect x="100" y="601" width="12" height="12" fill="white" stroke="#475569" stroke-width="2"/><text x="132" y="613">Solid box: scored inputs (complete numerical score)</text>',
-    '<rect x="100" y="626" width="20" height="12" rx="3" fill="#3e438e" fill-opacity="0.07" stroke="#3e438e" stroke-dasharray="3 4"/><text x="132" y="638">Dotted outline: plausible range; confidence shown per system when supplied</text>',
+    '<g aria-label="Chart legend" font-size="14"><rect x="100" y="601" width="12" height="12" fill="white" stroke="#475569" stroke-width="2"/><text x="132" y="613">Solid box: scored inputs (complete score or one-axis range)</text>',
+    '<rect x="100" y="626" width="20" height="12" rx="3" fill="#3e438e" fill-opacity="0.07" stroke="#3e438e" stroke-dasharray="3 4"/><text x="132" y="638">Dotted outline: plausible range; confidence is calculated from range width</text>',
     '<circle cx="110" cy="657" r="7" fill="white" stroke="#3e438e" stroke-width="2.5"/><text x="132" y="662">Circle: where the assessor suspects it sits (only when supplied)</text>',
     '<text x="100" y="687" font-size="13">Ranges are mathematical bounds, not confidence intervals. No estimated position is invented.</text></g>'
   );
@@ -1999,6 +2233,112 @@ export function renderRiskChart(input) {
   const svg = `${lines.join('\n')}\n`;
   if (Buffer.byteLength(svg) > LIMITS.bytes)
     fail('Risk chart exceeds output byte limit; narrow its scope');
+  return svg;
+}
+
+/** Pure projection of calculated component indices and numerical intervals. */
+export function renderComponentChart(input) {
+  const a = assess(input),
+    results = a.results;
+  const colours = ['#15803d', '#b45309', '#b91c1c'];
+  const names = new Map(
+    a.systems.flatMap((s) =>
+      s.components.map((c) => [c.id, { name: c.name, system: s.id }])
+    )
+  );
+
+  const rows = results.systems
+    .flatMap((s) => s.componentResults)
+    .sort(
+      (a, b) =>
+        (b.numerical.position ?? -1) - (a.numerical.position ?? -1) ||
+        compare(a.componentId, b.componentId)
+    );
+  const left = 330,
+    top = 124,
+    column = 150,
+    rowHeight = 42,
+    bottom = top + 30 + Math.max(1, rows.length) * rowHeight;
+  const position = (value) => left + value * column;
+  const short = (value, n) =>
+    [...String(value)].length > n
+      ? [...String(value)].slice(0, n - 1).join('') + '…'
+      : String(value);
+  const lines = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 ${bottom + 225}" width="1260" height="${bottom + 225}" role="img" aria-labelledby="title description">`,
+    '<title id="title">Component legacy assessment breakdown</title>',
+    '<desc id="description">Horizontal component rows across Accepted, Action-Required and Legacy. Diamonds plot calculated central component indices; bars plot calculated lower and upper indices. Confidence is interval precision, not probability or evidence quality. The local calibration is distinct from government classification.</desc>',
+    `<metadata>Input SHA-256: ${results.inputDigest}; calculation version: ${results.calculationVersion}; component chart version: 4</metadata>`,
+    '<rect width="100%" height="100%" fill="white"/><g font-family="Arial, sans-serif" fill="#172b4d">',
+    '<text x="30" y="38" font-size="25" font-weight="bold">Component legacy assessment</text>',
+    `<text x="30" y="66" font-size="15">${xml(a.metadata.documentId)} | ${xml(a.metadata.assessmentDate)}</text>`,
+    '<text x="30" y="91" font-size="14">Local calibrated component index; independent of government classification and numerical risk</text>'
+  ];
+  rows.forEach((_, i) => {
+    if (i % 2 === 0)
+      lines.push(
+        `<rect x="20" y="${top + 30 + i * rowHeight}" width="1210" height="${rowHeight}" fill="#f8fafc"/>`
+      );
+  });
+  OUTCOMES.forEach((outcome, i) => {
+    lines.push(
+      `<rect x="${left + i * column}" y="${top}" width="${column}" height="${bottom - top}" fill="${['#dcfce7', '#fef3c7', '#fee2e2'][i]}" stroke="#94a3b8"/>`,
+      `<text x="${position(i + 0.5)}" y="${top + 18}" text-anchor="middle" font-size="13" font-weight="bold">${outcome}</text>`
+    );
+  });
+  lines.push(
+    `<text x="320" y="${top + 18}" text-anchor="end" font-size="13" font-weight="bold">Component</text>`,
+    `<text x="794" y="${top + 18}" font-size="13" font-weight="bold">Confidence¹</text>`,
+    `<text x="914" y="${top + 18}" font-size="13" font-weight="bold">Assessment notes</text>`
+  );
+  for (const [i, c] of rows.entries()) {
+    const cy = top + 30 + i * rowHeight + rowHeight / 2,
+      entry = names.get(c.componentId);
+    const m = c.numerical,
+      opacity = 0.25 + (0.75 * m.confidencePercent) / 100;
+    const note = `Recorded: ${c.outcome}${c.provisional ? ' (provisional)' : ''}`;
+    const px = m.position === null ? null : position(m.position),
+      lo = position(m.minimum),
+      hi = position(m.maximum);
+    lines.push(
+      `<g data-component-id="${xml(c.componentId)}"><title>${xml(entry.name)} (${xml(c.componentId)}). Actual classification ${xml(c.outcome)}. Index ${m.position === null ? 'unavailable' : m.position.toFixed(3)}, range ${m.minimum.toFixed(3)}–${m.maximum.toFixed(3)}. Local calculation, not a government score.</title>`,
+      `<text x="320" y="${cy + 4}" text-anchor="end" font-size="12" font-weight="bold">${xml(short((a.systems.length > 1 ? entry.system + ' / ' : '') + entry.name, 42))}</text>`,
+      `<path data-role="confidence-range" data-minimum="${m.minimum}" data-maximum="${m.maximum}" d="M ${lo} ${cy} H ${hi}" stroke="#1e3a8a" stroke-width="${m.confidencePercent >= 80 ? 6 : 9}" stroke-opacity="${opacity}" stroke-linecap="round"${m.measurementCoverage ? '' : ' stroke-dasharray="4 5"'}/>`
+    );
+    if (px !== null) {
+      const colour = colours[Math.min(2, Math.floor(m.position))];
+      lines.push(
+        `<path data-marker="calculated" data-position="${m.position}" d="M ${px} ${cy - 7} L ${px + 7} ${cy} L ${px} ${cy + 7} L ${px - 7} ${cy} Z" fill="white" stroke="${colour}" stroke-width="2"/>`
+      );
+    }
+    lines.push(
+      `<text x="794" y="${cy + 4}" font-size="12">${m.confidence ? m.confidence[0].toUpperCase() + m.confidence.slice(1) : 'Unmeasured'} ${m.confidencePercent.toFixed(0)}%</text>`,
+      `<text x="914" y="${cy - 9}" font-size="12">${xml(short(note, 44))}</text>`,
+      `<text x="914" y="${cy + 5}" font-size="11" fill="#475569">${m.position === null ? 'No central estimate' : m.position.toFixed(2)} [${m.minimum.toFixed(2)}–${m.maximum.toFixed(2)}]</text>`,
+      `<text x="914" y="${cy + 18}" font-size="10" fill="#475569">${m.measurementCoverage}/7 indicators; ${m.estimatedInputCount} estimated inputs</text></g>`
+    );
+  }
+  for (const index of [0, 1, 2, 3])
+    lines.push(
+      `<path d="M ${position(index)} ${bottom} v 5" stroke="#64748b"/><text x="${position(index)}" y="${bottom + 18}" text-anchor="middle" font-size="11" fill="#475569">${index}</text>`
+    );
+  if (!rows.length)
+    lines.push(
+      `<text x="405" y="${top + 65}" font-size="14">No components inventoried</text>`
+    );
+  lines.push(
+    `<path d="M 30 ${bottom + 45} H 90" stroke="#1e3a8a" stroke-width="6"/><text x="105" y="${bottom + 49}" font-size="12">Bar: calculated lower–upper range. Diamond: calculated central estimate, not the range midpoint.</text>`,
+    `<text x="30" y="${bottom + 78}" font-size="12">¹ Confidence = range precision: 100 × (1 − interval width / 3). High ≥80%, medium ≥50%, otherwise low.</text>`,
+    `<text x="30" y="${bottom + 104}" font-size="12">This is a local ArcKit plotting convention, not a probability, readiness percentage or published government score.</text>`,
+    `<text x="30" y="${bottom + 130}" font-size="12">Each criterion is calibrated at baseline=0, action-required=1 and legacy=2; the strongest indicator determines the component index.</text>`,
+    `<text x="30" y="${bottom + 156}" font-size="12">Missing indicators extend the upper bound to 3 and suppress the diamond. Labels retain exact bounds for narrow ranges.</text>`,
+    `<text x="30" y="${bottom + 182}" font-size="12">Recorded classifications remain separate. Raw measurements, calibration and evidence references are in the report.</text>`,
+    '</g></svg>'
+  );
+  const svg = lines.join('\n') + '\n';
+  if (Buffer.byteLength(svg) > LIMITS.bytes)
+    fail('Component chart exceeds output byte limit; narrow scope');
   return svg;
 }
 
@@ -2048,7 +2388,7 @@ export function renderResults(input) {
   if (a.metadata.riskModel !== 'none') {
     lines.push(
       '',
-      `![Legacy numerical risk chart: likelihood 1–6 versus impact 1–5; red-rated at 16. Solid boxes are complete scores; dotted outlines show incomplete ranges; hollow circles are supplied assessor judgement. System key in SVG.](${chartFilename(a)})`,
+      `![Legacy numerical risk chart: likelihood 1–6 versus impact 1–5; red-rated at 16. Solid boxes show scored points or one-axis ranges; dotted outlines show plausible ranges; hollow circles are supplied assessor judgement. System key in SVG.](${chartFilename(a)})`,
       '',
       '| System | Risk criterion | Supplied score | Evidence | Rationale |',
       '|--------|----------------|----------------|----------|-----------|'
@@ -2072,6 +2412,13 @@ export function renderResults(input) {
     `Numerical ordering: ${r.riskOrdering.join(', ') || 'None'}.`,
     ''
   );
+  if (hasComponents(a))
+    lines.push(
+      '### Component classification breakdown',
+      '',
+      `![Component breakdown across Accepted, Action-Required and Legacy; confidence and suspected outcomes are labelled separately.](${componentChartFilename(a)})`,
+      ''
+    );
   lines.push(
     'Legend: Outcome is classification; Unknown is an undecided criterion; Undetermined is an undecided system. Provisional means material policy/attestation approval is pending. Evidence gaps, plan gaps and incomplete numerical scores are independent.',
     ''
@@ -2256,7 +2603,7 @@ export function renderResults(input) {
       ])
   );
   table(
-    'Chart annotations — assessor judgement',
+    'Chart notes — calculated precision and supplied position',
     [
       'System',
       'Range confidence',
@@ -2267,12 +2614,67 @@ export function renderResults(input) {
       .filter((r) => r.chartAnnotation)
       .map((r) => [
         r.systemId,
-        r.chartAnnotation.confidence ?? 'Not recorded',
+        headlinePrecision(
+          a.results.systems.find((s) => s.systemId === r.systemId).risk
+        ).percent.toFixed(2) + '% calculated range precision',
         r.chartAnnotation.suspectedPosition
           ? `L=${r.chartAnnotation.suspectedPosition.likelihood}; impact=${r.chartAnnotation.suspectedPosition.impact}`
           : 'Not supplied',
         r.chartAnnotation.rationale
       ])
+  );
+  table(
+    'Component assessment',
+    [
+      'System / component',
+      'Recorded outcome / evidence completeness',
+      'Calculated position [lower–upper]',
+      'Confidence (range precision)',
+      'Numerical coverage / estimates',
+      'Finding IDs'
+    ],
+    r.systems.flatMap((s) =>
+      s.componentResults.map((c) => [
+        s.systemId + ' / ' + c.componentId,
+        [c.outcome, c.completeness, c.provisional ? 'provisional' : '']
+          .filter(Boolean)
+          .join(' / '),
+        `${c.numerical.position ?? 'Unavailable'} [${c.numerical.minimum}–${c.numerical.maximum}]`,
+        `${c.confidence ?? 'Unmeasured'}; ${c.numerical.confidencePercent.toFixed(2)}%`,
+        `${c.numerical.measurementCoverage}/7; ${c.numerical.estimatedInputCount} estimated`,
+        c.findingIds.join(', ')
+      ])
+    )
+  );
+  const measurementRows = [];
+  for (const system of a.systems)
+    for (const component of system.components)
+      for (const m of component.measurements ?? [])
+        measurementRows.push([
+          component.id + ' / ' + m.criterionId,
+          [m.lower, m.estimate, m.upper]
+            .map((v) => v ?? 'Not recorded')
+            .join(' / '),
+          [
+            m.calibration.unit,
+            m.calibration.baseline,
+            m.calibration.actionRequired,
+            m.calibration.legacy,
+            m.calibration.direction
+          ].join(' / '),
+          m.basis + ' / ' + m.evidenceIds.join(', '),
+          m.rationale
+        ]);
+  table(
+    'Component numerical inputs',
+    [
+      'Component / criterion',
+      'Raw lower / central / upper',
+      'Unit / calibration (baseline, action, legacy)',
+      'Basis / evidence',
+      'Rationale'
+    ],
+    measurementRows
   );
   table(
     'Dated events',
@@ -2447,7 +2849,7 @@ function readBounded(path) {
   }
 }
 const USAGE =
-  'Usage: node legacy-assessment.mjs --input assessment.json (--json | --markdown | --svg | --check-report report.md | --lint [--format text|json] | --explain ID | --approval-digest assessment|policy:ID|risk-acceptance:ID)\n';
+  'Usage: node legacy-assessment.mjs --input assessment.json (--json | --markdown | --svg | --headline-svg | --components-svg | --check-report report.md | --lint [--format text|json] | --explain ID | --approval-digest assessment|policy:ID|risk-acceptance:ID)\n';
 function main(args) {
   if (args.length === 1 && args[0] === '--help') {
     process.stdout.write(USAGE);
@@ -2467,7 +2869,14 @@ function main(args) {
     )
       input = args[++i];
     else if (
-      ['--json', '--markdown', '--svg', '--lint'].includes(args[i]) &&
+      [
+        '--json',
+        '--markdown',
+        '--svg',
+        '--headline-svg',
+        '--components-svg',
+        '--lint'
+      ].includes(args[i]) &&
       !mode
     )
       mode = args[i];
@@ -2560,6 +2969,13 @@ function main(args) {
     )
       fail('Report filename disagrees with document ID');
     if (mode === '--check-report') {
+      if (
+        hasComponents(a) &&
+        readBounded(
+          join(dirname(report), componentChartFilename(a))
+        ).replaceAll('\r\n', '\n') !== renderComponentChart(a)
+      )
+        fail('Report component chart disagrees with verified assessment');
       verifyReport(a, readBounded(report));
       if (
         a.metadata.riskModel !== 'none' &&
@@ -2570,15 +2986,17 @@ function main(args) {
       )
         fail('Report risk chart disagrees with verified assessment');
       process.stdout.write(
-        'Calculated report block and applicable risk chart verified; evidence truth and narrative are not verified\n'
+        'Calculated report block and applicable SVG companions verified; evidence truth and narrative are not verified\n'
       );
     } else
       process.stdout.write(
         mode === '--json'
           ? `${JSON.stringify(a, null, 2)}\n`
-          : mode === '--svg'
+          : ['--svg', '--headline-svg'].includes(mode)
             ? renderRiskChart(a)
-            : renderResults(a)
+            : mode === '--components-svg'
+              ? renderComponentChart(a)
+              : renderResults(a)
       );
     return 0;
   } catch (error) {

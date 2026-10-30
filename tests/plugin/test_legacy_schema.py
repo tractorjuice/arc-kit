@@ -29,6 +29,7 @@ def test_schema_is_valid_and_fixtures_validate_independently():
     lambda a: a['evidence'][0]['approvalFor'][0].update(decision='rejected'),
     lambda a: a['systems'].extend([copy.deepcopy(a['systems'][0])] * 256),
     lambda a: a['riskInputs'][0].update(chartAnnotation={'confidence': 'certain', 'suspectedPosition': None, 'rationale': 'Synthetic invalid confidence'}),
+    lambda a: a['systems'][0]['components'][0].update(measurements=[{'criterionId': 'D8'}]),
 ])
 def test_structural_invalid_cases_fail_both_validators(tmp_path, mutate):
     assessment = copy.deepcopy(BASE)
@@ -40,3 +41,11 @@ def test_structural_invalid_cases_fail_both_validators(tmp_path, mutate):
     result = subprocess.run(['node', str(ROOT / 'plugins/arckit-claude/scripts/legacy-assessment.mjs'), '--input', str(path), '--json'], capture_output=True, text=True, timeout=5)
     assert result.returncode == 1, result.stderr
     assert result.stdout == ''
+
+
+def test_component_measurement_example_matches_independent_json_schema():
+    script = """import {formatExample} from './tests/fixtures/legacy-assessment/format-example.mjs';
+import {assess} from './plugins/arckit-claude/scripts/legacy-assessment.mjs';
+console.log(JSON.stringify(assess(formatExample())));"""
+    result = subprocess.run(['node', '--input-type=module', '-e', script], cwd=ROOT, capture_output=True, text=True, check=True)
+    VALIDATOR.validate(json.loads(result.stdout))

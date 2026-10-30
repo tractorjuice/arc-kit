@@ -60,7 +60,7 @@ Published numerical prioritisation (separate from classification):
 |--------|--------|------------|--------|------|-----------|-------------------------------------|
 | payments | complete | 5.714285714285714 | 4.666666666666667 | 26.67 | true | L=80/14; C=56/12; risk=4480/168 |
 
-![Legacy numerical risk chart: likelihood 1–6 versus impact 1–5; red-rated at 16. Solid boxes are complete scores; dotted outlines show incomplete ranges; hollow circles are supplied assessor judgement. System key in SVG.](ARC-001-LEGACY-v1.0-risk.svg)
+![Legacy numerical risk chart: likelihood 1–6 versus impact 1–5; red-rated at 16. Solid boxes show scored points or one-axis ranges; dotted outlines show plausible ranges; hollow circles are supplied assessor judgement. System key in SVG.](ARC-001-LEGACY-v1.0-risk.svg)
 
 | System | Risk criterion | Supplied score | Evidence | Rationale |
 |--------|----------------|----------------|----------|-----------|
@@ -79,6 +79,10 @@ Published numerical prioritisation (separate from classification):
 | payments | C6 | 4 | operating_record | Synthetic independently supplied score against the original published table. |
 
 Numerical ordering: payments.
+
+### Component classification breakdown
+
+![Component breakdown across Accepted, Action-Required and Legacy; confidence and suspected outcomes are labelled separately.](ARC-001-LEGACY-v1.0-components.svg)
 
 Legend: Outcome is classification; Unknown is an undecided criterion; Undetermined is an undecided system. Provisional means material policy/attestation approval is pending. Evidence gaps, plan gaps and incomplete numerical scores are independent.
 
@@ -152,10 +156,21 @@ Legend: Outcome is classification; Unknown is an undecided criterion; Undetermin
 | System | Minimum / maximum | Threshold sensitivity | Single missing input |
 | --- | --- | --- | --- |
 
-### Chart annotations — assessor judgement
+### Chart notes — calculated precision and supplied position
 
 | System | Range confidence | Suspected position (not scored) | Rationale |
 | --- | --- | --- | --- |
+
+### Component assessment
+
+| System / component | Recorded outcome / evidence completeness | Calculated position [lower–upper] | Confidence (range precision) | Numerical coverage / estimates | Finding IDs |
+| --- | --- | --- | --- | --- | --- |
+| payments / payments_app | Undetermined / incomplete | Unavailable [0–3] | Unmeasured; 0.00% | 0/7; 0 estimated |  |
+
+### Component numerical inputs
+
+| Component / criterion | Raw lower / central / upper | Unit / calibration (baseline, action, legacy) | Basis / evidence | Rationale |
+| --- | --- | --- | --- | --- |
 
 ### Dated events
 

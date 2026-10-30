@@ -9,7 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Legacy charts use a muted background, a solid threshold curve and an explicit three-symbol legend: dotted plausible ranges with supplied confidence, solid boxes for complete scored inputs, and hollow circles for supplied suspected positions. Optional chart annotations remain assessor judgement and never affect calculated classification, score completeness or prioritisation.
+- Component-chart diamonds and bars now come from numerical criterion intervals and explicit local calibration. Independent maxima determine the central position and bounds, so a point need not be centred in its interval. Confidence is calculated range precision, not a supplied label or statistical probability; the local plotting convention does not change government-framework findings. Missing numerical data remains unmeasured.
+
+- Legacy reports now include a focused headline plot and a separate horizontal component breakdown with classification bands, confidence-weighted ranges, diamond markers and notes. Component findings stay distinct from system-wide context and advisory judgement. Both SVG companions are verified against the assessment JSON. All new format examples use independently invented data.
+
+- Legacy charts use a muted background, a solid threshold curve and an explicit three-symbol legend: dotted plausible ranges with calculated range precision, solid boxes for complete scored inputs, and hollow circles for supplied suspected positions. Optional chart annotations remain assessor judgement and never affect calculated classification, score completeness or prioritisation.
 
 - Legacy risk charts show incomplete numerical inputs as annotated dotted indigo envelopes or range bars, with exact axis bounds and missing criteria. Complete scores remain precise points; uncertainty is not presented as an estimate or confidence interval.
 

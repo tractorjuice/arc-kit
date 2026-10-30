@@ -8,7 +8,8 @@ import { runInNewContext } from 'node:vm';
 import {
   assess,
   renderResults,
-  renderRiskChart
+  renderRiskChart,
+  renderComponentChart
 } from '../../plugins/arckit-claude/scripts/legacy-assessment.mjs';
 
 const helper = 'plugins/arckit-claude/scripts/legacy-assessment.mjs';
@@ -20,6 +21,16 @@ const constantScores = (a, likelihood, impact) => {
   for (const i of a.riskInputs[0].inputs)
     i.value = i.criterionId.startsWith('L') ? likelihood : impact;
   return a;
+};
+const projection = (svg, l, c) => {
+  const xmin = Number(svg.match(/data-likelihood-min="([^"]+)"/)[1]),
+    ymin = Number(svg.match(/data-impact-min="([^"]+)"/)[1]);
+  return {
+    x: 100 + ((l - xmin) * 800) / (6 - xmin),
+    y: 120 + ((5 - c) * 400) / (5 - ymin),
+    dx: 800 / (6 - xmin),
+    dy: 400 / (5 - ymin)
+  };
 };
 const marker = (svg) =>
   svg.match(/<g data-system-ids="payments">([\s\S]*?)<\/g>/)?.[1];
@@ -45,8 +56,9 @@ test('chart uses exact calculated coordinates, published axes and only the red-r
   const a = fresh(),
     v = assess(a).results.systems[0].risk,
     svg = renderRiskChart(a);
-  const px = (100 + (v.likelihood - 1) * 160).toFixed(3);
-  const py = (120 + (5 - v.impact) * 100).toFixed(3);
+  const pt = projection(svg, v.likelihood, v.impact),
+    px = pt.x.toFixed(3),
+    py = pt.y.toFixed(3);
   assert.ok(
     marker(svg).includes(
       `x="${(Number(px) - 6).toFixed(3)}" y="${(Number(py) - 6).toFixed(3)}"`
@@ -56,8 +68,8 @@ test('chart uses exact calculated coordinates, published axes and only the red-r
   assert.match(svg, /Likelihood score/);
   assert.match(svg, /Impact score/);
   assert.match(svg, /Red-rated: risk 16 or more/);
-  assert.match(svg, /452\.000,120\.000/); // 16 / 5 = 3.2
-  assert.match(svg, /900\.000,353\.333/); // 16 / 6, not a diagonal or square cell boundary
+  assert.ok(svg.includes(`${projection(svg, 3.2, 5).x.toFixed(3)},120.000`)); // 16 / 5 = 3.2
+  assert.ok(svg.includes(`900.000,${projection(svg, 6, 16 / 6).y.toFixed(3)}`)); // 16 / 6, not a diagonal or square cell boundary
   assert.doesNotMatch(svg, />Medium<|>High<|Example/);
   assert.equal(svg, renderRiskChart(a));
   assert.equal(svg, renderRiskChart(assess(a)));
@@ -71,7 +83,11 @@ test('minimum, maximum and exactly-16 scores keep true boundary coordinates and 
   assert.match(marker(maximum), /x="894\.000" y="114\.000"/);
   assert.match(maximum, /risk=30\.00; RED-RATED/);
   const boundary = renderRiskChart(constantScores(fresh(), 4, 4));
-  assert.match(marker(boundary), /x="574\.000" y="214\.000"/);
+  assert.ok(
+    marker(boundary).includes(
+      `x="${(projection(boundary, 4, 4).x - 6).toFixed(3)}" y="${(projection(boundary, 4, 4).y - 6).toFixed(3)}"`
+    )
+  );
   assert.match(boundary, /risk=16\.00; RED-RATED/);
 });
 
@@ -152,6 +168,10 @@ test('CLI rejects missing, tampered, stale or swapped charts and verifies the co
       });
     writeFileSync(input, JSON.stringify(a));
     writeFileSync(report, renderResults(a));
+    writeFileSync(
+      join(dir, 'ARC-001-LEGACY-v1.0-components.svg'),
+      renderComponentChart(a)
+    );
     assert.equal(
       run('--check-report', report).status,
       2,
@@ -167,6 +187,10 @@ test('CLI rejects missing, tampered, stale or swapped charts and verifies the co
     a.metadata.scope += ' changed';
     writeFileSync(input, JSON.stringify(a));
     writeFileSync(report, renderResults(a));
+    writeFileSync(
+      join(dir, 'ARC-001-LEGACY-v1.0-components.svg'),
+      renderComponentChart(a)
+    );
     writeFileSync(chart, output.stdout);
     assert.equal(
       run('--check-report', report).status,
@@ -179,6 +203,10 @@ test('CLI rejects missing, tampered, stale or swapped charts and verifies the co
     a.riskInputs = [];
     writeFileSync(input, JSON.stringify(a));
     writeFileSync(report, renderResults(a));
+    writeFileSync(
+      join(dir, 'ARC-001-LEGACY-v1.0-components.svg'),
+      renderComponentChart(a)
+    );
     rmSync(chart);
     assert.equal(
       run('--check-report', report).status,
@@ -252,7 +280,9 @@ test('uncertain envelopes bound every completion without adding a precise marker
       );
       assert.ok(v.impact >= b.impactMinimum && v.impact <= b.impactMaximum);
     }
-  const geometry = `x="${(100 + (b.likelihoodMinimum - 1) * 160).toFixed(3)}" y="${(120 + (5 - b.impactMaximum) * 100).toFixed(3)}" width="${((b.likelihoodMaximum - b.likelihoodMinimum) * 160).toFixed(3)}" height="${((b.impactMaximum - b.impactMinimum) * 100).toFixed(3)}"`;
+  const lower = projection(svg, b.likelihoodMinimum, b.impactMinimum),
+    upper = projection(svg, b.likelihoodMaximum, b.impactMaximum);
+  const geometry = `x="${lower.x.toFixed(3)}" y="${upper.y.toFixed(3)}" width="${(upper.x - lower.x).toFixed(3)}" height="${(lower.y - upper.y).toFixed(3)}"`;
   assert.ok(svg.includes(geometry));
   assert.equal(
     svg,
@@ -293,6 +323,10 @@ test('chart verification rejects an altered uncertainty envelope', () => {
       chart = join(dir, 'ARC-001-LEGACY-v1.0-risk.svg');
     writeFileSync(input, JSON.stringify(a));
     writeFileSync(report, renderResults(a));
+    writeFileSync(
+      join(dir, 'ARC-001-LEGACY-v1.0-components.svg'),
+      renderComponentChart(a)
+    );
     const svg = renderRiskChart(a);
     writeFileSync(chart, svg);
     const check = () =>
@@ -320,7 +354,7 @@ test('legend uses separate symbols and never invents judgement or confidence', (
   assert.match(svg, /Solid box: scored inputs/);
   assert.match(svg, /Dotted outline: plausible range/);
   assert.match(svg, /Circle: where the assessor suspects it sits/);
-  assert.match(svg, /confidence not recorded/);
+  assert.match(svg, /high confidence.*range precision/);
   assert.doesNotMatch(svg, /data-suspected-system-id=/);
   assert.doesNotMatch(svg, /medium confidence/);
   assert.doesNotMatch(svg, /uncertainty-hatch/);
@@ -332,7 +366,6 @@ test('supplied confidence and suspected position render without changing calcula
     a.riskInputs[0].inputs.find((i) => i.criterionId === id).value = null;
   const before = assess(a).results;
   a.riskInputs[0].chartAnnotation = {
-    confidence: 'medium',
     suspectedPosition: { likelihood: 4.5, impact: 4 },
     rationale:
       'Invented assessor judgement for a chart legend regression fixture; not operational evidence.'
@@ -350,7 +383,11 @@ test('supplied confidence and suspected position render without changing calcula
     /Invented assessor judgement for a chart legend regression fixture/
   );
   assert.match(svg, /data-suspected-system-id="payments"/);
-  assert.match(svg, /cx="660.000" cy="220.000" r="8"/);
+  assert.ok(
+    svg.includes(
+      `cx="${projection(svg, 4.5, 4).x.toFixed(3)}" cy="${projection(svg, 4.5, 4).y.toFixed(3)}" r="8"`
+    )
+  );
   assert.match(svg, /suspected: risk ~18.00 \(not scored\)/);
   assert.equal(
     svg,
@@ -359,10 +396,10 @@ test('supplied confidence and suspected position render without changing calcula
       'utf8'
     )
   );
-  assert.match(renderResults(a), /Chart annotations — assessor judgement/);
+  assert.match(renderResults(a), /Chart notes — calculated precision/);
   a.riskInputs[0].chartAnnotation.suspectedPosition.likelihood = 1;
   assert.throws(() => assess(a), /outside the input bounds/);
   a.riskInputs[0].chartAnnotation.suspectedPosition = null;
   a.riskInputs[0].chartAnnotation.confidence = 'certain';
-  assert.throws(() => assess(a), /unsupported/);
+  assert.throws(() => assess(a), /unsupported|unknown field/);
 });

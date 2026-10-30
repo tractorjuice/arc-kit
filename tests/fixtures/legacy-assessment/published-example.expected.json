@@ -730,6 +730,37 @@
             "dependencyPathIndexes": []
           }
         ],
+        "componentResults": [
+          {
+            "componentId": "payments_app",
+            "outcome": "Undetermined",
+            "strongestKnown": null,
+            "provisional": false,
+            "completeness": "incomplete",
+            "findingIds": [],
+            "confidence": null,
+            "numerical": {
+              "method": "arckit-component-index-1",
+              "position": null,
+              "minimum": 0,
+              "maximum": 3,
+              "confidencePercent": 0,
+              "confidence": null,
+              "measurementCoverage": 0,
+              "estimatedInputCount": 0,
+              "missingCriteria": [
+                "D1",
+                "D2",
+                "D3",
+                "D4",
+                "D5",
+                "D6",
+                "D7"
+              ],
+              "indicators": []
+            }
+          }
+        ],
         "events": [
           {
             "kind": "immediate-review",

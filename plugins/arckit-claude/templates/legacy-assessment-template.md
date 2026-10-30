@@ -22,7 +22,8 @@ Narrative is assessor judgement; helper verification does not verify its truth.]
 
 <!-- LEGACY-RESULTS -->
 <!-- Insert --markdown output verbatim, including all factual registers. Save --svg output
-as the versioned -risk.svg companion when scoring is enabled; run --check-report. -->
+as the versioned -risk.svg companion when scoring is enabled. Save --components-svg
+as the versioned -components.svg companion when components are inventoried; run --check-report. -->
 
 ## Scope, Source Versions and Limitations
 

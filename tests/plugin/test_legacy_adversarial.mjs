@@ -7,7 +7,8 @@ import { spawnSync } from 'node:child_process';
 import {
   assess,
   score,
-  anniversary
+  anniversary,
+  renderComponentChart
 } from '../../plugins/arckit-claude/scripts/legacy-assessment.mjs';
 
 const helper = 'plugins/arckit-claude/scripts/legacy-assessment.mjs';
@@ -17,11 +18,20 @@ const base = JSON.parse(
 const fresh = () => structuredClone(base);
 const result = (a) => assess(a).results.systems[0];
 function system(a, id) {
-  a.systems.push({ ...structuredClone(a.systems[0]), id, name: id, components: [] });
+  a.systems.push({
+    ...structuredClone(a.systems[0]),
+    id,
+    name: id,
+    components: []
+  });
   a.findings.push(
     ...a.findings
       .filter((f) => f.systemId === 'payments')
-      .map((f) => ({ ...structuredClone(f), id: `${id}_${f.id}`, systemId: id }))
+      .map((f) => ({
+        ...structuredClone(f),
+        id: `${id}_${f.id}`,
+        systemId: id
+      }))
   );
 }
 function dependency(a, consumerId, dependencyId) {
@@ -78,7 +88,11 @@ test('evidence about another system cannot establish a direct finding', () => {
 });
 test('a component-only Accepted finding cannot cover an unassessed sibling', () => {
   const a = fresh();
-  a.systems[0].components.push({ id: 'untested_database', name: 'Database', version: '1.0' });
+  a.systems[0].components.push({
+    id: 'untested_database',
+    name: 'Database',
+    version: '1.0'
+  });
   a.findings[0].componentId = 'payments_app';
   assert.equal(result(a).outcome, 'Undetermined');
 });
@@ -96,7 +110,10 @@ test('a consumer with its own gap still exposes dependency uncertainty at D7', (
   a.findings[0].completeness = 'incomplete';
   a.findings.find((f) => f.id === 'reporting_finding_D3').outcome = 'Unknown';
   dependency(a, 'reporting', 'payments');
-  assert.equal(assess(a).results.systems[1].criterionResults[6].outcome, 'Unknown');
+  assert.equal(
+    assess(a).results.systems[1].criterionResults[6].outcome,
+    'Unknown'
+  );
 });
 test('risk acceptance review date participates in proposed next review', () => {
   const a = fresh();
@@ -119,7 +136,11 @@ test('confirmed Legacy without a forecast event still recommends urgent review',
 });
 test('proposal evidence cannot be presented as completed remediation', () => {
   const a = fresh();
-  a.evidence.push({ ...structuredClone(a.evidence[1]), id: 'proposal', provenance: 'proposal' });
+  a.evidence.push({
+    ...structuredClone(a.evidence[1]),
+    id: 'proposal',
+    provenance: 'proposal'
+  });
   action(a).completionEvidenceIds = ['proposal'];
   assert.throws(() => assess(a), /completion|evidence/i);
 });
@@ -156,7 +177,10 @@ test('calendar helpers preserve four-digit years and reject impossible dates', (
 });
 for (const key of ['schemaVersion', 'schema\\u0056ersion'])
   test(`duplicate JSON key ${key} is rejected before interpretation`, () => {
-    const raw = JSON.stringify(fresh()).replace('{', `{"${key}":"unsupported",`);
+    const raw = JSON.stringify(fresh()).replace(
+      '{',
+      `{"${key}":"unsupported",`
+    );
     const r = cli(raw);
     assert.equal(r.status, 1, r.stderr);
     assert.equal(r.stdout, '');
@@ -217,7 +241,11 @@ test('a correctly targeted assessment approval is accepted, another version is n
 });
 test('component evidence cannot certify an unrelated sibling', () => {
   const a = fresh();
-  a.systems[0].components.push({ id: 'database', name: 'Database', version: null });
+  a.systems[0].components.push({
+    id: 'database',
+    name: 'Database',
+    version: null
+  });
   a.evidence[1].componentId = 'database';
   a.findings[0].componentId = 'payments_app';
   assert.throws(() => assess(a), /component scope/i);
@@ -256,9 +284,16 @@ test('numeric score ties use locale-independent ID order', () => {
   system(a, 'Zebra');
   system(a, 'alpha');
   a.riskInputs.push(
-    ...['Zebra', 'alpha'].map((systemId) => ({ ...structuredClone(a.riskInputs[0]), systemId }))
+    ...['Zebra', 'alpha'].map((systemId) => ({
+      ...structuredClone(a.riskInputs[0]),
+      systemId
+    }))
   );
-  assert.deepEqual(assess(a).results.riskOrdering, ['Zebra', 'alpha', 'payments']);
+  assert.deepEqual(assess(a).results.riskOrdering, [
+    'Zebra',
+    'alpha',
+    'payments'
+  ]);
 });
 test('API objects with accessors and unsafe numbers are rejected before reading', () => {
   const a = fresh();
@@ -276,16 +311,23 @@ test('API objects with accessors and unsafe numbers are rejected before reading'
 test('dense acyclic graphs produce bounded witnesses, not exponentially many paths', () => {
   const a = fresh();
   a.evidence[1].systemId = null;
-  const ids = ['payments', ...Array.from({ length: 27 }, (_, i) => `system_${i}`)];
+  const ids = [
+    'payments',
+    ...Array.from({ length: 27 }, (_, i) => `system_${i}`)
+  ];
   for (const id of ids.slice(1)) system(a, id);
   a.findings[0].outcome = 'Legacy';
   // Each node consumes every preceding node: over 2^26 simple paths, 28 witnesses.
-  for (let i = 1; i < ids.length; i++) for (let j = 0; j < i; j++) dependency(a, ids[i], ids[j]);
+  for (let i = 1; i < ids.length; i++)
+    for (let j = 0; j < i; j++) dependency(a, ids[i], ids[j]);
   const raw = JSON.stringify(a),
     r = cli(raw);
   assert.equal(r.status, 0, r.stderr);
   const output = JSON.parse(r.stdout);
-  assert.equal(output.results.systems.flatMap((s) => s.dependencyPaths).length, 28);
+  assert.equal(
+    output.results.systems.flatMap((s) => s.dependencyPaths).length,
+    28
+  );
   assert.ok(output.results.systems.every((s) => s.outcome === 'Legacy'));
 });
 let seed = 73129;
@@ -297,7 +339,8 @@ test('seeded mixed findings obey independent conservative aggregation and do not
   for (let n = 0; n < 180; n++) {
     const a = fresh(),
       outcomes = ['Accepted', 'Action-Required', 'Legacy', 'Unknown'];
-    for (const f of a.findings.slice(0, 6)) f.outcome = outcomes[Math.floor(random() * 4)];
+    for (const f of a.findings.slice(0, 6))
+      f.outcome = outcomes[Math.floor(random() * 4)];
     const before = JSON.stringify(a),
       known = a.findings.map((f) => f.outcome);
     const expected = known.includes('Legacy')
@@ -319,17 +362,22 @@ test('seeded cyclic graph classifications agree with an independent reachability
     for (const id of ids.slice(1)) system(a, id);
     const origins = new Set(ids.filter(() => random() < 0.3));
     for (const f of a.findings)
-      if (f.criterionId === 'D1' && origins.has(f.systemId)) f.outcome = 'Legacy';
+      if (f.criterionId === 'D1' && origins.has(f.systemId))
+        f.outcome = 'Legacy';
     for (const consumer of ids)
       for (const target of ids)
-        if (consumer !== target && random() < 0.25) dependency(a, consumer, target);
+        if (consumer !== target && random() < 0.25)
+          dependency(a, consumer, target);
     const reachable = new Set(origins);
     for (let k = 0; k < ids.length; k++)
       for (const e of a.dependencies)
         if (reachable.has(e.dependencyId)) reachable.add(e.consumerId);
     const output = assess(a);
     for (const s of output.results.systems) {
-      assert.equal(s.outcome, reachable.has(s.systemId) ? 'Legacy' : 'Accepted');
+      assert.equal(
+        s.outcome,
+        reachable.has(s.systemId) ? 'Legacy' : 'Accepted'
+      );
       for (const p of s.dependencyPaths) {
         assert.equal(new Set(p.systemPath).size, p.systemPath.length);
         for (let i = 0; i < p.dependencyPath.length; i++) {
@@ -349,7 +397,10 @@ test('report block verification rejects tampering, stale inputs, missing or dupl
   const a = fresh(),
     block = renderResults(a);
   assert.equal(verifyReport(a, `# Report\n\n${block}`), true);
-  assert.throws(() => verifyReport(a, block.replace('26.67', '26.68')), /disagrees/i);
+  assert.throws(
+    () => verifyReport(a, block.replace('26.67', '26.68')),
+    /disagrees/i
+  );
   assert.throws(() => verifyReport(a, block + block), /exactly one/i);
   assert.throws(() => verifyReport(a, 'No calculated block'), /exactly one/i);
   a.metadata.scope += ' Changed scope';
@@ -361,16 +412,28 @@ test('report CLI checks the generated block with the same supplied input', () =>
     const input = join(tmp, 'input.json'),
       report = join(tmp, 'report.md');
     writeFileSync(input, JSON.stringify(fresh()));
-    const generated = spawnSync('node', [helper, '--input', input, '--markdown'], {
-      encoding: 'utf8'
-    });
+    const generated = spawnSync(
+      'node',
+      [helper, '--input', input, '--markdown'],
+      {
+        encoding: 'utf8'
+      }
+    );
     assert.equal(generated.status, 0, generated.stderr);
     writeFileSync(report, generated.stdout);
-    const chart = spawnSync('node', [helper, '--input', input, '--svg'], { encoding: 'utf8' });
+    writeFileSync(
+      join(tmp, 'ARC-001-LEGACY-v1.0-components.svg'),
+      renderComponentChart(fresh())
+    );
+    const chart = spawnSync('node', [helper, '--input', input, '--svg'], {
+      encoding: 'utf8'
+    });
     assert.equal(chart.status, 0, chart.stderr);
     writeFileSync(join(tmp, 'ARC-001-LEGACY-v1.0-risk.svg'), chart.stdout);
     const check = () =>
-      spawnSync('node', [helper, '--input', input, '--check-report', report], { encoding: 'utf8' });
+      spawnSync('node', [helper, '--input', input, '--check-report', report], {
+        encoding: 'utf8'
+      });
     assert.equal(check().status, 0);
     writeFileSync(report, generated.stdout.replace('26.67', '0.00'));
     assert.equal(check().status, 1);
@@ -413,7 +476,9 @@ test('artifact filenames cannot silently disagree with document identity', () =>
   try {
     const input = join(tmp, 'ARC-002-LEGACY-v1.0.json');
     writeFileSync(input, JSON.stringify(fresh()));
-    const r = spawnSync('node', [helper, '--input', input, '--json'], { encoding: 'utf8' });
+    const r = spawnSync('node', [helper, '--input', input, '--json'], {
+      encoding: 'utf8'
+    });
     assert.equal(r.status, 1);
     assert.equal(r.stdout, '');
     assert.match(r.stderr, /filename/i);
@@ -439,16 +504,24 @@ test('API aggregate text limits apply even when individual strings fit the schem
   const a = fresh(),
     text = 'x'.repeat(20000);
   for (let i = 0; i < 850; i++)
-    a.evidence.push({ ...structuredClone(a.evidence[1]), id: `large_${i}`, observation: text });
+    a.evidence.push({
+      ...structuredClone(a.evidence[1]),
+      id: `large_${i}`,
+      observation: text
+    });
   assert.throws(() => assess(a), /excessive|limit/i);
 });
 test('too many causal witnesses fail explicitly without partial JSON', () => {
   const a = fresh();
   a.evidence[1].systemId = null;
   a.findings[0].outcome = 'Legacy';
-  const ids = ['payments', ...Array.from({ length: 255 }, (_, i) => `node_${i}`)];
+  const ids = [
+    'payments',
+    ...Array.from({ length: 255 }, (_, i) => `node_${i}`)
+  ];
   for (const id of ids.slice(1)) system(a, id);
-  for (let i = 0; i < ids.length; i++) dependency(a, ids[i], ids[(i + 1) % ids.length]);
+  for (let i = 0; i < ids.length; i++)
+    dependency(a, ids[i], ids[(i + 1) % ids.length]);
   const r = cli(JSON.stringify(a));
   assert.equal(r.status, 1, r.stderr);
   assert.match(r.stderr, /complexity limit/i);
@@ -485,7 +558,9 @@ test('placeholder owner or approver names cannot manufacture policy approval', (
 test('placeholder owner names do not make the action plan complete', () => {
   const a = fresh();
   a.systems[0].businessRiskOwner = 'Unknown';
-  assert.ok(result(a).managementGaps.some((g) => g.includes('business risk owner')));
+  assert.ok(
+    result(a).managementGaps.some((g) => g.includes('business risk owner'))
+  );
 });
 
 test('report approval claims cannot contradict the JSON approval state', async () => {
@@ -497,10 +572,17 @@ test('report approval claims cannot contradict the JSON approval state', async (
       '## Document Control\n\n| Field | Value |\n|-------|-------|\n| **Document ID** | ARC-001-LEGACY-v1.0 |\n| **Version** | 1.0 |\n| **Status** | DRAFT |\n| **Approved By** | PENDING |\n\n## Results\n\n';
   const report = control + renderResults(a);
   assert.equal(verifyReport(a, report), true);
-  assert.throws(() => verifyReport(a, report.replace('| DRAFT |', '| APPROVED |')), /approval/i);
   assert.throws(
-    () => verifyReport(a, report.replace('| PENDING |', '| Invented approver |')),
+    () => verifyReport(a, report.replace('| DRAFT |', '| APPROVED |')),
     /approval/i
   );
-  assert.throws(() => verifyReport(a, report.replace('| 1.0 |', '| 9.0 |')), /version/i);
+  assert.throws(
+    () =>
+      verifyReport(a, report.replace('| PENDING |', '| Invented approver |')),
+    /approval/i
+  );
+  assert.throws(
+    () => verifyReport(a, report.replace('| 1.0 |', '| 9.0 |')),
+    /version/i
+  );
 });

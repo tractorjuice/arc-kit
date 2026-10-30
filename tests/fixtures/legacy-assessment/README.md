@@ -23,7 +23,12 @@ published-example fixture’s numerical inputs to 4, then make L1 and C1 null. T
 chart regression reproduces it byte-for-byte and enumerates all completions to check
 its envelope. It illustrates a range crossing 16 without assigning a completed score.
 
-`chart-legend-example.svg` uses the same synthetic incomplete inputs with explicitly
-invented medium confidence and a suspected aggregate position of likelihood 4.5 and
+`chart-legend-example.svg` uses the same synthetic incomplete inputs with
+a numerically derived range-precision label and an invented suspected aggregate position of likelihood 4.5 and
 impact 4. Its test proves that these annotations leave the calculated system results
 and risk ordering unchanged. The picture is not derived from a source project.
+
+`format-example.mjs` constructs an independent six-component synthetic case. It
+reproduces `headline-format.svg` and `component-format.svg`, showing continuous calculated component positions, asymmetric numerical ranges and
+unresolved coverage. All quantities and calibration anchors are invented. No private reference text,
+numbers, names, row count or plotted positions are used in this fixture.

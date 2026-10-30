@@ -28,6 +28,8 @@ def test_target_can_run_bundled_helper_and_resolve_assets(target):
     assert calculate(root / 'scripts/legacy-assessment.mjs') == json.loads((FIXTURES / 'published-example.expected.json').read_text())
     chart = subprocess.run(['node', str(root / 'scripts/legacy-assessment.mjs'), '--input', str(FIXTURES / 'published-example.input.json'), '--svg'], capture_output=True, text=True, check=True)
     assert chart.stdout == (FIXTURES / 'ARC-001-LEGACY-v1.0-risk.svg').read_text()
+    component_chart = subprocess.run(['node', str(root / 'scripts/legacy-assessment.mjs'), '--input', str(FIXTURES / 'published-example.input.json'), '--components-svg'], capture_output=True, text=True, check=True)
+    assert component_chart.stdout == (FIXTURES / 'ARC-001-LEGACY-v1.0-components.svg').read_text()
 
 
 @pytest.mark.parametrize('ai', ['codex', 'opencode', 'copilot', 'kimi'])
@@ -45,6 +47,8 @@ def test_cli_scaffold_has_helper_schema_catalogue_and_preserves_template_overrid
     assert calculate(installed / 'scripts/legacy-assessment.mjs')['results']['systems'][0]['risk']['display'] == '26.67'
     chart = subprocess.run(['node', str(installed / 'scripts/legacy-assessment.mjs'), '--input', str(FIXTURES / 'published-example.input.json'), '--svg'], capture_output=True, text=True, check=True)
     assert chart.stdout == (FIXTURES / 'ARC-001-LEGACY-v1.0-risk.svg').read_text()
+    component_chart = subprocess.run(['node', str(installed / 'scripts/legacy-assessment.mjs'), '--input', str(FIXTURES / 'published-example.input.json'), '--components-svg'], capture_output=True, text=True, check=True)
+    assert component_chart.stdout == (FIXTURES / 'ARC-001-LEGACY-v1.0-components.svg').read_text()
     assert (installed / 'data/legacy-frameworks-1.0.json').is_file()
     for name in ['legacy-risk-rubric-2026-08-17.json', 'legacy-definition-2026-08-17.json']:
         assert (installed / 'data' / name).read_bytes() == (CORE / 'data' / name).read_bytes()
@@ -126,6 +130,7 @@ def test_claude_native_write_hooks_preserve_verified_report_and_allow_json_sidec
     report.write_bytes((FIXTURES / 'published-example.report.md').read_bytes())
     sidecar.write_bytes((FIXTURES / 'published-example.expected.json').read_bytes())
     (project / 'ARC-001-LEGACY-v1.0-risk.svg').write_bytes((FIXTURES / 'ARC-001-LEGACY-v1.0-risk.svg').read_bytes())
+    (project / 'ARC-001-LEGACY-v1.0-components.svg').write_bytes((FIXTURES / 'ARC-001-LEGACY-v1.0-components.svg').read_bytes())
     for path in [report, sidecar]:
         payload = json.dumps({'tool_name': 'Write', 'cwd': str(tmp_path), 'tool_input': {'file_path': str(path), 'content': path.read_text()}})
         for hook in ['validate-arc-filename.mjs', 'file-protection.mjs']:

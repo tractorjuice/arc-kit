@@ -604,6 +604,177 @@
                     "reviewTrigger"
                   ]
                 }
+              },
+              "componentResults": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "componentId": {
+                      "type": "string"
+                    },
+                    "outcome": {
+                      "enum": [
+                        "Accepted",
+                        "Action-Required",
+                        "Legacy",
+                        "Undetermined"
+                      ]
+                    },
+                    "strongestKnown": {
+                      "enum": [
+                        null,
+                        "Accepted",
+                        "Action-Required",
+                        "Legacy"
+                      ]
+                    },
+                    "provisional": {
+                      "type": "boolean"
+                    },
+                    "completeness": {
+                      "enum": [
+                        "complete",
+                        "incomplete"
+                      ]
+                    },
+                    "findingIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "confidence": {
+                      "enum": [
+                        null,
+                        "low",
+                        "medium",
+                        "high"
+                      ]
+                    },
+                    "numerical": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "method": {
+                          "enum": [
+                            "arckit-component-index-1"
+                          ]
+                        },
+                        "position": {
+                          "type": [
+                            "number",
+                            "null"
+                          ],
+                          "minimum": 0,
+                          "maximum": 3
+                        },
+                        "minimum": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 3
+                        },
+                        "maximum": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 3
+                        },
+                        "confidencePercent": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 100
+                        },
+                        "confidence": {
+                          "enum": [
+                            "high",
+                            "medium",
+                            "low",
+                            null
+                          ]
+                        },
+                        "measurementCoverage": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 7
+                        },
+                        "estimatedInputCount": {
+                          "type": "integer",
+                          "minimum": 0,
+                          "maximum": 7
+                        },
+                        "missingCriteria": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "indicators": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": {
+                              "criterionId": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 20000,
+                                "pattern": "\\S"
+                              },
+                              "lower": {
+                                "type": "number"
+                              },
+                              "estimate": {
+                                "type": [
+                                  "number",
+                                  "null"
+                                ]
+                              },
+                              "upper": {
+                                "type": "number"
+                              },
+                              "basis": {
+                                "enum": [
+                                  "measured",
+                                  "estimated"
+                                ]
+                              }
+                            },
+                            "required": [
+                              "criterionId",
+                              "lower",
+                              "estimate",
+                              "upper",
+                              "basis"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "method",
+                        "position",
+                        "minimum",
+                        "maximum",
+                        "confidencePercent",
+                        "confidence",
+                        "measurementCoverage",
+                        "estimatedInputCount",
+                        "missingCriteria",
+                        "indicators"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "componentId",
+                    "outcome",
+                    "strongestKnown",
+                    "provisional",
+                    "completeness",
+                    "findingIds",
+                    "confidence",
+                    "numerical"
+                  ]
+                }
               }
             },
             "required": [
@@ -1115,6 +1286,102 @@
                 "minLength": 1,
                 "maxLength": 20000,
                 "pattern": "\\S"
+              },
+              "measurements": {
+                "type": "array",
+                "maxItems": 7,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "criterionId": {
+                      "enum": [
+                        "D1",
+                        "D2",
+                        "D3",
+                        "D4",
+                        "D5",
+                        "D6",
+                        "D7"
+                      ]
+                    },
+                    "lower": {
+                      "type": "number"
+                    },
+                    "estimate": {
+                      "type": [
+                        "number",
+                        "null"
+                      ]
+                    },
+                    "upper": {
+                      "type": "number"
+                    },
+                    "calibration": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "unit": {
+                          "type": "string",
+                          "minLength": 1,
+                          "maxLength": 20000,
+                          "pattern": "\\S"
+                        },
+                        "baseline": {
+                          "type": "number"
+                        },
+                        "actionRequired": {
+                          "type": "number"
+                        },
+                        "legacy": {
+                          "type": "number"
+                        },
+                        "direction": {
+                          "enum": [
+                            "higher-is-worse",
+                            "lower-is-worse"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "unit",
+                        "baseline",
+                        "actionRequired",
+                        "legacy",
+                        "direction"
+                      ]
+                    },
+                    "basis": {
+                      "enum": [
+                        "measured",
+                        "estimated"
+                      ]
+                    },
+                    "evidenceIds": {
+                      "type": "array",
+                      "maxItems": 1000,
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "rationale": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 20000,
+                      "pattern": "\\S"
+                    }
+                  },
+                  "required": [
+                    "criterionId",
+                    "lower",
+                    "estimate",
+                    "upper",
+                    "calibration",
+                    "basis",
+                    "evidenceIds",
+                    "rationale"
+                  ]
+                }
               }
             },
             "required": [
@@ -1539,19 +1806,10 @@
           "type": "object",
           "additionalProperties": false,
           "required": [
-            "confidence",
             "suspectedPosition",
             "rationale"
           ],
           "properties": {
-            "confidence": {
-              "enum": [
-                "low",
-                "medium",
-                "high",
-                null
-              ]
-            },
             "suspectedPosition": {
               "anyOf": [
                 {

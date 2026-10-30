@@ -208,14 +208,58 @@ node "${CLAUDE_PLUGIN_ROOT}/scripts/legacy-assessment.mjs" --input assessment-ou
 Save successful SVG stdout beside the report as
 `ARC-{PROJECT_ID}-LEGACY-v{VERSION}-risk.svg`, using a temporary file and moving only
 on success. Preserve previous chart versions. The generated Markdown embeds this
-relative image automatically; keep all three files together when sharing the report.
+relative image automatically; keep all generated files together when sharing the report.
 The chart uses unrounded calculated coordinates, likelihood 1–6 and impact 1–5,
-with the published curved `likelihood × impact = 16` boundary. Solid outlined boxes mark complete numerical scores, with the threshold curve and
+with the published curved `likelihood × impact = 16` boundary. Solid outlined boxes mark complete numerical scores or a remaining one-axis range, with the threshold curve and
 key showing their risk status. Hollow circles are reserved for supplied suspected positions. Do not invent
 official Medium/High bands or use point colour for updated-definition classification.
 Incomplete inputs draw dotted indigo bounding envelopes, or range bars when one axis is fixed, labelled with ? and the missing criteria. With no numerical inputs, the entire domain remains possible. These are not estimates, confidence intervals or completed scores; interior positions need not all be attainable. Never substitute zero or a midpoint. Coincident scores share
 a marker without moving coordinates; the key lists every system. No network,
-plotting package or image service is required. For `risk-model none`, omit the image.
+plotting package or image service is required. For `risk-model none`, omit the numerical headline image; the component chart remains available.
+
+When components are inventoried, also generate the horizontal component breakdown:
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/scripts/legacy-assessment.mjs" --input assessment-output.json --components-svg
+```
+
+Save it beside the report as `ARC-{PROJECT_ID}-LEGACY-v{VERSION}-components.svg`.
+The existing `--svg` (also `--headline-svg`) generates the numerical headline plot.
+The headline focuses the lower axes to the plotted data while keeping all bounds visible
+and labels each axis start. The component plot uses three labelled regions of a continuous locally calibrated index,
+numerically calculated confidence bars and diamond positions. The local component index is not the published numerical risk model.
+
+Gather component-scoped D1–D7 findings where evidence permits. System-wide findings are
+context and must not be silently assigned to each component. `componentResults` retains
+actual component outcome, strongest known finding, completeness, provisional status and
+source finding IDs. Missing coverage remains Undetermined; established component Legacy
+still takes precedence. Component chart results do not change system outcomes or risk order.
+
+Component diamonds and bars must come from numerical `measurements`, never from a
+category centre, a manually selected confidence label, or a bar midpoint. Each component
+may record up to seven measurements (unique D1–D7), each with `lower`, `estimate` (nullable),
+`upper`, `calibration`, `basis` (measured or estimated), `evidenceIds` and `rationale`.
+Calibration records `unit`, `baseline`, `actionRequired`, `legacy`, and `direction`
+(higher-is-worse or lower-is-worse). Anchors must be ordered in the worse direction.
+Use actual source quantities and documented local calibration; do not invent measurements
+or call these anchors government thresholds. Estimated inputs must be labelled explicitly.
+Measured inputs require current scoped operational/documentary evidence.
+
+The helper computes the local component index by piecewise-linear normalization at
+baseline=0, actionRequired=1 and legacy=2, clipping to 0–3. Beyond legacy it uses the
+warning-to-legacy step width. Lower-is-worse scales are reversed. The component point
+is the maximum central criterion index; bounds are the separate maxima of all lower
+and upper criterion indices. The point is not the range midpoint. Missing D criteria
+contribute [0,3] and suppress the point; null estimates also suppress it.
+
+Confidence is a declared ArcKit range-precision convention: `100 * (1 - width/3)`,
+with high >=80%, medium >=50%, otherwise low. It is not probability, evidence quality,
+readiness or an official government measure. The graph plots computed values unchanged.
+Use plain rounded confidence bars without end caps; retain exact narrow-range bounds in labels.
+Recorded findings, approvals, system outcomes and published numerical risk stay separate.
+When local calibration or quantities are unavailable, leave measurements absent and show
+uncertainty; do not fill positions from the categorical finding. The report must retain
+raw intervals, units, anchors, basis, evidence and rationale for review.
 
 Insert the `--markdown` output verbatim at `<!-- LEGACY-RESULTS -->`, removing that template marker.
 Keep exactly one `legacy-results:start` / `legacy-results:end` block. Do not hand-write
@@ -223,14 +267,14 @@ another decision/count/risk table elsewhere in the report. This block includes t
 calculation version and an input digest, binding results to the full supplied assessment.
 The digest detects changes; it does not authenticate evidence or approvals.
 
-After writing both files, require successful verification:
+After writing the Markdown, JSON and applicable SVG files, require successful verification:
 
 ```bash
 node "${CLAUDE_PLUGIN_ROOT}/scripts/legacy-assessment.mjs" --input assessment-output.json --check-report assessment-report.md
 ```
 
 Use the real versioned project paths in these calls. Verification checks the generated factual
-block (including inventory, policies, dependencies, findings, evidence and actions) and, when applicable, the exact companion SVG against the same JSON. A missing,
+block (including inventory, policies, dependencies, findings, evidence and actions) and, when applicable, both applicable companion SVGs against the same JSON. A missing,
 stale or edited chart fails verification. It does not verify the truth of source
 material or free-text recommendations. A failed check
 must be fixed before claiming the report's results are verified.
@@ -331,17 +375,18 @@ the old files and generate a new draft from assessor facts with fresh approval p
 ## Optional chart judgement
 
 For an incomplete system, a `riskInputs` entry may include `chartAnnotation` with
-`confidence` (`low`, `medium`, `high` or null), `suspectedPosition` (null or an object
-with aggregate `likelihood` and `impact` factors), and a non-empty `rationale`. All three
-fields are required when the annotation is supplied. Confidence and suspected position
-must come from supplied assessor judgement; never infer medium confidence or choose
-a midpoint to fill the picture. These are separate from supported L/C criterion inputs.
+`suspectedPosition` (null or aggregate `likelihood` and `impact` factors) and a non-empty
+`rationale`. Both fields are required when this optional object is present. The suspected
+position is supplied numerical judgement, not a completed score; it must lie inside the
+calculated bounds. Never insert a midpoint merely to fill the picture.
 
-The suspected factors must lie inside the calculated axis bounds. Use the plotted
-aggregate factors, not a raw guessed criterion value. They do not complete the score,
-alter classification, create an official red-rated flag or change numerical ordering.
-The chart shows a dotted plausible range with confidence when supplied, a solid box
-for scored inputs, and a hollow circle where the assessor suspects it sits. Unknown
-confidence and absent suspected positions remain explicit in the key. Rationale stays
-in the verified report register, not the SVG. Complete scores cannot carry this
-incomplete-score annotation. No source-project information may be used in examples.
+Headline confidence is calculated range precision: take the larger of likelihood interval
+width/5 and impact interval width/4; precision is 100 × (1 − that fraction). High is >=80%,
+medium >=50%, otherwise low. It is not supplied by a confidence label, not probability and
+not evidence quality. The chart plots the recorded/calculated point and bounds directly.
+No suspected position is invented. Rationale remains in the report, not the SVG.
+
+For one-axis uncertainty, the headline shows a rounded scored-input range box, its
+dotted callout and the supplied suspected circle. The fixed factor is explicitly
+labelled; the box width is decorative, not uncertainty in that fixed axis. A range
+remains an incomplete score. Do not describe a scored-input range as a completed result.

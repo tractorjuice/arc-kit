@@ -23,6 +23,12 @@ All artifacts must pass these 10 checks:
 
 ### LEGACY -- Legacy IT Assessment
 
+- Headline axes disclose focused starts and contain all score bounds; scaling never changes scores
+- Inventoried components have a verified `-components.svg` companion, including when numerical risk is omitted
+- Component outcomes use component-scoped findings; system-wide context is not silently inherited, and advisory confidence/ranges never change findings or approval
+- Component plotting uses declared numerical intervals and local calibration, not category-centre positions or manual confidence labels; the point and bounds are calculated independently, with missing inputs explicit
+- Component confidence is labelled range precision (not probability or government scoring); recorded classifications remain separate and raw calibration is auditable
+
 - Strongest known urgency remains visible beside Unknown outcomes and named blockers
 - Evidence qualifications are per use; rejection reasons name records and failed tests
 - Approval is content-bound with a documented decision date or remains pending/stale; later sign-off cannot move the assessment evidence cutoff
