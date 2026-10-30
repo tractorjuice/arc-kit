@@ -4,7 +4,7 @@
   "displayName": "ArcKit Netherlands Public Sector Overlay",
   "version": "6.18.3",
   "defaultEnabled": false,
-  "description": "Netherlands Public Sector Overlay for ArcKit — 4 commands for Rijksbreed cloudbeleid compliance, Te Beschermen Belangen (TBB) category determination under VIRBI 2025, BIO2 conformance, and cloud exit planning. Requires arckit core plugin.",
+  "description": "Netherlands Public Sector Overlay for ArcKit — 6 commands for Rijksbreed cloudbeleid compliance, Te Beschermen Belangen (TBB) category determination under VIRBI 2025, BIO2 conformance, cloud exit planning, and NORA and GEMMA reference-architecture assessments. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
@@ -21,6 +21,8 @@
     "architecture",
     "governance",
     "netherlands",
+    "nora",
+    "gemma",
     "bio2",
     "compliance"
   ],

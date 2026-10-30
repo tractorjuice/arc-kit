@@ -30,7 +30,7 @@ PINNED = "4.0.0"
 
 
 def guide_names() -> list[str]:
-    return sorted(str(p.relative_to(DOCS / "guides").with_suffix("")) for p in (DOCS / "guides").rglob("*.md"))
+    return sorted(p.relative_to(DOCS / "guides").with_suffix("").as_posix() for p in (DOCS / "guides").rglob("*.md"))
 
 
 def listed_slugs() -> list[str]:

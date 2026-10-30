@@ -375,6 +375,8 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:nl-tbb` | requirements | data-model, risk | principles |
 | `/arckit:nl-bio` | requirements | nl-cloud, nl-tbb, risk, secure | data-model |
 | `/arckit:nl-exit` | requirements | nl-cloud, risk | data-model |
+| `/arckit:nl-nora` | requirements | principles, stakeholders, data-model, adr, nl-bio, nl-gemma | diagram, risk, nl-tbb, nl-cloud |
+| `/arckit:nl-gemma` | a landscape source (application-inventory from the TOGAF ADM overlay, or an export) | principles, requirements, data-model, diagram | nl-nora, roadmap, risk |
 
 ### ArcKit Austrian Overlay (`arckit-at`)
 
@@ -1094,21 +1096,27 @@ Added 18 new commands covering EU regulations and French public sector governanc
 - `/arckit:nl-cloud` — Rijksbreed cloudbeleid 2026 compliance. Depends on: requirements (M), nl-tbb (R), nl-bio (R), principles (R), risk (R), dpia (O), secure (O). Produces ARC-*-RBCLOUD-*.md
 - `/arckit:nl-bio` — BIO2 conformance assessment. Depends on: requirements (M), nl-cloud (R), nl-tbb (R), risk (R), secure (R), data-model (O). Produces ARC-*-BIO2-*.md
 - `/arckit:nl-exit` — Cloud exit plan (Rijksbreed cloudbeleid clause 3.2). Depends on: requirements (M), nl-cloud (R), risk (R), data-model (O). Produces ARC-*-NLEXIT-*.md
+- `/arckit:nl-nora` — NORA conformance assessment (GEMMA supplement for gemeenten). Depends on: requirements (M), principles (R), stakeholders (R), data-model (R), adr (R), nl-bio (R), nl-gemma (R). Produces ARC-*-NORA-*.md
+- `/arckit:nl-gemma` — GEMMA landscape mapping for gemeenten. Depends on: a landscape source (M: application inventory from the TOGAF ADM overlay, or an external export), principles (R), requirements (R), data-model (R), diagram (R). Produces ARC-*-GEMMA-*.md
 
 **Key inter-dependencies among NL commands**:
 
 - `nl-tbb` → feeds `nl-cloud` (R) — the TBB category, with any existing marking it records, decides the clause 5.2 public-cloud prohibition; without it `nl-cloud` flags the category as pending
 - `nl-cloud` → feeds `nl-exit` (R) — the exit plan is required for material cloud use identified by the assessment
 - `nl-cloud` assesses Cbw essential-entity status itself (clause 4.3); it does not read an `eu-nis2` artefact
+- `nl-gemma` → informs `nl-nora` (R) — the component mapping is evidence for the reuse and standardisation principles
+- `nl-bio` → informs `nl-nora` (R) — security evidence for NAP13 and NAP14
 - `nl-tbb`, `nl-cloud`, `nl-exit` and `nl-bio` → feed `risk` — each hands its findings (classification implications, clause 3.1 cloud risks, exit residual risks, BIO2 gaps) to the risk register. Each reads an existing register only as a recommended input, so `risk` runs after them
 
 **Typical Dutch central-government compliance path**:
 
 ```text
 stakeholders → requirements →
-nl-tbb → nl-cloud → nl-exit → nl-bio →
+nl-tbb → nl-cloud → nl-exit → nl-bio → nl-nora →
 risk → eu-nis2 → eu-data-act
 ```
+
+For a gemeente, `nl-gemma` runs before `nl-nora`: its component mapping is evidence for the reuse and standardisation principles.
 
 **Key inter-dependencies among EU/FR commands**:
 

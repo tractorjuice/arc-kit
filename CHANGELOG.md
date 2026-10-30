@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **NORA and GEMMA for the Netherlands overlay.** `/arckit:nl-nora` assesses a Dutch government service against the NORA architectuurprincipes NAP01–NAP17, per implicatie and per Vijflaagsmodel layer, rolled up to kwaliteitsdoelen and kernwaarden; for a gemeente it adds the GEMMA principles alongside, never merged. `/arckit:nl-gemma` maps a gemeente's application landscape onto the GEMMA referentiecomponenten and bedrijfsfuncties: coverage, overlap, gaps, standards, data exchange and roadmap candidates. ArcKit ships no NORA or GEMMA text: both commands first run the overlay's `scripts/nl-references.py`, which builds local extracts from the NORA Online API and the GEMMA Archi-repository and refreshes them only when the source has changed. Extracts placed by hand are never overwritten, and offline builds from downloaded files are supported. New doc-types `NORA` and `GEMMA`. Contributed by @trednets (#941).
+
 ### Fixed
 
 - **`/arckit:pages` sites no longer run HTML from documents or filenames** (#875, from @johnfelipe). The generated site rendered Markdown with marked and inserted the result, and built the sidebar, search results, dashboard and document header from manifest titles and paths, without escaping. A document, or a file or folder name (an `external/` filename becomes its title), could therefore run script in the reader's browser, and a Mermaid block could do the same through `securityLevel: 'loose'`. Rendered Markdown is now passed through DOMPurify (if the library fails to load, the document is shown as escaped source instead of unsanitised HTML), every title and path in the sidebar, search, dashboard and headers is escaped, including quotes, so a name such as `001-x" onmouseover="alert(1)` can't break out of an `href` or `data-path` attribute, and Mermaid runs at its default `strict` level (HTML in labels is encoded; `<br/>` line breaks still work, `click` callbacks are disabled).

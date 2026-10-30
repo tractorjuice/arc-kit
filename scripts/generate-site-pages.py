@@ -544,11 +544,12 @@ def broken_links(pages: dict[Path, str], tracked: set[str]) -> list[str]:
     means a published article's images need `git add -f` too: two articles
     shipped from March to October 2026 with four diagrams that never were.
     """
-    files = tracked | {str(p.relative_to(REPO)) for p in pages}
-    folders = {str(parent) for f in files for parent in Path(f).parents}
+    # as_posix(): git and the site use forward slashes, Path on Windows does not.
+    files = tracked | {p.relative_to(REPO).as_posix() for p in pages}
+    folders = {parent.as_posix() for f in files for parent in Path(f).parents}
     broken = []
     for path, text in pages.items():
-        folder = posixpath.dirname(str(path.relative_to(REPO)))
+        folder = posixpath.dirname(path.relative_to(REPO).as_posix())
         for _attr, value in ATTR_RE.findall(text):
             url = html.unescape(value)
             parts = urlsplit(url)
@@ -562,7 +563,7 @@ def broken_links(pages: dict[Path, str], tracked: set[str]) -> list[str]:
                 target = posixpath.normpath(posixpath.join(folder, unquote(parts.path)))
             target = target.rstrip("/")
             if target not in files and target not in folders:
-                broken.append(f"{path.relative_to(REPO)}: {url}")
+                broken.append(f"{path.relative_to(REPO).as_posix()}: {url}")
     return broken
 
 
@@ -901,7 +902,7 @@ def date_hand_entries(head: str, record: dict[str, dict[str, str]], today: str,
 def build() -> tuple[dict[Path, str], str, str, list[str], Site]:
     listed = cards()
     site = Site(
-        guides=frozenset(str(p.relative_to(GUIDES).with_suffix("")) for p in GUIDES.rglob("*.md")),
+        guides=frozenset(p.relative_to(GUIDES).with_suffix("").as_posix() for p in GUIDES.rglob("*.md")),
         articles=frozenset(c["slug"] for c in listed),
     )
     missing = sorted(c["slug"] for c in listed if not (ARTICLES / f"{c['slug']}.md").is_file())
@@ -939,7 +940,7 @@ def main() -> int:
     for path, content in sorted(pages.items()):
         if path.is_file() and path.read_text(encoding="utf-8") == content:
             continue
-        rel = path.relative_to(REPO)
+        rel = path.relative_to(REPO).as_posix()
         if args.check:
             problems.append(f"{'stale' if path.exists() else 'missing'}: {rel}")
         else:
@@ -948,7 +949,7 @@ def main() -> int:
             written += 1
     for path in sorted(existing - set(pages)):
         if args.check:
-            problems.append(f"orphan (no guide or article card): {path.relative_to(REPO)}")
+            problems.append(f"orphan (no guide or article card): {path.relative_to(REPO).as_posix()}")
         else:
             path.unlink()
             written += 1
@@ -961,7 +962,7 @@ def main() -> int:
             written += 1
     if (LASTMOD.read_text(encoding="utf-8") if LASTMOD.is_file() else "") != lastmod:
         if args.check:
-            problems.append(f"stale: {LASTMOD.relative_to(REPO)}")
+            problems.append(f"stale: {LASTMOD.relative_to(REPO).as_posix()}")
         else:
             LASTMOD.write_text(lastmod, encoding="utf-8")
             written += 1

@@ -208,6 +208,8 @@ DOC_TYPES = {
     "TBB":        {"name": "Te Beschermen Belangen (TBB) Category Determination",           "category": "Compliance"},
     "BIO2":       {"name": "BIO2 Conformance Assessment",                                   "category": "Compliance"},
     "NLEXIT":     {"name": "NL Cloud Exit Plan",                                            "category": "Governance"},
+    "NORA":       {"name": "NORA Conformance Assessment",                                   "category": "Governance"},
+    "GEMMA":      {"name": "GEMMA Alignment Assessment",                                    "category": "Architecture"},
     # UK Financial Services Payments Overlay
     "FSSCA":      {"name": "UK PSD2 SCA-RTS Exemption Design",                              "category": "Compliance"},
     "FSSAFE":     {"name": "UK EMI / PI Safeguarding Assessment",                           "category": "Compliance"},

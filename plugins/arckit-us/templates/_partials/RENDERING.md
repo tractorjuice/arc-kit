@@ -50,7 +50,7 @@ The doc-type codes that carry a regime. A `doc-type:` value absent from this tab
 | CA | Canada | hard-routes | `FITAA`, `PIA`, `ATIP`, `AIA`, `CHRT`, `ITSG`, `SOIA`, `CACR`, `DIGSTD`, `OLA`, `PROC`, `OCAP` |
 | EU | EU | falls through to step 2 | `RGPD`, `NIS2`, `AIACT`, `DORA`, `CRA`, `DSA`, `DATAACT`, `EUCSF` |
 | FR | France | hard-routes | `IRN`, `CNIL`, `SECNUM`, `MARPUB`, `DINUM`, `EBIOS`, `ANSSI`, `CARTO`, `DR`, `ALGO`, `PSSI`, `REUSE` |
-| NL | Netherlands | hard-routes | `RBCLOUD`, `TBB`, `BIO2`, `NLEXIT` |
+| NL | Netherlands | hard-routes | `RBCLOUD`, `TBB`, `BIO2`, `NLEXIT`, `NORA`, `GEMMA` |
 | UAE | UAE | hard-routes | `PDPL`, `IAS`, `CRES`, `CLAS`, `UPASS`, `ZBUR`, `DREC`, `DSHR`, `NPRA`, `AICH`, `AUTI`, `FPRO` |
 | US | USA Federal | hard-routes | `FIPS199`, `NIST`, `FRSSP`, `FRRR`, `ZTA`, `ICAM`, `AIRMF`, `AIIA`, `USPIA`, `SBOM` |
 
