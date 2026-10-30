@@ -573,6 +573,7 @@
                 <li><strong>Tier = Community + Category = TOGAF ADM</strong> → <code>arckit-togaf-adm</code> — ADM lifecycle and architecture repository</li>
                 <li><strong>Tier = Community + Category = AI Agent Architecture</strong> → <code>arckit-agent-architecture</code> — agent inventory, design, governance, integration, security, and maturity</li>
                 <li><strong>Tier = Community + Category = Open Agile Architecture</strong> → <code>arckit-oaa</code> — O-AA product-driven, sprint-based architecture</li>
+                <li><strong>Tier = Community + Category = arc42</strong> → <code>arckit-arc42</code> — arc42 architecture description assembled from existing artefacts</li>
             </ul>
             <p class="govuk-body">Install only what you need: <code>claude plugin install arckit arckit-uae</code> picks up core + UAE. Community plugins auto-install <code>arckit</code> as a declared dependency. See <a href="getting-started.html#step-2" class="govuk-link">Getting Started</a> for install snippets.</p>
         </div>
@@ -632,6 +633,7 @@
                     <option value="togaf-adm-overlay">TOGAF ADM Overlay (Community, Method)</option>
                     <option value="agent-architecture-overlay">AI Agent Architecture Overlay (Community, Method)</option>
                     <option value="oaa-overlay">Open Agile Architecture Overlay (Community, Method)</option>
+                    <option value="arc42-overlay">arc42 Overlay (Community, Method)</option>
                     <option value="ca-overlay">Canada Federal Overlay (Community)</option>
                     <option value="uae-overlay">UAE Federal Overlay (Community)</option>
                     <option value="eu-overlay">EU Regulatory Overlay (Community)</option>
@@ -652,6 +654,7 @@
                     <option value="togaf-adm">TOGAF ADM (method)</option>
                     <option value="agent-architecture">AI Agent Architecture (method)</option>
                     <option value="oaa">Open Agile Architecture (method)</option>
+                    <option value="arc42">arc42 (method)</option>
                     <option value="uk">UK</option>
                     <option value="eu">EU</option>
                     <option value="france">France</option>
@@ -2761,6 +2764,15 @@
                         <td class="description">[COMMUNITY] Agile architecture governance cadence: lightweight review gates, compliance evidence, and change management.</td>
                         <td>Open Agile Architecture Overlay</td>
                         <td>Open Agile Architecture</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="arc42-overlay" data-jurisdiction="arc42" data-tier="community">
+                        <td><code>/arckit-arc42:arc42</code></td>
+                        <td class="description">[COMMUNITY] arc42 architecture description: all 12 arc42 sections assembled from the project's existing artefacts, each cited, with a Gap Register of the sections still undocumented.</td>
+                        <td>arc42 Overlay</td>
+                        <td>arc42</td>
                         <td>Community</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
@@ -6235,6 +6247,17 @@
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-oaa:agile-strategy</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">business-capability-map, oaa-adm-lite, principles, product-architecture, requirements, stakeholders, transition-architecture</td><td class="govuk-table__cell">&mdash;</td></tr>
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-oaa:agile-security</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">agile-strategy, oaa-adm-lite, principles, product-architecture, requirements</td><td class="govuk-table__cell">&mdash;</td></tr>
                         <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-oaa:agile-governance</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">agile-security, agile-strategy, oaa-adm-lite, principles, product-architecture</td><td class="govuk-table__cell">&mdash;</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+        <details class="govuk-details">
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">arc42 (1 command)</span></summary>
+            <div class="govuk-details__text">
+                <table class="govuk-table">
+                    <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
+                    <tbody class="govuk-table__body">
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-arc42:arc42</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">adr, diagram, hld-review, principles, requirements, stakeholders</td><td class="govuk-table__cell">data-model, devops, dfd, dld-review, glossary, operationalize, platform-design, repo-audit, risk, secure, sobc, strategy, wardley</td></tr>
                     </tbody>
                 </table>
             </div>

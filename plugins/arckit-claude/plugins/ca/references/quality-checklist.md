@@ -919,6 +919,18 @@ All artifacts must pass these 10 checks:
 - Distributed model justified against a traditional review board, with the conditions for reverting stated
 - Governance outputs feed the compliance evidence consumed by OASEC, so the two are not parallel universes
 
+### ARC42 -- arc42 Architecture Description
+
+- All 12 arc42 sections present in order, none removed or renumbered
+- Every populated section cites the source artefact(s) it summarises by Document ID
+- Content summarised from sources, not copied wholesale; diagram code reproduced unchanged from its cited DIAG or DFD artefact
+- Nothing invented: a section with no source says so and has a matching Gap Register entry, rather than plausible filler
+- Anything inferred rather than stated in a source is marked "Inferred"
+- Requirement, ADR and risk IDs used exactly as they appear in their source artefacts
+- Gap Register names the arc42 section, what is missing and the `/arckit:*` command that would fill it
+- Source Artefacts table lists the version of every artefact read, so a reader can tell when the description is out of date
+- arc42 attribution (CC BY-SA 4.0, Peter Hruschka and Gernot Starke) kept in the document
+
 ### AAGI -- AI Agent Inventory
 
 - Every agent has a unique AGT-xxx ID used consistently across all sections

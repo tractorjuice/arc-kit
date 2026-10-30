@@ -73,6 +73,7 @@ CLAUDE_PLUGIN_LAYOUT=(
   "plugins/arckit-uk-gcloud:plugins/uk/gcloud"
   "plugins/arckit-togaf-adm:plugins/togaf/adm"
   "plugins/arckit-oaa:plugins/oaa"
+  "plugins/arckit-arc42:plugins/arc42"
   "plugins/arckit-agent-architecture:plugins/agent/architecture"
   "plugins/arckit-repo:plugins/repo"
 )
@@ -336,7 +337,7 @@ Each plugin lives in its own folder under `plugins/`, with its own README:
 - [`plugins/arckit`](plugins/arckit): the core plugin
 - Jurisdiction overlays: [`uae`](plugins/uae), [`fr`](plugins/fr), [`nl`](plugins/nl), [`ca`](plugins/ca), [`eu`](plugins/eu), [`at`](plugins/at), [`au`](plugins/au), [`au/energy`](plugins/au/energy), [`us`](plugins/us)
 - Sector overlays: [`uk/finance`](plugins/uk/finance), [`uk/nhs`](plugins/uk/nhs), [`uk/gcloud`](plugins/uk/gcloud) (proprietary, see its LICENSE)
-- Method overlays: [`togaf/adm`](plugins/togaf/adm), [`oaa`](plugins/oaa), [`agent/architecture`](plugins/agent/architecture)
+- Method overlays: [`togaf/adm`](plugins/togaf/adm), [`oaa`](plugins/oaa), [`arc42`](plugins/arc42), [`agent/architecture`](plugins/agent/architecture)
 - Tooling: [`repo`](plugins/repo), [`fde`](plugins/fde)
 
 ## Data and privacy

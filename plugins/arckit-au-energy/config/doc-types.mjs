@@ -103,6 +103,9 @@ export const DOC_TYPES = {
   'OAAL':      { name: 'ADM Lite Sprint Mapping',          category: 'Architecture' },
   'OASEC':     { name: 'Agile Security',                   category: 'Governance', severity: 'HIGH' },
   'OAGOV':     { name: 'Agile Governance',                 category: 'Governance' },
+  // arc42 overlay (arckit-arc42, community) — an arc42 architecture description
+  // assembled from the project's existing artefacts, one per project.
+  'ARC42':     { name: 'arc42 Architecture Description',   category: 'Architecture' },
   // Governance — universal best-practice (no regime tag, HIGH-severity)
   'RISK':      { name: 'Risk Register',                    category: 'Governance', severity: 'HIGH' },
   'TRAC':      { name: 'Traceability Matrix',              category: 'Governance', severity: 'HIGH' },

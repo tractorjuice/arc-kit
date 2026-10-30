@@ -1,0 +1,118 @@
+recipe: arc42-full
+schema_version: 1
+description: >
+  arc42 architecture description: the core artefacts each arc42 section draws
+  on (principles, stakeholders, requirements, decisions, data model, the four
+  C4/runtime/deployment views, security, risks, glossary), then the arc42
+  assembly that summarises and cites them.
+
+defaults:
+  version: "1.0"
+
+optional_targets:
+  SECD:
+    description: Secure by Design assessment, the source for the security crosscutting concept (arc42 section 8)
+    default: true
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:traceability
+    args: ""
+
+targets:
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  # /arckit:requirements reads the stakeholder analysis, so it runs after STKE.
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN, STKE]
+
+  # arc42 section 4 (Solution Strategy) and 9 (Architecture Decisions).
+  - id: ADR-001
+    skill: arckit:adr
+    topic: "Top-level decomposition and technology approach"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-002
+    skill: arckit:adr
+    topic: "Deployment topology and hosting"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  # arc42 sections 5 and 8 (persistence and domain model).
+  - id: DATA
+    skill: arckit:data-model
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DATA }
+    deps: [REQ]
+
+  # One diagram per arc42 view: 3 Context, 5 Building Blocks, 6 Runtime, 7 Deployment.
+  - id: DIAG-CONTEXT
+    skill: arckit:diagram
+    topic: "C4 context"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [REQ, STKE]
+
+  - id: DIAG-CONTAINER
+    skill: arckit:diagram
+    topic: "C4 container"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [REQ, ADR-001, DATA]
+
+  - id: DIAG-SEQ
+    skill: arckit:diagram
+    topic: "sequence for the primary user journey"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [REQ, ADR-001]
+
+  - id: DIAG-DEP
+    skill: arckit:diagram
+    topic: "deployment"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [REQ, ADR-002]
+
+  - id: SECD
+    skill: arckit:secure
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SECD }
+    deps: [REQ, ADR-001]
+
+  # arc42 section 11 (Risks and Technical Debt).
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, "ADR-*", PRIN]
+
+  # arc42 section 12. Runs late so it picks up terms from the design artefacts.
+  - id: GLOS
+    skill: arckit:glossary
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GLOS }
+    deps: [REQ, DATA, "ADR-*"]
+
+  - id: ARC42
+    skill: arckit:arc42
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ARC42 }
+    deps: [PRIN, STKE, REQ, "ADR-*", DATA, "DIAG-*", SECD, RISK, GLOS]

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`arckit-arc42` overlay: `/arckit:arc42` writes an [arc42](https://arc42.org) architecture description from the artefacts you already have** (#1053). It fills all 12 arc42 sections from the requirements, stakeholders, principles, ADRs, diagrams, data model, security assessment, risk register and glossary, citing each source by Document ID rather than copying it. Diagrams are reproduced unchanged from their `DIAG` artefacts. A section no artefact covers is marked "Not yet documented." and listed in a Gap Register with the command that would fill it, and a Source Artefacts table records the version of everything read, so you can see when the description is out of date. The `arc42-full` recipe builds the source artefacts and then the description. Install with `claude plugin install arckit arckit-arc42`. The arc42 template is by Peter Hruschka and Gernot Starke under CC BY-SA 4.0, and the ArcKit template keeps that attribution.
+
 ### Fixed
 
 - **`/arckit:pages` sites no longer run HTML from documents or filenames** (#875, from @johnfelipe). The generated site rendered Markdown with marked and inserted the result, and built the sidebar, search results, dashboard and document header from manifest titles and paths, without escaping. A document, or a file or folder name (an `external/` filename becomes its title), could therefore run script in the reader's browser, and a Mermaid block could do the same through `securityLevel: 'loose'`. Rendered Markdown is now passed through DOMPurify (if the library fails to load, the document is shown as escaped source instead of unsanitised HTML), every title and path in the sidebar, search, dashboard and headers is escaped, including quotes, so a name such as `001-x" onmouseover="alert(1)` can't break out of an `href` or `data-path` attribute, and Mermaid runs at its default `strict` level (HTML in labels is encoded; `<br/>` line breaks still work, `click` callbacks are disabled).

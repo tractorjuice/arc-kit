@@ -1,0 +1,110 @@
+# arc42 Architecture Description Playbook
+
+> **Guide Origin**: Community | **ArcKit Version**: [VERSION]
+
+`/arckit:arc42` writes an [arc42](https://arc42.org) architecture description for a project. arc42 is a 12-section template for documenting the architecture of one software system, widely used by solution and software architects. The command does not design anything: it assembles each section from the artefacts ArcKit has already produced, cites them by Document ID, and lists the sections no artefact covers yet. The command is part of the `arckit-arc42` overlay, which needs the core `arckit` plugin.
+
+The arc42 template is by Peter Hruschka and Gernot Starke and is published under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The ArcKit template uses arc42's section structure with ArcKit's own guidance text, and keeps the attribution.
+
+---
+
+## When to Use
+
+| Use when any of these apply | Do not use when |
+|-----------------------------|-----------------|
+| A delivery team, reviewer or supplier expects architecture documentation in arc42 form | The project has no requirements, stakeholder analysis, principles, diagrams or ADRs yet: there is nothing to assemble |
+| You want one readable description of a system, instead of pointing readers at a dozen artefacts | You need to make architecture decisions (use `/arckit:adr`) or review a design (use `/arckit:hld-review`) |
+| You want to see which parts of the architecture are still undocumented | You want an enterprise-level view across many systems (use `/arckit:framework` or the TOGAF ADM overlay) |
+
+---
+
+## Inputs
+
+No single artefact is mandatory. The command stops if the project has none of requirements, stakeholder analysis, principles, HLD review, diagrams or ADRs.
+
+| Artefact | Feeds arc42 section |
+|----------|---------------------|
+| Requirements (`ARC-<id>-REQ-v*.md`) | 1 Introduction and Goals, 2 Constraints, 10 Quality Requirements |
+| Stakeholder analysis (`ARC-<id>-STKE-v*.md`) | 1.3 Stakeholders |
+| Business case (`ARC-<id>-SOBC-v*.md`) | 1 Introduction and Goals |
+| Architecture principles (`ARC-000-PRIN-v*.md`) | 2 Constraints, 4 Solution Strategy |
+| Architecture strategy, Wardley maps | 4 Solution Strategy |
+| Diagrams (`diagrams/ARC-<id>-DIAG-*.md`, `DFD`) | 3 Context, 5 Building Blocks, 6 Runtime, 7 Deployment |
+| HLD and DLD reviews, vendor HLD/DLD | 4, 5, 8 |
+| ADRs (`decisions/ARC-<id>-ADR-*.md`) | 4 Solution Strategy, 9 Architecture Decisions |
+| Data model (`ARC-<id>-DATA-v*.md`) | 5 Building Blocks, 8 Crosscutting Concepts |
+| Platform design, DevOps strategy, operational readiness | 5, 7 Deployment View, 8 |
+| Secure by Design (`ARC-<id>-SECD-v*.md`) | 8 Crosscutting Concepts (security) |
+| Risk register, codebase audit | 11 Risks and Technical Debt |
+| Glossary (`ARC-<id>-GLOS-v*.md`) | 12 Glossary |
+| Project and enterprise external documents | Any section, with citations |
+
+---
+
+## Command
+
+```bash
+/arckit:arc42 <project ID or name>
+```
+
+Output: `projects/<id>/ARC-<id>-ARC42-v1.0.md`
+
+If an arc42 description already exists, the command writes the next version beside it instead of overwriting it.
+
+To build every source artefact and then the description in one run, use the recipe:
+
+```bash
+/arckit:build <project-name> --recipe arc42-full --plan   # wave-plan dry run
+/arckit:build <project-name> --recipe arc42-full          # full build
+```
+
+Add `--exclude SECD` to skip the Secure by Design assessment; the security concept in section 8 is then recorded as a gap.
+
+---
+
+## How Sections Are Filled
+
+- **Summarised, not copied.** Each section summarises its sources and cites them. The cited artefacts remain authoritative, so when an ADR changes you update the ADR and re-run `/arckit:arc42`.
+- **Diagrams reproduced unchanged.** Context, container, sequence and deployment diagrams are copied from their `DIAG` artefacts. The command never draws a diagram no artefact backs.
+- **Gaps recorded, not filled.** A section with no source says "Not yet documented." and appears in the Gap Register with the command that would fill it, such as `/arckit:diagram sequence <scenario>` for an empty Runtime View.
+- **Inferences marked.** Quality scenarios derived from NFRs with measurable targets are marked "Inferred", with the NFR they came from.
+- **Conflicts reported.** Where two artefacts disagree, the section cites both instead of choosing one silently.
+
+---
+
+## Deliverable Snapshot
+
+| Section | Contents |
+|---------|----------|
+| Document Control | Document ID, owner, status, classification; sections complete and sources read |
+| 1–12 | The arc42 sections, each summarising and citing its sources |
+| Gap Register | Each empty or partial section, what is missing, and the command that would fill it |
+| Source Artefacts | Every artefact read, its version, and the sections it fed |
+| External References | Document Register and citations for external documents |
+
+---
+
+## Keeping It Current
+
+The description is a view over the project's artefacts, so it goes out of date when they change. The Source Artefacts table records the version of each artefact it was built from. When a newer version of any of them exists, re-run `/arckit:arc42` to produce the next version of the description.
+
+---
+
+## Review Checklist
+
+- All 12 arc42 sections are present, in order, with their arc42 numbers.
+- Every populated section cites at least one source by Document ID.
+- No section contains content without a source; empty sections are in the Gap Register.
+- Diagram code matches the cited `DIAG` artefact.
+- "Inferred" items have been checked by the architects who own the source artefacts.
+- The arc42 CC BY-SA 4.0 attribution is still in the document.
+
+---
+
+## Next Steps
+
+- `/arckit:diagram` - Fill an empty Context, Building Block, Runtime or Deployment view.
+- `/arckit:adr` - Record a decision the Solution Strategy relies on but no ADR covers.
+- `/arckit:risk` - Add risks or technical debt the description surfaced.
+- `/arckit:glossary` - Build the glossary the arc42 Glossary section summarises.
+- `/arckit:traceability` - Check requirements trace through to the building blocks described.

@@ -33,6 +33,7 @@ PLUGIN_SOURCES = [
     "plugins/arckit-uk-nhs",
     "plugins/arckit-togaf-adm",
     "plugins/arckit-oaa",
+    "plugins/arckit-arc42",
     "plugins/arckit-agent-architecture",
     "plugins/arckit-repo",
 ]
