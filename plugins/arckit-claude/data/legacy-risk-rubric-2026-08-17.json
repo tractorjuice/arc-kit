@@ -1,0 +1,504 @@
+{
+  "formatVersion": "1.0",
+  "modelId": "published-2026-08-17",
+  "source": {
+    "url": "https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/guidance-on-the-legacy-it-risk-assessment-framework",
+    "publicUpdated": "2026-08-17",
+    "retrievedDate": "2026-10-28",
+    "sourceHtmlSha256": "0cd0a6522fecdf621de4681eb5feebc183ee5f29e99aebcd545422b3a6fc10a1",
+    "licence": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
+    "normalisation": "HTML markup removed; whitespace normalised. Rubric wording and numeric anchors retained."
+  },
+  "status": "Published numerical prioritisation model; under review following the updated definition. Not a revised classification model.",
+  "assessmentHorizonYears": 3,
+  "redThreshold": 16,
+  "maximumRisk": 30,
+  "formula": {
+    "likelihood": "(mean(L1..L7) + max(L1..L7)) / 2",
+    "impact": "(mean(C1..C6) + max(C1..C6)) / 2",
+    "risk": "likelihood * impact; compare unrounded risk >= 16"
+  },
+  "likelihood": [
+    {
+      "id": "L1",
+      "name": "End of Life / End of Support",
+      "description": "Level to which the technology used is out of support, i.e. technical support, upgrades, patches, and new features",
+      "levels": [
+        {
+          "score": 6,
+          "degree": "Certain",
+          "anchor": "Already out of support"
+        },
+        {
+          "score": 5,
+          "degree": "Very High",
+          "anchor": "Very high likelihood technology will be out of support"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High likelihood technology will be out of support"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium likelihood technology will be out of support"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low likelihood technology will be out of support"
+        },
+        {
+          "score": 1,
+          "degree": "Very Low",
+          "anchor": "Very low likelihood technology will be out of support"
+        }
+      ]
+    },
+    {
+      "id": "L2",
+      "name": "Expired Vendor Contract",
+      "description": "Level to which support contracts for services are due to expire with no replacement agreement",
+      "levels": [
+        {
+          "score": 6,
+          "degree": "Certain",
+          "anchor": "Already out of vendor contract"
+        },
+        {
+          "score": 5,
+          "degree": "Very High",
+          "anchor": "Very high likelihood vendor contracts will expire with no replacement agreement in place"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High likelihood vendor contracts will expire with no replacement agreement in place"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium likelihood vendor contracts will expire with no replacement agreement in place"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low likelihood vendor contracts will expire with no replacement agreement in place"
+        },
+        {
+          "score": 1,
+          "degree": "Very Low",
+          "anchor": "Very low likelihood vendor contracts will expire with no replacement agreement in place"
+        }
+      ]
+    },
+    {
+      "id": "L3",
+      "name": "Lack of Knowledge and Skills",
+      "description": "Prevalence of personnel with skills and knowledge to provide support and make changes to the asset",
+      "levels": [
+        {
+          "score": 6,
+          "degree": "Certain",
+          "anchor": "Already insufficient expertise"
+        },
+        {
+          "score": 5,
+          "degree": "Very High",
+          "anchor": "Very high likelihood that expertise to provide support or make changes to the asset will become an issue"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High likelihood that expertise to provide support or make changes to the asset will become an issue"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium likelihood that expertise to provide support or make changes to the asset will become an issue"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low likelihood that expertise to provide support or make changes to the asset will become an issue"
+        },
+        {
+          "score": 1,
+          "degree": "Very Low",
+          "anchor": "Very low likelihood that expertise to provide support or make changes to the asset will become an issue"
+        }
+      ]
+    },
+    {
+      "id": "L4",
+      "name": "Inability to Meet Current or Future Business Needs",
+      "description": "Technical inability for asset to meet current or future business needs (e.g. inability to be scaled or have improvements applied)",
+      "levels": [
+        {
+          "score": 6,
+          "degree": "Certain",
+          "anchor": "Already not meeting current business needs"
+        },
+        {
+          "score": 5,
+          "degree": "Very High",
+          "anchor": "Very high likelihood that the system will be unable to meet its business needs"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High likelihood that the system will be unable to meet its business needs"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium likelihood that the system will be unable to meet its business needs"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low likelihood that the system will be unable to meet its business needs"
+        },
+        {
+          "score": 1,
+          "degree": "Very Low",
+          "anchor": "Very low likelihood that the system will be unable to meet its business needs"
+        }
+      ]
+    },
+    {
+      "id": "L5",
+      "name": "Unsuitable Physical Environment",
+      "description": "Degree to which the asset is based on old hardware or housed in improper physical environment (e.g. due to climate, location)",
+      "levels": [
+        {
+          "score": 6,
+          "degree": "Certain",
+          "anchor": "Hardware or physical environment is currently unsuitable"
+        },
+        {
+          "score": 5,
+          "degree": "Very High",
+          "anchor": "Very high likelihood level of concern regarding the suitability of the hardware or physical environment"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High level of concern regarding the suitability of the hardware or physical environment"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium level of concern regarding the suitability of the hardware or physical environment"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low level of concern regarding the suitability of the hardware or physical environment"
+        },
+        {
+          "score": 1,
+          "degree": "Very Low",
+          "anchor": "Very low likelihood level of concern regarding the suitability of the hardware or physical environment"
+        }
+      ]
+    },
+    {
+      "id": "L6",
+      "name": "Known Security Vulnerabilities",
+      "description": "Likelihood that security vulnerabilities exist",
+      "levels": [
+        {
+          "score": 6,
+          "degree": "Certain",
+          "anchor": "Security vulnerabilities known to currently exist"
+        },
+        {
+          "score": 5,
+          "degree": "Very High",
+          "anchor": "Very high likelihood that security vulnerabilities exist"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High likelihood that security vulnerabilities exist"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium likelihood that security vulnerabilities exist"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low likelihood that security vulnerabilities exist"
+        },
+        {
+          "score": 1,
+          "degree": "Very Low",
+          "anchor": "Very low likelihood that security vulnerabilities exist"
+        }
+      ]
+    },
+    {
+      "id": "L7",
+      "name": "Historically Recorded Issues",
+      "description": "Evidence of historical failures or issues",
+      "levels": [
+        {
+          "score": 6,
+          "degree": "Certain",
+          "anchor": "Issues or failures are currently occurring"
+        },
+        {
+          "score": 5,
+          "degree": "Very High",
+          "anchor": "Severe issues or failures have occurred in recent past"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "Major issues or failures have occurred in recent past"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Moderate issues or failures have occurred in recent past"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Minor issues or failures known to have occurred in recent past"
+        },
+        {
+          "score": 1,
+          "degree": "Very Low",
+          "anchor": "No issues or failures known to have occurred in recent past"
+        }
+      ]
+    }
+  ],
+  "impact": [
+    {
+      "id": "C1",
+      "name": "National Security Impact",
+      "description": "Impact of a failure of the system directly or indirectly resulting in a threat to national security, health, personal safety or loss of human life",
+      "levels": [
+        {
+          "score": 5,
+          "degree": "Very high",
+          "anchor": "Very high sustained impact, including threats to health, personal safety or loss of human life"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High impact to national security, health, personal safety or loss of human life"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium impact to national security, health, personal safety or loss of human life"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low impact to national security, health or personal safety"
+        },
+        {
+          "score": 1,
+          "degree": "Very low",
+          "anchor": "Very low impact to national security, including threats to health or personal safety"
+        }
+      ]
+    },
+    {
+      "id": "C2",
+      "name": "Reputational Impact",
+      "description": "Impact to perception of UK Government and scale of intervention to manage damage to reputation",
+      "levels": [
+        {
+          "score": 5,
+          "degree": "Very high",
+          "anchor": "Very high impact to perception of UK government, requiring major intervention at a parliamentary level to manage reputation"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High impact on perception of UK government, requiring significant intervention to manage reputation"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium impact on perception of UK government, requiring some intervention to manage reputation"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low impact on perception of UK government, requiring little intervention to manage reputation"
+        },
+        {
+          "score": 1,
+          "degree": "Very low",
+          "anchor": "Very low impact on perception of UK government, requiring no intervention to manage reputation"
+        }
+      ]
+    },
+    {
+      "id": "C3",
+      "name": "Direct Financial impact",
+      "description": "Financial impact, either absolute or percentage of departmental budget, that would result from regulatory, litigation, citizen redress or other direct costs including exist-costs and break-clauses",
+      "levels": [
+        {
+          "score": 5,
+          "degree": "Very high",
+          "anchor": "Very high impact e.g. >10% or >£50m of impact, related to regulatory, litigation, citizen redress, and other direct costs"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High impact e.g. 8-10% or £21-50m of financial impact, related to regulatory, litigation, citizen redress, and other direct costs"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium impact e.g. 5-7% or £11-20m of financial impact, related to regulatory, litigation, citizen redress, and other direct costs"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low impact e.g. 1-4% or £5-10m of financial impact, related to regulatory, litigation, citizen redress, and other direct costs"
+        },
+        {
+          "score": 1,
+          "degree": "Very low",
+          "anchor": "Very low impact e.g. <1% of departmental budget or <£5m of financial impact related to regulatory, litigation, citizen redress, and other direct costs"
+        }
+      ]
+    },
+    {
+      "id": "C4",
+      "name": "Direct External Stakeholder Impact",
+      "description": "Impact on external stakeholders, including economic loss and/or significant inconvenience",
+      "levels": [
+        {
+          "score": 5,
+          "degree": "Very high",
+          "anchor": "Very high impact on external stakeholders, including economic loss and/or significant inconvenience"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High impact on external stakeholders, including economic loss and/or significant inconvenience"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium impact on external stakeholders, including economic loss and/or significant inconvenience"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low impact on external stakeholders, including economic loss and/or significant inconvenience"
+        },
+        {
+          "score": 1,
+          "degree": "Very low",
+          "anchor": "Very low impact on external stakeholders, including economic loss and/or significant inconvenience"
+        }
+      ]
+    },
+    {
+      "id": "C5",
+      "name": "Operational Impact",
+      "description": "Extent of resource hours lost or additional workload hours required following outage",
+      "levels": [
+        {
+          "score": 5,
+          "degree": "Very high",
+          "anchor": "Very high impact e.g. >500,000 resource hours of idleness or increased workload"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High impact e.g. 100,001-500,000 resource hours of idleness or increased workload"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium impact e.g. 1001-100,000 resource hours of idleness or increased workload"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low impact e.g. 101-1000 resource hours of idleness or increased workload"
+        },
+        {
+          "score": 1,
+          "degree": "Very low",
+          "anchor": "Very low impact e.g. <100 resource hours of idleness or increased workload"
+        }
+      ]
+    },
+    {
+      "id": "C6",
+      "name": "Impact on other Systems (Technical Barrier to Innovation)",
+      "description": "Level of difficulty in improving the system due to significant codependency on other systems",
+      "levels": [
+        {
+          "score": 5,
+          "degree": "Very high",
+          "anchor": "Very high barrier to innovation, e.g. highly integrated with other systems, significantly increasing build cost or duration for other projects"
+        },
+        {
+          "score": 4,
+          "degree": "High",
+          "anchor": "High barrier to innovation"
+        },
+        {
+          "score": 3,
+          "degree": "Medium",
+          "anchor": "Medium barrier to innovation, e.g. integrated with some systems, sometimes increasing build cost or duration for projects"
+        },
+        {
+          "score": 2,
+          "degree": "Low",
+          "anchor": "Low barrier to innovation"
+        },
+        {
+          "score": 1,
+          "degree": "Very low",
+          "anchor": "Very low barrier to innovation, e.g. no interactions with other systems"
+        }
+      ]
+    }
+  ],
+  "workedExample": {
+    "likelihoodInputs": [
+      5,
+      5,
+      5,
+      5,
+      6,
+      6,
+      6
+    ],
+    "impactInputs": [
+      5,
+      5,
+      2,
+      5,
+      5,
+      4
+    ],
+    "displayRisk": "26.67",
+    "sourceSection": "#example-scoring-of-a-legacy-it-asset"
+  },
+  "interpretationNotes": [
+    "These are original criterion-specific anchors, including financial and resource-hour examples; do not interpolate or repair gaps in the published bands.",
+    "The older numeric threshold for calling an asset legacy does not determine classification under the updated definition.",
+    "Older register/submission instructions in the source snapshot are historical; current reporting arrangements require confirmation.",
+    "Bundled rubric availability is independent of evidence about a project system. Missing system evidence still leaves a score unknown."
+  ]
+}

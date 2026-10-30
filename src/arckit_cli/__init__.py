@@ -161,6 +161,13 @@ COMMON_REQUIRED_ASSETS = (
     "scripts",
     "docid_generator",
     "doctypes_config",
+    "legacy_helper",
+    "legacy_schema",
+    "legacy_catalogue",
+    "legacy_rubric",
+    "legacy_definition",
+    "doc_control_rendering",
+    "doc_control_uk",
 )
 
 REQUIRED_ASSETS_BY_AI = {
@@ -186,7 +193,8 @@ def missing_required_assets(data_paths, ai_assistant, all_ai=False):
     missing = []
     for key in keys:
         path = data_paths.get(key)
-        if path is None or not Path(path).exists():
+        available = path is not None and (Path(path).is_file() if key in {"legacy_helper", "legacy_schema", "legacy_catalogue", "legacy_rubric", "legacy_definition", "doc_control_rendering", "doc_control_uk"} else Path(path).exists())
+        if not available:
             missing.append((key, path))
     return missing
 
@@ -226,6 +234,13 @@ def get_data_paths():
             # scripts/, and scaffolded to .arckit/scripts/ and .arckit/config/
             # so the generator's ../config/doc-types.mjs import resolves.
             "docid_generator": base_path / "plugins" / "arckit-claude" / "scripts" / "generate-document-id.mjs",
+            "legacy_helper": base_path / "plugins" / "arckit-claude" / "scripts" / "legacy-assessment.mjs",
+            "legacy_schema": base_path / "plugins" / "arckit-claude" / "schemas" / "legacy-assessment-1.0.schema.json",
+            "legacy_catalogue": base_path / "plugins" / "arckit-claude" / "data" / "legacy-frameworks-1.0.json",
+            "legacy_rubric": base_path / "plugins" / "arckit-claude" / "data" / "legacy-risk-rubric-2026-08-17.json",
+            "legacy_definition": base_path / "plugins" / "arckit-claude" / "data" / "legacy-definition-2026-08-17.json",
+            "doc_control_rendering": base_path / ".arckit" / "templates" / "_partials" / "RENDERING.md",
+            "doc_control_uk": base_path / ".arckit" / "templates" / "_partials" / "document-control-uk.md",
             "doctypes_config": base_path / "plugins" / "arckit-claude" / "config" / "doc-types.mjs",
             "codex_config": base_path / "extensions" / "arckit-codex" / "config.toml",
             "copilot_prompts": base_path / "extensions" / "arckit-copilot" / "prompts",
@@ -660,6 +675,10 @@ def init(
         for template_file in templates_src.glob("*.md"):
             shutil.copy2(template_file, templates_dst / template_file.name)
             template_count += 1
+        # Commands resolve Document Control from these partials on every CLI.
+        partials_src = templates_src / "_partials"
+        if partials_src.is_dir():
+            shutil.copytree(partials_src, templates_dst / "_partials", dirs_exist_ok=True)
         console.print(f"[green]✓[/green] Copied {template_count} templates")
     else:
         console.print(
@@ -703,6 +722,21 @@ def init(
             "found; .arckit/scripts/bash/generate-document-id.sh will not "
             "resolve[/yellow]"
         )
+
+    # Mandatory legacy runtime assets: the helper reads its sibling schema;
+    # the assessment command reads the frozen framework catalogue.
+    for asset_key, relative_path in [
+        ("legacy_helper", "scripts/legacy-assessment.mjs"),
+        ("legacy_schema", "schemas/legacy-assessment-1.0.schema.json"),
+        ("legacy_catalogue", "data/legacy-frameworks-1.0.json"),
+        ("legacy_rubric", "data/legacy-risk-rubric-2026-08-17.json"),
+        ("legacy_definition", "data/legacy-definition-2026-08-17.json"),
+    ]:
+        asset_src = data_paths.get(asset_key)
+        if asset_src and asset_src.is_file():
+            asset_dst = project_path / ".arckit" / relative_path
+            asset_dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(asset_src, asset_dst)
 
     # Copy references if they exist
     references_src = data_paths.get("codex_references")
@@ -975,6 +1009,7 @@ Once you start your AI assistant, you'll have access to these commands:
 
 #### UK Government Compliance
 - `{p}service-assessment` - GDS Service Standard assessment preparation
+- `{p}legacy-assessment` - Evidence-led legacy classification and numerical risk
 - `{p}tcop` - Technology Code of Practice assessment (all 13 points)
 - `{p}ai-playbook` - AI Playbook compliance for responsible AI
 - `{p}atrs` - Algorithmic Transparency Recording Standard (ATRS) record

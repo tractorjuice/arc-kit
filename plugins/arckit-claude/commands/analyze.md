@@ -1603,3 +1603,15 @@ After analysis, you may need:
 **Traceability**:
 
 - `/arckit:traceability` - Update traceability matrix
+
+## Legacy assessment evidence (contextual)
+
+When existing systems or modernisation are in scope, read the latest applicable
+`ARC-*-LEGACY-v*.md` and its JSON sidecar if available. Consume the evidenced findings,
+policy approval/provisional status, completeness, dependency paths and remediation
+actions. Keep updated-definition classification separate from numerical prioritisation.
+Do not treat document presence, risk acceptance or planned work as compliance or
+completed remediation. Carry unresolved gaps into this workflow; recommend
+`/arckit:legacy-assessment` when support, contracts, skills, business fit, hardware,
+security or dependencies need assessment. It is not universally mandatory. Planning
+and investment work should use its action owners, funding gaps and dependencies.

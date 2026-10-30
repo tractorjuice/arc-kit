@@ -35,7 +35,7 @@ jobs:
       # the pages byte for byte. `-e .` is needed because several suites
       # import from `src/arckit_cli/`.
       - name: Install test dependencies
-        run: python -m pip install -e . pytest pyyaml markdown-it-py==4.0.0 linkify-it-py==2.0.3
+        run: python -m pip install -e . pytest pyyaml 'jsonschema>=4,<5' markdown-it-py==4.0.0 linkify-it-py==2.0.3
 
       # The generated content under extensions/** is gitignored (see .gitignore
       # "Generated distribution formats"), so a fresh checkout holds only each
@@ -45,6 +45,16 @@ jobs:
       # checkout. tests/plugin/ is converter-independent.
       - name: Generate extension formats
         run: python scripts/converter.py
+
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: extensions/arckit-paperclip/package-lock.json
+
+      - name: Test built Paperclip command handlers
+        working-directory: extensions/arckit-paperclip
+        run: npm ci && npm test
 
       # testpaths is set in pyproject.toml, so this collects the same tests a
       # bare local `python -m pytest` does. Run via `python -m` (not the

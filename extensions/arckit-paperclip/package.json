@@ -1,7 +1,7 @@
 {
   "name": "@tractorjuice/arckit-paperclip",
   "version": "6.18.3",
-  "description": "ArcKit Paperclip plugin — The Enterprise Architecture Governance Harness, 116 commands across strategy, architecture, delivery, and assurance",
+  "description": "ArcKit Paperclip plugin \u2014 The Enterprise Architecture Governance Harness, 116 commands across strategy, architecture, delivery, and assurance",
   "type": "module",
   "main": "dist/worker.js",
   "types": "dist/worker.d.ts",
@@ -12,7 +12,8 @@
   "scripts": {
     "build": "tsc && mkdir -p dist/data && cp src/data/commands.json dist/data/commands.json",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@paperclipai/plugin-sdk": "^2026.416.0"
@@ -24,7 +25,12 @@
   "files": [
     "dist/",
     "templates/",
-    "references/"
+    "references/",
+    "scripts/legacy-assessment.mjs",
+    "schemas/legacy-assessment-1.0.schema.json",
+    "data/legacy-frameworks-1.0.json",
+    "data/legacy-risk-rubric-2026-08-17.json",
+    "data/legacy-definition-2026-08-17.json"
   ],
   "author": "tractorjuice",
   "license": "MIT",

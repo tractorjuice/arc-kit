@@ -1,0 +1,819 @@
+{
+  "schemaVersion": "1.0",
+  "metadata": {
+    "documentId": "ARC-001-LEGACY-v1.0",
+    "projectId": "001",
+    "assessmentDate": "2026-10-28",
+    "scope": "Synthetic Payments service; one project only",
+    "classificationModel": "uk-definition-2026-08-17",
+    "riskModel": "published-2026-08-17",
+    "researchDate": "2026-10-28",
+    "approvalEvidenceIds": []
+  },
+  "policies": [
+    {
+      "id": "rule_D1",
+      "criterionId": "D1",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "No current provider or community arrangement delivers required technical support and security fixes for the exact deployed version.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D2",
+      "criterionId": "D2",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "Required operating rights or support obligations have lapsed without suitable continuity arrangements.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D3",
+      "criterionId": "D3",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "Tested capability to operate, restore, patch or safely change the system is absent, including necessary cover for key people.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D4",
+      "criterionId": "D4",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "An agreed user, statutory, performance or business requirement is demonstrably unmet without an acceptable workaround.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D5",
+      "criterionId": "D5",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "Measured capacity, physical reliability, repairability or recovery fails the agreed operating requirement without verified mitigation.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D6",
+      "criterionId": "D6",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "Persistent exploitable weaknesses breach the applicable CAF profile or Secure by Design requirements without verified adequate controls.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D7",
+      "criterionId": "D7",
+      "source": "external/owner-policy.md",
+      "owner": "Business risk owner (synthetic)",
+      "version": "1.0",
+      "status": "approved",
+      "approvalEvidenceIds": [
+        "policy_approval"
+      ],
+      "effectiveDate": "2026-10-01",
+      "systemIds": [],
+      "unacceptableCondition": "Necessary operational reliance on an assessed Legacy service exceeds the owner tolerance documented for the consuming system.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    }
+  ],
+  "systems": [
+    {
+      "id": "payments",
+      "name": "Payments",
+      "boundary": "Application and database; hosted platform responsibilities attested separately",
+      "components": [
+        {
+          "id": "payments_app",
+          "name": "Payments application",
+          "version": "8.2"
+        }
+      ],
+      "services": [
+        "Benefit disbursement"
+      ],
+      "businessRiskOwner": "Service owner (synthetic fixture)",
+      "deliveryOwner": "Operations lead (synthetic fixture)"
+    }
+  ],
+  "evidence": [
+    {
+      "id": "policy_approval",
+      "systemId": null,
+      "componentId": null,
+      "source": "external/owner-policy.md",
+      "locator": "Approval section",
+      "date": "2026-10-01",
+      "provenance": "document",
+      "observation": "Synthetic owner decision approves the seven rules before this assessment.",
+      "limitations": [
+        "Synthetic test evidence only."
+      ],
+      "approvalFor": [
+        {
+          "kind": "policy",
+          "id": "rule_D1",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved",
+          "approvedOn": "2026-10-01",
+          "approvedDigest": "3c9aaf8bbb158faa806833a17129f33491731a87dc7078fd4cd153b67f0bfbe1"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D2",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved",
+          "approvedOn": "2026-10-01",
+          "approvedDigest": "ec5383c5d94d4e7d393d28cf554e960889a1a854d2b8adb7f161831342173037"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D3",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved",
+          "approvedOn": "2026-10-01",
+          "approvedDigest": "a6b17f2d7c9a4ecbfac95ed2fcd980582452d4fca770d10382410bf4fe6d0beb"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D4",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved",
+          "approvedOn": "2026-10-01",
+          "approvedDigest": "d3a6f3f7f29700701ae3480e0dc4b569c653b80164feb77be8cfd1a6dc80ee7e"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D5",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved",
+          "approvedOn": "2026-10-01",
+          "approvedDigest": "05182e9ffcb6a8bd643b62423bd6627b9e90f545fbbf3ec9676d061a3071a072"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D6",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved",
+          "approvedOn": "2026-10-01",
+          "approvedDigest": "9e63017392e624e772928f7c85523b1cc07e0d9abb92ae718508add95655967e"
+        },
+        {
+          "kind": "policy",
+          "id": "rule_D7",
+          "version": "1.0",
+          "approvedBy": "Synthetic business risk owner",
+          "decision": "approved",
+          "approvedOn": "2026-10-01",
+          "approvedDigest": "60e425ddd68f08065e2415df90d8592e09e0e29e9eba351acf256b88633395b5"
+        }
+      ]
+    },
+    {
+      "id": "operating_record",
+      "systemId": "payments",
+      "componentId": null,
+      "source": "external/operations.md",
+      "locator": "Test results and attestations",
+      "date": "2026-10-27",
+      "provenance": "operation",
+      "observation": "Version-specific support, contract rights, recovery/skills, requirements, capacity, applicable CAF controls and dependency attestations verified.",
+      "limitations": [
+        "Synthetic test evidence only."
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "finding_D1",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D1",
+      "thresholdId": "rule_D1",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D2",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D2",
+      "thresholdId": "rule_D2",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D3",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D3",
+      "thresholdId": "rule_D3",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D4",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D4",
+      "thresholdId": "rule_D4",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D5",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D5",
+      "thresholdId": "rule_D5",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D6",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D6",
+      "thresholdId": "rule_D6",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D7",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D7",
+      "thresholdId": "rule_D7",
+      "outcome": "Accepted",
+      "rationale": "Dated operational evidence meets the supplied criterion rule.",
+      "evidenceIds": [
+        "operating_record"
+      ],
+      "completeness": "complete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    }
+  ],
+  "dependencies": [],
+  "riskInputs": [
+    {
+      "systemId": "payments",
+      "inputs": [
+        {
+          "criterionId": "L1",
+          "value": 5,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L2",
+          "value": 5,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L3",
+          "value": 5,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L4",
+          "value": 5,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L5",
+          "value": 6,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L6",
+          "value": 6,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "L7",
+          "value": 6,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C1",
+          "value": 5,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C2",
+          "value": 5,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C3",
+          "value": 2,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C4",
+          "value": 5,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C5",
+          "value": 5,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        },
+        {
+          "criterionId": "C6",
+          "value": 4,
+          "evidenceIds": [
+            "operating_record"
+          ],
+          "rationale": "Synthetic independently supplied score against the original published table."
+        }
+      ]
+    }
+  ],
+  "actions": [],
+  "riskAcceptances": [],
+  "results": {
+    "calculationVersion": "1.2.0",
+    "inputDigest": "af2ae97a82a490b3000623dd20b2760e6ce9f6dac3669e8b1883a625980ea89d",
+    "warningHorizon": "2027-10-28",
+    "evidenceUses": [
+      {
+        "evidenceId": "operating_record",
+        "use": "Finding finding_D1",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Finding finding_D2",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Finding finding_D3",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Finding finding_D4",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Finding finding_D5",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Finding finding_D6",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Finding finding_D7",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/L1",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/L2",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/L3",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/L4",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/L5",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/L6",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/L7",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/C1",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/C2",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/C3",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/C4",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/C5",
+        "at": "2026-10-28",
+        "reasons": []
+      },
+      {
+        "evidenceId": "operating_record",
+        "use": "Risk payments/C6",
+        "at": "2026-10-28",
+        "reasons": []
+      }
+    ],
+    "approvals": [
+      {
+        "target": "policy:rule_D1",
+        "digest": "3c9aaf8bbb158faa806833a17129f33491731a87dc7078fd4cd153b67f0bfbe1",
+        "status": "verified"
+      },
+      {
+        "target": "policy:rule_D2",
+        "digest": "ec5383c5d94d4e7d393d28cf554e960889a1a854d2b8adb7f161831342173037",
+        "status": "verified"
+      },
+      {
+        "target": "policy:rule_D3",
+        "digest": "a6b17f2d7c9a4ecbfac95ed2fcd980582452d4fca770d10382410bf4fe6d0beb",
+        "status": "verified"
+      },
+      {
+        "target": "policy:rule_D4",
+        "digest": "d3a6f3f7f29700701ae3480e0dc4b569c653b80164feb77be8cfd1a6dc80ee7e",
+        "status": "verified"
+      },
+      {
+        "target": "policy:rule_D5",
+        "digest": "05182e9ffcb6a8bd643b62423bd6627b9e90f545fbbf3ec9676d061a3071a072",
+        "status": "verified"
+      },
+      {
+        "target": "policy:rule_D6",
+        "digest": "9e63017392e624e772928f7c85523b1cc07e0d9abb92ae718508add95655967e",
+        "status": "verified"
+      },
+      {
+        "target": "policy:rule_D7",
+        "digest": "60e425ddd68f08065e2415df90d8592e09e0e29e9eba351acf256b88633395b5",
+        "status": "verified"
+      }
+    ],
+    "models": {
+      "riskRubric": {
+        "path": "legacy-risk-rubric-2026-08-17.json",
+        "sha256": "24720780035dbd6a97689b3fbe717942d529be523722947a559bd05b3ad8f448"
+      },
+      "definition": {
+        "path": "legacy-definition-2026-08-17.json",
+        "sha256": "1608869b63e996a38b35f890180827a49f92dbff078b2142f8248705ac313687"
+      }
+    },
+    "systems": [
+      {
+        "systemId": "payments",
+        "outcome": "Accepted",
+        "strongestKnownFinding": "Accepted",
+        "provisional": false,
+        "completeness": "complete",
+        "criterionResults": [
+          {
+            "criterionId": "D1",
+            "strongestKnown": "Accepted",
+            "blockers": [],
+            "outcome": "Accepted",
+            "basis": "approved-policy",
+            "provisional": false,
+            "completeness": "complete",
+            "findingIds": [
+              "finding_D1"
+            ],
+            "dependencyPathIndexes": []
+          },
+          {
+            "criterionId": "D2",
+            "strongestKnown": "Accepted",
+            "blockers": [],
+            "outcome": "Accepted",
+            "basis": "approved-policy",
+            "provisional": false,
+            "completeness": "complete",
+            "findingIds": [
+              "finding_D2"
+            ],
+            "dependencyPathIndexes": []
+          },
+          {
+            "criterionId": "D3",
+            "strongestKnown": "Accepted",
+            "blockers": [],
+            "outcome": "Accepted",
+            "basis": "approved-policy",
+            "provisional": false,
+            "completeness": "complete",
+            "findingIds": [
+              "finding_D3"
+            ],
+            "dependencyPathIndexes": []
+          },
+          {
+            "criterionId": "D4",
+            "strongestKnown": "Accepted",
+            "blockers": [],
+            "outcome": "Accepted",
+            "basis": "approved-policy",
+            "provisional": false,
+            "completeness": "complete",
+            "findingIds": [
+              "finding_D4"
+            ],
+            "dependencyPathIndexes": []
+          },
+          {
+            "criterionId": "D5",
+            "strongestKnown": "Accepted",
+            "blockers": [],
+            "outcome": "Accepted",
+            "basis": "approved-policy",
+            "provisional": false,
+            "completeness": "complete",
+            "findingIds": [
+              "finding_D5"
+            ],
+            "dependencyPathIndexes": []
+          },
+          {
+            "criterionId": "D6",
+            "strongestKnown": "Accepted",
+            "blockers": [],
+            "outcome": "Accepted",
+            "basis": "approved-policy",
+            "provisional": false,
+            "completeness": "complete",
+            "findingIds": [
+              "finding_D6"
+            ],
+            "dependencyPathIndexes": []
+          },
+          {
+            "criterionId": "D7",
+            "strongestKnown": "Accepted",
+            "blockers": [],
+            "outcome": "Accepted",
+            "basis": "approved-policy",
+            "provisional": false,
+            "completeness": "complete",
+            "findingIds": [
+              "finding_D7"
+            ],
+            "dependencyPathIndexes": []
+          }
+        ],
+        "componentResults": [
+          {
+            "componentId": "payments_app",
+            "outcome": "Undetermined",
+            "strongestKnown": null,
+            "provisional": false,
+            "completeness": "incomplete",
+            "findingIds": [],
+            "confidence": null,
+            "numerical": {
+              "method": "arckit-component-index-1",
+              "position": null,
+              "minimum": 0,
+              "maximum": 3,
+              "confidencePercent": 0,
+              "confidence": null,
+              "measurementCoverage": 0,
+              "estimatedInputCount": 0,
+              "missingCriteria": [
+                "D1",
+                "D2",
+                "D3",
+                "D4",
+                "D5",
+                "D6",
+                "D7"
+              ],
+              "indicators": []
+            }
+          }
+        ],
+        "events": [
+          {
+            "kind": "immediate-review",
+            "sourceId": "payments",
+            "date": "2026-10-28",
+            "reviewTrigger": true
+          },
+          {
+            "kind": "review-horizon",
+            "sourceId": "payments",
+            "date": "2027-10-28",
+            "reviewTrigger": true
+          }
+        ],
+        "gaps": [],
+        "dependencyPaths": [],
+        "risk": {
+          "status": "complete",
+          "missing": [],
+          "likelihood": 5.714285714285714,
+          "impact": 4.666666666666667,
+          "risk": 26.666666666666668,
+          "redRated": true,
+          "display": "26.67",
+          "arithmetic": {
+            "likelihoodNumerator": 80,
+            "likelihoodDenominator": 14,
+            "impactNumerator": 56,
+            "impactDenominator": 12,
+            "riskNumerator": 4480,
+            "riskDenominator": 168
+          }
+        },
+        "proposedReviewDate": "2026-10-28",
+        "actionPlanCompleteness": "incomplete",
+        "managementGaps": [
+          "Numerical red-rated risk has no recorded review action"
+        ]
+      }
+    ],
+    "counts": {
+      "Accepted": 1,
+      "Action-Required": 0,
+      "Legacy": 0,
+      "Undetermined": 0,
+      "complete": 1,
+      "incomplete": 0,
+      "provisional": 0,
+      "actionPlanComplete": 0,
+      "actionPlanIncomplete": 1
+    },
+    "riskOrdering": [
+      "payments"
+    ]
+  }
+}

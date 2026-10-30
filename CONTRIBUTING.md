@@ -18,6 +18,23 @@ Thank you for your interest in contributing to ArcKit! This document provides gu
    git checkout -b feature/your-feature-name
    ```
 
+## Reproducible test environment
+
+Use Python 3.11+ in a virtual environment. Install the complete test extra, then generate
+the extensions before running the suite:
+
+```bash
+python -m pip install -e ".[test]"
+python scripts/converter.py
+python -m pytest -q
+```
+
+Legacy assessment changes also require the Node adversarial suite and offline bundle
+checks. The calculator has no runtime dependencies; `jsonschema` is a test-only,
+independent conformance check. Full rubric and definition source snapshots are bundled
+so tests and assessments do not need GOV.UK network access. See the
+[legacy assessment guide](docs/guides/legacy-assessment.md) for frozen-source maintenance.
+
 ## Types of Contributions
 
 ### 1. Bug Reports

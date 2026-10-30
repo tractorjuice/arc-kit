@@ -689,6 +689,11 @@ def convert(commands_dirs, agents_dir):
         # Collect entry for Paperclip JSON format
         if "paperclip" in AGENT_CONFIG:
             pc_config = AGENT_CONFIG["paperclip"]
+            # This command runs a bundled calculator, not a project bash helper.
+            # Paperclip resolves this token from its installed package at runtime.
+            if base_name == "legacy-assessment":
+                pc_config = {**pc_config, "path_prefix": "{arckit_package_root}",
+                             "script_path_prefix": "{arckit_package_root}/scripts"}
             pc_prompt = rewrite_paths(prompt, pc_config)
             pc_prompt = rewrite_hook_dependencies(pc_prompt, pc_config)
             pc_prompt = neutralise_question_tool(pc_prompt)
@@ -891,6 +896,7 @@ def copy_extension_files(plugin_sources):
         # /arckit:archify probes for a user-installed Archify before doing
         # anything else; without this the command cannot even report its absence.
         ("scripts/archify-detect.mjs", "scripts/archify-detect.mjs"),
+        ("scripts/legacy-assessment.mjs", "scripts/legacy-assessment.mjs"),
         ("scripts/export-okf.mjs", "scripts/export-okf.mjs"),
         ("scripts/import-okf.mjs", "scripts/import-okf.mjs"),
         # owm-tidy.mjs is invoked by /arckit:wardley --tidy-owm; ship it and its
@@ -1022,7 +1028,10 @@ def copy_extension_files(plugin_sources):
 
         # Core-only categories
         for src_rel, dst_rel in core_only_copies:
-            if not copy_scripts and src_rel.startswith("scripts/"):
+            # legacy-assessment is offline and dependency-free, and is required
+            # even by Paperclip, which omits the project's other shell helpers.
+            if (not copy_scripts and src_rel.startswith("scripts/")
+                    and src_rel != "scripts/legacy-assessment.mjs"):
                 continue
             if src_rel == "skills" and not config.get("copy_core_skills_to_extension", True):
                 continue

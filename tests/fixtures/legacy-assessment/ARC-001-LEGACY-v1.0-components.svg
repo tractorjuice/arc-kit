@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 421" width="1260" height="421" role="img" aria-labelledby="title description">
+<title id="title">Component legacy assessment breakdown</title>
+<desc id="description">Horizontal component rows across Accepted, Action-Required and Legacy. Diamonds plot calculated central component indices; bars plot calculated lower and upper indices. Confidence is interval precision, not probability or evidence quality. The local calibration is distinct from government classification.</desc>
+<metadata>Input SHA-256: af2ae97a82a490b3000623dd20b2760e6ce9f6dac3669e8b1883a625980ea89d; calculation version: 1.2.0; component chart version: 4</metadata>
+<rect width="100%" height="100%" fill="white"/><g font-family="Arial, sans-serif" fill="#172b4d">
+<text x="30" y="38" font-size="25" font-weight="bold">Component legacy assessment</text>
+<text x="30" y="66" font-size="15">ARC-001-LEGACY-v1.0 | 2026-10-28</text>
+<text x="30" y="91" font-size="14">Local calibrated component index; independent of government classification and numerical risk</text>
+<rect x="20" y="154" width="1210" height="42" fill="#f8fafc"/>
+<rect x="330" y="124" width="150" height="72" fill="#dcfce7" stroke="#94a3b8"/>
+<text x="405" y="142" text-anchor="middle" font-size="13" font-weight="bold">Accepted</text>
+<rect x="480" y="124" width="150" height="72" fill="#fef3c7" stroke="#94a3b8"/>
+<text x="555" y="142" text-anchor="middle" font-size="13" font-weight="bold">Action-Required</text>
+<rect x="630" y="124" width="150" height="72" fill="#fee2e2" stroke="#94a3b8"/>
+<text x="705" y="142" text-anchor="middle" font-size="13" font-weight="bold">Legacy</text>
+<text x="320" y="142" text-anchor="end" font-size="13" font-weight="bold">Component</text>
+<text x="794" y="142" font-size="13" font-weight="bold">Confidence¹</text>
+<text x="914" y="142" font-size="13" font-weight="bold">Assessment notes</text>
+<g data-component-id="payments_app"><title>Payments application (payments_app). Actual classification Undetermined. Index unavailable, range 0.000–3.000. Local calculation, not a government score.</title>
+<text x="320" y="179" text-anchor="end" font-size="12" font-weight="bold">Payments application</text>
+<path data-role="confidence-range" data-minimum="0" data-maximum="3" d="M 330 175 H 780" stroke="#1e3a8a" stroke-width="9" stroke-opacity="0.25" stroke-linecap="round" stroke-dasharray="4 5"/>
+<text x="794" y="179" font-size="12">Unmeasured 0%</text>
+<text x="914" y="166" font-size="12">Recorded: Undetermined</text>
+<text x="914" y="180" font-size="11" fill="#475569">No central estimate [0.00–3.00]</text>
+<text x="914" y="193" font-size="10" fill="#475569">0/7 indicators; 0 estimated inputs</text></g>
+<path d="M 330 196 v 5" stroke="#64748b"/><text x="330" y="214" text-anchor="middle" font-size="11" fill="#475569">0</text>
+<path d="M 480 196 v 5" stroke="#64748b"/><text x="480" y="214" text-anchor="middle" font-size="11" fill="#475569">1</text>
+<path d="M 630 196 v 5" stroke="#64748b"/><text x="630" y="214" text-anchor="middle" font-size="11" fill="#475569">2</text>
+<path d="M 780 196 v 5" stroke="#64748b"/><text x="780" y="214" text-anchor="middle" font-size="11" fill="#475569">3</text>
+<path d="M 30 241 H 90" stroke="#1e3a8a" stroke-width="6"/><text x="105" y="245" font-size="12">Bar: calculated lower–upper range. Diamond: calculated central estimate, not the range midpoint.</text>
+<text x="30" y="274" font-size="12">¹ Confidence = range precision: 100 × (1 − interval width / 3). High ≥80%, medium ≥50%, otherwise low.</text>
+<text x="30" y="300" font-size="12">This is a local ArcKit plotting convention, not a probability, readiness percentage or published government score.</text>
+<text x="30" y="326" font-size="12">Each criterion is calibrated at baseline=0, action-required=1 and legacy=2; the strongest indicator determines the component index.</text>
+<text x="30" y="352" font-size="12">Missing indicators extend the upper bound to 3 and suppress the diamond. Labels retain exact bounds for narrow ranges.</text>
+<text x="30" y="378" font-size="12">Recorded classifications remain separate. Raw measurements, calibration and evidence references are in the report.</text>
+</g></svg>

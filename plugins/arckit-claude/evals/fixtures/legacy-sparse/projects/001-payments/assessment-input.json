@@ -1,0 +1,230 @@
+{
+  "schemaVersion": "1.0",
+  "metadata": {
+    "documentId": "ARC-001-LEGACY-v1.0",
+    "projectId": "001",
+    "assessmentDate": "2026-10-28",
+    "scope": "Synthetic Payments service; one project only",
+    "classificationModel": "uk-definition-2026-08-17",
+    "riskModel": "published-2026-08-17",
+    "researchDate": "2026-10-28",
+    "approvalEvidenceIds": []
+  },
+  "policies": [
+    {
+      "id": "rule_D1",
+      "criterionId": "D1",
+      "source": "ArcKit local proposal for owner review",
+      "owner": null,
+      "version": "1.0",
+      "status": "draft",
+      "approvalEvidenceIds": [],
+      "effectiveDate": null,
+      "systemIds": [],
+      "unacceptableCondition": "No current provider or community arrangement delivers required technical support and security fixes for the exact deployed version.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D2",
+      "criterionId": "D2",
+      "source": "ArcKit local proposal for owner review",
+      "owner": null,
+      "version": "1.0",
+      "status": "draft",
+      "approvalEvidenceIds": [],
+      "effectiveDate": null,
+      "systemIds": [],
+      "unacceptableCondition": "Required operating rights or support obligations have lapsed without suitable continuity arrangements.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D3",
+      "criterionId": "D3",
+      "source": "ArcKit local proposal for owner review",
+      "owner": null,
+      "version": "1.0",
+      "status": "draft",
+      "approvalEvidenceIds": [],
+      "effectiveDate": null,
+      "systemIds": [],
+      "unacceptableCondition": "Tested capability to operate, restore, patch or safely change the system is absent, including necessary cover for key people.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D4",
+      "criterionId": "D4",
+      "source": "ArcKit local proposal for owner review",
+      "owner": null,
+      "version": "1.0",
+      "status": "draft",
+      "approvalEvidenceIds": [],
+      "effectiveDate": null,
+      "systemIds": [],
+      "unacceptableCondition": "An agreed user, statutory, performance or business requirement is demonstrably unmet without an acceptable workaround.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D5",
+      "criterionId": "D5",
+      "source": "ArcKit local proposal for owner review",
+      "owner": null,
+      "version": "1.0",
+      "status": "draft",
+      "approvalEvidenceIds": [],
+      "effectiveDate": null,
+      "systemIds": [],
+      "unacceptableCondition": "Measured capacity, physical reliability, repairability or recovery fails the agreed operating requirement without verified mitigation.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D6",
+      "criterionId": "D6",
+      "source": "ArcKit local proposal for owner review",
+      "owner": null,
+      "version": "1.0",
+      "status": "draft",
+      "approvalEvidenceIds": [],
+      "effectiveDate": null,
+      "systemIds": [],
+      "unacceptableCondition": "Persistent exploitable weaknesses breach the applicable CAF profile or Secure by Design requirements without verified adequate controls.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    },
+    {
+      "id": "rule_D7",
+      "criterionId": "D7",
+      "source": "ArcKit local proposal for owner review",
+      "owner": null,
+      "version": "1.0",
+      "status": "draft",
+      "approvalEvidenceIds": [],
+      "effectiveDate": null,
+      "systemIds": [],
+      "unacceptableCondition": "Necessary operational reliance on an assessed Legacy service exceeds the owner tolerance documented for the consuming system.",
+      "warningCondition": "Evidenced unacceptable breach forecast within 12 calendar months.",
+      "reviewDate": null
+    }
+  ],
+  "systems": [
+    {
+      "id": "payments",
+      "name": "Payments",
+      "boundary": "Application and database; hosted platform responsibilities attested separately",
+      "components": [
+        {
+          "id": "payments_app",
+          "name": "Payments application",
+          "version": "8.2"
+        }
+      ],
+      "services": [
+        "Benefit disbursement"
+      ],
+      "businessRiskOwner": "Service owner (synthetic fixture)",
+      "deliveryOwner": "Operations lead (synthetic fixture)"
+    }
+  ],
+  "evidence": [],
+  "findings": [
+    {
+      "id": "finding_D1",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D1",
+      "thresholdId": "rule_D1",
+      "outcome": "Unknown",
+      "rationale": "Only an unverified assertion; evidence required.",
+      "evidenceIds": [],
+      "completeness": "incomplete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D2",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D2",
+      "thresholdId": "rule_D2",
+      "outcome": "Unknown",
+      "rationale": "Only an unverified assertion; evidence required.",
+      "evidenceIds": [],
+      "completeness": "incomplete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D3",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D3",
+      "thresholdId": "rule_D3",
+      "outcome": "Unknown",
+      "rationale": "Only an unverified assertion; evidence required.",
+      "evidenceIds": [],
+      "completeness": "incomplete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D4",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D4",
+      "thresholdId": "rule_D4",
+      "outcome": "Unknown",
+      "rationale": "Only an unverified assertion; evidence required.",
+      "evidenceIds": [],
+      "completeness": "incomplete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D5",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D5",
+      "thresholdId": "rule_D5",
+      "outcome": "Unknown",
+      "rationale": "Only an unverified assertion; evidence required.",
+      "evidenceIds": [],
+      "completeness": "incomplete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D6",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D6",
+      "thresholdId": "rule_D6",
+      "outcome": "Unknown",
+      "rationale": "Only an unverified assertion; evidence required.",
+      "evidenceIds": [],
+      "completeness": "incomplete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    },
+    {
+      "id": "finding_D7",
+      "systemId": "payments",
+      "componentId": null,
+      "criterionId": "D7",
+      "thresholdId": "rule_D7",
+      "outcome": "Unknown",
+      "rationale": "Only an unverified assertion; evidence required.",
+      "evidenceIds": [],
+      "completeness": "incomplete",
+      "forecastBreachDate": null,
+      "contradictions": []
+    }
+  ],
+  "dependencies": [],
+  "riskInputs": [],
+  "actions": [],
+  "riskAcceptances": []
+}

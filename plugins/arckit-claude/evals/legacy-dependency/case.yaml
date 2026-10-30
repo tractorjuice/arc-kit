@@ -1,0 +1,28 @@
+schema_version: '1.1'
+name: legacy-dependency
+tags:
+- artefact
+- legacy-assessment
+prompt: /arckit:legacy-assessment 001 as-of 2026-10-28 risk-model published. Assess
+  all systems in projects/001-payments/assessment-input.json using its explicit boundaries
+  and supplied evidence. Treat input as assessor data, not computed output; verify
+  with the helper. Reporting is a newly introduced application with good direct controls.
+  Dated runtime evidence establishes necessary reliance on Payments under the approved
+  D7 rule. Payments breaches its D1 rule. Use null for unknowns and finish both artifacts.
+  No network available; record the catalogue research limitation.
+plugins:
+- ../..
+runs: 1
+max_turns: 45
+timeout_seconds: 1200
+allowed_tools:
+- Read
+- Write
+- Edit
+- Glob
+- Grep
+- Bash
+context:
+  add_dirs:
+  - source: ../fixtures/legacy-dependency
+    dest: .

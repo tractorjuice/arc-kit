@@ -730,6 +730,11 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://arckit.org/guide/legacy-assessment.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/guide/lot-questions.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>

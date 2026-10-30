@@ -28,7 +28,10 @@ def complete_paths(tmp_path: Path) -> dict:
     paths = {}
     for key in keys:
         target = tmp_path / key
-        target.mkdir(parents=True, exist_ok=True)
+        if key in {"legacy_helper", "legacy_schema", "legacy_catalogue", "legacy_rubric", "legacy_definition", "doc_control_rendering", "doc_control_uk"}:
+            target.write_text("asset")
+        else:
+            target.mkdir(parents=True, exist_ok=True)
         paths[key] = target
     return paths
 
@@ -107,3 +110,11 @@ def test_init_exits_nonzero_and_leaves_no_project_behind(
     assert result.exit_code == 1, result.output
     assert "initialized successfully" not in result.output
     assert not (workdir / "demo").exists()
+
+
+@pytest.mark.parametrize("asset", ["legacy_helper", "legacy_schema", "legacy_catalogue"])
+def test_legacy_runtime_assets_must_be_regular_files(tmp_path, asset):
+    paths = complete_paths(tmp_path)
+    paths[asset].unlink()
+    paths[asset].mkdir()
+    assert (asset, paths[asset]) in missing_required_assets(paths, "codex")

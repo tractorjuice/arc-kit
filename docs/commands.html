@@ -1460,6 +1460,12 @@
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
                     <tr data-status="beta" data-category="quality-compliance" data-jurisdiction="uk" data-tier="core">
+                        <td><code>/arckit:legacy-assessment</code></td>
+                        <td class="description">Assess existing systems and dependencies against the UK legacy definition, independently calculate published risk and plan remediation. <a href="guide/legacy-assessment.html" class="govuk-link">Guide</a></td>
+                        <td>Quality &amp; Compliance</td><td>UK</td><td>Core</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="quality-compliance" data-jurisdiction="uk" data-tier="core">
                         <td><code>/arckit:service-assessment</code><br><a href="https://youtu.be/E2QJqkzIivk" class="govuk-link app-film-link" target="_blank" rel="noopener" aria-label="Watch the film for /arckit:service-assessment on YouTube (opens in a new tab)">&#9654; Film</a></td>
                         <td class="description">Prepare for <a href="https://www.gov.uk/service-manual/service-assessments" class="govuk-link">GDS Service Standard</a> assessment - analyze evidence against 14 points, identify gaps, generate readiness report</td>
                         <td>Quality &amp; Compliance</td>
@@ -2877,6 +2883,7 @@
                                 <th class="app-dep-matrix__col-header" scope="col"><span>jsp-936</span></th>
                                 <th class="app-dep-matrix__col-header app-dep-matrix__col-header--ext" scope="col"><span>HLD *</span></th>
                                 <th class="app-dep-matrix__col-header app-dep-matrix__col-header--ext" scope="col"><span>DLD *</span></th>
+                                <th class="app-dep-matrix__col-header" scope="col"><span>legacy-assessment</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -2930,11 +2937,13 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="plan recommends legacy-assessment">R</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">principles</td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="principles self"></td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -3029,6 +3038,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
                                 <td colspan="46" class="app-dep-matrix__tier-label">Tier 2: Risk &amp; Justification</td>
@@ -3080,6 +3090,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="risk recommends legacy-assessment">R</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">sobc</td>
@@ -3128,6 +3139,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="sobc recommends legacy-assessment">R</td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
                                 <td colspan="46" class="app-dep-matrix__tier-label">Tier 4: Requirements</td>
@@ -3140,6 +3152,7 @@
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="requirements recommends risk">R</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="requirements recommends sobc">R</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="requirements self"></td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -3230,6 +3243,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">roadmap</td>
@@ -3278,6 +3292,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="roadmap recommends legacy-assessment">R</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">strategy</td>
@@ -3326,6 +3341,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">framework</td>
@@ -3340,6 +3356,7 @@
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="framework recommends data-model">R</td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="framework recommends research">R</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -3422,6 +3439,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
                                 <td colspan="46" class="app-dep-matrix__tier-label">Tier 6: Detailed Design</td>
@@ -3473,6 +3491,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">data-mesh-contract</td>
@@ -3485,6 +3504,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="data-mesh-contract recommends data-model">R</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -3569,6 +3589,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">research</td>
@@ -3598,6 +3619,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="research recommends tenders">R</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -3665,6 +3687,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="azure-research recommends the vendor HLD">R</td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">aws-research</td>
@@ -3712,6 +3735,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="aws-research recommends the vendor HLD">R</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
@@ -3761,6 +3785,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="gcp-research recommends the vendor HLD">R</td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">gov-reuse</td>
@@ -3770,6 +3795,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--m" title="gov-reuse requires requirements (mandatory)">M</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -3857,6 +3883,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">gov-landscape</td>
@@ -3866,6 +3893,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="gov-landscape can use requirements (optional)">O</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -3953,6 +3981,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">grants</td>
@@ -3962,6 +3991,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="grants recommends sobc">R</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--m" title="grants requires requirements (mandatory)">M</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -4049,6 +4079,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">wardley</td>
@@ -4097,6 +4128,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">wardley.value-chain</td>
@@ -4117,6 +4149,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="wardley.value-chain self"></td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -4193,6 +4226,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">wardley.climate</td>
@@ -4215,6 +4249,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="wardley.climate can use wardley.doctrine (optional)">O</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="wardley.climate self"></td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -4289,6 +4324,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">archify</td>
@@ -4337,6 +4373,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="archify can use the vendor HLD (optional)">O</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="archify can use the vendor DLD (optional)">O</td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">diagram</td>
@@ -4385,6 +4422,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="diagram can use the vendor HLD (optional)">O</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="diagram can use the vendor DLD (optional)">O</td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">adr</td>
@@ -4410,6 +4448,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="adr self"></td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -4484,6 +4523,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">dos</td>
@@ -4511,6 +4551,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="dos can use sow (optional)">O</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="dos self"></td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -4580,6 +4621,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">gcloud-clarify</td>
@@ -4608,6 +4650,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--m" title="gcloud-clarify requires gcloud-search (mandatory)">M</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -4676,6 +4719,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">competitors</td>
@@ -4706,6 +4750,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="competitors self"></td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -4772,6 +4817,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">score</td>
@@ -4803,6 +4849,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="score can use competitors (optional)">O</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--m" title="score requires evaluate (mandatory)">M</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -4871,6 +4918,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--m" title="hld-review requires the vendor HLD (mandatory)">M</td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">dld-review</td>
@@ -4919,6 +4967,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--m" title="dld-review requires the vendor DLD (mandatory)">M</td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
                                 <td colspan="46" class="app-dep-matrix__tier-label">Tier 9-10: Implementation</td>
@@ -4970,6 +5019,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="backlog recommends the vendor HLD">R</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="backlog recommends the vendor DLD">R</td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">trello</td>
@@ -5004,6 +5054,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--m" title="trello requires backlog (mandatory)">M</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -5069,6 +5120,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="servicenow recommends the vendor HLD">R</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="servicenow recommends the vendor DLD">R</td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">devops</td>
@@ -5110,6 +5162,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="devops can use tcop (optional)">O</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -5165,6 +5218,7 @@
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="mlops can use jsp-936 (optional)">O</td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">finops</td>
@@ -5201,6 +5255,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="finops recommends devops">R</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -5261,6 +5316,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">traceability</td>
@@ -5309,6 +5365,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="traceability recommends the vendor HLD">R</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="traceability recommends the vendor DLD">R</td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
                                 <td colspan="46" class="app-dep-matrix__tier-label">Tier 12-13: Quality &amp; Compliance</td>
@@ -5360,6 +5417,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="analyze can use the vendor HLD (optional)">O</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="analyze can use the vendor DLD (optional)">O</td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="analyze recommends legacy-assessment">R</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">principles-compliance</td>
@@ -5408,6 +5466,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="principles-compliance recommends the vendor HLD">R</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="principles-compliance recommends the vendor DLD">R</td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">conformance</td>
@@ -5456,6 +5515,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="conformance recommends the vendor HLD">R</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="conformance recommends the vendor DLD">R</td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">maturity-model</td>
@@ -5468,6 +5528,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="maturity-model can use strategy (optional)">O</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="maturity-model can use data-model (optional)">O</td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -5552,6 +5613,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="service-assessment recommends legacy-assessment">R</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">tcop</td>
@@ -5600,6 +5662,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="tcop recommends legacy-assessment">R</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">ai-playbook</td>
@@ -5642,6 +5705,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="ai-playbook self"></td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -5696,6 +5760,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">secure</td>
@@ -5744,6 +5809,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="secure recommends legacy-assessment">R</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">mod-secure</td>
@@ -5789,6 +5855,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="mod-secure recommends secure">R</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="mod-secure self"></td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
@@ -5838,6 +5905,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="jsp-936 can use mod-secure (optional)">O</td>
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="jsp-936 self"></td>
+                                <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                             </tr>
@@ -5891,6 +5959,7 @@
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="story recommends jsp-936">R</td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">presentation</td>
@@ -5939,6 +6008,54 @@
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
                                 <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                            </tr>
+                                                    <tr>
+                                <td class="app-dep-matrix__row-label">legacy-assessment</td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="legacy-assessment recommends plan">R</td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="legacy-assessment can use principles">O</td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="legacy-assessment recommends risk">R</td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="legacy-assessment recommends requirements">R</td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="legacy-assessment recommends roadmap">R</td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="legacy-assessment recommends diagram">R</td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--o" title="legacy-assessment can use evaluate">O</td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="legacy-assessment recommends devops">R</td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--r" title="legacy-assessment recommends secure">R</td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell"></td>
+                                <td class="app-dep-matrix__cell app-dep-matrix__cell--self" aria-label="legacy-assessment self"></td>
                             </tr>
                         </tbody>
                     </table>

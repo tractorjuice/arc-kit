@@ -132,6 +132,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Technology Code of Practice](https://arckit.org/guides/uk-government/technology-code-of-practice.md): `/arckit:tcop`.
 - [Secure by Design](https://arckit.org/guides/uk-government/secure-by-design.md): `/arckit:secure`.
 - [DPIA](https://arckit.org/guides/dpia.md): `/arckit:dpia` Data Protection Impact Assessment.
+- [Legacy IT Assessment](https://arckit.org/guides/legacy-assessment.md): `/arckit:legacy-assessment` evidence, classification, numerical risk and remediation.
 - [Service Assessment](https://arckit.org/guides/service-assessment.md): `/arckit:service-assessment` GDS.
 - [AI Playbook](https://arckit.org/guides/ai-playbook.md): `/arckit:ai-playbook`.
 - [Algorithmic Transparency (ATRS)](https://arckit.org/guides/uk-government/algorithmic-transparency.md): `/arckit:atrs`.

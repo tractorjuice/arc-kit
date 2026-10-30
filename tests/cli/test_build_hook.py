@@ -94,3 +94,24 @@ def test_working_tree_is_packageable() -> None:
     hook = load_build_hook()
 
     assert hook.missing_assets(REPO_ROOT) == []
+
+
+def test_missing_legacy_calculator_is_not_a_packageable_tree(tmp_path: Path) -> None:
+    hook = load_build_hook()
+    build_tree(tmp_path, hook.REQUIRED_ASSETS)
+    helper = tmp_path / "extensions/arckit-codex/scripts/legacy-assessment.mjs"
+    helper.unlink()
+    assert "extensions/arckit-codex/scripts/legacy-assessment.mjs" in hook.missing_assets(tmp_path)
+
+
+def test_stale_legacy_assets_cannot_pass_the_wheel_guard(tmp_path):
+    hook = load_build_hook()
+    build_tree(tmp_path, hook.REQUIRED_ASSETS)
+    for relative in hook.LEGACY_RUNTIME_ASSETS:
+        source = tmp_path / "plugins/arckit-claude" / relative
+        source.parent.mkdir(parents=True, exist_ok=True)
+        source.write_text("x")
+    assert not hook.legacy_asset_drift(tmp_path)
+    target = tmp_path / "extensions/arckit-codex/scripts/legacy-assessment.mjs"
+    target.write_text("old calculator")
+    assert hook.legacy_asset_drift(tmp_path) == ["extensions/arckit-codex/scripts/legacy-assessment.mjs"]
