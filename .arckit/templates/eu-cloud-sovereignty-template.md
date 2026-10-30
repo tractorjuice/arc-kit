@@ -19,7 +19,7 @@
 
 **Assessment context**: [Tender minimum-setting / Candidate service assessment / Both]
 
-**Framework version**: EU Cloud Sovereignty Framework v1.2.1 (October 2025)
+**Framework version**: EU Cloud Sovereignty Framework v1.2.1 (October 2025), weighted and scored per the Commission's Implementation guidance and Annex calculator (1 June 2026) — see Section 3.1 for the weighting used
 
 **Overall SEAL**: [SEAL-0 to SEAL-4] — the lowest SEAL evidenced across all eight objectives, a minimum never an average or mode (Implementation guidance p.9). Governing objective: [SOV-n — objective name]. Governing criterion: [contributing factor that set the minimum]. This is the framework's actual rejection gate — see Section 3.3.
 
@@ -110,7 +110,7 @@
 
 **SEAL is not an input to the Score, and the Score does not determine SEAL.** Per the Implementation guidance (p.9), the same 48 answers determine both readings independently — each answer carries its own Score value and its own SEAL level. The Overall SEAL above is `SEAL-{N}` where N is the **minimum** SEAL level across every answered criterion in the whole assessment, not an average and not derived from the weighted Score.
 
-**Adaptability caveats**: answer values "can be adapted by contracting authorities" per the guidance; the calculator's weight column is captioned "Score (examples)," not a mandated regulatory weighting; the calculator's own worked example column holds fictitious illustrative values that must never be presented as a real provider assessment.
+**Adaptability caveats**: answer values "can be adapted by contracting authorities" per the guidance (p.11); the guidance (p.7) captions the calculator's weights "Score (examples)", not a mandated regulatory weighting; the calculator's own worked example column holds fictitious illustrative values that must never be presented as a real provider assessment.
 
 ### 3.1 Objective Weights
 
@@ -125,6 +125,8 @@
 | SOV-7 Security & Compliance Sovereignty | 15% |
 | SOV-8 Environmental Sustainability | 5% |
 | **Total** | **100%** |
+
+> **Source of the weights**: the European Commission's Annex – Sovereignty assessment calculator (1 June 2026), cells D4/D45/D76/D102/D133/D169/D195/D231, shown in the Implementation guidance (p.7) under "Score (examples)". Framework v1.2.1 (October 2025, p.6) weighted SOV-1 at 15%, SOV-5 at 20% and SOV-7 at 10%, the other five objectives being the same. The Commission published the guidance and calculator as "an additional clarification" of the framework and has not withdrawn v1.2.1. Weighting used in this assessment: [1 June 2026 calculator (default) / Framework v1.2.1 / tender specification's own — state which, and record any deviation from the table above].
 
 ### 3.2 Scored Result
 
@@ -336,7 +338,8 @@ The EU Cloud Sovereignty Framework is being adopted as a national yardstick by m
 
 | Doc ID | Filename | Type | Source Location | Description |
 |--------|----------|------|-----------------|-------------|
-| WEB-1 | [full URL of the framework as published] | Web URL | [domain] | EU Cloud Sovereignty Framework v1.2.1 (October 2025) — sovereignty objectives, weights, and SEAL scale. Verified [YYYY-MM-DD] |
+| WEB-1 | [full URL of the framework as published] | Web URL | [domain] | EU Cloud Sovereignty Framework v1.2.1 (October 2025) — sovereignty objectives, contributing factors and SEAL scale; its p.6 weights differ from the calculator's for SOV-1, SOV-5 and SOV-7 (see Section 3.1). Verified [YYYY-MM-DD] |
+| WEB-2 | [full URL of the Annex calculator as published] | Web URL | [domain] | Annex – Sovereignty assessment calculator (European Commission, 1 June 2026), with the Implementation guidance — the weights, answer values and per-answer SEAL levels used in Section 3 and Appendix A. [Commission attribution from the catalogue's provenance.reuse.attribution]. Verified [YYYY-MM-DD] |
 
 ### Citations
 

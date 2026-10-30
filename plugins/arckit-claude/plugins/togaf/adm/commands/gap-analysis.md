@@ -33,8 +33,18 @@ $ARGUMENTS
 
 - **PRIN** (Architecture Principles, in 000-global) — Extract: Guiding principles, decision framework, compliance requirements, technology standards, design constraints, governance standards
   - If missing: note in assumptions that principle alignment could not be validated
-- **STRAT** (Architecture Strategy) — Extract: Strategic vision, target state description, strategic themes, investment priorities
+- **STRAT** (Architecture Strategy, in this project or in 000-global) — Extract: Strategic vision, target state description, strategic themes, investment priorities
   - If missing: note in assumptions that strategic alignment could not be validated
+- **APP** (Application Inventory) — Extract: Applications in scope (APP-NNN IDs), the capabilities each supports and how fully (application-to-capability mapping), strategic fit, lifecycle phase, status and end-of-life dates, vendor lock-in risk
+  - If missing: note in assumptions that application coverage of each capability could not be validated, and suggest `/arckit-togaf-adm:application-inventory`
+- **APPR** (Application Rationalisation) — Extract: Per-application decisions (KEEP / MERGE / REPLACE / RETIRE), target platforms, the target portfolio's capability coverage, implementation waves
+  - If missing: note in assumptions that the target application portfolio was not available, and suggest `/arckit-togaf-adm:application-rationalization`
+
+**OPTIONAL** (read if available, skip silently if missing):
+
+- **ADMP** (ADM Preliminary / Architecture Vision) — Extract: Scope boundaries, target state vision, success criteria
+- **RISK** (Risk Register) — Extract: Existing risk IDs and ratings to cross-reference in the gap-to-risk mapping
+- **STKE** (Stakeholder Analysis) — Extract: Stakeholder priorities and drivers by capability area
 
 ### Prerequisites 1b: Read external documents and policies
 
@@ -89,7 +99,9 @@ Unless the arguments already settle it, use the **AskUserQuestion** tool to ask 
 Read all available documents identified in the Prerequisites section. Build a mental model of:
 
 - **Current state capabilities** (from BPCM): Maturity levels, coverage, capability gaps
+- **Current application coverage** (from APP if available): Which applications support each capability, how fully, and their lifecycle phase and end-of-life dates
 - **Target state** (from STRAT/ADMP): Desired maturity levels, new capabilities, retired capabilities
+- **Target application portfolio** (from APPR if available): KEEP / MERGE / REPLACE / RETIRE decisions and the capabilities each change affects
 - **Principles** (from PRIN): Constraints on how gaps can be addressed
 - **Risks** (from RISK if available): Existing risk exposure from capability gaps
 - **Stakeholder priorities** (from STKE if available): Which capability areas matter most
@@ -165,6 +177,7 @@ Map each gap to associated risks:
 #### 6. Traceability
 
 - Link each capability gap back to BPCM source
+- Link each gap to the applications that support the capability (APP IDs) and their rationalisation decisions (from APPR), where those documents exist
 - Link workstreams to strategic themes (from STRAT)
 - Link gaps to principles (from PRIN) if principle compliance is affected
 - Cross-reference to stakeholder drivers (from STKE)
@@ -250,8 +263,10 @@ After writing the file, show a concise summary (NOT the full document):
 
 ### Synthesised From
 - ✅ Business Capability Model: ARC-{P}-BPCM-v[N].md
-- [✅/⚠️] Architecture Strategy: ARC-{P}-STRAT-v[N].md
+- [✅/⚠️] Architecture Strategy: ARC-{P}-STRAT-v[N].md (or ARC-000-STRAT-v[N].md in 000-global)
 - [✅/⚠️] Architecture Principles: ARC-000-PRIN-v[N].md
+- [✅/⚠️] Application Inventory: ARC-{P}-APP-v[N].md
+- [✅/⚠️] Application Rationalisation: ARC-{P}-APPR-v[N].md
 
 ### Next Steps
 1. Review gap analysis with Architecture Board: `/arckit-togaf-adm:architecture-board`
@@ -274,7 +289,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 2. **Use Write Tool**: The gap analysis document is typically 250-400 lines. ALWAYS use the Write tool to create it. Never output the full content in chat.
 
-3. **Mandatory Prerequisites**: BPCM is the only mandatory prerequisite. Without a capability baseline, gap analysis cannot be performed. STRAT and PRIN are recommended for target state and principle alignment.
+3. **Mandatory Prerequisites**: BPCM is the only mandatory prerequisite. Without a capability baseline, gap analysis cannot be performed. STRAT and PRIN are recommended for target state and principle alignment, and APP and APPR for the current and target application portfolio behind each capability.
 
 4. **Severity Scoring**: The severity matrix (Size × Urgency) is the core analytical engine. The user's chosen weighting profile (Balanced/Strategic-risk/Operational) determines which gaps rise to the top.
 
@@ -284,7 +299,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 7. **Integration with Other Commands**:
    - Gap Analysis feeds into: `/arckit-togaf-adm:transition-architecture` (Phase F — Migration Planning), `/arckit-togaf-adm:architecture-board` (governance review)
-   - Gap Analysis is informed by: `/arckit-togaf-adm:business-capability-map` (BPCM), `/arckit:strategy` (STRAT), `/arckit:principles` (PRIN)
+   - Gap Analysis is informed by: `/arckit-togaf-adm:business-capability-map` (BPCM), `/arckit:strategy` (STRAT), `/arckit:principles` (PRIN), `/arckit-togaf-adm:application-inventory` (APP), `/arckit-togaf-adm:application-rationalization` (APPR)
 
 8. **Version Management**: If a gap analysis already exists (`ARC-*-GAPA-v*.md`), create a new version (v2.0) rather than overwriting. Gap analyses should be versioned to track re-assessment across ADM cycles.
 

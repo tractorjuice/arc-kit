@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:repo-docs generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent…">
+    <meta name="description" content="/arckit-repo:repo-docs generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent…">
     <meta name="author" content="ArcKit">
     <title>Repository Documentation Wiki Guide | ArcKit</title>
     <meta property="og:title" content="Repository Documentation Wiki Guide">
-    <meta property="og:description" content="/arckit:repo-docs generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent sessions, and safe change work.">
+    <meta property="og:description" content="/arckit-repo:repo-docs generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent sessions, and safe change work.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/repo-docs.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Repository Documentation Wiki Guide">
-    <meta name="twitter:description" content="/arckit:repo-docs generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent sessions, and safe change work.">
+    <meta name="twitter:description" content="/arckit-repo:repo-docs generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent sessions, and safe change work.">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/repo-docs.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/repo-docs.md">
@@ -339,7 +339,7 @@
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/repo-docs.html",
                 "headline": "Repository Documentation Wiki Guide",
-                "description": "/arckit:repo-docs generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent sessions, and safe change work.",
+                "description": "/arckit-repo:repo-docs generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent sessions, and safe change work.",
                 "url": "https://arckit.org/guide/repo-docs.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -422,7 +422,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
             <h1 class="app-page-hero__title">Repository Documentation Wiki Guide</h1>
-            <p class="app-page-hero__description">/arckit:repo-docs generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent sessions, and safe change work.</p>
+            <p class="app-page-hero__description">/arckit-repo:repo-docs generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent sessions, and safe change work.</p>
         </div>
     </div>
 
@@ -439,7 +439,7 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:repo-docs</code> generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent sessions, and safe change work.</p>
+<p><code>/arckit-repo:repo-docs</code> generates and maintains an agent-readable source wiki for a repository. It is designed for implementation onboarding, future agent sessions, and safe change work.</p>
 <p>The command ships in the optional <code>arckit-repo</code> plugin. It is inspired by OpenWiki's repository documentation workflow, but it runs as an ArcKit-native command instead of adding the OpenWiki CLI and provider configuration as dependencies.</p>
 <hr />
 <h2 id="quick-start">Quick Start</h2>
@@ -447,16 +447,16 @@
 <pre><code class="language-bash">claude plugin install arckit-repo
 </code></pre>
 <p>Create the first repository wiki:</p>
-<pre><code class="language-text">/arckit:repo-docs --init
+<pre><code class="language-text">/arckit-repo:repo-docs --init
 </code></pre>
 <p>Refresh existing repository docs after implementation changes:</p>
-<pre><code class="language-text">/arckit:repo-docs --update
+<pre><code class="language-text">/arckit-repo:repo-docs --update
 </code></pre>
 <p>Document one area only:</p>
-<pre><code class="language-text">/arckit:repo-docs document hooks and release flow only
+<pre><code class="language-text">/arckit-repo:repo-docs document hooks and release flow only
 </code></pre>
 <p>Preview gaps without writing files:</p>
-<pre><code class="language-text">/arckit:repo-docs --check
+<pre><code class="language-text">/arckit-repo:repo-docs --check
 </code></pre>
 <hr />
 <h2 id="output">Output</h2>
@@ -506,7 +506,7 @@
 <p>Focused runs may update a smaller subset.</p>
 <hr />
 <h2 id="how-it-works">How It Works</h2>
-<p><code>/arckit:repo-docs</code> uses a targeted discovery process:</p>
+<p><code>/arckit-repo:repo-docs</code> uses a targeted discovery process:</p>
 <ul>
 <li>reads the root README, changelog, agent instructions, and existing docs</li>
 <li>lists source files with <code>rg --files</code> or <code>find</code></li>
@@ -528,12 +528,12 @@
 </thead>
 <tbody>
 <tr>
-<td><code>/arckit:repo-docs</code></td>
+<td><code>/arckit-repo:repo-docs</code></td>
 <td>Source-code repository understanding</td>
 <td><code>docs/repository/*.md</code></td>
 </tr>
 <tr>
-<td><code>/arckit:repo-audit</code></td>
+<td><code>/arckit-repo:repo-audit</code></td>
 <td>Source-code repository assessment</td>
 <td><code>ARC-{PID}-CDAU-*.md</code> in <code>audits/</code></td>
 </tr>
@@ -543,13 +543,13 @@
 <td><code>docs/index.html</code>, <code>docs/manifest.json</code>, <code>docs/llms.txt</code></td>
 </tr>
 <tr>
-<td><code>/arckit:architecture-repository</code></td>
+<td><code>/arckit-togaf-adm:architecture-repository</code></td>
 <td>TOGAF-style governance repository</td>
 <td><code>ARC-000-REPO-v*.md</code> or project repository artifact</td>
 </tr>
 </tbody>
 </table>
-<p>Use <code>/arckit:repo-docs</code> when the question is &quot;how does this repo work?&quot; Use <code>/arckit:repo-audit</code> when the question is &quot;is this repo any good, and what did we never write down?&quot; Use <code>/arckit:pages</code> when the question is &quot;how do we publish ArcKit artifacts?&quot; Use the TOGAF architecture repository when the question is &quot;what reusable architecture knowledge has this organisation captured?&quot;</p>
+<p>Use <code>/arckit-repo:repo-docs</code> when the question is &quot;how does this repo work?&quot; Use <code>/arckit-repo:repo-audit</code> when the question is &quot;is this repo any good, and what did we never write down?&quot; Use <code>/arckit:pages</code> when the question is &quot;how do we publish ArcKit artifacts?&quot; Use the TOGAF architecture repository when the question is &quot;what reusable architecture knowledge has this organisation captured?&quot;</p>
 <hr />
 <h2 id="openwiki-compatibility">OpenWiki Compatibility</h2>
 <p>OpenWiki remains useful as an external tool when you want a standalone CLI with model/provider selection and scheduled GitHub Actions updates. ArcKit's command keeps the same core documentation discipline without adding:</p>

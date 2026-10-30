@@ -310,59 +310,154 @@ function scanGlobalDocs(repoRoot) {
 
 // ── Guard: never publish an index entry for a file git will not publish ─────
 //
+// KEEP IDENTICAL in plugins/arckit-claude/hooks/sync-guides.mjs and
+// extensions/arckit-codex/hooks/sync-guides.mjs, from this banner to the
+// END marker; tests/plugin/sync-guides-codex-parity.test.mjs compares them.
+//
 // update-manifest.mjs gained this rule in #690 ("a published index must not
 // reference a file that will never be published"). This hook, which rewrites
-// the WHOLE manifest rather than appending one entry, never got it -- so
-// running /arckit:pages in a repo that gitignores its projects/ published a
-// local, unpublishable scan. ArcKit gitignores its own projects/, so that is
-// exactly what happened here (#727).
+// the WHOLE manifest rather than appending one entry, first got it in #727 at
+// project-directory granularity only, so a gitignored `vendors/` or a single
+// gitignored artefact inside a published project still reached
+// docs/manifest.json: path, H1 title, vendor names from folder names, and in
+// dependencyGraph the full Document Control (owner, classification, status,
+// requirement IDs).
 //
-// Which project directories git will never publish.
-//
-// Filtering at the SOURCE rather than pruning the finished manifest, because
-// the manifest is not one shape: projects[] and global[] are arrays of
-// {path}, but dependencyGraph.nodes is an object keyed by document ID and
-// comes from a SEPARATE scanAllArtifacts() call. A generic post-hoc walk
-// missed the graph entirely and published 7 gitignored paths plus 20 edges
-// referencing them -- the exact leak this guard exists to close. Deciding once,
-// where directories are discovered, makes every derived structure correct by
-// construction.
-//
-// Directory granularity is deliberate. The real case is a whole projects/ tree
-// being gitignored, which is ArcKit's own situation; a single artefact ignored
-// inside an otherwise tracked project is not something we have ever seen, and
-// failing to catch it costs one stale link rather than a wholesale leak.
+// Every candidate path is now asked about: the `projects` tree, each project
+// directory, every {path} in global[], globalExternal[], globalPolicies[] and
+// projects[] (vendor documents included), each project's vendors/scores.json,
+// and every dependencyGraph node. One `git check-ignore -z --stdin` call
+// answers for all of them; git reports a path inside an ignored directory as
+// ignored, so a directory rule such as `projects/*/vendors/` is honoured.
+// dependencyGraph.nodes is an object keyed by document ID from a separate
+// scanAllArtifacts() walk, so it is pruned explicitly, and edges are dropped
+// when either endpoint goes, leaving no dangling references.
 //
 // Fails OPEN on any error -- no git, not a repo, git unavailable all mean
 // "cannot prove it is ignored", so nothing is skipped. Note this asks about
 // IGNORED, not merely untracked: an artefact written moments ago in a repo that
-// tracks projects/ is untracked and must still be published.
-function ignoredProjectDirs(repoRoot, projectsDir, entries) {
-  const empty = new Set();
-  const candidates = ['projects', ...entries.map((e) => `projects/${e}`)];
+// tracks projects/ is untracked and must still be published. A TRACKED file is
+// never reported by `git check-ignore`, which is right: git publishes it.
+function gitIgnoredPaths(repoRoot, candidates) {
+  const ignored = new Set();
+  if (candidates.length === 0) return ignored;
   try {
-    const r = spawnSync('git', ['check-ignore', '--stdin'], {
+    const r = spawnSync('git', ['check-ignore', '-z', '--stdin'], {
       cwd: repoRoot,
-      input: candidates.join('\n') + '\n',
+      input: candidates.join('\0') + '\0',
       encoding: 'utf8',
-      timeout: 5000,
+      timeout: 10000,
+      maxBuffer: 64 * 1024 * 1024,
     });
     // 0 = some ignored, 1 = none ignored, anything else = error.
-    if (r.error || (r.status !== 0 && r.status !== 1)) return empty;
-    const ignored = new Set(
-      (r.stdout || '').split('\n').map((l) => l.trim()).filter(Boolean)
-    );
-    // The whole tree ignored implies every project under it.
-    if (ignored.has('projects') || ignored.has('projects/')) {
-      return new Set(['*', ...entries]);
+    if (r.error || (r.status !== 0 && r.status !== 1)) return ignored;
+    for (const p of (r.stdout || '').split('\0')) {
+      if (p) ignored.add(p.replace(/\/$/, ''));
     }
-    return new Set(
-      [...ignored].map((p) => p.replace(/^projects\//, '').replace(/\/$/, ''))
-    );
   } catch {
-    return empty;
+    ignored.clear();
+  }
+  return ignored;
+}
+
+function collectIndexedPaths(node, out) {
+  if (Array.isArray(node)) {
+    for (const item of node) collectIndexedPaths(item, out);
+    return;
+  }
+  if (node && typeof node === 'object') {
+    if (typeof node.path === 'string') out.add(node.path);
+    for (const value of Object.values(node)) collectIndexedPaths(value, out);
   }
 }
+
+// Removes every gitignored entry from the scan results in place and returns
+// how many project directories and individual paths were left out.
+function dropGitIgnored(repoRoot, projectEntries, scan) {
+  const omitted = { projectDirs: 0, paths: 0 };
+  const candidates = new Set(['projects', ...projectEntries.map((e) => `projects/${e}`)]);
+  collectIndexedPaths([scan.global, scan.globalExternal, scan.globalPolicies, scan.projects], candidates);
+  for (const p of scan.projects) {
+    if (p.vendorScores) candidates.add(`projects/${p.id}/vendors/scores.json`);
+  }
+  if (scan.graph) {
+    for (const node of Object.values(scan.graph.nodes)) {
+      if (typeof node.path === 'string') candidates.add(node.path);
+    }
+  }
+
+  const ignored = gitIgnoredPaths(repoRoot, [...candidates]);
+  if (ignored.size === 0) return omitted;
+
+  const dirIgnored = (dir) => ignored.has('projects') || ignored.has(`projects/${dir}`);
+  const keep = (item) => {
+    if (item && typeof item.path === 'string' && ignored.has(item.path)) {
+      omitted.paths++;
+      return false;
+    }
+    return true;
+  };
+
+  if (dirIgnored('000-global')) {
+    if (scan.global.length || scan.globalExternal.length || scan.globalPolicies.length) {
+      omitted.projectDirs++;
+    }
+    scan.global = [];
+    scan.globalExternal = [];
+    scan.globalPolicies = [];
+  } else {
+    scan.global = scan.global.filter(keep);
+    scan.globalExternal = scan.globalExternal.filter(keep);
+    scan.globalPolicies = scan.globalPolicies.filter(keep);
+  }
+
+  scan.projects = scan.projects.filter((project) => {
+    if (dirIgnored(project.id)) {
+      omitted.projectDirs++;
+      return false;
+    }
+    for (const [key, value] of Object.entries(project)) {
+      if (!Array.isArray(value) || value.length === 0) continue;
+      let kept;
+      if (key === 'vendors') {
+        kept = [];
+        for (const vendor of value) {
+          vendor.documents = (vendor.documents || []).filter(keep);
+          if (vendor.documents.length > 0) kept.push(vendor);
+        }
+      } else {
+        kept = value.filter(keep);
+      }
+      if (kept.length === 0 && key !== 'documents') delete project[key];
+      else project[key] = kept;
+    }
+    if (project.vendorScores && ignored.has(`projects/${project.id}/vendors/scores.json`)) {
+      omitted.paths++;
+      delete project.vendorScores;
+    }
+    return true;
+  });
+
+  if (scan.graph) {
+    for (const [id, node] of Object.entries(scan.graph.nodes)) {
+      if (dirIgnored(node.project) || ignored.has(node.path)) delete scan.graph.nodes[id];
+    }
+    scan.graph.edges = scan.graph.edges.filter(
+      (e) => scan.graph.nodes[e.from] && scan.graph.nodes[e.to]
+    );
+    // graph.projects feeds projectHealth; reqIndex maps requirement IDs to
+    // node IDs. Neither may name what was just removed.
+    scan.graph.projects = (scan.graph.projects || []).filter((p) => !dirIgnored(p));
+    for (const [req, ids] of Object.entries(scan.graph.reqIndex || {})) {
+      const kept = ids.filter((id) => scan.graph.nodes[id]);
+      if (kept.length > 0) scan.graph.reqIndex[req] = kept;
+      else delete scan.graph.reqIndex[req];
+    }
+  }
+
+  return omitted;
+}
+// ── END publish guard ──
 
 // ── Preserved regions in docs/index.html ───────────────────────────────────
 //
@@ -396,6 +491,15 @@ function applyPreservedRegion(html, existingHtml) {
 function subdirKey(dir) {
   return dir.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 }
+
+// Manifest keys of every SUBDIR_MAP bucket, in registry order. llms.txt walks
+// this list, so a bucket for a newly registered subdirectory is indexed without
+// another hand edit. The dashboard template and the DOCUMENT STATS table still
+// name each bucket, because each needs a display label;
+// tests/plugin/sync-guides-buckets.test.mjs fails when one of them misses a
+// key. changes/ (ACHG), audits/ (CDAU), framework/ (FWRK) and procurement/
+// (GCLD, DOS, GCLC) were all written to manifest.json but never shown (#982).
+const SUBDIR_KEYS = [...new Set(Object.values(SUBDIR_MAP))].map(subdirKey);
 
 function scanProject(repoRoot, projectName) {
   const projectDir = join(repoRoot, 'projects', projectName);
@@ -641,9 +745,12 @@ function scanProject(repoRoot, projectName) {
     }
   }
 
-  // Remove empty arrays
-  for (const key of ['diagrams', 'decisions', 'wardleyMaps', 'dataContracts', 'reviews', 'research', 'vendors', 'vendorProfiles', 'techNotes', 'dataSourceProfiles', 'external']) {
-    if (project[key].length === 0) delete project[key];
+  // Remove empty arrays, except documents. Walks the project rather than a
+  // list, so the derived SUBDIR_MAP buckets are cleaned up too.
+  for (const key of Object.keys(project)) {
+    if (key !== 'documents' && Array.isArray(project[key]) && project[key].length === 0) {
+      delete project[key];
+    }
   }
 
   return project;
@@ -737,11 +844,7 @@ function buildLlmsTxt(manifest, repoInfo, version) {
         }
       };
       emit(project.documents);
-      emit(project.diagrams);
-      emit(project.decisions);
-      emit(project.wardleyMaps);
-      emit(project.dataContracts);
-      emit(project.research);
+      for (const key of SUBDIR_KEYS) emit(project[key]);
       emit(project.reviews);
       if (project.vendors) {
         for (const vendor of project.vendors) {
@@ -836,31 +939,32 @@ function buildLlmsTxt(manifest, repoInfo, version) {
   return lines.join('\n');
 }
 
-function buildManifest(repoRoot, repoInfo, guideTitles) {
+function buildManifest(repoRoot, repoInfo, guideTitles, omitted = { projectDirs: 0, paths: 0 }) {
   const { guides, roleGuides } = buildGuides(guideTitles);
 
   const projectsDir = join(repoRoot, 'projects');
   const allEntries = listDir(projectsDir).filter((e) => isDir(join(projectsDir, e)));
-  const ignoredDirs = ignoredProjectDirs(repoRoot, projectsDir, allEntries);
 
-  // projects/000-global obeys the same rule as any other project directory.
-  let { global: globalDocs, globalExternal, globalPolicies } =
-    ignoredDirs.has('000-global')
-      ? { global: [], globalExternal: [], globalPolicies: [] }
-      : scanGlobalDocs(repoRoot);
+  // Scan everything first, then let one git query decide what may be indexed.
+  const scan = {
+    ...scanGlobalDocs(repoRoot),
+    projects: allEntries
+      .filter((entry) => entry !== '000-global' && /^\d{3}-/.test(entry))
+      .map((entry) => scanProject(repoRoot, entry)),
+    // Pass richer opts so the graph carries enough metadata for the dashboard
+    // to render health flags, coverage, and compliance rollups without a
+    // separate scan.
+    graph: isDir(projectsDir) ? scanAllArtifacts(projectsDir, { withNodeMetadata: true }) : null,
+  };
+  const dropped = dropGitIgnored(repoRoot, allEntries, scan);
+  omitted.projectDirs += dropped.projectDirs;
+  omitted.paths += dropped.paths;
+
+  const { global: globalDocs, globalExternal, globalPolicies, projects, graph } = scan;
 
   // Find default document (principles if exists)
   const defaultDoc = globalDocs.find(d => d.documentId && d.documentId.includes('PRIN'));
   if (defaultDoc) defaultDoc.isDefault = true;
-
-  // Scan numbered projects (skip 000-global)
-  const projects = [];
-  for (const entry of allEntries) {
-    if (entry === '000-global') continue;
-    if (!/^\d{3}-/.test(entry)) continue;
-    if (ignoredDirs.has(entry)) { skippedProjectDirs++; continue; }
-    projects.push(scanProject(repoRoot, entry));
-  }
 
   const manifest = {
     generated: new Date().toISOString(),
@@ -882,28 +986,10 @@ function buildManifest(repoRoot, repoInfo, guideTitles) {
   if (globalPolicies.length > 0) manifest.globalPolicies = globalPolicies;
   manifest.projects = projects;
 
-  // Dependency graph for dashboard visualization.
-  // Pass richer opts so the graph carries enough metadata for the dashboard
-  // to render health flags, coverage, and compliance rollups without a
-  // separate scan. tagNodeHealth() then stamps stale/draft/orphan flags on
-  // each node, and computeAllProjectRollups() builds the per-project
-  // summary that the new "Project Health" panel renders.
-  if (isDir(projectsDir)) {
-    const graph = scanAllArtifacts(projectsDir, {
-      withNodeMetadata: true,
-    });
-    // scanAllArtifacts walks projects/ independently of the loop above, so it
-    // needs the same rule applied or the graph republishes what the manifest
-    // just dropped. Nodes carry their project directory name; edges are dropped
-    // when either endpoint goes, leaving no dangling references.
-    if (ignoredDirs.size) {
-      for (const [id, node] of Object.entries(graph.nodes)) {
-        if (ignoredDirs.has(node.project)) delete graph.nodes[id];
-      }
-      graph.edges = graph.edges.filter(
-        (e) => graph.nodes[e.from] && graph.nodes[e.to]
-      );
-    }
+  // Dependency graph for dashboard visualization. tagNodeHealth() stamps
+  // stale/draft/orphan flags on each node, and computeAllProjectRollups()
+  // builds the per-project summary that the "Project Health" panel renders.
+  if (graph) {
     if (Object.keys(graph.nodes).length > 0) {
       const baseline = new Date();
       tagNodeHealth(graph, baseline);
@@ -1046,7 +1132,6 @@ const version = (readText(join(pluginRoot, 'VERSION')) || '').trim();
 
 // ── 3. Template → index.html ──
 
-let skippedProjectDirs = 0;
 let templateProcessed = false;
 let templateSource = '';
 
@@ -1084,7 +1169,8 @@ if (templatePath) {
 
 // ── 4. Manifest ──
 
-const manifest = buildManifest(repoRoot, repoInfo, guideTitles);
+const omittedByGit = { projectDirs: 0, paths: 0 };
+const manifest = buildManifest(repoRoot, repoInfo, guideTitles, omittedByGit);
 
 // Vendor scores: the ranked summary of vendors/scores.json is left out of
 // manifest.json unless the user opted in with VENDOR_SCORES=true.
@@ -1165,6 +1251,10 @@ let wardleyMapCount = 0;
 let dataContractCount = 0;
 let researchCount = 0;
 let reviewCount = 0;
+let changeCount = 0;
+let auditCount = 0;
+let frameworkCount = 0;
+let procurementCount = 0;
 let vendorDocCount = 0;
 let vendorProfileCount = 0;
 let techNoteCount = 0;
@@ -1177,6 +1267,10 @@ for (const p of manifest.projects) {
   dataContractCount = dataContractCount + (p.dataContracts ? p.dataContracts.length : 0);
   researchCount = researchCount + (p.research ? p.research.length : 0);
   reviewCount = reviewCount + (p.reviews ? p.reviews.length : 0);
+  changeCount = changeCount + (p.changes ? p.changes.length : 0);
+  auditCount = auditCount + (p.audits ? p.audits.length : 0);
+  frameworkCount = frameworkCount + (p.framework ? p.framework.length : 0);
+  procurementCount = procurementCount + (p.procurement ? p.procurement.length : 0);
   if (p.vendors) for (const v of p.vendors) vendorDocCount = vendorDocCount + v.documents.length;
   vendorProfileCount = vendorProfileCount + (p.vendorProfiles ? p.vendorProfiles.length : 0);
   techNoteCount = techNoteCount + (p.techNotes ? p.techNotes.length : 0);
@@ -1198,8 +1292,11 @@ const message = [
   `### Files Written`,
   `- \`docs/index.html\` — ${templateProcessed ? `from ${templateSource}` : 'NOT written (template not found)'}`,
   `- \`docs/manifest.json\` — ${manifest.projects.length} project(s), ${guideCount} guides, ${roleCount} role guides`,
-  skippedProjectDirs > 0
-    ? `  - **${skippedProjectDirs}** gitignored project director(ies) omitted — a published index must not reference unpublishable files`
+  omittedByGit.projectDirs > 0
+    ? `  - **${omittedByGit.projectDirs}** gitignored project director(ies) omitted — a published index must not reference unpublishable files`
+    : '',
+  omittedByGit.paths > 0
+    ? `  - **${omittedByGit.paths}** gitignored file(s) inside published projects omitted`
     : '',
   `- \`docs/llms.txt\` — ${llmsTxtAction}`,
   ``,
@@ -1226,6 +1323,10 @@ const message = [
   `| Data Contracts | ${dataContractCount} |`,
   `| Research | ${researchCount} |`,
   `| Reviews | ${reviewCount} |`,
+  `| Change Requests | ${changeCount} |`,
+  `| Audits | ${auditCount} |`,
+  `| Framework | ${frameworkCount} |`,
+  `| Procurement | ${procurementCount} |`,
   `| Vendor Documents | ${vendorDocCount} |`,
   `| Vendor Profiles | ${vendorProfileCount} |`,
   `| Tech Notes | ${techNoteCount} |`,
@@ -1241,7 +1342,7 @@ const message = [
   `>`,
   `> - Documents indexed: **${indexedDocPaths.size}** artefacts${vendorDocCount > 0 ? `, including **${vendorDocCount}** vendor document(s)` : ''}.`,
   sensitiveDocs.length > 0
-    ? `> - **${sensitiveDocs.length} artefact(s) are marked above OFFICIAL**, for example ${sensitiveDocs.slice(0, 5).map((d) => `\`${d.path}\` (${d.marking})`).join(', ')}${sensitiveDocs.length > 5 ? ', …' : ''}. Keep these out of a public site: move the project into a gitignored directory, which this command skips, or do not push docs/.`
+    ? `> - **${sensitiveDocs.length} artefact(s) are marked above OFFICIAL**, for example ${sensitiveDocs.slice(0, 5).map((d) => `\`${d.path}\` (${d.marking})`).join(', ')}${sensitiveDocs.length > 5 ? ', …' : ''}. Keep these out of a public site: gitignore the project or the files, which this command skips, or do not push docs/.`
     : `> - No artefact is marked above OFFICIAL in its Document Control.`,
   includeVendorScores
     ? `> - Vendor scores: **included** (VENDOR_SCORES=true) — the ranked vendor summary is in manifest.json.`

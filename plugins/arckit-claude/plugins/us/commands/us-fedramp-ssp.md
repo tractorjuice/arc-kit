@@ -26,12 +26,13 @@ allowed-tools:
 > and 3PAO before reliance.
 >
 > **Statutory currency**: EO 14110 was **revoked January 2025**; the active AI assurance mandates
-> are **OMB M-24-10** (use of AI) and **OMB M-25-21** (acquisition of AI). FedRAMP completed the
+> are **OMB M-25-21** (use and governance of AI; it rescinded and replaced M-24-10 on 3 April 2025)
+> and **OMB M-25-22** (acquisition of AI; it replaced M-24-18). FedRAMP completed the
 > transition to NIST 800-53 **Rev 5** baselines in 2024 — Rev 4 references are deprecated. Verify
 > all citations against the current Federal Register, OMB Circulars page, NIST publications, and
 > FedRAMP.gov before relying on this output.
 
-You are an enterprise architect drafting a **FedRAMP System Security Plan (SSP)** for a Cloud Service Offering (CSO) pursuing Agency or JAB authorization at the FedRAMP Moderate or High baseline.
+You are an enterprise architect drafting a **FedRAMP System Security Plan (SSP)** for a Cloud Service Offering (CSO) pursuing a FedRAMP Rev 5 certification at the Moderate or High baseline (Class C or Class D under the FedRAMP Consolidated Rules for 2026), normally through a sponsoring agency.
 
 ## User Input
 
@@ -41,19 +42,20 @@ $ARGUMENTS
 
 ## Context
 
-The FedRAMP SSP is the central artefact of a FedRAMP authorization package. It documents the CSO at a level of detail sufficient for an Authorizing Official (AO) — agency-level for Agency ATO, or the FedRAMP PMO / JAB for Joint Authorization — to make a risk-based authorization decision. The SSP cross-references the FedRAMP SAP (Security Assessment Plan), SAR (Security Assessment Report), and POA&M, and is updated continuously through ConMon (Continuous Monitoring).
+The FedRAMP SSP is the central artefact of a FedRAMP authorization package. It documents the CSO at a level of detail sufficient for an Authorizing Official (AO) to make a risk-based authorization decision: on the Agency path the sponsoring agency's AO authorizes the CSO and FedRAMP then reviews the package for certification; on the Program path, which for Rev 5 is limited to the Ready Conversion and Lost Sponsor pipelines, FedRAMP certifies directly. The JAB no longer exists: OMB M-24-15 (25 July 2024) replaced it with the FedRAMP Board, and existing JAB P-ATOs were re-designated. The SSP cross-references the FedRAMP SAP (Security Assessment Plan), SAR (Security Assessment Report), and POA&M, and is updated continuously through ConMon (Continuous Monitoring).
 
-Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** baselines and is progressively requiring **OSCAL** machine-readable submission. The FedRAMP Rev 5 SSP template (v1.1, October 2023) has 12 numbered front-matter sections and Appendices A–Q; the control implementations sit in Appendix A, one version per baseline. FedRAMP marked that template legacy on 23 June 2026, as the FedRAMP Consolidated Rules for 2026 replace it, and stops accepting applications for new Rev 5 certifications on 11 June 2027 — confirm on fedramp.gov which template your submission must use. ArcKit's SSP is an architecture-led draft in **14 sections**; step 6 lists each one and the part of the FedRAMP template it feeds. Authorization Boundary Guidance (ABG) defines what is in-scope; getting the boundary right is the most common cause of FedRAMP delays.
+Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** baselines. Under the Consolidated Rules for 2026 (rule FRC-CSO-JSN), machine-readable certification data must be JSON that validates against FedRAMP's own JSON schemas wherever a rule specifies one; for Rev 5 that applies to initial certifications from 1 January 2027. The FedRAMP Rev 5 SSP template (v1.1, October 2023) has 12 numbered front-matter sections and Appendices A–Q; the control implementations sit in Appendix A, one version per baseline. FedRAMP marked that template legacy on 23 June 2026, as the FedRAMP Consolidated Rules for 2026 replace it, and stops accepting applications for new Rev 5 certifications on 11 June 2027 — confirm on fedramp.gov which template your submission must use. ArcKit's SSP is an architecture-led draft in **14 sections**; step 6 lists each one and the part of the FedRAMP template it feeds. FedRAMP's Minimum Assessment Scope (MAS) rules, which replace the Authorization Boundary Guidance, define what is in scope; getting the boundary right is the most common cause of FedRAMP delays.
 
 **Authoritative anchors**:
 
-- FedRAMP SSP Template (Rev 5, current revision) — <https://www.fedramp.gov/documents-templates/>
-- FedRAMP Authorization Boundary Guidance — <https://www.fedramp.gov/assets/resources/documents/CSP_A_FedRAMP_Authorization_Boundary_Guidance.pdf>
-- FedRAMP Rev 5 Baselines (Low / Moderate / High / LI-SaaS) — <https://www.fedramp.gov/rev5/baselines/>
+- FedRAMP SSP Template (Rev 5, v1.1; legacy since 23 June 2026) — <https://www.fedramp.gov/legacy/>
+- FedRAMP Minimum Assessment Scope rules (Rev 5; formerly the Authorization Boundary Guidance) — <https://www.fedramp.gov/2026/providers/rev5/rules/minimum-assessment-scope/>
+- FedRAMP Rev 5 Baselines (Low / Moderate / High / LI-SaaS), shown per control in the Full Rev5 Control Reference — <https://www.fedramp.gov/2026/reference/controls/>
 - NIST SP 800-37 Rev 2 (Risk Management Framework) — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-37r2.pdf>
 - NIST SP 800-53 Rev 5 — <https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-53r5.pdf>
-- FedRAMP OSCAL guidance — <https://www.fedramp.gov/using-the-fedramp-oscal-resources-and-templates/>
-- FedRAMP Consolidated Rules for 2026 — important dates — <https://www.fedramp.gov/2026/timeline/>
+- FedRAMP JSON Schemas (machine-readable certification data, rule FRC-CSO-JSN) — <https://www.fedramp.gov/schemas/>
+- FedRAMP Consolidated Rules for 2026 — important dates — <https://www.fedramp.gov/2026/timeline/>; choosing a certification path — <https://www.fedramp.gov/2026/providers/start/path/>
+- OMB M-24-15 (Modernizing the Federal Risk and Authorization Management Program) — <https://www.whitehouse.gov/wp-content/uploads/2024/07/M-24-15-Modernizing-the-Federal-Risk-and-Authorization-Management-Program.pdf>
 
 ## Process
 
@@ -78,13 +80,13 @@ Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** basel
 
 6. Generate the template's 14 sections. The italic note after each one names the part of the FedRAMP Rev 5 SSP template it feeds; that template's §1 Introduction and §2 Purpose are standard text and are not drafted here.
 
-   1. **System Identification** — CSO name and identifier, CSP, FedRAMP package ID (if assigned), service model (IaaS / PaaS / SaaS), deployment model, authorization path, sponsoring agency, baseline, digital identity level, operational status and fully-operational date. *FedRAMP §3 System Information (Table 3.1).*
+   1. **System Identification** — CSO name and identifier, CSP, FedRAMP package ID (if assigned), service model (IaaS / PaaS / SaaS), deployment model, certification path (Agency / Program), sponsoring agency, baseline, digital identity level, operational status and fully-operational date. *FedRAMP §3 System Information (Table 3.1).*
    2. **System Categorization** — pull verbatim from the FIPS 199 artefact (CIA water-mark). *FedRAMP §3 and Appendix K.*
-   3. **System Owner & Authorising Official** — System Owner, Authorizing Official (Agency AO for Agency Authorization, FedRAMP JAB for Joint Authorization), ISSO, ISSM and other designated contacts, plus a separation-of-duties matrix for every role with access to the system. *FedRAMP §4, §5 and §11.*
+   3. **System Owner & Authorising Official** — System Owner, Authorizing Official (the sponsoring agency's AO on the Agency path; on the Program path FedRAMP certifies and each customer agency's AO issues its own ATO), ISSO, ISSM and other designated contacts, plus a separation-of-duties matrix for every role with access to the system. *FedRAMP §4, §5 and §11.*
    4. **System Description** — purpose, mission served, user populations, customer use cases and the sectors targeted. *FedRAMP §3 General System Description and §8.2 Narrative.*
-   5. **System Environment** — the authorization-boundary and data-flow diagrams; components inside vs outside the boundary; external services with explicit in-scope / out-of-scope justification per ABG; inventory summary. *FedRAMP §8.1 and Appendix M (Integrated Inventory Workbook).*
+   5. **System Environment** — the authorization-boundary and data-flow diagrams; components inside vs outside the boundary; external services with explicit in-scope / out-of-scope justification per the MAS rules; inventory summary. *FedRAMP §8.1 and Appendix M (Integrated Inventory Workbook).*
    6. **System Interconnections** — leveraged FedRAMP-authorized services; external systems and services without FedRAMP authorization; and every connection that crosses the boundary: name, FedRAMP package ID, agreement type (ICA / MOU / ISA), data direction, ports/protocols, sensitivity. *FedRAMP §6 and §7.*
-   7. **Applicable Laws and Regulations** — FISMA, Privacy Act, E-Gov Act §208, agency-specific statutes (HIPAA for HHS systems, FERPA for ED systems, etc.), executive orders, OMB memoranda (M-24-10 if AI in scope). *FedRAMP Appendix L.*
+   7. **Applicable Laws and Regulations** — FISMA, Privacy Act, E-Gov Act §208, agency-specific statutes (HIPAA for HHS systems, FERPA for ED systems, etc.), executive orders, OMB memoranda (M-25-21 if AI is in scope; M-25-22 if AI is acquired). *FedRAMP Appendix L.*
    8. **Minimum Security Controls** — baseline selection and control counts drawn from the NIST 800-53 artefact (the full tailoring matrix stays there), and the Control Origination (Service Provider Corporate / SP System Specific / Configured by Customer / Provided by Customer / Shared / Inherited) and Customer Responsibility of every control that is not wholly provider-originated. *FedRAMP Appendix A and Appendix J (CIS/CRM Workbook).*
    9. **Types of Users** — Internal (CSP staff) / Privileged / Non-Privileged / External / Public; required clearances, citizenship requirements (US-Persons for some agencies), authentication mechanisms (PIV / login.gov / federated) and assurance levels (IAL / AAL / FAL). *FedRAMP §3 Digital Identity Level and Appendix E (Digital Identity Worksheet).*
    10. **Network Architecture** — network diagram, segmentation zones, public-facing components, management-plane separation; services, ports and protocols; cryptographic modules for data at rest and in transit. *FedRAMP §8.1, §9, §10 and Appendix Q.*
@@ -96,7 +98,7 @@ Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** basel
 7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FRSSP** per-type checks pass. Fix any failures before proceeding.
 8. Use the Write tool to save the artefact at the path returned by `create-project.sh` + `generate-document-id.mjs`.
 
-9. Emit a short summary to the user — CSO name, baseline (Moderate / High), authorization path (Agency / JAB), boundary component count, interconnection count, and any sections marked `<TBC>`. Do not echo the full artefact.
+9. Emit a short summary to the user — CSO name, baseline (Moderate / High), certification path (Agency / Program), boundary component count, interconnection count, and any sections marked `<TBC>`. Do not echo the full artefact.
 
 ## Handoffs
 
@@ -104,8 +106,8 @@ Once the SSP is in draft, run `/arckit-us:us-fedramp-readiness` to produce the i
 
 ## Important Notes
 
-- **The Authorization Boundary is the single highest-risk SSP section** — most FedRAMP delays trace to ambiguous or shifting boundaries. Apply the FedRAMP Authorization Boundary Guidance strictly: every external service must be explicitly in-scope (and therefore covered by the SSP's controls) or out-of-scope (and therefore relying on independent ATO or contractual safeguards).
+- **The Authorization Boundary is the single highest-risk SSP section** — most FedRAMP delays trace to ambiguous or shifting boundaries. Apply the MAS rules strictly: every external service must be explicitly in-scope (and therefore covered by the SSP's controls) or out-of-scope (and therefore relying on independent ATO or contractual safeguards).
 - **Customer Responsibility Matrix (CRM) is not optional** — for SaaS and PaaS CSOs, the CRM is a separate deliverable but its content is determined by the SSP's Control Origination column. Inconsistency between SSP and CRM blocks authorization.
-- **JAB vs Agency path** — most CSOs should pursue Agency Authorization. JAB Authorization is restricted to CSOs that meet the JAB Prioritization Criteria (federal demand, unique capability, market readiness); aiming for JAB without those criteria is a delay pattern.
-- **OSCAL submission is being phased in** — confirm with the FedRAMP PMO whether OSCAL is required for the current submission window. Even where Word is accepted, plan the OSCAL conversion as a roadmap item.
+- **Agency vs Program path** — there is no JAB path: OMB M-24-15 ended the JAB and its prioritization criteria. Under the Consolidated Rules for 2026 a Rev 5 certification generally needs a sponsoring agency (the Agency path), and Rev 5 Class D (High) always does. The sponsorless Program path is mainly for FedRAMP 20x, which uses a different package from this SSP; for Rev 5 it is open only through the Ready Conversion and Lost Sponsor pipelines until 11 June 2027. Confirm the route on fedramp.gov.
+- **Machine-readable data is being phased in** — FedRAMP's rules ask for JSON that validates against FedRAMP's own schemas, and FedRAMP's RFC-0024 records that none of the 100+ Rev 5 authorizations it processed in 2025 used OSCAL. Confirm on fedramp.gov which rules carry a JSON schema for the current submission, and plan the machine-readable data as a roadmap item even where a Word SSP is accepted.
 - **ConMon is a continuous obligation** — the SSP §13 Continuous Monitoring section (FedRAMP Appendix N) is not "set and forget". Monthly vulnerability scanning, ongoing POA&M maintenance, and annual assessment are pre-conditions of maintaining the ATO.

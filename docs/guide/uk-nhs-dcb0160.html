@@ -431,19 +431,19 @@
             <a href="../guides.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Guides</a>
 <div id="films" class="app-films">
 <div class="app-film">
-<button type="button" class="app-film__play" data-film="vGeIuM3MYwY" data-label="Film: /arckit:uk-nhs-dcb0160" aria-label="Play Film: /arckit:uk-nhs-dcb0160"><span class="app-film__icon" aria-hidden="true">▶</span><span>Film: /arckit:uk-nhs-dcb0160</span></button>
+<button type="button" class="app-film__play" data-film="vGeIuM3MYwY" data-label="Film: /arckit-uk-nhs:uk-nhs-dcb0160" aria-label="Play Film: /arckit-uk-nhs:uk-nhs-dcb0160"><span class="app-film__icon" aria-hidden="true">▶</span><span>Film: /arckit-uk-nhs:uk-nhs-dcb0160</span></button>
 <p class="govuk-body-s app-film__note">A short AI-narrated film with English captions. Pressing play loads the YouTube player. <a class="govuk-link" href="https://youtu.be/vGeIuM3MYwY" target="_blank" rel="noopener">Watch on YouTube</a></p>
 </div>
 </div>
 <div id="content" class="app-markdown">
 <blockquote>
-<p><strong>Command</strong>: <code>/arckit:uk-nhs-dcb0160</code> | <strong>Overlay</strong>: <a href="uk-nhs-clinical-safety-overlay.html">UK NHS Clinical Safety Overlay</a> | <strong>Origin</strong>: Community-contributed</p>
+<p><strong>Command</strong>: <code>/arckit-uk-nhs:uk-nhs-dcb0160</code> | <strong>Overlay</strong>: <a href="uk-nhs-clinical-safety-overlay.html">UK NHS Clinical Safety Overlay</a> | <strong>Origin</strong>: Community-contributed</p>
 </blockquote>
 <h2 id="purpose">Purpose</h2>
 <p>Generates the <strong>deployer-side</strong> clinical safety documentation required under NHS DCB0160 for an NHS organisation (Trust, ICS, GP federation, mental health Trust, ambulance service) deploying or significantly configuring a health IT product into a specific clinical setting.</p>
 <p>DCB0160 sits <strong>alongside</strong> DCB0129 — neither replaces the other. The manufacturer's DCB0129 case argues the product is acceptably safe when used as intended; the deployer's DCB0160 case argues that <em>this specific deployment</em>, with this organisation's clinicians, workflows, integrations, training, and business continuity, is acceptably safe in this clinical context.</p>
 <h2 id="what-it-produces">What it produces</h2>
-<p>Three files in <code>projects/{NNN}-&lt;slug&gt;/clinical-safety/deployment/</code>, following the same Marcus Baw <a href="http://SAFETY.md">SAFETY.md</a> spec adapted for deployer use:</p>
+<p>Three files in <code>projects/{NNN}-&lt;slug&gt;/clinical-safety/deployment/</code>, following the same Marcus Baw <a href="http://SAFETY.md">SAFETY.md</a> spec for deployer use. The deployer filenames and the extra <code>manufacturer-case-url</code> field are ArcKit deviations from the spec: see <a href="uk-nhs-clinical-safety-overlay.html#safetymd-spec-version-and-deviations">SAFETY.md spec version and deviations</a>.</p>
 <table>
 <thead>
 <tr>
@@ -454,7 +454,7 @@
 <tbody>
 <tr>
 <td><code>SAFETY.md</code></td>
-<td>Deployer anchor: product, version-being-deployed, deploying organisation, deploying-organisation CSO, link to manufacturer case</td>
+<td>Deployer anchor: product, version being deployed, deploying organisation (<code>organisation</code>, with <code>role: deployer</code>), deploying-organisation CSO, applicable standards, link to manufacturer case</td>
 </tr>
 <tr>
 <td><code>DEPLOYMENT-SAFETY-CASE.md</code></td>
@@ -497,8 +497,8 @@
 <p>The deployment safety case is a legal obligation of the deploying NHS organisation under DCB0160. A complete DCB0129 manufacturer case does <strong>not</strong> discharge this obligation.</p>
 <h2 id="related-commands">Related commands</h2>
 <ul>
-<li><code>/arckit:uk-nhs-dcb0129</code> — manufacturer-side companion (run first or attach external)</li>
-<li><code>/arckit:uk-nhs-dtac</code> — DTAC Section 1 may need the deployer case if the deploying NHS organisation is responsible for procurement assurance</li>
+<li><code>/arckit-uk-nhs:uk-nhs-dcb0129</code> — manufacturer-side companion (run first or attach external)</li>
+<li><code>/arckit-uk-nhs:uk-nhs-dtac</code> — the deploying organisation assesses the manufacturer's DTAC form, whose section C1 asks for the DCB0129 case; this DCB0160 case is the deployer's own duty and not a DTAC question</li>
 <li><code>/arckit:risk</code> — deployment-specific risks cross-reference the project risk register</li>
 <li><code>/arckit:operationalize</code> — builds the runbooks, on-call and incident-response procedures that carry out the deployment hazard controls (manual fallback, interface monitoring, local incident reporting)</li>
 </ul>

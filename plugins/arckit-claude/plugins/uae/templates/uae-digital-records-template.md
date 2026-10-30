@@ -75,13 +75,14 @@
 
 | Doc ID | Title | URL | Verified date |
 |--------|-------|-----|---------------|
+| UAE-LEG-DREC | Government Services Digital Records Policy — UAE Legislation Platform entry (issued 23 April 2026; lead entity: Prime Minister's Office) | <https://uaelegislation.gov.ae/en/policy/details/government-services-digital-records-policy> | [YYYY-MM-DD] |
 | UAE-CAB-2026-04-23 | UAE Cabinet meeting, 23 April 2026 — Government Services Digital Records Policy approved | <https://uaecabinet.ae/en/news/under-directives-of-uae-president-and-in-world-first-mohammed-bin-rashid-reveals-new-uae-government-framework-to-deploy-agentic-ai-across-50-of-government-sectors-operations-within-two-years> | [YYYY-MM-DD] |
 
 ### Citations
 
 | Citation | Doc ID | Section | Used in |
 |----------|--------|---------|---------|
-| [DREC-1] | UAE-CAB-2026-04-23 | Digital Records Policy | Records-as-Official-Source Designation |
+| [DREC-1] | UAE-LEG-DREC | Priorities & Key Components | Records-as-Official-Source Designation |
 | [DREC-2] | UAE-CAB-2026-04-23 | Records lifecycle obligations | Records Lifecycle |
 
 ### Unreferenced Documents

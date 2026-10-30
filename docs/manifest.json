@@ -403,7 +403,7 @@
     },
     {
       "path": "docs/guides/ca-soia.md",
-      "title": "Canada Security of Information Act Handling Playbook",
+      "title": "Canada Foreign Interference and Security of Information Act Handling Playbook",
       "category": "Canada Federal Overlay",
       "status": "community",
       "section": "Overlay Packs",
@@ -1386,7 +1386,7 @@
     },
     {
       "path": "docs/guides/uk-fs-consumer-duty.md",
-      "title": "Consumer Duty Annual Board Report (`/arckit:uk-fs-consumer-duty`)",
+      "title": "Consumer Duty Annual Board Report (`/arckit-uk-finance:uk-fs-consumer-duty`)",
       "category": "UK Finance Payments Overlay",
       "status": "community",
       "section": "Overlay Packs",
@@ -1394,7 +1394,7 @@
     },
     {
       "path": "docs/guides/uk-fs-ctp-dependency.md",
-      "title": "Critical Third Party Dependency Assessment (`/arckit:uk-fs-ctp-dependency`)",
+      "title": "Critical Third Party Dependency Assessment (`/arckit-uk-finance:uk-fs-ctp-dependency`)",
       "category": "UK Finance Payments Overlay",
       "status": "community",
       "section": "Overlay Packs",
@@ -1402,7 +1402,7 @@
     },
     {
       "path": "docs/guides/uk-fs-safeguarding.md",
-      "title": "EMI / PI Safeguarding Assessment (`/arckit:uk-fs-safeguarding`)",
+      "title": "EMI / PI Safeguarding Assessment (`/arckit-uk-finance:uk-fs-safeguarding`)",
       "category": "UK Finance Payments Overlay",
       "status": "community",
       "section": "Overlay Packs",
@@ -1410,7 +1410,7 @@
     },
     {
       "path": "docs/guides/uk-fs-sca-rts.md",
-      "title": "SCA-RTS Exemption Design (`/arckit:uk-fs-sca-rts`)",
+      "title": "SCA-RTS Exemption Design (`/arckit-uk-finance:uk-fs-sca-rts`)",
       "category": "UK Finance Payments Overlay",
       "status": "community",
       "section": "Overlay Packs",
@@ -1442,7 +1442,7 @@
     },
     {
       "path": "docs/guides/uk-nhs-dtac.md",
-      "title": "NHS DTAC v3 Assessment Guide",
+      "title": "NHS DTAC Assessment Guide",
       "category": "UK NHS Clinical Safety Overlay",
       "status": "community",
       "section": "Overlay Packs",
@@ -1457,7 +1457,7 @@
     },
     {
       "path": "docs/guides/us-ai-impact.md",
-      "title": "US AI Impact Assessment (OMB M-24-10 / M-25-21)",
+      "title": "US AI Impact Assessment (OMB M-25-21 / M-25-22)",
       "category": "USA Federal Civilian Overlay",
       "status": "community",
       "section": "Overlay Packs",

@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:repo-audit reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles…">
+    <meta name="description" content="/arckit-repo:repo-audit reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture…">
     <meta name="author" content="ArcKit">
     <title>Codebase Audit Guide | ArcKit</title>
     <meta property="og:title" content="Codebase Audit Guide">
-    <meta property="og:description" content="/arckit:repo-audit reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles and requirements where they exist, with every gap expressed as a…">
+    <meta property="og:description" content="/arckit-repo:repo-audit reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles and requirements where they exist, with every gap expressed…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/repo-audit.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Codebase Audit Guide">
-    <meta name="twitter:description" content="/arckit:repo-audit reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles and requirements where they exist, with every gap expressed as a…">
+    <meta name="twitter:description" content="/arckit-repo:repo-audit reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles and requirements where they exist, with every gap expressed…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/repo-audit.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/repo-audit.md">
@@ -339,7 +339,7 @@
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/repo-audit.html",
                 "headline": "Codebase Audit Guide",
-                "description": "/arckit:repo-audit reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles and requirements where they exist, with every gap expressed as a…",
+                "description": "/arckit-repo:repo-audit reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles and requirements where they exist, with every gap expressed…",
                 "url": "https://arckit.org/guide/repo-audit.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -422,7 +422,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
             <h1 class="app-page-hero__title">Codebase Audit Guide</h1>
-            <p class="app-page-hero__description">/arckit:repo-audit reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles and requirements where they exist, with every gap expressed as a…</p>
+            <p class="app-page-hero__description">/arckit-repo:repo-audit reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles and requirements where they exist, with every gap expressed…</p>
         </div>
     </div>
 
@@ -439,7 +439,7 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:repo-audit</code> reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles and requirements where they exist, with every gap expressed as a proposed ADR.</p>
+<p><code>/arckit-repo:repo-audit</code> reads a real codebase and produces a governance-shaped audit: the as-built architecture, scored against your architecture principles and requirements where they exist, with every gap expressed as a proposed ADR.</p>
 <p>It is the inverse of the usual ArcKit flow. Most commands generate artefacts that a build will later satisfy. This one reads a build that already exists and works backwards to the governance record it should have had.</p>
 <p>The command ships in the optional <code>arckit-repo</code> plugin.</p>
 <hr />
@@ -448,22 +448,22 @@
 <pre><code class="language-bash">claude plugin install arckit-repo
 </code></pre>
 <p>Audit the repository you are working in:</p>
-<pre><code class="language-text">/arckit:repo-audit
+<pre><code class="language-text">/arckit-repo:repo-audit
 </code></pre>
 <p>Audit a public repository elsewhere:</p>
-<pre><code class="language-text">/arckit:repo-audit https://github.com/org/service
+<pre><code class="language-text">/arckit-repo:repo-audit https://github.com/org/service
 </code></pre>
 <p>Narrow the audit to what you care about:</p>
-<pre><code class="language-text">/arckit:repo-audit https://github.com/org/service security and resilience
+<pre><code class="language-text">/arckit-repo:repo-audit https://github.com/org/service security and resilience
 </code></pre>
 <p>See what would happen without writing or cloning anything:</p>
-<pre><code class="language-text">/arckit:repo-audit https://gitlab.com/group/project --check
+<pre><code class="language-text">/arckit-repo:repo-audit https://gitlab.com/group/project --check
 </code></pre>
 <hr />
 <h2 id="choosing-the-diagram-format">Choosing the Diagram Format</h2>
 <p>The audit includes a C4 container diagram of the as-built architecture. It is written as Mermaid by default, because the report is usually read in the repository it audits, and GitHub, GitLab and ArcKit Pages all render Mermaid inline with no toolchain to install.</p>
 <p>Pass <code>--diagram-format plantuml</code> when layout quality matters more than portability:</p>
-<pre><code class="language-text">/arckit:repo-audit https://github.com/org/service --diagram-format plantuml
+<pre><code class="language-text">/arckit-repo:repo-audit https://github.com/org/service --diagram-format plantuml
 </code></pre>
 <p>C4-PlantUML lays out large container diagrams better and supports directional hints (<code>Lay_D</code>, <code>Lay_R</code>), which start to matter above roughly ten containers. The trade is that it needs a PlantUML server, the VS Code PlantUML extension, or ArcKit Pages to render, so it will not display inline on GitHub.</p>
 <p>To make one format the permanent default for a project rather than passing the flag each time, edit the template instead.</p>
@@ -473,7 +473,7 @@ find ~/.claude/plugins/cache -path '*/templates/codebase-audit-template.md' \
   | sort -V | tail -1 \
   | xargs -I{} cp {} .arckit/templates-custom/codebase-audit-template.md
 </code></pre>
-<p>Then edit the fenced diagram block in your copy. <code>/arckit:repo-audit</code> reads <code>.arckit/templates-custom/</code> before <code>.arckit/templates/</code> and before the plugin default, so every audit in that project picks up your version, and it survives plugin upgrades. An explicit <code>--diagram-format</code> on the command line still wins over whatever the template says.</p>
+<p>Then edit the fenced diagram block in your copy. <code>/arckit-repo:repo-audit</code> reads <code>.arckit/templates-custom/</code> before <code>.arckit/templates/</code> and before the plugin default, so every audit in that project picks up your version, and it survives plugin upgrades. An explicit <code>--diagram-format</code> on the command line still wins over whatever the template says.</p>
 <hr />
 <h2 id="two-modes-inferred-automatically">Two Modes, Inferred Automatically</h2>
 <p>You never pass a mode flag. The command works out which one applies.</p>
@@ -518,7 +518,7 @@ find ~/.claude/plugins/cache -path '*/templates/codebase-audit-template.md' \
 </thead>
 <tbody>
 <tr>
-<td><code>/arckit:repo-docs</code></td>
+<td><code>/arckit-repo:repo-docs</code></td>
 <td>Documents a repository</td>
 <td>Describes. This command judges.</td>
 </tr>
@@ -539,7 +539,7 @@ find ~/.claude/plugins/cache -path '*/templates/codebase-audit-template.md' \
 </tr>
 </tbody>
 </table>
-<p>A natural sequence for an inherited codebase: <code>/arckit:repo-audit</code> to find out what you have, <code>/arckit:adr</code> to record the decisions it surfaced, <code>/arckit:risk</code> to promote the CRITICAL and HIGH findings, then <code>/arckit:conformance</code> once there are ADRs to conform to.</p>
+<p>A natural sequence for an inherited codebase: <code>/arckit-repo:repo-audit</code> to find out what you have, <code>/arckit:adr</code> to record the decisions it surfaced, <code>/arckit:risk</code> to promote the CRITICAL and HIGH findings, then <code>/arckit:conformance</code> once there are ADRs to conform to.</p>
 <hr />
 <h2 id="review-checklist">Review Checklist</h2>
 <p>Before you circulate an audit:</p>

@@ -24,9 +24,9 @@ allowed-tools:
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output is
 > **not** regulatory advice. The CTP dependency assessment MUST be reviewed, materially supplemented,
-> and signed off by qualified UK FS regulatory counsel, the firm's Compliance Officer, and the SMF
-> holder with primary accountability for operational resilience (typically SMF24 — Chief Operations
-> Function — at larger firms; SMF1 — CEO — at smaller firms without a dedicated COO). MLRO review
+> and signed off by qualified UK FS regulatory counsel, the firm's Compliance Officer, and the
+> individual with primary accountability for operational resilience (an SMF holder only if the firm
+> is within SM&CR; see Important Notes). MLRO review
 > is required only where a CTP relationship directly affects AML/sanctions screening capability (e.g.
 > a third-party sanctions-screening service is itself a designated or material CTP). The CTP regime
 > (BoE/PRA/FCA PS24/16, effective January 2025) is recent and the designated CTP list is still
@@ -221,7 +221,7 @@ Print the summary per `## Output Summary` below. Do not echo the full artefact.
   resilience testing plan that lists "substitution drill planned for Q3 2025" without a recorded
   outcome is an audit finding. The "Last resilience test date" field in the dependency register
   must contain a date. Where no drill has yet been conducted, this must be documented as a gap with
-  a remediation timeline signed off by the relevant SMF holder.
+  a remediation timeline signed off by the individual accountable for operational resilience.
 - **Nth-party (sub-contractor) dependencies are often the actual failure mode.** A cloud hyperscaler
   may itself rely on a small number of specialist sub-contractors for power, cooling, hardware
   supply, or networking. Surface these sub-contractor dependencies explicitly in the register even
@@ -232,11 +232,18 @@ Print the summary per `## Output Summary` below. Do not echo the full artefact.
   framework effective March 2022) are the anchor for CTP materiality. A provider that the firm
   cannot operate an IBS without for more than the IBS's impact tolerance is always material,
   regardless of contract value or volume.
-- **SMF accountability for operational resilience and CTP assessment.** Primary accountability
-  sits with SMF24 (Chief Operations Function) at most large firms, and with SMF1 (CEO) at smaller
-  firms that do not have a dedicated COO. The assessment should name the accountable SMF holder
-  explicitly — a document listing "Operations Team" rather than a named SMF individual is not
-  compliant with the FCA's senior manager accountability expectations.
+- **Name the individual accountable for operational resilience; do not assume SM&CR.** SYSC 15A
+  applies to EMIs, payment institutions and RAISPs as well as to banks, building societies and
+  enhanced scope SM&CR firms (SYSC 15A.1.1R), and the firm's governing body must approve and
+  regularly review the self-assessment (SYSC 15A.7.1R). SM&CR applies only to FSMA-authorised
+  firms (e.g. a bank, building society or other firm with a Part 4A permission). For such a firm,
+  name the SMF holder: SMF24 (Chief operations function) where the firm has one, which for an FCA
+  solo-regulated firm means an enhanced scope firm (SUP 10C Annex 1), otherwise SMF1 (Chief
+  executive function). A PI or EMI authorised only under the
+  PSRs 2017 or EMRs 2011 is outside SM&CR: name the director or person responsible for management
+  notified to the FCA (PSRs 2017 reg 6(7)(b); EMRs 2011 reg 6(6)(b)). Either way, name an
+  individual, not a team: "Operations Team" does not show the clear lines of responsibility that
+  SM&CR, or the governance condition in PSRs 2017 reg 6(6)(a) and EMRs 2011 reg 6(5)(a), expects.
 - **MLRO involvement is narrow in scope for CTP work.** The MLRO's primary role in this assessment
   is limited to scenarios where a CTP relationship directly affects AML or sanctions screening
   capability — for example, where a designated sanctions-screening service is itself a material CTP.
@@ -283,7 +290,8 @@ After writing the artefact, print only:
 - Number of material non-CTPs identified
 - Concentration risks surfaced (geographic / vendor / functional — count each)
 - Providers with no resilience test date recorded (count — each is an audit finding)
-- SMF holder named (role and name, or PENDING if not provided in user input)
+- Accountable individual named (role and name, or PENDING if not provided in user input), and
+  whether the firm is within SM&CR
 - Citation count
 - Any items flagged as requiring legal sign-off or gap-remediation before the assessment is
   presented to the Board or submitted to regulators

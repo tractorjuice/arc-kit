@@ -95,7 +95,7 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
 
    - **NER / NGR and AEMO Obligation Mapping** - map architecture-relevant NER, NGR, AEMO procedure, market interface, registration, dispatch, metering, settlement, and operational obligations at a high level for specialist confirmation.
 
-   - **Energy-Specific SOCI Interpretation** - cross-reference `/arckit-au:au-soci-cirmp` for critical-infrastructure applicability, protected information, reporting, CIRMP hazards, and SOCI incident escalation.
+   - **Energy-Specific SOCI Interpretation** - cross-reference `/arckit-au:au-soci-cirmp` for critical-infrastructure applicability, protected information, CIRMP hazards, and SOCI incident escalation, with one row for each reporting obligation: register reporting (Part 2), the CIRMP annual report (Part 2A), and mandatory cyber incident reporting (Part 2B, 12 or 72 hours). Which obligations apply depends on the asset class; record the position rather than assuming all three.
 
    - **Market and System-Operator Interface Register** - identify AEMO portals, APIs, B2B / B2M, file transfers, telemetry, dispatch, outage, settlement, and operational interfaces.
 

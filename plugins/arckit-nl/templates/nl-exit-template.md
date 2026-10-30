@@ -30,15 +30,25 @@
 
 Clause 3.2 of the Herziening rijksbreed cloudbeleid 2026 requires a mandatory, documented, self-tested exit plan covering **two scenarios**: a planned exit and a disruptive interruption of service. The plan must address destruction of data at the provider after migration and must be reviewed annually.
 
+Art. 7 of the Implementatiekader risicoafweging cloudgebruik ([VERSION APPLIED — v1.1, 5 January 2023, unless a later version has been published]) adds four parts, secured through the organisation's own measures, including budget, and through contract terms with the provider:
+
+| Implementatiekader Art. 7 part | Covered in | Status |
+|--------------------------------|------------|--------|
+| 1. Conditions on the provider and its sub-suppliers for data portability, service portability and data destruction, including the processes and facilities needed | Section 4 | [Covered / Gap] |
+| 2. An alternative provider or an internal landing place | Sections 2 and 3 | [Covered / Gap] |
+| 3. A strategy, conditions and budget for leaving at once in a crisis or a sudden (geopolitical) development | Section 3 | [Covered / Gap] |
+| 4. A strategy and budget for the regular end of the contract | Section 2 | [Covered / Gap] |
+
 ## 2. Scenario A — Planned Exit
 
 | Element | Detail |
 |---------|--------|
 | Trigger conditions | [e.g. contract expiry, policy decision, better-fit alternative] |
 | Data export method | [Format, mechanism, verification of completeness] |
-| Target environment | [Where data and workloads move to] |
+| Target environment — alternative provider or internal landing place (implementatiekader Art. 7.2) | [Where data and workloads move to, by type and capability — not an endorsement of a provider] |
 | Estimated timeline | [Duration] |
 | Estimated cost | [Egress fees, rebuild effort, dual-running costs] |
+| Budget for the regular end of the contract (Art. 7.4) | [Amount and where it is reserved / Not reserved — gap] |
 | Dependencies | [Integrations, identity, key management] |
 | Owner | [Role] |
 
@@ -46,7 +56,10 @@ Clause 3.2 of the Herziening rijksbreed cloudbeleid 2026 requires a mandatory, d
 
 | Element | Detail |
 |---------|--------|
-| Trigger conditions | [e.g. provider insolvency, sanctions event, sudden service withdrawal, sustained outage] |
+| Trigger conditions | [e.g. provider insolvency, sanctions event, sudden service withdrawal, sustained outage, a crisis or sudden (geopolitical) development that requires leaving at once] |
+| Strategy and conditions for leaving at once in a crisis (implementatiekader Art. 7.3) | [Who decides, on what grounds, and the steps to leave immediately] |
+| Budget for leaving at once (Art. 7.3) | [Amount and where it is reserved / Not reserved — gap] |
+| Landing place in this scenario (Art. 7.2) | [Alternative provider or internal landing place, and how quickly it can be reached] |
 | Minimum viable continuity path | [Fallback capability and how quickly it can be reached] |
 | Data recovery method | [How data is retrieved without provider cooperation, if backups are held independently] |
 | Estimated recovery time | [RTO] |
@@ -59,6 +72,7 @@ Clause 3.2 of the Herziening rijksbreed cloudbeleid 2026 requires a mandatory, d
 | Requirement | Status |
 |-------------|--------|
 | Contractual destruction clause in place | [Status] |
+| Contract conditions for data portability, service portability and data destruction, including the processes and facilities needed, also bind the sub-suppliers (implementatiekader Art. 7.1) | [Status] |
 | Destruction method specified | [Status] |
 | Verification / attestation of destruction obtained | [Status] |
 | Destruction logged | [Status] |
@@ -100,6 +114,7 @@ Clause 3.2 of the Herziening rijksbreed cloudbeleid 2026 requires a mandatory, d
 | Doc ID | Filename | Type | Source Location | Description |
 |--------|----------|------|-----------------|-------------|
 | WEB-1 | <https://www.tweedekamer.nl/downloads/document?id=2026D35295> | Web URL | tweedekamer.nl | Herziening rijksbreed cloudbeleid 2026, clause 3.2 (Exit-plan) (3 July 2026, definitief). Verified [YYYY-MM-DD] |
+| WEB-2 | <https://zoek.officielebekendmakingen.nl/blg-1070754.pdf> | Web URL | officielebekendmakingen.nl | Implementatiekader risicoafweging cloudgebruik, v1.1 (5 January 2023), Art. 7 (Exit-strategie), bijlage to Kamerstuk 26643 nr. 964 — or the later version applied. Verified [YYYY-MM-DD] |
 
 ### Citations
 

@@ -70,7 +70,7 @@ Generates a UAE IAS Statement of Applicability against the 188 controls (60 mana
 
 #### `/arckit:uae-cloud-residency`
 
-Assesses sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, names approved CSP options (Core42 / G42 sovereign, Microsoft UAE North and Central, TDRA FedNet, e& Sovereign Launchpad on AWS), and captures the shared-responsibility matrix and exit/portability plan. Handoffs: `uae-classification` (depends on it), `adr` (residency decisions captured as ADRs).
+Assesses sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, checks candidate CSPs (Core42 / G42 sovereign, Microsoft UAE North and Central, TDRA FedNet, e& Sovereign Launchpad on AWS, du Tech National Hypercloud) against the policy's tiers and minimum certifications (the policy itself approves no CSPs; any Cyber Security Council certification is recorded with its scope), and captures the shared-responsibility matrix and exit/portability plan. Handoffs: `uae-classification` (depends on it), `adr` (residency decisions captured as ADRs).
 
 ### Federal Identity
 
@@ -184,14 +184,14 @@ Earlier ArcKit releases used a five-rung UAE ladder (`Open / Shared / Confidenti
 
 ## Verified Citations
 
-The maintenance document records six citations that earlier releases flagged as not yet verified. Each was checked against its primary source on 18 October 2026 (issue #949):
+The maintenance document records six citations that earlier releases flagged as not yet verified. Each was checked against its primary source on 18 October 2026 (issue #949), and items 1, 4 and 6 again on 27 October 2026 (issue #982):
 
 1. **PDPL Executive Regulations**: the Decree-Law has been in force since 2 January 2022; the UAE Government portal names no Executive Regulations, so the PDPL command records the status with the date it was checked.
 2. **Smart Data classes**: four — Open, Confidential, Sensitive, Secret (Smart Data Framework Part 1, DC1).
 3. **UAE Pass and eIDAS**: UAE PASS defines SOP1 / SOP2 / SOP3 account types and publishes no eIDAS mapping.
-4. **AWS `me-south-1`**: Bahrain, not UAE-resident; AWS's UAE Region is `me-central-1`.
+4. **AWS `me-south-1`**: Bahrain, not UAE-resident; AWS's UAE Region is `me-central-1`. The National Cloud Security Policy v2.0 sets no UAE-location requirement for Open data, so only an Open dataset may be stored there.
 5. **Central Bank AI guidance**: CBUAE Guidance Note on AI and ML for licensed financial institutions, 11 February 2026.
-6. **Digital Records Policy owner**: the Cabinet approved it on 23 April 2026; the announcement names no administering body.
+6. **Digital Records Policy owner**: the Cabinet approved it on 23 April 2026; the announcement names no owner, but the UAE Legislation Platform lists the Prime Minister's Office as lead entity.
 
 See `uae-overlay-maintenance.md` for the sources and detail.
 

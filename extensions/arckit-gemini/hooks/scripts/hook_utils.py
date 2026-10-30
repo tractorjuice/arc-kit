@@ -173,7 +173,7 @@ DOC_TYPES = {
     "AIA":        {"name": "Canada Algorithmic Impact Assessment",                          "category": "Compliance"},
     "CHRT":       {"name": "Canada Charter Rights Design Review",                           "category": "Governance"},
     "ITSG":       {"name": "Canada ITSG-33 Statement of Applicability",                     "category": "Architecture"},
-    "SOIA":       {"name": "Canada Security of Information Act Handling Plan",              "category": "Compliance"},
+    "SOIA":       {"name": "Canada Foreign Interference and Security of Information Act Handling Plan", "category": "Compliance"},
     "CACR":       {"name": "Canada Sovereign Cloud Residency Assessment",                   "category": "Architecture"},
     "DIGSTD":     {"name": "Canada GC Digital Standards Conformance",                       "category": "Governance"},
     "OLA":        {"name": "Canada Official Languages Act Review",                          "category": "Compliance"},
@@ -187,7 +187,7 @@ DOC_TYPES = {
     "ZTA":        {"name": "US CISA Zero Trust Maturity Posture",                           "category": "Architecture"},
     "ICAM":       {"name": "US ICAM Architecture (OMB M-19-17 / NIST SP 800-63-3)",         "category": "Architecture"},
     "AIRMF":      {"name": "US NIST AI Risk Management Framework Assessment",               "category": "Compliance"},
-    "AIIA":       {"name": "US AI Impact Assessment (OMB M-24-10 / M-25-21)",               "category": "Compliance"},
+    "AIIA":       {"name": "US AI Impact Assessment (OMB M-25-21 / M-25-22)",               "category": "Compliance"},
     "USPIA":      {"name": "US Privacy Impact Assessment (E-Gov §208)",                     "category": "Compliance"},
     "SBOM":       {"name": "US SBOM + Secure-Software Self-Attestation (EO 14028)",         "category": "Compliance"},
     # Australian Federal Overlay
@@ -216,7 +216,7 @@ DOC_TYPES = {
     "FSCD":       {"name": "UK FCA Consumer Duty Board Report",                             "category": "Compliance"},
     "FSCTP":      {"name": "UK Critical Third Parties Dependency Assessment",               "category": "Compliance"},
     # UK NHS Clinical Safety Overlay
-    "NHSDTAC":    {"name": "NHS Digital Technology Assessment Criteria (DTAC v3)",          "category": "Compliance"},
+    "NHSDTAC":    {"name": "NHS Digital Technology Assessment Criteria (DTAC)",             "category": "Compliance"},
     "NHSMDR":     {"name": "UK MDR + EU MDR SaMD/AIaMD Classification",                     "category": "Compliance"},
     "MMOD":       {"name": "Maturity Model Assessment",                                     "category": "Governance"},
 }

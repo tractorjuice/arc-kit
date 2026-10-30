@@ -404,7 +404,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 
 | Command | Needs (M) | Recommended (R) | Optional (O) |
 |---------|-----------|-----------------|--------------|
-| `/arckit:au-aescsf` | — | requirements, stakeholders | au-e8-posture, au-ism-controls, au-ot-security, au-soci-cirmp, data-model, dfd, diagram, maturity-model, principles, risk, servicenow, traceability |
+| `/arckit:au-aescsf` | — | au-e8-posture, au-ism-controls, requirements, stakeholders | au-ot-security, au-soci-cirmp, data-model, dfd, diagram, maturity-model, principles, risk, servicenow, traceability |
 | `/arckit:au-energy-compliance` | — | requirements, stakeholders | adr, au-aescsf, au-ndb-playbook, au-ot-security, au-pia, au-soci-cirmp, data-model, dfd, diagram, principles, risk, servicenow, traceability |
 
 ### ArcKit USA Federal Civilian Overlay (`arckit-us`)
@@ -437,7 +437,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 |---------|-----------|-----------------|--------------|
 | `/arckit:uk-nhs-dcb0129` | — | data-model, requirements, stakeholders | atrs, dpia, principles, risk |
 | `/arckit:uk-nhs-dcb0160` | — | data-model, principles, requirements, stakeholders, uk-nhs-dcb0129 | operationalize |
-| `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-nhs-dcb0129, uk-nhs-dcb0160 |
+| `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-mdr-classification, uk-nhs-dcb0129, uk-nhs-dcb0160 |
 | `/arckit:uk-mdr-classification` | — | data-model, principles, requirements, stakeholders | secure, uk-nhs-dcb0129 |
 
 ### ArcKit FDE Site Generator (`arckit-fde`)
@@ -481,7 +481,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:business-capability-map` | adm-preliminary | principles, requirements, stakeholders | application-inventory |
 | `/arckit:application-inventory` | adm-preliminary | business-capability-map, principles, requirements | — |
 | `/arckit:application-rationalization` | application-inventory | adm-preliminary, adr, business-capability-map, principles, transition-architecture | — |
-| `/arckit:gap-analysis` | business-capability-map | principles, strategy | adm-preliminary, risk, stakeholders |
+| `/arckit:gap-analysis` | business-capability-map | application-inventory, application-rationalization, principles, strategy | adm-preliminary, risk, stakeholders |
 | `/arckit:transition-architecture` | gap-analysis | adr, application-rationalization, roadmap | risk, stakeholders |
 | `/arckit:architecture-board` | principles | adm-preliminary, business-capability-map, vendor HLD | — |
 | `/arckit:architecture-change` | — | adm-preliminary, architecture-board, business-capability-map, principles, transition-architecture | application-inventory |
@@ -1104,13 +1104,14 @@ Added 18 new commands covering EU regulations and French public sector governanc
 - `nl-cloud` assesses Cbw essential-entity status itself (clause 4.3); it does not read an `eu-nis2` artefact
 - `nl-gemma` → informs `nl-nora` (R) — the component mapping is evidence for the reuse and standardisation principles
 - `nl-bio` → informs `nl-nora` (R) — security evidence for NAP13 and NAP14
+- `nl-tbb`, `nl-cloud`, `nl-exit` and `nl-bio` → feed `risk` — each hands its findings (classification implications, clause 3.1 cloud risks, exit residual risks, BIO2 gaps) to the risk register. Each reads an existing register only as a recommended input, so `risk` runs after them
 
 **Typical Dutch central-government compliance path**:
 
 ```text
-stakeholders → requirements → risk →
+stakeholders → requirements →
 nl-tbb → nl-cloud → nl-exit → nl-bio →
-eu-nis2 → eu-data-act
+risk → eu-nis2 → eu-data-act
 ```
 
 **Key inter-dependencies among EU/FR commands**:
@@ -1150,7 +1151,7 @@ Added 12 official-baseline commands covering UAE federal regulatory and digital-
 - `/arckit:uae-classification` — UAE Smart Data Classification Register. Depends on: requirements (R), data-model (R). Produces ARC-*-CLAS-*.md
 - `/arckit:uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-PDPL-*.md
 - `/arckit:uae-ias` — UAE Cybersecurity Council IAS v2 Statement of Applicability. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-IAS-*.md
-- `/arckit:uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment. Depends on: uae-classification (M), requirements (R). Produces ARC-*-CLDR-*.md
+- `/arckit:uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment. Depends on: uae-classification (M), requirements (R). Produces ARC-*-CRES-*.md
 - `/arckit:uae-uaepass` — UAE Pass integration design (OIDC/OAuth, claim mapping, profiles, e-signature). Depends on: requirements (M), integration (R). Produces ARC-*-UPASS-*.md
 - `/arckit:uae-zero-bureaucracy` — Service Catalogue review under Code for Government Services. Depends on: requirements (M), user-stories (R), journeys (R). Produces ARC-*-ZBUR-*.md
 - `/arckit:uae-digital-records` — Digital Records Plan (source-of-truth register, retention, official-source). Depends on: requirements (M), data-model (R), uae-classification (R). Produces ARC-*-DREC-*.md
@@ -1186,20 +1187,20 @@ uae-procurement → sobc → wardley → framework
 
 Added 12 community-overlay commands (`ca-*`) covering federal Canadian regulatory and digital-government instruments. They ship with the `[COMMUNITY]` description prefix and are not part of the officially-maintained baseline. Total command count moves from 104 to 116 (70 official + 46 community).
 
-The 12 commands cover: FITAA (Bill C-70 2024), federal privacy and access (Privacy Act, ATI Act), Treasury Board Directive on Automated Decision-Making, Charter rights design review, ITSG-33 + Standard on Security Categorization, Security of Information Act handling, GC Cloud sovereign residency, GC Digital Standards conformance, Official Languages Act, federal procurement (PSPC + PSAB), and First Nations OCAP® data sovereignty.
+The 12 commands cover: FITAA (Bill C-70 2024), federal privacy and access (Privacy Act, ATI Act), Treasury Board Directive on Automated Decision-Making, Charter rights design review, ITSG-33 + Standard on Security Categorization, *Foreign Interference and Security of Information Act* handling, GC Cloud sovereign residency, GC Digital Standards conformance, Official Languages Act, federal procurement (PSPC + PSIB), and First Nations OCAP® data sovereignty.
 
 **Canonical execution chains**:
 
 ```text
 Flow 1 — FITAA-class application (registration scheme, scoring, automated triage):
-principles → stakeholders → requirements → ca-charter → ca-fitaa → ca-pia → ca-atip → ca-aia (if ADM) → ca-ocap (if Indigenous data)
+principles → stakeholders → requirements → data-model → ca-pia → ca-atip → ca-aia (if ADM) → ca-fitaa → ca-charter → ca-ocap (if Indigenous data)
   → ca-itsg-33 → ca-soia (if classified) → ca-cloud-residency → ca-ola
   → ca-gc-digital-standards → risk → sobc → ca-pspc → adr → framework
 ```
 
 ```text
 Flow 2 — generic federal Canadian application:
-principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (if ADM) → ca-ocap (if Indigenous data)
+principles → stakeholders → requirements → data-model → ca-pia → ca-atip → ca-aia (if ADM) → ca-ocap (if Indigenous data)
   → ca-itsg-33 → ca-cloud-residency → ca-ola
   → ca-gc-digital-standards → risk → sobc → ca-pspc → adr → framework
 ```
@@ -1209,35 +1210,27 @@ principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (
 | From command | Handoff target | Condition / rationale |
 |---|---|---|
 | `ca-fitaa` | `ca-charter` | Charter §2 (expression / association) review required for any registration scheme touching protected speech |
-| `ca-fitaa` | `ca-pia` | PIA for personal information collected during arrangement registration |
-| `ca-fitaa` | `ca-atip` | Reconciles the public-facing register against the protected investigative dataset (severance design for hybrid views) |
-| `ca-fitaa` | `ca-aia` | Triggered when registration triage uses automated decision-making, scoring, or risk classification |
+| `ca-fitaa` | `ca-soia` | When classified material is in scope: the protected investigative dataset overlaps with Special Operational Information |
+| `ca-fitaa` | `ca-ola` | The public register and registration forms trigger Official Languages Act Part IV obligations |
 | `ca-pia` | `risk` | PIA findings feed privacy and regulatory entries in the risk register |
 | `ca-pia` | `ca-atip` | Personal-information disclosure register continues into ATIP reconciliation |
 | `ca-pia` | `ca-aia` | Required when ADM touches personal information; AIA inherits the PIA inventory |
-| `ca-atip` | `data-model` | Severance rules feed back into data-model classification flags and access controls |
-| `ca-atip` | `ca-pia` | PIA personal-information register is the authoritative source for the §4–§8 use/disclosure register |
+| `ca-atip` | `adr` | Severance design choices for hybrid public/protected views warrant ADRs |
 | `ca-aia` | `risk` | AIA findings — bias, drift, contestability — feed the operational risk register |
 | `ca-aia` | `adr` | Material AIA outcomes (vendor selection, autonomy tier, recourse design) warrant ADRs |
-| `ca-aia` | `ca-pia` | Personal-information feeding the algorithmic system inherits PIA controls; AIA depth must match PIA depth |
-| `ca-charter` | `ca-fitaa` | Charter §2 expression / association analysis is a mandatory companion to FITAA |
-| `ca-charter` | `ca-pia` | §8 search-and-seizure analysis grounded in the PIA personal-information categories |
 | `ca-charter` | `risk` | Residual Charter risks per right feed the operational risk register |
 | `ca-itsg-33` | `ca-cloud-residency` | Categorisation and control profile feed the sovereign cloud residency assessment |
 | `ca-itsg-33` | `risk` | Residual security risks and tailoring deviations become risk-register entries |
 | `ca-itsg-33` | `adr` | Material control tailoring or compensating-control decisions warrant ADRs |
-| `ca-soia` | `ca-itsg-33` | SOIA handling rules sit on top of the ITSG-33 baseline (categorisation is prerequisite) |
 | `ca-soia` | `risk` | SOIA-specific residual risks (compartment compromise, suspected unauthorised disclosure) |
 | `ca-soia` | `adr` | Compartment design, MOU choices with CSIS / RCMP, and tier-promotion thresholds warrant ADRs |
 | `ca-cloud-residency` | `adr` | Sovereign cloud option choices and CLOUD-Act risk acceptance warrant ADRs |
-| `ca-cloud-residency` | `ca-itsg-33` | Cloud control-profile selection (PBMM-Cloud, Secret-High) grounded in ITSG-33 categorisation |
+| `ca-cloud-residency` | `ca-pspc` | Residency envelope, sub-processor analysis and CSP shortlist feed the procurement strategy where cloud is in scope |
 | `ca-gc-digital-standards` | `service-assessment` | GC Digital Standards conformance feeds the broader service-assessment evidence base |
 | `ca-gc-digital-standards` | `roadmap` | Identified gaps and remediation actions become roadmap milestones |
 | `ca-ola` | `ca-gc-digital-standards` | OLA service equivalence is a baseline expectation under the GC Digital Standards scorecard |
 | `ca-ola` | `service-assessment` | OLA review feeds the service-assessment evidence base for bilingualism and active offer |
 | `ca-pspc` | `evaluate` | PSPC route selection feeds the vendor evaluation framework's scoring rubric |
-| `ca-ocap` | `data-model` | OCAP-mapped classifications and access controls feed the data-model stewardship and access policies |
-| `ca-ocap` | `ca-pia` | Personal-information processing of Indigenous data inherits PIA controls plus OCAP-derived restrictions |
 | `ca-ocap` | `ca-atip` | ATIP severance design must reflect OCAP access and control determinations for Indigenous datasets |
 
 - **Updated**: Total command count from 104 to 116 (70 official + 46 community = 116; community now includes 12 Canada + 12 UAE + 7 EU + 12 FR + 3 Austrian)
@@ -1245,9 +1238,9 @@ principles → stakeholders → requirements → ca-pia → ca-atip → ca-aia (
 
 ### 2026-05-23 - USA Federal Civilian Overlay Commands (Community)
 
-Added 10 community-overlay commands (`us-*`) covering US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship with the `[COMMUNITY]` description prefix and are not part of the officially-maintained baseline. Total command count moves to **135** (71 official + 64 community).
+Added 10 community-overlay commands (`us-*`) covering US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-25-21/M-25-22 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship with the `[COMMUNITY]` description prefix and are not part of the officially-maintained baseline. Total command count moves to **135** (71 official + 64 community).
 
-**Statutory currency anchor**: EO 14110 was revoked January 2025; the live AI mandates are OMB M-24-10 + M-25-21. FedRAMP completed the Rev 5 transition in 2024.
+**Statutory currency anchor**: EO 14110 was revoked January 2025; the live AI mandates are OMB M-25-21 (use of AI; it rescinded and replaced M-24-10 on 3 April 2025) + M-25-22 (acquisition of AI; it replaced M-24-18). FedRAMP completed the Rev 5 transition in 2024, and OMB M-24-15 (July 2024) replaced the JAB with the FedRAMP Board.
 
 **Canonical execution chain (us-federal recipe, 5 waves)**:
 
@@ -1283,15 +1276,15 @@ Wave 5 (authorization): us-sbom-eo-14028 → us-fedramp-ssp → us-fedramp-readi
 | `us-icam` | `us-zero-trust` | ICAM is the foundation of the Zero Trust Identity pillar; IAL/AAL/FAL selections directly score ZTMM Identity functions |
 | `us-icam` | `us-privacy-pia` | Identity proofing collects and processes PII (especially IAL2/IAL3); the ICAM data flows feed the PIA personal-information inventory |
 | `us-icam` | `adr` | Identity provider selection (PIV vs login.gov vs agency-specific) and federation pattern decisions warrant ADRs |
-| `us-ai-rmf` | `us-ai-impact` | Translate AI RMF findings into the M-24-10 rights-impacting / safety-impacting determination and the M-25-21 acquisition controls |
+| `us-ai-rmf` | `us-ai-impact` | Translate AI RMF findings into the M-25-21 high-impact determination and minimum practices, and the M-25-22 acquisition terms |
 | `us-ai-rmf` | `us-privacy-pia` | AI systems trained on or inferencing over PII require an E-Gov Act §208 PIA; the AI RMF data inventory seeds the PIA |
 | `us-ai-rmf` | `risk` | Residual AI risks (confabulation, bias, security, value-chain) flow into the project risk register |
 | `us-ai-rmf` | `adr` | Model architecture, hosting, data-governance, and human-oversight decisions made during the RMF process warrant ADRs |
 | `us-ai-impact` | `us-ai-rmf` | The minimum-practice gaps surfaced here drive the AI RMF Govern / Map / Measure / Manage uplift backlog |
-| `us-ai-impact` | `us-privacy-pia` | Rights-impacting AI systems handling PII require an E-Gov Act §208 PIA |
-| `us-ai-impact` | `risk` | Residual M-24-10 risks (especially where minimum practices cannot be met) flow into the risk register |
+| `us-ai-impact` | `us-privacy-pia` | AI systems handling PII require an E-Gov Act §208 PIA, which the M-25-21 impact assessment should reference |
+| `us-ai-impact` | `risk` | Residual M-25-21 risks (especially where minimum practices cannot be met) flow into the risk register |
 | `us-privacy-pia` | `us-icam` | PII collected by identity proofing (IAL2/IAL3) and authentication processes is documented in the PIA; the ICAM data flows must reconcile with the PIA inventory |
-| `us-privacy-pia` | `us-ai-impact` | AI systems processing PII require both the PIA and the M-24-10 rights-impacting determination; the PIA feeds the AI Impact Assessment |
+| `us-privacy-pia` | `us-ai-impact` | AI systems processing PII require both the PIA and the M-25-21 high-impact determination; the PIA feeds the AI Impact Assessment |
 | `us-privacy-pia` | `data-model` | PII fields and lawful authorities surface as data-model attributes and access-control rules |
 | `us-sbom-eo-14028` | `us-nist-800-53` | SR (Supply Chain Risk Management) and SA (System and Services Acquisition) control family implementations must cross-reference the attestation and SBOM |
 | `us-sbom-eo-14028` | `adr` | SBOM format choice (CycloneDX vs SPDX), signing strategy (Sigstore, in-toto, SLSA level), and attestation exception requests warrant ADRs |

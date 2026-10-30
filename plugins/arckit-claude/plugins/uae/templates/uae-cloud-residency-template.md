@@ -15,7 +15,7 @@
 
 ## Executive Summary
 
-[Two to three paragraphs describing the residency posture, the chosen sovereign cloud combination, residual non-compliance (if any), and the exit / portability stance under the UAE National Cloud Security Policy v2.]
+[Two to three paragraphs describing the residency posture, the chosen sovereign cloud combination, residual non-compliance (if any), and the exit / portability stance under the UAE National Cloud Security Policy, Version 2.0.]
 
 ## Scope
 
@@ -29,17 +29,17 @@
 
 ## Per-Dataset Residency Assessment
 
-For each Dataset ID from the project's Smart Data Classification Register (`ARC-<project-id>-CLAS-v*.md`), assess required and actual residency.
+For each Dataset ID from the project's Smart Data Classification Register (`ARC-<project-id>-CLAS-v*.md`), map the Smart Data class to the policy's data classification level (Appendix 6.7) and assess required and actual residency.
 
-| Dataset ID | Classification | Required residency | Chosen CSP | Region | Compliance check |
-|------------|----------------|---------------------|------------|--------|-------------------|
-| [DS-001] | [Open / Confidential / Sensitive / Secret] | [UAE-resident / no constraint] | [Core42 / G42 / Microsoft UAE North / UAE Central / FedNet / e& Sovereign Launchpad / etc.] | [region] | [Compliant / Non-compliant — rationale] |
+| Dataset ID | Classification | Policy level (Appendix 6.7) | Required tier | Chosen CSP | Region | Compliance check |
+|------------|----------------|-----------------------------|---------------|------------|--------|-------------------|
+| [DS-001] | [Open / Confidential / Sensitive / Secret] | [Open, Confidential/Restricted, Secret or Top Secret — mapping rationale] | [Baseline Secure Cloud / Partial Sovereign Cloud / Sovereign Cloud] | [Core42 / G42 / Microsoft UAE North / UAE Central / FedNet / e& Sovereign Launchpad / du National Hypercloud / etc.] | [region] | [Compliant / Non-compliant — rationale] |
 
-> Confidential, Sensitive, and Secret datasets MUST resolve to UAE-resident sovereign infrastructure under the National Cloud Security Policy v2. Any non-compliant row is a critical gap.
+> Under the National Cloud Security Policy, Version 2.0: Open data needs only the Baseline Secure Cloud Requirements, with its location known (§2.4.1.1–2.4.1.3); Confidential/Restricted data MUST be stored and processed on a Partial Sovereign or Sovereign Cloud, with the data stored in the UAE (§2.4.1.4, §3.4.1.1); data above Confidential/Restricted MUST be stored and processed on a Sovereign Cloud, with processing and metadata also in the UAE (§2.4.1.5, §3.4.1.4–3.4.1.5). Any non-compliant row is a critical gap unless the Cyber Security Council has granted an exception (§1.4).
 
 ## CSP Due-Diligence Pack
 
-For each candidate CSP, record the diligence posture.
+The policy approves no CSPs: the providers below are candidates. For each, record the certifications Appendix 6.6 requires of every cloud service (§3.1.5.1), with the evidence seen, and the CSP's own list of services that meet the Partial Sovereign or Sovereign Cloud Requirements. Record any Cyber Security Council certification a CSP holds, with its scope and source, as additional evidence.
 
 ### Core42 / G42 sovereign cloud
 
@@ -47,8 +47,12 @@ For each candidate CSP, record the diligence posture.
 |------|-------|
 | Sovereign-data scope | [in scope / out of scope] |
 | Regional footprint | [Abu Dhabi / Dubai / other] |
-| DESC accreditation | [Y/N — date] |
-| CSC accreditation | [Y/N — date] |
+| UAE IAS self-assessment (Appendix 6.6) | [Y/N — date] |
+| DESC ISR self-assessment (Appendix 6.6) | [Y/N — date] |
+| ISO/IEC 27001:2022, 27017:2019, 27018:2019, 22301:2019 | [valid certificates seen — expiry dates] |
+| SOC 1 and SOC 2 Type II | [attestation reports seen — period covered] |
+| CSA STAR 2 | [certification or attestation — date] |
+| Services listed as meeting the Partial Sovereign / Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6) | [list reference — date checked] |
 | Documented limitations | [notes] |
 
 ### Microsoft UAE North (Dubai) and UAE Central (Abu Dhabi)
@@ -57,8 +61,12 @@ For each candidate CSP, record the diligence posture.
 |------|-------|
 | Sovereign-data scope | [in scope / out of scope] |
 | Regional footprint | [UAE North / UAE Central / both] |
-| DESC accreditation | [Y/N — date] |
-| CSC accreditation | [Y/N — date] |
+| UAE IAS self-assessment (Appendix 6.6) | [Y/N — date] |
+| DESC ISR self-assessment (Appendix 6.6) | [Y/N — date] |
+| ISO/IEC 27001:2022, 27017:2019, 27018:2019, 22301:2019 | [valid certificates seen — expiry dates] |
+| SOC 1 and SOC 2 Type II | [attestation reports seen — period covered] |
+| CSA STAR 2 | [certification or attestation — date] |
+| Services listed as meeting the Partial Sovereign / Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6) | [list reference — date checked] |
 | Documented limitations | [notes] |
 
 ### TDRA FedNet
@@ -67,7 +75,12 @@ For each candidate CSP, record the diligence posture.
 |------|-------|
 | Sovereign-data scope | [in scope / out of scope] |
 | Regional footprint | [federal data centre] |
-| Accreditation | [TDRA — date] |
+| UAE IAS self-assessment (Appendix 6.6) | [Y/N — date] |
+| DESC ISR self-assessment (Appendix 6.6) | [Y/N — date] |
+| ISO/IEC 27001:2022, 27017:2019, 27018:2019, 22301:2019 | [valid certificates seen — expiry dates] |
+| SOC 1 and SOC 2 Type II | [attestation reports seen — period covered] |
+| CSA STAR 2 | [certification or attestation — date] |
+| Services listed as meeting the Partial Sovereign / Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6) | [list reference — date checked] |
 | Documented limitations | [notes] |
 
 ### e& Sovereign Launchpad on AWS
@@ -76,8 +89,27 @@ For each candidate CSP, record the diligence posture.
 |------|-------|
 | Sovereign-data scope | [in scope / out of scope] |
 | Regional footprint | [me-central-1 / other] |
-| DESC accreditation | [Y/N — date] |
-| CSC accreditation | [Y/N — date] |
+| UAE IAS self-assessment (Appendix 6.6) | [Y/N — date] |
+| DESC ISR self-assessment (Appendix 6.6) | [Y/N — date] |
+| ISO/IEC 27001:2022, 27017:2019, 27018:2019, 22301:2019 | [valid certificates seen — expiry dates] |
+| SOC 1 and SOC 2 Type II | [attestation reports seen — period covered] |
+| CSA STAR 2 | [certification or attestation — date] |
+| Services listed as meeting the Partial Sovereign / Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6) | [list reference — date checked] |
+| Documented limitations | [notes] |
+
+### du Tech National Hypercloud
+
+| Item | Value |
+|------|-------|
+| Sovereign-data scope | [in scope / out of scope] |
+| Regional footprint | [UAE locations] |
+| Cyber Security Council certification | [scope and reference seen — du announced CSC certification for all workloads except those classified Secret and Top Secret [CRES-5]; confirm against the certificate] |
+| UAE IAS self-assessment (Appendix 6.6) | [Y/N — date] |
+| DESC ISR self-assessment (Appendix 6.6) | [Y/N — date] |
+| ISO/IEC 27001:2022, 27017:2019, 27018:2019, 22301:2019 | [valid certificates seen — expiry dates] |
+| SOC 1 and SOC 2 Type II | [attestation reports seen — period covered] |
+| CSA STAR 2 | [certification or attestation — date] |
+| Services listed as meeting the Partial Sovereign / Sovereign Cloud Requirements (§3.4.1.2, §3.4.1.6) | [list reference — date checked] |
 | Documented limitations | [notes] |
 
 > Add additional candidate CSPs (e.g. Oracle UAE, Google Cloud) using the same pattern.
@@ -113,15 +145,18 @@ For the chosen CSP combination, record the division of security responsibilities
 
 | Doc ID | Title | URL | Verified date |
 |--------|-------|-----|---------------|
-| UAE-NCSP-V2 | UAE National Cloud Security Policy v2 (Cybersecurity Council) | <https://csc.gov.ae/documents/38662/489552/National+Cloud+Security+Policy_V2.0.pdf> | [YYYY-MM-DD] |
+| UAE-NCSP-V2 | UAE National Cloud Security Policy, Version 2.0, September 2025 (UAE Cyber Security Council) | <https://csc.gov.ae/documents/38662/1042755/National+Cloud+Security+Policy_V2.0.pdf/ee6897fa-943b-8874-d23b-c0ec1608c90f> | [YYYY-MM-DD] |
+| WAM-2026-05-05-DU | WAM, 5 May 2026: du Tech's National Hypercloud receives UAE Cyber Security Council certification | <https://www.wam.ae/en/article/177h4m4-tech%E2%80%99s-national-hypercloud-receives-uae-cyber> | [YYYY-MM-DD] |
 
 ### Citations
 
 | Citation | Doc ID | Section | Used in |
 |----------|--------|---------|---------|
-| [CRES-1] | UAE-NCSP-V2 | Per-classification residency obligations | Per-Dataset Residency Assessment |
-| [CRES-2] | UAE-NCSP-V2 | Approved CSP scope | CSP Due-Diligence Pack |
-| [CRES-3] | UAE-NCSP-V2 | Shared responsibility expectations | Shared-Responsibility Matrix |
+| [CRES-1] | UAE-NCSP-V2 | §2.4.1, Appendices 6.7–6.9 (classification levels and sovereignty tiers) | Per-Dataset Residency Assessment |
+| [CRES-2] | UAE-NCSP-V2 | §3.4.1.2, §3.4.1.6 (CSP lists of compliant services) | CSP Due-Diligence Pack |
+| [CRES-3] | UAE-NCSP-V2 | §1.2 (responsibilities by service model) | Shared-Responsibility Matrix |
+| [CRES-4] | UAE-NCSP-V2 | §3.1.5.1, Appendix 6.6 (minimum cyber security certifications) | CSP Due-Diligence Pack |
+| [CRES-5] | WAM-2026-05-05-DU | Scope of the Cyber Security Council certification of du Tech's National Hypercloud | CSP Due-Diligence Pack |
 
 ### Unreferenced Documents
 

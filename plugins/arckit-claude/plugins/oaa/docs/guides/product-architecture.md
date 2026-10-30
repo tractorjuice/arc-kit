@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit-oaa:product-architecture` creates an Agile Product Architecture document using Open Agile Architecture (O-AA, C208) Ch. 14, Product Architecture. The product is the organising principle for the team, the backlog and the architecture. The document sets the product mission, outcomes and boundary, the permanent cross-functional team, architecture items in the product backlog with requirements coverage, architecture guardrails, a C4 component diagram with the product's interfaces and dependencies, the release roadmap, value streams and the compliance controls carried by each feature. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
+`/arckit-oaa:product-architecture` creates an Agile Product Architecture document using the Open Agile Architecture™ Standard, Version 2.0 (O-AA, C262) Ch. 12, Product Architecture. The product is the organising principle for the team, the backlog and the architecture. The document sets the product mission, outcomes and boundary, the permanent cross-functional team, architecture items in the product backlog with requirements coverage, architecture guardrails, a C4 component diagram with the product's interfaces and dependencies, the release roadmap, value streams and the compliance controls carried by each feature. The command is part of the `arckit-oaa` overlay, which needs the core `arckit` plugin.
 
 ---
 
@@ -70,7 +70,7 @@ If the named project does not exist, the command creates it. If an OAPR document
 | 8. Embedded Compliance Per Feature | Regulations and controls, feature compliance matrix, compliance gaps, compliance-as-code integration points |
 | 9. Template Usage Guide | When to use the template and how its elements map to TOGAF ADM phases |
 | 10. Worked Sample | Combined `product-architecture.yaml` sample |
-| External References | Document Register (C208 with URL and verification date), citations |
+| External References | Document Register (O-AA Standard, Version 2.0, C262, with URL and verification date), citations |
 
 ---
 

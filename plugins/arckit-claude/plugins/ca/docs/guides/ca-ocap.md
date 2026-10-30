@@ -15,7 +15,9 @@ The command enforces a structural FNIGC pre-engagement gate. If the architect ca
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | System scope and Indigenous-data triggers |
 | Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Per-element collection / use / disclosure |
 | Data model (`ARC-<id>-DATA-v*.md`) | Entity-level data classifications |
-| Privacy Impact Assessment (`ARC-<id>-PIA-v*.md`) | Privacy controls inherited; OCAP layers community sovereignty over the PIA's federal privacy posture |
+| Privacy Impact Assessment (`ARC-<id>-PIA-v*.md`) | Privacy controls inherited; OCAP layers community sovereignty over the PIA's federal privacy posture. Run `/arckit-ca:ca-pia` first if any personal information is in scope |
+
+The data model is upstream: the `ca-federal-fitaa` build recipe builds it before this command. OCAP-mapped data classifications and access controls then feed back into its stewardship and access policies. Where a dataset is community-controlled, record the controlling body and the access tier in the data model. `/arckit:data-model` does not read this artefact, so make that change in the data model directly.
 
 ---
 
@@ -76,8 +78,6 @@ If the assessment exists in planning-scaffold mode for an extended period, treat
 
 ## Handoffs
 
-- **`data-model`** — OCAP-mapped data classifications and access controls feed the data model's stewardship and access policies. Where a dataset is community-controlled, the data model must record the controlling body and the access tier.
-- **`ca-pia`** — Personal-information processing of Indigenous data inherits the federal PIA controls plus OCAP-derived restrictions. Run `ca-pia` if any personal information is in scope; the OCAP register layers community sovereignty on top of the PIA's federal privacy posture.
 - **`ca-atip`** — ATIP severance design must reflect OCAP access and control determinations for Indigenous datasets. Where access is community-controlled, ATIP exemptions and severance must align so federal access requests do not bypass community decision authority.
 
 ---

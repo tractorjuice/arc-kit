@@ -406,7 +406,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 
 | Command | Needs (M) | Recommended (R) | Optional (O) |
 |---------|-----------|-----------------|--------------|
-| `/arckit:au-aescsf` | — | requirements, stakeholders | au-e8-posture, au-ism-controls, au-ot-security, au-soci-cirmp, data-model, dfd, diagram, maturity-model, principles, risk, servicenow, traceability |
+| `/arckit:au-aescsf` | — | au-e8-posture, au-ism-controls, requirements, stakeholders | au-ot-security, au-soci-cirmp, data-model, dfd, diagram, maturity-model, principles, risk, servicenow, traceability |
 | `/arckit:au-energy-compliance` | — | requirements, stakeholders | adr, au-aescsf, au-ndb-playbook, au-ot-security, au-pia, au-soci-cirmp, data-model, dfd, diagram, principles, risk, servicenow, traceability |
 
 ### ArcKit USA Federal Civilian Overlay (`arckit-us`)
@@ -439,7 +439,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 |---------|-----------|-----------------|--------------|
 | `/arckit:uk-nhs-dcb0129` | — | data-model, requirements, stakeholders | atrs, dpia, principles, risk |
 | `/arckit:uk-nhs-dcb0160` | — | data-model, principles, requirements, stakeholders, uk-nhs-dcb0129 | operationalize |
-| `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-nhs-dcb0129, uk-nhs-dcb0160 |
+| `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-mdr-classification, uk-nhs-dcb0129, uk-nhs-dcb0160 |
 | `/arckit:uk-mdr-classification` | — | data-model, principles, requirements, stakeholders | secure |
 
 ### ArcKit FDE Site Generator (`arckit-fde`)
@@ -483,7 +483,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:business-capability-map` | adm-preliminary | principles, requirements, stakeholders | application-inventory |
 | `/arckit:application-inventory` | adm-preliminary | business-capability-map, principles, requirements | — |
 | `/arckit:application-rationalization` | application-inventory | adm-preliminary, adr, business-capability-map, principles, transition-architecture | — |
-| `/arckit:gap-analysis` | business-capability-map | principles, strategy | adm-preliminary, risk, stakeholders |
+| `/arckit:gap-analysis` | business-capability-map | application-inventory, application-rationalization, principles, strategy | adm-preliminary, risk, stakeholders |
 | `/arckit:transition-architecture` | gap-analysis | adr, application-rationalization, roadmap | risk, stakeholders |
 | `/arckit:architecture-board` | principles | adm-preliminary, business-capability-map, vendor HLD | — |
 | `/arckit:architecture-change` | — | adm-preliminary, architecture-board, business-capability-map, principles, transition-architecture | application-inventory |

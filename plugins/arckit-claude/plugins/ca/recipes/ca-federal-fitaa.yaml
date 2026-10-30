@@ -8,23 +8,23 @@
 #
 # Produces every artefact a FITAA-class build needs: FITAA assessment,
 # Privacy Act PIA, ATIP reconciliation, Algorithmic Impact Assessment,
-# Charter rights review, ITSG-33 Statement of Applicability, Security of
-# Information Act handling plan, sovereign cloud residency, GC Digital
-# Standards conformance, Official Languages Act review, PSPC procurement
-# strategy, First Nations OCAP® sovereignty assessment (when Indigenous
-# data in scope), plus the core ArcKit governance suite tailored for
-# Canadian federal entities.
+# Charter rights review, ITSG-33 Statement of Applicability, Foreign
+# Interference and Security of Information Act handling plan, sovereign
+# cloud residency, GC Digital Standards conformance, Official Languages
+# Act review, PSPC procurement strategy, First Nations OCAP® sovereignty
+# assessment (when Indigenous data in scope), plus the core ArcKit
+# governance suite tailored for Canadian federal entities.
 #
 # Differences from uk-saas / uk-mod-sovereign / uae-federal-ai
 #
 #   Twelve ca-* community commands all included
 #     ca-fitaa                      FITAA Bill C-70 2024 registration assessment
-#     ca-pia                        Privacy Act + TBS Directive on PIA
+#     ca-pia                        Privacy Act + TBS Standard on PIA
 #     ca-atip                       Access to Information / Privacy reconciliation
 #     ca-aia                        TBS Directive on Automated Decision-Making
 #     ca-charter                    Charter rights design review
 #     ca-itsg-33                    ITSG-33 SoA + TBS Security Categorization
-#     ca-soia                       Security of Information Act handling
+#     ca-soia                       Foreign Interference and Security of Information Act handling
 #     ca-cloud-residency            GC sovereign cloud residency + CLOUD Act
 #     ca-gc-digital-standards       10 GC Digital Standards scorecard
 #     ca-ola                        Official Languages Act (Parts IV / V / VI)
@@ -32,9 +32,16 @@
 #     ca-ocap                       First Nations OCAP® sovereignty (optional)
 #
 #   Differences from the UAE recipe specifically
-#     - The Charter rights review (ca-charter) runs early because it
-#       informs FITAA, PIA, and AIA design decisions (s.2 freedoms,
-#       s.7 life/liberty/security, s.8 search/seizure, s.15 equality).
+#     - The data model runs straight after requirements and stakeholders.
+#       /arckit:data-model reads neither the PIA nor the ATIP
+#       reconciliation, while ca-pia, ca-atip, ca-aia, ca-fitaa, ca-ocap,
+#       ca-itsg-33 and ca-cloud-residency all read the data model.
+#     - The Charter rights review (ca-charter) runs after the PIA and
+#       FITAA assessments, because it reads both: the s.8 analysis rests
+#       on the PIA's personal-information inventory and the s.2(b)/(d)
+#       analysis on the FITAA registration design. Departmental counsel
+#       is engaged from the concept stage regardless (TBS Directive on
+#       Automated Decision-Making 6.3.12).
 #     - SOIA handling is gated behind ca-itsg-33 because the SOI
 #       register depends on the security categorization output.
 #     - OCAP® is gated behind an optional flag (only when Indigenous
@@ -89,7 +96,7 @@ optional_targets:
     description: First Nations OCAP® sovereignty assessment — only enable when Indigenous data is in scope and FNIGC pre-engagement has been arranged
     default: false
   CA_SOIA:
-    description: Security of Information Act handling plan — only enable when classified leads (PROTECTED C / SECRET / TOP SECRET) are in scope
+    description: Foreign Interference and Security of Information Act handling plan — only enable when classified leads (PROTECTED C / SECRET / TOP SECRET) are in scope
     default: true
   DATA_MODEL:
     description: Data model with entity relationships and GDPR-equivalent governance (recommended for systems with PII)
@@ -184,11 +191,17 @@ targets:
     output: { project: "{P}-{NAME}", type: DSCT, subfolder: research, multi_instance: true }
     deps: [REQ, ORG_RESEARCH]
 
-  # --- Charter rights (early — informs FITAA / PIA / AIA design) ---------
-  - id: CA_CHARTER
-    skill: arckit-ca:ca-charter
+  # --- Data model (before the privacy and security stream) ---------------
+  # /arckit:data-model reads REQ, STKE and PRIN (and SOBC and research
+  # findings if present), and none of the ca-* artefacts, so it waits only
+  # for REQ and STKE. Seven ca-* commands read the data model (PIA, ATIP,
+  # AIA, FITAA, OCAP, ITSG-33, cloud residency), so each depends on it.
+  # SOBC cannot come first: it follows the risk register. With DATA_MODEL
+  # disabled, the harness drops the dep and those targets run without it.
+  - id: DATA_MODEL
+    skill: arckit:data-model
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: CHRT }
+    output: { project: "{P}-{NAME}", type: DATA }
     deps: [REQ, STKE]
 
   # --- Privacy and access -------------------------------------------------
@@ -198,29 +211,40 @@ targets:
     skill: arckit-ca:ca-pia
     args: "{P}"
     output: { project: "{P}-{NAME}", type: PIA }
-    deps: [REQ, STKE]
+    deps: [REQ, STKE, DATA_MODEL]
 
   - id: CA_ATIP
     skill: arckit-ca:ca-atip
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ATIP }
-    deps: [CA_PIA]
+    deps: [CA_PIA, DATA_MODEL]
 
   - id: CA_AIA
     skill: arckit-ca:ca-aia
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AIA }
-    deps: [REQ, CA_PIA]
+    deps: [REQ, CA_PIA, DATA_MODEL]
 
-  # --- FITAA flagship (after PIA / Charter / AIA available) --------------
-  # FITAA is the apex compliance artefact for this recipe. It depends on
-  # the privacy and Charter outputs so the foreign-influence registration
-  # design can reflect rights-engaging mitigations and PII handling.
+  # --- FITAA flagship (after the data model) -----------------------------
+  # FITAA is the apex compliance artefact for this recipe. /arckit-ca:ca-fitaa
+  # reads PRIN, REQ, STKE and the data model, and none of the privacy
+  # artefacts, so it waits only for those and runs alongside the PIA;
+  # with DATA_MODEL disabled, FITAA runs straight after REQ and STKE.
   - id: CA_FITAA
     skill: arckit-ca:ca-fitaa
     args: "{P}"
     output: { project: "{P}-{NAME}", type: FITAA }
-    deps: [REQ, STKE, CA_CHARTER, CA_PIA, CA_ATIP, CA_AIA]
+    deps: [REQ, STKE, DATA_MODEL]
+
+  # --- Charter rights (after PIA and FITAA — it reads both) --------------
+  # /arckit-ca:ca-charter grounds its s.8 analysis in the PIA's
+  # personal-information inventory and its s.2(b)/(d) analysis in the
+  # FITAA registration design; FITAA hands off to it unconditionally.
+  - id: CA_CHARTER
+    skill: arckit-ca:ca-charter
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: CHRT }
+    deps: [REQ, STKE, CA_PIA, CA_FITAA]
 
   # --- Indigenous data (optional; only when applicable) -----------------
   # OCAP® First Nations sovereignty is gated behind an optional flag —
@@ -230,14 +254,14 @@ targets:
     skill: arckit-ca:ca-ocap
     args: "{P}"
     output: { project: "{P}-{NAME}", type: OCAP }
-    deps: [REQ, CA_PIA]
+    deps: [REQ, CA_PIA, DATA_MODEL]
 
-  # --- Security stream (after FITAA — system shape and SOI scope known) -
+  # --- Security stream (after the PIA and data model; SOIA after FITAA) -
   - id: CA_ITSG
     skill: arckit-ca:ca-itsg-33
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ITSG }
-    deps: [REQ, CA_PIA]
+    deps: [REQ, CA_PIA, DATA_MODEL]
 
   - id: CA_SOIA
     skill: arckit-ca:ca-soia
@@ -250,7 +274,7 @@ targets:
     skill: arckit-ca:ca-cloud-residency
     args: "{P}"
     output: { project: "{P}-{NAME}", type: CACR }
-    deps: [CA_ITSG, AWS_RESEARCH, AZURE_RESEARCH, GCP_RESEARCH]
+    deps: [CA_ITSG, DATA_MODEL, AWS_RESEARCH, AZURE_RESEARCH, GCP_RESEARCH]
 
   # --- Service-side compliance (parallel after FITAA) -------------------
   - id: CA_OLA
@@ -264,13 +288,6 @@ targets:
     args: "{P}"
     output: { project: "{P}-{NAME}", type: DIGSTD }
     deps: [REQ]
-
-  # --- Cross-cutting and supporting outputs -----------------------------
-  - id: DATA_MODEL
-    skill: arckit:data-model
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: DATA }
-    deps: [REQ, CA_PIA, CA_ATIP]
 
   # --- Risk register (FITAA-class — pulls from rights / privacy / AI / sec)
   - id: RISK
@@ -341,7 +358,7 @@ targets:
 
   - id: ADR-006
     skill: arckit:adr
-    topic: "Procurement route — PSPC Supply Manual / Standing Offer / AgileIQ / RFP with PSAB 5% target"
+    topic: "Procurement route — PSPC Supply Manual / Standing Offer / AgileIQ / RFP with PSIB 5% target"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ, CA_PSPC]

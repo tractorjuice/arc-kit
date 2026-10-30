@@ -1366,6 +1366,10 @@ def generate_codex_mcp_json(mcp_json_path, output_path):
     print(f"  Generated: {output_path}")
 
 
+KIMI_WRITE_MATCHER = "^(Write|WriteFile)$"
+KIMI_WRITE_EDIT_MATCHER = "^(Edit|Write|StrReplaceFile|WriteFile)$"
+
+
 def generate_kimi_hooks():
     """Build the Kimi plugin-manifest ``hooks`` array.
 
@@ -1390,21 +1394,28 @@ def generate_kimi_hooks():
         base = f"node ./hooks/kimi-hook-adapter.mjs {target}"
         return f"{base} {guard}" if guard else base
 
+    # Kimi matchers are regexes run with re.search against Kimi's own tool
+    # names (WriteFile, StrReplaceFile); the Claude names stay for hosts that
+    # report them. Anchored so an MCP tool whose name merely contains "Write"
+    # or "Edit" does not reach the fail-closed security guards.
+    write = KIMI_WRITE_MATCHER
+    write_edit = KIMI_WRITE_EDIT_MATCHER
+
     # event, matcher (""=all), target hook, timeout (s), path guard
     specs = [
         ("SessionStart", "", "arckit-session.mjs", 5, None),
         ("SessionStart", "", "notify-stale-artifacts.mjs", 8, None),
         ("UserPromptSubmit", "", "arckit-context.mjs", 10, None),
         ("UserPromptSubmit", "", "secret-detection.mjs", 5, None),
-        ("PreToolUse", "Edit|Write", "file-protection.mjs", 5, None),
-        ("PreToolUse", "Edit|Write", "secret-file-scanner.mjs", 5, None),
-        ("PreToolUse", "Write", "validate-arc-filename.mjs", 5, "/projects/"),
-        ("PreToolUse", "Write", "score-validator.mjs", 5, "/vendors/scores.json"),
-        ("PreToolUse", "Write", "validate-wardley-math.mjs", 5, "/wardley-maps/"),
-        ("PreToolUse", "Write", "validate-backlog-totals.mjs", 5, "-BKLG-"),
-        ("PostToolUse", "Write|Edit", "provenance-stamp.mjs", 5, "/projects/"),
-        ("PostToolUse", "Write|Edit", "tidy-wardley-labels.mjs", 10, "/wardley-maps/"),
-        ("PostToolUse", "Write", "update-manifest.mjs", 5, "/projects/"),
+        ("PreToolUse", write_edit, "file-protection.mjs", 5, None),
+        ("PreToolUse", write_edit, "secret-file-scanner.mjs", 5, None),
+        ("PreToolUse", write, "validate-arc-filename.mjs", 5, "/projects/"),
+        ("PreToolUse", write, "score-validator.mjs", 5, "/vendors/scores.json"),
+        ("PreToolUse", write, "validate-wardley-math.mjs", 5, "/wardley-maps/"),
+        ("PreToolUse", write, "validate-backlog-totals.mjs", 5, "-BKLG-"),
+        ("PostToolUse", write_edit, "provenance-stamp.mjs", 5, "/projects/"),
+        ("PostToolUse", write_edit, "tidy-wardley-labels.mjs", 10, "/wardley-maps/"),
+        ("PostToolUse", write, "update-manifest.mjs", 5, "/projects/"),
         ("PostToolUse", ".*", "telemetry.mjs", 3, None),
         ("Stop", "", "session-learner.mjs", 10, None),
         ("StopFailure", "", "session-learner.mjs", 10, None),

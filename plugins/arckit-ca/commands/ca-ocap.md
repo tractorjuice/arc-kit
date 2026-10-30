@@ -5,10 +5,6 @@ argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true
 handoffs:
-  - command: data-model
-    description: OCAP-mapped data classifications and access controls feed the data model's stewardship and access policies.
-  - command: ca-pia
-    description: Personal-information processing of Indigenous data inherits the PIA controls plus OCAP-derived restrictions.
   - command: ca-atip
     description: ATIP severance design must reflect OCAP access and control determinations for Indigenous datasets.
 allowed-tools:

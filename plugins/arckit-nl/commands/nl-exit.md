@@ -21,6 +21,8 @@ allowed-tools:
 
 You are helping an enterprise architect produce a **Cloud Exit Plan** required under clause 3.2 of the Herziening rijksbreed cloudbeleid 2026 (Ministerie van Economische Zaken en Klimaat, 3 July 2026, definitief). The exit plan is mandatory, documented, and self-tested wherever materieel publiek cloudgebruik applies, and must cover **two scenarios**: a planned exit and a disruptive interruption of service. It must address destruction of data at the provider after migration, and is reviewed annually. Existing cloud use has a four-year transition; the exit plan itself has a twelve-month production deadline.
 
+The plan also covers the exit-strategy parts in Art. 7 of the **Implementatiekader risicoafweging cloudgebruik** (v1.1, 5 January 2023, CIO Rijk), which is mandatory when carrying out the cloud policy (its §1) and which clause 3.1 says must be followed. Art. 7 says the exit strategy secures business continuity and the clean-up of data when the service ends, through the organisation's own measures, including budget, and through contract terms with the provider. Its four parts are: (1) conditions on the provider and its sub-suppliers for data portability, service portability and data destruction, including the processes and facilities needed; (2) an alternative provider or an internal landing place; (3) a strategy, conditions and budget for leaving at once in a crisis or a sudden (geopolitical) development; (4) a strategy and budget for the regular end of the contract. If CIO Rijk has published the revision announced in July 2026, use it and record its version.
+
 ## User Input
 
 ```text
@@ -85,15 +87,23 @@ State why this plan is being produced: materieel publiek cloudgebruik per `/arck
 
 Document the export method, target environment, timeline, cost (including egress fees and rebuild effort), dependencies, and owner for a planned, orderly exit — e.g. contract expiry or a policy decision to move.
 
+- **Landing place (implementatiekader Art. 7.2)**: name the alternative provider or the internal landing place the service moves to. Describe it by type and capability; this plan does not recommend or endorse a provider
+- **Budget for the regular end of the contract (Art. 7.4)**: state the budget set aside for the exit, and where it is reserved, alongside the cost estimate. A cost estimate with no budget behind it does not meet Art. 7.4
+
 ### Step 6: Scenario B — Disruptive Interruption of Service
 
 Document the same elements for an unplanned, disruptive interruption — e.g. provider insolvency, a sanctions event, or a sudden withdrawal of service. This scenario assumes the provider may not cooperate; the plan must not depend on provider goodwill for data recovery. State the minimum viable continuity path, RTO, and RPO.
+
+- **Leaving at once in a crisis (implementatiekader Art. 7.3)**: include a crisis or a sudden (geopolitical) development among the triggers, and set out the strategy and the conditions for leaving the provider immediately in that case, with the budget for it
+- **Landing place (Art. 7.2)**: name the alternative provider or internal landing place this scenario relies on, and how quickly it can be reached
 
 **Both scenarios are mandatory.** A plan that only documents a planned, orderly exit does not satisfy clause 3.2.
 
 ### Step 7: Destruction of Data at the Provider
 
 Document the contractual basis, method, and verification for destroying data held by the provider after migration completes, in either scenario.
+
+Implementatiekader Art. 7.1 asks for conditions on the provider **and its sub-suppliers** covering data portability, service portability and data destruction, including the processes and facilities needed. Record whether the contract sets these conditions and whether they reach the sub-suppliers.
 
 ### Step 8: Self-Test Plan and Evidence
 
@@ -121,7 +131,7 @@ Identify residual risks — e.g. data-format lock-in, proprietary managed-servic
 
 3. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the NL regime to `_partials/document-control-nl.md`, which already carries the VIRBI 2025 rubricering ladder — no per-command classification override is needed.
 
-4. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The Herziening rijksbreed cloudbeleid 2026, clause 3.2 MUST appear in the Document Register with its primary URL and the verification date.
+4. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The Herziening rijksbreed cloudbeleid 2026, clause 3.2, and the Implementatiekader risicoafweging cloudgebruik, Art. 7 (with the version applied), MUST appear in the Document Register with their primary URLs and verification dates.
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **NLEXIT** per-type checks pass.
 
@@ -149,6 +159,7 @@ projects/{project_id}/<filename>
 Scenario A — Planned exit:              {Documented / Gaps noted}
 Scenario B — Disruptive interruption:   {Documented / Gaps noted}
 Provider data destruction:              {Contractual clause in place / Not in place}
+Implementatiekader Art. 7 parts:        {All four covered / Gaps noted — e.g. no budget}
 Self-test evidence:                     {Present / None yet — flagged}
 Next review date:                       {date}
 
@@ -164,6 +175,7 @@ Next steps:
 
 - **Both scenarios are mandatory, not alternatives.** Clause 3.2 requires a planned exit AND a disruptive interruption of service to be covered. Do not accept a document that only handles one.
 - **The disruptive scenario cannot assume provider cooperation.** If the plan's recovery method depends on the provider actively assisting, flag it as a gap — the scenario exists precisely because the provider may not be able or willing to help.
+- **Budget is part of the exit strategy.** Implementatiekader Art. 7 asks for a budget both for the regular end of the contract and for leaving at once in a crisis. Flag a missing budget as a gap, not a detail.
 - **A plan without test evidence is not yet compliant.** Self-testing is part of the clause 3.2 requirement, not an optional maturity add-on. State plainly if no test has occurred yet.
 - **This plan does not itself determine cloud eligibility** — that is `/arckit:nl-cloud`'s job. This command assumes a hosting decision already exists (or is being justified under clause 4.5(b)) and plans the exit from it.
 - **Use Write Tool**: Exit plans are detailed operational documents. Always use the Write tool.
@@ -173,6 +185,7 @@ Next steps:
 | Document | Publisher | URL |
 |----------|-----------|-----|
 | Herziening rijksbreed cloudbeleid 2026, clause 3.2 (Exit-plan) (3 July 2026, definitief) | Ministerie van Economische Zaken en Klimaat, Staatssecretaris W.J.M. Aerdts, 3 juli 2026 | Kamerbrief: <https://www.tweedekamer.nl/kamerstukken/brieven_regering/detail?id=2026Z15738&did=2026D35294> · Policy PDF: <https://www.tweedekamer.nl/downloads/document?id=2026D35295> · Kamerstuk 26643, nr. 1541 |
+| Implementatiekader risicoafweging cloudgebruik, v1.1 (5 January 2023), Art. 7 (Exit-strategie); a revision for the 2026 policy is announced | CIO Rijk | <https://zoek.officielebekendmakingen.nl/blg-1070754.pdf> · Kamerstuk 26643, nr. 964 |
 | OBDO "Cloud definities en begrippenlijst" (approved 16 April 2026) | OBDO | *(not linked — verify current text via digitaleoverheid.nl before citing)* |
 
 > **Note for reviewers**: Clause 3.2 sits alongside clause 4.5(b), which requires a tested exit plan as one of three cumulative conditions before email or document/workplace/file-storage services may be processed in public cloud. A single exit plan can satisfy both purposes if it is referenced from the `/arckit:nl-cloud` assessment rather than duplicated.
@@ -184,6 +197,7 @@ Next steps:
 - ✅ Scenario A (planned exit) documented with export method, timeline, cost, dependencies, owner
 - ✅ Scenario B (disruptive interruption) documented, not assuming provider cooperation, with RTO/RPO
 - ✅ Provider data destruction after migration addressed with verification method
+- ✅ Implementatiekader Art. 7 covered: alternative provider or internal landing place; strategy, conditions and budget for leaving at once in a crisis; strategy and budget for the regular end of the contract; portability and destruction conditions reaching the sub-suppliers
 - ✅ Self-test plan present, with test evidence or an explicit gap flag if untested
 - ✅ Annual review cycle set with owner and next review date
 - ✅ Residual risks identified with mitigation

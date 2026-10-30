@@ -150,3 +150,84 @@ test('importOkf dry-run writes only the report', () => {
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+// Strip the parts of a note that render as inert code (fenced blocks and code
+// spans) so whatever is left is what a Markdown renderer would turn into HTML.
+function activeMarkdown(note) {
+  const kept = [];
+  let fence = null;
+  for (const line of note.split(/\r\n|\r|\n/)) {
+    const match = line.match(/^ {0,3}(`{3,}|~{3,})/);
+    if (fence) {
+      if (match && match[1][0] === fence[0] && match[1].length >= fence.length && !line.slice(match[0].length).trim()) {
+        fence = null;
+      }
+      continue;
+    }
+    if (match) {
+      fence = match[1];
+      continue;
+    }
+    kept.push(line.replace(/(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)/g, ''));
+  }
+  assert.equal(fence, null, 'note leaves a code fence open');
+  return kept.join('\n');
+}
+
+test('importOkf neutralises HTML and Markdown from a malicious bundle', () => {
+  const root = makeRepo();
+  try {
+    writeFileSync(
+      join(root, 'okf', 'evil-`<img src=x onerror=alert(5)>`.md'),
+      `---
+type: Observation <script>alert(2)</script>
+title: <img src=x onerror=alert(1)> [click](javascript:alert(3)) | x
+resource: https://evil.test/<svg/onload=alert(4)>
+tags:
+  - "<b>bold</b>"
+  - "a|b"
+# lone CRs end lines in Markdown but not in the frontmatter parser\r\`\`\`\r<img src=x onerror=alert(6)>
+---
+
+<script>alert(7)</script>
+<img src=x onerror=alert(8)>
+
+\`\`\`\`
+</div><iframe srcdoc="<script>alert(9)</script>"></iframe>
+\`\`\`\`
+
+[link](javascript:alert(10))
+`
+    );
+
+    const summary = importOkf({ bundle: 'okf', project: '001', outDir: null, dryRun: false, cwd: root });
+    const entry = summary.entries.find(item => item.source_path.includes('evil-'));
+    assert.ok(entry, 'malicious entry was imported');
+    assert.equal(entry.materialized, true);
+
+    const note = readFileSync(join(root, entry.materialized_path), 'utf8');
+    const active = activeMarkdown(note);
+    assert.doesNotMatch(active, /</, 'raw HTML outside code');
+    assert.doesNotMatch(active, /\]\(/, 'Markdown link outside code');
+    assert.doesNotMatch(active, /javascript:alert\(10\)/, 'body rendered outside code');
+
+    const h1 = note.split('\n')[0];
+    assert.equal(
+      h1,
+      '# OKF Import: &lt;img src=x onerror=alert(1)&gt; &#91;click&#93;(javascript:alert(3)) &#124; x'
+    );
+
+    const rows = note.split('\n').filter(line => line.startsWith('| '));
+    for (const row of rows) {
+      const cells = row.replace(/\\\|/g, '').split('|').length - 2;
+      assert.equal(cells, 2, `table row keeps two cells: ${row}`);
+    }
+    assert.ok(rows.some(row => row.includes('&lt;b&gt;bold&lt;/b&gt;, a&#124;b')));
+
+    assert.match(note, /^````yaml$/m, 'frontmatter fence outgrows embedded backticks');
+    assert.match(note, /^`````markdown$/m, 'body fence outgrows embedded backticks');
+    assert.ok(note.includes('<script>alert(7)</script>'), 'body is preserved verbatim inside the fence');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

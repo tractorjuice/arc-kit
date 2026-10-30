@@ -53,7 +53,7 @@ UK MDR is being substantially reformed by MHRA. CE-marking recognition in GB tra
 ## Related commands
 
 - `/arckit-uk-nhs:uk-nhs-dcb0129` — DCB0129 hazard log feeds the ISO 14971 risk file (complementary; ISO 14971 and DCB0129 are distinct but cross-referenced)
-- `/arckit-uk-nhs:uk-nhs-dtac` — DTAC consumes the classification statement to determine procurement assurance route
+- `/arckit-uk-nhs:uk-nhs-dtac` — DTAC question C1.1.1 asks whether the product is Software or AI as a Medical Device under UK MDR 2002; a Yes needs a completed Pre-Acquisition Questionnaire
 - `/arckit:risk` — project risk register cross-references regulatory-classification risks (misclassification, market-access risk, post-market surveillance failure)
 - `/arckit:adr` — major regulatory routing decisions (UKCA self-declare vs Approved Body, EU MDR via Notified Body vs not, NI placement strategy) belong in an ADR
 - `/arckit:atrs` — if AIaMD, ATRS publication is expected alongside model card

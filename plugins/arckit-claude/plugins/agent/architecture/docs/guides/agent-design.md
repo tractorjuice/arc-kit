@@ -66,6 +66,6 @@ Output: `projects/<id>/ARC-<id>-AAGR-v1.0.md`
 
 ## Related Commands
 
-- `/arckit-agent-architecture:agent-integration` - Design multi-agent contracts and shared state.
-- `/arckit-agent-architecture:agent-security` - Add sandboxing, permission, and validation controls.
-- `/arckit-agent-architecture:agent-governance` - Define oversight and approvals.
+- `/arckit-agent-architecture:agent-governance` - Define oversight and approvals. Run it next.
+- `/arckit-agent-architecture:agent-security` - Add sandboxing, permission, and validation controls. Run it after governance.
+- `/arckit-agent-architecture:agent-integration` - Design multi-agent contracts and shared state. Run it after security.

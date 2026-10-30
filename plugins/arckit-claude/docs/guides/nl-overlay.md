@@ -34,7 +34,7 @@ Determines the **Te Beschermen Belangen (TBB) category** for a system or dataset
 
 ### `/arckit:nl-cloud`
 
-Assesses **Rijksbreed Cloudbeleid** compliance: the materieel publiek cloudgebruik determination (clause 4.1), the clause 3.1 risk assessment (including the mandatory foreign-government-interference aspect), and the headline eligibility determination — clause 5.2's prohibition for Te Beschermen Belangen niveau 1–3 and staatsgeheim data, clause 4.5's three cumulative conditions for email/file-storage services, and clause 5.4's basisregistraties constraint. Also covers cybersecurity criteria (clause 4.2), critical/essential-entity discouragement (clause 4.3), Woo publication posture (clause 4.4), data location and encryption (clause 4.6), and the clause 3.3/3.4 governance obligations. Produces `ARC-{id}-RBCLOUD-v{version}.md`.
+Assesses **Rijksbreed Cloudbeleid** compliance: the materieel publiek cloudgebruik determination (clause 4.1), the clause 3.1 risk assessment (including the mandatory foreign-government-interference aspect, and following the Implementatiekader risicoafweging cloudgebruik that clause 3.1 requires), and the headline eligibility determination — clause 5.2's prohibition for Te Beschermen Belangen niveau 1–3 and staatsgeheim data, clause 4.5's three cumulative conditions for email/file-storage services, and clause 5.4's basisregistraties constraint. Also covers cybersecurity criteria (clause 4.2), critical/essential-entity discouragement (clause 4.3), Woo publication posture (clause 4.4), data location and encryption (clause 4.6), and the clause 3.3/3.4 governance obligations. Produces `ARC-{id}-RBCLOUD-v{version}.md`.
 
 ### `/arckit:nl-bio`
 
@@ -117,6 +117,8 @@ principles, requirements
 **Run `nl-tbb` before `nl-cloud`.** The classification drives eligibility, not the other way round: `nl-cloud`'s clause 5.2 prohibition check needs a TBB category to test Te Beschermen Belangen niveau 1–3 against. Running `nl-cloud` first means its eligibility section can only flag the category as pending. The inference between the two commands runs one way only — `nl-tbb` determines the category from BIV scores; `nl-cloud` consumes that category but never derives or overrides it.
 
 `nl-exit` follows `nl-cloud` once materieel cloudgebruik is confirmed (or as one of the three cumulative conditions under clause 4.5(b)). `nl-bio` can run at any point; a TBB category, where one exists, helps it prioritise which control areas matter most, and cross-references `nl-cloud`'s data-location and encryption section for the Technological control theme rather than re-deriving it.
+
+**Run `risk` after the four.** Each NL command hands its findings to the risk register: the classification implications of the TBB category, the clause 3.1 cloud risks, the exit plan's residual risks and the open BIO2 gaps. Each reads an existing register if there is one, but none requires it, so a register built first would miss everything the overlay finds.
 
 ---
 

@@ -4,7 +4,7 @@
 
 `/arckit:ca-aia` generates a Canada Algorithmic Impact Assessment under the TBS *Directive on Automated Decision-Making*. It scores the system against the six-dimension questionnaire (Project, System, Algorithm, Decision, Impact, Data), computes the Impact Level (I, II, III, or IV), and applies the Directive's mandated mitigations for that Level — peer review tier, bilingual transparency notice, human-in-the-loop design, quality assurance plan, and a recourse mechanism for affected individuals.
 
-The AIA is mandatory for any federal automated decision-making system that produces administrative decisions about individuals or businesses. The computed Level gates the system: Level III/IV systems require external peer review and pre-launch publication 30 days ahead of go-live, and the AIA itself is published on the Open Government portal by default. AIDA (Bill C-27) was stalled in Parliament, so the TBS Directive remains the federal public-sector floor for algorithmic accountability.
+The AIA is mandatory for any federal automated decision-making system that produces administrative decisions about individuals or businesses. The computed Level gates the system: from Level II it needs peer review by qualified experts (at least one at Levels II and III, two at Level IV), and approval to operate comes from the ADM responsible for the programme (Levels I–II), the deputy head (Level III) or Treasury Board (Level IV). The AIA results must be published on the Open Government portal, and the peer review (or a plain-language summary) on a Government of Canada website, before the system goes into production (Directive 6.1.1, 6.3.7, 6.3.14). The Directive sets no fixed lead time beyond that. AIDA (Bill C-27) was stalled in Parliament, so the TBS Directive remains the federal public-sector floor for algorithmic accountability.
 
 ---
 
@@ -15,7 +15,7 @@ The AIA is mandatory for any federal automated decision-making system that produ
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Decisions automated, NFR-AI / NFR-DEC requirements covering bias, contestability, override |
 | Data requirements (`DR-*` in `ARC-<id>-REQ-v*.md`) | Training-data lineage and decision boundary inputs |
 | Data model (`ARC-<id>-DATA-v*.md`) | Entity-level data structures feeding the model |
-| Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Lawful authority and personal-information posture; AIA depth must match PIA depth |
+| Privacy Impact Assessment (`ARC-<id>-PIA-v1.0.md`) | Lawful authority and personal-information posture; AIA depth must match PIA depth — a Level III/IV AIA against a thin PIA is a red flag, and vice versa |
 
 ---
 
@@ -60,7 +60,7 @@ Output: `projects/<id>/ARC-<id>-AIA-v1.0.md`
 ## Common pitfalls
 
 - **Self-declaring Level I to skip peer review.** The questionnaire output is the source of truth, not an architect's intuition. Reviewers will check the score-to-level mapping against the Directive's threshold matrix and a downward bias is a Directive breach.
-- **Missing the 30-day pre-launch notification window.** Level III and IV systems require pre-launch publication 30 days before go-live and external peer review with realistic lead time. Booking these late forces a launch slip or a Directive non-conformance.
+- **Booking publication, peer review and approval late.** The Directive sets no fixed notice period, but the AIA results must be published, the peer review (from Level II) completed and published, and approval to operate obtained before the system goes into production (6.1.1, 6.3.7, 6.3.14). At Level IV the approval comes from Treasury Board. Booking these late forces a launch slip or a Directive non-conformance.
 - **Treating the AIA as a launch artefact rather than a continuous compliance asset.** The Directive requires reassessment on material change to data, model, decision boundary, or operating environment, plus periodic reassessment. A static AIA produced once at launch is non-compliant over the system's lifecycle.
 - **Conflating internal-productivity AI with decision-making AI.** Internal copilots that do not produce administrative decisions about individuals fall outside the Directive; running an AIA against them dilutes review capacity. Run the AIA where the Directive bites — automated administrative decisions — and pair internal-productivity AI with a separate posture (cross-reference `uae-ai-autonomy-tier` for a tiered model).
 
@@ -70,7 +70,6 @@ Output: `projects/<id>/ARC-<id>-AIA-v1.0.md`
 
 - **`risk`** — AIA findings (bias, drift, contestability, fairness gaps) feed the operational risk register. Each algorithmic risk row in the AIA should map to a project-level risk entry with owner and review cadence.
 - **`adr`** — Material AIA outcomes warrant Architecture Decision Records. Vendor selection of an ML model, autonomy tier (full automation vs decision-support vs human-only), and recourse-mechanism design are all ADR-worthy decisions with options analysis.
-- **`ca-pia`** — Personal-information feeding the algorithmic system inherits the PIA controls. The AIA depth must match the PIA depth: a Level III/IV AIA against a thin PIA is a red flag, and vice versa.
 
 ---
 

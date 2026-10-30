@@ -1,12 +1,10 @@
 ---
-description: "[COMMUNITY] Generate a Canada Security of Information Act handling plan — Special Operational Information (SOI) register, marking and handling matrix, transmission channels, compartments and need-to-know, destruction and sanitisation, CSIS Act §16 and §19 coordination, RCMP NSP liaison, breach response, personnel reliability prerequisites."
+description: "[COMMUNITY] Generate a Canada Foreign Interference and Security of Information Act handling plan — Special Operational Information (SOI) register, marking and handling matrix, transmission channels, compartments and need-to-know, destruction and sanitisation, CSIS Act §16 and §19 coordination, RCMP NSP liaison, breach response, personnel reliability prerequisites."
 doc-type: SOIA
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true
 handoffs:
-  - command: ca-itsg-33
-    description: SOIA handling rules sit on top of the ITSG-33 security baseline; categorisation and control profile are the prerequisite layer.
   - command: risk
     description: SOIA-specific residual risks (compartment compromise, suspected unauthorised disclosure) feed the operational risk register.
   - command: adr
@@ -33,7 +31,7 @@ allowed-tools:
 $ARGUMENTS
 ```
 
-You are an enterprise architect generating a Canada Security of Information Act handling plan for a federal information system that processes Special Operational Information or other classified material.
+You are an enterprise architect generating a Canada *Foreign Interference and Security of Information Act* handling plan for a federal information system that processes Special Operational Information or other classified material.
 
 ## Process
 
@@ -50,7 +48,7 @@ You are an enterprise architect generating a Canada Security of Information Act 
 3. Use `node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs <PROJECT_ID> SOIA {VERSION} --filename` for the artefact filename. Work out `{VERSION}` first with `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md`: a re-run writes the next version beside the earlier file, never over it.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md` before writing the artefact. `RENDERING.md` hard-routes the CA regime to `_partials/document-control-ca.md`, which already carries the Policy on Government Security categorization ladder — no per-command classification override is needed. Note that the artefact itself will frequently warrant a SECRET or higher classification.
 5. Generate the following sections (the template provides skeletons for each):
-   - **SOI Inventory** — every dataset, document, or artefact that meets the *Security of Information Act* s.8 definition of *Special Operational Information*. Include intelligence reporting, source-protective material, foreign-government-shared product, methods and techniques, and identities subject to s.8. SOI is a statutory category — material qualifies by meeting the s.8 definition, and departmental designation cannot create or remove SOI status.
+   - **SOI Inventory** — every dataset, document, or artefact that meets the s.8 definition of *Special Operational Information* in the *Foreign Interference and Security of Information Act* (the *Security of Information Act* until Bill C-70 retitled it in 2024). Include intelligence reporting, source-protective material, foreign-government-shared product, methods and techniques, and identities subject to s.8. SOI is a statutory category — material qualifies by meeting the s.8 definition, and departmental designation cannot create or remove SOI status.
    - **Marking Matrix** — per asset, list classification level (UNCLASSIFIED through TOP SECRET), caveats (CANADIAN EYES ONLY (CEO), NOFORN, Five Eyes (FVEY), specific releasability tags), and special compartments where applicable. Foreign-shared product carries originator caveats — the Third-Party Rule applies and redistribution requires originator consent.
    - **Handling Rules per categorisation** — at rest (storage approval, encryption to CMVP / CSE-approved standard), in transit (transmission channels), and in use (clean-desk, screen viewing, printing, USB / removable media rules). Tier the rules per classification level.
    - **Transmission Channel Matrix** — a true matrix of allowed channels per categorisation (e.g. SECRET via XNet / IRRINET / designated dark fibre / approved courier; TOP SECRET via Mandrake / SCIF-to-SCIF / dedicated channels). Capture unencrypted-link prohibitions and any caveat-driven channel restrictions (CEO and NOFORN material is not transmissible over allied-shared infrastructure).
@@ -60,21 +58,21 @@ You are an enterprise architect generating a Canada Security of Information Act 
    - **RCMP National Security Programme Liaison** (where applicable) — INSET (Integrated National Security Enforcement Team) or SI&IS (Sensitive Investigations and Intelligence Services) interface, evidence-handling for criminal disclosure under the *Stinchcombe* and *McNeil* obligations.
    - **Breach Response** — suspected unauthorised disclosure runbook: containment within minutes (revoke access, isolate the affected system, suspend the implicated account), notification (departmental security officer → CSE incident response → CSIS / RCMP as warranted), investigation, and reporting to the Privy Council Office where Cabinet-level confidence is implicated. Breach-response timing matters more than completeness — initial containment within minutes, with forensic completeness following.
    - **Personnel Reliability** — clearance prerequisites (Reliability, Secret, Top Secret, Top Secret SCI), update cycle, briefing and debriefing protocol, and indoctrination for compartments. Clearance is per-task, not per-role.
-   - **Open Items** — explicit list of statutory currency caveats: which CSIS Act amendments under Bill C-26 / Bill C-70 are still settling, which Ministerial Directives are pending, which compartment MOUs with CSIS or RCMP are still in negotiation, and a reminder that the artefact itself is likely classified and must be stored, marked, and handled accordingly.
-6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The *Security of Information Act* (R.S.C., 1985, c. O-5) and the *Canadian Security Intelligence Service Act* (R.S.C., 1985, c. C-23) MUST appear in the Document Register with their primary URLs (Justice Laws Website) and the verification date.
+   - **Open Items** — explicit list of statutory currency caveats: any amendment to the *Foreign Interference and Security of Information Act* or the CSIS Act after the verification date (the last were made by Bill C-70, S.C. 2024, c. 16), which Ministerial Directives are pending, which compartment MOUs with CSIS or RCMP are still in negotiation, and a reminder that the artefact itself is likely classified and must be stored, marked, and handled accordingly.
+6. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The *Foreign Interference and Security of Information Act* (R.S.C., 1985, c. O-5) and the *Canadian Security Intelligence Service Act* (R.S.C., 1985, c. C-23) MUST appear in the Document Register with their primary URLs (Justice Laws Website) and the verification date.
 7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SOIA** per-type checks pass. Fix any failures before proceeding.
 8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 9. Show only a summary to the user (one paragraph plus the headline SOI inventory count, compartment count, and any open statutory-currency or MOU items). Remind the user that the artefact may itself be classified.
 
 ## Authoritative anchor
 
-*Security of Information Act* (R.S.C., 1985, c. O-5); *Canadian Security Intelligence Service Act* (R.S.C., 1985, c. C-23); TBS *Standard on Security Screening*; CSE ITSP-series guidance (ITSP.40.006 media sanitisation, ITSP.30.031 v3 user authentication, etc.). Authority: CSIS, CSE / Cyber Centre, RCMP, TBS. Primary URLs: <https://laws-lois.justice.gc.ca/eng/acts/O-5/> (SOIA) and <https://laws-lois.justice.gc.ca/eng/acts/C-23/> (CSIS Act).
+*Foreign Interference and Security of Information Act* (R.S.C., 1985, c. O-5; formerly the *Security of Information Act*); *Canadian Security Intelligence Service Act* (R.S.C., 1985, c. C-23); TBS *Standard on Security Screening*; CSE ITSP-series guidance (ITSP.40.006 media sanitisation, ITSP.30.031 v3 user authentication, etc.). Authority: CSIS, CSE / Cyber Centre, RCMP, TBS. Primary URLs: <https://laws-lois.justice.gc.ca/eng/acts/O-5/> (O-5 Act) and <https://laws-lois.justice.gc.ca/eng/acts/C-23/> (CSIS Act).
 
-CSIS Act amendments via Bill C-26 (cyber security) and Bill C-70 (foreign interference) are still settling — flag the consolidated Justice Laws text date in the External References section.
+Bill C-70, the *Countering Foreign Interference Act* (S.C. 2024, c. 16), retitled the O-5 Act and amended it from 19 August 2024: new foreign-interference offences in ss. 20.1–20.4, a wider s.22 preparatory-acts offence, and more persons permanently bound to secrecy under s.8(1). It also amended the CSIS Act, including ss. 16 and 19, from 20 June 2024. Cite the consolidated Justice Laws text and flag its currency date in the External References section.
 
 ## Important notes
 
-- **SOI is a statutory category** — material qualifies as Special Operational Information by meeting the *Security of Information Act* s.8 definition. Departmental designation cannot create or remove SOI status; a departmental "we treat this as SOI" label without a s.8 hook is a finding by inspection.
+- **SOI is a statutory category** — material qualifies as Special Operational Information by meeting the s.8 definition in the *Foreign Interference and Security of Information Act*. Departmental designation cannot create or remove SOI status; a departmental "we treat this as SOI" label without a s.8 hook is a finding by inspection.
 - **Compartmentation defaults to deny** — every access decision is an explicit need-to-know determination. Default-allow on a compartment is the highest-impact failure mode of the handling plan; review the access-list size and audit cadence with the same rigour as the marking matrix.
 - **Breach response timing matters more than completeness** — initial containment must occur within minutes (revoke access, isolate the affected system, suspend the implicated account). Forensic completeness can follow; waiting for a complete picture before containment is the second-highest-impact failure mode.
 - **Foreign-shared product carries originator caveats** — the Third-Party Rule applies. CANADIAN EYES ONLY, NOFORN, and FVEY-restricted material can only be redistributed with the originator's consent. The marking matrix and the transmission channel matrix must both enforce this; an unrestricted internal share of caveated foreign product is a reportable breach.

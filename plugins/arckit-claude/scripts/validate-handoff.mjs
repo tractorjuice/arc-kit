@@ -93,6 +93,7 @@ const INVISIBLE = new RegExp(
 // Tag characters spell invisible ASCII — an instruction the model can read
 // and a human cannot see. Rejected, not stripped.
 const TAG_CHARS = /[\u{E0000}-\u{E007F}]/u;
+const TAG_CHARS_ALL = /[\u{E0000}-\u{E007F}]/gu;
 
 // C0/C1 control characters except tab and newline; replaced with a space.
 const CONTROL = /[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]/g;
@@ -141,8 +142,13 @@ function sanitize(value, path, errors) {
   if (value !== null && typeof value === 'object') {
     const out = {};
     for (const [k, v] of Object.entries(value)) {
-      const key = sanitizeText(k, `${path}/${k}`, errors);
-      out[key] = sanitize(v, `${path}/${key}`, errors);
+      // Errors about a key are reported at its sanitised path, so the raw
+      // key's invisible characters never reach an error message.
+      const keyErrors = [];
+      const key = sanitizeText(k, '', keyErrors);
+      const keyPath = `${path}/${key.replace(TAG_CHARS_ALL, '')}`;
+      for (const e of keyErrors) errors.push({ ...e, path: keyPath });
+      out[key] = sanitize(v, keyPath, errors);
     }
     return out;
   }

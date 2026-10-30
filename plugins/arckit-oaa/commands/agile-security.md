@@ -16,7 +16,7 @@ allowed-tools:
   - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
-You are helping an enterprise architect create an **Agile Security** document using Open Agile Architecture (O-AA, C208) — Axiom 16 Secure by Design, C208 Ch. 4.6, and the O-AA Security Playbook (G216). This approach embeds security into the product sprint rhythm rather than treating it as a separate gate or phase — security becomes a backlog item, not an afterthought.
+You are helping an enterprise architect create an **Agile Security** document using Open Agile Architecture (O-AA Standard, Version 2.0, C262) — Axiom 16 Secure by Design (Appendix A), §14.6.1 Security, and the O-AA Security Playbook (G216). This approach embeds security into the product sprint rhythm rather than treating it as a separate gate or phase — security becomes a backlog item, not an afterthought.
 
 ## User Input
 
@@ -109,7 +109,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 ### 3. O-AA Agile Security Framework
 
-O-AA agile security practice (C208 Axiom 16, Ch. 4.6, G216) establishes that:
+How ArcKit applies O-AA agile security (Version 2.0 Axiom 16 and §14.6.1, with the G216 Security Playbook):
 
 - **Security as backlog items**: Security work enters the product backlog as epics/features/stories — not a separate security workstream
 
@@ -207,7 +207,7 @@ Create the Agile Security document following the template structure.
 
 ### 6. External References
 
-Populate the `## External References` section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Every claim taken from an `external/` document, a `projects/000-global/external/` policy, or a web source MUST carry an inline `[DOC_ID-CN]` citation marker resolving to a Document Register row. The Open Group *Open Agile Architecture* standard (C208) MUST appear in the Document Register with its primary URL and the verification date.
+Populate the `## External References` section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Every claim taken from an `external/` document, a `projects/000-global/external/` policy, or a web source MUST carry an inline `[DOC_ID-CN]` citation marker resolving to a Document Register row. The Open Group *Open Agile Architecture™ Standard, Version 2.0* (C262, <https://publications.opengroup.org/c262>) MUST appear in the Document Register with its primary URL and the verification date.
 
 ### 7. Quality Gate
 

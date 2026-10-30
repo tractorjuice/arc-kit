@@ -66,7 +66,7 @@ For users, it checks the Chapter II basics. Were buyers told before purchase wha
 
 For business-to-business sharing, it checks for fair, reasonable and non-discriminatory terms. It also looks for a way to protect trade secrets that is not a blanket refusal.
 
-It covers Article 27, on access requests from non-EU governments. And it notes that the Data Act does not replace GDPR. When the data is personal, both apply.
+It covers Article 32, on access requests from non-EU governments. And it notes that the Data Act does not replace GDPR. When the data is personal, both apply.
 
 The output is a DRAFT. Your data protection, legal and commercial reviewers decide what it should say.
 

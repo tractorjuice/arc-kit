@@ -16,12 +16,12 @@
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
   "commands.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "4bb4501d63fdf6efef686cd40b7c0b89bf7a1e22ba02f336e897f20ab47c7fb8"
+    "lastmod": "2026-10-30",
+    "text_sha256": "d8c1f472c50a35d4ed928b80897f5971712c4b3e026f6b42671ee1ffbe8b0952"
   },
   "contributors.html": {
-    "lastmod": "2026-10-20",
-    "text_sha256": "2d020aeca971f0d8e01506ba86337fcc79d947c8f0057b03023f6b8f4a514995"
+    "lastmod": "2026-10-28",
+    "text_sha256": "4f6d326d59a89379799675a069fec9b60c7a9e7f899b861073dde7edef69e249"
   },
   "fde/architects.html": {
     "lastmod": "2026-10-19",
@@ -36,28 +36,28 @@
     "text_sha256": "00a39ac1aac6c32fbbf6ef7ae53116933583b0649e92aa2d208b06372f15b813"
   },
   "getting-started.html": {
-    "lastmod": "2026-06-30",
-    "text_sha256": "5e90aa4e6e77146237251785c6423b5b21acde85544610597555d710106114db"
+    "lastmod": "2026-10-27",
+    "text_sha256": "5b41801c5e7f3fb3fabc58fd1cd3a891f511b18a10b0fc40a6e935aa6052125d"
   },
   "guides.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "8acd3ed729192b1fd405037c0646f363eda7840c12b2e89aca2a67d8de5ad020"
+    "lastmod": "2026-10-30",
+    "text_sha256": "5e0c0fc644e145a55921488d34024238c01a78509005d5784142094c23ea004e"
   },
   "index.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "30b91aa0b4b06862379611e1233952acec42d1db201444c71056da5ab44bf2fd"
+    "lastmod": "2026-10-30",
+    "text_sha256": "71d0f562782d11553f8b0aaaa30fa44dcd28d0dd89af20ce73eb8c57bf2e0760"
   },
   "llms.txt": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "944342b2e35799d29f37a6b1add2620fb1ac8819ad47b6408016143617d200d2"
+    "lastmod": "2026-10-30",
+    "text_sha256": "e8e8100083182f2eba7276badbf4c6ef4aca4373becc636ac2b0e709102bdd3f"
   },
   "on-github.html": {
     "lastmod": "2026-10-26",
     "text_sha256": "dece2b08b5eb1b8aec91a432a003014e50fe7bb63669db643de32df3c21d0f12"
   },
   "privacy.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "3da5ecca67e49a52e343e348880fabdf44cd842843844737c472dbbf6a27eeb1"
+    "lastmod": "2026-10-30",
+    "text_sha256": "6ff673f0aff6aa040e543a5b4a9834692dfb978ffc6d30f30a3b0353706e8faf"
   },
   "public-sector.html": {
     "lastmod": "2026-10-18",

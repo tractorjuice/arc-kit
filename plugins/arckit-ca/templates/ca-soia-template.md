@@ -1,4 +1,4 @@
-# Canada Security of Information Act Handling Plan
+# Canada Foreign Interference and Security of Information Act Handling Plan
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:ca-soia`
 
@@ -16,11 +16,11 @@
 
 ## Executive Summary
 
-[Two to three paragraphs describing the system, the SOI scope (count of assets meeting the *Security of Information Act* s.8 definition), the highest classification handled, the compartment count, the dominant transmission channels, the breach-response posture, and the personnel-reliability envelope. Note any open items — pending CSIS or RCMP MOUs, unresolved compartment indoctrination backlogs, or unsettled CSIS Act amendments under Bill C-26 / C-70.]
+[Two to three paragraphs describing the system, the SOI scope (count of assets meeting the s.8 definition in the *Foreign Interference and Security of Information Act*), the highest classification handled, the compartment count, the dominant transmission channels, the breach-response posture, and the personnel-reliability envelope. Note any open items — pending CSIS or RCMP MOUs, unresolved compartment indoctrination backlogs, or amendments to the *Foreign Interference and Security of Information Act* or the CSIS Act made after the verification date.]
 
 ## SOI Inventory
 
-> Every dataset, document, or artefact meeting the *Security of Information Act* s.8 definition of Special Operational Information. SOI is a statutory category — material qualifies by meeting s.8, not by departmental designation.
+> Every dataset, document, or artefact meeting the s.8 definition of Special Operational Information in the *Foreign Interference and Security of Information Act*. SOI is a statutory category — material qualifies by meeting s.8, not by departmental designation.
 
 | Asset | SOIA s.8 Category | Originator | Stewardship |
 |-------|-------------------|------------|-------------|
@@ -180,7 +180,7 @@
 
 | ID | Description | Owner | Due Date | Status |
 |----|-------------|-------|----------|--------|
-| OI-1 | [CSIS Act amendments under Bill C-26 / C-70 still settling — verify against the consolidated Justice Laws text at publication] | [Security Authority] | [YYYY-MM-DD] | [Open / In Progress] |
+| OI-1 | [Any amendment to the Foreign Interference and Security of Information Act or the CSIS Act since Bill C-70 (S.C. 2024, c. 16) — verify against the consolidated Justice Laws text at publication] | [Security Authority] | [YYYY-MM-DD] | [Open / In Progress] |
 | OI-2 | [Pending MOU with CSIS or RCMP — name the compartment / route] | [System Owner] | [YYYY-MM-DD] | [Open / In Progress] |
 | OI-3 | [Pending compartment indoctrination backlog — name the compartment and the count] | [Departmental Security Officer] | [YYYY-MM-DD] | [Open / In Progress] |
 | OI-4 | [Pending CMVP module re-validation for crypto in scope of this plan — list modules drifting toward Historical] | [Crypto Custodian] | [YYYY-MM-DD] | [Open / In Progress] |
@@ -192,7 +192,7 @@
 
 | Doc ID | Title | URL | Verified date |
 |--------|-------|-----|---------------|
-| CA-SOIA | Security of Information Act (R.S.C., 1985, c. O-5) | <https://laws-lois.justice.gc.ca/eng/acts/O-5/> | [YYYY-MM-DD] |
+| CA-SOIA | Foreign Interference and Security of Information Act (R.S.C., 1985, c. O-5), formerly the Security of Information Act | <https://laws-lois.justice.gc.ca/eng/acts/O-5/> | [YYYY-MM-DD] |
 | CA-CSIS-ACT | Canadian Security Intelligence Service Act (R.S.C., 1985, c. C-23) | <https://laws-lois.justice.gc.ca/eng/acts/C-23/> | [YYYY-MM-DD] |
 | CA-TBS-SCREEN | TBS Standard on Security Screening | <https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=28115> | [YYYY-MM-DD] |
 | CA-ITSP-40-006 | CSE ITSP.40.006 — IT Media Sanitization | <https://cyber.gc.ca/en/guidance/it-media-sanitization-itsp40006> | [YYYY-MM-DD] |

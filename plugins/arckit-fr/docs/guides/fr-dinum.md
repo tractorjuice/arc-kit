@@ -80,4 +80,5 @@ Output: `projects/<id>/ARC-<id>-DINUM-v1.0.md`
 
 - **DINUM** = Direction Interministérielle du Numérique — the French government digital directorate, analogous in purpose to the UK's GDS.
 - **RGAA is legally mandatory** for public administrations, public service delegatees, and organisations receiving public funding (Loi ELAN 2018).
+- **RGESN is not legally binding**: Arcep and Arcom publish it, with ADEME, under the REEN law (loi n° 2021-1485, art. 25), and the RGESN 2024 calls itself non-binding. It becomes a requirement only where the organisation's policy or a contract adopts it; claiming to apply it requires a published ecodesign declaration.
 - **RGS ≠ SecNumCloud**: RGS is a security baseline for IS — SecNumCloud is specifically for cloud hosting. Both can apply simultaneously.

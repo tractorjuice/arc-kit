@@ -15,7 +15,7 @@
 
 ## Executive Summary
 
-[Two to three paragraphs describing the procurement scope, the recommended route (Standing Offer / Supply Arrangement / AgileIQ / RFP / set-aside), the binding trade agreements, the PSAB contribution posture, the longest security-clearance lead time on the critical path, and any open items that block solicitation posting. State the recommended instrument by name (e.g. SBIPS, TBIPS, ProServices, SA-AIDP, SA-Cyber, or bespoke RFP).]
+[Two to three paragraphs describing the procurement scope, the recommended route (Standing Offer / Supply Arrangement / AgileIQ / RFP / set-aside), the binding trade agreements, the PSIB contribution posture, the longest security-clearance lead time on the critical path, and any open items that block solicitation posting. State the recommended instrument by name (e.g. SBIPS, TBIPS, ProServices, SA-AIDP, SA-Cyber, or bespoke RFP).]
 
 ## Procurement Scope
 
@@ -51,7 +51,7 @@
 
 | Set-aside basis | Trade-agreement carve-out | Applies here? | Justification |
 |-----------------|---------------------------|---------------|---------------|
-| Procurement Strategy for Indigenous Business (PSAB) | CFTA Article 800 / CETA / CPTPP / WTO-AGP Indigenous-business carve-outs | [Yes / No] | [reasoning anchored to supplier pool and policy] |
+| Procurement Strategy for Indigenous Business (PSIB) | CFTA Article 800 / CETA / CPTPP / WTO-AGP Indigenous-business carve-outs | [Yes / No] | [reasoning anchored to supplier pool and policy] |
 | National security exception | CFTA Article 803 / international equivalents | [Yes / No] | [reasoning] |
 | Below-threshold open competition | n/a (CFTA does not apply) | [Yes / No] | [reasoning] |
 
@@ -65,7 +65,7 @@
 | Supply Arrangement | [scope fit / partial / poor] | [risk posture] | [weeks–months] | [Selected / Rejected — reason] |
 | AgileIQ / Agile Procurement | [scope fit / partial / poor] | [risk posture] | [weeks–months] | [Selected / Rejected — reason] |
 | Bespoke RFP / RFSO / RFSA | [scope fit / partial / poor] | [risk posture] | [months] | [Selected / Rejected — reason] |
-| PSAB set-aside | [scope fit / partial / poor] | [risk posture] | [variable — depends on supplier pool] | [Selected / Rejected — reason] |
+| PSIB set-aside | [scope fit / partial / poor] | [risk posture] | [variable — depends on supplier pool] | [Selected / Rejected — reason] |
 
 ### Standing Offers / Supply Arrangements Considered
 
@@ -97,14 +97,14 @@
 
 ## Procurement Strategy for Indigenous Business
 
-| PSAB consideration | Decision | Justification | Departmental 5% contribution |
+| PSIB consideration | Decision | Justification | Departmental 5% contribution |
 |--------------------|----------|---------------|------------------------------|
-| Mandatory set-aside (Indigenous-only competition) | [Applied / Not applied] | [supplier-pool analysis, trade-agreement carve-out] | [contribution to rolling target] |
-| Voluntary set-aside | [Applied / Not applied] | [reasoning] | [contribution to rolling target] |
-| Sub-contracting plan (Indigenous sub-contractors) | [Applied / Not applied] | [reasoning] | [contribution to rolling target] |
-| No PSAB participation | [Applied / Not applied] | [justification — evidence the supplier pool was assessed] | [zero contribution acknowledged] |
+| Mandatory set-aside (Indigenous-only competition) | [Applied / Not applied] | [supplier-pool analysis, trade-agreement carve-out] | [contribution to the fiscal-year target] |
+| Voluntary set-aside | [Applied / Not applied] | [reasoning] | [contribution to the fiscal-year target] |
+| Sub-contracting plan (Indigenous sub-contractors) | [Applied / Not applied] | [reasoning] | [contribution to the fiscal-year target] |
+| No PSIB participation | [Applied / Not applied] | [justification — evidence the supplier pool was assessed] | [zero contribution acknowledged] |
 
-> The PSAB 5% target is a department-level rolling figure, not a per-procurement target. This procurement contributes to that rolling figure; document the contribution explicitly so the departmental return can roll it up. Identify suppliers through Indigenous Services Canada's PSAB-registered supplier directory.
+> The 5% target is an annual department-level figure, not a per-procurement target. Appendix E of the TBS Directive on the Management of Procurement counts the value of contracts awarded to Indigenous businesses in the fiscal year (and may count subcontracting to Indigenous businesses committed at award) against the total value of contracts awarded that year, and says the target is not to be applied to each individual contract. Document this procurement's contribution explicitly so the departmental return can count it. Identify suppliers through Indigenous Services Canada's Indigenous Business Directory (or a modern treaty business list).
 
 ## Security Clearance Requirements
 
@@ -150,7 +150,7 @@
 | Debriefing offer to unsuccessful bidders | [YYYY-MM-DD] | [Contracting authority] | [evaluation complete] |
 | Standstill period ends | [YYYY-MM-DD] | [Contracting authority] | [debriefing window] |
 | Contract award | [YYYY-MM-DD] | [Contracting authority] | [standstill clear] |
-| Post-award PSAB reporting | [YYYY-MM-DD] | [Procurement lead] | [departmental return cycle] |
+| Post-award PSIB reporting | [YYYY-MM-DD] | [Procurement lead] | [departmental return cycle] |
 
 ## Risks
 
@@ -172,7 +172,7 @@ Cross-reference `risk` for the project-level continuation of these entries.
 |------|-------|-----|--------|
 | Confirm current Standing Offer / Supply Arrangement instrument numbers | [Procurement lead] | [YYYY-MM-DD] | [Open / Closed] |
 | Re-verify CFTA / CETA / CPTPP / WTO-AGP thresholds at posting | [Procurement lead] | [YYYY-MM-DD] | [Open / Closed] |
-| Confirm PSAB-registered suppliers via Indigenous Services Canada directory | [Procurement lead] | [YYYY-MM-DD] | [Open / Closed] |
+| Confirm suppliers are listed in the Indigenous Business Directory (or a modern treaty business list) | [Procurement lead] | [YYYY-MM-DD] | [Open / Closed] |
 | Identify clearance-eligible incumbents for critical-path roles | [Delivery lead] | [YYYY-MM-DD] | [Open / Closed] |
 | Sign off detailed evaluation rubric in `evaluate` | [Evaluation lead] | [YYYY-MM-DD] | [Open / Closed] |
 
@@ -187,7 +187,8 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | CA-CETA | Canada–EU Comprehensive Economic and Trade Agreement | <https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/ceta-aecg/index.aspx> | [YYYY-MM-DD] |
 | CA-CPTPP | Comprehensive and Progressive Agreement for Trans-Pacific Partnership | <https://www.international.gc.ca/trade-commerce/trade-agreements-accords-commerciaux/agr-acc/cptpp-ptpgp/index.aspx> | [YYYY-MM-DD] |
 | CA-WTO-AGP | WTO Agreement on Government Procurement | <https://www.wto.org/english/tratop_e/gproc_e/gp_gpa_e.htm> | [YYYY-MM-DD] |
-| CA-PSAB | Indigenous Services Canada — Procurement Strategy for Indigenous Business | <https://www.sac-isc.gc.ca/eng/1100100032802/1610549795508> | [YYYY-MM-DD] |
+| CA-TBS-DMP | TBS Directive on the Management of Procurement — Appendix E: Mandatory Procedures for Contracts Awarded to Indigenous Businesses | <https://www.tbs-sct.canada.ca/pol/doc-eng.aspx?id=32692> | [YYYY-MM-DD] |
+| CA-PSIB | Indigenous Services Canada — Procurement Strategy for Indigenous Business | <https://www.sac-isc.gc.ca/eng/1100100032802/1610723869356> | [YYYY-MM-DD] |
 | CA-CITT | Canadian International Trade Tribunal — procurement complaints | <https://www.citt-tcce.gc.ca/en/procurement> | [YYYY-MM-DD] |
 | CA-CANADABUYS | CanadaBuys — federal tender notice service | <https://canadabuys.canada.ca/en> | [YYYY-MM-DD] |
 
@@ -203,8 +204,8 @@ Cross-reference `risk` for the project-level continuation of these entries.
 | [CETA-1] | CA-CETA | Government procurement chapter — non-discrimination | Threshold Analysis |
 | [CPTPP-1] | CA-CPTPP | Government procurement chapter — non-discrimination | Threshold Analysis |
 | [WTO-AGP-1] | CA-WTO-AGP | Coverage schedules and thresholds | Threshold Analysis |
-| [PSAB-1] | CA-PSAB | 5% departmental rolling target | Procurement Strategy for Indigenous Business |
-| [PSAB-2] | CA-PSAB | Set-aside criteria and supplier directory | Procurement Strategy for Indigenous Business |
+| [DMP-1] | CA-TBS-DMP | Appendix E — 5% of the total value of contracts per fiscal year, not applied to each contract | Procurement Strategy for Indigenous Business |
+| [PSIB-1] | CA-PSIB | Set-aside criteria and supplier directory | Procurement Strategy for Indigenous Business |
 | [CITT-1] | CA-CITT | Procurement complaint jurisdiction | Risks |
 
 ### Unreferenced Documents

@@ -30,8 +30,8 @@
 | **Cloud Service Offering (CSO)** | [CSO name] |
 | **CSP** | [CSP organisation] |
 | **Service Model** | [IaaS / PaaS / SaaS] |
-| **Baseline Targeted** | [Moderate / High] |
-| **Authorisation Path** | [Agency / JAB / Tailored] |
+| **Baseline Targeted** | [Moderate (Rev 5 Class C) / High (Rev 5 Class D)] |
+| **Certification Route** | [Type: Rev 5 / 20x; Path: Agency / Program; Class: A / B / C / D] |
 | **Prepared By** | [CSP readiness lead — name + role] |
 | **3PAO Engaged (planned or contracted)** | [3PAO name + A2LA accreditation # / Not yet engaged] |
 | **Self-Assessment Period** | [YYYY-MM-DD to YYYY-MM-DD] |
@@ -57,21 +57,27 @@
 
 ---
 
-## 2. Authorisation Path Recommendation
+## 2. Certification Route Recommendation
 
-| Path | Recommended? | Rationale |
-|------|--------------|-----------|
-| **Agency ATO** | [Yes / No] | [Single sponsoring agency identified; suits CSOs with a primary federal customer.] |
-| **JAB P-ATO** | [Yes / No] | [Multi-agency demand; suits widely-used CSOs.] |
-| **FedRAMP Tailored (Low-Impact SaaS)** | [Yes / No] | [LI-SaaS only; suits collaboration / productivity tools with no PII / no sensitive data.] |
+[Under the FedRAMP Consolidated Rules for 2026, a FedRAMP Certification has a type (Rev 5 or 20x), a path (Agency or Program) and a class (A–D). For Rev 5, Class B carries the LI-SaaS and Low baselines, Class C Moderate and Class D High. There is no JAB P-ATO route: OMB M-24-15 (25 July 2024) replaced the JAB with the FedRAMP Board, and existing JAB P-ATOs were re-designated. FedRAMP Tailored LI-SaaS is a baseline, now part of Rev 5 Class B, not a separate path.]
 
-**Recommendation**: [Agency / JAB / Tailored] — [Rationale narrative]
+| Route | Recommended? | Rationale |
+|-------|--------------|-----------|
+| **Rev 5, Agency path** — a sponsoring agency authorizes the CSO, then sponsors it for FedRAMP Certification (Class B, C or D) | [Yes / No] | [Sponsor identified; the only Rev 5 route to Class D (High); suits CSOs that run their own infrastructure. FedRAMP takes no new Rev 5 applications after 11 June 2027.] |
+| **Rev 5, Program path** — FedRAMP certifies without a sponsor, through the Ready Conversion or Lost Sponsor pipeline (Class B or C) | [Yes / No] | [Only for CSOs that, between January 2025 and March 2026, lost a sponsor while In Process, completed a SAP / SAR, completed a RAR, or achieved FedRAMP Ready. Pipeline open 10 August 2026 to 11 June 2027.] |
+| **20x, Program path** — FedRAMP certifies directly against Key Security Indicators (Class A, B or C; Class D planned for 2027) | [Yes / No] | [CSO built on FedRAMP Certified infrastructure or platforms; no sponsor needed. This RAR-format self-assessment does not cover 20x.] |
+
+**Class Targeted**: [A / B (LI-SaaS, Low) / C (Moderate) / D (High)]
+
+**Recommendation**: [Type / Path / Class] — [Rationale narrative]
 
 ---
 
 ## 3. Gap Register
 
 Gaps identified during the readiness assessment that must be remediated before authorisation.
+
+Severity is ArcKit's remediation-priority scale, not a FedRAMP rubric: the RAR answers each question Yes or No, and the 3PAO then judges overall readiness. **Critical** — a Federal Mandate (Section 5.1) answered No. **High** — a gap that would make a RAR FedRAMP Requirements (§4.2) answer No; the RAR says a CSP is unlikely to be authorized if any is unmet. **Moderate** — a control gap with a credible POA&M before the 3PAO assessment. **Low** — a documentation or evidence gap only.
 
 | Control ID | Gap Description | Severity (Critical / High / Moderate / Low) | Mitigation Plan | Target Completion (POA&M Target) | Owner |
 |-----------|-----------------|---------------------------------------------|-----------------|----------------------------------|-------|
@@ -99,7 +105,7 @@ Gaps identified during the readiness assessment that must be remediated before a
 | Penetration Test Report | [CA-8] | [Complete — last test YYYY-MM-DD] | [Pentest report ref] |
 | Customer Responsibility Matrix (CRM) | [All inherited] | [Complete] | [Reference] |
 | FIPS 140-3 Validation Certs for crypto modules | [SC-13] | [Complete — CMVP cert NNNN] | [CMVP cert link] |
-| SSDF Self-Attestation (EO 14028) | [SR family] | [Complete] | [ARC-{P}-SBOM-v*] |
+| Secure-software evidence the sponsoring agency asks for (attestation form, SBOM; OMB M-26-05) | [SR family] | [Complete / Not requested] | [ARC-{P}-SBOM-v*] |
 
 ---
 
@@ -120,7 +126,7 @@ The six Federal Mandates in the FedRAMP Moderate and High RAR templates. Answer 
 
 ### 5.2 Further Readiness Checks
 
-ArcKit's pre-assessment checks, covering ground the RAR assesses under FedRAMP Requirements (§4.2) and Additional Capabilities (§4.3), plus federal requirements the RAR does not test (row 13).
+ArcKit's pre-assessment checks, covering ground the RAR assesses under FedRAMP Requirements (§4.2) and Additional Capabilities (§4.3), plus an agency requirement the RAR does not test (row 13). Answer Met only when the check is fully met. A partly met check is Not Met, with what is missing in Notes, as the RAR instructs for its Yes / No questions.
 
 | # | Criterion | Status | Notes |
 |---|-----------|--------|-------|
@@ -136,9 +142,9 @@ ArcKit's pre-assessment checks, covering ground the RAR assesses under FedRAMP R
 | 10 | Incident response capability validated by tabletop exercise | [Met / Not Met] | [Notes] |
 | 11 | All cryptographic key management implemented per SC-12 | [Met / Not Met] | [Notes] |
 | 12 | CRM completed and signed by CSP | [Met / Not Met] | [Notes] |
-| 13 | SSDF / EO 14028 self-attestation submitted to CISA | [Met / Not Met] | [Notes] |
+| 13 | Secure-software evidence the sponsoring agency asks for under OMB M-26-05 (attestation form, SBOM) supplied, or recorded as not requested | [Met / Not Met] | [Notes] |
 
-**Readiness Verdict for 3PAO Assessment**: [Ready / Conditionally Ready / Not Ready]
+**Readiness Verdict for 3PAO Assessment**: [Ready / Conditionally Ready / Not Ready] — Ready only when every Federal Mandate is Yes and no Critical or High gap is open.
 
 ---
 
@@ -176,22 +182,23 @@ ArcKit's pre-assessment checks, covering ground the RAR assesses under FedRAMP R
 ## 8. Remediation Roadmap
 
 ```text
-Month 1     |================================|  Address all High gaps
+Month 1     |================================|  Address all Critical and High gaps
 Month 2     |================================|  Address Moderate gaps
-Month 3     |================================|  3PAO assessment (official RAR or full initial assessment)
-Month 4     |================================|  Submit package to FedRAMP PMO
-Month 5-6   |================================|  ATO process (Agency or JAB review)
+Month 3     |================================|  3PAO initial assessment (SAP / SAR)
+Month 4     |================================|  Agency ATO (Agency path) or FedRAMP application (Program path)
+Month 5-6   |================================|  FedRAMP review and certification decision
 ```
 
-[Replace with project-specific timeline. Include milestone gates: gap closure → 3PAO assessment → package submission → AO review → ATO issued.]
+[Replace with project-specific timeline. Include milestone gates: gap closure → 3PAO assessment → sponsoring agency ATO (Agency path only) → FedRAMP Certification application → FedRAMP decision. Each agency still issues its own ATO before using a FedRAMP Certified service.]
 
 | Milestone | Target Date | Owner | Status |
 |-----------|-------------|-------|--------|
-| All High gaps closed | [YYYY-MM-DD] | [Owner] | [Open / Done] |
+| All Critical and High gaps closed | [YYYY-MM-DD] | [Owner] | [Open / Done] |
 | All Moderate gaps closed | [YYYY-MM-DD] | [Owner] | [Open / Done] |
 | 3PAO assessment complete | [YYYY-MM-DD] | [3PAO] | [Open / Done] |
-| Package submitted to FedRAMP PMO | [YYYY-MM-DD] | [System Owner] | [Open / Done] |
-| ATO issued | [YYYY-MM-DD] | [AO] | [Open / Done] |
+| Sponsoring agency ATO issued (Agency path only) | [YYYY-MM-DD] | [Agency AO] | [Open / Done / N/A] |
+| FedRAMP Certification application submitted | [YYYY-MM-DD] | [System Owner] | [Open / Done] |
+| FedRAMP Certification decision | [YYYY-MM-DD] | [FedRAMP] | [Open / Done] |
 
 ---
 
@@ -199,11 +206,12 @@ Month 5-6   |================================|  ATO process (Agency or JAB revie
 
 | Reference | Citation | URL |
 |-----------|----------|-----|
-| FedRAMP 3PAO RAR Template | Readiness Assessment Report Template (Moderate v2.1, May 2024; High) | <https://www.fedramp.gov/documents-templates/> |
+| FedRAMP 3PAO RAR Template | Readiness Assessment Report Template (Moderate v2.1, May 2024; High); legacy since 23 June 2026 | <https://www.fedramp.gov/legacy/> |
 | FedRAMP Consolidated Rules for 2026 | Important dates — FedRAMP Ready retired 28 July 2026 | <https://www.fedramp.gov/2026/timeline/> |
-| FedRAMP Agency Authorization Playbook | Agency Authorization Playbook | <https://www.fedramp.gov/agency-authorization/> |
-| FedRAMP JAB Prioritisation Criteria | JAB Prioritisation Criteria | <https://www.fedramp.gov/jab-prioritization/> |
-| FedRAMP Continuous Monitoring Strategy Guide | ConMon Strategy Guide | <https://www.fedramp.gov/assets/resources/documents/CSP_Continuous_Monitoring_Strategy_Guide.pdf> |
+| FedRAMP Consolidated Rules for 2026 | Choosing a Certification Path (Agency / Program) | <https://www.fedramp.gov/2026/providers/start/path/> |
+| OMB M-24-15 | Modernizing the Federal Risk and Authorization Management Program (25 July 2024) | <https://www.whitehouse.gov/wp-content/uploads/2024/07/M-24-15-Modernizing-the-Federal-Risk-and-Authorization-Management-Program.pdf> |
+| FedRAMP Consolidated Rules for 2026 | Collaborative Continuous Monitoring (Rev 5) | <https://www.fedramp.gov/2026/providers/rev5/rules/collaborative-continuous-monitoring/> |
+| FedRAMP Continuous Monitoring Playbook | Rev 5 ConMon Playbook (legacy), which replaced the ConMon Strategy Guide v3.2 | <https://www.fedramp.gov/legacy/playbook/csp/continuous-monitoring/intro/> |
 | A2LA 3PAO Directory | Accredited 3PAO Directory | <https://customer.a2la.org/index.cfm?event=directory.search> |
 
 ---
