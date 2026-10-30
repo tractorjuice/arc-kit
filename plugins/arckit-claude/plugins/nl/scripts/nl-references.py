@@ -18,14 +18,16 @@ identify it) and carries a version stamp on the second line:
     <!-- arckit-extract: source=nora origin=api version=... fetched=YYYY-MM-DD -->
 
 On every run the script asks the live source for its version, once, and
-refreshes the extract only when the source has changed. An extract without
-a stamp counts as placed by hand: nothing replaces it, not even --from-dump
-or --from-xml, unless --force is given. One built from a local file
-(origin=file) is not refreshed from the live source unless --force is given,
-but a new --from-* build replaces it. A set with a file missing, with files
-from different versions, or with files that carry a stamp next to files
-that do not (a run that stopped halfway), is rebuilt whatever built it; to
-keep your own edits in the GEMMA set, remove the stamp from all three files.
+refreshes the extract only when the source has changed. An extract whose
+files all lack a stamp counts as placed by hand: nothing replaces it, not
+even --from-dump or --from-xml, unless --force is given. One built from a
+local file (origin=file) is not refreshed from the live source unless
+--force is given, but a new --from-* build replaces it. A set with a file
+missing, with files from different versions, or with files that carry a
+stamp next to files that do not (a run that stopped halfway), is rebuilt
+whatever built it; each file in it without a stamp is first copied to
+<name>.bak, and the status line's note names the copy. To keep your own
+edits in the GEMMA set, remove the stamp from all three files.
 A file at an extract's name that is not an extract (another first line, or
 not UTF-8) is left alone. Offline, an existing extract is kept and reported
 as such. Downloads are requested compressed.
@@ -83,6 +85,7 @@ import tempfile
 import threading
 import time
 import unicodedata
+import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -186,7 +189,9 @@ def _download(url, where, timeout, deadline):
     # URLError, HTTPError and timeouts are OSErrors; a connection dropped
     # mid-response (IncompleteRead, BadStatusLine) is an HTTPException.
     except (OSError, ValueError, http.client.HTTPException) as exc:
-        raise SourceUnavailable(f"{where}: {exc}") from exc
+        # An HTTP error's reason phrase is the server's text: report its code.
+        why = f"HTTP {exc.code}" if isinstance(exc, urllib.error.HTTPError) else exc
+        raise SourceUnavailable(f"{where}: {why}") from exc
     data = b"".join(chunks)
     # http.client returns a short body without complaint when the connection
     # closes early; Content-Length (of the bytes as sent) tells.
@@ -431,8 +436,9 @@ def clean(value):
     v = re.sub(r"\{\{[^{}]*\}\}", "", v)                        # templates
     # Bounded repeats: an unbounded class lets a long run of `[[` or
     # `[http://` cost quadratic time (hours on a 2 MB page).
-    v = re.sub(r"\[\[(?:[^\]|\n]{0,300}\|)?([^\]\n]{0,300})\]\]", r"\1", v)        # [[target|label]] -> label
-    v = re.sub(r"\[(https?://[^\s\]]{1,2000})[ \t]+([^\]\n]{1,500})\]", r"\2 (\1)", v)  # [url label]
+    # No class crosses a `[`, so a long run of `[[` or `[http://` is read once.
+    v = re.sub(r"\[\[(?:[^\[\]|\n]{0,300}\|)?([^\[\]\n]{0,300})\]\]", r"\1", v)        # [[target|label]] -> label
+    v = re.sub(r"\[(https?://[^\s\[\]]{1,2000})[ \t]+([^\[\]\n]{1,500})\]", r"\2 (\1)", v)  # [url label]
     v = re.sub(r"<br\s*/?>", "\n", v, flags=re.I)
     # \b: not <script>, <style>, <summary>. [^<>]: a run of `<span` without a `>`
     # would otherwise be rescanned from every opener (quadratic).
@@ -490,7 +496,10 @@ def nora_ask(query, printouts=()):
         q = query + "".join(f"|?{p}" for p in printouts) + f"|limit={ASK_LIMIT}|offset={offset}"
         data = http_json(NORA_API, {"action": "ask", "query": q, "format": "json"})
         if not isinstance(data, dict) or "query" not in data:
-            raise SourceUnavailable(f"NORA ask query failed: {data.get('error', data) if isinstance(data, dict) else data}")
+            err = data.get("error") if isinstance(data, dict) else None
+            code = err.get("code") if isinstance(err, dict) else None
+            raise SourceUnavailable("NORA ask query failed: " + (f"API error {code}" if isinstance(code, str)
+                                                                else "the reply holds no query results"))
         results = data["query"].get("results") or {}
         for title, row in results.items():
             yield one_line(title), row.get("printouts", {})
@@ -730,7 +739,9 @@ def gemma_live_version():
     commits = http_json(f"https://api.github.com/repos/{GEMMA_REPO}/commits",
                         {"path": GEMMA_EXPORT, "per_page": "1"})
     if not isinstance(commits, list) or not commits:
-        raise SourceUnavailable(f"GitHub returned no commit for {GEMMA_EXPORT}: {commits}")
+        message = commits.get("message") if isinstance(commits, dict) else None
+        raise SourceUnavailable(f"GitHub returned no commit for {GEMMA_EXPORT}"
+                                + (f": {message}" if isinstance(message, str) else ""))
     record = commits[0] if isinstance(commits[0], dict) else {}
     sha = record.get("sha")
     if not isinstance(sha, str) or not re.fullmatch(r"[0-9a-f]{40}", sha):   # goes into a URL path
@@ -1075,7 +1086,8 @@ def existing_state(directory, files):
     partial  some are missing, they carry different versions, or some carry
              a stamp and some do not (a run that stopped halfway, a failed
              write): rebuilt when the source or a local file can be used,
-             whatever built the files, and used as they are when it cannot
+             whatever built the files, after each file without a stamp is
+             copied to <name>.bak; used as they are when it cannot
     file     built from a local file with --from-dump or --from-xml: not
              refreshed from the live source without --force, but a new
              --from-* build replaces it
@@ -1120,8 +1132,18 @@ SOURCE_ERRORS = (SourceUnavailable, KeyError, IndexError, TypeError, AttributeEr
                  RecursionError)
 
 
+MAX_ERROR = 300   # characters of an error on the status line
+
+
 def describe(exc):
-    return str(exc) if isinstance(exc, (SourceUnavailable, OSError)) else f"unexpected response: {exc!r}"
+    """The `error` for the status line. The commands quote it in the
+    assessment, and it can carry a server's text (an unexpected reply, a
+    value that failed a check), which neutralise() never sees. So it becomes
+    one line of visible characters with `&`, `<` and backticks escaped, cut
+    to MAX_ERROR characters; the commands put it in a code span."""
+    text = str(exc) if isinstance(exc, (SourceUnavailable, OSError)) else f"unexpected response: {exc!r}"
+    text = one_line(visible_chars(text)).replace("&", "&amp;").replace("<", "&lt;").replace("`", "'")
+    return text if len(text) <= MAX_ERROR else text[:MAX_ERROR - 1] + "\u2026"
 
 
 def foreign_file(directory, files):
@@ -1158,18 +1180,51 @@ def write_all(source, directory, origin, version, texts, files):
         write_extract(os.path.join(directory, name), title, stamp_line(source, origin, version), texts[name])
 
 
+def keep_copies(directory, files):
+    """Copy each file without a stamp in a partial set to <name>.bak (or
+    .bak2, .bak3, ...) before the set is rebuilt. The script cannot tell a
+    file whose stamp the user removed to keep an edit from one an
+    interrupted --force left behind, so it keeps both. Each copy is created
+    exclusively, so a name planted in a clone (a symlink, say) is never
+    written through. Returns the copies' names."""
+    kept = []
+    for name in files:
+        path = os.path.join(directory, name)
+        if not os.path.isfile(path) or read_stamp(path)[1] is not None:
+            continue
+        with open(path, "rb") as f:
+            data = f.read()
+        for n in range(1, 100):
+            backup = f"{path}.bak" if n == 1 else f"{path}.bak{n}"
+            try:
+                fd = os.open(backup, os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_BINARY", 0), 0o666)
+            except FileExistsError:
+                continue
+            with os.fdopen(fd, "wb") as out:
+                out.write(data)
+            kept.append(os.path.basename(backup))
+            break
+        else:
+            raise OSError(f"{path}: no free name for a copy (.bak to .bak99 all exist)")
+    return kept
+
+
 def written(result, source, directory, origin, state, new_version, texts, files):
     """Write the new extract files and report it. When a file cannot be
     written (held open by a viewer on Windows, a full disk), report what is
     on disk now instead: a set replaced halfway is partial, and the next run
-    rebuilds it."""
+    rebuilds it. A partial set's files without a stamp are copied first."""
     try:
+        kept = keep_copies(directory, files) if state == "partial" else []
         write_all(source, directory, origin, new_version, texts, files)
     except OSError as exc:
         now, version, found = existing_state(directory, files)
         return kept_or_missing(result, now, version, found, "the extract could not be written", exc)
-    return {**result, "status": "fetched" if state == "missing" else "refreshed",
-            "origin": origin, "version": new_version}
+    status = {**result, "status": "fetched" if state == "missing" else "refreshed",
+              "origin": origin, "version": new_version}
+    if kept:
+        status["note"] = "copied each file without a stamp before the rebuild: " + ", ".join(kept)
+    return status
 
 
 def refresh(source, directory, force, live_version, build, files):

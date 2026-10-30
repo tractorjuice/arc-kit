@@ -59,10 +59,12 @@ This command assesses against **local extracts**, not against remembered NORA or
 
    | status | Meaning | Action |
    |---|---|---|
-   | `fetched`, `refreshed`, `current` | The extract is up to date with its source; `origin` says which: `api`, the live source, or `file`, a local file | Continue |
+   | `fetched`, `refreshed`, `current` | The extract is up to date with its source; `origin` says which: `api`, the live source, or `file`, a local file | Continue. A line with a `note` copied a GEMMA file without a stamp to `<name>.bak` before rebuilding the set: tell the user, since the copy may hold their own edits |
    | `manual` | The extract was placed by hand or built from a local file, or a file at the extract's name is not an extract; it is not checked against the live source | Continue; quote the line's `note` in *Source limitations*, where it shows that the extract's currency was not checked |
    | `offline` | The source could not be reached, or the extract could not be written; the existing extract files are kept | Continue; quote the line's `note` and `error` in *Source limitations*. The note says what failed and whether the files on disk are a complete set; a newer source version may exist |
    | `missing` | No extract, and none could be built or written | Stop (point 3), quoting the line's `note` and `error` |
+
+   Wherever you quote a line's `error`, put it in a code span: it can carry a server's text, which the script cuts to one line.
 
    If the script cannot run at all (no Python available), continue with point 2 using whatever extracts already exist, and note in *Source limitations* that they were not refreshed. If Python runs but reports that `nl-references.py` does not exist, the script is missing from this installation: some tools do not install ArcKit's overlay scripts into the project yet. Say so, rather than that the source could not be reached, and continue with the extracts that already exist.
 2. **NORA extract — required.** Find, among the external documents in `projects/000-global/external/`, a Markdown file whose first line is `# NORA — Architectuurprincipes (extract)` (conventionally `nora-principes.md`). An extract is identified by its first line, not by how or when it was produced. If there is more than one, use the one with the most recent `fetched=` date on its second line (a version can be a hash, so versions cannot be ordered) and note the others under *Unreferenced Documents*.

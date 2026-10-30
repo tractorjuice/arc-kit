@@ -56,10 +56,12 @@ If `python3` is not found, retry with `python`. The script prints one JSON line 
 
 | status | Meaning | Action |
 |---|---|---|
-| `fetched`, `refreshed`, `current` | The extracts are up to date with their source; `origin` says which: `api`, the live source, or `file`, a local file | Continue |
+| `fetched`, `refreshed`, `current` | The extracts are up to date with their source; `origin` says which: `api`, the live source, or `file`, a local file | Continue. A line with a `note` copied a file without a stamp to `<name>.bak` before rebuilding the set: tell the user, since the copy may hold their own edits |
 | `manual` | The extracts were placed by hand or built from a local file, or a file at an extract's name is not an extract; they are not checked against the live source | Continue; quote the line's `note` in *Source limitations*, where it shows that their currency was not checked |
 | `offline` | The source could not be reached, or an extract could not be written; the existing extract files are kept | Continue; quote the line's `note` and `error` in *Source limitations*. The note says what failed and whether the files on disk are a complete set; a newer GEMMA version may exist |
 | `missing` | No extracts, and none could be built or written | Stop (point 1 below), quoting the line's `note` and `error` |
+
+Wherever you quote a line's `error`, put it in a code span: it can carry a server's text, which the script cuts to one line.
 
 If the script cannot run at all (no Python available), continue with whatever extracts already exist and note in *Source limitations* that they were not refreshed. If Python runs but reports that `nl-references.py` does not exist, the script is missing from this installation: some tools do not install ArcKit's overlay scripts into the project yet. Say so, rather than that the source could not be reached, and continue with the extracts that already exist.
 
