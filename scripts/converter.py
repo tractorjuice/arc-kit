@@ -270,6 +270,7 @@ PLUGIN_SOURCES = [
     "plugins/arckit-uk-nhs",
     "plugins/arckit-togaf-adm",
     "plugins/arckit-oaa",
+    "plugins/arckit-arc42",
     "plugins/arckit-agent-architecture",
     "plugins/arckit-claude",  # core last
 ]
@@ -1477,7 +1478,7 @@ def generate_kimi_plugin_json(mcp_json_path, version, output_path):
         "author": "ArcKit",
         "homepage": "https://github.com/tractorjuice/arckit-kimi",
         "repository": "https://github.com/tractorjuice/arckit-kimi",
-        "license": "MIT",
+        "license": "MIT AND CC-BY-SA-4.0",
         "keywords": [
             "enterprise-architecture",
             "governance",
@@ -1534,7 +1535,7 @@ def generate_codex_plugin_manifest(output_dir):
         },
         "homepage": "https://github.com/tractorjuice/arckit-codex",
         "repository": "https://github.com/tractorjuice/arckit-codex",
-        "license": "MIT",
+        "license": "MIT AND CC-BY-SA-4.0",
         "keywords": [
             "enterprise-architecture",
             "governance",
@@ -1752,7 +1753,7 @@ def generate_vibe_config_toml(output_path, version, agent_files):
         '"""',
         'author = "TractorJuice"',
         'repository = "https://github.com/tractorjuice/arckit-vibe"',
-        'license = "MIT"',
+        'license = "MIT AND CC-BY-SA-4.0"',
         'homepage = "https://tractorjuice.github.io/arc-kit/"',
         "",
         "[extension.feature_flags]",

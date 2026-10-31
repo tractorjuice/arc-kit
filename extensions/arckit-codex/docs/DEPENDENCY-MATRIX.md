@@ -312,9 +312,9 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:ca-atip` | — | — | ca-pia, data-model, principles, requirements |
 | `/arckit:ca-aia` | — | data-model, requirements | ca-pia, principles |
 | `/arckit:ca-charter` | — | requirements, stakeholders | ca-fitaa, ca-pia, principles |
-| `/arckit:ca-itsg-33` | — | ca-pia, fr-dr, requirements | ca-soia, principles |
+| `/arckit:ca-itsg-33` | — | ca-pia, data-model, requirements | ca-soia, principles |
 | `/arckit:ca-soia` | — | — | ca-fitaa, ca-itsg-33, principles, requirements |
-| `/arckit:ca-cloud-residency` | — | ca-pia, requirements | ca-itsg-33, principles |
+| `/arckit:ca-cloud-residency` | — | ca-pia, data-model, requirements | ca-itsg-33, principles |
 | `/arckit:ca-gc-digital-standards` | — | — | ca-aia, principles, requirements, service-assessment |
 | `/arckit:ca-ola` | — | — | ca-fitaa, principles, requirements, service-assessment |
 | `/arckit:ca-pspc` | — | — | ca-cloud-residency, ca-itsg-33, principles, requirements, sobc |
@@ -405,7 +405,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | Command | Needs (M) | Recommended (R) | Optional (O) |
 |---------|-----------|-----------------|--------------|
 | `/arckit:au-aescsf` | — | au-e8-posture, au-ism-controls, requirements, stakeholders | au-ot-security, au-soci-cirmp, data-model, dfd, diagram, maturity-model, principles, risk, servicenow, traceability |
-| `/arckit:au-energy-compliance` | — | requirements, stakeholders | adr, au-aescsf, au-ot-security, au-pia, au-soci-cirmp, data-model, dfd, diagram, principles, risk, servicenow, traceability |
+| `/arckit:au-energy-compliance` | — | requirements, stakeholders | adr, au-aescsf, au-ndb-playbook, au-ot-security, au-pia, au-soci-cirmp, data-model, dfd, diagram, principles, risk, servicenow, traceability |
 
 ### ArcKit USA Federal Civilian Overlay (`arckit-us`)
 
@@ -507,6 +507,23 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:agile-strategy` | — | business-capability-map, oaa-adm-lite, principles, product-architecture, requirements, stakeholders, transition-architecture | — |
 | `/arckit:agile-security` | — | agile-strategy, oaa-adm-lite, principles, product-architecture, requirements | — |
 | `/arckit:agile-governance` | — | agile-security, agile-strategy, oaa-adm-lite, principles, product-architecture | — |
+
+### ArcKit arc42 (`arckit-arc42`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:arc42` | — | adr, diagram, hld-review, principles, requirements, stakeholders | data-model, devops, dfd, dld-review, glossary, operationalize, platform-design, repo-audit, risk, secure, sobc, strategy, wardley |
+
+`/arckit:arc42` stops only when the project has none of its project-level Recommended inputs (adr, diagram, hld-review, requirements, stakeholders); principles live in `000-global` and do not count on their own. Every other input fills a section when present and is listed in the Gap Register when not.
+
+Typical assembly flow, automated by the `arc42-full` recipe in Claude Code or run as individual commands in other assistants:
+
+```text
+principles → stakeholders → requirements → ADRs + data model →
+context, container, sequence and deployment diagrams + secure + risk + glossary → arc42
+```
+
+Existing source artefacts can be reused; missing inputs leave gaps in the description.
 
 ---
 
@@ -636,7 +653,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 6.18.2
 - **Matrix Date**: 2026-10-17
-- **Commands Documented**: 76 core commands in the matrix; 120 community overlay and tooling commands in Community Overlay Dependencies
+- **Commands Documented**: 76 core commands in the matrix; 121 community overlay and tooling commands in Community Overlay Dependencies
 - **Matrix Rows**: 65 (63 commands + 2 external documents)
 - **Note**: `/arckit:build`, `/arckit:customize`, `/arckit:export-okf`, `/arckit:graph-report`, `/arckit:health`, `/arckit:impact`, `/arckit:import-okf`, `/arckit:init`, `/arckit:navigator`, `/arckit:pages`, `/arckit:search`, `/arckit:start`, `/arckit:template-builder` are not in the matrix. They need no earlier documents, or they work across whatever the project already holds rather than on particular documents, and no other command reads their output
 

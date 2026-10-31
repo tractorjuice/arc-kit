@@ -27,6 +27,7 @@ PLUGIN_LAYOUT = (
     ("plugins/arckit-uk-gcloud", "plugins/uk/gcloud"),
     ("plugins/arckit-togaf-adm", "plugins/togaf/adm"),
     ("plugins/arckit-oaa", "plugins/oaa"),
+    ("plugins/arckit-arc42", "plugins/arc42"),
     ("plugins/arckit-agent-architecture", "plugins/agent/architecture"),
     ("plugins/arckit-repo", "plugins/repo"),
 )

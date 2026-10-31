@@ -43,6 +43,7 @@ export const GUIDE_CATEGORY_ORDER = [
   'Repository Plugin',
   'TOGAF ADM Overlay',
   'Open Agile Architecture Overlay',
+  'arc42 Overlay',
   'Australian Federal / Energy Overlay',
   'Community overlays - Austria',
   'Canada Federal Overlay',
@@ -260,6 +261,8 @@ add(GUIDE_SECTIONS.OVERLAY, 'Open Agile Architecture Overlay', 'community', [
   'agile-security',
   'agile-governance',
 ], 'Open Agile Architecture Overlay');
+
+add(GUIDE_SECTIONS.OVERLAY, 'arc42 Overlay', 'community', ['arc42'], 'arc42 Overlay');
 
 add(GUIDE_SECTIONS.OVERLAY, 'Australian Federal / Energy Overlay', 'community', [
   'au-aescsf',

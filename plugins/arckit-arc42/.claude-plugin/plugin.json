@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "arckit-arc42",
+  "displayName": "ArcKit arc42",
+  "version": "6.18.3",
+  "description": "arc42 — assembles an arc42 architecture description from the project's existing ArcKit artefacts, citing each source and listing the sections no artefact covers yet. 1 command: arc42. Recipe: arc42-full.",
+  "author": {
+    "name": "ArcKit Contributors",
+    "url": "https://github.com/tractorjuice/arckit-claude"
+  },
+  "homepage": "https://arckit.org",
+  "repository": "https://github.com/tractorjuice/arckit-claude",
+  "license": "MIT AND CC-BY-SA-4.0",
+  "icon": "./assets/icon.svg",
+  "privacyPolicyUrl": "https://arckit.org/privacy.html",
+  "supportUrl": "https://github.com/tractorjuice/arc-kit/issues",
+  "documentationUrl": "https://github.com/tractorjuice/arckit-claude/tree/main/plugins/arc42#readme",
+  "termsOfServiceUrl": "https://github.com/tractorjuice/arckit-claude/blob/main/plugins/arc42/LICENSE",
+  "defaultEnabled": false,
+  "userConfig": {
+    "default_classification": {
+      "title": "Default Classification",
+      "type": "string",
+      "default": "PUBLIC",
+      "description": "Default document classification (e.g. PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE)"
+    },
+    "organisation_name": {
+      "title": "Organisation Name",
+      "type": "string",
+      "default": "",
+      "description": "Organisation or client name substituted into the Document Control header"
+    }
+  },
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=6.18.3"
+    }
+  ]
+}

@@ -168,7 +168,7 @@ The highest-signal failures — collected from real releases. Read these before 
   checked out in another worktree, release from a clean one: `git worktree add
   ../arc-kit-release main`. The session hook's `.arckit/memory/sessions.md` edits then land
   in the session's own checkout, not in the release tree.
-- **Hardcoding the plugin list.** The Claude marketplace now ships 18 plugins (core plus
+- **Hardcoding the plugin list.** The Claude marketplace now ships 19 plugins (core plus
   regional, sector, method, agent-architecture, tooling, and supplier overlays) and keeps growing. Older examples listed
   only 7, silently skipping newer plugins. Discover plugins dynamically (step 10) -- this is the
   exact bug that shipped `arckit-uk-nhs` untagged mid-v5.4.0, which is why `tag-plugins.sh`

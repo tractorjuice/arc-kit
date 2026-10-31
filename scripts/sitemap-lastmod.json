@@ -16,8 +16,8 @@
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
   "commands.html": {
-    "lastmod": "2026-10-28",
-    "text_sha256": "143f772111eae5b8b6106d9d056db1483f65468bf41b406ad6f79b40d8da6973"
+    "lastmod": "2026-10-30",
+    "text_sha256": "3ef733de4236df7a574e20dce53339cf3664b332606a4cb13ae212419e2885a3"
   },
   "contributors.html": {
     "lastmod": "2026-10-28",
@@ -40,16 +40,16 @@
     "text_sha256": "5b41801c5e7f3fb3fabc58fd1cd3a891f511b18a10b0fc40a6e935aa6052125d"
   },
   "guides.html": {
-    "lastmod": "2026-10-28",
-    "text_sha256": "a1f3dc3b27fd479a535cb9c0f4420c2fdb596cf9ebe3f6a9bcfcafa1bed805be"
+    "lastmod": "2026-10-30",
+    "text_sha256": "12c5a6be65afdc83f70a56b3f257243744815aa436b9c91ee5799d729d5ffc31"
   },
   "index.html": {
-    "lastmod": "2026-10-28",
-    "text_sha256": "2e939680d388a3317867bba96fd8d1461b28ba08c7f6e1084e2f69f077cf06d0"
+    "lastmod": "2026-10-31",
+    "text_sha256": "7052da8c4f026eec708311b30668ff3c96ac3ce69098833aff4682cb48f9e9e4"
   },
   "llms.txt": {
-    "lastmod": "2026-10-28",
-    "text_sha256": "06578458e98498ad6de74679dcc8c3372bf3bcb7eae6c6ecf60a33ef6bdffca4"
+    "lastmod": "2026-10-30",
+    "text_sha256": "6ffde25394dfc909e62295a0c6a4de755eeb94f0f7ef6fcc05166acd90d594ec"
   },
   "on-github.html": {
     "lastmod": "2026-10-26",

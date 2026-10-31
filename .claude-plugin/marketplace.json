@@ -403,6 +403,26 @@
         "enterprise-architecture"
       ],
       "category": "productivity"
+    },
+    {
+      "name": "arckit-arc42",
+      "source": "./plugins/arckit-arc42",
+      "description": "arc42 overlay for ArcKit. /arckit:arc42 assembles an arc42 architecture description from the project's existing artefacts, citing each source and listing uncovered sections in a Gap Register. Recipe: arc42-full. Requires arckit core. [COMMUNITY]",
+      "version": "6.18.3",
+      "author": {
+        "name": "ArcKit Contributors"
+      },
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
+      "license": "MIT AND CC-BY-SA-4.0",
+      "keywords": [
+        "architecture",
+        "governance",
+        "arc42",
+        "documentation",
+        "architecture-description"
+      ],
+      "category": "productivity"
     }
   ]
 }

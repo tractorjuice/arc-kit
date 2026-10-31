@@ -54,6 +54,14 @@ def test_codex_selection_ignores_copilot_assets(tmp_path: Path) -> None:
     assert missing_required_assets(paths, "codex") == []
 
 
+def test_codex_hook_configuration_gates_only_codex(tmp_path: Path) -> None:
+    paths = complete_paths(tmp_path)
+    paths["codex_hook_config"] = tmp_path / "absent"
+
+    assert [key for key, _ in missing_required_assets(paths, "codex")] == ["codex_hook_config"]
+    assert missing_required_assets(paths, "opencode") == []
+
+
 def test_all_ai_requires_both_codex_and_opencode(tmp_path: Path) -> None:
     paths = complete_paths(tmp_path)
     paths["codex_skills"] = tmp_path / "absent"
