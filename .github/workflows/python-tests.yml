@@ -33,9 +33,11 @@ jobs:
       # Markdown packages test_site_pages.py needs. Those are pinned to the
       # versions in scripts/generate-site-pages.py because its --check compares
       # the pages byte for byte. `-e .` is needed because several suites
-      # import from `src/arckit_cli/`.
+      # import from `src/arckit_cli/`. build and hatchling let
+      # tests/cli/test_package_licence.py build the sdist and wheel offline
+      # and check their licence metadata; without them those tests skip.
       - name: Install test dependencies
-        run: python -m pip install -e . pytest pyyaml markdown-it-py==4.0.0 linkify-it-py==2.0.3
+        run: python -m pip install -e . pytest pyyaml markdown-it-py==4.0.0 linkify-it-py==2.0.3 build "hatchling>=1.27"
 
       # The generated content under extensions/** is gitignored (see .gitignore
       # "Generated distribution formats"), so a fresh checkout holds only each
