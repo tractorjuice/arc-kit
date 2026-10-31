@@ -516,6 +516,15 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 
 `/arckit:arc42` stops only when none of its Recommended inputs exists; every other input fills a section when present and is listed in the Gap Register when not.
 
+Typical assembly flow, automated by the `arc42-full` recipe in Claude Code or run as individual commands in other assistants:
+
+```text
+principles → stakeholders → requirements → ADRs + data model →
+context, container, sequence and deployment diagrams + secure + risk + glossary → arc42
+```
+
+Existing source artefacts can be reused; missing inputs leave gaps in the description.
+
 ---
 
 ## Critical Paths

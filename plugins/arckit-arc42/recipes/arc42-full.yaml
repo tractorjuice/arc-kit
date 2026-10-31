@@ -95,7 +95,7 @@ targets:
     skill: arckit:secure
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SECD }
-    deps: [REQ, ADR-001]
+    deps: [PRIN, REQ, ADR-001]
 
   # arc42 section 11 (Risks and Technical Debt).
   - id: RISK

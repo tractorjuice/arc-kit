@@ -43,22 +43,55 @@ No single artefact is mandatory. The command stops if the project has none of re
 
 ## Command
 
-```bash
+### Claude Code
+
+```text
 /arckit-arc42:arc42 <project ID or name>
 ```
 
-Output: `projects/<id>/ARC-<id>-ARC42-v1.0.md`
+### Codex CLI
+
+```text
+$arckit-arc42 <project ID or name>
+```
+
+Both commands write `projects/<id>/ARC-<id>-ARC42-v1.0.md`.
 
 If an arc42 description already exists, the command writes the next version beside it instead of overwriting it.
 
-To build every source artefact and then the description in one run, use the recipe:
+### Building the Source Artefacts
 
-```bash
+The `arc42-full` recipe uses the **Claude Code only** build harness to generate the source artefacts and then assemble the description:
+
+```text
 /arckit:build <project-name> --recipe arc42-full --plan   # wave-plan dry run
 /arckit:build <project-name> --recipe arc42-full          # full build
 ```
 
 Add `--exclude SECD` to skip the Secure by Design assessment; the security concept in section 8 is then recorded as a gap.
+
+In Codex, run the source commands individually before `$arckit-arc42`. Start with `$arckit-principles`, `$arckit-stakeholders` and `$arckit-requirements` if the project has no source artefacts. Add the sources for the sections you need; the Inputs table shows which command outputs each section uses.
+
+For example, to build the recipe's sources for an appointment-booking system in project `001`, run these commands in order, completing each artefact before continuing:
+
+```text
+$arckit-principles
+$arckit-stakeholders appointment-booking
+$arckit-requirements appointment-booking
+$arckit-adr 001 Top-level decomposition and technology approach
+$arckit-adr 001 Deployment topology and hosting
+$arckit-data-model 001
+$arckit-diagram 001 C4 context
+$arckit-diagram 001 C4 container
+$arckit-diagram 001 sequence for the primary user journey
+$arckit-diagram 001 deployment
+$arckit-secure 001
+$arckit-risk 001
+$arckit-glossary 001
+$arckit-arc42 001
+```
+
+Reuse source artefacts that already exist. A complete source set is not required to run the assembly command: missing sections are recorded in the Gap Register.
 
 ---
 

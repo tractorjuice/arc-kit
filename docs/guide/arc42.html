@@ -530,15 +530,38 @@
 </table>
 <hr />
 <h2 id="command">Command</h2>
-<pre><code class="language-bash">/arckit-arc42:arc42 &lt;project ID or name&gt;
+<h3 id="claude-code">Claude Code</h3>
+<pre><code class="language-text">/arckit-arc42:arc42 &lt;project ID or name&gt;
 </code></pre>
-<p>Output: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-ARC42-v1.0.md</code></p>
+<h3 id="codex-cli">Codex CLI</h3>
+<pre><code class="language-text">$arckit-arc42 &lt;project ID or name&gt;
+</code></pre>
+<p>Both commands write <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-ARC42-v1.0.md</code>.</p>
 <p>If an arc42 description already exists, the command writes the next version beside it instead of overwriting it.</p>
-<p>To build every source artefact and then the description in one run, use the recipe:</p>
-<pre><code class="language-bash">/arckit:build &lt;project-name&gt; --recipe arc42-full --plan   # wave-plan dry run
+<h3 id="building-the-source-artefacts">Building the Source Artefacts</h3>
+<p>The <code>arc42-full</code> recipe uses the <strong>Claude Code only</strong> build harness to generate the source artefacts and then assemble the description:</p>
+<pre><code class="language-text">/arckit:build &lt;project-name&gt; --recipe arc42-full --plan   # wave-plan dry run
 /arckit:build &lt;project-name&gt; --recipe arc42-full          # full build
 </code></pre>
 <p>Add <code>--exclude SECD</code> to skip the Secure by Design assessment; the security concept in section 8 is then recorded as a gap.</p>
+<p>In Codex, run the source commands individually before <code>$arckit-arc42</code>. Start with <code>$arckit-principles</code>, <code>$arckit-stakeholders</code> and <code>$arckit-requirements</code> if the project has no source artefacts. Add the sources for the sections you need; the Inputs table shows which command outputs each section uses.</p>
+<p>For example, to build the recipe's sources for an appointment-booking system in project <code>001</code>, run these commands in order, completing each artefact before continuing:</p>
+<pre><code class="language-text">$arckit-principles
+$arckit-stakeholders appointment-booking
+$arckit-requirements appointment-booking
+$arckit-adr 001 Top-level decomposition and technology approach
+$arckit-adr 001 Deployment topology and hosting
+$arckit-data-model 001
+$arckit-diagram 001 C4 context
+$arckit-diagram 001 C4 container
+$arckit-diagram 001 sequence for the primary user journey
+$arckit-diagram 001 deployment
+$arckit-secure 001
+$arckit-risk 001
+$arckit-glossary 001
+$arckit-arc42 001
+</code></pre>
+<p>Reuse source artefacts that already exist. A complete source set is not required to run the assembly command: missing sections are recorded in the Gap Register.</p>
 <hr />
 <h2 id="how-sections-are-filled">How Sections Are Filled</h2>
 <ul>
