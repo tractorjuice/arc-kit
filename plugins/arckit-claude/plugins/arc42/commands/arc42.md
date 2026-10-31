@@ -22,7 +22,7 @@ allowed-tools:
 
 You are helping an architect produce an **arc42 architecture description** for a project. [arc42](https://arc42.org) is a 12-section template for documenting the architecture of one software system. This command does not design the architecture: it assembles the description from the artefacts ArcKit has already produced, cites each one, and records which sections still have no source.
 
-The arc42 template is by Peter Hruschka and Gernot Starke and is published under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The ArcKit template keeps that attribution; do not remove it.
+The adapted template is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. ArcKit changed its explanatory text and added Document Control, source citations, a Gap Register and a Source Artefacts table. Preserve the template's licence, attribution and changes notice in every output, including when using a customised template. This notice applies to the adapted template; project-specific content and cited artefacts retain their own licences and confidentiality rules.
 
 ## User Input
 
@@ -32,9 +32,9 @@ $ARGUMENTS
 
 ## Prerequisites: Read Artifacts
 
-> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+> **Project context**: Use the supplied project context for existing projects, source artefacts, external documents and global policies. If context is unavailable, list existing projects read-only, then inspect the selected project's directories and `projects/000-global/`. Do not create a project or request optional information while gathering context.
 
-This command has no single mandatory artefact, because each arc42 section draws on different ones. If the project has **none** of REQ, STKE, PRIN, HLDR, DIAG or ADR, STOP: there is nothing to assemble. Tell the user to run `/arckit:principles`, `/arckit:stakeholders` and `/arckit:requirements` first.
+Resolve the existing project as described in step 1 before reading its sources. This command has no single mandatory artefact, because each arc42 section draws on different ones. If the project has **none** of REQ, STKE, PRIN, HLDR, DIAG or ADR, STOP without writing an ARC42 document: there is nothing to assemble. Name the missing source types and suggest `/arckit:principles`, `/arckit:stakeholders <project-name>` and `/arckit:requirements <project-name>`, then re-running `/arckit-arc42:arc42 <project-id>`.
 
 Read every artefact below that exists. For a multi-instance type, read every instance: ADRs are in `projects/{project-dir}/decisions/`, and DIAG and DFD documents are in `projects/{project-dir}/diagrams/`. Where more than one version of an artefact exists, read the latest.
 
@@ -64,23 +64,27 @@ Also read any vendor HLD or DLD documents in `projects/{project-dir}/vendors/`; 
 
 - Read any **external documents** listed in the project context (`external/` files) — extract existing architecture descriptions, context diagrams, deployment topology and technical constraints
 - Read any **enterprise standards** in `projects/000-global/external/` — extract organisation-wide constraints and mandated technologies for section 2
-- If the project has no external documents but an existing architecture description would improve the output, ask: "Do you have an existing architecture document, or an earlier arc42 description of this system? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- External documents are optional. If none are supplied, proceed with the existing ArcKit artefacts and record "No external documents supplied (default; not asked)" as an assumption. Offer once in the closing summary to place additional documents in `projects/{project-dir}/external/` and re-run; never pause for them.
 - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[AD-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ## Instructions
 
-### 1. Identify or Create Project
+### 1. Require an Existing Project
 
-Identify the target project from the hook context. If the user names a project that does not exist yet, create it:
+Match the project ID or name in the arguments to an existing project in the project context. If no project is named, use the explicitly active project, or the sole existing non-global project. Set `PROJECT_ID`, `PROJECT_PATH` and `{project-dir}` from that existing directory and its metadata.
 
-1. Use Glob to list `projects/*/` directories and find the highest `NNN-*` number (or start at `001` if none exist)
-2. Calculate the next number (zero-padded to 3 digits, e.g., `002`)
-3. Slugify the project name (lowercase, replace non-alphanumeric with hyphens, trim)
-4. Use the Write tool to create `projects/{NNN}-{slug}/README.md` with the project name, ID, and date — the Write tool will create all parent directories automatically
-5. Also create `projects/{NNN}-{slug}/external/README.md` with a note to place external reference documents here
-6. Set `PROJECT_ID` = the 3-digit number, `PROJECT_PATH` = the new directory path
+Do not create a project, allocate a project number or write project metadata. An empty new project cannot supply this command's source artefacts.
 
-A newly created project has no artefacts, so the STOP rule in Prerequisites applies.
+If the requested project does not exist, STOP without writing files. Suggest `/arckit:stakeholders <project-name>` followed by `/arckit:requirements <project-name>` to initialise it and create source artefacts, then re-running `/arckit-arc42:arc42 <project-id>`. If the target is ambiguous, list the matching existing projects and request a re-run with an explicit ID; do not guess or start an interview.
+
+### Gathering Rules
+
+Read `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` and prefill from the arguments, project metadata and source artefacts. This assembly command needs no interview: optional information never blocks interactive, unattended, headless or recipe-worker runs.
+
+- Use the document owner supplied in the arguments or project metadata; otherwise set the Owner field to `[PENDING]`. Do not infer ownership from authorship or ask for an owner.
+- Use existing external documents when available; otherwise take the no-external-documents default above.
+- Record every default taken in an **Assumptions** section in the document and an **Assumptions** line in the closing summary. For example: "Owner: [PENDING] (default; not asked)". Keep assumptions separate from sourced architecture content.
+- Missing project or source prerequisites are actionable failures, not interview questions. Optional omissions are recorded defaults, not failures.
 
 ### 2. Read the arc42 Template
 
@@ -158,6 +162,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 **Coverage**: [N] of 12 sections complete, [N] partial, [N] gaps
 **Source Artefacts Read**: [N]
+**Assumptions**: [Defaults taken, or "None"]
 
 ### Gaps to Fill
 1. Section [N] — [what is missing] — run `/arckit:[command]`
@@ -183,7 +188,7 @@ After writing the file, show a concise summary (NOT the full document):
 *User-provided fields* (extract from project metadata or user input):
 
 - `[PROJECT_NAME]` -> Full project name from project metadata or user input
-- `[OWNER_NAME_AND_ROLE]` -> Document owner (prompt user if not in metadata)
+- `[OWNER_NAME_AND_ROLE]` -> Document owner from arguments or project metadata; otherwise `[PENDING]` (default; not asked)
 - **Classification** → comes from the resolved Document Control header, not from a placeholder. `_partials/RENDERING.md` fixes the ladder from the artefact's own regime; `${user_config.default_classification}` applies only where that regime falls through to user config.
 
 *Pending fields* (leave as [PENDING] until manually updated):

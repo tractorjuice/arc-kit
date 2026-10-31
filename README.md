@@ -598,7 +598,7 @@ Install: `claude plugin install arckit arckit-uk-finance`. Help wanted: recruiti
 
 ## UK G-Cloud Supplier Bid-Authoring Overlay (15 commands) — Proprietary
 
-> **PROPRIETARY, Claude Code only.** The 15 commands below are a supplier-side overlay for authoring UK G-Cloud 15 (RM1557.15) Digital Marketplace bids, run by the Government Commercial Agency (GCA, formerly CCS): supplier profile, social value, lot questions, the Procurement Act 2023 supplier declaration, service design, a Service Definition Document for each of the five lots (1a, 1b, 2a, 2b, 3), pricing, security evidence, competitor benchmarking, submission review, and a final submission pack. Unlike every other ArcKit plugin, `arckit-uk-gcloud` ships under a **proprietary licence (not MIT)** and is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot) — it runs on Claude Code only. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and requires the `arckit` core plugin.
+> **PROPRIETARY, Claude Code only.** The 15 commands below are a supplier-side overlay for authoring UK G-Cloud 15 (RM1557.15) Digital Marketplace bids, run by the Government Commercial Agency (GCA, formerly CCS): supplier profile, social value, lot questions, the Procurement Act 2023 supplier declaration, service design, a Service Definition Document for each of the five lots (1a, 1b, 2a, 2b, 3), pricing, security evidence, competitor benchmarking, submission review, and a final submission pack. Unlike the MIT-licensed core, `arckit-uk-gcloud` ships under a **proprietary licence (not MIT)** and is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot) — it runs on Claude Code only. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and requires the `arckit` core plugin.
 
 **Supplier-wide (once per bid)**:
 
@@ -706,7 +706,7 @@ Writes an [arc42](https://arc42.org) architecture description for one system, as
 **Install:** `claude plugin install arckit arckit-arc42`
 **Recipe:** `arc42-full` — principles → stakeholders → requirements → ADRs and data model → context, container, runtime and deployment diagrams → Secure by Design → risks → glossary → arc42
 
-The arc42 template is by Peter Hruschka and Gernot Starke under CC BY-SA 4.0; the ArcKit template keeps that attribution.
+The adapted arc42 template and its copies are CC BY-SA 4.0, based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. The template records ArcKit's changes; original command logic, recipes and scripts remain MIT-licensed. See the [third-party notice](plugins/arckit-arc42/templates/arc42-LICENSE.md).
 
 ---
 
@@ -2093,6 +2093,8 @@ arckit init .
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
+
+The adapted arc42 template, including copied and embedded template text, is **CC BY-SA 4.0**, not MIT; see its [licence and attribution notice](plugins/arckit-arc42/templates/arc42-LICENSE.md). Original ArcKit implementation code remains MIT-licensed.
 
 > **Exception:** the `plugins/arckit-uk-gcloud/` overlay is **proprietary** (not MIT) — see [`plugins/arckit-uk-gcloud/LICENSE`](plugins/arckit-uk-gcloud/LICENSE).
 

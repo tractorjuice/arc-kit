@@ -414,7 +414,7 @@
       },
       "homepage": "https://github.com/tractorjuice/arckit-claude",
       "repository": "https://github.com/tractorjuice/arckit-claude",
-      "license": "MIT",
+      "license": "MIT AND CC-BY-SA-4.0",
       "keywords": [
         "architecture",
         "governance",

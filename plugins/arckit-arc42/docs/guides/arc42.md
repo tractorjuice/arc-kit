@@ -4,7 +4,7 @@
 
 `/arckit:arc42` writes an [arc42](https://arc42.org) architecture description for a project. arc42 is a 12-section template for documenting the architecture of one software system, widely used by solution and software architects. The command does not design anything: it assembles each section from the artefacts ArcKit has already produced, cites them by Document ID, and lists the sections no artefact covers yet. The command is part of the `arckit-arc42` overlay, which needs the core `arckit` plugin.
 
-The arc42 template is by Peter Hruschka and Gernot Starke and is published under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The ArcKit template uses arc42's section structure with ArcKit's own guidance text, and keeps the attribution.
+The adapted template, including its structure, headings and guidance, is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. ArcKit changed the explanatory text and added Document Control, source citations, a Gap Register, a Source Artefacts table and assumptions for optional information. Every copied or embedded template retains this licence and attribution. Original ArcKit implementation code remains MIT-licensed. Project-specific content and cited artefacts retain their own licences and confidentiality rules.
 
 ---
 
@@ -20,7 +20,15 @@ The arc42 template is by Peter Hruschka and Gernot Starke and is published under
 
 ## Inputs
 
-No single artefact is mandatory. The command stops if the project has none of requirements, stakeholder analysis, principles, HLD review, diagrams or ADRs.
+An existing project is required. The command uses the project ID or name supplied, the explicitly active project, or the sole existing non-global project. It never allocates project numbers or creates project folders. If the project is missing or ambiguous, it stops without writing files and explains how to initialise source artefacts or re-run with an explicit ID.
+
+No single artefact is mandatory. The command stops if the project has none of requirements, stakeholder analysis, principles, HLD review, diagrams or ADRs. Run `/arckit:stakeholders <project-name>` and `/arckit:requirements <project-name>` first when starting a project, with `/arckit:principles` for global principles.
+
+### Optional Information and Unattended Runs
+
+The command follows ArcKit's interview pattern and needs no interview. It uses the owner in the arguments or project metadata, otherwise `[PENDING]`. If no external documents are supplied, it proceeds with existing ArcKit artefacts. Defaults are recorded in the document's Assumptions section and closing summary; they never supply architecture decisions. Headless and recipe-worker runs do not wait for optional answers.
+
+To add an external architecture description later, place it in the project's `external/` folder and re-run the command. To change a pending owner, supply the owner in the arguments or project metadata and re-run.
 
 | Artefact | Feeds arc42 section |
 |----------|---------------------|
@@ -113,6 +121,7 @@ Reuse source artefacts that already exist. A complete source set is not required
 | 1–12 | The arc42 sections, each summarising and citing its sources |
 | Gap Register | Each empty or partial section, what is missing, and the command that would fill it |
 | Source Artefacts | Every artefact read, its version, and the sections it fed |
+| Assumptions | Defaults used for optional metadata and external documents |
 | External References | Document Register and citations for external documents |
 
 ---
@@ -130,7 +139,7 @@ The description is a view over the project's artefacts, so it goes out of date w
 - No section contains content without a source; empty sections are in the Gap Register.
 - Diagram code matches the cited `DIAG` artefact.
 - "Inferred" items have been checked by the architects who own the source artefacts.
-- The arc42 CC BY-SA 4.0 attribution is still in the document.
+- The adapted template's CC BY-SA 4.0 licence, attribution and changes notice are still in the document.
 
 ---
 

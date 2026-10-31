@@ -2,7 +2,10 @@
 title: "arc42 Architecture Description"
 docType: ARC42
 templateVersion: "1.0"
+license: CC-BY-SA-4.0
 ---
+
+<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
 
 # arc42 Architecture Description: `[PROJECT_NAME]`
 
@@ -24,7 +27,9 @@ templateVersion: "1.0"
 |---------|------|--------|---------|-------------|---------------|
 | `[VERSION]` | `[YYYY-MM-DD]` | ArcKit AI | Initial creation from `/arckit-arc42:arc42` command | `[PENDING]` | `[PENDING]` |
 
-> **About this document**: This description follows the [arc42](https://arc42.org) template by Peter Hruschka and Gernot Starke, licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). ArcKit assembles it from the project's existing artefacts. Each section summarises and cites its sources; the cited artefacts remain authoritative. Sections with no source are marked "Not yet documented." and listed in the Gap Register.
+> **Template licence and attribution**: This is an adaptation of the [arc42 template](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. This adapted template, including its structure, headings and guidance, is licensed under [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/). **Changes by ArcKit contributors**: rewritten explanatory text and added Document Control, source citations, a Gap Register and a Source Artefacts table. Retain this notice, identify further changes and distribute adaptations of the template under CC BY-SA 4.0. No endorsement by arc42 or its authors is implied. Project-specific content and cited artefacts retain their own licences and confidentiality rules.
+
+> **About this document**: ArcKit assembles this description from the project's existing artefacts. Each section summarises and cites its sources; the cited artefacts remain authoritative. Sections with no source are marked "Not yet documented." and listed in the Gap Register.
 
 ---
 
@@ -194,6 +199,10 @@ templateVersion: "1.0"
 | Document ID | Version | Feeds Sections |
 |-------------|---------|----------------|
 | `[ARC-xxx-REQ-vN.N]` | `[N.N]` | `[1, 2, 10]` |
+
+## Assumptions
+
+`[List defaults taken for optional metadata or documents, or "None". These assumptions do not supply architecture decisions or replace source evidence.]`
 
 ---
 

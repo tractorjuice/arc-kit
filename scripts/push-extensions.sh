@@ -359,6 +359,12 @@ the directory `plugins/uk/gcloud/`, which is proprietary and licensed
 separately — see `plugins/uk/gcloud/LICENSE`. The MIT grant below does not
 extend to that directory or any files within it.
 
+The adapted arc42 template (including all copied and embedded template text)
+is licensed under CC BY-SA 4.0, not the MIT grant below. See the template's
+licence and attribution notice and https://arc42.org/license/. Original ArcKit
+implementation code remains MIT-licensed; project-specific content retains
+its own rights.
+
 MIT License
 
 Copyright (c) 2025 Mark Craddock

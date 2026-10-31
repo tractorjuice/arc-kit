@@ -83,6 +83,10 @@ See the [full articles index](articles.html) for all ArcKit release notes, analy
 - [Architecture Change Request](guides/architecture-change.md) - `/arckit:architecture-change`
 - [Architecture Repository](guides/architecture-repository.md) - `/arckit:architecture-repository`
 
+### arc42 Overlay
+
+- [arc42 Architecture Description](guides/arc42.md) - `/arckit-arc42:arc42` - Assemble 12 sections from existing artefacts, with citations, source versions and a Gap Register
+
 ### AI Agent Architecture Overlay
 
 - [AI Agent Inventory](guides/agent-inventory.md) - `/arckit:agent-inventory`

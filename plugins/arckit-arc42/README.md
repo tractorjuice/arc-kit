@@ -52,7 +52,9 @@ Sections with no source are marked "Not yet documented." and listed in the Gap R
 
 ## Licence and Attribution
 
-The overlay is MIT-licensed, like the rest of ArcKit. The arc42 template it follows is by Peter Hruschka and Gernot Starke and is published under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). `templates/arc42-template.md` uses arc42's section structure, with ArcKit's own guidance text, and carries that attribution. Keep the attribution if you customise the template.
+This overlay contains separately licensed parts (`MIT AND CC-BY-SA-4.0` in its licence metadata). Original ArcKit command logic, recipes and scripts remain MIT-licensed. The adapted [`arc42-template.md`](templates/arc42-template.md), including its structure, headings and guidance, and every distributed or embedded copy are **CC BY-SA 4.0**. It is adapted from [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. ArcKit rewrote the explanatory text and added Document Control, source citations, a Gap Register, a Source Artefacts table and assumptions for optional information.
+
+See [LICENSE](LICENSE) and the [template's third-party notice](templates/arc42-LICENSE.md). Retain attribution, licence links and the changes notice when customising or distributing the template. Project-specific content and cited artefacts retain their own licences and confidentiality rules.
 
 ## Roadmap
 
