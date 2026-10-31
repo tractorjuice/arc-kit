@@ -108,7 +108,12 @@ The orchestrator substitutes these placeholders in `args` and `output.project` b
 
 `deps: ["ADR-*"]` matches all targets whose ID begins with `ADR-`. Exact IDs take precedence; globs expand at wave-computation time against the resolved target list (after optional-target filtering).
 
-An exact-ID dep naming an **optional target** orders the build only while that target is enabled: disabled optional-target IDs are pruned from every remaining target's `deps` at resolution time (step 4 below). A recipe may therefore declare the true ordering — `OAGOV` deps `[OAAL, OASEC]` in `oaa-full` — without `--exclude OASEC` leaving `OAGOV` waiting forever on a target that will never run. A dep naming a *non-optional* target that doesn't exist in the recipe is still an error.
+An exact-ID dep naming an **optional target** orders the build only while that target is enabled. A disabled optional target is resolved in one of two ways (step 4 below):
+
+- **Adopted.** When it is disabled only because its `default` is `false` (it was not named in `--exclude`), and the project already has an artefact of its output type, the harness adopts that artefact instead of building it. The target is recorded `complete` with `source: "pre-existing"` and `adopted: true`, it stays in its dependents' `deps`, and they read the existing artefact: for a multi-instance type, the latest version of every instance. A recipe can therefore declare evidence a target should read when it exists but never generate just to satisfy a dependency, such as an existing backlog or codebase audit.
+- **Pruned.** Otherwise (no existing artefact, or named in `--exclude`), its ID is removed from every remaining target's `deps`. A recipe may therefore declare the true ordering — `OAGOV` deps `[OAAL, OASEC]` in `oaa-full` — without `--exclude OASEC` leaving `OAGOV` waiting forever on a target that will never run.
+
+`--exclude ID` therefore means "neither build nor read", and `--enable ID` builds the target when no artefact exists. A dep naming a *non-optional* target that doesn't exist in the recipe is still an error.
 
 ## Input-hash change detection
 
@@ -116,7 +121,7 @@ The orchestrator records the SHA-256 of every input artefact at build time and c
 
 ### What counts as an input
 
-A target's inputs are the **resolved output paths of its `deps`** (after glob expansion). Externally-supplied inputs (e.g. `external/policies/*.md`) are not hashed by v0.4 — only artefacts the harness itself produced or recorded as `source: "pre-existing"`. Recipes that surface external inputs should hash them in v0.5.
+A target's inputs are the **resolved output paths of its `deps`** (after glob expansion), including every path of an adopted dep. A worker may also read its own target's previous version, but that is context for version detection, not an input: it is not hashed, so a target never goes stale because of its own earlier output. Externally-supplied inputs (e.g. `external/policies/*.md`) are not hashed by v0.4 — only artefacts the harness itself produced or recorded as `source: "pre-existing"`. Recipes that surface external inputs should hash them in v0.5.
 
 ### What's recorded
 
@@ -213,7 +218,7 @@ Use the **Agent tool** with `subagent_type: "general-purpose"`. One Agent call p
 
 **Pass `run_in_background: false` on every call in the wave.** Claude Code v2.1.232 made non-teammate `Agent` spawns background-by-default in interactive sessions — a backgrounded spawn returns `async_launched` and an `agentId`, *not* the worker's report. This harness needs the reports before it can validate, commit, and decide whether to halt, so a wave is exactly the case the parameter exists for. The parameter is stripped from the tool schema in some contexts; if it is unavailable, the spawns are background-only and you must **wait for every worker's completion notification before step 3** — do not proceed on `async_launched` results, and never infer a worker's outcome from the fact that it launched.
 
-Per-agent prompt template (substitute `{...}` placeholders from the resolved target):
+Per-agent prompt template (substitute `{...}` placeholders from the resolved target). `{INPUT_PATHS_BULLETED}` has one bullet per resolved dep path, including every path of an adopted dep. `{PREVIOUS_VERSION_LINE}` is `Your target's previous version (read it to keep its IDs, owners and Revision History; write the next version beside it, never over it): {PATH}` when the target already has an artefact: its recorded `path` on a rebuild, or the latest `ARC-{P}-{TYPE}-v*.md` for a single-instance type. Otherwise leave the line out.
 
 ```
 You are an ArcKit artefact worker subagent (orchestrated by arckit-build, wave {WAVE_N}).
@@ -226,6 +231,7 @@ Expected directory: {EXPECTED_DIR}     # for orientation only — actual filenam
 
 Inputs you may read (only these):
 {INPUT_PATHS_BULLETED}
+{PREVIOUS_VERSION_LINE}
 
 Steps:
 1. Use the Skill tool to invoke `{SKILL}` with the args above verbatim.
@@ -320,7 +326,7 @@ Read `projects/{P}-{NAME}/.arckit/state.json`, update each target with:
 }
 ```
 
-Compute `input_hashes` via Bash `sha256sum` on each resolved dep's `state.targets[DEP_ID].path` immediately before persisting state. Skip deps whose target has no recorded path (e.g. external inputs). Targets with no deps get `input_hashes: {}`.
+Compute `input_hashes` via Bash `sha256sum` on each resolved dep's `state.targets[DEP_ID].path` immediately before persisting state; for an adopted multi-instance dep, hash each of its `paths` and key them `DEP_ID:<filename>`. Skip deps whose target has no recorded path (e.g. external inputs). Targets with no deps get `input_hashes: {}`.
 
 For failures: `status: "failed"`, `error: "..."`, `wave: {WAVE_N}` — do not record `input_hashes` for failed targets.
 
@@ -372,6 +378,7 @@ Otherwise, proceed.
     "PRIN":   {"status": "complete", "path": "projects/000-global/ARC-000-PRIN-v1.0.md", "wave": 0, "source": "pre-existing", "input_hashes": {}},
     "REQ":    {"status": "complete", "path": "...", "wave": 1, "source": "pre-existing", "input_hashes": {"PRIN": "44e7...bc92"}},
     "RISK":   {"status": "complete", "path": "...", "wave": 3, "skill": "arckit:risk", "input_hashes": {"REQ": "9f2a...c41e", "STKE": "1b88...07ad", "PRIN": "44e7...bc92"}},
+    "CDAU":   {"status": "complete", "source": "pre-existing", "adopted": true, "paths": ["projects/001-arckit-saas/audits/ARC-001-CDAU-001-v1.1.md", "projects/001-arckit-saas/audits/ARC-001-CDAU-002-v1.0.md"], "input_hashes": {}},
     "SVCASS": {"status": "pending"}
   },
   "waves": [
@@ -388,7 +395,7 @@ State written by older versions (`state_format_version: "0.3"`) is read-compatib
 1. **Parse arguments** from skill input (project, --plan, --resume, --recipe, --enable, --exclude, etc.). If project not specified, ask user.
 2. **Detect project**: resolve `<project>` arg → `projects/{P}-{slug}/`. Confirm directory exists.
 3. **Load recipe**: resolve `--recipe NAME` (default `uk-saas`) against the precedence list. Read the YAML with the Read tool. Validate top-level shape (`recipe`, `schema_version`, `targets`, `defaults.version`). Halt with a clear error if the recipe file is missing or malformed.
-4. **Resolve enabled targets**: drop `optional_targets` whose `default: false` unless `--enable ID` was passed; drop `optional_targets` named in `--exclude ID`. Then prune every dropped optional-target ID from the remaining targets' `deps` lists — a dep on an optional target orders the build only when that target is enabled; without pruning, the dependent target's deps could never all be `done` and it would sit in `pending` forever. Apply `{P}/{NAME}/{V}/{TOPIC}` substitution to every `args` and `output.project` field.
+4. **Resolve enabled targets**: drop `optional_targets` whose `default: false` unless `--enable ID` was passed; drop `optional_targets` named in `--exclude ID`. **Adopt** each dropped `default: false` target that was not named in `--exclude` and whose output type already has an artefact in the project: glob `ARC-{P}-{TYPE}-v*.md` (or `ARC-{P}-{TYPE}-*-v*.md` for a multi-instance type) in the project directory and its subfolders, record the target `complete`, `source: "pre-existing"`, `adopted: true`, with `path` set to the latest version (or `paths` to the latest version of every instance), and keep it in its dependents' `deps`; it is never dispatched. Then prune every other dropped optional-target ID from the remaining targets' `deps` lists — a dep on an optional target orders the build only when that target is enabled; without pruning, the dependent target's deps could never all be `done` and it would sit in `pending` forever. Apply `{P}/{NAME}/{V}/{TOPIC}` substitution to every `args` and `output.project` field.
 5. **Load state.json** at `projects/{P}-{NAME}/.arckit/state.json`. If absent, scan project dir for existing `ARC-{P}-*-v*.md` files and infer initial state.
 6. **Subagent capability smoke-test** (first wave only, skip on `--resume`): before dispatching the real wave, spawn one throwaway `general-purpose` Agent with this prompt:
 
@@ -399,7 +406,7 @@ State written by older versions (`state_format_version: "0.3"`) is read-compatib
 
    This is a metadata check, not a skill invocation — it should complete in seconds. If the response is `NOT_AVAILABLE`, halt: subagents in this session do not have access to plugin skills (Failure mode #1). Suggest enabling the plugin at user-scope or running the harness from a session where `claude --print '/skill list'` shows the `arckit:*` family.
 7. **Compute work list**: apply the staleness rules from § "Input-hash change detection". `done` = targets where `status: complete` AND file exists AND every recorded input hash still matches AND no transitive dep is stale (steps 2–3 of the staleness rules). `pending` = `enabled-targets − done`. Stale targets have their `state.targets[id].status` rewritten to `"stale"` and re-enter the wave plan. With `--skip-hash-check`, skip the hash + cascade checks (`test -f` only).
-8. **If `--plan`**: print plan (each wave + targets + line `(skip|build) target ← deps`), exit.
+8. **If `--plan`**: print plan (each wave + targets + line `(skip|build) target ← deps`, and `(adopt) target ← existing artefact(s)` for every adopted target), exit.
 9. **For each wave** (sequential outer loop):
    - Print wave header.
    - Build the per-agent prompt for each target in wave.

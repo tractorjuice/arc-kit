@@ -3,7 +3,7 @@
   "name": "arckit-arc42",
   "displayName": "ArcKit arc42",
   "version": "6.18.3",
-  "description": "arc42 — assembles an arc42 architecture description from the project's existing ArcKit artefacts, citing each source and listing the sections no artefact covers yet. 1 command: arc42. Recipe: arc42-full.",
+  "description": "arc42 — assembles an arc42 architecture description from the project's existing ArcKit artefacts, citing each source and listing the sections no artefact covers yet; documents the quality scenarios, crosscutting concepts and technical debt it summarises; and hands it over to Spec Kit. 5 commands: arc42, arc42-quality, arc42-concepts, arc42-debt, arc42-handover. Recipe: arc42-full.",
   "author": {
     "name": "ArcKit Contributors",
     "url": "https://github.com/tractorjuice/arckit-claude"

@@ -697,16 +697,20 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 
 ## arc42 Overlay (`arckit-arc42`) [COMMUNITY]
 
-Writes an [arc42](https://arc42.org) architecture description for one system, assembled from the artefacts the project already has. arc42 is a documentation structure rather than a method, so the overlay has one command: each of the 12 sections summarises and cites its source artefacts, and sections no artefact covers are listed in a Gap Register with the command that would fill them.
+Writes an [arc42](https://arc42.org) architecture description for one system, assembled from the artefacts the project already has, and hands it over to a Specification Driven Development tool. arc42 is a documentation structure rather than a method, so the overlay has one assembly command: each of the 12 sections summarises and cites its source artefacts, and sections no artefact covers are listed in a Gap Register with the command that would fill them. Four source commands write the artefacts three sections need and core does not produce, and the handover pack carries requirement and decision IDs into [Spec Kit](https://github.com/github/spec-kit).
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
 | `/arckit-arc42:arc42` | `ARC42` | All 12 arc42 sections from existing artefacts, each cited, with a Gap Register and a Source Artefacts table |
+| `/arckit-arc42:arc42-quality` | `QUAL` | Quality tree and measurable quality scenarios for section 10, classified by the nine Q42 dimensions; goals without a measurable target listed, never estimated |
+| `/arckit-arc42:arc42-concepts` | `CONC` | Crosscutting concepts for section 8, each traced to the ADR or design that settles it; open concepts routed to ADRs |
+| `/arckit-arc42:arc42-debt` | `DEBT` | Technical debt register for section 11.2, consolidated from audits, conformance assessments, reviews, ADRs and risks |
+| `/arckit-arc42:arc42-handover` | `SDDH` | SDD handover pack for Spec Kit: constitution, one feature brief per epic and plan inputs, tagged with ArcKit IDs |
 
 **Install:** `claude plugin install arckit arckit-arc42`
-**Recipe:** `arc42-full` — principles → stakeholders → requirements → ADRs and data model → context, container, runtime and deployment diagrams → Secure by Design → risks → glossary → arc42
+**Recipe:** `arc42-full` — principles → stakeholders → requirements → ADRs and data model → context, container, runtime and deployment diagrams → Secure by Design → risks → glossary → quality scenarios → crosscutting concepts → arc42 (`--enable DEBT` and `--enable SDDH` add the debt register and handover pack)
 
-The adapted arc42 template and its copies are CC BY-SA 4.0, based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. The template records ArcKit's changes; original command logic, recipes and scripts remain MIT-licensed. See the [third-party notice](plugins/arckit-arc42/templates/arc42-LICENSE.md).
+The adapted arc42 template and its copies are CC BY-SA 4.0, based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. The template records ArcKit's changes; original command logic, recipes, scripts and the overlay's other templates remain MIT-licensed. See the [third-party notice](plugins/arckit-arc42/templates/arc42-LICENSE.md).
 
 ---
 

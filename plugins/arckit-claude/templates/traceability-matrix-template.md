@@ -140,6 +140,19 @@ This ensures no "orphan" design elements or tests that don't trace to requiremen
 
 **Test Coverage Goal**: 100% of functional requirements, 90%+ of NFRs
 
+### 3.4 Delivery Trace (Spec Kit)
+
+[Only when a Spec Kit specs folder exists; omit this subsection otherwise. Requirements are traced through the `[ArcKit <ID>]` tags the SDD handover pack asks the delivery team to keep, in features whose ownership tag, `[ArcKit Project NNN]`, names this project and no other. Spec Kit's own per-feature IDs (FR-001) are not ArcKit IDs and are never matched.]
+
+| Req ID | Spec Kit Feature | Tagged In | Tagged Tasks Done | Status |
+|--------|------------------|-----------|-------------------|--------|
+| [FR-001] | [001-booking] | [spec, plan, tasks] | [3/4] | [In delivery / Delivered / Specified only] |
+
+**Requirements in a Spec Kit feature**: [N] of [N] ([%])
+**Owned features with no ArcKit requirement tags**: [Feature names, or "None"]
+**ArcKit IDs in owned specs but not in REQ**: [IDs, or "None"]
+**Features not counted**: [Features with no ownership tag, tags for more than one project, or another project's tag, with the reason; or "None"]
+
 ---
 
 ## 4. Gap Analysis

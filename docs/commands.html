@@ -2777,6 +2777,42 @@
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
+                    <tr data-status="experimental" data-category="arc42-overlay" data-jurisdiction="arc42" data-tier="community">
+                        <td><code>/arckit-arc42:arc42-quality</code></td>
+                        <td class="description">[COMMUNITY] Quality scenarios for arc42 section 10: a quality tree classified by the nine Q42 dimensions and measurable scenarios quoting each requirement's target; goals without a measurable target are listed, never estimated.</td>
+                        <td>arc42 Overlay</td>
+                        <td>arc42</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="arc42-overlay" data-jurisdiction="arc42" data-tier="community">
+                        <td><code>/arckit-arc42:arc42-concepts</code></td>
+                        <td class="description">[COMMUNITY] Crosscutting concepts for arc42 section 8: domain model, persistence, security, error handling, logging and more, each traced to the ADR or design that settles it, with open concepts routed to ADRs.</td>
+                        <td>arc42 Overlay</td>
+                        <td>arc42</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="arc42-overlay" data-jurisdiction="arc42" data-tier="community">
+                        <td><code>/arckit-arc42:arc42-debt</code></td>
+                        <td class="description">[COMMUNITY] Technical debt register for arc42 section 11.2, consolidated from codebase audits, conformance assessments, design reviews, ADR consequences and accepted risks, each item traced to its source.</td>
+                        <td>arc42 Overlay</td>
+                        <td>arc42</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="arc42-overlay" data-jurisdiction="arc42" data-tier="community">
+                        <td><code>/arckit-arc42:arc42-handover</code></td>
+                        <td class="description">[COMMUNITY] SDD handover pack for Spec Kit: a constitution, one feature brief per epic and plan inputs from the arc42 description, each tagged with its ArcKit IDs so traceability survives delivery.</td>
+                        <td>arc42 Overlay</td>
+                        <td>arc42</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -6252,12 +6288,16 @@
             </div>
         </details>
         <details class="govuk-details">
-            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">arc42 (1 command)</span></summary>
+            <summary class="govuk-details__summary"><span class="govuk-details__summary-text">arc42 (5 commands)</span></summary>
             <div class="govuk-details__text">
                 <table class="govuk-table">
                     <thead class="govuk-table__head"><tr class="govuk-table__row"><th scope="col" class="govuk-table__header">Command</th><th scope="col" class="govuk-table__header">Needs (mandatory)</th><th scope="col" class="govuk-table__header">Recommended</th><th scope="col" class="govuk-table__header">Optional</th></tr></thead>
                     <tbody class="govuk-table__body">
-                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-arc42:arc42</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">adr, diagram, hld-review, principles, requirements, stakeholders</td><td class="govuk-table__cell">data-model, devops, dfd, dld-review, glossary, operationalize, platform-design, repo-audit, risk, secure, sobc, strategy, wardley</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-arc42:arc42</code></td><td class="govuk-table__cell">&mdash;</td><td class="govuk-table__cell">adr, diagram, hld-review, principles, requirements, stakeholders</td><td class="govuk-table__cell">arc42-concepts, arc42-debt, arc42-quality, conformance, data-model, devops, dfd, dld-review, glossary, operationalize, platform-design, repo-audit, risk, secure, sobc, strategy, wardley</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-arc42:arc42-quality</code></td><td class="govuk-table__cell">requirements</td><td class="govuk-table__cell">adr, principles, stakeholders</td><td class="govuk-table__cell">arc42-concepts, diagram, hld-review, risk, secure, sobc</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-arc42:arc42-concepts</code></td><td class="govuk-table__cell">requirements or adr</td><td class="govuk-table__cell">adr, data-model, dld-review, hld-review, principles, secure</td><td class="govuk-table__cell">arc42-quality, devops, diagram, dpia, operationalize, platform-design, repo-audit</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-arc42:arc42-debt</code></td><td class="govuk-table__cell">any one of adr, conformance, dld-review, hld-review, repo-audit, risk</td><td class="govuk-table__cell">conformance, repo-audit</td><td class="govuk-table__cell">diagram, principles-compliance</td></tr>
+                        <tr class="govuk-table__row"><td class="govuk-table__cell"><code>/arckit-arc42:arc42-handover</code></td><td class="govuk-table__cell">arc42, requirements</td><td class="govuk-table__cell">adr, arc42-concepts, arc42-quality, backlog, data-model, principles</td><td class="govuk-table__cell">arc42-debt, diagram, glossary, risk, secure, stakeholders</td></tr>
                     </tbody>
                 </table>
             </div>

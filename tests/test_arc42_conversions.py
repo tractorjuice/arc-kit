@@ -70,3 +70,36 @@ def test_converted_assembly_keeps_defaults_and_existing_project_rule(target):
     assert "AskUserQuestion" not in prompt
     assert "prompt user" not in prompt
     assert "ask the user" not in prompt
+
+
+NEW_COMMAND_MARKERS = {
+    "arc42-quality": ("quoted exactly", '"Target needed"', "https://quality.arc42.org"),
+    "arc42-concepts": ('"Proposed — not decided"', "Partially decided"),
+    "arc42-debt": ("It never invents debt.", "**Merge duplicates**"),
+    "arc42-handover": ("[ArcKit FR-012]", "[NEEDS CLARIFICATION: question]", "/speckit-specify"),
+}
+
+
+def converted_prompt(target, name):
+    distribution = EXTENSIONS / f"arckit-{target}"
+    if target == "paperclip":
+        entries = json.loads((distribution / "src/data/commands.json").read_text())
+        return next(entry for entry in entries if entry["name"] == f"arckit-{name}")["prompt"]
+    path = distribution / COMMAND_PATHS[target].replace("arc42", name, 1)
+    if target == "gemini":
+        return tomllib.loads(path.read_text())["prompt"]
+    return path.read_text()
+
+
+@pytest.mark.parametrize("target", TARGETS)
+@pytest.mark.parametrize("name", sorted(NEW_COMMAND_MARKERS))
+def test_converted_overlay_commands_keep_their_safeguards(target, name):
+    prompt = converted_prompt(target, name)
+    for marker in (
+        "Require an Existing Project",
+        "`000-global` is never a valid target",
+        "This command needs no interview",
+        *NEW_COMMAND_MARKERS[name],
+    ):
+        assert marker in prompt, (target, name, marker)
+    assert "AskUserQuestion" not in prompt

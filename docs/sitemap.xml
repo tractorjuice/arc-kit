@@ -8,7 +8,7 @@
     </url>
     <url>
         <loc>https://arckit.org/commands.html</loc>
-        <lastmod>2026-10-30</lastmod>
+        <lastmod>2026-10-31</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
@@ -20,7 +20,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guides.html</loc>
-        <lastmod>2026-10-30</lastmod>
+        <lastmod>2026-10-31</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -86,7 +86,7 @@
     </url>
     <url>
         <loc>https://arckit.org/llms.txt</loc>
-        <lastmod>2026-10-30</lastmod>
+        <lastmod>2026-10-31</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
@@ -186,6 +186,26 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/arc42.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/guide/arc42-concepts.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/guide/arc42-debt.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/guide/arc42-handover.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/guide/arc42-quality.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>

@@ -931,6 +931,47 @@ All artifacts must pass these 10 checks:
 - Source Artefacts table lists the version of every artefact read, so a reader can tell when the description is out of date
 - arc42 attribution notice (CC BY-SA 4.0, Peter Hruschka and Gernot Starke) kept in the document; the template's YAML frontmatter and `SPDX-License-Identifier` comment not copied into it
 
+### QUAL -- Quality Scenarios
+
+- Every quality goal cites the requirement, stakeholder goal or principle that states it; none is added without a source
+- Each goal has one primary Q42 dimension, chosen by what it constrains
+- Three to five Top quality goals marked, with what the ranking is based on ("Inferred" when no source ranks them)
+- A scenario exists only for a goal with a measurable target, and its response measure quotes that target exactly
+- Every scenario is marked "Inferred" and cites the requirement it derives from
+- Goals without a measurable target are listed as "Target needed" with the command that would add one, never given an estimated target
+- Verification approaches not stated in a source are marked "Proposed"; scenarios with no approach say "No approach recorded"
+- Q42 attribution line kept; only the nine dimension names used, no Q42 text copied
+
+### CONC -- Crosscutting Concepts
+
+- Every catalogue concept has exactly one status: Decided, Partially decided, Open, Not applicable or Not assessed
+- Decided and Partially decided concepts cite the ADR, design or mandatory principle that settles them; Not applicable cites the source that shows it
+- Rules summarise their sources, reusing ADR numbers and requirement IDs exactly
+- Open concepts state why they are needed, list candidate approaches labelled "Proposed — not decided", and name the `/arckit:adr` command that would decide them
+- No concept raised to Decided on the strength of a proposal, a common practice or a vendor default
+- As-built differences from a codebase audit recorded as findings, not corrections
+
+### DEBT -- Technical Debt Register
+
+- Every item links the source that recorded it (CDAU finding, CONF ATD item, review condition, ADR consequence, accepted risk or exception) by ID
+- Duplicates across sources merged into one item that links every source
+- No item added that no source records; debt and risk kept apart and linked
+- Interest, principal and severity taken from sources, or written "Not stated" / "Not rated" — never estimated
+- Item IDs (TD-NNN) kept stable across versions; repaid items marked Resolved, not deleted
+- Repayment candidates labelled "Proposed"
+
+### SDDH -- SDD Handover Pack
+
+- Built from the latest arc42 description, with any source newer than it recorded in the Gap Register
+- Every carried requirement, decision and principle tagged `[ArcKit <ID>]`, with requirement IDs exactly as REQ writes them
+- The tag convention tells the delivery team to keep Spec Kit's local IDs (FR-001, SC-001) and add the ArcKit tag after the statement
+- Every Specify Input starts with the project's ownership tag, `[ArcKit Project NNN]`, so traceability can tell this project's features from another project's with the same requirement IDs
+- Constitution rules each cite a principle, constraint or decided concept; no rule without a source
+- Shared Plan Context lists accepted ADRs only, with Proposed ADRs separate and marked not yet decided
+- One feature brief per epic (or per business requirement, marked "Inferred"), each with Specify Input, Requirements Carried, Success Criteria Candidates and Plan Input
+- Gaps the sources leave open written as `[NEEDS CLARIFICATION: ...]`, never filled with assumptions
+- Evidence Loop names `/arckit:traceability`, `/arckit:conformance` and `/arckit-repo:repo-audit`
+
 ### AAGI -- AI Agent Inventory
 
 - Every agent has a unique AGT-xxx ID used consistently across all sections

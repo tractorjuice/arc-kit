@@ -130,7 +130,7 @@ license: CC-BY-SA-4.0
 
 ## 8. Crosscutting Concepts
 
-`[One subsection per concept a source addresses. Concepts with no source go in the Gap Register, not here.]`
+`[One subsection per concept a source addresses, summarised from the Crosscutting Concepts document (CONC) when one exists. Open concepts and concepts with no source go in the Gap Register, not here.]`
 
 ### 8.1 `[Concept, e.g., Security]`
 
@@ -147,6 +147,8 @@ license: CC-BY-SA-4.0
 ---
 
 ## 10. Quality Requirements
+
+`[Summarise the quality tree and scenarios from the Quality Scenarios document (QUAL) when one exists, and cite it; otherwise derive them from the NFRs as below.]`
 
 ### 10.1 Quality Requirements Overview
 
@@ -174,7 +176,7 @@ license: CC-BY-SA-4.0
 
 | Item | Impact | Source |
 |------|--------|--------|
-| `[Debt item]` | `[Impact]` | `[CDAU or DLDR ID]` |
+| `[Debt item, e.g., TD-001]` | `[Impact]` | `[DEBT, CDAU, CONF or DLDR ID]` |
 
 ---
 

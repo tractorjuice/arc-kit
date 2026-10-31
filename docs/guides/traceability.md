@@ -88,6 +88,18 @@ Output: `projects/<id>/ARC-<id>-TRAC-v1.0.md` (traceability matrix with coverage
 
 > **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
 
+### Spec Kit delivery evidence
+
+When a delivery team builds with [Spec Kit](https://github.com/github/spec-kit) from an SDD handover pack (`/arckit:arc42-handover`), the matrix gains a **Delivery Trace (Spec Kit)** section. The command reads the `specs/` folder at the repository root, or a separate delivery repository's specs folder:
+
+```text
+/arckit:traceability 001 SPECS=../booking-service/specs
+```
+
+- **Ownership comes first.** Every project can have an `FR-001`, so a feature counts for a project only when its spec, plan or tasks carry that project's ownership tag, `[ArcKit Project 001]`, and no other project's. The handover pack puts the tag at the top of every feature description, and Spec Kit copies it into the spec.
+- **Requirements travel as tags.** In owned features, `[ArcKit FR-012]` tags map requirements to features, and checked task lines that carry a tag show delivery progress. Spec Kit's own per-feature IDs, such as its `FR-001`, are never matched to ArcKit requirements.
+- **Gaps are named, not guessed.** A feature with no ownership tag, or with tags for more than one project, is listed as not counted, with the fix. So is a tagged ID the requirements do not contain.
+
 ### Coverage targets
 
 The command flags gaps against these targets: MUST requirements should be 100% covered, and SHOULD requirements over 80%. Lower-priority requirements can sit below 50%. A MUST requirement with no coverage is a critical gap, and security or compliance requirements without tests are high-risk gaps.

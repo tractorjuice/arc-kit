@@ -51,7 +51,15 @@ $ARGUMENTS
    - If no external docs found but they would improve traceability coverage, ask the user
    - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
-4. **Build the traceability matrix**:
+4. **Trace delivery through Spec Kit** (when a Spec Kit `specs/` folder exists):
+   - If the hook output has a **SPEC KIT DELIVERY** section, use it directly. It lists, for each requirement, the features owned by this project whose `spec.md`, `plan.md` or `tasks.md` carry an `[ArcKit <ID>]` tag, with tagged task progress from the `tasks.md` checkboxes, and every feature it did not count and why.
+   - If the hook data is not present, read `specs/*/spec.md`, `plan.md` and `tasks.md` at the repository root, or in the folder named by `SPECS=<path>` in the arguments, and apply the same rules:
+     - **Ownership first.** A feature belongs to this project only when its files carry this project's ownership tag, `[ArcKit Project NNN]` with this project's three-digit ID, and no other project's. Requirement IDs repeat across projects, so never credit a feature without that tag, or with tags for two projects, even when its requirement IDs match.
+     - From owned features only, take the requirement IDs inside `[ArcKit ...]` tags and the `- [x]` and `- [ ]` task lines that carry them.
+   - Only IDs inside `[ArcKit ...]` tags are ArcKit IDs. Spec Kit numbers each feature's own requirements `FR-001`, `FR-002` and so on; never match one of those to an ArcKit requirement.
+   - Fill the template's **Delivery Trace (Spec Kit)** subsection. Add each owned feature with no requirement tags, each feature with no ownership tag or more than one, and each tagged ID that REQ does not contain to the Action Items as a gap. If there is no specs folder, omit the subsection.
+
+5. **Build the traceability matrix**:
 
    ### Forward Traceability (Requirements → Design → Implementation → Tests)
 
@@ -102,7 +110,7 @@ $ARGUMENTS
    - **Orphan Tests**: Tests not linked to requirements (what are they testing?)
    - **Coverage Gaps**: Requirements without adequate test coverage
 
-5. **Analyze coverage metrics**:
+6. **Analyze coverage metrics**:
 
    Use the hook's **COVERAGE SUMMARY** table directly — it already provides:
    - Overall coverage (covered / total / percentage)
@@ -119,7 +127,7 @@ $ARGUMENTS
    - COULD_HAVE requirements: Can be < 50% covered
    - WONT_HAVE requirements: agreed not to be delivered this time, so list them but leave them out of the coverage percentages and do not report them as gaps
 
-6. **Risk Assessment**:
+7. **Risk Assessment**:
 
    Flag high-risk gaps:
    - **CRITICAL**: MUST_HAVE requirements not covered
@@ -127,7 +135,7 @@ $ARGUMENTS
    - **MEDIUM**: Performance requirements without validation
    - **LOW**: Optional features not implemented
 
-7. **Generate Traceability Report**:
+8. **Generate Traceability Report**:
 
    Create comprehensive report with:
 
@@ -160,7 +168,7 @@ $ARGUMENTS
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **TRAC** per-type checks pass. Fix any failures before proceeding.
 
-8. **Write output**:
+9. **Write output**:
    - `projects/{project-dir}/ARC-{PROJECT_ID}-TRAC-v${VERSION}.md` - Full traceability matrix including coverage metrics and gap analysis (all in one document)
 
    **CRITICAL - Show Summary Only**:

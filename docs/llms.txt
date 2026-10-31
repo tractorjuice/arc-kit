@@ -107,6 +107,10 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 ### arc42 overlay (community-contributed)
 
 - [arc42 Architecture Description](https://arckit.org/guides/arc42.md): `/arckit-arc42:arc42` all 12 arc42 sections assembled from the project's existing artefacts, each cited, with a Gap Register of undocumented sections.
+- [arc42 Quality Scenarios](https://arckit.org/guides/arc42-quality.md): `/arckit-arc42:arc42-quality` quality tree and measurable quality scenarios for section 10, classified by the nine Q42 dimensions.
+- [arc42 Crosscutting Concepts](https://arckit.org/guides/arc42-concepts.md): `/arckit-arc42:arc42-concepts` crosscutting concepts for section 8, each traced to the decision that settles it.
+- [arc42 Technical Debt Register](https://arckit.org/guides/arc42-debt.md): `/arckit-arc42:arc42-debt` technical debt for section 11.2, consolidated from audits, assessments, reviews, ADRs and risks.
+- [arc42 SDD Handover](https://arckit.org/guides/arc42-handover.md): `/arckit-arc42:arc42-handover` constitution, feature briefs and plan inputs for Spec Kit, tagged with ArcKit IDs.
 
 ### AI Agent Architecture overlay (community-contributed)
 

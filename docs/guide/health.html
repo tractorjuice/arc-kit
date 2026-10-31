@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:health scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and…">
+    <meta name="description" content="/arckit:health scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability…">
     <meta name="author" content="ArcKit">
     <title>Health Check Guide | ArcKit</title>
     <meta property="og:title" content="Health Check Guide">
-    <meta property="og:description" content="/arckit:health scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift -- reporting findings to the console and writing…">
+    <meta property="og:description" content="/arckit:health scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, version drift, overdue reviews, long-running drafts and out-of-date…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/health.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Health Check Guide">
-    <meta name="twitter:description" content="/arckit:health scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift -- reporting findings to the console and writing…">
+    <meta name="twitter:description" content="/arckit:health scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, version drift, overdue reviews, long-running drafts and out-of-date…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/health.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/health.md">
@@ -339,7 +339,7 @@
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/health.html",
                 "headline": "Health Check Guide",
-                "description": "/arckit:health scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift -- reporting findings to the console and writing…",
+                "description": "/arckit:health scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, version drift, overdue reviews, long-running drafts and out-of-date…",
                 "url": "https://arckit.org/guide/health.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -422,7 +422,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
             <h1 class="app-page-hero__title">Health Check Guide</h1>
-            <p class="app-page-hero__description">/arckit:health scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift -- reporting findings to the console and writing…</p>
+            <p class="app-page-hero__description">/arckit:health scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, version drift, overdue reviews, long-running drafts and out-of-date…</p>
         </div>
     </div>
 
@@ -439,7 +439,7 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:health</code> scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift -- reporting findings to the console and writing <code>docs/health.json</code> for dashboard integration.</p>
+<p><code>/arckit:health</code> scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, version drift, overdue reviews, long-running drafts and out-of-date generated views -- reporting findings to the console and writing <code>docs/health.json</code> for dashboard integration.</p>
 <hr />
 <h2 id="purpose">Purpose</h2>
 <p>Architecture governance produces dozens of artifacts over weeks and months. Without regular health checks, projects accumulate governance debt:</p>
@@ -451,10 +451,13 @@
 <li><strong>Missing traceability</strong> -- ADRs without requirement references reduce audit confidence</li>
 <li><strong>Version drift</strong> -- multiple artifact versions where the latest has gone stale</li>
 <li><strong>Unincorporated external files</strong> -- new external documents not yet reflected in architecture artifacts</li>
+<li><strong>Overdue reviews</strong> -- approved artifacts whose Next Review Date has passed</li>
+<li><strong>Long-running drafts</strong> -- DRAFT artifacts left untouched for over a month</li>
+<li><strong>Out-of-date generated views</strong> -- an arc42 description or SDD handover pack built from sources that have since changed</li>
 </ul>
 <p>The <code>/arckit:health</code> command <strong>performs a diagnostic scan</strong> that:</p>
 <ul>
-<li>Applies seven detection rules across all projects and artifacts</li>
+<li>Applies ten detection rules across all projects and artifacts</li>
 <li>Assigns severity levels (HIGH, MEDIUM, LOW) to each finding</li>
 <li>Provides specific remediation actions for every issue</li>
 <li>Writes <code>docs/health.json</code> for dashboard integration with <code>/arckit:pages</code></li>
@@ -573,6 +576,24 @@
 <td>Missing Traceability</td>
 <td>MEDIUM</td>
 <td>ADR documents that do not reference any requirement ID</td>
+</tr>
+<tr>
+<td>REVIEW-OVERDUE</td>
+<td>Overdue Review</td>
+<td>HIGH</td>
+<td>Document Control Next Review Date is in the past, on an artifact that is not DRAFT, SUPERSEDED or ARCHIVED</td>
+</tr>
+<tr>
+<td>STALE-DRAFT</td>
+<td>Long-running Draft</td>
+<td>MEDIUM</td>
+<td>DRAFT artifact unchanged for &gt; 30 days (override with <code>STALE_DRAFT_DAYS=N</code>)</td>
+</tr>
+<tr>
+<td>STALE-VIEW</td>
+<td>Out-of-date Generated View</td>
+<td>MEDIUM</td>
+<td>An artifact with a Source Artefacts table (such as an arc42 description) cites a source, including the global architecture principles, that now has a newer version, or omits a later instance of a type it cites</td>
 </tr>
 <tr>
 <td>VERSION-DRIFT</td>
@@ -700,8 +721,11 @@ FINDINGS BY TYPE
   FORGOTTEN-ADR:    1
   UNRESOLVED-COND:  1
   STALE-EXT:        0
+  REVIEW-OVERDUE:   0
   ORPHAN-REQ:       3
   MISSING-TRACE:    2
+  STALE-DRAFT:      0
+  STALE-VIEW:       0
   VERSION-DRIFT:    1
 
 PROJECT: 001-payment-gateway

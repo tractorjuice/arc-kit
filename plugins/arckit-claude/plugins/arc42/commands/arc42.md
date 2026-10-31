@@ -17,6 +17,17 @@ handoffs:
     condition: "No GLOS artefact exists"
   - command: traceability
     description: Check requirements trace through to the building blocks described
+  - command: arc42-quality
+    description: Build the quality tree and scenarios that sections 1.2 and 10 summarise
+    condition: "No QUAL artefact exists"
+  - command: arc42-concepts
+    description: Document the crosscutting concepts that section 8 summarises
+    condition: "No CONC artefact exists"
+  - command: arc42-debt
+    description: Consolidate the technical debt that section 11.2 lists
+    condition: "No DEBT artefact exists, and a CDAU, CONF or DLDR does"
+  - command: arc42-handover
+    description: Hand the described architecture over to a Specification Driven Development tool such as Spec Kit
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
@@ -55,8 +66,12 @@ Read every artefact below that exists. For a multi-instance type, read every ins
 | **PLAT** | Platform Design | 5, 7 Deployment View |
 | **DEVOPS** / **OPS** | DevOps Strategy, Operational Readiness | 7 Deployment View, 8 (operations concepts) |
 | **SECD** | Secure by Design | 8 (security concepts) |
+| **CONC** | Crosscutting Concepts | 8 Crosscutting Concepts |
+| **QUAL** | Quality Scenarios | 1.2 Quality Goals, 10 Quality Requirements |
 | **RISK** | Risk Register | 11 Risks and Technical Debt |
+| **DEBT** | Technical Debt Register | 11.2 Technical Debt |
 | **CDAU** | Codebase Audit (in `audits/`) | 11 (technical debt found in code) |
+| **CONF** | Conformance Assessment | 11 (known and untracked architecture debt) |
 | **GLOS** | Glossary | 12 Glossary |
 
 Also read any vendor HLD or DLD documents in `projects/{project-dir}/vendors/`; they feed sections 5, 6 and 7.
@@ -111,16 +126,16 @@ Work through the 12 sections in order. For each one:
 
 Section-specific rules:
 
-- **1.2 Quality Goals**: the top three to five quality goals only, taken from the NFRs the requirements or stakeholders prioritise highest. The full list belongs in section 10.
+- **1.2 Quality Goals**: the top three to five quality goals only. When a QUAL exists, use its Top quality goals; otherwise take the NFRs the requirements or stakeholders prioritise highest. The full list belongs in section 10.
 - **2 Constraints**: separate technical, organisational and regulatory constraints. Principles from PRIN are constraints only where they are mandatory; say which.
 - **5 Building Block View**: Level 1 is the system's containers or major components. Go to Level 2 only where a DLDR, vendor DLD or C4 Component diagram describes the internals.
-- **8 Crosscutting Concepts**: cover only the concepts a source addresses (for example, security from SECD, persistence from DATA). List concepts a system of this kind would normally need but no source covers in the Gap Register, not in the section.
-- **10 Quality Requirements**: the Quality Requirements Overview groups the NFRs by quality attribute. Write a quality scenario only for an NFR with a measurable target, and mark each one "Inferred".
-- **11 Risks and Technical Debt**: risks come from RISK; list technical risks only and cite the risk ID. Technical debt comes from CDAU or DLDR findings. If neither exists, record the gap rather than guessing at debt.
+- **8 Crosscutting Concepts**: when a CONC exists, summarise its Decided and Partially decided concepts and cite it; its Open concepts go in the Gap Register. Otherwise cover only the concepts a source addresses (for example, security from SECD, persistence from DATA), and list concepts a system of this kind would normally need but no source covers in the Gap Register, not in the section.
+- **10 Quality Requirements**: when a QUAL exists, summarise its quality tree and scenarios and cite it, rather than deriving scenarios again. Otherwise the Quality Requirements Overview groups the NFRs by quality attribute; write a quality scenario only for an NFR with a measurable target, and mark each one "Inferred".
+- **11 Risks and Technical Debt**: risks come from RISK; list technical risks only and cite the risk ID. Technical debt comes from DEBT when it exists; otherwise from CDAU findings, CONF ATD items or DLDR findings. If none exists, record the gap rather than guessing at debt.
 
 ### 4. Build the Gap Register and Source Artefacts Table
 
-- **Gap Register**: one row per empty or partial section or subsection, giving the arc42 section, what is missing, and the `/arckit:*` command that would fill it. For example: section 6, no runtime scenarios, `/arckit:diagram sequence <scenario>`. Order rows by section number.
+- **Gap Register**: one row per empty or partial section or subsection, giving the arc42 section, what is missing, and the `/arckit:*` command that would fill it. For example: section 6, no runtime scenarios, `/arckit:diagram sequence <scenario>`. Use `/arckit-arc42:arc42-concepts` for section 8, `/arckit-arc42:arc42-quality` for the quality scenarios in section 10, and `/arckit-arc42:arc42-debt` for technical debt in section 11.2. Order rows by section number.
 - **Source Artefacts**: one row per artefact read, with its Document ID, version and the sections it fed. Re-running this command after a source changes produces a new version of the description; this table is how a reader tells whether the current one is out of date.
 
 ### 5. Auto-Populate Document Control
@@ -216,7 +231,7 @@ After writing the file, show a concise summary (NOT the full document):
 4. **Version Management**: If an arc42 description already exists (`ARC-*-ARC42-v*.md`), write the next version beside it rather than overwriting it, as `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` describes: a refresh after source changes is a minor increment, a description restructured after a major redesign is a major one.
 
 5. **Integration with Other Commands**:
-   - Informed by: `/arckit:requirements`, `/arckit:stakeholders`, `/arckit:principles`, `/arckit:diagram`, `/arckit:adr`, `/arckit:hld-review`, `/arckit:dld-review`, `/arckit:data-model`, `/arckit:platform-design`, `/arckit:secure`, `/arckit:risk`, `/arckit:glossary`
-   - Feeds into: architecture reviews and hand-over to delivery teams, as the single description of the system's architecture
+   - Informed by: `/arckit:requirements`, `/arckit:stakeholders`, `/arckit:principles`, `/arckit:diagram`, `/arckit:adr`, `/arckit:hld-review`, `/arckit:dld-review`, `/arckit:data-model`, `/arckit:platform-design`, `/arckit:secure`, `/arckit:risk`, `/arckit:glossary`, `/arckit:conformance`, `/arckit-arc42:arc42-quality`, `/arckit-arc42:arc42-concepts`, `/arckit-arc42:arc42-debt`
+   - Feeds into: architecture reviews and hand-over to delivery teams, as the single description of the system's architecture; `/arckit-arc42:arc42-handover` turns it into inputs for a Specification Driven Development tool
 
 6. **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
