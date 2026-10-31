@@ -62,6 +62,9 @@ def test_converted_assembly_keeps_defaults_and_existing_project_rule(target):
         "https://arc42.org/license/",
         "Reproduce diagrams unchanged",
         "Document ID, version",
+        "Architecture principles (PRIN) do not count towards this check",
+        "`000-global` is never a valid target",
+        "Do not copy the template's YAML frontmatter or its `SPDX-License-Identifier` comment",
     ):
         assert marker in prompt
     assert "AskUserQuestion" not in prompt

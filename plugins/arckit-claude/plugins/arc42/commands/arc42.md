@@ -3,6 +3,7 @@ description: Assemble an arc42 architecture description from the project's exist
 doc-type: ARC42
 argument-hint: "<project ID or name, e.g. '001', 'booking system'>"
 effort: high
+keep-coding-instructions: true
 handoffs:
   - command: diagram
     description: Fill an empty Context, Building Block, Runtime or Deployment view
@@ -22,7 +23,7 @@ allowed-tools:
 
 You are helping an architect produce an **arc42 architecture description** for a project. [arc42](https://arc42.org) is a 12-section template for documenting the architecture of one software system. This command does not design the architecture: it assembles the description from the artefacts ArcKit has already produced, cites each one, and records which sections still have no source.
 
-The adapted template is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. ArcKit changed its explanatory text and added Document Control, source citations, a Gap Register and a Source Artefacts table. Preserve the template's licence, attribution and changes notice in every output, including when using a customised template. This notice applies to the adapted template; project-specific content and cited artefacts retain their own licences and confidentiality rules.
+The adapted template is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. ArcKit changed its explanatory text and added Document Control, source citations, a Gap Register and a Source Artefacts table. Keep the template's written licence, attribution and changes notice in every output, including when using a customised template. The notice covers the template only: project-specific content and cited artefacts retain their own licences and confidentiality rules, because documenting a system in arc42's structure does not place that content under CC BY-SA. Do not copy the template's YAML frontmatter or its `SPDX-License-Identifier` comment into the output; they label the template file, not the architecture description.
 
 ## User Input
 
@@ -34,7 +35,7 @@ $ARGUMENTS
 
 > **Project context**: Use the supplied project context for existing projects, source artefacts, external documents and global policies. If context is unavailable, list existing projects read-only, then inspect the selected project's directories and `projects/000-global/`. Do not create a project or request optional information while gathering context.
 
-Resolve the existing project as described in step 1 before reading its sources. This command has no single mandatory artefact, because each arc42 section draws on different ones. If the project has **none** of REQ, STKE, PRIN, HLDR, DIAG or ADR, STOP without writing an ARC42 document: there is nothing to assemble. Name the missing source types and suggest `/arckit:principles`, `/arckit:stakeholders <project-name>` and `/arckit:requirements <project-name>`, then re-running `/arckit-arc42:arc42 <project-id>`.
+Resolve the existing project as described in step 1 before reading its sources. This command has no single mandatory artefact, because each arc42 section draws on different ones. If the project's own directory and subdirectories have **none** of REQ, STKE, HLDR, DIAG or ADR, STOP without writing an ARC42 document: there is nothing to assemble. Architecture principles (PRIN) do not count towards this check: they live in `projects/000-global/`, exist in almost every repository and feed only sections 2 and 4. Name the missing source types and suggest `/arckit:stakeholders <project-name>` and `/arckit:requirements <project-name>`, plus `/arckit:principles` if no PRIN exists, then re-running `/arckit-arc42:arc42 <project-id>`.
 
 Read every artefact below that exists. For a multi-instance type, read every instance: ADRs are in `projects/{project-dir}/decisions/`, and DIAG and DFD documents are in `projects/{project-dir}/diagrams/`. Where more than one version of an artefact exists, read the latest.
 
@@ -71,7 +72,7 @@ Also read any vendor HLD or DLD documents in `projects/{project-dir}/vendors/`; 
 
 ### 1. Require an Existing Project
 
-Match the project ID or name in the arguments to an existing project in the project context. If no project is named, use the explicitly active project, or the sole existing non-global project. Set `PROJECT_ID`, `PROJECT_PATH` and `{project-dir}` from that existing directory and its metadata.
+Match the project ID or name in the arguments to an existing project in the project context. If no project is named, use a project the user named earlier in the conversation, or the sole existing non-global project. `000-global` is never a valid target: it holds enterprise-wide artefacts, not the architecture of one system. If the arguments name it, STOP without writing files and request a re-run with the ID of the system's project. Set `PROJECT_ID`, `PROJECT_PATH` and `{project-dir}` from that existing directory and its metadata.
 
 Do not create a project, allocate a project number or write project metadata. An empty new project cannot supply this command's source artefacts.
 
@@ -94,6 +95,7 @@ Read `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` and prefill from th
 - **If found**: Read the user's customised template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/arc42-template.md` (default)
 - **Then**, read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the template's `<!-- DOC-CONTROL-HEADER -->` marker to the Document Control partial it selects, applying the `${user_config.organisation_name}` and `${user_config.default_classification}` substitutions. Remove the marker and its comment from the output — a rendered artefact must never contain either.
+- Start the output at the template's first heading (`# arc42 Architecture Description: ...`). The template's frontmatter and `SPDX-License-Identifier` comment stay in the template file.
 
 > **Tip**: Users can customise templates with `/arckit:customize arc42`
 

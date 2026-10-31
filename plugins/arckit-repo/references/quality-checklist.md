@@ -929,7 +929,7 @@ All artifacts must pass these 10 checks:
 - Requirement, ADR and risk IDs used exactly as they appear in their source artefacts
 - Gap Register names the arc42 section, what is missing and the `/arckit:*` command that would fill it
 - Source Artefacts table lists the version of every artefact read, so a reader can tell when the description is out of date
-- arc42 attribution (CC BY-SA 4.0, Peter Hruschka and Gernot Starke) kept in the document
+- arc42 attribution notice (CC BY-SA 4.0, Peter Hruschka and Gernot Starke) kept in the document; the template's YAML frontmatter and `SPDX-License-Identifier` comment not copied into it
 
 ### AAGI -- AI Agent Inventory
 

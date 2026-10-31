@@ -51,6 +51,32 @@ def test_assembly_requires_existing_sources_without_optional_interviews():
     assert "Document ID, version" in command
 
 
+def test_assembly_needs_a_project_level_source_and_never_targets_global():
+    """Global principles exist in almost every repo, so they cannot satisfy the stop check."""
+    command = (OVERLAY / "commands/arc42.md").read_text()
+    assert "none** of REQ, STKE, HLDR, DIAG or ADR" in command
+    assert "Architecture principles (PRIN) do not count towards this check" in command
+    assert "`000-global` is never a valid target" in command
+    assert "explicitly active project" not in command
+
+
+def test_generated_documents_do_not_inherit_template_licence_metadata():
+    """The SPDX tag and frontmatter label the template file; the description's content is not CC BY-SA."""
+    command = (OVERLAY / "commands/arc42.md").read_text()
+    assert (
+        "Do not copy the template's YAML frontmatter or its `SPDX-License-Identifier` comment"
+        in command
+    )
+    checklist = (OVERLAY / "references/quality-checklist.md").read_text()
+    arc42_checks = checklist.split("### ARC42", 1)[1].split("\n### ", 1)[0]
+    assert "`SPDX-License-Identifier` comment not copied" in arc42_checks
+
+
+def test_long_assembly_keeps_its_instructions_across_compaction():
+    frontmatter = (OVERLAY / "commands/arc42.md").read_text().split("---", 2)[1]
+    assert re.search(r"^keep-coding-instructions: true$", frontmatter, re.M)
+
+
 def test_release_notices_preserve_the_template_exception():
     for relative in ("LICENSE", "plugins/arckit-claude/LICENSE", "scripts/push-extensions.sh"):
         text = (REPO_ROOT / relative).read_text()

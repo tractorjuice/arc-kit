@@ -4,7 +4,7 @@
 
 `/arckit:arc42` writes an [arc42](https://arc42.org) architecture description for a project. arc42 is a 12-section template for documenting the architecture of one software system, widely used by solution and software architects. The command does not design anything: it assembles each section from the artefacts ArcKit has already produced, cites them by Document ID, and lists the sections no artefact covers yet. The command is part of the `arckit-arc42` overlay, which needs the core `arckit` plugin.
 
-The adapted template, including its structure, headings and guidance, is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. ArcKit changed the explanatory text and added Document Control, source citations, a Gap Register, a Source Artefacts table and assumptions for optional information. Every copied or embedded template retains this licence and attribution. Original ArcKit implementation code remains MIT-licensed. Project-specific content and cited artefacts retain their own licences and confidentiality rules.
+The adapted template, including its structure, headings and guidance, is licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. ArcKit changed the explanatory text and added Document Control, source citations, a Gap Register, a Source Artefacts table and assumptions for optional information. Every copied or embedded template retains this licence and attribution. Original ArcKit implementation code remains MIT-licensed. Project-specific content and cited artefacts retain their own licences and confidentiality rules: as [arc42's licence page](https://arc42.org/license/) puts it, publishing an architecture document in arc42 structure does not place your content under CC BY-SA. Each generated description therefore keeps the template's written attribution notice but not its licence metadata (the template's frontmatter and SPDX tag).
 
 ---
 
@@ -12,7 +12,7 @@ The adapted template, including its structure, headings and guidance, is license
 
 | Use when any of these apply | Do not use when |
 |-----------------------------|-----------------|
-| A delivery team, reviewer or supplier expects architecture documentation in arc42 form | The project has no requirements, stakeholder analysis, principles, diagrams or ADRs yet: there is nothing to assemble |
+| A delivery team, reviewer or supplier expects architecture documentation in arc42 form | The project has no requirements, stakeholder analysis, HLD review, diagrams or ADRs yet: there is nothing to assemble |
 | You want one readable description of a system, instead of pointing readers at a dozen artefacts | You need to make architecture decisions (use `/arckit:adr`) or review a design (use `/arckit:hld-review`) |
 | You want to see which parts of the architecture are still undocumented | You want an enterprise-level view across many systems (use `/arckit:framework` or the TOGAF ADM overlay) |
 
@@ -20,9 +20,9 @@ The adapted template, including its structure, headings and guidance, is license
 
 ## Inputs
 
-An existing project is required. The command uses the project ID or name supplied, the explicitly active project, or the sole existing non-global project. It never allocates project numbers or creates project folders. If the project is missing or ambiguous, it stops without writing files and explains how to initialise source artefacts or re-run with an explicit ID.
+An existing project is required. The command uses the project ID or name supplied, a project named earlier in the conversation, or the sole existing non-global project. `000-global` is never a target: it holds enterprise-wide artefacts, not the architecture of one system. It never allocates project numbers or creates project folders. If the project is missing or ambiguous, it stops without writing files and explains how to initialise source artefacts or re-run with an explicit ID.
 
-No single artefact is mandatory. The command stops if the project has none of requirements, stakeholder analysis, principles, HLD review, diagrams or ADRs. Run `/arckit:stakeholders <project-name>` and `/arckit:requirements <project-name>` first when starting a project, with `/arckit:principles` for global principles.
+No single artefact is mandatory. The command stops if the project has none of requirements, stakeholder analysis, HLD review, diagrams or ADRs. Global architecture principles feed sections 2 and 4 but are not enough on their own, because almost every repository has them. Run `/arckit:stakeholders <project-name>` and `/arckit:requirements <project-name>` first when starting a project, with `/arckit:principles` for global principles.
 
 ### Optional Information and Unattended Runs
 
@@ -139,7 +139,7 @@ The description is a view over the project's artefacts, so it goes out of date w
 - No section contains content without a source; empty sections are in the Gap Register.
 - Diagram code matches the cited `DIAG` artefact.
 - "Inferred" items have been checked by the architects who own the source artefacts.
-- The adapted template's CC BY-SA 4.0 licence, attribution and changes notice are still in the document.
+- The adapted template's CC BY-SA 4.0 licence, attribution and changes notice are still in the document, and no `license:` frontmatter or SPDX tag was copied from the template.
 
 ---
 
