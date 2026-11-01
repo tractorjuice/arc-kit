@@ -521,40 +521,67 @@
 <thead>
 <tr>
 <th>Step</th>
-<th>Spec Kit command</th>
+<th>Spec Kit step</th>
 <th>Input from the pack</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>1</td>
-<td><code>/speckit-constitution</code></td>
+<td><code>speckit.constitution</code></td>
 <td>Constitution Input</td>
 </tr>
 <tr>
 <td>2</td>
-<td><code>/speckit-specify</code>, one feature at a time</td>
+<td><code>speckit.specify</code>, one feature at a time</td>
 <td>The feature's Specify Input</td>
 </tr>
 <tr>
 <td>3</td>
-<td><code>/speckit-clarify</code></td>
+<td><code>speckit.clarify</code></td>
 <td>The <code>[NEEDS CLARIFICATION]</code> markers the brief carries</td>
 </tr>
 <tr>
 <td>4</td>
-<td><code>/speckit-plan</code></td>
+<td><code>speckit.plan</code></td>
 <td>The feature's Plan Input plus the Shared Plan Context</td>
 </tr>
 <tr>
 <td>5</td>
-<td><code>/speckit-tasks</code>, <code>/speckit-implement</code>, <code>/speckit-converge</code></td>
+<td><code>speckit.tasks</code>, <code>speckit.implement</code>, <code>speckit.converge</code></td>
 <td>—</td>
 </tr>
 </tbody>
 </table>
-<p>Older Spec Kit installations use dotted command names (<code>/speckit.specify</code>). The inputs are plain text and work with either, and with other SDD tools that take a constitution, a feature description and a plan.</p>
-<p>Where the sources leave something open, the brief writes Spec Kit's own <code>[NEEDS CLARIFICATION: ...]</code> marker, so <code>/speckit-clarify</code> raises it with the team instead of the pack guessing.</p>
+<p>The steps are Spec Kit's logical names. How you invoke one depends on your Spec Kit integration, as Spec Kit's <a href="https://github.github.io/spec-kit/integrations/cli.html#command-invocation">command invocation</a> guidance describes; use the form exposed by your installed integration:</p>
+<table>
+<thead>
+<tr>
+<th>Integration</th>
+<th><code>speckit.specify</code> is invoked as</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GitHub Copilot, default skills mode</td>
+<td><code>/speckit-specify</code></td>
+</tr>
+<tr>
+<td>Codex, Command Code and ZCode skills</td>
+<td><code>$speckit-specify</code></td>
+</tr>
+<tr>
+<td>Kimi skills</td>
+<td><code>/skill:speckit-specify</code></td>
+</tr>
+<tr>
+<td>Integrations using slash-command notation</td>
+<td><code>/speckit.specify</code></td>
+</tr>
+</tbody>
+</table>
+<p>The pack carries this table too. Its inputs are plain text and work with any of these forms, and with other SDD tools that take a constitution, a feature description and a plan.</p>
+<p>Where the sources leave something open, the brief writes Spec Kit's own <code>[NEEDS CLARIFICATION: ...]</code> marker, so <code>speckit.clarify</code> raises it with the team instead of the pack guessing.</p>
 <hr />
 <h2 id="bringing-evidence-back">Bringing Evidence Back</h2>
 <ol>

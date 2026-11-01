@@ -666,7 +666,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-10-31 - arc42 overlay Phase 2
 
-- **Added**: `/arckit:arc42-quality`, `/arckit:arc42-concepts`, `/arckit:arc42-debt` and `/arckit:arc42-handover` to the `arckit-arc42` table (#1053)
+- **Added**: `/arckit:arc42-quality`, `/arckit:arc42-concepts`, `/arckit:arc42-debt` and `/arckit:arc42-handover` to the `arckit-arc42` table (arc42 overlay Phase 2, tracked in separate follow-on issues)
 - **Updated**: `/arckit:arc42` reads the new quality, concepts and debt documents and conformance assessments as optional inputs
 - **Updated**: the arc42 assembly flow, with the optional debt register and SDD handover steps
 - **Updated**: Commands Documented from 121 to 125 community overlay and tooling commands

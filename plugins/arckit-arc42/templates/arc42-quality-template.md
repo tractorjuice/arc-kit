@@ -1,3 +1,12 @@
+---
+title: "Quality Scenarios"
+docType: QUAL
+templateVersion: "1.0"
+license: CC-BY-SA-4.0
+---
+
+<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
+
 # Quality Scenarios: `[PROJECT_NAME]`
 
 ## Document Control
@@ -19,7 +28,7 @@
 |---------|------|--------|---------|-------------|---------------|
 | `[VERSION]` | `[YYYY-MM-DD]` | ArcKit AI | Initial creation from `/arckit:arc42-quality` command | `[PENDING]` | `[PENDING]` |
 
-> **About this document**: The system's quality requirements in the form arc42 section 10 expects: a quality tree and measurable quality scenarios. Every goal, priority and target comes from the cited sources, which remain authoritative. Goals are grouped by the dimensions of the [Q42 quality model](https://quality.arc42.org) by Gernot Starke, licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/); this document uses only Q42's dimension names.
+> **About this document**: The system's quality requirements in the form arc42 section 10 expects: a quality tree and measurable quality scenarios. Every goal, priority and target comes from the cited sources, which remain authoritative. Goals are classified by the dimensions of the [Q42 quality model](https://quality.arc42.org) by Gernot Starke, licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). The classification and this document's structure are adapted from Q42 by ArcKit contributors; no endorsement by Q42 or its author is implied. The project's goals, scenarios and targets are its own content.
 
 ---
 

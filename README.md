@@ -710,7 +710,7 @@ Writes an [arc42](https://arc42.org) architecture description for one system, as
 **Install:** `claude plugin install arckit arckit-arc42`
 **Recipe:** `arc42-full` — principles → stakeholders → requirements → ADRs and data model → context, container, runtime and deployment diagrams → Secure by Design → risks → glossary → quality scenarios → crosscutting concepts → arc42 (`--enable DEBT` and `--enable SDDH` add the debt register and handover pack)
 
-The adapted arc42 template and its copies are CC BY-SA 4.0, based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. The template records ArcKit's changes; original command logic, recipes, scripts and the overlay's other templates remain MIT-licensed. See the [third-party notice](plugins/arckit-arc42/templates/arc42-LICENSE.md).
+The adapted arc42 template and its copies are CC BY-SA 4.0, based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. The quality template and the `arc42-quality` command's Q42 classification are CC BY-SA 4.0 as well, adapted from the [Q42 quality model](https://quality.arc42.org) by Gernot Starke. The notice records ArcKit's changes; original command logic, recipes, scripts and the concepts, debt and handover templates remain MIT-licensed. See the [third-party notice](plugins/arckit-arc42/templates/arc42-LICENSE.md).
 
 ---
 
@@ -2098,7 +2098,7 @@ arckit init .
 
 MIT License - see [LICENSE](LICENSE) for details.
 
-The adapted arc42 template, including copied and embedded template text, is **CC BY-SA 4.0**, not MIT; see its [licence and attribution notice](plugins/arckit-arc42/templates/arc42-LICENSE.md). Original ArcKit implementation code remains MIT-licensed.
+The adapted arc42 template and the Q42-derived quality material (the arc42 quality template and the `arc42-quality` command's Q42 classification), including copied and embedded text, are **CC BY-SA 4.0**, not MIT; see the [licence and attribution notice](plugins/arckit-arc42/templates/arc42-LICENSE.md). Original ArcKit implementation code remains MIT-licensed.
 
 > **Exception:** the `plugins/arckit-uk-gcloud/` overlay is **proprietary** (not MIT) — see [`plugins/arckit-uk-gcloud/LICENSE`](plugins/arckit-uk-gcloud/LICENSE).
 

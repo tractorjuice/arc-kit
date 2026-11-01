@@ -59,17 +59,26 @@ The tags are the contract between ArcKit and the delivery team:
 
 ## Handing Over in Spec Kit
 
-| Step | Spec Kit command | Input from the pack |
+| Step | Spec Kit step | Input from the pack |
 |------|------------------|---------------------|
-| 1 | `/speckit-constitution` | Constitution Input |
-| 2 | `/speckit-specify`, one feature at a time | The feature's Specify Input |
-| 3 | `/speckit-clarify` | The `[NEEDS CLARIFICATION]` markers the brief carries |
-| 4 | `/speckit-plan` | The feature's Plan Input plus the Shared Plan Context |
-| 5 | `/speckit-tasks`, `/speckit-implement`, `/speckit-converge` | — |
+| 1 | `speckit.constitution` | Constitution Input |
+| 2 | `speckit.specify`, one feature at a time | The feature's Specify Input |
+| 3 | `speckit.clarify` | The `[NEEDS CLARIFICATION]` markers the brief carries |
+| 4 | `speckit.plan` | The feature's Plan Input plus the Shared Plan Context |
+| 5 | `speckit.tasks`, `speckit.implement`, `speckit.converge` | — |
 
-Older Spec Kit installations use dotted command names (`/speckit.specify`). The inputs are plain text and work with either, and with other SDD tools that take a constitution, a feature description and a plan.
+The steps are Spec Kit's logical names. How you invoke one depends on your Spec Kit integration, as Spec Kit's [command invocation](https://github.github.io/spec-kit/integrations/cli.html#command-invocation) guidance describes; use the form exposed by your installed integration:
 
-Where the sources leave something open, the brief writes Spec Kit's own `[NEEDS CLARIFICATION: ...]` marker, so `/speckit-clarify` raises it with the team instead of the pack guessing.
+| Integration | `speckit.specify` is invoked as |
+|-------------|---------------------------------|
+| GitHub Copilot, default skills mode | `/speckit-specify` |
+| Codex, Command Code and ZCode skills | `$speckit-specify` |
+| Kimi skills | `/skill:speckit-specify` |
+| Integrations using slash-command notation | `/speckit.specify` |
+
+The pack carries this table too. Its inputs are plain text and work with any of these forms, and with other SDD tools that take a constitution, a feature description and a plan.
+
+Where the sources leave something open, the brief writes Spec Kit's own `[NEEDS CLARIFICATION: ...]` marker, so `speckit.clarify` raises it with the team instead of the pack guessing.
 
 ---
 

@@ -107,7 +107,7 @@ The tags are the contract that carries traceability across the handover, and `/a
 
 ### 4. Write the Constitution Input
 
-Write the text the team passes to `/speckit-constitution`, as one fenced `text` block:
+Write the text the team passes to `speckit.constitution`, as one fenced `text` block:
 
 - **Principles**: each architecture principle that applies to this system becomes a constitution principle with its name and its rules. A non-negotiable or mandatory principle gives MUST rules; any other gives SHOULD rules. Tag each with `[ArcKit Principle N]`.
 - **Constraints**: the arc42 section 2 constraints that bind every feature become MUST rules, tagged with their source.
@@ -118,7 +118,7 @@ Every rule comes from a source. Do not add a rule no source states.
 
 ### 5. Write the Shared Plan Context
 
-Write the architecture every feature's plan must follow, once, as one fenced `text` block the team adds to each `/speckit-plan` input:
+Write the architecture every feature's plan must follow, once, as one fenced `text` block the team adds to each `speckit.plan` input:
 
 - The technology and patterns decided by accepted ADRs (number and one line each). Leave superseded decisions out. List Proposed ADRs separately as "not yet decided".
 - The building blocks from arc42 section 5 with their responsibilities, and the deployment view from section 7.
@@ -131,15 +131,15 @@ Take the epics from BKLG (`EPIC-001` and so on, with the business requirement an
 For each feature, write:
 
 - **Heading**: `Feature F-NN: [epic name]` with its tag (`[ArcKit EPIC-002]`, or `[ArcKit BR-003]` for an inferred feature).
-- **Specify input**: one fenced `text` block for `/speckit-specify`. Its first line is the ownership tag, `[ArcKit Project {PROJECT_ID}]`. Then describe what to build and why, for whom (from STKE) and what is out of scope, in natural language. Tag every requirement it carries. Quote non-functional targets exactly. Where the sources leave something open that the feature needs, write Spec Kit's own marker, `[NEEDS CLARIFICATION: question]`, so `/speckit-clarify` raises it; never fill the gap with an assumption.
+- **Specify input**: one fenced `text` block for `speckit.specify`. Its first line is the ownership tag, `[ArcKit Project {PROJECT_ID}]`. Then describe what to build and why, for whom (from STKE) and what is out of scope, in natural language. Tag every requirement it carries. Quote non-functional targets exactly. Where the sources leave something open that the feature needs, write Spec Kit's own marker, `[NEEDS CLARIFICATION: question]`, so `speckit.clarify` raises it; never fill the gap with an assumption.
 - **Requirements carried**: a table of ArcKit ID, summary, priority and acceptance criteria, from REQ.
 - **Success criteria candidates**: the acceptance criteria and quality scenarios (`QS-NNN` from QUAL) that apply, with their targets quoted exactly.
-- **Plan input**: one fenced `text` block for `/speckit-plan`: the building blocks this feature touches, the ADRs and concepts that constrain it, the data entities from DATA and the integrations from INT requirements. Refer to the Shared Plan Context rather than repeating it.
+- **Plan input**: one fenced `text` block for `speckit.plan`: the building blocks this feature touches, the ADRs and concepts that constrain it, the data entities from DATA and the integrations from INT requirements. Refer to the Shared Plan Context rather than repeating it.
 - **Debt to avoid**: DEBT items that affect the feature's building blocks, by ID. Omit the line when there is no DEBT.
 
 ### 7. Write the Evidence Loop
 
-Describe how delivery evidence returns to ArcKit after `/speckit-implement` and `/speckit-converge`:
+Describe how delivery evidence returns to ArcKit after `speckit.implement` and `speckit.converge`:
 
 1. `/arckit:traceability` reads the `[ArcKit ...]` tags in `specs/`, or in a separate delivery repository's specs folder passed as `SPECS=<path>`, and traces each requirement to the features this project owns and their tasks. Features without exactly one matching ownership tag are listed as gaps.
 2. `/arckit:conformance` checks each `specs/*/plan.md` and the constitution against the ADRs and principles.
@@ -187,10 +187,10 @@ After writing the file, show a concise summary (NOT the full document):
 **Open clarifications**: [N] `[NEEDS CLARIFICATION]` markers
 **Assumptions**: [Defaults taken, or "None"]
 
-### Hand Over in Spec Kit
-1. `/speckit-constitution` with the Constitution Input
-2. For each feature: `/speckit-specify` with its Specify Input, `/speckit-clarify`, then `/speckit-plan` with its Plan Input and the Shared Plan Context
-3. `/speckit-tasks`, `/speckit-implement`, `/speckit-converge`
+### Hand Over in Spec Kit (use the form exposed by your installed integration)
+1. `speckit.constitution` with the Constitution Input
+2. For each feature: `speckit.specify` with its Specify Input, `speckit.clarify`, then `speckit.plan` with its Plan Input and the Shared Plan Context
+3. `speckit.tasks`, `speckit.implement`, `speckit.converge`
 
 ### Bring Evidence Back
 1. `/arckit:traceability`, `/arckit:conformance` and `/arckit:repo-audit` after each delivery
@@ -233,12 +233,21 @@ After writing the file, show a concise summary (NOT the full document):
 
 2. **Use Write Tool**: ALWAYS use the Write tool to create the file. Never output the full content in chat.
 
-3. **Spec Kit Command Names**: Current Spec Kit uses hyphenated commands (`/speckit-constitution`, `/speckit-specify`, `/speckit-plan`); older installations use dotted ones (`/speckit.specify`). The inputs are plain text and work with either, and with other SDD tools that take a constitution, a feature description and a plan.
+3. **Spec Kit Step Names**: Name Spec Kit's steps by their logical names (`speckit.constitution`, `speckit.specify`, `speckit.clarify`, `speckit.plan`, `speckit.tasks`, `speckit.implement`, `speckit.converge`), never by one integration's invocation form as if it were universal. How a step is invoked depends on the team's Spec Kit integration, so keep the template's integration table, which follows Spec Kit's [command invocation](https://github.github.io/spec-kit/integrations/cli.html#command-invocation) guidance, and its instruction to "use the form exposed by your installed integration":
+
+   | Integration | `speckit.specify` is invoked as |
+   |-------------|---------------------------------|
+   | GitHub Copilot, default skills mode | `/speckit-specify` |
+   | Codex, Command Code and ZCode skills | `$speckit-specify` |
+   | Kimi skills | `/skill:speckit-specify` |
+   | Integrations using slash-command notation | `/speckit.specify` |
+
+   None of these forms is obsolete; each is current for its integration. The inputs are plain text and work with any of them, and with other SDD tools that take a constitution, a feature description and a plan.
 
 4. **Version Management**: If a pack already exists (`ARC-*-SDDH-v*.md`), write the next version beside it rather than overwriting it, as `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` describes. Keep feature numbers (`F-NN`) stable for epics that persist, so the delivery team's Spec Kit features still match.
 
 5. **Integration with Other Commands**:
    - Informed by: `/arckit:arc42`, `/arckit:requirements`, `/arckit:principles`, `/arckit:adr`, `/arckit:backlog`, `/arckit:data-model`, `/arckit:arc42-quality`, `/arckit:arc42-concepts`, `/arckit:arc42-debt`
-   - Feeds into: Spec Kit (`/speckit-constitution`, `/speckit-specify`, `/speckit-plan`); evidence returns through `/arckit:traceability`, `/arckit:conformance` and `/arckit:repo-audit`
+   - Feeds into: Spec Kit (`speckit.constitution`, `speckit.specify`, `speckit.plan`); evidence returns through `/arckit:traceability`, `/arckit:conformance` and `/arckit:repo-audit`
 
 6. **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

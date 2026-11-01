@@ -25,16 +25,25 @@
 
 ## 1. How to Use This Pack
 
-| Step | Spec Kit Command | Input From This Pack | ArcKit Sources |
+| Step | Spec Kit Step | Input From This Pack | ArcKit Sources |
 |------|------------------|----------------------|----------------|
-| 1 | `/speckit-constitution` | Section 3, Constitution Input | PRIN, arc42 section 2, CONC |
-| 2 | `/speckit-specify` (one feature at a time) | Section 5, the feature's Specify Input | REQ, BKLG, STKE |
-| 3 | `/speckit-clarify` | The `[NEEDS CLARIFICATION]` markers in the spec | — |
-| 4 | `/speckit-plan` | The feature's Plan Input with Section 4, Shared Plan Context | arc42 sections 4 to 8, ADR, DATA |
-| 5 | `/speckit-tasks`, `/speckit-implement`, `/speckit-converge` | — | — |
+| 1 | `speckit.constitution` | Section 3, Constitution Input | PRIN, arc42 section 2, CONC |
+| 2 | `speckit.specify` (one feature at a time) | Section 5, the feature's Specify Input | REQ, BKLG, STKE |
+| 3 | `speckit.clarify` | The `[NEEDS CLARIFICATION]` markers in the spec | — |
+| 4 | `speckit.plan` | The feature's Plan Input with Section 4, Shared Plan Context | arc42 sections 4 to 8, ADR, DATA |
+| 5 | `speckit.tasks`, `speckit.implement`, `speckit.converge` | — | — |
 | 6 | Evidence back into ArcKit | Section 6, Evidence Loop | — |
 
-`[Older Spec Kit installations use dotted command names, such as /speckit.specify. The inputs are plain text and work with either.]`
+Spec Kit steps are named here by their logical names. How you invoke a step depends on your Spec Kit integration; use the form exposed by your installed integration:
+
+| Integration | `speckit.specify` is invoked as |
+|-------------|---------------------------------|
+| GitHub Copilot, default skills mode | `/speckit-specify` |
+| Codex, Command Code and ZCode skills | `$speckit-specify` |
+| Kimi skills | `/skill:speckit-specify` |
+| Integrations using slash-command notation | `/speckit.specify` |
+
+The other steps follow the same pattern, for example `speckit.plan` as `/speckit-plan`, `$speckit-plan`, `/skill:speckit-plan` or `/speckit.plan`. The inputs in this pack are plain text and work with any of these forms.
 
 ---
 
@@ -49,7 +58,7 @@
 
 ## 3. Constitution Input
 
-`[Pass this block to /speckit-constitution. Every rule cites its ArcKit source.]`
+`[Pass this block to speckit.constitution. Every rule cites its ArcKit source.]`
 
 ```text
 # [PROJECT_NAME] Constitution
@@ -77,7 +86,7 @@ Derived from ArcKit document ARC-[PROJECT_ID]-SDDH-v[VERSION]. Change a principl
 
 ## 4. Shared Plan Context
 
-`[Add this block to every /speckit-plan input. Accepted decisions only; list Proposed ADRs separately as not yet decided.]`
+`[Add this block to every speckit.plan input. Accepted decisions only; list Proposed ADRs separately as not yet decided.]`
 
 ```text
 Architecture every plan must follow (from ARC-[PROJECT_ID]-ARC42-v[N.N]):
@@ -160,7 +169,7 @@ Integrations: [ArcKit INT-001] [Contract or interface]
 
 ## 6. Evidence Loop
 
-1. After `/speckit-implement` and `/speckit-converge`, run `/arckit:traceability [PROJECT_ID]`, adding `SPECS=<path>` when the delivery repository is separate. It reads the `[ArcKit ...]` tags in the specs, traces each requirement to the features this project owns and their tasks, and lists features without exactly one matching ownership tag as gaps.
+1. After `speckit.implement` and `speckit.converge`, run `/arckit:traceability [PROJECT_ID]`, adding `SPECS=<path>` when the delivery repository is separate. It reads the `[ArcKit ...]` tags in the specs, traces each requirement to the features this project owns and their tasks, and lists features without exactly one matching ownership tag as gaps.
 2. Run `/arckit:conformance [PROJECT_ID]`. It checks each `specs/*/plan.md` and the constitution against the ADRs and principles.
 3. Run `/arckit-repo:repo-audit <repository>` on the delivered code.
 4. Record any decision taken during delivery that changes the architecture with `/arckit:adr`, then re-run `/arckit-arc42:arc42` and `/arckit-arc42:arc42-handover`.

@@ -940,7 +940,7 @@ All artifacts must pass these 10 checks:
 - Every scenario is marked "Inferred" and cites the requirement it derives from
 - Goals without a measurable target are listed as "Target needed" with the command that would add one, never given an estimated target
 - Verification approaches not stated in a source are marked "Proposed"; scenarios with no approach say "No approach recorded"
-- Q42 attribution line kept; only the nine dimension names used, no Q42 text copied
+- Q42 attribution line (CC BY-SA 4.0, Gernot Starke) kept in the document; Q42's own definitions not copied into it; the template's YAML frontmatter and `SPDX-License-Identifier` comment not copied into it
 
 ### CONC -- Crosscutting Concepts
 

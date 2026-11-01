@@ -24,15 +24,16 @@ optional_targets:
   # Evidence the description, concepts, debt register and handover read but this
   # recipe never needs to generate. Off by default, each is adopted when the
   # project already has one (arckit-build "Dep resolution"), so its dependents
-  # read it; when none exists it is pruned, never built. --enable builds one.
+  # read it; when none exists it is pruned, never built. --enable builds a new
+  # one instead of reading the existing one.
   BKLG:
-    description: Product backlog. An existing backlog is adopted so the SDD handover writes one brief per epic; --enable BKLG builds one when none exists
+    description: Product backlog. An existing backlog is adopted so the SDD handover writes one brief per epic; --enable BKLG builds a new version instead
     default: false
   CDAU:
     description: Codebase audits in audits/. Existing audits are adopted as debt and as-built evidence; --enable CDAU audits this repository
     default: false
   CONF:
-    description: Conformance assessment. An existing one is adopted for its known and untracked debt; --enable CONF builds one
+    description: Conformance assessment. An existing one is adopted for its known and untracked debt; --enable CONF builds a new version instead
     default: false
   HLDR:
     description: HLD review. An existing review is adopted for its conditions and findings; --enable HLDR reviews an available HLD
@@ -41,7 +42,7 @@ optional_targets:
     description: DLD review. An existing review is adopted for its conditions and findings; --enable DLDR reviews an available DLD
     default: false
   PRIN-COMP:
-    description: Principles compliance assessment. An existing one is adopted for its approved exceptions; --enable PRIN-COMP builds one
+    description: Principles compliance assessment. An existing one is adopted for its approved exceptions; --enable PRIN-COMP builds a new version instead
     default: false
 
 post_build_hooks:

@@ -30,7 +30,7 @@ Running `/arckit:requirements` then `/arckit:risk` then `/arckit:tcop`… sequen
 | `--refresh NAME` | Force-rebuild `NAME` and everything downstream |
 | `--no-commit` | Skip the per-wave git commit |
 | `--recipe NAME` | Recipe to use; default `uk-saas` |
-| `--enable ID` | Enable an optional target (e.g. `--enable AIP`); it is built when the project has no artefact of its type |
+| `--enable ID` | Build an optional target (e.g. `--enable AIP`), even when the project already has an artefact of its type; existing evidence is then not adopted |
 | `--exclude ID` | Exclude an optional target: neither build it nor read an existing one (e.g. `--exclude SVCASS`) |
 
 ## Built-in recipes
@@ -45,7 +45,7 @@ Recipes ship at `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{name}.yaml`.
 ## How it works
 
 1. **Recipe loaded** from `.arckit/recipes/{name}.yaml` if present, else `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{name}.yaml`
-2. **Optional-target filter** applied (`--enable` / `--exclude` / recipe defaults). An optional target that is off by default but whose artefact already exists in the project is **adopted**: it is never built, and the targets that depend on it read the existing artefact (every instance's latest version, for a multi-instance type such as codebase audits). Only an optional target with no existing artefact, or one named in `--exclude`, is dropped from its dependents' inputs. A recipe can therefore read an existing backlog or audit without ever generating one
+2. **Optional-target filter** applied (`--enable` / `--exclude` / recipe defaults). An optional target that is off by default but whose artefact already exists in the project is **adopted**: it is never built, and the targets that depend on it read the existing artefact (every instance's latest version, for a multi-instance type such as codebase audits). Only an optional target with no existing artefact, or one named in `--exclude`, is dropped from its dependents' inputs. A recipe can therefore read an existing backlog or audit without ever generating one. Adopted evidence is hashed like any other input, so a changed, added or removed instance makes the targets that read it stale on the next run, and `--plan` lists every adopted file
 3. **Subagent skill smoke-test** — confirms `arckit:*` skills are reachable from `general-purpose` subagents in this session (~5 sec halt-or-go check)
 4. **Topological wave computation** — targets group into waves where every dep is complete; wave 0 is no-deps targets, wave 1 depends only on wave 0, etc.
 5. **Per-wave dispatch** — single assistant message containing N `Agent` tool calls runs in parallel; each subagent invokes its assigned `arckit:*` skill, validates the output, returns a ≤200-word summary. A subagent reads only its dependencies' outputs, plus its own target's previous version when it is rebuilding one, so a regenerated artefact keeps its IDs and Revision History

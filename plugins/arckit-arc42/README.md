@@ -64,13 +64,13 @@ Sections with no source are marked "Not yet documented." and listed in the Gap R
 
 This overlay contains separately licensed parts (`MIT AND CC-BY-SA-4.0` in its licence metadata). Original ArcKit command logic, recipes and scripts remain MIT-licensed. The adapted [`arc42-template.md`](templates/arc42-template.md), including its structure, headings and guidance, and every distributed or embedded copy are **CC BY-SA 4.0**. It is adapted from [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. ArcKit rewrote the explanatory text and added Document Control, source citations, a Gap Register, a Source Artefacts table and assumptions for optional information.
 
-The quality, concepts, debt and handover templates are original ArcKit material under the MIT License. The quality template uses the nine dimension names of the [Q42 quality model](https://quality.arc42.org) by Gernot Starke (CC BY-SA 4.0), with attribution, and copies no Q42 text.
+The quality material is CC BY-SA 4.0 too: [`arc42-quality-template.md`](templates/arc42-quality-template.md) as a whole, and the Q42 classification in the `arc42-quality` command (its dimension names and the table mapping each dimension to the goals it covers). Both are adapted from the [Q42 quality model](https://quality.arc42.org) by Gernot Starke, with attribution and a changes notice; no endorsement by Q42 or its author is implied. The concepts, debt and handover templates are original ArcKit material under the MIT License.
 
 See [LICENSE](LICENSE) and the [template's third-party notice](templates/arc42-LICENSE.md). Retain attribution, licence links and the changes notice when customising or distributing the template. Project-specific content and cited artefacts retain their own licences and confidentiality rules: as arc42's licence page puts it, publishing an architecture document in arc42 structure does not place your content under CC BY-SA.
 
 ## Roadmap
 
-Phase 1 delivered the assembly command and recipe; Phase 2 the quality, concepts, debt and handover commands, Spec Kit evidence in `/arckit:traceability`, `/arckit:conformance` and `/arckit:repo-audit`, and `STALE-VIEW` in `/arckit:health`. Possible later additions, tracked on [#1053](https://github.com/tractorjuice/arc-kit/issues/1053):
+Phase 1, tracked on [#1053](https://github.com/tractorjuice/arc-kit/issues/1053), delivered the assembly command and recipe. Phase 2 added the quality, concepts, debt and handover commands, Spec Kit evidence in `/arckit:traceability`, `/arckit:conformance` and `/arckit:repo-audit`, and `STALE-VIEW` in `/arckit:health`; it and any later additions are tracked in separate follow-on issues. Possible later additions:
 
 - A link from `/arckit:repo-docs` to the arc42 description, since arc42 is a common target format for code-level architecture documentation
 - Behavioural eval cases for the overlay's commands, once the eval harness can load an overlay beside core

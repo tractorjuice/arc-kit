@@ -19,7 +19,7 @@ allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
 ---
 
-You are helping an architect write a system's **quality requirements** in the form arc42 section 10 expects: a quality tree that groups the quality goals, and quality scenarios that make each goal concrete and testable. The command works from the project's existing artefacts. It classifies each goal by a dimension of the [Q42 quality model](https://quality.arc42.org) (by Gernot Starke, licensed CC BY-SA 4.0; ArcKit uses only its nine dimension names), turns every requirement with a measurable target into a scenario, and lists the goals that still have no measurable target. It never invents a target.
+You are helping an architect write a system's **quality requirements** in the form arc42 section 10 expects: a quality tree that groups the quality goals, and quality scenarios that make each goal concrete and testable. The command works from the project's existing artefacts. It classifies each goal by a dimension of the [Q42 quality model](https://quality.arc42.org) (by Gernot Starke, licensed CC BY-SA 4.0), turns every requirement with a measurable target into a scenario, and lists the goals that still have no measurable target. It never invents a target.
 
 ## User Input
 
@@ -82,6 +82,7 @@ Read `${CLAUDE_PLUGIN_ROOT}/references/interview-pattern.md` and prefill from th
 - **If found**: Read the user's customised template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/arc42-quality-template.md` (default)
 - **Then**, read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the template's `<!-- DOC-CONTROL-HEADER -->` marker to the Document Control partial it selects, applying the `${user_config.organisation_name}` and `${user_config.default_classification}` substitutions. Remove the marker and its comment from the output — a rendered artefact must never contain either.
+- Start the output at the template's first heading (`# Quality Scenarios: ...`). Do not copy the template's YAML frontmatter or its `SPDX-License-Identifier` comment into the output; they label the template file, which is CC BY-SA 4.0, not the project's quality document. Keep the template's written Q42 attribution in the "About this document" line, including when using a customised template.
 
 > **Tip**: Users can customise templates with `/arckit:customize arc42-quality`
 
@@ -98,6 +99,8 @@ Do not add a goal no source states. A quality that systems of this kind usually 
 ### 4. Classify Each Goal by Q42 Dimension
 
 Give each goal one primary Q42 dimension, chosen by what the goal constrains rather than by its ID prefix. Record a secondary dimension only where a goal clearly spans two.
+
+> **Licence**: The dimension names and the classification in this table are adapted from the [Q42 quality model](https://quality.arc42.org) by Gernot Starke and licensed [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), not MIT. See `${CLAUDE_PLUGIN_ROOT}/templates/arc42-LICENSE.md` for the attribution and the changes ArcKit made. The rest of this command is MIT-licensed.
 
 | Q42 dimension | Typical goals | Usual NFR families |
 |---------------|---------------|--------------------|
@@ -218,7 +221,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 2. **Use Write Tool**: ALWAYS use the Write tool to create the file. Never output the full content in chat.
 
-3. **Q42 Attribution**: The nine dimension names come from the Q42 quality model by Gernot Starke ([quality.arc42.org](https://quality.arc42.org)), licensed CC BY-SA 4.0. Keep the template's attribution line. Use only the dimension names; do not copy Q42's definitions or other text into the document.
+3. **Q42 Attribution and Licence**: The dimension names, the step 4 classification and the quality template are adapted from the Q42 quality model by Gernot Starke ([quality.arc42.org](https://quality.arc42.org)) and licensed CC BY-SA 4.0; `${CLAUDE_PLUGIN_ROOT}/templates/arc42-LICENSE.md` records the attribution and ArcKit's changes. Keep the template's written attribution line in the document. The licence covers that material, not the project's goals, scenarios and targets, so the document carries no licence metadata. Do not copy Q42's own definitions or other Q42 text into the document.
 
 4. **Version Management**: If a quality model already exists (`ARC-*-QUAL-v*.md`), write the next version beside it rather than overwriting it, as `${CLAUDE_PLUGIN_ROOT}/references/version-detection.md` describes.
 

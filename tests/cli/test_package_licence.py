@@ -1,7 +1,8 @@
 """The PyPI licence metadata matches what the distributions actually ship.
 
-The wheel and sdist carry the adapted arc42 template, which is CC BY-SA 4.0,
-beside ArcKit's MIT code (#1053). `pyproject.toml` therefore declares the PEP
+The wheel and sdist carry the adapted arc42 template (#1053) and the
+Q42-derived quality template, which are CC BY-SA 4.0, beside ArcKit's MIT code
+and the MIT concepts, debt and handover templates. `pyproject.toml` therefore declares the PEP
 639 expression `MIT AND CC-BY-SA-4.0` and lists both licence texts, and must
 not also carry an MIT `License ::` classifier, which PEP 639 forbids alongside
 an expression. The static tests read `pyproject.toml`; the build tests build
@@ -25,6 +26,11 @@ EXPRESSION = "MIT AND CC-BY-SA-4.0"
 NOTICE = ".arckit/templates/arc42-LICENSE.md"
 TEMPLATE = ".arckit/templates/arc42-template.md"
 LICENCE_FILES = ["LICENSE", NOTICE]
+# The adapted arc42 template and the Q42-derived quality template are CC BY-SA
+# 4.0; the other three arc42 overlay templates are ArcKit's own MIT material.
+CC_TEMPLATES = ["arc42-template.md", "arc42-quality-template.md"]
+MIT_TEMPLATES = ["arc42-concepts-template.md", "arc42-debt-template.md", "arc42-handover-template.md"]
+ARC42_TEMPLATES = CC_TEMPLATES + MIT_TEMPLATES
 # Each extension pyproject maps into share/arckit ships the template and its
 # notice side by side.
 EXTENSIONS = ["arckit-codex", "arckit-copilot", "arckit-opencode", "arckit-vibe"]
@@ -77,9 +83,25 @@ def test_licence_files_exist_and_cover_both_licences() -> None:
     notice = (REPO_ROOT / NOTICE).read_text()
     assert "MIT License" in mit
     assert "arc42" in mit and "CC BY-SA 4.0" in mit
+    assert "Q42-derived quality material" in mit
     assert "SPDX-License-Identifier: CC-BY-SA-4.0" in notice
     assert "Peter Hruschka and Gernot Starke" in notice
     assert "remain MIT-licensed" in notice
+    # The notice names every CC-licensed file the packages ship and no MIT one.
+    q42 = notice.split("## Q42-derived quality material", 1)[1].split("\n## ", 1)[0]
+    assert "`arc42-quality-template.md`" in q42 and "**Gernot Starke**" in q42
+    assert "https://quality.arc42.org" in q42
+    for name in MIT_TEMPLATES:
+        assert name not in q42, name
+
+
+def test_template_spdx_tags_match_their_licence() -> None:
+    templates = REPO_ROOT / ".arckit/templates"
+    for name in CC_TEMPLATES:
+        assert "<!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->" in (templates / name).read_text(), name
+    for name in MIT_TEMPLATES:
+        text = (templates / name).read_text()
+        assert "SPDX-License-Identifier" not in text and "CC BY-SA" not in text, name
 
 
 def test_build_backend_supports_pep_639() -> None:
@@ -142,6 +164,21 @@ def test_wheel_ships_template_beside_its_notice(dists) -> None:
             assert f"{templates}/arc42-LICENSE.md" in names, extension
 
 
+def test_wheel_ships_all_five_arc42_templates_unchanged(dists) -> None:
+    with zipfile.ZipFile(dists["wheel"]) as whl:
+        names = set(whl.namelist())
+        data = next(n.split("/")[0] for n in names if ".data/" in n)
+        share = f"{data}/data/share/arckit"
+        for folder in [".arckit/templates", *(f"extensions/{e}/templates" for e in EXTENSIONS)]:
+            for name in [*ARC42_TEMPLATES, "arc42-LICENSE.md"]:
+                shipped = whl.read(f"{share}/{folder}/{name}")
+                assert shipped == (REPO_ROOT / ".arckit/templates" / name).read_bytes(), (folder, name)
+        for name in CC_TEMPLATES:
+            assert b"SPDX-License-Identifier: CC-BY-SA-4.0" in whl.read(f"{share}/.arckit/templates/{name}")
+        for name in MIT_TEMPLATES:
+            assert b"SPDX-License-Identifier" not in whl.read(f"{share}/.arckit/templates/{name}")
+
+
 def test_sdist_metadata_declares_expression_and_licence_files(dists) -> None:
     with tarfile.open(dists["sdist"]) as sdist:
         (pkg_info,) = [m for m in sdist.getmembers()
@@ -160,3 +197,7 @@ def test_sdist_ships_licences_and_template(dists) -> None:
                      "plugins/arckit-arc42/templates/arc42-LICENSE.md",
                      "plugins/arckit-arc42/templates/arc42-template.md"]:
             assert f"{root}/{path}" in names, path
+        for folder in (".arckit/templates", "plugins/arckit-arc42/templates"):
+            for name in [*ARC42_TEMPLATES, "arc42-LICENSE.md"]:
+                member = sdist.extractfile(f"{root}/{folder}/{name}")
+                assert member.read() == (REPO_ROOT / folder / name).read_bytes(), (folder, name)

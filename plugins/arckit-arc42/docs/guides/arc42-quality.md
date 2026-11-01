@@ -4,7 +4,7 @@
 
 `/arckit:arc42-quality` writes a system's quality requirements in the form arc42 section 10 expects: a quality tree that groups the quality goals, and measurable quality scenarios that make each goal testable. It derives everything from the project's requirements and stakeholder analysis. Goals are grouped by the nine dimensions of the [Q42 quality model](https://quality.arc42.org), and any goal without a measurable target is listed as "Target needed" instead of being given an invented one. The command is part of the `arckit-arc42` overlay, which needs the core `arckit` plugin.
 
-The Q42 quality model is by Gernot Starke and licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). ArcKit uses only its nine dimension names, with attribution; the template and its guidance are ArcKit's own and MIT-licensed.
+The Q42 quality model is by Gernot Starke and licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). ArcKit's quality template, and the command's classification of goals by Q42 dimension, are adapted from it, so they are licensed CC BY-SA 4.0 too; the overlay's `templates/arc42-LICENSE.md` records the attribution and ArcKit's changes. The rest of the command is MIT-licensed. A generated quality document keeps the template's written attribution line but carries none of its licence metadata: your goals, scenarios and targets remain your own content.
 
 ---
 
