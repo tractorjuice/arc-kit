@@ -5,6 +5,10 @@ outcomes, a dependency carrying Legacy to a new application, the separate
 risk score, and a strip for the security fixes. Same house style as the
 sibling generate-hero-*.py scripts.
 
+The published hero is a redesigned version of this layout, supplied by the
+maintainer on 2 November 2026 (1672x941). Running this script writes the
+original draft over it, so don't run it unless you mean to replace that image.
+
     uv run --with pillow python docs/articles/generate-hero-v6-19-is-it-legacy.py
 """
 
