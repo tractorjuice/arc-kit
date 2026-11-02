@@ -53,6 +53,30 @@ def rewrite_copilot_command_invocations(prompt):
     return prompt.replace("/arckit:", "/arckit-")
 
 
+def rewrite_vibe_command_invocations(content):
+    """Rewrite Claude-style /arckit:X command references to Vibe skill names.
+
+    A named command follows vibe_skill_name, so /arckit:wardley.climate
+    becomes /arckit-wardley-climate. The name capture ends on a word
+    character, leaving trailing punctuation (`/arckit:arc42.`) as a literal.
+    A wildcard or placeholder (/arckit:*, /arckit:{command}) keeps its suffix
+    and takes the hyphen form, /arckit-*. A placeholder after a dotted name is
+    joined the same way: /arckit:community.{name} becomes
+    /arckit-community-{name}.
+    """
+    content = re.sub(
+        r"(?<![\w/])/arckit:((?:\w[\w-]*\.)+)(\{\w+\})",
+        lambda match: vibe_skill_invocation(match.group(1) + match.group(2)),
+        content,
+    )
+    content = re.sub(
+        r"(?<![\w/])/arckit:(\w(?:[\w.-]*\w)?)",
+        lambda match: vibe_skill_invocation(match.group(1)),
+        content,
+    )
+    return re.sub(r"(?<![\w/])/arckit:", "/arckit-", content)
+
+
 # Commands that never reach a non-Claude target. `build` orchestrates parallel
 # `Agent` dispatch, which no other runtime has. Read by converter.py itself and
 # by scripts/check-orchestrator-leaks.py, so there is exactly one copy.
@@ -201,6 +225,11 @@ def codex_skill_invocation(command_name):
 def vibe_skill_name(command_name):
     """Return the Vibe skill filename/name for an ArcKit command name."""
     return f"arckit-{command_name.replace('.', '-')}"
+
+
+def vibe_skill_invocation(command_name):
+    """Return the invocation string for a Vibe skill-backed command."""
+    return f"/{vibe_skill_name(command_name)}"
 
 
 def kimi_skill_name(command_name):
@@ -352,7 +381,11 @@ AGENT_CONFIG = {
         "name": "Paperclip",
         "output_dir": "extensions/arckit-paperclip/src/data",
         "format": "json",
-        "path_prefix": "scripts/bash",
+        # Paperclip ships templates/, references/, schemas/ and data/ at its
+        # package root and replaces {arckit_package_root} in each prompt at
+        # runtime (src/tools/command-tools.ts), so plugin-root assets resolve
+        # there. Executable scripts keep script_path_prefix.
+        "path_prefix": "{arckit_package_root}",
         "script_path_prefix": "scripts",
         "arg_placeholder": "{topic}",
         "extension_dir": "extensions/arckit-paperclip",
@@ -694,11 +727,10 @@ def convert(commands_dirs, agents_dir):
         # Collect entry for Paperclip JSON format
         if "paperclip" in AGENT_CONFIG:
             pc_config = AGENT_CONFIG["paperclip"]
-            # This command runs a bundled calculator, not a project bash helper.
-            # Paperclip resolves this token from its installed package at runtime.
+            # This command runs a bundled calculator, not a project bash helper,
+            # so its scripts also resolve from the installed package.
             if has_runtime_assets:
-                pc_config = {**pc_config, "path_prefix": "{arckit_package_root}",
-                             "script_path_prefix": "{arckit_package_root}/scripts"}
+                pc_config = {**pc_config, "script_path_prefix": "{arckit_package_root}/scripts"}
             pc_prompt = rewrite_paths(prompt, pc_config)
             pc_prompt = rewrite_hook_dependencies(pc_prompt, pc_config)
             pc_prompt = neutralise_question_tool(pc_prompt)
@@ -2201,6 +2233,34 @@ def rewrite_kimi_skills(skills_dir):
         print(f"  Rewrote {count} skill files for Kimi skill invocation format")
 
 
+def rewrite_vibe_skills(skills_dir):
+    """Rewrite /arckit:X command references in every Vibe skill file.
+
+    Covers the generated command skills and the copied reference skills
+    (architecture-workflow, wardley-mapping and the rest), so a skill never
+    tells the user to run a Claude-only /arckit:X command.
+    """
+    if not os.path.isdir(skills_dir):
+        return
+
+    count = 0
+    for root, _dirs, files in os.walk(skills_dir):
+        for filename in files:
+            if not filename.endswith(".md"):
+                continue
+            filepath = os.path.join(root, filename)
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+            rewritten = rewrite_vibe_command_invocations(content)
+            if rewritten != content:
+                with open(filepath, "w", encoding="utf-8") as f:
+                    f.write(rewritten)
+                count += 1
+
+    if count:
+        print(f"  Rewrote {count} skill files for Vibe skill invocation format")
+
+
 def generate_gemini_agents(agents_dir, output_dir):
     """Generate Gemini CLI sub-agent markdown files from Claude Code agents.
 
@@ -2621,6 +2681,7 @@ if __name__ == "__main__":
         os.path.join(plugin_dir, "skills"),
         "extensions/arckit-vibe/skills",
     )
+    rewrite_vibe_skills("extensions/arckit-vibe/skills")
     vibe_version = "0.0.0"
     vibe_version_path = "extensions/arckit-vibe/VERSION"
     if os.path.isfile(vibe_version_path):
