@@ -5,31 +5,12 @@ argument-hint: '<project ID> [systems "Payments, Reporting"] [as-of YYYY-MM-DD] 
 effort: max
 runtime-assets:
   - scripts/legacy-assessment.mjs
+  - scripts/generate-document-id.mjs
   - schemas/legacy-assessment-1.0.schema.json
   - data/legacy-frameworks-1.0.json
   - data/legacy-risk-rubric-2026-08-17.json
   - data/legacy-definition-2026-08-17.json
 handoffs:
-  - command: requirements
-    description: Read agreed needs and acceptance criteria when available.
-  - command: risk
-    description: Read the project risk register and ownership evidence.
-  - command: diagram
-    description: Read architecture and dependency boundaries.
-  - command: operationalize
-    description: Read restoration, support and operational-readiness evidence.
-  - command: devops
-    description: Read deployment, patching and recovery evidence.
-  - command: secure
-    description: Read the applicable security baseline and actual control evidence.
-  - command: evaluate
-    description: Read supplier and contract evidence.
-  - command: finops
-    description: Read operating cost and funding evidence.
-  - command: service-assessment
-    description: Read relevant service assessment evidence.
-  - command: tcop
-    description: Read technology-code evidence when applicable.
   - command: sobc
     description: Use the findings for options and investment work.
   - command: roadmap
@@ -39,6 +20,7 @@ handoffs:
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
   - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/legacy-assessment.mjs" *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
 
 # Legacy IT Assessment
@@ -103,8 +85,9 @@ separate from delivered arrangements and require project-specific funding eviden
 ## Gather evidence and thresholds
 
 Read relevant requirements, risks, diagrams, operational readiness, DevOps, security,
-supplier evaluation, financial analysis, roadmap, previous LEGACY reports and external
-records. Missing principles or requirements create gaps and do not block assessment.
+supplier evaluation, financial analysis, service assessments, TCoP evidence, roadmap,
+previous LEGACY reports and external records. These are evidence inputs when available,
+not commands to run after this assessment. Missing principles or requirements create gaps and do not block assessment.
 Operational evidence can outweigh document completeness. Follow
 `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md` for inline citations and
 the external reference register.
@@ -206,6 +189,15 @@ sidecar to retrofit it; copy its assessor facts into a new version with approval
 Compare existing LEGACY artifacts; preserve previous Markdown, JSON and
 approvals. New report approval is pending. LEGACY is single-instance per project
 assessment version, with the scope listing all selected systems.
+
+Generate the Markdown filename with the shared helper after choosing the version:
+
+```bash
+node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" <PROJECT_ID> LEGACY <VERSION> --filename
+```
+
+Use the returned stem for the JSON, `-risk.svg` and `-components.svg` companions,
+and for the assessment document ID. Do not use `--next-num`: LEGACY is single-instance.
 
 Write input to a temporary file, then run:
 
@@ -318,8 +310,8 @@ claim of verified calculations; do not fabricate a results object or a verified 
 State this limitation in the report and handoff.
 
 Read the template with user override support: first check
-`.arckit/templates-custom/legacy-assessment-template.md`, then `.arckit/templates/legacy-assessment-template.md`.
-If neither exists, read `${CLAUDE_PLUGIN_ROOT}/templates/legacy-assessment-template.md`.
+`.arckit/templates-custom/uk-legacy-assessment-template.md`, then `.arckit/templates/uk-legacy-assessment-template.md`.
+If neither exists, read `${CLAUDE_PLUGIN_ROOT}/templates/uk-legacy-assessment-template.md`.
 
 Read `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md` and resolve the
 `<!-- DOC-CONTROL-HEADER -->` marker per those rendering rules (UK default for LEGACY; honour their user configuration fallback). Do not
@@ -330,6 +322,10 @@ Write `projects/{project}/ARC-{PROJECT_ID}-LEGACY-v{VERSION}.md` with the decisi
 helper-generated factual sections, counts by classification/completeness, separate numerical ordering and arithmetic,
 dependency diagram/causal paths, seven-criterion findings, evidence, conflicts and gaps.
 Do not combine classification, evidence quality and risk into a readiness percentage.
+Keep narrative consistent with each effective criterion result. An empty dependency
+register does not by itself prove either no reliance or an unassessed D7: explain the
+supplied D7 evidence and its limitations. Do not call D7 unassessed solely because
+there are no recorded edges when a qualifying finding already establishes it.
 
 ## Remediation and review
 
@@ -371,10 +367,10 @@ Disclose any unavailable source/runtime checks. Do not stop at a proposed plan.
 ## Examples and integration
 
 ```text
-/arckit:legacy-assessment 001
-/arckit:legacy-assessment 001 systems "Payments, Reporting"
-/arckit:legacy-assessment 001 as-of 2026-10-28 risk-model published
-/arckit:legacy-assessment 001 risk-model none
+/arckit:uk-legacy-assessment 001
+/arckit:uk-legacy-assessment 001 systems "Payments, Reporting"
+/arckit:uk-legacy-assessment 001 as-of 2026-10-28 risk-model published
+/arckit:uk-legacy-assessment 001 risk-model none
 ```
 
 Service assessment, TCoP, security, risk and analysis may consume this evidence when

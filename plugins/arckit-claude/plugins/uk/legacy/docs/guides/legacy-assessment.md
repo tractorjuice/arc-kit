@@ -14,21 +14,21 @@ In Claude Code, install the core plugin and this overlay from the ArcKit marketp
 claude plugin install arckit arckit-uk-legacy
 ```
 
-The Claude command is `/arckit-uk-legacy:legacy-assessment`. Other generated targets
+The Claude command is `/arckit-uk-legacy:uk-legacy-assessment`. Other generated targets
 use their merged ArcKit namespace. The overlay consumes existing core artifacts;
 core commands do not require or automatically recommend this optional assessment.
 
 ## Run an assessment
 
 ```text
-/arckit-uk-legacy:legacy-assessment 001
-/arckit-uk-legacy:legacy-assessment 001 systems "Payments, Reporting"
-/arckit-uk-legacy:legacy-assessment 001 as-of 2026-10-28 risk-model published
-/arckit-uk-legacy:legacy-assessment 001 risk-model none
+/arckit-uk-legacy:uk-legacy-assessment 001
+/arckit-uk-legacy:uk-legacy-assessment 001 systems "Payments, Reporting"
+/arckit-uk-legacy:uk-legacy-assessment 001 as-of 2026-10-28 risk-model published
+/arckit-uk-legacy:uk-legacy-assessment 001 risk-model none
 ```
 
-Codex uses `$arckit-legacy-assessment`; Copilot uses `/arckit-legacy-assessment`.
-Gemini and OpenCode use `/arckit-uk-legacy:legacy-assessment`.
+Codex uses `$arckit-uk-legacy-assessment`; Copilot uses `/arckit-uk-legacy-assessment`.
+Gemini and OpenCode use `/arckit-uk-legacy:uk-legacy-assessment`.
 The date defaults to the local calendar date. The command resolves an existing project
 and confirms ambiguous system boundaries; it does not silently create a new project.
 It writes `ARC-001-LEGACY-v1.0.md`, a JSON sidecar and, when numerical scoring is

@@ -96,7 +96,7 @@ def test_legacy_is_optional_and_its_references_are_not_core_shared_assets():
     manifest = json.loads((overlay / '.claude-plugin/plugin.json').read_text())
     assert manifest['defaultEnabled'] is False
     assert manifest['dependencies'][0]['name'] == 'arckit'
-    assert not (ROOT / 'plugins/arckit-claude/commands/legacy-assessment.md').exists()
+    assert not (ROOT / 'plugins/arckit-claude/commands/uk-legacy-assessment.md').exists()
     assert (overlay / 'references/legacy-quality-checklist.md').is_file()
     for core in (ROOT / 'plugins').glob('arckit-*'):
         if core == overlay:
@@ -106,7 +106,7 @@ def test_legacy_is_optional_and_its_references_are_not_core_shared_assets():
         assert 'legacy-assessment' not in (ROOT / 'plugins/arckit-claude/commands' / (name + '.md')).read_text()
     # Both dev and published Claude paths own the correctly namespaced command.
     published = ROOT / 'plugins/arckit-claude/plugins/uk/legacy'
-    assert '/arckit-uk-legacy:legacy-assessment' in (published / 'docs/guides/legacy-assessment.md').read_text()
+    assert '/arckit-uk-legacy:uk-legacy-assessment' in (published / 'docs/guides/legacy-assessment.md').read_text()
     assert (published / 'scripts/legacy-assessment.mjs').read_bytes() == (overlay / 'scripts/legacy-assessment.mjs').read_bytes()
 
 
@@ -129,3 +129,22 @@ def test_overlay_live_eval_recordings_cannot_be_committed():
     for relative in ['plugins/arckit-uk-legacy/evals/results/synthetic/recording.json', 'plugins/arckit-claude/plugins/uk/legacy/evals/results/synthetic/recording.json']:
         result = subprocess.run(['git', 'check-ignore', '--quiet', relative], cwd=ROOT)
         assert result.returncode == 0, relative
+
+
+def test_legacy_handoffs_are_follow_up_work_not_evidence_inputs():
+    path = ROOT / 'plugins/arckit-uk-legacy/commands/uk-legacy-assessment.md'
+    front, body = path.read_text().split('---', 2)[1:]
+    metadata = yaml.safe_load(front)
+    assert [item['command'] for item in metadata['handoffs']] == ['sobc', 'roadmap', 'plan']
+    assert 'service assessments, TCoP evidence' in body
+    assert 'scripts/generate-document-id.mjs' in metadata['runtime-assets']
+    assert 'LEGACY <VERSION> --filename' in body
+    assert not path.with_name('legacy-assessment.md').exists()
+
+
+def test_generated_paperclip_scripts_are_ignored_and_untracked():
+    import subprocess
+    path = 'extensions/arckit-paperclip/scripts/legacy-assessment.mjs'
+    assert subprocess.run(['git', 'check-ignore', '--quiet', '--no-index', path], cwd=ROOT).returncode == 0
+    tracked = subprocess.check_output(['git', 'ls-files', 'extensions/arckit-paperclip/scripts/'], cwd=ROOT, text=True)
+    assert not tracked.strip(), tracked

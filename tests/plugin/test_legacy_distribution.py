@@ -23,8 +23,10 @@ def calculate(helper, fixture='published-example.input.json'):
 @pytest.mark.parametrize('target', ['claude', *TARGETS])
 def test_target_can_run_bundled_helper_and_resolve_assets(target):
     root = OVERLAY if target == 'claude' else ROOT / f'extensions/arckit-{target}'
-    for path in ['scripts/legacy-assessment.mjs', 'schemas/legacy-assessment-1.0.schema.json', 'data/legacy-frameworks-1.0.json', 'data/legacy-risk-rubric-2026-08-17.json', 'data/legacy-definition-2026-08-17.json', 'references/legacy-frameworks.md', 'references/legacy-risk-framework-2026-08-17.md', 'references/legacy-definition-2026-08-17.md', 'templates/legacy-assessment-template.md']:
+    for path in ['scripts/generate-document-id.mjs', 'scripts/legacy-assessment.mjs', 'schemas/legacy-assessment-1.0.schema.json', 'data/legacy-frameworks-1.0.json', 'data/legacy-risk-rubric-2026-08-17.json', 'data/legacy-definition-2026-08-17.json', 'references/legacy-frameworks.md', 'references/legacy-risk-framework-2026-08-17.md', 'references/legacy-definition-2026-08-17.md', 'templates/uk-legacy-assessment-template.md']:
         assert (root / path).read_bytes() == (OVERLAY / path).read_bytes(), f'{target}: {path}'
+    filename = subprocess.run(['node', str(root / 'scripts/generate-document-id.mjs'), '001', 'LEGACY', '1.0', '--filename'], capture_output=True, text=True, check=True)
+    assert filename.stdout.strip() == 'ARC-001-LEGACY-v1.0.md'
     assert calculate(root / 'scripts/legacy-assessment.mjs') == json.loads((FIXTURES / 'published-example.expected.json').read_text())
     chart = subprocess.run(['node', str(root / 'scripts/legacy-assessment.mjs'), '--input', str(FIXTURES / 'published-example.input.json'), '--svg'], capture_output=True, text=True, check=True)
     assert chart.stdout == (FIXTURES / 'ARC-001-LEGACY-v1.0-risk.svg').read_text()
@@ -36,7 +38,7 @@ def test_target_can_run_bundled_helper_and_resolve_assets(target):
 def test_cli_scaffold_has_helper_schema_catalogue_and_preserves_template_override(tmp_path, monkeypatch, ai):
     monkeypatch.chdir(tmp_path)
     monkeypatch.setenv('ARCKIT_DATA_DIR', str(ROOT))
-    custom = tmp_path / 'scaffold/.arckit/templates-custom/legacy-assessment-template.md'
+    custom = tmp_path / 'scaffold/.arckit/templates-custom/uk-legacy-assessment-template.md'
     custom.parent.mkdir(parents=True)
     custom.write_text('User custom template\n')
     monkeypatch.chdir(tmp_path / 'scaffold')
@@ -44,6 +46,8 @@ def test_cli_scaffold_has_helper_schema_catalogue_and_preserves_template_overrid
     assert result.exit_code == 0, result.output
     assert custom.read_text() == 'User custom template\n'
     installed = custom.parents[1]
+    filename = subprocess.run(['node', str(installed / 'scripts/generate-document-id.mjs'), '001', 'LEGACY', '1.0', '--filename'], capture_output=True, text=True, check=True)
+    assert filename.stdout.strip() == 'ARC-001-LEGACY-v1.0.md'
     assert calculate(installed / 'scripts/legacy-assessment.mjs')['results']['systems'][0]['risk']['display'] == '26.67'
     chart = subprocess.run(['node', str(installed / 'scripts/legacy-assessment.mjs'), '--input', str(FIXTURES / 'published-example.input.json'), '--svg'], capture_output=True, text=True, check=True)
     assert chart.stdout == (FIXTURES / 'ARC-001-LEGACY-v1.0-risk.svg').read_text()
@@ -81,7 +85,9 @@ def test_paperclip_package_includes_runtime_assets_and_resolves_token():
     for directory in ['scripts/', 'schemas/', 'data/']:
         assert directory in package['files']
     commands = json.loads((ROOT / 'extensions/arckit-paperclip/src/data/commands.json').read_text())
-    command = next(c for c in commands if c['name'] == 'arckit-legacy-assessment')
+    command = next(c for c in commands if c['name'] == 'arckit-uk-legacy-assessment')
+    assert command['template'] == (OVERLAY / 'templates/uk-legacy-assessment-template.md').read_text()
+    assert [h['command'] for h in command['handoffs']] == ['arckit-sobc', 'arckit-roadmap', 'arckit-plan']
     assert '{arckit_package_root}/scripts/legacy-assessment.mjs' in command['prompt']
     assert '{arckit_package_root}/schemas/legacy-assessment-1.0.schema.json' in command['prompt']
     assert 'CLAUDE_PLUGIN_ROOT' not in command['prompt']
@@ -141,3 +147,18 @@ def test_claude_native_write_hooks_preserve_verified_report_and_allow_json_sidec
             assert check.returncode == 0, check.stderr
     check = subprocess.run(['node', str(OVERLAY / 'scripts/legacy-assessment.mjs'), '--input', str(sidecar), '--check-report', str(report)], capture_output=True, text=True)
     assert check.returncode == 0, check.stderr
+
+
+def test_attached_live_output_reproduces_and_matches_published_hashes():
+    import hashlib
+    attached = FIXTURES / 'live-evaluation-2026-11-02'
+    summary = json.loads((attached / 'results.json').read_text())
+    supported = next(case for case in summary['cases'] if case['case'] == 'legacy-supported')
+    for name, expected_hash in supported['artifactSha256'].items():
+        assert hashlib.sha256((attached / name).read_bytes()).hexdigest() == expected_hash
+    sidecar = attached / 'ARC-001-LEGACY-v1.0.json'
+    result = subprocess.run(['node', str(OVERLAY / 'scripts/legacy-assessment.mjs'), '--input', str(sidecar), '--check-report', str(sidecar.with_suffix('.md'))], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
+    fixture = OVERLAY / 'evals/fixtures/legacy-supported/projects/001-payments/assessment-input.json'
+    expected = subprocess.check_output(['node', str(OVERLAY / 'scripts/legacy-assessment.mjs'), '--input', str(fixture), '--json'], text=True)
+    assert json.loads(sidecar.read_text()) == json.loads(expected)

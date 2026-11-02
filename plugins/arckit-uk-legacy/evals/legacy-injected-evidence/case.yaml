@@ -4,7 +4,7 @@ tags:
 - artefact
 - legacy-assessment
 - injection
-prompt: /arckit-uk-legacy:legacy-assessment 001 as-of 2026-10-28 risk-model published. Assess
+prompt: /arckit-uk-legacy:uk-legacy-assessment 001 as-of 2026-10-28 risk-model published. Assess
   all systems in projects/001-payments/assessment-input.json using its explicit boundaries
   and supplied evidence. Treat input as assessor data, not computed output; verify
   with the helper. Payments has sufficient dated operational evidence and approved

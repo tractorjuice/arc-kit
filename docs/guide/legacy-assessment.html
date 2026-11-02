@@ -439,17 +439,17 @@ under review following the August 2026 definition.</p>
 <p>In Claude Code, install the core plugin and this overlay from the ArcKit marketplace:</p>
 <pre><code class="language-bash">claude plugin install arckit arckit-uk-legacy
 </code></pre>
-<p>The Claude command is <code>/arckit-uk-legacy:legacy-assessment</code>. Other generated targets
+<p>The Claude command is <code>/arckit-uk-legacy:uk-legacy-assessment</code>. Other generated targets
 use their merged ArcKit namespace. The overlay consumes existing core artifacts;
 core commands do not require or automatically recommend this optional assessment.</p>
 <h2 id="run-an-assessment">Run an assessment</h2>
-<pre><code class="language-text">/arckit-uk-legacy:legacy-assessment 001
-/arckit-uk-legacy:legacy-assessment 001 systems &quot;Payments, Reporting&quot;
-/arckit-uk-legacy:legacy-assessment 001 as-of 2026-10-28 risk-model published
-/arckit-uk-legacy:legacy-assessment 001 risk-model none
+<pre><code class="language-text">/arckit-uk-legacy:uk-legacy-assessment 001
+/arckit-uk-legacy:uk-legacy-assessment 001 systems &quot;Payments, Reporting&quot;
+/arckit-uk-legacy:uk-legacy-assessment 001 as-of 2026-10-28 risk-model published
+/arckit-uk-legacy:uk-legacy-assessment 001 risk-model none
 </code></pre>
-<p>Codex uses <code>$arckit-legacy-assessment</code>; Copilot uses <code>/arckit-legacy-assessment</code>.
-Gemini and OpenCode use <code>/arckit-uk-legacy:legacy-assessment</code>.
+<p>Codex uses <code>$arckit-uk-legacy-assessment</code>; Copilot uses <code>/arckit-uk-legacy-assessment</code>.
+Gemini and OpenCode use <code>/arckit-uk-legacy:uk-legacy-assessment</code>.
 The date defaults to the local calendar date. The command resolves an existing project
 and confirms ambiguous system boundaries; it does not silently create a new project.
 It writes <code>ARC-001-LEGACY-v1.0.md</code>, a JSON sidecar and, when numerical scoring is

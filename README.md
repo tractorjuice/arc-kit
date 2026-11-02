@@ -546,7 +546,7 @@ claude plugin install arckit arckit-uk-legacy
 
 | Command | Description | Guide | Status |
 |---------|-------------|-------|--------|
-| `/arckit-uk-legacy:legacy-assessment` | Assess existing systems and dependencies, calculate independent risk, and plan remediation with evidence and owner review | [Guide](docs/guides/legacy-assessment.md) | Experimental |
+| `/arckit-uk-legacy:uk-legacy-assessment` | Assess existing systems and dependencies, calculate independent risk, and plan remediation with evidence and owner review | [Guide](docs/guides/legacy-assessment.md) | Experimental |
 
 ## UK NHS Clinical Safety Overlay (Community-contributed)
 

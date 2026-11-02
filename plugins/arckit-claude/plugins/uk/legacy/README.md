@@ -15,14 +15,14 @@ claude plugin install arckit arckit-uk-legacy
 In Claude Code:
 
 ```text
-/arckit-uk-legacy:legacy-assessment 001
-/arckit-uk-legacy:legacy-assessment 001 systems "Payments, Reporting"
-/arckit-uk-legacy:legacy-assessment 001 risk-model none
+/arckit-uk-legacy:uk-legacy-assessment 001
+/arckit-uk-legacy:uk-legacy-assessment 001 systems "Payments, Reporting"
+/arckit-uk-legacy:uk-legacy-assessment 001 risk-model none
 ```
 
 The seven generated extension targets include the command in their merged ArcKit
-namespace: Codex `$arckit-legacy-assessment`, Gemini/OpenCode `/arckit-uk-legacy:legacy-assessment`,
-and Copilot `/arckit-legacy-assessment`. See the [guide](docs/guides/legacy-assessment.md)
+namespace: Codex `$arckit-uk-legacy-assessment`, Gemini/OpenCode `/arckit-uk-legacy:uk-legacy-assessment`,
+and Copilot `/arckit-uk-legacy-assessment`. See the [guide](docs/guides/legacy-assessment.md)
 for other targets, source versions, evidence requirements and examples.
 
 ## Outputs and evidence

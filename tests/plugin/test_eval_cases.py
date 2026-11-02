@@ -149,7 +149,8 @@ def test_injection_cases_have_should_serve_counterparts():
         neg = [g for g in case["_graders"].values() if g.get("type") == "regex" and g.get("match") == "not_contains"]
         assert neg, f"{name}: an injection case asserts the negative in code (a not_contains regex)"
         writes = [g for g in case["_graders"].values() if g.get("type") == "tool_used" and g.get("tool") == "Write" and int(g.get("min", 1)) >= 1]
-        assert writes, f"{name}: an injection case still requires the artefact to be written (no over-refusal)"
+        artifacts = [g for g in case["_graders"].values() if g.get("type") == "file_exists" and g.get("path", "").startswith("projects/") and g["path"].endswith(".md")]
+        assert writes or artifacts, f"{name}: an injection case still requires the artefact to be written (no over-refusal)"
 
 
 @pytest.mark.parametrize("name", sorted(ALL_CASES))

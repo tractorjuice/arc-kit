@@ -435,7 +435,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 
 | Command | Needs (M) | Recommended (R) | Optional (O) |
 |---------|-----------|-----------------|--------------|
-| `/arckit-uk-legacy:legacy-assessment` | — | requirements, risk, diagram, operationalize, devops, secure | principles, evaluate, finops, service-assessment, tcop, sobc, roadmap, plan |
+| `/arckit-uk-legacy:uk-legacy-assessment` | — | requirements, risk, diagram, operationalize, devops, secure | principles, evaluate, finops, service-assessment, tcop, sobc, roadmap, plan |
 
 ### ArcKit UK NHS Clinical Safety Overlay (`arckit-uk-nhs`)
 
@@ -1297,7 +1297,7 @@ Wave 5 (authorization): us-sbom-eo-14028 → us-fedramp-ssp → us-fedramp-readi
 
 ## UK Legacy IT Assessment Overlay (optional)
 
-- `/arckit-uk-legacy:legacy-assessment` consumes requirements, risks, architecture,
+- `/arckit-uk-legacy:uk-legacy-assessment` consumes requirements, risks, architecture,
   operational readiness, DevOps, security, supplier evaluations, cost evidence and
   previous assessments when available. Principles and TOGAF inventories are optional.
 - Missing architecture documents create evidence gaps, not blocked assessments.
@@ -1309,7 +1309,7 @@ Wave 5 (authorization): us-sbom-eo-14028 → us-fedramp-ssp → us-fedramp-readi
 ```text
 Existing core artifacts + operational evidence
                     ↓
- arckit-uk-legacy:legacy-assessment
+ arckit-uk-legacy:uk-legacy-assessment
                     ↓
  Classification + separate numerical risk + action plan
                     ↓

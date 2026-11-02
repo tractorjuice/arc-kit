@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New optional `arckit-uk-legacy` overlay assesses existing project systems against the updated UK legacy IT definition, separately calculates published numerical risk, and produces an evidence-linked action plan. Includes a structured JSON assessment, bundled offline framework sources and deterministic report/chart verification across Claude and all seven generated targets. Findings remain provisional where policy approval or evidence is missing.
+- New optional `arckit-uk-legacy` overlay assesses existing project systems against the updated UK legacy IT definition, separately calculates published numerical risk, and produces an evidence-linked action plan. Includes a structured JSON assessment, bundled offline framework sources and deterministic report/chart verification across Claude and all seven generated targets. Findings remain provisional where policy approval or evidence is missing. Shared distribution support adds `runtime-assets:` command frontmatter and `converter.py --check-runtime-assets`, run by `hatch_build.py` on every wheel build; `arckit init` now copies Document Control `_partials` and merged `scripts/` and `schemas/` into every scaffold; `evals/` is excluded from every published plugin, including core.
 
 ### Fixed
 

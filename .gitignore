@@ -160,6 +160,7 @@ extensions/arckit-paperclip/templates/
 extensions/arckit-paperclip/docs/
 extensions/arckit-paperclip/skills/
 extensions/arckit-paperclip/config/
+extensions/arckit-paperclip/scripts/
 extensions/arckit-paperclip/schemas/
 extensions/arckit-paperclip/references/
 extensions/arckit-paperclip/hooks/

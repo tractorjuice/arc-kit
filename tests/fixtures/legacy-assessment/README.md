@@ -13,9 +13,9 @@ The Node suite tests calculations, dates, schema, classifications and dependency
 propagation. The Python distribution suite executes the helper in Claude and all
 seven generated targets and all four CLI scaffold modes.
 
-Seven behavioural cases live in `plugins/arckit-uk-legacy/evals/legacy-*`. They test
+Eight behavioural cases live in `plugins/arckit-uk-legacy/evals/legacy-*`. They test
 supported, unsupported, expiring, dependent, sparse, conflicting and incomplete-risk
-scenarios. Live evaluation requires the relevant authenticated runtime; structural
+and injected-evidence scenarios. Live evaluation requires the relevant authenticated runtime; structural
 case validation does not establish model behaviour. See the command guide for sources.
 
 `uncertainty-example.svg` is an independently synthetic chart: set the existing
@@ -32,3 +32,7 @@ and risk ordering unchanged. The picture is not derived from a source project.
 reproduces `headline-format.svg` and `component-format.svg`, showing continuous calculated component positions, asymmetric numerical ranges and
 unresolved coverage. All quantities and calibration anchors are invented. No private reference text,
 numbers, names, row count or plotted positions are used in this fixture.
+
+[Live Claude evaluation and original synthetic outputs](live-evaluation-2026-11-02/README.md)
+record the supported and injected-evidence runs, independent artifact verification,
+initial grader and narrative findings, and the skipped judgement graders.
