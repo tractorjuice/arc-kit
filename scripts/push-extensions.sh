@@ -69,6 +69,7 @@ CLAUDE_PLUGIN_LAYOUT=(
   "plugins/arckit-us:plugins/us"
   "plugins/arckit-uk-finance:plugins/uk/finance"
   "plugins/arckit-uk-nhs:plugins/uk/nhs"
+  "plugins/arckit-uk-legacy:plugins/uk/legacy"
   "plugins/arckit-fde:plugins/fde"
   "plugins/arckit-uk-gcloud:plugins/uk/gcloud"
   "plugins/arckit-togaf-adm:plugins/togaf/adm"
@@ -242,7 +243,7 @@ copy_distribution_files() {
     --exclude='./.npm' \
     --exclude='./.pnpm-store' \
     --exclude='./.yarn/cache' \
-    --exclude='./evals/results' \
+    --exclude='./evals' \
     --exclude='__pycache__' \
     --exclude='*.pyc' \
     --exclude='.DS_Store' \
@@ -336,7 +337,7 @@ Each plugin lives in its own folder under `plugins/`, with its own README:
 
 - [`plugins/arckit`](plugins/arckit): the core plugin
 - Jurisdiction overlays: [`uae`](plugins/uae), [`fr`](plugins/fr), [`nl`](plugins/nl), [`ca`](plugins/ca), [`eu`](plugins/eu), [`at`](plugins/at), [`au`](plugins/au), [`au/energy`](plugins/au/energy), [`us`](plugins/us)
-- Sector overlays: [`uk/finance`](plugins/uk/finance), [`uk/nhs`](plugins/uk/nhs), [`uk/gcloud`](plugins/uk/gcloud) (proprietary, see its LICENSE)
+- Sector overlays: [`uk/finance`](plugins/uk/finance), [`uk/nhs`](plugins/uk/nhs), [`uk/legacy`](plugins/uk/legacy), [`uk/gcloud`](plugins/uk/gcloud) (proprietary, see its LICENSE)
 - Method overlays: [`togaf/adm`](plugins/togaf/adm), [`oaa`](plugins/oaa), [`arc42`](plugins/arc42), [`agent/architecture`](plugins/agent/architecture)
 - Tooling: [`repo`](plugins/repo), [`fde`](plugins/fde)
 

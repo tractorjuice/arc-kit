@@ -56,6 +56,9 @@ data/
 # scripts/sync-claude-plugin-layout.py for the standalone arckit-claude repo)
 # needs the same exception, or the standalone publish silently loses the file.
 !plugins/arckit-eu/data/
+# The optional legacy overlay carries frozen source catalogues.
+!plugins/arckit-uk-legacy/data/
+!plugins/arckit-claude/plugins/uk/legacy/data/
 !plugins/arckit-claude/plugins/eu/data/
 
 # Plugin runtime caches — ephemeral, project-scoped, regenerated each session
@@ -68,7 +71,8 @@ docs/telemetry.json
 # Projects (created by arckit init, not part of the toolkit itself)
 projects/
 # ...but the eval suite's fixture repositories are source, not user artefacts
-!plugins/arckit-claude/evals/fixtures/**/projects/
+!plugins/arckit-*/evals/fixtures/**/projects/
+!plugins/arckit-claude/plugins/**/evals/fixtures/**/projects/
 
 # Vendor proposals (may contain sensitive info)
 # Uncomment if you don't want to commit vendor documents
@@ -156,6 +160,7 @@ extensions/arckit-paperclip/templates/
 extensions/arckit-paperclip/docs/
 extensions/arckit-paperclip/skills/
 extensions/arckit-paperclip/config/
+extensions/arckit-paperclip/scripts/
 extensions/arckit-paperclip/schemas/
 extensions/arckit-paperclip/references/
 extensions/arckit-paperclip/hooks/
@@ -246,7 +251,8 @@ deepbook-test-output/
 .arckit/deepbook-tools/
 
 # Behavioural eval recordings (scripts/eval-headless.py, claude plugin eval)
-plugins/arckit-claude/evals/results/
+plugins/arckit-*/evals/results/
+plugins/arckit-claude/plugins/**/evals/results/
 
 # Certification: the real question banks hold answer keys and never go in this public repo.
 certification/private/

@@ -643,6 +643,7 @@
                     <option value="au-overlay">Australian Federal Overlay (Community)</option>
                     <option value="us-overlay">USA Federal Civilian Overlay (Community)</option>
                     <option value="uk-fs-overlay">UK Finance Payments Overlay (Community, Sector)</option>
+                    <option value="uk-legacy-overlay">UK Legacy IT Assessment Overlay (Community)</option>
                     <option value="uk-nhs-overlay">UK NHS Clinical Safety Overlay (Community, Sector)</option>
                 </select>
             </div>
@@ -665,6 +666,7 @@
                     <option value="australia">Australia</option>
                     <option value="usa">USA</option>
                     <option value="uk-finance">UK Finance (sector)</option>
+                    <option value="uk-legacy">UK Legacy IT</option>
                     <option value="uk-nhs">UK NHS (sector)</option>
                     <option value="au-energy">Australian Energy (sector)</option>
                 </select>
@@ -2389,6 +2391,12 @@
                         <td>Community</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-legacy-overlay" data-jurisdiction="uk-legacy" data-tier="community">
+                        <td><code>/arckit-uk-legacy:uk-legacy-assessment</code></td>
+                        <td class="description">Assess existing systems and dependencies against the updated UK legacy definition, independently calculate published numerical risk, and plan remediation. Optional overlay with offline framework sources. <a href="guide/legacy-assessment.html" class="govuk-link">Guide</a></td>
+                        <td>UK Legacy IT Overlay</td><td>UK Legacy IT</td><td>Community</td>
+                        <td class="examples">—</td><td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
                     <tr data-status="experimental" data-category="uk-nhs-overlay" data-jurisdiction="uk-nhs" data-tier="community">
                         <td><code>/arckit-uk-nhs:uk-nhs-dcb0129</code><br><a href="https://youtu.be/qR9TAb1xT_4" class="govuk-link app-film-link" target="_blank" rel="noopener" aria-label="Watch the film for /arckit-uk-nhs:uk-nhs-dcb0129 on YouTube (opens in a new tab)">&#9654; Film</a></td>

@@ -45,6 +45,7 @@ PLUGIN_COMMAND_DIRS = [
     REPO_ROOT / "plugins" / "arckit-us" / "commands",
     REPO_ROOT / "plugins" / "arckit-uk-finance" / "commands",
     REPO_ROOT / "plugins" / "arckit-uk-nhs" / "commands",
+    REPO_ROOT / "plugins" / "arckit-uk-legacy" / "commands",
     REPO_ROOT / "plugins" / "arckit-togaf-adm" / "commands",
     REPO_ROOT / "plugins" / "arckit-oaa" / "commands",
     REPO_ROOT / "plugins" / "arckit-arc42" / "commands",
