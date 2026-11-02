@@ -1,8 +1,14 @@
-# Live Claude evaluation — 2 November 2026
+# Superseded evaluation — runtime not loaded
 
-The optional UK Legacy overlay was exercised through `scripts/eval-headless.py`
-with Claude Code 2.1.316 and `claude-sonnet-5-5`. These are live model runs against
-synthetic repository fixtures. No source-project material is included.
+**Correction following review:** neither original init event lists the overlay or
+its command. These runs produced verifiable artifacts by finding the helper on disk;
+they are **invalid as plugin evaluations**. The former passing scores below describe
+artifact graders only. The new harness rejects both recordings with runtime score
+0.0. No source-project material is included.
+
+[Replacement runs with runtime verification](enabled-runtime/README.md) exercise the
+explicitly enabled overlay and core dependency. Original artifact bytes are retained
+below so this correction does not erase the earlier evidence.
 
 | Case | Deterministic graders | Model turns | Independent output verification |
 | --- | --- | --- | --- |
@@ -49,7 +55,7 @@ final report explains D7's supplied attestation basis and the lack of individual
 edges without contradicting its classification. Narrative review remains distinct
 from helper verification.
 
-## Reproduce
+## Reproduce with the corrected harness
 
 From the repository root, with an authenticated Claude installation:
 

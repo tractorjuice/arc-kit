@@ -140,6 +140,7 @@ while [ $# -gt 0 ]; do
   shift
 done
 if grep -q WRITE-THE-FILE "$plugin/commands/demo.md"; then echo written > out.md; fi
+printf '{"type":"system","subtype":"init","plugins":[{"name":"arckit","source":"arckit@inline","path":"%s"}],"slash_commands":["arckit:demo"]}\n' "$plugin"
 echo '{"type": "result", "subtype": "success", "result": "ok", "total_cost_usd": 0.5, "num_turns": 1}'
 """
 
@@ -149,6 +150,8 @@ def fake_run(tmp_path, monkeypatch):
     plugin = tmp_path / "plugin"
     (plugin / "commands").mkdir(parents=True)
     (plugin / "commands" / "demo.md").write_text("---\ndescription: demo\n---\n\nSay hello.\n", encoding="utf-8")
+    (plugin / ".claude-plugin").mkdir()
+    (plugin / ".claude-plugin/plugin.json").write_text(json.dumps({"name": "arckit", "defaultEnabled": False}))
     case = plugin / "evals" / "demo-case"
     (case / "graders").mkdir(parents=True)
     (case / "case.yaml").write_text("name: demo-case\nprompt: /arckit:demo go\n", encoding="utf-8")

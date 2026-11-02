@@ -8,7 +8,11 @@ prompt: /arckit-uk-legacy:uk-legacy-assessment 001 as-of 2026-10-28 risk-model p
   and supplied evidence. Treat input as assessor data, not computed output; verify
   with the helper. Reporting is a newly introduced application with good direct controls.
   Dated runtime evidence establishes necessary reliance on Payments under the approved
-  D7 rule. Payments breaches its D1 rule. Use null for unknowns and finish both artifacts.
+  D7 rule. Payments breaches its D1 rule. The supplied reporting_finding_D7 is
+  deliberately Accepted as a local finding before dependency propagation. Preserve
+  that assessor input; the helper should derive effective D7 Legacy through Payments
+  and retain the causal path. This difference is intentional, not contradictory evidence
+  or permission to rewrite the input. Use null for unknowns and finish both artifacts.
   No network available; record the catalogue research limitation.
 plugins:
 - ../..

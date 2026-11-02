@@ -355,3 +355,12 @@ python scripts/eval-headless.py --plugin plugins/arckit-uk-legacy --help
 Behavioural cases use the real Claude overlay namespace. Their structural checks run
 in the shared Python suite; live model evaluations require an authenticated runtime
 and are separate from deterministic calculation and installation tests.
+
+### Live evaluation validity
+
+The headless runner enables this overlay and its declared core dependency for the
+session, then checks the actual `system/init` event for both local plugins and the
+invoked command. Finding the helper on disk does not count as a loaded command.
+Missing runtime evidence fails on replay too, even if artifact graders pass.
+The dependency fixture intentionally preserves an Accepted local D7 finding while
+the effective D7 result becomes Legacy through a qualifying reliance path.
