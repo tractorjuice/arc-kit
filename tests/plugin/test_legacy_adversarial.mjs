@@ -9,9 +9,9 @@ import {
   score,
   anniversary,
   renderComponentChart
-} from '../../plugins/arckit-claude/scripts/legacy-assessment.mjs';
+} from '../../plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs';
 
-const helper = 'plugins/arckit-claude/scripts/legacy-assessment.mjs';
+const helper = 'plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs';
 const base = JSON.parse(
   readFileSync('tests/fixtures/legacy-assessment/published-example.input.json')
 );
@@ -49,7 +49,7 @@ function dependency(a, consumerId, dependencyId) {
 function action(a, id = 'containment') {
   const raw = JSON.parse(
     readFileSync(
-      'plugins/arckit-claude/evals/fixtures/legacy-unsupported/projects/001-payments/assessment-input.json'
+      'plugins/arckit-uk-legacy/evals/fixtures/legacy-unsupported/projects/001-payments/assessment-input.json'
     )
   );
   const act = { ...structuredClone(raw.actions[0]), id };
@@ -392,7 +392,7 @@ test('seeded cyclic graph classifications agree with an independent reachability
 
 test('report block verification rejects tampering, stale inputs, missing or duplicate blocks', async () => {
   const { renderResults, verifyReport } = await import(
-    '../../plugins/arckit-claude/scripts/legacy-assessment.mjs'
+    '../../plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs'
   );
   const a = fresh(),
     block = renderResults(a);
@@ -565,7 +565,7 @@ test('placeholder owner names do not make the action plan complete', () => {
 
 test('report approval claims cannot contradict the JSON approval state', async () => {
   const { renderResults, verifyReport } = await import(
-    '../../plugins/arckit-claude/scripts/legacy-assessment.mjs'
+    '../../plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs'
   );
   const a = fresh(),
     control =

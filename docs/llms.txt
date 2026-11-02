@@ -132,7 +132,6 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Technology Code of Practice](https://arckit.org/guides/uk-government/technology-code-of-practice.md): `/arckit:tcop`.
 - [Secure by Design](https://arckit.org/guides/uk-government/secure-by-design.md): `/arckit:secure`.
 - [DPIA](https://arckit.org/guides/dpia.md): `/arckit:dpia` Data Protection Impact Assessment.
-- [Legacy IT Assessment](https://arckit.org/guides/legacy-assessment.md): `/arckit:legacy-assessment` evidence, classification, numerical risk and remediation.
 - [Service Assessment](https://arckit.org/guides/service-assessment.md): `/arckit:service-assessment` GDS.
 - [AI Playbook](https://arckit.org/guides/ai-playbook.md): `/arckit:ai-playbook`.
 - [Algorithmic Transparency (ATRS)](https://arckit.org/guides/uk-government/algorithmic-transparency.md): `/arckit:atrs`.
@@ -270,6 +269,10 @@ French government (apply on top of EU baseline):
 - [EMI / PI safeguarding](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-safeguarding.md): `/arckit-uk-finance:uk-fs-safeguarding` safeguarding method statement (segregation vs insurance vs guarantee) under the EMRs 2011.
 - [FCA Consumer Duty board report](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-consumer-duty.md): `/arckit-uk-finance:uk-fs-consumer-duty` annual Board Report evidencing customer outcomes across the four outcomes.
 - [Critical Third Parties dependency](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-ctp-dependency.md): `/arckit-uk-finance:uk-fs-ctp-dependency` register of designated CTPs the firm relies on, under FSMA 2023.
+
+### UK Legacy IT assessment (community-contributed, optional overlay)
+
+- [Legacy IT Assessment](https://arckit.org/guides/legacy-assessment.md): `/arckit-uk-legacy:legacy-assessment` optional UK overlay for evidence, classification, numerical risk and remediation.
 
 ### UK NHS clinical safety (community-contributed, sector overlay)
 

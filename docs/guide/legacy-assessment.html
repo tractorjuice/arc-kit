@@ -435,13 +435,21 @@ thresholds. Age alone does not decide it. ArcKit assesses existing project syste
 records evidence and policy gaps, and supplies remediation actions for investment and
 planning. It separately calculates the older published numerical model, which remains
 under review following the August 2026 definition.</p>
+<h2 id="install-the-optional-overlay">Install the optional overlay</h2>
+<p>In Claude Code, install the core plugin and this overlay from the ArcKit marketplace:</p>
+<pre><code class="language-bash">claude plugin install arckit arckit-uk-legacy
+</code></pre>
+<p>The Claude command is <code>/arckit-uk-legacy:legacy-assessment</code>. Other generated targets
+use their merged ArcKit namespace. The overlay consumes existing core artifacts;
+core commands do not require or automatically recommend this optional assessment.</p>
 <h2 id="run-an-assessment">Run an assessment</h2>
-<pre><code class="language-text">/arckit:legacy-assessment 001
-/arckit:legacy-assessment 001 systems &quot;Payments, Reporting&quot;
-/arckit:legacy-assessment 001 as-of 2026-10-28 risk-model published
-/arckit:legacy-assessment 001 risk-model none
+<pre><code class="language-text">/arckit-uk-legacy:legacy-assessment 001
+/arckit-uk-legacy:legacy-assessment 001 systems &quot;Payments, Reporting&quot;
+/arckit-uk-legacy:legacy-assessment 001 as-of 2026-10-28 risk-model published
+/arckit-uk-legacy:legacy-assessment 001 risk-model none
 </code></pre>
 <p>Codex uses <code>$arckit-legacy-assessment</code>; Copilot uses <code>/arckit-legacy-assessment</code>.
+Gemini and OpenCode use <code>/arckit-uk-legacy:legacy-assessment</code>.
 The date defaults to the local calendar date. The command resolves an existing project
 and confirms ambiguous system boundaries; it does not silently create a new project.
 It writes <code>ARC-001-LEGACY-v1.0.md</code>, a JSON sidecar and, when numerical scoring is
@@ -493,7 +501,7 @@ null; suggested roles and indicative dates are clearly proposals.</p>
 <h2 id="reproduce-calculations">Reproduce calculations</h2>
 <p>The dependency-free Node helper runs offline, validates the bundled versioned schema
 and references, and emits enriched JSON. It never changes input or verifies evidence truth.</p>
-<pre><code class="language-bash">node plugins/arckit-claude/scripts/legacy-assessment.mjs --input assessment.json --json
+<pre><code class="language-bash">node plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs --input assessment.json --json
 </code></pre>
 <p>In a CLI-scaffolded project use <code>.arckit/scripts/legacy-assessment.mjs</code>; extensions carry
 <code>scripts/legacy-assessment.mjs</code> with sibling <code>schemas/</code> and <code>data/</code> assets. Exit 0 includes
@@ -505,7 +513,7 @@ checks stored results. If Node/helper is unavailable, calculations remain unveri
 maximum; risk multiplies those results. Compare the unrounded score to 16. The maximum
 is 30 and the published example displays 26.67. L7 means historical incidents; D7 means
 legacy reliance. No additional official risk bands or composite readiness percentage.</p>
-<p>The schema is <code>plugins/arckit-claude/schemas/legacy-assessment-1.0.schema.json</code>.
+<p>The schema is <code>plugins/arckit-uk-legacy/schemas/legacy-assessment-1.0.schema.json</code>.
 A reproducible input, expected enriched output and report are under
 <code>tests/fixtures/legacy-assessment/</code>. Use null for unknowns and empty collections for none.</p>
 <h2 id="act-and-review">Act and review</h2>
@@ -696,6 +704,19 @@ end caps; exact narrow/zero-width bounds remain in labels and are never widened 
 a dotted callout and labels the fixed factor explicitly. Its decorative width does
 not imply uncertainty in the fixed factor. A supplied circle may sit within that
 range without completing the numerical assessment.</p>
+<h2 id="maintainer-validation">Maintainer validation</h2>
+<p>The command, schema, helper, frozen sources and behavioural cases belong to
+<code>plugins/arckit-uk-legacy/</code>; core keeps only shared document registration and generic
+runtime distribution support. The overlay owns its <code>legacy-quality-checklist.md</code>.</p>
+<pre><code class="language-bash">python scripts/converter.py
+python scripts/converter.py --check-runtime-assets
+python -m pytest tests/plugin/test_legacy_distribution.py tests/plugin/test_overlay_runtime_assets.py
+node --test tests/plugin/*legacy*.mjs
+python scripts/eval-headless.py --plugin plugins/arckit-uk-legacy --help
+</code></pre>
+<p>Behavioural cases use the real Claude overlay namespace. Their structural checks run
+in the shared Python suite; live model evaluations require an authenticated runtime
+and are separate from deterministic calculation and installation tests.</p>
 </div>
         </div>
     </main>

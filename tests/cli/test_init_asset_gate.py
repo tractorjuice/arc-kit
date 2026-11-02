@@ -28,7 +28,7 @@ def complete_paths(tmp_path: Path) -> dict:
     paths = {}
     for key in keys:
         target = tmp_path / key
-        if key in {"legacy_helper", "legacy_schema", "legacy_catalogue", "legacy_rubric", "legacy_definition", "doc_control_rendering", "doc_control_uk"}:
+        if key in {"doc_control_rendering", "doc_control_uk"}:
             target.write_text("asset")
         else:
             target.mkdir(parents=True, exist_ok=True)
@@ -112,9 +112,6 @@ def test_init_exits_nonzero_and_leaves_no_project_behind(
     assert not (workdir / "demo").exists()
 
 
-@pytest.mark.parametrize("asset", ["legacy_helper", "legacy_schema", "legacy_catalogue"])
-def test_legacy_runtime_assets_must_be_regular_files(tmp_path, asset):
-    paths = complete_paths(tmp_path)
-    paths[asset].unlink()
-    paths[asset].mkdir()
-    assert (asset, paths[asset]) in missing_required_assets(paths, "codex")
+def test_optional_overlay_is_not_a_global_cli_prerequisite():
+    from arckit_cli import COMMON_REQUIRED_ASSETS
+    assert not any(key.startswith("legacy_") for key in COMMON_REQUIRED_ASSETS)

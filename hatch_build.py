@@ -1,6 +1,6 @@
 """Hatchling build hook: regenerate the non-Claude extension trees.
 
-`plugins/arckit-claude/` is the single source of truth; the extension formats
+`plugins/arckit-*/` contain the canonical core and overlay sources; the extension formats
 under `extensions/` are produced by `scripts/converter.py` and are gitignored
 (see CLAUDE.md, "Generated extension formats are not tracked"). Wheels built
 from a working tree where the converter had been run were therefore complete,
@@ -63,19 +63,6 @@ REQUIRED_ASSETS = {
 }
 
 
-# Every packaged CLI target can invoke the legacy calculator. A populated
-# commands directory alone must not let a wheel omit its runtime assets.
-LEGACY_RUNTIME_ASSETS = (
-    "scripts/legacy-assessment.mjs",
-    "schemas/legacy-assessment-1.0.schema.json",
-    "data/legacy-frameworks-1.0.json",
-    "data/legacy-risk-rubric-2026-08-17.json",
-    "data/legacy-definition-2026-08-17.json",
-)
-for _required_entries in REQUIRED_ASSETS.values():
-    _required_entries.extend(LEGACY_RUNTIME_ASSETS)
-
-
 def missing_assets(root):
     """Return the required assets absent from `root`, as repo-relative paths.
 
@@ -113,26 +100,13 @@ def run_converter(root):
     return True
 
 
-def legacy_asset_drift(root):
-    """A populated extension must not ship an older calculator or schema."""
-    root = Path(root)
-    stale = []
-    for extension in REQUIRED_ASSETS:
-        for relative in LEGACY_RUNTIME_ASSETS:
-            source = root / "plugins/arckit-claude" / relative
-            target = root / extension / relative
-            if not source.is_file() or not target.is_file() or source.read_bytes() != target.read_bytes():
-                stale.append(str(target.relative_to(root)))
-    return stale
-
-
 class ArcKitBuildHook(BuildHookInterface):
     PLUGIN_NAME = "arckit-extensions"
 
     def initialize(self, version, build_data):
         root = Path(self.root)
 
-        if not os.environ.get("ARCKIT_SKIP_CONVERTER"):
+        if missing_assets(root) and not os.environ.get("ARCKIT_SKIP_CONVERTER"):
             self.app.display_info("Regenerating extension formats (converter.py)...")
             if not run_converter(root):
                 raise RuntimeError(
@@ -141,9 +115,14 @@ class ArcKitBuildHook(BuildHookInterface):
                     "the repository."
                 )
 
-        drift = legacy_asset_drift(root)
-        if drift:
-            raise RuntimeError("Refusing to build stale legacy runtime assets; regenerate extensions:\n  " + "\n  ".join(drift))
+        # Validate declared command dependencies even when regeneration is
+        # deliberately skipped. Optional overlay assets are not global CLI keys.
+        check = subprocess.run(
+            [sys.executable, str(root / "scripts/converter.py"), "--check-runtime-assets"],
+            cwd=str(root), capture_output=True, text=True,
+        )
+        if check.returncode:
+            raise RuntimeError("Refusing to build stale runtime assets; regenerate extensions:\n" + check.stdout + check.stderr)
 
         still_missing = missing_assets(root)
         if still_missing:

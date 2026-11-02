@@ -1,0 +1,126 @@
+{
+  "catalogueVersion": "1.0",
+  "reviewedDate": "2026-10-28",
+  "classificationModel": "uk-definition-2026-08-17",
+  "riskModel": "published-2026-08-17",
+  "reportingStatus": "Subject to confirmation; no government submission compatibility claimed.",
+  "sources": [
+    {
+      "id": "definition",
+      "title": "Updated Definition of Legacy IT",
+      "sourceDate": "2026-08-17",
+      "url": "https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/updated-definition-of-legacy-it",
+      "use": "Classification; owner thresholds must be evidenced."
+    },
+    {
+      "id": "published-risk",
+      "title": "Published numerical framework",
+      "sourceDate": "2026-08-17",
+      "url": "https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/guidance-on-the-legacy-it-risk-assessment-framework",
+      "use": "Under review; separate three-year prioritisation model, not revised classification."
+    },
+    {
+      "id": "reporting-suspension",
+      "title": "Ministerial answer HL16286",
+      "sourceDate": "2026-04-27",
+      "url": "https://questions-statements.parliament.uk/written-questions/detail/2026-04-13/HL16286/",
+      "use": "Reporting suspended in 2025; old register instructions are not current obligations."
+    },
+    {
+      "id": "government-response",
+      "title": "Government response on digital government",
+      "sourceDate": "2026-10-22",
+      "url": "https://publications.parliament.uk/pa/cm5902/cmselect/cmsctech/651/report.html",
+      "use": "Prospective coordination/reporting plans; confidential central ringfencing is not project funding evidence; sourcing strategy remains in development.",
+      "responseReceivedDate": "2026-09-07",
+      "relevantRecommendations": [
+        13,
+        14,
+        21
+      ],
+      "offlineBrief": "references/legacy-parliamentary-context-2026-10-22.md"
+    },
+    {
+      "id": "management",
+      "title": "Managing legacy technology",
+      "sourceDate": "2026-10-15",
+      "url": "https://www.gov.uk/guidance/managing-legacy-technology",
+      "use": "Proportionate phased intervention selected in context."
+    },
+    {
+      "id": "prevention",
+      "title": "Prevent technical debt and legacy",
+      "sourceDate": "2024-10-23",
+      "url": "https://www.gov.uk/guidance/prevent-technical-debt-and-legacy",
+      "use": "Ownership, funding, risk management and asset registration; check current assurance process."
+    },
+    {
+      "id": "cyber",
+      "title": "Government Cyber Security Standard",
+      "sourceDate": "2025-02-07",
+      "url": "https://www.gov.uk/guidance/follow-the-government-cyber-security-standard",
+      "use": "Assess applicable CAF profile and Secure by Design evidence."
+    },
+    {
+      "id": "assurance",
+      "title": "Digital Assurance Playbook",
+      "sourceDate": "2026-04-01",
+      "url": "https://www.gov.uk/government/publications/digital-assurance-playbook/digital-assurance-playbook",
+      "use": "Assurance changed April 2026; check organisational arrangements."
+    }
+  ],
+  "classificationCriteria": {
+    "D1": "Support",
+    "D2": "Contracts",
+    "D3": "Skills and knowledge",
+    "D4": "User and business needs",
+    "D5": "Hardware",
+    "D6": "Cyber security",
+    "D7": "Legacy dependencies"
+  },
+  "riskCriteria": {
+    "L1": "End of Life / End of Support",
+    "L2": "Expired Vendor Contract",
+    "L3": "Lack of Knowledge and Skills",
+    "L4": "Inability to Meet Current or Future Business Needs",
+    "L5": "Unsuitable Physical Environment",
+    "L6": "Known Security Vulnerabilities",
+    "L7": "Historically Recorded Issues",
+    "C1": "National Security Impact",
+    "C2": "Reputational Impact",
+    "C3": "Direct Financial impact",
+    "C4": "Direct External Stakeholder Impact",
+    "C5": "Operational Impact",
+    "C6": "Impact on other Systems (Technical Barrier to Innovation)"
+  },
+  "likelihoodScale": {
+    "1": "Very Low",
+    "2": "Low",
+    "3": "Medium",
+    "4": "High",
+    "5": "Very High",
+    "6": "Certain"
+  },
+  "impactScale": {
+    "1": "Very Low",
+    "2": "Low",
+    "3": "Medium",
+    "4": "High",
+    "5": "Very High"
+  },
+  "riskHorizonYears": 3,
+  "redThreshold": 16,
+  "maximumRisk": 30,
+  "rubricUrl": "https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/guidance-on-the-legacy-it-risk-assessment-framework#legacy-it-risk-assessment-framework",
+  "rubricInstruction": "Use the bundled riskRubric original criterion-specific tables offline. Network access is only for optional source refresh. Do not infer scores from D1-D7 outcomes; missing system evidence still leaves an input unknown.",
+  "offlineAssets": {
+    "riskRubric": {
+      "path": "legacy-risk-rubric-2026-08-17.json",
+      "sha256": "24720780035dbd6a97689b3fbe717942d529be523722947a559bd05b3ad8f448"
+    },
+    "definition": {
+      "path": "legacy-definition-2026-08-17.json",
+      "sha256": "1608869b63e996a38b35f890180827a49f92dbff078b2142f8248705ac313687"
+    }
+  }
+}

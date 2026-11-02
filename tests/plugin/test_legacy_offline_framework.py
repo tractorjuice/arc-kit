@@ -6,7 +6,7 @@ import os
 import subprocess
 
 ROOT=Path(__file__).resolve().parents[2]
-CORE=ROOT/'plugins/arckit-claude'
+CORE=ROOT/'plugins/arckit-uk-legacy'
 CATALOGUE=json.loads((CORE/'data/legacy-frameworks-1.0.json').read_text())
 
 

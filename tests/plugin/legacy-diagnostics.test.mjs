@@ -8,7 +8,7 @@ import {
   approvalDigest,
   renderResults,
   verifyReport
-} from '../../plugins/arckit-claude/scripts/legacy-assessment.mjs';
+} from '../../plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs';
 const fresh = () =>
   JSON.parse(
     readFileSync(
@@ -18,7 +18,7 @@ const fresh = () =>
 const action = () =>
   JSON.parse(
     readFileSync(
-      'plugins/arckit-claude/evals/fixtures/legacy-unsupported/projects/001-payments/assessment-input.json'
+      'plugins/arckit-uk-legacy/evals/fixtures/legacy-unsupported/projects/001-payments/assessment-input.json'
     )
   ).actions[0];
 
@@ -221,7 +221,7 @@ test('generated factual sections and dated event sources are verified', () => {
 
 test('CLI lint, digest and explain modes use the same validated behaviour', async () => {
   const { spawnSync } = await import('node:child_process');
-  const helper = 'plugins/arckit-claude/scripts/legacy-assessment.mjs',
+  const helper = 'plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs',
     input = 'tests/fixtures/legacy-assessment/published-example.input.json';
   const run = (...args) =>
     spawnSync('node', [helper, '--input', input, ...args], {

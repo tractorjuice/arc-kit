@@ -6,16 +6,29 @@ records evidence and policy gaps, and supplies remediation actions for investmen
 planning. It separately calculates the older published numerical model, which remains
 under review following the August 2026 definition.
 
+## Install the optional overlay
+
+In Claude Code, install the core plugin and this overlay from the ArcKit marketplace:
+
+```bash
+claude plugin install arckit arckit-uk-legacy
+```
+
+The Claude command is `/arckit-uk-legacy:legacy-assessment`. Other generated targets
+use their merged ArcKit namespace. The overlay consumes existing core artifacts;
+core commands do not require or automatically recommend this optional assessment.
+
 ## Run an assessment
 
 ```text
-/arckit:legacy-assessment 001
-/arckit:legacy-assessment 001 systems "Payments, Reporting"
-/arckit:legacy-assessment 001 as-of 2026-10-28 risk-model published
-/arckit:legacy-assessment 001 risk-model none
+/arckit-uk-legacy:legacy-assessment 001
+/arckit-uk-legacy:legacy-assessment 001 systems "Payments, Reporting"
+/arckit-uk-legacy:legacy-assessment 001 as-of 2026-10-28 risk-model published
+/arckit-uk-legacy:legacy-assessment 001 risk-model none
 ```
 
 Codex uses `$arckit-legacy-assessment`; Copilot uses `/arckit-legacy-assessment`.
+Gemini and OpenCode use `/arckit:legacy-assessment`.
 The date defaults to the local calendar date. The command resolves an existing project
 and confirms ambiguous system boundaries; it does not silently create a new project.
 It writes `ARC-001-LEGACY-v1.0.md`, a JSON sidecar and, when numerical scoring is
@@ -84,7 +97,7 @@ The dependency-free Node helper runs offline, validates the bundled versioned sc
 and references, and emits enriched JSON. It never changes input or verifies evidence truth.
 
 ```bash
-node plugins/arckit-claude/scripts/legacy-assessment.mjs --input assessment.json --json
+node plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs --input assessment.json --json
 ```
 
 In a CLI-scaffolded project use `.arckit/scripts/legacy-assessment.mjs`; extensions carry
@@ -99,7 +112,7 @@ maximum; risk multiplies those results. Compare the unrounded score to 16. The m
 is 30 and the published example displays 26.67. L7 means historical incidents; D7 means
 legacy reliance. No additional official risk bands or composite readiness percentage.
 
-The schema is `plugins/arckit-claude/schemas/legacy-assessment-1.0.schema.json`.
+The schema is `plugins/arckit-uk-legacy/schemas/legacy-assessment-1.0.schema.json`.
 A reproducible input, expected enriched output and report are under
 `tests/fixtures/legacy-assessment/`. Use null for unknowns and empty collections for none.
 
@@ -324,3 +337,21 @@ When only one numerical factor varies, the headline uses a rounded range box wit
 a dotted callout and labels the fixed factor explicitly. Its decorative width does
 not imply uncertainty in the fixed factor. A supplied circle may sit within that
 range without completing the numerical assessment.
+
+## Maintainer validation
+
+The command, schema, helper, frozen sources and behavioural cases belong to
+`plugins/arckit-uk-legacy/`; core keeps only shared document registration and generic
+runtime distribution support. The overlay owns its `legacy-quality-checklist.md`.
+
+```bash
+python scripts/converter.py
+python scripts/converter.py --check-runtime-assets
+python -m pytest tests/plugin/test_legacy_distribution.py tests/plugin/test_overlay_runtime_assets.py
+node --test tests/plugin/*legacy*.mjs
+python scripts/eval-headless.py --plugin plugins/arckit-uk-legacy --help
+```
+
+Behavioural cases use the real Claude overlay namespace. Their structural checks run
+in the shared Python suite; live model evaluations require an authenticated runtime
+and are separate from deterministic calculation and installation tests.

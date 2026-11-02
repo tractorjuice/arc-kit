@@ -266,6 +266,27 @@
       "category": "productivity"
     },
     {
+      "name": "arckit-uk-legacy",
+      "source": "./plugins/arckit-uk-legacy",
+      "description": "UK Legacy IT Assessment Overlay — 1 command for evidence-led classification, independent numerical risk and actionable remediation. Includes frozen offline framework sources and a deterministic helper. Requires arckit core plugin.",
+      "version": "6.18.3",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "uk",
+        "legacy-it",
+        "risk",
+        "remediation"
+      ],
+      "category": "productivity"
+    },
+    {
       "name": "arckit-fde",
       "source": "./plugins/arckit-fde",
       "description": "ArcKit FDE Site Generator — /arckit-fde:create interviews you and renders a brandable, GitHub-Pages-ready Forward Deploy Engineering consulting website to docs/. White-label brand, colour, pricing and contact; UK public sector or generic market preset. Claude Code only.",

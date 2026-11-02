@@ -62,7 +62,7 @@ RECIPE_SUFFIXES = {".yaml", ".yml"}
 # mirror (sync-claude-plugin-layout.py), the namespace rewrite here and the
 # converter's extension scripts all skip it. push-extensions.sh keeps its
 # own list as tar --exclude flags.
-IGNORED_NAMES = {".git", "node_modules", ".npm", ".pnpm-store", "__pycache__", ".DS_Store"}
+IGNORED_NAMES = {".git", "node_modules", ".npm", ".pnpm-store", "__pycache__", ".DS_Store", "evals"}
 
 
 def command_namespaces(repo_root: Path | None = None) -> dict[str, str]:

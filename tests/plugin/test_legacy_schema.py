@@ -8,7 +8,7 @@ from jsonschema import Draft202012Validator, FormatChecker, ValidationError
 import pytest
 
 ROOT = Path(__file__).resolve().parents[2]
-SCHEMA = json.loads((ROOT / 'plugins/arckit-claude/schemas/legacy-assessment-1.0.schema.json').read_text())
+SCHEMA = json.loads((ROOT / 'plugins/arckit-uk-legacy/schemas/legacy-assessment-1.0.schema.json').read_text())
 BASE = json.loads((ROOT / 'tests/fixtures/legacy-assessment/published-example.input.json').read_text())
 VALIDATOR = Draft202012Validator(SCHEMA, format_checker=FormatChecker())
 
@@ -38,14 +38,14 @@ def test_structural_invalid_cases_fail_both_validators(tmp_path, mutate):
         VALIDATOR.validate(assessment)
     path = tmp_path / 'input.json'
     path.write_text(json.dumps(assessment))
-    result = subprocess.run(['node', str(ROOT / 'plugins/arckit-claude/scripts/legacy-assessment.mjs'), '--input', str(path), '--json'], capture_output=True, text=True, timeout=5)
+    result = subprocess.run(['node', str(ROOT / 'plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs'), '--input', str(path), '--json'], capture_output=True, text=True, timeout=5)
     assert result.returncode == 1, result.stderr
     assert result.stdout == ''
 
 
 def test_component_measurement_example_matches_independent_json_schema():
     script = """import {formatExample} from './tests/fixtures/legacy-assessment/format-example.mjs';
-import {assess} from './plugins/arckit-claude/scripts/legacy-assessment.mjs';
+import {assess} from './plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs';
 console.log(JSON.stringify(assess(formatExample())));"""
     result = subprocess.run(['node', '--input-type=module', '-e', script], cwd=ROOT, capture_output=True, text=True, check=True)
     VALIDATOR.validate(json.loads(result.stdout))

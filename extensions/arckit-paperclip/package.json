@@ -26,11 +26,9 @@
     "dist/",
     "templates/",
     "references/",
-    "scripts/legacy-assessment.mjs",
-    "schemas/legacy-assessment-1.0.schema.json",
-    "data/legacy-frameworks-1.0.json",
-    "data/legacy-risk-rubric-2026-08-17.json",
-    "data/legacy-definition-2026-08-17.json"
+    "scripts/",
+    "schemas/",
+    "data/"
   ],
   "author": "tractorjuice",
   "license": "MIT",

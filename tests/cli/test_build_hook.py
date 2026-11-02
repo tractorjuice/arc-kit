@@ -96,22 +96,17 @@ def test_working_tree_is_packageable() -> None:
     assert hook.missing_assets(REPO_ROOT) == []
 
 
-def test_missing_legacy_calculator_is_not_a_packageable_tree(tmp_path: Path) -> None:
-    hook = load_build_hook()
-    build_tree(tmp_path, hook.REQUIRED_ASSETS)
-    helper = tmp_path / "extensions/arckit-codex/scripts/legacy-assessment.mjs"
-    helper.unlink()
-    assert "extensions/arckit-codex/scripts/legacy-assessment.mjs" in hook.missing_assets(tmp_path)
-
-
-def test_stale_legacy_assets_cannot_pass_the_wheel_guard(tmp_path):
-    hook = load_build_hook()
-    build_tree(tmp_path, hook.REQUIRED_ASSETS)
-    for relative in hook.LEGACY_RUNTIME_ASSETS:
-        source = tmp_path / "plugins/arckit-claude" / relative
-        source.parent.mkdir(parents=True, exist_ok=True)
-        source.write_text("x")
-    assert not hook.legacy_asset_drift(tmp_path)
-    target = tmp_path / "extensions/arckit-codex/scripts/legacy-assessment.mjs"
-    target.write_text("old calculator")
-    assert hook.legacy_asset_drift(tmp_path) == ["extensions/arckit-codex/scripts/legacy-assessment.mjs"]
+def test_shared_data_selection_keeps_generated_offline_catalogues():
+    """Exercise Hatch's actual selection rules, including the global data/ ignore."""
+    from hatchling.builders.wheel import WheelBuilder
+    builder = WheelBuilder(str(REPO_ROOT))
+    sources = {source: target for source, target in builder.config.shared_data.items()
+               if "/extensions/arckit-" in source.replace("\\", "/")}
+    included = {file.distribution_path.replace("\\", "/")
+                for file in builder.recurse_explicit_files(sources)}
+    for target in ["codex", "opencode", "copilot", "vibe"]:
+        prefix = f"share/arckit/extensions/arckit-{target}/"
+        for relative in ["scripts/legacy-assessment.mjs", "schemas/legacy-assessment-1.0.schema.json",
+                         "data/legacy-frameworks-1.0.json", "data/legacy-risk-rubric-2026-08-17.json",
+                         "data/legacy-definition-2026-08-17.json"]:
+            assert prefix + relative in included, target + ": " + relative

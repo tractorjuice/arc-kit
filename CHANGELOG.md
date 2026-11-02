@@ -9,20 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Component-chart diamonds and bars now come from numerical criterion intervals and explicit local calibration. Independent maxima determine the central position and bounds, so a point need not be centred in its interval. Confidence is calculated range precision, not a supplied label or statistical probability; the local plotting convention does not change government-framework findings. Missing numerical data remains unmeasured.
-
-- Legacy reports now include a focused headline plot and a separate horizontal component breakdown with classification bands, confidence-weighted ranges, diamond markers and notes. Component findings stay distinct from system-wide context and advisory judgement. Both SVG companions are verified against the assessment JSON. All new format examples use independently invented data.
-
-- Legacy charts use a muted background, a solid threshold curve and an explicit three-symbol legend: dotted plausible ranges with calculated range precision, solid boxes for complete scored inputs, and hollow circles for supplied suspected positions. Optional chart annotations remain assessor judgement and never affect calculated classification, score completeness or prioritisation.
-
-- Legacy risk charts show incomplete numerical inputs as annotated dotted indigo envelopes or range bars, with exact axis bounds and missing criteria. Complete scores remain precise points; uncertainty is not presented as an estimate or confidence interval.
-
-- Restored the legacy report template’s Document Register, Citations and Unreferenced Documents tables so its evidence instructions resolve and the CI citation guard passes.
-
-- Draft legacy assessments retain known urgency through unknowns, explain evidence qualification, support lint/explain and content-bound approvals, report exact incomplete-score bounds, link actions to information gaps, and verify generated factual registers with dated review sources. All feedback regressions use independently invented repository fixtures.
-
-- Legacy reports now embed an offline, deterministic likelihood–impact SVG with the published red-rated boundary at 16, a complete system key, and explicitly annotated incomplete scores. Report verification rejects missing, stale or edited companion charts across Claude and all generated targets.
-- `/arckit:legacy-assessment` assesses project systems against the August 2026 UK definition, separately calculates the published numerical risk model, and links evidence gaps to remediation actions. Includes a versioned JSON schema, offline deterministic Node helper, dependency paths, provisional policy handling, report template, behavioural cases and installation assets across all seven extension targets. The complete original scoring rubric and updated definition are bundled with dated source snapshots, Open Government Licence attribution and SHA-256 integrity checks, enabling full offline assessments. Government reporting arrangements remain subject to confirmation. Adversarial hardening adds scoped evidence, decision-specific approvals, bounded JSON and graph processing, exact report/JSON verification, visible action-plan gaps, required scaffold partials and stale-build protection.
+- New optional `arckit-uk-legacy` overlay assesses existing project systems against the updated UK legacy IT definition, separately calculates published numerical risk, and produces an evidence-linked action plan. Includes a structured JSON assessment, bundled offline framework sources and deterministic report/chart verification across Claude and all seven generated targets. Findings remain provisional where policy approval or evidence is missing.
 
 ### Fixed
 

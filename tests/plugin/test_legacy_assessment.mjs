@@ -8,9 +8,9 @@ import {
   assess,
   anniversary,
   CRITERIA
-} from '../../plugins/arckit-claude/scripts/legacy-assessment.mjs';
+} from '../../plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs';
 
-const helper = 'plugins/arckit-claude/scripts/legacy-assessment.mjs';
+const helper = 'plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs';
 const fixture = JSON.parse(
   readFileSync('tests/fixtures/legacy-assessment/published-example.input.json')
 );

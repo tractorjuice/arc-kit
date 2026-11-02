@@ -1,0 +1,78 @@
+{
+  "formatVersion": "1.0",
+  "modelId": "uk-definition-2026-08-17",
+  "source": {
+    "url": "https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/updated-definition-of-legacy-it",
+    "publicUpdated": "2026-08-17",
+    "retrievedDate": "2026-10-28",
+    "sourceHtmlSha256": "34736e92f5c78752056def85b31aa67cfe136e46c08b1f6340c503b44c27e5a8",
+    "licence": "https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/",
+    "attribution": "Contains public sector information licensed under the Open Government Licence v3.0.",
+    "normalisation": "HTML markup removed; whitespace normalised. Rubric wording and numeric anchors retained."
+  },
+  "definition": [
+    "Legacy IT are systems whose continued use creates a persistent, unacceptable burden or risk and can no longer be supported or secured effectively or economically.",
+    "This definition is deliberately centred on burden or risk, rather than age, technology type, hosting model or whether a technology is unfashionable.",
+    "This establishes a common, measurable and uniform understanding of what we define as unacceptable, and what requires remediation."
+  ],
+  "criteria": [
+    {
+      "id": "D1",
+      "name": "Out of support systems",
+      "description": "Software or hardware that is beyond its current support date by the original equipment manufacturer (OEM) or provider. This can include commercially procured software and hardware, or those provided free by open-source communities."
+    },
+    {
+      "id": "D2",
+      "name": "Missing or inadequate contracts",
+      "description": "Contracts or licences which are required to manage and operate a system have expired or lapsed, with no suitable arrangements in place for service continuity, modernisation or decommission."
+    },
+    {
+      "id": "D3",
+      "name": "Lack of required skills and knowledge",
+      "description": "When there are not enough individuals within an organisation who possess the expertise needed to effectively manage, maintain, and support outdated systems."
+    },
+    {
+      "id": "D4",
+      "name": "Inability to meet user or business needs",
+      "description": "Failure to meet current business needs or adapt to future requirements."
+    },
+    {
+      "id": "D5",
+      "name": "Unsuitable hardware",
+      "description": "Systems or devices that no longer work as required because the hardware is outdated, capacity is insufficient, they are prone to physical failures or cannot be easily repaired with available parts and services."
+    },
+    {
+      "id": "D6",
+      "name": "Failure to meet minimum cyber security standards",
+      "description": "Persistent security weaknesses or vulnerabilities that are exploitable by hostile actors to gain unauthorised access, disrupt operations, or steal sensitive information."
+    },
+    {
+      "id": "D7",
+      "name": "Reliance on a legacy dependency",
+      "description": "Reliance on an external dependency or system which is itself classified as legacy IT."
+    }
+  ],
+  "outcomes": [
+    {
+      "outcome": "Accepted",
+      "definition": "The system is operating within the bounds of risk and burden considered normal and acceptable."
+    },
+    {
+      "outcome": "Action-Required",
+      "definition": "The system is not yet legacy but will become legacy within the next 12 months if no action is taken."
+    },
+    {
+      "outcome": "Legacy",
+      "definition": "The system carries an unacceptable risk or burden and must be remediated as an urgent priority."
+    }
+  ],
+  "determinationAndThresholdText": [
+    "A system is classified as legacy IT if it meets the unacceptable threshold in any of the following 7 legacy criterion.",
+    "Each criterion represents a different way in which a system can create an unacceptable burden or risk.",
+    "Legacy IT is a classification, not scored, which means that if a system meets the threshold for unacceptable in any of the above criterion, then the system is classified as legacy and requires remediation.",
+    "There are 3 outcomes to a review of a system.",
+    "Each criterion will have defined thresholds for what is considered legacy, where the risk or burden is unacceptable, and for action-required, where the risk or burden is not yet unacceptable but is likely to become so.",
+    "Each criterion will outline these thresholds explicitly based on the risk owner’s risk appetite."
+  ],
+  "localPolicyNote": "This publication does not provide a complete quantitative threshold catalogue. Owner rules and draft ArcKit proposals remain separate."
+}

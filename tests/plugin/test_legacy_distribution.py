@@ -9,7 +9,7 @@ from typer.testing import CliRunner
 from arckit_cli import app
 
 ROOT = Path(__file__).resolve().parents[2]
-CORE = ROOT / 'plugins/arckit-claude'
+OVERLAY = ROOT / 'plugins/arckit-uk-legacy'
 FIXTURES = ROOT / 'tests/fixtures/legacy-assessment'
 TARGETS = ['codex', 'gemini', 'opencode', 'copilot', 'paperclip', 'vibe', 'kimi']
 
@@ -22,9 +22,9 @@ def calculate(helper, fixture='published-example.input.json'):
 
 @pytest.mark.parametrize('target', ['claude', *TARGETS])
 def test_target_can_run_bundled_helper_and_resolve_assets(target):
-    root = CORE if target == 'claude' else ROOT / f'extensions/arckit-{target}'
+    root = OVERLAY if target == 'claude' else ROOT / f'extensions/arckit-{target}'
     for path in ['scripts/legacy-assessment.mjs', 'schemas/legacy-assessment-1.0.schema.json', 'data/legacy-frameworks-1.0.json', 'data/legacy-risk-rubric-2026-08-17.json', 'data/legacy-definition-2026-08-17.json', 'references/legacy-frameworks.md', 'references/legacy-risk-framework-2026-08-17.md', 'references/legacy-definition-2026-08-17.md', 'templates/legacy-assessment-template.md']:
-        assert (root / path).read_bytes() == (CORE / path).read_bytes(), f'{target}: {path}'
+        assert (root / path).read_bytes() == (OVERLAY / path).read_bytes(), f'{target}: {path}'
     assert calculate(root / 'scripts/legacy-assessment.mjs') == json.loads((FIXTURES / 'published-example.expected.json').read_text())
     chart = subprocess.run(['node', str(root / 'scripts/legacy-assessment.mjs'), '--input', str(FIXTURES / 'published-example.input.json'), '--svg'], capture_output=True, text=True, check=True)
     assert chart.stdout == (FIXTURES / 'ARC-001-LEGACY-v1.0-risk.svg').read_text()
@@ -51,14 +51,14 @@ def test_cli_scaffold_has_helper_schema_catalogue_and_preserves_template_overrid
     assert component_chart.stdout == (FIXTURES / 'ARC-001-LEGACY-v1.0-components.svg').read_text()
     assert (installed / 'data/legacy-frameworks-1.0.json').is_file()
     for name in ['legacy-risk-rubric-2026-08-17.json', 'legacy-definition-2026-08-17.json']:
-        assert (installed / 'data' / name).read_bytes() == (CORE / 'data' / name).read_bytes()
+        assert (installed / 'data' / name).read_bytes() == (OVERLAY / 'data' / name).read_bytes()
     for partial in ['RENDERING.md', 'document-control-uk.md']:
-        assert (installed / 'templates/_partials' / partial).read_bytes() == (CORE / 'templates/_partials' / partial).read_bytes()
-    assert (installed / 'data/legacy-frameworks-1.0.json').read_bytes() == (CORE / 'data/legacy-frameworks-1.0.json').read_bytes()
+        assert (installed / 'templates/_partials' / partial).read_bytes() == (OVERLAY / 'templates/_partials' / partial).read_bytes()
+    assert (installed / 'data/legacy-frameworks-1.0.json').read_bytes() == (OVERLAY / 'data/legacy-frameworks-1.0.json').read_bytes()
 
 
 def test_golden_report_matches_json_results_and_uk_document_control():
-    a = calculate(CORE / 'scripts/legacy-assessment.mjs')
+    a = calculate(OVERLAY / 'scripts/legacy-assessment.mjs')
     report = (FIXTURES / 'published-example.report.md').read_text()
     s = a['results']['systems'][0]
     assert f"| {s['systemId']} | {s['outcome']} | {s['strongestKnownFinding']} | {str(s['provisional']).lower()} | {s['completeness']} | {s['actionPlanCompleteness']} | {s['proposedReviewDate']} |" in report
@@ -68,18 +68,18 @@ def test_golden_report_matches_json_results_and_uk_document_control():
         assert f"| {f['id']} / {f['systemId']} | {f['criterionId']} / {f['thresholdId']} | {f['outcome']} |" in report
     assert f"{r['arithmetic']['riskNumerator']}/{r['arithmetic']['riskDenominator']}" in report
     assert '<!-- DOC-CONTROL-HEADER -->' not in report
-    partial = (CORE / 'templates/_partials/document-control-uk.md').read_text()
+    partial = (OVERLAY / 'templates/_partials/document-control-uk.md').read_text()
     for row in partial.splitlines()[2:]:
         assert row.split('|')[1] in report
     assert '| **Approved By** | PENDING |' in report
-    r = subprocess.run(['node', str(CORE / 'scripts/legacy-assessment.mjs'), '--input', str(FIXTURES / 'published-example.expected.json'), '--check-report', str(FIXTURES / 'published-example.report.md')], capture_output=True, text=True)
+    r = subprocess.run(['node', str(OVERLAY / 'scripts/legacy-assessment.mjs'), '--input', str(FIXTURES / 'published-example.expected.json'), '--check-report', str(FIXTURES / 'published-example.report.md')], capture_output=True, text=True)
     assert r.returncode == 0, r.stderr
 
 
 def test_paperclip_package_includes_runtime_assets_and_resolves_token():
     package = json.loads((ROOT / 'extensions/arckit-paperclip/package.json').read_text())
-    for asset in ['scripts/legacy-assessment.mjs', 'schemas/legacy-assessment-1.0.schema.json', 'data/legacy-frameworks-1.0.json', 'data/legacy-risk-rubric-2026-08-17.json', 'data/legacy-definition-2026-08-17.json']:
-        assert asset in package['files']
+    for directory in ['scripts/', 'schemas/', 'data/']:
+        assert directory in package['files']
     commands = json.loads((ROOT / 'extensions/arckit-paperclip/src/data/commands.json').read_text())
     command = next(c for c in commands if c['name'] == 'arckit-legacy-assessment')
     assert '{arckit_package_root}/scripts/legacy-assessment.mjs' in command['prompt']
@@ -111,8 +111,8 @@ console.log(JSON.stringify({type: DOC_TYPES.LEGACY, universal: HIGH_SEVERITY_TYP
     ('incomplete-risk', ['Accepted'], True),
 ])
 def test_behavioural_fixture_has_reproducible_expected_decisions(scenario, outcomes, incomplete_risk):
-    fixture = CORE / f'evals/fixtures/legacy-{scenario}/projects/001-payments/assessment-input.json'
-    r = subprocess.run(['node', str(CORE / 'scripts/legacy-assessment.mjs'), '--input', str(fixture), '--json'], text=True, capture_output=True, check=True)
+    fixture = OVERLAY / f'evals/fixtures/legacy-{scenario}/projects/001-payments/assessment-input.json'
+    r = subprocess.run(['node', str(OVERLAY / 'scripts/legacy-assessment.mjs'), '--input', str(fixture), '--json'], text=True, capture_output=True, check=True)
     result = json.loads(r.stdout)['results']['systems']
     assert [s['outcome'] for s in result] == outcomes
     assert any(s['risk']['status'] == 'incomplete' for s in result) == incomplete_risk
@@ -134,10 +134,10 @@ def test_claude_native_write_hooks_preserve_verified_report_and_allow_json_sidec
     for path in [report, sidecar]:
         payload = json.dumps({'tool_name': 'Write', 'cwd': str(tmp_path), 'tool_input': {'file_path': str(path), 'content': path.read_text()}})
         for hook in ['validate-arc-filename.mjs', 'file-protection.mjs']:
-            check = subprocess.run(['node', str(CORE / 'hooks' / hook)], input=payload, capture_output=True, text=True)
+            check = subprocess.run(['node', str(ROOT / 'plugins/arckit-claude/hooks' / hook)], input=payload, capture_output=True, text=True)
             assert check.returncode == 0, check.stderr
         for hook in ['provenance-stamp.mjs', 'update-manifest.mjs']:
-            check = subprocess.run(['node', str(CORE / 'hooks' / hook)], input=payload, capture_output=True, text=True)
+            check = subprocess.run(['node', str(ROOT / 'plugins/arckit-claude/hooks' / hook)], input=payload, capture_output=True, text=True)
             assert check.returncode == 0, check.stderr
-    check = subprocess.run(['node', str(CORE / 'scripts/legacy-assessment.mjs'), '--input', str(sidecar), '--check-report', str(report)], capture_output=True, text=True)
+    check = subprocess.run(['node', str(OVERLAY / 'scripts/legacy-assessment.mjs'), '--input', str(sidecar), '--check-report', str(report)], capture_output=True, text=True)
     assert check.returncode == 0, check.stderr

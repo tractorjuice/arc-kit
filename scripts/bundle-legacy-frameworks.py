@@ -14,7 +14,7 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-CORE = ROOT / 'plugins/arckit-claude'
+CORE = ROOT / 'plugins/arckit-uk-legacy'
 BASE = 'https://www.gov.uk/government/publications/guidance-on-the-legacy-it-risk-assessment-framework/'
 VERSION = '2026-08-17'
 ATTRIBUTION = 'Contains public sector information licensed under the Open Government Licence v3.0.'

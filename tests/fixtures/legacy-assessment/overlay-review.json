@@ -1,0 +1,38 @@
+{
+  "reviewDate": "2026-11-02",
+  "scope": "Optional UK legacy overlay migration and deterministic runtime distribution",
+  "findings": [
+    {
+      "id": "OV01",
+      "finding": "Core reference synchronisation distributed legacy-only publications to unrelated plugins.",
+      "resolution": "Framework sources and the LEGACY checklist are overlay-owned; tests reject legacy reference files in core and unrelated flat overlays."
+    },
+    {
+      "id": "OV02",
+      "finding": "Data merging alone does not ship a helper and schema to every runtime or installed CLI scaffold.",
+      "resolution": "Generic runtime-assets declarations validate confined regular files, detect collisions and supply declared dependencies to all targets. CLI copying uses merged script/schema folders, not Legacy-required asset keys."
+    },
+    {
+      "id": "OV03",
+      "finding": "Skipping regeneration could package stale declared command dependencies.",
+      "resolution": "The generic converter runtime check compares installed-target assets with their owning sources, and the build hook invokes it even when conversion is skipped."
+    },
+    {
+      "id": "OV04",
+      "finding": "Evaluation discovery and invocation only understood core ownership, and ignore rules hid moved synthetic fixtures while leaving overlay result recordings exposed.",
+      "resolution": "Cases are discovered across canonical plugins, namespace checks use the actual owner manifest, synthetic fixtures remain tracked, and result recordings are ignored for every overlay."
+    },
+    {
+      "id": "OV05",
+      "finding": "Maintainer evaluation fixtures would have been duplicated into the installed overlay mirror and published plugin.",
+      "resolution": "Evaluation directories remain in canonical source for tests and are excluded from plugin mirror and publication copies."
+    },
+    {
+      "id": "OV06",
+      "finding": "Generated catalogues passed checkout tests but the built wheel omitted ignored data directories. Source-shaped artifact patterns did not match installed shared-data paths.",
+      "resolution": "A generic installed-path artifact rule retains public shared catalogues. A regression exercises Hatch actual selection rules, and fresh installed CLI scaffolds are smoke-tested with network access disabled."
+    }
+  ],
+  "unchangedBehaviour": "The calculator and assessment schema are byte-identical to the pre-migration reviewed implementation; numerical and classification regressions remain in place.",
+  "limitations": "These are repository and deterministic runtime checks. Live model evaluation and source evidence truth are separate concerns. All fixtures are synthetic."
+}

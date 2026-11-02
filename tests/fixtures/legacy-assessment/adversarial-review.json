@@ -140,8 +140,8 @@
       "severity": "high",
       "kind": "review-finding",
       "before": "A populated generated tree could ship stale runtime assets, and fresh scaffolds omitted Document Control partials.",
-      "resolution": "Builds regenerate by default, refuse drift when regeneration is skipped, gate required files before scaffolding, and copy rendering partials for every CLI.",
-      "regression": "test_stale_legacy_assets_cannot_pass_the_wheel_guard",
+      "resolution": "Builds regenerate by default and check declared command dependencies for drift even when regeneration is skipped. Overlay dependencies are not global CLI-required file keys. Rendering partials ship to every CLI.",
+      "regression": "test_runtime_drift_detects_stale_and_missing_assets",
       "status": "addressed"
     },
     {
@@ -362,16 +362,16 @@
     "offlineRubricLookup": "/tmp/arckit-legacy-offline-rubric-smoke/scores.json"
   },
   "sourceFingerprints": {
-    "plugins/arckit-claude/scripts/legacy-assessment.mjs": "a919bbc6f6e8f6ca613742f19d6cee98f4ff072d6bc7053594acb41c2f358d55",
-    "plugins/arckit-claude/schemas/legacy-assessment-1.0.schema.json": "6ad29e33c79e418c8ed9c4eae669aeb7ac81a257d1c6f58b1498a5f0e68da59a",
-    "plugins/arckit-claude/data/legacy-frameworks-1.0.json": "7b7da0742688c0bbfc244eefdbc9af110bf6bce5b70d3fcf84292a3185fb0faf",
-    "plugins/arckit-claude/data/legacy-risk-rubric-2026-08-17.json": "24720780035dbd6a97689b3fbe717942d529be523722947a559bd05b3ad8f448",
-    "plugins/arckit-claude/data/legacy-definition-2026-08-17.json": "1608869b63e996a38b35f890180827a49f92dbff078b2142f8248705ac313687"
+    "plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs": "a919bbc6f6e8f6ca613742f19d6cee98f4ff072d6bc7053594acb41c2f358d55",
+    "plugins/arckit-uk-legacy/schemas/legacy-assessment-1.0.schema.json": "6ad29e33c79e418c8ed9c4eae669aeb7ac81a257d1c6f58b1498a5f0e68da59a",
+    "plugins/arckit-uk-legacy/data/legacy-frameworks-1.0.json": "7b7da0742688c0bbfc244eefdbc9af110bf6bce5b70d3fcf84292a3185fb0faf",
+    "plugins/arckit-uk-legacy/data/legacy-risk-rubric-2026-08-17.json": "24720780035dbd6a97689b3fbe717942d529be523722947a559bd05b3ad8f448",
+    "plugins/arckit-uk-legacy/data/legacy-definition-2026-08-17.json": "1608869b63e996a38b35f890180827a49f92dbff078b2142f8248705ac313687"
   },
   "disposition": "All reproduced implementation defects addressed. Human evidence/approval authority and the explicitly listed live-model coverage limits remain outside deterministic verification.",
   "followUpContext": {
     "source": "https://publications.parliament.uk/pa/cm5902/cmselect/cmsctech/651/report.html",
-    "offlineBrief": "plugins/arckit-claude/references/legacy-parliamentary-context-2026-10-22.md",
+    "offlineBrief": "plugins/arckit-uk-legacy/references/legacy-parliamentary-context-2026-10-22.md",
     "recommendations": [
       13,
       14,

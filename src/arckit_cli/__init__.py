@@ -161,11 +161,6 @@ COMMON_REQUIRED_ASSETS = (
     "scripts",
     "docid_generator",
     "doctypes_config",
-    "legacy_helper",
-    "legacy_schema",
-    "legacy_catalogue",
-    "legacy_rubric",
-    "legacy_definition",
     "doc_control_rendering",
     "doc_control_uk",
 )
@@ -193,7 +188,7 @@ def missing_required_assets(data_paths, ai_assistant, all_ai=False):
     missing = []
     for key in keys:
         path = data_paths.get(key)
-        available = path is not None and (Path(path).is_file() if key in {"legacy_helper", "legacy_schema", "legacy_catalogue", "legacy_rubric", "legacy_definition", "doc_control_rendering", "doc_control_uk"} else Path(path).exists())
+        available = path is not None and (Path(path).is_file() if key in {"doc_control_rendering", "doc_control_uk"} else Path(path).exists())
         if not available:
             missing.append((key, path))
     return missing
@@ -220,6 +215,7 @@ def get_data_paths():
             "codex_skills": base_path / "extensions" / "arckit-codex" / "skills",
             "codex_agents": base_path / "extensions" / "arckit-codex" / "agents",
             "codex_hooks": base_path / "extensions" / "arckit-codex" / "hooks",
+            "codex_scripts": base_path / "extensions" / "arckit-codex" / "scripts",
             "codex_schemas": base_path / "extensions" / "arckit-codex" / "schemas",
             # Vendored reference data a command declares as its ONLY source of
             # truth (e.g. the EUCSF Annex calculator catalogue). Under the plugin
@@ -234,11 +230,6 @@ def get_data_paths():
             # scripts/, and scaffolded to .arckit/scripts/ and .arckit/config/
             # so the generator's ../config/doc-types.mjs import resolves.
             "docid_generator": base_path / "plugins" / "arckit-claude" / "scripts" / "generate-document-id.mjs",
-            "legacy_helper": base_path / "plugins" / "arckit-claude" / "scripts" / "legacy-assessment.mjs",
-            "legacy_schema": base_path / "plugins" / "arckit-claude" / "schemas" / "legacy-assessment-1.0.schema.json",
-            "legacy_catalogue": base_path / "plugins" / "arckit-claude" / "data" / "legacy-frameworks-1.0.json",
-            "legacy_rubric": base_path / "plugins" / "arckit-claude" / "data" / "legacy-risk-rubric-2026-08-17.json",
-            "legacy_definition": base_path / "plugins" / "arckit-claude" / "data" / "legacy-definition-2026-08-17.json",
             "doc_control_rendering": base_path / ".arckit" / "templates" / "_partials" / "RENDERING.md",
             "doc_control_uk": base_path / ".arckit" / "templates" / "_partials" / "document-control-uk.md",
             "doctypes_config": base_path / "plugins" / "arckit-claude" / "config" / "doc-types.mjs",
@@ -723,20 +714,12 @@ def init(
             "resolve[/yellow]"
         )
 
-    # Mandatory legacy runtime assets: the helper reads its sibling schema;
-    # the assessment command reads the frozen framework catalogue.
-    for asset_key, relative_path in [
-        ("legacy_helper", "scripts/legacy-assessment.mjs"),
-        ("legacy_schema", "schemas/legacy-assessment-1.0.schema.json"),
-        ("legacy_catalogue", "data/legacy-frameworks-1.0.json"),
-        ("legacy_rubric", "data/legacy-risk-rubric-2026-08-17.json"),
-        ("legacy_definition", "data/legacy-definition-2026-08-17.json"),
-    ]:
-        asset_src = data_paths.get(asset_key)
-        if asset_src and asset_src.is_file():
-            asset_dst = project_path / ".arckit" / relative_path
-            asset_dst.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(asset_src, asset_dst)
+    # Runtime helpers and schemas are merged by the converter for all public
+    # overlays. Copy them for every CLI target, just like references and data.
+    for key, directory in [("codex_scripts", "scripts"), ("codex_schemas", "schemas")]:
+        source = data_paths.get(key)
+        if source and source.is_dir():
+            shutil.copytree(source, project_path / ".arckit" / directory, dirs_exist_ok=True)
 
     # Copy references if they exist
     references_src = data_paths.get("codex_references")
@@ -1009,7 +992,6 @@ Once you start your AI assistant, you'll have access to these commands:
 
 #### UK Government Compliance
 - `{p}service-assessment` - GDS Service Standard assessment preparation
-- `{p}legacy-assessment` - Evidence-led legacy classification and numerical risk
 - `{p}tcop` - Technology Code of Practice assessment (all 13 points)
 - `{p}ai-playbook` - AI Playbook compliance for responsible AI
 - `{p}atrs` - Algorithmic Transparency Recording Standard (ATRS) record

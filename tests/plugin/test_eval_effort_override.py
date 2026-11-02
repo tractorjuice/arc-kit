@@ -30,6 +30,7 @@ def frontmatter(path: Path) -> str:
 def test_prompt_command():
     assert eval_headless.prompt_command("/arckit:sobc 001 Business case") == "sobc"
     assert eval_headless.prompt_command("  /arckit:wardley.value-chain x") == "wardley.value-chain"
+    assert eval_headless.prompt_command("/arckit-uk-legacy:legacy-assessment 001") == "legacy-assessment"
     with pytest.raises(ValueError):
         eval_headless.prompt_command("please run sobc")
 

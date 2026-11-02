@@ -10,7 +10,7 @@ import {
   renderRiskChart,
   renderResults,
   componentMeasure
-} from '../../plugins/arckit-claude/scripts/legacy-assessment.mjs';
+} from '../../plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs';
 import { formatExample } from '../fixtures/legacy-assessment/format-example.mjs';
 const base = () =>
   JSON.parse(
@@ -129,7 +129,7 @@ test('CLI verifies both companions and component charts remain available with ri
       spawnSync(
         'node',
         [
-          'plugins/arckit-claude/scripts/legacy-assessment.mjs',
+          'plugins/arckit-uk-legacy/scripts/legacy-assessment.mjs',
           '--input',
           input,
           ...args
