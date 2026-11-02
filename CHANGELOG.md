@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Paperclip commands read their templates and references from the installed package.** The converter wrote every Paperclip template, reference and data path under `scripts/bash/`, so 165 of 178 commands pointed at files such as `scripts/bash/templates/requirements-template.md` that do not exist. They now resolve through `{arckit_package_root}`, which Paperclip replaces with its package root at runtime; script paths are unchanged. The package now also ships `skills/` (the Mermaid, PlantUML and Wardley references 21 commands read) and `hooks/` (the `owm-tidy.mjs` label tidier `/arckit-wardley` runs). The package's handler test looked up `arckit-legacy-assessment` after the command became `uk-legacy-assessment`, and CI had stopped running it. It is fixed, it now checks every command's assets exist and are published, and CI runs it again.
+
 ## [6.19.0] — 2026-11-02
 
 ### Added
