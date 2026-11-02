@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- New optional `arckit-uk-legacy` overlay assesses existing project systems against the updated UK legacy IT definition, separately calculates published numerical risk, and produces an evidence-linked action plan. Includes a structured JSON assessment, bundled offline framework sources and deterministic report/chart verification across Claude and all seven generated targets. Findings remain provisional where policy approval or evidence is missing. Shared distribution support adds `runtime-assets:` command frontmatter and `converter.py --check-runtime-assets`, run by `hatch_build.py` on every wheel build; `arckit init` now copies Document Control `_partials` and merged `scripts/` and `schemas/` into every scaffold; `evals/` is excluded from every published plugin, including core.
+
 ### Fixed
 
 - **`/arckit:pages` sites no longer run HTML from documents or filenames** (#875, from @johnfelipe). The generated site rendered Markdown with marked and inserted the result, and built the sidebar, search results, dashboard and document header from manifest titles and paths, without escaping. A document, or a file or folder name (an `external/` filename becomes its title), could therefore run script in the reader's browser, and a Mermaid block could do the same through `securityLevel: 'loose'`. Rendered Markdown is now passed through DOMPurify (if the library fails to load, the document is shown as escaped source instead of unsanitised HTML), every title and path in the sidebar, search, dashboard and headers is escaped, including quotes, so a name such as `001-x" onmouseover="alert(1)` can't break out of an `href` or `data-path` attribute, and Mermaid runs at its default `strict` level (HTML in labels is encoded; `<br/>` line breaks still work, `click` callbacks are disabled).

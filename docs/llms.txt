@@ -270,6 +270,10 @@ French government (apply on top of EU baseline):
 - [FCA Consumer Duty board report](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-consumer-duty.md): `/arckit-uk-finance:uk-fs-consumer-duty` annual Board Report evidencing customer outcomes across the four outcomes.
 - [Critical Third Parties dependency](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-uk-finance/commands/uk-fs-ctp-dependency.md): `/arckit-uk-finance:uk-fs-ctp-dependency` register of designated CTPs the firm relies on, under FSMA 2023.
 
+### UK Legacy IT assessment (community-contributed, optional overlay)
+
+- [Legacy IT Assessment](https://arckit.org/guides/legacy-assessment.md): `/arckit-uk-legacy:uk-legacy-assessment` optional UK overlay for evidence, classification, numerical risk and remediation.
+
 ### UK NHS clinical safety (community-contributed, sector overlay)
 
 > ⚠️ EXPERIMENTAL sector overlay — clinical safety output requires sign-off by a suitably qualified Clinical Safety Officer before reliance.

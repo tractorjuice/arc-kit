@@ -18,6 +18,23 @@ Thank you for your interest in contributing to ArcKit! This document provides gu
    git checkout -b feature/your-feature-name
    ```
 
+## Reproducible test environment
+
+Use Python 3.11+ in a virtual environment. Install the complete test extra, then generate
+the extensions before running the suite:
+
+```bash
+python -m pip install -e ".[test]"
+python scripts/converter.py
+python -m pytest -q
+```
+
+Legacy assessment changes in `plugins/arckit-uk-legacy/` also require the Node adversarial suite and offline bundle
+checks. The calculator has no runtime dependencies; `jsonschema` is a test-only,
+independent conformance check. Full rubric and definition source snapshots are bundled
+so tests and assessments do not need GOV.UK network access. See the
+[legacy assessment guide](docs/guides/legacy-assessment.md) for frozen-source maintenance.
+
 ## Types of Contributions
 
 ### 1. Bug Reports
@@ -253,6 +270,13 @@ A new `plugins/arckit-<name>/` directory is **not** discovered automatically. Se
 Add `"plugins/arckit-<name>"` to the list (core `arckit-claude` stays last). Without it the converter generates **no** files for your overlay in any of the seven non-Claude extensions, and still exits 0 with a success summary — nothing looks wrong.
 
 Two plugins are excluded deliberately and must stay out: `arckit-fde` (Claude-only tooling) and `arckit-uk-gcloud` (proprietary — must not leak into the MIT extension repos).
+
+An overlay command that needs an offline helper or schema can declare a
+`runtime-assets:` list in its frontmatter. Entries are plugin-relative regular
+files under `scripts/`, `schemas/` or `data/`; traversal, escaping symlinks and
+conflicting destination paths are rejected. These declared files also ship to
+runtimes that omit general shell helpers. The CLI copies merged runtime folders;
+there should be no command-specific CLI asset keys or core build-hook rules.
 
 ### 2. Both marketplace manifests
 

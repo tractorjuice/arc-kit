@@ -35,7 +35,7 @@ jobs:
       # the pages byte for byte. `-e .` is needed because several suites
       # import from `src/arckit_cli/`.
       - name: Install test dependencies
-        run: python -m pip install -e . pytest pyyaml markdown-it-py==4.0.0 linkify-it-py==2.0.3
+        run: python -m pip install -e ".[test]"
 
       # The generated content under extensions/** is gitignored (see .gitignore
       # "Generated distribution formats"), so a fresh checkout holds only each

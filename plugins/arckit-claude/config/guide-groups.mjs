@@ -372,6 +372,10 @@ add(GUIDE_SECTIONS.OVERLAY, 'UK Finance Payments Overlay', 'community', [
   'uk-fs-sca-rts',
 ], 'UK Finance Payments Overlay');
 
+add(GUIDE_SECTIONS.OVERLAY, 'UK Legacy IT Assessment Overlay', 'community', [
+  'legacy-assessment',
+], 'UK Legacy IT Assessment Overlay');
+
 add(GUIDE_SECTIONS.OVERLAY, 'UK NHS Clinical Safety Overlay', 'community', [
   'uk-mdr-classification',
   'uk-nhs-dcb0129',

@@ -280,6 +280,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | ATRS | `ARC-*-ATRS-*.md` | ATRS Record |
 | | DPIA | `ARC-*-DPIA-*.md` | Data Protection Impact Assessment |
 | | JSP936 | `ARC-*-JSP936-*.md` | JSP 936 Assessment |
+| | LEGACY | `ARC-*-LEGACY-*.md` | Legacy IT Assessment |
 | | SVCASS | `ARC-*-SVCASS-*.md` | Service Assessment |
 | **Operations** | | | |
 | | SNOW | `ARC-*-SNOW-*.md` | ServiceNow Design |

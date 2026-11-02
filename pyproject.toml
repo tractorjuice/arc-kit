@@ -34,6 +34,16 @@ classifiers = [
     "Topic :: System :: Systems Administration",
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "hatchling",
+    "pyyaml",
+    "jsonschema>=4,<5",
+    "markdown-it-py==4.0.0",
+    "linkify-it-py==2.0.3",
+]
+
 [project.urls]
 Homepage = "https://github.com/tractorjuice/arc-kit"
 Documentation = "https://github.com/tractorjuice/arc-kit/blob/main/README.md"
@@ -63,6 +73,9 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/arckit_cli"]
+# Shared-data selection matches installed paths. Retain public overlay catalogues
+# despite the blanket data/ ignore, without command-specific file mappings.
+artifacts = ["share/arckit/**/data/**"]
 
 # The extensions/ trees below are converter output and gitignored, so a build
 # straight from a git checkout would package them empty. The hook regenerates

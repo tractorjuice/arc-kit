@@ -4,6 +4,7 @@ import re
 import json
 import shutil
 import sys
+from pathlib import Path, PurePosixPath
 
 import yaml
 
@@ -20,6 +21,7 @@ CLAUDE_ONLY_COMMAND_FIELDS = (
     # writes. Nothing consumes it at runtime on any platform, so it is stripped
     # rather than carried into the generated extensions (#715).
     "doc-type",
+    "runtime-assets",
 )
 
 CLAUDE_ONLY_AGENT_FIELDS = (
@@ -268,6 +270,7 @@ PLUGIN_SOURCES = [
     "plugins/arckit-us",
     "plugins/arckit-uk-finance",
     "plugins/arckit-uk-nhs",
+    "plugins/arckit-uk-legacy",
     "plugins/arckit-togaf-adm",
     "plugins/arckit-oaa",
     "plugins/arckit-agent-architecture",
@@ -666,6 +669,7 @@ def convert(commands_dirs, agents_dir):
         frontmatter, command_prompt = extract_frontmatter_and_prompt(command_content)
         description = frontmatter.get("description", "")
         handoffs = frontmatter.get("handoffs", [])
+        has_runtime_assets = bool(frontmatter.get("runtime-assets"))
         # Strip Claude-only fields — they have no meaning for Codex/OpenCode/Gemini/Copilot targets
         for field in CLAUDE_ONLY_COMMAND_FIELDS:
             frontmatter.pop(field, None)
@@ -689,6 +693,11 @@ def convert(commands_dirs, agents_dir):
         # Collect entry for Paperclip JSON format
         if "paperclip" in AGENT_CONFIG:
             pc_config = AGENT_CONFIG["paperclip"]
+            # This command runs a bundled calculator, not a project bash helper.
+            # Paperclip resolves this token from its installed package at runtime.
+            if has_runtime_assets:
+                pc_config = {**pc_config, "path_prefix": "{arckit_package_root}",
+                             "script_path_prefix": "{arckit_package_root}/scripts"}
             pc_prompt = rewrite_paths(prompt, pc_config)
             pc_prompt = rewrite_hook_dependencies(pc_prompt, pc_config)
             pc_prompt = neutralise_question_tool(pc_prompt)
@@ -873,6 +882,7 @@ def copy_extension_files(plugin_sources):
             ("plugins/arckit-claude"), which is copied last.
     """
     core_plugin_dir = plugin_sources[-1]
+    runtime_assets = declared_runtime_assets(plugin_sources)
 
     # Categories that exist only in the core plugin and are copied from there.
     core_only_copies = [
@@ -1077,6 +1087,71 @@ def copy_extension_files(plugin_sources):
                 merged_refs += 1
         if merged_refs:
             print(f"  Merged {merged_refs} overlay-only reference file(s)")
+        # Explicit command dependencies also ship to runtimes that omit shell
+        # helpers (Paperclip). Never overwrite a conflicting core/overlay asset.
+        for relative, source in runtime_assets.items():
+            destination = Path(ext_dir) / relative
+            if destination.exists() and (
+                not destination.is_file() or destination.read_bytes() != source.read_bytes()
+            ):
+                raise SystemExit(f"converter: conflicting runtime asset {relative}")
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source, destination)
+
+
+def declared_runtime_assets(plugin_sources):
+    """Validate explicit, plugin-local command runtime dependencies before copying.
+
+    Dependencies are regular files under scripts/, schemas/ or data/. Paths must
+    be portable and cannot traverse or follow symlinks out of their plugin.
+    Duplicate declarations are allowed only for the same path and same bytes.
+    """
+    assets = {}
+    folded = {}
+    for plugin in plugin_sources:
+        plugin_root = Path(plugin).resolve()
+        for command in sorted((plugin_root / "commands").glob("*.md")):
+            frontmatter, _ = extract_frontmatter_and_prompt(command.read_text(encoding="utf-8"))
+            declared = frontmatter.get("runtime-assets", [])
+            if not isinstance(declared, list):
+                raise SystemExit(f"converter: {command} runtime-assets must be a list")
+            for relative in declared:
+                if not isinstance(relative, str):
+                    raise SystemExit(f"converter: {command} runtime asset must be a path string")
+                path = PurePosixPath(relative)
+                if (not relative or any(ord(c) < 32 for c in relative) or "\\" in relative or ":" in relative
+                        or path.is_absolute() or any(p.startswith(".") for p in relative.split("/"))
+                        or len(path.parts) < 2 or path.parts[0] not in {"scripts", "schemas", "data"}
+                        or str(path) != relative):
+                    raise SystemExit(f"converter: unsafe runtime asset path in {command}: {relative!r}")
+                source = plugin_root.joinpath(*path.parts)
+                if (not source.is_file() or source.is_symlink()
+                        or not source.resolve().is_relative_to(plugin_root)):
+                    raise SystemExit(f"converter: missing or escaped runtime asset {relative} in {plugin}")
+                prior = folded.get(relative.casefold())
+                if prior is not None and (prior != relative or assets[prior].read_bytes() != source.read_bytes()):
+                    raise SystemExit(f"converter: conflicting runtime asset {relative} in {plugin}")
+                folded[relative.casefold()] = relative
+                assets[relative] = source
+    return assets
+
+
+def runtime_asset_drift(root):
+    """Return absent/stale declared dependencies in generated public targets."""
+    root = Path(root)
+    assets = declared_runtime_assets([root / source for source in PLUGIN_SOURCES])
+    drift = []
+    for config in AGENT_CONFIG.values():
+        if not config.get("extension_dir"):
+            continue
+        extension = root / config["extension_dir"]
+        for relative, source in assets.items():
+            target = extension / relative
+            if (not target.is_file() or target.is_symlink()
+                    or not target.resolve().is_relative_to(extension.resolve())
+                    or target.read_bytes() != source.read_bytes()):
+                drift.append(str(target.relative_to(root)))
+    return drift
 
 
 # Test code in an overlay's scripts/ is for the overlay's own CI and never
@@ -2404,6 +2479,16 @@ projects/
 
 
 if __name__ == "__main__":
+    if sys.argv[1:] == ["--check-runtime-assets"]:
+        drift = runtime_asset_drift(Path.cwd())
+        if drift:
+            print("Missing or stale declared runtime assets:\n  " + "\n  ".join(drift), file=sys.stderr)
+            sys.exit(1)
+        print("Declared runtime assets match all generated targets.")
+        sys.exit(0)
+    if sys.argv[1:]:
+        print("Usage: converter.py [--check-runtime-assets]", file=sys.stderr)
+        sys.exit(2)
     commands_dirs = [os.path.join(src, "commands") for src in PLUGIN_SOURCES]
     agents_dir = "plugins/arckit-claude/agents/"
     plugin_dir = "plugins/arckit-claude"  # for downstream functions that only touch core

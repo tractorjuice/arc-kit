@@ -123,6 +123,7 @@ export const DOC_TYPES = {
   'ATRS':      { name: 'ATRS Record',                      category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
   'DPIA':      { name: 'Data Protection Impact Assessment', category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
   'JSP936':    { name: 'JSP 936 Assessment',               category: 'Compliance', regime: 'MOD', severity: 'HIGH' },
+  'LEGACY':    { name: 'Legacy IT Assessment',               category: 'Compliance', regime: 'UK' },
   'SVCASS':    { name: 'Service Assessment',               category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
   // Operations
   'SNOW':      { name: 'ServiceNow Design',                category: 'Operations' },

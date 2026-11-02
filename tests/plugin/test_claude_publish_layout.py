@@ -200,3 +200,9 @@ def test_overlay_guides_ship_with_their_overlay_not_core(staged):
         assert not stray, f"{plugin['name']} guides published in core: {sorted(stray)}"
         assert guides <= commands | {p.stem for p in (REPO_ROOT / "docs" / "guides").glob("*.md")}
     assert (staged / "plugins" / "fr" / "docs" / "guides" / "fr-irn.md").is_file()
+
+
+def test_overlay_evaluations_are_maintainer_tooling_not_installed_assets(staged):
+    overlay = staged / "plugins/uk/legacy"
+    assert (overlay / "scripts/legacy-assessment.mjs").is_file()
+    assert not (overlay / "evals").exists()

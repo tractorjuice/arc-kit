@@ -21,6 +21,7 @@ import subprocess
 from pathlib import Path
 
 import pytest
+import yaml
 
 REPO = Path(__file__).resolve().parents[2]
 CORE = REPO / "plugins" / "arckit-claude"
@@ -56,7 +57,15 @@ def test_every_script_a_command_names_is_in_its_overlay(command):
 
 @pytest.mark.parametrize("command", COMMANDS, ids=_id)
 def test_no_command_names_a_script_its_plugin_cannot_reach(command):
-    bad = sorted({m.group(0) for m in UNREACHABLE.finditer(command.read_text(encoding="utf-8"))})
+    text = command.read_text(encoding="utf-8")
+    if text.startswith("---"):
+        _, header, body = text.split("---", 2)
+        metadata = yaml.safe_load(header) or {}
+        # These are plugin-relative packaging paths, never shell invocations.
+        # Other metadata (including Bash permissions) and the body stay checked.
+        metadata.pop("runtime-assets", None)
+        text = yaml.safe_dump(metadata) + body
+    bad = sorted({m.group(0) for m in UNREACHABLE.finditer(text)})
     assert not bad, (
         f"{_id(command)} names {bad}; in Claude Code only ${{CLAUDE_PLUGIN_ROOT}}/scripts/... "
         "inside the overlay itself resolves"

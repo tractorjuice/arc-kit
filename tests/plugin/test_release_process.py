@@ -45,6 +45,7 @@ EXPECTED_CLAUDE_MARKETPLACE_SOURCES = {
     "arckit-us": ("./plugins/us", "plugins/arckit-us", "MIT"),
     "arckit-uk-finance": ("./plugins/uk/finance", "plugins/arckit-uk-finance", "MIT"),
     "arckit-uk-nhs": ("./plugins/uk/nhs", "plugins/arckit-uk-nhs", "MIT"),
+    "arckit-uk-legacy": ("./plugins/uk/legacy", "plugins/arckit-uk-legacy", "MIT"),
     "arckit-fde": ("./plugins/fde", "plugins/arckit-fde", "MIT"),
     "arckit-uk-gcloud": ("./plugins/uk/gcloud", "plugins/arckit-uk-gcloud", "Proprietary"),
     "arckit-togaf-adm": ("./plugins/togaf/adm", "plugins/arckit-togaf-adm", "MIT"),
@@ -179,6 +180,7 @@ def test_root_claude_marketplace_remains_arc_kit_compatibility_marketplace():
 def test_local_claude_standalone_plugin_paths_match_sources():
     standalone_root = standalone_path("claude")
     expected_files: dict[Path, Path] = {}
+    sync = _load_sync_layout()
 
     for name, (source, local_dir, _license_name) in EXPECTED_CLAUDE_MARKETPLACE_SOURCES.items():
         source_path = standalone_root / source.removeprefix("./")
@@ -193,6 +195,8 @@ def test_local_claude_standalone_plugin_paths_match_sources():
             if not path.is_file():
                 continue
             relative = path.relative_to(local_path)
+            if any(part in sync.IGNORED_NAMES for part in relative.parts):
+                continue
             target = source_path / relative
             assert target not in expected_files, f"duplicate standalone target: {target}"
             expected_files[target] = path
