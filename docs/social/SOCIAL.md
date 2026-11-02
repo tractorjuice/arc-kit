@@ -501,3 +501,11 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/15
 > • Codex and Kimi get matching protections
 > Update with `claude plugin update arckit@arckit-claude`, and add the overlay with `claude plugin install arckit-uk-legacy@arckit-claude` if you have an estate to assess. Tell us how it goes in #show-your-working
 > <https://github.com/tractorjuice/arc-kit/releases/tag/v6.19.0>
+
+### Q35. ArcKit 6.19.0 article — LinkedIn page, with the article hero (Warm "we" voice) — posted 2 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7523042913182744576/>. Copy: `docs/articles/2026-11-02-arckit-v6-19-is-it-legacy-linkedin.md`, with the redesigned hero and the alt text recorded in that file. LinkedIn added a "Content credentials" label from the image's provenance data. This went out after the group (Q33) and Discord (Q34) posts, because the article page wasn't live until #1057 merged.
+
+### Q36. ArcKit 6.19.0 article — Medium, ArcKit publication — published 2 November
+
+Published: <https://medium.com/arckit/arckit-v6-19-0-is-it-legacy-assess-your-existing-systems-against-the-uks-new-definition-dee08f78c53d>. It was imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: Enterprise Architecture, Legacy Systems, Digital Transformation, Government, Claude. The publication's 302 subscribers were notified. The import needed four fixes in the editor: line breaks restored in the install block, empty lines removed under each heading, the byline split off the lead paragraph, and the community links (which were dropped) put back. The mirrored text, with its hero image, is `docs/articles/2026-11-02-arckit-v6-19-is-it-legacy-medium.md`.
