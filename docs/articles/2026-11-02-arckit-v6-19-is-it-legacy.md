@@ -26,7 +26,7 @@ Install the overlay and run one command against a project. It works through each
 
 **It ends in actions, not adjectives.** The findings feed an action plan. Each action names an accountable owner, the immediate containment, the longer-term fix, its funding status and a date for the next review. Where a finding has no action, or an action has no owner, budget or date, that shows as a gap too, ready to carry into your business case, roadmap and delivery plan.
 
-You get a written report, the data behind it, a chart of each system's risk score against the red-rated line, and a breakdown by component. The framework sources travel with the overlay, so the whole assessment runs without an internet connection, and the calculations are checked against the report before it claims to be verified.
+You get a written report, the data behind it, a chart of each system's risk score against the red-rated line, and a breakdown by component. The framework sources travel with the overlay, so the assessment never has to look anything up online, and the calculations are checked against the report before it claims to be verified.
 
 The overlay is experimental and off by default. Try it first on one system you know well, where you can judge whether the evidence and the outcome ring true. It works in Claude Code and in the other assistants ArcKit supports.
 
