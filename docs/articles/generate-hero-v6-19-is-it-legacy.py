@@ -140,7 +140,7 @@ d.text((rx + 26, top + 186), "out of 30 is red-rated", font=font(24), fill=TEXT)
 d.text((rx + 26, top + 240), "Kept apart from the", font=font(21), fill=MUTED)
 d.text((rx + 26, top + 270), "yes-or-no answer, as the", font=font(21), fill=MUTED)
 d.text((rx + 26, top + 300), "guidance does", font=font(21), fill=MUTED)
-d.text((rx + 26, top + 356), "Charts · offline · verified", font=font(19, False, True), fill=DIM)
+d.text((rx + 26, top + 356), "Charts · bundled sources · verified", font=font(19, False, True), fill=DIM)
 
 # Bottom strip: the security fixes
 sy = 700
