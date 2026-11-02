@@ -359,8 +359,12 @@ and are separate from deterministic calculation and installation tests.
 ### Live evaluation validity
 
 The headless runner enables this overlay and its declared core dependency for the
-session, then checks the actual `system/init` event for both local plugins and the
-invoked command. Finding the helper on disk does not count as a loaded command.
-Missing runtime evidence fails on replay too, even if artifact graders pass.
+session, disabling installed copies of those namespaces for that session. It checks
+all `system/init` events for both local plugins and the invoked command. Replay
+recomputes the required dependencies from the selected manifests. Finding the helper
+on disk does not count as a loaded command. Missing runtime evidence fails on replay
+too, even if artifact graders pass. Run completion is reported separately; a loaded
+but incomplete run retains its artifact scores while failing the overall evaluation.
+Implicit replay selects recorded cases; explicit missing selections fail.
 The dependency fixture intentionally preserves an Accepted local D7 finding while
 the effective D7 result becomes Legacy through a qualifying reliance path.

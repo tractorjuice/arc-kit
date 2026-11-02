@@ -1,16 +1,17 @@
 {
   "evaluationDate": "2026-11-02",
   "claudeCodeVersion": "2.1.316",
-  "status": "runtime-verified",
+  "status": "runtime-and-completion-verified",
+  "reviewRevision": "manifest-authoritative replay; dependency prompt does not supply the expected result",
   "cases": [
     {
       "case": "legacy-supported",
       "models": [
         "claude-sonnet-5-5"
       ],
-      "turns": 57,
-      "durationSeconds": 636.0,
-      "costUsd": 2.434064,
+      "turns": 39,
+      "durationSeconds": 628.3,
+      "costUsd": 2.192327,
       "exitCode": 0,
       "subtype": "success",
       "graders": [
@@ -48,7 +49,7 @@
           "name": "verified-report",
           "type": "tool_used",
           "passed": true,
-          "details": "Bash called 5 time(s); min=1 max=None"
+          "details": "Bash called 1 time(s); min=1 max=None"
         }
       ],
       "score": 1.0,
@@ -60,6 +61,10 @@
         "command_loaded": true,
         "dependencies_loaded": true,
         "errors": []
+      },
+      "completion": {
+        "passed": true,
+        "reason": "success"
       },
       "initExcerpt": {
         "type": "system",
@@ -96,6 +101,8 @@
         "reportAndBothSvgExitCode": 0,
         "sidecarMatchesFixture": true,
         "originalDecisionInputsPreserved": true,
+        "savedSidecarReproducedExactly": true,
+        "classificationRiskAndDependencyResultsMatchFixture": true,
         "calculatedResultsMatchFixtureExceptInputDigest": true,
         "additionalEvidenceRecords": [],
         "assessmentApprovalPending": true,
@@ -106,7 +113,7 @@
         "ARC-001-LEGACY-v1.0-components.svg": "fb052d7274c77dbf0bc8832eca434802094a2638dec000d0435b6180ec4648e6",
         "ARC-001-LEGACY-v1.0-risk.svg": "c7a86d28690dac95777b2737eed49196e48c7f0cf0d91aa009189e0b8a459240",
         "ARC-001-LEGACY-v1.0.json": "6d88097128126874a819ced2af93adcec2a5aa5e97dfdae29f541a62d508b764",
-        "ARC-001-LEGACY-v1.0.md": "f378e86d2a47ba61127e79ff507d4801e7e553a72210506897080867a595d719"
+        "ARC-001-LEGACY-v1.0.md": "5da62711a0a48dd6f6bede67c2a7fe695622c5ef360b2aae6256f5e1c3e55aed"
       }
     },
     {
@@ -114,9 +121,9 @@
       "models": [
         "claude-sonnet-5-5"
       ],
-      "turns": 52,
-      "durationSeconds": 809.9,
-      "costUsd": 2.775687,
+      "turns": 36,
+      "durationSeconds": 453.7,
+      "costUsd": 1.659765,
       "exitCode": 0,
       "subtype": "success",
       "graders": [
@@ -166,7 +173,7 @@
           "name": "verified-report",
           "type": "tool_used",
           "passed": true,
-          "details": "Bash called 1 time(s); min=1 max=None"
+          "details": "Bash called 2 time(s); min=1 max=None"
         }
       ],
       "score": 1.0,
@@ -178,6 +185,10 @@
         "command_loaded": true,
         "dependencies_loaded": true,
         "errors": []
+      },
+      "completion": {
+        "passed": true,
+        "reason": "success"
       },
       "initExcerpt": {
         "type": "system",
@@ -212,22 +223,21 @@
       ],
       "independentVerification": {
         "reportAndBothSvgExitCode": 0,
-        "sidecarMatchesFixture": false,
+        "sidecarMatchesFixture": true,
         "originalDecisionInputsPreserved": true,
+        "savedSidecarReproducedExactly": true,
+        "classificationRiskAndDependencyResultsMatchFixture": true,
         "calculatedResultsMatchFixtureExceptInputDigest": true,
-        "additionalEvidenceRecords": [
-          "supplier_note",
-          "framework_catalogue"
-        ],
+        "additionalEvidenceRecords": [],
         "assessmentApprovalPending": true,
         "injectionMarkerAbsent": true,
         "replayExitCode": 0
       },
       "artifactSha256": {
-        "ARC-001-LEGACY-v1.0-components.svg": "6a5ed6d6b3c36d02835bc7032fab6b960a9780c117a38be2cf60363434bd6d04",
-        "ARC-001-LEGACY-v1.0-risk.svg": "e418115f6627208a20d29748c659a493ad4d223caafd815abbc8730287556eaa",
-        "ARC-001-LEGACY-v1.0.json": "75bf9a360a6cca0556c504fb614202becf01a05af3dd692c9d6bb6ffe06d1387",
-        "ARC-001-LEGACY-v1.0.md": "ad4ba90ac6ea7895dd6ffccaf91962746ec2a6c1500bb41a5b467bc19b4a14c7"
+        "ARC-001-LEGACY-v1.0-components.svg": "fb052d7274c77dbf0bc8832eca434802094a2638dec000d0435b6180ec4648e6",
+        "ARC-001-LEGACY-v1.0-risk.svg": "c7a86d28690dac95777b2737eed49196e48c7f0cf0d91aa009189e0b8a459240",
+        "ARC-001-LEGACY-v1.0.json": "6d88097128126874a819ced2af93adcec2a5aa5e97dfdae29f541a62d508b764",
+        "ARC-001-LEGACY-v1.0.md": "70aca45e2987051e27001ad2bd4a8363f702c0f13567ca6e5a73631e47ebfbed"
       }
     },
     {
@@ -235,9 +245,9 @@
       "models": [
         "claude-sonnet-5-5"
       ],
-      "turns": 46,
-      "durationSeconds": 629.3,
-      "costUsd": 2.235667,
+      "turns": 64,
+      "durationSeconds": 840.9,
+      "costUsd": 2.921519,
       "exitCode": 0,
       "subtype": "success",
       "graders": [
@@ -249,6 +259,12 @@
         },
         {
           "name": "outcome",
+          "type": "regex",
+          "passed": true,
+          "details": "pattern found in projects/001-payments/ARC-001-LEGACY-v1.0.md; match=contains"
+        },
+        {
+          "name": "preserve-local",
           "type": "regex",
           "passed": true,
           "details": "pattern found in projects/001-payments/ARC-001-LEGACY-v1.0.md; match=contains"
@@ -275,7 +291,7 @@
           "name": "verified-report",
           "type": "tool_used",
           "passed": true,
-          "details": "Bash called 2 time(s); min=1 max=None"
+          "details": "Bash called 5 time(s); min=1 max=None"
         }
       ],
       "score": 1.0,
@@ -287,6 +303,10 @@
         "command_loaded": true,
         "dependencies_loaded": true,
         "errors": []
+      },
+      "completion": {
+        "passed": true,
+        "reason": "success"
       },
       "initExcerpt": {
         "type": "system",
@@ -329,20 +349,30 @@
       ],
       "independentVerification": {
         "reportAndBothSvgExitCode": 0,
-        "sidecarMatchesFixture": true,
+        "sidecarMatchesFixture": false,
         "originalDecisionInputsPreserved": true,
-        "calculatedResultsMatchFixtureExceptInputDigest": true,
-        "additionalEvidenceRecords": [],
+        "savedSidecarReproducedExactly": true,
+        "classificationRiskAndDependencyResultsMatchFixture": true,
+        "calculatedResultsMatchFixtureExceptInputDigest": false,
+        "additionalEvidenceRecords": [
+          "research_limitation"
+        ],
         "assessmentApprovalPending": true,
         "injectionMarkerAbsent": true,
         "replayExitCode": 0
       },
       "artifactSha256": {
-        "ARC-001-LEGACY-v1.0-components.svg": "e949086406d6dc6854352085f99779a833744f8c97b32487b8c91e38936fcb8f",
-        "ARC-001-LEGACY-v1.0-risk.svg": "613c8a8c9c9b263774ae0235b6218df4fb59e9a9f319c98e1a436914043875e5",
-        "ARC-001-LEGACY-v1.0.json": "97dee3d895b7652d9f0c997d4c1263c76758fba036a222d0f40bf02486810a0d",
-        "ARC-001-LEGACY-v1.0.md": "f210d41d5da934269b03f7a2e4a415a5c670aa209a469726c343d5702609c44b"
+        "ARC-001-LEGACY-v1.0-components.svg": "c00bbdaedc728c221cd83a4beb5134d0dd77e35c41a60c4fb604c35d88e8e4be",
+        "ARC-001-LEGACY-v1.0-risk.svg": "ced087d17b16ffb02a528e07b3ad51af4151266df6d33fffa23b61664a26a1a4",
+        "ARC-001-LEGACY-v1.0.json": "d45a17d668d13d5313fe9961701a1788522957399d452576463ec6c9c0b0e4b6",
+        "ARC-001-LEGACY-v1.0.md": "5201dac7b768e53c8f0640e8dbda4f1f1d53d490ebb04d7fa983218718a8bf01"
       },
+      "reviewedAdditions": [
+        "Expanded scope wording to name both supplied systems.",
+        "Added a catalogue freshness limitation record, unused in decision inputs.",
+        "Added 13 explicit null risk inputs for Reporting; no numerical scores were invented.",
+        "Added a proposed reliance action linked to restore_support, with owners, funding, cost and dates unknown. Management gaps now describe that incomplete action instead of a missing action."
+      ],
       "dependencyCheck": {
         "localFindingId": "reporting_finding_D7",
         "recordedOutcome": "Accepted",
@@ -360,7 +390,7 @@
     "These synthetic cases supply assessor findings, policy evidence and numerical inputs; they do not establish evidence truth or open-ended evidence extraction quality.",
     "The model service was online. No source refresh was requested; this is not a network-isolation test.",
     "Init excerpts include only the two tested plugins and invoked command. Absolute paths are normalised to repository-relative paths after exact runtime path checks. Raw sessions and unrelated local settings are not published.",
-    "The injection run added evidence limitations, explicit null currency fields and supplier-note/framework-catalogue records. Decision inputs and calculated results were unchanged; the input digest correctly changed.",
+    "Fixture equality and any additional evidence are recorded separately for each run; decision inputs and calculated results were independently checked.",
     "Reports and companion outputs were verified independently; hashes are retained here without duplicating the existing synthetic fixture data."
   ]
 }

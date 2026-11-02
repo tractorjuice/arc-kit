@@ -45,8 +45,9 @@ in `results.json`.
 The first injection run scored 7/8 because a redundant grader required the `Write`
 tool. The model had saved a valid report through the explicitly allowed Bash tool.
 The created-report grader now provides the positive serving check; a regression
-proves an absent report fails even if `Write` was called. Replaying that recording
-and a fresh live run both passed. The initial failure is recorded in `results.json`.
+proves an absent report fails even if `Write` was called. The old artifact-only harness reported that replay and a fresh run as passing.
+Neither established plugin loading: both are rejected by the corrected runtime gate.
+The initial artifact-grader failure is recorded in `results.json`.
 
 A preliminary supported report called D7 unassessed solely because its dependency
 register was empty, despite its qualifying Accepted finding. The command now tells

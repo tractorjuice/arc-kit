@@ -22,18 +22,32 @@ The format is the one `claude plugin eval` reads (`case.yaml` schema 1.1, `grade
 
 ## Runtime verification
 
-The headless runner explicitly enables the inline plugin under test and loads its
-declared dependencies from local canonical plugin sources. Exact version pins must
-match; missing or ambiguous sources and dependency cycles fail before starting the
-model. This does not install plugins or change your persistent Claude settings.
+The headless runner explicitly enables the inline plugin under test and its
+manifest-declared dependencies. It prefers sources in the selected checkout, then
+falls back to this repository's plugins. Every dependency requires a matching exact
+version pin; malformed manifests, missing or ambiguous sources and cycles fail
+before starting that case's model call. Installed copies of these namespaces are
+disabled through session-only settings; persistent Claude settings are unchanged.
 
-A passing run requires the CLI's `system/init` event to list the plugin from the
-expected inline source and path, its declared dependencies, and the exact invoked
-command. A model finding a helper on disk is not proof that the plugin was loaded.
-The run must also finish successfully. Runtime failure makes the run invalid even
-when all artifact graders pass or `--threshold` is zero. Replay recomputes this gate
-from the recorded init event; absent init evidence fails closed. Variant copies are
-checked against their recorded paths, even after the temporary copy is removed.
+`runtime` checks the CLI's `system/init` events for the expected inline plugin
+sources and paths, all declared dependencies, and the exact invoked command. Every
+init event must agree on those required entries. A model finding a helper on disk
+is not proof that the plugin was loaded. Replay resolves dependencies afresh from
+the selected manifests; recorded dependency maps cannot weaken these checks. Only
+the root of a variant or effort copy uses its recorded temporary path.
+
+`completion` separately records success, timeout, turn limit or process/setup
+failure. Loaded but incomplete runs retain their artifact scores for diagnosis;
+the overall command still fails regardless of `--threshold`. Invalid loading
+forces score zero. Comparisons with any missing, invalid or incomplete arm are
+marked invalid and do not infer grader improvements.
+
+All selected run counts are validated before any model call. A case setup failure
+is recorded and the batch continues, saving the aggregate after each case.
+Unfiltered `--replay` selects the cases actually recorded in that directory; an
+explicit `--case`, `--tag` or `--runs` selection fails on missing recordings. A
+replay with no evaluated recordings fails. Command invocations must be exact tokens
+followed by whitespace or end of input; punctuation is not an argument separator.
 
 ## Running
 

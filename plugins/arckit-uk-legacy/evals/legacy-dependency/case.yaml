@@ -10,9 +10,7 @@ prompt: /arckit-uk-legacy:uk-legacy-assessment 001 as-of 2026-10-28 risk-model p
   Dated runtime evidence establishes necessary reliance on Payments under the approved
   D7 rule. Payments breaches its D1 rule. The supplied reporting_finding_D7 is
   deliberately Accepted as a local finding before dependency propagation. Preserve
-  that assessor input; the helper should derive effective D7 Legacy through Payments
-  and retain the causal path. This difference is intentional, not contradictory evidence
-  or permission to rewrite the input. Use null for unknowns and finish both artifacts.
+  that assessor input and assess the recorded reliance separately. Use null for unknowns and finish both artifacts.
   No network available; record the catalogue research limitation.
 plugins:
 - ../..
