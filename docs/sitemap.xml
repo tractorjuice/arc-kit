@@ -26,7 +26,7 @@
     </url>
     <url>
         <loc>https://arckit.org/articles.html</loc>
-        <lastmod>2026-09-30</lastmod>
+        <lastmod>2026-11-02</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -1723,6 +1723,12 @@
     <url>
         <loc>https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html</loc>
         <lastmod>2026-09-29</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/share/2026-11-02-arckit-v6-19-is-it-legacy.html</loc>
+        <lastmod>2026-11-02</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
