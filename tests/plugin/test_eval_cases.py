@@ -30,10 +30,12 @@ import subprocess
 from pathlib import Path
 
 import pytest
+import json
 import yaml
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 EVALS = REPO_ROOT / "plugins" / "arckit-claude" / "evals"
+EVAL_ROOTS = sorted(p for p in (REPO_ROOT / "plugins").glob("arckit-*/evals") if p.is_dir())
 GRADER_TYPES = {"file_exists", "regex", "tool_used", "tool_order", "llm", "baseline"}
 REQUIRED_KEYS = {
     "file_exists": {"path"},
@@ -53,7 +55,7 @@ def split_frontmatter(text: str) -> tuple[dict, str]:
 
 
 def case_dirs() -> list[Path]:
-    return sorted(p.parent for p in EVALS.glob("*/case.yaml"))
+    return sorted(p.parent for root in EVAL_ROOTS for p in root.glob("*/case.yaml"))
 
 
 def load_case(case_dir: Path) -> dict:
@@ -71,6 +73,7 @@ ALL_CASES = {d.name: load_case(d) for d in case_dirs()}
 
 
 def test_suite_is_not_empty():
+    assert len(ALL_CASES) == len(case_dirs()), "case names must be unique across plugins"
     assert len(ALL_CASES) >= 4, "the first wave has four cases; do not delete without replacing"
 
 
@@ -79,7 +82,8 @@ def test_case_shape(name):
     case = ALL_CASES[name]
     assert case.get("name") == name, f"{name}: case.yaml name must equal the directory name"
     assert isinstance(case.get("prompt"), str) and case["prompt"].strip(), f"{name}: prompt missing"
-    assert case["prompt"].startswith("/arckit:"), f"{name}: prompt should invoke an /arckit: command"
+    owner = json.loads((case["_dir"].parents[1] / ".claude-plugin/plugin.json").read_text())["name"]
+    assert case["prompt"].startswith(f"/{owner}:"), f"{name}: prompt must invoke its actual plugin namespace {owner}"
     assert case.get("tags"), f"{name}: tags missing"
     assert case.get("plugins") == ["../.."], f"{name}: plugins must point at the plugin root"
     assert case["_graders"], f"{name}: no graders"
@@ -119,7 +123,7 @@ def test_fixture_sources_resolve(name):
     for entry in (case.get("context") or {}).get("add_dirs") or []:
         src = (case["_dir"] / entry["source"]).resolve()
         assert src.is_dir(), f"{name}: add_dirs source {entry['source']} does not resolve"
-        assert EVALS in src.parents, f"{name}: fixture must live under evals/"
+        assert case["_dir"].parent in src.parents, f"{name}: fixture must live under evals/"
         assert not str(entry.get("dest", ".")).startswith("/"), f"{name}: dest must be relative"
 
 
@@ -128,9 +132,9 @@ def test_every_fixture_is_used():
     for case in ALL_CASES.values():
         for entry in (case.get("context") or {}).get("add_dirs") or []:
             used.add((case["_dir"] / entry["source"]).resolve())
-    leaves = [p for p in (EVALS / "fixtures").rglob("*") if p.is_dir() and not any(c.is_dir() for c in p.iterdir())]
+    leaves = [p for root in EVAL_ROOTS for p in (root / "fixtures").rglob("*") if p.is_dir() and not any(c.is_dir() for c in p.iterdir())]
     for leaf in leaves:
-        assert any(leaf == u or u in leaf.parents for u in used), f"unused fixture directory {leaf.relative_to(EVALS)}"
+        assert any(leaf == u or u in leaf.parents for u in used), f"unused fixture directory {leaf.relative_to(REPO_ROOT)}"
 
 
 def test_injection_cases_have_should_serve_counterparts():
@@ -145,7 +149,8 @@ def test_injection_cases_have_should_serve_counterparts():
         neg = [g for g in case["_graders"].values() if g.get("type") == "regex" and g.get("match") == "not_contains"]
         assert neg, f"{name}: an injection case asserts the negative in code (a not_contains regex)"
         writes = [g for g in case["_graders"].values() if g.get("type") == "tool_used" and g.get("tool") == "Write" and int(g.get("min", 1)) >= 1]
-        assert writes, f"{name}: an injection case still requires the artefact to be written (no over-refusal)"
+        artifacts = [g for g in case["_graders"].values() if g.get("type") == "file_exists" and g.get("path", "").startswith("projects/") and g["path"].endswith(".md")]
+        assert writes or artifacts, f"{name}: an injection case still requires the artefact to be written (no over-refusal)"
 
 
 @pytest.mark.parametrize("name", sorted(ALL_CASES))
@@ -168,9 +173,9 @@ def test_evals_dir_is_not_shipped_by_converter():
 
 def test_every_fixture_file_is_tracked_by_git():
     tracked = set(subprocess.run(
-        ["git", "ls-files", "--", str(EVALS / "fixtures")],
+        ["git", "ls-files", "--", *[str(root / "fixtures") for root in EVAL_ROOTS]],
         cwd=REPO_ROOT, capture_output=True, text=True, check=True,
     ).stdout.split())
-    on_disk = {str(p.relative_to(REPO_ROOT)) for p in (EVALS / "fixtures").rglob("*") if p.is_file()}
+    on_disk = {str(p.relative_to(REPO_ROOT)) for root in EVAL_ROOTS for p in (root / "fixtures").rglob("*") if p.is_file()}
     missing = sorted(on_disk - tracked)
     assert not missing, f"fixture files on disk but not tracked (an ignore rule is eating them): {missing}"

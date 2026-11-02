@@ -5,9 +5,27 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Releases before 6.13.0 are in the [changelog archive](https://github.com/tractorjuice/arc-kit/blob/main/docs/changelog/arckit-plugin-archive.md).
+Releases before 6.14.0 are in the [changelog archive](https://github.com/tractorjuice/arc-kit/blob/main/docs/changelog/arckit-plugin-archive.md).
 
 ## [Unreleased]
+
+## [6.19.0] — 2026-11-02
+
+### Added
+
+- **`arckit-uk-legacy`, a new optional overlay** (#1050, from @chrisns). `/arckit-uk-legacy:uk-legacy-assessment` classifies existing systems against the UK's *Updated Definition of Legacy IT*, calculates the separate published risk score, and links each finding to a remediation action. It is experimental and off by default.
+
+### Fixed
+
+- **`/arckit:pages` sites no longer run HTML from documents or filenames** (#875, from @johnfelipe). Rendered Markdown is sanitised, every title and path is escaped, and Mermaid diagrams run in strict mode.
+- **`/arckit:pages` leaves out gitignored files inside a published project** (#1026, from @johnfelipe), not only gitignored project folders.
+- **The `/arckit:pages` dashboard shows change, audit, framework and procurement documents** (#1035).
+- **`/arckit:import-okf` shows imported HTML as text** (#1021, from @johnfelipe), so a tag in a bundle can't run on your `/arckit:pages` site.
+- **The protected-file guard checks the file a write actually lands in** (#1025, from @johnfelipe). It follows symlinks, protects every `.env.*` file except the example, sample and template placeholders, and also checks `NotebookEdit`.
+- **The filename hook no longer creates folders, and acts only inside your project** (#1019, from @johnfelipe).
+- **A research reader's reply that fails the handoff check is withheld** (#1020, from @johnfelipe), so text copied from a vendor page can't reach the conversation that holds Write and Bash.
+- **`/arckit:health` won't write through a symbolic link** (#1022, from @johnfelipe).
+- **Session history and new external file names reach Claude as fenced data** (#1023, from @johnfelipe), so a commit subject can't pose as an instruction.
 
 ## [6.18.3] — 2026-10-26
 
@@ -282,41 +300,3 @@ These five come from @johnfelipe, following up the client risk review that shape
 ### Documentation
 
 - **Claude Code v2.1.236 → v2.1.258 adoption, from the #580 triage.** Claude Fable 5.1 is now the default Fable model (v2.1.257), so `CLAUDE.md`, `start.md` and the enterprise guide name it as the top tier, with the caveat that a Claude apps gateway keeps resolving `fable`/`best` to Fable 5 until it is configured for 5.1. The enterprise guide's model-governance section gains `ANTHROPIC_DEFAULT_MODEL` (v2.1.236), `modelPicker` and `modelPricing` (v2.1.243), and records that `CLAUDE_CODE_SUBAGENT_MODEL` became a default rather than an override in v2.1.251 with `CLAUDE_CODE_SUBAGENT_MODEL_FORCE` (v2.1.257) restoring the override — every ArcKit agent declares `model: inherit`, and until the precedence of that declaration is verified a fleet routing subagents to a cheaper model should use `_FORCE`. Its marketplace section notes the `owner/*` wildcards (v2.1.223), its security baseline adds `permissions.blockReadsOutsideWorkingDirectories` (v2.1.257), and its changelog table gains rows for v2.1.236 through v2.1.258. `hooks/README.md` documents the one effort downgrade the provenance stamp cannot see: from v2.1.251 an Opus 5 request at `xhigh`/`max` with thinking disabled is sent as `high` instead of failing, so Effective Effort over-reports on thinking-off sessions. `READER-PATTERN.md` adds the orchestrator invariant that a reader return marked partial (a subagent stopping at `maxTurns`, v2.1.246) is retry-or-halt, never writer input. `mcp-servers.md` and `byo-llm.md` note that Bedrock, Vertex and Foundry sessions are told about MCP connection failures from v2.1.246, where previously the model concluded the tools did not exist. `RELEASING.md` gains a `claude plugin validate` step. `research.md` and `autoresearch.md` document the 15-minute `WebFetch` URL cache and `CLAUDE_CODE_WEBFETCH_CACHE_TTL_MS` (v2.1.233); `autoresearch.md` also loses the stale claim that sessions cap at 200 subagent spawns — the same v2.1.224 removal #817 corrected in `build.md`, which this guide had restated. `experimental` (v2.1.248, currently only `experimental.cacheTtl`) is added to the agent frontmatter list and to `CLAUDE_ONLY_AGENT_FIELDS` in the converter and its CI guard, pre-emptively, so it can never leak into the non-Claude targets.
-
-## [6.13.0] — 2026-08-31
-
-### Fixed
-
-- **`/arckit:tenders` and `/arckit:competitors` now work on every non-Claude runtime (#447).** Both commands were born three-tier in #558 and never got the pre-split monolith that `converter.py` swaps in for Codex, Gemini, OpenCode, Copilot, Paperclip, Vibe and Kimi. With no monolith the converter falls through to the orchestrator body, so all seven extensions have been shipping `Dispatch the reader using the Agent tool with subagent_type: "arckit-tenders-reader"` since v5.9.0 — an instruction none of those runtimes can honour. Adds `agents/arckit-tenders.md` and `agents/arckit-competitors.md`, single-agent prompts that do the MCP querying, derivation and rendering in one role, with the same guardrails, hard limits, mandatory awarded-value caveat and quality-checklist step as the split tiers. Claude Code is unaffected and keeps the three-tier path.
-
-  This is the same defect #447 reported against `datascout` in #446, which was fixed by retaining that command's monolith. It recurred because nothing derived the rule: `tests/codex/test_codex_extension.py` checked three hardcoded skill names, on one target, so two commands added afterwards were never in scope.
-
-- **New CI guard: `scripts/check-orchestrator-leaks.py`.** Enumerates every `plugins/*/commands/*.md`, resolves each through `converter.py`'s own `build_agent_map()`, and fails if the prompt a non-Claude target would receive contains subagent-dispatch vocabulary. Because it reuses the converter's resolution logic rather than restating it, the check cannot drift from what the converter actually emits, and a new split command is covered the day it lands. `CLAUDE_ONLY_COMMANDS` is promoted from a function-local literal in `converter.py` to a module constant so there is exactly one copy. The matching Codex test now enumerates all skills instead of naming three, and `AGENT_BACKED_SKILLS` is derived from the plugin source for the same reason.
-
-- **Mistral Vibe no longer registers the Claude-only reader/writer subagents.** `generate_vibe_agent_toml_files()` was the one generation path missing the `is_subagent_file()` filter that every other target applies, so the Vibe extension shipped 29 agent definitions — 19 of them subagents whose own descriptions read "Not user-invocable — only the orchestrator dispatches this subagent via the Agent tool". Vibe surfaces every agent file as a user-invocable `--agent` target and has no orchestrator-dispatch primitive, so those 19 were unusable noise. Vibe now ships 12 single-tier agents, matching the other targets.
-
-- **Mermaid ER guard rails for `/arckit:data-model` and the `mermaid-syntax` skill (#435).** `/arckit:diagram` has carried the `PK, FK` comma rule since #78; `/arckit:data-model` never did, and it is the command that emitted the `uuid tenant_id FK UK` attribute that failed to render in #435. Adds a Mermaid ERD Rules block to `data-model.md`, a combined-key note to both copies of `data-model-template.md`, and three ER rows to the skill's gotchas table (combined keys, attribute comments, cardinality tokens) in place of a "missing semicolons in ER" row that described no real error. The skill's `paths:` now auto-activates on `ARC-*-DATA-*.md` as well as `ARC-*-DIAG-*.md`, having never fired on the artefact class that broke. Note the rule is *not* "one key per attribute" as #435 states — Mermaid accepts multiple keys comma-separated; `FK UK` fails only for the missing comma. Every claim verified against `mermaid@11.15.0`: `FK UK` and `PK_FK` are parse errors, `FK, UK` and `PK, FK` parse.
-
-- **`/arckit:customize list` now covers the community overlays too, closing #717.** Piece 1 fixed the silent-partial-answer; this completes the reachability half. `list` globs `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/` alongside the core tree and renders the overlay templates grouped by owning plugin, derived from the path (`plugins/uk/finance/` is `arckit-uk-finance`). Copy-by-name already reached the overlays as of piece 1, so `/arckit:customize codebase-audit` worked but nothing told you the name existed. Discovery was the last gap.
-
-  Overlay templates are deliberately **not** added to the hardcoded table: `list` renders them from the glob, so a newly added overlay appears without editing the command, and 118 extra rows would bloat a command body that sits in context on every invocation.
-
-  **`all` stays core-only, on purpose**, and now says so as a documented decision rather than an unstated limitation. Expanding it to all 183 would drop twelve UAE, twelve France, twelve Canada and ten US templates into a project that uses none of them.
-
-  `check-customize-table.py` gains a section-aware check that the overlay glob is present in *both* the `list` action and the copy-by-name fallback. A global occurrence count was not enough: `list` losing the glob while the fallback kept it is exactly the regression #717 was about, and the first version of the check did not catch it.
-
-- **`/arckit:customize` no longer presents a core-only result as the full inventory** (#717, piece 1). The command globs `${CLAUDE_PLUGIN_ROOT}/templates/`, which resolves to the plugin it ships in, so the community overlays' templates are invisible to it: 118 of the 183 templates in the repo, or 64%. Nothing in the command's 130-odd lines said so, so `list` presented a core-only list as the complete catalogue and `all` reported success having copied 65 of 183. A user asking for all templates and getting a third of them had no signal that anything was missing.
-
-  The reachability fix is piece 2 and is tracked separately. What changes here is that the command stops giving a wrong answer: `list` and `all` state their scope, the "not found" branch checks the overlays before dead-ending, and the command explains how to copy an overlay template by hand. That path uses `${CLAUDE_PLUGIN_ROOT}/plugins/**/templates/`, because the core plugin bundles a copy of every overlay under its own root, so no plugin-cache walking is involved.
-
-- **The `customize.md` template table matches the templates on disk.** It had drifted in both directions. Twenty core templates were absent from it (`competitors`, `conformance-assessment`, `data-source-profile`, `dfd`, `framework-overview`, `gcp-research`, `glossary`, the four `gov-*` and `wardley-*` sets, `grants`, `maturity-model`, `presentation`, `tech-note`, `tenders`, `vendor-profile`), and one row named `uk-gov-tcop`, a template that has never existed, so asking for it hit the "source template does not exist" branch while the docs said it was valid. The table now carries all 65 core templates, sorted, with the phantom row removed.
-
-- **`docs/guides/customize.md` describes the plugin's template locations correctly.** It told plugin users that defaults live in `.arckit/templates/`, which is the CLI and non-Claude-extension story; under the Claude Code plugin they live in `${CLAUDE_PLUGIN_ROOT}/templates/`. The guide now covers both, states the same overlay scope as the command, and stops implying that its truncated sample table is the catalogue.
-
-### Added
-
-- **New community plugin `arckit-oaa` — Open Agile Architecture (O-AA, standard C208).** Five new commands (`oaa-adm-lite`, `product-architecture`, `agile-strategy`, `agile-security`, `agile-governance`) in a standalone plugin with its own `/arckit-oaa:` command namespace, five doc-type codes (`OASTR`, `OAPR`, `OAAL`, `OASEC`, `OAGOV`), the `oaa-full` build recipe, and `userConfig` placeholder support. Registered in both marketplaces, the doc-type registry, `pages.md`, `llms.txt`, and all extension formats. Complementary to `arckit-togaf-adm`, which keeps the full document-centric ADM; neither depends on the other. Core `references/quality-checklist.md` gains the five OAA per-type sections and `references/citation-instructions.md` the O-AA C208 derivation row, so every plugin keeps the shared assets byte-identical to core. The core `plugin.json` description's command count is also corrected (73 → 75). Contributed by @terrygzhou (#825), carried unchanged in #828.
-
-- **`scripts/check-customize-table.py`, wired into `lint-markdown.yml`.** Holds the table to the templates on disk: every core template has a row, every row names a template that exists, every row's `/arckit:<command>` reference resolves to a real command file, and no template is listed twice. It also asserts the scope wording is still present, so the silent-partial-answer failure mode cannot come back by deletion. All five failure modes were verified against deliberately reintroduced instances, including the exact `uk-gov-tcop` row this PR removes.
-
-  This fits the existing guard pattern (`check-doc-type-registry.py`, `check-multi-instance-parity.py`, `check-guide-parity.py`). Nothing had ever looked at this table, which is why it drifted through both halves undetected.

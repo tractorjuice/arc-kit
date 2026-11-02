@@ -1,7 +1,7 @@
 {
   "articles.html": {
-    "lastmod": "2026-09-30",
-    "text_sha256": "d8ad3de29d4009793bcae5fa677d3d76bcdce36e99caf294da2b59eea5d23263"
+    "lastmod": "2026-11-02",
+    "text_sha256": "a1d1bebb9aa87e91787c29466d1eaebf4186508681ffd9db45cabc26bf6150a5"
   },
   "certification/awareness.html": {
     "lastmod": "2026-10-14",
@@ -16,8 +16,8 @@
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
   "commands.html": {
-    "lastmod": "2026-10-31",
-    "text_sha256": "ba617d92de5c63c55e9db97dbdb9405fb4c355a21be26ec8aee766134fe3db0d"
+    "lastmod": "2026-11-02",
+    "text_sha256": "3787d91a7770e3f9fefd1ed199756c2f036054b239b219cee3ffd58911b4c3d5"
   },
   "contributors.html": {
     "lastmod": "2026-10-28",
@@ -40,20 +40,20 @@
     "text_sha256": "5b41801c5e7f3fb3fabc58fd1cd3a891f511b18a10b0fc40a6e935aa6052125d"
   },
   "guides.html": {
-    "lastmod": "2026-10-31",
-    "text_sha256": "e9d97bf08b2d34a1498cffdfd5a7b2969a26a8951d56c5a5e11ea69552a49dd3"
+    "lastmod": "2026-11-02",
+    "text_sha256": "30f1fbde5860fddf41c754556fb0fe8a1e4704f1a3660e9cebbf1a1c7989f245"
   },
   "index.html": {
-    "lastmod": "2026-10-31",
-    "text_sha256": "bdafca6c0ab7d61a00f511f815f5a8bcfa564c0dc2cc2d95dcafd3f1a1dc002a"
+    "lastmod": "2026-11-02",
+    "text_sha256": "40d0209c147a3ae9c84aa65d495c817daaec7e7b92034f3b28423989c87553d0"
   },
   "llms.txt": {
-    "lastmod": "2026-10-31",
-    "text_sha256": "b07f2ac98602666373bc07dc441712c1d77bcdee924fcd2e0d257c81ed667c28"
+    "lastmod": "2026-11-02",
+    "text_sha256": "161c708c15044e28a23ad351e038f8f82181db04cd64a0869af0043e734c72ea"
   },
   "on-github.html": {
-    "lastmod": "2026-10-26",
-    "text_sha256": "dece2b08b5eb1b8aec91a432a003014e50fe7bb63669db643de32df3c21d0f12"
+    "lastmod": "2026-11-02",
+    "text_sha256": "a2259ea2c373c3063ba142bcce47e10c394a12b85b76f4006617abc2fcbbbcfb"
   },
   "privacy.html": {
     "lastmod": "2026-10-27",

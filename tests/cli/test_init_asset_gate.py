@@ -28,7 +28,10 @@ def complete_paths(tmp_path: Path) -> dict:
     paths = {}
     for key in keys:
         target = tmp_path / key
-        target.mkdir(parents=True, exist_ok=True)
+        if key in {"doc_control_rendering", "doc_control_uk"}:
+            target.write_text("asset")
+        else:
+            target.mkdir(parents=True, exist_ok=True)
         paths[key] = target
     return paths
 
@@ -115,3 +118,8 @@ def test_init_exits_nonzero_and_leaves_no_project_behind(
     assert result.exit_code == 1, result.output
     assert "initialized successfully" not in result.output
     assert not (workdir / "demo").exists()
+
+
+def test_optional_overlay_is_not_a_global_cli_prerequisite():
+    from arckit_cli import COMMON_REQUIRED_ASSETS
+    assert not any(key.startswith("legacy_") for key in COMMON_REQUIRED_ASSETS)

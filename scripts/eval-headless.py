@@ -68,9 +68,9 @@ VARIANT_IGNORE = {"__pycache__", ".DS_Store"}
 
 
 def prompt_command(prompt: str) -> str:
-    m = re.match(r"\s*/arckit:([\w.-]+)", prompt)
+    m = re.match(r"\s*/arckit(?:-[\w-]+)?:([\w.-]+)", prompt)
     if not m:
-        raise ValueError(f"prompt does not invoke an /arckit: command: {prompt[:60]!r}")
+        raise ValueError(f"prompt does not invoke an ArcKit command: {prompt[:60]!r}")
     return m.group(1)
 
 

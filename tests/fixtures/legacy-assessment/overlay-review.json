@@ -1,0 +1,58 @@
+{
+  "reviewDate": "2026-11-02",
+  "scope": "Optional UK legacy overlay migration and deterministic runtime distribution",
+  "findings": [
+    {
+      "id": "OV01",
+      "finding": "Core reference synchronisation distributed legacy-only publications to unrelated plugins.",
+      "resolution": "Framework sources and the LEGACY checklist are overlay-owned; tests reject legacy reference files in core and unrelated flat overlays."
+    },
+    {
+      "id": "OV02",
+      "finding": "Data merging alone does not ship a helper and schema to every runtime or installed CLI scaffold.",
+      "resolution": "Generic runtime-assets declarations validate confined regular files, detect collisions and supply declared dependencies to all targets. CLI copying uses merged script/schema folders, not Legacy-required asset keys."
+    },
+    {
+      "id": "OV03",
+      "finding": "Skipping regeneration could package stale declared command dependencies.",
+      "resolution": "The generic converter runtime check compares installed-target assets with their owning sources, and the build hook invokes it even when conversion is skipped."
+    },
+    {
+      "id": "OV04",
+      "finding": "Evaluation discovery and invocation only understood core ownership, and ignore rules hid moved synthetic fixtures while leaving overlay result recordings exposed.",
+      "resolution": "Cases are discovered across canonical plugins, namespace checks use the actual owner manifest, synthetic fixtures remain tracked, and result recordings are ignored for every overlay."
+    },
+    {
+      "id": "OV05",
+      "finding": "Maintainer evaluation fixtures would have been duplicated into the installed overlay mirror and published plugin.",
+      "resolution": "Evaluation directories remain in canonical source for tests and are excluded from plugin mirror and publication copies."
+    },
+    {
+      "id": "OV06",
+      "finding": "Generated catalogues passed checkout tests but the built wheel omitted ignored data directories. Source-shaped artifact patterns did not match installed shared-data paths.",
+      "resolution": "A generic installed-path artifact rule retains public shared catalogues. A regression exercises Hatch actual selection rules, and fresh installed CLI scaffolds are smoke-tested with network access disabled."
+    },
+    {
+      "id": "OV07",
+      "finding": "A generated Paperclip helper remained tracked and input handoffs appeared as suggested next steps.",
+      "resolution": "Ignore and untrack generated scripts; retain only sobc, roadmap and plan handoffs, with evidence inputs documented in the command body."
+    },
+    {
+      "id": "OV08",
+      "finding": "Prefixing the command could silently remove the embedded Paperclip template and leave the filename generator unavailable there.",
+      "resolution": "Rename the template to match the prefixed command, declare the shared filename helper as a runtime asset, and execute it on all targets and installed scaffolds. Regressions verify the embedded template and follow-up handoffs."
+    },
+    {
+      "id": "OV09",
+      "finding": "The injection evaluation rejected an actual completed report because it used allowed Bash instead of Write.",
+      "resolution": "Retain the created-report grader as the positive serving gate, remove the redundant Write-call requirement, and test that absent output fails even if Write was called. Preserve the initial failure in the live evaluation record."
+    },
+    {
+      "id": "OV10",
+      "finding": "A live report called D7 unassessed solely because its dependency register was empty, despite an accepted qualifying D7 finding.",
+      "resolution": "Clarify narrative consistency with criterion results and distinguish empty edges from missing evidence. Re-run the live supported case and review its narrative separately from deterministic scoring."
+    }
+  ],
+  "unchangedBehaviour": "The calculator and assessment schema are byte-identical to the pre-migration reviewed implementation; numerical and classification regressions remain in place.",
+  "limitations": "Deterministic checks do not establish evidence truth. Curated live results and their skipped LLM judgement graders are recorded separately in live-evaluation-2026-11-02/. All fixtures are synthetic."
+}

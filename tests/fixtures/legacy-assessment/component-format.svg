@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 631" width="1260" height="631" role="img" aria-labelledby="title description">
+<title id="title">Component legacy assessment breakdown</title>
+<desc id="description">Horizontal component rows across Accepted, Action-Required and Legacy. Diamonds plot calculated central component indices; bars plot calculated lower and upper indices. Confidence is interval precision, not probability or evidence quality. The local calibration is distinct from government classification.</desc>
+<metadata>Input SHA-256: e50af211e40de377a8b601965ba1d0caa8ce63d34eff7e380a4401d396d3a594; calculation version: 1.2.0; component chart version: 4</metadata>
+<rect width="100%" height="100%" fill="white"/><g font-family="Arial, sans-serif" fill="#172b4d">
+<text x="30" y="38" font-size="25" font-weight="bold">Component legacy assessment</text>
+<text x="30" y="66" font-size="15">ARC-001-LEGACY-v1.0 | 2026-10-28</text>
+<text x="30" y="91" font-size="14">Local calibrated component index; independent of government classification and numerical risk</text>
+<rect x="20" y="154" width="1210" height="42" fill="#f8fafc"/>
+<rect x="20" y="238" width="1210" height="42" fill="#f8fafc"/>
+<rect x="20" y="322" width="1210" height="42" fill="#f8fafc"/>
+<rect x="330" y="124" width="150" height="282" fill="#dcfce7" stroke="#94a3b8"/>
+<text x="405" y="142" text-anchor="middle" font-size="13" font-weight="bold">Accepted</text>
+<rect x="480" y="124" width="150" height="282" fill="#fef3c7" stroke="#94a3b8"/>
+<text x="555" y="142" text-anchor="middle" font-size="13" font-weight="bold">Action-Required</text>
+<rect x="630" y="124" width="150" height="282" fill="#fee2e2" stroke="#94a3b8"/>
+<text x="705" y="142" text-anchor="middle" font-size="13" font-weight="bold">Legacy</text>
+<text x="320" y="142" text-anchor="end" font-size="13" font-weight="bold">Component</text>
+<text x="794" y="142" font-size="13" font-weight="bold">Confidence¹</text>
+<text x="914" y="142" font-size="13" font-weight="bold">Assessment notes</text>
+<g data-component-id="example_1"><title>Component A (example_1). Actual classification Legacy. Index 2.670, range 2.300–2.900. Local calculation, not a government score.</title>
+<text x="320" y="179" text-anchor="end" font-size="12" font-weight="bold">Component A</text>
+<path data-role="confidence-range" data-minimum="2.3" data-maximum="2.9" d="M 675 175 H 765" stroke="#1e3a8a" stroke-width="6" stroke-opacity="0.85" stroke-linecap="round"/>
+<path data-marker="calculated" data-position="2.67" d="M 730.5 168 L 737.5 175 L 730.5 182 L 723.5 175 Z" fill="white" stroke="#b91c1c" stroke-width="2"/>
+<text x="794" y="179" font-size="12">High 80%</text>
+<text x="914" y="166" font-size="12">Recorded: Legacy</text>
+<text x="914" y="180" font-size="11" fill="#475569">2.67 [2.30–2.90]</text>
+<text x="914" y="193" font-size="10" fill="#475569">7/7 indicators; 7 estimated inputs</text></g>
+<g data-component-id="example_2"><title>Component B (example_2). Actual classification Action-Required. Index 1.170, range 1.120–1.320. Local calculation, not a government score.</title>
+<text x="320" y="221" text-anchor="end" font-size="12" font-weight="bold">Component B</text>
+<path data-role="confidence-range" data-minimum="1.12" data-maximum="1.32" d="M 498 217 H 528" stroke="#1e3a8a" stroke-width="6" stroke-opacity="0.949999999975" stroke-linecap="round"/>
+<path data-marker="calculated" data-position="1.17" d="M 505.5 210 L 512.5 217 L 505.5 224 L 498.5 217 Z" fill="white" stroke="#b45309" stroke-width="2"/>
+<text x="794" y="221" font-size="12">High 93%</text>
+<text x="914" y="208" font-size="12">Recorded: Action-Required</text>
+<text x="914" y="222" font-size="11" fill="#475569">1.17 [1.12–1.32]</text>
+<text x="914" y="235" font-size="10" fill="#475569">7/7 indicators; 7 estimated inputs</text></g>
+<g data-component-id="example_4"><title>Component D (example_4). Actual classification Undetermined. Index 1.160, range 0.450–2.550. Local calculation, not a government score.</title>
+<text x="320" y="263" text-anchor="end" font-size="12" font-weight="bold">Component D</text>
+<path data-role="confidence-range" data-minimum="0.45" data-maximum="2.55" d="M 397.5 259 H 712.5" stroke="#1e3a8a" stroke-width="9" stroke-opacity="0.475" stroke-linecap="round"/>
+<path data-marker="calculated" data-position="1.16" d="M 504 252 L 511 259 L 504 266 L 497 259 Z" fill="white" stroke="#b45309" stroke-width="2"/>
+<text x="794" y="263" font-size="12">Low 30%</text>
+<text x="914" y="250" font-size="12">Recorded: Undetermined</text>
+<text x="914" y="264" font-size="11" fill="#475569">1.16 [0.45–2.55]</text>
+<text x="914" y="277" font-size="10" fill="#475569">7/7 indicators; 7 estimated inputs</text></g>
+<g data-component-id="example_5"><title>Component E (example_5). Actual classification Undetermined. Index 0.780, range 0.320–1.550. Local calculation, not a government score.</title>
+<text x="320" y="305" text-anchor="end" font-size="12" font-weight="bold">Component E</text>
+<path data-role="confidence-range" data-minimum="0.32" data-maximum="1.55" d="M 378 301 H 562.5" stroke="#1e3a8a" stroke-width="9" stroke-opacity="0.6925" stroke-linecap="round"/>
+<path data-marker="calculated" data-position="0.78" d="M 447 294 L 454 301 L 447 308 L 440 301 Z" fill="white" stroke="#15803d" stroke-width="2"/>
+<text x="794" y="305" font-size="12">Medium 59%</text>
+<text x="914" y="292" font-size="12">Recorded: Undetermined</text>
+<text x="914" y="306" font-size="11" fill="#475569">0.78 [0.32–1.55]</text>
+<text x="914" y="319" font-size="10" fill="#475569">7/7 indicators; 7 estimated inputs</text></g>
+<g data-component-id="example_3"><title>Component C (example_3). Actual classification Accepted. Index 0.520, range 0.420–0.780. Local calculation, not a government score.</title>
+<text x="320" y="347" text-anchor="end" font-size="12" font-weight="bold">Component C</text>
+<path data-role="confidence-range" data-minimum="0.42000000000000004" data-maximum="0.78" d="M 393 343 H 447" stroke="#1e3a8a" stroke-width="6" stroke-opacity="0.91" stroke-linecap="round"/>
+<path data-marker="calculated" data-position="0.52" d="M 408 336 L 415 343 L 408 350 L 401 343 Z" fill="white" stroke="#15803d" stroke-width="2"/>
+<text x="794" y="347" font-size="12">High 88%</text>
+<text x="914" y="334" font-size="12">Recorded: Accepted</text>
+<text x="914" y="348" font-size="11" fill="#475569">0.52 [0.42–0.78]</text>
+<text x="914" y="361" font-size="10" fill="#475569">7/7 indicators; 7 estimated inputs</text></g>
+<g data-component-id="example_6"><title>Component F (example_6). Actual classification Undetermined. Index unavailable, range 0.000–3.000. Local calculation, not a government score.</title>
+<text x="320" y="389" text-anchor="end" font-size="12" font-weight="bold">Component F</text>
+<path data-role="confidence-range" data-minimum="0" data-maximum="3" d="M 330 385 H 780" stroke="#1e3a8a" stroke-width="9" stroke-opacity="0.25" stroke-linecap="round" stroke-dasharray="4 5"/>
+<text x="794" y="389" font-size="12">Unmeasured 0%</text>
+<text x="914" y="376" font-size="12">Recorded: Undetermined</text>
+<text x="914" y="390" font-size="11" fill="#475569">No central estimate [0.00–3.00]</text>
+<text x="914" y="403" font-size="10" fill="#475569">0/7 indicators; 0 estimated inputs</text></g>
+<path d="M 330 406 v 5" stroke="#64748b"/><text x="330" y="424" text-anchor="middle" font-size="11" fill="#475569">0</text>
+<path d="M 480 406 v 5" stroke="#64748b"/><text x="480" y="424" text-anchor="middle" font-size="11" fill="#475569">1</text>
+<path d="M 630 406 v 5" stroke="#64748b"/><text x="630" y="424" text-anchor="middle" font-size="11" fill="#475569">2</text>
+<path d="M 780 406 v 5" stroke="#64748b"/><text x="780" y="424" text-anchor="middle" font-size="11" fill="#475569">3</text>
+<path d="M 30 451 H 90" stroke="#1e3a8a" stroke-width="6"/><text x="105" y="455" font-size="12">Bar: calculated lower–upper range. Diamond: calculated central estimate, not the range midpoint.</text>
+<text x="30" y="484" font-size="12">¹ Confidence = range precision: 100 × (1 − interval width / 3). High ≥80%, medium ≥50%, otherwise low.</text>
+<text x="30" y="510" font-size="12">This is a local ArcKit plotting convention, not a probability, readiness percentage or published government score.</text>
+<text x="30" y="536" font-size="12">Each criterion is calibrated at baseline=0, action-required=1 and legacy=2; the strongest indicator determines the component index.</text>
+<text x="30" y="562" font-size="12">Missing indicators extend the upper bound to 3 and suppress the diamond. Labels retain exact bounds for narrow ranges.</text>
+<text x="30" y="588" font-size="12">Recorded classifications remain separate. Raw measurements, calibration and evidence references are in the report.</text>
+</g></svg>

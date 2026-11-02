@@ -94,3 +94,19 @@ def test_working_tree_is_packageable() -> None:
     hook = load_build_hook()
 
     assert hook.missing_assets(REPO_ROOT) == []
+
+
+def test_shared_data_selection_keeps_generated_offline_catalogues():
+    """Exercise Hatch's actual selection rules, including the global data/ ignore."""
+    from hatchling.builders.wheel import WheelBuilder
+    builder = WheelBuilder(str(REPO_ROOT))
+    sources = {source: target for source, target in builder.config.shared_data.items()
+               if "/extensions/arckit-" in source.replace("\\", "/")}
+    included = {file.distribution_path.replace("\\", "/")
+                for file in builder.recurse_explicit_files(sources)}
+    for target in ["codex", "opencode", "copilot", "vibe"]:
+        prefix = f"share/arckit/extensions/arckit-{target}/"
+        for relative in ["scripts/legacy-assessment.mjs", "schemas/legacy-assessment-1.0.schema.json",
+                         "data/legacy-frameworks-1.0.json", "data/legacy-risk-rubric-2026-08-17.json",
+                         "data/legacy-definition-2026-08-17.json"]:
+            assert prefix + relative in included, target + ": " + relative

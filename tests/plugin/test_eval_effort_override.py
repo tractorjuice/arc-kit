@@ -30,6 +30,7 @@ def frontmatter(path: Path) -> str:
 def test_prompt_command():
     assert eval_headless.prompt_command("/arckit:sobc 001 Business case") == "sobc"
     assert eval_headless.prompt_command("  /arckit:wardley.value-chain x") == "wardley.value-chain"
+    assert eval_headless.prompt_command("/arckit-uk-legacy:uk-legacy-assessment 001") == "uk-legacy-assessment"
     with pytest.raises(ValueError):
         eval_headless.prompt_command("please run sobc")
 
@@ -111,3 +112,12 @@ def test_timeout_is_recorded_not_raised(tmp_path, monkeypatch):
     assert rec["timed_out"] is True
     assert rec["subtype"] == "timeout after 1s"
     assert rec["exit_code"] is None
+
+
+def test_serving_grader_measures_created_report_not_choice_of_write_tool(tmp_path):
+    grader = {"_name": "report", "type": "file_exists", "path": "projects/001-test/ARC-001-LEGACY-v1.0.md"}
+    rec = {"tool_uses": [{"name": "Bash", "input": {"command": "synthetic renderer"}}], "created_files": [grader["path"]]}
+    assert eval_headless.grade(grader, rec, tmp_path)["passed"]
+    rec["created_files"] = []
+    rec["tool_uses"] = [{"name": "Write", "input": {"file_path": grader["path"]}}]
+    assert not eval_headless.grade(grader, rec, tmp_path)["passed"]

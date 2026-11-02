@@ -431,6 +431,12 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:uk-fs-consumer-duty` | — | — | principles, requirements, risk, stakeholders |
 | `/arckit:uk-fs-ctp-dependency` | — | principles, requirements, risk, uk-fs-safeguarding | — |
 
+### ArcKit UK Legacy IT Assessment Overlay (`arckit-uk-legacy`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit-uk-legacy:uk-legacy-assessment` | — | requirements, risk, diagram, operationalize, devops, secure | principles, evaluate, finops, service-assessment, tcop, sobc, roadmap, plan |
+
 ### ArcKit UK NHS Clinical Safety Overlay (`arckit-uk-nhs`)
 
 | Command | Needs (M) | Recommended (R) | Optional (O) |
@@ -1322,3 +1328,24 @@ Wave 5 (authorization): us-sbom-eo-14028 → us-fedramp-ssp → us-fedramp-readi
 
 - **Updated**: Total command count to 135 (71 official + 64 community; community now includes 12 Canada + 12 UAE + 7 EU + 12 FR + 3 Austrian + 8 Australian + 10 USA)
 - **Updated**: Matrix version date to 2026-05-23
+
+## UK Legacy IT Assessment Overlay (optional)
+
+- `/arckit-uk-legacy:uk-legacy-assessment` consumes requirements, risks, architecture,
+  operational readiness, DevOps, security, supplier evaluations, cost evidence and
+  previous assessments when available. Principles and TOGAF inventories are optional.
+- Missing architecture documents create evidence gaps, not blocked assessments.
+  Operational records and external support/contract notices can establish findings.
+- The overlay's `handoffs:` link evidence producers and the existing business-case,
+  roadmap and planning commands. Core command prompts have no dependency on the overlay.
+  Its report can be supplied as evidence for those workflows when relevant.
+
+```text
+Existing core artifacts + operational evidence
+                    ↓
+ arckit-uk-legacy:uk-legacy-assessment
+                    ↓
+ Classification + separate numerical risk + action plan
+                    ↓
+        Optional input to sobc / roadmap / plan
+```
