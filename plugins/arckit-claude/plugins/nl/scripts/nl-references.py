@@ -309,15 +309,19 @@ def escape_headings(text):
     return HEADING_START.sub(lambda m: m.group(1) + "\\#", text)
 
 
-# One container marker at a line start: a list item or a blockquote.
-# A list marker needs a space or tab after it; a blockquote marker does not.
-CONTAINER = re.compile(r"[ \t]*(?:>|(?:[-*+]|\d{1,9}[.)])(?=[ \t]|$))[ \t]*")
+# One container marker at a line start: a list item or a blockquote, as
+# (indentation, marker, blanks after it). A list marker needs a space or tab
+# after it; a blockquote marker does not.
+CONTAINER = re.compile(r"([ \t]*)(>|(?:[-*+]|\d{1,9}[.)])(?=[ \t]|$))([ \t]*)")
 
 
 def escape_containers(body):
-    """Escape a blockquote or heading that opens inside list items or quotes.
+    """Escape a blockquote or heading that opens inside list items or quotes,
+    and leave one space after each marker.
 
-    `- > # x` is a heading in a quote in a list item, at any depth. Walking
+    `- > # x` is a heading in a quote in a list item, at any depth. Text five
+    columns or more after a marker renders as a code block, where a run of
+    blanks puts it out of sight; the script writes one space. Walking
     the markers one at a time keeps this linear, where a regex with nested
     repeats could backtrack. The script never writes a list item that opens
     with `>` or `#`, so only source text is touched."""
@@ -328,11 +332,14 @@ def escape_containers(body):
             m = CONTAINER.match(line, pos)
             if not m:
                 break
-            marker = m.group(0)
-            if pos and marker.strip() == ">":
-                marker = marker.replace(">", "\\>", 1)   # a quote inside a list item
+            indent, marker, gap = m.groups()
+            if pos and marker == ">":
+                marker = "\\>"   # a quote inside a list item
                 changed = True
-            parts.append(marker)
+            if gap not in ("", " "):
+                gap = " "
+                changed = True
+            parts.append(indent + marker + gap)
             pos = m.end()
         if pos and line.startswith("#", pos):
             parts.append("\\")
@@ -356,7 +363,10 @@ def neutralise(text):
     block can carry a `%%` comment), math (`\\phantom{}` hides text) or table
     (a renderer drops the cells past the header's columns) can form, and a
     blockquote or setext underline at the start of a line is escaped, so
-    source text cannot pose as a section of the extract. The script's own
+    source text cannot pose as a section of the extract. No indented code
+    block forms either, where no line wraps and a run of blanks puts the
+    text out of sight: clean() takes the indentation off source lines,
+    and one space follows each list or quote marker. The script's own
     links are bare URLs, and its own text below the header uses none of
     these characters.
 
@@ -443,6 +453,15 @@ def clean(value):
     # \b: not <script>, <style>, <summary>. [^<>]: a run of `<span` without a `>`
     # would otherwise be rescanned from every opener (quadratic).
     v = re.sub(r"</?(?:span|div|small|sup|sub|u|s)\b[^<>]*>", "", v, flags=re.I)
+    # Remove what neutralise() would remove before the line starts are read:
+    # a line opening with a zero-width or wide space before `#` would pass
+    # the heading escape, then become a heading once that character is gone.
+    v = visible_chars(v)
+    # Source lines lose their indentation. Four columns or more render as a
+    # code block, where no line wraps and a run of blanks puts the text out
+    # of sight; in the wiki a line that opens with a space is preformatted
+    # too. The list nesting below is added after this.
+    v = re.sub(r"^[ \t]+", "", v, flags=re.M)
     # Bullets before bold: once '''x''' is **x**, a line opening in bold
     # would read as a sub-bullet.
     v = re.sub(r"^\*\*\s*", "  - ", v, flags=re.M)              # wiki sub-bullets
@@ -457,10 +476,6 @@ def clean(value):
     # long run with no line break after it would otherwise be rescanned
     # from every blank (quadratic: hours on a 2 MB page).
     v = re.sub(r"(?<![ \t])[ \t]+\n", "\n", v)
-    # Remove what neutralise() would remove before escaping headings: a line
-    # opening with a zero-width or wide space before `#` passes the escape,
-    # then becomes a heading once that character is gone.
-    v = visible_chars(v)
     return escape_headings(re.sub(r"\n{3,}", "\n\n", v).strip())
 
 
@@ -1281,6 +1296,24 @@ def from_local(source, directory, force, build, files):
     return written(result, source, directory, "file", state, new_version, texts, files)
 
 
+def inside(root, target):
+    """Whether `target` is the directory `root` or below it. Compared by
+    identity, not by name, so a differently cased path to the same directory
+    on a case-insensitive file system (macOS, Windows) counts as inside, and
+    a path on another drive does not."""
+    path = target
+    while True:
+        try:
+            if os.path.samefile(path, root):
+                return True
+        except OSError:   # a part that does not exist yet
+            pass
+        parent = os.path.dirname(path)
+        if parent == path:
+            return False
+        path = parent
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0],
                                  epilog=__doc__.split("\n\n", 1)[1],
@@ -1296,28 +1329,31 @@ def main(argv=None):
     ap.add_argument("--from-dump", action="append", metavar="XML",
                     help="build the NORA extract offline from a NORA Online MediaWiki XML export "
                          "(repeat for several files)")
-    ap.add_argument("--from-xml", metavar="XML",
+    ap.add_argument("--from-xml", action="append", metavar="XML",
                     help="build the GEMMA extracts offline from a local copy of `GEMMA release.xml`")
     args = ap.parse_args(argv)
+    if not args.dir:
+        ap.error("--dir needs a directory")
+    if args.from_xml and len(args.from_xml) > 1:
+        ap.error("--from-xml takes one file: `GEMMA release.xml` holds the whole model")
+    args.from_xml = args.from_xml[0] if args.from_xml else None
     if args.from_dump and args.source == "gemma":
         ap.error("--from-dump builds the NORA extract; use it with nora or all")
     if args.from_xml and args.source == "nora":
         ap.error("--from-xml builds the GEMMA extracts; use it with gemma or all")
     # A typo is a usage error, not an unusable source: report it as one.
     for given in (args.from_dump or []) + ([args.from_xml] if args.from_xml else []):
-        if not os.path.isfile(given):
+        if not os.path.exists(given):
             ap.error(f"no such file: {given}")
+        if not os.path.isfile(given):
+            ap.error(f"not a regular file: {given}")
     # The commands pre-approve this script with any arguments, so it keeps its
     # writes inside the directory it runs from (the project): a --dir that
     # resolves outside it, also through a symlink, is refused.
     root = os.path.realpath(os.getcwd())
-    target = os.path.realpath(args.dir)
-    try:
-        inside = os.path.commonpath([root, target]) == root
-    except ValueError:   # another drive on Windows
-        inside = False
-    if not inside:
-        ap.error(f"--dir must be inside the current directory ({root}): {args.dir}")
+    if not inside(root, os.path.realpath(args.dir)):
+        ap.error(f"--dir must be inside the current directory ({root}): {args.dir}; "
+                 "run the script from the project root")
 
     nora_files = {NORA_FILE: NORA_TITLE}
     results = []
