@@ -4,6 +4,9 @@ doc-type: NORA
 argument-hint: "<project ID or service description, e.g. '001', 'citizen portal for permit applications'>"
 effort: high
 keep-coding-instructions: true
+runtime-assets:
+  - scripts/nl-references.py
+  - scripts/generate-document-id.mjs
 handoffs:
   - command: adr
     description: Record each deliberate deviation from a NORA or GEMMA principle as an architecture decision
@@ -66,7 +69,7 @@ This command assesses against **local extracts**, not against remembered NORA or
 
    Wherever you quote a line's `error`, put it in a code span: it can carry a server's text, which the script cuts to one line.
 
-   If the script cannot run at all (no Python available), continue with point 2 using whatever extracts already exist, and note in *Source limitations* that they were not refreshed. If Python runs but reports that `nl-references.py` does not exist, the script is missing from this installation: some tools do not install ArcKit's overlay scripts into the project yet. Say so, rather than that the source could not be reached, and continue with the extracts that already exist.
+   If the script cannot run at all (no Python available), continue with point 2 using whatever extracts already exist, and note in *Source limitations* that they were not refreshed. If Python runs but reports that `nl-references.py` does not exist, the script is missing from this installation. Say so, rather than that the source could not be reached, and continue with the extracts that already exist.
 2. **NORA extract — required.** Find, among the external documents in `projects/000-global/external/`, a Markdown file whose first line is `# NORA — Architectuurprincipes (extract)` (conventionally `nora-principes.md`). An extract is identified by its first line, not by how or when it was produced. If there is more than one, use the one with the most recent `fetched=` date on its second line (a version can be a hash, so versions cannot be ordered) and note the others under *Unreferenced Documents*.
 3. **If no NORA extract is found, stop.** Do not write an artefact. Tell the user why, and what they can do before re-running `/arckit:nl-nora`:
    - **The source could not be reached** (status `missing`, note `source unreachable`): quote the line's `error`. They can build the extract offline from a NORA Online XML export with the same script, giving its full path as you ran it in point 1: `python3 "<path>/nl-references.py" nora --from-dump <export.xml> --dir projects/000-global/external`, or place an extract in `projects/000-global/external/` by hand.

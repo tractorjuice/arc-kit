@@ -4,6 +4,9 @@ doc-type: GEMMA
 argument-hint: "<project ID or scope, e.g. '001', 'full application landscape of the gemeente', 'sociaal domein applications'>"
 effort: high
 keep-coding-instructions: true
+runtime-assets:
+  - scripts/nl-references.py
+  - scripts/generate-document-id.mjs
 handoffs:
   - command: roadmap
     description: Turn the roadmap candidates in Section 7 into a sequenced architecture roadmap
@@ -63,7 +66,7 @@ If `python3` is not found, retry with `python`. The script prints one JSON line 
 
 Wherever you quote a line's `error`, put it in a code span: it can carry a server's text, which the script cuts to one line.
 
-If the script cannot run at all (no Python available), continue with whatever extracts already exist and note in *Source limitations* that they were not refreshed. If Python runs but reports that `nl-references.py` does not exist, the script is missing from this installation: some tools do not install ArcKit's overlay scripts into the project yet. Say so, rather than that the source could not be reached, and continue with the extracts that already exist.
+If the script cannot run at all (no Python available), continue with whatever extracts already exist and note in *Source limitations* that they were not refreshed. If Python runs but reports that `nl-references.py` does not exist, the script is missing from this installation. Say so, rather than that the source could not be reached, and continue with the extracts that already exist.
 
 Then look among the external documents in `projects/000-global/external/`. An extract is identified by its first line, not by how or when it was produced:
 
