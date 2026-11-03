@@ -1,6 +1,6 @@
 {
   "name": "@tractorjuice/arckit-paperclip",
-  "version": "6.18.3",
+  "version": "6.19.0",
   "description": "ArcKit Paperclip plugin — The Enterprise Architecture Governance Harness, 116 commands across strategy, architecture, delivery, and assurance",
   "type": "module",
   "main": "dist/worker.js",
@@ -12,7 +12,8 @@
   "scripts": {
     "build": "tsc && mkdir -p dist/data && cp src/data/commands.json dist/data/commands.json",
     "typecheck": "tsc --noEmit",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && node --test tests/*.test.mjs"
   },
   "dependencies": {
     "@paperclipai/plugin-sdk": "^2026.416.0"
@@ -24,7 +25,10 @@
   "files": [
     "dist/",
     "templates/",
-    "references/"
+    "references/",
+    "scripts/",
+    "schemas/",
+    "data/"
   ],
   "author": "tractorjuice",
   "license": "MIT",

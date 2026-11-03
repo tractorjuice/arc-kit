@@ -161,6 +161,8 @@ COMMON_REQUIRED_ASSETS = (
     "scripts",
     "docid_generator",
     "doctypes_config",
+    "doc_control_rendering",
+    "doc_control_uk",
 )
 
 REQUIRED_ASSETS_BY_AI = {
@@ -186,7 +188,8 @@ def missing_required_assets(data_paths, ai_assistant, all_ai=False):
     missing = []
     for key in keys:
         path = data_paths.get(key)
-        if path is None or not Path(path).exists():
+        available = path is not None and (Path(path).is_file() if key in {"doc_control_rendering", "doc_control_uk"} else Path(path).exists())
+        if not available:
             missing.append((key, path))
     return missing
 
@@ -212,6 +215,7 @@ def get_data_paths():
             "codex_skills": base_path / "extensions" / "arckit-codex" / "skills",
             "codex_agents": base_path / "extensions" / "arckit-codex" / "agents",
             "codex_hooks": base_path / "extensions" / "arckit-codex" / "hooks",
+            "codex_scripts": base_path / "extensions" / "arckit-codex" / "scripts",
             "codex_schemas": base_path / "extensions" / "arckit-codex" / "schemas",
             # Vendored reference data a command declares as its ONLY source of
             # truth (e.g. the EUCSF Annex calculator catalogue). Under the plugin
@@ -226,6 +230,8 @@ def get_data_paths():
             # scripts/, and scaffolded to .arckit/scripts/ and .arckit/config/
             # so the generator's ../config/doc-types.mjs import resolves.
             "docid_generator": base_path / "plugins" / "arckit-claude" / "scripts" / "generate-document-id.mjs",
+            "doc_control_rendering": base_path / ".arckit" / "templates" / "_partials" / "RENDERING.md",
+            "doc_control_uk": base_path / ".arckit" / "templates" / "_partials" / "document-control-uk.md",
             "doctypes_config": base_path / "plugins" / "arckit-claude" / "config" / "doc-types.mjs",
             "codex_config": base_path / "extensions" / "arckit-codex" / "config.toml",
             "copilot_prompts": base_path / "extensions" / "arckit-copilot" / "prompts",
@@ -660,6 +666,10 @@ def init(
         for template_file in templates_src.glob("*.md"):
             shutil.copy2(template_file, templates_dst / template_file.name)
             template_count += 1
+        # Commands resolve Document Control from these partials on every CLI.
+        partials_src = templates_src / "_partials"
+        if partials_src.is_dir():
+            shutil.copytree(partials_src, templates_dst / "_partials", dirs_exist_ok=True)
         console.print(f"[green]✓[/green] Copied {template_count} templates")
     else:
         console.print(
@@ -703,6 +713,13 @@ def init(
             "found; .arckit/scripts/bash/generate-document-id.sh will not "
             "resolve[/yellow]"
         )
+
+    # Runtime helpers and schemas are merged by the converter for all public
+    # overlays. Copy them for every CLI target, just like references and data.
+    for key, directory in [("codex_scripts", "scripts"), ("codex_schemas", "schemas")]:
+        source = data_paths.get(key)
+        if source and source.is_dir():
+            shutil.copytree(source, project_path / ".arckit" / directory, dirs_exist_ok=True)
 
     # Copy references if they exist
     references_src = data_paths.get("codex_references")

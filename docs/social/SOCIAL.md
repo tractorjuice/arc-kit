@@ -473,3 +473,39 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/15
 > Thanks to @johnfelipe on GitHub for two security fixes: the secret scanner now checks your own docs, READMEs and changelogs, and a file or folder name can't pass itself off as an instruction to Claude. And to @trednets: the EU Cloud Sovereignty scorer now runs in Codex, Gemini and the other AI tools too.
 > Update with `claude plugin update arckit@arckit-claude`, and tell us how it goes in #show-your-working
 > <https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.3>
+
+### Q33. ArcKit 6.19.0 — LinkedIn group (Question voice) — posted 2 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-7523034633404489728>, after Q34. No image: the release link makes GitHub's text-only card. It leads with the new legacy IT overlay and gives the security fixes one line. The release article (PR #1057) wasn't merged yet, so the link is to the release.
+
+> How do you show a board which of your systems are legacy, and why?
+>
+> ArcKit 6.19.0 is out, with a new optional overlay that answers that question for the systems in your project, using the UK government's updated definition of legacy IT. The August 2026 definition isn't about age. It asks whether a system is out of support, short of contracts or skills, failing user needs, on unsuitable hardware, below minimum cyber security standards, or reliant on something that is itself legacy. Each system comes out Accepted, Action-Required or Legacy, with the evidence and its date. Risk is followed through dependencies, so a new app that relies on an unsupported payments system shows up too. Findings stay provisional until your thresholds are approved, the published risk score stays separate from the classification, and every finding links to an action with an owner. Thanks to Chris Nesbitt-Smith, who contributed it.
+>
+> The release also brings twelve security fixes from @johnfelipe that make ArcKit harder to fool: your published site, your files and what Claude reads are all better protected.
+>
+> How does your organisation decide when a system has become legacy: by age, by support dates, or by risk?
+>
+> https://github.com/tractorjuice/arc-kit/releases/tag/v6.19.0
+
+### Q34. ArcKit 6.19.0 — Discord #announcements — posted 2 November
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/1566827366985105510>, before Q33. It credits both contributors by their GitHub names and tells existing users how to update and how to add the overlay.
+
+> 🏛️ **ArcKit 6.19.0: is it legacy? A new overlay for assessing existing systems**
+> The optional `arckit-uk-legacy` overlay adds /arckit-uk-legacy:uk-legacy-assessment. It checks the systems in a project against the UK's updated definition of legacy IT (August 2026): seven tests, each ending Accepted, Action-Required or Legacy, backed by dated evidence. Risk follows dependencies, findings stay provisional until thresholds are approved, the published risk score is kept separate from the classification, and every finding links to an owned action. It's experimental and off by default. Thanks to @chrisns on GitHub, who built it.
+> Also in 6.19.0, twelve security fixes from @johnfelipe:
+> • Sites built by /arckit:pages can't run HTML from your documents or file names, and they leave out gitignored files
+> • The protected-file guard checks where a write really lands, so a link can't point an edit at your secrets
+> • A research helper's reply that fails its checks is withheld, and session history reaches Claude as data, not instructions
+> • Codex and Kimi get matching protections
+> Update with `claude plugin update arckit@arckit-claude`, and add the overlay with `claude plugin install arckit-uk-legacy@arckit-claude` if you have an estate to assess. Tell us how it goes in #show-your-working
+> <https://github.com/tractorjuice/arc-kit/releases/tag/v6.19.0>
+
+### Q35. ArcKit 6.19.0 article — LinkedIn page, with the article hero (Warm "we" voice) — posted 2 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7523042913182744576/>. Copy: `docs/articles/2026-11-02-arckit-v6-19-is-it-legacy-linkedin.md`, with the redesigned hero and the alt text recorded in that file. LinkedIn added a "Content credentials" label from the image's provenance data. This went out after the group (Q33) and Discord (Q34) posts, because the article page wasn't live until #1057 merged.
+
+### Q36. ArcKit 6.19.0 article — Medium, ArcKit publication — published 2 November
+
+Published: <https://medium.com/arckit/arckit-v6-19-0-is-it-legacy-assess-your-existing-systems-against-the-uks-new-definition-dee08f78c53d>. It was imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: Enterprise Architecture, Legacy Systems, Digital Transformation, Government, Claude. The publication's 302 subscribers were notified. The import needed four fixes in the editor: line breaks restored in the install block, empty lines removed under each heading, the byline split off the lead paragraph, and the community links (which were dropped) put back. The mirrored text, with its hero image, is `docs/articles/2026-11-02-arckit-v6-19-is-it-legacy-medium.md`.

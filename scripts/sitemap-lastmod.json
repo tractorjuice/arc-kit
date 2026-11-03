@@ -1,7 +1,7 @@
 {
   "articles.html": {
-    "lastmod": "2026-09-30",
-    "text_sha256": "d8ad3de29d4009793bcae5fa677d3d76bcdce36e99caf294da2b59eea5d23263"
+    "lastmod": "2026-11-02",
+    "text_sha256": "a1d1bebb9aa87e91787c29466d1eaebf4186508681ffd9db45cabc26bf6150a5"
   },
   "certification/awareness.html": {
     "lastmod": "2026-10-14",
@@ -16,8 +16,8 @@
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
   "commands.html": {
-    "lastmod": "2026-10-30",
-    "text_sha256": "d8c1f472c50a35d4ed928b80897f5971712c4b3e026f6b42671ee1ffbe8b0952"
+    "lastmod": "2026-11-03",
+    "text_sha256": "df256e5595851510acc997c826846b10e5231b3bddaefef5627ef7f9249894f8"
   },
   "contributors.html": {
     "lastmod": "2026-10-28",
@@ -40,23 +40,23 @@
     "text_sha256": "5b41801c5e7f3fb3fabc58fd1cd3a891f511b18a10b0fc40a6e935aa6052125d"
   },
   "guides.html": {
-    "lastmod": "2026-10-30",
-    "text_sha256": "5e0c0fc644e145a55921488d34024238c01a78509005d5784142094c23ea004e"
+    "lastmod": "2026-11-03",
+    "text_sha256": "c5d31ae469cb69440fb26a0319d4dab915661bb865e7457ccf7cb09da2d82f9a"
   },
   "index.html": {
-    "lastmod": "2026-10-30",
-    "text_sha256": "71d0f562782d11553f8b0aaaa30fa44dcd28d0dd89af20ce73eb8c57bf2e0760"
+    "lastmod": "2026-11-03",
+    "text_sha256": "ca05ec3374b1a49680cda646837c23a51d8cb6a8e38f45d367ceef1caee6bd6c"
   },
   "llms.txt": {
-    "lastmod": "2026-10-30",
-    "text_sha256": "e8e8100083182f2eba7276badbf4c6ef4aca4373becc636ac2b0e709102bdd3f"
+    "lastmod": "2026-11-03",
+    "text_sha256": "fd0a2683357145afa68aae7709a245dd6cef47b43ff2b460f7194bfb69205d6c"
   },
   "on-github.html": {
-    "lastmod": "2026-10-26",
-    "text_sha256": "dece2b08b5eb1b8aec91a432a003014e50fe7bb63669db643de32df3c21d0f12"
+    "lastmod": "2026-11-02",
+    "text_sha256": "a2259ea2c373c3063ba142bcce47e10c394a12b85b76f4006617abc2fcbbbcfb"
   },
   "privacy.html": {
-    "lastmod": "2026-10-30",
+    "lastmod": "2026-11-03",
     "text_sha256": "6ff673f0aff6aa040e543a5b4a9834692dfb978ffc6d30f30a3b0353706e8faf"
   },
   "public-sector.html": {

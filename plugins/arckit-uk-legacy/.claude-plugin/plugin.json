@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "arckit-uk-legacy",
+  "displayName": "ArcKit UK Legacy IT Assessment Overlay",
+  "version": "6.19.0",
+  "defaultEnabled": false,
+  "description": "UK Legacy IT Assessment Overlay — 1 command for evidence-led classification, independent numerical risk and actionable remediation. Includes frozen offline framework sources and a deterministic helper. Requires arckit core plugin.",
+  "author": {
+    "name": "TractorJuice",
+    "url": "https://github.com/tractorjuice"
+  },
+  "homepage": "https://arckit.org",
+  "repository": "https://github.com/tractorjuice/arckit-claude",
+  "license": "MIT",
+  "icon": "./assets/icon.svg",
+  "privacyPolicyUrl": "https://arckit.org/privacy.html",
+  "supportUrl": "https://github.com/tractorjuice/arc-kit/issues",
+  "documentationUrl": "https://github.com/tractorjuice/arckit-claude/tree/main/plugins/uk/legacy#readme",
+  "termsOfServiceUrl": "https://github.com/tractorjuice/arckit-claude/blob/main/LICENSE",
+  "keywords": [
+    "architecture",
+    "governance",
+    "uk",
+    "legacy-it",
+    "risk",
+    "remediation"
+  ],
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=6.19.0"
+    }
+  ]
+}

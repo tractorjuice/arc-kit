@@ -60,7 +60,7 @@ Then in Claude Code:
 /plugin marketplace add tractorjuice/arckit-claude
 ```
 
-Then install from the Discover tab, or via CLI. The marketplace ships **17 plugins** — install only the overlays you need:
+Then install from the Discover tab, or via CLI. The marketplace ships **19 plugins** — install only the overlays you need:
 
 ```bash
 # Core (76 commands — UK Government civilian + generic enterprise)
@@ -76,7 +76,7 @@ claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs,uk-gcloud}
 claude plugin install arckit arckit-togaf-adm arckit-agent-architecture
 ```
 
-The standalone `tractorjuice/arckit-claude` marketplace hosts all Claude Code plugins: the `arckit` core plugin, regional overlays, sector overlays, the TOGAF ADM and AI agent architecture overlays, the `arckit-fde` tooling plugin, and the public-but-proprietary `arckit-uk-gcloud` supplier overlay. The 14 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-gcloud`, `arckit-togaf-adm`, `arckit-agent-architecture`, `arckit-oaa`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is public for installation and inspection, but not MIT licensed and not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
+The standalone `tractorjuice/arckit-claude` marketplace hosts all Claude Code plugins: the `arckit` core plugin, regional overlays, sector overlays, the TOGAF ADM and AI agent architecture overlays, the `arckit-fde` tooling plugin, and the public-but-proprietary `arckit-uk-gcloud` supplier overlay. The 15 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-legacy`, `arckit-uk-gcloud`, `arckit-togaf-adm`, `arckit-agent-architecture`, `arckit-oaa`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is public for installation and inspection, but not MIT licensed and not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
 
 The older `tractorjuice/arc-kit` marketplace remains available for compatibility, but new Claude Code installs should use `tractorjuice/arckit-claude`. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all official commands, autonomous research agents, automation hooks, bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape, uk-tenders), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
@@ -167,7 +167,7 @@ Zero-config: 76 official commands as skills, 10 specialized agents, all template
 
 Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
 
-**Latest Release**: [v6.18.3](https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.3)
+**Latest Release**: [v6.19.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.19.0)
 
 ### OKF Interoperability
 
@@ -534,6 +534,22 @@ The commands chain together in a canonical order from `principles → uae-classi
 
 ---
 
+## UK Legacy IT Assessment Overlay (Community-contributed)
+
+The optional `arckit-uk-legacy` overlay adds one command for existing project systems:
+classification against the updated UK definition, independent published numerical risk,
+and a finding-linked remediation plan. It bundles the full dated framework material
+for offline use and depends on `arckit` core. It does not make LEGACY mandatory for
+other projects or approve policy on an owner's behalf.
+
+```bash
+claude plugin install arckit arckit-uk-legacy
+```
+
+| Command | Description | Guide | Status |
+|---------|-------------|-------|--------|
+| `/arckit-uk-legacy:uk-legacy-assessment` | Assess existing systems and dependencies, calculate independent risk, and plan remediation with evidence and owner review | [Guide](docs/guides/legacy-assessment.md) | Experimental |
+
 ## UK NHS Clinical Safety Overlay (Community-contributed)
 
 > ⚠️ **Community-contributed overlay — second sector-specific overlay in ArcKit, after `arckit-uk-finance`.** The 4 commands below cover NHS clinical safety (DCB0129 manufacturer + DCB0160 deployer), NHS DTAC procurement assurance, and UK MDR 2002 + EU MDR 2017/745 software-as-medical-device classification. Adopts Dr Marcus Baw's [SAFETY.md spec](https://github.com/pacharanero/SAFETY.md) for DCB0129/0160 file naming and YAML-frontmatter hazard log. Output is **not** clinical, legal, or regulatory advice — MUST be reviewed by a qualified Clinical Safety Officer (CSO with appropriate GMC / NMC / HCPC / GPhC registration) and, for MDR classification, by a qualified Regulatory Affairs specialist before reliance.
@@ -673,7 +689,7 @@ Handoff chain: `oaa-adm-lite` → `product-architecture` → `agile-strategy` �
 
 ## Using TOGAF ADM and O-AA Together
 
-The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.18.3` pin) — neither depends on the other. O-AA maps the ADM cycle onto sprints within a 4–8 week engagement; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.19.0` pin) — neither depends on the other. O-AA maps the ADM cycle onto sprints within a 4–8 week engagement; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Pattern | When to use | Sequence |
 |---------|-------------|----------|
@@ -691,7 +707,7 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 
 **Running both in the same project:**
 
-- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.18.3` pins.
+- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.19.0` pins.
 - No schema files are shared between the overlays. The O-AA YAML sprint artefacts are defined in the O-AA templates and kept consistent with the matching TOGAF documents: `vision.yaml` with the ADM Preliminary, which `oaa-adm-lite` reads, and `implementation-strategy.yaml` with the transition architecture. `oaa-adm-lite` sends Sprint 4+ architecture change requests through `/arckit-togaf-adm:architecture-change`. `agile-governance` defines its own `change-request.yaml` and `compliance-evidence.yaml` (the latter shared with `agile-security`) and does not read `architecture-change` output.
 - Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands read TOGAF outputs when they exist (ADM Preliminary, business capability map, transition architecture) but do not require them, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
 
@@ -2073,7 +2089,7 @@ arckit init .
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Community**: the [ArcKit LinkedIn group](https://www.linkedin.com/groups/17641034/) for worked examples, office hours and questions, and [Discord](https://discord.gg/HsA4Y3hQ4) for chat with other users
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v6.18.3](https://github.com/tractorjuice/arc-kit/releases/tag/v6.18.3)
+- **Latest Version**: [v6.19.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.19.0)
 
 ---
 

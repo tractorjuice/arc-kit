@@ -1,6 +1,6 @@
 """Hatchling build hook: regenerate the non-Claude extension trees.
 
-`plugins/arckit-claude/` is the single source of truth; the extension formats
+`plugins/arckit-*/` contain the canonical core and overlay sources; the extension formats
 under `extensions/` are produced by `scripts/converter.py` and are gitignored
 (see CLAUDE.md, "Generated extension formats are not tracked"). Wheels built
 from a working tree where the converter had been run were therefore complete,
@@ -114,6 +114,15 @@ class ArcKitBuildHook(BuildHookInterface):
                     "formats cannot be rebuilt. Build from a full checkout of "
                     "the repository."
                 )
+
+        # Validate declared command dependencies even when regeneration is
+        # deliberately skipped. Optional overlay assets are not global CLI keys.
+        check = subprocess.run(
+            [sys.executable, str(root / "scripts/converter.py"), "--check-runtime-assets"],
+            cwd=str(root), capture_output=True, text=True,
+        )
+        if check.returncode:
+            raise RuntimeError("Refusing to build stale runtime assets; regenerate extensions:\n" + check.stdout + check.stderr)
 
         still_missing = missing_assets(root)
         if still_missing:

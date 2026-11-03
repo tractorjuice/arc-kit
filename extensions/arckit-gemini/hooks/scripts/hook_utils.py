@@ -89,6 +89,7 @@ DOC_TYPES = {
     "ATRS":       {"name": "ATRS Record",                                                   "category": "Compliance"},
     "DPIA":       {"name": "Data Protection Impact Assessment",                             "category": "Compliance"},
     "JSP936":     {"name": "JSP 936 Assessment",                                            "category": "Compliance"},
+    "LEGACY":     {"name": "Legacy IT Assessment",                                         "category": "Compliance"},
     "SVCASS":     {"name": "Service Assessment",                                            "category": "Compliance"},
     # Operations
     "SNOW":       {"name": "ServiceNow Design",                                             "category": "Operations"},

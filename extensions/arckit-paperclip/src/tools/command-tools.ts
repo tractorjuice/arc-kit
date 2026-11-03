@@ -1,3 +1,5 @@
+import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 import type { PluginContext, ToolResult, ToolRunContext } from "@paperclipai/plugin-sdk";
 import commands from "../data/commands.json" with { type: "json" };
 import { CommandEntry } from "../types.js";
@@ -17,17 +19,21 @@ export function registerCommandTools(ctx: PluginContext): void {
             topic: {
               type: "string",
               description: "Project name or topic",
+              maxLength: 20000,
             },
           },
           required: ["topic"],
         },
       },
       async (params: unknown, _runCtx: ToolRunContext): Promise<ToolResult> => {
-        const { topic } = params as { topic?: string };
-        if (!topic || topic.trim().length === 0) {
-          return { error: "topic is required" };
+        const topic = params && typeof params === "object" && !Array.isArray(params)
+          ? (params as { topic?: unknown }).topic : undefined;
+        if (typeof topic !== "string" || topic.trim().length === 0 || topic.length > 20000) {
+          return { error: "topic must be a non-empty string of at most 20,000 characters" };
         }
-        const prompt = cmd.prompt.replaceAll("{topic}", topic);
+        const packageRoot = resolve(fileURLToPath(new URL("../../", import.meta.url)));
+        const prompt = cmd.prompt.replaceAll("{arckit_package_root}", () => packageRoot)
+          .replaceAll("{topic}", () => topic);
         const parts: string[] = [`## Instructions\n\n${prompt}`];
         if (cmd.template) {
           parts.push(`## Template\n\n${cmd.template}`);
