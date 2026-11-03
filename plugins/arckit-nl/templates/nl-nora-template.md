@@ -158,9 +158,9 @@
 
 ### Kwaliteitsdoelen
 
-| Kwaliteitsdoel | Realised by | NAPs conformant / partial / not / undetermined | Status |
+| Kwaliteitsdoel | Realised by | NAPs conformant / partial / not / n.a. / undetermined | Status |
 |----------------|-------------|-----------------------------------------------|--------|
-| [KD ID] [Name] | [NAP IDs, from the extract's Realiseert relations] | [n / n / n / n] | [At risk / On track / Not applicable] |
+| [KD ID] [Name] | [NAP IDs, from the extract's Realiseert relations] | [n / n / n / n / n] | [At risk / On track / Not applicable] |
 
 A kwaliteitsdoel is *Not applicable* when every realising NAP is Not applicable, *At risk* when any realising NAP is Not conformant or Undetermined, and *On track* otherwise. A kernwaarde is *At risk* when any kwaliteitsdoel its **Motiveert** line names is At risk, and *On track* otherwise. The GEMMA roll-up follows the same rules with the GAP conformance.
 
@@ -172,9 +172,9 @@ A kwaliteitsdoel is *Not applicable* when every realising NAP is Not applicable,
 
 ### GEMMA roll-up *(GEMMA mode only)*
 
-| Kwaliteitsdoel / Kernwaarde | Kind | Realised by / influenced by (GEMMA extract) | GAP conformance | Status | Only in GEMMA? |
+| Kwaliteitsdoel / Kernwaarde | Kind | Realised by / influenced by (GEMMA extract) | GAPs conformant / partial / not / n.a. / undetermined | Status | Only in GEMMA? |
 |-----------------------------|------|----------------------------------------------|-----------------|--------|----------------|
-| [Name] | [Kwaliteitsdoel / Kernwaarde] | [GAP IDs / kwaliteitsdoelen] | [n / n / n / n] | [At risk / On track] | [Yes / No] |
+| [Name] | [Kwaliteitsdoel / Kernwaarde] | [GAP IDs / kwaliteitsdoelen] | [n / n / n / n / n] | [At risk / On track / Not applicable] | [Yes / No] |
 
 > Roll-ups follow the relations stated in the extracts only. A relation an extract lists under *Data notes* as unresolved is not counted.
 

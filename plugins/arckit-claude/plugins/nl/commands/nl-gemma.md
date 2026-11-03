@@ -63,6 +63,7 @@ If `python3` is not found, retry with `python`. The script prints one JSON line 
 | `manual` | The extracts were placed by hand or built from a local file, or a file at an extract's name is not an extract; they are not checked against the live source | Continue; quote the line's `note` in *Source limitations*, where it shows that their currency was not checked |
 | `offline` | The source could not be reached, or an extract could not be written; the existing extract files are kept | Continue; quote the line's `note` and `error` in *Source limitations*. The note says what failed and whether the files on disk are a complete set; a newer GEMMA version may exist |
 | `missing` | No extracts, and none could be built or written | Stop (point 1 below), quoting the line's `note` and `error` |
+| *no status line: a usage message, exit code 2* | The call itself was wrong, for example a `--dir` outside the project; nothing was fetched or written | Run the command above again exactly as shown, from the repository root. If the message comes back, stop without writing an artefact and quote it |
 
 Wherever you quote a line's `error`, put it in a code span: it can carry a server's text, which the script cuts to one line.
 
@@ -75,6 +76,7 @@ Then look among the external documents in `projects/000-global/external/`. An ex
    - **An extract could not be written** (status `missing`, note `the extract could not be written`): quote the `error`, which names the file and the reason, such as a permission or a file held open by another program. An offline build would fail on the same write, so do not offer it; the user fixes the cause and re-runs.
    - **A file at an extract's name is not an extract** (status `manual`, note `not an extract: …`): name the file and quote the note. The script leaves the file alone; the user moves it aside, or re-runs the script with `--force` to replace it.
    - **The script is missing** from this installation: they can place the extracts by hand. Do not offer the script you just reported missing.
+   - **Python is not available**, so the script could not run: they can install Python 3 and re-run, or place the extracts by hand.
 
    Do not fall back to GEMMA content from memory, and do not fetch gemmaonline.nl or the repository with any other tool.
 2. **Bedrijfsfunctiemodel extract — optional.** First line `# GEMMA — Bedrijfsfunctiemodel (extract)` (conventionally `gemma-bedrijfsfuncties.md`). Without it, skip Section 4 and say so in *Source limitations*.
@@ -243,7 +245,7 @@ Next steps:
 ## Success Criteria
 
 - ✅ Document created at `projects/{project_id}/ARC-{PROJECT_ID}-GEMMA-v{VERSION}.md`
-- ✅ `nl-references.py` run first; its status recorded, and `manual` or `offline` noted under *Source limitations*
+- ✅ `nl-references.py` run first; its status recorded, and a `manual` or `offline` status under *Source limitations* with the line's note and error
 - ✅ Referentiecomponenten extract and at least one landscape source identified; command stopped without an artefact if either was missing
 - ✅ Every application mapped with a confidence (Stated / Inferred / Unmapped); every Inferred mapping has a rationale; every Stated mapping cites its source
 - ✅ Only component, function and standard names from the extract are used
