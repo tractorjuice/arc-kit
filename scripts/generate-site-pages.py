@@ -741,7 +741,8 @@ def on_github_blocks(data: dict) -> dict[str, str]:
          "description": ("A weekly search of public GitHub for repositories that use or mention ArcKit: repositories "
                          "with ArcKit documents or ArcKit set up, repositories that mention it, and the issues, pull "
                          "requests and commits that name it."),
-         "url": ON_GITHUB_URL, "creator": ARCKIT, "dateModified": week, "isAccessibleForFree": True,
+         "url": ON_GITHUB_URL, "creator": ARCKIT, "license": f"{REPO_BLOB}LICENSE",
+         "dateModified": week, "isAccessibleForFree": True,
          "temporalCoverage": first if first == last else f"{first}/{last}",
          "keywords": ["ArcKit", "architecture governance", "GitHub", "open source adoption"],
          "distribution": {"@type": "DataDownload", "encodingFormat": "application/json",
