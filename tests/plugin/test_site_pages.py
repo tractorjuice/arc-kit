@@ -316,6 +316,15 @@ def test_on_github_lists_are_in_the_html():
     assert '<div id="gh-content" hidden>' not in page and "Loading this week" not in page
 
 
+def test_on_github_dataset_names_its_licence():
+    # Search Console flagged the Dataset for a missing 'license' (4 November 2026).
+    # on-github.json is in the repository, so the repository's MIT licence covers it.
+    page = (DOCS / "on-github.html").read_text(encoding="utf-8")
+    block = re.search(r'<script type="application/ld\+json">(.*?)</script><!-- /on-github:jsonld -->', page, re.S)
+    dataset = next(n for n in json.loads(block.group(1))["@graph"] if n["@type"] == "Dataset")
+    assert dataset["license"] == "https://github.com/tractorjuice/arc-kit/blob/main/LICENSE"
+
+
 def test_on_github_text_is_escaped_and_links_only_github():
     # Every value on the page is other people's text.
     gen = load_generator()
