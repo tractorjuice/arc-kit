@@ -4,7 +4,7 @@
 Checks:
 - parses as YAML
 - has the required top-level keys (recipe, schema_version, targets, defaults.version)
-- has unique target IDs within the recipe
+- has unique target IDs within the recipe, none containing ':'
 - every target's `deps:` entries resolve to other target IDs in the same recipe
   (glob patterns like "ADR-*" are accepted if at least one target matches)
 - the dependency graph is acyclic (a cycle makes the harness halt at runtime with
@@ -162,6 +162,10 @@ for path in paths:
         if tid in seen:
             errors.append(f"{path}: duplicate target id: {tid}")
         seen.add(tid)
+        # arckit-build keys an adopted dep's input hashes `DEP_ID:<path>`, so
+        # a colon in an ID could collide with another dep's key.
+        if ":" in str(tid):
+            errors.append(f"{path}: target id {tid!r} must not contain ':'")
 
     target_id_set = set(target_ids)
     for t in targets:

@@ -3,8 +3,10 @@ schema_version: 1
 description: >
   arc42 architecture description: the core artefacts each arc42 section draws
   on (principles, stakeholders, requirements, decisions, data model, the four
-  C4/runtime/deployment views, security, risks, glossary), then the arc42
-  assembly that summarises and cites them.
+  C4/runtime/deployment views, security, risks, glossary), the quality
+  scenarios and crosscutting concepts for sections 10 and 8, then the arc42
+  assembly that summarises and cites them. Optionally a technical debt
+  register for section 11.2 and an SDD handover pack for Spec Kit.
 
 defaults:
   version: "1.0"
@@ -13,6 +15,35 @@ optional_targets:
   SECD:
     description: Secure by Design assessment, the source for the security crosscutting concept (arc42 section 8)
     default: true
+  DEBT:
+    description: Technical debt register for arc42 section 11.2. Enable for an existing system; it consolidates debt from audits, assessments and reviews this recipe does not build
+    default: false
+  SDDH:
+    description: SDD handover pack (constitution, feature briefs and plan inputs for Spec Kit), built from the arc42 description
+    default: false
+  # Evidence the description, concepts, debt register and handover read but this
+  # recipe never needs to generate. Off by default, each is adopted when the
+  # project already has one (arckit-build "Dep resolution"), so its dependents
+  # read it; when none exists it is pruned, never built. --enable builds a new
+  # one instead of reading the existing one.
+  BKLG:
+    description: Product backlog. An existing backlog is adopted so the SDD handover writes one brief per epic; --enable BKLG builds a new version instead
+    default: false
+  CDAU:
+    description: Codebase audits in audits/. Existing audits are adopted as debt and as-built evidence; --enable CDAU audits this repository
+    default: false
+  CONF:
+    description: Conformance assessment. An existing one is adopted for its known and untracked debt; --enable CONF builds a new version instead
+    default: false
+  HLDR:
+    description: HLD review. An existing review is adopted for its conditions and findings; --enable HLDR reviews an available HLD
+    default: false
+  DLDR:
+    description: DLD review. An existing review is adopted for its conditions and findings; --enable DLDR reviews an available DLD
+    default: false
+  PRIN-COMP:
+    description: Principles compliance assessment. An existing one is adopted for its approved exceptions; --enable PRIN-COMP builds a new version instead
+    default: false
 
 post_build_hooks:
   - skill: arckit:health
@@ -111,8 +142,75 @@ targets:
     output: { project: "{P}-{NAME}", type: GLOS }
     deps: [REQ, DATA, "ADR-*"]
 
+  # Evidence targets (optional, adopted when they already exist; see optional_targets).
+  - id: BKLG
+    skill: arckit:backlog
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: BKLG }
+    deps: [REQ, STKE]
+
+  - id: HLDR
+    skill: arckit:hld-review
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: HLDR, subfolder: reviews }
+    deps: [PRIN, REQ, "ADR-*"]
+
+  - id: DLDR
+    skill: arckit:dld-review
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DLDR, subfolder: reviews }
+    deps: [HLDR, PRIN, REQ]
+
+  - id: CDAU
+    skill: arckit:repo-audit
+    args: "."
+    output: { project: "{P}-{NAME}", type: CDAU, subfolder: audits, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: CONF
+    skill: arckit:conformance
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: CONF }
+    deps: [PRIN, REQ, "ADR-*", HLDR, DLDR, RISK]
+
+  - id: PRIN-COMP
+    skill: arckit:principles-compliance
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: PRIN-COMP }
+    deps: [PRIN, REQ, "ADR-*"]
+
+  # arc42 sections 1.2 and 10: the quality tree and scenarios.
+  - id: QUAL
+    skill: arckit:arc42-quality
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: QUAL }
+    deps: [REQ, STKE, PRIN, "ADR-*"]
+
+  # arc42 section 8. Reads the security assessment, the quality scenarios and,
+  # when they exist, the design reviews and codebase audits.
+  - id: CONC
+    skill: arckit:arc42-concepts
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: CONC }
+    deps: [REQ, PRIN, "ADR-*", DATA, SECD, QUAL, HLDR, DLDR, CDAU]
+
+  # arc42 section 11.2. Optional (see optional_targets). Reads every recorded
+  # debt source the project has: audits, conformance, reviews, exceptions.
+  - id: DEBT
+    skill: arckit:arc42-debt
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DEBT }
+    deps: [RISK, "ADR-*", "DIAG-*", CDAU, CONF, HLDR, DLDR, PRIN-COMP]
+
   - id: ARC42
     skill: arckit:arc42
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ARC42 }
-    deps: [PRIN, STKE, REQ, "ADR-*", DATA, "DIAG-*", SECD, RISK, GLOS]
+    deps: [PRIN, STKE, REQ, "ADR-*", DATA, "DIAG-*", SECD, RISK, GLOS, QUAL, CONC, DEBT, HLDR, DLDR, CDAU, CONF]
+
+  # Handover to a Specification Driven Development tool. Optional (see optional_targets).
+  - id: SDDH
+    skill: arckit:arc42-handover
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SDDH }
+    deps: [ARC42, REQ, PRIN, STKE, "ADR-*", DATA, BKLG, QUAL, CONC, DEBT]

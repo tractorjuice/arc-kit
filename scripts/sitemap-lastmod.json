@@ -17,7 +17,7 @@
   },
   "commands.html": {
     "lastmod": "2026-11-07",
-    "text_sha256": "695e93eea5d21ea132e5e104a0ad7d33d11338eb303072221d29a10118bf9c28"
+    "text_sha256": "7cef91e2686b559e21eca25e1cf88d5eba5eaebcc594faa0b0a74fe5f279e4b0"
   },
   "contributors.html": {
     "lastmod": "2026-10-28",
@@ -41,15 +41,15 @@
   },
   "guides.html": {
     "lastmod": "2026-11-07",
-    "text_sha256": "d1c8fc39958b5b9ceaa9aa58dc9d8fefca9f60f2e679bb8a7cd6f70c049fd8da"
+    "text_sha256": "62bdad0edc0a685ea324b63486c67f95cb7cb594a130f54d3cbf9d75aeb4abcc"
   },
   "index.html": {
     "lastmod": "2026-11-07",
-    "text_sha256": "3e17a0aafd12f6861ba3e6c22f8e28e3dd3347cf5981467a4a19ecef341cf124"
+    "text_sha256": "aa3859294b2d98cf6a091c7d76ad5d9992b822344a3747f014778452a40c7c14"
   },
   "llms.txt": {
     "lastmod": "2026-11-07",
-    "text_sha256": "57dacc12110bc92bb325ff9a2e18c6cdb32388b89178807cb78e912a62de2c0f"
+    "text_sha256": "abd025bcdf7cdf9e4f7ba8cc28f36c7029671cdf6f9cf1e2b61e3950f68b0572"
   },
   "on-github.html": {
     "lastmod": "2026-11-02",

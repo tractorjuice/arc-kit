@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit:health` scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift -- reporting findings to the console and writing `docs/health.json` for dashboard integration.
+`/arckit:health` scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, version drift, overdue reviews, long-running drafts and out-of-date generated views -- reporting findings to the console and writing `docs/health.json` for dashboard integration.
 
 ---
 
@@ -17,10 +17,13 @@ Architecture governance produces dozens of artifacts over weeks and months. With
 - **Missing traceability** -- ADRs without requirement references reduce audit confidence
 - **Version drift** -- multiple artifact versions where the latest has gone stale
 - **Unincorporated external files** -- new external documents not yet reflected in architecture artifacts
+- **Overdue reviews** -- approved artifacts whose Next Review Date has passed
+- **Long-running drafts** -- DRAFT artifacts left untouched for over a month
+- **Out-of-date generated views** -- an arc42 description or SDD handover pack built from sources that have since changed
 
 The `/arckit:health` command **performs a diagnostic scan** that:
 
-- Applies seven detection rules across all projects and artifacts
+- Applies ten detection rules across all projects and artifacts
 - Assigns severity levels (HIGH, MEDIUM, LOW) to each finding
 - Provides specific remediation actions for every issue
 - Writes `docs/health.json` for dashboard integration with `/arckit:pages`
@@ -77,6 +80,9 @@ Outputs: Console report plus `docs/health.json` for dashboard integration. No pr
 | STALE-EXT | Unincorporated External Files | HIGH | External file in `external/` newer than all ARC-* artifacts in the same project |
 | ORPHAN-REQ | Orphaned Requirements | MEDIUM | Requirements not referenced by any ADR in the same project |
 | MISSING-TRACE | Missing Traceability | MEDIUM | ADR documents that do not reference any requirement ID |
+| REVIEW-OVERDUE | Overdue Review | HIGH | Document Control Next Review Date is in the past, on an artifact that is not DRAFT, SUPERSEDED or ARCHIVED |
+| STALE-DRAFT | Long-running Draft | MEDIUM | DRAFT artifact unchanged for > 30 days (override with `STALE_DRAFT_DAYS=N`) |
+| STALE-VIEW | Out-of-date Generated View | MEDIUM | An artifact with a Source Artefacts table (such as an arc42 description) cites a source, including the global architecture principles, that now has a newer version, or omits a later instance of a type it cites |
 | VERSION-DRIFT | Version Drift | LOW | Multiple versions of the same artifact type where the latest is > 3 months old |
 
 ---
@@ -198,8 +204,11 @@ FINDINGS BY TYPE
   FORGOTTEN-ADR:    1
   UNRESOLVED-COND:  1
   STALE-EXT:        0
+  REVIEW-OVERDUE:   0
   ORPHAN-REQ:       3
   MISSING-TRACE:    2
+  STALE-DRAFT:      0
+  STALE-VIEW:       0
   VERSION-DRIFT:    1
 
 PROJECT: 001-payment-gateway

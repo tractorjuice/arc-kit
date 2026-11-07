@@ -64,3 +64,18 @@ def test_a_transitive_dependency_counts():
     """REQ -> MID -> STKE satisfies the rule; only the order matters."""
     result = _run("[MID]", extra=MID)
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+COLON_ID = """\
+  - id: "CDAU:audits"
+    skill: arckit:repo-audit
+    output: { project: "001-probe", type: CDAU }
+    deps: [PRIN]
+"""
+
+
+def test_a_colon_in_a_target_id_fails():
+    """arckit-build keys an adopted dep's input hashes `DEP_ID:<path>`."""
+    result = _run("[PRIN, STKE]", extra=COLON_ID)
+    assert result.returncode == 1, result.stdout + result.stderr
+    assert "target id 'CDAU:audits' must not contain ':'" in result.stderr

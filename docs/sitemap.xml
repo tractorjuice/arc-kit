@@ -190,6 +190,26 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://arckit.org/guide/arc42-concepts.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/guide/arc42-debt.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/guide/arc42-handover.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/guide/arc42-quality.html</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/guide/archify.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>

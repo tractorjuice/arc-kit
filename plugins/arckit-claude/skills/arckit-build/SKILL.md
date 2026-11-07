@@ -17,7 +17,7 @@ You are running the ArcKit build harness. Your job is **orchestration only** —
 - **Halt-on-fail** by default — if any agent in a wave reports failure, stop and surface to user.
 - **State is sacred** — update `projects/{P}-{NAME}/.arckit/state.json` after every wave, before moving on.
 - **Single message, multiple Agent calls** for parallelism within a wave. Never loop sequential Agent calls.
-- **Idempotency**: if state says `complete`, the file exists at the recorded path, AND every input file's SHA-256 matches the hash recorded at build time, skip. Otherwise the target is **stale** — rebuild it (and propagate staleness through the DAG). See § "Input-hash change detection".
+- **Idempotency**: if state says `complete`, every file the entry records exists (§ "Recorded paths"), AND every input file's SHA-256 matches the hash recorded at build time, skip. Otherwise the target is **stale** — rebuild it (and propagate staleness through the DAG). See § "Input-hash change detection".
 - **Trust the path-allocation hook.** ArcKit's `validate-arc-filename.mjs` PreToolUse hook is the authoritative path normalizer — it allocates sequence numbers, applies subfolders, pads project IDs at write time. The orchestrator and workers never construct paths by string substitution or call `generate-document-id.mjs` directly. Read the corrected path back from the Write tool result.
 
 ## Args
@@ -28,12 +28,12 @@ You are running the ArcKit build harness. Your job is **orchestration only** —
 | `--plan` | Dry run. Print the wave plan, do not dispatch any Agents, exit. |
 | `--resume` | Read state.json; continue from last incomplete wave. |
 | `--target NAME` | Build only NAME and its missing dependencies. |
-| `--refresh NAME` | Force-rebuild NAME and everything downstream. |
+| `--refresh NAME` | Force-rebuild NAME and everything downstream. An adopted NAME is re-read, never built; everything downstream of it rebuilds. |
 | `--no-commit` | Skip the per-wave git commit. |
 | `--recipe NAME` | Recipe name (default `uk-saas`). Resolved against the precedence list below. |
-| `--enable ID` | Enable an optional target (e.g. `--enable AIP`). |
-| `--exclude ID` | Exclude a default-on optional target (e.g. `--exclude SVCASS`). |
-| `--skip-hash-check` | Treat any `complete` target with its output file present as up-to-date; skip SHA-256 staleness detection. Fast resume; risks missing edits to inputs. |
+| `--enable ID` | Build an optional target (e.g. `--enable AIP`), even when the project already has an artefact of its type; existing evidence is then not adopted. |
+| `--exclude ID` | Exclude an optional target: neither build it nor read an existing artefact of its type (e.g. `--exclude SVCASS`). |
+| `--skip-hash-check` | Treat any `complete` target whose recorded files are all present as up-to-date; skip SHA-256 staleness detection. Fast resume; risks missing edits to inputs. |
 
 ## Recipe loading
 
@@ -81,7 +81,7 @@ Each `targets[]` entry:
 
 | Field | Required | Notes |
 |-------|----------|-------|
-| `id` | yes | Unique target ID (e.g. `PRIN`, `ADR-001`, `DIAG-C4`) |
+| `id` | yes | Unique target ID (e.g. `PRIN`, `ADR-001`, `DIAG-C4`). Never contains `:`, which separates the dep ID from the path in an input-hash key |
 | `skill` | yes | ArcKit skill name (e.g. `arckit:requirements`) |
 | `args` | yes | Args string passed to the skill, after substitution |
 | `output.project` | yes | `"000-global"` or `"{P}-{NAME}"` |
@@ -108,19 +108,40 @@ The orchestrator substitutes these placeholders in `args` and `output.project` b
 
 `deps: ["ADR-*"]` matches all targets whose ID begins with `ADR-`. Exact IDs take precedence; globs expand at wave-computation time against the resolved target list (after optional-target filtering).
 
-An exact-ID dep naming an **optional target** orders the build only while that target is enabled: disabled optional-target IDs are pruned from every remaining target's `deps` at resolution time (step 4 below). A recipe may therefore declare the true ordering — `OAGOV` deps `[OAAL, OASEC]` in `oaa-full` — without `--exclude OASEC` leaving `OAGOV` waiting forever on a target that will never run. A dep naming a *non-optional* target that doesn't exist in the recipe is still an error.
+An exact-ID dep naming an **optional target** orders the build only while that target is enabled. A disabled optional target is resolved in one of two ways (run step 6):
+
+- **Adopted.** When it is disabled only because its `default` is `false` (it was named in neither `--enable` nor `--exclude`), and the project already has an artefact of its output type, the harness adopts that artefact instead of building it. The target is recorded `complete` with `source: "pre-existing"` and `adopted: true`, it stays in its dependents' `deps`, and they read the existing artefact: for a multi-instance type, the latest version of every instance. A recipe can therefore declare evidence a target should read when it exists but never generate just to satisfy a dependency, such as an existing backlog or codebase audit. **An adopted target is never dispatched**, on a first run, a `--resume` or a `--refresh`; it is re-resolved from the project's files on every run.
+- **Pruned.** Otherwise (no existing artefact, or named in `--exclude`), its ID is removed from every remaining target's `deps`. A recipe may therefore declare the true ordering — `OAGOV` deps `[OAAL, OASEC]` in `oaa-full` — without `--exclude OASEC` leaving `OAGOV` waiting forever on a target that will never run.
+
+`--exclude ID` therefore means "neither build nor read": the target is not dispatched, existing artefacts of its type are not adopted, and no worker receives their paths. `--enable ID` turns adoption off: the target is built like a default-on one. For a single-instance type its worker reads the latest existing artefact as its previous version and writes the next version; a multi-instance type gets a new instance. A dep naming a *non-optional* target that doesn't exist in the recipe is still an error.
 
 ## Input-hash change detection
 
 The orchestrator records the SHA-256 of every input artefact at build time and compares against the live filesystem on the next run. This catches the "user edited REQ after the build completed but never re-ran" case that pure `test -f` idempotency misses.
 
+### Recorded paths
+
+A state entry records the files it stands for in one of two shapes. Every rule in this skill (completion, the work list, `--resume`, `--skip-hash-check`, hashing, staleness and the paths a worker may read) reads an entry through `paths(t)`:
+
+| Entry | Shape | `paths(t)` | Complete when |
+|-------|-------|------------|---------------|
+| Built target, pre-existing target, adopted single-instance target | `"path": "<repo-relative path>"` | `[path]` | `status` is `complete` and the file exists |
+| Adopted multi-instance target | `"paths": ["<repo-relative path>", …]` | `paths` | `status` is `complete`, the array is non-empty and every file in it exists |
+
+An entry carries one shape, never both. An entry with neither, or with an empty `paths` array, is not complete. Only an adopted entry uses `paths`; a built multi-instance target such as `ADR-001` records its one file in `path`.
+
 ### What counts as an input
 
-A target's inputs are the **resolved output paths of its `deps`** (after glob expansion). Externally-supplied inputs (e.g. `external/policies/*.md`) are not hashed by v0.4 — only artefacts the harness itself produced or recorded as `source: "pre-existing"`. Recipes that surface external inputs should hash them in v0.5.
+A target's inputs are the **resolved output paths of its `deps`** (after glob expansion), including every path of an adopted dep. A worker may also read its own target's previous version, but that is context for version detection, not an input: it is not hashed, so a target never goes stale because of its own earlier output. Externally-supplied inputs (e.g. `external/policies/*.md`) are not hashed by v0.4 — only artefacts the harness itself produced or recorded as `source: "pre-existing"`. Recipes that surface external inputs should hash them in v0.5.
 
 ### What's recorded
 
-Each completed target's state entry gains an `input_hashes` map of dep-ID → SHA-256:
+Each completed target's state entry gains an `input_hashes` map from **input key** to SHA-256, with one key per file in each resolved dep's `paths(dep)`:
+
+- a dep recorded with `path`: the key is `DEP_ID`
+- a dep recorded with `paths`: one key per file, `DEP_ID:<repo-relative path>`, for example `CDAU:projects/001-arckit-saas/audits/ARC-001-CDAU-002-v1.0.md`
+
+Every file of an adopted dep is hashed. Target IDs never contain `:`, so the two forms cannot collide, and the full path keeps two files with the same name in different folders apart.
 
 ```json
 "RISK": {
@@ -135,17 +156,24 @@ Each completed target's state entry gains an `input_hashes` map of dep-ID → SH
 }
 ```
 
-The map is populated by the orchestrator (Bash `sha256sum`) immediately after a target validates `complete` in step 5 — workers don't compute hashes.
+The map is populated by the orchestrator (Bash `sha256sum`) immediately after a target validates `complete` in per-wave step 5 — workers don't compute hashes.
 
 ### Staleness rules (skipped if `--skip-hash-check`)
 
-At work-list computation (step 7 of the run order):
+At work-list computation (run step 8), after run step 6 has re-resolved this run's adopted targets:
 
-1. Start with `done = { t ∈ state.targets : t.status == "complete" AND test -f t.path }`.
-2. **Direct staleness**: for each `t ∈ done`, recompute SHA-256 for every entry in `t.input_hashes`. If any current hash differs from the recorded value (or the input file is now missing), `t` is **stale** — move it from `done` back into pending and clear it from `state.targets[t].status` (set `"stale"`).
+1. Start with `done = { t ∈ state.targets : t.status == "complete" AND paths(t) is non-empty AND test -f every file in paths(t) }`.
+2. **Direct staleness**: for each `t ∈ done` that has an `input_hashes` map (adopted entries have none, so they are never stale themselves), compute its **expected keys**: the input keys of every resolved dep, as this run resolves it, whose entry records `path` or `paths`. `t` is **stale** if
+   - a recorded key is not expected: a file it read is gone, such as an adopted instance removed or superseded by a later version, or a dep now excluded or pruned
+   - an expected key is not recorded: an input it never read, such as a new adopted instance or version, or newly adopted evidence. This check applies only to an entry the harness built (it records a `skill`); a pre-existing entry was not built from those inputs, so only its recorded keys are checked
+   - a recorded key's file is missing or its current SHA-256 differs from the recorded value. The file is the dep's current `path` for a `DEP_ID` key, and the named path for a `DEP_ID:<path>` key
+
+   Move a stale `t` from `done` back into pending and set `state.targets[t].status` to `"stale"`.
 3. **Propagated staleness**: walk the DAG; any target whose deps (transitively) include a stale target is itself stale. Apply in topological order so a single REQ edit cascades to RISK, HLD, SOBC, PLAN, TRACE, …
-4. Targets explicitly named in `--refresh NAME` are marked stale unconditionally (existing behaviour — overrides hash check).
-5. With `--skip-hash-check`, skip steps 2–3 entirely. `done` is whatever survives the `test -f` filter.
+4. Targets explicitly named in `--refresh NAME` are marked stale unconditionally (existing behaviour — overrides hash check). An adopted target named in `--refresh` stays adopted and is not dispatched; its dependents are marked stale and the cascade continues from them.
+5. With `--skip-hash-check`, skip steps 2–3 entirely. `done` is whatever survives step 1.
+
+Adopted targets are never in pending, whatever these rules find: a changed or missing adopted file makes its **dependents** stale, through step 2 and then the step 3 cascade.
 
 Print the staleness reason in the `--plan` output so users can see why a target rebuilt:
 
@@ -154,20 +182,22 @@ Wave 1: REQ
   (stale) REQ ← file edited since last build (sha mismatch)
 Wave 3: RISK, HLD, STRATEGY, ...
   (stale-cascade) RISK ← REQ changed since 2026-05-12T10:14:03Z
+Wave 4: DEBT
+  (stale) DEBT ← new input CDAU:projects/001-arckit-saas/audits/ARC-001-CDAU-002-v1.1.md
 ```
 
 ### Performance note
 
-SHA-256 of typical ArcKit artefacts (≤500 KB markdown) is sub-millisecond per file. A 50-target project incurs <100 ms of hashing on `--resume`. Workers do no hashing; only the orchestrator does (single shell loop in step 5/step 7).
+SHA-256 of typical ArcKit artefacts (≤500 KB markdown) is sub-millisecond per file. A 50-target project incurs <100 ms of hashing on `--resume`. Workers do no hashing; only the orchestrator does (single shell loop in per-wave step 5 and run step 8).
 
 ## Wave plan algorithm
 
 Standard topological sort with parallelism:
 
-1. `pending = recipe.targets ∩ enabled - done` — where `enabled` reflects `--enable`/`--exclude` flags and `optional_targets[id].default`, and `done` is computed by the staleness rules in § "Input-hash change detection" (i.e. `complete` AND `test -f` AND every input hash matches, unless `--skip-hash-check` is set). Stale targets stay in `pending`.
+1. `pending = recipe.targets ∩ enabled - adopted - done` — where `enabled` reflects `--enable`/`--exclude` flags and `optional_targets[id].default`, `adopted` is the set run step 6 adopted (never dispatched), and `done` is computed by the staleness rules in § "Input-hash change detection" (i.e. `complete` AND every file in `paths(t)` exists AND its input keys and hashes match, unless `--skip-hash-check` is set). Stale targets stay in `pending`.
 2. `done` from staleness computation above.
 3. While pending non-empty:
-   - `wave = { t ∈ pending : deps(t) ⊆ done }` (after expanding globs)
+   - `wave = { t ∈ pending : deps(t) ⊆ done ∪ adopted }` (after expanding globs)
    - If wave empty → cycle / unresolvable. Halt with error, list involved targets.
    - **If `|wave| > 20`, split it**: dispatch the first 20 (stable sort by target ID), and leave the remainder in `pending` for the next iteration. They have no unmet deps, so they form the next wave immediately.
    - Emit wave; remove its members from pending; (after dispatch + validate) add to done.
@@ -213,7 +243,7 @@ Use the **Agent tool** with `subagent_type: "general-purpose"`. One Agent call p
 
 **Pass `run_in_background: false` on every call in the wave.** Claude Code v2.1.232 made non-teammate `Agent` spawns background-by-default in interactive sessions — a backgrounded spawn returns `async_launched` and an `agentId`, *not* the worker's report. This harness needs the reports before it can validate, commit, and decide whether to halt, so a wave is exactly the case the parameter exists for. The parameter is stripped from the tool schema in some contexts; if it is unavailable, the spawns are background-only and you must **wait for every worker's completion notification before step 3** — do not proceed on `async_launched` results, and never infer a worker's outcome from the fact that it launched.
 
-Per-agent prompt template (substitute `{...}` placeholders from the resolved target):
+Per-agent prompt template (substitute `{...}` placeholders from the resolved target). `{INPUT_PATHS_BULLETED}` has one bullet per file in `paths(dep)` for each resolved dep, so every path of an adopted dep; an excluded or pruned dep contributes none. `{PREVIOUS_VERSION_LINE}` is `Your target's previous version (read it to keep its IDs, owners and Revision History; write the next version beside it, never over it): {PATH}` when the target already has an artefact: its recorded `path` on a rebuild, or the latest `ARC-{P}-{TYPE}-v*.md` for a single-instance type. Otherwise leave the line out.
 
 ```
 You are an ArcKit artefact worker subagent (orchestrated by arckit-build, wave {WAVE_N}).
@@ -226,6 +256,7 @@ Expected directory: {EXPECTED_DIR}     # for orientation only — actual filenam
 
 Inputs you may read (only these):
 {INPUT_PATHS_BULLETED}
+{PREVIOUS_VERSION_LINE}
 
 Steps:
 1. Use the Skill tool to invoke `{SKILL}` with the args above verbatim.
@@ -320,7 +351,9 @@ Read `projects/{P}-{NAME}/.arckit/state.json`, update each target with:
 }
 ```
 
-Compute `input_hashes` via Bash `sha256sum` on each resolved dep's `state.targets[DEP_ID].path` immediately before persisting state. Skip deps whose target has no recorded path (e.g. external inputs). Targets with no deps get `input_hashes: {}`.
+Compute `input_hashes` via Bash `sha256sum` on every file in each resolved dep's `paths(state.targets[DEP_ID])` immediately before persisting state, keyed as § "What's recorded" describes (`DEP_ID` for a `path`, `DEP_ID:<repo-relative path>` for each of an adopted dep's `paths`). Skip deps whose entry records neither (e.g. external inputs). Targets with no deps get `input_hashes: {}`.
+
+The same write persists run step 6's adoption changes: the adopted entries it recorded, and the removal of those it discarded. Read the current file first and merge into it; a later wave must not lose what an earlier wave or an earlier run recorded.
 
 For failures: `status: "failed"`, `error: "..."`, `wave: {WAVE_N}` — do not record `input_hashes` for failed targets.
 
@@ -372,6 +405,9 @@ Otherwise, proceed.
     "PRIN":   {"status": "complete", "path": "projects/000-global/ARC-000-PRIN-v1.0.md", "wave": 0, "source": "pre-existing", "input_hashes": {}},
     "REQ":    {"status": "complete", "path": "...", "wave": 1, "source": "pre-existing", "input_hashes": {"PRIN": "44e7...bc92"}},
     "RISK":   {"status": "complete", "path": "...", "wave": 3, "skill": "arckit:risk", "input_hashes": {"REQ": "9f2a...c41e", "STKE": "1b88...07ad", "PRIN": "44e7...bc92"}},
+    "BKLG":   {"status": "complete", "source": "pre-existing", "adopted": true, "path": "projects/001-arckit-saas/ARC-001-BKLG-v1.2.md"},
+    "CDAU":   {"status": "complete", "source": "pre-existing", "adopted": true, "paths": ["projects/001-arckit-saas/audits/ARC-001-CDAU-001-v1.1.md", "projects/001-arckit-saas/audits/ARC-001-CDAU-002-v1.0.md"]},
+    "DEBT":   {"status": "complete", "path": "...", "wave": 4, "skill": "arckit:arc42-debt", "input_hashes": {"RISK": "6c01...9e2f", "CDAU:projects/001-arckit-saas/audits/ARC-001-CDAU-001-v1.1.md": "d3a9...71b0", "CDAU:projects/001-arckit-saas/audits/ARC-001-CDAU-002-v1.0.md": "0b5e...c8d4"}},
     "SVCASS": {"status": "pending"}
   },
   "waves": [
@@ -388,9 +424,15 @@ State written by older versions (`state_format_version: "0.3"`) is read-compatib
 1. **Parse arguments** from skill input (project, --plan, --resume, --recipe, --enable, --exclude, etc.). If project not specified, ask user.
 2. **Detect project**: resolve `<project>` arg → `projects/{P}-{slug}/`. Confirm directory exists.
 3. **Load recipe**: resolve `--recipe NAME` (default `uk-saas`) against the precedence list. Read the YAML with the Read tool. Validate top-level shape (`recipe`, `schema_version`, `targets`, `defaults.version`). Halt with a clear error if the recipe file is missing or malformed.
-4. **Resolve enabled targets**: drop `optional_targets` whose `default: false` unless `--enable ID` was passed; drop `optional_targets` named in `--exclude ID`. Then prune every dropped optional-target ID from the remaining targets' `deps` lists — a dep on an optional target orders the build only when that target is enabled; without pruning, the dependent target's deps could never all be `done` and it would sit in `pending` forever. Apply `{P}/{NAME}/{V}/{TOPIC}` substitution to every `args` and `output.project` field.
-5. **Load state.json** at `projects/{P}-{NAME}/.arckit/state.json`. If absent, scan project dir for existing `ARC-{P}-*-v*.md` files and infer initial state.
-6. **Subagent capability smoke-test** (first wave only, skip on `--resume`): before dispatching the real wave, spawn one throwaway `general-purpose` Agent with this prompt:
+4. **Resolve enabled targets**: drop `optional_targets` whose `default: false` unless `--enable ID` was passed; drop `optional_targets` named in `--exclude ID`. Note which dropped targets are **adoption candidates**: those dropped only because their `default` is `false`, named in neither `--enable` nor `--exclude`. Record nothing yet. Apply `{P}/{NAME}/{V}/{TOPIC}` substitution to every `args` and `output.project` field.
+5. **Load state.json** at `projects/{P}-{NAME}/.arckit/state.json`. If absent, scan project dir for existing `ARC-{P}-*-v*.md` files and infer initial state for the enabled targets (not for `--enable`d ones, which are always built, and not for adoption candidates, which step 6 resolves).
+6. **Resolve adopted evidence**, on the state step 5 loaded:
+   - For each adoption candidate, glob `ARC-{P}-{TYPE}-v*.md` (or `ARC-{P}-{TYPE}-*-v*.md` for a multi-instance type) in the project directory and its subfolders, and take the latest version of each instance, comparing version numbers numerically (`v1.10` is later than `v1.9`). If there is at least one, set `state.targets[ID]` to `{"status": "complete", "source": "pre-existing", "adopted": true}` plus `path` (single-instance type) or `paths`, sorted (multi-instance type), replacing any earlier entry for ID, and keep ID in its dependents' `deps`. If there is none, delete any earlier `adopted` entry for ID.
+   - Delete any `adopted` entry for a target that is not adopted this run: one named in `--enable` (it is built instead) or in `--exclude`.
+   - Prune every dropped optional target that was not adopted from the remaining targets' `deps` lists — a dep on an optional target orders the build only when that target is enabled; without pruning, the dependent target's deps could never all be `done` and it would sit in `pending` forever.
+
+   These changes stay in memory until the first state write (per-wave step 5). `--plan` never writes them.
+7. **Subagent capability smoke-test** (first wave only, skip on `--resume` and `--plan`): before dispatching the real wave, spawn one throwaway `general-purpose` Agent with this prompt:
 
    > "Examine your system-reminder messages — they enumerate the skills available in this conversation. Return exactly one line:
    > - `AVAILABLE` if the list contains `arckit:principles` (or any other `arckit:*` skill).
@@ -398,19 +440,19 @@ State written by older versions (`state_format_version: "0.3"`) is read-compatib
    > Do NOT invoke any skill. Do NOT call any tool other than reading your own context."
 
    This is a metadata check, not a skill invocation — it should complete in seconds. If the response is `NOT_AVAILABLE`, halt: subagents in this session do not have access to plugin skills (Failure mode #1). Suggest enabling the plugin at user-scope or running the harness from a session where `claude --print '/skill list'` shows the `arckit:*` family.
-7. **Compute work list**: apply the staleness rules from § "Input-hash change detection". `done` = targets where `status: complete` AND file exists AND every recorded input hash still matches AND no transitive dep is stale (steps 2–3 of the staleness rules). `pending` = `enabled-targets − done`. Stale targets have their `state.targets[id].status` rewritten to `"stale"` and re-enter the wave plan. With `--skip-hash-check`, skip the hash + cascade checks (`test -f` only).
-8. **If `--plan`**: print plan (each wave + targets + line `(skip|build) target ← deps`), exit.
-9. **For each wave** (sequential outer loop):
-   - Print wave header.
-   - Build the per-agent prompt for each target in wave.
-   - **Send a single assistant message containing N Agent tool calls** (one per target, all parallel).
-   - Collect summaries when all complete.
-   - Validate each output.
-   - Update state.json (Write tool).
-   - git commit (Bash) unless `--no-commit`.
-   - Halt if any fail.
-10. **Post-build hooks**: spawn parallel agents — one per `recipe.post_build_hooks[]` entry.
-11. **Final report**:
+8. **Compute work list**: apply the staleness rules from § "Input-hash change detection". `done` = targets where `status: complete` AND every file in `paths(t)` exists AND every recorded input key is still expected, every expected key is recorded and every hash still matches AND no transitive dep is stale (steps 2–3 of the staleness rules). `pending` = `enabled-targets − adopted − done`. Stale targets have their `state.targets[id].status` rewritten to `"stale"` and re-enter the wave plan. With `--skip-hash-check`, skip the hash + cascade checks (step 1 only: every recorded file present).
+9. **If `--plan`**: print the plan and exit without writing state. Print each wave with its targets and a line `(skip|build|stale|stale-cascade) target ← deps` per target; an `(adopt) target ← path` line per adopted target, listing **every** selected path; and an `(exclude) target` or `(prune) target ← no existing artefact` line per dropped optional target.
+10. **For each wave** (sequential outer loop):
+    - Print wave header.
+    - Build the per-agent prompt for each target in wave.
+    - **Send a single assistant message containing N Agent tool calls** (one per target, all parallel).
+    - Collect summaries when all complete.
+    - Validate each output.
+    - Update state.json (Write tool).
+    - git commit (Bash) unless `--no-commit`.
+    - Halt if any fail.
+11. **Post-build hooks**: spawn parallel agents — one per `recipe.post_build_hooks[]` entry.
+12. **Final report**:
     - Targets built (with line counts) / skipped / failed.
     - Total wall-clock.
     - Post-build hook outcomes.
@@ -432,11 +474,11 @@ Caveats:
 
 ## Failure modes to watch for
 
-- **Subagent doesn't have access to `arckit:*` skills** — detected by the smoke-test in step 6 of the run order; halts the build before any wave dispatches. Workaround if smoke-test fails: load the skill prompt in main context once, pass as plain text to agent (deferred to v0.4+).
+- **Subagent doesn't have access to `arckit:*` skills** — detected by the smoke-test in step 7 of the run order; halts the build before any wave dispatches. Workaround if smoke-test fails: load the skill prompt in main context once, pass as plain text to agent (deferred to v0.4+).
 - **Recipe file missing or malformed** — halt at step 3 with the exact YAML parse error and the precedence list of paths checked. If a community recipe is requested but the corresponding community plugin isn't installed, surface a concrete install command: `"Recipe 'uae-federal-ai' not found. It ships in the arckit-uae community plugin. Install with: claude plugin install arckit-uae"`. The orchestrator maps recipe name to expected plugin via the built-in recipes table; recipes the table doesn't know about fall back to the generic precedence-list error.
 - **Skill expects interactive Q&A** — the worker prompt's defaults table covers this. The recipe's `args` field should be specific enough to skip interaction in the first place.
 - **Output path collision** — two targets writing to same path. Recipe must have unique `(output.project, output.type, output.subfolder, multi_instance)` tuples for non-multi-instance targets, and unique `id`s for multi-instance ones.
-- **State drift** — user manually deletes/edits artefacts after build. Deletions are caught by `test -f`. Edits are caught by the SHA-256 hash check (§ "Input-hash change detection") — the edited artefact's downstream targets are marked stale and rebuilt in dep order. Use `--skip-hash-check` to bypass.
+- **State drift** — user manually deletes/edits artefacts after build. Deletions are caught by `test -f` on every recorded path; an adopted file that is deleted or superseded is caught by the expected-key comparison. Edits are caught by the SHA-256 hash check (§ "Input-hash change detection") — the edited artefact's downstream targets are marked stale and rebuilt in dep order. Use `--skip-hash-check` to bypass.
 - **Cycle in dependencies** — wave algorithm halts with "unresolvable cycle" error and lists the involved targets. Glob deps (`ADR-*`) are expanded before cycle detection.
 
 ## Future versions

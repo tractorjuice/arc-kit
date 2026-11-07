@@ -43,7 +43,10 @@ To add an external architecture description later, place it in the project's `ex
 | Data model (`ARC-<id>-DATA-v*.md`) | 5 Building Blocks, 8 Crosscutting Concepts |
 | Platform design, DevOps strategy, operational readiness | 5, 7 Deployment View, 8 |
 | Secure by Design (`ARC-<id>-SECD-v*.md`) | 8 Crosscutting Concepts (security) |
-| Risk register, codebase audit | 11 Risks and Technical Debt |
+| Crosscutting concepts (`ARC-<id>-CONC-v*.md`, from `/arckit:arc42-concepts`) | 8 Crosscutting Concepts |
+| Quality scenarios (`ARC-<id>-QUAL-v*.md`, from `/arckit:arc42-quality`) | 1.2 Quality Goals, 10 Quality Requirements |
+| Risk register, codebase audit, conformance assessment | 11 Risks and Technical Debt |
+| Technical debt register (`ARC-<id>-DEBT-v*.md`, from `/arckit:arc42-debt`) | 11.2 Technical Debt |
 | Glossary (`ARC-<id>-GLOS-v*.md`) | 12 Glossary |
 | Project and enterprise external documents | Any section, with citations |
 
@@ -54,7 +57,7 @@ To add an external architecture description later, place it in the project's `ex
 ### Claude Code
 
 ```text
-/arckit:arc42 <project ID or name>
+/arckit-arc42:arc42 <project ID or name>
 ```
 
 ### Codex CLI
@@ -63,20 +66,22 @@ To add an external architecture description later, place it in the project's `ex
 $arckit-arc42 <project ID or name>
 ```
 
-Both commands write `projects/<id>/ARC-<id>-ARC42-v1.0.md`.
+Both commands write `projects/<id>-<name>/ARC-<id>-ARC42-v1.0.md`.
 
 If an arc42 description already exists, the command writes the next version beside it instead of overwriting it.
 
 ### Building the Source Artefacts
 
-The `arc42-full` recipe uses the **Claude Code only** build harness to generate the source artefacts and then assemble the description:
+The `arc42-full` recipe uses the **Claude Code only** build harness to generate the source artefacts, including the quality scenarios and crosscutting concepts, and then assemble the description:
 
 ```text
 /arckit:build <project-name> --recipe arc42-full --plan   # wave-plan dry run
 /arckit:build <project-name> --recipe arc42-full          # full build
 ```
 
-Add `--exclude SECD` to skip the Secure by Design assessment; the security concept in section 8 is then recorded as a gap.
+Add `--exclude SECD` to skip the Secure by Design assessment; the security concept in section 8 is then recorded as a gap. Add `--enable DEBT` for an existing system to consolidate its technical debt for section 11.2, and `--enable SDDH` to write an SDD handover pack after the description.
+
+Evidence the recipe never needs to generate is read when it already exists: an existing backlog (`BKLG`), codebase audits (`CDAU`), conformance assessment (`CONF`), HLD and DLD reviews (`HLDR`, `DLDR`) and principles compliance assessment (`PRIN-COMP`). These optional targets are off by default, so the harness adopts any that exist and passes them to the description, the concepts, the debt register and the handover; it never builds one just to satisfy a dependency. `--enable` one to build a new one instead of reading the existing one, or `--exclude` it to ignore an existing one. When adopted evidence changes, such as a new audit or a later version of the backlog, the next `--resume` rebuilds the documents that read it. A rebuilt document also reads its own previous version, so technical debt IDs and feature numbers stay stable.
 
 In Codex, run the source commands individually before `$arckit-arc42`. Start with `$arckit-principles`, `$arckit-stakeholders` and `$arckit-requirements` if the project has no source artefacts. Add the sources for the sections you need; the Inputs table shows which command outputs each section uses.
 
@@ -96,8 +101,12 @@ $arckit-diagram 001 deployment
 $arckit-secure 001
 $arckit-risk 001
 $arckit-glossary 001
+$arckit-arc42-quality 001
+$arckit-arc42-concepts 001
 $arckit-arc42 001
 ```
+
+For an existing system, run `$arckit-arc42-debt 001` before `$arckit-arc42`. To hand the result to Spec Kit, run `$arckit-arc42-handover 001` after it.
 
 Reuse source artefacts that already exist. A complete source set is not required to run the assembly command: missing sections are recorded in the Gap Register.
 
@@ -108,6 +117,7 @@ Reuse source artefacts that already exist. A complete source set is not required
 - **Summarised, not copied.** Each section summarises its sources and cites them. The cited artefacts remain authoritative, so when an ADR changes you update the ADR and re-run `/arckit:arc42`.
 - **Diagrams reproduced unchanged.** Context, container, sequence and deployment diagrams are copied from their `DIAG` artefacts. The command never draws a diagram no artefact backs.
 - **Gaps recorded, not filled.** A section with no source says "Not yet documented." and appears in the Gap Register with the command that would fill it, such as `/arckit:diagram sequence <scenario>` for an empty Runtime View.
+- **Dedicated sources preferred.** Where `/arckit:arc42-concepts`, `/arckit:arc42-quality` or `/arckit:arc42-debt` has written its document, sections 8, 10 and 11.2 summarise and cite it instead of deriving the content again.
 - **Inferences marked.** Quality scenarios derived from NFRs with measurable targets are marked "Inferred", with the NFR they came from.
 - **Conflicts reported.** Where two artefacts disagree, the section cites both instead of choosing one silently.
 
@@ -128,7 +138,7 @@ Reuse source artefacts that already exist. A complete source set is not required
 
 ## Keeping It Current
 
-The description is a view over the project's artefacts, so it goes out of date when they change. The Source Artefacts table records the version of each artefact it was built from. When a newer version of any of them exists, re-run `/arckit:arc42` to produce the next version of the description.
+The description is a view over the project's artefacts, so it goes out of date when they change. The Source Artefacts table records the version of each artefact it was built from. When a newer version of any of them exists, re-run `/arckit:arc42` to produce the next version of the description. `/arckit:health` flags a description that has fallen behind its sources as `STALE-VIEW`.
 
 ---
 
@@ -150,3 +160,5 @@ The description is a view over the project's artefacts, so it goes out of date w
 - `/arckit:risk` - Add risks or technical debt the description surfaced.
 - `/arckit:glossary` - Build the glossary the arc42 Glossary section summarises.
 - `/arckit:traceability` - Check requirements trace through to the building blocks described.
+- `/arckit:arc42-quality`, `/arckit:arc42-concepts`, `/arckit:arc42-debt` - Fill sections 10, 8 and 11.2 with dedicated source documents.
+- `/arckit:arc42-handover` - Hand the described architecture to a Specification Driven Development tool such as Spec Kit.

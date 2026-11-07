@@ -262,7 +262,13 @@ add(GUIDE_SECTIONS.OVERLAY, 'Open Agile Architecture Overlay', 'community', [
   'agile-governance',
 ], 'Open Agile Architecture Overlay');
 
-add(GUIDE_SECTIONS.OVERLAY, 'arc42 Overlay', 'community', ['arc42'], 'arc42 Overlay');
+add(GUIDE_SECTIONS.OVERLAY, 'arc42 Overlay', 'community', [
+  'arc42',
+  'arc42-quality',
+  'arc42-concepts',
+  'arc42-debt',
+  'arc42-handover',
+], 'arc42 Overlay');
 
 add(GUIDE_SECTIONS.OVERLAY, 'Australian Federal / Energy Overlay', 'community', [
   'au-aescsf',

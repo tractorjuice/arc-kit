@@ -430,7 +430,7 @@
     {
       "name": "arckit-arc42",
       "source": "./plugins/arc42",
-      "description": "arc42 overlay for ArcKit. /arckit:arc42 assembles an arc42 architecture description from the project's existing artefacts, citing each source and listing uncovered sections in a Gap Register. Recipe: arc42-full. Requires arckit core. [COMMUNITY]",
+      "description": "arc42 overlay for ArcKit. /arckit:arc42 assembles an arc42 architecture description from the project's existing artefacts, citing each source and listing uncovered sections in a Gap Register; /arckit:arc42-quality, /arckit:arc42-concepts and /arckit:arc42-debt write its sections 10, 8 and 11.2; /arckit:arc42-handover hands it over to Spec Kit. Recipe: arc42-full. Requires arckit core. [COMMUNITY]",
       "version": "6.19.0",
       "author": {
         "name": "ArcKit Contributors"

@@ -1,7 +1,9 @@
 Original ArcKit implementation code in this overlay is licensed under the
-MIT License below. The adapted template in templates/arc42-template.md and
-its copies are licensed under CC BY-SA 4.0. See templates/arc42-LICENSE.md
-for attribution, changes and the licence terms.
+MIT License below. The adapted arc42 template (templates/arc42-template.md),
+the Q42-derived quality template (templates/arc42-quality-template.md) and
+the Q42 classification in commands/arc42-quality.md, with their copies, are
+licensed under CC BY-SA 4.0. See templates/arc42-LICENSE.md for attribution,
+changes and the licence terms.
 
 MIT License
 

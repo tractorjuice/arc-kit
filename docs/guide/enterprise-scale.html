@@ -1138,16 +1138,54 @@ identity-solution-architecture/    # Domain-owned
 <li><strong>ArcKit</strong> — the governance layer: principles, requirements, stakeholders, ADRs, business cases, procurement, compliance.</li>
 <li><strong>Spec Kit</strong> — the implementation layer: specification-driven delivery of a given piece of software.</li>
 </ul>
-<p>A natural pipeline:</p>
-<pre><code class="language-text">ArcKit                                 Spec Kit
-───────                                ────────
-/arckit:requirements   ──(FR/NFR)──▶  /spec-kit specify
-/arckit:data-model     ──(DR)─────▶  /spec-kit plan
-/arckit:adr            ──(constr.)─▶  /spec-kit tasks
-                                      /spec-kit implement
-/arckit:conformance   ◀─(evidence)── (built artifacts)
+<p>ArcKit supplies Spec Kit's inputs and checks what comes back; Spec Kit builds. The arc42 overlay's <code>/arckit-arc42:arc42-handover</code> writes those inputs as one pack, built from the arc42 description and the artefacts behind it:</p>
+<pre><code class="language-text">ArcKit                                          Spec Kit
+──────                                          ────────
+/arckit:principles, arc42 §2 and §8   ──▶  speckit.constitution
+/arckit:requirements, /arckit:backlog ──▶  speckit.specify  (one feature per epic)
+arc42 §4–§7, ADRs, /arckit:data-model ──▶  speckit.plan
+                                           speckit.tasks, speckit.implement, speckit.converge
+/arckit:traceability  ◀── tagged specs and tasks
+/arckit:conformance   ◀── plans and constitution
+/arckit-repo:repo-audit    ◀── delivered code
 </code></pre>
-<p>Keep requirement IDs (<code>FR-xxx</code>, <code>NFR-xxx</code>, <code>DR-xxx</code>) in the Spec Kit spec frontmatter so traceability survives the handoff.</p>
+<h3 id="carrying-ids-across">Carrying IDs Across</h3>
+<p>Spec Kit numbers each feature's own requirements (<code>FR-001</code>) and success criteria (<code>SC-001</code>), so ArcKit IDs travel as tags beside them: <code>[ArcKit FR-012]</code>, <code>[ArcKit NFR-P-001]</code>, <code>[ArcKit ADR-003]</code>. Keep Spec Kit's local ID first and the ArcKit tag after the statement, and keep the tags in <code>spec.md</code>, <code>plan.md</code> and <code>tasks.md</code>. <code>/arckit:traceability</code> reads them back; an ID without the tag is treated as Spec Kit's own.</p>
+<p>Requirement IDs also repeat across ArcKit projects, so each feature declares the project it delivers with one ownership tag, <code>[ArcKit Project 001]</code>. The handover pack puts it at the top of every feature description. A feature with no ownership tag, or with tags for more than one project, is reported as a gap and never counted.</p>
+<h3 id="worked-example-an-appointment-booking-service">Worked Example: an Appointment Booking Service</h3>
+<p>Project <code>001-appointment-booking</code> has principles, requirements, three ADRs, a data model, a backlog and an arc42 description.</p>
+<ol>
+<li>
+<p><strong>Write the handover pack.</strong> <code>/arckit-arc42:arc42-handover 001</code> writes <code>ARC-001-SDDH-v1.0.md</code> with a constitution input, a shared plan context and one feature brief per backlog epic. Feature F-01 follows <code>EPIC-001 Book an appointment</code>.</p>
+</li>
+<li>
+<p><strong>Constitution.</strong> The team passes the pack's Constitution Input to <code>speckit.constitution</code>. One principle reads:</p>
+<pre><code class="language-text">### II. Security by Design [ArcKit Principle 4]
+- Every endpoint MUST authenticate the caller [ArcKit NFR-SEC-001]
+- Personal data MUST be encrypted at rest [ArcKit NFR-SEC-003]
+</code></pre>
+</li>
+<li>
+<p><strong>Specify.</strong> The team runs <code>speckit.specify</code> with F-01's Specify Input, which starts with <code>[ArcKit Project 001]</code>. Spec Kit writes <code>specs/001-book-appointment/spec.md</code>, copying the description into its <code>Input</code> line, numbering requirements itself and keeping the tags:</p>
+<pre><code class="language-text">**Input**: User description: &quot;[ArcKit Project 001] Residents book an appointment ...&quot;
+
+- **FR-001**: System MUST show available slots for a chosen service [ArcKit FR-003]
+- **FR-002**: System MUST confirm a booking by email [ArcKit FR-004]
+- **SC-001**: 95th percentile booking confirmation under 2 seconds [ArcKit NFR-P-001]
+</code></pre>
+<p>The brief carried one open question as <code>[NEEDS CLARIFICATION: Can a resident book for someone else?]</code>, which <code>speckit.clarify</code> raises with the team.</p>
+</li>
+<li>
+<p><strong>Plan.</strong> <code>speckit.plan</code> takes F-01's Plan Input with the Shared Plan Context: the building blocks it touches, <code>[ArcKit ADR-002]</code> (PostgreSQL for bookings), <code>[ArcKit ADR-003]</code> (email through the notification service), and the data model's <code>Booking</code> and <code>Slot</code> entities.</p>
+</li>
+<li>
+<p><strong>Build.</strong> <code>speckit.tasks</code>, <code>speckit.implement</code> and <code>speckit.converge</code>. Task lines keep their tags, as in <code>- [x] T004 Slot availability query [ArcKit FR-003]</code>.</p>
+</li>
+<li>
+<p><strong>Bring evidence back.</strong> <code>/arckit:traceability 001</code> shows <code>FR-003</code> in feature <code>001-book-appointment</code>, which project 001 owns, with its tagged tasks done. <code>/arckit:conformance 001</code> checks that <code>specs/001-book-appointment/plan.md</code> uses PostgreSQL as ADR-002 decided. <code>/arckit-repo:repo-audit</code> audits the code. A decision taken during delivery, such as adding a cache, becomes an ADR, and then <code>/arckit-arc42:arc42</code> and <code>/arckit-arc42:arc42-handover</code> are re-run. Until they are, <code>/arckit:health</code> flags the old description and pack as <code>STALE-VIEW</code>.</p>
+</li>
+</ol>
+<p>The pack is plain Markdown with no dependency on Spec Kit's internals. The steps above use Spec Kit's logical names; invoke each in the form your installed integration exposes, such as <code>/speckit-specify</code> in GitHub Copilot's default skills mode, <code>$speckit-specify</code> in Codex, <code>/skill:speckit-specify</code> in Kimi, or <code>/speckit.specify</code> where the integration uses slash-command notation. When the delivery repository is separate, pass its specs folder to traceability with <code>SPECS=&lt;path&gt;</code>. See the <a href="arc42-handover.html">arc42 SDD handover guide</a> for the full pack layout.</p>
 <hr />
 <h2 id="worked-example-placeholder">Worked Example (placeholder)</h2>
 <p>We're looking for a real-world enterprise case study to anchor this guide — ideally a large org with 50+ applications across multiple repos, Topology 2 or 3. If that's you, leave a comment on <a href="https://github.com/tractorjuice/arc-kit/issues/346">issue #346</a>; we'll anonymise however you need.</p>
