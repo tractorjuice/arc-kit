@@ -39,6 +39,7 @@ import { fileURLToPath } from 'node:url';
 import {
   isDir, readText, listDir, findRepoRoot, parseHookInput,
   extractRequirementIds, REQUIREMENT_PRIORITIES,
+  isMainModule,
 } from './hook-utils.mjs';
 import { scanAllArtifacts } from './graph-utils.mjs';
 import {
@@ -1922,11 +1923,7 @@ export function runGraphInject(data) {
 
 // ── Main ──────────────────────────────────────────────────────────────────
 
-function isMainModule() {
-  return process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
-}
-
-if (isMainModule()) {
+if (isMainModule(import.meta.url)) {
   const output = runGraphInject(parseHookInput());
   if (output != null) {
     console.log(JSON.stringify(output));

@@ -58,6 +58,37 @@ test('each finding type is accepted', () => {
   }
 });
 
+test('a file that is not an object is blocked with a reason, not a crash', () => {
+  const run = spawnSync('node', [HOOK], {
+    input: JSON.stringify({ tool_name: 'Write', tool_input: { file_path: '/repo/projects/001-x/vendors/scores.json', content: 'null' } }),
+    encoding: 'utf8',
+  });
+  assert.equal(run.status, 0, run.stderr);
+  assert.equal(JSON.parse(run.stdout).decision, 'block');
+});
+
+test('evidence or a weight of the wrong type is a warning, not a crash', () => {
+  const content = JSON.stringify({
+    projectId: '001',
+    criteria: [{ id: 'C-001', name: 'Technical', weight: [] }],
+    vendors: { acme: { displayName: 'Acme', scores: [{ criterionId: 'C-001', score: 2, evidence: ['Section 4'] }] } },
+  });
+  const run = spawnSync('node', [HOOK], {
+    input: JSON.stringify({ tool_name: 'Write', tool_input: { file_path: '/repo/projects/001-x/vendors/scores.json', content } }),
+    encoding: 'utf8',
+  });
+  assert.equal(run.status, 0, run.stderr);
+  assert.match(JSON.parse(run.stdout).hookSpecificOutput.additionalContext, /missing evidence|numeric weight/);
+});
+
+test('a Windows path is validated like any other', () => {
+  const run = spawnSync('node', [HOOK], {
+    input: JSON.stringify({ tool_name: 'Write', tool_input: { file_path: 'C:\\repo\\projects\\001-x\\vendors\\scores.json', content: 'not json' } }),
+    encoding: 'utf8',
+  });
+  assert.equal(JSON.parse(run.stdout).decision, 'block');
+});
+
 test('a list is required', () => {
   assert.match(warningsFor('none'), /acme.*integrityFindings must be an array/);
 });

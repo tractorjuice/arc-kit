@@ -6,7 +6,7 @@ The Enterprise Architecture Governance Harness — a Claude Code plugin providin
 
 ### Step 0: Make sure Claude Code is up to date
 
-ArcKit needs Claude Code **v2.1.287 or later** (see Prerequisites below). The simplest way to land on a supported version — even if you've never installed Claude Code before — is:
+ArcKit needs Claude Code **v2.1.295 or later** (see Prerequisites below). The simplest way to land on a supported version — even if you've never installed Claude Code before — is:
 
 ```bash
 claude install latest
@@ -60,13 +60,14 @@ claude --plugin-dir /path/to/arckit-claude
 
 ## Prerequisites
 
-- **Claude Code** v2.1.287 or later (recommended minimum)
+- **Claude Code** v2.1.295 or later (recommended minimum)
+- **Node.js** on your `PATH`. ArcKit's hooks and helper scripts need it, and without it ArcKit artefacts can't be written
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.287?** It adds **Claude mods**, which ArcKit uses to draw a status line above the prompt: how many projects and artefacts you have, how many are DRAFT, and how many reviews are overdue. It also fixes plugin SessionStart hooks not running in new cloud sessions, which skipped ArcKit's session set-up and version check there.
+> **Why v2.1.295?** It adds `onFailure: "block"`, so a check on an ArcKit artefact stops the write when it can't run, instead of letting it through. It also carries the fix for plugin SessionStart hooks not running in new cloud sessions.
 >
 > The floor also carries earlier releases ArcKit depends on:
 >
