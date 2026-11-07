@@ -9,6 +9,10 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+### Changed
+
+- **`/arckit:hld-review` and `/arckit:dld-review` treat supplier designs as evidence.** A design is written by a party that gains from approval, so text in it aimed at the reviewer is not followed. Each instance is now listed in a new Integrity Findings section of the review, which states None found when there are none.
+
 ### Fixed
 
 - **`/arckit:evaluate` sets its criteria before it reads any bid.** It used to read every proposal in `vendors/` before working out what it had been asked to do, so a new framework's scoring criteria were written with bids in context. It now reads a proposal only when scoring that vendor, after the framework exists, and a comparison works from the saved evaluations.

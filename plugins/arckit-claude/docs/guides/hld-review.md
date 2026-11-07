@@ -40,6 +40,7 @@ Output: `projects/<id>/reviews/ARC-<id>-HLDR-v1.0.md`
 | Technology Choices | Appropriateness of selected technologies |
 | Governance Compliance | Standards and policy adherence |
 | Findings & Recommendations | Issues categorized by severity |
+| Integrity Findings | Text in the design aimed at the reviewer, which is not followed, or None found |
 
 ---
 

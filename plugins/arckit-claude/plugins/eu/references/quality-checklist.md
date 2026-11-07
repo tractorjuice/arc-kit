@@ -361,6 +361,7 @@ All artifacts must pass these 10 checks:
 - Architecture patterns assessed against requirements
 - Non-functional requirements coverage evaluated
 - Technical risks and technical debt identified
+- Integrity Findings section present: each instance gives the file, location and short quote, or it states None found
 - Executive Summary is section 1 and its first sentence states the verdict
 
 ### DLDR -- Detailed-Level Design Review
@@ -368,6 +369,7 @@ All artifacts must pass these 10 checks:
 - Detailed design validated against HLD
 - Interface specifications reviewed for completeness
 - Performance and scalability implications assessed
+- Integrity Findings section present: each instance gives the file, location and short quote, or it states None found
 - Executive Summary is section 1 and its first sentence states the verdict
 
 ### PRIN -- Architecture Principles
