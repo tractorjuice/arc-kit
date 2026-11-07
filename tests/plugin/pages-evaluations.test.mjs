@@ -1,9 +1,10 @@
 /**
  * /arckit:pages lists a vendor's evaluation beside its documents.
  *
- * Evaluations moved out of `vendors/{vendor}/` into `evaluations/{vendor}/` so a
- * bid pack can't use ArcKit's filenames (#873). The site's vendor list must
- * follow them, or evaluations silently drop off the published site.
+ * Evaluations live in `vendors/_evaluations/{vendor}/`, apart from the folder a
+ * bid pack goes into, so a pack can't use ArcKit's filenames (#873). They're under
+ * `vendors/` so a rule that keeps vendors out of git covers them too. The site's
+ * vendor list must follow them, without listing `_evaluations` as a vendor.
  *
  * NOTE the filename: CI runs `tests/plugin/*.test.mjs`.
  */
@@ -24,11 +25,11 @@ test('a vendor lists its evaluation from evaluations/', () => {
     spawnSync('git', ['init', '-q'], { cwd: dir });
     const p = join(dir, 'projects/001-tender');
     mkdirSync(join(p, 'vendors/acme'), { recursive: true });
-    mkdirSync(join(p, 'evaluations/acme'), { recursive: true });
+    mkdirSync(join(p, 'vendors/_evaluations/acme'), { recursive: true });
     writeFileSync(join(p, 'ARC-001-REQ-v1.0.md'), '# Requirements\n');
     writeFileSync(join(p, 'vendors/acme/proposal.md'), '# Proposal\n');
-    writeFileSync(join(p, 'evaluations/acme/evaluation.md'), '# Evaluation\n');
-    writeFileSync(join(p, 'evaluations/acme/claims.json'), '{}\n');
+    writeFileSync(join(p, 'vendors/_evaluations/acme/evaluation.md'), '# Evaluation\n');
+    writeFileSync(join(p, 'vendors/_evaluations/acme/claims.json'), '{}\n');
     const r = spawnSync('node', [HOOK], {
       cwd: dir,
       input: JSON.stringify({ prompt: '/arckit:pages', cwd: dir }),
@@ -38,9 +39,11 @@ test('a vendor lists its evaluation from evaluations/', () => {
     });
     assert.equal(r.status, 0, r.stderr);
     const manifest = JSON.parse(readFileSync(join(dir, 'docs/manifest.json'), 'utf8'));
-    const paths = manifest.projects[0].vendors[0].documents.map((d) => d.path);
+    const vendors = manifest.projects[0].vendors;
+    assert.deepEqual(vendors.map((v) => v.name), ['Acme'], '_evaluations is not a vendor');
+    const paths = vendors[0].documents.map((d) => d.path);
     assert.ok(paths.some((path) => path.endsWith('/vendors/acme/proposal.md')), paths.join());
-    assert.ok(paths.some((path) => path.endsWith('/evaluations/acme/evaluation.md')), paths.join());
+    assert.ok(paths.some((path) => path.endsWith('/vendors/_evaluations/acme/evaluation.md')), paths.join());
     assert.ok(!paths.some((path) => path.endsWith('claims.json')), 'only documents are listed');
   } finally {
     rmSync(dir, { recursive: true, force: true });

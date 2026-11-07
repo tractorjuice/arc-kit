@@ -35,16 +35,24 @@ import { isMainModule, listDir, parseHookInput } from './hook-utils.mjs';
 const READER = 'arckit-evaluate-reader';
 const HOOKS_DIR = dirname(fileURLToPath(import.meta.url));
 
-// Files ArcKit writes directly under vendors/. A vendor's own folder holds only
-// what the supplier sent: a bid pack can name a file anything, so ArcKit's
-// per-vendor output lives in evaluations/ and nothing in that folder is trusted.
-const OWN_FILE = /^(scores\.json|[^/]+-profile\.md)$/;
+// What ArcKit writes under vendors/. A vendor's own folder holds only what the
+// supplier sent: a bid pack can name a file anything, so ArcKit's per-vendor
+// output lives in vendors/_evaluations/, apart from the folder a pack goes into
+// but still under vendors/, so a rule keeping vendors out of git covers it.
+const OWN_FILE = /^(scores\.json|[^/]+-profile\.md|_evaluations(?:\/.*)?)$/;
 
 const VENDORS = /(?:^|\/)projects\/[^/]+\/vendors(?:\/(.*))?$/;
-const SHELL_VENDORS = /[^\s'"`;|&()<>=]*(?:vendors\/[^\s'"`;|&()<>]*|\/vendors(?![\w-]))/g;
+const SHELL_DELIMITERS = String.raw`\s'"\x60;|&()<>`;
+// A project's vendors folder, or a path that starts at vendors/. Anchored, so
+// src/vendors.ts or a URL with /vendors/ in it isn't a bid.
+const SHELL_VENDORS = new RegExp(
+  String.raw`(?:^|[\s'"\x60=(])((?:[^${SHELL_DELIMITERS}=]*\/)?projects\/[^/${SHELL_DELIMITERS}]+\/vendors(?![\w.-])(?:\/[^${SHELL_DELIMITERS}]*)?|vendors\/[^${SHELL_DELIMITERS}]*)`,
+  'g',
+);
 const SHELL_PROJECT_FOLDER = /(?:^|\/)projects(?:\/[^/]+)?(?:\/\*{0,2})?$/;
-// Listing and creating folders names a vendor without opening anything.
-const SAFE_ON_A_FOLDER = new Set(['ls', 'mkdir', 'test', '[']);
+// None of these opens a file's contents.
+const SAFE = new Set(['ls', 'mkdir', 'test', '[']);
+const SAFE_GIT = new Set(['add', 'status']);
 // These open everything below a folder, so a project folder reaches its bids.
 const RECURSIVE = new Set(['grep', 'egrep', 'fgrep', 'rg', 'ag', 'ack', 'find', 'tar', 'zip', 'cp', 'rsync', 'get-childitem', 'gci']);
 
@@ -96,18 +104,15 @@ function looksLikeAFolder(path) {
 function bashOpensABid(command) {
   const text = String(command).replace(/\\/g, '/');
   for (const segment of text.split(/&&|\|\||[;|\n]/)) {
-    const first = segment.trim().split(/\s+/)[0];
-    for (const raw of segment.match(SHELL_VENDORS) || []) {
+    const words = segment.trim().replace(/^(?:\w+=\S*\s+)+/, '').split(/\s+/);
+    const [first, second] = words;
+    if (SAFE.has(first) || (first === 'git' && SAFE_GIT.has(second))) continue;
+    for (const [, raw] of segment.matchAll(SHELL_VENDORS)) {
       const below = normalise(raw).match(/(?:^|\/)vendors(?:\/(.*))?$/)?.[1] ?? '';
-      if (/[*?[]/.test(below)) return true;
-      if (looksLikeAFolder(below)) {
-        if (!SAFE_ON_A_FOLDER.has(first)) return true;
-      } else if (!OWN_FILE.test(below)) {
-        return true;
-      }
+      if (/[*?[]/.test(below) || looksLikeAFolder(below) || !OWN_FILE.test(below)) return true;
     }
-    if (RECURSIVE.has(first.toLowerCase())) {
-      for (const word of segment.trim().split(/\s+/).map((w) => w.replace(/^['"]|['"]$/g, ''))) {
+    if (RECURSIVE.has(first.toLowerCase()) || (first === 'git' && second === 'grep')) {
+      for (const word of words.map((w) => w.replace(/^['"]|['"]$/g, ''))) {
         if (SHELL_PROJECT_FOLDER.test(word) && looksLikeAFolder(word)) return true;
       }
     }

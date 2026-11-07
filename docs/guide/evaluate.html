@@ -477,7 +477,7 @@
 <p>Output:</p>
 <ul>
 <li><code>projects/&lt;id&gt;/ARC-&lt;id&gt;-EVAL-v1.0.md</code> (framework)</li>
-<li><code>projects/&lt;id&gt;/evaluations/&lt;vendor&gt;/evaluation.md</code> (scoring)</li>
+<li><code>projects/&lt;id&gt;/vendors/_evaluations/&lt;vendor&gt;/evaluation.md</code> (scoring)</li>
 <li><code>projects/&lt;id&gt;/ARC-&lt;id&gt;-VEND-v1.0.md</code> (comparison)</li>
 </ul>
 <hr />
@@ -562,7 +562,7 @@
 </table>
 <hr />
 <h2 id="how-bids-are-read">How Bids Are Read</h2>
-<p>A bid is written by a party that gains from a high score, so <code>/arckit:evaluate</code> never reads it directly. A read-only reader opens one supplier's documents and returns short claims against each criterion, and scoring uses only those claims. Each vendor's claims, evaluation and notes are saved in <code>evaluations/&lt;vendor&gt;/</code>.</p>
+<p>A bid is written by a party that gains from a high score, so <code>/arckit:evaluate</code> never reads it directly. A read-only reader opens one supplier's documents and returns short claims against each criterion, and scoring uses only those claims. Each vendor's claims, evaluation and notes are saved in <code>vendors/_evaluations/&lt;vendor&gt;/</code>.</p>
 <ul>
 <li><strong>Formats:</strong> PDF, Markdown and text. Export a Word document to PDF first.</li>
 <li><strong>No claim, no marks:</strong> a criterion the bid doesn't address scores 0, and a mandatory qualification with no claim fails.</li>

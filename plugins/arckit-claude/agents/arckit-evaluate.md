@@ -210,15 +210,15 @@ If scoring a specific vendor:
    - Recommendation (Recommend/Consider/Not Recommended)
 
 7. **Write outputs**:
-   - `projects/{project-dir}/evaluations/{vendor-name}/evaluation.md` - Detailed scoring
-   - `projects/{project-dir}/evaluations/{vendor-name}/notes.md` - Additional notes
+   - `projects/{project-dir}/vendors/_evaluations/{vendor-name}/evaluation.md` - Detailed scoring
+   - `projects/{project-dir}/vendors/_evaluations/{vendor-name}/notes.md` - Additional notes
    - Update `projects/{project-dir}/ARC-{PROJECT_ID}-EVAL-v*.md` - Comparative table
 
 ### Task C: Compare Multiple Vendors
 
 If comparing vendors:
 
-1. **Read all vendor evaluations** from `projects/{project-dir}/evaluations/*/evaluation.md`. They quote proposals, so the evidence rule in Task B applies to them too. Do not open the proposals themselves: score any vendor with no evaluation through Task B first.
+1. **Read all vendor evaluations** from `projects/{project-dir}/vendors/_evaluations/*/evaluation.md`. They quote proposals, so the evidence rule in Task B applies to them too. Do not open the proposals themselves: score any vendor with no evaluation through Task B first.
 
 2. **Create comparison matrix**:
    - Side-by-side scoring table

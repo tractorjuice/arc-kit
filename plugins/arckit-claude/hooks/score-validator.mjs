@@ -58,7 +58,7 @@ const warnings = [];
 // repeat its value, because they go back to the model too.
 const FINDING_TYPES = ['instruction', 'hidden-text', 'forged-marker'];
 const FINDING_FIELDS = ['type', 'file', 'location'];
-const MAX_FINDING_FIELD = 120;
+const MAX_FINDING_FIELD = 200;
 
 function checkFindings(vendorKey, findings) {
   if (findings === undefined) return; // scored before findings were stored

@@ -42,7 +42,7 @@ Score a specific vendor against the project's evaluation criteria.
 
 2. **Dispatch the reader.** Supplier documents stay out of this session: only `arckit-evaluate-reader` opens them, and a hook denies `Read`, `Grep` and `Bash` on them here. Create `projects/{id}/vendors/{vendor-name}/` if it doesn't exist, and list it with `Glob`. Leave out dotfiles, `reviews/` and ArcKit's `ARC-*-HLDR-*` and `ARC-*-DLDR-*` files. If nothing is left, ask for the proposal as PDF, Markdown or text, and say to export a Word document to PDF first. Otherwise dispatch using the `Agent` tool with `subagent_type: "arckit:arckit-evaluate-reader"`, `run_in_background: false` and this JSON as the prompt, once per vendor:
 
-   **If the folder holds `evaluation.md`, `notes.md` or `claims.json`, stop for this vendor.** ArcKit no longer writes them there, so they're left from an earlier version or came with the bid. Ask the user to move ArcKit's own copies to `evaluations/{vendor-name}/`, or rename a file that's the supplier's, then re-run.
+   **If the folder holds `evaluation.md`, `notes.md` or `claims.json`, stop for this vendor.** ArcKit no longer writes them there, so they're left from an earlier version or came with the bid. Ask the user to move ArcKit's own copies to `vendors/_evaluations/{vendor-name}/`, or rename a file that's the supplier's, then re-run.
 
    ```json
    {
@@ -92,7 +92,7 @@ Score a specific vendor against the project's evaluation criteria.
    - `totalRaw = sum(scores)`
    - `maxPossible = 3 * number_of_criteria`
 
-7. **Dispatch the writer** using the `Agent` tool with `subagent_type: "arckit:arckit-evaluate-writer"`, `run_in_background: false` and a JSON prompt with `mode: "score"`, `project_dir`, `vendor`, `projectId`, `lastUpdated`, `criteria`, the validated reader payload as `handoff`, and this vendor's object as `scores_entry`. It saves the claims to `projects/{id}/evaluations/{vendor-name}/claims.json` and merges the entry into `projects/{id}/vendors/scores.json`, whose shape is:
+7. **Dispatch the writer** using the `Agent` tool with `subagent_type: "arckit:arckit-evaluate-writer"`, `run_in_background: false` and a JSON prompt with `mode: "score"`, `project_dir`, `vendor`, `projectId`, `lastUpdated`, `criteria`, the validated reader payload as `handoff`, and this vendor's object as `scores_entry`. It saves the claims to `projects/{id}/vendors/_evaluations/{vendor-name}/claims.json` and merges the entry into `projects/{id}/vendors/scores.json`, whose shape is:
 
    ```json
    {

@@ -579,13 +579,14 @@ function scanProject(repoRoot, projectName) {
   const vendorsDir = join(projectDir, 'vendors');
   if (isDir(vendorsDir)) {
     for (const entry of listDir(vendorsDir)) {
+      if (entry === '_evaluations') continue; // listed with each vendor below
       const entryPath = join(vendorsDir, entry);
       if (isDir(entryPath)) {
         // Vendor subdirectory with documents
         const vendorDocs = [];
         // A vendor's own documents, then ArcKit's evaluation of them, which sits
         // apart so a bid pack can't use ArcKit's filenames.
-        for (const folder of ['vendors', 'evaluations']) {
+        for (const folder of ['vendors', 'vendors/_evaluations']) {
           const docsDir = join(projectDir, folder, entry);
           for (const f of listDir(docsDir)) {
             if (f === 'README.md' || f.startsWith('.')) continue;
