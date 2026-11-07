@@ -513,3 +513,26 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:activity:752304291318274457
 ### Q36. ArcKit 6.19.0 article — Medium, ArcKit publication — published 2 November
 
 Published: <https://medium.com/arckit/arckit-v6-19-0-is-it-legacy-assess-your-existing-systems-against-the-uks-new-definition-dee08f78c53d>. It was imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: Enterprise Architecture, Legacy Systems, Digital Transformation, Government, Claude. The publication's 302 subscribers were notified. The import needed four fixes in the editor: line breaks restored in the install block, empty lines removed under each heading, the byline split off the lead paragraph, and the community links (which were dropped) put back. The mirrored text, with its hero image, is `docs/articles/2026-11-02-arckit-v6-19-is-it-legacy-medium.md`.
+
+### Q37. How Claude Code lets AI coding agents collaborate — Medium, ArcKit publication — published 7 November
+
+Published: <https://medium.com/arckit/how-claude-code-lets-ai-coding-agents-collaborate-across-machines-331c52ccc6ba>. The maintainer published this one directly, so it isn't on arckit.org and has no share page. Medium is its canonical copy.
+
+### Q38. How Claude Code lets AI coding agents collaborate — maintainer's own LinkedIn, as a LinkedIn article — published 7 November
+
+Published: <https://www.linkedin.com/pulse/how-claude-code-lets-ai-coding-agents-collaborate-across-craddock-pbzqe/>. The Medium text, unchanged, with LinkedIn's optional intro line left blank. The first version carried a stray line of Medium's banner text and no diagram caption for a few minutes; both were corrected the same morning.
+
+### Q39. How Claude Code lets AI coding agents collaborate — LinkedIn group (maintainer's voice) — posted 7 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7524771312704147456/>. First posted in the old question voice, then edited the same morning to the text below, so LinkedIn marks it "Edited".
+
+> Just written up how Claude Code sessions talk to each other across machines.
+>
+> The interesting bit is the trust model. Agents can share information but can't give each other orders. If an agent needs your approval, you have to give it directly. Another agent can't pass it on for you.
+>
+> Worth a look if you're running more than one agent:
+> https://www.linkedin.com/pulse/how-claude-code-lets-ai-coding-agents-collaborate-across-craddock-pbzqe/
+
+### Q40. Bring Your Own Template call — LinkedIn group (maintainer's voice) — posted 7 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7524781305960722432/>. Five days after the ArcKit page post, because the group version hadn't gone out on 2 November. Copy: `campaign-bring-your-own-template.md`. LinkedIn added a generic GitHub preview card.
