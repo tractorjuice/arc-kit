@@ -536,3 +536,11 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:activity:752477131270414745
 ### Q40. Bring Your Own Template call — LinkedIn group (maintainer's voice) — posted 7 November
 
 Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7524781305960722432/>. Five days after the ArcKit page post, because the group version hadn't gone out on 2 November. Copy: `campaign-bring-your-own-template.md`. LinkedIn added a generic GitHub preview card.
+
+### Q41. ArcKit 6.20.0 article — LinkedIn page, with the article hero (maintainer's voice) — posted 7 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:share:7524865393992052736?actorCompanyId=146637218>. Copy: `docs/articles/2026-11-07-arckit-v6-20-a-bid-cant-mark-its-own-homework-linkedin.md`, with the hero and the alt text recorded in that file. The group and Discord versions haven't gone out.
+
+### Q42. ArcKit 6.20.0 article — Medium, ArcKit publication — published 7 November
+
+Published: <https://medium.com/arckit/arckit-v6-20-0-a-bid-cant-mark-its-own-homework-080851f059a9>. It was imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: Enterprise Architecture, Procurement, Digital Transformation, Government, Claude. The maintainer's 302 subscribers were notified. As well as the four known import fixes, the import dropped the "Before you update" heading, which had to be added back.
