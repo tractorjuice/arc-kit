@@ -1195,7 +1195,8 @@ def test_template_customizations_use_templates_custom():
     ]
     assert not offenders
 
-    for skill_name in AGENT_BACKED_SKILLS | {"arckit-customize", "arckit-requirements"}:
+    # arckit-score writes scores.json from no template, so it has nothing to override.
+    for skill_name in (AGENT_BACKED_SKILLS | {"arckit-customize", "arckit-requirements"}) - {"arckit-score"}:
         skill_path = CODEX_SKILLS / skill_name / "SKILL.md"
         assert ".arckit/templates-custom/" in skill_path.read_text(encoding="utf-8")
 

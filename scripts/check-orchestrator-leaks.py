@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Guard: Claude-only orchestrator prose must never reach a non-Claude target.
 
-Ten ArcKit commands are split into three tiers — an orchestrator that runs in
+Twelve ArcKit commands are split into three tiers — an orchestrator that runs in
 the main session, a reader subagent that touches the network/MCP, and a writer
 subagent that holds the only `Write` call. Non-Claude runtimes (Codex, Gemini,
 OpenCode, Copilot, Paperclip, Vibe, Kimi) have no subagent-dispatch primitive

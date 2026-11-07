@@ -113,6 +113,23 @@ The hook maps each reader agent to its schema (`READER_SCHEMAS`); a new reader m
 
 The validator is shared across all three-tier splits. Each agent supplies its own `{name}-handoff.schema.json`.
 
+## The exception: supplier bids
+
+`/arckit:evaluate` and `/arckit:score` share one reader, `arckit-evaluate-reader`, and one writer, `arckit-evaluate-writer`. They keep the split but break three invariants above, on purpose (#873).
+
+- **Scoring isn't a pure function of the evidence.** `score` asks whether a proposal fully addresses a criterion, which is a judgement on free text with no rubric YAML behind it. Only three things are arithmetic: a criterion with no claim scores 0, a mandatory qualification with no claim fails, and in `/arckit:evaluate` price follows the EVAL's cost method. In `/arckit:score` a price counts as a claim for a cost criterion. So "an injection can't change a score" stays a Tier 2 rule in `ENFORCEMENT.md`.
+- **A claim is free text.** It has a 256-character cap and no `pattern`, because research's text pattern rejected ordinary SLA wording such as `RPO < 15 minutes` while passing injected sentences.
+- **A failed read doesn't log a gap and continue.** A bidder's score can't rest on part of a bid, so any document the reader can't fully read, or leaves out, keeps that vendor unscored, with the reason stated. It never gets a 0. The command lists the folder with `Glob` and checks the reader's `documents` against it.
+
+Four things differ from research because a bid is a local file, not a URL:
+
+- **The orchestrator has to be stopped from opening one.** Research stays clean by not calling `WebFetch`, but here the same `Read` tool loads the EVAL. `hooks/supplier-isolation.mjs` denies `Read`, `Grep` and `Bash` on supplier documents while either command runs. A frontmatter hook can't do this, because it stays on for the session and would block `/arckit:hld-review`. `allowed-tools` only pre-approves, and `disallowed-tools` removes whole tools.
+- **Nothing in a vendor's folder is trusted.** A bid pack can name a file `evaluation.md` or `claims.json`, so an allowlist of ArcKit's filenames would let a supplier write straight into the scoring context. ArcKit writes per-vendor output to `projects/{id}/evaluations/{vendor}/` instead, and the gate treats the whole vendor folder as the supplier's. If one of those names turns up in a vendor's folder, the command stops for that vendor, because it's either left from an earlier version or came with the bid.
+- **Findings carry no text.** A flagged quote holding transcript markup would be rejected by the sanitiser, and a retry would then drop the evidence. So `integrity_findings` holds a type, a file and a location only, and `location` has a strict grammar (`Page 3`, `Clause 7.1(b)`) that leaves no room for a sentence. A file name is the supplier's own choice and is only bounded.
+- **The monoliths can't read.** `build_agent_map()` pairs one agent file with one command, so there are two, and both still register as dispatchable Claude agents. Each sets `tools: ["Glob"]`, because that field is stripped for the runtimes that use the prompt, so a dispatch in Claude Code can't open a bid.
+
+**What this doesn't protect against:** a misled reader can still return false claims that pass validation, and no check confirms a claim against the document, because a claim is a paraphrase. `claims.json` is saved beside each evaluation so a person can trace a score back to its file and location.
+
 ## Adapting this pattern to another agent
 
 **Every research agent has now been split.** `arckit-framework` is the only

@@ -106,7 +106,7 @@ def test_graders_are_well_formed(name):
                 assert target.get("source") == "file" and target.get("path"), f"{name}/{gname}: bad file target"
                 assert not str(target["path"]).startswith("/"), f"{name}/{gname}: file target must be relative"
             else:
-                assert target in {"last_message", "trace", "files", "mock_calls"}, f"{name}/{gname}: bad target"
+                assert target in {"last_message", "trace", "main_trace", "files", "mock_calls"}, f"{name}/{gname}: bad target"
         if kind == "file_exists":
             assert not str(g["path"]).startswith("/"), f"{name}/{gname}: path must be relative"
         if kind == "tool_used":

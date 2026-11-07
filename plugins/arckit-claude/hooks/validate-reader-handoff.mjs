@@ -65,7 +65,11 @@ export const READER_SCHEMAS = {
   'arckit-azure-research-reader': 'cloud-research-handoff.schema.json',
   'arckit-gcp-research-reader': 'cloud-research-handoff.schema.json',
   'arckit-tenders-reader': 'tenders-handoff.schema.json',
+  'arckit-evaluate-reader': 'evaluate-handoff.schema.json',
 };
+
+// A bidder can't be scored on part of a bid, so a failed read isn't a gap to note and move past.
+const ONE_BIDDER = new Set(['arckit-evaluate-reader']);
 
 /** "arckit:arckit-research-reader" or "arckit-research-reader" -> "arckit-research-reader". */
 export function readerName(agentType) {
@@ -199,7 +203,7 @@ export function decide(data) {
         hookSpecificOutput: {
           hookEventName: 'PostToolUse',
           updatedToolOutput: replaceText(response, WITHHELD),
-          additionalContext: `ArcKit handoff check (${reader}): the reader did not complete (status ${clip(JSON.stringify(status))}), so its reply was withheld unvalidated. Re-dispatch the reader once; if that also fails, log the gap.`,
+          additionalContext: `ArcKit handoff check (${reader}): the reader did not complete (status ${clip(JSON.stringify(status))}), so its reply was withheld unvalidated. Re-dispatch the reader once; if that also fails, ${ONE_BIDDER.has(reader) ? 'leave this vendor unscored and state why' : 'log the gap'}.`,
         },
       };
     }
