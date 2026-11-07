@@ -28,7 +28,7 @@
 Output:
 
 - `projects/<id>/ARC-<id>-EVAL-v1.0.md` (framework)
-- `projects/<id>/evaluations/<vendor>/evaluation.md` (scoring)
+- `projects/<id>/vendors/_evaluations/<vendor>/evaluation.md` (scoring)
 - `projects/<id>/ARC-<id>-VEND-v1.0.md` (comparison)
 
 ---
@@ -63,7 +63,7 @@ Output:
 
 ## How Bids Are Read
 
-A bid is written by a party that gains from a high score, so `/arckit:evaluate` never reads it directly. A read-only reader opens one supplier's documents and returns short claims against each criterion, and scoring uses only those claims. Each vendor's claims, evaluation and notes are saved in `evaluations/<vendor>/`.
+A bid is written by a party that gains from a high score, so `/arckit:evaluate` never reads it directly. A read-only reader opens one supplier's documents and returns short claims against each criterion, and scoring uses only those claims. Each vendor's claims, evaluation and notes are saved in `vendors/_evaluations/<vendor>/`.
 
 - **Formats:** PDF, Markdown and text. Export a Word document to PDF first.
 - **No claim, no marks:** a criterion the bid doesn't address scores 0, and a mandatory qualification with no claim fails.

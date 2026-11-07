@@ -25,18 +25,18 @@ You are the **writer tier** for `/arckit:evaluate` and `/arckit:score`. You save
 
 ## Always
 
-Write `{project_dir}/evaluations/{vendor}/claims.json` containing the `handoff` object exactly as given, so every score can be traced to its source. Never write into `vendors/{vendor}/`, which holds only what the supplier sent.
+Write `{project_dir}/vendors/_evaluations/{vendor}/claims.json` containing the `handoff` object exactly as given, so every score can be traced to its source. Never write into `vendors/{vendor}/`, which holds only what the supplier sent.
 
 ## `mode: "evaluate"`
 
-1. Write `{project_dir}/evaluations/{vendor}/evaluation.md`, with these sections in order, from the payload's fields:
+1. Write `{project_dir}/vendors/_evaluations/{vendor}/evaluation.md`, with these sections in order, from the payload's fields:
    - Overall Score (`overall_score`)
    - Mandatory Qualifications (`mandatory`)
    - Category Breakdown (`categories`, with each justification and the claims it cites)
    - Strengths, Weaknesses and Risk Assessment
    - Integrity Findings: a table with the columns Type, File and Location, from `handoff.integrity_findings`, or write None found
    - Recommendation
-2. Write `{project_dir}/evaluations/{vendor}/notes.md` from `notes`.
+2. Write `{project_dir}/vendors/_evaluations/{vendor}/notes.md` from `notes`.
 3. Add or update this vendor's row in the comparative table in `eval_path`, using `Edit`.
 
 ## `mode: "score"`

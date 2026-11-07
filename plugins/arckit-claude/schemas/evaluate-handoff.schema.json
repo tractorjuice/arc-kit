@@ -15,11 +15,11 @@
   "properties": {
     "vendor": {
       "type": "string",
-      "pattern": "^[A-Za-z0-9][A-Za-z0-9 ._&()-]{0,63}$"
+      "pattern": "^[^\\s./\\\\<>`][^\\n\\r/\\\\<>`]{0,63}$"
     },
     "documents": {
       "type": "array",
-      "maxItems": 30,
+      "maxItems": 200,
       "items": {
         "$ref": "#/$defs/Document"
       },
@@ -27,21 +27,21 @@
     },
     "claims": {
       "type": "array",
-      "maxItems": 300,
+      "maxItems": 500,
       "items": {
         "$ref": "#/$defs/Claim"
       }
     },
     "prices": {
       "type": "array",
-      "maxItems": 20,
+      "maxItems": 100,
       "items": {
         "$ref": "#/$defs/Price"
       }
     },
     "integrity_findings": {
       "type": "array",
-      "maxItems": 50,
+      "maxItems": 100,
       "items": {
         "$ref": "#/$defs/IntegrityFinding"
       }
@@ -51,12 +51,12 @@
     "File": {
       "type": "string",
       "description": "Path relative to the vendor's folder.",
-      "pattern": "^[^\\s./\\\\<>`][^\\n\\r<>`\\\\]{0,119}$"
+      "pattern": "^[^\\s./\\\\<>`][^\\n\\r<>`]{0,199}$"
     },
     "Location": {
       "type": "string",
-      "description": "Where in the file, as a locator such as 'Page 3', 'Clause 7.1(b)' or 'Page 3, Section 2', or 'Document' or 'Metadata' for the file as a whole. The grammar leaves no room for a sentence.",
-      "pattern": "^(?:Document|Metadata|(?:Page|Pages|Section|Sections|Line|Lines|Slide|Slides|Sheet|Row|Rows|Column|Cell|Paragraph|Appendix|Annex|Schedule|Table|Figure|Clause|Part) (?:[0-9A-Z][0-9A-Za-z.()-]{0,11}|[ivxlc]{1,8})(?:, (?:(?:Page|Pages|Section|Sections|Line|Lines|Slide|Slides|Sheet|Row|Rows|Column|Cell|Paragraph|Appendix|Annex|Schedule|Table|Figure|Clause|Part) (?:[0-9A-Z][0-9A-Za-z.()-]{0,11}|[ivxlc]{1,8})|[0-9][0-9.()-]{0,11})){0,3})$"
+      "description": "Where in the file: a locator word and a short reference, such as 'Page 12 of 40' or 'Clause 7.1(b)', or 'Document' or 'Metadata' for the file as a whole. Two consecutive words of three or more letters are refused, which leaves no room for a sentence.",
+      "pattern": "^(?!.*[A-Za-z]{3,}[ ,]+[A-Za-z]{3,})(?:Document|Metadata|(?:Page|Pages|Section|Sections|Line|Lines|Slide|Slides|Sheet|Row|Rows|Column|Cell|Para|Paragraph|Paragraphs|Appendix|Annex|Schedule|Table|Figure|Clause|Clauses|Part|Question|Questions|Item|Exhibit|Attachment|Tab|Chapter) [0-9A-Za-z .,:;()/#&'–—-]{1,40})$"
     },
     "Document": {
       "type": "object",
@@ -91,7 +91,7 @@
       "properties": {
         "criterion_id": {
           "type": "string",
-          "pattern": "^[A-Z0-9][A-Z0-9.]{0,7}(?:-[A-Z0-9.]{1,8}){0,3}$"
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9.]{0,7}(?:-[A-Za-z0-9.]{1,8}){0,3}$"
         },
         "claim": {
           "type": "string",
