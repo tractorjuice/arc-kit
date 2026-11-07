@@ -119,12 +119,15 @@ console.log(JSON.stringify({type: DOC_TYPES.LEGACY, universal: HIGH_SEVERITY_TYP
 def test_behavioural_fixture_has_reproducible_expected_decisions(scenario, outcomes, incomplete_risk):
     fixture = OVERLAY / f'evals/fixtures/legacy-{scenario}/projects/001-payments/assessment-input.json'
     r = subprocess.run(['node', str(OVERLAY / 'scripts/legacy-assessment.mjs'), '--input', str(fixture), '--json'], text=True, capture_output=True, check=True)
-    result = json.loads(r.stdout)['results']['systems']
+    assessment = json.loads(r.stdout)
+    result = assessment['results']['systems']
     assert [s['outcome'] for s in result] == outcomes
     assert any(s['risk']['status'] == 'incomplete' for s in result) == incomplete_risk
     if scenario == 'sparse':
         assert result[0]['provisional']
     if scenario == 'dependency':
+        local = next(f for f in assessment['findings'] if f['id'] == 'reporting_finding_D7')
+        assert local['outcome'] == 'Accepted'  # Local input is intentionally preserved.
         assert result[1]['criterionResults'][6]['outcome'] == 'Legacy'
 
 

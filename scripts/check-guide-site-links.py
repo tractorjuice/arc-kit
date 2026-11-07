@@ -45,7 +45,7 @@ UNLINKED_BY_DESIGN = {
 
 def guides_on_disk() -> set[str]:
     return {
-        str(p.relative_to(GUIDES_DIR)).removesuffix(".md")
+        p.relative_to(GUIDES_DIR).as_posix().removesuffix(".md")
         for p in GUIDES_DIR.rglob("*.md")
     }
 
