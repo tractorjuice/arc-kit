@@ -104,7 +104,7 @@ def test_timeout_is_recorded_not_raised(tmp_path, monkeypatch):
     fake_bin = tmp_path / "bin"
     fake_bin.mkdir()
     claude = fake_bin / "claude"
-    claude.write_text('#!/bin/sh\necho \'{"type": "system", "subtype": "init"}\'\nexec sleep 30\n', encoding="utf-8")
+    claude.write_text('#!/bin/sh\nif [ \"$1\" = plugin ]; then echo \'[]\'; exit 0; fi\necho \'{"type": "system", "subtype": "init"}\'\nexec sleep 30\n', encoding="utf-8")
     claude.chmod(0o755)
     monkeypatch.setenv("PATH", f"{fake_bin}:{os.environ['PATH']}")
     case = {"prompt": "/arckit:sobc 001", "max_turns": 1, "timeout_seconds": 600}

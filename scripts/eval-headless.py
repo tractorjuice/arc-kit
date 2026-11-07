@@ -11,6 +11,9 @@ the eval README describes.
 
 Deterministic graders only — `file_exists`, `regex`, `tool_used`, `tool_order`.
 An `llm` or `baseline` grader is reported as skipped, never as passed.
+The plugin under test and its declared local dependencies are explicitly enabled.
+A run must prove their loading and its command in the CLI system/init event;
+artifact scores cannot rescue invalid runtime evidence, including on replay.
 
     python3 scripts/eval-headless.py                       # run every case
     python3 scripts/eval-headless.py --case "search*"       # by name glob
@@ -33,8 +36,9 @@ mirrors the plugin's layout (`commands/`, `templates/`, `references/`, ...).
 Each arm is recorded under `baseline/` and `variant/`; `--replay` on the
 results directory re-scores and compares both.
 
-Exit 0 when every scored case meets --threshold (default 1.0), 1 otherwise;
-for a comparison, every scored case of the variant.
+Exit 0 when at least one run is evaluated, every run loads and completes, and
+all scored cases meet --threshold (default 1.0); 1 otherwise. For comparisons,
+the score threshold applies to the variant, with validity required in both arms.
 """
 
 from __future__ import annotations
@@ -67,11 +71,16 @@ VARIANT_IGNORE = {"__pycache__", ".DS_Store"}
 # ── Plugin copies: effort override and variants ──────────────────────
 
 
-def prompt_command(prompt: str) -> str:
-    m = re.match(r"\s*/arckit(?:-[\w-]+)?:([\w.-]+)", prompt)
+def parse_invocation(prompt: str) -> tuple[str, str]:
+    """Parse one exact slash-command token; punctuation is not an argument separator."""
+    m = re.match(r"\s*/(arckit(?:-[\w-]+)?):([\w.-]+)(?=\s|$)", prompt)
     if not m:
         raise ValueError(f"prompt does not invoke an ArcKit command: {prompt[:60]!r}")
-    return m.group(1)
+    return m.group(1), m.group(2)
+
+
+def prompt_command(prompt: str) -> str:
+    return parse_invocation(prompt)[1]
 
 
 def build_plugin(plugin_dir: Path, dest: Path, *, command: str, effort: str | None = None,
@@ -235,11 +244,111 @@ def snapshot(workspace: Path) -> set[str]:
     return out
 
 
+def read_plugin_manifest(path: Path) -> dict:
+    try:
+        data = json.loads((path / ".claude-plugin/plugin.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError) as exc:
+        raise ValueError(f"cannot read plugin manifest at {path}: {exc}") from exc
+    if not isinstance(data, dict) or not isinstance(data.get("name"), str) or not data["name"]:
+        raise ValueError(f"plugin manifest at {path} needs a name")
+    dependencies = data.get("dependencies", [])
+    if not isinstance(dependencies, list):
+        raise ValueError(f"plugin {data['name']!r}: dependencies must be a list")
+    for dependency in dependencies:
+        if not isinstance(dependency, dict) or not isinstance(dependency.get("name"), str) or not dependency["name"]:
+            raise ValueError(f"plugin {data['name']!r}: each dependency must be an object with a name")
+        pin = dependency.get("version")
+        if not isinstance(pin, str) or not re.fullmatch(r"=\d+\.\d+(?:\.\d+)?(?:-[\w.-]+)?(?:\+[\w.-]+)?", pin):
+            raise ValueError(f"dependency {dependency['name']!r} requires an exact version pin")
+    return data
+
+
+def plugin_runtime_dirs(plugin_dir: Path, *, dependency_parent: Path | None = None) -> dict[str, Path]:
+    """Resolve pinned dependencies, preferring the selected checkout over this one.
+
+    Only the root is exempt from a pin. Copies can retain their original checkout's
+    dependency parent; missing, malformed or ambiguous sources fail before a model call.
+    """
+    selected = read_plugin_manifest(plugin_dir)
+    parents = list(dict.fromkeys([(dependency_parent or plugin_dir.parent).resolve(),
+                                  (REPO_ROOT / "plugins").resolve()]))
+    indexes = {}
+
+    def locate(name):
+        if name == selected["name"]:
+            return plugin_dir.resolve()
+        for parent in parents:
+            if parent not in indexes:
+                index = {}
+                for manifest in sorted(parent.glob("*/.claude-plugin/plugin.json")):
+                    path = manifest.parents[1].resolve()
+                    # Validate dependency structure only on the selected graph.
+                    data = json.loads(manifest.read_text(encoding="utf-8"))
+                    if isinstance(data, dict) and isinstance(data.get("name"), str):
+                        index.setdefault(data["name"], set()).add(path)
+                indexes[parent] = index
+            choices = indexes[parent].get(name, set())
+            if len(choices) > 1:
+                raise ValueError(f"dependency {name!r} needs one unambiguous local plugin source")
+            if choices:
+                return next(iter(choices))
+        raise ValueError(f"dependency {name!r} needs one unambiguous local plugin source")
+
+    resolved, visiting = {}, set()
+
+    def visit(name, version=None, *, root=False):
+        path = locate(name)
+        data = read_plugin_manifest(path)
+        if not root and (not isinstance(version, str) or data.get("version") != version[1:]):
+            raise ValueError(f"dependency {name!r} needs a matching exact version pin, got {version!r}")
+        if name in visiting:
+            raise ValueError(f"plugin dependency cycle at {name!r}")
+        if name in resolved:
+            return
+        visiting.add(name)
+        for dependency in data.get("dependencies", []):
+            visit(dependency["name"], dependency["version"])
+        visiting.remove(name)
+        resolved[name] = path
+
+    visit(selected["name"], root=True)
+    return resolved
+
+
+def session_plugin_settings(runtime_dirs: dict[str, Path], workspace: Path, env: dict) -> dict:
+    """Disable installed copies of the tested namespaces for this session only."""
+    listing = subprocess.run(["claude", "plugin", "list", "--json"], cwd=workspace,
+                             env=env, capture_output=True, text=True, timeout=30, check=True)
+    try:
+        installed = json.loads(listing.stdout)
+    except ValueError as exc:
+        raise ValueError("Claude plugin list did not return JSON") from exc
+    if not isinstance(installed, list) or any(not isinstance(p, dict) or not isinstance(p.get("id"), str) for p in installed):
+        raise ValueError("Claude plugin list did not return plugin IDs")
+    enabled = {p["id"]: False for p in installed if p["id"].split("@", 1)[0] in runtime_dirs}
+    enabled.update({f"{name}@inline": True for name in runtime_dirs})
+    return {"enabledPlugins": enabled}
+
+
 def run_claude(case: dict, workspace: Path, plugin_dir: Path, model: str | None,
-               timeout: int | None = None) -> dict:
+               timeout: int | None = None, *, source_plugin_dir: Path | None = None) -> dict:
+    manifest = read_plugin_manifest(plugin_dir)
+    name = manifest.get("name")
+    namespace, command = parse_invocation(case["prompt"])
+    invocation = f"{namespace}:{command}"
+    if not isinstance(name, str) or invocation != f"{name}:{command}":
+        raise ValueError("case invocation does not match the plugin manifest namespace")
+    if not (plugin_dir / "commands" / f"{command}.md").is_file():
+        raise ValueError(f"plugin under test has no command {command!r}")
+    runtime_dirs = plugin_runtime_dirs(plugin_dir, dependency_parent=(source_plugin_dir or plugin_dir).parent)
+    env = dict(os.environ)
+    for k, v in (case.get("env") or {}).items():
+        env[k] = str(v)
+    settings = session_plugin_settings(runtime_dirs, workspace, env)
     cmd = [
         "claude", "-p", case["prompt"],
-        "--plugin-dir", str(plugin_dir),
+        *[arg for path in runtime_dirs.values() for arg in ("--plugin-dir", str(path))],
+        "--settings", json.dumps(settings),
         "--output-format", "stream-json", "--verbose",
         "--max-turns", str(case.get("max_turns", 10)),
     ]
@@ -249,9 +358,6 @@ def run_claude(case: dict, workspace: Path, plugin_dir: Path, model: str | None,
         cmd += ["--model", model or case["model"]]
     if case.get("append_system_prompt"):
         cmd += ["--append-system-prompt", case["append_system_prompt"]]
-    env = dict(os.environ)
-    for k, v in (case.get("env") or {}).items():
-        env[k] = str(v)
     started = time.time()
     limit = timeout or case.get("timeout_seconds", 600)
     timed_out = False
@@ -287,6 +393,8 @@ def run_claude(case: dict, workspace: Path, plugin_dir: Path, model: str | None,
     result = next((ev for ev in reversed(events) if ev.get("type") == "result"), {})
     model_usage = result.get("modelUsage") or {}
     return {
+        "plugin_dir": str(plugin_dir.resolve()),
+        "plugin_dirs": {name: str(path) for name, path in runtime_dirs.items()},
         "models": sorted(model_usage),
         "thinking_tokens": sum(int(m.get("thinkingTokens") or 0) for m in model_usage.values()),
         "output_tokens": sum(int(m.get("outputTokens") or 0) for m in model_usage.values()),
@@ -297,6 +405,7 @@ def run_claude(case: dict, workspace: Path, plugin_dir: Path, model: str | None,
         "cost_usd": result.get("total_cost_usd"),
         "num_turns": result.get("num_turns"),
         "subtype": f"timeout after {limit}s" if timed_out else result.get("subtype"),
+        "is_error": result.get("is_error", False),
         "timed_out": timed_out,
         "exit_code": returncode,
         "stderr": stderr[-4000:],
@@ -381,11 +490,89 @@ def early_stop(rec: dict, scored: dict) -> str | None:
     return tail[-200:] or "(no final message)"
 
 
-def score_case(case: dict, rec: dict, files_dir: Path) -> dict:
+def validate_runtime(case: dict, rec: dict, plugin_dir: Path, *, copied_plugin: bool = False) -> dict:
+    """Use the selected manifest graph, never a recording's dependency expectations.
+
+    Every CLI init event must agree on the required inline plugins and command.
+    Only an explicitly copied run may use its recorded path for the root plugin;
+    dependencies are always resolved from the current selected checkout.
+    """
+    errors = []
+    namespace = command = ""
+    plugin_loaded = command_loaded = dependencies_loaded = False
+    try:
+        namespace, command = parse_invocation(case["prompt"])
+        invocation = f"{namespace}:{command}"
+        manifest = read_plugin_manifest(plugin_dir)
+        if manifest["name"] != namespace:
+            raise ValueError("case invocation does not match the plugin manifest namespace")
+        expected_dirs = plugin_runtime_dirs(plugin_dir)
+        if copied_plugin:
+            path = rec.get("plugin_dir")
+            if not isinstance(path, str) or "\x00" in path or not Path(path).is_absolute():
+                raise ValueError("copied run lacks an absolute recorded root plugin path")
+            expected_dirs[namespace] = Path(path).resolve()
+        events = [e for e in rec.get("events", [])
+                  if isinstance(e, dict) and e.get("type") == "system" and e.get("subtype") == "init"]
+        if not events:
+            errors.append("missing system/init event")
+        else:
+            def loaded(init, name, expected):
+                plugins = init.get("plugins")
+                candidates = [p for p in plugins if isinstance(p, dict) and p.get("name") == name] if isinstance(plugins, list) else []
+                if len(candidates) != 1:
+                    return False
+                candidate = candidates[0]
+                path = candidate.get("path")
+                return (candidate.get("source") == f"{name}@inline"
+                        and isinstance(path, str) and "\x00" not in path and Path(path).is_absolute()
+                        and Path(path).resolve() == expected)
+            plugin_loaded = all(loaded(e, namespace, expected_dirs[namespace]) for e in events)
+            dependencies_loaded = all(loaded(e, name, path) for e in events
+                                      for name, path in expected_dirs.items() if name != namespace)
+            command_loaded = all(isinstance(e.get("slash_commands"), list) and invocation in e["slash_commands"] for e in events)
+            if not plugin_loaded:
+                errors.append("expected inline plugin name, source and path not loaded consistently")
+            if not command_loaded:
+                errors.append(f"invoked command {invocation!r} not loaded consistently")
+            if not dependencies_loaded:
+                errors.append("declared dependency plugin not loaded consistently from its expected source")
+    except (ValueError, OSError) as exc:
+        errors.append(str(exc))
+    if rec.get("setup_error"):
+        errors.append(rec["setup_error"])
+    return {"passed": not errors, "plugin": namespace, "command": f"{namespace}:{command}",
+            "plugin_loaded": plugin_loaded, "command_loaded": command_loaded,
+            "dependencies_loaded": dependencies_loaded, "errors": errors}
+
+
+def completion_status(rec: dict) -> dict:
+    if rec.get("setup_error"):
+        reason = "setup_error"
+    elif rec.get("timed_out"):
+        reason = "timeout"
+    elif rec.get("subtype") != "success":
+        reason = rec.get("subtype") or "missing_result"
+    elif rec.get("exit_code") != 0 or rec.get("is_error"):
+        reason = "process_error"
+    else:
+        return {"passed": True, "reason": "success"}
+    return {"passed": False, "reason": reason}
+
+
+def failed_record(exc: Exception) -> dict:
+    return {"events": [], "tool_uses": [], "created_files": [], "models": [],
+            "setup_error": str(exc), "subtype": "setup_error", "exit_code": None,
+            "cost_usd": 0.0, "num_turns": 0, "last_message": ""}
+
+
+def score_case(case: dict, rec: dict, files_dir: Path, plugin_dir: Path, *, copied_plugin: bool = False) -> dict:
     results = [grade(g, rec, files_dir) for g in case["_graders"]]
     scored = [r for r in results if not r.get("skipped")]
     score = (sum(1 for r in scored if r["passed"]) / len(scored)) if scored else None
-    return {"graders": results, "score": score}
+    runtime = validate_runtime(case, rec, plugin_dir, copied_plugin=copied_plugin)
+    return {"graders": results, "score": score if runtime["passed"] else 0.0,
+            "runtime": runtime, "completion": completion_status(rec)}
 
 
 # ── Recording ────────────────────────────────────────────────────────
@@ -424,6 +611,8 @@ def recorded_runs(results_dir: Path, case_name: str) -> int:
 
 def load_recording(case_out: Path) -> dict:
     rec = json.loads((case_out / "recording.json").read_text(encoding="utf-8"))
+    if not isinstance(rec, dict):
+        raise ValueError("recording must be an object")
     transcript = case_out / "transcript.jsonl"
     rec["events"] = [json.loads(l) for l in transcript.read_text(encoding="utf-8").splitlines() if l.strip()] \
         if transcript.exists() else []
@@ -443,9 +632,12 @@ def compare(baseline: list[dict], variant: list[dict]) -> list[dict]:
     rows = []
     for name in dict.fromkeys(e["case"] for e in baseline + variant):
         runs = {arm: [e for e in entries if e["case"] == name] for arm, entries in arms.items()}
+        invalid = {arm: sum(not (e.get("runtime", {}).get("passed") and e.get("completion", {}).get("passed")) for e in entries)
+                   for arm, entries in runs.items()}
+        valid = all(runs.values()) and not any(invalid.values())
         tally: dict[str, dict[str, tuple[int, int]]] = {arm: {} for arm in arms}
         for arm, entries in runs.items():
-            for e in entries:
+            for e in entries if valid else []:
                 for g in e["graders"]:
                     if g.get("skipped"):
                         continue
@@ -463,9 +655,9 @@ def compare(baseline: list[dict], variant: list[dict]) -> list[dict]:
             return sum(values) / len(values) if values else None
 
         rows.append({
-            "case": name,
+            "case": name, "valid": valid, "invalid_runs": invalid,
             "runs": {arm: len(entries) for arm, entries in runs.items()},
-            "score": {arm: mean(e["score"] for e in entries) for arm, entries in runs.items()},
+            "score": {arm: mean(e["score"] for e in entries) if valid else None for arm, entries in runs.items()},
             "cost_usd": {arm: round(sum(float(e.get("cost_usd") or 0) for e in entries), 4)
                          for arm, entries in runs.items()},
             "output_tokens": {arm: mean(e.get("output_tokens") for e in entries) for arm, entries in runs.items()},
@@ -481,6 +673,9 @@ def print_comparison(rows: list[dict]) -> None:
 
     print("\nbaseline → variant")
     for row in rows:
+        if not row["valid"]:
+            print(f"  {row['case']}: INVALID COMPARISON (invalid/incomplete runs: {row['invalid_runs']}; recorded runs: {row['runs']}); no grader changes inferred")
+            continue
         s, c, t, stops = row["score"], row["cost_usd"], row["output_tokens"], row["early_stops"]
         print(f"  {row['case']}: score {num(s['baseline'], '.2f')} → {num(s['variant'], '.2f')}, "
               f"cost ${c['baseline']:.2f} → ${c['variant']:.2f}, "
@@ -495,7 +690,7 @@ def print_comparison(rows: list[dict]) -> None:
     better = sum(g["change"] == "better" for row in rows for g in row["graders"])
     worse = sum(g["change"] == "worse" for row in rows for g in row["graders"])
     cost = {arm: sum(row["cost_usd"][arm] for row in rows) for arm in ("baseline", "variant")}
-    print(f"variant: {better} grader result(s) better, {worse} worse; "
+    print(f"variant: {better} grader result(s) better, {worse} worse; {sum(not r['valid'] for r in rows)} invalid comparison(s); "
           f"cost ${cost['baseline']:.2f} → ${cost['variant']:.2f}")
 
 
@@ -522,6 +717,12 @@ def main() -> int:
     ap.add_argument("--json", type=Path, help="write the aggregate result to this path as well")
     ap.add_argument("--keep-temp", action="store_true")
     args = ap.parse_args()
+    if args.runs is not None and args.runs < 1:
+        ap.error("--runs must be positive")
+    if args.timeout is not None and args.timeout < 1:
+        ap.error("--timeout must be positive")
+    if not 0 <= args.threshold <= 1:
+        ap.error("--threshold must be between 0 and 1")
     if args.variant and args.replay:
         ap.error("--variant runs live; to re-score a comparison, pass its results directory to --replay")
 
@@ -531,6 +732,14 @@ def main() -> int:
     if not cases:
         print("no cases matched", file=sys.stderr)
         return 1
+
+    # Validate the whole selection before starting any paid run.
+    run_counts = {}
+    for case in cases:
+        count = args.runs if args.runs is not None else case.get("runs", 1)
+        if not isinstance(count, int) or isinstance(count, bool) or count < 1:
+            ap.error(f"case {case['name']!r} must have a positive integer runs value")
+        run_counts[case["name"]] = count
 
     overlay = None
     if args.variant:
@@ -570,16 +779,27 @@ def main() -> int:
     elif comparing:
         variant_meta = json.loads((out_dir / "variant.json").read_text(encoding="utf-8"))
 
-    aggregates = {arm: {"mode": mode, "plugin": str(plugin_dir), "cases": [], "total_cost_usd": 0.0}
+    aggregates = {arm: {"mode": mode, "plugin": str(plugin_dir), "cases": [], "errors": [], "total_cost_usd": 0.0}
                   for arm, _ in arms}
     worst = dict.fromkeys(aggregates, 1.0)
+    invalid_run = False
+    evaluated = 0
+    explicit_selection = bool(args.case or args.tag or args.runs is not None)
     for case in cases:
-        if args.runs:
+        if mode == "replay":
+            present = any((directory / "recording.json").is_file()
+                          for arm, _ in arms
+                          for directory in (out_dir / arm if arm else out_dir).glob(case["name"] + "*")
+                          if directory.name == case["name"] or re.fullmatch(re.escape(case["name"]) + r"\.run\d+", directory.name))
+            if not present and not explicit_selection:
+                print(f"[skip] {case['name']}: not recorded in this selection")
+                continue
+        if args.runs is not None:
             runs = args.runs
         elif mode == "replay":
             runs = max(recorded_runs(out_dir / arm if arm else out_dir, case["name"]) for arm, _ in arms)
         else:
-            runs = int(case.get("runs", 1))
+            runs = run_counts[case["name"]]
         for run_no in range(1, runs + 1):
             case_key = case["name"] if runs == 1 else f"{case['name']}.run{run_no}"
             for arm, arm_overlay in arms:
@@ -588,26 +808,35 @@ def main() -> int:
                 shown = f"{case_key} ({arm})" if arm else case_key
                 if mode == "replay":
                     if not (case_out / "recording.json").exists():
-                        print(f"[skip] {shown}: no recording in {arm_dir}")
+                        message = f"{shown}: missing selected recording in {arm_dir}"
+                        print(f"[FAIL] {message}")
+                        aggregates[arm]["errors"].append(message)
+                        invalid_run = True
                         continue
-                    rec = load_recording(case_out)
+                    try:
+                        rec = load_recording(case_out)
+                    except (ValueError, OSError) as exc:
+                        rec = failed_record(exc)
                 else:
                     workspace = Path(tempfile.mkdtemp(prefix=f"arckit-eval-{case['name']}-"))
                     effort = args.effort or case.get("effort")
                     plugin_copy = None
+                    before = snapshot(workspace)
                     try:
-                        build_workspace(case, workspace)
-                        before = snapshot(workspace)
-                        run_plugin = plugin_dir
-                        # Both arms of a comparison run from a copy made the same way,
-                        # so the only difference between them is the variant's files.
-                        if effort or arm:
-                            plugin_copy = Path(tempfile.mkdtemp(prefix="arckit-eval-plugin-"))
-                            run_plugin = build_plugin(plugin_dir, plugin_copy / "arckit",
-                                                      command=prompt_command(case["prompt"]),
-                                                      effort=effort, overlay=arm_overlay)
-                        print(f"[run ] {shown}{f' (effort: {effort})' if effort else ''} …", flush=True)
-                        rec = run_claude(case, workspace, run_plugin, args.model, args.timeout)
+                        try:
+                            build_workspace(case, workspace)
+                            before = snapshot(workspace)
+                            run_plugin = plugin_dir
+                            if effort or arm:
+                                plugin_copy = Path(tempfile.mkdtemp(prefix="arckit-eval-plugin-"))
+                                run_plugin = build_plugin(plugin_dir, plugin_copy / "arckit",
+                                                          command=prompt_command(case["prompt"]),
+                                                          effort=effort, overlay=arm_overlay)
+                            print(f"[run ] {shown}{f' (effort: {effort})' if effort else ''} …", flush=True)
+                            rec = run_claude(case, workspace, run_plugin, args.model, args.timeout,
+                                             source_plugin_dir=plugin_dir)
+                        except (ValueError, OSError, subprocess.SubprocessError) as exc:
+                            rec = failed_record(exc)
                         rec["requested_model"] = args.model or case.get("model")
                         rec["requested_effort"] = effort
                         if arm:
@@ -621,7 +850,12 @@ def main() -> int:
                             print(f"       workspace kept at {workspace}")
                         else:
                             shutil.rmtree(workspace, ignore_errors=True)
-                scored = score_case(case, rec, case_out / "files")
+                copied = bool(arm or rec.get("arm") in ("baseline", "variant") or rec.get("requested_effort") in EFFORT_LEVELS)
+                scored = score_case(case, rec, case_out / "files", plugin_dir, copied_plugin=copied)
+                valid = scored["runtime"]["passed"] and scored["completion"]["passed"]
+                invalid_run |= not valid
+                evaluated += 1
+                case_out.mkdir(parents=True, exist_ok=True)
                 (case_out / "scores.json").write_text(json.dumps(scored, indent=2), encoding="utf-8")
                 score = scored["score"]
                 stopped = early_stop(rec, scored)
@@ -633,17 +867,23 @@ def main() -> int:
                     "requested_effort": rec.get("requested_effort"),
                     "thinking_tokens": rec.get("thinking_tokens"), "output_tokens": rec.get("output_tokens"),
                     "duration_ms": rec.get("duration_ms"), "graders": scored["graders"],
-                    "early_stop": stopped,
+                    "early_stop": stopped, "runtime": scored["runtime"], "completion": scored["completion"],
                 })
                 aggregates[arm]["total_cost_usd"] += float(rec.get("cost_usd") or 0)
-                label = "pass" if score == 1.0 else ("FAIL" if score is not None else "n/a ")
+                # Persist after every case, including setup failures.
+                (arm_dir / "aggregate.json").write_text(json.dumps(aggregates[arm], indent=2), encoding="utf-8")
+                label = "FAIL" if not valid else ("pass" if score == 1.0 else ("FAIL" if score is not None else "n/a "))
                 extra = " TIMED OUT" if rec.get("timed_out") else ""
                 if stopped:
                     extra += " EARLY STOP"
                 if rec.get("thinking_tokens") is not None:
                     extra += (f" thinking={rec.get('thinking_tokens')} output={rec.get('output_tokens')}"
-                             f" models={','.join(rec.get('models') or [])}")
+                              f" models={','.join(rec.get('models') or [])}")
                 print(f"[{label}] {shown}: score={score} cost=${rec.get('cost_usd') or 0:.2f} turns={rec.get('num_turns')}{extra}")
+                if not scored["runtime"]["passed"]:
+                    print("         INVALID RUNTIME: " + "; ".join(scored["runtime"]["errors"]))
+                elif not scored["completion"]["passed"]:
+                    print("         INCOMPLETE RUN: " + scored["completion"]["reason"])
                 for g in scored["graders"]:
                     mark = "skip" if g.get("skipped") else ("ok  " if g["passed"] else "FAIL")
                     print(f"         {mark} {g['name']}: {g['details']}")
@@ -665,8 +905,11 @@ def main() -> int:
         args.json.write_text(json.dumps(result, indent=2), encoding="utf-8")
     total = sum(a["total_cost_usd"] for a in aggregates.values())
     print(f"\nresults: {out_dir}  total cost: ${total:.2f}")
-    # A comparison's exit status is the variant's, against the same threshold.
-    return 0 if worst[arms[-1][0]] >= args.threshold else 1
+    # Grader threshold applies to the variant; invalid runtime in either arm
+    # invalidates the comparison regardless of its apparent artifact scores.
+    if not evaluated:
+        print("no recordings evaluated", file=sys.stderr)
+    return 0 if evaluated and not invalid_run and worst[arms[-1][0]] >= args.threshold else 1
 
 
 if __name__ == "__main__":
