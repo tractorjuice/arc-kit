@@ -351,7 +351,11 @@ AGENT_CONFIG = {
         "name": "Paperclip",
         "output_dir": "extensions/arckit-paperclip/src/data",
         "format": "json",
-        "path_prefix": "scripts/bash",
+        # Paperclip ships templates/, references/, schemas/ and data/ at its
+        # package root and replaces {arckit_package_root} in each prompt at
+        # runtime (src/tools/command-tools.ts), so plugin-root assets resolve
+        # there. Executable scripts keep script_path_prefix.
+        "path_prefix": "{arckit_package_root}",
         "script_path_prefix": "scripts",
         "arg_placeholder": "{topic}",
         "extension_dir": "extensions/arckit-paperclip",
@@ -693,11 +697,10 @@ def convert(commands_dirs, agents_dir):
         # Collect entry for Paperclip JSON format
         if "paperclip" in AGENT_CONFIG:
             pc_config = AGENT_CONFIG["paperclip"]
-            # This command runs a bundled calculator, not a project bash helper.
-            # Paperclip resolves this token from its installed package at runtime.
+            # This command runs a bundled calculator, not a project bash helper,
+            # so its scripts also resolve from the installed package.
             if has_runtime_assets:
-                pc_config = {**pc_config, "path_prefix": "{arckit_package_root}",
-                             "script_path_prefix": "{arckit_package_root}/scripts"}
+                pc_config = {**pc_config, "script_path_prefix": "{arckit_package_root}/scripts"}
             pc_prompt = rewrite_paths(prompt, pc_config)
             pc_prompt = rewrite_hook_dependencies(pc_prompt, pc_config)
             pc_prompt = neutralise_question_tool(pc_prompt)
