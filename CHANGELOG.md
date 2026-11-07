@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Harness dreaming: find the mistakes ArcKit keeps leading the model into** (`scripts/managed-agents/dream.py`). A maintainer script, based on the Claude cookbook *Dreaming with a dynamic workflow*, that reads finished runs (eval recordings from `eval-headless.py`, Claude Code session transcripts, self-harness traces) and distils them on Claude Managed Agents into a memory store of harness weaknesses: one page per repeatable mistake, naming the command, skill, template, reference or hook, with quoted evidence and a proposed gotcha. The store is exported to local files for review and turned into pull requests by hand; nothing it writes reaches a user's session. A lead agent with read-only tools writes a workflow that runs one analyzer per transcript and then one organizer, in a sandbox with no network and under a hard spend limit. The default is a dry run that stages the rendered transcripts locally so you can read what would be sent. Likely secrets are redacted, transcripts with a filled-in `OFFICIAL-SENSITIVE` or higher classification are left out unless `--allow-classified` is given, and a ledger skips transcripts a store has already seen, so a nightly run uploads only new ones. Not part of any plugin or extension. `tests/plugin/test_managed_agents_dream.py` covers the rendering, the guards and the request shapes, and drives a whole run, including cleanup after a failure, against a fake client.
+
 ## [6.19.0] — 2026-11-02
 
 ### Added
