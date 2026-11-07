@@ -49,6 +49,20 @@ jobs:
       - name: Generate extension formats
         run: python scripts/converter.py
 
+      # Builds the Paperclip package and runs its handlers against the
+      # generated commands.json: every command's {arckit_package_root} assets
+      # must exist and be in package.json "files". Nothing else exercises the
+      # published package, so a stale path or an unshipped folder goes unseen.
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: extensions/arckit-paperclip/package-lock.json
+
+      - name: Test built Paperclip command handlers
+        working-directory: extensions/arckit-paperclip
+        run: npm ci && npm test
+
       # testpaths is set in pyproject.toml, so this collects the same tests a
       # bare local `python -m pytest` does. Run via `python -m` (not the
       # `pytest` entry point) so the repo root lands on sys.path for the
