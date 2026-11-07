@@ -24,6 +24,7 @@ TEMPLATES = [
     "dld-review-template.md",
     "gcloud-requirements-template.md",
     "gcloud-clarify-template.md",
+    "vendor-scoring-template.md",
 ]
 CHECKLIST_SECTIONS = ["HLDR", "DLDR", "GCLD", "GCLC"]
 
