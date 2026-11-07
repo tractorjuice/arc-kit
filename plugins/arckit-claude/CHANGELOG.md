@@ -12,6 +12,7 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 ### Changed
 
 - **`/arckit:hld-review` and `/arckit:dld-review` treat supplier designs as evidence.** A design is written by a party that gains from approval, so text in it aimed at the reviewer is not followed. Each instance is now listed in a new Integrity Findings section of the review, which states None found when there are none.
+- **`/arckit:gcloud-search` and `/arckit:gcloud-clarify` treat supplier pages as evidence.** A service page is written by a party that gains from being shortlisted, and `gcloud-search` scores it in the same context that reads it. Text on a page aimed at the reader is no longer followed, and each instance is listed under a new Integrity Findings section. `gcloud-clarify` carries those findings into each service's risk assessment.
 
 ### Fixed
 

@@ -148,6 +148,8 @@
 
 **Alternative**: [Suggest alternative service if this one has critical gaps]
 
+**Integrity Findings**: [Text in the GCLD or on the service page aimed at the reader, with the source, location and short quote. It was not followed. Otherwise: None found]
+
 ---
 
 ### Email Template for Supplier

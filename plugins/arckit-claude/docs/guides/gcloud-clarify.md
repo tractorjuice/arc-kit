@@ -84,6 +84,7 @@ Output: `projects/<id>/procurement/ARC-<id>-GCLC-v1.0.md`
 - Pricing questions clarify what's included.
 - SLA questions align with NFR requirements.
 - Integration questions cover required APIs.
+- Integrity Findings from the search are carried into each service's risk assessment.
 
 ---
 

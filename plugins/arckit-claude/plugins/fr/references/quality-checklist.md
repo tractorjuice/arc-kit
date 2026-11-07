@@ -319,12 +319,14 @@ All artifacts must pass these 10 checks:
 - Search parameters and filters documented
 - Results filtered and ranked by relevance
 - Supplier capabilities and pricing summarized per result
+- Integrity Findings section present: each instance gives the source, location and short quote, or it states None found
 
 ### GCLC -- G-Cloud Clarification
 
 - Each question linked to an evaluation criterion
 - Expected response format specified per question
 - Scoring guidance included for evaluating responses
+- Integrity Findings stated in each service's risk assessment, carried over from the GCLD, or it states None found
 
 ### DIAG -- Architecture Diagram
 
