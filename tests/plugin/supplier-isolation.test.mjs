@@ -238,10 +238,23 @@ test('sessions do not share a gate', () => {
   assert.equal(b.readBid(), null);
 });
 
+test('the command refuses to start if the gate can\'t be switched on', () => {
+  const noTmp = { ...process.env, TMPDIR: '/nonexistent/arckit-gate' };
+  const session_id = randomUUID();
+  const run = (event) => spawnSync('node', [HOOK], { input: JSON.stringify({ session_id, ...event }), encoding: 'utf8', env: noTmp });
+  const prompt = run({ hook_event_name: 'UserPromptSubmit', prompt: '/arckit:score vendor x' });
+  assert.equal(prompt.status, 0, prompt.stderr);
+  assert.equal(JSON.parse(prompt.stdout).decision, 'block');
+  const skill = run({ hook_event_name: 'PreToolUse', tool_name: 'Skill', tool_input: { skill: 'arckit:evaluate' } });
+  assert.equal(JSON.parse(skill.stdout).hookSpecificOutput.permissionDecision, 'deny');
+  const other = run({ hook_event_name: 'UserPromptSubmit', prompt: '/arckit:hld-review 001' });
+  assert.equal(other.stdout.trim(), '', 'other commands are unaffected');
+});
+
 test('hooks.json runs the gate on every event it needs', () => {
   const { hooks } = JSON.parse(readFileSync(resolve(PLUGIN, 'hooks/hooks.json'), 'utf8'));
   const uses = (entries) => entries.filter((e) => e.hooks.some((h) => (h.args || []).join().includes('supplier-isolation.mjs')));
   assert.equal(uses(hooks.UserPromptSubmit).length, 1);
   const matchers = uses(hooks.PreToolUse).map((e) => e.matcher).sort();
-  assert.deepEqual(matchers, ['Read|Grep|Bash|PowerShell', 'Skill']);
+  assert.deepEqual(matchers, ['Read', 'Read|Grep|Bash|PowerShell', 'Skill']);
 });

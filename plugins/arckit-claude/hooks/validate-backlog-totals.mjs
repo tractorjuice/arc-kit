@@ -35,7 +35,7 @@ import { parseHookInput } from './hook-utils.mjs';
 import { checkBacklog, parseRequirementPriorities } from './backlog-totals.mjs';
 
 const data = parseHookInput();
-const filePath = (data.tool_input || {}).file_path || '';
+const filePath = String((data.tool_input || {}).file_path || '');
 const filename = basename(filePath);
 if (!/^ARC-\d{3}-BKLG(?:-\d+)?-v\d+\.\d+\.json$/i.test(filename)) process.exit(0);
 

@@ -41,7 +41,7 @@
 
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { findRepoRoot, parseHookInput } from './hook-utils.mjs';
+import { findRepoRoot, isMainModule, parseHookInput } from './hook-utils.mjs';
 import { buildProjectContext } from './project-context-builder.mjs';
 
 /** Whether a SubagentStart agent_type should receive ArcKit project context. */
@@ -71,7 +71,7 @@ export function decide(data, build = buildProjectContext) {
   };
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMainModule(import.meta.url)) {
   const out = decide(parseHookInput());
   if (out) console.log(JSON.stringify(out));
   process.exit(0);

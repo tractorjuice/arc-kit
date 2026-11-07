@@ -7,8 +7,7 @@
  */
 
 import { dirname } from 'node:path';
-import { pathToFileURL } from 'node:url';
-import { findRepoRoot, parseHookInput } from './hook-utils.mjs';
+import { findRepoRoot, isMainModule, parseHookInput } from './hook-utils.mjs';
 import { buildProjectContext, sanitizeContextValue } from './project-context-builder.mjs';
 import {
   collectExternalWatchPaths,
@@ -63,6 +62,6 @@ export function runExternalContextWatch(data) {
   return output;
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (isMainModule(import.meta.url)) {
   console.log(JSON.stringify(runExternalContextWatch(parseHookInput())));
 }

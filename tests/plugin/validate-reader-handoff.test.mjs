@@ -30,7 +30,7 @@ import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PLUGIN = resolve(__dirname, '../../plugins/arckit-claude');
 const HOOK = resolve(PLUGIN, 'hooks/validate-reader-handoff.mjs');
-const { READER_SCHEMAS, WITHHELD, decide, extractJson, readerName } = await import(HOOK);
+const { READER_SCHEMAS, WITHHELD, decide, extractJson, onCheckFailed, readerName } = await import(HOOK);
 
 const fixtureDir = (schema) => resolve(__dirname, 'fixtures', schema.replace('.schema.json', ''));
 const load = (schema, f) => readFileSync(resolve(fixtureDir(schema), f), 'utf8');
@@ -238,4 +238,18 @@ test('a bidder is never logged as a gap: a failed read leaves the vendor unscore
   const context = decide(event).hookSpecificOutput.additionalContext;
   assert.match(context, /leave this vendor unscored/);
   assert.doesNotMatch(context, /log the gap/);
+});
+
+test('a validator that breaks withholds a reader\'s reply, and leaves other subagents alone', () => {
+  const reader = 'arckit:arckit-evaluate-reader';
+  const handback = onCheckFailed({ hook_event_name: 'PreToolUse', tool_name: 'SubagentHandback', agent_type: reader });
+  assert.equal(handback.hookSpecificOutput.permissionDecision, 'deny');
+  const reply = onCheckFailed({
+    hook_event_name: 'PostToolUse',
+    tool_name: 'Agent',
+    tool_input: { subagent_type: reader },
+    tool_response: { status: 'completed', content: [{ type: 'text', text: '{}' }] },
+  });
+  assert.match(JSON.stringify(reply.hookSpecificOutput.updatedToolOutput), /withheld/);
+  assert.equal(onCheckFailed({ hook_event_name: 'PreToolUse', tool_name: 'SubagentHandback', agent_type: 'general-purpose' }), null);
 });
