@@ -109,7 +109,8 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Opus 5 at \`effort: xhigh\`/\`max\` with thinking disabled is sent as \`high\` instead of failing, so ArcKit's \`effort: max\` commands complete on thinking-off sessions rather than erroring (needs v2.1.251)\n` +
     `- Claude Opus 5.5 — the default Opus model; it always thinks, so \`effort: max\` commands cannot be sent as \`high\` by a thinking-off session and the provenance Effective Effort row is accurate (needs v2.1.280)\n` +
     `- Claude Sonnet 5.5 — the default Sonnet model on the Anthropic API; like Opus 5.5 it always thinks, so \`effort: max\` commands run at \`max\` on it (needs v2.1.284)\n` +
-    `- Plugin SessionStart hooks now run in new cloud sessions, so ArcKit's session-start hooks run there too (needs v2.1.287)\n\n` +
+    `- Plugin SessionStart hooks now run in new cloud sessions, so ArcKit's session-start hooks run there too (needs v2.1.287)\n` +
+    `- A check on an ArcKit artefact stops the write when it can't run, instead of letting it through (needs v2.1.295)\n\n` +
     `Update with: \`claude update\`\n\n` +
     `**Tip — stop drifting back below the floor:** after updating, add ` +
     `\`"minimumVersion": "${MIN_CLAUDE_CODE_VERSION}"\` to your \`.claude/settings.json\`. ` +

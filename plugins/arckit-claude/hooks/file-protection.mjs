@@ -264,7 +264,10 @@ if (isBlocked) {
 const filePathLower = filePath.toLowerCase();
 if (['config', 'settings', 'setup'].some(kw => filePathLower.includes(kw))) {
   const output = {
-    additionalContext: `Note: ${filePath} may contain configuration. Ensure no secrets are included.`,
+    hookSpecificOutput: {
+      hookEventName: 'PreToolUse',
+      additionalContext: `Note: ${filePath} may contain configuration. Ensure no secrets are included.`,
+    },
   };
   console.log(JSON.stringify(output));
 }

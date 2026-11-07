@@ -6,18 +6,21 @@
  * `onFailure: "block"` closes that, and turns a crash into a stopped write. So
  * every gate here must survive odd input and print valid output.
  *
- * It is deliberately not on Bash, Grep, the wider Read, UserPromptSubmit or
- * anything after a tool call: with Node missing, those would leave a session
- * unable to run the command that diagnoses the problem.
+ * It is deliberately scoped. Native Claude Code runs without Node, and a plugin
+ * enabled for a user loads in every repo, so an unscoped entry would stop every
+ * write everywhere on such a machine, and on Bash or UserPromptSubmit it would
+ * leave a session unable to run the command that diagnoses the problem.
  *
  * NOTE the filename: CI runs `tests/plugin/*.test.mjs`.
  */
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
+import { mkdtempSync, readFileSync, symlinkSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve, dirname } from 'node:path';
 import { spawnSync } from 'node:child_process';
+import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -38,37 +41,68 @@ const GATES = [
   'validate-reader-handoff.mjs',
 ];
 
-test('every write gate fails closed, with room to run under load', () => {
+// Each scoped by an ArcKit-shaped name. Native Claude Code runs without Node, so
+// a plugin enabled for a user would otherwise stop every write in every repo.
+// `**/projects/**` isn't narrow enough: it matches any repo under ~/projects.
+const FAIL_CLOSED = [
+  ['validate-arc-filename.mjs', 'Write', 'Write(**/ARC-*)'],
+  ['score-validator.mjs', 'Write', 'Write(**/vendors/scores.json)'],
+  ['validate-wardley-math.mjs', 'Write', 'Write(**/wardley-maps/**)'],
+  ['validate-backlog-totals.mjs', 'Write', 'Write(**/ARC-*-BKLG-*.json)'],
+  ['file-protection.mjs', 'Write', 'Write(**/ARC-*)'],
+  ['file-protection.mjs', 'Edit', 'Edit(**/ARC-*)'],
+  ['secret-file-scanner.mjs', 'Write', 'Write(**/ARC-*)'],
+  ['secret-file-scanner.mjs', 'Edit', 'Edit(**/ARC-*)'],
+  ['supplier-isolation.mjs', 'Read', 'Read(**/projects/*/vendors/**)'],
+];
+
+test('each ArcKit artefact write and supplier read fails closed, with room to run', () => {
   const pre = entries('PreToolUse');
-  for (const gate of GATES) {
-    const found = pre.filter((h) => script(h) === gate);
-    assert.ok(found.length > 0, `${gate} is not registered`);
-    for (const h of found) {
-      assert.equal(h.onFailure, 'block', `${gate} on ${h.matcher}`);
-      assert.ok(h.timeout >= 15, `${gate} on ${h.matcher} has timeout ${h.timeout}`);
+  for (const [gate, matcher, rule] of FAIL_CLOSED) {
+    const found = pre.find((h) => script(h) === gate && h.matcher === matcher && h.if === rule);
+    assert.ok(found, `${gate} on ${matcher} with ${rule}`);
+    assert.equal(found.onFailure, 'block', gate);
+    assert.ok(found.timeout >= 15, `${gate} has timeout ${found.timeout}`);
+  }
+});
+
+test('nothing fails closed without an if rule, so a broken Node stops only ArcKit work', () => {
+  for (const event of Object.keys(hooks)) {
+    for (const h of entries(event).filter((e) => e.onFailure)) {
+      assert.equal(event, 'PreToolUse', script(h));
+      assert.ok(h.if, `${script(h)} on ${h.matcher} is unscoped`);
+      assert.doesNotMatch(h.if, /\*\*\/projects\/\*\*/, 'matches any repo under ~/projects');
     }
   }
 });
 
-test('a supplier read fails closed as well, added to the gate and not replacing it', () => {
-  const iso = entries('PreToolUse').filter((h) => script(h) === 'supplier-isolation.mjs');
-  const vendorRead = iso.find((h) => h.matcher === 'Read');
-  assert.equal(vendorRead?.onFailure, 'block');
-  assert.equal(vendorRead?.if, 'Read(**/vendors/**)');
-  const wide = iso.find((h) => h.matcher === 'Read|Grep|Bash|PowerShell');
-  assert.ok(wide, 'the unconditional gate must stay: an if rule depends on where the session started');
+test('protected files and secrets are still checked everywhere', () => {
+  const pre = entries('PreToolUse');
+  for (const gate of ['file-protection.mjs', 'secret-file-scanner.mjs']) {
+    const wide = pre.find((h) => script(h) === gate && h.matcher === 'Edit|Write');
+    assert.ok(wide, `${gate} must still run on every write`);
+    assert.equal(wide.if, undefined);
+    assert.equal(wide.onFailure, undefined);
+  }
+});
+
+test('the unconditional supplier gate stays beside the scoped entry', () => {
+  const wide = entries('PreToolUse').find((h) => script(h) === 'supplier-isolation.mjs' && h.matcher === 'Read|Grep|Bash|PowerShell');
+  assert.ok(wide);
   assert.equal(wide.if, undefined);
+  assert.equal(wide.onFailure, undefined);
 });
 
-test('nothing that would stall a whole session fails closed', () => {
-  for (const event of Object.keys(hooks).filter((e) => e !== 'PreToolUse')) {
-    for (const h of entries(event)) assert.equal(h.onFailure, undefined, `${event} ${script(h)}`);
+test('no gate is anchored to where the session started', () => {
+  for (const h of entries('PreToolUse').filter((e) => e.if)) {
+    assert.doesNotMatch(h.if, /^\w+\(\//, `${script(h)}: ${h.if} misses a session started in a subfolder`);
   }
-  for (const h of entries('PreToolUse')) {
-    if (h.matcher === 'Skill' || h.matcher === 'Read|Grep|Bash|PowerShell') {
-      assert.equal(h.onFailure, undefined, h.matcher);
-    }
-  }
+});
+
+test('a hand-back fails open, because its matcher covers every subagent, not only ours', () => {
+  const handback = entries('PreToolUse').filter((h) => h.matcher === 'SubagentHandback');
+  assert.ok(handback.length > 0);
+  for (const h of handback) assert.equal(h.onFailure, undefined);
 });
 
 test('the version floor is one that understands onFailure', () => {
@@ -76,6 +110,34 @@ test('the version floor is one that understands onFailure', () => {
   assert.match(check, /MIN_CLAUDE_CODE_VERSION = '2\.1\.295'/);
   const settings = JSON.parse(readFileSync(resolve(REPO, '.claude/settings.json'), 'utf8'));
   assert.equal(settings.minimumVersion, '2.1.295');
+});
+
+test('a registered hook still runs when reached through a symlink', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'hooks-link-'));
+  const link = join(dir, 'hooks');
+  symlinkSync(HOOKS, link);
+  const session_id = randomUUID();
+  const run = (input, name = 'supplier-isolation.mjs') =>
+    spawnSync('node', [join(link, name)], { input: JSON.stringify(input), encoding: 'utf8' });
+  run({ hook_event_name: 'UserPromptSubmit', session_id, prompt: '/arckit:score vendor x' });
+  const gate = run({
+    hook_event_name: 'PreToolUse', tool_name: 'Read', session_id,
+    tool_input: { file_path: '/r/projects/001-x/vendors/acme/bid.pdf' },
+  });
+  assert.match(gate.stdout, /"permissionDecision":"deny"/);
+  const handback = run({
+    hook_event_name: 'PreToolUse', tool_name: 'SubagentHandback',
+    agent_type: 'arckit:arckit-evaluate-reader', tool_input: { message: 'not json' },
+  }, 'validate-reader-handoff.mjs');
+  assert.match(handback.stdout, /"permissionDecision":"deny"/);
+});
+
+test('no registered hook decides it is the main module with a symlink-blind check', () => {
+  const registered = new Set(Object.values(hooks).flat().flatMap((e) => e.hooks.map(script)));
+  for (const name of registered) {
+    const text = readFileSync(resolve(HOOKS, name), 'utf8');
+    assert.doesNotMatch(text, /(resolve|pathToFileURL)\(process\.argv\[1\]\)/, name);
+  }
 });
 
 const ODD_INPUT = [
@@ -97,19 +159,42 @@ const ODD_INPUT = [
   '{"tool_name":"Write","tool_input":{"file_path":"/p/projects/001-x/ARC-001-BKLG-v1.0.json","content":"{\\"epics\\":[null],\\"stories\\":[null]}"}}',
   '{"tool_name":"SubagentHandback","agent_type":"arckit:arckit-evaluate-reader","tool_input":{}}',
   '{"tool_name":"SubagentHandback","agent_type":"arckit:arckit-evaluate-reader","tool_input":{"message":null}}',
+  '{"tool_name":"Write","tool_input":{"file_path":"/p/projects/001-x/vendors/scores.json","content":"{\\"criteria\\":[{\\"weight\\":[]}],\\"vendors\\":{\\"a\\":{\\"scores\\":[{\\"score\\":1,\\"evidence\\":[1]}]}}}"}}',
+  '{"tool_name":"Write","tool_input":{"file_path":"/p/settings.json","content":"x"}}',
 ];
+const WITH_CONTEXT = ODD_INPUT.flatMap((input) => {
+  let parsed;
+  try { parsed = JSON.parse(input); } catch { return []; }
+  if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) return [];
+  return [JSON.stringify({ hook_event_name: 'PreToolUse', session_id: 'fuzz', ...parsed })];
+});
+const SESSION_EVENTS = [
+  '{"hook_event_name":"UserPromptSubmit","session_id":"fuzz"}',
+  '{"hook_event_name":"UserPromptSubmit","session_id":"fuzz","prompt":null}',
+  '{"hook_event_name":"PreToolUse","session_id":"fuzz","tool_name":"Skill","tool_input":null}',
+  '{"hook_event_name":"PreToolUse","session_id":"fuzz","tool_name":"Bash","tool_input":{"command":null}}',
+  '{"hook_event_name":"PreToolUse","session_id":"fuzz","tool_name":"Grep","tool_input":{"path":7}}',
+  '{"hook_event_name":"PreToolUse","session_id":"fuzz","tool_name":"Read","tool_input":{"file_path":null}}',
+  '{"hook_event_name":"PostToolUse","tool_name":"Agent","tool_input":{"subagent_type":"arckit:arckit-evaluate-reader"},"tool_response":null}',
+  '{"hook_event_name":"PreToolUse","tool_name":"SubagentHandback","agent_type":"arckit:arckit-evaluate-reader","tool_input":{"message":"{}"}}',
+];
+
+const TOP_LEVEL = new Set(['decision', 'reason', 'hookSpecificOutput', 'continue', 'stopReason', 'suppressOutput', 'systemMessage']);
+function assertValidOutput(gate, input, out) {
+  const parsed = JSON.parse(out);
+  assert.equal(typeof parsed, 'object', input);
+  assert.notEqual(parsed, null, input);
+  for (const key of Object.keys(parsed)) assert.ok(TOP_LEVEL.has(key), `${gate} printed unknown key ${key} on ${input}`);
+  if (parsed.hookSpecificOutput) assert.ok(parsed.hookSpecificOutput.hookEventName, `${gate} on ${input}`);
+}
 
 for (const gate of [...GATES, 'supplier-isolation.mjs']) {
   test(`${gate} survives odd input and prints only valid output`, () => {
-    for (const input of ODD_INPUT) {
+    for (const input of [...ODD_INPUT, ...WITH_CONTEXT, ...SESSION_EVENTS]) {
       const run = spawnSync('node', [resolve(HOOKS, gate)], { input, encoding: 'utf8', timeout: 15000 });
       assert.ok([0, 2].includes(run.status), `exit ${run.status} on ${input}\n${run.stderr.slice(0, 300)}`);
       const out = run.stdout.trim();
-      if (out) {
-        const parsed = JSON.parse(out);
-        assert.equal(typeof parsed, 'object', input);
-        assert.notEqual(parsed, null, input);
-      }
+      if (out) assertValidOutput(gate, input, out);
     }
   });
 }

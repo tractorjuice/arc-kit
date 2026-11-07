@@ -709,7 +709,7 @@ template overrides.</li>
 <tr>
 <td>v2.1.295</td>
 <td><code>onFailure: &quot;block&quot;</code>: a command hook that can't start, times out or exits with an unexpected code stops the action</td>
-<td>ArcKit's write gates, reader hand-back check and vendor <code>Read</code> gate fail closed. Node must be on <code>PATH</code> for any file write to succeed. This is ArcKit's floor</td>
+<td>Gates on ArcKit's own artefacts and supplier documents fail closed, so those need Node on <code>PATH</code>. Other paths are unaffected. This is ArcKit's floor</td>
 </tr>
 <tr>
 <td>v2.1.287</td>

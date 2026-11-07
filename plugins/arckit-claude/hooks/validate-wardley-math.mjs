@@ -100,7 +100,7 @@ const filePath = (data.tool_input || {}).file_path || '';
 const content = (data.tool_input || {}).content || '';
 
 if (!filePath || !content) process.exit(0);
-if (!filePath.includes('/wardley-maps/')) process.exit(0);
+if (!String(filePath).replace(/\\/g, '/').includes('/wardley-maps/')) process.exit(0);
 
 const filename = basename(filePath);
 const contentLines = content.split('\n');

@@ -30,7 +30,7 @@ import { existsSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { basename, dirname, join, posix, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { listDir, parseHookInput } from './hook-utils.mjs';
+import { isMainModule, listDir, parseHookInput } from './hook-utils.mjs';
 
 const READER = 'arckit-evaluate-reader';
 const HOOKS_DIR = dirname(fileURLToPath(import.meta.url));
@@ -122,7 +122,7 @@ function holdsVendorFolders(dir) {
 }
 
 function grepReachesABid(path, cwd) {
-  const target = resolve(cwd || '.', path || '.');
+  const target = resolve(String(cwd || '.'), String(path || '.'));
   const below = belowVendors(target);
   if (below !== null) return below === '' || !OWN_FILE.test(below);
   return holdsVendorFolders(target);
@@ -136,21 +136,27 @@ function opensABid(event) {
   return false;
 }
 
+function deny(reason) {
+  return {
+    hookSpecificOutput: { hookEventName: 'PreToolUse', permissionDecision: 'deny', permissionDecisionReason: reason },
+  };
+}
+
+const KEPT_OUT =
+  `ArcKit keeps supplier documents out of this session while /arckit:evaluate or /arckit:score runs. ` +
+  `Dispatch ${READER} for this vendor and score from its claims. ` +
+  `A search must not reach vendors/: narrow its path. ` +
+  `This stays on until another /command runs or the session is cleared.`;
+
+const NOT_ARMED =
+  `ArcKit couldn't switch on the gate that keeps supplier documents out of this session, because it can't write ` +
+  `to the temp folder, so this command hasn't started. Fix the temp folder and run it again.`;
+
 /** The PreToolUse decision for one call: a deny, or null to let it through. */
 export function decide(event, { isolated }) {
   if (!isolated || !opensABid(event)) return null;
   if (event.agent_type && agentName(event.agent_type) === READER) return null;
-  return {
-    hookSpecificOutput: {
-      hookEventName: 'PreToolUse',
-      permissionDecision: 'deny',
-      permissionDecisionReason:
-        `ArcKit keeps supplier documents out of this session while /arckit:evaluate or /arckit:score runs. ` +
-        `Dispatch ${READER} for this vendor and score from its claims. ` +
-        `A search must not reach vendors/: narrow its path. ` +
-        `This stays on until another /command runs or the session is cleared.`,
-    },
-  };
+  return deny(KEPT_OUT);
 }
 
 function markerPath(sessionId) {
@@ -164,30 +170,42 @@ function setMarker(sessionId, on) {
   else rmSync(path, { force: true });
 }
 
-function main() {
-  const event = parseHookInput();
+/** Switch the gate on. False if it can't be, so the command mustn't start without it. */
+function arm(sessionId) {
+  try {
+    setMarker(sessionId, true);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function main(event) {
   const id = event.session_id;
-  if (!id) return;
+  if (!id) return null;
   if (event.hook_event_name === 'UserPromptSubmit') {
-    if (isolatingCommand(event.prompt)) setMarker(id, true);
-    else if (isSlashCommand(event.prompt)) setMarker(id, false);
-    return;
+    if (isolatingCommand(event.prompt)) return arm(id) ? null : { decision: 'block', reason: NOT_ARMED };
+    if (isSlashCommand(event.prompt)) setMarker(id, false);
+    return null;
   }
   if (event.tool_name === 'Skill') {
     const skill = (event.tool_input || {}).skill;
-    if (isolatingSkill(skill)) setMarker(id, true);
-    else if (isArckitCommand(skill)) setMarker(id, false);
-    return;
+    if (isolatingSkill(skill)) return arm(id) ? null : deny(NOT_ARMED);
+    if (isArckitCommand(skill)) setMarker(id, false);
+    return null;
   }
-  const out = decide(event, { isolated: existsSync(markerPath(id)) });
-  if (out) process.stdout.write(JSON.stringify(out));
+  return decide(event, { isolated: existsSync(markerPath(id)) });
 }
 
-if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+if (isMainModule(import.meta.url)) {
+  const event = parseHookInput();
+  let out = null;
   try {
-    main();
+    out = main(event);
   } catch (e) {
     process.stderr.write(`[ArcKit] supplier isolation check failed: ${e.message}\n`);
+    if (event.tool_name === 'Read' && isSupplierPath((event.tool_input || {}).file_path)) out = deny(KEPT_OUT);
   }
+  if (out) process.stdout.write(JSON.stringify(out));
   process.exit(0);
 }

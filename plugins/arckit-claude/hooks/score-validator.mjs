@@ -24,7 +24,7 @@ import { parseHookInput } from './hook-utils.mjs';
 const data = parseHookInput();
 
 // --- Early exit: only validate scores.json files ---
-const filePath = String((data.tool_input || {}).file_path || '');
+const filePath = String((data.tool_input || {}).file_path || '').replace(/\\/g, '/');
 if (!filePath.endsWith('/scores.json') && basename(filePath) !== 'scores.json') {
   process.exit(0);
 }
@@ -100,7 +100,7 @@ if (!scores.vendors || typeof scores.vendors !== 'object') {
 
 // --- Validate criteria weights ---
 if (Array.isArray(scores.criteria) && scores.criteria.length > 0) {
-  const weightSum = scores.criteria.reduce((sum, c) => sum + (c?.weight || 0), 0);
+  const weightSum = scores.criteria.reduce((sum, c) => sum + (typeof c?.weight === 'number' ? c.weight : 0), 0);
   if (Math.abs(weightSum - 1.0) > 0.01) {
     warnings.push(`Criteria weights sum to ${weightSum.toFixed(3)} (expected ~1.0)`);
   }
@@ -141,7 +141,7 @@ if (scores.vendors && typeof scores.vendors === 'object') {
       if (typeof s.score !== 'number' || s.score < 0 || s.score > 3) {
         warnings.push(`Vendor '${vendorKey}' criterion ${s.criterionId || '?'}: score ${s.score} out of range (must be 0-3)`);
       }
-      if (!s.evidence || !s.evidence.trim()) {
+      if (typeof s.evidence !== 'string' || !s.evidence.trim()) {
         warnings.push(`Vendor '${vendorKey}' criterion ${s.criterionId || '?'}: missing evidence (every score must cite supporting evidence)`);
       }
       if (s.criterionId && !criteriaIds.has(s.criterionId)) {
