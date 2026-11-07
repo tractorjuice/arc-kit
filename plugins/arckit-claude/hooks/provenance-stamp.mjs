@@ -374,6 +374,10 @@ const fm = command ? readCommandFrontmatter(command) : {};
 const model = extractModelFromContent(content);
 
 const effortRequested = fm.effort || null;
+// From the matrix, not `data.effort.level` as telemetry.mjs reads it. That field
+// is the level in force now, not the level the command ran at: writer subagents
+// run at `medium`, and this block is rewritten on every later Write or Edit. See
+// hooks/README.md and tests/plugin/provenance-effort-source.test.mjs.
 const effortEffective = downgradeEffort(effortRequested, model);
 const effortDowngraded =
   effortEffective !== null && effortRequested !== null && effortEffective !== effortRequested;
