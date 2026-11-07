@@ -129,7 +129,7 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:activity:751112733017454182
 > Tried Sonnet 5.5 with ArcKit? Tell us what you're seeing in #show-your-working
 > <https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html?utm_campaign=show-your-working&utm_source=discord>
 
-### Q4. Adopter ask — LinkedIn page, with the `show-your-working` carousel (Plain evidence voice)
+### Q4. Adopter ask — LinkedIn page, with the `show-your-working` carousel (maintainer's voice)
 
 Copy: `docs/articles/2026-09-23-show-your-working-linkedin.md`. Attach `docs/social/out/show-your-working/carousel.pdf` as a document.
 
