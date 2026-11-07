@@ -4,7 +4,7 @@
 
 One post a day on the ArcKit LinkedIn page, walking through ArcKit the way an architect uses it: one project, from first command to review, one step a day. The running example is fictional: the Housing Benefits Digital Service at Ashcombe District Council, the project the evals fixtures (`plugins/arckit-claude/evals/fixtures/benefits-portal*`) are built on. Examples in the posts come from those fixtures.
 
-Voice and rules: `SOCIAL.md` (warm "we", lead with what the reader can use, no costs, no mistakes, "GitHub Copilot" in full). Facts come from the README and each command's own description. Every post that shows a document says, or links to something that says, that ArcKit writes drafts for qualified people to review.
+Voice and rules: `SOCIAL.md` (the maintainer's voice, lead with what the reader can use, no costs, no mistakes, "GitHub Copilot" in full). Facts come from the README and each command's own description. Every post that shows a document says, or links to something that says, that ArcKit writes drafts for qualified people to review.
 
 **Channels, per the plan in `SOCIAL.md`:**
 

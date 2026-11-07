@@ -14,18 +14,18 @@ One job per channel, and never the same text in two places. Decided 30 September
 
 | Channel | Address | Its job | What goes there | Voice |
 |---|---|---|---|---|
-| LinkedIn group | linkedin.com/groups/17641034 | **Main place to reach people** | Findings framed as a question, asks for feedback, the adopter ask, office hours. Posts appear under the maintainer's name | Question, "we" |
-| LinkedIn page | linkedin.com/company/**arckit-org** | The official record | Releases and articles, with one image or carousel each. **Not** linkedin.com/company/arckit, which is an unrelated education firm in Dublin | Warm "we" |
+| LinkedIn group | linkedin.com/groups/17641034 | **Main place to reach people** | Findings, asks for feedback, the adopter ask, office hours. Posts appear under the maintainer's name | Maintainer's voice |
+| LinkedIn page | linkedin.com/company/**arckit-org** | The official record | Releases and articles, with one image or carousel each. **Not** linkedin.com/company/arckit, which is an unrelated education firm in Dublin | Maintainer's voice |
 | Maintainer's own LinkedIn | — | Reach | A reshare of the page post with a line of the maintainer's own. The maintainer's call each time, and theirs to post | Theirs |
-| Discord #announcements | ArcKit server (read-only) | For existing users | Releases and "what changed for you", short, linked | Short "we" |
+| Discord #announcements | ArcKit server (read-only) | For existing users | Releases and "what changed for you", short, linked | Maintainer's voice, short |
 | Discord #show-your-working | ArcKit server (open) | Conversation | Results, adopter chat, help; the private route for adopters who can't post a public GitHub issue | Informal |
-| Medium | medium.com/arckit | Article mirrors | The article, unchanged | Article |
-| YouTube | youtube.com/@**arckitorg** (`@arckit` was taken) | Video guides | Narrated guides and explainers, grouped in playlists. Titles carry "(experimental)" while we test AI narration | Warm "we" in descriptions |
+| Medium | medium.com/arckit | Article mirrors | The article, unchanged | Maintainer's voice |
+| YouTube | youtube.com/@**arckitorg** (`@arckit` was taken) | Video guides | Narrated guides and explainers, grouped in playlists. Titles carry "(experimental)" while we test AI narration | Maintainer's voice in descriptions and narration |
 
 **Order for each new piece:**
 
 1. Post it on the ArcKit page.
-2. The same day, post the group's question version, worded differently.
+2. The same day, post the group's version, worded differently.
 3. The maintainer reshares it on their own profile, if they choose to.
 4. Post in Discord #announcements only if it changes something for people who already use ArcKit, such as a release or template fixes.
 
@@ -69,13 +69,17 @@ From 30 September the page posts daily: *ArcKit Explained* (`series-arckit-expla
 
 ## Voice
 
-**To be tested, the way the chef kit tests its voices.** Three voices on the same content, one post each, a week apart, judged on LinkedIn's own analytics seven days after each goes up (impressions, reactions, comments, clicks to the share page, and the one that matters: adopter-form submissions that week). Nothing changes the articles' voice; this is for posts only.
+**Everything is written in the maintainer's own voice.** Decided on 7 November 2026, this covers articles, LinkedIn page and group posts, Medium, Discord, YouTube descriptions, and the scripts and narration of new films. The full style guide is kept outside this repo; read it before drafting. In short:
 
-- **Warm "we", first.** The ArcKit page speaking, warm and competent, led by what the reader can use: *"Here's what we learned about getting the best from Sonnet 5.5 with ArcKit."* This replaced the first-person practitioner voice before the first post went out (30 September), because "I" on a company page leaves readers asking who "I" is.
-- **Plain evidence, second.** No first person. The finding, the number, the cost, the link. Reads like a good briefing note.
-- **Question, third.** Opens on the reader's own situation: *"How long does your next spend-control pack take to draft?"* Then the evidence.
+- **Start with the subject.** Name the release, finding or question in the first sentence, with no scene-setting.
+- **Say what was actually done.** Use "I" for the maintainer's own work and views, and "we" for a real team or shared project, which is how the ArcKit page speaks. Claim nothing first-person that the sources don't support.
+- **Give the reader something useful.** A resource, an invitation, an explanation or a consequence.
+- **Keep it plain.** Everyday British English, contractions, short sentences and compact paragraphs.
+- **Stop when the point is made.** A short post can be complete. Ask a question when you want the answer, not as a closing habit.
 
-Whatever the voice: lead with what the reader can use (a model, a practice, a template), not with costs or with what we got wrong. Costs and the full method belong in the article, where there is room to explain them. Plain words, short sentences, no hype words ("revolutionary", "game-changing", "10x"), no emoji beyond the occasional one in Discord, and "GitHub Copilot" always in full. LinkedIn page posts end with three or four hashtags (#EnterpriseArchitecture first); group posts and Discord carry none. Every post ends with one clear next step, or a question for the group.
+Lead with what the reader can use (a model, a practice, a template), not with costs or with what we got wrong. Costs and the full method belong in the article, where there is room to explain them. No hype words ("revolutionary", "game-changing", "10x"), no emoji beyond the occasional one in Discord, and "GitHub Copilot" always in full. LinkedIn page posts end with three or four hashtags (#EnterpriseArchitecture first); group posts and Discord carry none. End with a next step when there is a real one.
+
+The three-voice test planned on 30 September (warm "we", plain evidence, question) has ended. Posts already published keep their words, and their entries below keep the voice they went out in, as a record. Queued drafts written before this change need rewriting before they go out.
 
 ## What never goes on one of these
 

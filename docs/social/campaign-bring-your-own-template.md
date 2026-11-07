@@ -4,7 +4,7 @@
 
 A recurring campaign for architects whose organisation already has a house format: "we have our own templates" is the most common reason a team doesn't try ArcKit. We invite people to share a template, then show ArcKit drafting in it on a fictional project, crediting them the way they choose.
 
-Voice and rules: `SOCIAL.md` (warm "we", lead with what the reader can use, no costs, no mistakes, no usage claims, "GitHub Copilot" in full).
+Voice and rules: `SOCIAL.md` (the maintainer's voice, lead with what the reader can use, no costs, no mistakes, no usage claims, "GitHub Copilot" in full).
 
 ## How it works
 

@@ -193,8 +193,9 @@ The Claude plugin directory picks up the new `tractorjuice/arckit-claude` versio
 ### Release article
 
 Every release with major features gets a write-up in `docs/articles/`
-(`YYYY-MM-DD-<slug>.md`), in the voice of the existing pieces, with a hero
-generator script in the house style (1200×630, see the `generate-hero-*.py`
+(`YYYY-MM-DD-<slug>.md`), in the maintainer's voice (`docs/social/SOCIAL.md` →
+Voice), with a hero generator script in the house style (1200×630, see the
+`generate-hero-*.py`
 siblings). The directory is gitignored as a drafts folder — force-add the
 keepers with `git add -f`, as every published article has been.
 
