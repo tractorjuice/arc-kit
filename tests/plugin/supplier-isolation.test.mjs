@@ -232,5 +232,5 @@ test('hooks.json runs the gate on every event it needs', () => {
   const uses = (entries) => entries.filter((e) => e.hooks.some((h) => (h.args || []).join().includes('supplier-isolation.mjs')));
   assert.equal(uses(hooks.UserPromptSubmit).length, 1);
   const matchers = uses(hooks.PreToolUse).map((e) => e.matcher).sort();
-  assert.deepEqual(matchers, ['Read|Grep|Bash|PowerShell', 'Skill']);
+  assert.deepEqual(matchers, ['Read', 'Read|Grep|Bash|PowerShell', 'Skill']);
 });

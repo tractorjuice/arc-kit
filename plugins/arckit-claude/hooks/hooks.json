@@ -248,6 +248,21 @@
         ]
       },
       {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Read(**/vendors/**)",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/supplier-isolation.mjs"
+            ],
+            "timeout": 15,
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
         "matcher": "Write",
         "hooks": [
           {
@@ -257,7 +272,8 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           },
           {
             "type": "command",
@@ -266,7 +282,8 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/score-validator.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           },
           {
             "type": "command",
@@ -275,7 +292,8 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           },
           {
             "type": "command",
@@ -284,7 +302,8 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/validate-backlog-totals.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           }
         ]
       },
@@ -297,7 +316,8 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           },
           {
             "type": "command",
@@ -305,7 +325,8 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/secret-file-scanner.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           }
         ]
       },
@@ -318,7 +339,8 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           }
         ]
       },
@@ -331,7 +353,8 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/validate-reader-handoff.mjs"
             ],
-            "timeout": 10
+            "timeout": 15,
+            "onFailure": "block"
           }
         ]
       }

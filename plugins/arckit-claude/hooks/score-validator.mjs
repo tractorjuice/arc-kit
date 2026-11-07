@@ -24,7 +24,7 @@ import { parseHookInput } from './hook-utils.mjs';
 const data = parseHookInput();
 
 // --- Early exit: only validate scores.json files ---
-const filePath = (data.tool_input || {}).file_path || '';
+const filePath = String((data.tool_input || {}).file_path || '');
 if (!filePath.endsWith('/scores.json') && basename(filePath) !== 'scores.json') {
   process.exit(0);
 }
@@ -42,6 +42,11 @@ try {
     decision: 'block',
     reason: `Invalid JSON in scores.json: ${e.message}`,
   }));
+  process.exit(0);
+}
+
+if (!scores || typeof scores !== 'object' || Array.isArray(scores)) {
+  console.log(JSON.stringify({ decision: 'block', reason: 'scores.json must hold a JSON object' }));
   process.exit(0);
 }
 
@@ -95,13 +100,17 @@ if (!scores.vendors || typeof scores.vendors !== 'object') {
 
 // --- Validate criteria weights ---
 if (Array.isArray(scores.criteria) && scores.criteria.length > 0) {
-  const weightSum = scores.criteria.reduce((sum, c) => sum + (c.weight || 0), 0);
+  const weightSum = scores.criteria.reduce((sum, c) => sum + (c?.weight || 0), 0);
   if (Math.abs(weightSum - 1.0) > 0.01) {
     warnings.push(`Criteria weights sum to ${weightSum.toFixed(3)} (expected ~1.0)`);
   }
 
   // Check each criterion has required fields
   for (const c of scores.criteria) {
+    if (!c || typeof c !== 'object') {
+      warnings.push('Criterion is not an object');
+      continue;
+    }
     if (!c.id) warnings.push(`Criterion missing id field`);
     if (!c.name) warnings.push(`Criterion ${c.id || '?'} missing name field`);
     if (typeof c.weight !== 'number') warnings.push(`Criterion ${c.id || '?'} missing numeric weight`);
@@ -110,9 +119,13 @@ if (Array.isArray(scores.criteria) && scores.criteria.length > 0) {
 
 // --- Validate vendor scores ---
 if (scores.vendors && typeof scores.vendors === 'object') {
-  const criteriaIds = new Set((scores.criteria || []).map(c => c.id));
+  const criteriaIds = new Set((Array.isArray(scores.criteria) ? scores.criteria : []).map(c => c?.id));
 
   for (const [vendorKey, vendor] of Object.entries(scores.vendors)) {
+    if (!vendor || typeof vendor !== 'object') {
+      warnings.push(`Vendor '${vendorKey}' is not an object`);
+      continue;
+    }
     if (!vendor.displayName) warnings.push(`Vendor '${vendorKey}' missing displayName`);
     checkFindings(vendorKey, vendor.integrityFindings);
     if (!Array.isArray(vendor.scores)) {
@@ -121,6 +134,10 @@ if (scores.vendors && typeof scores.vendors === 'object') {
     }
 
     for (const s of vendor.scores) {
+      if (!s || typeof s !== 'object') {
+        warnings.push(`Vendor '${vendorKey}' has a score that is not an object`);
+        continue;
+      }
       if (typeof s.score !== 'number' || s.score < 0 || s.score > 3) {
         warnings.push(`Vendor '${vendorKey}' criterion ${s.criterionId || '?'}: score ${s.score} out of range (must be 0-3)`);
       }

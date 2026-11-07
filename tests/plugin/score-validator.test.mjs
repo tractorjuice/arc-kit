@@ -58,6 +58,15 @@ test('each finding type is accepted', () => {
   }
 });
 
+test('a file that is not an object is blocked with a reason, not a crash', () => {
+  const run = spawnSync('node', [HOOK], {
+    input: JSON.stringify({ tool_name: 'Write', tool_input: { file_path: '/repo/projects/001-x/vendors/scores.json', content: 'null' } }),
+    encoding: 'utf8',
+  });
+  assert.equal(run.status, 0, run.stderr);
+  assert.equal(JSON.parse(run.stdout).decision, 'block');
+});
+
 test('a list is required', () => {
   assert.match(warningsFor('none'), /acme.*integrityFindings must be an array/);
 });

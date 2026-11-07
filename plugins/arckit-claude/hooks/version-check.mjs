@@ -15,11 +15,12 @@
  *      MCP diagnostics no longer printing resolved secrets, the plugin
  *      skills/hook-error/cache fixes, and the file-tool symlink and
  *      Grep/Glob deny-rule fixes, Claude Opus 5.5 availability, Claude
- *      Sonnet 5.5 availability, and plugin SessionStart hooks in new cloud
- *      sessions depend on
+ *      Sonnet 5.5 availability, plugin SessionStart hooks in new cloud
+ *      sessions, and `onFailure: "block"`, which lets a gate stop a call when
+ *      it can't run, depend on
  *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/
  *      v2.1.172+/v2.1.200+/v2.1.219+/v2.1.221+/v2.1.234+/v2.1.246+/
- *      v2.1.251+/v2.1.280+/v2.1.284+/v2.1.287+). Silent on
+ *      v2.1.251+/v2.1.280+/v2.1.284+/v2.1.287+/v2.1.295+). Silent on
  *      detection failure.
  *
  * Side effect: when inside an ArcKit project, persists the detected client
@@ -38,7 +39,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDir, isFile, readText, parseHookInput, parseVersion, compareVersions } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.287';
+const MIN_CLAUDE_CODE_VERSION = '2.1.295';
 
 const data = parseHookInput(); // consume stdin (required by hook protocol)
 const cwd = data.cwd || '.';

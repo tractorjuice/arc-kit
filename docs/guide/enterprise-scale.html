@@ -495,7 +495,7 @@ for a short pilot.</li>
 <li>Assign a seat type that includes Claude Code. In Anthropic's current
 Enterprise guidance, legacy seat-based plans need Premium seats; usage-based
 plans need Chat + Code or Claude Enterprise seats.</li>
-<li>Install Claude Code v2.1.287 or later on pilot machines. ArcKit's
+<li>Install Claude Code v2.1.295 or later on pilot machines. ArcKit's
 SessionStart version hook warns below this floor; managed settings can block
 startup below it.</li>
 <li>Verify each pilot user with <code>claude --version</code>, <code>/status</code>, and
@@ -505,7 +505,7 @@ startup below it.</li>
 <p>For a team repository pilot, commit a project-level <code>.claude/settings.json</code> so
 users are prompted to add the ArcKit marketplace when they trust the repo:</p>
 <pre><code class="language-json">{
-  &quot;minimumVersion&quot;: &quot;2.1.287&quot;,
+  &quot;minimumVersion&quot;: &quot;2.1.295&quot;,
   &quot;extraKnownMarketplaces&quot;: {
     &quot;arckit-claude&quot;: {
       &quot;source&quot;: {
@@ -524,7 +524,7 @@ users are prompted to add the ArcKit marketplace when they trust the repo:</p>
 server-managed settings or endpoint-managed settings and add a hard version
 range:</p>
 <pre><code class="language-json">{
-  &quot;requiredMinimumVersion&quot;: &quot;2.1.287&quot;,
+  &quot;requiredMinimumVersion&quot;: &quot;2.1.295&quot;,
   &quot;requiredMaximumVersion&quot;: &quot;2.1.999&quot;,
   &quot;extraKnownMarketplaces&quot;: {
     &quot;arckit-claude&quot;: {
@@ -707,6 +707,11 @@ template overrides.</li>
 </thead>
 <tbody>
 <tr>
+<td>v2.1.295</td>
+<td><code>onFailure: &quot;block&quot;</code>: a command hook that can't start, times out or exits with an unexpected code stops the action</td>
+<td>ArcKit's write gates, reader hand-back check and vendor <code>Read</code> gate fail closed. Node must be on <code>PATH</code> for any file write to succeed. This is ArcKit's floor</td>
+</tr>
+<tr>
 <td>v2.1.287</td>
 <td>Claude mods: a plugin can name a hooks module that observes, rewrites or answers tool calls, prompts and turns, and draws its own interface; plugin SessionStart hooks now run in new cloud sessions; a dangerous <code>rm</code> keeps its always-ask safeguard when it also redirects to a <code>~</code> or wildcard path; a shell write through a committed symlink onto a sensitive file or out of the working tree now waits for a person</td>
 <td>Current floor, for the SessionStart fix in new cloud sessions. ArcKit ships no mod: 6.18.1 and earlier carried a status band above the prompt, removed because the Claude plugin directory holds any plugin with a mod for a reviewer. Organisations with managed settings get Anthropic's built-in <code>sec-default</code> mod, which keeps their own hooks and deny rules out of reach of installed plugins</td>
@@ -860,6 +865,10 @@ template overrides.</li>
 <tr>
 <td>Unreleased</td>
 <td>The status band mod is removed from core: the Claude plugin directory holds any plugin with a mod for a reviewer. Every gate was always a classic hook, so nothing enforced changes; the v2.1.287 floor stays for the SessionStart fix</td>
+</tr>
+<tr>
+<td>Unreleased #580</td>
+<td>Claude Code floor raised to v2.1.295 for <code>onFailure: &quot;block&quot;</code>, so a gate that can't run stops the write rather than letting it through. <code>version-check.mjs</code> still warns rather than blocks, so also set <code>requiredMinimumVersion</code> in managed settings</td>
 </tr>
 <tr>
 <td>Unreleased #580</td>
@@ -1202,7 +1211,7 @@ give administrators the control point ArcKit benefits from.</p>
 anyone running below the supported Claude Code version. To <em>enforce</em> it, an
 admin can set the native managed settings (Claude Code v2.1.163+):</p>
 <pre><code class="language-json">{
-  &quot;requiredMinimumVersion&quot;: &quot;2.1.287&quot;,
+  &quot;requiredMinimumVersion&quot;: &quot;2.1.295&quot;,
   &quot;requiredMaximumVersion&quot;: &quot;2.1.999&quot;
 }
 </code></pre>

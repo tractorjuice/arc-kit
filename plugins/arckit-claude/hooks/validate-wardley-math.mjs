@@ -94,6 +94,8 @@ try {
   process.exit(0);
 }
 
+if (!data || typeof data !== 'object') process.exit(0);
+
 const filePath = (data.tool_input || {}).file_path || '';
 const content = (data.tool_input || {}).content || '';
 

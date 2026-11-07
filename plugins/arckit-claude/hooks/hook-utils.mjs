@@ -516,6 +516,7 @@ export function parseHookInput() {
   } catch {
     process.exit(0);
   }
+  if (!data || typeof data !== 'object' || Array.isArray(data)) process.exit(0);
   return data;
 }
 
