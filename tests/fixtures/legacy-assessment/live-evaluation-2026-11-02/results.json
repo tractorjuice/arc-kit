@@ -53,7 +53,6 @@
           "details": "Bash called 1 time(s); min=1 max=None"
         }
       ],
-      "score": 1.0,
       "independentVerification": {
         "helperReportAndBothSvgExitCode": 0,
         "assessorInputsAndResultsMatchFixture": true,
@@ -65,6 +64,21 @@
         "ARC-001-LEGACY-v1.0-risk.svg": "c7a86d28690dac95777b2737eed49196e48c7f0cf0d91aa009189e0b8a459240",
         "ARC-001-LEGACY-v1.0.json": "6d88097128126874a819ced2af93adcec2a5aa5e97dfdae29f541a62d508b764",
         "ARC-001-LEGACY-v1.0.md": "e934892687dd064732548277ae5daefd3f1a8dc9856d525a48fc6928250c8cde"
+      },
+      "artifactGraderScore": 1.0,
+      "score": 0.0,
+      "runtime": {
+        "passed": false,
+        "plugin": "arckit-uk-legacy",
+        "command": "arckit-uk-legacy:uk-legacy-assessment",
+        "plugin_loaded": false,
+        "command_loaded": false,
+        "dependencies_loaded": false,
+        "errors": [
+          "expected inline plugin name, source and path not loaded",
+          "invoked command 'arckit-uk-legacy:uk-legacy-assessment' not loaded",
+          "declared dependency plugin not loaded from its expected source"
+        ]
       }
     },
     {
@@ -128,7 +142,6 @@
           "details": "Bash called 1 time(s); min=1 max=None"
         }
       ],
-      "score": 1.0,
       "independentVerification": {
         "helperReportAndBothSvgExitCode": 0,
         "assessorInputsAndResultsMatchFixture": true,
@@ -140,6 +153,21 @@
         "ARC-001-LEGACY-v1.0-risk.svg": "c7a86d28690dac95777b2737eed49196e48c7f0cf0d91aa009189e0b8a459240",
         "ARC-001-LEGACY-v1.0.json": "6d88097128126874a819ced2af93adcec2a5aa5e97dfdae29f541a62d508b764",
         "ARC-001-LEGACY-v1.0.md": "bbd993cbf6fa5ef1388b9d74066f1866daa9d8ff078780d6401c086f0d98d821"
+      },
+      "artifactGraderScore": 1.0,
+      "score": 0.0,
+      "runtime": {
+        "passed": false,
+        "plugin": "arckit-uk-legacy",
+        "command": "arckit-uk-legacy:uk-legacy-assessment",
+        "plugin_loaded": false,
+        "command_loaded": false,
+        "dependencies_loaded": false,
+        "errors": [
+          "expected inline plugin name, source and path not loaded",
+          "invoked command 'arckit-uk-legacy:uk-legacy-assessment' not loaded",
+          "declared dependency plugin not loaded from its expected source"
+        ]
       }
     }
   ],
@@ -159,6 +187,8 @@
     "These cases start from synthetic assessor-supplied structured inputs; they do not establish open-ended evidence extraction quality or evidence truth.",
     "The model service was online. No framework refresh was requested; framework material was bundled. Network isolation is established by separate deterministic wheel checks, not these live runs.",
     "Raw transcripts and local environment paths are intentionally excluded; original report, JSON and SVG outputs from the final supported run are attached unchanged.",
-    "The injection run preceded the final narrative-only D7 clarification; the attached supported run exercised the final command hash."
-  ]
+    "The recorded source command hash identifies source available to the filesystem fallback, not command activation. Both earlier plugin evaluation claims are withdrawn."
+  ],
+  "status": "superseded-invalid-runtime",
+  "correction": "Neither original system/init event lists the overlay or its command. Artifact verification is valid; plugin evaluation claims are withdrawn."
 }

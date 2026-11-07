@@ -330,6 +330,8 @@ add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - Netherlands', 'community', [
   'nl-cloud',
   'nl-bio',
   'nl-exit',
+  'nl-nora',
+  'nl-gemma',
 ], 'Community overlays - Netherlands');
 
 add(GUIDE_SECTIONS.OVERLAY, 'UAE Federal Overlay', 'community', [

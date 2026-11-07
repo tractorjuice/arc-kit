@@ -254,6 +254,9 @@ deepbook-test-output/
 plugins/arckit-*/evals/results/
 plugins/arckit-claude/plugins/**/evals/results/
 
+# Harness dreaming (scripts/managed-agents/dream.py): staged transcripts, exported stores, ledger
+scripts/managed-agents/.dream/
+
 # Certification: the real question banks hold answer keys and never go in this public repo.
 certification/private/
 certification/worker/node_modules/

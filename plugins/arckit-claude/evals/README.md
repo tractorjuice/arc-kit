@@ -20,6 +20,35 @@ evals/
 
 The format is the one `claude plugin eval` reads (`case.yaml` schema 1.1, `graders/*.md` with a `type:` frontmatter). That runner is early-access and gated per account, so the repository also ships `scripts/eval-headless.py`, which reads the same files, runs each case through `claude -p` with the plugin loaded from `plugins/arckit-claude`, records the run, and scores the deterministic graders. When the official runner is enabled on your account both can be used on the same cases.
 
+## Runtime verification
+
+The headless runner explicitly enables the inline plugin under test and its
+manifest-declared dependencies. It prefers sources in the selected checkout, then
+falls back to this repository's plugins. Every dependency requires a matching exact
+version pin; malformed manifests, missing or ambiguous sources and cycles fail
+before starting that case's model call. Installed copies of these namespaces are
+disabled through session-only settings; persistent Claude settings are unchanged.
+
+`runtime` checks the CLI's `system/init` events for the expected inline plugin
+sources and paths, all declared dependencies, and the exact invoked command. Every
+init event must agree on those required entries. A model finding a helper on disk
+is not proof that the plugin was loaded. Replay resolves dependencies afresh from
+the selected manifests; recorded dependency maps cannot weaken these checks. Only
+the root of a variant or effort copy uses its recorded temporary path.
+
+`completion` separately records success, timeout, turn limit or process/setup
+failure. Loaded but incomplete runs retain their artifact scores for diagnosis;
+the overall command still fails regardless of `--threshold`. Invalid loading
+forces score zero. Comparisons with any missing, invalid or incomplete arm are
+marked invalid and do not infer grader improvements.
+
+All selected run counts are validated before any model call. A case setup failure
+is recorded and the batch continues, saving the aggregate after each case.
+Unfiltered `--replay` selects the cases actually recorded in that directory; an
+explicit `--case`, `--tag` or `--runs` selection fails on missing recordings. A
+replay with no evaluated recordings fails. Command invocations must be exact tokens
+followed by whitespace or end of input; punctuation is not an argument separator.
+
 ## Running
 
 ```bash
