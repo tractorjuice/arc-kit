@@ -17,12 +17,12 @@ Never: publish anything that looks sensitive, even if submitted; name an organis
 
 ## Cadence
 
-- **Call for templates**: Monday 2 November 2026 (after *Regulation week*), on the page, in the group and on Discord. A reminder in the group on Monday 16 November.
+- **Call for templates**: on the page on Monday 2 November 2026 (after *Regulation week*). The group version hadn't gone out by 7 November, so post it before the reminder. A reminder in the group on Monday 16 November.
 - **Showcase**: monthly, from the first submission. If nothing has arrived by Monday 23 November, seed the first showcase with a template a UK public body has already published, credited to it as a public document, and say that's what it is.
 
 ## Posts
 
-### Call for templates: ArcKit page (Monday 2 November)
+### Call for templates: ArcKit page (posted Monday 2 November)
 
 Does your organisation already have its own template for requirements, a business case or a design review?
 
@@ -46,37 +46,37 @@ What's the one template your team couldn't work without?
 
 ### Call for templates: LinkedIn group (Monday 2 November)
 
-What's the one document template your team couldn't work without?
+We're looking for house templates to try with ArcKit: requirements, a business case, a design authority submission, anything your team relies on.
 
-We're inviting architects to share a house template, for requirements, a business case, a design authority submission or anything else, and we'll show ArcKit drafting in that format on a fictional project, published side by side. Only templates that are public or cleared for release, with anything sensitive removed; we'll credit you however you prefer.
+If you've got one that's public or cleared for release, please share it. We'll draft a document in it on a fictional project and publish the two side by side, so you can see what carries over. Take out anything sensitive first. We'll credit you however you like, or not at all.
 
 Share one here: https://github.com/tractorjuice/arc-kit/issues/new?template=template-share.yml
-Or send it privately to the maintainer through the group.
+Or get in touch through the group.
 
 ### Reminder: LinkedIn group (Monday 16 November)
 
-Still looking for a few house templates to show ArcKit drafting in your format. If your team has one it's proud of, and it's public or cleared to share, we'd love to see it: https://github.com/tractorjuice/arc-kit/issues/new?template=template-share.yml
+Still after a few house templates to try with ArcKit. If you've got one that's public or cleared to share, please get in touch: https://github.com/tractorjuice/arc-kit/issues/new?template=template-share.yml
 
 ### Discord #announcements (Monday 2 November)
 
 > 📝 **Bring your own template**
-> Got a house format for requirements, business cases or design reviews? Share it (public or cleared for release, nothing sensitive) and we'll show ArcKit drafting in it on a fictional project.
+> Looking for house formats to try with ArcKit: requirements, business cases, design reviews. If you've got one that's public or cleared for release, share it and we'll draft in it on a fictional project.
 > <https://github.com/tractorjuice/arc-kit/issues/new?template=template-share.yml>
 > Questions: #show-your-working
 
 ### Showcase post: template (fill in per submission)
 
-> [One line on what the format does that a standard one doesn't, in the submitter's words.]
+> [What the format does that a standard one doesn't, in the submitter's words.]
 >
 > [Credit as chosen: "Shared by [name], [organisation]" / "Shared by an architect at a central government department" / no credit.]
 >
-> We brought it into ArcKit with [/arckit:customize <name> | /arckit:template-builder], then drafted [document] for our fictional Ashcombe housing benefits project.
+> Brought it into ArcKit with [/arckit:customize <name> | /arckit:template-builder], then drafted [document] for our fictional Ashcombe housing benefits project.
 >
-> What carried over: [two or three specifics]. What ArcKit added: [traceability to requirements, citations, document control, as applicable]. As always, the result is a draft for qualified people to review.
+> What carried over: [two or three specifics]. What ArcKit added: [traceability to requirements, citations, document control, as applicable]. It's a draft for qualified people to review.
 >
-> The template, ArcKit's copy and the draft are side by side here: [public test repository link]
+> The template, ArcKit's copy and the draft, side by side: [public test repository link]
 >
-> Got a format of your own? https://github.com/tractorjuice/arc-kit/issues/new?template=template-share.yml
+> Got a format of your own? Please share it: https://github.com/tractorjuice/arc-kit/issues/new?template=template-share.yml
 >
 > #EnterpriseArchitecture #DigitalGovernment #OpenSource
 

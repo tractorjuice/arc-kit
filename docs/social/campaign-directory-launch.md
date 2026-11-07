@@ -19,35 +19,33 @@ Share link: https://arckit.org/share/<slug>.html?utm_campaign=directory-launch&u
 
 ArcKit is now in the Claude plugin directory.
 
-From today you can find ArcKit in the directory and install it from inside Claude, without adding a marketplace first. The core plugin, with 76 commands for strategy, architecture, delivery and assurance, joins the country, sector and tooling plugins already listed there.
+You can find it and install it from inside Claude, without adding a marketplace first. The core plugin has 76 commands for strategy, architecture, delivery and assurance, and it joins the country, sector and tooling plugins already listed.
 
-Getting ready for the directory also changed how ArcKit behaves. From version 6.17.2, nothing in ArcKit approves an action on your behalf. Each command pre-approves only reading ArcKit's own templates and running ArcKit's own scripts, through Claude Code's own permission rules, and only while it runs. Calls to research services are never pre-approved; you decide which ones to trust.
+We changed how ArcKit behaves to get here. From version 6.17.2, nothing in ArcKit approves an action on your behalf. Each command pre-approves only reading ArcKit's own templates and running its own scripts, through Claude Code's permission rules and only while it runs. Calls to research services are never pre-approved.
 
-That gives you a short answer to the question assurance reviewers ask first: what can this tool do without asking?
+So when an assurance reviewer asks what it can do without asking, there's a short answer.
 
-ArcKit writes drafts for qualified people to review: requirements, risk registers, business cases, decisions, and assessment packs for the Technology Code of Practice, the Service Standard and Secure by Design. It is free and MIT licensed.
-
-Prefer the marketplace? /plugin marketplace add tractorjuice/arckit-claude still works.
+It writes drafts for qualified people to review. It's free and MIT licensed, and the marketplace route still works: /plugin marketplace add tractorjuice/arckit-claude
 
 https://arckit.org/share/<slug>.html?utm_campaign=directory-launch&utm_source=linkedin
 
 #EnterpriseArchitecture #ClaudeCode #DigitalGovernment #OpenSource
 
-## 2. LinkedIn group version (question, no hashtags)
+## 2. LinkedIn group version (no hashtags)
 
-ArcKit is now in the Claude plugin directory, so you can find and install it from inside Claude without adding a marketplace first.
+ArcKit is now in the Claude plugin directory, so you can install it from inside Claude without adding a marketplace first.
 
-Preparing for it, we removed every place ArcKit approved its own actions. From 6.17.2, each command pre-approves only reading ArcKit's own templates and running its own scripts, through Claude Code's permission rules, and calls to research services always ask first.
+To get there we removed every place ArcKit approved its own actions. From 6.17.2, commands pre-approve only ArcKit's own templates and scripts, through Claude Code's permission rules, and research services always ask first.
 
-A question for the group: when you bring an AI tool to a security or architecture board, what do they ask first? Is "what can it do without asking you?" on the list, and what else would you want a plugin to show you before you approve it?
+What does your security or architecture board ask first about an AI tool? I'd like to know what should be on the list beyond "what can it do without asking?"
 
 Write-up: https://arckit.org/share/<slug>.html?utm_campaign=directory-launch&utm_source=linkedin-group
 
 ## 3. Discord #announcements
 
-📣 ArcKit is now in the Claude plugin directory. Find ArcKit there and install the core plugin from inside Claude; overlays are listed alongside it.
+📣 ArcKit is now in the Claude plugin directory. You can install the core plugin from inside Claude, with the overlays listed alongside it.
 
-Update to 6.17.2 or later too: nothing in ArcKit approves an action for you any more. Commands pre-approve only ArcKit's own templates and scripts, and research services always ask first.
+Update to 6.17.2 or later too. Nothing in ArcKit approves an action for you any more: commands pre-approve only ArcKit's own templates and scripts, and research services always ask first.
 
 Marketplace install still works: `/plugin marketplace add tractorjuice/arckit-claude`
 
@@ -55,7 +53,7 @@ Write-up: <https://arckit.org/share/<slug>.html?utm_campaign=directory-launch&ut
 
 ## 4. Reshare line for the maintainer's own profile
 
-The core ArcKit plugin is now in the Claude plugin directory, and getting it there made ArcKit ask before it acts. Short write-up below.
+Core ArcKit is now in the Claude plugin directory. Getting it there meant making it ask before it acts. Short write-up below.
 
 ## Card
 
