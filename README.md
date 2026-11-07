@@ -427,7 +427,7 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 
 ## EU, French, Dutch & Austrian Regulatory Compliance (Community)
 
-> ⚠️ **Community-contributed.** EU and French commands are domain-maintained by [@thomas-jardinet](https://github.com/thomas-jardinet), Austrian commands by [@gtonic](https://github.com/gtonic). The 27 commands below cover EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act, Cloud Sovereignty Framework), French government standards (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, etc.), Dutch government standards (Rijksbreed cloudbeleid, VIRBI 2025, BIO2, cloud exit), and Austrian government standards (DSG, NISG 2026, BVergG 2018, BaFG / WZG accessibility). They are not part of the officially-maintained baseline — output should be reviewed by qualified DPO / CISO / Vergabejurist / legal counsel before reliance, and citations may lag current source text. Each command surfaces with a `[COMMUNITY]` prefix in `/help` listings and renders a warning banner before generating.
+> ⚠️ **Community-contributed.** EU and French commands are domain-maintained by [@thomas-jardinet](https://github.com/thomas-jardinet), Austrian commands by [@gtonic](https://github.com/gtonic). The 29 commands below cover EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act, Cloud Sovereignty Framework), French government standards (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, etc.), Dutch government standards (Rijksbreed cloudbeleid, VIRBI 2025, BIO2, cloud exit, NORA and GEMMA reference architectures), and Austrian government standards (DSG, NISG 2026, BVergG 2018, BaFG / WZG accessibility). They are not part of the officially-maintained baseline — output should be reviewed by qualified DPO / CISO / Vergabejurist / legal counsel before reliance, and citations may lag current source text. Each command surfaces with a `[COMMUNITY]` prefix in `/help` listings and renders a warning banner before generating.
 
 **EU regulations** (member-state-neutral baselines, applicable across EU/EEA):
 
@@ -454,12 +454,14 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 - `/arckit:fr-pssi` — Information System Security Policy (PSSI) per ANSSI / RGS
 - `/arckit:fr-code-reuse` — Public code reuse assessment (code.gouv.fr, SILL, EUPL) — build-vs-reuse decision matrix
 
-**Dutch government** (apply on top of the EU baseline for Netherlands central-government deployments — domain-maintained by [@umag](https://github.com/umag)):
+**Dutch government** (apply on top of the EU baseline for Netherlands public-sector deployments: central government for the cloud, classification, BIO2 and exit commands, every bestuurslaag for NORA, gemeenten for GEMMA — domain-maintained by [@umag](https://github.com/umag)):
 
 - `/arckit:nl-cloud` — Rijksbreed cloudbeleid 2026 compliance (materieel cloudgebruik, exit plan, CISO Rijk notification, EEA residency, staatsgeheim / TBB eligibility)
 - `/arckit:nl-tbb` — Te Beschermen Belangen (TBB) category determination (BIV scoring across five kernbelangen; any existing VIRBI 2025 rubricering is applied as a floor on the category, never derived from it)
 - `/arckit:nl-bio` — BIO2 conformance (OBDO, on NEN-EN-ISO/IEC 27001:2023 and 27002:2022)
 - `/arckit:nl-exit` — Cloud exit plan under Rijksbreed cloudbeleid clause 3.2 (planned exit and disruptive interruption, annual review)
+- `/arckit:nl-nora` — NORA conformance (NAP01–NAP17 per implicatie and Vijflaagsmodel layer, kwaliteitsdoelen and kernwaarden roll-up; GEMMA supplement for gemeenten)
+- `/arckit:nl-gemma` — GEMMA landscape mapping for gemeenten (referentiecomponenten, bedrijfsfuncties, overlap, gaps, standards, roadmap candidates)
 
 **Austrian government** (apply on top of the EU baseline for Austrian deployments — domain-maintained by [@gtonic](https://github.com/gtonic)):
 
