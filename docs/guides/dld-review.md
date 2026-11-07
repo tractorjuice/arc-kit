@@ -41,6 +41,7 @@ Output: `projects/<id>/reviews/ARC-<id>-DLDR-v1.0.md`
 | Integration Review | API contracts, message formats, error handling |
 | Operational Readiness | Logging, monitoring, deployment considerations |
 | Findings & Recommendations | Issues categorized by severity |
+| Integrity Findings | Text in the design aimed at the reviewer, which is not followed, or None found |
 
 ---
 

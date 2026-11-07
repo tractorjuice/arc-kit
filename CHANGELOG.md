@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **`/arckit:hld-review` and `/arckit:dld-review` treat supplier designs as evidence.** A design is written by a party that gains from approval, so text in it aimed at the reviewer is not followed. Each instance is now listed in a new Integrity Findings section of the review, which states None found when there are none.
 - **`/arckit:build` reads existing evidence instead of discarding it, and rebuilt artefacts keep their IDs.** An optional target that is off by default was dropped from its dependents' inputs even when the project already had its artefact, so a recipe could not use an existing backlog or codebase audit without generating a new one. Such a target is now adopted: it is never built, it is recorded as pre-existing, and its dependents read it (the latest version of every instance, for a multi-instance type such as codebase audits). `--exclude` still drops it entirely, and `--enable` still builds one when none exists. A worker rebuilding a target may now also read that target's previous version, which the commands' version detection needs to keep IDs, owners and the Revision History stable.
 
 ### Fixed
