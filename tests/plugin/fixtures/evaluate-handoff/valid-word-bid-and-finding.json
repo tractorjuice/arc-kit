@@ -1,0 +1,12 @@
+{
+  "vendor": "beta-systems",
+  "documents": [
+    { "file": "proposal.md", "status": "read" },
+    { "file": "technical-annex.docx", "status": "unsupported-format" }
+  ],
+  "claims": [],
+  "prices": [],
+  "integrity_findings": [
+    { "type": "hidden-text", "file": "proposal.md", "location": "Line 13" }
+  ]
+}

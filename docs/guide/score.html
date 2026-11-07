@@ -446,6 +446,15 @@
 <pre><code class="language-text">/arckit:evaluate  →  /arckit:score vendor  →  /arckit:score compare  →  /arckit:sow
    (criteria)         (score each)             (decide)                  (procure)
 </code></pre>
+<h2 id="how-bids-are-read">How bids are read</h2>
+<p>A bid is written by a party that gains from a high score, so <code>/arckit:score</code> never reads it directly. A read-only reader opens one supplier's documents and returns short claims against each criterion, and scoring uses only those claims.</p>
+<ul>
+<li><strong>Formats:</strong> PDF, Markdown and text. Export a Word document to PDF first.</li>
+<li><strong>No claim, no marks:</strong> a criterion the bid doesn't address scores 0.</li>
+<li><strong>Unreadable documents:</strong> if any document can't be read, the vendor stays unscored and you're told which file and why. It never gets a 0.</li>
+<li><strong>Keep the vendor's folder for what the supplier sent.</strong> ArcKit writes its own files to <code>evaluations/&lt;vendor&gt;/</code>, and scoring stops for a vendor whose folder holds an <code>evaluation.md</code>, <code>notes.md</code> or <code>claims.json</code>.</li>
+</ul>
+<p>Scoring is still a judgement on what the supplier claims, so check the claims behind any close result. This works in Claude Code. Other runtimes have no subagents, so they read bids in one context.</p>
 <h2 id="scoring-rubric">Scoring Rubric</h2>
 <table>
 <thead>
@@ -510,7 +519,9 @@
 }
 </code></pre>
 <p>This file can be committed to git for team visibility and governance audit.</p>
-<p><code>integrityFindings</code> lists any text in a proposal aimed at the evaluator or hidden from a human reader, which isn't followed. An empty list means none was found. A finding says where the text is, not what it says, because <code>compare</code> reads this file back. The short quote appears in the summary after scoring.</p>
+<p><code>integrityFindings</code> lists any text in a proposal aimed at the evaluator or hidden from a human reader, which isn't followed. An empty list means none was found. A finding says where the text is, not what it says.</p>
+<p><code>failedQualifications</code> lists any mandatory qualification the bid doesn't evidence. A vendor with one can't be the recommendation in <code>compare</code>. To clear it, add the evidence to the vendor's folder and re-score.</p>
+<p>The claims behind each score are saved in <code>evaluations/&lt;vendor&gt;/claims.json</code>, so a score can be traced to its file and location.</p>
 <h2 id="comparison-features">Comparison Features</h2>
 <p>The <code>compare</code> sub-action generates:</p>
 <ul>

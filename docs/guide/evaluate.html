@@ -477,7 +477,7 @@
 <p>Output:</p>
 <ul>
 <li><code>projects/&lt;id&gt;/ARC-&lt;id&gt;-EVAL-v1.0.md</code> (framework)</li>
-<li><code>projects/&lt;id&gt;/vendors/&lt;vendor&gt;/ARC-&lt;id&gt;-EVAL-&lt;vendor&gt;-v1.0.md</code> (scoring)</li>
+<li><code>projects/&lt;id&gt;/evaluations/&lt;vendor&gt;/evaluation.md</code> (scoring)</li>
 <li><code>projects/&lt;id&gt;/ARC-&lt;id&gt;-VEND-v1.0.md</code> (comparison)</li>
 </ul>
 <hr />
@@ -552,7 +552,7 @@
 </tr>
 <tr>
 <td>Integrity Findings</td>
-<td>Text in the proposal aimed at the evaluator, which is not followed, or None found</td>
+<td>Text in the proposal aimed at the evaluator, which is not followed, by type, file and location, or None found</td>
 </tr>
 <tr>
 <td>Recommendation</td>
@@ -560,6 +560,16 @@
 </tr>
 </tbody>
 </table>
+<hr />
+<h2 id="how-bids-are-read">How Bids Are Read</h2>
+<p>A bid is written by a party that gains from a high score, so <code>/arckit:evaluate</code> never reads it directly. A read-only reader opens one supplier's documents and returns short claims against each criterion, and scoring uses only those claims. Each vendor's claims, evaluation and notes are saved in <code>evaluations/&lt;vendor&gt;/</code>.</p>
+<ul>
+<li><strong>Formats:</strong> PDF, Markdown and text. Export a Word document to PDF first.</li>
+<li><strong>No claim, no marks:</strong> a criterion the bid doesn't address scores 0, and a mandatory qualification with no claim fails.</li>
+<li><strong>Unreadable documents:</strong> if any document can't be read, the vendor stays unscored and you're told which file and why.</li>
+<li><strong>Keep the vendor's folder for what the supplier sent.</strong> Everything in <code>vendors/&lt;vendor&gt;/</code> is treated as the supplier's, and scoring stops for a vendor whose folder holds an <code>evaluation.md</code>, <code>notes.md</code> or <code>claims.json</code>.</li>
+</ul>
+<p>Scoring is still a judgement on what the supplier claims, so check the claims behind any close result. This works in Claude Code. Other runtimes have no subagents, so they read bids in one context.</p>
 <hr />
 <h2 id="three-task-types">Three Task Types</h2>
 <table>

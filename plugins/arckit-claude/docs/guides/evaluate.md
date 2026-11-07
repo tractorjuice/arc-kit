@@ -28,7 +28,7 @@
 Output:
 
 - `projects/<id>/ARC-<id>-EVAL-v1.0.md` (framework)
-- `projects/<id>/vendors/<vendor>/ARC-<id>-EVAL-<vendor>-v1.0.md` (scoring)
+- `projects/<id>/evaluations/<vendor>/evaluation.md` (scoring)
 - `projects/<id>/ARC-<id>-VEND-v1.0.md` (comparison)
 
 ---
@@ -56,8 +56,21 @@ Output:
 | Strengths | What the vendor did well |
 | Weaknesses | Gaps, concerns, or risks identified |
 | Risk Assessment | Delivery, technical, commercial, and compliance risks |
-| Integrity Findings | Text in the proposal aimed at the evaluator, which is not followed, or None found |
+| Integrity Findings | Text in the proposal aimed at the evaluator, which is not followed, by type, file and location, or None found |
 | Recommendation | Recommend / Consider / Not Recommended |
+
+---
+
+## How Bids Are Read
+
+A bid is written by a party that gains from a high score, so `/arckit:evaluate` never reads it directly. A read-only reader opens one supplier's documents and returns short claims against each criterion, and scoring uses only those claims. Each vendor's claims, evaluation and notes are saved in `evaluations/<vendor>/`.
+
+- **Formats:** PDF, Markdown and text. Export a Word document to PDF first.
+- **No claim, no marks:** a criterion the bid doesn't address scores 0, and a mandatory qualification with no claim fails.
+- **Unreadable documents:** if any document can't be read, the vendor stays unscored and you're told which file and why.
+- **Keep the vendor's folder for what the supplier sent.** Everything in `vendors/<vendor>/` is treated as the supplier's, and scoring stops for a vendor whose folder holds an `evaluation.md`, `notes.md` or `claims.json`.
+
+Scoring is still a judgement on what the supplier claims, so check the claims behind any close result. This works in Claude Code. Other runtimes have no subagents, so they read bids in one context.
 
 ---
 

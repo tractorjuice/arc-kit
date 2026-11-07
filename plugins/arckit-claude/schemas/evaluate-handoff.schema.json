@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arckit.org/schemas/evaluate-handoff/v1",
+  "title": "evaluate reader → orchestrator handoff payload (v1)",
+  "description": "What arckit-evaluate-reader returns for one supplier. Bounded claims against criteria, with no score, rank or recommendation, and no field that can hold a supplier's own text beyond a claim.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "vendor",
+    "documents",
+    "claims",
+    "prices",
+    "integrity_findings"
+  ],
+  "properties": {
+    "vendor": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9 ._&()-]{0,63}$"
+    },
+    "documents": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "$ref": "#/$defs/Document"
+      },
+      "minItems": 1
+    },
+    "claims": {
+      "type": "array",
+      "maxItems": 300,
+      "items": {
+        "$ref": "#/$defs/Claim"
+      }
+    },
+    "prices": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "$ref": "#/$defs/Price"
+      }
+    },
+    "integrity_findings": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "$ref": "#/$defs/IntegrityFinding"
+      }
+    }
+  },
+  "$defs": {
+    "File": {
+      "type": "string",
+      "description": "Path relative to the vendor's folder.",
+      "pattern": "^[^\\s./\\\\<>`][^\\n\\r<>`\\\\]{0,119}$"
+    },
+    "Location": {
+      "type": "string",
+      "description": "Where in the file, as a locator such as 'Page 3', 'Clause 7.1(b)' or 'Page 3, Section 2', or 'Document' or 'Metadata' for the file as a whole. The grammar leaves no room for a sentence.",
+      "pattern": "^(?:Document|Metadata|(?:Page|Pages|Section|Sections|Line|Lines|Slide|Slides|Sheet|Row|Rows|Column|Cell|Paragraph|Appendix|Annex|Schedule|Table|Figure|Clause|Part) (?:[0-9A-Z][0-9A-Za-z.()-]{0,11}|[ivxlc]{1,8})(?:, (?:(?:Page|Pages|Section|Sections|Line|Lines|Slide|Slides|Sheet|Row|Rows|Column|Cell|Paragraph|Appendix|Annex|Schedule|Table|Figure|Clause|Part) (?:[0-9A-Z][0-9A-Za-z.()-]{0,11}|[ivxlc]{1,8})|[0-9][0-9.()-]{0,11})){0,3})$"
+    },
+    "Document": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "status"
+      ],
+      "properties": {
+        "file": {
+          "$ref": "#/$defs/File"
+        },
+        "status": {
+          "enum": [
+            "read",
+            "unsupported-format",
+            "unreadable",
+            "empty"
+          ]
+        }
+      }
+    },
+    "Claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "criterion_id",
+        "claim",
+        "file",
+        "location"
+      ],
+      "properties": {
+        "criterion_id": {
+          "type": "string",
+          "pattern": "^[A-Z0-9][A-Z0-9.]{0,7}(?:-[A-Z0-9.]{1,8}){0,3}$"
+        },
+        "claim": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "file": {
+          "$ref": "#/$defs/File"
+        },
+        "location": {
+          "$ref": "#/$defs/Location"
+        }
+      }
+    },
+    "Price": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "amount",
+        "currency",
+        "basis",
+        "file",
+        "location"
+      ],
+      "properties": {
+        "amount": {
+          "type": "number",
+          "minimum": 0
+        },
+        "currency": {
+          "enum": [
+            "GBP",
+            "EUR",
+            "USD",
+            "AED",
+            "AUD",
+            "CAD"
+          ]
+        },
+        "basis": {
+          "enum": [
+            "one-off",
+            "per-year",
+            "per-month",
+            "per-day",
+            "per-unit",
+            "other"
+          ]
+        },
+        "file": {
+          "$ref": "#/$defs/File"
+        },
+        "location": {
+          "$ref": "#/$defs/Location"
+        }
+      }
+    },
+    "IntegrityFinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "file",
+        "location"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "instruction",
+            "hidden-text",
+            "forged-marker"
+          ]
+        },
+        "file": {
+          "$ref": "#/$defs/File"
+        },
+        "location": {
+          "$ref": "#/$defs/Location"
+        }
+      }
+    }
+  }
+}

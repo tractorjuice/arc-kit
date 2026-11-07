@@ -461,7 +461,7 @@
 </tr>
 <tr>
 <td><strong>UserPromptSubmit</strong></td>
-<td>arckit-context, secret-detection, sync-guides, graph-inject</td>
+<td>arckit-context, secret-detection, supplier-isolation, sync-guides, graph-inject</td>
 <td>Every user message and matched ArcKit commands</td>
 </tr>
 <tr>
@@ -471,7 +471,7 @@
 </tr>
 <tr>
 <td><strong>PreToolUse</strong></td>
-<td>validate-reader-handoff (SubagentHandback), validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner</td>
+<td>validate-reader-handoff (SubagentHandback), supplier-isolation, validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner</td>
 <td>Before selected tool calls</td>
 </tr>
 <tr>
@@ -564,6 +564,8 @@ for a restart, <code>/compact</code>, or another <code>/arckit:</code> command. 
 <p>Blocks the write if invalid, and the reason names the corrected path, with the next sequence number and the right subfolder already worked out. Claude then writes the same content there. The hook never changes the write itself.</p>
 <h3 id="score-validator-write">score-validator (Write)</h3>
 <p>Checks <code>vendors/scores.json</code> before it is written. Invalid JSON is blocked. A score outside 0–3, weights that don't sum to about 1.0, missing evidence, or an integrity finding holding anything but a type, file and location is reported to the model as a warning.</p>
+<h3 id="supplier-isolation-read--grep--bash--powershell">supplier-isolation (Read | Grep | Bash | PowerShell)</h3>
+<p>While <code>/arckit:evaluate</code> or <code>/arckit:score</code> runs, only their reader can open a supplier's documents under <code>vendors/</code>, so a bid's raw text never reaches the context that scores it. <code>scores.json</code> and vendor profiles stay readable. The gate stays on until you run another <code>/command</code> or clear the session, so <code>/arckit:hld-review</code> still reads supplier designs as normal.</p>
 <h3 id="file-protection-edit--write">file-protection (Edit | Write)</h3>
 <p>Blocks writes to sensitive file paths — environment files (<code>.env</code>), credential stores, private keys, lock files, and CI/CD configuration. See the <a href="security-hooks.html">Security Hooks Guide</a> for the full list.</p>
 <h3 id="secret-file-scanner-edit--write">secret-file-scanner (Edit | Write)</h3>

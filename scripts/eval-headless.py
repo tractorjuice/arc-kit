@@ -384,12 +384,7 @@ def run_claude(case: dict, workspace: Path, plugin_dir: Path, model: str | None,
             events.append(json.loads(line))
         except json.JSONDecodeError:
             events.append({"type": "raw", "text": line})
-    tool_uses = []
-    for ev in events:
-        if ev.get("type") == "assistant":
-            for block in ev.get("message", {}).get("content", []):
-                if block.get("type") == "tool_use":
-                    tool_uses.append({"name": block.get("name"), "input": block.get("input")})
+    tool_uses = tool_calls(events)
     result = next((ev for ev in reversed(events) if ev.get("type") == "result"), {})
     model_usage = result.get("modelUsage") or {}
     return {
@@ -416,6 +411,18 @@ def run_claude(case: dict, workspace: Path, plugin_dir: Path, model: str | None,
 # ── Graders ──────────────────────────────────────────────────────────
 
 
+def tool_calls(events: list) -> list:
+    """Every tool call in a run. `parent` is set when a subagent made it."""
+    calls = []
+    for ev in events:
+        if ev.get("type") == "assistant":
+            for block in ev.get("message", {}).get("content", []):
+                if block.get("type") == "tool_use":
+                    calls.append({"name": block.get("name"), "input": block.get("input"),
+                                  "parent": ev.get("parent_tool_use_id")})
+    return calls
+
+
 def grade(grader: dict, rec: dict, files_dir: Path) -> dict:
     kind = grader.get("type")
     name = grader["_name"]
@@ -433,7 +440,9 @@ def grade(grader: dict, rec: dict, files_dir: Path) -> dict:
     if kind == "tool_used":
         tool = grader["tool"]
         input_re = re.compile(grader["input_match"]) if grader.get("input_match") else None
+        main_only = grader.get("scope") == "main"
         calls = [t for t in rec["tool_uses"] if t["name"] == tool
+                 and not (main_only and t.get("parent"))
                  and (input_re is None or input_re.search(json.dumps(t["input"])))]
         lo, hi = int(grader.get("min", 1)), grader.get("max")
         ok = len(calls) >= lo and (hi is None or len(calls) <= int(hi))
@@ -458,6 +467,9 @@ def grade(grader: dict, rec: dict, files_dir: Path) -> dict:
             where = ", ".join(hits)
     elif target == "trace":
         text, where = "\n".join(json.dumps(e) for e in rec.get("events", [])), "trace"
+    elif target == "main_trace":
+        events = [e for e in rec.get("events", []) if not e.get("parent_tool_use_id")]
+        text, where = "\n".join(json.dumps(e) for e in events), "main thread"
     elif target == "files":
         text, where = "\n".join(created), "created file list"
     else:

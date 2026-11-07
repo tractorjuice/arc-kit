@@ -227,3 +227,15 @@ test('every reader and writer dispatch in the commands asks for the foreground',
     }
   }
 });
+
+test('a bidder is never logged as a gap: a failed read leaves the vendor unscored', () => {
+  const event = {
+    hook_event_name: 'PostToolUse',
+    tool_name: 'Agent',
+    tool_input: { subagent_type: 'arckit:arckit-evaluate-reader' },
+    tool_response: { status: 'error', content: [] },
+  };
+  const context = decide(event).hookSpecificOutput.additionalContext;
+  assert.match(context, /leave this vendor unscored/);
+  assert.doesNotMatch(context, /log the gap/);
+});
