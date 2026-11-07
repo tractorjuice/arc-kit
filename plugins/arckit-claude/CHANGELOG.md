@@ -9,6 +9,10 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+### Fixed
+
+- **`/arckit:evaluate` sets its criteria before it reads any bid.** It used to read every proposal in `vendors/` before working out what it had been asked to do, so a new framework's scoring criteria were written with bids in context. It now reads a proposal only when scoring that vendor, after the framework exists, and a comparison works from the saved evaluations.
+
 ## [6.19.0] — 2026-11-02
 
 ### Added
