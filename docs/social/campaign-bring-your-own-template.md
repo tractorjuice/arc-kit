@@ -17,7 +17,7 @@ Never: publish anything that looks sensitive, even if submitted; name an organis
 
 ## Cadence
 
-- **Call for templates**: on the page on Monday 2 November 2026 (after *Regulation week*). The group version hadn't gone out by 7 November, so post it before the reminder. A reminder in the group on Monday 16 November.
+- **Call for templates**: on the page on Monday 2 November 2026 (after *Regulation week*). The group version went out on 7 November. A reminder in the group on Monday 16 November.
 - **Showcase**: monthly, from the first submission. If nothing has arrived by Monday 23 November, seed the first showcase with a template a UK public body has already published, credited to it as a public document, and say that's what it is.
 
 ## Posts
@@ -44,7 +44,7 @@ What's the one template your team couldn't work without?
 
 #EnterpriseArchitecture #DigitalGovernment #OpenSource
 
-### Call for templates: LinkedIn group (Monday 2 November)
+### Call for templates: LinkedIn group (posted 7 November)
 
 We're looking for house templates to try with ArcKit: requirements, a business case, a design authority submission, anything your team relies on.
 
