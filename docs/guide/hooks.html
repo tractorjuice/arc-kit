@@ -563,7 +563,7 @@ for a restart, <code>/compact</code>, or another <code>/arckit:</code> command. 
 </ul>
 <p>Blocks the write if invalid, and the reason names the corrected path, with the next sequence number and the right subfolder already worked out. Claude then writes the same content there. The hook never changes the write itself.</p>
 <h3 id="score-validator-write">score-validator (Write)</h3>
-<p>Validates scoring/assessment documents for numeric consistency. Checks that individual scores match totals, percentages are calculated correctly, and rating scales are applied consistently.</p>
+<p>Checks <code>vendors/scores.json</code> before it is written. Invalid JSON is blocked. A score outside 0–3, weights that don't sum to about 1.0, missing evidence, or an integrity finding holding anything but a type, file and location is reported to the model as a warning.</p>
 <h3 id="file-protection-edit--write">file-protection (Edit | Write)</h3>
 <p>Blocks writes to sensitive file paths — environment files (<code>.env</code>), credential stores, private keys, lock files, and CI/CD configuration. See the <a href="security-hooks.html">Security Hooks Guide</a> for the full list.</p>
 <h3 id="secret-file-scanner-edit--write">secret-file-scanner (Edit | Write)</h3>

@@ -501,18 +501,23 @@
     &quot;acme-cloud&quot;: {
       &quot;displayName&quot;: &quot;Acme Cloud Services&quot;,
       &quot;scores&quot;: [...],
-      &quot;totalWeighted&quot;: 2.45
+      &quot;totalWeighted&quot;: 2.45,
+      &quot;integrityFindings&quot;: [
+        { &quot;type&quot;: &quot;instruction&quot;, &quot;file&quot;: &quot;proposal.md&quot;, &quot;location&quot;: &quot;Section 4&quot; }
+      ]
     }
   }
 }
 </code></pre>
 <p>This file can be committed to git for team visibility and governance audit.</p>
+<p><code>integrityFindings</code> lists any text in a proposal aimed at the evaluator or hidden from a human reader, which isn't followed. An empty list means none was found. A finding says where the text is, not what it says, because <code>compare</code> reads this file back. The short quote appears in the summary after scoring.</p>
 <h2 id="comparison-features">Comparison Features</h2>
 <p>The <code>compare</code> sub-action generates:</p>
 <ul>
 <li><strong>Score matrix</strong> — side-by-side scores for every criterion</li>
 <li><strong>Weighted totals</strong> — overall ranking accounting for criterion weights</li>
 <li><strong>Risk summary</strong> — aggregated risks from each vendor's scoring</li>
+<li><strong>Integrity findings</strong> — each vendor's findings, named in the recommendation if the top vendor has any</li>
 <li><strong>Sensitivity analysis</strong> — how rankings change if criterion weights shift by ±10%</li>
 </ul>
 <h2 id="validation">Validation</h2>
@@ -522,6 +527,7 @@
 <li>Criteria weights must sum to approximately 1.0</li>
 <li>All required fields must be present</li>
 <li>Referenced criterion IDs must exist</li>
+<li>An integrity finding must hold only a type, file and location</li>
 </ul>
 <h2 id="governance">Governance</h2>
 <p>The structured format supports:</p>
