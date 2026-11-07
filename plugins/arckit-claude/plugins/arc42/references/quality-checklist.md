@@ -397,7 +397,7 @@ All artifacts must pass these 10 checks:
 - International transfers assessed with Schrems II requirements (TIA, SCCs 2021)
 - Processor inventory with Article 28 DPA compliance checked
 - 72-hour breach notification process assessed
-- French deployment flagged for `/arckit:fr-rgpd` follow-up
+- French deployment flagged for `/arckit-fr:fr-rgpd` follow-up
 
 ### AIACT -- EU AI Act Assessment
 
@@ -726,7 +726,7 @@ All artifacts must pass these 10 checks:
 ### RBCLOUD -- Rijksbreed Cloudbeleid Compliance Assessment
 
 - Materieel publiek cloudgebruik determination made with stated rationale (clause 4.1)
-- Every clause 5.2 / 4.5 / 5.4 eligibility conclusion cites the clause number it rests on, and the clause 5.2 conclusion cites the TBB category / rubricering it depends on (or explicitly flags the category as pending `/arckit:nl-tbb`)
+- Every clause 5.2 / 4.5 / 5.4 eligibility conclusion cites the clause number it rests on, and the clause 5.2 conclusion cites the TBB category / rubricering it depends on (or explicitly flags the category as pending `/arckit-nl:nl-tbb`)
 - Clause 4.5 email/file-storage conditions assessed individually — partial satisfaction of the three cumulative conditions is not treated as eligible
 - Clause 3.1 risk analysis covers, besides security, continuity and privacy, all five aspects the clause lists: (1) the characteristics of the cloud use (main provider and any sub-providers, public / private / hybrid / community cloud, region of processing and storage); (2) the provider's role in security and continuity and how it is assured; (3) how the provider admits, or reports on, audit and accountability investigations; (4) foreign-government interference with confidentiality and availability, explicitly weighed and mitigated as far as possible; (5) the risk of the provider abusing a large supplier dependency, such as forcing technology choices or commercial conditions. Residual risk is documented and formally accepted within the organisation, and the decision is recorded so it can be traced and audited
 - The clause 3.1 risk analysis follows the Implementatiekader risicoafweging cloudgebruik (v1.1, 5 January 2023, unless CIO Rijk has published the announced revision), and the assessment states the version applied. It shows the Art. 4.3 contents: context and characteristics, including the service model; the C2000 criteria, the NBV public-cloud risk scenarios (Bijlage 2) and a comparison with on-premise processing; the measures against the information-security requirements, including the provider's own supplier checks; the design, existence and, from the first update, effectiveness of the measures; residual risks. It names the Responsible process owner and the Accountable Bestuursraad or delegate (Art. 3a), records formal adoption under the departmental mandateringsregeling (Art. 4.4), and sets a review at material change and at least every three years (Art. 9)
@@ -754,7 +754,7 @@ All artifacts must pass these 10 checks:
 - Certification-vs-conformance distinction stated explicitly — "not certified" is never reported as a finding of non-conformance on its own
 - All four ISO/IEC 27002:2022 control themes (Organisational, People, Physical, Technological) addressed
 - Conformance claims reference the current BIO2 overheidsmaatregelen rather than an invented measure number, wording, or threshold — unsupplied specifics carry the `[PENDING — cite from current BIO2 text]` placeholder
-- BIV scores from `/arckit:nl-tbb` used to prioritise controls where available
+- BIV scores from `/arckit-nl:nl-tbb` used to prioritise controls where available
 - Gap summary includes priority, owner, and target date per gap
 - Cbw/Wwke sector applicability noted
 
@@ -1718,7 +1718,7 @@ All artifacts must pass these 10 checks:
 
 ### RATE -- G-Cloud Lot 3 Rate Card
 
-- One card for all the supplier's Lot 3 services, supplier-wide in `projects/000-global/supplier/`, written only by `/arckit:pricing`; it lists the Lot 3 services it covers
+- One card for all the supplier's Lot 3 services, supplier-wide in `projects/000-global/supplier/`, written only by `/arckit-uk-gcloud:pricing`; it lists the Lot 3 services it covers
 - Every role level named exactly as GCA's Lot 3 rate card names it (9 job families, 58 roles, 222 role levels); levels the supplier can't provide left blank, not priced
 - A maximum UK day rate, and an offshore rate or "Not offered", for every level offered; every rate at least £50, for a 7.5-hour day with travel and subsistence inside the M25 included and no risk or contingency uplift; no SFIA levels or SFIA rates
 - The average day rate computed as GCA scores it: every UK and offshore rate entered, added up and divided by their number, leaving out any under £50 or over £10,000
