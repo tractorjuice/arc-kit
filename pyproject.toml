@@ -13,7 +13,12 @@ dependencies = [
 ]
 authors = [{ name = "Your Name", email = "your.email@example.com" }]
 readme = "README.md"
-license = { text = "MIT" }
+# PEP 639 licence expression. The CLI and the rest of ArcKit's code are MIT;
+# the adapted arc42 template shipped under share/arckit is CC BY-SA 4.0 (#1053).
+# An expression replaces the "License ::" classifier, which PEP 639 forbids
+# alongside it. arc42-LICENSE.md is the notice saying which files each covers.
+license = "MIT AND CC-BY-SA-4.0"
+license-files = ["LICENSE", ".arckit/templates/arc42-LICENSE.md"]
 keywords = [
     "architecture",
     "enterprise",
@@ -26,7 +31,6 @@ classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "Intended Audience :: System Administrators",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -37,7 +41,10 @@ classifiers = [
 [project.optional-dependencies]
 test = [
     "pytest",
-    "hatchling",
+    # build and hatchling>=1.27 (PEP 639 licence expressions) let
+    # tests/cli/test_package_licence.py build the wheel and sdist offline.
+    "build",
+    "hatchling>=1.27",
     "pyyaml",
     "jsonschema>=4,<5",
     "markdown-it-py==4.0.0",
@@ -68,7 +75,9 @@ testpaths = ["tests"]
 [build-system]
 # pyyaml is a build dependency because hatch_build.py shells out to
 # scripts/converter.py, which parses command frontmatter with yaml.
-requires = ["hatchling", "pyyaml"]
+# hatchling 1.27 is the first release to read PEP 639 `license` expressions and
+# `license-files`.
+requires = ["hatchling>=1.27", "pyyaml"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]

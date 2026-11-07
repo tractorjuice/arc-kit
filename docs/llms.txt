@@ -104,6 +104,10 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [O-AA Agile Security](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-security.md): `/arckit-oaa:agile-security` security embedded in the sprint rhythm — threat modeling, compliance evidence.
 - [O-AA Agile Governance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-governance.md): `/arckit-oaa:agile-governance` lightweight governance cadence aligned to sprint cycles.
 
+### arc42 overlay (community-contributed)
+
+- [arc42 Architecture Description](https://arckit.org/guides/arc42.md): `/arckit-arc42:arc42` all 12 arc42 sections assembled from the project's existing artefacts, each cited, with a Gap Register of undocumented sections.
+
 ### AI Agent Architecture overlay (community-contributed)
 
 - [AI Agent Inventory](https://arckit.org/guides/agent-inventory.md): `/arckit-agent-architecture:agent-inventory` agent catalogue, capabilities, security classification, dependencies, and oversight level.

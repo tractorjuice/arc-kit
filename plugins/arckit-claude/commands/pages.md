@@ -251,6 +251,8 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | **Architecture (Community-contributed — Open Agile Architecture Overlay)** | | | |
 | | OAPR | `ARC-*-OAPR-*.md` | Product Architecture |
 | | OAAL | `ARC-*-OAAL-*.md` | ADM Lite Sprint Mapping |
+| **Architecture (Community-contributed — arc42 Overlay)** | | | |
+| | ARC42 | `ARC-*-ARC42-*.md` | arc42 Architecture Description |
 | **Governance** | | | |
 | | RISK | `ARC-*-RISK-*.md` | Risk Register |
 | | TRAC | `ARC-*-TRAC-*.md` | Traceability Matrix |

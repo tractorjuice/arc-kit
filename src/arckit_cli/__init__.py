@@ -166,7 +166,7 @@ COMMON_REQUIRED_ASSETS = (
 )
 
 REQUIRED_ASSETS_BY_AI = {
-    "codex": ("codex_skills",),
+    "codex": ("codex_skills", "codex_hook_config"),
     "opencode": ("opencode_commands", "opencode_agents"),
     "copilot": ("copilot_prompts", "copilot_agents", "copilot_instructions"),
     "kimi": (),
@@ -215,6 +215,7 @@ def get_data_paths():
             "codex_skills": base_path / "extensions" / "arckit-codex" / "skills",
             "codex_agents": base_path / "extensions" / "arckit-codex" / "agents",
             "codex_hooks": base_path / "extensions" / "arckit-codex" / "hooks",
+            "codex_hook_config": base_path / "extensions" / "arckit-codex" / "config",
             "codex_scripts": base_path / "extensions" / "arckit-codex" / "scripts",
             "codex_schemas": base_path / "extensions" / "arckit-codex" / "schemas",
             # Vendored reference data a command declares as its ONLY source of
@@ -662,14 +663,11 @@ def init(
     # Copy templates if they exist
     if templates_src.exists():
         console.print(f"[dim]Copying templates from: {templates_src}[/dim]")
-        template_count = 0
-        for template_file in templates_src.glob("*.md"):
-            shutil.copy2(template_file, templates_dst / template_file.name)
-            template_count += 1
-        # Commands resolve Document Control from these partials on every CLI.
-        partials_src = templates_src / "_partials"
-        if partials_src.is_dir():
-            shutil.copytree(partials_src, templates_dst / "_partials", dirs_exist_ok=True)
+        # Rendering rules and Document Control headers live in _partials/, and
+        # /arckit:pages needs pages-template.html; commands need the complete
+        # template tree, not only the top-level *.md files.
+        shutil.copytree(templates_src, templates_dst, dirs_exist_ok=True)
+        template_count = sum(1 for _ in templates_dst.rglob("*.md"))
         console.print(f"[green]✓[/green] Copied {template_count} templates")
     else:
         console.print(
@@ -787,6 +785,15 @@ def init(
                 if hook_file.is_file() and hook_file.name != "hooks.json":
                     shutil.copy2(hook_file, hooks_dst / hook_file.name)
             console.print(f"[green]✓[/green] Copied Codex lifecycle hooks to .codex/hooks/")
+
+        # The copied hooks import ../config/{doc-types,guide-groups,okf-types}.mjs.
+        # Keep the bundle's sibling layout; .arckit/config serves project scripts.
+        shutil.copytree(
+            data_paths["codex_hook_config"],
+            project_path / ".codex" / "config",
+            dirs_exist_ok=True,
+        )
+        console.print(f"[green]✓[/green] Copied Codex hook configuration to .codex/config/")
 
         # Copy Codex schemas and deterministic validators used by research workflows
         codex_schemas_src = data_paths.get("codex_schemas")
