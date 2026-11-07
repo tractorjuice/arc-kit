@@ -89,6 +89,36 @@
       "label": "Film: /arckit:application-rationalization"
     }
   ],
+  "arc42": [
+    {
+      "id": "GWy593Eqs4w",
+      "label": "Film: /arckit:arc42"
+    }
+  ],
+  "arc42-concepts": [
+    {
+      "id": "dg8A1OY96no",
+      "label": "Film: /arckit:arc42-concepts"
+    }
+  ],
+  "arc42-debt": [
+    {
+      "id": "MsNz6IYwJFc",
+      "label": "Film: /arckit:arc42-debt"
+    }
+  ],
+  "arc42-handover": [
+    {
+      "id": "obhf6NRHuwU",
+      "label": "Film: /arckit:arc42-handover"
+    }
+  ],
+  "arc42-quality": [
+    {
+      "id": "NncRtaQy42g",
+      "label": "Film: /arckit:arc42-quality"
+    }
+  ],
   "archify": [
     {
       "id": "e-Qm2j-pJd4",
@@ -705,6 +735,18 @@
       "label": "Film: /arckit:nl-exit"
     }
   ],
+  "nl-gemma": [
+    {
+      "id": "WvVD2qgXAZQ",
+      "label": "Film: /arckit:nl-gemma"
+    }
+  ],
+  "nl-nora": [
+    {
+      "id": "cdgvVQoa1Ho",
+      "label": "Film: /arckit:nl-nora"
+    }
+  ],
   "nl-overlay": [
     {
       "id": "Ffuaw-AShWQ",
@@ -721,6 +763,14 @@
     {
       "id": "Z9juIvtoVcQ",
       "label": "Film: /arckit:nl-bio"
+    },
+    {
+      "id": "cdgvVQoa1Ho",
+      "label": "Film: /arckit:nl-nora"
+    },
+    {
+      "id": "WvVD2qgXAZQ",
+      "label": "Film: /arckit:nl-gemma"
     }
   ],
   "nl-tbb": [
