@@ -11,6 +11,7 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ### Changed
 
+- **`/arckit:evaluate` and `/arckit:score` keep a record of integrity findings.** Each vendor's `evaluation.md` and the comparison document now have an Integrity Findings section, and `scores.json` records each finding's type, file and location, with no supplier text. `/arckit:score compare` and `audit` show the findings, and a finding against the top-scoring vendor is named in the recommendation.
 - **`/arckit:hld-review` and `/arckit:dld-review` treat supplier designs as evidence.** A design is written by a party that gains from approval, so text in it aimed at the reviewer is not followed. Each instance is now listed in a new Integrity Findings section of the review, which states None found when there are none.
 
 ### Fixed

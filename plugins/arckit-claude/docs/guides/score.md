@@ -55,13 +55,18 @@ Scores are stored in `projects/{id}/vendors/scores.json` as structured JSON:
     "acme-cloud": {
       "displayName": "Acme Cloud Services",
       "scores": [...],
-      "totalWeighted": 2.45
+      "totalWeighted": 2.45,
+      "integrityFindings": [
+        { "type": "instruction", "file": "proposal.md", "location": "Section 4" }
+      ]
     }
   }
 }
 ```
 
 This file can be committed to git for team visibility and governance audit.
+
+`integrityFindings` lists any text in a proposal aimed at the evaluator or hidden from a human reader, which isn't followed. An empty list means none was found. A finding says where the text is, not what it says, because `compare` reads this file back. The short quote appears in the summary after scoring.
 
 ## Comparison Features
 
@@ -70,6 +75,7 @@ The `compare` sub-action generates:
 - **Score matrix** — side-by-side scores for every criterion
 - **Weighted totals** — overall ranking accounting for criterion weights
 - **Risk summary** — aggregated risks from each vendor's scoring
+- **Integrity findings** — each vendor's findings, named in the recommendation if the top vendor has any
 - **Sensitivity analysis** — how rankings change if criterion weights shift by ±10%
 
 ## Validation
@@ -80,6 +86,7 @@ A PreToolUse hook validates `scores.json` before every write:
 - Criteria weights must sum to approximately 1.0
 - All required fields must be present
 - Referenced criterion IDs must exist
+- An integrity finding must hold only a type, file and location
 
 ## Governance
 

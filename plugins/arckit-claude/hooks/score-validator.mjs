@@ -9,6 +9,7 @@
  *   - Valid JSON structure with required fields
  *   - Score values are 0-3
  *   - Weights sum to approximately 1.0
+ *   - Integrity findings hold a type, file and location, and no supplier text
  *
  * Hook Type: PreToolUse
  * Matcher: Write
@@ -46,6 +47,43 @@ try {
 
 const warnings = [];
 
+// `/arckit:score compare` reads this file back into the context that ranks
+// vendors, so a quote stored here would give planted text a second run at it.
+// The quote goes in the console summary. Warnings name the field and never
+// repeat its value, because they go back to the model too.
+const FINDING_TYPES = ['instruction', 'hidden-text', 'forged-marker'];
+const FINDING_FIELDS = ['type', 'file', 'location'];
+const MAX_FINDING_FIELD = 120;
+
+function checkFindings(vendorKey, findings) {
+  if (findings === undefined) return; // scored before findings were stored
+  if (!Array.isArray(findings)) {
+    warnings.push(`Vendor '${vendorKey}' integrityFindings must be an array (use [] when none were found)`);
+    return;
+  }
+  findings.forEach((finding, index) => {
+    const label = `Vendor '${vendorKey}' integrity finding ${index + 1}`;
+    if (!finding || typeof finding !== 'object') {
+      warnings.push(`${label} must be an object`);
+      return;
+    }
+    if (!FINDING_TYPES.includes(finding.type)) {
+      warnings.push(`${label}: type must be one of ${FINDING_TYPES.join(', ')}`);
+    }
+    for (const field of ['file', 'location']) {
+      if (!finding[field]) warnings.push(`${label}: missing ${field}`);
+      else if (String(finding[field]).length > MAX_FINDING_FIELD) {
+        warnings.push(`${label}: ${field} is longer than ${MAX_FINDING_FIELD} characters. Give the place, not the text`);
+      }
+    }
+    const extra = Object.keys(finding).filter(key => !FINDING_FIELDS.includes(key));
+    for (const key of extra) {
+      const name = key === 'quote' ? 'quote' : '(not a finding field)';
+      warnings.push(`${label}: unexpected field ${name}. Keep supplier text out of scores.json`);
+    }
+  });
+}
+
 // --- Validate required top-level fields ---
 if (!scores.projectId) warnings.push('Missing required field: projectId');
 if (!scores.criteria || !Array.isArray(scores.criteria)) {
@@ -76,6 +114,7 @@ if (scores.vendors && typeof scores.vendors === 'object') {
 
   for (const [vendorKey, vendor] of Object.entries(scores.vendors)) {
     if (!vendor.displayName) warnings.push(`Vendor '${vendorKey}' missing displayName`);
+    checkFindings(vendorKey, vendor.integrityFindings);
     if (!Array.isArray(vendor.scores)) {
       warnings.push(`Vendor '${vendorKey}' missing scores array`);
       continue;
