@@ -9,8 +9,18 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+## [6.20.0] — 2026-11-07
+
+### Added
+
+- **`arckit-arc42`, a new optional overlay** (#1053, #1062, from @chrismckelt). `/arckit:arc42` writes an arc42 architecture description from the artefacts you already have, with four more commands for the sections core doesn't cover and a handover to Spec Kit.
+- **NORA and GEMMA for the Netherlands overlay** (#952, from @trednets). `/arckit-nl:nl-nora` assesses a Dutch government service against the NORA principles, and `/arckit-nl:nl-gemma` maps a gemeente's application landscape onto GEMMA.
+- **`/arckit:traceability` reads delivery evidence from Spec Kit** (#1062, from @chrismckelt). It reads the `[ArcKit <ID>]` tags in a `specs/` folder and adds a Delivery Trace showing what's been delivered against each requirement.
+- **`/arckit:health` flags out-of-date generated views (`STALE-VIEW`)** (#1062, from @chrismckelt), when a source they cite has moved on.
+
 ### Changed
 
+- **`/arckit:build` reads existing evidence instead of discarding it, and rebuilt artefacts keep their IDs** (#1062, from @chrismckelt). An optional target that's off by default is now used if the project already has its artefact, rather than being dropped from what depends on it.
 - **Checks on ArcKit artefacts stop the write when they can't run.** A check that hung, crashed or couldn't start used to let the write through, so it gave no protection at that moment. Now writing an `ARC-*` file, `scores.json` or a Wardley map, or reading a supplier's bid, stops and the error says why. **ArcKit needs Claude Code v2.1.295 or later**, and those files need Node on your `PATH`. Work in other repos is unaffected, and checks on other paths, prompts and shell commands still carry on if they fail, because stopping those could leave a session unable to diagnose the problem.
 - **Checks work when the plugin folder is a symlink, and when a session starts in a subfolder.** Through a symlink, five hooks did nothing and reported success. From a subfolder, the checks on `ARC-*` filenames, `scores.json`, Wardley maps and backlogs didn't run.
 - **`/arckit:evaluate` and `/arckit:score` won't start if they can't keep bids out of the session,** and a reader's reply is held back if the check on it breaks.
