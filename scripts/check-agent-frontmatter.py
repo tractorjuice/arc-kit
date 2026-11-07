@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Guard the security-relevant frontmatter on plugin agent files.
 
-Three failure modes, all of which have already shipped to users once:
+Three failure modes that have already shipped to users once, and a fourth
+that would undo the reader/writer split without anyone noticing:
 
 1. **Missing `tools:` allowlist.** PR #445 migrated every research agent
    from a `disallowedTools` denylist to an explicit `tools:` allowlist so
@@ -21,6 +22,11 @@ Three failure modes, all of which have already shipped to users once:
    still registers, and resolves to an unrestricted tool grant --- which
    is what happened to `READER-PATTERN.md`.
 
+4. **A reader or writer crossing its tier.** The split only holds while a
+   reader can't write and a writer can't fetch. `ENFORCEMENT.md` lists that as
+   enforced, so each tier gets an allowlist here: a tool added to either one
+   fails until someone decides which side of the split it belongs on.
+
 Exit 0 on success, 1 on any violation.
 """
 
@@ -39,6 +45,11 @@ PLUGIN_ROOT = os.path.join(
 # leaves behind, it has almost certainly been through copy_agent_stripped().
 CLAUDE_ONLY_AGENT_FIELDS = ("effort", "initialPrompt", "maxTurns", "disallowedTools", "tools", "experimental")
 STRIPPED_SIGNATURE = {"description", "model", "name"}
+
+# Neither tier gets Bash or Agent: a shell can write and fetch, and a subagent
+# can hold what its parent doesn't.
+READER_TOOLS = {"Read", "Glob", "Grep", "WebSearch", "WebFetch", "TodoWrite"}
+WRITER_TOOLS = {"Read", "Glob", "Write", "Edit"}
 
 
 def agent_dirs():
@@ -62,6 +73,15 @@ def parse_frontmatter(path):
         return yaml.safe_load(parts[1]) or {}, None
     except yaml.YAMLError as exc:
         return None, f"unparseable frontmatter: {exc}"
+
+
+def tier_violations(filename, tools):
+    """Return the tools a reader or writer holds outside its tier."""
+    if filename.endswith("-reader.md"):
+        return [t for t in tools if t not in READER_TOOLS and not str(t).startswith("mcp__")]
+    if filename.endswith("-writer.md"):
+        return [t for t in tools if t not in WRITER_TOOLS]
+    return []
 
 
 def main():
@@ -121,6 +141,15 @@ def main():
                         f"{rel}: tool `{tool}` uses the bare MCP prefix, which matches nothing "
                         f"in plugin context. Use mcp__plugin_<package>_<server>__<tool>."
                     )
+
+            # (4) Keep each side of the reader/writer split on its own side.
+            for tool in tier_violations(filename, frontmatter.get("tools") or []):
+                tier = "reader" if filename.endswith("-reader.md") else "writer"
+                errors.append(
+                    f"{rel}: tool `{tool}` is outside the {tier} tier. Readers fetch and "
+                    f"cannot write; writers render and cannot fetch "
+                    f"(see plugins/arckit-claude/docs/ENFORCEMENT.md)."
+                )
 
     if errors:
         print("Agent frontmatter check FAILED:\n")

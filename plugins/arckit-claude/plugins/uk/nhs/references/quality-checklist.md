@@ -142,6 +142,7 @@ All artifacts must pass these 10 checks:
 - Evaluation criteria weighted and weights total 100%
 - Scoring methodology defined (scale, definitions per score)
 - Vendor comparison matrix present with scores per criterion
+- Integrity Findings recorded for every scored vendor: each instance gives the file, location and short quote, or it states None found
 
 ### TRAC -- Traceability Matrix
 

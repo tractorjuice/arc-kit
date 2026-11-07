@@ -94,7 +94,7 @@ Blocks the write if invalid, and the reason names the corrected path, with the n
 
 ### score-validator (Write)
 
-Validates scoring/assessment documents for numeric consistency. Checks that individual scores match totals, percentages are calculated correctly, and rating scales are applied consistently.
+Checks `vendors/scores.json` before it is written. Invalid JSON is blocked. A score outside 0–3, weights that don't sum to about 1.0, missing evidence, or an integrity finding holding anything but a type, file and location is reported to the model as a warning.
 
 ### file-protection (Edit | Write)
 

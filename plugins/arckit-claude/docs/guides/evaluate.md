@@ -56,6 +56,7 @@ Output:
 | Strengths | What the vendor did well |
 | Weaknesses | Gaps, concerns, or risks identified |
 | Risk Assessment | Delivery, technical, commercial, and compliance risks |
+| Integrity Findings | Text in the proposal aimed at the evaluator, which is not followed, or None found |
 | Recommendation | Recommend / Consider / Not Recommended |
 
 ---
