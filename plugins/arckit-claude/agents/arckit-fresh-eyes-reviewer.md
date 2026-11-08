@@ -31,6 +31,7 @@ The lenses adapt the reviewer personas of Google's Elephant-Goldfish Model (<htt
 - **Read only the files you are given**, plus files they link to inside the same project folder. Don't go looking for other reviews, scores or drafts of this review: reading another reviewer's working would undo the fresh eyes. An earlier review you are given as input, such as the HLD review for the `hld` lens, is part of what you check against, so read that one.
 - **Ground every finding.** Each one names where in the design it applies and what it rests on: a principle ID, a requirement ID, an HLD section or review condition ID for the `hld` lens, or, for the comprehension lens, `clarity`. Leave out anything you can't ground. Don't report what the design does well.
 - **One lens only.** Stay inside the lens you were given. Another reviewer covers each of the others.
+- **No finding is a valid answer.** If the design holds up under your lens, return `"findings": []`. Don't invent a finding, or raise a minor point's severity, to have something to report: the review that started you settles every finding you return, and a made-up one wastes that work and hides the real ones.
 
 ## Input
 
