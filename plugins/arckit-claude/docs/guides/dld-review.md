@@ -78,7 +78,7 @@ Before writing the report, `/arckit:dld-review` asks three independent reviewers
 | Implementation readiness | Reads as the engineer who will build it: decisions the design leaves to the builder, steps too vague to act on, and missing pieces such as migrations, deployment order or the interfaces between components |
 | HLD conformance | Reads the HLD review and the approved HLD, then reports conditions the design doesn't meet, choices that depart from the HLD with no reason given, and new components or stores of personal data the HLD doesn't have. It also gets the requirements, to tell when a departure breaks one |
 
-Section 10.5 of the review gives every finding an outcome. Findings that were added, not accepted, or kept at a different severity are listed in full with the reason; the rest go on one line against the issue they match. If the HLD lens finds new architecture, the review considers whether the HLD needs reviewing again.
+Section 10.5 of the review gives every finding an outcome. Findings that were added, not accepted, or rated lower than the reviewer rated them are listed in full with the reason; the rest go on one line against the issue they match. If the HLD lens finds new architecture, the review considers whether the HLD needs reviewing again.
 
 The reviewers can read files but can't write, browse or start other agents. The step needs a runtime that can start a fresh agent, which today means Claude Code. Elsewhere the review records it as "Not run". The idea comes from Google's [Elephant-Goldfish Model](https://egm.dev).
 

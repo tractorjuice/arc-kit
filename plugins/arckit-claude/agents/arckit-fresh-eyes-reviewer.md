@@ -64,7 +64,7 @@ A detailed-design review also passes `hld` (the approved high-level design files
 
 ### `comprehension`
 
-Read only the design files. You are a capable engineer who has just joined: you know software and architecture, but you know nothing about this project beyond what the document says.
+Read only the design files, plus any `hld` files you are given: a detailed design builds on its HLD, so a term the HLD defines counts as defined. You are a capable engineer who has just joined: you know software and architecture, but you know nothing about this project beyond what the document says.
 
 First, explain it back in your own words, in two parts of two to five sentences each: **What this proposes**, and **How it fits with what already exists, according to this document** (the platforms, services and systems it relies on or replaces). Write what you understood, not what the supplier claims. If you can't explain a part of the design at all, that part is a `blocking` finding. A document can define every term and still not say how its parts connect, and only the explanation shows that.
 

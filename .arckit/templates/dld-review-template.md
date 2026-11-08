@@ -382,13 +382,13 @@ Three reviewers checked the detailed design independently. Each saw only the des
 
 **What a fresh reader understood**: [The comprehension reviewer's two to four sentences on what the design does. Where this differs from what the design means to say, the design is unclear.]
 
-The table lists each finding that was added, not accepted, or kept at a different severity from the reviewer's.
+The table lists each finding that was added, not accepted, or rated lower than the reviewer rated it. A finding the review had already raised at the same or a higher severity goes on the Already raised line.
 
 | Ref | Lens | Severity | Location | Finding | Outcome |
 |-----|------|----------|----------|---------|---------|
-| FE-01 | [Lens] | [Blocking / Advisory / Informational] | [Section or line] | [Finding] | [Added as ADVISORY-03 / Not accepted: reason / Already raised as BLOCKING-01, kept at Blocking: reason] |
+| FE-01 | [Lens] | [Blocking / Advisory / Informational] | [Section or line] | [Finding] | [Added as ADVISORY-03 / Not accepted: reason / Already raised as ADVISORY-01, rated lower than the reviewer's Blocking: reason] |
 
-**Already raised at the same severity** ([n]): [FE-02 → BLOCKING-01, FE-03 → ADVISORY-02, …]
+**Already raised** ([n]): [FE-02 → BLOCKING-01, FE-03 → ADVISORY-02, …]
 
 If the step did not run, replace everything after the first paragraph with: Not run, and the reason.
 
