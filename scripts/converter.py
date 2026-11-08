@@ -31,6 +31,7 @@ CLAUDE_ONLY_AGENT_FIELDS = (
     "disallowedTools",
     "tools",
     "experimental",
+    "omitClaudeMd",
 )
 
 

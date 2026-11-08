@@ -601,6 +601,33 @@
 </tbody>
 </table>
 <hr />
+<h2 id="fresh-eyes-review">Fresh-Eyes Review</h2>
+<p>Before writing the report, <code>/arckit:dld-review</code> asks three independent reviewers to read the detailed design. None of them sees the review's working.</p>
+<table>
+<thead>
+<tr>
+<th>Lens</th>
+<th>What it checks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Comprehension</td>
+<td>Explains the design back in plain words, then lists undefined terms, missing steps, claims with no mechanism behind them, and contradictions</td>
+</tr>
+<tr>
+<td>Implementation readiness</td>
+<td>Reads as the engineer who will build it: decisions the design leaves to the builder, steps too vague to act on, and missing pieces such as migrations, deployment order or the interfaces between components</td>
+</tr>
+<tr>
+<td>HLD conformance</td>
+<td>Reads the HLD review and the approved HLD, then reports conditions the design doesn't meet, choices that depart from the HLD with no reason given, and new components or stores of personal data the HLD doesn't have. It also gets the requirements, to tell when a departure breaks one</td>
+</tr>
+</tbody>
+</table>
+<p>Section 10.5 of the review gives every finding an outcome. Findings that were added, not accepted, or kept at a different severity are listed in full with the reason; the rest go on one line against the issue they match. If the HLD lens finds new architecture, the review considers whether the HLD needs reviewing again.</p>
+<p>The reviewers can read files but can't write, browse or start other agents. The step needs a runtime that can start a fresh agent, which today means Claude Code. Elsewhere the review records it as &quot;Not run&quot;. The idea comes from Google's <a href="https://egm.dev">Elephant-Goldfish Model</a>.</p>
+<hr />
 <h2 id="one-page-workflow">One-Page Workflow</h2>
 <table>
 <thead>

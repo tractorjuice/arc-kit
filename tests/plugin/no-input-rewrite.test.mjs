@@ -69,6 +69,10 @@ test('ArcKit subagents get context in both name forms; readers, writers and othe
   assert.equal(wantsContext('arckit:arckit-research-writer'), false);
   assert.equal(wantsContext('Explore'), false);
   assert.equal(wantsContext('other-plugin:arckit-lookalike'), false, 'another plugin\'s agent');
+  // Independent reviewers start with only their prompt, in both name forms.
+  assert.equal(wantsContext('arckit:arckit-fresh-eyes-reviewer'), false);
+  assert.equal(wantsContext('arckit-fresh-eyes-reviewer'), false);
+  assert.equal(wantsContext('arckit:arckit-independent-scorer'), false);
   assert.equal(wantsContext(undefined), false);
 });
 
