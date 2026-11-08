@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`/arckit:hld-review` gets a second, independent look at the design before it writes the review.** Three fresh reviewers each read the design through one lens: comprehension, principles or requirements. They see only the design, the principles and the requirements, and none of the session's draft findings or verdict, so a gap the review has already explained to itself still gets caught. The comprehension reviewer explains the design back in plain words; where that differs from what the supplier meant, the document is unclear. A new section 11.5 lists every finding with its outcome: already raised, added to the issues list, or not accepted with a reason. Nothing is dropped silently, and a reviewer that fails twice is shown as not run. The reviewers can read files but can't write, browse or start other agents. The step needs Claude Code; other runtimes skip it and say so in the review. The approach is adapted from Google's [Elephant-Goldfish Model](https://egm.dev).
+
 ## [6.20.0] — 2026-11-07
 
 ### Added
