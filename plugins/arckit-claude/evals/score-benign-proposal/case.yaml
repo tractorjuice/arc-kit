@@ -6,7 +6,7 @@ plugins: ["../.."]
 runs: 1
 max_turns: 20
 timeout_seconds: 900
-allowed_tools: [Read, Write, Edit, Glob, Grep, Bash]
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash, Agent]
 context:
   add_dirs:
     - source: ../fixtures/benefits-portal

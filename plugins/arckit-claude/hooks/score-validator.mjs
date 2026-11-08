@@ -10,6 +10,8 @@
  *   - Score values are 0-3
  *   - Weights sum to approximately 1.0
  *   - Integrity findings hold a type, file and location, and no supplier text
+ *   - Moderation: each criterion the independent scorer scored differently has
+ *     both scores, a final score that matches the stored one, and a reason
  *
  * Hook Type: PreToolUse
  * Matcher: Write
@@ -89,6 +91,63 @@ function checkFindings(vendorKey, findings) {
   });
 }
 
+// A second, independent scorer sees only the criteria and the claims; every
+// criterion the two scored differently is settled with a reason. Warnings name
+// fields and print numbers only, never a reason's text.
+const MODERATION_SCORES = ['firstScore', 'independentScore', 'finalScore'];
+const isScore = v => typeof v === 'number' && v >= 0 && v <= 3;
+
+function checkModeration(vendorKey, moderation, storedScores, criteriaIds) {
+  if (moderation === undefined) return; // scored before moderation existed
+  const where = `Vendor '${vendorKey}' moderation`;
+  if (!moderation || typeof moderation !== 'object' || Array.isArray(moderation)) {
+    warnings.push(`${where} must be an object`);
+    return;
+  }
+  const status = moderation.independentScorer;
+  const ran = status === 'completed';
+  if (!ran && !(typeof status === 'string' && /^not run\b/i.test(status))) {
+    warnings.push(`${where}: independentScorer must be "completed" or start with "not run"`);
+  }
+  const moderated = moderation.moderated === undefined && !ran ? [] : moderation.moderated;
+  if (!Array.isArray(moderated)) {
+    warnings.push(`${where}: moderated must be an array (use [] when every score matched)`);
+    return;
+  }
+  if (!ran && moderated.length > 0) {
+    warnings.push(`${where} lists moderated criteria, but the independent scorer did not run`);
+  }
+  if (ran) {
+    if (!Number.isInteger(moderation.agreed) || moderation.agreed < 0) {
+      warnings.push(`${where}: agreed must be a whole number (the criteria both scorers scored the same)`);
+    } else if (moderation.agreed + moderated.length !== storedScores.size) {
+      warnings.push(`${where}: agreed (${moderation.agreed}) plus moderated (${moderated.length}) should equal the ${storedScores.size} scored criteria`);
+    }
+  }
+  moderated.forEach((entry, index) => {
+    const label = `${where} entry ${index + 1}`;
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+      warnings.push(`${label} must be an object`);
+      return;
+    }
+    const id = typeof entry.criterionId === 'string' && criteriaIds.has(entry.criterionId) ? entry.criterionId : null;
+    if (!entry.criterionId) warnings.push(`${label}: missing criterionId`);
+    else if (!id) warnings.push(`${label}: criterionId is not one of the criteria`);
+    for (const field of MODERATION_SCORES) {
+      if (!isScore(entry[field])) warnings.push(`${label}: ${field} must be a number from 0 to 3`);
+    }
+    if (isScore(entry.firstScore) && entry.firstScore === entry.independentScore) {
+      warnings.push(`${label}: firstScore and independentScore match, so there is nothing to moderate`);
+    }
+    if (typeof entry.reason !== 'string' || !entry.reason.trim()) {
+      warnings.push(`${label}: missing reason (every moderated score needs one)`);
+    }
+    if (id && isScore(entry.finalScore) && storedScores.has(id) && storedScores.get(id) !== entry.finalScore) {
+      warnings.push(`${label}: finalScore ${entry.finalScore} differs from the score stored for ${id}`);
+    }
+  });
+}
+
 // --- Validate required top-level fields ---
 if (!scores.projectId) warnings.push('Missing required field: projectId');
 if (!scores.criteria || !Array.isArray(scores.criteria)) {
@@ -148,6 +207,13 @@ if (scores.vendors && typeof scores.vendors === 'object') {
         warnings.push(`Vendor '${vendorKey}' references unknown criterion: ${s.criterionId}`);
       }
     }
+
+    const storedScores = new Map(
+      vendor.scores
+        .filter(s => s && typeof s === 'object' && typeof s.criterionId === 'string')
+        .map(s => [s.criterionId, s.score]),
+    );
+    checkModeration(vendorKey, vendor.moderation, storedScores, criteriaIds);
   }
 }
 

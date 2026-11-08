@@ -128,6 +128,8 @@ Four things differ from research because a bid is a local file, not a URL:
 - **Findings carry no text.** A flagged quote holding transcript markup would be rejected by the sanitiser, and a retry would then drop the evidence. So `integrity_findings` holds a type, a file and a location only, and `location` must start with a locator word and can't hold two consecutive words of three or more letters, which leaves no room for a sentence. A file name is the supplier's own choice and is only bounded.
 - **The monoliths can't read.** `build_agent_map()` pairs one agent file with one command, so there are two, and both still register as dispatchable Claude agents. Each sets `tools: ["Glob"]`, because that field is stripped for the runtimes that use the prompt, so a dispatch in Claude Code can't open a bid.
 
+**Scores are moderated against an independent score.** After the orchestrator scores a vendor, it starts `arckit-independent-scorer` with only the scale, the criteria and the validated claims and prices. It never sees the orchestrator's scores or the conversation, isn't told the vendor's name, and its only tool is `TodoWrite`, so it can't open a bid or read `scores.json`. The orchestrator settles every difference with a reason and stores both scores. This checks one reading of the claims against another. It doesn't check the claims against the bid.
+
 **What this doesn't protect against:** a misled reader can still return false claims that pass validation, and no check confirms a claim against the document, because a claim is a paraphrase. `claims.json` is saved beside each evaluation so a person can trace a score back to its file and location.
 
 ## Adapting this pattern to another agent

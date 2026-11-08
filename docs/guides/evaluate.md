@@ -57,6 +57,7 @@ Output:
 | Weaknesses | Gaps, concerns, or risks identified |
 | Risk Assessment | Delivery, technical, commercial, and compliance risks |
 | Integrity Findings | Text in the proposal aimed at the evaluator, which is not followed, by type, file and location, or None found |
+| Moderation | Whether the independent scorer ran, and each criterion where its score and the first differed by a fifth or more of the points, with both scores, the final score and the reason |
 | Recommendation | Recommend / Consider / Not Recommended |
 
 ---
@@ -71,6 +72,8 @@ A bid is written by a party that gains from a high score, so `/arckit:evaluate` 
 - **Keep the vendor's folder for what the supplier sent.** Everything in `vendors/<vendor>/` is treated as the supplier's, and scoring stops for a vendor whose folder holds an `evaluation.md`, `notes.md` or `claims.json`.
 
 Scoring is still a judgement on what the supplier claims, so check the claims behind any close result. This works in Claude Code. Other runtimes have no subagents, so they read bids in one context.
+
+**Independent score and moderation.** After scoring a vendor, `/arckit:evaluate` asks an independent scorer to score the same claims against the same criteria, without seeing the first scores or your answers to its questions, and without being told which vendor it is. Where the two differ by a fifth or more of a criterion's points, the command decides a final score and records why in the evaluation's Moderation section. If the independent scorer can't run, the evaluation says so.
 
 ---
 

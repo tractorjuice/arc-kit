@@ -455,6 +455,9 @@
 <li><strong>Keep the vendor's folder for what the supplier sent.</strong> ArcKit writes its own files to <code>vendors/_evaluations/&lt;vendor&gt;/</code>, and scoring stops for a vendor whose folder holds an <code>evaluation.md</code>, <code>notes.md</code> or <code>claims.json</code>.</li>
 </ul>
 <p>Scoring is still a judgement on what the supplier claims, so check the claims behind any close result. This works in Claude Code. Other runtimes have no subagents, so they read bids in one context.</p>
+<h2 id="independent-score-and-moderation">Independent Score and Moderation</h2>
+<p>Public-sector evaluation expects a second evaluator to score on their own, with the two then agreeing a final score. <code>/arckit:score</code> does the same. After scoring a vendor, it asks an independent scorer to score the same claims against the same criteria. The independent scorer never sees the first scores or the conversation, and isn't told which vendor it is scoring. It can't open any file, so it can't read the bid or earlier scores either.</p>
+<p>For every criterion where the two scores differ, the command decides a final score and records why, citing the claims, the rubric or the criterion text. &quot;Averaged&quot; isn't accepted as a reason. The scores you see are the moderated ones, and <code>scores.json</code> keeps both original scores beside each one that was moderated. If the independent scorer can't run, the vendor is marked &quot;not run&quot;, and <code>compare</code> says so if that vendor comes out on top.</p>
 <h2 id="scoring-rubric">Scoring Rubric</h2>
 <table>
 <thead>
@@ -513,7 +516,14 @@
       &quot;totalWeighted&quot;: 2.45,
       &quot;integrityFindings&quot;: [
         { &quot;type&quot;: &quot;instruction&quot;, &quot;file&quot;: &quot;proposal.md&quot;, &quot;location&quot;: &quot;Section 4&quot; }
-      ]
+      ],
+      &quot;moderation&quot;: {
+        &quot;independentScorer&quot;: &quot;completed&quot;,
+        &quot;agreed&quot;: 7,
+        &quot;moderated&quot;: [
+          { &quot;criterionId&quot;: &quot;C-002&quot;, &quot;firstScore&quot;: 3, &quot;independentScore&quot;: 1, &quot;finalScore&quot;: 2, &quot;reason&quot;: &quot;...&quot; }
+        ]
+      }
     }
   }
 }
@@ -522,6 +532,7 @@
 <p><code>integrityFindings</code> lists any text in a proposal aimed at the evaluator or hidden from a human reader, which isn't followed. An empty list means none was found. A finding says where the text is, not what it says.</p>
 <p><code>failedQualifications</code> lists any mandatory qualification the bid doesn't evidence. A vendor with one can't be the recommendation in <code>compare</code>. To clear it, add the evidence to the vendor's folder and re-score.</p>
 <p>The claims behind each score are saved in <code>vendors/_evaluations/&lt;vendor&gt;/claims.json</code>, so a score can be traced to its file and location.</p>
+<p><code>moderation</code> records whether the independent scorer ran, how many criteria both scorers scored the same, and each criterion they didn't, with both scores, the final score and the reason. A vendor scored before moderation existed has no <code>moderation</code> field and shows as Not recorded.</p>
 <h2 id="comparison-features">Comparison Features</h2>
 <p>The <code>compare</code> sub-action generates:</p>
 <ul>
@@ -529,6 +540,7 @@
 <li><strong>Weighted totals</strong> — overall ranking accounting for criterion weights</li>
 <li><strong>Risk summary</strong> — aggregated risks from each vendor's scoring</li>
 <li><strong>Integrity findings</strong> — each vendor's findings, named in the recommendation if the top vendor has any</li>
+<li><strong>Moderation</strong> — how many criteria were moderated for each vendor, named in the recommendation if the top vendor wasn't independently scored</li>
 <li><strong>Sensitivity analysis</strong> — how rankings change if criterion weights shift by ±10%</li>
 </ul>
 <h2 id="validation">Validation</h2>
@@ -539,6 +551,7 @@
 <li>All required fields must be present</li>
 <li>Referenced criterion IDs must exist</li>
 <li>An integrity finding must hold only a type, file and location</li>
+<li>A moderated criterion must have both scores, a reason, and a final score that matches the stored score</li>
 </ul>
 <h2 id="governance">Governance</h2>
 <p>The structured format supports:</p>

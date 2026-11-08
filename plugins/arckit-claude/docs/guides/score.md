@@ -28,6 +28,12 @@ A bid is written by a party that gains from a high score, so `/arckit:score` nev
 
 Scoring is still a judgement on what the supplier claims, so check the claims behind any close result. This works in Claude Code. Other runtimes have no subagents, so they read bids in one context.
 
+## Independent Score and Moderation
+
+Public-sector evaluation expects a second evaluator to score on their own, with the two then agreeing a final score. `/arckit:score` does the same. After scoring a vendor, it asks an independent scorer to score the same claims against the same criteria. The independent scorer never sees the first scores or the conversation, and isn't told which vendor it is scoring. It can't open any file, so it can't read the bid or earlier scores either.
+
+For every criterion where the two scores differ, the command decides a final score and records why, citing the claims, the rubric or the criterion text. "Averaged" isn't accepted as a reason. The scores you see are the moderated ones, and `scores.json` keeps both original scores beside each one that was moderated. If the independent scorer can't run, the vendor is marked "not run", and `compare` says so if that vendor comes out on top.
+
 ## Scoring Rubric
 
 | Score | Meaning | Description |
@@ -69,7 +75,14 @@ Scores are stored in `projects/{id}/vendors/scores.json` as structured JSON:
       "totalWeighted": 2.45,
       "integrityFindings": [
         { "type": "instruction", "file": "proposal.md", "location": "Section 4" }
-      ]
+      ],
+      "moderation": {
+        "independentScorer": "completed",
+        "agreed": 7,
+        "moderated": [
+          { "criterionId": "C-002", "firstScore": 3, "independentScore": 1, "finalScore": 2, "reason": "..." }
+        ]
+      }
     }
   }
 }
@@ -83,6 +96,8 @@ This file can be committed to git for team visibility and governance audit.
 
 The claims behind each score are saved in `vendors/_evaluations/<vendor>/claims.json`, so a score can be traced to its file and location.
 
+`moderation` records whether the independent scorer ran, how many criteria both scorers scored the same, and each criterion they didn't, with both scores, the final score and the reason. A vendor scored before moderation existed has no `moderation` field and shows as Not recorded.
+
 ## Comparison Features
 
 The `compare` sub-action generates:
@@ -91,6 +106,7 @@ The `compare` sub-action generates:
 - **Weighted totals** — overall ranking accounting for criterion weights
 - **Risk summary** — aggregated risks from each vendor's scoring
 - **Integrity findings** — each vendor's findings, named in the recommendation if the top vendor has any
+- **Moderation** — how many criteria were moderated for each vendor, named in the recommendation if the top vendor wasn't independently scored
 - **Sensitivity analysis** — how rankings change if criterion weights shift by ±10%
 
 ## Validation
@@ -102,6 +118,7 @@ A PreToolUse hook validates `scores.json` before every write:
 - All required fields must be present
 - Referenced criterion IDs must exist
 - An integrity finding must hold only a type, file and location
+- A moderated criterion must have both scores, a reason, and a final score that matches the stored score
 
 ## Governance
 
