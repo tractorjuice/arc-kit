@@ -242,3 +242,35 @@ test('a moderation that is not an object is reported, not a crash', () => {
   assert.match(moderationWarnings({ independentScorer: 'completed', agreed: 1, moderated: [null] }), /entry 1 must be an object/);
   assert.match(moderationWarnings({ independentScorer: 'completed', agreed: 2, moderated: 'none' }), /moderated must be an array/);
 });
+
+// --- The neutral moderator settles each difference ---
+
+test('each moderator status is accepted, and its absence is allowed', () => {
+  assert.equal(moderationWarnings({ independentScorer: 'completed', moderator: 'completed', agreed: 1, moderated: [moderated] }), '');
+  assert.equal(moderationWarnings({ independentScorer: 'completed', moderator: 'not needed', agreed: 2, moderated: [] }), '');
+  assert.equal(moderationWarnings({ independentScorer: 'completed', agreed: 1, moderated: [moderated] }), '', 'recorded before the moderator existed');
+});
+
+test('an unknown moderator status is reported', () => {
+  assert.match(
+    moderationWarnings({ independentScorer: 'completed', moderator: 'me', agreed: 1, moderated: [moderated] }),
+    /moderator must be "completed", "not needed" or start with "not run"/,
+  );
+});
+
+test('"not needed" with moderated criteria is reported', () => {
+  assert.match(
+    moderationWarnings({ independentScorer: 'completed', moderator: 'not needed', agreed: 1, moderated: [moderated] }),
+    /moderator is "not needed", but criteria were moderated/,
+  );
+});
+
+test('when the moderator did not run, the first score must stand', () => {
+  // The stored C-002 score is 1, so a final of 1 over a first of 2 means someone else's score was used.
+  assert.match(
+    moderationWarnings({ independentScorer: 'completed', moderator: 'not run: failed twice', agreed: 1, moderated: [moderated] }),
+    /moderator did not run, so finalScore should be the first evaluator's score/,
+  );
+  const kept = { ...moderated, firstScore: 1, independentScore: 0, finalScore: 1 };
+  assert.equal(moderationWarnings({ independentScorer: 'completed', moderator: 'not run: failed twice', agreed: 1, moderated: [kept] }), '');
+});

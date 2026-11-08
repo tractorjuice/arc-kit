@@ -117,6 +117,17 @@ function checkModeration(vendorKey, moderation, storedScores, criteriaIds) {
   if (!ran && moderated.length > 0) {
     warnings.push(`${where} lists moderated criteria, but the independent scorer did not run`);
   }
+  // A neutral moderator settles each difference. Absent on records made before
+  // it existed; when it didn't run, the first evaluator's score stands.
+  const moderator = moderation.moderator;
+  const moderatorSkipped = typeof moderator === 'string' && /^not run\b/i.test(moderator);
+  if (moderator !== undefined
+      && moderator !== 'completed' && moderator !== 'not needed' && !moderatorSkipped) {
+    warnings.push(`${where}: moderator must be "completed", "not needed" or start with "not run"`);
+  }
+  if (moderator === 'not needed' && moderated.length > 0) {
+    warnings.push(`${where}: moderator is "not needed", but criteria were moderated`);
+  }
   if (ran) {
     if (!Number.isInteger(moderation.agreed) || moderation.agreed < 0) {
       warnings.push(`${where}: agreed must be a whole number (the criteria both scorers scored the same)`);
@@ -144,6 +155,9 @@ function checkModeration(vendorKey, moderation, storedScores, criteriaIds) {
     }
     if (id && isScore(entry.finalScore) && storedScores.has(id) && storedScores.get(id) !== entry.finalScore) {
       warnings.push(`${label}: finalScore ${entry.finalScore} differs from the score stored for ${id}`);
+    }
+    if (moderatorSkipped && isScore(entry.finalScore) && isScore(entry.firstScore) && entry.finalScore !== entry.firstScore) {
+      warnings.push(`${label}: the moderator did not run, so finalScore should be the first evaluator's score`);
     }
   });
 }

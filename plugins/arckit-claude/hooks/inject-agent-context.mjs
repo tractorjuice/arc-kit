@@ -19,7 +19,8 @@
  *          tier of the orchestrator pattern takes strict JSON payloads;
  *          prose context would pollute the schema discipline);
  *        - the agent is an independent reviewer (arckit-fresh-eyes-reviewer,
- *          arckit-independent-scorer), which must start with only its prompt.
+ *          arckit-independent-scorer, arckit-score-moderator), which must
+ *          start with only its prompt.
  *   2. Build the same project-context block the UserPromptSubmit hook
  *      builds (shared module — `project-context-builder.mjs`).
  *   3. Return it as `hookSpecificOutput.additionalContext`, which Claude
@@ -49,7 +50,7 @@ import { buildProjectContext } from './project-context-builder.mjs';
 // Independent reviewers are useful because they start with only what their
 // prompt gives them. Project context would hand them the session's view of the
 // project, so they don't get it (and set omitClaudeMd for the same reason).
-const INDEPENDENT_AGENTS = new Set(['arckit-fresh-eyes-reviewer', 'arckit-independent-scorer']);
+const INDEPENDENT_AGENTS = new Set(['arckit-fresh-eyes-reviewer', 'arckit-independent-scorer', 'arckit-score-moderator']);
 
 /** Whether a SubagentStart agent_type should receive ArcKit project context. */
 export function wantsContext(agentType) {

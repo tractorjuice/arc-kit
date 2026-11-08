@@ -73,6 +73,7 @@ test('ArcKit subagents get context in both name forms; readers, writers and othe
   assert.equal(wantsContext('arckit:arckit-fresh-eyes-reviewer'), false);
   assert.equal(wantsContext('arckit-fresh-eyes-reviewer'), false);
   assert.equal(wantsContext('arckit:arckit-independent-scorer'), false);
+  assert.equal(wantsContext('arckit:arckit-score-moderator'), false);
   assert.equal(wantsContext(undefined), false);
 });
 

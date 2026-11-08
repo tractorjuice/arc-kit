@@ -33,7 +33,7 @@ Scoring is still a judgement on what the supplier claims, so check the claims be
 
 Public-sector evaluation expects a second evaluator to score on their own, with the two then agreeing a final score. `/arckit:score` does the same. After scoring a vendor, it asks an independent scorer to score the same claims against the same criteria. The independent scorer never sees the first scores or the conversation, and isn't told which vendor it is scoring. It can't open any file, so it can't read the bid or earlier scores either.
 
-For every criterion where the two scores differ, the command decides a final score and records why, citing the claims, the rubric or the criterion text. "Averaged" isn't accepted as a reason. The scores you see are the moderated ones, and `scores.json` keeps both original scores beside each one that was moderated. If the independent scorer can't run, the vendor is marked "not run", and `compare` says so if that vendor comes out on top.
+For every criterion where the two scores differ, a neutral moderator decides the final score, because the command gave one of the two scores and would otherwise judge its own work. The moderator sees both scores and their reasons as "Evaluator A" and "Evaluator B", lower score first, with nothing to say which came from the command. It records why, citing the claims, the rubric or the criterion text, and "averaged" isn't accepted as a reason. Its decision is final: the command can tell you it disagrees, but can't change the score. The scores you see are the moderated ones, and `scores.json` keeps both original scores beside each one that was moderated. If the independent scorer can't run, the vendor is marked "not run", and `compare` says so if that vendor comes out on top.
 
 ## Scoring Rubric
 
