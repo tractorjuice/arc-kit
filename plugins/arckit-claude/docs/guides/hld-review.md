@@ -68,6 +68,22 @@ Output: `projects/<id>/reviews/ARC-<id>-HLDR-v1.0.md`
 
 ---
 
+## Fresh-Eyes Review
+
+A review written in a long session can miss a gap it has already explained to itself. Before writing the report, `/arckit:hld-review` asks three independent reviewers to read the design. Each one sees only the design, the principles and the requirements, and none of the review's working.
+
+| Lens | What it checks |
+|------|----------------|
+| Comprehension | Explains the design back in plain words, then lists undefined terms, missing steps, claims with no mechanism behind them, and contradictions |
+| Principles | Departures from each principle, unnecessary complexity, and proprietary components where the principles favour a platform or open standard |
+| Requirements | Requirements that are not met, partly met, contradicted, or have a target with nothing in the design to achieve it |
+
+Section 11.5 of the review gives every finding they raise an outcome. A finding that was added to the issues list, not accepted, or kept at a different severity is listed in full with the reason. One the review had already raised goes on a single line against the issue it matches, so the section stays short. It also includes the comprehension reviewer's account of what the design does, so the supplier can see what their document actually communicates.
+
+The reviewers can read files but can't write, browse or start other agents. The step needs a runtime that can start a fresh agent, which today means Claude Code. Elsewhere the review records it as "Not run". The idea comes from Google's [Elephant-Goldfish Model](https://egm.dev).
+
+---
+
 ## One-Page Workflow
 
 | Phase | Key Activities | ArcKit Commands |

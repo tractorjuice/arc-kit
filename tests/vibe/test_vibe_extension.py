@@ -63,6 +63,8 @@ EXCLUDED_SUBAGENTS = [
     "arckit-tenders-reader.toml",
     "arckit-tenders-writer.toml",
     "arckit-competitors-writer.toml",
+    "arckit-fresh-eyes-reviewer.toml",
+    "arckit-independent-scorer.toml",
 ]
 
 # Minimum expected skill count (core commands)

@@ -76,3 +76,17 @@ def test_single_tier_agent_may_hold_both_sides(tmp_path, monkeypatch, capsys):
 
 def test_every_shipped_agent_passes(capsys):
     assert load_guard().main() == 0, capsys.readouterr().out
+
+
+@pytest.mark.parametrize("tools", [["TodoWrite"], ["TodoWrite", "TaskCreate"]])
+def test_agent_holding_only_removed_tools_fails(tmp_path, monkeypatch, capsys, tools):
+    """Claude Code refuses to start an agent whose allowlist resolves to no tools."""
+    code, out = run_guard(tmp_path, monkeypatch, capsys, "arckit-x-scorer.md", tools)
+    assert code == 1
+    assert "has been removed from Claude Code" in out
+
+
+def test_removed_tool_beside_a_live_one_passes(tmp_path, monkeypatch, capsys):
+    """An entry for a removed tool is inert when the agent has another tool."""
+    code, out = run_guard(tmp_path, monkeypatch, capsys, "arckit-x-scorer.md", ["Glob", "TodoWrite"])
+    assert code == 0, out
