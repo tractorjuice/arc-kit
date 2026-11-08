@@ -167,7 +167,7 @@ $ARGUMENTS
      - *Added*: it is new and stands up against the design, principles and requirements. Add it to 11.1, 11.2 or 11.3 with the next ID there, and name that ID.
      - *Not accepted*: give a one-line reason grounded in the design, a principle or a requirement.
 
-     You may disagree with a reviewer, but never drop a finding without an outcome. Number the findings `FE-01` onwards. In 11.5, a finding that was added, not accepted, or kept at a different severity from the reviewer's gets a table row. Every other finding was already raised at the same severity, so it goes on the **Already raised** line as `FE-nn → ID`. Above them, give the counts: total, added, already raised, not accepted.
+     You may disagree with a reviewer, but never drop a finding without an outcome. Number the findings `FE-01` onwards. In 11.5, a finding that was added, not accepted, or kept at a different severity from the reviewer's gets a table row. Every other finding was already raised at the same severity, so it goes on the **Already raised at the same severity** line as `FE-nn → ID`. Above them, give the counts: total, added, already raised, not accepted.
    - **Check the verdict again** if you added a blocking finding.
    - **Integrity findings**: add any the reviewers report to 11.4, taking the short quote from your own reading of the design.
    - **What a fresh reader understood**: put the comprehension reviewer's paraphrase in 11.5. Where it differs from what the design means to say, the design is unclear, and that difference is a finding.

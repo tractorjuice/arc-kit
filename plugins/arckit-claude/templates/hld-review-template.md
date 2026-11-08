@@ -691,7 +691,7 @@ The table lists each finding that was added, not accepted, or kept at a differen
 |-----|------|----------|----------|---------|---------|
 | FE-01 | [Lens] | [Blocking / Advisory / Informational] | [Section or line] | [Finding] | [Added as ADVISORY-03 / Not accepted: reason / Already raised as BLOCKING-01, kept at Blocking: reason] |
 
-**Already raised** ([R]): [FE-02 → BLOCKING-01, FE-03 → ADVISORY-02, …]
+**Already raised at the same severity** ([n]): [FE-02 → BLOCKING-01, FE-03 → ADVISORY-02, …]
 
 If the step did not run, replace everything after the first paragraph with: Not run, and the reason.
 
