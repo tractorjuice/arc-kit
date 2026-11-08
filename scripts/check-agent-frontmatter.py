@@ -27,6 +27,13 @@ that would undo the reader/writer split without anyone noticing:
    enforced, so each tier gets an allowlist here: a tool added to either one
    fails until someone decides which side of the split it belongs on.
 
+5. **An allowlist of removed tools only.** Claude Code v2.1.233 removed
+   `TodoWrite` and the `TaskCreate*` tools on current models. An entry for
+   one is inert beside other tools, but an agent whose every tool is gone
+   resolves to none, and Claude Code refuses to start it ("would be spawned
+   with zero tools"). `arckit-independent-scorer` shipped that way in its
+   first draft and failed every dispatch.
+
 Exit 0 on success, 1 on any violation.
 """
 
@@ -50,6 +57,10 @@ STRIPPED_SIGNATURE = {"description", "model", "name"}
 # can hold what its parent doesn't.
 READER_TOOLS = {"Read", "Glob", "Grep", "WebSearch", "WebFetch", "TodoWrite"}
 WRITER_TOOLS = {"Read", "Glob", "Write", "Edit"}
+
+# Tools Claude Code no longer offers on current models (v2.1.233). Harmless in
+# a list with others; fatal as the whole list.
+REMOVED_TOOLS = {"TodoWrite", "TaskCreate", "TaskGet", "TaskList", "TaskUpdate"}
 
 
 def agent_dirs():
@@ -123,6 +134,14 @@ def main():
                 )
             elif not isinstance(frontmatter["tools"], list) or not frontmatter["tools"]:
                 errors.append(f"{rel}: `tools:` must be a non-empty list")
+            # (5) A list of removed tools resolves to nothing at runtime.
+            elif all(str(t) in REMOVED_TOOLS for t in frontmatter["tools"]):
+                errors.append(
+                    f"{rel}: every tool in `tools:` ({', '.join(map(str, frontmatter['tools']))}) "
+                    f"has been removed from Claude Code, so the agent would start with none and "
+                    f"Claude Code refuses to start it. Give it a tool that still exists, such as "
+                    f"`Glob` for an agent that must not open files."
+                )
 
             # (2) The converter-writeback signature.
             if set(frontmatter) == STRIPPED_SIGNATURE:
