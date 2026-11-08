@@ -68,6 +68,7 @@ A bid is written by a party that gains from a high score, so `/arckit:evaluate` 
 
 - **Formats:** PDF, Markdown and text. Export a Word document to PDF first.
 - **No claim, no marks:** a criterion the bid doesn't address scores 0, and a mandatory qualification with no claim fails.
+- **Evidenced beats promised:** a claim that the supplier will or can do something, with nothing to show how, scores lower than one that says how or where it has been done.
 - **Unreadable documents:** if any document can't be read, the vendor stays unscored and you're told which file and why.
 - **Keep the vendor's folder for what the supplier sent.** Everything in `vendors/<vendor>/` is treated as the supplier's, and scoring stops for a vendor whose folder holds an `evaluation.md`, `notes.md` or `claims.json`.
 

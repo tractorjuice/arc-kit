@@ -23,6 +23,7 @@ A bid is written by a party that gains from a high score, so `/arckit:score` nev
 
 - **Formats:** PDF, Markdown and text. Export a Word document to PDF first.
 - **No claim, no marks:** a criterion the bid doesn't address scores 0.
+- **Evidenced beats promised:** a claim that the supplier will or can do something, with nothing to show how, scores lower than one that says how or where it has been done.
 - **Unreadable documents:** if any document can't be read, the vendor stays unscored and you're told which file and why. It never gets a 0.
 - **Keep the vendor's folder for what the supplier sent.** ArcKit writes its own files to `vendors/_evaluations/<vendor>/`, and scoring stops for a vendor whose folder holds an `evaluation.md`, `notes.md` or `claims.json`.
 
