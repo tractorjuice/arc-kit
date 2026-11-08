@@ -74,7 +74,7 @@ A bid is written by a party that gains from a high score, so `/arckit:evaluate` 
 
 Scoring is still a judgement on what the supplier claims, so check the claims behind any close result. This works in Claude Code. Other runtimes have no subagents, so they read bids in one context.
 
-**Independent score and moderation.** After scoring a vendor, `/arckit:evaluate` asks an independent scorer to score the same claims against the same criteria, without seeing the first scores or your answers to its questions, and without being told which vendor it is. Where the two differ by a fifth or more of a criterion's points, the command decides a final score and records why in the evaluation's Moderation section. If the independent scorer can't run, the evaluation says so.
+**Independent score and moderation.** After scoring a vendor, `/arckit:evaluate` asks an independent scorer to score the same claims against the same criteria, without seeing the first scores or your answers to its questions, and without being told which vendor it is. Where the two differ by a fifth or more of a criterion's points, a neutral moderator, which isn't told which score is the command's, decides the final score and records why in the evaluation's Moderation section. If the independent scorer can't run, the evaluation says so.
 
 ---
 

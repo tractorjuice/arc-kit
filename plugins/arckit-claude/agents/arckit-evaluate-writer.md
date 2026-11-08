@@ -35,7 +35,7 @@ Write `{project_dir}/vendors/_evaluations/{vendor}/claims.json` containing the `
    - Category Breakdown (`categories`, with each justification and the claims it cites)
    - Strengths, Weaknesses and Risk Assessment
    - Integrity Findings: a table with the columns Type, File and Location, from `handoff.integrity_findings`, or write None found
-   - Moderation (`moderation`): a first line reading `Independent scorer: Completed` or `Independent scorer: Not run:` and the reason, then a table with the columns Criterion, First Score, Independent Score, Final Score and Reason, or write No criteria needed moderation
+   - Moderation (`moderation`): a first line reading `Independent scorer: Completed` or `Independent scorer: Not run:` and the reason, a second line reading `Moderator: Completed`, `Moderator: Not needed` or `Moderator: Not run:` and the reason, then a table with the columns Criterion, First Score, Independent Score, Final Score and Reason, or write No criteria needed moderation
    - Recommendation
 2. Write `{project_dir}/vendors/_evaluations/{vendor}/notes.md` from `notes`.
 3. Add or update this vendor's row in the comparative table in `eval_path`, using `Edit`.

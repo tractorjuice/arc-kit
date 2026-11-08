@@ -575,7 +575,7 @@
 <li><strong>Keep the vendor's folder for what the supplier sent.</strong> Everything in <code>vendors/&lt;vendor&gt;/</code> is treated as the supplier's, and scoring stops for a vendor whose folder holds an <code>evaluation.md</code>, <code>notes.md</code> or <code>claims.json</code>.</li>
 </ul>
 <p>Scoring is still a judgement on what the supplier claims, so check the claims behind any close result. This works in Claude Code. Other runtimes have no subagents, so they read bids in one context.</p>
-<p><strong>Independent score and moderation.</strong> After scoring a vendor, <code>/arckit:evaluate</code> asks an independent scorer to score the same claims against the same criteria, without seeing the first scores or your answers to its questions, and without being told which vendor it is. Where the two differ by a fifth or more of a criterion's points, the command decides a final score and records why in the evaluation's Moderation section. If the independent scorer can't run, the evaluation says so.</p>
+<p><strong>Independent score and moderation.</strong> After scoring a vendor, <code>/arckit:evaluate</code> asks an independent scorer to score the same claims against the same criteria, without seeing the first scores or your answers to its questions, and without being told which vendor it is. Where the two differ by a fifth or more of a criterion's points, a neutral moderator, which isn't told which score is the command's, decides the final score and records why in the evaluation's Moderation section. If the independent scorer can't run, the evaluation says so.</p>
 <hr />
 <h2 id="three-task-types">Three Task Types</h2>
 <table>

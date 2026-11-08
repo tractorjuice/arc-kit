@@ -1,0 +1,19 @@
+schema_version: "1.1"
+name: dld-review-checks-hld-conditions
+tags: [governance, artefact]
+prompt: "/arckit:dld-review 001 Review Acme Digital's detailed design for the Housing Benefits Portal, in vendors/acme-digital/. Do not ask questions; use sensible defaults."
+plugins: ["../.."]
+runs: 1
+max_turns: 40
+timeout_seconds: 1500
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash, Agent]
+context:
+  add_dirs:
+    - source: ../fixtures/benefits-portal
+      dest: .
+    - source: ../fixtures/benefits-portal-principles
+      dest: .
+    - source: ../fixtures/vendor-designs/sound
+      dest: projects/001-benefits-portal/vendors/acme-digital
+    - source: ../fixtures/vendor-designs/dld
+      dest: projects/001-benefits-portal/vendors/acme-digital

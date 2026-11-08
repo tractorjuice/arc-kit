@@ -368,6 +368,32 @@ If there are none, replace the table with: None found.
 
 ---
 
+### 10.5 Fresh-Eyes Review
+
+Three reviewers checked the detailed design independently. Each saw only the design, the approved HLD, its review and the requirements, and none of this review's working. Every finding they raised has an outcome below.
+
+[N] findings: [A] added, [R] already raised, [X] not accepted.
+
+| Lens | Status |
+|------|--------|
+| Comprehension | [Completed / Not run: reason] |
+| Implementation readiness | [Completed / Not run: reason] |
+| HLD conformance | [Completed / Not run: reason] |
+
+**What a fresh reader understood**: [The comprehension reviewer's two to four sentences on what the design does. Where this differs from what the design means to say, the design is unclear.]
+
+The table lists each finding that was added, not accepted, or rated lower than the reviewer rated it. A finding the review had already raised at the same or a higher severity goes on the Already raised line.
+
+| Ref | Lens | Severity | Location | Finding | Outcome |
+|-----|------|----------|----------|---------|---------|
+| FE-01 | [Lens] | [Blocking / Advisory / Informational] | [Section or line] | [Finding] | [Added as ADVISORY-03 / Not accepted: reason / Already raised as ADVISORY-01, rated lower than the reviewer's Blocking: reason] |
+
+**Already raised** ([n]): [FE-02 → BLOCKING-01, FE-03 → ADVISORY-02, …]
+
+If the step did not run, replace everything after the first paragraph with: Not run, and the reason.
+
+---
+
 ## 11. Review Decision
 
 ### 11.1 Final Decision
