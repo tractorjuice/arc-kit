@@ -80,7 +80,7 @@ End of week one you have a classified portfolio, named pathfinders, a working to
 
 ## The First Pathfinder
 
-Week two starts the first pathfinder. The command sequence is direct: `/arckit.requirements` to generate the BR/FR/NFR/INT/DR set against the existing service definition; `/arckit.stakeholders` for the stakeholder map; `/arckit.risks` for the risk register. Each command reads the existing material, drafts the artefact against a versioned template, applies the Document Control header with your federal classification, and writes it to the project directory as a citation-traceable Markdown file.
+Week two starts the first pathfinder. The command sequence is direct: `/arckit.requirements` to generate the BR/FR/NFR/INT/DR set against the existing service definition; `/arckit.stakeholders` for the stakeholder map; `/arckit.risk` for the risk register. Each command reads the existing material, drafts the artefact against a versioned template, applies the Document Control header with your federal classification, and writes it to the project directory as a citation-traceable Markdown file.
 
 Weeks three to five run the heavier commands: `/arckit.data-model`, `/arckit.integration`, `/arckit.research` for vendor and platform evaluation, `/arckit.sobc` for the strategic outline business case the federal funding gates require, and `/arckit.adr` for each material decision. The `/arckit.gov-reuse` agent runs the build-versus-reuse decision against open government code repositories — UK, France, EU, and any UAE national repository as it becomes available — so the Federal Government Guide's "avoid duplication" obligation is satisfied with evidence rather than assertion.
 
