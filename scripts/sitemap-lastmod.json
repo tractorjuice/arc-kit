@@ -1,7 +1,7 @@
 {
   "articles.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "1a769b3d7e5cd80a58b018643222e589c9b5547309a3dcadd8d769d41dcd265b"
+    "lastmod": "2026-11-09",
+    "text_sha256": "06d5aa9e7b6c87692ec174c59b16fddd5db7c6619a18b33a18ca4c515fb23e95"
   },
   "certification/awareness.html": {
     "lastmod": "2026-10-14",
@@ -44,8 +44,8 @@
     "text_sha256": "62bdad0edc0a685ea324b63486c67f95cb7cb594a130f54d3cbf9d75aeb4abcc"
   },
   "index.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "a4093f099c21ae28a3307ac71904cf9fbb9fb091519a395dcb63517fd63d5485"
+    "lastmod": "2026-11-09",
+    "text_sha256": "a55e1e74e86fd42114d78a1ca28901ced35c03973d21bb80718a6919bbd29346"
   },
   "llms.txt": {
     "lastmod": "2026-11-07",
