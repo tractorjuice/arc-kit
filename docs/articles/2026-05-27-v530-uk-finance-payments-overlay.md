@@ -105,7 +105,7 @@ Nine marketplace plugins. 139 commands. Eight jurisdictions and one sector. The 
 - [ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay](article-viewer.html?a=2026-05-28-v540-uk-nhs-clinical-safety-overlay)
 - [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
 - [Five Patterns to Steal from anthropics/financial-services](article-viewer.html?a=2026-05-06-anthropics-financial-services-architecture-lesson)
-- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+- [Wanted: `/arckit:build` Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
 
 <!-- arckit:community-block -->
 ## Join the ArcKit Community

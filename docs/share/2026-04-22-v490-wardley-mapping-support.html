@@ -300,7 +300,7 @@
 <p>ArcKit 4.9.0, released on 21 April 2026, fixes that for anyone generating architecture artefacts through the toolkit.</p>
 <h2 id="what-changed">What changed</h2>
 <p>Mermaid 11.14.0 shipped a new diagram type called wardley-beta. It is a first-class Mermaid renderer for Wardley Maps, which means any surface that already renders Mermaid, GitHub README files, GitLab wikis, static site generators, Obsidian, and of course ArcKit's generated docs/index.html dashboards, can now render Wardley Maps inline from plain text.</p>
-<p>ArcKit 4.9.0 adopts this across the board. We bumped the Mermaid CDN in all six pages-template.html files, covering the plugin and all five extensions (Codex, Copilot, Gemini, OpenCode, Paperclip). Run /arckit.pages in any ArcKit repo and your generated dashboard will render Wardley Maps alongside your requirements, ADRs, risk registers, and business cases.</p>
+<p>ArcKit 4.9.0 adopts this across the board. We bumped the Mermaid CDN in all six pages-template.html files, covering the plugin and all five extensions (Codex, Copilot, Gemini, OpenCode, Paperclip). Run <code>/arckit.pages</code> in any ArcKit repo and your generated dashboard will render Wardley Maps alongside your requirements, ADRs, risk registers, and business cases.</p>
 <h2 id="why-conversion-fidelity-mattered">Why conversion fidelity mattered</h2>
 <p>We could have stopped at &quot;Mermaid supports it now, good luck.&quot; We did not, because Wardley Maps are not decorative. They carry real decisions about evolution, dependency, and where to build versus buy. Losing components or drifting evolution values during conversion changes the strategic meaning of the map.</p>
 <p>So we built a fidelity test suite. The methodology borrows from Simon Wardley's own mathematical model work. We take every Wardley Map in the reference repository at swardley/WARDLEY-MAP-REPOSITORY, 147 real-world maps drawn from books, blog posts, and Wardley's own teaching material, convert each one from <a href="http://create.wardleymaps.ai">create.wardleymaps.ai</a> syntax to Mermaid wardley-beta, re-parse the output, and measure what was preserved.</p>
@@ -326,8 +326,8 @@
 <p>If you work in UK public sector and need to demonstrate strategic thinking alongside GDS Service Standard points, TCoP compliance, or NCSC CAF evidence, the map is now a first-class citizen of the evidence pack, not an appendix image.</p>
 <p>If you are a consultant or architect writing for clients, you can commit a plain-text Wardley Map to a repository, review it in a pull request, diff it cleanly between versions, and render it automatically wherever Mermaid runs. No more chasing screenshots.</p>
 <h2 id="getting-started">Getting started</h2>
-<p>If you already have ArcKit installed as a Claude Code plugin, update the marketplace and the new version picks up automatically. If you are using the Codex, Gemini, OpenCode, or Copilot extension, pull the latest from the respective repository. If you are new, &quot;pip install arckit-cli&quot; or install the plugin via &quot;/plugin marketplace add tractorjuice/arckit-claude&quot; inside Claude Code.</p>
-<p>Then run /arckit.wardley on any project and check your generated docs/index.html. The map will be there, rendered, linkable, and version-controlled.</p>
+<p>If you already have ArcKit installed as a Claude Code plugin, update the marketplace and the new version picks up automatically. If you are using the Codex, Gemini, OpenCode, or Copilot extension, pull the latest from the respective repository. If you are new, <code>pip install arckit-cli</code> or install the plugin via <code>/plugin marketplace add tractorjuice/arckit-claude</code> inside Claude Code.</p>
+<p>Then run <code>/arckit.wardley</code> on any project and check your generated docs/index.html. The map will be there, rendered, linkable, and version-controlled.</p>
 <hr />
 <p><strong>Links</strong></p>
 <ul>
