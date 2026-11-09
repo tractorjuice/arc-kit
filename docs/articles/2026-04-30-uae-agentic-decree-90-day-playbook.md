@@ -12,7 +12,7 @@ Install ArcKit on day 1. Configure your federal entity name and OFFICIAL-SENSITI
 
 WEEK 2. FIRST PATHFINDER.
 
-`/arckit.requirements` generates the BR/FR/NFR/INT/DR set against your service. `/arckit.stakeholders` maps influence and interest. `/arckit.risks` builds the register. Three artefacts on disk in 5 days, not 4 weeks.
+`/arckit.requirements` generates the BR/FR/NFR/INT/DR set against your service. `/arckit.stakeholders` maps influence and interest. `/arckit.risk` builds the register. Three artefacts on disk in 5 days, not 4 weeks.
 
 WEEKS 3 TO 4. DATA AND INTEGRATION.
 
