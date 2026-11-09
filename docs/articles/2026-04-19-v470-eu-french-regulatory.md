@@ -34,7 +34,7 @@ The eleven French commands sit on top of the EU baseline. Several are SecNumClou
 - `fr-algorithme-public` produces the public algorithm transparency notice required by Article L311-3-1 of the Code des relations entre le public et l'administration, the Loi République Numérique transparency obligation
 - `fr-code-reuse` runs the build-versus-reuse decision matrix against code.gouv.fr, the SILL, and EUPL-licensed European public code repositories before procurement starts
 
-Together these eighteen commands plug the most visible gap for architects working in EU public sector or French regulated industries. Like every other ArcKit command they read templates, integrate with the project context hook, write versioned ARC artefacts to the project directory, and chain to other commands through the handoffs schema. `fr-rgpd` cleanly extends `eu-rgpd`. `fr-pssi` references `eu-nis2`. `fr-secnumcloud` integrates with the existing `arckit.research` and `arckit.evaluate` procurement workflows.
+Together these eighteen commands plug the most visible gap for architects working in EU public sector or French regulated industries. Like every other ArcKit command they read templates, integrate with the project context hook, write versioned ARC artefacts to the project directory, and chain to other commands through the handoffs schema. `fr-rgpd` cleanly extends `eu-rgpd`. `fr-pssi` references `eu-nis2`. `fr-secnumcloud` integrates with the existing `/arckit.research` and `/arckit.evaluate` procurement workflows.
 
 ## Marked as Community, Not Official
 

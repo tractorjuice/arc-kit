@@ -74,15 +74,15 @@ Day three: identify your three to five pathfinder services. Bias toward services
 
 Day four: stand up the toolchain. Install ArcKit (the Claude Code plugin via marketplace, the Codex CLI extension, or the Gemini CLI extension depending on which AI assistant your architects use). Configure the federal organisation name and default classification at plugin enable time so every generated artefact carries them automatically.
 
-Day five: run `arckit.principles` once at the federal-portfolio level. The output is a starting point your chief architect adapts in an afternoon and circulates for endorsement.
+Day five: run `/arckit.principles` once at the federal-portfolio level. The output is a starting point your chief architect adapts in an afternoon and circulates for endorsement.
 
 End of week one you have a classified portfolio, named pathfinders, a working toolchain, and a draft principles document. That is more than most federal entities anywhere in the world will have at this point in the timeline.
 
 ## The First Pathfinder
 
-Week two starts the first pathfinder. The command sequence is direct: `arckit.requirements` to generate the BR/FR/NFR/INT/DR set against the existing service definition; `arckit.stakeholders` for the stakeholder map; `arckit.risks` for the risk register. Each command reads the existing material, drafts the artefact against a versioned template, applies the Document Control header with your federal classification, and writes it to the project directory as a citation-traceable Markdown file.
+Week two starts the first pathfinder. The command sequence is direct: `/arckit.requirements` to generate the BR/FR/NFR/INT/DR set against the existing service definition; `/arckit.stakeholders` for the stakeholder map; `/arckit.risks` for the risk register. Each command reads the existing material, drafts the artefact against a versioned template, applies the Document Control header with your federal classification, and writes it to the project directory as a citation-traceable Markdown file.
 
-Weeks three to five run the heavier commands: `arckit.data-model`, `arckit.integration`, `arckit.research` for vendor and platform evaluation, `arckit.sobc` for the strategic outline business case the federal funding gates require, and `arckit.adr` for each material decision. The `arckit.gov-reuse` agent runs the build-versus-reuse decision against open government code repositories — UK, France, EU, and any UAE national repository as it becomes available — so the Federal Government Guide's "avoid duplication" obligation is satisfied with evidence rather than assertion.
+Weeks three to five run the heavier commands: `/arckit.data-model`, `/arckit.integration`, `/arckit.research` for vendor and platform evaluation, `/arckit.sobc` for the strategic outline business case the federal funding gates require, and `/arckit.adr` for each material decision. The `/arckit.gov-reuse` agent runs the build-versus-reuse decision against open government code repositories — UK, France, EU, and any UAE national repository as it becomes available — so the Federal Government Guide's "avoid duplication" obligation is satisfied with evidence rather than assertion.
 
 Week six: review with the taskforce. By this point you have a complete artefact set for one service — requirements, stakeholders, risks, data model, integration, vendor evaluation, SOBC, ADRs, all classified, all versioned, all citation-traceable. The artefact set is exactly what the Cabinet's four instruments oblige you to produce, in the form an auditor can follow.
 
