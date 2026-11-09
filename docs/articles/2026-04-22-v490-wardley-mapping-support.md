@@ -8,7 +8,7 @@ ArcKit 4.9.0, released on 21 April 2026, fixes that for anyone generating archit
 
 Mermaid 11.14.0 shipped a new diagram type called wardley-beta. It is a first-class Mermaid renderer for Wardley Maps, which means any surface that already renders Mermaid, GitHub README files, GitLab wikis, static site generators, Obsidian, and of course ArcKit's generated docs/index.html dashboards, can now render Wardley Maps inline from plain text.
 
-ArcKit 4.9.0 adopts this across the board. We bumped the Mermaid CDN in all six pages-template.html files, covering the plugin and all five extensions (Codex, Copilot, Gemini, OpenCode, Paperclip). Run /arckit.pages in any ArcKit repo and your generated dashboard will render Wardley Maps alongside your requirements, ADRs, risk registers, and business cases.
+ArcKit 4.9.0 adopts this across the board. We bumped the Mermaid CDN in all six pages-template.html files, covering the plugin and all five extensions (Codex, Copilot, Gemini, OpenCode, Paperclip). Run `/arckit.pages` in any ArcKit repo and your generated dashboard will render Wardley Maps alongside your requirements, ADRs, risk registers, and business cases.
 
 ## Why conversion fidelity mattered
 
@@ -53,9 +53,9 @@ If you are a consultant or architect writing for clients, you can commit a plain
 
 ## Getting started
 
-If you already have ArcKit installed as a Claude Code plugin, update the marketplace and the new version picks up automatically. If you are using the Codex, Gemini, OpenCode, or Copilot extension, pull the latest from the respective repository. If you are new, "pip install arckit-cli" or install the plugin via "/plugin marketplace add tractorjuice/arckit-claude" inside Claude Code.
+If you already have ArcKit installed as a Claude Code plugin, update the marketplace and the new version picks up automatically. If you are using the Codex, Gemini, OpenCode, or Copilot extension, pull the latest from the respective repository. If you are new, `pip install arckit-cli` or install the plugin via `/plugin marketplace add tractorjuice/arckit-claude` inside Claude Code.
 
-Then run /arckit.wardley on any project and check your generated docs/index.html. The map will be there, rendered, linkable, and version-controlled.
+Then run `/arckit.wardley` on any project and check your generated docs/index.html. The map will be there, rendered, linkable, and version-controlled.
 
 ---
 

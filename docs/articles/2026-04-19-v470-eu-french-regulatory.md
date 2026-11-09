@@ -34,7 +34,7 @@ The eleven French commands sit on top of the EU baseline. Several are SecNumClou
 - `fr-algorithme-public` produces the public algorithm transparency notice required by Article L311-3-1 of the Code des relations entre le public et l'administration, the Loi République Numérique transparency obligation
 - `fr-code-reuse` runs the build-versus-reuse decision matrix against code.gouv.fr, the SILL, and EUPL-licensed European public code repositories before procurement starts
 
-Together these eighteen commands plug the most visible gap for architects working in EU public sector or French regulated industries. Like every other ArcKit command they read templates, integrate with the project context hook, write versioned ARC artefacts to the project directory, and chain to other commands through the handoffs schema. `fr-rgpd` cleanly extends `eu-rgpd`. `fr-pssi` references `eu-nis2`. `fr-secnumcloud` integrates with the existing `arckit.research` and `arckit.evaluate` procurement workflows.
+Together these eighteen commands plug the most visible gap for architects working in EU public sector or French regulated industries. Like every other ArcKit command they read templates, integrate with the project context hook, write versioned ARC artefacts to the project directory, and chain to other commands through the handoffs schema. `fr-rgpd` cleanly extends `eu-rgpd`. `fr-pssi` references `eu-nis2`. `fr-secnumcloud` integrates with the existing `/arckit.research` and `/arckit.evaluate` procurement workflows.
 
 ## Marked as Community, Not Official
 
@@ -106,7 +106,7 @@ For domain experts in other jurisdictions: the doors are open, the pattern is es
 - [What You Can Now Do in Austria with ArcKit v4.8](article-viewer.html?a=2026-04-20-v480-austrian-overlay)
 - [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](article-viewer.html?a=2026-04-30-uae-overlay-launch)
 - [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
-- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+- [Wanted: `/arckit:build` Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
 
 <!-- arckit:community-block -->
 ## Join the ArcKit Community

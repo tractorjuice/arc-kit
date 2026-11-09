@@ -134,7 +134,7 @@ Version synchronisation followed. All five distributions, including the CLI pack
 
 The converter was overhauled from a collection of format-specific functions into a config-driven pipeline. The AGENT_CONFIG dictionary replaced hard-coded conversion logic with declarative target definitions. This is what made it practical to give each platform deep, native support. Adding a new output format or enriching an existing one became a configuration change rather than a rewrite.
 
-The Codex extension became fully standalone in this release. Previously, Codex support was scaffolded through the arckit init CLI command, which copied files into a project directory. Now arckit-codex is its own self-contained extension with skills, agents, a config.toml, and its own version tracking. It's published as a separate repository and can be installed independently.
+The Codex extension became fully standalone in this release. Previously, Codex support was scaffolded through the `arckit init` CLI command, which copied files into a project directory. Now arckit-codex is its own self-contained extension with skills, agents, a config.toml, and its own version tracking. It's published as a separate repository and can be installed independently.
 
 These structural changes aren't the exciting part of v4.0.0. The hooks, policies, MCP servers, and native skills described in this article are the exciting part. But none of them would exist without the restructuring that made room for each platform to be treated as what it is: a unique environment with its own idioms, capabilities, and expectations.
 

@@ -91,7 +91,7 @@ The toolkit's contribution model is now ready for both axes.
 
 For users on the existing ArcKit Claude Code plugin, the v5.3.0 update arrives through the marketplace. Run `claude plugin install arckit arckit-uk-finance` to install the core plugin and the UK Finance overlay together. The four new commands appear in `/help` with the `[COMMUNITY]` tag and a warning banner before each prompt body runs. Gemini CLI extension users get the same via `gemini extensions update arckit`. Codex, OpenCode, Copilot, and Paperclip users get the commands via their respective extension repos, or via `arckit init`.
 
-The `arckit` core plugin is a hard dependency. Without it, the `uk-fs-payments` recipe cannot resolve the foundation commands (`arckit:principles`, `arckit:requirements`, `arckit:risk`, `arckit:adr`, `arckit:dpia`), and the file name validation hook will not recognise the four new UK Finance doc-type codes. On Claude Code v2.1.143 and later, `claude plugin disable arckit` will refuse with a copy pasteable disable chain hint while `arckit-uk-finance` is still enabled.
+The `arckit` core plugin is a hard dependency. Without it, the `uk-fs-payments` recipe cannot resolve the foundation commands (`/arckit:principles`, `/arckit:requirements`, `/arckit:risk`, `/arckit:adr`, `/arckit:dpia`), and the file name validation hook will not recognise the four new UK Finance doc-type codes. On Claude Code v2.1.143 and later, `claude plugin disable arckit` will refuse with a copy pasteable disable chain hint while `arckit-uk-finance` is still enabled.
 
 The full release notes are at [github.com/tractorjuice/arc-kit/releases/tag/v5.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v5.3.0). The maintenance guide and full citation register are at [`docs/guides/uk-fs-payments-overlay.md`](https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/uk-fs-payments-overlay.md). Per command guides for all four are under [`docs/guides/uk-fs-*.md`](https://github.com/tractorjuice/arc-kit/tree/main/docs/guides).
 
@@ -105,7 +105,7 @@ Nine marketplace plugins. 139 commands. Eight jurisdictions and one sector. The 
 - [ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay](article-viewer.html?a=2026-05-28-v540-uk-nhs-clinical-safety-overlay)
 - [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
 - [Five Patterns to Steal from anthropics/financial-services](article-viewer.html?a=2026-05-06-anthropics-financial-services-architecture-lesson)
-- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+- [Wanted: `/arckit:build` Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
 
 <!-- arckit:community-block -->
 ## Join the ArcKit Community
