@@ -61,11 +61,12 @@ A series is a recurring shape of post, so each one is quick to make and readers 
 
 From 30 September the page posts daily: *ArcKit Explained* (`series-arckit-explained.md`, 30 September to 13 October), then *From the Articles* (`series-from-the-articles.md`, 14 to 27 October), both scheduled in LinkedIn's scheduler. Keep one slot a week free for anything reactive, such as a release that changes something for users.
 
-**After 27 October**, three campaigns, each with its own file:
+**After 27 October**, four campaigns, each with its own file:
 
 - *Regulation week* (`campaign-regulation-week.md`): 28 October to 1 November, five page posts on what the community EU overlay drafts for NIS2, the CRA, the Data Act, GDPR and the AI Act, on one fictional product, with cards in `out/regulation-week/`.
 - *Bring your own template* (`campaign-bring-your-own-template.md`): call for templates on 2 November, reminder on 16 November, then a monthly showcase. Templates come in through the `template-share` issue form.
 - *Now in the Claude plugin directory* (`campaign-directory-launch.md`, article draft in `drafts/`): goes out the day the core plugin is approved, whichever day that is; it takes that day's slot.
+- *A second look* (`campaign-second-look.md`): five silent films on the independent reviewers and the moderator, one a day on the page from 9 to 13 November, and a group post on 9 November. The changes aren't released yet, so the posts say "Coming in the next release".
 
 ## Voice
 
@@ -544,3 +545,11 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:share:7524865393992052736?a
 ### Q42. ArcKit 6.20.0 article — Medium, ArcKit publication — published 7 November
 
 Published: <https://medium.com/arckit/arckit-v6-20-0-a-bid-cant-mark-its-own-homework-080851f059a9>. It was imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: Enterprise Architecture, Procurement, Digital Transformation, Government, Claude. The maintainer's 302 subscribers were notified. As well as the four known import fixes, the import dropped the "Before you update" heading, which had to be added back.
+
+### Q43. A second look, film 1 — LinkedIn page, with the 30s `arckit-second-look-01-readers` video (maintainer's voice) — posted 9 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7525463463314309120/>. Copy and the films: `campaign-second-look.md`. It went out without text when Post was clicked straight after the upload, and was edited the same minute to the campaign text, so LinkedIn marks it "Edited". Films 2 to 5 follow on the page, one a day to 13 November.
+
+### Q44. A second look, film 1 — LinkedIn group (maintainer's voice) — posted 9 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7525464245493239808/>, with the same film. Copy: `campaign-second-look.md`. It asks people who moderate evaluations or sit on a design authority how they'd want a second look done.
