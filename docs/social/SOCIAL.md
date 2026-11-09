@@ -66,7 +66,7 @@ From 30 September the page posts daily: *ArcKit Explained* (`series-arckit-expla
 - *Regulation week* (`campaign-regulation-week.md`): 28 October to 1 November, five page posts on what the community EU overlay drafts for NIS2, the CRA, the Data Act, GDPR and the AI Act, on one fictional product, with cards in `out/regulation-week/`.
 - *Bring your own template* (`campaign-bring-your-own-template.md`): call for templates on 2 November, reminder on 16 November, then a monthly showcase. Templates come in through the `template-share` issue form.
 - *Now in the Claude plugin directory* (`campaign-directory-launch.md`, article draft in `drafts/`): goes out the day the core plugin is approved, whichever day that is; it takes that day's slot.
-- *A second look* (`campaign-second-look.md`): five silent films on the independent reviewers and the moderator, one a day on the page from 9 to 13 November, and a group post on 9 November. The changes aren't released yet, so the posts say "Coming in the next release".
+- *A second look* (`campaign-second-look.md`): five silent films on the independent reviewers and the moderator, one a day on the page from 9 to 13 November, and a group post on 9 November. The changes were released in 6.21.0 the same day, so films 2 to 5 say "Now in ArcKit 6.21.0".
 
 ## Voice
 

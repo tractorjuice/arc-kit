@@ -6,7 +6,7 @@ Five silent 30-second films about ArcKit's independent reviewers: the fresh-eyes
 
 Voice and rules: `SOCIAL.md` (the maintainer's voice, lead with what the reader can use, no costs, no mistakes, no usage claims, "GitHub Copilot" in full).
 
-**Not released yet.** The changes are under Unreleased in the changelog: they merged on 8 November, after 6.20.0. Every post says "Coming in the next release". Once that release is out, change the line to "Now in ArcKit" in any post still queued, and consider editing the ones already live.
+**Released in 6.21.0 on 9 November**, after film 1 went out. The two film 1 posts say "Coming in the next release" and "in the next release"; the queued posts say "Now in ArcKit 6.21.0". The release article is `docs/articles/2026-11-09-arckit-v6-21-a-second-look.md`.
 
 ## The films
 
@@ -85,7 +85,7 @@ Every public-sector evaluator knows the moderation meeting. ArcKit now runs one.
 
 On a sample bid it was a 1 and a 2, settled at 2: the criterion as worded named neither of the unfinished features.
 
-Coming in the next release. https://arckit.org/guide/score.html
+Now in ArcKit 6.21.0. https://arckit.org/guide/score.html
 
 #EnterpriseArchitecture #Procurement #PublicSector
 
@@ -111,6 +111,6 @@ Split vendor scores get the same: a moderator settles them before a final score 
 
 That's the last of five short films on the new independent checks. They need Claude Code; other assistants skip the step and say so in the review.
 
-Coming in the next release. https://arckit.org/guide/hld-review.html
+Now in ArcKit 6.21.0. https://arckit.org/guide/hld-review.html
 
 #EnterpriseArchitecture #ArchitectureReview #Procurement
