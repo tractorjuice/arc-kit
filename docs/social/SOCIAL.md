@@ -548,8 +548,16 @@ Published: <https://medium.com/arckit/arckit-v6-20-0-a-bid-cant-mark-its-own-hom
 
 ### Q43. A second look, film 1 — LinkedIn page, with the 30s `arckit-second-look-01-readers` video (maintainer's voice) — posted 9 November
 
-Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7525463463314309120/>. Copy and the films: `campaign-second-look.md`. It went out without text when Post was clicked straight after the upload, and was edited the same minute to the campaign text, so LinkedIn marks it "Edited". Films 2 to 5 follow on the page, one a day to 13 November.
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7525463463314309120/>. Copy and the films: `campaign-second-look.md`. It went out without text when Post was clicked straight after the upload, and was edited the same minute to the campaign text, so LinkedIn marks it "Edited". After 6.21.0 shipped the same day, "Coming in the next release" was edited to "Now in ArcKit 6.21.0". Films 2 to 5 follow on the page, one a day to 13 November.
 
 ### Q44. A second look, film 1 — LinkedIn group (maintainer's voice) — posted 9 November
 
-Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7525464245493239808/>, with the same film. Copy: `campaign-second-look.md`. It asks people who moderate evaluations or sit on a design authority how they'd want a second look done.
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7525464245493239808/>, with the same film. Copy: `campaign-second-look.md`. It asks people who moderate evaluations or sit on a design authority how they'd want a second look done. After 6.21.0 shipped, "All of this is in the next release:" was edited to "All of this is in ArcKit 6.21.0, out today:".
+
+### Q45. ArcKit 6.21.0 article — LinkedIn page, with the article hero (maintainer's voice) — posted 9 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7525469396924989440/>. Copy: `docs/articles/2026-11-09-arckit-v6-21-a-second-look-linkedin.md`, with the hero and the alt text recorded in that file. The same day as film 1, so the page had two posts on 9 November. The group and Discord versions haven't gone out.
+
+### Q46. ArcKit 6.21.0 article — Medium, ArcKit publication — published 9 November
+
+Published: <https://medium.com/arckit/arckit-v6-21-0-a-second-look-from-someone-who-wasnt-in-the-room-7b9de499928e>. Imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: Enterprise Architecture, Procurement, Digital Transformation, Government, Claude Code. The maintainer's 301 subscribers were notified. The four known import fixes were needed, plus one more: Medium's alt text takes at most 500 characters, so the image has a shorter version than the LinkedIn alt text. The share page's headings use a non-breaking space before the last word, so match on normalised text when scripting the empty-line fixes.
