@@ -9,6 +9,15 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+## [6.21.0] — 2026-11-09
+
+### Added
+
+- **`/arckit:hld-review` gets a second look from three readers who weren't in the session.** Before it writes the review, three fresh reviewers read the design, one each for comprehension, principles and requirements. They see only the design, the principles and the requirements, none of the review's draft findings or verdict, so a gap the review has already explained to itself still gets caught. The comprehension reader explains the design back in plain words, and where that differs from what the supplier meant, the design is unclear. A new section 11.5 gives every finding an outcome: added, already raised, or not accepted with a reason. If a blocking finding is added, the verdict is checked again.
+- **`/arckit:dld-review` gets the same fresh-eyes review.** One reader explains the design back, one reads it as the engineer who'll build it and lists every decision it leaves to the builder, and one checks it against the approved HLD and its review's conditions. Section 10.5 settles every finding.
+- **Vendor scores get a second, independent score.** After `/arckit:score` or `/arckit:evaluate` scores a supplier, an independent scorer scores the same claims against the same criteria. It never sees the first scores, the vendor's name or the conversation, and it can't open any file. `scores.json` keeps both scores, the evaluation gets a Moderation section, and `compare` and `audit` show how many criteria were moderated.
+- **A neutral moderator settles any difference between the two scores.** It sees both scores and their reasons as Evaluator A and Evaluator B, with nothing to say which is the command's, and decides the final score with a reason. Its decision is recorded unchanged: the command can tell you it disagrees but can't change it. Both first scores are kept.
+
 ## [6.20.0] — 2026-11-07
 
 ### Added

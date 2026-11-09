@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-uk-legacy",
   "displayName": "ArcKit UK Legacy IT Assessment Overlay",
-  "version": "6.20.0",
+  "version": "6.21.0",
   "defaultEnabled": false,
   "description": "UK Legacy IT Assessment Overlay — 1 command for evidence-led classification, independent numerical risk and actionable remediation. Includes frozen offline framework sources and a deterministic helper. Requires arckit core plugin.",
   "author": {
@@ -28,7 +28,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.20.0"
+      "version": "=6.21.0"
     }
   ]
 }
