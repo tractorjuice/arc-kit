@@ -967,7 +967,7 @@ Once you start your AI assistant, you'll have access to these commands:
 - `{p}sobc` - Create Strategic Outline Business Case (Green Book 5-case)
 - `{p}requirements` - Define comprehensive requirements
 - `{p}data-model` - Create data model with ERD, GDPR compliance, data governance
-- `{p}research` - Research technology, services, and products with build vs buy analysis
+- `{p}research` - Research technology, services, and products, with checked facts and published costs
 - `{p}wardley` - Create strategic Wardley Maps for build vs buy and procurement strategy
 
 #### Vendor Procurement

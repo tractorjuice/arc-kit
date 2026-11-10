@@ -176,7 +176,7 @@ $arckit-glossary           # Domain glossary
 #### Research and Procurement
 
 ```bash
-$arckit-research        # Market research with build vs buy analysis
+$arckit-research        # Market research: options, facts and costs
 $arckit-datascout       # External data source discovery
 $arckit-aws-research    # AWS service research via MCP
 $arckit-azure-research  # Azure service research via MCP

@@ -38,10 +38,11 @@ All artifacts must pass these 10 checks:
 ### RSCH -- Research
 
 - Market landscape section with vendor/technology comparison table
-- Build vs buy analysis includes 3-year TCO projection
+- Each option's coverage of its category's requirements, with what it meets and lacks
+- Published 3-year costs per option, and the build estimate labelled as an estimate
 - All claims supported by source citations with URLs
-- Clear recommendation with justification
-- Executive Summary opens with the overall recommendation; Research Scope comes after the findings
+- No score, ranking, shortlist or build-or-buy verdict: those are for `/arckit:wardley`, `/arckit:sobc` and `/arckit:evaluate`
+- Executive Summary opens with the headline finding; Research Scope comes after the findings
 
 ### SOBC -- Strategic Outline Business Case
 

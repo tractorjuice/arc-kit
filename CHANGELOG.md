@@ -7,14 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **`/arckit:research` now reports evidence and makes no decisions.** It used to score each option, rank the options and give a build-or-buy verdict for each category. It now reports what each option offers, lacks and costs, with sources, and the market evidence for each capability: how many products cover it, from how many vendors, and whether a utility, GOV.UK platform or open-source project does. `/arckit:wardley` decides how to source each capability, `/arckit:sobc` appraises value for money, and `/arckit:evaluate` and `/arckit:score` score suppliers. `/arckit:sobc` now reads the research report's costs and the Wardley map's sourcing.
+
 ### Added
 
-- **`/arckit:research` now reads prices from G-Cloud pricing documents.** Suppliers publish their G-Cloud prices in a PDF linked from the listing, which web fetch can't read, so those options had no price and the category often couldn't get a verdict. For the leading options in each category, ArcKit now downloads that PDF from the Digital Marketplace and reads the prices from it. Claude Code only.
+- **`/arckit:research` now reads prices from G-Cloud pricing documents.** Suppliers publish their G-Cloud prices in a PDF linked from the listing, which web fetch can't read, so those options had no price in the report or for the business case. For the leading options in each category, ArcKit now downloads that PDF from the Digital Marketplace and reads the prices from it. Claude Code only.
 
 ### Fixed
 
-- **`/arckit:research` now scores each option against the category it was found in.** It used to score every product against the whole project's capability list, so a good dashboard tool lost marks for not being a forms tool and no option could reach the score a "buy" needs. A product that does more than the category asks is no longer marked down for it.
-- **`/arckit:research` always reaches a build-or-buy answer.** The rules had gaps that left some categories with no verdict. They now run in a fixed order and end in "no clear winner", which names the leading options and recommends a proof of concept or an RFI. A leading option with no published price now returns "insufficient evidence" instead of a guess.
+- **`/arckit:research` now measures each option against the category it was found in.** It used to measure every product against the whole project's capability list, so a good dashboard tool looked weak for not being a forms tool. A product that does more than the category asks no longer looks worse for it.
 
 ## [6.21.0] — 2026-11-09
 

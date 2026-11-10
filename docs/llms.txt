@@ -51,7 +51,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 
 - [Requirements](https://arckit.org/guides/requirements.md): `/arckit:requirements` (BR/FR/NFR/INT/DR).
 - [Stakeholders](https://arckit.org/guides/stakeholders.md): `/arckit:stakeholders` drivers, goals, outcomes.
-- [Technology research](https://arckit.org/guides/research.md): `/arckit:research` build vs buy, TCO.
+- [Technology research](https://arckit.org/guides/research.md): `/arckit:research` options, checked facts and published costs.
 - [Data source discovery](https://arckit.org/guides/datascout.md): `/arckit:datascout` API catalogue scoring.
 - [UK government code reuse](https://arckit.org/guides/gov-reuse.md): `/arckit:gov-reuse` find reusable UK government open-source code before building from scratch.
 - [UK government code search](https://arckit.org/guides/gov-code-search.md): `/arckit:gov-code-search` natural-language search across 24,500+ UK government repositories.
