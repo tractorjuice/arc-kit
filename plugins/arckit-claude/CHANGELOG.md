@@ -9,6 +9,10 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+### Added
+
+- **`/arckit:research` now reads prices from G-Cloud pricing documents.** Suppliers publish their G-Cloud prices in a PDF linked from the listing, which web fetch can't read, so those options had no price and the category often couldn't get a verdict. For the leading options in each category, ArcKit now downloads that PDF from the Digital Marketplace and reads the prices from it. Claude Code only.
+
 ### Fixed
 
 - **`/arckit:research` now scores each option against the category it was found in.** It used to score every product against the whole project's capability list, so a good dashboard tool lost marks for not being a forms tool and no option could reach the score a "buy" needs. A product that does more than the category asks is no longer marked down for it.
