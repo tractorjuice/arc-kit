@@ -65,3 +65,12 @@ def test_writer_template_and_monolith_carry_no_verdict():
         assert heading not in TEMPLATE, heading
     assert "Report, don't decide" in MONOLITH
     assert "Build vs Buy Analysis" not in MONOLITH
+
+
+def test_research_still_spawns_tech_notes_and_vendor_profiles():
+    produce = COMMAND.split("## What you produce", 1)[1].split("## Process", 1)[0]
+    assert "**Tech-notes**" in produce and "**Vendor profiles**" in produce
+    assert "tech-notes/{topic-slug}.md" in step(11)
+    assert "### Step C: Spawn one tech-note per significant technology finding" in WRITER
+    assert "tech-note-template.md" in WRITER
+    assert "**Tech Notes:**" in MONOLITH and "tech-note-template.md" in MONOLITH
