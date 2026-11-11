@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
-import { existsSync, mkdtempSync, readFileSync, realpathSync, rmSync, utimesSync, writeFileSync, mkdirSync } from 'node:fs';
+import {
+  existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, symlinkSync, utimesSync, writeFileSync,
+} from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, it } from 'node:test';
@@ -90,25 +92,89 @@ describe('fetch-gcloud-prices', () => {
     assert.equal(output.results[1].reason, 'HTTP 404');
   });
 
-  it('keeps downloads from earlier calls, which a reader may not have opened yet', async () => {
+  const age = (path, ms) => {
+    const then = new Date(Date.now() - ms);
+    utimesSync(path, then, then);
+  };
+
+  it('keeps downloads from earlier calls, even days old, which a reader may not have opened yet', async () => {
     mkdirSync(join(cwd, OUT), { recursive: true });
-    writeFileSync(join(cwd, OUT, '111111.pdf'), 'earlier call');
-    writeFileSync(join(cwd, OUT, 'keep.txt'), 'keep');
+    const earlier = join(cwd, OUT, '111111.pdf');
+    writeFileSync(earlier, 'earlier call');
+    age(earlier, 3 * 24 * 60 * 60 * 1000);
     const { impl } = fakeFetch({ [LISTING_BASE + ID]: '<p>none</p>' });
     await run(['--out', OUT, ID], { fetchImpl: impl, cwd });
-    assert.ok(existsSync(join(cwd, OUT, '111111.pdf')));
-    assert.ok(existsSync(join(cwd, OUT, 'keep.txt')));
+    assert.ok(existsSync(earlier));
   });
 
-  it('clears downloads older than a day', async () => {
+  it('clears only its own stale downloads, never other files in the folder', async () => {
     mkdirSync(join(cwd, OUT), { recursive: true });
-    const old = join(cwd, OUT, '222222.pdf');
-    writeFileSync(old, 'old');
-    const then = new Date(Date.now() - STALE_AFTER_MS - 60_000);
-    utimesSync(old, then, then);
+    const stale = join(cwd, OUT, '222222.pdf');
+    const others = ['keep.txt', 'report.pdf', 'notes-123.pdf'].map((name) => join(cwd, OUT, name));
+    for (const path of [stale, ...others]) {
+      writeFileSync(path, 'old');
+      age(path, STALE_AFTER_MS + 60_000);
+    }
     const { impl } = fakeFetch({ [LISTING_BASE + ID]: '<p>none</p>' });
     await run(['--out', OUT, ID], { fetchImpl: impl, cwd });
-    assert.equal(existsSync(old), false);
+    assert.equal(existsSync(stale), false);
+    for (const path of others) assert.ok(existsSync(path), path);
+  });
+
+  it('never leaves an old document behind when a service has none or its fetch fails', async () => {
+    const file = join(cwd, OUT, `${ID}.pdf`);
+    const cases = [
+      [{ [LISTING_BASE + ID]: '<p>none</p>' }, 'no-document'],
+      [{ [LISTING_BASE + ID]: LISTING, [PDF_URL]: '<html>login</html>' }, 'failed'],
+      [{}, 'failed'],
+    ];
+    for (const [routes, status] of cases) {
+      mkdirSync(join(cwd, OUT), { recursive: true });
+      writeFileSync(file, '%PDF-out of date');
+      const { output } = await run(['--out', OUT, ID], { fetchImpl: fakeFetch(routes).impl, cwd });
+      assert.equal(output.results[0].status, status);
+      assert.equal(existsSync(file), false, status);
+    }
+  });
+
+  it('replaces a link at the document path instead of writing through it', async () => {
+    mkdirSync(join(cwd, OUT), { recursive: true });
+    const outside = join(cwd, 'outside.txt');
+    writeFileSync(outside, 'untouched');
+    symlinkSync(outside, join(cwd, OUT, `${ID}.pdf`));
+    const { impl } = fakeFetch({ [LISTING_BASE + ID]: LISTING, [PDF_URL]: () => new Response(PDF) });
+    const { output } = await run(['--out', OUT, ID], { fetchImpl: impl, cwd });
+    assert.equal(output.results[0].status, 'ok');
+    assert.equal(readFileSync(outside, 'utf8'), 'untouched');
+    assert.equal(lstatSync(join(cwd, OUT, `${ID}.pdf`)).isSymbolicLink(), false);
+  });
+
+  it('still returns results when the folder holds a broken link or a folder named like a download', async () => {
+    mkdirSync(join(cwd, OUT, '333333.pdf'), { recursive: true });
+    symlinkSync(join(cwd, 'missing'), join(cwd, OUT, '444444.pdf'));
+    age(join(cwd, OUT, '333333.pdf'), STALE_AFTER_MS + 60_000);
+    const { impl } = fakeFetch({ [LISTING_BASE + ID]: '<p>none</p>' });
+    const { code, output } = await run(['--out', OUT, ID], { fetchImpl: impl, cwd });
+    assert.equal(code, 0);
+    assert.deepEqual(output.results, [{ service_id: ID, status: 'no-document' }]);
+    assert.ok(existsSync(join(cwd, OUT, '333333.pdf')));
+  });
+
+  it('reports a document it cannot save, without the system error text', async () => {
+    mkdirSync(join(cwd, OUT, `${ID}.pdf`), { recursive: true });
+    const { impl } = fakeFetch({ [LISTING_BASE + ID]: LISTING, [PDF_URL]: () => new Response(PDF) });
+    const { code, output } = await run(['--out', OUT, ID], { fetchImpl: impl, cwd });
+    assert.equal(code, 0);
+    assert.deepEqual(output.results, [{ service_id: ID, status: 'failed', reason: 'could not save' }]);
+  });
+
+  it('rejects an --out path that cannot be a folder', async () => {
+    writeFileSync(join(cwd, 'blocked'), 'a file');
+    const { impl, calls } = fakeFetch({});
+    const { code, output } = await run(['--out', 'blocked/prices', ID], { fetchImpl: impl, cwd });
+    assert.equal(code, 2);
+    assert.deepEqual(output, { ok: false, errors: ['--out folder could not be prepared'] });
+    assert.equal(calls.length, 0);
   });
 
   it('rejects bad arguments without touching the network', async () => {

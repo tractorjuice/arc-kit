@@ -55,6 +55,8 @@ def test_price_step_passes_numeric_ids_and_keeps_documents_from_the_orchestrator
     recovery = step("7a")
     assert "numeric service IDs only" in recovery
     assert "Never open those files yourself" in recovery
+    assert ".arckit/cache/gcloud-prices/{P}" in recovery
+    assert "passes only the failed IDs" in recovery
     assert "price_documents" in (PLUGIN / "agents" / "arckit-research-reader.md").read_text(encoding="utf-8")
 
 
