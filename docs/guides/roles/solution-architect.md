@@ -14,7 +14,7 @@ The Solution Architect designs technical solutions to meet business requirements
 | Command | Purpose | Guide |
 |---------|---------|-------|
 | `/arckit:requirements` | Define comprehensive business and technical requirements (with Business Analyst) | [Guide](../requirements.md) |
-| `/arckit:research` | Research technologies and services with build vs buy analysis | [Guide](../research.md) |
+| `/arckit:research` | Research technologies and services: options, checked facts and published costs | [Guide](../research.md) |
 | `/arckit:azure-research` | Deep-dive Azure services via Microsoft Learn MCP | [Guide](../azure-research.md) |
 | `/arckit:aws-research` | Deep-dive AWS services via AWS Knowledge MCP | [Guide](../aws-research.md) |
 | `/arckit:gcp-research` | Deep-dive GCP services via Google Developer Knowledge MCP | [Guide](../gcp-research.md) |

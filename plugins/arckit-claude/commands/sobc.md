@@ -67,6 +67,10 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    **OPTIONAL** (read if available, skip silently if missing):
    - **REQ** (Requirements) in `projects/{project}/`
      - Extract: Detailed requirements for more accurate cost estimates
+   - **RSCH** (Research Findings) at `projects/{project}/research/ARC-{P}-RSCH-*.md`
+     - Extract: the options found per capability, their published 3-year costs, the labelled build estimates, and which options publish no price, as evidence for the Economic Case options and costs. Research makes no recommendation: the options appraisal and the preferred way forward are this command's
+   - **WARD** (Wardley Map) at `projects/{project}/wardley-maps/ARC-{P}-WARD-*.md`
+     - Extract: the sourcing decided for each component (build, buy or outsource), to shape the options
    - **PLAN** (Project Plan) in `projects/{project}/`
      - Extract: Timeline, phasing for Commercial Case delivery schedule
    - **TNDR** (Procurement Market Intelligence) at `projects/{project}/research/ARC-{P}-TNDR-*.md`

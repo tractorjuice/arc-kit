@@ -90,7 +90,7 @@ gemini
 
 | Command | Description |
 |---------|-------------|
-| `/arckit:research` | Technology research with build vs buy analysis |
+| `/arckit:research` | Technology research: options, facts and costs |
 | `/arckit:datascout` | Data source discovery and API catalogue search |
 | `/arckit:aws-research` | AWS service research (via AWS Knowledge MCP) |
 | `/arckit:azure-research` | Azure service research (via Microsoft Learn MCP) |

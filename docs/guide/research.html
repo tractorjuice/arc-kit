@@ -14,18 +14,18 @@
     </script>
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="/arckit:research investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.">
+    <meta name="description" content="/arckit:research investigates market, SaaS, open-source, and government marketplace options and reports what each offers, lacks and costs. It makes no…">
     <meta name="author" content="ArcKit">
     <title>Technology Research Guide | ArcKit</title>
     <meta property="og:title" content="Technology Research Guide">
-    <meta property="og:description" content="/arckit:research investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.">
+    <meta property="og:description" content="/arckit:research investigates market, SaaS, open-source, and government marketplace options and reports what each offers, lacks and costs. It makes no build-or-buy decision: /arckit:wardley decides how to source each…">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://arckit.org/guide/research.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Technology Research Guide">
-    <meta name="twitter:description" content="/arckit:research investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.">
+    <meta name="twitter:description" content="/arckit:research investigates market, SaaS, open-source, and government marketplace options and reports what each offers, lacks and costs. It makes no build-or-buy decision: /arckit:wardley decides how to source each…">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guide/research.html">
     <link rel="alternate" type="text/markdown" href="https://arckit.org/guides/research.md">
@@ -339,7 +339,7 @@
                 "@type": "TechArticle",
                 "@id": "https://arckit.org/guide/research.html",
                 "headline": "Technology Research Guide",
-                "description": "/arckit:research investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.",
+                "description": "/arckit:research investigates market, SaaS, open-source, and government marketplace options and reports what each offers, lacks and costs. It makes no build-or-buy decision: /arckit:wardley decides how to source each…",
                 "url": "https://arckit.org/guide/research.html",
                 "inLanguage": "en-GB",
                 "author": {
@@ -422,7 +422,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">Guide</span>
             <h1 class="app-page-hero__title">Technology Research Guide</h1>
-            <p class="app-page-hero__description">/arckit:research investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.</p>
+            <p class="app-page-hero__description">/arckit:research investigates market, SaaS, open-source, and government marketplace options and reports what each offers, lacks and costs. It makes no build-or-buy decision: /arckit:wardley decides how to source each…</p>
         </div>
     </div>
 
@@ -439,7 +439,7 @@
 <blockquote>
 <p><strong>Guide Origin</strong>: Official</p>
 </blockquote>
-<p><code>/arckit:research</code> investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.</p>
+<p><code>/arckit:research</code> investigates market, SaaS, open-source, and government marketplace options and reports what each offers, lacks and costs. It makes no build-or-buy decision: <code>/arckit:wardley</code> decides how to source each capability, and <code>/arckit:sobc</code> appraises value for money.</p>
 <blockquote>
 <p><strong>Agent Architecture</strong>: This command delegates to the <code>arckit-research</code> autonomous agent. The agent runs as a subprocess with its own context window, performing dozens of WebSearch and WebFetch calls for vendor pricing, reviews, and compliance data without polluting your main conversation. The slash command launches the agent and relays its summary back to you.</p>
 </blockquote>
@@ -455,9 +455,9 @@
 </thead>
 <tbody>
 <tr>
-<td>Build vs buy</td>
-<td>“Research options for <capability> and recommend build vs buy”</td>
-<td>Compares custom development vs product</td>
+<td>Options for a capability</td>
+<td>“Research the options for <capability>, with costs”</td>
+<td>Evidence for the build-or-buy decision in <code>/arckit:wardley</code> and <code>/arckit:sobc</code></td>
 </tr>
 <tr>
 <td>Supplier shortlist</td>
@@ -508,10 +508,10 @@ claude
 <hr />
 <h2 id="output-highlights">Output Highlights</h2>
 <ul>
-<li>Option catalogue with pros, cons, pricing, support model.</li>
+<li>Option catalogue with what each option meets and lacks, published pricing and support model, all cited.</li>
 <li>Alignment to requirements and principles.</li>
 <li>Risk considerations (lock-in, data sovereignty, accessibility).</li>
-<li>Recommendation with rationale and next steps (PoC, procurement, or custom build).</li>
+<li>Market evidence per capability for <code>/arckit:wardley</code>, cost data for <code>/arckit:sobc</code>, and next steps. No ranking or recommendation.</li>
 </ul>
 <hr />
 <h2 id="follow-on-actions">Follow-on Actions</h2>

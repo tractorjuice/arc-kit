@@ -18,7 +18,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 - 💼 Business case justification (HM Treasury Green Book SOBC)
 - 📋 Creating comprehensive requirements documents
 - 🗄️ Data modeling with ERD, GDPR compliance, and data governance
-- 🔬 Technology research with build vs buy analysis (web search powered)
+- 🔬 Technology research: options, checked facts and published costs (web search powered)
 - ☁️ Azure-specific research using Microsoft Learn MCP for authoritative documentation
 - 🗺️ Strategic planning with Wardley Mapping
 - 📊 Generating visual architecture diagrams (Mermaid)
@@ -912,18 +912,17 @@ Discover and evaluate external data sources to fulfil project data requirements:
 
 **`/arckit:research`** → Research technology, services, and products
 
-Research available solutions to meet requirements with build vs buy analysis:
+Research the solutions available to meet requirements, with checked facts and published costs. It makes no build-or-buy decision: `/arckit:wardley` decides sourcing and `/arckit:sobc` appraises value for money.
 
 - Dynamic category detection from requirements (authentication, payments, databases, etc.)
 - Commercial SaaS options with pricing, reviews, and ratings (WebSearch)
 - Open source alternatives with GitHub stats and community maturity
 - UK Government GOV.UK platforms (One Login, Pay, Notify, Forms)
 - Digital Marketplace suppliers (G-Cloud, DOS)
-- Total Cost of Ownership (TCO) comparison (3-year)
-- Build vs Buy vs Adopt recommendations
-- Vendor shortlisting for deeper evaluation
-- Integration with Wardley mapping (evolution positioning)
-- Feeds into SOBC Economic Case (cost data, options analysis)
+- Published 3-year costs, including supplier price documents on G-Cloud
+- What each option meets and lacks against the requirements, all cited
+- Market evidence for Wardley mapping (how many products cover each capability)
+- Feeds into SOBC Economic Case (cost data)
 
 ### Phase 6.5: Grants & Funding Research
 
@@ -1747,7 +1746,7 @@ Core ArcKit commands with maturity status and example outputs from public test r
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
 | `/arckit:platform-design` | Create platform strategy using Platform Design Toolkit (8 canvases for multi-sided ecosystems) | [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-GAAP-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/ARC-001-PLAT-v1.0.md) | 🟣 Experimental |
-| `/arckit:research` | Research technology, services, and products to meet requirements with build vs buy analysis | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-RSCH-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-RSCH-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-RSCH-001-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-RSCH-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-RSCH-v1.0.md) | 🔵 Beta |
+| `/arckit:research` | Research the technology, services and products that could meet the requirements, with checked facts and published costs | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-RSCH-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-RSCH-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-RSCH-001-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-RSCH-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-RSCH-v1.0.md) | 🔵 Beta |
 | `/arckit:grants` | Research UK government grants, charitable funding, and accelerator programmes with eligibility scoring | — | 🟣 Experimental |
 | `/arckit:wardley` | Create strategic Wardley Maps for architecture decisions and build vs buy analysis | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/wardley-maps/ARC-001-WARD-001-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/wardley-maps/ARC-001-WARD-001-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/wardley-maps/ARC-001-WARD-001-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/wardley-maps/ARC-001-WARD-001-v1.0.md) | 🟣 Experimental |
 | `/arckit:wardley.value-chain` | Decompose user needs into value chains for Wardley Mapping | — | 🟣 Experimental |

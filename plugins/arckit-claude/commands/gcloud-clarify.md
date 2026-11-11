@@ -46,7 +46,7 @@ This command analyzes gaps between requirements and service descriptions, then g
 
 **OPTIONAL** (read if available, skip silently if missing):
 
-- **RSCH** (Research) — Extract: Market landscape, alternative services, technology recommendations
+- **RSCH** (Research) — Extract: Market landscape, alternative services and their checked facts
 
 ### 3. Gap Analysis
 

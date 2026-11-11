@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit:research` investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.
+`/arckit:research` investigates market, SaaS, open-source, and government marketplace options and reports what each offers, lacks and costs. It makes no build-or-buy decision: `/arckit:wardley` decides how to source each capability, and `/arckit:sobc` appraises value for money.
 
 > **Agent Architecture**: This command delegates to the `arckit-research` autonomous agent. The agent runs as a subprocess with its own context window, performing dozens of WebSearch and WebFetch calls for vendor pricing, reviews, and compliance data without polluting your main conversation. The slash command launches the agent and relays its summary back to you.
 
@@ -12,7 +12,7 @@
 
 | Scenario | Prompt seed | Focus |
 |---------|-------------|-------|
-| Build vs buy | “Research options for <capability> and recommend build vs buy” | Compares custom development vs product |
+| Options for a capability | “Research the options for <capability>, with costs” | Evidence for the build-or-buy decision in `/arckit:wardley` and `/arckit:sobc` |
 | Supplier shortlist | “Research G-Cloud services for <need> including pricing tiers” | Public sector supplier discovery |
 | Standards review | “Research regulatory obligations for <domain>” | Highlights policies, certifications, compliance |
 | Migration | “Research tooling to migrate from <legacy> to <target>” | Guides modernisation approaches |
@@ -65,10 +65,10 @@ The cap exists to stop runaway search loops, so raise it deliberately rather tha
 
 ## Output Highlights
 
-- Option catalogue with pros, cons, pricing, support model.
+- Option catalogue with what each option meets and lacks, published pricing and support model, all cited.
 - Alignment to requirements and principles.
 - Risk considerations (lock-in, data sovereignty, accessibility).
-- Recommendation with rationale and next steps (PoC, procurement, or custom build).
+- Market evidence per capability for `/arckit:wardley`, cost data for `/arckit:sobc`, and next steps. No ranking or recommendation.
 
 ---
 

@@ -94,7 +94,7 @@ Some commands delegate to **autonomous agents** (`plugins/arckit-claude/agents/a
 
 | Agent | Command | Purpose |
 |-------|---------|---------|
-| `arckit-research` | *(non-Claude only)* | Market research, vendor evaluation, build vs buy, TCO |
+| `arckit-research` | *(non-Claude only)* | Market research: options, checked facts, published costs (no build-or-buy verdict) |
 | `arckit-datascout` | *(non-Claude only)* | Data source discovery, API catalogue search |
 | `arckit-aws-research` | *(non-Claude only)* | AWS via AWS Knowledge MCP |
 | `arckit-azure-research` | *(non-Claude only)* | Azure via Microsoft Learn MCP |
