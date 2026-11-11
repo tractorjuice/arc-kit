@@ -15,11 +15,18 @@
  * Redirects are refused. stdout carries status and paths, never document
  * content, so nothing a supplier wrote reaches the session that runs this.
  *
+ * Each call replaces only the files for the IDs it is given: a service's old
+ * file is removed before its fetch, so a failed or withdrawn document never
+ * leaves an out-of-date one behind, and a second call for other IDs leaves
+ * earlier files in place. Files untouched for a week are cleared.
+ *
  * Exit 0: {ok:true, results:[{service_id, status, pdf_url?, file?, bytes?, reason?}]}
  *         status is "ok", "no-document" or "failed", per service.
- * Exit 2: {ok:false, errors:[...]} for bad arguments. Nothing is downloaded.
+ * Exit 2: {ok:false, errors:[...]} for bad arguments or an unusable --out
+ *         folder. Nothing is downloaded.
+ * Exit 1: {ok:false, errors:["unexpected failure"]}.
  */
-import { mkdirSync, readdirSync, realpathSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { lstatSync, mkdirSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -31,8 +38,9 @@ const MAX_LISTING_BYTES = 3 * 1024 * 1024;
 const TIMEOUT_MS = 30_000;
 const CONCURRENCY = 3;
 const USER_AGENT = 'ArcKit-research (+https://arckit.org)';
-// Downloads from earlier calls in the same run must survive: a reader may not have opened them yet.
-export const STALE_AFTER_MS = 24 * 60 * 60 * 1000;
+// Housekeeping only. Files from earlier calls in a run must survive, even a run paused for days,
+// because a reader may not have opened them yet. Freshness comes from replacing each requested ID.
+export const STALE_AFTER_MS = 7 * 24 * 60 * 60 * 1000;
 
 // Fixed strings only: a reason is printed to the calling session.
 class FetchProblem extends Error {}
@@ -84,26 +92,53 @@ async function fetchOne(serviceId, directory, cwd, fetchImpl) {
     const body = await download(pdfUrl, MAX_DOCUMENT_BYTES, fetchImpl);
     if (body.subarray(0, 5).toString('latin1') !== '%PDF-') throw new FetchProblem('not a PDF');
     const path = join(directory, `${serviceId}.pdf`);
-    writeFileSync(path, body);
+    try {
+      writeFileSync(path, body);
+    } catch {
+      throw new FetchProblem('could not save');
+    }
     return { service_id: serviceId, status: 'ok', pdf_url: pdfUrl, file: relative(cwd, path).split(sep).join('/'), bytes: body.length };
   } catch (error) {
     return { service_id: serviceId, status: 'failed', reason: error instanceof FetchProblem ? error.message : 'network error' };
   }
 }
 
-function prepareDirectory(out, cwd) {
+// Remove one entry without ever throwing: another call may have removed it first, it may be a
+// broken link, or it may be a folder, which is left alone.
+function removeQuietly(path) {
+  try {
+    rmSync(path, { force: true });
+  } catch {
+    // Not removable. A later write to this path reports "could not save".
+  }
+}
+
+function prepareDirectory(out, cwd, ids) {
   const directory = resolve(cwd, out);
   const inside = relative(cwd, directory);
-  if (!inside || inside.startsWith('..') || isAbsolute(inside)) return null;
-  mkdirSync(directory, { recursive: true });
-  // These are working files, so keep them out of the project's history.
-  writeFileSync(join(directory, '.gitignore'), '*\n');
-  const cutoff = Date.now() - STALE_AFTER_MS;
-  for (const name of readdirSync(directory)) {
-    const path = join(directory, name);
-    if (/^\d+\.pdf$/.test(name) && statSync(path).mtimeMs < cutoff) rmSync(path);
+  if (!inside || inside.startsWith('..') || isAbsolute(inside)) return { error: '--out must be a folder inside the working directory' };
+  let names;
+  try {
+    mkdirSync(directory, { recursive: true });
+    // These are working files, so keep them out of the project's history.
+    writeFileSync(join(directory, '.gitignore'), '*\n');
+    names = readdirSync(directory);
+  } catch {
+    return { error: '--out folder could not be prepared' };
   }
-  return directory;
+  // A requested service starts with no file, so a failed fetch can't leave an old document behind.
+  for (const id of ids) removeQuietly(join(directory, `${id}.pdf`));
+  const cutoff = Date.now() - STALE_AFTER_MS;
+  for (const name of names) {
+    if (!/^\d+\.pdf$/.test(name)) continue;
+    const path = join(directory, name);
+    try {
+      if (lstatSync(path).mtimeMs < cutoff) removeQuietly(path);
+    } catch {
+      // Already gone.
+    }
+  }
+  return { directory };
 }
 
 export async function run(argv, { fetchImpl = fetch, cwd = process.cwd() } = {}) {
@@ -122,9 +157,10 @@ export async function run(argv, { fetchImpl = fetch, cwd = process.cwd() } = {})
   if (!out) errors.push('--out <dir> is required');
   if (ids.length === 0) errors.push('at least one service ID is required');
   if (ids.length > MAX_IDS) errors.push(`at most ${MAX_IDS} service IDs per run`);
-  const directory = errors.length === 0 ? prepareDirectory(out, cwd) : null;
-  if (errors.length === 0 && !directory) errors.push('--out must be a folder inside the working directory');
+  const prepared = errors.length === 0 ? prepareDirectory(out, cwd, ids) : {};
+  if (prepared.error) errors.push(prepared.error);
   if (errors.length > 0) return { code: 2, output: { ok: false, errors: [...new Set(errors)] } };
+  const { directory } = prepared;
 
   const results = new Array(ids.length);
   let next = 0;
@@ -149,7 +185,13 @@ function isMainModule() {
 }
 
 if (isMainModule()) {
-  const { code, output } = await run(process.argv.slice(2));
-  process.stdout.write(`${JSON.stringify(output)}\n`);
-  process.exitCode = code;
+  let outcome;
+  try {
+    outcome = await run(process.argv.slice(2));
+  } catch {
+    // Fixed text only: an error message could carry supplier-controlled text.
+    outcome = { code: 1, output: { ok: false, errors: ['unexpected failure'] } };
+  }
+  process.stdout.write(`${JSON.stringify(outcome.output)}\n`);
+  process.exitCode = outcome.code;
 }
