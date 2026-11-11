@@ -224,7 +224,7 @@ G-Cloud suppliers publish their prices in a PDF linked from the listing, which `
 
 1. **Choose the options.** In each category, take the three options with the highest coverage that have no usable `tco_3yr_gbp` and whose `fetched_from_url` or `product_url` matches `https://www.applytosupply.digitalmarketplace.service.gov.uk/g-cloud/services/<digits>`. Take at most 18 in total, highest coverage first.
 
-2. **Download the documents.** Run the script with the numeric service IDs only. Never put a URL or any other text from a reader's payload on the command line:
+2. **Download the documents.** Run the script once, with every chosen service, passing the numeric service IDs only. Never put a URL or any other text from a reader's payload on the command line:
 
    ```bash
    node "${CLAUDE_PLUGIN_ROOT}/scripts/fetch-gcloud-prices.mjs" --out .arckit/cache/gcloud-prices 849857478096097 192802101890655

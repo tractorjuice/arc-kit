@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
-import { existsSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync, mkdirSync } from 'node:fs';
+import { existsSync, mkdtempSync, readFileSync, realpathSync, rmSync, utimesSync, writeFileSync, mkdirSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, describe, it } from 'node:test';
 import {
-  ASSET_HOST, LISTING_BASE, MAX_DOCUMENT_BYTES, MAX_IDS, findPricingDocument, isServiceId, run,
+  ASSET_HOST, LISTING_BASE, MAX_DOCUMENT_BYTES, MAX_IDS, STALE_AFTER_MS, findPricingDocument, isServiceId, run,
 } from '../../plugins/arckit-claude/scripts/fetch-gcloud-prices.mjs';
 
 const ID = '849857478096097';
@@ -90,14 +90,25 @@ describe('fetch-gcloud-prices', () => {
     assert.equal(output.results[1].reason, 'HTTP 404');
   });
 
-  it('clears earlier downloads but leaves other files alone', async () => {
+  it('keeps downloads from earlier calls, which a reader may not have opened yet', async () => {
     mkdirSync(join(cwd, OUT), { recursive: true });
-    writeFileSync(join(cwd, OUT, '111111.pdf'), 'old');
+    writeFileSync(join(cwd, OUT, '111111.pdf'), 'earlier call');
     writeFileSync(join(cwd, OUT, 'keep.txt'), 'keep');
     const { impl } = fakeFetch({ [LISTING_BASE + ID]: '<p>none</p>' });
     await run(['--out', OUT, ID], { fetchImpl: impl, cwd });
-    assert.equal(existsSync(join(cwd, OUT, '111111.pdf')), false);
+    assert.ok(existsSync(join(cwd, OUT, '111111.pdf')));
     assert.ok(existsSync(join(cwd, OUT, 'keep.txt')));
+  });
+
+  it('clears downloads older than a day', async () => {
+    mkdirSync(join(cwd, OUT), { recursive: true });
+    const old = join(cwd, OUT, '222222.pdf');
+    writeFileSync(old, 'old');
+    const then = new Date(Date.now() - STALE_AFTER_MS - 60_000);
+    utimesSync(old, then, then);
+    const { impl } = fakeFetch({ [LISTING_BASE + ID]: '<p>none</p>' });
+    await run(['--out', OUT, ID], { fetchImpl: impl, cwd });
+    assert.equal(existsSync(old), false);
   });
 
   it('rejects bad arguments without touching the network', async () => {
