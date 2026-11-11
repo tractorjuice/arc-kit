@@ -412,7 +412,7 @@ Return ONLY a concise summary to the user:
 - **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`
 - **Subagents dispatched** — `arckit-tenders-reader` (shared reader: fetch + extract) · `arckit-competitors-writer` (final render + vendor-profile enrichment)
 - **External tools** — none directly (delegated to reader)
-- **Related commands** — `/arckit:research` (build-vs-buy with the competitive set) · `/arckit:score` (rival award history as Company Experience evidence) · `/arckit:risk` (supplier-concentration risk)
+- **Related commands** — `/arckit:research` (market options, with the competitive set) · `/arckit:score` (rival award history as Company Experience evidence) · `/arckit:risk` (supplier-concentration risk)
 
 ## Important Notes
 

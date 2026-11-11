@@ -204,7 +204,7 @@ Most procurement commands require ARC-*-REQ-*.md:
 - **tenders** → Depends on: principles (O), requirements (O)
   - Note: Procurement market intelligence from the UK Tenders MCP — award-value benchmarks, top suppliers, incumbency/concentration across more than 700k UK contracting processes (October 2026)
   - Requires the bundled `uk-tenders` MCP server (keyless, deferred, best-effort availability)
-  - Outputs TNDR artefact; feeds into sobc (Economic Case benchmarks), risk (concentration risk), research (build-vs-buy market context)
+  - Outputs TNDR artefact; feeds into sobc (Economic Case benchmarks), risk (concentration risk), research (market context)
   - Agent-delegating command (reader/orchestrator/writer three-tier split); shares `arckit-tenders-reader` with `/arckit:competitors`
 - **competitors** → Depends on: principles (O), requirements (O)
   - Note: Competitor landscape from the UK Tenders MCP — rival suppliers, awarded-value market share, head-to-head comparison, concentration analysis

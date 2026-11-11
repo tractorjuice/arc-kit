@@ -221,7 +221,7 @@ The reader returns evidence across five procurement portals, ranked internally b
 | **Input** | `/arckit:principles` | Commissioning buyer identified from ARC-000-PRIN |
 | **Output** | `/arckit:sobc` | Median award value anchors the Economic Case cost range |
 | **Output** | `/arckit:risk` | Concentration / single-supplier-dependency risk |
-| **Output** | `/arckit:research` | Build-vs-buy market context; TCO comparison |
+| **Output** | `/arckit:research` | Market context; real awarded values beside published prices |
 | **Output** | `/arckit:adr` | Data source, make-vs-buy, or route-to-market recorded as decisions |
 
 ---
@@ -230,7 +230,7 @@ The reader returns evidence across five procurement portals, ranked internally b
 
 - Anchor the Economic Case with real median award values (`/arckit:sobc`)
 - Register supplier-concentration or single-supplier-dependency risks (`/arckit:risk`)
-- Use market depth evidence in build-vs-buy analysis (`/arckit:research`)
+- Use market depth evidence in market research (`/arckit:research`)
 - Record route-to-market decisions as ADRs (`/arckit:adr`)
 - Escalate `HIGH` concentration findings to commercial lead before procurement scoping
 

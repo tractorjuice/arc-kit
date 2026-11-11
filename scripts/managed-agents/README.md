@@ -45,7 +45,7 @@ python arckit-agent.py research \
 
 | Agent | Description | MCP Servers Used |
 |---|---|---|
-| `research` | Market research, vendor eval, build vs buy, TCO | govreposcrape |
+| `research` | Market research: options, checked facts, published costs | govreposcrape |
 | `grants` | UK government grants and funding research | (none) |
 | `datascout` | Data source discovery, API catalogue search | DataCommons (optional) |
 | `framework` | Transform artifacts into structured framework | (none) |

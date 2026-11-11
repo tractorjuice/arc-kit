@@ -49,7 +49,7 @@ diagram → hld-review → dld-review → traceability
 
 1. **Understand the problem**: Review stakeholders and business case from Business Architect
 2. **Define requirements**: Run `/arckit:requirements` (co-own with Business Analyst)
-3. **Research solutions**: Run `/arckit:research` for market analysis and build vs buy
+3. **Research solutions**: Run `/arckit:research` for market options, checked facts and costs
 4. **Cloud deep-dive**: Run `/arckit:azure-research`, `/arckit:aws-research`, or `/arckit:gcp-research` for specific platforms
 5. **Map the landscape**: Run `/arckit:wardley` to visualise component evolution
 6. **Record decisions**: Run `/arckit:adr` for each significant architecture decision

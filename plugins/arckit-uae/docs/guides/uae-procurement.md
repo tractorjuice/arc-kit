@@ -46,7 +46,7 @@ Output: `projects/<id>/ARC-<id>-FPRO-v1.0.md`
 |-------|----------------|-----------------|
 | Strategic case | Business case and budget | `/arckit:sobc` |
 | Procurement | Strategy + ITT / RFP pack + ICV | `/arckit:uae-procurement` |
-| Market | Vendor research and shortlist | `/arckit:research` |
+| Market | Vendor research | `/arckit:research` |
 | Evaluation | Formal supplier evaluation | `/arckit:evaluate` |
 
 ---

@@ -246,7 +246,7 @@ Agents run as autonomous sub-processes to handle research-intensive tasks. They 
 
 | Agent | Description |
 |-------|-------------|
-| **arckit-research** | Market research, vendor evaluation, build vs buy analysis, TCO comparison, UK Digital Marketplace search |
+| **arckit-research** | Market research: options, checked facts, published costs, UK Digital Marketplace search |
 | **arckit-datascout** | External data source discovery -- APIs, datasets, open data portals, commercial data providers |
 | **arckit-aws-research** | AWS service research via AWS Knowledge MCP (service matching, Well-Architected guidance, Security Hub controls) |
 | **arckit-azure-research** | Azure service research via Microsoft Learn MCP (service matching, Well-Architected guidance, Security Benchmark controls) |

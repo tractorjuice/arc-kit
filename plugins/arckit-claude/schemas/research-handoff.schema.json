@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://arckit.org/schemas/research-handoff/v1",
   "title": "research reader → orchestrator handoff payload (v1)",
-  "description": "Factual, extraction-only evidence about technology and service options for one research category. Contains no score, rank, recommendation, or build-vs-buy verdict — those are computed by the /arckit:research orchestrator from a YAML rubric. Field set is driven by templates/research-findings-template.md.",
+  "description": "Factual, extraction-only evidence about technology and service options for one research category. Contains no score, rank, recommendation, or build-vs-buy verdict — /arckit:research gives none; /arckit:wardley, /arckit:sobc and /arckit:evaluate make those decisions. Field set is driven by templates/research-findings-template.md.",
   "type": "object",
   "additionalProperties": false,
   "required": ["research_category", "options", "errors"],

@@ -460,9 +460,9 @@
 <td>Evidence for the build-or-buy decision in <code>/arckit:wardley</code> and <code>/arckit:sobc</code></td>
 </tr>
 <tr>
-<td>Supplier shortlist</td>
+<td>Supplier discovery</td>
 <td>“Research G-Cloud services for <need> including pricing tiers”</td>
-<td>Public sector supplier discovery</td>
+<td>Public sector suppliers and their published prices</td>
 </tr>
 <tr>
 <td>Standards review</td>
@@ -486,7 +486,7 @@
 <h2 id="command">Command</h2>
 <pre><code class="language-bash">/arckit:research Research &lt;topic&gt; for &lt;project&gt;
 </code></pre>
-<p>Outputs: <code>projects/&lt;id&gt;/ARC-&lt;id&gt;-RSCH-v1.0.md</code> plus optional CSV of suppliers.</p>
+<p>Outputs: <code>projects/&lt;id&gt;/research/ARC-&lt;id&gt;-RSCH-001-v1.0.md</code>, plus a vendor profile in <code>vendors/</code> for each vendor found and a tech note in <code>tech-notes/</code> for each significant technology finding.</p>
 <blockquote>
 <p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
 </blockquote>
@@ -495,7 +495,7 @@
 <p><code>/arckit:research</code> frequently exceeds 10 minutes once the agent starts pulling vendor pricing pages, G-Cloud listings, and product reviews. To avoid babysitting the terminal, pair it with <a href="https://code.claude.com/docs/en/remote-control">Claude Code Remote Control</a>:</p>
 <pre><code class="language-bash">claude remote-control
 </code></pre>
-<p>Drive the session from <a href="http://claude.ai/code">claude.ai/code</a> or the mobile app, then enable <code>/config → Push when Claude decides</code> so your phone gets a notification on completion or when the agent reaches a decision point (vendor shortlist confirmation, build vs buy direction). ArcKit's minimum Claude Code floor (v2.1.295) already covers the v2.1.110 RC requirement.</p>
+<p>Drive the session from <a href="http://claude.ai/code">claude.ai/code</a> or the mobile app, then enable <code>/config → Push when Claude decides</code> so your phone gets a notification on completion or when the run needs your input. ArcKit's minimum Claude Code floor (v2.1.295) already covers the v2.1.110 RC requirement.</p>
 <p>Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local <code>claude</code> process must keep running.</p>
 <h2 id="session-search-budget">Session search budget</h2>
 <p>Claude Code v2.1.212 added a session-wide cap of <strong>200 WebSearch calls</strong>, after which further searches are refused. <code>/arckit:research</code> is deliberately search-heavy — the agent is instructed to discover the current market landscape rather than rely on general knowledge — so a single large-scope run uses a meaningful slice of that budget, and several research commands back to back in one session can exhaust it.</p>

@@ -354,7 +354,7 @@ Return ONLY a concise summary to the user:
 - **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs`
 - **Subagents dispatched** — `arckit-tenders-reader` (fetch + extract) · `arckit-tenders-writer` (final render)
 - **External tools** — none directly (delegated to reader)
-- **Related commands** — `/arckit:sobc` (downstream Economic Case) · `/arckit:risk` (downstream concentration risk) · `/arckit:research` (build-vs-buy context)
+- **Related commands** — `/arckit:sobc` (downstream Economic Case) · `/arckit:risk` (downstream concentration risk) · `/arckit:research` (market context)
 
 ## Important Notes
 

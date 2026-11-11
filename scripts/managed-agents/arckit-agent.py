@@ -61,7 +61,7 @@ MCP_JSON = os.path.join(REPO_ROOT, "plugins", "arckit-claude", ".mcp.json")
 
 # Map agent names to descriptions for the --list output and API metadata
 AGENT_DESCRIPTIONS = {
-    "research": "Market research, vendor evaluation, build vs buy, TCO comparison",
+    "research": "Market research: options, checked facts, published costs",
     "grants": "UK government grants, charitable funding, accelerator programmes",
     "datascout": "Data source discovery, API catalogue search, scoring",
     "framework": "Transform artifacts into structured framework with principles and patterns",
