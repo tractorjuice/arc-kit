@@ -19,7 +19,7 @@
  *         status is "ok", "no-document" or "failed", per service.
  * Exit 2: {ok:false, errors:[...]} for bad arguments. Nothing is downloaded.
  */
-import { mkdirSync, readdirSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readdirSync, realpathSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { isAbsolute, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -31,6 +31,8 @@ const MAX_LISTING_BYTES = 3 * 1024 * 1024;
 const TIMEOUT_MS = 30_000;
 const CONCURRENCY = 3;
 const USER_AGENT = 'ArcKit-research (+https://arckit.org)';
+// Downloads from earlier calls in the same run must survive: a reader may not have opened them yet.
+export const STALE_AFTER_MS = 24 * 60 * 60 * 1000;
 
 // Fixed strings only: a reason is printed to the calling session.
 class FetchProblem extends Error {}
@@ -96,8 +98,10 @@ function prepareDirectory(out, cwd) {
   mkdirSync(directory, { recursive: true });
   // These are working files, so keep them out of the project's history.
   writeFileSync(join(directory, '.gitignore'), '*\n');
+  const cutoff = Date.now() - STALE_AFTER_MS;
   for (const name of readdirSync(directory)) {
-    if (/^\d+\.pdf$/.test(name)) rmSync(join(directory, name));
+    const path = join(directory, name);
+    if (/^\d+\.pdf$/.test(name) && statSync(path).mtimeMs < cutoff) rmSync(path);
   }
   return directory;
 }
