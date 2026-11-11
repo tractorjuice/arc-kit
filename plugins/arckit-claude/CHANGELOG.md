@@ -9,6 +9,11 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+### Fixed
+
+- **`/arckit:research` now scores each option against the category it was found in.** It used to score every product against the whole project's capability list, so a good dashboard tool lost marks for not being a forms tool and no option could reach the score a "buy" needs. A product that does more than the category asks is no longer marked down for it.
+- **`/arckit:research` always reaches a build-or-buy answer.** The rules had gaps that left some categories with no verdict. They now run in a fixed order and end in "no clear winner", which names the leading options and recommends a proof of concept or an RFI. A leading option with no published price now returns "insufficient evidence" instead of a guess.
+
 ## [6.21.0] — 2026-11-09
 
 ### Added

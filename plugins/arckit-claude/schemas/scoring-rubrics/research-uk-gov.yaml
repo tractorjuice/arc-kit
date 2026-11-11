@@ -47,13 +47,15 @@ weights:
   vendor_viability: 5
 
 scoring:
-  # How much of what the project needs does this option claim to do?
-  # Jaccard overlap of the reader's allowlisted capability tags against
-  # the capability tags the orchestrator derived from FR/NFR/INT/DR.
+  # How much of what this category needs does the option claim to do?
+  # The share of the capability tags the orchestrator derived for this
+  # category, from the FR/NFR/INT/DR mapped to it, that the reader's
+  # allowlisted tags cover. Capabilities beyond that list neither add
+  # nor subtract, so a broader product is not marked down for being broad.
   requirements_fit:
-    method: jaccard_overlap
+    method: coverage_ratio
     field: evidence.capabilities
-    against: project_profile.required_capabilities
+    against: category.required_capabilities
     scale: 100
     when_missing: 0
 

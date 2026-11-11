@@ -134,6 +134,8 @@ Read the chosen rubric with `Read`. State which rubric you selected and why in y
 
 Group the requirements into research categories — coherent capability areas that would be bought or built as one thing (e.g. "Identity and access management", "Appointment booking", "Notifications"). Aim for 3 to 6 categories. Every category must trace to at least one requirement ID; record the mapping, it becomes the traceability matrix in Step 9.
 
+Give each category its own `required_capabilities`: the allowlisted capability tags from the requirements mapped to that category, a subset of `project_profile.required_capabilities`. Steps 7 and 8 score against this list, so a product bought for one category is not marked down for not doing another category's job.
+
 If `$ARGUMENTS` names a specific topic, scope to that topic and say you have done so.
 
 ### Step 5: Pre-flight check
@@ -159,7 +161,7 @@ For each category:
        "uk_data_residency", "procurement_vehicles", "integration_protocols",
        "auth_methods", "data_export_formats", "licence", "deployment_models"
      ],
-     "project_profile": { /* from Step 2 */ }
+     "project_profile": { /* from Step 2, with required_capabilities set to this category's list */ }
    }
    ```
 
@@ -193,9 +195,10 @@ For each accumulated `OptionRecord`:
      - one-off tier: `price`, plus any annual support tier `× 3`
      - `per-user` unit: multiply by the user count from the requirements; if no user count is stated, mark `tco_3yr_gbp` as unknown rather than guessing a headcount
      - Convert non-GBP currencies at a spot rate you state once, with its source and date, in `fx_note`. Never convert silently.
+     - `free-open-source` with no paid tier recorded: `tco_3yr_gbp` is 0 for licences. It excludes hosting and support, so say so in `score_rationale`.
    - `company_age_years` — `current year − evidence.founded_year`
 
-2. **Apply each rubric criterion** to produce a 0–100 sub-score, using `when_missing` wherever the evidence field is absent. `coverage_ratio` is `|evidence ∩ required| / |required|`; `jaccard_overlap` is `|A ∩ B| / |A ∪ B|`; `set_intersects` is binary.
+2. **Apply each rubric criterion** to produce a 0–100 sub-score, using `when_missing` wherever the evidence field is absent. `coverage_ratio` is `|evidence ∩ required| / |required|`; `set_intersects` is binary. For `requirements_fit`, `required` is the list for the category the option was found in (`category.required_capabilities`), not the whole project's. Capabilities beyond that list neither add to the score nor take away from it.
 
 3. **Weight and sum** to a 0–100 `total_score`. Under `research-uk-gov`, apply the `overrides` block afterwards: `gov_platform_bonus` adds 10 to any `gov-platform` option (clamped to 100), and `accessibility_floor` caps the total at 70 for a public-facing project where `evidence.wcag_conformance` is not `wcag-2.1-aa` or `wcag-2.2-aa`.
 
@@ -205,12 +208,13 @@ For each accumulated `OptionRecord`:
 
 ### Step 8: Decide build vs buy per category
 
-This is a rule, applied to the numbers from Step 7 — not an opinion:
+This is a rule, applied to the numbers from Step 7 — not an opinion. Work down the list and stop at the first line that matches. `top` is the highest-scoring option in the category, and its coverage is the share of the category's `required_capabilities` that `top` claims. An option with no usable `tco_3yr_gbp` never counts as costing more than building.
 
-- **buy** — top option scores ≥ 70 and its `tco_3yr_gbp` is below `build_tco_3yr_gbp`
-- **build** — no option scores ≥ 50, or every option above 50 costs more than building
-- **hybrid** — top option scores ≥ 70 but covers under 70% of `required_capabilities` (buy the covered part, build the remainder)
-- **insufficient evidence** — fewer than two options carried usable pricing evidence. Say so; do not issue a verdict from one data point.
+1. **insufficient evidence** — fewer than two options carried usable pricing evidence, or `top` has no usable `tco_3yr_gbp`, so it cannot be compared with building. Say so; do not issue a verdict from the data you do have.
+2. **build** — no option scores ≥ 50, or every option scoring ≥ 50 costs more than building.
+3. **hybrid** — `top` scores ≥ 70 but its coverage is under 70% (buy the covered part, build the remainder).
+4. **buy** — `top` scores ≥ 70 and its `tco_3yr_gbp` is below `build_tco_3yr_gbp`.
+5. **no clear winner** — anything else, such as a `top` scoring 50 to 69, or a `top` that costs more than building while a lower-scoring option does not. Name the leading options with their scores and costs, give the build cost, and recommend a proof of concept or an RFI via `/arckit:sow`. Do not pick one.
 
 Record the verdict and its numeric basis in `recommendation`.
 
