@@ -41,3 +41,12 @@ def test_verdict_rules_run_in_order_and_end_in_a_catch_all():
     assert "first line that matches" in rules
     verdicts = re.findall(r"^\d+\. \*\*([a-z ]+)\*\*", rules, flags=re.M)
     assert verdicts == ["insufficient evidence", "build", "hybrid", "buy", "no clear winner"]
+
+
+def test_price_step_passes_numeric_ids_and_keeps_documents_from_the_orchestrator():
+    frontmatter = COMMAND.split("---", 2)[1]
+    assert "scripts/fetch-gcloud-prices.mjs" in frontmatter
+    recovery = step(7).split("### Step 7a:", 1)[1]
+    assert "numeric service IDs only" in recovery
+    assert "Never open those files yourself" in recovery
+    assert "price_documents" in (PLUGIN / "agents" / "arckit-research-reader.md").read_text(encoding="utf-8")

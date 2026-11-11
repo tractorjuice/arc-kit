@@ -16,7 +16,11 @@ CORE_PLUGIN = REPO_ROOT / "plugins/arckit-claude"
 CONVERTER = REPO_ROOT / "scripts/converter.py"
 
 # Scripts a command may reference without shipping, with the reason.
-NOT_SHIPPED_BY_DESIGN: dict[str, str] = {}
+NOT_SHIPPED_BY_DESIGN: dict[str, str] = {
+    # Only the Claude Code orchestrator runs it. Every other target gets the
+    # arckit-research monolith, which has no price-document step.
+    "scripts/fetch-gcloud-prices.mjs": "Claude-only /arckit:research step; other targets use the monolith",
+}
 
 INVOCATION_RE = re.compile(
     r"\$\{CLAUDE_PLUGIN_ROOT\}/(scripts/[A-Za-z0-9._/-]+\.mjs)"
