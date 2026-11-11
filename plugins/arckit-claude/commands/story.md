@@ -119,7 +119,7 @@ find "$PROJECT_DIR" -type f -name "*.md" | sort
 
 **Strategic Planning Artifacts**:
 
-- `ARC-*-RSCH-*.md` - Technology research and build vs buy
+- `ARC-*-RSCH-*.md` - Technology research: options, facts and costs
 - `wardley-maps/ARC-*-WARD-*.md` - Wardley maps
 - `diagrams/ARC-*-DIAG-*.md` - C4 and deployment diagrams
 - `ARC-*-PLAN-*.md` - Project plan with timeline

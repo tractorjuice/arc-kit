@@ -10,7 +10,7 @@
 # Differences from uk-saas / uk-mod-sovereign
 #
 #   First recipe to include a research wave
-#     arckit:research               general AI/ML market & build-vs-buy research
+#     arckit:research               general AI/ML market research
 #     arckit:aws-research           UAE region availability + sovereign options
 #     arckit:azure-research         UAE North / UAE Central + Microsoft sovereign
 #     arckit:datascout              UAE federal open-data sources (optional)

@@ -40,7 +40,7 @@
 | 6 | `/arckit:datascout` | Discover UK Gov open data sources (TCoP Point 10) | ARC-{PID}-DSCT-v1.0.md |
 | 7 | `/arckit:data-model` | Data architecture with GDPR/DPA considerations | ARC-{PID}-DMOD-v1.0.md |
 | 8 | `/arckit:dpia` | Data Protection Impact Assessment (mandatory for personal data) | ARC-{PID}-DPIA-v1.0.md |
-| 9 | `/arckit:research` | Technology research with Crown Commercial focus | ARC-{PID}-RES-v1.0.md |
+| 9 | `/arckit:research` | Technology research with Crown Commercial focus | ARC-{PID}-RSCH-001-v1.0.md |
 | 10 | `/arckit:wardley` | Strategic positioning for GaaP components | ARC-{PID}-WARD-001-v1.0.md |
 | 11 | `/arckit:roadmap` | Roadmap aligned to spending review cycles | ARC-{PID}-ROAD-v1.0.md |
 | 12 | `/arckit:diagram` | Architecture diagrams (C4, sequence, DFD) | ARC-{PID}-DIAG-001-v1.0.md |

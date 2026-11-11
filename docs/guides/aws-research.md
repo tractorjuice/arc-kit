@@ -164,7 +164,7 @@ When UK Government project detected:
 |---------|-------------------|------------------------|
 | Scope | Multi-cloud, SaaS, open-source | AWS-specific only |
 | Source | Web search, multiple sources | AWS Knowledge MCP (authoritative) |
-| Depth | Build vs buy analysis | Deep AWS service analysis |
+| Depth | Market options, checked facts and costs | Deep AWS service analysis |
 | Regional | General | `get_regional_availability` for eu-west-2 |
 | Compliance | General UK Gov | AWS-specific UK compliance |
 | Code samples | Limited | CDK, CloudFormation, Terraform |
@@ -172,7 +172,7 @@ When UK Government project detected:
 
 **When to use which**:
 
-- Use `/arckit:research` for cloud-agnostic evaluation or build vs buy
+- Use `/arckit:research` for cloud-agnostic market options and costs
 - Use `/arckit:aws-research` when AWS is the target platform
 
 ---

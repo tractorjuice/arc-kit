@@ -39,7 +39,7 @@ Commands you delegate to specialists but review or consume outputs from:
 | `/arckit:risk` | Review architecture risks, ensure mitigations align with principles | [Guide](../risk.md) |
 | `/arckit:sobc` | Review business case for strategic alignment | [Guide](../sobc.md) |
 | `/arckit:requirements` | Review requirements for completeness, traceability | [Guide](../requirements.md) |
-| `/arckit:research` | Review technology research and build vs buy recommendations | [Guide](../research.md) |
+| `/arckit:research` | Review technology research: options, checked facts and published costs | [Guide](../research.md) |
 | `/arckit:adr` | Chair ADR reviews, ensure decisions align with principles | [Guide](../adr.md) |
 | `/arckit:hld-review` | Lead HLD review against principles and requirements | [Guide](../hld-review.md) |
 | `/arckit:dld-review` | Lead DLD review for implementation readiness | [Guide](../dld-review.md) |

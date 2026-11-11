@@ -334,4 +334,4 @@ Return ONLY a concise summary to the user:
 - **Subagents dispatched** — `arckit-gov-reuse-reader` (per capability) · `arckit-gov-reuse-writer` (final render)
 - **External tools** — none directly (delegated to reader)
 - **MCP servers** — none directly (the reader uses `mcp__govreposcrape__search_uk_gov_code` for discovery and `mcp__govreposcrape__dependency_compare` for pairwise overlap %)
-- **Related commands** — `/arckit:requirements` (input) · `/arckit:research` (downstream build vs buy) · `/arckit:adr` (downstream reuse decisions)
+- **Related commands** — `/arckit:requirements` (input) · `/arckit:research` (downstream market options) · `/arckit:adr` (downstream reuse decisions)

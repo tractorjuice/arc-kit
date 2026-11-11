@@ -157,7 +157,7 @@ ArcKit includes 6 autonomous research agents that run as sub-agents. These handl
 
 | Agent | Purpose |
 |-------|---------|
-| `arckit-research` | Market research, vendor evaluation, build vs buy, TCO |
+| `arckit-research` | Market research: options, checked facts, published costs |
 | `arckit-datascout` | Data source discovery, API catalogue search |
 | `arckit-aws-research` | AWS service research via AWS Knowledge MCP |
 | `arckit-azure-research` | Azure service research via Microsoft Learn MCP |

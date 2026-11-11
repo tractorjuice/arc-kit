@@ -13,7 +13,7 @@
 | Scenario | Prompt seed | Focus |
 |---------|-------------|-------|
 | Options for a capability | “Research the options for <capability>, with costs” | Evidence for the build-or-buy decision in `/arckit:wardley` and `/arckit:sobc` |
-| Supplier shortlist | “Research G-Cloud services for <need> including pricing tiers” | Public sector supplier discovery |
+| Supplier discovery | “Research G-Cloud services for <need> including pricing tiers” | Public sector suppliers and their published prices |
 | Standards review | “Research regulatory obligations for <domain>” | Highlights policies, certifications, compliance |
 | Migration | “Research tooling to migrate from <legacy> to <target>” | Guides modernisation approaches |
 | Risk investigation | “Research security/operational risks for <technology>” | Informs risk register and mitigations |
@@ -28,7 +28,7 @@ Add constraints (budget, data residency, clearance) in the prompt for tailored r
 /arckit:research Research <topic> for <project>
 ```
 
-Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
+Outputs: `projects/<id>/research/ARC-<id>-RSCH-001-v1.0.md`, plus a vendor profile in `vendors/` for each vendor found and a tech note in `tech-notes/` for each significant technology finding.
 
 > **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
 
@@ -42,7 +42,7 @@ Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
 claude remote-control
 ```
 
-Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the agent reaches a decision point (vendor shortlist confirmation, build vs buy direction). ArcKit's minimum Claude Code floor (v2.1.295) already covers the v2.1.110 RC requirement.
+Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the run needs your input. ArcKit's minimum Claude Code floor (v2.1.295) already covers the v2.1.110 RC requirement.
 
 Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local `claude` process must keep running.
 

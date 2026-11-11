@@ -187,14 +187,14 @@ When UK Government project detected:
 |---------|-------------------|------------------------|
 | Scope | Multi-cloud, SaaS, open-source | Google Cloud-specific only |
 | Source | Web search, multiple sources | Google Developer Knowledge MCP (authoritative) |
-| Depth | Build vs buy analysis | Deep Google Cloud service analysis |
+| Depth | Market options, checked facts and costs | Deep Google Cloud service analysis |
 | Compliance | General UK Gov | Google Cloud-specific UK compliance |
 | Code samples | Limited | Terraform, Cloud Build |
 | Cost estimates | High-level | Detailed Google Cloud pricing |
 
 **When to use which**:
 
-- Use `/arckit:research` for cloud-agnostic evaluation or build vs buy
+- Use `/arckit:research` for cloud-agnostic market options and costs
 - Use `/arckit:gcp-research` when Google Cloud is the target platform
 
 ---

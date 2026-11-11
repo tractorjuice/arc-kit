@@ -123,14 +123,14 @@ When UK Government project detected:
 |---------|-------------------|-------------------------|
 | Scope | Multi-cloud, SaaS, open-source | Azure-specific only |
 | Source | Web search, multiple sources | Microsoft Learn MCP (authoritative) |
-| Depth | Build vs buy analysis | Deep Azure service analysis |
+| Depth | Market options, checked facts and costs | Deep Azure service analysis |
 | Compliance | General UK Gov | Azure-specific UK compliance |
 | Code samples | Limited | Bicep, Terraform, SDKs |
 | Cost estimates | High-level | Detailed Azure pricing |
 
 **When to use which**:
 
-- Use `/arckit:research` for cloud-agnostic evaluation or build vs buy
+- Use `/arckit:research` for cloud-agnostic market options and costs
 - Use `/arckit:azure-research` when Azure is the target platform
 
 ---

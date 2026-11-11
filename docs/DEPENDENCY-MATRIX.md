@@ -204,7 +204,7 @@ Most procurement commands require ARC-*-REQ-*.md:
 - **tenders** → Depends on: principles (O), requirements (O)
   - Note: Procurement market intelligence from the UK Tenders MCP — award-value benchmarks, top suppliers, incumbency/concentration across more than 700k UK contracting processes (October 2026)
   - Requires the bundled `uk-tenders` MCP server (keyless, deferred, best-effort availability)
-  - Outputs TNDR artefact; feeds into sobc (Economic Case benchmarks), risk (concentration risk), research (build-vs-buy market context)
+  - Outputs TNDR artefact; feeds into sobc (Economic Case benchmarks), risk (concentration risk), research (market context)
   - Agent-delegating command (reader/orchestrator/writer three-tier split); shares `arckit-tenders-reader` with `/arckit:competitors`
 - **competitors** → Depends on: principles (O), requirements (O)
   - Note: Competitor landscape from the UK Tenders MCP — rival suppliers, awarded-value market share, head-to-head comparison, concentration analysis
@@ -828,7 +828,7 @@ Added 11 community-overlay commands shipping in the new 13th marketplace plugin 
 - **Added**: `/arckit:tenders` command (85th ArcKit command) for procurement market intelligence from the UK Tenders MCP
 - **Updated**: Tier 7 Procurement to include tenders command
 - **Dependencies**: requirements (O), sobc (O), research (O) — all optional; command can run standalone with only a keyword or CPV scope
-- **Consumed by**: sobc (O — Economic Case benchmarks), risk (O — concentration risk), research (O — build-vs-buy market context)
+- **Consumed by**: sobc (O — Economic Case benchmarks), risk (O — concentration risk), research (O — market context)
 - **Doc-type produced**: `TNDR` (Procurement Market Intelligence, regime UK)
 - **Updated**: Commands Documented count from 84 to 85
 - **Note**: Agent-delegating command (reader/orchestrator/writer three-tier split). Requires bundled `uk-tenders` MCP server (keyless, deferred, best-effort). Not added to the main DSM table because it produces no artifact currently consumed as a MANDATORY input by any other command — fits alongside datascout in the optional-input pattern.

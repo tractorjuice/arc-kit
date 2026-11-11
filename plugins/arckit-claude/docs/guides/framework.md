@@ -34,7 +34,7 @@ The `/arckit:framework` command **synthesises and organises** all existing artif
 | Stakeholder Analysis (STKE) | Recommended | Stakeholder context, roles, influence, and communication needs |
 | Architecture Strategy (STRAT) | Recommended | Strategic direction, capability gaps, target state vision |
 | Data Model (DATA) | Recommended | Data architecture, entity relationships, data governance needs |
-| Research Report (RSCH) | Recommended | Technology research findings, vendor evaluations, build vs buy analysis |
+| Research Report (RSCH) | Recommended | Technology research findings: options, checked facts and published costs |
 | All other ARC-* artifacts | Optional | Any additional artifact (ADR, RISK, SOBC, DIAG, WARD, etc.) can be included and categorised into framework phases |
 
 > **Note**: At minimum, architecture principles and requirements must exist before running. The more artifacts available, the richer and more comprehensive the framework will be.

@@ -390,7 +390,7 @@ Concretely, and regardless of how complete an artefact looks:
 - **`/arckit:atrs` and `/arckit:ai-playbook` do not make an algorithmic tool lawful, fair, or transparent.** An ATRS record is published by the department after its own internal clearance, and the UK Government AI Playbook principles are obligations on the deploying organisation.
 - **The EU overlay does not perform conformity assessment.** It drafts documentation referencing the AI Act, NIS2, DORA, CRA, DSA and the Data Act. It is not a notified-body activity, it does not determine your risk classification, and it does not track amendments or implementing acts as they are made.
 - **`/arckit:jsp-936` and the NHS clinical safety commands are not assurance either.** Defence AI assurance requires the accountable authority; DCB0129 and DCB0160 require a suitably registered Clinical Safety Officer.
-- **No output is a procurement decision.** Research, scoring, and evaluation commands rank options against stated criteria. The Senior Responsible Owner and the procurement officer decide, under whatever framework rules apply to them.
+- **No output is a procurement decision.** `/arckit:research` reports evidence. The cloud research, scoring and evaluation commands rank options against stated criteria. The Senior Responsible Owner and the procurement officer decide, under whatever framework rules apply to them.
 
 Two limits apply to everything above:
 

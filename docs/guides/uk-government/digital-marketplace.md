@@ -30,7 +30,7 @@ Use `/arckit:sow`, `/arckit:evaluate`, and `/arckit:research` to prepare complia
 
 | Step | Command | Purpose |
 |------|---------|---------|
-| Supplier landscape | `/arckit:research Research G-Cloud services for <capability>` | Build shortlist, identify price points |
+| Supplier landscape | `/arckit:research Research G-Cloud services for <capability>` | List suppliers, identify price points |
 | SOW / Outcome spec | `/arckit:sow Generate SOW for <route>` | Structure scope, deliverables, timelines, evaluation |
 | Evaluation design | `/arckit:evaluate Create evaluation framework for <procurement>` | Weight criteria (technical, delivery, compliance, price, social value) |
 | Proposal scoring | `/arckit:evaluate Score <supplier>` | Consistent scoring, evidence, comments |
