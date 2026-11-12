@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **The command films are easier to read.** Every film is being re-made with larger text, because the first versions were hard to read on a phone. The first 101 are live: all 76 core command films and the films for the AI agent architecture, EU, Austria and part of the Australia overlays. The guide pages and the commands page now link to the new versions; the old links still play.
 - **`/arckit:research` now reports evidence and makes no decisions.** It used to score each option, rank the options and give a build-or-buy verdict for each category. It now reports what each option offers, lacks and costs, with sources, and the market evidence for each capability: how many products cover it, from how many vendors, and whether a utility, GOV.UK platform or open-source project does. `/arckit:wardley` decides how to source each capability, `/arckit:sobc` appraises value for money, and `/arckit:evaluate` and `/arckit:score` score suppliers. `/arckit:sobc` now reads the research report's costs and the Wardley map's sourcing.
 
 ### Added
