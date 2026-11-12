@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://arckit.org/</loc>
-        <lastmod>2026-11-09</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
@@ -26,7 +26,7 @@
     </url>
     <url>
         <loc>https://arckit.org/articles.html</loc>
-        <lastmod>2026-11-09</lastmod>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -2038,6 +2038,12 @@
     <url>
         <loc>https://arckit.org/share/2026-11-09-arckit-v6-21-a-second-look.html</loc>
         <lastmod>2026-11-09</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/share/2026-11-12-arckit-v6-22-research-reports-evidence.html</loc>
+        <lastmod>2026-11-12</lastmod>
         <changefreq>yearly</changefreq>
         <priority>0.6</priority>
     </url>
