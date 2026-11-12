@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **arckit.org now tells agents where ArcKit's plugins and skills are.** The site publishes an Agentic Resource Discovery (ARD) manifest at `https://arckit.org/.well-known/ard.json`, linked from the homepage. It lists the seven public ArcKit plugin and extension archives (Claude Code, Gemini CLI, Codex CLI, OpenCode, GitHub Copilot, Mistral Vibe and Kimi Code) and the four reference skills, each with the questions it answers, so a registry or agent that reads ARD can find them. Lighthouse's agentic browsing audit reports the manifest as valid.
 - **`/arckit:research` now reads prices from G-Cloud pricing documents.** Suppliers publish their G-Cloud prices in a PDF linked from the listing, which web fetch can't read, so those options had no price in the report or for the business case. For the leading options in each category, ArcKit now downloads that PDF from the Digital Marketplace and reads the prices from it. Claude Code only.
 
 ### Fixed
