@@ -561,3 +561,15 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:activity:752546939692498944
 ### Q46. ArcKit 6.21.0 article — Medium, ArcKit publication — published 9 November
 
 Published: <https://medium.com/arckit/arckit-v6-21-0-a-second-look-from-someone-who-wasnt-in-the-room-7b9de499928e>. Imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: Enterprise Architecture, Procurement, Digital Transformation, Government, Claude Code. The maintainer's 301 subscribers were notified. The four known import fixes were needed, plus one more: Medium's alt text takes at most 500 characters, so the image has a shorter version than the LinkedIn alt text. The share page's headings use a non-breaking space before the last word, so match on normalised text when scripting the empty-line fixes.
+
+### Q47. ArcKit 6.22.0 article — LinkedIn page, with the article hero (maintainer's voice) — posted 12 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:share:7526712465062133760>. Copy: `docs/articles/2026-11-12-arckit-v6-22-research-reports-evidence-linkedin.md`, with the redesigned hero and the alt text recorded in that file, plus one added line: "The article also says what a second reader and a blind build estimate found when I pointed them at research." A first version went up minutes earlier with the plain hero and was deleted and recreated on the maintainer's word, because LinkedIn can't swap the image on a published post. The group version hasn't gone out.
+
+### Q48. ArcKit 6.22.0 — Discord #announcements — posted 12 November
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/1570505066853695590>, with the redesigned hero attached. Existing users will see a different research report the next time they run the command, so it belongs in #announcements. It says where each decision is now made, lists the other changes, and tells people to update and to run `/arckit:wardley` after research. The first Discord announcement since 6.19.0: 6.20.0 and 6.21.0 had none.
+
+### Q49. ArcKit 6.22.0 article — Medium, ArcKit publication — published 12 November
+
+Published: <https://medium.com/arckit/arckit-v6-22-0-research-reports-the-evidence-you-make-the-decision-3cfde63c0b5e>. Imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: ArcKit, Enterprise Architecture, Procurement, Government, Open Source. The maintainer's 300 subscribers were notified. The known import fixes were needed (empty heading lines, the code block, the byline, the community list), and the image has a shorter alt text because Medium takes at most 500 characters.
