@@ -219,7 +219,7 @@ Before submitting:
 1. **Test command execution**:
 
    ```bash
-   # Claude Code (requires ArcKit plugin: /plugin marketplace add tractorjuice/arc-kit)
+   # Claude Code (requires ArcKit plugin: /plugin marketplace add tractorjuice/arckit-claude)
    /arckit:your-command Test description
 
    # Gemini CLI

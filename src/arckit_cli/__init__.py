@@ -573,7 +573,7 @@ def init(
         console.print("4. kimi (Kimi Code CLI)")
         console.print()
         console.print("[dim]For Claude Code, use the ArcKit plugin instead:[/dim]")
-        console.print("[dim]  /plugin marketplace add tractorjuice/arc-kit[/dim]")
+        console.print("[dim]  /plugin marketplace add tractorjuice/arckit-claude[/dim]")
         console.print("[dim]For Gemini CLI, use the ArcKit extension instead:[/dim]")
         console.print(
             "[dim]  gemini extensions install https://github.com/tractorjuice/arckit-gemini[/dim]"
@@ -588,7 +588,7 @@ def init(
             "[yellow]Claude Code support has moved to the ArcKit plugin.[/yellow]"
         )
         console.print("Install in Claude Code with:")
-        console.print("  [cyan]/plugin marketplace add tractorjuice/arc-kit[/cyan]")
+        console.print("  [cyan]/plugin marketplace add tractorjuice/arckit-claude[/cyan]")
         console.print("\nThen enable the plugin from the Discover tab.")
         raise typer.Exit(0)
 

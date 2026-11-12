@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **`arckit init` now sends Claude Code users to the right marketplace.** The assistant menu and `arckit init --ai claude` both told people to run `/plugin marketplace add tractorjuice/arc-kit`, the older marketplace, and so did the testing step in CONTRIBUTING.md. All three now name `tractorjuice/arckit-claude`, as the README has since June. The older marketplace still works for anyone who already added it, but adding both registers every plugin twice. A new test fails on any instruction that names the old one.
 - **The sitemap now says when each guide last changed.** None of the 262 guide pages on arckit.org had a date in the sitemap, so a search engine had no signal that a guide had been corrected. Each guide's entry now carries the date its text last changed, and the date moves only when that guide's own text does.
 - **`/arckit:research` now measures each option against the category it was found in.** It used to measure every product against the whole project's capability list, so a good dashboard tool looked weak for not being a forms tool. A product that does more than the category asks no longer looks worse for it.
 
