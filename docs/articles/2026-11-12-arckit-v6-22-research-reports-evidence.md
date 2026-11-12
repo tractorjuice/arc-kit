@@ -41,6 +41,22 @@ Research used to measure every product against the whole project's capability li
 
 Each option is now measured against the category it was found in. A product that does more than its category asks no longer looks worse for it.
 
+## How research works
+
+`/arckit:research` splits the work so that nothing read from the web can reach the part that writes your report. A separate reader gathers the evidence for each category, from supplier pages, the Digital Marketplace and open-source projects. ArcKit checks what each reader hands back. A writer with no web access then turns the checked evidence into the report.
+
+## A second look at research itself
+
+The last release gave design reviews and vendor scores a second look, using lenses adapted from Google's [Elephant-Goldfish Model](https://egm.dev), which pairs a reviewer who knows everything with one who knows nothing. On 10 November I pointed the same idea at research, on a fictional council's requirements across three areas: forms, dashboards and documents.
+
+I tried two checks. A second reader gathered the same evidence again, knowing nothing of the first reader's work. And a build estimate was made blind, without seeing any supplier's price.
+
+- **The second reader disagreed on 41 of 144 fields.** It changed the leading dashboard option for a real reason: the first reader had missed a capability the project needs.
+- **Seeing prices moved the build estimate.** It came out higher in five of six comparisons when supplier prices were visible.
+- **22 of 44 options had no usable price.** Most were G-Cloud listings with the price in a PDF.
+
+Neither check is in this release. What they showed me was where research itself was weak, and that's what 6.22.0 changes: the missing prices, the measure that marked a product down for doing more, and a verdict resting on both. Once the G-Cloud documents could be read, six of nine gave a usable price.
+
 ## Also in this release
 
 - **The command films are easier to read.** I'm re-making every film with larger text, because the first versions were hard to read on a phone. The first 101 are live, including all 76 core command films. The guide pages and the commands page link to the new ones, and the old links still play.

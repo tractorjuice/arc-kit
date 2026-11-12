@@ -23,7 +23,7 @@
     <meta property="og:url" content="https://arckit.org/share/2026-11-12-arckit-v6-22-research-reports-evidence.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/articles/2026-11-12-arckit-v6-22-research-reports-evidence-hero.png">
-    <meta property="og:image:alt" content="ArcKit v6.22.0 hero: the research report holds what each option offers, lacks and costs and how many products and vendors cover it, while the Wardley map decides how to source, the business case appraises value for money, and evaluate and score assess the suppliers.">
+    <meta property="og:image:alt" content="ArcKit v6.22.0 hero: evidence, not a verdict; comparable, not ranked. The research report holds what each option offers, lacks and costs and how many products and vendors cover it, while the Wardley map decides how to source, the business case appraises value for money, and evaluate and score assess the suppliers.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ArcKit v6.22.0: Research Reports the Evidence, You Make the Decision">
     <meta name="twitter:description" content="/arckit:research now reports what each option offers, lacks and costs, and makes no build-or-buy call. It also reads prices from G-Cloud pricing documents.">
@@ -293,7 +293,7 @@
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-width-container">
             <a href="../articles.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Articles</a>
-<img class="app-article-hero-img" src="../articles/2026-11-12-arckit-v6-22-research-reports-evidence-hero.png" alt="ArcKit v6.22.0 hero: the research report holds what each option offers, lacks and costs and how many products and vendors cover it, while the Wardley map decides how to source, the business case appraises value for money, and evaluate and score assess the suppliers.">
+<img class="app-article-hero-img" src="../articles/2026-11-12-arckit-v6-22-research-reports-evidence-hero.png" alt="ArcKit v6.22.0 hero: evidence, not a verdict; comparable, not ranked. The research report holds what each option offers, lacks and costs and how many products and vendors cover it, while the Wardley map decides how to source, the business case appraises value for money, and evaluate and score assess the suppliers.">
 <div class="app-article-meta"><span class="app-article-meta__date">12 November 2026</span></div>
 <article id="content" class="app-markdown">
 <p><strong>ArcKit v6.22.0 is out. <code>/arckit:research</code> now reports what it found and stops there: no scores, no ranking, no build-or-buy verdict. It also reads prices from G-Cloud pricing documents, so more options arrive with a real price.</strong></p>
@@ -319,6 +319,17 @@
 <h2 id="a-fairer-measure-for-each-option">A fairer measure for each option</h2>
 <p>Research used to measure every product against the whole project's capability list. A good dashboard tool looked weak for not being a forms tool.</p>
 <p>Each option is now measured against the category it was found in. A product that does more than its category asks no longer looks worse for it.</p>
+<h2 id="how-research-works">How research works</h2>
+<p><code>/arckit:research</code> splits the work so that nothing read from the web can reach the part that writes your report. A separate reader gathers the evidence for each category, from supplier pages, the Digital Marketplace and open-source projects. ArcKit checks what each reader hands back. A writer with no web access then turns the checked evidence into the report.</p>
+<h2 id="a-second-look-at-research-itself">A second look at research itself</h2>
+<p>The last release gave design reviews and vendor scores a second look, using lenses adapted from Google's <a href="https://egm.dev">Elephant-Goldfish Model</a>, which pairs a reviewer who knows everything with one who knows nothing. On 10 November I pointed the same idea at research, on a fictional council's requirements across three areas: forms, dashboards and documents.</p>
+<p>I tried two checks. A second reader gathered the same evidence again, knowing nothing of the first reader's work. And a build estimate was made blind, without seeing any supplier's price.</p>
+<ul>
+<li><strong>The second reader disagreed on 41 of 144 fields.</strong> It changed the leading dashboard option for a real reason: the first reader had missed a capability the project needs.</li>
+<li><strong>Seeing prices moved the build estimate.</strong> It came out higher in five of six comparisons when supplier prices were visible.</li>
+<li><strong>22 of 44 options had no usable price.</strong> Most were G-Cloud listings with the price in a PDF.</li>
+</ul>
+<p>Neither check is in this release. What they showed me was where research itself was weak, and that's what 6.22.0 changes: the missing prices, the measure that marked a product down for doing more, and a verdict resting on both. Once the G-Cloud documents could be read, six of nine gave a usable price.</p>
 <h2 id="also-in-this-release">Also in this release</h2>
 <ul>
 <li><strong>The command films are easier to read.</strong> I'm re-making every film with larger text, because the first versions were hard to read on a phone. The first 101 are live, including all 76 core command films. The guide pages and the commands page link to the new ones, and the old links still play.</li>

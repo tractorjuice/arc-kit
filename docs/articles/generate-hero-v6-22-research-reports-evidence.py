@@ -5,6 +5,10 @@ decisions moved to. A strip of facts underneath. Same house style as the
 sibling generate-hero-*.py scripts.
 
     uv run --with pillow python docs/articles/generate-hero-v6-22-research-reports-evidence.py
+
+The published hero is a redesigned version of this layout, supplied by the
+maintainer on 12 November 2026. Running this script overwrites it with the
+plain version, so only run it to start a new design.
 """
 
 from pathlib import Path
