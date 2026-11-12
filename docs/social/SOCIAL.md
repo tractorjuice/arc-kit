@@ -564,7 +564,7 @@ Published: <https://medium.com/arckit/arckit-v6-21-0-a-second-look-from-someone-
 
 ### Q47. ArcKit 6.22.0 article — LinkedIn page, with the article hero (maintainer's voice) — posted 12 November
 
-Posted: <https://www.linkedin.com/feed/update/urn:li:share:7526712465062133760>. Copy: `docs/articles/2026-11-12-arckit-v6-22-research-reports-evidence-linkedin.md`, with the redesigned hero and the alt text recorded in that file, plus one added line: "The article also says what a second reader and a blind build estimate found when I pointed them at research." A first version went up minutes earlier with the plain hero and was deleted and recreated on the maintainer's word, because LinkedIn can't swap the image on a published post. The group version hasn't gone out.
+Posted: <https://www.linkedin.com/feed/update/urn:li:share:7526712465062133760>. Copy: `docs/articles/2026-11-12-arckit-v6-22-research-reports-evidence-linkedin.md`, with the redesigned hero and the alt text recorded in that file, plus one added line: "The article also says what a second reader and a blind build estimate found when I pointed them at research." A first version went up minutes earlier with the plain hero and was deleted and recreated on the maintainer's word, because LinkedIn can't swap the image on a published post. The group version is Q50.
 
 ### Q48. ArcKit 6.22.0 — Discord #announcements — posted 12 November
 
@@ -573,3 +573,17 @@ Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/15
 ### Q49. ArcKit 6.22.0 article — Medium, ArcKit publication — published 12 November
 
 Published: <https://medium.com/arckit/arckit-v6-22-0-research-reports-the-evidence-you-make-the-decision-3cfde63c0b5e>. Imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: ArcKit, Enterprise Architecture, Procurement, Government, Open Source. The maintainer's 300 subscribers were notified. The known import fixes were needed (empty heading lines, the code block, the byline, the community list), and the image has a shorter alt text because Medium takes at most 500 characters.
+
+### Q50. ArcKit 6.22.0 — LinkedIn group (maintainer's voice) — posted 12 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-7526716431405592577>, with the redesigned hero and the same alt text as Q47. Reworded from the page post and ending on a question, because the group is where feedback is asked for:
+
+> ArcKit 6.22.0 is out, and I've taken the verdict out of /arckit:research.
+>
+> It used to score each option, rank them and say build or buy. I didn't trust that. A research report knows what's on the market. It doesn't know how you want to source things, and it hasn't looked at value for money.
+>
+> So it now reports what each option offers, lacks and costs, with sources. The Wardley map decides how to source, and the business case appraises value for money.
+>
+> Does that match how you make build-or-buy calls, or did you find the verdict useful? I'd like to know before the next release.
+>
+> <https://arckit.org/share/2026-11-12-arckit-v6-22-research-reports-evidence.html>
