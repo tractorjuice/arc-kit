@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **The sitemap now says when each guide last changed.** None of the 262 guide pages on arckit.org had a date in the sitemap, so a search engine had no signal that a guide had been corrected. Each guide's entry now carries the date its text last changed, and the date moves only when that guide's own text does.
 - **`/arckit:research` now measures each option against the category it was found in.** It used to measure every product against the whole project's capability list, so a good dashboard tool looked weak for not being a forms tool. A product that does more than the category asks no longer looks worse for it.
 
 ## [6.21.0] — 2026-11-09
