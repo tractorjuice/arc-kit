@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-arc42",
   "displayName": "ArcKit arc42",
-  "version": "6.21.0",
+  "version": "6.22.0",
   "description": "arc42 — assembles an arc42 architecture description from the project's existing ArcKit artefacts, citing each source and listing the sections no artefact covers yet; documents the quality scenarios, crosscutting concepts and technical debt it summarises; and hands it over to Spec Kit. 5 commands: arc42, arc42-quality, arc42-concepts, arc42-debt, arc42-handover. Recipe: arc42-full.",
   "author": {
     "name": "ArcKit Contributors",
@@ -34,7 +34,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.21.0"
+      "version": "=6.22.0"
     }
   ]
 }

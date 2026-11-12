@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.22.0] — 2026-11-12
+
 ### Changed
 
 - **The command films are easier to read.** Every film is being re-made with larger text, because the first versions were hard to read on a phone. The first 101 are live: all 76 core command films and the films for the AI agent architecture, EU, Austria and part of the Australia overlays. The guide pages and the commands page now link to the new versions; the old links still play.
