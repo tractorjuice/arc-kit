@@ -16,6 +16,10 @@ marketplace: the `marketplace add` command, a plugin id such as `arckit@arc-kit`
 
 A page that explains how to move off the old marketplace has to name it. Add that page to
 EXEMPT_FILES with the reason.
+
+One use of the old source is the opposite of an instruction to install from it: an entry in
+a `blockedMarketplaces` list, which stops Claude Code adding it. A settings source within
+BLOCKLIST_REACH lines below a `blockedMarketplaces` key is left alone.
 """
 
 from __future__ import annotations
@@ -39,6 +43,12 @@ OLD_PLUGIN_ID = re.compile(r"\barckit[\w-]*@arc-kit(?![\w-])")
 OLD_SETTINGS_SOURCE = re.compile(r"""["']repo["']\s*:\s*["']tractorjuice/arc-kit["']""")
 
 PATTERNS = (OLD_MARKETPLACE_ADD, OLD_PLUGIN_ID, OLD_SETTINGS_SOURCE)
+
+# How far below a `blockedMarketplaces` key a blocked source can sit. A pretty-printed entry
+# puts `"repo"` three lines below the key; a second entry in the same list, seven.
+BLOCKLIST_REACH = 8
+BLOCKLIST_KEY = re.compile(r"""["']?blockedMarketplaces["']?\s*:""")
+ALLOWING_KEY = re.compile(r"""["']?(?:extraKnownMarketplaces|strictKnownMarketplaces|allowedMarketplaces|additionalMarketplaces)["']?\s*:""")
 
 EXEMPT_FILES = {
     # Other people's repo names, descriptions and PR titles, and the page made from them.
@@ -71,6 +81,36 @@ def old_marketplace_mentions(text: str) -> list[str]:
     return [m.group(0) for pattern in PATTERNS for m in pattern.finditer(text)]
 
 
+def in_blocklist(lines: list[str], index: int) -> bool:
+    """Whether the line at `index` sits in a `blockedMarketplaces` list.
+
+    Reads upwards from the line. The nearest marketplace key decides, so a source under
+    `extraKnownMarketplaces` that follows a blocklist in the same example is still reported.
+    """
+    for back in range(0, BLOCKLIST_REACH + 1):
+        if index - back < 0:
+            break
+        line = lines[index - back]
+        if BLOCKLIST_KEY.search(line):
+            return True
+        if ALLOWING_KEY.search(line):
+            return False
+    return False
+
+
+def old_marketplace_lines(text: str) -> list[tuple[int, str]]:
+    """Each (line number, mention) in `text` that sends a reader to the old marketplace."""
+    lines = text.splitlines()
+    found = []
+    for index, line in enumerate(lines):
+        for pattern in PATTERNS:
+            for m in pattern.finditer(line):
+                if pattern is OLD_SETTINGS_SOURCE and in_blocklist(lines, index):
+                    continue
+                found.append((index + 1, m.group(0)))
+    return found
+
+
 def test_no_instruction_names_the_old_marketplace():
     found = []
     scanned = 0
@@ -82,9 +122,8 @@ def test_no_instruction_names_the_old_marketplace():
         except (UnicodeDecodeError, OSError):
             continue  # a binary file, a file deleted in the working tree, or a submodule
         scanned += 1
-        for line_number, line in enumerate(text.splitlines(), start=1):
-            for mention in old_marketplace_mentions(line):
-                found.append(f"{path}:{line_number}: {mention}")
+        for line_number, mention in old_marketplace_lines(text):
+            found.append(f"{path}:{line_number}: {mention}")
     assert scanned > 1000, f"only {scanned} files read, so the listing of tracked files is wrong"
     assert not found, (
         "these lines send readers to the old `arc-kit` marketplace; use `tractorjuice/arckit-claude` "
@@ -127,6 +166,56 @@ def test_the_check_catches_the_old_forms(line):
 )
 def test_the_check_leaves_the_new_forms_and_plain_repo_links_alone(line):
     assert not old_marketplace_mentions(line), line
+
+
+BLOCKED = """{
+  "blockedMarketplaces": [
+    {
+      "source": "github",
+      "repo": "tractorjuice/arc-kit"
+    }
+  ]
+}"""
+
+ADDED = """{
+  "extraKnownMarketplaces": {
+    "arc-kit": {
+      "source": {
+        "source": "github",
+        "repo": "tractorjuice/arc-kit"
+      }
+    }
+  }
+}"""
+
+BLOCKED_THEN_ADDED = """{
+  "blockedMarketplaces": [],
+  "extraKnownMarketplaces": {
+    "arc-kit": {"source": {"source": "github", "repo": "tractorjuice/arc-kit"}}
+  }
+}"""
+
+ALLOWLISTED = """{
+  "strictKnownMarketplaces": [
+    {"source": "github", "repo": "tractorjuice/arc-kit"}
+  ]
+}"""
+
+FAR_BELOW_A_BLOCKLIST = '"blockedMarketplaces": []' + "\n" * (BLOCKLIST_REACH + 1) + '"repo": "tractorjuice/arc-kit"'
+
+
+def test_a_blocklist_entry_is_not_an_instruction():
+    assert old_marketplace_lines(BLOCKED) == []
+
+
+@pytest.mark.parametrize("text", [ADDED, BLOCKED_THEN_ADDED, ALLOWLISTED, FAR_BELOW_A_BLOCKLIST])
+def test_a_source_outside_a_blocklist_is_still_caught(text):
+    assert [mention for _, mention in old_marketplace_lines(text)] == ['"repo": "tractorjuice/arc-kit"']
+
+
+def test_a_plugin_id_inside_a_blocklist_is_still_caught():
+    text = '"blockedMarketplaces": [],\n"enabledPlugins": {"arckit@arc-kit": true}'
+    assert [mention for _, mention in old_marketplace_lines(text)] == ["arckit@arc-kit"]
 
 
 @pytest.mark.parametrize(

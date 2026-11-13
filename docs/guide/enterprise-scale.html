@@ -554,6 +554,30 @@ access. Claude Code v2.1.195 and later asks users to install and trust plugins
 before they run, even when a project enables them. For managed dev containers
 or golden images, pre-populate the plugin cache with <code>CLAUDE_CODE_PLUGIN_SEED_DIR</code>
 so startup does not need to clone the marketplace at runtime.</p>
+<p><strong>Keep the second ArcKit marketplace out.</strong> The <code>tractorjuice/arc-kit</code>
+repository publishes the same 20 plugins, under the same names, as a
+marketplace called <code>arc-kit</code>. A machine with both <code>arc-kit</code> and
+<code>arckit-claude</code> registered lists every plugin twice. The allowlist above
+prevents that, because it admits only <code>tractorjuice/arckit-claude</code>. If you
+aren't ready for an allowlist, block the one source instead:</p>
+<pre><code class="language-json">{
+  &quot;blockedMarketplaces&quot;: [
+    {
+      &quot;source&quot;: &quot;github&quot;,
+      &quot;repo&quot;: &quot;tractorjuice/arc-kit&quot;
+    }
+  ]
+}
+</code></pre>
+<p>Claude Code checks both lists again at session start, so a plugin already
+installed from the blocked marketplace stops loading. Reinstall it as
+<code>arckit@arckit-claude</code>.</p>
+<p>From Claude Code v2.1.321, a marketplace name declared in managed
+<code>extraKnownMarketplaces</code> can't be added from another source, and an entry of
+that name from elsewhere is hidden. A user therefore can't point the name
+<code>arckit-claude</code> at a fork. This pins the name only: it doesn't hide the
+differently named <code>arc-kit</code> marketplace, which is what the allowlist or the
+blocklist is for.</p>
 <h3 id="4-configure-arckit-options-and-mcp">4. Configure ArcKit options and MCP</h3>
 <p>At enable time, the ArcKit plugin exposes user configuration for organization
 defaults and optional MCP credentials:</p>
@@ -706,6 +730,11 @@ template overrides.</li>
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>v2.1.321</td>
+<td>A marketplace name declared in managed <code>extraKnownMarketplaces</code> can't be added from another source; an entry of that name from elsewhere is hidden, and plugins the declared marketplace lists are reinstalled from it</td>
+<td>A user can't point the managed <code>arckit-claude</code> name at a fork. It doesn't hide the differently named <code>arc-kit</code> marketplace; use the allowlist or <code>blockedMarketplaces</code> for that</td>
+</tr>
 <tr>
 <td>v2.1.319</td>
 <td>PostToolUse hooks run, with up to 10 seconds, on a tool call that finishes after a new message interrupts the turn; three permission and sandbox bypasses closed (a crafted Bash environment prefix, <code>sed</code> in accept-edits and auto mode, worktree creation); Bash deny and ask rules match commands written with quoted words; a plugin update installs a dependency the new version adds; <code>permissions.denyInsteadOfPrompting</code> added</td>
@@ -1307,7 +1336,7 @@ the <em>default</em> subagent model, and an agent definition's <code>model:</cod
 explicit per-spawn model takes precedence over it; v2.1.257 added
 <code>CLAUDE_CODE_SUBAGENT_MODEL_FORCE</code> to restore the old override-everything
 behaviour. Every ArcKit agent declares <code>model: inherit</code>. Whether that
-declaration counts as an override is being verified on tractorjuice/arc-kit#580;
+declaration counts as an override is being verified on tractorjuice/arc-kit#1109;
 until it is, a fleet that routes ArcKit's readers and writers to a cheaper
 model should set <code>CLAUDE_CODE_SUBAGENT_MODEL_FORCE</code> rather than rely on the
 default, and can read the model each subagent actually ran on from <code>/tasks</code>
@@ -1321,7 +1350,11 @@ driving adoption across many teams without a manual rollout. Pair with
 <code>strictKnownMarketplaces</code> / <code>blockedMarketplaces</code> if you want to <em>restrict</em>
 installs to only the marketplaces you've vetted. Both accept <code>owner/*</code>
 wildcards from Claude Code v2.1.223, so <code>tractorjuice/*</code> allowlists the
-marketplace and every standalone extension repo in one entry.</p>
+marketplace and every standalone extension repo in one entry. That wildcard
+also admits <code>tractorjuice/arc-kit</code>, the second marketplace described under
+<a href="#3-deploy-the-arckit-marketplace-and-plugin">Deploy the ArcKit marketplace and plugin</a>,
+so add the <code>blockedMarketplaces</code> entry shown there. The blocklist is checked
+first.</p>
 <h3 id="slice-usagecost-metrics-by-project">Slice usage/cost metrics by project</h3>
 <p>If you run Claude Code's OpenTelemetry export, set
 <code>OTEL_RESOURCE_ATTRIBUTES</code> (Claude Code v2.1.161+) to attach custom labels to
