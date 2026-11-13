@@ -10,6 +10,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **ArcKit now needs Claude Code v2.1.319 or later.** That release closes three ways a command could get past a permission check or the sandbox. It also runs ArcKit's after-write steps on an artefact written just as you send a new message; earlier versions skipped them, leaving the artefact with no provenance block and no entry in the published index. Run `claude update`, and if you set `minimumVersion` or `requiredMinimumVersion`, raise it to `2.1.319`. Below it ArcKit still runs and warns at session start.
+- **A plugin removed from the `arckit-claude` marketplace is now uninstalled for you.** The marketplace sets `forceRemoveDeletedPlugins`, so if a plugin is ever withdrawn, Claude Code removes it at the next session start and lists it under Flagged in `/plugin`, instead of leaving a copy that reports "not found in marketplace". No plugin is being removed.
+- **Eleven overlay READMEs give an install line that works in one step**: `claude plugin install <overlay> --marketplace tractorjuice/arckit-claude` adds the marketplace if needed and brings the core plugin with it (Claude Code 2.1.275 or later). The old line named no marketplace.
+
+### Fixed
+
+- **The core plugin's marketplace listing said 75 commands.** It has 76.
+- **The research handoff check no longer repeats a reader's own words in its errors.** When a reader's reply failed the check, the error lines named the offending key or value, so text a web page had planted could reach the main session inside ArcKit's own message. Errors now name positions in the schema only: unknown keys are one line that lists the keys the schema allows, and no value is quoted. The validator script used by the non-Claude extensions reports errors the same way. Follow-up to #1020.
+- **Only Claude Code's own details of a reader's result keep their text** when the check replaces the reply, so a field the check does not know cannot carry reader text past it.
+- **A report that no hook checked is validated before it is used.** If a reader is not run in the foreground, or the check does not run, its report arrives without the check's `valid` line. The research commands, `/arckit:evaluate` and `/arckit:score` now run the validator on such a report themselves and use only its output. `ENFORCEMENT.md` and `READER-PATTERN.md` now say plainly that these two cases are asked of the model and not enforced, which the earlier wording overstated.
 
 ## [6.22.0] — 2026-11-12
 

@@ -18,9 +18,19 @@
  *     sanitised payload (updatedToolOutput) and adds a one-line verdict.
  *     Otherwise (invalid, no JSON, or a reader that did not complete) it
  *     replaces the result with a neutral "withheld" note and adds the errors,
- *     which the orchestrator quotes in its single re-dispatch. The reader's
- *     raw text never reaches the orchestrator; only a launch receipt
- *     (`async_launched`), which carries no reader output, passes untouched.
+ *     which the orchestrator quotes in its single re-dispatch. The errors
+ *     name schema positions only and quote nothing the reader wrote. Of the
+ *     result's other fields, only Claude Code's own run details keep their text. A
+ *     launch receipt (`async_launched`) carries no reader output, so its
+ *     result is left alone and a note says the report will arrive where this
+ *     check can't see it, and how to check it.
+ *
+ *     This path can't hold a reply back when the hook itself doesn't run
+ *     (no Node, a timeout): Claude Code has already produced the result, and
+ *     a failed PostToolUse hook can only add a message. The commands
+ *     therefore count a report as checked only when this hook's verdict
+ *     follows it or it came through SubagentHandback, and run the validator
+ *     themselves on any other. See docs/ENFORCEMENT.md.
  *
  *   PreToolUse on SubagentHandback: in auto mode (Claude Code v2.1.271+) a
  *     subagent hands its report back through this tool, and the Agent result
@@ -128,16 +138,17 @@ function isExactPayload(message, payload) {
   }
 }
 
-// Error paths and messages can echo sanitised source text (a key, an enum
-// value), so each is cut short before it reaches the orchestrator.
-const MAX_ERROR_FIELD = 200;
-const clip = (s) => {
+// checkHandoff's errors name schema positions and quote nothing from the
+// payload (see reportable() in validate-handoff.mjs). The cut is a second
+// bound, not the control: a path is short, and a message can list a schema's
+// own keys or enum values.
+const clip = (s, max = 200) => {
   const t = String(s);
-  return t.length > MAX_ERROR_FIELD ? `${t.slice(0, MAX_ERROR_FIELD)}…` : t;
+  return t.length > max ? `${t.slice(0, max)}…` : t;
 };
 
 function formatErrors(errors) {
-  const shown = errors.slice(0, 20).map((e) => `- ${clip(e.path)}: ${clip(e.msg)}`);
+  const shown = errors.slice(0, 20).map((e) => `- ${clip(e.path)}: ${clip(e.msg, 600)}`);
   if (errors.length > 20) shown.push(`- … and ${errors.length - 20} more`);
   return shown.join('\n');
 }
@@ -148,11 +159,46 @@ function agentText(toolResponse) {
   return content.filter((b) => b && b.type === 'text').map((b) => b.text).join('\n');
 }
 
-/** Replace the reply text of an Agent result, keeping its other fields. */
+// Fields of an Agent result that Claude Code or the orchestrator wrote, never
+// the reader. Read from a live result on Claude Code v2.1.323 and from the
+// hooks reference.
+const RESULT_FIELDS = new Set([
+  'status', 'prompt', 'description', 'agentId', 'agentType', 'resolvedModel', 'modelsUsed',
+  'totalDurationMs', 'totalTokens', 'totalToolUseCount', 'usage', 'canContinueAgent',
+  'harnessNoteCount', 'harnessTailCount', 'harnessSectionHash', 'outputFile',
+]);
+
+/** A value with every string in it emptied: the same keys and types, no text. */
+function withoutText(value) {
+  if (typeof value === 'string') return '';
+  if (Array.isArray(value)) return value.map(withoutText);
+  if (value !== null && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, withoutText(v)]));
+  }
+  return value;
+}
+
+/**
+ * Replace the reply text of an Agent result. The fields listed above are kept
+ * as they are. Any other field keeps its key and its shape, so the result
+ * still looks like an Agent result to Claude Code, but every string in it is
+ * emptied: a field this hook has never seen can't carry reader text past the
+ * check.
+ */
 function replaceText(response, text) {
-  return typeof response === 'object' && response !== null
-    ? { ...response, content: [{ type: 'text', text }] }
-    : text;
+  if (typeof response !== 'object' || response === null) return text;
+  const kept = {};
+  for (const [k, v] of Object.entries(response)) {
+    if (k !== 'content') kept[k] = RESULT_FIELDS.has(k) ? v : withoutText(v);
+  }
+  return { ...kept, content: [{ type: 'text', text }] };
+}
+
+/** How the orchestrator checks a report this hook never saw. */
+function selfCheck(reader) {
+  const script = resolve(__dirname, '..', 'scripts', 'validate-handoff.mjs');
+  const schema = resolve(SCHEMAS, READER_SCHEMAS[reader]);
+  return `save the report's JSON to a temporary file and run: node "${script}" "${schema}" <that file>. Use only what it prints: on exit 0 the sanitised payload, otherwise its errors[], which use up the reader's one re-dispatch`;
 }
 
 /** A background or teammate launch receipt: Claude Code's own text, no reader output yet. */
@@ -199,7 +245,14 @@ export function decide(data) {
     const response = data.tool_response;
     const status = response && typeof response === 'object' ? response.status : undefined;
     if (status && status !== 'completed') {
-      if (isLaunchReceipt(status)) return null;
+      if (isLaunchReceipt(status)) {
+        return {
+          hookSpecificOutput: {
+            hookEventName: 'PostToolUse',
+            additionalContext: `ArcKit handoff check (${reader}): this reader was not run in the foreground, so its report will arrive later in a notification, which this check does not see. Wait for it. A report the reader handed back through SubagentHandback was validated at hand-back; use it. Any other report is unchecked: don't use it as it stands and don't pass it to a writer. Instead, ${selfCheck(reader)}. If it still can't be checked, ${ONE_BIDDER.has(reader) ? 'leave this vendor unscored and state why' : 'log the gap'}.`,
+          },
+        };
+      }
       return {
         hookSpecificOutput: {
           hookEventName: 'PostToolUse',
