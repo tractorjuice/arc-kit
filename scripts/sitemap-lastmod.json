@@ -40,8 +40,8 @@
     "text_sha256": "00a39ac1aac6c32fbbf6ef7ae53116933583b0649e92aa2d208b06372f15b813"
   },
   "getting-started.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "5b41801c5e7f3fb3fabc58fd1cd3a891f511b18a10b0fc40a6e935aa6052125d"
+    "lastmod": "2026-11-13",
+    "text_sha256": "be8e5c90ab944c2a3992d0d62357464ebfa44139ed46b2aeac3ca6b48f286fce"
   },
   "guide/adm-preliminary.html": {
     "lastmod": "2026-07-01",
@@ -1097,7 +1097,7 @@
   },
   "index.html": {
     "lastmod": "2026-11-13",
-    "text_sha256": "cbd7b08688b679f2f44754055856d2282f09bfc700f349dc5d12791c20482d37"
+    "text_sha256": "3b486e1d883cb19d43e7da35dcf0b60121efbcb69f597b3e3ca0c3fe1a1ef625"
   },
   "llms.txt": {
     "lastmod": "2026-11-13",
@@ -1112,8 +1112,8 @@
     "text_sha256": "6efacf5932f519c54c4d7ed7eb90b5bb8d69fa1b0eeb27bf13010efe16728ef0"
   },
   "public-sector.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "4b87848402912e00d31bf1ba2d6086bde1573d81eb2f91edebdf55bc84e59cc0"
+    "lastmod": "2026-11-13",
+    "text_sha256": "ef6c9382951ce9958339b195708fe7a6ae3fb3ce933135d90a663137d0d2578c"
   },
   "roles.html": {
     "lastmod": "2026-06-15",
