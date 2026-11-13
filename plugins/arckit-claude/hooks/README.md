@@ -29,6 +29,8 @@ This avoids shell-parsing of the command string and the quoting / metacharacter 
 
 All PostToolUse entries (`update-manifest`, `provenance-stamp`, `telemetry`) set `continueOnBlock: true`. These hooks are observational — they stamp artefacts, refresh `docs/manifest.json`, and record telemetry. If one of them ever emits `decision: "block"` (whether by a bug, schema rejection, or unexpected crash propagating as a block decision), the user's turn must continue: a manifest refresh or provenance stamp failing should never derail the conversation. The block decision is still logged by the harness, so regressions remain visible. PreToolUse and UserPromptSubmit hooks (e.g. `file-protection`, `secret-detection`, `validate-arc-filename`) intentionally retain default block semantics — they exist to gate dangerous tool calls.
 
+From Claude Code v2.1.319, ArcKit's floor, a PostToolUse hook also runs on a tool call that finishes after a new message interrupts the turn. Before that an artefact written at that moment landed with no provenance block and no manifest entry. On an interrupted turn each hook gets 10 seconds whatever its `timeout`. Every ArcKit PostToolUse entry is set at or under 10 seconds, so none is cut short; the ones set at exactly 10 (`tidy-wardley-labels.mjs`, `validate-reader-handoff.mjs`) have no margin there.
+
 ## `if:` Field for Narrow Triggering
 
 Individual hook entries support an `if:` field (Claude Code v2.1.85+) using **permission rule syntax** to narrow triggering and avoid unnecessary Node process spawns. Examples:

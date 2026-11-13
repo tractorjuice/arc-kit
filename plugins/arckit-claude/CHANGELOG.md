@@ -9,6 +9,10 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+### Changed
+
+- **ArcKit now needs Claude Code v2.1.319 or later.** That release closes three ways a command could get past a permission check or the sandbox, and it runs ArcKit's after-write steps on an artefact written just as you send a new message, which earlier versions skipped. Run `claude update`. Below it ArcKit still runs and warns at session start.
+
 ### Fixed
 
 - **The research handoff check no longer repeats a reader's own words in its errors.** If a reader's reply failed the check, the error could carry text a web page had planted into the main session. Errors now name positions in the schema only.

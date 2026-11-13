@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **ArcKit now needs Claude Code v2.1.319 or later.** That release closes three ways a command could get past a permission check or the sandbox. It also runs ArcKit's after-write steps on an artefact written just as you send a new message; earlier versions skipped them, leaving the artefact with no provenance block and no entry in the published index. Run `claude update`, and if you set `minimumVersion` or `requiredMinimumVersion`, raise it to `2.1.319`. Below it ArcKit still runs and warns at session start.
 - **A plugin removed from the `arckit-claude` marketplace is now uninstalled for you.** The marketplace sets `forceRemoveDeletedPlugins`, so if a plugin is ever withdrawn, Claude Code removes it at the next session start and lists it under Flagged in `/plugin`, instead of leaving a copy that reports "not found in marketplace". No plugin is being removed.
 - **Eleven overlay READMEs give an install line that works in one step**: `claude plugin install <overlay> --marketplace tractorjuice/arckit-claude` adds the marketplace if needed and brings the core plugin with it (Claude Code 2.1.275 or later). The old line named no marketplace.
 

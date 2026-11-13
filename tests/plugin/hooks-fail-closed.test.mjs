@@ -107,9 +107,13 @@ test('a hand-back fails open, because its matcher covers every subagent, not onl
 
 test('the version floor is one that understands onFailure', () => {
   const check = readFileSync(resolve(HOOKS, 'version-check.mjs'), 'utf8');
-  assert.match(check, /MIN_CLAUDE_CODE_VERSION = '2\.1\.295'/);
+  // onFailure needs v2.1.295. The floor is v2.1.319, and the repo's own
+  // settings must name the same version the hook warns below.
+  const floor = check.match(/MIN_CLAUDE_CODE_VERSION = '2\.1\.(\d+)'/);
+  assert.ok(floor && Number(floor[1]) >= 295, 'the floor understands onFailure');
+  assert.equal(floor[0], "MIN_CLAUDE_CODE_VERSION = '2.1.319'");
   const settings = JSON.parse(readFileSync(resolve(REPO, '.claude/settings.json'), 'utf8'));
-  assert.equal(settings.minimumVersion, '2.1.295');
+  assert.equal(settings.minimumVersion, '2.1.319');
 });
 
 test('a registered hook still runs when reached through a symlink', () => {

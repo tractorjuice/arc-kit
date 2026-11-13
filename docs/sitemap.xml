@@ -369,7 +369,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/autoresearch.html</loc>
-        <lastmod>2026-11-07</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -381,13 +381,13 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/aws-research.html</loc>
-        <lastmod>2026-11-11</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://arckit.org/guide/azure-research.html</loc>
-        <lastmod>2026-11-11</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -507,7 +507,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/competitors.html</loc>
-        <lastmod>2026-11-11</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -555,7 +555,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/datascout.html</loc>
-        <lastmod>2026-11-07</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -615,7 +615,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/enterprise-scale.html</loc>
-        <lastmod>2026-11-07</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -789,7 +789,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/gcp-research.html</loc>
-        <lastmod>2026-11-11</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -825,7 +825,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/grants.html</loc>
-        <lastmod>2026-11-07</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
@@ -903,7 +903,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/mcp-servers.html</loc>
-        <lastmod>2026-11-07</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1089,7 +1089,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/research.html</loc>
-        <lastmod>2026-11-11</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1347,7 +1347,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/start.html</loc>
-        <lastmod>2026-11-07</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
@@ -1389,7 +1389,7 @@
     </url>
     <url>
         <loc>https://arckit.org/guide/tenders.html</loc>
-        <lastmod>2026-11-11</lastmod>
+        <lastmod>2026-11-13</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>

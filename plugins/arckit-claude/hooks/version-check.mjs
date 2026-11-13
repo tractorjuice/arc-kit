@@ -16,11 +16,15 @@
  *      skills/hook-error/cache fixes, and the file-tool symlink and
  *      Grep/Glob deny-rule fixes, Claude Opus 5.5 availability, Claude
  *      Sonnet 5.5 availability, plugin SessionStart hooks in new cloud
- *      sessions, and `onFailure: "block"`, which lets a gate stop a call when
- *      it can't run, depend on
+ *      sessions, `onFailure: "block"`, which lets a gate stop a call when
+ *      it can't run, and PostToolUse hooks running on a write that finishes
+ *      as a new message interrupts the turn (before v2.1.319 such an
+ *      artefact landed with no provenance block and no manifest entry, and
+ *      nothing showed it afterwards), with that release's three permission
+ *      and sandbox bypass fixes, depend on
  *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/
  *      v2.1.172+/v2.1.200+/v2.1.219+/v2.1.221+/v2.1.234+/v2.1.246+/
- *      v2.1.251+/v2.1.280+/v2.1.284+/v2.1.287+/v2.1.295+). Silent on
+ *      v2.1.251+/v2.1.280+/v2.1.284+/v2.1.287+/v2.1.295+/v2.1.319+). Silent on
  *      detection failure.
  *
  * Side effect: when inside an ArcKit project, persists the detected client
@@ -39,7 +43,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDir, isFile, readText, parseHookInput, parseVersion, compareVersions } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.295';
+const MIN_CLAUDE_CODE_VERSION = '2.1.319';
 
 const data = parseHookInput(); // consume stdin (required by hook protocol)
 const cwd = data.cwd || '.';
@@ -110,7 +114,10 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Claude Opus 5.5 — the default Opus model; it always thinks, so \`effort: max\` commands cannot be sent as \`high\` by a thinking-off session and the provenance Effective Effort row is accurate (needs v2.1.280)\n` +
     `- Claude Sonnet 5.5 — the default Sonnet model on the Anthropic API; like Opus 5.5 it always thinks, so \`effort: max\` commands run at \`max\` on it (needs v2.1.284)\n` +
     `- Plugin SessionStart hooks now run in new cloud sessions, so ArcKit's session-start hooks run there too (needs v2.1.287)\n` +
-    `- A check on an ArcKit artefact stops the write when it can't run, instead of letting it through (needs v2.1.295)\n\n` +
+    `- A check on an ArcKit artefact stops the write when it can't run, instead of letting it through (needs v2.1.295)\n` +
+    `- An artefact written just as you send a new message still gets its provenance block and its entry in the published index; earlier clients skipped both and nothing showed it afterwards (needs v2.1.319)\n` +
+    `- Three ways past a permission check or the sandbox are closed: a crafted environment prefix hiding part of a Bash command, a \`sed\` command skipping the check in accept-edits and auto mode, and a sandbox escape when creating a worktree (needs v2.1.319)\n` +
+    `- Updating a plugin installs a dependency the new version adds, which every ArcKit overlay relies on for the core plugin (needs v2.1.319)\n\n` +
     `Update with: \`claude update\`\n\n` +
     `**Tip — stop drifting back below the floor:** after updating, add ` +
     `\`"minimumVersion": "${MIN_CLAUDE_CODE_VERSION}"\` to your \`.claude/settings.json\`. ` +
