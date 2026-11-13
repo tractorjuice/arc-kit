@@ -495,7 +495,7 @@ for a short pilot.</li>
 <li>Assign a seat type that includes Claude Code. In Anthropic's current
 Enterprise guidance, legacy seat-based plans need Premium seats; usage-based
 plans need Chat + Code or Claude Enterprise seats.</li>
-<li>Install Claude Code v2.1.295 or later on pilot machines. ArcKit's
+<li>Install Claude Code v2.1.319 or later on pilot machines. ArcKit's
 SessionStart version hook warns below this floor; managed settings can block
 startup below it.</li>
 <li>Verify each pilot user with <code>claude --version</code>, <code>/status</code>, and
@@ -505,7 +505,7 @@ startup below it.</li>
 <p>For a team repository pilot, commit a project-level <code>.claude/settings.json</code> so
 users are prompted to add the ArcKit marketplace when they trust the repo:</p>
 <pre><code class="language-json">{
-  &quot;minimumVersion&quot;: &quot;2.1.295&quot;,
+  &quot;minimumVersion&quot;: &quot;2.1.319&quot;,
   &quot;extraKnownMarketplaces&quot;: {
     &quot;arckit-claude&quot;: {
       &quot;source&quot;: {
@@ -524,7 +524,7 @@ users are prompted to add the ArcKit marketplace when they trust the repo:</p>
 server-managed settings or endpoint-managed settings and add a hard version
 range:</p>
 <pre><code class="language-json">{
-  &quot;requiredMinimumVersion&quot;: &quot;2.1.295&quot;,
+  &quot;requiredMinimumVersion&quot;: &quot;2.1.319&quot;,
   &quot;requiredMaximumVersion&quot;: &quot;2.1.999&quot;,
   &quot;extraKnownMarketplaces&quot;: {
     &quot;arckit-claude&quot;: {
@@ -707,9 +707,14 @@ template overrides.</li>
 </thead>
 <tbody>
 <tr>
+<td>v2.1.319</td>
+<td>PostToolUse hooks run, with up to 10 seconds, on a tool call that finishes after a new message interrupts the turn; three permission and sandbox bypasses closed (a crafted Bash environment prefix, <code>sed</code> in accept-edits and auto mode, worktree creation); Bash deny and ask rules match commands written with quoted words; a plugin update installs a dependency the new version adds; <code>permissions.denyInsteadOfPrompting</code> added</td>
+<td>An artefact written as the user sends a new message still gets its provenance block and manifest entry. Deny rules a fleet writes match what they were written for. Overlays keep their core dependency across updates. This is ArcKit's floor</td>
+</tr>
+<tr>
 <td>v2.1.295</td>
 <td><code>onFailure: &quot;block&quot;</code>: a command hook that can't start, times out or exits with an unexpected code stops the action</td>
-<td>Gates on ArcKit's own artefacts and supplier documents fail closed, so those need Node on <code>PATH</code>. Other paths are unaffected. This is ArcKit's floor</td>
+<td>Gates on ArcKit's own artefacts and supplier documents fail closed, so those need Node on <code>PATH</code>. Other paths are unaffected</td>
 </tr>
 <tr>
 <td>v2.1.287</td>
@@ -868,6 +873,10 @@ template overrides.</li>
 </tr>
 <tr>
 <td>Unreleased #580</td>
+<td>Claude Code floor raised to v2.1.319: after-write hooks run on an interrupted write, so no artefact lands without its provenance block, and three permission and sandbox bypasses are closed. Update <code>minimumVersion</code> and <code>requiredMinimumVersion</code> to match</td>
+</tr>
+<tr>
+<td>v6.20.0 #580</td>
 <td>Claude Code floor raised to v2.1.295 for <code>onFailure: &quot;block&quot;</code>, so a gate that can't run stops the write rather than letting it through. <code>version-check.mjs</code> still warns rather than blocks, so also set <code>requiredMinimumVersion</code> in managed settings</td>
 </tr>
 <tr>
@@ -1211,7 +1220,7 @@ give administrators the control point ArcKit benefits from.</p>
 anyone running below the supported Claude Code version. To <em>enforce</em> it, an
 admin can set the native managed settings (Claude Code v2.1.163+):</p>
 <pre><code class="language-json">{
-  &quot;requiredMinimumVersion&quot;: &quot;2.1.295&quot;,
+  &quot;requiredMinimumVersion&quot;: &quot;2.1.319&quot;,
   &quot;requiredMaximumVersion&quot;: &quot;2.1.999&quot;
 }
 </code></pre>

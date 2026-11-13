@@ -9,6 +9,10 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+### Changed
+
+- **ArcKit now needs Claude Code v2.1.319 or later.** That release closes three ways a command could get past a permission check or the sandbox, and it runs ArcKit's after-write steps on an artefact written just as you send a new message, which earlier versions skipped. Run `claude update`. Below it ArcKit still runs and warns at session start.
+
 ## [6.22.0] — 2026-11-12
 
 ### Changed

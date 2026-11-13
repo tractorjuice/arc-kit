@@ -212,20 +212,20 @@
     "text_sha256": "d817c186231abdd15838dca6a77f3f73cf75413c82e4a6be5ffd475974077649"
   },
   "guide/autoresearch.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "8ba24d74fc8eabad9eb86abf907cddb1f7d47bd7804cbd5fd8e0c4f0c6825c11"
+    "lastmod": "2026-11-13",
+    "text_sha256": "15a50e7d51d6b4be33b958b6e6a799bbcf55dd5272ebc1b42a2cef59e2f2ec6d"
   },
   "guide/aws-documentation-mcp.html": {
     "lastmod": "2026-10-25",
     "text_sha256": "594f3cd0bad3be32a88d4c0495dac92f0475e47f9eac999586ddc7da2870208c"
   },
   "guide/aws-research.html": {
-    "lastmod": "2026-11-11",
-    "text_sha256": "da5fb146136a02f7db71c82e511a505e623047c269f44aac25eec63fdf0532c1"
+    "lastmod": "2026-11-13",
+    "text_sha256": "b5f54f0e27b6307bb9848798d17d7860cccb721fd332737f2f9556a0149726d8"
   },
   "guide/azure-research.html": {
-    "lastmod": "2026-11-11",
-    "text_sha256": "32010ca8def56719fc0d0d01d12827a5d90663b19686368bd5cde0a28b6f269d"
+    "lastmod": "2026-11-13",
+    "text_sha256": "1ecefb9fa625aeca1901f2f19d28373f6e1736381b15566b8339faa02f210d9c"
   },
   "guide/backlog.html": {
     "lastmod": "2026-10-25",
@@ -304,8 +304,8 @@
     "text_sha256": "408c1fca1f18c2feb5e844c9d58157310f102b4016d0cb164e740003ae4a924f"
   },
   "guide/competitors.html": {
-    "lastmod": "2026-11-11",
-    "text_sha256": "7d1e1e918644f2b181b82901070b915eb28b0473c04054676ad7f5e010c30159"
+    "lastmod": "2026-11-13",
+    "text_sha256": "d8005bb7f974612bb819c27b905c3afd1c9a32937759911a97420c48d59530fe"
   },
   "guide/conformance.html": {
     "lastmod": "2026-06-04",
@@ -336,8 +336,8 @@
     "text_sha256": "7ec0f52604fca1531f0dece0ab274eb9ad6233ec00765a8101cc2666d02fe053"
   },
   "guide/datascout.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "0dca6b702ed2aff13d68557f4523fc77b4ce630cb192566bac4bdcd02fa745a9"
+    "lastmod": "2026-11-13",
+    "text_sha256": "1bed118c97baa34f0b81a380ec8af403e8a22d5ca9217578ad5e2b81e5783338"
   },
   "guide/declaration.html": {
     "lastmod": "2026-10-07",
@@ -376,8 +376,8 @@
     "text_sha256": "e9ff55967e7f19fee68cd0529262d3ab50c9844e280932a43c283c8120481711"
   },
   "guide/enterprise-scale.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "369b9558d6016a6487cb1d28e8f07375cf09e67c79e5efa913b00519aadc06c9"
+    "lastmod": "2026-11-13",
+    "text_sha256": "d81c3e91550a96542798ea6967aa0f01a47683aa33aa981dc0ba1976a84db39e"
   },
   "guide/eu-ai-act.html": {
     "lastmod": "2026-10-18",
@@ -492,8 +492,8 @@
     "text_sha256": "fb83a7ff86b756d7c004d0f5fdd5b956b79c19506711d68c59fde9f8d9d62b8d"
   },
   "guide/gcp-research.html": {
-    "lastmod": "2026-11-11",
-    "text_sha256": "8b502aac2edc066b84b91efa5e3602a670b53dce93e76a26072c3de1018f484c"
+    "lastmod": "2026-11-13",
+    "text_sha256": "fb8164a064f6f646b027b21807673c0813208216a875081f47d21dbe9c25fdc2"
   },
   "guide/glossary.html": {
     "lastmod": "2026-06-04",
@@ -516,8 +516,8 @@
     "text_sha256": "94a54a5b85765069be36e82fff2357678deb2907727f99b5018fb59a915469e9"
   },
   "guide/grants.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "5e84c9050e12d1b0033ad050dda9a17b9f1043f758e9ca5ac518ef0ab3673b82"
+    "lastmod": "2026-11-13",
+    "text_sha256": "9da8d21f50261ae671ac66cf23881c084a5ed9f5973f29e7004f086283ff3d8b"
   },
   "guide/graph-report.html": {
     "lastmod": "2026-05-01",
@@ -568,8 +568,8 @@
     "text_sha256": "f9a6696799e088c982a8266a0a0f0f1f2dcca2ec6c512bf7a0eb5913bb07b061"
   },
   "guide/mcp-servers.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "fa6924bbae335247d79391fdffe9f53e9a05d7cb0e1a522524edef9cf04adf42"
+    "lastmod": "2026-11-13",
+    "text_sha256": "323196241b84c19fa86fa32d8cb8bfadb40494c5d713be7373ca7cf3d2180ded"
   },
   "guide/microsoft-learn-mcp.html": {
     "lastmod": "2026-10-25",
@@ -692,8 +692,8 @@
     "text_sha256": "190193dc6617c3f3b5aec03fd42a6afca747db444ce8ad2ebe2298a0722786ca"
   },
   "guide/research.html": {
-    "lastmod": "2026-11-11",
-    "text_sha256": "eb2b3c616a41a4389e02b3139e7d71229cb3d83472a3805478e7b763ab94b672"
+    "lastmod": "2026-11-13",
+    "text_sha256": "1fcf3b55e8a8eb7285bb04b8c12c0db970d274c74d5152948c1249029008bddb"
   },
   "guide/review.html": {
     "lastmod": "2026-10-07",
@@ -864,8 +864,8 @@
     "text_sha256": "fffae8957a5b1d415d08d6bfc7c7fc7f9181bba1192d3a55558bdd37357af925"
   },
   "guide/start.html": {
-    "lastmod": "2026-11-07",
-    "text_sha256": "17d879ef0b193b7f873527b5d2620428442ce2d6a5d1cd162cb3eb7c7d660d14"
+    "lastmod": "2026-11-13",
+    "text_sha256": "40e647a71ad0719357cd9ddc5deb1b0c2e4d8641a3dceb28bee8b8a11845c092"
   },
   "guide/story.html": {
     "lastmod": "2026-06-04",
@@ -892,8 +892,8 @@
     "text_sha256": "d9947c17dc18cdf71b6b7d29cfdf75f3f998e3f6851a51c994ca6452ac530bd2"
   },
   "guide/tenders.html": {
-    "lastmod": "2026-11-11",
-    "text_sha256": "aabbe24f0d01423774104d27c5f19349bed3a2b55ff957fa388ceea7157540a2"
+    "lastmod": "2026-11-13",
+    "text_sha256": "499f3ec5d94e3888acdd528d37be798ff273c19b873087551b9d7daef26abfd1"
   },
   "guide/testing-plugin-branches.html": {
     "lastmod": "2026-07-27",

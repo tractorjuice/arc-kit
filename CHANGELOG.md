@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **ArcKit now needs Claude Code v2.1.319 or later.** That release closes three ways a command could get past a permission check or the sandbox. It also runs ArcKit's after-write steps on an artefact written just as you send a new message; earlier versions skipped them, leaving the artefact with no provenance block and no entry in the published index. Run `claude update`, and if you set `minimumVersion` or `requiredMinimumVersion`, raise it to `2.1.319`. Below it ArcKit still runs and warns at session start.
+
 ## [6.22.0] — 2026-11-12
 
 ### Changed

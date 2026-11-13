@@ -566,7 +566,7 @@
 <p><code>/arckit:aws-research</code> frequently exceeds 10 minutes as the agent issues dozens of AWS Knowledge MCP calls and fetches full documentation pages for cost and compliance analysis. To avoid babysitting the terminal, pair it with <a href="https://code.claude.com/docs/en/remote-control">Claude Code Remote Control</a>:</p>
 <pre><code class="language-bash">claude remote-control
 </code></pre>
-<p>Drive the session from <a href="http://claude.ai/code">claude.ai/code</a> or the mobile app, then enable <code>/config → Push when Claude decides</code> so your phone gets a notification on completion or when the agent reaches a decision point (service shortlist confirmation, region selection). ArcKit's minimum Claude Code floor (v2.1.295) already covers the v2.1.110 RC requirement.</p>
+<p>Drive the session from <a href="http://claude.ai/code">claude.ai/code</a> or the mobile app, then enable <code>/config → Push when Claude decides</code> so your phone gets a notification on completion or when the agent reaches a decision point (service shortlist confirmation, region selection). ArcKit's minimum Claude Code floor (v2.1.319) already covers the v2.1.110 RC requirement.</p>
 <p>Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local <code>claude</code> process must keep running.</p>
 <hr />
 <h2 id="mcp-tools-used">MCP Tools Used</h2>
