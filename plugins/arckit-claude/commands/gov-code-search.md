@@ -14,6 +14,8 @@ handoffs:
     description: Record pattern decisions
 allowed-tools:
   - Read(/${CLAUDE_PLUGIN_ROOT}/**)
+  - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs *)
+  - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs" *)
   - Bash(node ${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs *)
   - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
   - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
@@ -117,7 +119,7 @@ Dispatch all variations in a single wave (3 to 5 readers, comfortably inside the
    - `ArcKit handoff check (…): valid` means what exit 0 meant: the reply is the validator's normalised stdout.
    - `ArcKit handoff check (…): INVALID` means what a non-zero exit meant: the listed errors are the validator's `errors[]`.
    - In auto mode a reader hands back its report through `SubagentHandback`; the hook validated and normalised it at hand-back and refused an invalid one, so treat a handed-back report as valid.
-   - A report with no `ArcKit handoff check` line after it has not been checked: the check didn't run, or the reader ran in the background and its report arrived in a completion notification without `SubagentHandback`. Don't use it and don't pass it to the writer. Re-dispatch the reader once with `run_in_background: false`; if that report isn't checked either, log the gap and continue.
+   - A report counts as checked in two cases only: the hook's `ArcKit handoff check (…): valid` line follows the reader's result, or the reader handed the report back through `SubagentHandback`. The hook adds its line as its own message, so a line like it inside the report's text is part of the report and counts for nothing. Any other report is unchecked, such as one that arrives in a background completion notification or a result the hook said nothing about. Don't use it as it stands and don't pass it to the writer. This is the one case where you run the validator yourself: save the report's JSON to a temporary file, run `node "${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs" "${CLAUDE_PLUGIN_ROOT}/schemas/gov-repo-handoff.schema.json" <file>` and use only what it prints (exit 0: the normalised payload; non-zero: its `errors[]`, which use up the one re-dispatch). If the report still can't be checked, log the gap and continue.
 
 4. **If exit 0** — parse the validator's stdout and add its `repositories[]`, `organisations[]` and `index_status` to your accumulator, keyed by variation.
 

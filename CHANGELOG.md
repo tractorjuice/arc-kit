@@ -9,9 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **The research handoff check no longer repeats a reader's own words in its errors.** When a reader's reply failed the check, the error lines named the offending key or value, so text a web page had planted could reach the main session inside ArcKit's own message. Errors now name schema positions only; a key the schema does not define is shown as `(unknown key)`, and many unknown keys are one line. The validator script used by the non-Claude extensions reports errors the same way. Follow-up to #1020.
-- **Only Claude Code's own details of a reader's result are kept** when the check replaces the reply, so a field the check does not know cannot carry reader text past it.
-- **A report that was never checked is no longer used.** If a reader runs in the background, or the check does not run, its report arrives with no `ArcKit handoff check` line. The research commands, `/arckit:evaluate` and `/arckit:score` now leave such a report unused and run the reader again in the foreground. `ENFORCEMENT.md` and `READER-PATTERN.md` now say plainly that these two cases are asked of the model and not enforced, which the earlier wording overstated.
+- **The research handoff check no longer repeats a reader's own words in its errors.** When a reader's reply failed the check, the error lines named the offending key or value, so text a web page had planted could reach the main session inside ArcKit's own message. Errors now name positions in the schema only: unknown keys are one line that lists the keys the schema allows, and no value is quoted. The validator script used by the non-Claude extensions reports errors the same way. Follow-up to #1020.
+- **Only Claude Code's own details of a reader's result keep their text** when the check replaces the reply, so a field the check does not know cannot carry reader text past it.
+- **A report that no hook checked is validated before it is used.** If a reader is not run in the foreground, or the check does not run, its report arrives without the check's `valid` line. The research commands, `/arckit:evaluate` and `/arckit:score` now run the validator on such a report themselves and use only its output. `ENFORCEMENT.md` and `READER-PATTERN.md` now say plainly that these two cases are asked of the model and not enforced, which the earlier wording overstated.
 
 ## [6.22.0] — 2026-11-12
 

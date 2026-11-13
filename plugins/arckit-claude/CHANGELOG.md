@@ -11,8 +11,8 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ### Fixed
 
-- **The research handoff check no longer repeats a reader's own words in its errors.** If a reader's reply failed the check, the error could carry text a web page had planted into the main session. Errors now name positions in the schema only. Only Claude Code's own details of the reader's result are kept.
-- **A report that was never checked is no longer used.** If a reader runs in the background, or the check does not run, the research commands, `/arckit:evaluate` and `/arckit:score` leave its report unused and run the reader again in the foreground.
+- **The research handoff check no longer repeats a reader's own words in its errors.** If a reader's reply failed the check, the error could carry text a web page had planted into the main session. Errors now name positions in the schema only.
+- **A report that no hook checked is validated before it is used.** If a reader is not run in the foreground, or the check does not run, the research commands, `/arckit:evaluate` and `/arckit:score` run the validator on its report themselves and use only its output.
 
 ## [6.22.0] — 2026-11-12
 

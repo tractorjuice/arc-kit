@@ -146,7 +146,12 @@ function sanitize(value, path, errors) {
       // key's invisible characters never reach an error message.
       const keyErrors = [];
       const key = sanitizeText(k, '', keyErrors);
-      const keyPath = `${path}/${key.replace(TAG_CHARS_ALL, '')}`;
+      // "/" and "~" are escaped as in a JSON pointer, so a key holding a
+      // slash stays one path segment.
+      // An empty key would read as its parent's path, so it gets a name no
+      // schema defines.
+      const segment = key.replace(TAG_CHARS_ALL, '').replace(/~/g, '~0').replace(/\//g, '~1');
+      const keyPath = `${path}/${segment === '' ? '(empty key)' : segment}`;
       for (const e of keyErrors) errors.push({ ...e, path: keyPath });
       out[key] = sanitize(v, keyPath, errors);
     }
@@ -175,39 +180,39 @@ export function checkHandoff(schema, rawPayload) {
 
 // An error is read by the orchestrator, which holds Write, Edit and Bash, so
 // it must carry nothing the payload's author chose. Messages never quote a
-// value. A path is built from the payload's own keys, so each segment is kept
-// only when it is an array index or a property name the schema defines;
-// any other key is shown as UNKNOWN_KEY. Identical lines are reported once.
+// value. A path is built from the payload's own keys, so it is walked against
+// the schema: a segment is kept only while it is a property the schema
+// defines at that position, or an index into an array the schema defines
+// there. The first segment that is neither is shown as UNKNOWN_KEY and the
+// path stops. Identical lines are reported once.
 export const UNKNOWN_KEY = '(unknown key)';
 
-function schemaNames(node, names = new Set()) {
-  if (Array.isArray(node)) {
-    for (const item of node) schemaNames(item, names);
-  } else if (node !== null && typeof node === 'object') {
-    for (const [k, v] of Object.entries(node)) {
-      if (k === 'properties' && v !== null && typeof v === 'object') {
-        for (const name of Object.keys(v)) names.add(name);
-      }
-      if (k !== 'enum' && k !== 'const' && k !== 'default' && k !== 'examples') schemaNames(v, names);
+function safePath(path, schema) {
+  if (path === '/' || path === '') return '/';
+  const out = [];
+  let node = schema;
+  for (const raw of path.split('/').slice(1)) {
+    const seg = decodeJsonPointer(raw);
+    if (node && node.$ref) node = resolveRef(node.$ref, schema);
+    if (node && node.properties && Object.hasOwn(node.properties, seg)) {
+      out.push(seg);
+      node = node.properties[seg];
+    } else if (node && node.items && /^\d{1,6}$/.test(seg)) {
+      out.push(seg);
+      node = node.items;
+    } else {
+      out.push(UNKNOWN_KEY);
+      break;
     }
   }
-  return names;
+  return `/${out.join('/')}`;
 }
 
 function reportable(errors, schema) {
-  const names = schemaNames(schema);
   const seen = new Set();
   const out = [];
   for (const e of errors) {
-    const path = e.path === '/'
-      ? '/'
-      : e.path.split('/')
-        // "//id" (a root-level property) reads as "/id".
-        .filter((seg, i) => i === 0 || seg !== '')
-        .map((seg, i) => (i === 0 || /^\d+$/.test(seg) || names.has(seg) ? seg : UNKNOWN_KEY))
-        // A key that itself contains "/" splits into several segments; show it once.
-        .filter((seg, i, all) => !(seg === UNKNOWN_KEY && all[i - 1] === UNKNOWN_KEY))
-        .join('/');
+    const path = safePath(e.path, schema);
     const line = `${path}\u0000${e.msg}`;
     if (seen.has(line)) continue;
     seen.add(line);
@@ -347,19 +352,19 @@ function validate(value, schemaNode, path, root, errors) {
     if (schemaNode.required) {
       for (const key of schemaNode.required) {
         if (!(key in value)) {
-          errors.push({ path: `${pathOrRoot(path)}/${key}`, msg: 'required property missing' });
+          errors.push({ path: `${path}/${key}`, msg: 'required property missing' });
         }
       }
     }
     if (schemaNode.additionalProperties === false && schemaNode.properties) {
-      const allowed = new Set(Object.keys(schemaNode.properties));
-      for (const key of Object.keys(value)) {
-        if (!allowed.has(key)) {
-          errors.push({
-            path: `${pathOrRoot(path)}/${key}`,
-            msg: 'unknown property (additionalProperties: false); remove every key the schema does not define here',
-          });
-        }
+      // One line for the object, naming the schema's keys and not the payload's.
+      const allowed = Object.keys(schemaNode.properties);
+      const unknown = Object.keys(value).filter(key => !Object.hasOwn(schemaNode.properties, key)).length;
+      if (unknown > 0) {
+        errors.push({
+          path: pathOrRoot(path),
+          msg: `has ${unknown} unknown ${unknown === 1 ? 'property' : 'properties'} (additionalProperties: false); the keys the schema allows here are: ${allowed.join(', ')}`,
+        });
       }
     }
     if (schemaNode.properties) {

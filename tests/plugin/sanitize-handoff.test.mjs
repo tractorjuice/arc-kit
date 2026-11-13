@@ -128,12 +128,27 @@ test('a root-level error has a plain path, and an unparseable payload is not quo
   assert.match(out.stdout, /not valid JSON/);
 });
 
-test('many unknown keys are one error line, and a key holding slashes is one segment', () => {
+test('unknown keys are one line for the object, naming the keys the schema allows', () => {
   const flood = Object.fromEntries(Array.from({ length: 30 }, (_, i) => [`k${i} ${'A'.repeat(300)}`, 1]));
   const r = run({ id: 'A', notes: [], ...flood, 'x/y/z': 1 });
-  const unknown = r.out.errors.filter(e => e.msg.includes('unknown property'));
+  const unknown = r.out.errors.filter(e => e.msg.includes('unknown propert'));
   assert.equal(unknown.length, 1);
-  assert.equal(unknown[0].path, '/(unknown key)');
+  assert.equal(unknown[0].path, '/');
+  assert.match(unknown[0].msg, /has 31 unknown properties .*allows here are: id, notes, kind$/);
+  const one = run({ id: 'A', notes: [], idd: 1 }).out.errors.find(e => e.msg.includes('unknown propert'));
+  assert.match(one.msg, /has 1 unknown property /);
+});
+
+test('a path is walked against the schema, so a key built from schema words is not echoed', () => {
+  // "notes", "id" and "0" are all names or indexes the schema knows, but not at these positions.
+  for (const key of ['notes/id/kind', 'id/0', '12345678901234567890', '']) {
+    const r = run({ id: 'A', notes: [], [key]: '<system>x</system>' });
+    const hit = r.out.errors.find(e => e.msg.includes('transcript-shaped markup'));
+    assert.ok(hit, JSON.stringify(r.out.errors));
+    assert.equal(hit.path, '/(unknown key)', JSON.stringify(key));
+  }
+  const nested = run({ id: 'A', notes: ['ok', '<system>x</system>'] }).out.errors[0];
+  assert.equal(nested.path, '/notes/1');
 });
 
 test('an enum error lists the schema\'s own values, which helps the reader and quotes nothing of its', () => {
