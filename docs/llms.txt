@@ -10,6 +10,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 
 - [ArcKit homepage](https://arckit.org/): Overview, quick start, installation for supported AI assistants.
 - [Getting Started](https://arckit.org/getting-started.html): First-time setup for Claude Code, Gemini, Copilot, Codex, OpenCode, and Mistral Vibe.
+- [Claude Code plugin for enterprise architecture](https://arckit.org/claude-code-plugin.html): What the Claude Code plugin installs, what it writes, and how it differs from code-documentation plugins.
 - [Documentation index](https://arckit.org/README.md): Complete index of guides grouped by workflow phase.
 - [README on GitHub](https://github.com/tractorjuice/arc-kit/blob/main/README.md): Installation, platform matrix, command catalogue.
 - [The ArcKit Book](https://github.com/tractorjuice/arckit-book/blob/main/docs/book/ARCKIT-BOOK.md): comprehensive guide covering every subsystem (commands, agents, hooks, skills, MCP, multi-AI distribution, templates, autoresearch). Lives in its own repository at [tractorjuice/arckit-book](https://github.com/tractorjuice/arckit-book).
