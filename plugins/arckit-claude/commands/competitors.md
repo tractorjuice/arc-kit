@@ -189,6 +189,7 @@ install is incomplete.
    - `ArcKit handoff check (…): valid` means what exit 0 meant: the reply is the validator's normalised stdout.
    - `ArcKit handoff check (…): INVALID` means what a non-zero exit meant: the listed errors are the validator's `errors[]`.
    - In auto mode a reader hands back its report through `SubagentHandback`; the hook validated and normalised it at hand-back and refused an invalid one, so treat a handed-back report as valid.
+   - A report with no `ArcKit handoff check` line after it has not been checked: the check didn't run, or the reader ran in the background and its report arrived in a completion notification without `SubagentHandback`. Don't use it and don't pass it to the writer. Re-dispatch the reader once with `run_in_background: false`; if that report isn't checked either, log the gap and continue.
 
 3. **If exit 0** — parse the validator's stdout (the normalised payload) and
    proceed to Step 5 with it.

@@ -127,11 +127,11 @@ function sanitizeText(text, path, errors) {
   text = text.normalize('NFKC').replace(INVISIBLE, '').replace(CONTROL, ' ');
   const token = SPECIAL_TOKEN.exec(text);
   if (token) {
-    errors.push({ path: pathOrRoot(path), msg: `contains transcript-shaped markup ${JSON.stringify(token[0])}; it is data, not conversation — remove it` });
+    errors.push({ path: pathOrRoot(path), msg: 'contains transcript-shaped markup (a tag such as <system> or <tool_result>, or a <|...|> token); it is data, not conversation — remove it' });
   }
   const turn = TURN_INDICATOR.exec(text);
   if (turn) {
-    errors.push({ path: pathOrRoot(path), msg: `contains a forged turn marker ${JSON.stringify(turn[0].trim())}; remove it` });
+    errors.push({ path: pathOrRoot(path), msg: 'contains a forged turn marker (a role word and a colon opening the text or following a blank line); remove it' });
   }
   return text;
 }
@@ -168,7 +168,52 @@ export function checkHandoff(schema, rawPayload) {
   if (errors.length === 0) {
     validate(payload, schema, '', schema, errors);
   }
-  return errors.length === 0 ? { ok: true, payload } : { ok: false, errors };
+  return errors.length === 0 ? { ok: true, payload } : { ok: false, errors: reportable(errors, schema) };
+}
+
+// ── Error reporting ────────────────────────────────────────────────────
+
+// An error is read by the orchestrator, which holds Write, Edit and Bash, so
+// it must carry nothing the payload's author chose. Messages never quote a
+// value. A path is built from the payload's own keys, so each segment is kept
+// only when it is an array index or a property name the schema defines;
+// any other key is shown as UNKNOWN_KEY. Identical lines are reported once.
+export const UNKNOWN_KEY = '(unknown key)';
+
+function schemaNames(node, names = new Set()) {
+  if (Array.isArray(node)) {
+    for (const item of node) schemaNames(item, names);
+  } else if (node !== null && typeof node === 'object') {
+    for (const [k, v] of Object.entries(node)) {
+      if (k === 'properties' && v !== null && typeof v === 'object') {
+        for (const name of Object.keys(v)) names.add(name);
+      }
+      if (k !== 'enum' && k !== 'const' && k !== 'default' && k !== 'examples') schemaNames(v, names);
+    }
+  }
+  return names;
+}
+
+function reportable(errors, schema) {
+  const names = schemaNames(schema);
+  const seen = new Set();
+  const out = [];
+  for (const e of errors) {
+    const path = e.path === '/'
+      ? '/'
+      : e.path.split('/')
+        // "//id" (a root-level property) reads as "/id".
+        .filter((seg, i) => i === 0 || seg !== '')
+        .map((seg, i) => (i === 0 || /^\d+$/.test(seg) || names.has(seg) ? seg : UNKNOWN_KEY))
+        // A key that itself contains "/" splits into several segments; show it once.
+        .filter((seg, i, all) => !(seg === UNKNOWN_KEY && all[i - 1] === UNKNOWN_KEY))
+        .join('/');
+    const line = `${path}\u0000${e.msg}`;
+    if (seen.has(line)) continue;
+    seen.add(line);
+    out.push({ path, msg: e.msg });
+  }
+  return out;
 }
 
 function main(argv) {
@@ -190,7 +235,8 @@ function main(argv) {
   try {
     payload = JSON.parse(readFileSync(payloadPath, 'utf8'));
   } catch (e) {
-    emitErrors([{ path: '/', msg: `failed to parse payload: ${e.message}` }]);
+    // Not e.message: a JSON parse error quotes the text around the fault.
+    emitErrors([{ path: '/', msg: `failed to read payload: ${e instanceof SyntaxError ? 'it is not valid JSON' : 'the file could not be read'}` }]);
     process.exit(1);
   }
 
@@ -241,7 +287,7 @@ function validate(value, schemaNode, path, root, errors) {
     if (!schemaNode.enum.some(allowed => deepEqual(allowed, value))) {
       errors.push({
         path: pathOrRoot(path),
-        msg: `must be one of allowlist (${schemaNode.enum.length} values); got ${JSON.stringify(value)}`,
+        msg: `must be one of the ${schemaNode.enum.length} values the schema allows${allowedList(schemaNode.enum)}; the value given is not one of them`,
       });
     }
   }
@@ -311,7 +357,7 @@ function validate(value, schemaNode, path, root, errors) {
         if (!allowed.has(key)) {
           errors.push({
             path: `${pathOrRoot(path)}/${key}`,
-            msg: `unknown property (additionalProperties: false) {"additionalProperty":"${key}"}`,
+            msg: 'unknown property (additionalProperties: false); remove every key the schema does not define here',
           });
         }
       }
@@ -330,6 +376,13 @@ function validate(value, schemaNode, path, root, errors) {
 
 function emitErrors(errs) {
   console.log(JSON.stringify({ ok: false, errors: errs }, null, 2));
+}
+
+/** The schema's own enum values, listed when they are short enough to help. */
+function allowedList(values) {
+  if (!values.every(v => typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean' || v === null)) return '';
+  const list = values.map(v => JSON.stringify(v)).join(', ');
+  return list.length <= 160 ? ` (${list})` : '';
 }
 
 function pathOrRoot(path) {

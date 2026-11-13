@@ -18,9 +18,18 @@
  *     sanitised payload (updatedToolOutput) and adds a one-line verdict.
  *     Otherwise (invalid, no JSON, or a reader that did not complete) it
  *     replaces the result with a neutral "withheld" note and adds the errors,
- *     which the orchestrator quotes in its single re-dispatch. The reader's
- *     raw text never reaches the orchestrator; only a launch receipt
- *     (`async_launched`), which carries no reader output, passes untouched.
+ *     which the orchestrator quotes in its single re-dispatch. The errors
+ *     name schema positions only and quote nothing the reader wrote. Of the
+ *     result's other fields, only Claude Code's own run details are kept. A
+ *     launch receipt (`async_launched`) carries no reader output, so its
+ *     result is left alone and a note says the report will arrive where this
+ *     check can't see it.
+ *
+ *     This path can't hold a reply back when the hook itself doesn't run
+ *     (no Node, a timeout): Claude Code has already produced the result, and
+ *     a failed PostToolUse hook can only add a message. The commands
+ *     therefore treat a report with no `ArcKit handoff check` line as
+ *     unvalidated. See docs/ENFORCEMENT.md.
  *
  *   PreToolUse on SubagentHandback: in auto mode (Claude Code v2.1.271+) a
  *     subagent hands its report back through this tool, and the Agent result
@@ -148,11 +157,28 @@ function agentText(toolResponse) {
   return content.filter((b) => b && b.type === 'text').map((b) => b.text).join('\n');
 }
 
-/** Replace the reply text of an Agent result, keeping its other fields. */
+// Fields of an Agent result that Claude Code or the orchestrator wrote, never
+// the reader. Read from a live result on Claude Code v2.1.323 and from the
+// hooks reference.
+const RESULT_FIELDS = new Set([
+  'status', 'prompt', 'description', 'agentId', 'agentType', 'resolvedModel', 'modelsUsed',
+  'totalDurationMs', 'totalTokens', 'totalToolUseCount', 'usage', 'canContinueAgent',
+  'harnessNoteCount', 'harnessTailCount', 'harnessSectionHash', 'outputFile',
+]);
+
+/**
+ * Replace the reply text of an Agent result. The fields listed above are
+ * kept; any other field is kept only when it is a number, a boolean or null,
+ * so a field this hook has never seen can't carry reader text past the check.
+ */
 function replaceText(response, text) {
-  return typeof response === 'object' && response !== null
-    ? { ...response, content: [{ type: 'text', text }] }
-    : text;
+  if (typeof response !== 'object' || response === null) return text;
+  const kept = {};
+  for (const [k, v] of Object.entries(response)) {
+    if (k === 'content') continue;
+    if (RESULT_FIELDS.has(k) || v === null || typeof v === 'number' || typeof v === 'boolean') kept[k] = v;
+  }
+  return { ...kept, content: [{ type: 'text', text }] };
 }
 
 /** A background or teammate launch receipt: Claude Code's own text, no reader output yet. */
@@ -199,7 +225,14 @@ export function decide(data) {
     const response = data.tool_response;
     const status = response && typeof response === 'object' ? response.status : undefined;
     if (status && status !== 'completed') {
-      if (isLaunchReceipt(status)) return null;
+      if (isLaunchReceipt(status)) {
+        return {
+          hookSpecificOutput: {
+            hookEventName: 'PostToolUse',
+            additionalContext: `ArcKit handoff check (${reader}): this reader was launched in the background, so its report will arrive later in a completion notification, which this check does not see. A report the reader handed back through SubagentHandback was validated at hand-back; use it. Any other background report is unvalidated: don't use it and don't pass it to a writer. Re-dispatch the reader once with run_in_background: false; if that isn't possible, ${ONE_BIDDER.has(reader) ? 'leave this vendor unscored and state why' : 'log the gap'}.`,
+          },
+        };
+      }
       return {
         hookSpecificOutput: {
           hookEventName: 'PostToolUse',
