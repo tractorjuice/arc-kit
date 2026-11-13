@@ -308,12 +308,12 @@
 <p>It indexes roughly 677,000 UK contracting processes drawn from all five national publication portals: Find a Tender, Contracts Finder, Public Contracts Scotland, Sell2Wales and eTendersNI. Every record carries the official notice URL it came from, and the whole dataset is republished verbatim under the Open Government Licence v3.0. The service is keyless and freely available, and ArcKit loads it lazily, so a project that never asks a procurement question never touches it.</p>
 <p>Just as importantly, ArcKit treats every response from this service as untrusted input. A single reader component is the only thing that talks to the service. It extracts the figures into a validated, schema-checked structure, and the commands that write your artefacts never see the raw response. That boundary is what lets an AI assistant pull live external data into a governance document without opening a prompt-injection hole.</p>
 <hr />
-<h2 id="arckittenders-procurement-market-intelligence">/arckit:tenders: Procurement Market Intelligence</h2>
+<h2 id="arckittenders-procurement-market-intelligence"><code>/arckit:tenders</code>: Procurement Market Intelligence</h2>
 <p>The first new command answers the question &quot;what is this market, and who holds it?&quot;</p>
 <p>Point it at a capability, a CPV code, or a named buyer, and it produces a Procurement Market Intelligence artefact: the median and total awarded value for comparable work, the suppliers ranked by how much of that value they hold, an incumbency read on who is entrenched with which buyer, and a concentration measure that flags when one supplier, or a small group, dominates. Every figure traces back to a published notice.</p>
 <p>A worked example. Ask for case management work commissioned by HMRC, and instead of a model-guessed budget you get a real median award value to anchor an option, the suppliers who have actually won that work, and a clear signal if one of them holds sixty per cent of it.</p>
 <hr />
-<h2 id="arckitcompetitors-the-competitive-set">/arckit:competitors: The Competitive Set</h2>
+<h2 id="arckitcompetitors-the-competitive-set"><code>/arckit:competitors</code>: The Competitive Set</h2>
 <p>The second command takes the supplier's view. Name a supplier, or a capability, and it maps the competitive set: the rival suppliers in that space, each one's share of awarded value as a market-share proxy, the buyers they serve, and how they stack up against each other. It also writes a Government Award History into each vendor's profile, so the evidence is waiting there the next time that supplier is evaluated.</p>
 <p>The two commands share one secure reader and one data contract. Tenders is the buyer-and-market lens. Competitors is the supplier-rivalry lens. The same evidence, asked two different ways.</p>
 <hr />

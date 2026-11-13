@@ -18,7 +18,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 - 💼 Business case justification (HM Treasury Green Book SOBC)
 - 📋 Creating comprehensive requirements documents
 - 🗄️ Data modeling with ERD, GDPR compliance, and data governance
-- 🔬 Technology research with build vs buy analysis (web search powered)
+- 🔬 Technology research: options, checked facts and published costs (web search powered)
 - ☁️ Azure-specific research using Microsoft Learn MCP for authoritative documentation
 - 🗺️ Strategic planning with Wardley Mapping
 - 📊 Generating visual architecture diagrams (Mermaid)
@@ -46,7 +46,7 @@ The [ArcKit YouTube channel](https://www.youtube.com/@arckitorg/playlists) also 
 
 ### Installation
 
-**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.287+**):
+**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.319+**):
 
 First, make sure Claude Code is on the latest version:
 
@@ -60,7 +60,7 @@ Then in Claude Code:
 /plugin marketplace add tractorjuice/arckit-claude
 ```
 
-Then install from the Discover tab, or via CLI. The marketplace ships **19 plugins** — install only the overlays you need:
+Then install from the Discover tab, or via CLI. The marketplace ships **20 plugins** — install only the overlays you need:
 
 ```bash
 # Core (76 commands — UK Government civilian + generic enterprise)
@@ -76,11 +76,11 @@ claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs,uk-gcloud}
 claude plugin install arckit arckit-togaf-adm arckit-agent-architecture
 ```
 
-The standalone `tractorjuice/arckit-claude` marketplace hosts all Claude Code plugins: the `arckit` core plugin, regional overlays, sector overlays, the TOGAF ADM and AI agent architecture overlays, the `arckit-fde` tooling plugin, and the public-but-proprietary `arckit-uk-gcloud` supplier overlay. The 15 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-legacy`, `arckit-uk-gcloud`, `arckit-togaf-adm`, `arckit-agent-architecture`, `arckit-oaa`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is public for installation and inspection, but not MIT licensed and not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
+The standalone `tractorjuice/arckit-claude` marketplace hosts all Claude Code plugins: the `arckit` core plugin, regional overlays, sector overlays, the TOGAF ADM, O-AA, arc42 and AI agent architecture overlays, the `arckit-fde` tooling plugin, and the public-but-proprietary `arckit-uk-gcloud` supplier overlay. The 18 community plugins (`arckit-uae`, `arckit-fr`, `arckit-nl`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-legacy`, `arckit-uk-gcloud`, `arckit-togaf-adm`, `arckit-agent-architecture`, `arckit-oaa`, `arckit-arc42`, `arckit-repo`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is public for installation and inspection, but not MIT licensed and not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
 
 The older `tractorjuice/arc-kit` marketplace remains available for compatibility, but new Claude Code installs should use `tractorjuice/arckit-claude`. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all official commands, autonomous research agents, automation hooks, bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape, uk-tenders), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-> **Why v2.1.287?** It adds **Claude mods**, which ArcKit uses to draw a status line above the prompt: how many projects and artefacts you have, how many are DRAFT, and how many reviews are overdue. It also fixes plugin SessionStart hooks not running in new cloud sessions, which skipped ArcKit's session set-up and version check there.
+> **Why v2.1.319?** It closes three ways a command could get past a permission check or the sandbox. It also runs ArcKit's after-write steps on an artefact written just as you send a new message; earlier versions skipped them, so the artefact had no provenance block and no entry in the published index. And updating a plugin now installs a dependency the new version adds, which every overlay relies on for the core plugin. It still carries what v2.1.295 brought: `onFailure: "block"`, so a check on an ArcKit artefact stops the write when it can't run. It also carries the fix for plugin SessionStart hooks not running in new cloud sessions, which skipped ArcKit's session set-up and version check there.
 >
 > The floor also carries earlier releases ArcKit depends on:
 >
@@ -167,7 +167,7 @@ Zero-config: 76 official commands as skills, 10 specialized agents, all template
 
 Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
 
-**Latest Release**: [v6.19.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.19.0)
+**Latest Release**: [v6.22.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.22.0)
 
 ### OKF Interoperability
 
@@ -390,7 +390,7 @@ Concretely, and regardless of how complete an artefact looks:
 - **`/arckit:atrs` and `/arckit:ai-playbook` do not make an algorithmic tool lawful, fair, or transparent.** An ATRS record is published by the department after its own internal clearance, and the UK Government AI Playbook principles are obligations on the deploying organisation.
 - **The EU overlay does not perform conformity assessment.** It drafts documentation referencing the AI Act, NIS2, DORA, CRA, DSA and the Data Act. It is not a notified-body activity, it does not determine your risk classification, and it does not track amendments or implementing acts as they are made.
 - **`/arckit:jsp-936` and the NHS clinical safety commands are not assurance either.** Defence AI assurance requires the accountable authority; DCB0129 and DCB0160 require a suitably registered Clinical Safety Officer.
-- **No output is a procurement decision.** Research, scoring, and evaluation commands rank options against stated criteria. The Senior Responsible Owner and the procurement officer decide, under whatever framework rules apply to them.
+- **No output is a procurement decision.** `/arckit:research` reports evidence. The cloud research, scoring and evaluation commands rank options against stated criteria. The Senior Responsible Owner and the procurement officer decide, under whatever framework rules apply to them.
 
 Two limits apply to everything above:
 
@@ -616,7 +616,7 @@ Install: `claude plugin install arckit arckit-uk-finance`. Help wanted: recruiti
 
 ## UK G-Cloud Supplier Bid-Authoring Overlay (15 commands) — Proprietary
 
-> **PROPRIETARY, Claude Code only.** The 15 commands below are a supplier-side overlay for authoring UK G-Cloud 15 (RM1557.15) Digital Marketplace bids, run by the Government Commercial Agency (GCA, formerly CCS): supplier profile, social value, lot questions, the Procurement Act 2023 supplier declaration, service design, a Service Definition Document for each of the five lots (1a, 1b, 2a, 2b, 3), pricing, security evidence, competitor benchmarking, submission review, and a final submission pack. Unlike every other ArcKit plugin, `arckit-uk-gcloud` ships under a **proprietary licence (not MIT)** and is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot) — it runs on Claude Code only. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and requires the `arckit` core plugin.
+> **PROPRIETARY, Claude Code only.** The 15 commands below are a supplier-side overlay for authoring UK G-Cloud 15 (RM1557.15) Digital Marketplace bids, run by the Government Commercial Agency (GCA, formerly CCS): supplier profile, social value, lot questions, the Procurement Act 2023 supplier declaration, service design, a Service Definition Document for each of the five lots (1a, 1b, 2a, 2b, 3), pricing, security evidence, competitor benchmarking, submission review, and a final submission pack. Unlike the MIT-licensed core, `arckit-uk-gcloud` ships under a **proprietary licence (not MIT)** and is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot) — it runs on Claude Code only. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and requires the `arckit` core plugin.
 
 **Supplier-wide (once per bid)**:
 
@@ -689,7 +689,7 @@ Handoff chain: `oaa-adm-lite` → `product-architecture` → `agile-strategy` �
 
 ## Using TOGAF ADM and O-AA Together
 
-The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.19.0` pin) — neither depends on the other. O-AA maps the ADM cycle onto sprints within a 4–8 week engagement; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
+The two overlays are **complementary, not competitors**. Each depends only on the `arckit` core (`=6.22.0` pin) — neither depends on the other. O-AA maps the ADM cycle onto sprints within a 4–8 week engagement; `arckit-togaf-adm` keeps the full document-centric ADM. Decision guide: [O-AA vs TOGAF ADM](plugins/arckit-oaa/README.md#oaa-vs-togaf-adm).
 
 | Pattern | When to use | Sequence |
 |---------|-------------|----------|
@@ -707,9 +707,28 @@ claude plugin install arckit-oaa && claude plugin enable arckit-oaa
 
 **Running both in the same project:**
 
-- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.19.0` pins.
+- No collisions: separate namespaces (`/arckit-togaf-adm:` vs `/arckit-oaa:`) and doc-type codes; one core install satisfies both `=6.22.0` pins.
 - No schema files are shared between the overlays. The O-AA YAML sprint artefacts are defined in the O-AA templates and kept consistent with the matching TOGAF documents: `vision.yaml` with the ADM Preliminary, which `oaa-adm-lite` reads, and `implementation-strategy.yaml` with the transition architecture. `oaa-adm-lite` sends Sprint 4+ architecture change requests through `/arckit-togaf-adm:architecture-change`. `agile-governance` defines its own `change-request.yaml` and `compliance-evidence.yaml` (the latter shared with `agile-security`) and does not read `architecture-change` output.
 - Order: run the TOGAF baseline first, then let O-AA sprints execute it at sprint velocity. O-AA commands read TOGAF outputs when they exist (ADM Preliminary, business capability map, transition architecture) but do not require them, so the reverse order works mechanically — you just lose the "sprints execute the baseline" benefit.
+
+---
+
+## arc42 Overlay (`arckit-arc42`) [COMMUNITY]
+
+Writes an [arc42](https://arc42.org) architecture description for one system, assembled from the artefacts the project already has, and hands it over to a Specification Driven Development tool. arc42 is a documentation structure rather than a method, so the overlay has one assembly command: each of the 12 sections summarises and cites its source artefacts, and sections no artefact covers are listed in a Gap Register with the command that would fill them. Four source commands write the artefacts three sections need and core does not produce, and the handover pack carries requirement and decision IDs into [Spec Kit](https://github.com/github/spec-kit).
+
+| Command | Doc Type | Description |
+|---------|----------|-------------|
+| `/arckit-arc42:arc42` | `ARC42` | All 12 arc42 sections from existing artefacts, each cited, with a Gap Register and a Source Artefacts table |
+| `/arckit-arc42:arc42-quality` | `QUAL` | Quality tree and measurable quality scenarios for section 10, classified by the nine Q42 dimensions; goals without a measurable target listed, never estimated |
+| `/arckit-arc42:arc42-concepts` | `CONC` | Crosscutting concepts for section 8, each traced to the ADR or design that settles it; open concepts routed to ADRs |
+| `/arckit-arc42:arc42-debt` | `DEBT` | Technical debt register for section 11.2, consolidated from audits, conformance assessments, reviews, ADRs and risks |
+| `/arckit-arc42:arc42-handover` | `SDDH` | SDD handover pack for Spec Kit: constitution, one feature brief per epic and plan inputs, tagged with ArcKit IDs |
+
+**Install:** `claude plugin install arckit arckit-arc42`
+**Recipe:** `arc42-full` — principles → stakeholders → requirements → ADRs and data model → context, container, runtime and deployment diagrams → Secure by Design → risks → glossary → quality scenarios → crosscutting concepts → arc42 (`--enable DEBT` and `--enable SDDH` add the debt register and handover pack)
+
+The adapted arc42 template and its copies are CC BY-SA 4.0, based on [arc42](https://arc42.org/license/) by Peter Hruschka and Gernot Starke. The quality template and the `arc42-quality` command's Q42 classification are CC BY-SA 4.0 as well, adapted from the [Q42 quality model](https://quality.arc42.org) by Gernot Starke. The notice records ArcKit's changes; original command logic, recipes, scripts and the concepts, debt and handover templates remain MIT-licensed. See the [third-party notice](plugins/arckit-arc42/templates/arc42-LICENSE.md).
 
 ---
 
@@ -893,18 +912,17 @@ Discover and evaluate external data sources to fulfil project data requirements:
 
 **`/arckit:research`** → Research technology, services, and products
 
-Research available solutions to meet requirements with build vs buy analysis:
+Research the solutions available to meet requirements, with checked facts and published costs. It makes no build-or-buy decision: `/arckit:wardley` decides sourcing and `/arckit:sobc` appraises value for money.
 
 - Dynamic category detection from requirements (authentication, payments, databases, etc.)
 - Commercial SaaS options with pricing, reviews, and ratings (WebSearch)
 - Open source alternatives with GitHub stats and community maturity
 - UK Government GOV.UK platforms (One Login, Pay, Notify, Forms)
 - Digital Marketplace suppliers (G-Cloud, DOS)
-- Total Cost of Ownership (TCO) comparison (3-year)
-- Build vs Buy vs Adopt recommendations
-- Vendor shortlisting for deeper evaluation
-- Integration with Wardley mapping (evolution positioning)
-- Feeds into SOBC Economic Case (cost data, options analysis)
+- Published 3-year costs, including supplier price documents on G-Cloud
+- What each option meets and lacks against the requirements, all cited
+- Market evidence for Wardley mapping (how many products cover each capability)
+- Feeds into SOBC Economic Case (cost data)
 
 ### Phase 6.5: Grants & Funding Research
 
@@ -1728,7 +1746,7 @@ Core ArcKit commands with maturity status and example outputs from public test r
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
 | `/arckit:platform-design` | Create platform strategy using Platform Design Toolkit (8 canvases for multi-sided ecosystems) | [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-GAAP-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/ARC-001-PLAT-v1.0.md) | 🟣 Experimental |
-| `/arckit:research` | Research technology, services, and products to meet requirements with build vs buy analysis | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-RSCH-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-RSCH-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-RSCH-001-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-RSCH-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-RSCH-v1.0.md) | 🔵 Beta |
+| `/arckit:research` | Research the technology, services and products that could meet the requirements, with checked facts and published costs | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-RSCH-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-RSCH-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-RSCH-001-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-RSCH-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-RSCH-v1.0.md) | 🔵 Beta |
 | `/arckit:grants` | Research UK government grants, charitable funding, and accelerator programmes with eligibility scoring | — | 🟣 Experimental |
 | `/arckit:wardley` | Create strategic Wardley Maps for architecture decisions and build vs buy analysis | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/wardley-maps/ARC-001-WARD-001-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/wardley-maps/ARC-001-WARD-001-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/wardley-maps/ARC-001-WARD-001-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/wardley-maps/ARC-001-WARD-001-v1.0.md) | 🟣 Experimental |
 | `/arckit:wardley.value-chain` | Decompose user needs into value chains for Wardley Mapping | — | 🟣 Experimental |
@@ -1938,8 +1956,9 @@ Every tool here now has AI features. Sparx has Kernaro AI and an MCP server, Ard
 ## Requirements
 
 - **Python 3.11+**
+- **Node.js** on your `PATH`. ArcKit's hooks and helper scripts need it, and without it ArcKit artefacts can't be written
 - **Git** (optional but recommended)
-- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.287+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
+- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.319+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---
@@ -2089,13 +2108,15 @@ arckit init .
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Community**: the [ArcKit LinkedIn group](https://www.linkedin.com/groups/17641034/) for worked examples, office hours and questions, and [Discord](https://discord.gg/HsA4Y3hQ4) for chat with other users
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v6.19.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.19.0)
+- **Latest Version**: [v6.22.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.22.0)
 
 ---
 
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
+
+The adapted arc42 template and the Q42-derived quality material (the arc42 quality template and the `arc42-quality` command's Q42 classification), including copied and embedded text, are **CC BY-SA 4.0**, not MIT; see the [licence and attribution notice](plugins/arckit-arc42/templates/arc42-LICENSE.md). Original ArcKit implementation code remains MIT-licensed.
 
 > **Exception:** the `plugins/arckit-uk-gcloud/` overlay is **proprietary** (not MIT) — see [`plugins/arckit-uk-gcloud/LICENSE`](plugins/arckit-uk-gcloud/LICENSE).
 

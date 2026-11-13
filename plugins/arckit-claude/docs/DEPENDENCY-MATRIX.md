@@ -204,7 +204,7 @@ Most procurement commands require ARC-*-REQ-*.md:
 - **tenders** → Depends on: principles (O), requirements (O)
   - Note: Procurement market intelligence from the UK Tenders MCP — award-value benchmarks, top suppliers, incumbency/concentration across more than 700k UK contracting processes (October 2026)
   - Requires the bundled `uk-tenders` MCP server (keyless, deferred, best-effort availability)
-  - Outputs TNDR artefact; feeds into sobc (Economic Case benchmarks), risk (concentration risk), research (build-vs-buy market context)
+  - Outputs TNDR artefact; feeds into sobc (Economic Case benchmarks), risk (concentration risk), research (market context)
   - Agent-delegating command (reader/orchestrator/writer three-tier split); shares `arckit-tenders-reader` with `/arckit:competitors`
 - **competitors** → Depends on: principles (O), requirements (O)
   - Note: Competitor landscape from the UK Tenders MCP — rival suppliers, awarded-value market share, head-to-head comparison, concentration analysis
@@ -440,7 +440,7 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:uk-nhs-dcb0129` | — | data-model, requirements, stakeholders | atrs, dpia, principles, risk |
 | `/arckit:uk-nhs-dcb0160` | — | data-model, principles, requirements, stakeholders, uk-nhs-dcb0129 | operationalize |
 | `/arckit:uk-nhs-dtac` | — | data-model, principles, requirements, stakeholders | atrs, dld-review, dpia, hld-review, secure, uk-mdr-classification, uk-nhs-dcb0129, uk-nhs-dcb0160 |
-| `/arckit:uk-mdr-classification` | — | data-model, principles, requirements, stakeholders | secure |
+| `/arckit:uk-mdr-classification` | — | data-model, principles, requirements, stakeholders | secure, uk-nhs-dcb0129 |
 
 ### ArcKit FDE Site Generator (`arckit-fde`)
 
@@ -509,6 +509,28 @@ Some prompts name codes that are not registered, so they are not shown: `DR` use
 | `/arckit:agile-strategy` | — | business-capability-map, oaa-adm-lite, principles, product-architecture, requirements, stakeholders, transition-architecture | — |
 | `/arckit:agile-security` | — | agile-strategy, oaa-adm-lite, principles, product-architecture, requirements | — |
 | `/arckit:agile-governance` | — | agile-security, agile-strategy, oaa-adm-lite, principles, product-architecture | — |
+
+### ArcKit arc42 (`arckit-arc42`)
+
+| Command | Needs (M) | Recommended (R) | Optional (O) |
+|---------|-----------|-----------------|--------------|
+| `/arckit:arc42` | — | adr, diagram, hld-review, principles, requirements, stakeholders | arc42-concepts, arc42-debt, arc42-quality, conformance, data-model, devops, dfd, dld-review, glossary, operationalize, platform-design, repo-audit, risk, secure, sobc, strategy, wardley |
+| `/arckit:arc42-quality` | requirements | adr, principles, stakeholders | arc42-concepts, diagram, hld-review, risk, secure, sobc |
+| `/arckit:arc42-concepts` | requirements or adr | adr, data-model, dld-review, hld-review, principles, secure | arc42-quality, devops, diagram, dpia, operationalize, platform-design, repo-audit |
+| `/arckit:arc42-debt` | any one of adr, conformance, dld-review, hld-review, repo-audit, risk | conformance, repo-audit | diagram, principles-compliance |
+| `/arckit:arc42-handover` | arc42, requirements | adr, arc42-concepts, arc42-quality, backlog, data-model, principles | arc42-debt, diagram, glossary, risk, secure, stakeholders |
+
+`/arckit:arc42` stops only when the project has none of its project-level Recommended inputs (adr, diagram, hld-review, requirements, stakeholders); principles live in `000-global` and do not count on their own. Every other input fills a section when present and is listed in the Gap Register when not.
+
+Typical assembly flow, automated by the `arc42-full` recipe in Claude Code or run as individual commands in other assistants:
+
+```text
+principles → stakeholders → requirements → ADRs + data model →
+context, container, sequence and deployment diagrams + secure + risk + glossary →
+arc42-quality → arc42-concepts → [arc42-debt] → arc42 → [arc42-handover]
+```
+
+Existing source artefacts can be reused; missing inputs leave gaps in the description. The bracketed steps are optional: `arc42-debt` suits an existing system with audits, conformance assessments or design reviews to consolidate, and `arc42-handover` writes the inputs for a Spec Kit delivery team. After delivery, `/arckit:traceability`, `/arckit:conformance` and `/arckit:repo-audit` read the tagged Spec Kit specs back.
 
 ---
 
@@ -638,7 +660,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 6.18.2
 - **Matrix Date**: 2026-10-17
-- **Commands Documented**: 76 core commands in the matrix; 120 community overlay and tooling commands in Community Overlay Dependencies
+- **Commands Documented**: 76 core commands in the matrix; 125 community overlay and tooling commands in Community Overlay Dependencies
 - **Matrix Rows**: 65 (63 commands + 2 external documents)
 - **Note**: `/arckit:build`, `/arckit:customize`, `/arckit:export-okf`, `/arckit:graph-report`, `/arckit:health`, `/arckit:impact`, `/arckit:import-okf`, `/arckit:init`, `/arckit:navigator`, `/arckit:pages`, `/arckit:search`, `/arckit:start`, `/arckit:template-builder` are not in the matrix. They need no earlier documents, or they work across whatever the project already holds rather than on particular documents, and no other command reads their output
 

@@ -157,7 +157,7 @@ flowchart TD
 | 4 | [DATE] | [DAYS] | Business Case | `/arckit:sobc` | ARC-{PROJECT_ID}-SOBC-v*.md | Strategic Outline Business Case (5-case model) |
 | 5 | [DATE] | [DAYS] | Requirements | `/arckit:requirements` | ARC-{PROJECT_ID}-REQ-v*.md | [BR] business, [FR] functional, [NFR] non-functional reqs |
 | 6 | [DATE] | [DAYS] | Data | `/arckit:data-model` | ARC-{PROJECT_ID}-DATA-v*.md | [N] entities, [M] relationships, GDPR compliance |
-| 7 | [DATE] | [DAYS] | Research | `/arckit:research` | ARC-{PROJECT_ID}-RSCH-v*.md | Evaluated [N] options (build vs buy analysis) |
+| 7 | [DATE] | [DAYS] | Research | `/arckit:research` | ARC-{PROJECT_ID}-RSCH-v*.md | Found [N] options (facts and published costs) |
 | 8 | [DATE] | [DAYS] | Strategy | `/arckit:wardley` | wardley-maps/ARC-*-WARD-*.md | Strategic positioning and evolution |
 | 9 | [DATE] | [DAYS] | Architecture | `/arckit:diagram` | diagrams/ARC-*-DIAG-*.md | C4 context/container/component diagrams |
 | 10 | [DATE] | [DAYS] | Procurement | `/arckit:sow` | ARC-*-SOW-*.md | Statement of Work for vendor RFP |
@@ -490,7 +490,7 @@ flowchart TD
     end
 
     subgraph Design
-        Research[Technology<br/>Research<br/>Build vs Buy]
+        Research[Technology<br/>Research<br/>Options and Costs]
         Wardley[Wardley<br/>Maps<br/>Evolution]
         Diagrams[Architecture<br/>Diagrams<br/>C4 + Deployment]
     end
@@ -811,7 +811,7 @@ ArcKit commands used in this project:
 | `/arckit:sobc` | Strategic Outline Business Case (Green Book) | Before detailed requirements |
 | `/arckit:data-model` | Define data model, ERD, GDPR compliance | With requirements definition |
 | `/arckit:requirements` | Define BR/FR/NFR/INT/DR requirements | After business case |
-| `/arckit:research` | Research technology options, build vs buy | After requirements |
+| `/arckit:research` | Research technology options, facts and costs | After requirements |
 | `/arckit:wardley` | Create Wardley Maps for strategic planning | With research phase |
 | `/arckit:diagram` | Generate C4/deployment/sequence diagrams | After requirements/research |
 | `/arckit:sow` | Create Statement of Work (RFP) | After research, before procurement |

@@ -10,8 +10,10 @@ Optional ArcKit plugin for repository-oriented commands: source-grounded documen
 ## Requires arckit core plugin
 
 ```bash
-claude plugin install arckit arckit-repo
+claude plugin install arckit-repo --marketplace tractorjuice/arckit-claude
 ```
+
+This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. It needs Claude Code 2.1.275 or later.
 
 Without `arckit` core, this plugin still provides the command prompt, but it will not be installed as part of the ArcKit marketplace dependency chain.
 

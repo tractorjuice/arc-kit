@@ -103,7 +103,7 @@ def test_the_arms_differ_only_in_the_variant_files(tmp_path):
 
 
 def entry(case: str, score: float, cost: float, **graders: bool) -> dict:
-    return {"case": case, "score": score, "cost_usd": cost, "output_tokens": 1000, "early_stop": None,
+    return {"case": case, "score": score, "cost_usd": cost, "output_tokens": 1000, "early_stop": None, "runtime": {"passed": True}, "completion": {"passed": True},
             "graders": [{"name": n, "type": "regex", "passed": p} for n, p in graders.items()]
             + [{"name": "judged", "type": "llm", "skipped": True}]}
 
@@ -135,11 +135,13 @@ def test_compare_keeps_a_case_one_arm_has_no_recording_for():
 
 
 FAKE_CLAUDE = """#!/bin/sh
+if [ "$1" = "plugin" ]; then echo '[]'; exit 0; fi
 while [ $# -gt 0 ]; do
   if [ "$1" = "--plugin-dir" ]; then plugin="$2"; fi
   shift
 done
 if grep -q WRITE-THE-FILE "$plugin/commands/demo.md"; then echo written > out.md; fi
+printf '{"type":"system","subtype":"init","plugins":[{"name":"arckit","source":"arckit@inline","path":"%s"}],"slash_commands":["arckit:demo"]}\n' "$plugin"
 echo '{"type": "result", "subtype": "success", "result": "ok", "total_cost_usd": 0.5, "num_turns": 1}'
 """
 
@@ -149,6 +151,8 @@ def fake_run(tmp_path, monkeypatch):
     plugin = tmp_path / "plugin"
     (plugin / "commands").mkdir(parents=True)
     (plugin / "commands" / "demo.md").write_text("---\ndescription: demo\n---\n\nSay hello.\n", encoding="utf-8")
+    (plugin / ".claude-plugin").mkdir()
+    (plugin / ".claude-plugin/plugin.json").write_text(json.dumps({"name": "arckit", "defaultEnabled": False}))
     case = plugin / "evals" / "demo-case"
     (case / "graders").mkdir(parents=True)
     (case / "case.yaml").write_text("name: demo-case\nprompt: /arckit:demo go\n", encoding="utf-8")
@@ -214,3 +218,15 @@ def test_variant_with_replay_is_refused(fake_run):
     run, variant, out = fake_run
     with pytest.raises(SystemExit):
         run("--variant", str(variant), "--replay", str(out))
+
+
+@pytest.mark.parametrize('field', ['runtime', 'completion'])
+def test_invalid_arm_never_claims_improvement(field, capsys):
+    baseline = entry('demo', 0, 0, report=False)
+    baseline[field] = {'passed': False}
+    rows = eval_headless.compare([baseline], [entry('demo', 1, 1, report=True)])
+    assert not rows[0]['valid']
+    assert rows[0]['score'] == {'baseline': None, 'variant': None}
+    assert rows[0]['graders'] == []
+    eval_headless.print_comparison(rows)
+    assert 'INVALID COMPARISON' in capsys.readouterr().out

@@ -86,7 +86,7 @@ $ARGUMENTS
 **RECOMMENDED** (read if available, note if missing):
 
 - **STKE** (Stakeholder Analysis) — Extract: Business drivers, stakeholder goals, priorities, success metrics
-- **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Vendor landscape, build vs buy analysis, TCO comparisons
+- **RSCH** / **AWRS** / **AZRS** (Research) — Extract: options per capability, and the market evidence for placing each one (how many products cover it, from how many vendors, whether a utility, GOV.UK platform or open-source project does), plus published costs. `/arckit:research` gives no build-or-buy verdict: this command decides sourcing.
 - **WVCH** (Value Chain) — Extract: Anchor (user need), components, visibility scores, dependencies
 
 **OPTIONAL** (read if available, skip silently if missing):

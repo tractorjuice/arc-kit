@@ -18,8 +18,10 @@ Rather than introduce a new inventory command, the register/evidence-heavy energ
 ## Requires arckit core and arckit-au
 
 ```bash
-claude plugin install arckit arckit-au arckit-au-energy
+claude plugin install arckit-au-energy --marketplace tractorjuice/arckit-claude
 ```
+
+This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) and `arckit-au` with the plugin. It needs Claude Code 2.1.275 or later.
 
 The `au-energy` recipe consumes federal-layer targets from `arckit-au` (`AU_E8`, `AU_ISM`, `AU_OT`, `AU_SOCI`, `AU_PIA`, `AU_NDB`). Without `arckit-au`, those foundation steps won't resolve. Without `arckit` (core), recipes won't resolve their base commands (`arckit:principles`, `arckit:requirements`, `arckit:stakeholders`, `arckit:adr`, `arckit:data-model`, etc.) and `validate-arc-filename` won't recognise the energy doc-type codes (`AUAESCSF`, `AUENERGY`).
 

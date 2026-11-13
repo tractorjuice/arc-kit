@@ -43,7 +43,7 @@ $ARGUMENTS
 
 ## What This Command Does
 
-Scans the `projects/` directory for all `ARC-*` artifacts and applies nine detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action. The hook also writes `docs/health.json` on every run for dashboard integration (consumed by `/arckit:pages`).
+Scans the `projects/` directory for all `ARC-*` artifacts and applies ten detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action. The hook also writes `docs/health.json` on every run for dashboard integration (consumed by `/arckit:pages`).
 
 The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of what the session-start `stale-artifact-scan` monitor surfaces, so the on-demand command and the background notification agree on the same set of artifacts.
 
@@ -62,6 +62,7 @@ The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of wha
 | STALE-EXT | Unincorporated External Files | HIGH | External file in `external/` newer than all ARC-* artifacts in the same project |
 | REVIEW-OVERDUE | Overdue Review | HIGH | Document Control `Next Review Date` is in the past, on a non-DRAFT/SUPERSEDED/ARCHIVED artifact |
 | STALE-DRAFT | Long-running Draft | MEDIUM | Artifact with `Status: DRAFT` whose `Last Modified` (or `Created Date`) is >30 days old (override via `STALE_DRAFT_DAYS=N`) |
+| STALE-VIEW | Out-of-date Generated View | MEDIUM | An artifact with a `## Source Artefacts` table (such as an arc42 description) cites a source, in its project or in `000-global`, that now has a newer version, or omits a later instance of a type it cites |
 
 ---
 
@@ -73,7 +74,7 @@ The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of wha
 >
 > 1. **Scan Scope** — identified all projects and ARC-* artifacts
 > 2. **Metadata Extraction** — read every artifact and extracted dates, statuses, requirement IDs, review verdicts, and conditions
-> 3. **Rule Application** — applied all nine detection rules and generated findings with severities
+> 3. **Rule Application** — applied all ten detection rules and generated findings with severities
 >
 > The hook's `hook context` above contains all findings — use them directly. **Do NOT re-read any artifact files.** Proceed to Step 4 to format the console output.
 >
@@ -303,6 +304,30 @@ The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of wha
   Action: Promote to IN_REVIEW/APPROVED, bump the version, or archive the draft
 ```
 
+#### Rule 10: STALE-VIEW — Out-of-date Generated View
+
+**Scan**: The latest version of every `ARC-*` artifact that has a `## Source Artefacts` table. Such an artifact is a generated view over other artifacts; today that means the arc42 description (`ARC42`) and the SDD handover pack (`SDDH`).
+
+**Logic**:
+
+1. Read the Document ID and version on each row of the view's Source Artefacts table
+2. For each cited document, find its latest version in the same project, or in `projects/000-global/` for a global source such as `ARC-000-PRIN`. If it is newer than the version the view cites, the view is stale. Global artefacts are read only for this comparison; they raise no findings of their own
+3. For each type the view cites (for example `ADR`), find documents of that type in the project that the table does not list, such as an ADR written after the view. Those are not reflected in it
+4. If either list is non-empty: **flag as MEDIUM severity**
+
+**Rationale**: A generated view summarises its sources and records which versions it read. Once a source moves on, the view describes an architecture that no longer matches its own evidence. The sources stay authoritative, so this is MEDIUM: the fix is to regenerate the view, not to repair it by hand.
+
+**Output per finding**:
+
+```text
+[MEDIUM] STALE-VIEW: {filepath}
+  Sources with a newer version: {N}
+    - {shortId}: cites v{X}, latest v{Y}
+  Later artefacts not reflected: {N}
+    - {document ID}
+  Action: Re-run {generating command} to write the next version from the current sources
+```
+
 ### Step 4: Compile Health Report
 
 Produce the health report as **console output only** (do NOT write a file). Structure the report as follows:
@@ -334,6 +359,7 @@ FINDINGS BY TYPE
   ORPHAN-REQ:       {count}
   MISSING-TRACE:    {count}
   STALE-DRAFT:      {count}
+  STALE-VIEW:       {count}
   VERSION-DRIFT:    {count}
 ```
 
@@ -413,7 +439,11 @@ RECOMMENDED ACTIONS (prioritised)
    Promote DRAFT artifacts to IN_REVIEW/APPROVED, bump the version, or archive them
    Why: Drafts unchanged for over a month usually indicate stalled or abandoned work
 
-9. [LOW] Review {count} artifacts with version drift
+9. [MEDIUM] Regenerate {count} out-of-date views
+   Re-run the command named in each finding (for an arc42 description, /arckit:arc42)
+   Why: A generated view that predates its sources describes an architecture its evidence no longer supports
+
+10. [LOW] Review {count} artifacts with version drift
    Confirm latest versions are current or archive old versions
    Why: Stale multi-version artifacts may indicate abandoned work
 ```
@@ -463,7 +493,8 @@ The hook automatically writes `docs/health.json` on every run. No action is need
     "MISSING-TRACE": 2,
     "VERSION-DRIFT": 1,
     "REVIEW-OVERDUE": 0,
-    "STALE-DRAFT": 0
+    "STALE-DRAFT": 0,
+    "STALE-VIEW": 0
   },
   "projects": [
     {
@@ -607,6 +638,7 @@ Console output is the primary user-facing output. `docs/health.json` is always w
 | External file staleness | Any age | External files newer than all artifacts indicate unincorporated content; no safe window to ignore since governance may be based on outdated information |
 | Review overdue | Any past date | The review cycle is a governance commitment captured at creation; once the date passes, the assurance gate has lapsed regardless of how recently |
 | Draft staleness | 30 days | Long enough that "actively iterating" is no longer plausible; matches the session-start monitor so both surfaces agree (override via `STALE_DRAFT_DAYS`) |
+| Generated view staleness | Any newer source | A view records the versions it was built from, so any newer source is a precise, cheap-to-fix signal; there is no age threshold to tune |
 
 ### Future Enhancements
 

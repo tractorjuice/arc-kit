@@ -119,6 +119,7 @@ The G-Cloud 15 search on the Digital Marketplace offers these filters, among oth
 - Data location requirements considered.
 - Price ranges captured for comparison.
 - At least 3 services shortlisted for evaluation.
+- Integrity Findings recorded, or the section states None found.
 
 ---
 

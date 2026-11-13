@@ -6,7 +6,7 @@ The Enterprise Architecture Governance Harness — a Claude Code plugin providin
 
 ### Step 0: Make sure Claude Code is up to date
 
-ArcKit needs Claude Code **v2.1.287 or later** (see Prerequisites below). The simplest way to land on a supported version — even if you've never installed Claude Code before — is:
+ArcKit needs Claude Code **v2.1.319 or later** (see Prerequisites below). The simplest way to land on a supported version — even if you've never installed Claude Code before — is:
 
 ```bash
 claude install latest
@@ -60,13 +60,14 @@ claude --plugin-dir /path/to/arckit-claude
 
 ## Prerequisites
 
-- **Claude Code** v2.1.287 or later (recommended minimum)
+- **Claude Code** v2.1.319 or later (recommended minimum)
+- **Node.js** on your `PATH`. ArcKit's hooks and helper scripts need it, and without it ArcKit artefacts can't be written
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.287?** It adds **Claude mods**, which ArcKit uses to draw a status line above the prompt: how many projects and artefacts you have, how many are DRAFT, and how many reviews are overdue. It also fixes plugin SessionStart hooks not running in new cloud sessions, which skipped ArcKit's session set-up and version check there.
+> **Why v2.1.319?** It closes three ways a command could get past a permission check or the sandbox. It also runs ArcKit's after-write steps on an artefact written just as you send a new message; earlier versions skipped them, so the artefact had no provenance block and no entry in the published index. And updating a plugin now installs a dependency the new version adds, which every overlay relies on for the core plugin. It still carries what v2.1.295 brought: `onFailure: "block"`, so a check on an ArcKit artefact stops the write when it can't run.
 >
 > The floor also carries earlier releases ArcKit depends on:
 >

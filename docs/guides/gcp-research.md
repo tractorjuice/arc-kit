@@ -126,7 +126,7 @@ Outputs: `projects/<id>/research/ARC-<id>-GCRS-v1.0.md`
 claude remote-control
 ```
 
-Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the agent reaches a decision point (service shortlist confirmation, region selection). ArcKit's minimum Claude Code floor (v2.1.287) already covers the v2.1.110 RC requirement.
+Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the agent reaches a decision point (service shortlist confirmation, region selection). ArcKit's minimum Claude Code floor (v2.1.319) already covers the v2.1.110 RC requirement.
 
 Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local `claude` process must keep running.
 
@@ -187,14 +187,14 @@ When UK Government project detected:
 |---------|-------------------|------------------------|
 | Scope | Multi-cloud, SaaS, open-source | Google Cloud-specific only |
 | Source | Web search, multiple sources | Google Developer Knowledge MCP (authoritative) |
-| Depth | Build vs buy analysis | Deep Google Cloud service analysis |
+| Depth | Market options, checked facts and costs | Deep Google Cloud service analysis |
 | Compliance | General UK Gov | Google Cloud-specific UK compliance |
 | Code samples | Limited | Terraform, Cloud Build |
 | Cost estimates | High-level | Detailed Google Cloud pricing |
 
 **When to use which**:
 
-- Use `/arckit:research` for cloud-agnostic evaluation or build vs buy
+- Use `/arckit:research` for cloud-agnostic market options and costs
 - Use `/arckit:gcp-research` when Google Cloud is the target platform
 
 ---

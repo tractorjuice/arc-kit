@@ -1,0 +1,17 @@
+schema_version: "1.1"
+name: score-borderline-proposal
+tags: [governance, artefact, procurement]
+prompt: '/arckit:score vendor "Brightwater Systems" --project=001'
+plugins: ["../.."]
+runs: 1
+max_turns: 20
+timeout_seconds: 900
+allowed_tools: [Read, Write, Edit, Glob, Grep, Bash, Agent]
+context:
+  add_dirs:
+    - source: ../fixtures/benefits-portal
+      dest: .
+    - source: ../fixtures/benefits-portal-evaluation
+      dest: .
+    - source: ../fixtures/vendor-proposals-borderline/brightwater-systems
+      dest: projects/001-benefits-portal/vendors/brightwater-systems

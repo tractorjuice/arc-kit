@@ -103,7 +103,7 @@ Outputs: `projects/<id>/research/ARC-<id>-CMPT-<NNN>-v1.0.md`
 claude remote-control
 ```
 
-Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion. ArcKit's minimum Claude Code floor (v2.1.287) already covers the v2.1.110 RC requirement.
+Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion. ArcKit's minimum Claude Code floor (v2.1.319) already covers the v2.1.110 RC requirement.
 
 Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local `claude` process must keep running.
 
@@ -186,7 +186,7 @@ The reader returns evidence across five procurement portals, ranked internally b
 |-----------|---------|-------------|
 | **Input** | `/arckit:requirements` | CPV codes and capability keywords derived from DR/FR/INT |
 | **Input** | `/arckit:tenders` | TNDR artefact narrows the capability scope and provides market benchmarks |
-| **Output** | `/arckit:research` | Feed the competitive set into build-vs-buy analysis and TCO comparison |
+| **Output** | `/arckit:research` | Feed the competitive set into the market research and its cost evidence |
 | **Output** | `/arckit:score` | Rival award history used as comparative Company Experience evidence |
 | **Output** | `/arckit:risk` | Concentration / single-supplier-dependency risk |
 | **Output** | `/arckit:adr` | Competitive landscape and route-to-market decisions recorded as ADRs |
@@ -195,7 +195,7 @@ The reader returns evidence across five procurement portals, ranked internally b
 
 ## Follow-on Actions
 
-- Feed the competitive set into build-vs-buy analysis (`/arckit:research`)
+- Feed the competitive set into market research (`/arckit:research`)
 - Use rival award history as Company Experience evidence in a vendor scorecard (`/arckit:score`)
 - Register supplier-concentration or single-supplier-dependency risks (`/arckit:risk`)
 - Record route-to-market decisions as ADRs (`/arckit:adr`)

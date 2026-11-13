@@ -94,7 +94,7 @@ Building something in Austria? The toolkit finally knows what you are actually u
 - [ArcKit v4.7: 18 EU and French Regulatory Commands](article-viewer.html?a=2026-04-19-v470-eu-french-regulatory)
 - [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](article-viewer.html?a=2026-04-30-uae-overlay-launch)
 - [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
-- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+- [Wanted: `/arckit:build` Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
 
 <!-- arckit:community-block -->
 ## Join the ArcKit Community

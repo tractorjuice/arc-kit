@@ -11,9 +11,9 @@ ArcKit's Claude Code plugin includes automation hooks across 10 event types. Hoo
 | **SessionStart** | arckit-session, version-check, v5-migration-banner, notify-stale-artifacts | Session start, resume, clear, compact |
 | **Stop** | session-learner | Session ends normally |
 | **StopFailure** | session-learner | Session ends with error |
-| **UserPromptSubmit** | arckit-context, secret-detection, sync-guides, graph-inject | Every user message and matched ArcKit commands |
+| **UserPromptSubmit** | arckit-context, secret-detection, supplier-isolation, sync-guides, graph-inject | Every user message and matched ArcKit commands |
 | **SubagentStart** | inject-agent-context | An ArcKit subagent starts (not readers or writers) |
-| **PreToolUse** | validate-reader-handoff (SubagentHandback), validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner | Before selected tool calls |
+| **PreToolUse** | validate-reader-handoff (SubagentHandback), supplier-isolation, validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner | Before selected tool calls |
 | **PostToolUse** | update-manifest, provenance-stamp, tidy-wardley-labels, telemetry | After selected tool calls |
 | **TaskCreated** | telemetry | When an agent task is created |
 | **FileChanged** | external-context-watch | Watched external documents change |
@@ -94,7 +94,11 @@ Blocks the write if invalid, and the reason names the corrected path, with the n
 
 ### score-validator (Write)
 
-Validates scoring/assessment documents for numeric consistency. Checks that individual scores match totals, percentages are calculated correctly, and rating scales are applied consistently.
+Checks `vendors/scores.json` before it is written. Invalid JSON is blocked. A score outside 0–3, weights that don't sum to about 1.0, missing evidence, or an integrity finding holding anything but a type, file and location is reported to the model as a warning.
+
+### supplier-isolation (Read | Grep | Bash | PowerShell)
+
+While `/arckit:evaluate` or `/arckit:score` runs, only their reader can open a supplier's documents under `vendors/`, so a bid's raw text never reaches the context that scores it. `scores.json` and vendor profiles stay readable. The gate stays on until you run another `/command` or clear the session, so `/arckit:hld-review` still reads supplier designs as normal.
 
 ### file-protection (Edit | Write)
 

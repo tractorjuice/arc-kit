@@ -1,14 +1,14 @@
 # LinkedIn Version: Show Your Working
 
-Post on the ArcKit page with the `show-your-working` carousel (`docs/social/out/show-your-working/carousel.pdf`). Plain-evidence voice, the second of the three voices under test in `docs/social/SOCIAL.md`. Update the last line but one when the adopter list is no longer empty.
+Post on the ArcKit page with the `show-your-working` carousel (`docs/social/out/show-your-working/carousel.pdf`). Written in the maintainer's voice (`docs/social/SOCIAL.md` → Voice). Update the last line but one when the adopter list is no longer empty.
 
 ## LinkedIn Post Body
 
-Who uses ArcKit? We genuinely don't know.
+We don't know who uses ArcKit.
 
-ArcKit collects no usage data and nothing phones home. That's deliberate. It also means the only way to find out is to ask.
+It collects no usage data and nothing phones home, which is deliberate. So the only way to find out is to ask.
 
-If you've used ArcKit on real work, tell us in two minutes. You choose how you appear:
+If you've used ArcKit on real work, please get in touch. It takes two minutes, and you choose how you appear:
 
 → Named, with a line about what you use it for
 → Anonymous, counted by sector only
@@ -16,7 +16,7 @@ If you've used ArcKit on real work, tell us in two minutes. You choose how you a
 
 In return: monthly office hours from October, a free two-hour pilot workshop on your own project (four this quarter), and a case study if you'd like one, in your words.
 
-The list is empty today. An honest empty list beats a padded one.
+The list is empty today, and we'd rather that than pad it.
 
 Tell us here: https://github.com/tractorjuice/arc-kit/issues/new?template=adopter.yml
 

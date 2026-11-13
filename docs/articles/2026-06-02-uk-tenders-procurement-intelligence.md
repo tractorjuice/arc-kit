@@ -24,7 +24,7 @@ Just as importantly, ArcKit treats every response from this service as untrusted
 
 ---
 
-## /arckit:tenders: Procurement Market Intelligence
+## `/arckit:tenders`: Procurement Market Intelligence
 
 The first new command answers the question "what is this market, and who holds it?"
 
@@ -34,7 +34,7 @@ A worked example. Ask for case management work commissioned by HMRC, and instead
 
 ---
 
-## /arckit:competitors: The Competitive Set
+## `/arckit:competitors`: The Competitive Set
 
 The second command takes the supplier's view. Name a supplier, or a capability, and it maps the competitive set: the rival suppliers in that space, each one's share of awarded value as a market-share proxy, the buyers they serve, and how they stack up against each other. It also writes a Government Award History into each vendor's profile, so the evidence is waiting there the next time that supplier is evaluated.
 

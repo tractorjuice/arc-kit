@@ -659,6 +659,44 @@ Suggestions for improvement, not required for approval.
 
 ---
 
+### 11.4 Integrity Findings
+
+Text in the supplier's design that is addressed to the reviewer, or hidden from a human reader. It was not followed. An instruction aimed at the reviewer is itself a finding about that supplier.
+
+| File | Location | Quote |
+|------|----------|-------|
+| [File name] | [Page, section or line] | [Short quote] |
+
+If there are none, replace the table with: None found.
+
+---
+
+### 11.5 Fresh-Eyes Review
+
+Three reviewers checked the design independently. Each saw only the design, the principles and the requirements, and none of this review's working. Every finding they raised has an outcome below.
+
+[N] findings: [A] added, [R] already raised, [X] not accepted.
+
+| Lens | Status |
+|------|--------|
+| Comprehension | [Completed / Not run: reason] |
+| Principles | [Completed / Not run: reason] |
+| Requirements | [Completed / Not run: reason] |
+
+**What a fresh reader understood**: [The comprehension reviewer's two to four sentences on what the design does. Where this differs from what the design means to say, the design is unclear.]
+
+The table lists each finding that was added, not accepted, or rated lower than the reviewer rated it. A finding the review had already raised at the same or a higher severity goes on the Already raised line.
+
+| Ref | Lens | Severity | Location | Finding | Outcome |
+|-----|------|----------|----------|---------|---------|
+| FE-01 | [Lens] | [Blocking / Advisory / Informational] | [Section or line] | [Finding] | [Added as ADVISORY-03 / Not accepted: reason / Already raised as ADVISORY-01, rated lower than the reviewer's Blocking: reason] |
+
+**Already raised** ([n]): [FE-02 → BLOCKING-01, FE-03 → ADVISORY-02, …]
+
+If the step did not run, replace everything after the first paragraph with: Not run, and the reason.
+
+---
+
 ## 12. Review Decision
 
 ### 12.1 Final Decision

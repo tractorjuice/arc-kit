@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit:research` investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.
+`/arckit:research` investigates market, SaaS, open-source, and government marketplace options and reports what each offers, lacks and costs. It makes no build-or-buy decision: `/arckit:wardley` decides how to source each capability, and `/arckit:sobc` appraises value for money.
 
 > **Agent Architecture**: This command delegates to the `arckit-research` autonomous agent. The agent runs as a subprocess with its own context window, performing dozens of WebSearch and WebFetch calls for vendor pricing, reviews, and compliance data without polluting your main conversation. The slash command launches the agent and relays its summary back to you.
 
@@ -12,8 +12,8 @@
 
 | Scenario | Prompt seed | Focus |
 |---------|-------------|-------|
-| Build vs buy | “Research options for <capability> and recommend build vs buy” | Compares custom development vs product |
-| Supplier shortlist | “Research G-Cloud services for <need> including pricing tiers” | Public sector supplier discovery |
+| Options for a capability | “Research the options for <capability>, with costs” | Evidence for the build-or-buy decision in `/arckit:wardley` and `/arckit:sobc` |
+| Supplier discovery | “Research G-Cloud services for <need> including pricing tiers” | Public sector suppliers and their published prices |
 | Standards review | “Research regulatory obligations for <domain>” | Highlights policies, certifications, compliance |
 | Migration | “Research tooling to migrate from <legacy> to <target>” | Guides modernisation approaches |
 | Risk investigation | “Research security/operational risks for <technology>” | Informs risk register and mitigations |
@@ -28,7 +28,7 @@ Add constraints (budget, data residency, clearance) in the prompt for tailored r
 /arckit:research Research <topic> for <project>
 ```
 
-Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
+Outputs: `projects/<id>/research/ARC-<id>-RSCH-001-v1.0.md`, plus a vendor profile in `vendors/` for each vendor found and a tech note in `tech-notes/` for each significant technology finding.
 
 > **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
 
@@ -42,7 +42,7 @@ Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
 claude remote-control
 ```
 
-Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the agent reaches a decision point (vendor shortlist confirmation, build vs buy direction). ArcKit's minimum Claude Code floor (v2.1.287) already covers the v2.1.110 RC requirement.
+Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the run needs your input. ArcKit's minimum Claude Code floor (v2.1.319) already covers the v2.1.110 RC requirement.
 
 Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local `claude` process must keep running.
 
@@ -65,10 +65,10 @@ The cap exists to stop runaway search loops, so raise it deliberately rather tha
 
 ## Output Highlights
 
-- Option catalogue with pros, cons, pricing, support model.
+- Option catalogue with what each option meets and lacks, published pricing and support model, all cited.
 - Alignment to requirements and principles.
 - Risk considerations (lock-in, data sovereignty, accessibility).
-- Recommendation with rationale and next steps (PoC, procurement, or custom build).
+- Market evidence per capability for `/arckit:wardley`, cost data for `/arckit:sobc`, and next steps. No ranking or recommendation.
 
 ---
 

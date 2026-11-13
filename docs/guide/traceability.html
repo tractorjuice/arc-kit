@@ -431,8 +431,8 @@
             <a href="../guides.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Guides</a>
 <div id="films" class="app-films">
 <div class="app-film">
-<button type="button" class="app-film__play" data-film="JRAIZum1gXg" data-label="Film: /arckit:traceability" aria-label="Play Film: /arckit:traceability"><span class="app-film__icon" aria-hidden="true">▶</span><span>Film: /arckit:traceability</span></button>
-<p class="govuk-body-s app-film__note">A short AI-narrated film with English captions. Pressing play loads the YouTube player. <a class="govuk-link" href="https://youtu.be/JRAIZum1gXg" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<button type="button" class="app-film__play" data-film="9qeeeVdiIyA" data-label="Film: /arckit:traceability" aria-label="Play Film: /arckit:traceability"><span class="app-film__icon" aria-hidden="true">▶</span><span>Film: /arckit:traceability</span></button>
+<p class="govuk-body-s app-film__note">A short AI-narrated film with English captions. Pressing play loads the YouTube player. <a class="govuk-link" href="https://youtu.be/9qeeeVdiIyA" target="_blank" rel="noopener">Watch on YouTube</a></p>
 </div>
 </div>
 <div id="content" class="app-markdown">
@@ -592,6 +592,15 @@
 <blockquote>
 <p><strong>Auto-versioning</strong>: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.</p>
 </blockquote>
+<h3 id="spec-kit-delivery-evidence">Spec Kit delivery evidence</h3>
+<p>When a delivery team builds with <a href="https://github.com/github/spec-kit">Spec Kit</a> from an SDD handover pack (<code>/arckit-arc42:arc42-handover</code>), the matrix gains a <strong>Delivery Trace (Spec Kit)</strong> section. The command reads the <code>specs/</code> folder at the repository root, or a separate delivery repository's specs folder:</p>
+<pre><code class="language-text">/arckit:traceability 001 SPECS=../booking-service/specs
+</code></pre>
+<ul>
+<li><strong>Ownership comes first.</strong> Every project can have an <code>FR-001</code>, so a feature counts for a project only when its spec, plan or tasks carry that project's ownership tag, <code>[ArcKit Project 001]</code>, and no other project's. The handover pack puts the tag at the top of every feature description, and Spec Kit copies it into the spec.</li>
+<li><strong>Requirements travel as tags.</strong> In owned features, <code>[ArcKit FR-012]</code> tags map requirements to features, and checked task lines that carry a tag show delivery progress. Spec Kit's own per-feature IDs, such as its <code>FR-001</code>, are never matched to ArcKit requirements.</li>
+<li><strong>Gaps are named, not guessed.</strong> A feature with no ownership tag, or with tags for more than one project, is listed as not counted, with the fix. So is a tagged ID the requirements do not contain.</li>
+</ul>
 <h3 id="coverage-targets">Coverage targets</h3>
 <p>The command flags gaps against these targets: MUST requirements should be 100% covered, and SHOULD requirements over 80%. Lower-priority requirements can sit below 50%. A MUST requirement with no coverage is a critical gap, and security or compliance requirements without tests are high-risk gaps.</p>
 <hr />

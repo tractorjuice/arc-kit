@@ -86,7 +86,7 @@ The agent uses the govreposcrape semantic search API to query 24,500+ UK governm
 
 ## Follow-on Actions
 
-- Run `/arckit:research` to feed reuse findings into build vs buy analysis
+- Run `/arckit:research` to see the market options beside the reuse findings
 - Run `/arckit:adr` to document reuse decisions
 - Run `/arckit:requirements` to refine requirements based on discovered capabilities
 

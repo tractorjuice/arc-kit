@@ -90,7 +90,7 @@ gemini
 
 | Command | Description |
 |---------|-------------|
-| `/arckit:research` | Technology research with build vs buy analysis |
+| `/arckit:research` | Technology research: options, facts and costs |
 | `/arckit:datascout` | Data source discovery and API catalogue search |
 | `/arckit:aws-research` | AWS service research (via AWS Knowledge MCP) |
 | `/arckit:azure-research` | Azure service research (via Microsoft Learn MCP) |
@@ -161,7 +161,7 @@ gemini
 
 ArcKit includes 6 autonomous research agents that handle web-intensive tasks:
 
-- **arckit-research** — Market research, vendor evaluation, build vs buy
+- **arckit-research** — Market research: options, checked facts, published costs
 - **arckit-datascout** — Data source discovery, API catalogue search
 - **arckit-aws-research** — AWS service research (via AWS Knowledge MCP)
 - **arckit-azure-research** — Azure service research (via Microsoft Learn MCP)

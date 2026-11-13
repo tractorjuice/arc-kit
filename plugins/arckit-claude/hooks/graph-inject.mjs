@@ -34,11 +34,12 @@ import { randomBytes } from 'node:crypto';
 import {
   writeFileSync, mkdirSync, lstatSync, realpathSync, renameSync, unlinkSync,
 } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
-  isDir, readText, findRepoRoot, parseHookInput,
+  isDir, readText, listDir, findRepoRoot, parseHookInput,
   extractRequirementIds, REQUIREMENT_PRIORITIES,
+  isMainModule,
 } from './hook-utils.mjs';
 import { scanAllArtifacts } from './graph-utils.mjs';
 import {
@@ -179,7 +180,7 @@ const RECIPES = [
     rawRe: /^\s*\/arckit[.:]+traceability\b/i,
     expandedRe: /description:\s*Generate requirements traceability/i,
     opts: prompt => {
-      const arg = parseProjectArg(prompt, 'traceability');
+      const arg = parseProjectArg(withoutSpecsArg(prompt), 'traceability');
       return {
         excludeGlobal: true,
         withRequirements: true,
@@ -1073,6 +1074,67 @@ function formatAnalyzeProject(projectName, graph, arckitVersion) {
   return lines.join('\n');
 }
 
+/** Compare dotted versions numerically, so 1.10 sorts after 1.9. */
+function compareVersions(a, b) {
+  const pa = String(a).split('.').map(n => parseInt(n, 10) || 0);
+  const pb = String(b).split('.').map(n => parseInt(n, 10) || 0);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const d = (pa[i] || 0) - (pb[i] || 0);
+    if (d !== 0) return d;
+  }
+  return 0;
+}
+
+const SOURCE_DOC_ID_RE = /\bARC-(\d{3})-([A-Z0-9][A-Z0-9-]*?)-v(\d+(?:\.\d+)*)\b/;
+
+/**
+ * The documents a generated view lists in its "## Source Artefacts" table,
+ * one per row, as { shortId, type, version }. An artefact with no such table
+ * is not a view and yields []. Only the first document ID on a row counts:
+ * it is the Document ID column.
+ */
+export function extractSourceArtefacts(content) {
+  const lines = String(content || '').split(/\r?\n/);
+  const start = lines.findIndex(l => /^##\s+Source Artefacts\s*$/.test(l));
+  if (start === -1) return [];
+  const sources = [];
+  for (const line of lines.slice(start + 1)) {
+    if (/^##\s/.test(line)) break;
+    if (!line.startsWith('|')) continue;
+    const m = line.match(SOURCE_DOC_ID_RE);
+    if (!m) continue;
+    const typeAndInstance = m[2];
+    sources.push({
+      shortId: `ARC-${m[1]}-${typeAndInstance}`,
+      type: typeAndInstance.replace(/-\d{3}$/, ''),
+      version: m[3],
+    });
+  }
+  return sources;
+}
+
+/**
+ * The latest version of each document among `nodes`, keyed by its ID without
+ * the version (`ARC-001-ADR-003`), compared numerically.
+ */
+function latestVersionsById(nodes) {
+  const latest = new Map();
+  for (const n of nodes) {
+    const fullId = n.path.split('/').pop().replace(/\.md$/, '');
+    const shortId = fullId.replace(/-v[\d.]+$/, '');
+    const version = n.version || fullId.match(/-v([\d.]+)$/)?.[1] || '0';
+    const prev = latest.get(shortId);
+    if (!prev || compareVersions(version, prev.version) > 0) {
+      latest.set(shortId, { node: n, version, fullId });
+    }
+  }
+  return latest;
+}
+
+// A view's footer names the command that generated it. It reaches the
+// unescaped Action line, so only a plain ArcKit command name is accepted.
+const GENERATOR_COMMAND_RE = /^\/arckit(?:-[a-z0-9]+)?[.:][a-z0-9-]+$/;
+
 function formatHealth(graph, prompt, repoRoot) {
   const text = prompt.replace(/^\/arckit[.:]+health\s*/i, '');
   const severityArg = (text.match(/\bSEVERITY\s*=\s*(HIGH|MEDIUM|LOW)/i)?.[1] || 'LOW').toUpperCase();
@@ -1106,6 +1168,15 @@ function formatHealth(graph, prompt, repoRoot) {
 
   const baseline = sinceArg ? new Date(sinceArg) : new Date();
   const minLevel = SEVERITY_ORDER[severityArg] || 1;
+
+  // Global artefacts are excluded from the scan, so no ordinary rule reports
+  // on them, but a view in any project can cite one (ARC-000-PRIN). Index their
+  // versions separately for Rule 10's freshness comparison only.
+  const globalLatest = repoRoot
+    ? latestVersionsById(Object.values(scanAllArtifacts(join(repoRoot, 'projects'), {
+      projectFilter: '000-global', withNodeMetadata: true,
+    }).nodes))
+    : new Map();
 
   const projectResults = [];
 
@@ -1310,6 +1381,51 @@ function formatHealth(graph, prompt, repoRoot) {
       });
     }
 
+    // Rule 10: STALE-VIEW — a generated view (an artefact with a "Source
+    // Artefacts" table, such as an arc42 description) was built from a source
+    // that now has a newer version, or omits a later instance of a type it
+    // cites, such as an ADR written after it. Cited global sources are checked
+    // against globalLatest; only project artefacts count as unlisted instances.
+    const latestById = latestVersionsById(projectNodes);
+    for (const [viewShortId, { node: view }] of latestById) {
+      const cited = extractSourceArtefacts(view.content);
+      if (cited.length === 0) continue;
+      const citedVersions = new Map();
+      for (const c of cited) {
+        const prev = citedVersions.get(c.shortId);
+        if (!prev || compareVersions(c.version, prev) > 0) citedVersions.set(c.shortId, c.version);
+      }
+      const citedTypes = new Set(cited.map(c => c.type));
+      const newer = [];
+      for (const [shortId, version] of citedVersions) {
+        const latest = latestById.get(shortId) || globalLatest.get(shortId);
+        if (latest && compareVersions(latest.version, version) > 0) {
+          newer.push(`${shortId}: cites v${version}, latest v${latest.version}`);
+        }
+      }
+      const unlisted = [];
+      for (const [shortId, latest] of latestById) {
+        if (shortId === viewShortId || citedVersions.has(shortId)) continue;
+        if (citedTypes.has(latest.node.type)) unlisted.push(latest.fullId);
+      }
+      if (newer.length === 0 && unlisted.length === 0) continue;
+      const list = items => items.slice(0, 5).map(s => `    - ${s}`).join('\n')
+        + (items.length > 5 ? `\n    - (+${items.length - 5} more)` : '');
+      const parts = [];
+      if (newer.length > 0) parts.push(`Sources with a newer version: ${newer.length}\n${list(newer)}`);
+      if (unlisted.length > 0) parts.push(`Later artefacts not reflected: ${unlisted.length}\n${list(unlisted)}`);
+      const generator = (view.content || '').match(/\*\*Generated by\*\*:\s*ArcKit\s+`([^`]+)`/)?.[1];
+      findings.push({
+        severity: 'MEDIUM',
+        rule: 'STALE-VIEW',
+        file: rel(view),
+        message: parts.join('\n  '),
+        action: generator && GENERATOR_COMMAND_RE.test(generator)
+          ? `Re-run ${generator} to write the next version from the current sources`
+          : 'Re-run the command that generated this view to write its next version',
+      });
+    }
+
     const filtered = findings.filter(f => (SEVERITY_ORDER[f.severity] || 0) >= minLevel);
     projectResults.push({
       projectId: projectName,
@@ -1323,7 +1439,7 @@ function formatHealth(graph, prompt, repoRoot) {
   const byTypeCounts = {
     'STALE-RSCH': 0, 'FORGOTTEN-ADR': 0, 'UNRESOLVED-COND': 0,
     'STALE-EXT': 0, 'ORPHAN-REQ': 0, 'MISSING-TRACE': 0, 'VERSION-DRIFT': 0,
-    'REVIEW-OVERDUE': 0, 'STALE-DRAFT': 0,
+    'REVIEW-OVERDUE': 0, 'STALE-DRAFT': 0, 'STALE-VIEW': 0,
   };
   let totalArtifacts = 0;
   const projectsJson = [];
@@ -1410,7 +1526,155 @@ function formatHealth(graph, prompt, repoRoot) {
   return lines.join('\n');
 }
 
-function formatTraceability(graph, prompt) {
+// ── Spec Kit delivery evidence ─────────────────────────────────────────────
+
+// `[ArcKit FR-012]` or `[ArcKit FR-012, NFR-P-001]`: the tag /arckit:arc42-handover
+// tells a delivery team to keep beside Spec Kit's own local requirement IDs.
+const ARCKIT_TAG_RE = /\[ArcKit\s+([^\]\n]+)\]/g;
+// `[ArcKit Project 001]` (or `[ArcKit Project 001-booking]`): which ArcKit project
+// a Spec Kit feature delivers. Requirement IDs repeat across projects, so a
+// feature's tags count only for the project its ownership tag names.
+const ARCKIT_PROJECT_TAG_RE = /\[ArcKit\s+Project\s+(\d{3})(?:-[a-z0-9-]+)?\s*\]/gi;
+const SPEC_KIT_FILES = ['spec.md', 'plan.md', 'tasks.md'];
+const MAX_SPEC_BYTES = 1024 * 1024;
+
+/** `SPECS=<path>` names a Spec Kit specs folder outside the default `specs/`. */
+function withoutSpecsArg(prompt) {
+  return prompt.replace(/\bSPECS\s*=\s*\S+/i, '');
+}
+
+function taggedRequirementIds(text) {
+  const ids = new Set();
+  for (const tag of String(text).matchAll(ARCKIT_TAG_RE)) {
+    for (const id of extractRequirementIds(tag[1])) ids.add(id);
+  }
+  return ids;
+}
+
+/**
+ * Spec Kit features in `specsDir` (one per subdirectory, e.g. `001-booking`):
+ * the projects each feature's ownership tags name, the ArcKit requirement IDs
+ * tagged in its spec, plan and tasks, and task progress per ID from `tasks.md`
+ * checkboxes. Symlinks and oversized files are skipped, so a committed link
+ * cannot pull in content from elsewhere.
+ */
+export function scanSpecKitFeatures(specsDir) {
+  const root = lstatOrNull(specsDir);
+  if (!root || !root.isDirectory()) return null;
+  const features = [];
+  for (const name of listDir(specsDir)) {
+    if (name.startsWith('.')) continue;
+    const dir = join(specsDir, name);
+    const st = lstatOrNull(dir);
+    if (!st || !st.isDirectory()) continue;
+    const feature = {
+      name, files: [], owners: new Set(), ids: new Set(), tasks: { total: 0, done: 0 }, taskIds: {},
+    };
+    for (const file of SPEC_KIT_FILES) {
+      const fp = join(dir, file);
+      const fst = lstatOrNull(fp);
+      if (!fst || !fst.isFile() || fst.size > MAX_SPEC_BYTES) continue;
+      const text = readText(fp);
+      if (text == null) continue;
+      feature.files.push(file);
+      for (const m of text.matchAll(ARCKIT_PROJECT_TAG_RE)) feature.owners.add(m[1]);
+      for (const id of taggedRequirementIds(text)) feature.ids.add(id);
+      if (file !== 'tasks.md') continue;
+      for (const line of text.split(/\r?\n/)) {
+        const box = line.match(/^\s*[-*]\s+\[([ xX])\]/);
+        if (!box) continue;
+        const done = box[1] !== ' ';
+        feature.tasks.total++;
+        if (done) feature.tasks.done++;
+        for (const id of taggedRequirementIds(line)) {
+          const counts = feature.taskIds[id] || (feature.taskIds[id] = { total: 0, done: 0 });
+          counts.total++;
+          if (done) counts.done++;
+        }
+      }
+    }
+    if (feature.files.length > 0) features.push(feature);
+  }
+  return features;
+}
+
+/**
+ * Sort features by ownership. Only a feature whose ownership tags name exactly
+ * one project, and that project is `projectId`, is credited to it; a missing or
+ * conflicting tag is a gap to fix, never a guess.
+ */
+export function classifySpecKitOwnership(features, projectId) {
+  const groups = { owned: [], otherProject: [], missing: [], ambiguous: [] };
+  for (const f of features) {
+    if (f.owners.size === 0) groups.missing.push(f);
+    else if (f.owners.size > 1) groups.ambiguous.push(f);
+    else if (f.owners.has(projectId)) groups.owned.push(f);
+    else groups.otherProject.push(f);
+  }
+  return groups;
+}
+
+function formatSpecKitDelivery(lines, requirements, specsDir, repoRoot, projectId) {
+  const scanned = scanSpecKitFeatures(specsDir);
+  const fromRoot = relative(repoRoot, specsDir);
+  const shown = fromRoot && !fromRoot.startsWith('..') ? fromRoot : specsDir;
+  lines.push('### SPEC KIT DELIVERY — requirement → feature → tasks');
+  lines.push('');
+  if (scanned == null) {
+    lines.push(`- **Spec Kit specs**: none found at \`${inline(shown)}\` (pass \`SPECS=<path>\` for a delivery repository elsewhere)`);
+    lines.push('');
+    return;
+  }
+  const { owned: features, otherProject, missing, ambiguous } = classifySpecKitOwnership(scanned, projectId);
+  const reqIds = new Set(requirements.map(r => r.id));
+  const byReq = {};
+  for (const f of features) {
+    for (const id of f.ids) (byReq[id] || (byReq[id] = [])).push(f);
+  }
+  lines.push(`- **Specs folder**: \`${inline(shown)}\` (${scanned.length} feature${scanned.length === 1 ? '' : 's'}; ${features.length} owned by project ${projectId})`);
+  lines.push(`- **Ownership tag**: a feature counts for this project only when its spec, plan or tasks carry \`[ArcKit Project ${projectId}]\` and no other project's tag`);
+  lines.push('');
+  lines.push('| Req ID | Spec Kit Features | Tagged Tasks Done |');
+  lines.push('|--------|-------------------|-------------------|');
+  for (const req of requirements) {
+    const tagged = byReq[req.id];
+    if (!tagged) continue;
+    let total = 0;
+    let done = 0;
+    for (const f of tagged) {
+      total += f.taskIds[req.id]?.total || 0;
+      done += f.taskIds[req.id]?.done || 0;
+    }
+    const names = tagged.map(f => `${f.name} (${f.files.map(x => x.replace('.md', '')).join(', ')})`).join('; ');
+    lines.push(`| ${cell(req.id)} | ${cell(names)} | ${total > 0 ? `${done}/${total}` : 'no tagged tasks'} |`);
+  }
+  lines.push('');
+  const delivered = requirements.filter(r => byReq[r.id]).length;
+  lines.push(`- **Requirements in a Spec Kit feature**: ${delivered} of ${requirements.length} (${pct(delivered, requirements.length)})`);
+  const untraced = features.filter(f => f.ids.size === 0).map(f => f.name);
+  lines.push(`- **Owned features with no ArcKit requirement tags**: ${untraced.length > 0 ? inline(untraced.join(', ')) : 'none'}`);
+  const unknown = Object.keys(byReq).filter(id => !reqIds.has(id)).sort();
+  lines.push(`- **ArcKit IDs tagged in owned specs but not in REQ**: ${unknown.length > 0 ? inline(unknown.join(', ')) : 'none'}`);
+  const withTags = f => `${f.name} (tags ${f.ids.size > 0 ? [...f.ids].sort().join(', ') : 'none'})`;
+  lines.push(`- **Features with no ownership tag (not counted)**: ${missing.length > 0
+    ? `${inline(missing.map(withTags).join('; '))} — add \`[ArcKit Project ${projectId}]\` to the spec of each one that delivers this project`
+    : 'none'}`);
+  lines.push(`- **Features tagged for more than one project (not counted)**: ${ambiguous.length > 0
+    ? `${inline(ambiguous.map(f => `${f.name} (projects ${[...f.owners].sort().join(', ')})`).join('; '))} — keep one ownership tag`
+    : 'none'}`);
+  lines.push(`- **Features owned by other projects (not counted)**: ${otherProject.length > 0
+    ? inline(otherProject.map(f => `${f.name} (project ${[...f.owners][0]})`).join('; '))
+    : 'none'}`);
+  for (const f of features) {
+    if (!f.files.includes('tasks.md')) continue;
+    lines.push(`- **${inline(f.name)} tasks**: ${f.tasks.done}/${f.tasks.total} checked`);
+  }
+  lines.push('');
+}
+
+function formatTraceability(graph, prompt, repoRoot) {
+  const specsArg = prompt.match(/\bSPECS\s*=\s*(\S+)/i)?.[1];
+  prompt = withoutSpecsArg(prompt);
   const arg = parseProjectArg(prompt, 'traceability');
 
   if (graph.projects.length === 0) return null;
@@ -1614,10 +1878,16 @@ function formatTraceability(graph, prompt) {
   lines.push(`- Reviews: ${reviews.length}${reviews.length > 0 ? ` (${inline(reviews.join(', '))})` : ''}`);
   lines.push('');
 
+  if (repoRoot) {
+    const specsDir = specsArg ? resolve(repoRoot, specsArg) : join(repoRoot, 'specs');
+    formatSpecKitDelivery(lines, requirements, specsDir, repoRoot, projectName.slice(0, 3));
+  }
+
   fenceUntrusted(lines, dataStart);
 
   lines.push('### What to do');
   lines.push('- **Use the requirements table and coverage data** to build the traceability matrix');
+  lines.push('- **If SPEC KIT DELIVERY lists features**, fill the Delivery Trace (Spec Kit) section from it: credit only features owned by this project, and add every feature with no ownership tag or more than one to the Action Items');
   lines.push('- **Still read vendor HLD/DLD** if you need component names for design mapping columns');
   lines.push('- **Still read the template** for formatting');
   lines.push('- **Write outputs** per the command instructions');
@@ -1653,11 +1923,7 @@ export function runGraphInject(data) {
 
 // ── Main ──────────────────────────────────────────────────────────────────
 
-function isMainModule() {
-  return process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
-}
-
-if (isMainModule()) {
+if (isMainModule(import.meta.url)) {
   const output = runGraphInject(parseHookInput());
   if (output != null) {
     console.log(JSON.stringify(output));

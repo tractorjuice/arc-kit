@@ -56,6 +56,7 @@ EXPECTED_CLAUDE_MARKETPLACE_SOURCES = {
     ),
     "arckit-repo": ("./plugins/repo", "plugins/arckit-repo", "MIT"),
     "arckit-oaa": ("./plugins/oaa", "plugins/arckit-oaa", "MIT"),
+    "arckit-arc42": ("./plugins/arc42", "plugins/arckit-arc42", "MIT AND CC-BY-SA-4.0"),
 }
 
 PINNED_README_VERSION_PATTERNS = [
@@ -127,6 +128,12 @@ def test_claude_standalone_marketplace_matches_plugin_version():
 
     assert marketplace["name"] == "arckit-claude"
     assert marketplace["metadata"]["version"] == "1.0.0"
+    # A plugin dropped from the list is uninstalled on users' machines, so a
+    # removal needs a `renames` entry or it leaves no trace for the user.
+    assert marketplace["forceRemoveDeletedPlugins"] is True
+    core_commands = len(list((standalone_path("claude") / "commands").glob("*.md")))
+    core_entry = next(p for p in marketplace["plugins"] if p["name"] == "arckit")
+    assert core_entry["description"].startswith(f"{core_commands} slash commands")
     assert len(marketplace["plugins"]) == len(EXPECTED_CLAUDE_MARKETPLACE_SOURCES)
 
     plugins = {plugin["name"]: plugin for plugin in marketplace["plugins"]}
@@ -148,6 +155,7 @@ def test_claude_standalone_marketplace_matches_plugin_version():
         assert manifest["name"] == name
         assert manifest["version"] == plugin_version
         assert manifest["repository"] == "https://github.com/tractorjuice/arckit-claude"
+        assert manifest["license"] == license_name
 
 
 def test_root_claude_marketplace_remains_arc_kit_compatibility_marketplace():
@@ -173,6 +181,7 @@ def test_root_claude_marketplace_remains_arc_kit_compatibility_marketplace():
         assert root_plugin["source"] == f"./{local_dir}"
         assert (REPO_ROOT / local_dir).exists()
         assert root_plugin["version"] == standalone_plugin["version"]
+        assert root_plugin["license"] == standalone_plugin["license"]
         assert root_plugin["repository"] == "https://github.com/tractorjuice/arckit-claude"
         assert root_plugin["homepage"] == "https://github.com/tractorjuice/arckit-claude"
 

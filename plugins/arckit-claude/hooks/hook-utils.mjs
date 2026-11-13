@@ -9,7 +9,8 @@
  * hook-utils.mjs module as the hook count grows."
  */
 
-import { lstatSync, readFileSync, statSync, readdirSync, writeSync } from 'node:fs';
+import { lstatSync, readFileSync, statSync, readdirSync, writeSync, realpathSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { homedir } from 'node:os';
 import { dirname, isAbsolute, join, relative, resolve } from 'node:path';
 import { DOC_TYPES } from '../config/doc-types.mjs';
@@ -516,7 +517,27 @@ export function parseHookInput() {
   } catch {
     process.exit(0);
   }
+  if (!data || typeof data !== 'object' || Array.isArray(data)) process.exit(0);
   return data;
+}
+
+/**
+ * True when the module at this URL is the script Node was asked to run.
+ *
+ * Compares real paths. `import.meta.url` is always one and `process.argv[1]`
+ * isn't, so through a symlinked plugin folder a plain comparison is false and
+ * a hook does nothing and exits 0, which Claude Code reads as success.
+ *
+ * @param {string} moduleUrl `import.meta.url`
+ * @returns {boolean}
+ */
+export function isMainModule(moduleUrl) {
+  if (!process.argv[1]) return false;
+  try {
+    return realpathSync(process.argv[1]) === realpathSync(fileURLToPath(moduleUrl));
+  } catch {
+    return false;
+  }
 }
 
 // ── Version helpers ──

@@ -14,7 +14,7 @@ The Solution Architect designs technical solutions to meet business requirements
 | Command | Purpose | Guide |
 |---------|---------|-------|
 | `/arckit:requirements` | Define comprehensive business and technical requirements (with Business Analyst) | [Guide](../requirements.md) |
-| `/arckit:research` | Research technologies and services with build vs buy analysis | [Guide](../research.md) |
+| `/arckit:research` | Research technologies and services: options, checked facts and published costs | [Guide](../research.md) |
 | `/arckit:azure-research` | Deep-dive Azure services via Microsoft Learn MCP | [Guide](../azure-research.md) |
 | `/arckit:aws-research` | Deep-dive AWS services via AWS Knowledge MCP | [Guide](../aws-research.md) |
 | `/arckit:gcp-research` | Deep-dive GCP services via Google Developer Knowledge MCP | [Guide](../gcp-research.md) |
@@ -49,7 +49,7 @@ diagram → hld-review → dld-review → traceability
 
 1. **Understand the problem**: Review stakeholders and business case from Business Architect
 2. **Define requirements**: Run `/arckit:requirements` (co-own with Business Analyst)
-3. **Research solutions**: Run `/arckit:research` for market analysis and build vs buy
+3. **Research solutions**: Run `/arckit:research` for market options, checked facts and costs
 4. **Cloud deep-dive**: Run `/arckit:azure-research`, `/arckit:aws-research`, or `/arckit:gcp-research` for specific platforms
 5. **Map the landscape**: Run `/arckit:wardley` to visualise component evolution
 6. **Record decisions**: Run `/arckit:adr` for each significant architecture decision

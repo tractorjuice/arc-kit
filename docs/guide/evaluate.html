@@ -431,8 +431,8 @@
             <a href="../guides.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Guides</a>
 <div id="films" class="app-films">
 <div class="app-film">
-<button type="button" class="app-film__play" data-film="-908y3ZGqNA" data-label="Film: /arckit:evaluate" aria-label="Play Film: /arckit:evaluate"><span class="app-film__icon" aria-hidden="true">▶</span><span>Film: /arckit:evaluate</span></button>
-<p class="govuk-body-s app-film__note">A short AI-narrated film with English captions. Pressing play loads the YouTube player. <a class="govuk-link" href="https://youtu.be/-908y3ZGqNA" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<button type="button" class="app-film__play" data-film="XmQJwhASDPc" data-label="Film: /arckit:evaluate" aria-label="Play Film: /arckit:evaluate"><span class="app-film__icon" aria-hidden="true">▶</span><span>Film: /arckit:evaluate</span></button>
+<p class="govuk-body-s app-film__note">A short AI-narrated film with English captions. Pressing play loads the YouTube player. <a class="govuk-link" href="https://youtu.be/XmQJwhASDPc" target="_blank" rel="noopener">Watch on YouTube</a></p>
 </div>
 </div>
 <div id="content" class="app-markdown">
@@ -477,7 +477,7 @@
 <p>Output:</p>
 <ul>
 <li><code>projects/&lt;id&gt;/ARC-&lt;id&gt;-EVAL-v1.0.md</code> (framework)</li>
-<li><code>projects/&lt;id&gt;/vendors/&lt;vendor&gt;/ARC-&lt;id&gt;-EVAL-&lt;vendor&gt;-v1.0.md</code> (scoring)</li>
+<li><code>projects/&lt;id&gt;/vendors/_evaluations/&lt;vendor&gt;/evaluation.md</code> (scoring)</li>
 <li><code>projects/&lt;id&gt;/ARC-&lt;id&gt;-VEND-v1.0.md</code> (comparison)</li>
 </ul>
 <hr />
@@ -551,11 +551,31 @@
 <td>Delivery, technical, commercial, and compliance risks</td>
 </tr>
 <tr>
+<td>Integrity Findings</td>
+<td>Text in the proposal aimed at the evaluator, which is not followed, by type, file and location, or None found</td>
+</tr>
+<tr>
+<td>Moderation</td>
+<td>Whether the independent scorer ran, and each criterion where its score and the first differed by a fifth or more of the points, with both scores, the final score and the reason</td>
+</tr>
+<tr>
 <td>Recommendation</td>
 <td>Recommend / Consider / Not Recommended</td>
 </tr>
 </tbody>
 </table>
+<hr />
+<h2 id="how-bids-are-read">How Bids Are Read</h2>
+<p>A bid is written by a party that gains from a high score, so <code>/arckit:evaluate</code> never reads it directly. A read-only reader opens one supplier's documents and returns short claims against each criterion, and scoring uses only those claims. Each vendor's claims, evaluation and notes are saved in <code>vendors/_evaluations/&lt;vendor&gt;/</code>.</p>
+<ul>
+<li><strong>Formats:</strong> PDF, Markdown and text. Export a Word document to PDF first.</li>
+<li><strong>No claim, no marks:</strong> a criterion the bid doesn't address scores 0, and a mandatory qualification with no claim fails.</li>
+<li><strong>Evidenced beats promised:</strong> a claim that the supplier will or can do something, with nothing to show how, scores lower than one that says how or where it has been done.</li>
+<li><strong>Unreadable documents:</strong> if any document can't be read, the vendor stays unscored and you're told which file and why.</li>
+<li><strong>Keep the vendor's folder for what the supplier sent.</strong> Everything in <code>vendors/&lt;vendor&gt;/</code> is treated as the supplier's, and scoring stops for a vendor whose folder holds an <code>evaluation.md</code>, <code>notes.md</code> or <code>claims.json</code>.</li>
+</ul>
+<p>Scoring is still a judgement on what the supplier claims, so check the claims behind any close result. This works in Claude Code. Other runtimes have no subagents, so they read bids in one context.</p>
+<p><strong>Independent score and moderation.</strong> After scoring a vendor, <code>/arckit:evaluate</code> asks an independent scorer to score the same claims against the same criteria, without seeing the first scores or your answers to its questions, and without being told which vendor it is. Where the two differ by a fifth or more of a criterion's points, a neutral moderator, which isn't told which score is the command's, decides the final score and records why in the evaluation's Moderation section. If the independent scorer can't run, the evaluation says so.</p>
 <hr />
 <h2 id="three-task-types">Three Task Types</h2>
 <table>

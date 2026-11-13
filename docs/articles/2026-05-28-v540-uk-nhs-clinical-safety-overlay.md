@@ -100,7 +100,7 @@ Two sector overlays in two days is not the cadence to expect going forward. Both
 
 For users on the existing ArcKit Claude Code plugin, the v5.4.0 update arrives through the marketplace. Run `claude plugin install arckit arckit-uk-nhs` to install the core plugin and the NHS overlay together. The four new commands appear in `/help` with the `[COMMUNITY]` tag and a warning banner before each prompt body runs. Gemini CLI extension users get the same via `gemini extensions update arckit`. Codex, OpenCode, Copilot, and Paperclip users get the commands via their respective extension repos, or via `arckit init`.
 
-The `arckit` core plugin is a hard dependency. Without it, the `uk-nhs-clinical-safety` recipe cannot resolve the foundation commands (`arckit:principles`, `arckit:requirements`, `arckit:risk`, `arckit:dpia`, `arckit:atrs`, `arckit:secure`, `arckit:tcop`), and the file name validation hook will not recognise the two new NHS doc-type codes. On Claude Code v2.1.143 and later, `claude plugin disable arckit` will refuse with a copy pasteable disable chain hint while `arckit-uk-nhs` is still enabled.
+The `arckit` core plugin is a hard dependency. Without it, the `uk-nhs-clinical-safety` recipe cannot resolve the foundation commands (`/arckit:principles`, `/arckit:requirements`, `/arckit:risk`, `/arckit:dpia`, `/arckit:atrs`, `/arckit:secure`, `/arckit:tcop`), and the file name validation hook will not recognise the two new NHS doc-type codes. On Claude Code v2.1.143 and later, `claude plugin disable arckit` will refuse with a copy pasteable disable chain hint while `arckit-uk-nhs` is still enabled.
 
 The full release notes are at [github.com/tractorjuice/arc-kit/releases/tag/v5.4.0](https://github.com/tractorjuice/arc-kit/releases/tag/v5.4.0). The maintenance guide and full citation register are at [`docs/guides/uk-nhs-clinical-safety-overlay.md`](https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/uk-nhs-clinical-safety-overlay.md). Per command guides for all four are under [`docs/guides/uk-nhs-*.md`](https://github.com/tractorjuice/arc-kit/tree/main/docs/guides) and [`docs/guides/uk-mdr-classification.md`](https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/uk-mdr-classification.md). The SAFETY.md spec lives at [github.com/pacharanero/SAFETY.md](https://github.com/pacharanero/SAFETY.md).
 
@@ -113,7 +113,7 @@ Ten marketplace plugins. 143 commands. Eight jurisdictions and two sectors. The 
 
 - [ArcKit v5.3: The First Sector Overlay, for UK Payments](article-viewer.html?a=2026-05-27-v530-uk-finance-payments-overlay)
 - [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
-- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+- [Wanted: `/arckit:build` Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
 - [ArcKit v4.7: 18 EU and French Regulatory Commands](article-viewer.html?a=2026-04-19-v470-eu-french-regulatory)
 
 <!-- arckit:community-block -->

@@ -116,7 +116,7 @@ function relativeWithin(root, absPath) {
 }
 
 function shouldSkipFile(filePath, cwd) {
-  if (!filePath) return false;
+  if (!filePath || typeof filePath !== 'string') return false;
   const absPath = canonicalPath(resolve(cwd, filePath));
   const inPlugin = relativeWithin(PLUGIN_ROOT, absPath);
   if (inPlugin !== null && PLUGIN_SKIP_PATTERNS.some(p => p.test(inPlugin))) return true;

@@ -45,11 +45,11 @@ $ARGUMENTS
 **OPTIONAL** (read if available, skip silently if missing):
 
 - **RSCH** (Research Findings) or **AWRS** / **AZRS** / **GCRS** (Cloud Research)
-  - Extract: Options already analyzed, vendor comparisons, TCO data
+  - Extract: Options found, their checked facts and published costs (research makes no decision)
 - **STKE** (Stakeholder Analysis)
   - Extract: Stakeholder goals, decision authority, RACI context
 - **WARD** (Wardley Map)
-  - Extract: Evolution stage influences on build vs buy choices
+  - Extract: Evolution stage and sourcing (build, buy or outsource) for each component, which decide build vs buy
 
 ### 1b. **Read external documents and policies**
 

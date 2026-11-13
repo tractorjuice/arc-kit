@@ -83,6 +83,14 @@ See the [full articles index](articles.html) for all ArcKit release notes, analy
 - [Architecture Change Request](guides/architecture-change.md) - `/arckit:architecture-change`
 - [Architecture Repository](guides/architecture-repository.md) - `/arckit:architecture-repository`
 
+### arc42 Overlay
+
+- [arc42 Architecture Description](guides/arc42.md) - `/arckit-arc42:arc42` - Assemble 12 sections from existing artefacts, with citations, source versions and a Gap Register
+- [arc42 Quality Scenarios](guides/arc42-quality.md) - `/arckit-arc42:arc42-quality` - Quality tree and measurable scenarios for section 10, by Q42 dimension
+- [arc42 Crosscutting Concepts](guides/arc42-concepts.md) - `/arckit-arc42:arc42-concepts` - Concepts for section 8, each traced to the decision that settles it
+- [arc42 Technical Debt Register](guides/arc42-debt.md) - `/arckit-arc42:arc42-debt` - Debt for section 11.2, consolidated from audits, assessments, reviews, ADRs and risks
+- [arc42 SDD Handover](guides/arc42-handover.md) - `/arckit-arc42:arc42-handover` - Constitution, feature briefs and plan inputs for Spec Kit, tagged with ArcKit IDs
+
 ### AI Agent Architecture Overlay
 
 - [AI Agent Inventory](guides/agent-inventory.md) - `/arckit:agent-inventory`
@@ -327,4 +335,4 @@ Found a gap or want to improve documentation?
 ---
 
 **Last updated**: 2026-02-25
-**ArcKit Version**: 6.19.0
+**ArcKit Version**: 6.22.0

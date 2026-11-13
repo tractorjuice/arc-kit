@@ -168,6 +168,16 @@ for (const [name, hook] of Object.entries(HOOKS)) {
     }, { ignore: 'projects/*/vendors/\n' });
   });
 
+  test(`${name}: a gitignored vendors/ folder keeps evaluations private too`, () => {
+    withRepo((dir) => {
+      const folder = join(dir, 'projects/001-tender/vendors/_evaluations/acme');
+      mkdirSync(folder, { recursive: true });
+      writeFileSync(join(folder, 'evaluation.md'), '# Evaluation of Acme\n');
+      runHook(hook, dir, '');
+      assert.doesNotMatch(JSON.stringify(manifestOf(dir)), /acme|_evaluations/i);
+    }, { ignore: 'projects/*/vendors/\n' });
+  });
+
   test(`${name}: a single gitignored artefact and external file are not indexed`, () => {
     withRepo((dir) => {
       runHook(hook, dir);

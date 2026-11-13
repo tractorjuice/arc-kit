@@ -30,6 +30,7 @@
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <title>ArcKit - The Enterprise Architecture Governance Harness</title>
     <link rel="canonical" href="https://arckit.org/">
+    <link rel="ard" href="/.well-known/ard.json" type="application/json">
     <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
@@ -413,7 +414,7 @@
                 "applicationSubCategory": "Enterprise Architecture Governance",
                 "operatingSystem": "macOS, Linux, Windows",
                 "description": "ArcKit is The Enterprise Architecture Governance Harness: open-source, covering strategy, architecture, delivery, and assurance, distributed as a plugin or extension for AI coding assistants — Claude Code, Gemini CLI, GitHub Copilot, OpenAI Codex CLI, and OpenCode CLI. It wraps the assistant with slash commands across an official UK Government baseline plus community-contributed jurisdiction and sector overlays (EU, France, Austria, Canada, UAE, Australia, USA, UK Finance, UK NHS, UK G-Cloud) that generate architecture artefacts using versioned templates with full traceability.",
-                "softwareVersion": "6.19.0",
+                "softwareVersion": "6.22.0",
                 "license": "https://github.com/tractorjuice/arc-kit/blob/main/LICENSE",
                 "codeRepository": "https://github.com/tractorjuice/arc-kit",
                 "offers": {
@@ -761,6 +762,16 @@
                     <p class="app-jurisdiction-card__desc">Supplier-side UK G-Cloud 15 (Digital Marketplace) bid authoring: supplier profile, social value, lot questions, the Procurement Act 2023 supplier declaration, service design, Service Definition Documents for Lots 1a, 1b, 2a, 2b and 3, pricing and DDaT rate card, security evidence, competitor benchmark, submission review, and final submission pack. Proprietary licence (not MIT), not distributed to the non-Claude extension formats. Recipe <code>uk-gcloud-submission</code>. Install: <code>claude plugin install arckit arckit-uk-gcloud</code>.</p>
                 </a>
             </div>
+            <h3 class="govuk-heading-m govuk-!-margin-top-6">Architecture documentation</h3>
+            <p class="govuk-body">Community overlays also include <a href="commands.html?jurisdiction=arc42" class="govuk-link">arc42</a>, a documentation structure for a system's architecture. It assembles existing artefacts into 12 sections with source citations and a Gap Register, documents the quality scenarios, crosscutting concepts and technical debt it summarises, hands the result over to Spec Kit, and works across jurisdictions.</p>
+            <div class="app-jurisdiction-grid">
+                <a href="commands.html?jurisdiction=arc42" class="app-jurisdiction-card govuk-link--no-visited-state">
+                    <div class="app-jurisdiction-card__flag">📐</div>
+                    <div class="app-jurisdiction-card__title">arc42 (documentation method)</div>
+                    <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 5 commands · method overlay</span>
+                    <p class="app-jurisdiction-card__desc">An arc42 architecture description assembled from existing requirements, ADRs, diagrams and other artefacts. Every section cites its sources; undocumented sections are listed in a Gap Register. Quality scenarios, crosscutting concepts and a technical debt register fill the sections core does not cover, and an SDD handover pack carries requirement and decision IDs into Spec Kit. Install: <code>claude plugin install arckit arckit-arc42</code>.</p>
+                </a>
+            </div>
             <p class="govuk-body govuk-!-margin-top-4"><a href="commands.html" class="govuk-link">Browse all commands &rarr;</a></p>
 
             <div class="app-feature-card govuk-!-margin-top-6" style="border-color: #d4351c; border-width: 3px; padding: 1.5rem;" id="limits">
@@ -868,6 +879,48 @@
             </div>
             <div class="app-article-teaser-grid">
                 <article class="app-article-teaser">
+                    <a class="app-article-teaser__media" href="share/2026-11-12-arckit-v6-22-research-reports-evidence.html">
+                        <img src="articles/2026-11-12-arckit-v6-22-research-reports-evidence-hero.png" alt="ArcKit v6.22.0 hero: evidence, not a verdict; comparable, not ranked. The research report holds what each option offers, lacks and costs and how many products and vendors cover it, while the Wardley map decides how to source, the business case appraises value for money, and evaluate and score assess the suppliers." loading="lazy">
+                    </a>
+                    <div class="app-article-teaser__body">
+                        <div class="app-article-teaser__meta">
+                            <span class="app-article-teaser__tag app-article-teaser__tag--release">Release</span>
+                            <span class="app-article-teaser__date">12 November 2026</span>
+                        </div>
+                        <h3 class="govuk-heading-s app-article-teaser__title">ArcKit v6.22.0: Research Reports the Evidence, You Make the Decision</h3>
+                        <p class="app-article-teaser__summary"><code>/arckit:research</code> now reports what each option offers, lacks and costs, and makes no build-or-buy call. It also reads prices from G-Cloud pricing documents.</p>
+                        <a href="share/2026-11-12-arckit-v6-22-research-reports-evidence.html" class="govuk-link app-article-teaser__link">Read article &rarr;</a>
+                    </div>
+                </article>
+                <article class="app-article-teaser">
+                    <a class="app-article-teaser__media" href="share/2026-11-09-arckit-v6-21-a-second-look.html">
+                        <img src="articles/2026-11-09-arckit-v6-21-a-second-look-hero.png" alt="ArcKit v6.21.0 hero: a design review read by three fresh readers for comprehension, principles and requirements, and two vendor scores, a 1 and a 2, settled at 2 by a moderator who isn&rsquo;t told whose score is whose." loading="lazy">
+                    </a>
+                    <div class="app-article-teaser__body">
+                        <div class="app-article-teaser__meta">
+                            <span class="app-article-teaser__tag app-article-teaser__tag--release">Release</span>
+                            <span class="app-article-teaser__date">9 November 2026</span>
+                        </div>
+                        <h3 class="govuk-heading-s app-article-teaser__title">ArcKit v6.21.0: A Second Look From Someone Who Wasn&rsquo;t in the Room</h3>
+                        <p class="app-article-teaser__summary">Design reviews get three fresh readers who see only the design, the principles and the requirements. Vendor scores get a second, independent score, and a neutral moderator settles any difference.</p>
+                        <a href="share/2026-11-09-arckit-v6-21-a-second-look.html" class="govuk-link app-article-teaser__link">Read article &rarr;</a>
+                    </div>
+                </article>
+                <article class="app-article-teaser">
+                    <a class="app-article-teaser__media" href="share/2026-11-07-arckit-v6-20-a-bid-cant-mark-its-own-homework.html">
+                        <img src="articles/2026-11-07-arckit-v6-20-a-bid-cant-mark-its-own-homework-hero.png" alt="ArcKit v6.20.0 hero: a supplier&rsquo;s bid goes to a read-only reader and stops at a wall, and only short claims cross it to the scoring." loading="lazy">
+                    </a>
+                    <div class="app-article-teaser__body">
+                        <div class="app-article-teaser__meta">
+                            <span class="app-article-teaser__tag app-article-teaser__tag--release">Release</span>
+                            <span class="app-article-teaser__date">7 November 2026</span>
+                        </div>
+                        <h3 class="govuk-heading-s app-article-teaser__title">ArcKit v6.20.0: A Bid Can&rsquo;t Mark Its Own Homework</h3>
+                        <p class="app-article-teaser__summary">A supplier&rsquo;s bid no longer reaches the part of ArcKit that scores it. Checks on your artefacts now stop the write when they can&rsquo;t run. Plus an arc42 overlay, and NORA and GEMMA for Dutch government.</p>
+                        <a href="share/2026-11-07-arckit-v6-20-a-bid-cant-mark-its-own-homework.html" class="govuk-link app-article-teaser__link">Read article &rarr;</a>
+                    </div>
+                </article>
+                <article class="app-article-teaser">
                     <a class="app-article-teaser__media" href="share/2026-11-02-arckit-v6-19-is-it-legacy.html">
                         <img src="articles/2026-11-02-arckit-v6-19-is-it-legacy-hero.png" alt="ArcKit v6.19.0 hero: the seven tests of the UK&rsquo;s updated definition of legacy IT, the three outcomes Accepted, Action-Required and Legacy, a new application inheriting Legacy from an unsupported system, a separate risk score red-rated at 16 or above, and a strip of security fixes." loading="lazy">
                     </a>
@@ -935,48 +988,6 @@
                         <h3 class="govuk-heading-s app-article-teaser__title">ArcKit v6.14.0: What the Harness Enforces, What It Asks, and What It Now Measures</h3>
                         <p class="app-article-teaser__summary">A one-page statement of which rules hold in code, which are asked of the model and which are yours; a behavioural eval suite with a replay gate; a sanitiser between research readers and writers; questions asked once.</p>
                         <a href="share/2026-09-03-arckit-v6-14-enforce-ask-measure.html" class="govuk-link app-article-teaser__link">Read article &rarr;</a>
-                    </div>
-                </article>
-                <article class="app-article-teaser">
-                    <a class="app-article-teaser__media" href="share/2026-09-02-arckit-at-openai-devday-2026.html">
-                        <img src="articles/2026-09-02-arckit-at-openai-devday-2026-hero.png" alt="ArcKit at OpenAI DevDay 2026 hero." loading="lazy">
-                    </a>
-                    <div class="app-article-teaser__body">
-                        <div class="app-article-teaser__meta">
-                            <span class="app-article-teaser__tag app-article-teaser__tag--community">Community</span>
-                            <span class="app-article-teaser__date">2 September 2026</span>
-                        </div>
-                        <h3 class="govuk-heading-s app-article-teaser__title">ArcKit at OpenAI DevDay 2026: Architecture Governance for Codex CLI, and an Invitation to Meet</h3>
-                        <p class="app-article-teaser__summary">DevDay is on 29 September at Fort Mason. ArcKit installs as a Codex plugin from its own marketplace, with 75 governance commands as Agent Skills, lifecycle hooks and six MCP servers. If you are building with Codex, find me.</p>
-                        <a href="share/2026-09-02-arckit-at-openai-devday-2026.html" class="govuk-link app-article-teaser__link">Read article &rarr;</a>
-                    </div>
-                </article>
-                <article class="app-article-teaser">
-                    <a class="app-article-teaser__media" href="share/2026-09-01-arckit-oaa-standalone-plugin.html">
-                        <img src="articles/2026-09-01-arckit-oaa-standalone-plugin-hero.png" alt="ArcKit OAA hero." loading="lazy">
-                    </a>
-                    <div class="app-article-teaser__body">
-                        <div class="app-article-teaser__meta">
-                            <span class="app-article-teaser__tag app-article-teaser__tag--announcement">Announcement</span>
-                            <span class="app-article-teaser__date">1 September 2026</span>
-                        </div>
-                        <h3 class="govuk-heading-s app-article-teaser__title">ArcKit OAA: Open Agile Architecture Becomes a Standalone Plugin</h3>
-                        <p class="app-article-teaser__summary">The Open Group's O-AA standard ships as its own plugin: five commands, five document types and a build recipe tuned to two-to-four week sprints rather than quarterly architecture boards.</p>
-                        <a href="share/2026-09-01-arckit-oaa-standalone-plugin.html" class="govuk-link app-article-teaser__link">Read article &rarr;</a>
-                    </div>
-                </article>
-                <article class="app-article-teaser">
-                    <a class="app-article-teaser__media" href="share/2026-08-19-arckit-v611-new-plugins.html">
-                        <img src="articles/2026-08-19-arckit-v611-new-plugins-hero.png" alt="ArcKit v6.11 hero: a row of jurisdiction pack flags for the UK, EU, Netherlands, Austria, France, Canada, USA, Australia and UAE with NEW badges on the EU, Netherlands and Austria, above three panels for the arckit-nl Netherlands pack, the arckit-repo codebase audit plugin, and method packs for TOGAF ADM and AI agent architecture">
-                    </a>
-                    <div class="app-article-teaser__body">
-                        <div class="app-article-teaser__meta">
-                            <span class="app-article-teaser__tag app-article-teaser__tag--release">Release</span>
-                            <span class="app-article-teaser__date">19 August 2026</span>
-                        </div>
-                        <h3 class="govuk-heading-s app-article-teaser__title">ArcKit v6.11: Four New Plugins, Twenty-Five New Commands</h3>
-                        <p class="app-article-teaser__summary">A Netherlands public-sector pack, EU Cloud Sovereignty, Austrian accessibility, a codebase audit plugin, TOGAF ADM and AI agent architecture overlays, OKF import and export, and Kimi Code CLI as a ninth distribution format.</p>
-                        <a href="share/2026-08-19-arckit-v611-new-plugins.html" class="govuk-link app-article-teaser__link">Read article &rarr;</a>
                     </div>
                 </article>
             </div>

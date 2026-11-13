@@ -51,7 +51,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 
 - [Requirements](https://arckit.org/guides/requirements.md): `/arckit:requirements` (BR/FR/NFR/INT/DR).
 - [Stakeholders](https://arckit.org/guides/stakeholders.md): `/arckit:stakeholders` drivers, goals, outcomes.
-- [Technology research](https://arckit.org/guides/research.md): `/arckit:research` build vs buy, TCO.
+- [Technology research](https://arckit.org/guides/research.md): `/arckit:research` options, checked facts and published costs.
 - [Data source discovery](https://arckit.org/guides/datascout.md): `/arckit:datascout` API catalogue scoring.
 - [UK government code reuse](https://arckit.org/guides/gov-reuse.md): `/arckit:gov-reuse` find reusable UK government open-source code before building from scratch.
 - [UK government code search](https://arckit.org/guides/gov-code-search.md): `/arckit:gov-code-search` natural-language search across 24,500+ UK government repositories.
@@ -103,6 +103,14 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [O-AA Agile Strategy](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-strategy.md): `/arckit-oaa:agile-strategy` dual transformation canvas — digital transformation plus agile transformation.
 - [O-AA Agile Security](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-security.md): `/arckit-oaa:agile-security` security embedded in the sprint rhythm — threat modeling, compliance evidence.
 - [O-AA Agile Governance](https://github.com/tractorjuice/arc-kit/blob/main/plugins/arckit-oaa/commands/agile-governance.md): `/arckit-oaa:agile-governance` lightweight governance cadence aligned to sprint cycles.
+
+### arc42 overlay (community-contributed)
+
+- [arc42 Architecture Description](https://arckit.org/guides/arc42.md): `/arckit-arc42:arc42` all 12 arc42 sections assembled from the project's existing artefacts, each cited, with a Gap Register of undocumented sections.
+- [arc42 Quality Scenarios](https://arckit.org/guides/arc42-quality.md): `/arckit-arc42:arc42-quality` quality tree and measurable quality scenarios for section 10, classified by the nine Q42 dimensions.
+- [arc42 Crosscutting Concepts](https://arckit.org/guides/arc42-concepts.md): `/arckit-arc42:arc42-concepts` crosscutting concepts for section 8, each traced to the decision that settles it.
+- [arc42 Technical Debt Register](https://arckit.org/guides/arc42-debt.md): `/arckit-arc42:arc42-debt` technical debt for section 11.2, consolidated from audits, assessments, reviews, ADRs and risks.
+- [arc42 SDD Handover](https://arckit.org/guides/arc42-handover.md): `/arckit-arc42:arc42-handover` constitution, feature briefs and plan inputs for Spec Kit, tagged with ArcKit IDs.
 
 ### AI Agent Architecture overlay (community-contributed)
 

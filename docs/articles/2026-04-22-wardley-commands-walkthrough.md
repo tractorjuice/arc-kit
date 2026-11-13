@@ -6,31 +6,31 @@ ArcKit ships five slash commands that mirror Simon Wardley's own analytical pipe
 
 This is a walkthrough of each command, what it actually does, and when to reach for it.
 
-## 1. /arckit.wardley.value-chain
+## 1. `/arckit.wardley.value-chain`
 
 **What it does.** Decomposes a user need into a ranked dependency chain. Takes a domain like "patient appointment booking" or "online shopping" and returns an anchor, visibility scores for every component, initial evolution estimates, and OWM-ready syntax.
 
 **Why it matters.** The hardest part of Wardley Mapping is the first step. Most people freeze at the blank canvas. value-chain exists to remove that friction. It asks a series of decomposition questions, applies visibility heuristics (closer to the user equals higher visibility), and produces a chain you can iterate on rather than invent from nothing.
 
-**When to run it.** Before /arckit.wardley, whenever you are starting a new mapping exercise. Also useful on its own during discovery to check that your team shares an understanding of what the user actually needs versus what the technology team thinks they need.
+**When to run it.** Before `/arckit.wardley`, whenever you are starting a new mapping exercise. Also useful on its own during discovery to check that your team shares an understanding of what the user actually needs versus what the technology team thinks they need.
 
 **Output artefact.** WVCH (Wardley Value Chain), stored in the project directory. Multi-instance, so you can model different user journeys separately.
 
 **A detail that matters.** Every generated value chain passes a mathematical validation hook before the command exits. The hook applies formulas from the Wardley Map Math Model to check that visibility scores are internally consistent and that dependency depth is reasonable. If the chain is structurally broken, the command tells you before you commit to a bad foundation.
 
-## 2. /arckit.wardley
+## 2. `/arckit.wardley`
 
 **What it does.** Produces a full strategic Wardley Map with components positioned on evolution and visibility axes, build-versus-buy recommendations for each component, movement predictions, and OWM syntax for rendering. Since ArcKit 4.9.0, the map also renders inline as Mermaid wardley-beta in your generated docs/index.html dashboard.
 
 **Why it matters.** This is the centerpiece of the suite. The map is the thing most people think of when you say "Wardley Map", and for good reason. It converts implicit strategy into an auditable artefact. The build-versus-buy column alone is worth the exercise: it forces you to name every Genesis or Custom-Built component and justify why you are building it, rather than defaulting to "we always build".
 
-**When to run it.** After /arckit.wardley.value-chain, or directly if you already have a mental model of the components. Also run it after any major architectural decision to check that the decision still holds when viewed through an evolution lens.
+**When to run it.** After `/arckit.wardley.value-chain`, or directly if you already have a mental model of the components. Also run it after any major architectural decision to check that the decision still holds when viewed through an evolution lens.
 
 **Output artefact.** WARD, multi-instance. You can have several maps per project covering different strategic views: current state, target state, or a specific capability.
 
 **A detail that matters.** The command reads every sibling Wardley artefact that exists. If doctrine, climate, and gameplay analyses are already in the project, the generated map is informed by them automatically. It will, for example, soften evolution predictions if a relevant climatic inertia pattern has been flagged, or flag a component as a doctrine risk if the organisation's doctrine assessment scored low on the relevant principle.
 
-## 3. /arckit.wardley.doctrine
+## 3. `/arckit.wardley.doctrine`
 
 **What it does.** Assesses your organisation's strategic maturity across 40-plus universally useful principles, organised into Simon Wardley's four phases (Stop Self-Harm, Becoming More Context Aware, Better for Less, Continuously Evolving) and six categories (Communication, Development, Operation, Structure, Learning, Leading). Each principle is scored 1 to 5 with evidence requirements.
 
@@ -42,25 +42,25 @@ This is a walkthrough of each command, what it actually does, and when to reach 
 
 **A detail that matters.** The scoring is evidence-based, not aspirational. The command asks you to name specific artefacts, incidents, decisions, or public commitments that justify each score. If you cannot cite evidence, the score stays at 1 regardless of how confident the leadership team feels.
 
-## 4. /arckit.wardley.climate
+## 4. `/arckit.wardley.climate`
 
 **What it does.** Analyses the 32 external forces that act on your landscape regardless of your choices. Climatic patterns include "everything evolves", "efficiency enables innovation", "past success breeds inertia", and 29 others, grouped into six categories: Component, Financial, Speed, Inertia, Competitor, and Prediction patterns. The command scores each pattern's impact on your mapped components and produces a forecast.
 
 **Why it matters.** Climate is the weather of strategy. You can choose your gameplay, but you cannot choose the climate. Most strategic failures trace back to a misread of climate: believing a pattern is optional when it is universal, or underestimating how quickly a component will commodify. The climate command is the closest thing to an aerial photograph of the forces around you.
 
-**When to run it.** After the initial map, and especially before /arckit.wardley.gameplay. Also re-run it whenever a major external event shifts the landscape: a new entrant, a regulatory change, a commodity offering from a hyperscaler.
+**When to run it.** After the initial map, and especially before `/arckit.wardley.gameplay`. Also re-run it whenever a major external event shifts the landscape: a new entrant, a regulatory change, a commodity offering from a hyperscaler.
 
 **Output artefact.** WCLM, multi-instance. Typically one per strategic horizon (twelve-month climate, three-year climate).
 
 **A detail that matters.** The output includes a Peace/War/Wonder positioning analysis for each mapped component. Peace/War/Wonder is Wardley's model of how competitive landscapes cycle through phases of stability, disruption, and genesis of novel forms. Knowing which phase a component sits in changes which plays are available to you, which is why climate must precede gameplay.
 
-## 5. /arckit.wardley.gameplay
+## 5. `/arckit.wardley.gameplay`
 
 **What it does.** Evaluates which strategic plays are applicable to your current map position, drawn from a catalogue of 60-plus gameplays across 11 categories. Each play is scored against your position, checked for compatibility with other selected plays, and annotated with a Dungeons and Dragons alignment (Lawful Good, Neutral, Lawful Evil, Chaotic Evil) so you can be explicit about the ethics of what you are choosing to do.
 
 **Why it matters.** Gameplay is where strategy stops being abstract. "Open source the reference implementation" is a play. "Sensibly poison a competitor's commodity dependency" is also a play, and it has a moral colour. The command refuses to pretend these are value-neutral. It shows you the full catalogue, including the Chaotic Evil plays, because you need to recognise them when they are used against you even if you would never deploy them yourself.
 
-**When to run it.** After /arckit.wardley.climate has been completed. Plays that look attractive in isolation become inappropriate when climatic context is added. Also run it when evaluating a competitor's move, by mapping their visible position and asking which plays they are likely running.
+**When to run it.** After `/arckit.wardley.climate` has been completed. Plays that look attractive in isolation become inappropriate when climatic context is added. Also run it when evaluating a competitor's move, by mapping their visible position and asking which plays they are likely running.
 
 **Output artefact.** WGAM, multi-instance. You can model different gameplay portfolios side by side (defensive, opportunistic, market-shaping) and compare them.
 
@@ -96,9 +96,9 @@ This is why the output is not a generic LLM gloss on Wardley Mapping. The model 
 
 ## Getting Started
 
-If you already have ArcKit installed as a Claude Code plugin, the five Wardley commands are available as /arckit.wardley.value-chain, /arckit.wardley, /arckit.wardley.doctrine, /arckit.wardley.climate, and /arckit.wardley.gameplay. The same commands exist in the Codex, Gemini, OpenCode, Copilot, and Paperclip extensions with platform-appropriate naming.
+If you already have ArcKit installed as a Claude Code plugin, the five Wardley commands are available as `/arckit.wardley.value-chain`, `/arckit.wardley`, `/arckit.wardley.doctrine`, `/arckit.wardley.climate`, and `/arckit.wardley.gameplay`. The same commands exist in the Codex, Gemini, OpenCode, Copilot, and Paperclip extensions with platform-appropriate naming.
 
-If you are new to ArcKit, install it via /plugin marketplace add tractorjuice/arckit-claude inside Claude Code, or pip install arckit-cli for the CLI-based workflow.
+If you are new to ArcKit, install it via `/plugin marketplace add tractorjuice/arckit-claude` inside Claude Code, or `pip install arckit-cli` for the CLI-based workflow.
 
 Start small. Run value-chain on a single user need you know well. Let it generate a chain. Look at the scores, argue with them where they feel wrong, commit a revised version. Then run wardley on the same project and watch how the map inherits the chain's structure. Then keep going. By the time you have run all five, you will have a strategic artefact pack that most consultancies charge five-figure sums to produce.
 

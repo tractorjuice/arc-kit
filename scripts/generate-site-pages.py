@@ -20,11 +20,12 @@ This script renders the Markdown when the site is built and writes:
   docs/on-github.html      the numbers and lists from docs/on-github.json, which
                            the weekly usage scan updates, between the page's
                            <!-- on-github:* --> markers
-  docs/sitemap.xml         the entries between the site-pages markers, and the
+  docs/sitemap.xml         the entries between the site-pages markers, each guide
+                           with the date its own text last changed, and the
                            <lastmod> of each hand-written entry above them
   scripts/sitemap-lastmod.json
-                           a fingerprint of each hand-written entry's text
-                           and the date that text last changed
+                           a fingerprint of each hand-written entry's text and
+                           of each guide's text, and the date it last changed
 
 Each page has its own title, description, canonical URL, preview tags,
 structured data, and the text itself in the HTML. A ```mermaid block becomes a
@@ -487,10 +488,17 @@ def canonical_url(name: str, url: str) -> str:
     return f"{SITE}/guide/{target}.html" if target else url
 
 
-def guide_pages(site: Site) -> dict[Path, str]:
+def render_guides(site: Site) -> tuple[dict[Path, str], dict[str, str]]:
+    """Every guide's page, and the text of each guide on its own for date_guides().
+
+    That text is the heading and the rendered Markdown, taken before the film
+    panel and the FDE panel go round it: the words that belong to this guide and
+    to no other.
+    """
     template = load_template(GUIDE_TEMPLATE)
     films = json.loads(FILMS.read_text(encoding="utf-8"))
     pages: dict[Path, str] = {}
+    texts: dict[str, str] = {}
     for name in sorted(site.guides):
         source = f"docs/guides/{name}.md"
         md = VERSION_TAIL_RE.sub("", VERSION_LINE_RE.sub("", (REPO / source).read_text(encoding="utf-8")))
@@ -506,6 +514,7 @@ def guide_pages(site: Site) -> dict[Path, str]:
         section, section_url = ("Roles", "roles.html") if is_role else ("Guides", "guides.html")
 
         body = render_body(md, page, site)
+        texts[name] = f"{heading} {visible_text(body)}"
         if extras.get("fde"):
             body = with_fde_panel(body, root, extras.get("fde_before", ""))
         content = [f'<a href="{root}{section_url}" class="govuk-back-link govuk-!-margin-bottom-6">Back to {section}</a>']
@@ -528,7 +537,11 @@ def guide_pages(site: Site) -> dict[Path, str]:
             "page:hero": hero_block("Role guide" if is_role else "Guide", heading, clip(lead, 220)),
             "page:body": "\n".join(content),
         }, source)
-    return pages
+    return pages, texts
+
+
+def guide_pages(site: Site) -> dict[Path, str]:
+    return render_guides(site)[0]
 
 
 def tracked_files() -> set[str]:
@@ -742,7 +755,8 @@ def on_github_blocks(data: dict) -> dict[str, str]:
          "description": ("A weekly search of public GitHub for repositories that use or mention ArcKit: repositories "
                          "with ArcKit documents or ArcKit set up, repositories that mention it, and the issues, pull "
                          "requests and commits that name it."),
-         "url": ON_GITHUB_URL, "creator": ARCKIT, "dateModified": week, "isAccessibleForFree": True,
+         "url": ON_GITHUB_URL, "creator": ARCKIT, "license": f"{REPO_BLOB}LICENSE",
+         "dateModified": week, "isAccessibleForFree": True,
          "temporalCoverage": first if first == last else f"{first}/{last}",
          "keywords": ["ArcKit", "architecture governance", "GitHub", "open source adoption"],
          "distribution": {"@type": "DataDownload", "encodingFormat": "application/json",
@@ -827,21 +841,24 @@ def on_github_page(page: str, data: dict) -> str:
     return page
 
 
-def sitemap_text(current: str, site: Site, listed: list[dict[str, str]]) -> str:
+def sitemap_text(current: str, listed: list[dict[str, str]], guide_dates: dict[str, dict[str, str]]) -> str:
+    """The generated half of the sitemap. `guide_dates` is date_guides()'s record: it
+    says which guides have an entry, in what order and with what date."""
     entries = []
-    for name in sorted(site.guides):
-        if GUIDE_EXTRAS.get(name, {}).get("canonical"):
-            continue
-        entries.append((f"{SITE}/guide/{name}.html", None, "monthly", "0.7" if name in GUIDE_EXTRAS else "0.6"))
+    for rel, entry in guide_dates.items():
+        name = rel.removeprefix("guide/").removesuffix(".html")
+        entries.append((f"{SITE}/{rel}", entry["lastmod"], "monthly", "0.7" if name in GUIDE_EXTRAS else "0.6"))
     for card in sorted(listed, key=lambda c: c["slug"]):
         date = re.match(r"^(\d{4}-\d{2}-\d{2})-", card["slug"])
-        entries.append((f"{SITE}/share/{card['slug']}.html", date.group(1) if date else None, "yearly", "0.6"))
+        if not date:
+            sys.exit(f"docs/articles.html lists {card['slug']}, whose name doesn't start with its date "
+                     "(YYYY-MM-DD-), so its sitemap entry would have no <lastmod>")
+        entries.append((f"{SITE}/share/{card['slug']}.html", date.group(1), "yearly", "0.6"))
     lines = [SITEMAP_START]
     for loc, lastmod, freq, priority in entries:
         lines.append("    <url>")
         lines.append(f"        <loc>{esc(loc)}</loc>")
-        if lastmod:
-            lines.append(f"        <lastmod>{lastmod}</lastmod>")
+        lines.append(f"        <lastmod>{lastmod}</lastmod>")
         lines.append(f"        <changefreq>{freq}</changefreq>")
         lines.append(f"        <priority>{priority}</priority>")
         lines.append("    </url>")
@@ -850,6 +867,12 @@ def sitemap_text(current: str, site: Site, listed: list[dict[str, str]]) -> str:
     if not pattern.search(current):
         sys.exit(f"docs/sitemap.xml: missing the {SITEMAP_START} ... {SITEMAP_END} block")
     return pattern.sub(lambda _m: "\n".join(lines), current, count=1)
+
+
+def visible_text(fragment: str) -> str:
+    """HTML as the words a reader sees: no markup, scripts or styles, and runs of white space as one."""
+    body = re.sub(r"<(script|style)\b.*?</\1>", " ", fragment, flags=re.S)
+    return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", body)).split())
 
 
 def page_text(path: Path, text: str | None = None) -> str:
@@ -863,19 +886,62 @@ def page_text(path: Path, text: str | None = None) -> str:
     if path.suffix != ".html":
         return text
     main = re.search(r"<main\b.*?</main>", text, re.S)
-    body = re.sub(r"<(script|style)\b.*?</\1>", " ", main.group(0) if main else text, flags=re.S)
-    return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", body)).split())
+    return visible_text(main.group(0) if main else text)
+
+
+def keep_or_today(record: dict[str, dict[str, str]], rel: str, text: str, today: str) -> tuple[dict[str, str], bool]:
+    """The sitemap record for one page, and whether its text has changed.
+
+    CI checks out no history, so git can't date a page. scripts/sitemap-lastmod.json
+    instead keeps a fingerprint of each page's text and the date it was taken. A
+    page keeps that date while its text matches, and is dated today once it doesn't
+    or when it has no record yet.
+    """
+    fingerprint = hashlib.sha256(text.encode("utf-8")).hexdigest()
+    kept = record.get(rel, {})
+    unchanged = kept.get("text_sha256") == fingerprint and "lastmod" in kept
+    return {"lastmod": kept["lastmod"] if unchanged else today, "text_sha256": fingerprint}, not unchanged
+
+
+def date_guides(texts: dict[str, str], record: dict[str, dict[str, str]],
+                today: str) -> tuple[dict[str, dict[str, str]], list[str]]:
+    """Date each guide's sitemap entry by when its own text last changed.
+
+    Google reads <lastmod> to decide what to crawl again and ignores <changefreq>
+    and <priority>, so an entry with no date tells it nothing. Until November 2026
+    no guide had one: 262 of the sitemap's 340 entries.
+
+    `texts` is render_guides()'s text of each guide: its heading and rendered
+    Markdown, without the film panel and FDE panel every guide page shares. A
+    change to a panel's wording would otherwise date every guide on one day, which
+    is what makes a search engine stop trusting the dates. Because the text is the
+    rendered one, realigning a table or reflowing a paragraph in the Markdown
+    changes nothing, and a renamed overlay command does. White space never counts,
+    so re-indenting a code example alone doesn't move the date.
+
+    Returns the record for the guides that have a sitemap entry, in sitemap order
+    (a guide whose canonical page is another guide has none), and the guides whose
+    text changed.
+    """
+    dated: dict[str, dict[str, str]] = {}
+    changed: list[str] = []
+    for name in sorted(texts):
+        if GUIDE_EXTRAS.get(name, {}).get("canonical"):
+            continue
+        rel = f"guide/{name}.html"
+        dated[rel], moved = keep_or_today(record, rel, texts[name], today)
+        if moved:
+            changed.append(f"docs/guides/{name}.md")
+    return dated, changed
 
 
 def date_hand_entries(head: str, record: dict[str, dict[str, str]], today: str,
                       pending: dict[Path, str] | None = None) -> tuple[str, dict[str, dict[str, str]], list[str]]:
     """Give each hand-written sitemap entry the date its page's text last changed.
 
-    CI checks out no history, so git can't date a page. scripts/sitemap-lastmod.json
-    instead keeps a fingerprint of each page's text and the date it was taken; a
-    page whose text no longer matches is dated today. A page this run is about to
-    write (`pending`) is dated by its new text. Returns the dated entries, the new
-    record and the pages that changed.
+    The rule is keep_or_today()'s, on the page's <main> text. A page this run is
+    about to write (`pending`) is dated by its new text. Returns the dated entries,
+    the new record and the pages that changed.
     """
     dated: dict[str, dict[str, str]] = {}
     changed: list[str] = []
@@ -886,15 +952,10 @@ def date_hand_entries(head: str, record: dict[str, dict[str, str]], today: str,
         rel = path + "index.html" if path == "" or path.endswith("/") else path
         if not (DOCS / rel).is_file():
             sys.exit(f"docs/sitemap.xml lists {loc}, but docs/{rel} doesn't exist")
-        fingerprint = hashlib.sha256(page_text(DOCS / rel, (pending or {}).get(DOCS / rel)).encode("utf-8")).hexdigest()
-        kept = record.get(rel, {})
-        if kept.get("text_sha256") == fingerprint:
-            date = kept["lastmod"]
-        else:
-            date = today
+        dated[rel], moved = keep_or_today(record, rel, page_text(DOCS / rel, (pending or {}).get(DOCS / rel)), today)
+        if moved:
             changed.append(f"docs/{rel}")
-        dated[rel] = {"lastmod": date, "text_sha256": fingerprint}
-        return f"<loc>{loc}</loc>{space}<lastmod>{date}</lastmod>{space}"
+        return f"<loc>{loc}</loc>{space}<lastmod>{dated[rel]['lastmod']}</lastmod>{space}"
 
     return HAND_ENTRY_RE.sub(repl, head), dated, changed
 
@@ -909,18 +970,22 @@ def build() -> tuple[dict[Path, str], str, str, list[str], Site]:
     if missing:
         sys.exit("Cards on docs/articles.html with no docs/articles/<slug>.md: " + ", ".join(missing))
     tracked = tracked_files()
-    pages = {**guide_pages(site), **article_pages(site, listed, tracked)}
+    guides, guide_texts = render_guides(site)
+    pages = {**guides, **article_pages(site, listed, tracked)}
     pages[ON_GITHUB] = on_github_page(ON_GITHUB.read_text(encoding="utf-8"),
                                       json.loads(ON_GITHUB_DATA.read_text(encoding="utf-8")))
     broken = broken_links(pages, tracked)
     if broken:
         sys.exit("Links to files that are not in git. Commit the file (`git add -f` under the gitignored "
                  "docs/articles/), or fix the link in the Markdown:\n  " + "\n  ".join(broken))
-    head, marker, rest = sitemap_text(SITEMAP.read_text(encoding="utf-8"), site, listed).partition(SITEMAP_START)
     record = json.loads(LASTMOD.read_text(encoding="utf-8")) if LASTMOD.is_file() else {}
-    head, dated, changed = date_hand_entries(head, record, datetime.now(timezone.utc).date().isoformat(), pages)
-    lastmod = json.dumps(dated, indent=2, sort_keys=True) + "\n"
-    return pages, head + marker + rest, lastmod, changed, site
+    today = datetime.now(timezone.utc).date().isoformat()
+    guide_dates, guides_changed = date_guides(guide_texts, record, today)
+    head, marker, rest = sitemap_text(SITEMAP.read_text(encoding="utf-8"), listed,
+                                      guide_dates).partition(SITEMAP_START)
+    head, dated, changed = date_hand_entries(head, record, today, pages)
+    lastmod = json.dumps({**dated, **guide_dates}, indent=2, sort_keys=True) + "\n"
+    return pages, head + marker + rest, lastmod, changed + guides_changed, site
 
 
 def main() -> int:
@@ -953,19 +1018,19 @@ def main() -> int:
         else:
             path.unlink()
             written += 1
-    if SITEMAP.read_text(encoding="utf-8") != sitemap:
+    stale = [(path, text) for path, text in ((SITEMAP, sitemap), (LASTMOD, lastmod))
+             if (path.read_text(encoding="utf-8") if path.is_file() else "") != text]
+    for path, text in stale:
         if args.check:
-            problems.append("stale: docs/sitemap.xml")
-            problems += [f"text changed, so its sitemap date needs updating: {page}" for page in changed]
+            problems.append(f"stale: {path.relative_to(REPO).as_posix()}")
         else:
-            SITEMAP.write_text(sitemap, encoding="utf-8")
+            path.write_text(text, encoding="utf-8")
             written += 1
-    if (LASTMOD.read_text(encoding="utf-8") if LASTMOD.is_file() else "") != lastmod:
-        if args.check:
-            problems.append(f"stale: {LASTMOD.relative_to(REPO).as_posix()}")
-        else:
-            LASTMOD.write_text(lastmod, encoding="utf-8")
-            written += 1
+    if args.check and stale:
+        # Either file can be the stale one (an edit, or a merge that took one side's
+        # record), so name the pages whichever it is.
+        problems += [f"its text no longer matches {LASTMOD.relative_to(REPO).as_posix()}, so its sitemap date "
+                     f"needs updating: {page}" for page in changed]
 
     if problems:
         print("Site pages are out of date. Run: uv run scripts/generate-site-pages.py")

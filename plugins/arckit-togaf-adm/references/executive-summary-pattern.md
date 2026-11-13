@@ -1,6 +1,6 @@
 # Executive Summary Pattern
 
-How an ArcKit artefact that asks its reader to accept a judgment or make a decision opens its Executive Summary. It applies to business cases, research findings, design reviews and any other artefact whose template carries a verdict; each such command points here from the step that writes the summary.
+How an ArcKit artefact that asks its reader to accept a judgment or make a decision opens its Executive Summary. It applies to business cases, design reviews, evaluations and any other artefact whose template carries a verdict; each such command points here from the step that writes the summary.
 
 The pattern is Barbara Minto's Pyramid Principle: the answer first, then the reasons grouped under it, then the evidence under each reason. A board member who reads one sentence should leave with the decision.
 
@@ -30,6 +30,6 @@ The summary reorders and condenses what the body of the artefact says. Every fig
 
 ## 5. Where it does not apply
 
-- An artefact with no verdict: a glossary, a data model, a stakeholder map, an inventory. Keep the template's order.
+- An artefact with no verdict: a glossary, a data model, a stakeholder map, an inventory, research findings. Keep the template's order.
 - An artefact whose sequence is the content: a timeline, a runbook, an implementation plan, the project story. Time order is the logical order there.
 - An inconclusive result. If the evidence supports no single verdict, say that first ("No option meets the affordability constraint; the board is asked to relax it or defer") rather than picking one.

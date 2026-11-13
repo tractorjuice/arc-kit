@@ -155,6 +155,77 @@ def test_sitemap_dates_follow_the_page_text(tmp_path):
     assert record["roles.html"] == {"lastmod": "2030-01-01", "text_sha256": fingerprint}
 
 
+def test_sitemap_dates_every_entry():
+    # Google reads <lastmod> to decide what to crawl again and ignores <changefreq>
+    # and <priority>. Until November 2026 no guide had a date: 262 of 340 entries.
+    sitemap = (DOCS / "sitemap.xml").read_text(encoding="utf-8")
+    undated = [re.search(r"<loc>([^<]*)</loc>", block).group(1)
+               for block in re.findall(r"<url>.*?</url>", sitemap, re.S) if "<lastmod>" not in block]
+    assert not undated, f"sitemap entries with no <lastmod>: {undated[:10]}"
+
+
+def test_sitemap_dates_a_guide_by_its_own_text():
+    # A guide keeps its date until its own text changes, and a change dates that
+    # guide alone. A guide whose canonical page is another guide has no entry.
+    gen = load_generator()
+    alias = next(name for name, extra in gen.GUIDE_EXTRAS.items() if extra.get("canonical"))
+    texts = {"risk": "Risk register Score each risk.", "adr": "Decisions Record each one.", alias: "A copy."}
+
+    first, changed = gen.date_guides(texts, {}, "2026-06-15")
+    assert list(first) == ["guide/adr.html", "guide/risk.html"], "sitemap order, without the alias"
+    assert changed == ["docs/guides/adr.md", "docs/guides/risk.md"]
+    assert {entry["lastmod"] for entry in first.values()} == {"2026-06-15"}
+
+    kept, changed = gen.date_guides(texts, first, "2030-01-01")
+    assert kept == first and not changed
+
+    moved, changed = gen.date_guides({**texts, "risk": "Risk register Score and own each risk."}, first, "2030-01-01")
+    assert changed == ["docs/guides/risk.md"]
+    assert moved["guide/risk.html"]["lastmod"] == "2030-01-01" and moved["guide/adr.html"] == first["guide/adr.html"]
+
+    # A record with a fingerprint but no date (a bad merge) is dated again, not a KeyError.
+    broken = {"guide/adr.html": {"text_sha256": first["guide/adr.html"]["text_sha256"]}}
+    assert gen.date_guides({"adr": texts["adr"]}, broken, "2030-01-01")[0]["guide/adr.html"]["lastmod"] == "2030-01-01"
+
+
+def test_a_guide_text_ignores_markdown_layout():
+    # The fingerprint is of the rendered guide, so realigning a table or reflowing
+    # a paragraph in the Markdown doesn't move the date, and new wording does.
+    gen = load_generator()
+    site = gen.Site(guides=frozenset(), articles=frozenset())
+    page = gen.Page("guide", "guide/risk.html", "docs/guides/risk.md")
+    text = lambda md: gen.visible_text(gen.render_body(md, page, site))  # noqa: E731
+    compact = "# Risk\n\n|Risk|Owner|\n|---|---|\n|Outage|Service owner|\n\nScore each risk and name an owner.\n"
+    aligned = ("# Risk\n\n| Risk   | Owner         |\n| ------ | ------------- |\n| Outage | Service owner |\n\n"
+               "Score each risk\nand name an owner.\n")
+    assert text(compact) == text(aligned)
+    assert text(compact) != text(compact.replace("Service owner", "Product owner"))
+
+
+def test_sitemap_guide_dates_match_the_guides():
+    # The sitemap, scripts/sitemap-lastmod.json and the guides agree: every listed
+    # guide has the record's date, and the record's fingerprints are of the guides
+    # as they are now, so a stale record can't pass by agreeing with a stale sitemap.
+    gen = load_generator()
+    record = json.loads((REPO / "scripts" / "sitemap-lastmod.json").read_text(encoding="utf-8"))
+    sitemap = (DOCS / "sitemap.xml").read_text(encoding="utf-8")
+    dates = dict(re.findall(r"<loc>https://arckit\.org/(guide/[^<]*)</loc>\s*<lastmod>([^<]*)</lastmod>", sitemap))
+    assert dates and dates == {rel: entry["lastmod"] for rel, entry in record.items() if rel.startswith("guide/")}
+    assert all(re.fullmatch(r"\d{4}-\d{2}-\d{2}", day) for day in dates.values())
+
+    site = gen.Site(guides=frozenset(guide_names()), articles=frozenset(listed_slugs()))
+    current, changed = gen.date_guides(gen.render_guides(site)[1], record, "2999-12-31")
+    assert not changed, f"run `uv run scripts/generate-site-pages.py`: the record is stale for {changed[:5]}"
+    assert list(current) == list(dates), "the sitemap lists the guides date_guides() dates, in its order"
+
+
+def test_an_article_with_no_date_in_its_name_is_refused():
+    # Every sitemap entry is dated, and an article's date is the one its name starts with.
+    gen = load_generator()
+    with pytest.raises(SystemExit, match="doesn't start with its date"):
+        gen.sitemap_text((DOCS / "sitemap.xml").read_text(encoding="utf-8"), [{"slug": "undated-article"}], {})
+
+
 def test_fde_panel_is_site_only():
     # The offer is added to the web page; the guide itself also ships in the
     # plugins and the CLI, where it must not appear.
@@ -314,6 +385,15 @@ def test_on_github_lists_are_in_the_html():
         assert not missing, f"{name} rows not in docs/on-github.html: {missing[:5]}"
     assert f"{data['summary']['using']:,} public GitHub" in page
     assert '<div id="gh-content" hidden>' not in page and "Loading this week" not in page
+
+
+def test_on_github_dataset_names_its_licence():
+    # Search Console flagged the Dataset for a missing 'license' (4 November 2026).
+    # on-github.json is in the repository, so the repository's MIT licence covers it.
+    page = (DOCS / "on-github.html").read_text(encoding="utf-8")
+    block = re.search(r'<script type="application/ld\+json">(.*?)</script><!-- /on-github:jsonld -->', page, re.S)
+    dataset = next(n for n in json.loads(block.group(1))["@graph"] if n["@type"] == "Dataset")
+    assert dataset["license"] == "https://github.com/tractorjuice/arc-kit/blob/main/LICENSE"
 
 
 def test_on_github_text_is_escaped_and_links_only_github():

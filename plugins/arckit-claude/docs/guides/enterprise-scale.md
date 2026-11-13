@@ -56,7 +56,7 @@ Before installing ArcKit broadly:
 - Assign a seat type that includes Claude Code. In Anthropic's current
   Enterprise guidance, legacy seat-based plans need Premium seats; usage-based
   plans need Chat + Code or Claude Enterprise seats.
-- Install Claude Code v2.1.287 or later on pilot machines. ArcKit's
+- Install Claude Code v2.1.319 or later on pilot machines. ArcKit's
   SessionStart version hook warns below this floor; managed settings can block
   startup below it.
 - Verify each pilot user with `claude --version`, `/status`, and
@@ -69,7 +69,7 @@ users are prompted to add the ArcKit marketplace when they trust the repo:
 
 ```json
 {
-  "minimumVersion": "2.1.287",
+  "minimumVersion": "2.1.319",
   "extraKnownMarketplaces": {
     "arckit-claude": {
       "source": {
@@ -91,7 +91,7 @@ range:
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.287",
+  "requiredMinimumVersion": "2.1.319",
   "requiredMaximumVersion": "2.1.999",
   "extraKnownMarketplaces": {
     "arckit-claude": {
@@ -241,6 +241,8 @@ Use a narrow pilot before broad installation:
 
 | Version | Enterprise-relevant change | ArcKit impact |
 |---------|----------------------------|---------------|
+| v2.1.319 | PostToolUse hooks run, with up to 10 seconds, on a tool call that finishes after a new message interrupts the turn; three permission and sandbox bypasses closed (a crafted Bash environment prefix, `sed` in accept-edits and auto mode, worktree creation); Bash deny and ask rules match commands written with quoted words; a plugin update installs a dependency the new version adds; `permissions.denyInsteadOfPrompting` added | An artefact written as the user sends a new message still gets its provenance block and manifest entry. Deny rules a fleet writes match what they were written for. Overlays keep their core dependency across updates. This is ArcKit's floor |
+| v2.1.295 | `onFailure: "block"`: a command hook that can't start, times out or exits with an unexpected code stops the action | Gates on ArcKit's own artefacts and supplier documents fail closed, so those need Node on `PATH`. Other paths are unaffected |
 | v2.1.287 | Claude mods: a plugin can name a hooks module that observes, rewrites or answers tool calls, prompts and turns, and draws its own interface; plugin SessionStart hooks now run in new cloud sessions; a dangerous `rm` keeps its always-ask safeguard when it also redirects to a `~` or wildcard path; a shell write through a committed symlink onto a sensitive file or out of the working tree now waits for a person | Current floor, for the SessionStart fix in new cloud sessions. ArcKit ships no mod: 6.18.1 and earlier carried a status band above the prompt, removed because the Claude plugin directory holds any plugin with a mod for a reviewer. Organisations with managed settings get Anthropic's built-in `sec-default` mod, which keeps their own hooks and deny rules out of reach of installed plugins |
 | v2.1.284 | Claude Sonnet 5.5 (`claude-sonnet-5-5`) added as the default Sonnet model on the Anthropic API — 1M context, $2/$10 per MTok, defaults to `effort: medium`, thinking cannot be turned off; biology-flagged requests end in a refusal (no fallback model); plugins from marketplaces no longer pre-approve their own tools via `allowed-tools` under managed `allowManagedPermissionRulesOnly`; MCP tool calls in a resumed session wait for a still-connecting server instead of failing | Carried into the current floor. Sonnet 5.5 always thinks, so ArcKit's `effort: max` commands run at `max` on it and the provenance Effective Effort row is accurate. Commands without `effort:` run at `medium` on Sonnet 5.5, as on Opus 5.5 |
 | v2.1.280 | Claude Opus 5.5 (`claude-opus-5-5`) added as the default Opus model — 1M context, defaults to `effort: medium`, thinking cannot be turned off, fast mode at $8/$40; an effort level saved before `/effort` became per-model no longer applies to newly released models | Opus 5.5 always thinks, so ArcKit's `effort: max` commands cannot be silently sent as `high` by a thinking-off session and the provenance Effective Effort row is accurate. Commands without `effort:` run at `medium` on Opus 5.5. Carried into the current floor |
@@ -275,6 +277,8 @@ Use a narrow pilot before broad installation:
 | ArcKit entry | Enterprise impact |
 |--------------|-------------------|
 | Unreleased | The status band mod is removed from core: the Claude plugin directory holds any plugin with a mod for a reviewer. Every gate was always a classic hook, so nothing enforced changes; the v2.1.287 floor stays for the SessionStart fix |
+| Unreleased #580 | Claude Code floor raised to v2.1.319: after-write hooks run on an interrupted write, so no artefact lands without its provenance block, and three permission and sandbox bypasses are closed. Update `minimumVersion` and `requiredMinimumVersion` to match |
+| v6.20.0 #580 | Claude Code floor raised to v2.1.295 for `onFailure: "block"`, so a gate that can't run stops the write rather than letting it through. `version-check.mjs` still warns rather than blocks, so also set `requiredMinimumVersion` in managed settings |
 | Unreleased #580 | Claude Code floor raised to v2.1.287 for Claude mods, which ArcKit uses for an observe-only status band above the prompt; classic hooks still carry every gate |
 | v6.16.5 #580 | Claude Code floor raised to v2.1.284 for Claude Sonnet 5.5, the default Sonnet model on the Anthropic API, which like Opus 5.5 always thinks |
 | v6.15.0 #580 | Claude Code floor raised to v2.1.280 for Claude Opus 5.5, the default Opus model, which always thinks and so keeps `effort: max` and the provenance Effective Effort row honest |
@@ -486,19 +490,59 @@ ArcKit and [Spec Kit](https://github.com/github/spec-kit) operate at different a
 - **ArcKit** — the governance layer: principles, requirements, stakeholders, ADRs, business cases, procurement, compliance.
 - **Spec Kit** — the implementation layer: specification-driven delivery of a given piece of software.
 
-A natural pipeline:
+ArcKit supplies Spec Kit's inputs and checks what comes back; Spec Kit builds. The arc42 overlay's `/arckit:arc42-handover` writes those inputs as one pack, built from the arc42 description and the artefacts behind it:
 
 ```text
-ArcKit                                 Spec Kit
-───────                                ────────
-/arckit:requirements   ──(FR/NFR)──▶  /spec-kit specify
-/arckit:data-model     ──(DR)─────▶  /spec-kit plan
-/arckit:adr            ──(constr.)─▶  /spec-kit tasks
-                                      /spec-kit implement
-/arckit:conformance   ◀─(evidence)── (built artifacts)
+ArcKit                                          Spec Kit
+──────                                          ────────
+/arckit:principles, arc42 §2 and §8   ──▶  speckit.constitution
+/arckit:requirements, /arckit:backlog ──▶  speckit.specify  (one feature per epic)
+arc42 §4–§7, ADRs, /arckit:data-model ──▶  speckit.plan
+                                           speckit.tasks, speckit.implement, speckit.converge
+/arckit:traceability  ◀── tagged specs and tasks
+/arckit:conformance   ◀── plans and constitution
+/arckit:repo-audit    ◀── delivered code
 ```
 
-Keep requirement IDs (`FR-xxx`, `NFR-xxx`, `DR-xxx`) in the Spec Kit spec frontmatter so traceability survives the handoff.
+### Carrying IDs Across
+
+Spec Kit numbers each feature's own requirements (`FR-001`) and success criteria (`SC-001`), so ArcKit IDs travel as tags beside them: `[ArcKit FR-012]`, `[ArcKit NFR-P-001]`, `[ArcKit ADR-003]`. Keep Spec Kit's local ID first and the ArcKit tag after the statement, and keep the tags in `spec.md`, `plan.md` and `tasks.md`. `/arckit:traceability` reads them back; an ID without the tag is treated as Spec Kit's own.
+
+Requirement IDs also repeat across ArcKit projects, so each feature declares the project it delivers with one ownership tag, `[ArcKit Project 001]`. The handover pack puts it at the top of every feature description. A feature with no ownership tag, or with tags for more than one project, is reported as a gap and never counted.
+
+### Worked Example: an Appointment Booking Service
+
+Project `001-appointment-booking` has principles, requirements, three ADRs, a data model, a backlog and an arc42 description.
+
+1. **Write the handover pack.** `/arckit:arc42-handover 001` writes `ARC-001-SDDH-v1.0.md` with a constitution input, a shared plan context and one feature brief per backlog epic. Feature F-01 follows `EPIC-001 Book an appointment`.
+
+2. **Constitution.** The team passes the pack's Constitution Input to `speckit.constitution`. One principle reads:
+
+   ```text
+   ### II. Security by Design [ArcKit Principle 4]
+   - Every endpoint MUST authenticate the caller [ArcKit NFR-SEC-001]
+   - Personal data MUST be encrypted at rest [ArcKit NFR-SEC-003]
+   ```
+
+3. **Specify.** The team runs `speckit.specify` with F-01's Specify Input, which starts with `[ArcKit Project 001]`. Spec Kit writes `specs/001-book-appointment/spec.md`, copying the description into its `Input` line, numbering requirements itself and keeping the tags:
+
+   ```text
+   **Input**: User description: "[ArcKit Project 001] Residents book an appointment ..."
+
+   - **FR-001**: System MUST show available slots for a chosen service [ArcKit FR-003]
+   - **FR-002**: System MUST confirm a booking by email [ArcKit FR-004]
+   - **SC-001**: 95th percentile booking confirmation under 2 seconds [ArcKit NFR-P-001]
+   ```
+
+   The brief carried one open question as `[NEEDS CLARIFICATION: Can a resident book for someone else?]`, which `speckit.clarify` raises with the team.
+
+4. **Plan.** `speckit.plan` takes F-01's Plan Input with the Shared Plan Context: the building blocks it touches, `[ArcKit ADR-002]` (PostgreSQL for bookings), `[ArcKit ADR-003]` (email through the notification service), and the data model's `Booking` and `Slot` entities.
+
+5. **Build.** `speckit.tasks`, `speckit.implement` and `speckit.converge`. Task lines keep their tags, as in `- [x] T004 Slot availability query [ArcKit FR-003]`.
+
+6. **Bring evidence back.** `/arckit:traceability 001` shows `FR-003` in feature `001-book-appointment`, which project 001 owns, with its tagged tasks done. `/arckit:conformance 001` checks that `specs/001-book-appointment/plan.md` uses PostgreSQL as ADR-002 decided. `/arckit:repo-audit` audits the code. A decision taken during delivery, such as adding a cache, becomes an ADR, and then `/arckit:arc42` and `/arckit:arc42-handover` are re-run. Until they are, `/arckit:health` flags the old description and pack as `STALE-VIEW`.
+
+The pack is plain Markdown with no dependency on Spec Kit's internals. The steps above use Spec Kit's logical names; invoke each in the form your installed integration exposes, such as `/speckit-specify` in GitHub Copilot's default skills mode, `$speckit-specify` in Codex, `/skill:speckit-specify` in Kimi, or `/speckit.specify` where the integration uses slash-command notation. When the delivery repository is separate, pass its specs folder to traceability with `SPECS=<path>`. See the [arc42 SDD handover guide](https://arckit.org/guide/arc42-handover.html) for the full pack layout.
 
 ---
 
@@ -525,7 +569,7 @@ admin can set the native managed settings (Claude Code v2.1.163+):
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.287",
+  "requiredMinimumVersion": "2.1.319",
   "requiredMaximumVersion": "2.1.999"
 }
 ```

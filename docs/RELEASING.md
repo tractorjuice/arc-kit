@@ -193,8 +193,9 @@ The Claude plugin directory picks up the new `tractorjuice/arckit-claude` versio
 ### Release article
 
 Every release with major features gets a write-up in `docs/articles/`
-(`YYYY-MM-DD-<slug>.md`), in the voice of the existing pieces, with a hero
-generator script in the house style (1200×630, see the `generate-hero-*.py`
+(`YYYY-MM-DD-<slug>.md`), in the maintainer's voice (`docs/social/SOCIAL.md` →
+Voice), with a hero generator script in the house style (1200×630, see the
+`generate-hero-*.py`
 siblings). The directory is gitignored as a drafts folder — force-add the
 keepers with `git add -f`, as every published article has been.
 
@@ -239,7 +240,7 @@ This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`)
 
 ## v6.0.0+ — single Claude marketplace repo
 
-From v6.0.0 the standalone `tractorjuice/arckit-claude` repo is the preferred Claude Code marketplace. It ships 18 plugins in one repo: the `arckit` core plugin at `plugins/arckit` (at the repo root until 6.16.2) plus regional, sector, method, agent-architecture, tooling, and supplier overlays under structured `plugins/...` paths. All Claude plugins share one version, bumped together. The `arckit-uk-gcloud` overlay is public for installation and inspection but remains proprietary, so the standalone repo license carries an explicit exception for `plugins/uk/gcloud/`.
+From v6.0.0 the standalone `tractorjuice/arckit-claude` repo is the preferred Claude Code marketplace. It ships 20 plugins in one repo: the `arckit` core plugin at `plugins/arckit` (at the repo root until 6.16.2) plus regional, sector, method, agent-architecture, tooling, and supplier overlays under structured `plugins/...` paths. All Claude plugins share one version, bumped together. The `arckit-uk-gcloud` overlay is public for installation and inspection but remains proprietary, so the standalone repo license carries an explicit exception for `plugins/uk/gcloud/`.
 
 The root `.claude-plugin/marketplace.json` in `tractorjuice/arc-kit` remains a compatibility marketplace for existing users who already added the old repo. Keep its `name` as `arc-kit` and its sources pointed at monorepo paths such as `./plugins/arckit-claude` and `./plugins/arckit-uae`. The standalone marketplace metadata lives at `plugins/arckit-claude/.claude-plugin/marketplace.json` and uses `.` plus `./plugins/...` sources for `tractorjuice/arckit-claude`.
 

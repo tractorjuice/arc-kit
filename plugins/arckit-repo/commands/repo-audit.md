@@ -146,6 +146,7 @@ Do not read the whole repository. Read enough to support every claim.
 4. IaC: `*.tf`, CDK app entrypoints, `template.yaml`, `*.bicep`, Helm charts, `docker-compose*.yml`.
 5. Entrypoints and boundary code: handlers, controllers, routers, main functions, integration clients.
 6. Test directories, to establish shape and coverage rather than to run them.
+7. Spec Kit delivery artefacts, when present: `.specify/memory/constitution.md` and `specs/*/spec.md`, `plan.md` and `tasks.md`. They record what the team set out to build, so treat them as design intent, not evidence of what was built.
 
 List candidates with `rg --files` when available, otherwise `find`. Exclude: `.git/`, `node_modules/`, `.venv/`, `vendor/`, `dist/`, `build/`, `target/`, `coverage/`, `.next/`, `__pycache__/`, and any minified or generated bundle.
 
@@ -220,6 +221,7 @@ Populate every section of the template. Specific requirements:
   For PlantUML, consult the `plantuml-syntax` skill for directional layout hints (`Lay_D`, `Lay_R`) on diagrams above roughly ten containers — that layout control is the main reason to choose this format. State the chosen format in the summary so the reader knows why the block looks the way it does.
 
 - **Blocking Decisions** is the section that makes this more than a repo summary. Every decision the codebase implies but never records becomes a numbered entry with enough context to file directly via `/arckit:adr`. If there are none, say so; do not invent them.
+- **Requirements Coverage**: where the repository holds Spec Kit specs, use the `[ArcKit <ID>]` tags in them to map each requirement to its feature, then look for the code that implements the feature. Use only features whose ownership tag, `[ArcKit Project NNN]`, names the project resolved in Step 3 and no other: requirement IDs repeat across projects. List features with no ownership tag, or more than one, under Limitations instead of mapping them. A tag says what a feature set out to do, not that it was done. A feature whose tasks are all checked but whose code you cannot find is a finding. Spec Kit's own per-feature IDs (`FR-001`) are not ArcKit IDs.
 - **Findings** must sort CRITICAL first. Any finding without evidence or an explicit `Absent` marker is cut before writing.
 - **Limitations** must be honest and specific. A reader must not mistake the report for exhaustive.
 

@@ -429,6 +429,12 @@
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-width-container">
             <a href="../guides.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Guides</a>
+<div id="films" class="app-films">
+<div class="app-film">
+<button type="button" class="app-film__play" data-film="sdtr7V6R7S8" data-label="Film: /arckit-uk-legacy:uk-legacy-assessment" aria-label="Play Film: /arckit-uk-legacy:uk-legacy-assessment"><span class="app-film__icon" aria-hidden="true">▶</span><span>Film: /arckit-uk-legacy:uk-legacy-assessment</span></button>
+<p class="govuk-body-s app-film__note">A short AI-narrated film with English captions. Pressing play loads the YouTube player. <a class="govuk-link" href="https://youtu.be/sdtr7V6R7S8" target="_blank" rel="noopener">Watch on YouTube</a></p>
+</div>
+</div>
 <div id="content" class="app-markdown">
 <p>Legacy is a classification of unacceptable burden or risk, assessed against owner
 thresholds. Age alone does not decide it. ArcKit assesses existing project systems,
@@ -717,7 +723,19 @@ python scripts/eval-headless.py --plugin plugins/arckit-uk-legacy --help
 <p>Behavioural cases use the real Claude overlay namespace. Their structural checks run
 in the shared Python suite; live model evaluations require an authenticated runtime
 and are separate from deterministic calculation and installation tests.</p>
+<h3 id="live-evaluation-validity">Live evaluation validity</h3>
+<p>The headless runner enables this overlay and its declared core dependency for the
+session, disabling installed copies of those namespaces for that session. It checks
+all <code>system/init</code> events for both local plugins and the invoked command. Replay
+recomputes the required dependencies from the selected manifests. Finding the helper
+on disk does not count as a loaded command. Missing runtime evidence fails on replay
+too, even if artifact graders pass. Run completion is reported separately; a loaded
+but incomplete run retains its artifact scores while failing the overall evaluation.
+Implicit replay selects recorded cases; explicit missing selections fail.
+The dependency fixture intentionally preserves an Accepted local D7 finding while
+the effective D7 result becomes Legacy through a qualifying reliance path.</p>
 </div>
+<script src="../films.js"></script>
         </div>
     </main>
 

@@ -29,11 +29,14 @@ jobs:
         with:
           python-version: "3.12"
 
-      # The suite's third-party imports are pytest and yaml, plus the two
-      # Markdown packages test_site_pages.py needs. Those are pinned to the
-      # versions in scripts/generate-site-pages.py because its --check compares
-      # the pages byte for byte. `-e .` is needed because several suites
-      # import from `src/arckit_cli/`.
+      # The suite's third-party imports are listed in pyproject.toml's `test`
+      # extra: pytest, yaml, jsonschema and the two Markdown packages
+      # test_site_pages.py needs, pinned to the versions in
+      # scripts/generate-site-pages.py because its --check compares the pages
+      # byte for byte. `-e .` is needed because several suites import from
+      # `src/arckit_cli/`. build and hatchling>=1.27 in the extra let
+      # tests/cli/test_package_licence.py build the sdist and wheel offline
+      # and check their licence metadata; without them those tests skip.
       - name: Install test dependencies
         run: python -m pip install -e ".[test]"
 
@@ -45,6 +48,20 @@ jobs:
       # checkout. tests/plugin/ is converter-independent.
       - name: Generate extension formats
         run: python scripts/converter.py
+
+      # Builds the Paperclip package and runs its handlers against the
+      # generated commands.json: every command's {arckit_package_root} assets
+      # must exist and be in package.json "files". Nothing else exercises the
+      # published package, so a stale path or an unshipped folder goes unseen.
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: "24"
+          cache: npm
+          cache-dependency-path: extensions/arckit-paperclip/package-lock.json
+
+      - name: Test built Paperclip command handlers
+        working-directory: extensions/arckit-paperclip
+        run: npm ci && npm test
 
       # testpaths is set in pyproject.toml, so this collects the same tests a
       # bare local `python -m pytest` does. Run via `python -m` (not the

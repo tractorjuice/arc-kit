@@ -9,6 +9,62 @@ Releases before 6.14.0 are in the [changelog archive](https://github.com/tractor
 
 ## [Unreleased]
 
+### Changed
+
+- **ArcKit now needs Claude Code v2.1.319 or later.** That release closes three ways a command could get past a permission check or the sandbox, and it runs ArcKit's after-write steps on an artefact written just as you send a new message, which earlier versions skipped. Run `claude update`. Below it ArcKit still runs and warns at session start.
+
+### Fixed
+
+- **The research handoff check no longer repeats a reader's own words in its errors.** If a reader's reply failed the check, the error could carry text a web page had planted into the main session. Errors now name positions in the schema only.
+- **A report that no hook checked is validated before it is used.** If a reader is not run in the foreground, or the check does not run, the research commands, `/arckit:evaluate` and `/arckit:score` run the validator on its report themselves and use only its output.
+
+## [6.22.0] — 2026-11-12
+
+### Changed
+
+- **`/arckit:research` now reports evidence and makes no decisions.** It used to score each option, rank the options and give a build-or-buy verdict for each category. It now reports what each option offers, lacks and costs, with sources, and the market evidence for each capability: how many products cover it, from how many vendors, and whether a utility, GOV.UK platform or open-source project does. `/arckit:wardley` decides how to source each capability, `/arckit:sobc` appraises value for money, and `/arckit:evaluate` and `/arckit:score` score suppliers. `/arckit:sobc` now reads the research report's costs and the Wardley map's sourcing.
+
+### Added
+
+- **`/arckit:research` now reads prices from G-Cloud pricing documents.** Suppliers publish their G-Cloud prices in a PDF linked from the listing, which web fetch can't read, so those options had no price in the report or for the business case. For the leading options in each category, ArcKit now downloads that PDF from the Digital Marketplace and reads the prices from it. Claude Code only.
+
+### Fixed
+
+- **`/arckit:research` now measures each option against the category it was found in.** It used to measure every product against the whole project's capability list, so a good dashboard tool looked weak for not being a forms tool. A product that does more than the category asks no longer looks worse for it.
+
+## [6.21.0] — 2026-11-09
+
+### Added
+
+- **`/arckit:hld-review` gets a second look from three readers who weren't in the session.** Before it writes the review, three fresh reviewers read the design, one each for comprehension, principles and requirements. They see only the design, the principles and the requirements, none of the review's draft findings or verdict, so a gap the review has already explained to itself still gets caught. The comprehension reader explains the design back in plain words, and where that differs from what the supplier meant, the design is unclear. A new section 11.5 gives every finding an outcome: added, already raised, or not accepted with a reason. If a blocking finding is added, the verdict is checked again.
+- **`/arckit:dld-review` gets the same fresh-eyes review.** One reader explains the design back, one reads it as the engineer who'll build it and lists every decision it leaves to the builder, and one checks it against the approved HLD and its review's conditions. Section 10.5 settles every finding.
+- **Vendor scores get a second, independent score.** After `/arckit:score` or `/arckit:evaluate` scores a supplier, an independent scorer scores the same claims against the same criteria. It never sees the first scores, the vendor's name or the conversation, and it can't open any file. `scores.json` keeps both scores, the evaluation gets a Moderation section, and `compare` and `audit` show how many criteria were moderated.
+- **A neutral moderator settles any difference between the two scores.** It sees both scores and their reasons as Evaluator A and Evaluator B, with nothing to say which is the command's, and decides the final score with a reason. Its decision is recorded unchanged: the command can tell you it disagrees but can't change it. Both first scores are kept.
+
+## [6.20.0] — 2026-11-07
+
+### Added
+
+- **`arckit-arc42`, a new optional overlay** (#1053, #1062, from @chrismckelt). `/arckit:arc42` writes an arc42 architecture description from the artefacts you already have, with four more commands for the sections core doesn't cover and a handover to Spec Kit.
+- **NORA and GEMMA for the Netherlands overlay** (#952, from @trednets). `/arckit-nl:nl-nora` assesses a Dutch government service against the NORA principles, and `/arckit-nl:nl-gemma` maps a gemeente's application landscape onto GEMMA.
+- **`/arckit:traceability` reads delivery evidence from Spec Kit** (#1062, from @chrismckelt). It reads the `[ArcKit <ID>]` tags in a `specs/` folder and adds a Delivery Trace showing what's been delivered against each requirement.
+- **`/arckit:health` flags out-of-date generated views (`STALE-VIEW`)** (#1062, from @chrismckelt), when a source they cite has moved on.
+
+### Changed
+
+- **`/arckit:build` reads existing evidence instead of discarding it, and rebuilt artefacts keep their IDs** (#1062, from @chrismckelt). An optional target that's off by default is now used if the project already has its artefact, rather than being dropped from what depends on it.
+- **Checks on ArcKit artefacts stop the write when they can't run.** A check that hung, crashed or couldn't start used to let the write through, so it gave no protection at that moment. Now writing an `ARC-*` file, `scores.json` or a Wardley map, or reading a supplier's bid, stops and the error says why. **ArcKit needs Claude Code v2.1.295 or later**, and those files need Node on your `PATH`. Work in other repos is unaffected, and checks on other paths, prompts and shell commands still carry on if they fail, because stopping those could leave a session unable to diagnose the problem.
+- **Checks work when the plugin folder is a symlink, and when a session starts in a subfolder.** Through a symlink, five hooks did nothing and reported success. From a subfolder, the checks on `ARC-*` filenames, `scores.json`, Wardley maps and backlogs didn't run.
+- **`/arckit:evaluate` and `/arckit:score` won't start if they can't keep bids out of the session,** and a reader's reply is held back if the check on it breaks.
+- **`/arckit:evaluate` and `/arckit:score` no longer read a bid in the context that scores it.** A read-only reader opens one supplier's documents and returns short claims against each criterion, and scoring uses only those claims, so text planted in a bid can't reach the scoring context. A hook denies the command's own `Read`, `Grep` and `Bash` on supplier documents while it runs, and `/arckit:hld-review` is unaffected. Each vendor's claims are saved so a score can be traced to its source. A criterion with no claim scores 0, and `/arckit:score compare` won't recommend a vendor with a failed mandatory qualification. If any document can't be read, the vendor stays unscored and you're told why, so **export Word documents to PDF first**. Integrity findings now hold a type, file and location, with no quote. **Evaluations move to `projects/<id>/vendors/_evaluations/<vendor>/`**, because a bid pack could otherwise use ArcKit's filenames. Before re-scoring a vendor evaluated with an earlier release, move its `evaluation.md` and `notes.md` there: scoring stops for a vendor whose folder still holds them. Scoring is still a judgement on what a supplier claims, so a bid that misleads the reader can still move a score. Other runtimes have no subagents and keep reading bids in one context (#873).
+- **`/arckit:evaluate` and `/arckit:score` keep a record of integrity findings.** Each vendor's `evaluation.md` and the comparison document now have an Integrity Findings section, and `scores.json` records each finding's type, file and location, with no supplier text. `/arckit:score compare` and `audit` show the findings, and a finding against the top-scoring vendor is named in the recommendation.
+- **`/arckit:hld-review` and `/arckit:dld-review` treat supplier designs as evidence.** A design is written by a party that gains from approval, so text in it aimed at the reviewer is not followed. Each instance is now listed in a new Integrity Findings section of the review, which states None found when there are none.
+- **`/arckit:gcloud-search` and `/arckit:gcloud-clarify` treat supplier pages as evidence.** A service page is written by a party that gains from being shortlisted, and `gcloud-search` scores it in the same context that reads it. Text on a page aimed at the reader is no longer followed, and each instance is listed under a new Integrity Findings section. `gcloud-clarify` carries those findings into each service's risk assessment.
+
+### Fixed
+
+- **`/arckit:evaluate` sets its criteria before it reads any bid.** It used to read every proposal in `vendors/` before working out what it had been asked to do, so a new framework's scoring criteria were written with bids in context. It now reads a proposal only when scoring that vendor, after the framework exists, and a comparison works from the saved evaluations.
+
 ## [6.19.0] — 2026-11-02
 
 ### Added

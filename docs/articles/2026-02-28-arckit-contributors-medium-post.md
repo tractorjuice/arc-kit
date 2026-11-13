@@ -80,7 +80,7 @@ File an issue. Submit a PR. Or just tell us how you're using ArcKit. Every contr
 - [Why an EA Toolkit Is Trending on GitHub in 2026](article-viewer.html?a=2026-04-19-arckit-trending-on-github)
 - [Show HN: ArcKit — Architecture Governance as Slash Commands](article-viewer.html?a=2026-05-06-show-hn-arckit)
 - [Product Hunt Launch: ArcKit](article-viewer.html?a=2026-05-06-product-hunt-arckit)
-- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+- [Wanted: `/arckit:build` Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
 
 <!-- arckit:community-block -->
 ## Join the ArcKit Community

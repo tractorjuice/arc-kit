@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Guard the security-relevant frontmatter on plugin agent files.
 
-Three failure modes, all of which have already shipped to users once:
+Three failure modes that have already shipped to users once, and a fourth
+that would undo the reader/writer split without anyone noticing:
 
 1. **Missing `tools:` allowlist.** PR #445 migrated every research agent
    from a `disallowedTools` denylist to an explicit `tools:` allowlist so
@@ -21,6 +22,18 @@ Three failure modes, all of which have already shipped to users once:
    still registers, and resolves to an unrestricted tool grant --- which
    is what happened to `READER-PATTERN.md`.
 
+4. **A reader or writer crossing its tier.** The split only holds while a
+   reader can't write and a writer can't fetch. `ENFORCEMENT.md` lists that as
+   enforced, so each tier gets an allowlist here: a tool added to either one
+   fails until someone decides which side of the split it belongs on.
+
+5. **An allowlist of removed tools only.** Claude Code v2.1.233 removed
+   `TodoWrite` and the `TaskCreate*` tools on current models. An entry for
+   one is inert beside other tools, but an agent whose every tool is gone
+   resolves to none, and Claude Code refuses to start it ("would be spawned
+   with zero tools"). `arckit-independent-scorer` shipped that way in its
+   first draft and failed every dispatch.
+
 Exit 0 on success, 1 on any violation.
 """
 
@@ -37,8 +50,17 @@ PLUGIN_ROOT = os.path.join(
 # Fields converter.py strips for non-Claude targets. If a file in the plugin
 # source is missing ALL of these while carrying exactly the keys yaml.dump
 # leaves behind, it has almost certainly been through copy_agent_stripped().
-CLAUDE_ONLY_AGENT_FIELDS = ("effort", "initialPrompt", "maxTurns", "disallowedTools", "tools", "experimental")
+CLAUDE_ONLY_AGENT_FIELDS = ("effort", "initialPrompt", "maxTurns", "disallowedTools", "tools", "experimental", "omitClaudeMd")
 STRIPPED_SIGNATURE = {"description", "model", "name"}
+
+# Neither tier gets Bash or Agent: a shell can write and fetch, and a subagent
+# can hold what its parent doesn't.
+READER_TOOLS = {"Read", "Glob", "Grep", "WebSearch", "WebFetch", "TodoWrite"}
+WRITER_TOOLS = {"Read", "Glob", "Write", "Edit"}
+
+# Tools Claude Code no longer offers on current models (v2.1.233). Harmless in
+# a list with others; fatal as the whole list.
+REMOVED_TOOLS = {"TodoWrite", "TaskCreate", "TaskGet", "TaskList", "TaskUpdate"}
 
 
 def agent_dirs():
@@ -62,6 +84,15 @@ def parse_frontmatter(path):
         return yaml.safe_load(parts[1]) or {}, None
     except yaml.YAMLError as exc:
         return None, f"unparseable frontmatter: {exc}"
+
+
+def tier_violations(filename, tools):
+    """Return the tools a reader or writer holds outside its tier."""
+    if filename.endswith("-reader.md"):
+        return [t for t in tools if t not in READER_TOOLS and not str(t).startswith("mcp__")]
+    if filename.endswith("-writer.md"):
+        return [t for t in tools if t not in WRITER_TOOLS]
+    return []
 
 
 def main():
@@ -103,6 +134,14 @@ def main():
                 )
             elif not isinstance(frontmatter["tools"], list) or not frontmatter["tools"]:
                 errors.append(f"{rel}: `tools:` must be a non-empty list")
+            # (5) A list of removed tools resolves to nothing at runtime.
+            elif all(str(t) in REMOVED_TOOLS for t in frontmatter["tools"]):
+                errors.append(
+                    f"{rel}: every tool in `tools:` ({', '.join(map(str, frontmatter['tools']))}) "
+                    f"has been removed from Claude Code, so the agent would start with none and "
+                    f"Claude Code refuses to start it. Give it a tool that still exists, such as "
+                    f"`Glob` for an agent that must not open files."
+                )
 
             # (2) The converter-writeback signature.
             if set(frontmatter) == STRIPPED_SIGNATURE:
@@ -121,6 +160,15 @@ def main():
                         f"{rel}: tool `{tool}` uses the bare MCP prefix, which matches nothing "
                         f"in plugin context. Use mcp__plugin_<package>_<server>__<tool>."
                     )
+
+            # (4) Keep each side of the reader/writer split on its own side.
+            for tool in tier_violations(filename, frontmatter.get("tools") or []):
+                tier = "reader" if filename.endswith("-reader.md") else "writer"
+                errors.append(
+                    f"{rel}: tool `{tool}` is outside the {tier} tier. Readers fetch and "
+                    f"cannot write; writers render and cannot fetch "
+                    f"(see plugins/arckit-claude/docs/ENFORCEMENT.md)."
+                )
 
     if errors:
         print("Agent frontmatter check FAILED:\n")

@@ -1,10 +1,10 @@
 # ArcKit Mistral Vibe Extension Configuration
-# Version: 6.19.0
+# Version: 6.22.0
 # Generated from ArcKit canonical plugin (plugins/arckit-claude/)
 
 [extension]
 name = "arckit"
-version = "6.19.0"
+version = "6.22.0"
 description = """
 The Enterprise Architecture Governance Harness - 73+ slash commands across
 strategy, architecture, delivery, and assurance. Enables enterprise architects
@@ -13,7 +13,7 @@ management, and compliance workflows in Mistral Vibe.
 """
 author = "TractorJuice"
 repository = "https://github.com/tractorjuice/arckit-vibe"
-license = "MIT"
+license = "MIT AND CC-BY-SA-4.0"
 homepage = "https://tractorjuice.github.io/arc-kit/"
 
 [extension.feature_flags]
@@ -35,6 +35,7 @@ files = [
     "arckit-azure-research.toml",
     "arckit-competitors.toml",
     "arckit-datascout.toml",
+    "arckit-evaluate.toml",
     "arckit-framework.toml",
     "arckit-gcp-research.toml",
     "arckit-gov-code-search.toml",
@@ -42,6 +43,7 @@ files = [
     "arckit-gov-reuse.toml",
     "arckit-grants.toml",
     "arckit-research.toml",
+    "arckit-score.toml",
     "arckit-tenders.toml"
 ]
 

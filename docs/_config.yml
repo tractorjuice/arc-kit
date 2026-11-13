@@ -1,2 +1,6 @@
 exclude:
   - plans/
+# GitHub Pages builds this folder with Jekyll, which leaves out any folder whose name starts with a
+# dot. Without this line arckit.org/.well-known/ard.json would be a 404.
+include:
+  - .well-known

@@ -146,6 +146,14 @@ Read the following artifacts. Do NOT read entire files — extract relevant sect
 - `ARC-*-RISK-*.md` — Risk register (for exception context)
 - `ARC-*-DEVOPS-*.md` — DevOps strategy (for technology stack drift check)
 
+**Spec Kit Delivery Artefacts** (if a `specs/` folder exists at the repository root, or the arguments name one with `SPECS=<path>`):
+
+- `.specify/memory/constitution.md` — the constitution the delivery team builds to
+- `specs/*/plan.md`, `specs/*/data-model.md` and `specs/*/contracts/` — each feature's design
+- Treat each plan, data model and contract as a design document in the ADR-IMPL, ADR-SUPER, PRIN-DESIGN, DRIFT-TECH and DRIFT-PATTERN checks, and cite it by path and line like an HLD or DLD
+- `[ArcKit ADR-NNN]` and `[ArcKit Principle N]` tags in a plan say which decisions and principles it claims to follow; check each claim against the plan's content rather than taking it on trust
+- Assess only the features this project owns: those whose spec, plan or tasks carry its ownership tag, `[ArcKit Project NNN]`, and no other project's. A feature with no ownership tag, or with tags for more than one project, is NOT ASSESSED; name it and the fix (one ownership tag in its spec). A feature owned by another project is out of scope
+
 **Custom Rules** (if exist):
 
 - `.arckit/conformance-rules.md` in the project root
@@ -207,6 +215,7 @@ For EACH architecture principle:
    - Does the design SATISFY this principle? → PASS
    - Insufficient evidence to determine? → NOT ASSESSED
 4. This is a **hard constraint check**, not a maturity assessment
+5. If a Spec Kit constitution exists, check that it carries every non-negotiable principle, by name or `[ArcKit Principle N]` tag. A non-negotiable principle missing from the constitution is a FAIL: the delivery team is not bound by it
 
 **Note**: This differs from `/arckit:principles-compliance` which provides RAG scoring with remediation plans. This check is a binary gate: does the design conform or not?
 

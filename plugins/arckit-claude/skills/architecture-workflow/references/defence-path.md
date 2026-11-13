@@ -42,7 +42,7 @@
 | 6 | `/arckit:datascout` | Discover data sources within MOD and cross-government | ARC-{PID}-DSCT-v1.0.md |
 | 7 | `/arckit:data-model` | Data architecture with classification levels | ARC-{PID}-DMOD-v1.0.md |
 | 8 | `/arckit:dpia` | Data Protection Impact Assessment | ARC-{PID}-DPIA-v1.0.md |
-| 9 | `/arckit:research` | Technology research with defence supplier focus | ARC-{PID}-RES-v1.0.md |
+| 9 | `/arckit:research` | Technology research with defence supplier focus | ARC-{PID}-RSCH-001-v1.0.md |
 | 10 | `/arckit:wardley` | Strategic positioning for defence capabilities | ARC-{PID}-WARD-001-v1.0.md |
 | 11 | `/arckit:roadmap` | Multi-year roadmap aligned to defence planning rounds | ARC-{PID}-ROAD-v1.0.md |
 | 12 | `/arckit:diagram` | Architecture diagrams (C4, sequence, DFD) | ARC-{PID}-DIAG-001-v1.0.md |

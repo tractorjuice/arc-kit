@@ -19,53 +19,42 @@
 
 ### Key Findings
 
-**Recommendation**: [One sentence: the overall build/buy/adopt split and its 3-year TCO, e.g. "Buy for [Y] of [Total] categories and build only [Category], for a blended 3-year TCO of £[TOTAL]."]
+**Headline**: [One sentence: what the research found across the categories, e.g. "Off-the-shelf options cover [Y] of [Total] categories in full; no option covers [Category]."]
 
-[One bullet per research category, most decisive first. As many as there are categories; not a fixed number.]
+[One bullet per research category. As many as there are categories; not a fixed number.]
 
-- **[Category]**: [Recommendation] - [Key reason]
-- **[Category]**: [Recommendation] - [Key reason]
-- **[Category]**: [Recommendation] - [Key reason]
+- **[Category]**: [What was found: options covering it, utility or GOV.UK platform, open source, cost range]
+- **[Category]**: [What was found]
+- **[Category]**: [What was found]
 
-### Build vs Buy Summary
+### Market Summary
 
-| Approach | Categories | Total 3-Year TCO | Rationale |
-|----------|-----------|------------------|-----------|
-| **BUILD** (Custom Development) | [X] categories | £[X] | [Key reason] |
-| **BUY** (Commercial SaaS) | [Y] categories | £[Y] | [Key reason] |
-| **ADOPT** (Open Source) | [Z] categories | £[Z] | [Key reason] |
-| **GOV.UK Platforms** (if applicable) | [W] categories | £[W] | [Key reason] |
-| **TOTAL** | [Total] categories | **£[TOTAL]** | Blended approach |
-
-### Top Recommended Vendors
-
-**Shortlist for further evaluation**:
-
-1. **[Vendor/Product 1]** for [Category]: [Key strengths]
-2. **[Vendor/Product 2]** for [Category]: [Key strengths]
-3. **[Vendor/Product 3]** for [Category]: [Key strengths]
+| Category | Options Found | Cover Fully | Cover 70%+ (Vendors) | Utility or GOV.UK Platform | Open Source | Published 3-Year Cost Range |
+|----------|---------------|-------------|----------------------|----------------------------|-------------|-----------------------------|
+| [Category 1] | [X] | [Y] | [Z] ([V] vendors) | [Name or none] | [Name or none] | £[MIN] to £[MAX] ([U] unpriced) |
+| [Category 2] | [X] | [Y] | [Z] ([V] vendors) | [Name or none] | [Name or none] | £[MIN] to £[MAX] ([U] unpriced) |
 
 ### Requirements Coverage
 
-- ✅ **[X%]** of requirements have identified solutions
-- ⚠️ **[Y]** requirements need custom development (no suitable off-the-shelf)
+- ✅ **[X%]** of requirements are covered by at least one option
+- ⚠️ **[Y]** requirements are covered by no option found
 - 🔍 **[Z]** requirements need further research or clarification
 
 ### Research Scope
 
-This document presents research findings for technology, services, and products that can meet the requirements documented in `ARC-{PROJECT_ID}-REQ-v*.md`. It provides build vs buy analysis and vendor recommendations for procurement decisions.
+This document reports the technology, services and products found that could meet the requirements documented in `ARC-{PROJECT_ID}-REQ-v*.md`: what each offers and lacks, with sources, and what it costs. It makes no build-or-buy decision and ranks no option. `/arckit:wardley` decides how to source each capability, `/arckit:sobc` appraises value for money, and `/arckit:evaluate` scores suppliers.
 
 **Requirements Analyzed**: [X] functional, [Y] non-functional, [Z] integration, [W] data requirements
 
 **Research Categories Identified**: [X] categories based on requirement analysis
 
-**Research Approach**: [Market research, vendor evaluation, UK Government Digital Marketplace search, open source assessment]
+**Research Approach**: [Market research, UK Government Digital Marketplace search, open source assessment, supplier price documents]
 
 ---
 
 ## Research Categories
 
-> **Note**: Research categories are dynamically identified based on project requirements, not a fixed list.
+> **Note**: Research categories are dynamically identified based on project requirements, not a fixed list. Options within a category are listed by how much of it they cover. That order is for reading, not a ranking.
 
 ---
 
@@ -73,216 +62,141 @@ This document presents research findings for technology, services, and products 
 
 **Requirements Addressed**: [List requirement IDs: FR-001, FR-015, NFR-SEC-003]
 
+**Capabilities Required**: [The category's required capability tags]
+
 **Why This Category**: [Explain why this capability is needed based on requirements]
 
 ---
 
-### Option 1A: Build Custom Solution
+### Option 1A: Build Estimate
+
+> An orchestrator estimate for building this capability in-house, for `/arckit:sobc`'s options appraisal. No supplier sourced it.
 
 **Description**: [What would be built]
 
-**Technology Stack**: [Languages, frameworks, libraries]
-
 **Effort Estimate**:
 
-- **Development**: [X] person-months
-- **Skills Required**: [Backend, frontend, DevOps, etc.]
-- **Timeline**: [X] months to production-ready
+- **Development**: [X] person-weeks
+- **Basis**: [How the estimate was made]
 
 **Cost Breakdown**:
 | Cost Item | Year 1 | Year 2 | Year 3 | Notes |
 |-----------|--------|--------|--------|-------|
-| Development | £[X] | £0 | £0 | [Rate] × [person-months] |
-| Infrastructure | £[Y] | £[Y] | £[Y] | Cloud hosting |
-| Maintenance (30% of dev) | £[Z] | £[Z] | £[Z] | Bug fixes, updates |
+| Development | £[X] | £0 | £0 | [Rate] × [person-weeks] |
+| Run (20% of build a year) | £[Z] | £[Z] | £[Z] | Hosting, fixes, updates |
 | **Total** | **£[T1]** | **£[T2]** | **£[T3]** | |
-| **3-Year TCO** | | | **£[TOTAL]** | |
-
-**Pros**:
-
-- ✅ [Benefit 1]
-- ✅ [Benefit 2]
-- ✅ [Benefit 3]
-
-**Cons**:
-
-- ❌ [Drawback 1]
-- ❌ [Drawback 2]
-- ❌ [Drawback 3]
-
-**Risks**:
-
-- [Risk 1]: [Mitigation]
-- [Risk 2]: [Mitigation]
-
-**When to Build**:
-
-- Unique competitive advantage or IP
-- No suitable commercial products exist
-- Long-term TCO favors build over SaaS subscriptions
-- Full control required for security/compliance
+| **3-Year Cost** | | | **£[TOTAL]** | Estimate |
 
 ---
 
-### Option 1B: Buy - [VENDOR_NAME / PRODUCT_NAME]
+### Option 1B: [VENDOR_NAME / PRODUCT_NAME]
 
-**Description**: [What the product does, key features]
+**Description**: [What the product does, as its own pages describe it]
 
-**Vendor**: [Vendor name, headquarters, founded year]
+**Option Type**: [SaaS | Marketplace listing | Managed service | Self-hosted commercial]
 
-**Pricing Model**: [Per user, per transaction, tiered, usage-based]
+**Coverage**: [X of Y required capabilities (Z%), missing: …] [CITATION]
+
+**Meets**:
+
+- ✅ [Requirement or condition met, with evidence] [CITATION]
+- ✅ [Requirement or condition met, with evidence] [CITATION]
+
+**Lacks**:
+
+- ❌ [Requirement or condition not met, with evidence] [CITATION]
+
+**Not Evidenced**: [Fields the research could not confirm either way]
+
+**Pricing Model**: [Per user, per transaction, tiered, usage-based, custom quote]
 
 **Cost Breakdown**:
 | Cost Item | Year 1 | Year 2 | Year 3 | Notes |
 |-----------|--------|--------|--------|-------|
-| Setup/onboarding | £[X] | £0 | £0 | One-time |
-| Subscription | £[Y] | £[Y] × 1.1 | £[Y] × 1.2 | [Tier], 10% annual increase |
-| Integration | £[Z] | £0 | £0 | [X] person-weeks |
-| Training | £[W] | £0 | £0 | User training |
+| Setup/onboarding | £[X] | £0 | £0 | One-time, as published |
+| Subscription | £[Y] | £[Y] | £[Y] | [Tier], as published |
 | **Total** | **£[T1]** | **£[T2]** | **£[T3]** | |
-| **3-Year TCO** | | | **£[TOTAL]** | |
+| **3-Year Cost** | | | **£[TOTAL]** | Published prices only |
 
-**Pricing Tiers**:
+**Pricing Tiers** (as published):
 
-- **Starter**: £[X]/month - [Features, limits]
-- **Professional**: £[Y]/month - [Features, limits]
-- **Enterprise**: £[Z]/month - [Features, limits, SLA]
-
-**Estimated Tier for This Project**: [Tier name] based on [usage projection]
-
-**Pros**:
-
-- ✅ [Benefit 1]
-- ✅ [Benefit 2]
-- ✅ [Benefit 3]
-
-**Cons**:
-
-- ❌ [Limitation 1]
-- ❌ [Limitation 2]
-- ❌ [Limitation 3]
-
-**Key Features**:
-
-- [Feature 1]: [Description]
-- [Feature 2]: [Description]
-- [Feature 3]: [Description]
+- **[Tier]**: £[X]/[period] - [Included limits]
 
 **Integration**:
 
-- **APIs**: REST, GraphQL, webhooks
-- **SDKs**: JavaScript, Python, Ruby, Go
-- **Authentication**: OAuth 2.0, API keys
-- **Documentation**: [Quality rating: Excellent/Good/Fair/Poor]
+- **APIs**: [Protocols, as published]
+- **SDKs**: [Languages, as published]
+- **Authentication**: [Methods, as published]
 
 **Compliance & Security**:
 
-- ✅ GDPR compliant
-- ✅ ISO 27001 certified
-- ✅ SOC 2 Type II
-- ✅ UK data residency available
-- ✅ Encryption at rest and in transit
+- **Certifications**: [As published]
+- **UK Data Residency**: [Yes | No | Not evidenced]
+- **GDPR Data Processing Agreement**: [Yes | No | Not evidenced]
+- **Accessibility**: [WCAG conformance, as stated]
 
-**Vendor Maturity**:
+**Vendor**:
 
 - **Founded**: [Year]
-- **Funding**: [Series X, $YM raised] OR [Public company]
-- **Customers**: [Notable customers or customer count]
-- **Market Position**: [Leader, challenger, niche]
-- **Financial Stability**: [Strong/Moderate/Weak]
+- **Ownership**: [Public company, private, foundation, government]
+- **Customers**: [Count or named customers, as stated]
+- **Analyst Rating**: [Source, position and year, only where a named source states it]
 
 **Support**:
 
-- **Support Tiers**: Email, chat, phone, dedicated support engineer
-- **SLA**: [Uptime guarantee, response times]
-- **Community**: [Active community, forum, Stack Overflow]
+- **Support Tiers**: [As published]
+- **SLA**: [Uptime commitment, as published]
 
-**Exit Strategy**:
+**Exit**:
 
-- **Data Export**: [CSV, JSON, API export]
-- **Migration Effort**: [Estimated person-weeks to migrate away]
-- **Lock-in Risk**: [LOW | MEDIUM | HIGH]
+- **Data Export**: [Formats, as published]
+- **Licence**: [Licence]
+- **Deployment Models**: [As published]
+
+**Procurement**: [G-Cloud | DOS | Other framework | None found]
 
 **References**:
 
-- [Customer case study 1]
-- [Customer case study 2]
-- [G2/Gartner rating]
+- [Source pages and citation IDs]
 
 ---
 
-### Option 1C: Buy - [ANOTHER_VENDOR / PRODUCT]
+### Option 1C: [ANOTHER_VENDOR / PRODUCT]
 
-[Repeat structure for second commercial option]
+[Repeat structure for each further option]
 
 ---
 
-### Option 1D: Adopt - [OPEN_SOURCE_PROJECT]
+### Option 1D: [OPEN_SOURCE_PROJECT] (Open Source)
 
-**Description**: [What it does, key features]
+**Description**: [What it does, as its own pages describe it]
+
+**Coverage**: [X of Y required capabilities (Z%), missing: …] [CITATION]
+
+**Meets** / **Lacks** / **Not Evidenced**: [As for Option 1B]
 
 **Project Details**:
 
 - **License**: [MIT, Apache 2.0, GPL, AGPL]
-- **GitHub**: [URL, star count, fork count]
-- **Maturity**: [Mature/Stable/Emerging/Experimental]
-- **Last Release**: [Date]
-- **Commit Activity**: [Active/Moderate/Slow]
-- **Contributors**: [X] contributors
+- **Repository**: [URL, stars, contributors]
+- **Last Commit**: [Date]
 
 **Hosting Options**:
 
 - **Self-hosted**: Deploy on own infrastructure
-- **Managed Service**: [If available, e.g., Redis Labs for Redis]
+- **Managed Service**: [If available, with its published price]
 
-**Cost Breakdown** (Self-hosted):
+**Cost Breakdown**:
 | Cost Item | Year 1 | Year 2 | Year 3 | Notes |
 |-----------|--------|--------|--------|-------|
-| Infrastructure | £[X] | £[X] | £[X] | Cloud hosting (EC2, RDS, etc.) |
-| Setup | £[Y] | £0 | £0 | [X] person-weeks |
-| Maintenance | £[Z] | £[Z] | £[Z] | [Y] person-weeks/year for updates, patches |
-| Commercial Support (optional) | £[W] | £[W] | £[W] | If purchasing support |
-| **Total** | **£[T1]** | **£[T2]** | **£[T3]** | |
-| **3-Year TCO** | | | **£[TOTAL]** | |
-
-**Cost Breakdown** (Managed Service):
-| Cost Item | Year 1 | Year 2 | Year 3 | Notes |
-|-----------|--------|--------|--------|-------|
-| Managed Service Subscription | £[X] | £[X] | £[X] | [Provider] managed hosting |
-| Setup/Integration | £[Y] | £0 | £0 | [X] person-weeks |
-| **Total** | **£[T1]** | **£[T2]** | **£[T3]** | |
-| **3-Year TCO** | | | **£[TOTAL]** | |
-
-**Pros**:
-
-- ✅ [Benefit 1]
-- ✅ [Benefit 2]
-- ✅ [Benefit 3]
-
-**Cons**:
-
-- ❌ [Limitation 1]
-- ❌ [Limitation 2]
-- ❌ [Limitation 3]
-
-**Technical Considerations**:
-
-- **Skills Required**: [Technologies team needs to know]
-- **Operational Burden**: [Backup, monitoring, scaling, patching]
-- **Community Support**: [Stack Overflow questions, Discord/Slack community]
-- **Commercial Support Available**: [Company offering paid support, SLA, cost]
+| Licence | £0 | £0 | £0 | Open source |
+| Commercial Support (if published) | £[W] | £[W] | £[W] | As published |
+| **3-Year Cost** | | | **£[TOTAL]** | Excludes hosting and operation |
 
 **License Considerations**:
 
 - [License name and key terms]
-- [Any restrictions on commercial use, modifications, redistribution]
 - [Copyleft requirements if GPL/AGPL]
-
-**Maturity Assessment**:
-
-- [Production-ready OR needs additional work]
-- [Used by major companies: list examples]
-- [Security track record: CVE history]
 
 ---
 
@@ -292,81 +206,43 @@ This document presents research findings for technology, services, and products 
 
 **Description**: [What the platform does]
 
-**Eligibility**: [Who can use it: all public sector, central government only, etc.]
+**Coverage**: [X of Y required capabilities (Z%), missing: …] [CITATION]
+
+**Eligibility**: [Who can use it, as the platform states: all public sector, central government only, etc.]
 
 **Cost Model**:
 
-- **Setup**: Free OR £[X] one-time
-- **Usage**: Free OR [pricing model]
-- **Transaction Fees**: [If applicable, e.g., GOV.UK Pay 1.5%]
+- **Setup**: [As published]
+- **Usage**: [As published]
+- **Transaction Fees**: [If applicable, as published]
 
-**Cost Breakdown**:
-| Cost Item | Year 1 | Year 2 | Year 3 | Notes |
-|-----------|--------|--------|--------|-------|
-| Platform Usage | £[X] | £[Y] | £[Z] | [Free or pricing] |
-| Integration | £[W] | £0 | £0 | [X] person-weeks |
-| **Total** | **£[T1]** | **£[T2]** | **£[T3]** | |
-| **3-Year TCO** | | | **£[TOTAL]** | Significantly lower than commercial |
-
-**Pros**:
-
-- ✅ Free or subsidized for public sector
-- ✅ GDPR compliant, UK data residency
-- ✅ Meets Government Service Standard
-- ✅ Well-documented, supported by GDS
-- ✅ TCoP compliant (use common platforms)
-
-**Cons**:
-
-- ❌ Only for public sector
-- ❌ [Any feature limitations]
-- ❌ [Any integration constraints]
+**Meets** / **Lacks** / **Not Evidenced**: [As for Option 1B]
 
 **Support**:
 
 - **Documentation**: [URL to docs]
-- **Support**: [Email, Slack, ticketing system]
-- **SLA**: [If provided]
+- **SLA**: [If published]
 
-**Technology Code of Practice Alignment**:
-
-- ✅ **Point 8**: Share, reuse and collaborate (common platform)
-- ✅ **Point 6**: Make things secure (security by design)
-- ✅ **Point 7**: Make privacy integral (GDPR by design)
-
-**Mandate**:
-
-- [MANDATORY for public-facing services OR RECOMMENDED but not required]
+**Mandate**: [Mandatory, recommended or neither, as the platform or policy states, with source]
 
 ---
 
-### Build vs Buy Recommendation for [CATEGORY]
+### Market Evidence for [CATEGORY]
 
-**Recommended Approach**: [BUILD | BUY: Vendor X | ADOPT: Open Source Y | GOV.UK Platform Z]
+> Evidence for `/arckit:wardley` to judge how evolved this capability is, and for `/arckit:sobc` to appraise the options. It is not a placement or a decision.
 
-**Rationale**:
+| Measure | Finding |
+|---------|---------|
+| Options found | [X] |
+| Cover all required capabilities | [Y] |
+| Cover 70% or more | [Z], from [V] different vendors |
+| Utility, managed service or GOV.UK platform covering 70%+ | [Name or none] |
+| Open source covering 70%+ | [Name or none] |
+| Published 3-year cost range | £[MIN] to £[MAX] ([U] options publish no price) |
+| Build estimate | £[TOTAL] over 3 years ([X] person-weeks, estimate) |
+| Existing Wardley map | [Map ID, component, evolution coordinate, sourcing line] or "No map covers this capability" |
 
-[2-3 paragraphs explaining why this is the best approach given requirements, budget, timeline, team capabilities, strategic importance]
-
-**Key Decision Factors**:
-
-- ✅ **[Factor 1]**: [Why this matters and how chosen option addresses it]
-- ✅ **[Factor 2]**: [Why this matters and how chosen option addresses it]
-- ✅ **[Factor 3]**: [Why this matters and how chosen option addresses it]
-
-**Shortlist for Further Evaluation**:
-
-1. **[Vendor/Product 1]**: [Why shortlisted]
-2. **[Vendor/Product 2]**: [Why shortlisted]
-
-**Next Steps**:
-
-- [ ] Schedule vendor demos for shortlisted options
-- [ ] Request pricing quotes based on projected usage
-- [ ] Technical proof-of-concept (POC) for top 2 options
-- [ ] Review security/compliance certifications
-- [ ] Check references from similar customers
-- [ ] Negotiate contract terms (if proceeding with commercial vendor)
+**Over Budget**: [Options whose 3-year cost exceeds the stated budget, or "None" or "No budget stated"]
 
 ---
 
@@ -376,63 +252,22 @@ This document presents research findings for technology, services, and products 
 
 ---
 
-## Total Cost of Ownership (TCO) Summary
+## Published Costs
 
-### Blended TCO Across All Categories
+### Costs by Category
 
-**Recommended Approach (Blended)**:
+| Category | Options with Published Cost | Lowest 3-Year Cost | Highest 3-Year Cost | Build Estimate (3-Year) |
+|----------|-----------------------------|--------------------|---------------------|-------------------------|
+| [Category 1] | [X of Y] | £[MIN] | £[MAX] | £[BUILD] |
+| [Category 2] | [X of Y] | £[MIN] | £[MAX] | £[BUILD] |
 
-| Category | Recommended Option | Year 1 | Year 2 | Year 3 | 3-Year TCO |
-|----------|-------------------|--------|--------|--------|------------|
-| [Category 1] | [Build/Buy/Adopt] | £[X] | £[Y] | £[Z] | £[TOTAL] |
-| [Category 2] | [Build/Buy/Adopt] | £[X] | £[Y] | £[Z] | £[TOTAL] |
-| [Category 3] | [Build/Buy/Adopt] | £[X] | £[Y] | £[Z] | £[TOTAL] |
-| [Category 4] | [Build/Buy/Adopt] | £[X] | £[Y] | £[Z] | £[TOTAL] |
-| **TOTAL** | | **£[X]** | **£[Y]** | **£[Z]** | **£[TOTAL]** |
+### Cost Assumptions
 
-### Alternative Scenarios
-
-**Scenario A: Build Everything**:
-
-- 3-Year TCO: £[X]
-- Pros: Maximum control and flexibility
-- Cons: Highest cost, longest time to market, highest risk
-
-**Scenario B: Buy Everything (Commercial SaaS)**:
-
-- 3-Year TCO: £[Y]
-- Pros: Fastest time to market, managed services
-- Cons: Vendor lock-in, ongoing subscription costs, less control
-
-**Scenario C: Open Source Everything**:
-
-- 3-Year TCO: £[Z]
-- Pros: Lower licensing costs, flexibility
-- Cons: Operational burden, skills required, support limitations
-
-**Scenario D: Recommended Blended Approach**:
-
-- 3-Year TCO: £[W]
-- Pros: Balance of cost, speed, control, and risk
-- Cons: [Any trade-offs]
-
-### TCO Assumptions
-
-- Engineering rates: £[X]/day (blended rate for contractors/FTE)
-- Infrastructure: AWS UK region pricing (on-demand, reserved instances for savings)
-- SaaS pricing: List prices with 10% annual increases
-- Maintenance: 20-30% of development cost for custom builds
-- Exchange rates: [If relevant]
-- Inflation: [If multi-year]
-
-### Risk-Adjusted TCO
-
-| Scenario | Base TCO | Contingency | Risk-Adjusted TCO | Risk Factors |
-|----------|----------|-------------|-------------------|--------------|
-| Build Everything | £[X] | +20% | £[Y] | Scope creep, delays, skill gaps |
-| Buy (SaaS) | £[X] | +10% | £[Y] | Price increases, vendor changes |
-| Open Source | £[X] | +15% | £[Y] | Underestimated maintenance |
-| Recommended | £[X] | +12% | £[Y] | Blended risk profile |
+- Engineering rate for build estimates: £[X]/day
+- Tier chosen: the one whose stated limits cover the project's scale, otherwise the second-cheapest, as noted per option
+- Published list prices only; discounts and negotiated prices are not included
+- Exchange rates: [fx_note]
+- Awarded contract values from `/arckit:tenders`, where present: [Figures, with the caveat that awarded value is not actual spend]
 
 ---
 
@@ -440,29 +275,23 @@ This document presents research findings for technology, services, and products 
 
 ### Requirements Coverage Matrix
 
-| Requirement ID | Requirement Description | Research Category | Recommended Solution | Rationale |
-|----------------|------------------------|-------------------|---------------------|-----------|
-| FR-001 | [Requirement text] | [Category] | [Solution] | [Why this meets the requirement] |
-| FR-002 | [Requirement text] | [Category] | [Solution] | [Why this meets the requirement] |
-| NFR-SEC-001 | [Requirement text] | [Category] | [Solution] | [Why this meets the requirement] |
-| INT-001 | [Requirement text] | [Category] | [Solution] | [Why this meets the requirement] |
-| DR-001 | [Requirement text] | [Category] | [Solution] | [Why this meets the requirement] |
+| Requirement ID | Requirement Description | Research Category | Options Covering It | Evidence |
+|----------------|------------------------|-------------------|---------------------|----------|
+| FR-001 | [Requirement text] | [Category] | [Options] | [Citation IDs] |
+| FR-002 | [Requirement text] | [Category] | [Options or gap] | [Citation IDs] |
+| NFR-SEC-001 | [Requirement text] | [Category] | [Options] | [Citation IDs] |
+| INT-001 | [Requirement text] | [Category] | [Options] | [Citation IDs] |
+| DR-001 | [Requirement text] | [Category] | [Options] | [Citation IDs] |
 
 ### Coverage Summary
 
-**Requirements with Identified Solutions**:
-
-- ✅ **[X] requirements ([Y%])** have recommended commercial or open source solutions
-- 🔨 **[Z] requirements ([W%])** require custom development (no suitable off-the-shelf)
+- ✅ **[X] requirements ([Y%])** are covered by at least one option found
+- ⚠️ **[Z] requirements ([W%])** are covered by no option found
 - 🔍 **[A] requirements ([B%])** need further research or clarification
 
-**Gaps and Concerns**:
+### Gaps
 
-**GAP-1**: [Requirement ID]: [Gap description]
-
-- **Impact**: [What can't be done without this]
-- **Options**: [Build custom | Wait for market | Workaround]
-- **Recommendation**: [What to do]
+**GAP-1**: [Requirement ID]: [What no option was found to cover, and why]
 
 **GAP-2**: [Another gap]
 
@@ -472,377 +301,88 @@ This document presents research findings for technology, services, and products 
 
 > **Note**: Only applicable if this is a UK Government project
 
-### Technology Code of Practice (TCoP) Compliance
+### Technology Code of Practice Evidence
 
-Assessment against 13 TCoP points relevant to technology selection:
+What the research found that bears on the Technology Code of Practice. Assessing compliance is for `/arckit:tcop`.
 
-| TCoP Point | Status | Notes |
-|-----------|--------|-------|
-| **1. Define user needs** | ✅ Compliant | Research driven by user requirements |
-| **2. Make things accessible** | ✅ Compliant | All vendors assessed for WCAG 2.2 AA |
-| **3. Be open and use open standards** | ✅ Compliant | Open source options prioritized |
-| **4. Make use of open source** | ✅ Compliant | [X] categories using open source |
-| **5. Use cloud first** | ✅ Compliant | Public cloud (AWS/Azure/GCP) recommended |
-| **6. Make things secure** | ✅ Compliant | Security by design, ISO 27001 vendors |
-| **7. Make privacy integral** | ✅ Compliant | GDPR compliance mandatory, UK data residency |
-| **8. Share, reuse and collaborate** | ✅ Compliant | GOV.UK platforms used where available |
-| **9. Integrate and adapt technology** | ✅ Compliant | APIs and interoperability assessed |
-| **10. Make better use of data** | ✅ Compliant | Open data formats, data standards |
-| **11. Define your purchasing strategy** | ✅ Compliant | Digital Marketplace procurement |
-| **12. Meet the Service Standard** | ⚠️ If applicable | For public-facing services |
-| **13. Spend controls** | ⚠️ If >£100K | Spend approval process required |
+| TCoP Point | Evidence Found |
+|-----------|----------------|
+| **3. Be open and use open standards** | [Options publishing open APIs and standards] |
+| **4. Make use of open source** | [Open-source options found] |
+| **5. Use cloud first** | [Cloud and managed options found] |
+| **6. Make things secure** | [Certifications found] |
+| **7. Make privacy integral** | [UK residency and data processing agreements found] |
+| **8. Share, reuse and collaborate** | [GOV.UK platforms and reusable government code found] |
+| **11. Define your purchasing strategy** | [Framework listings found] |
 
-### GOV.UK Common Platforms Used
+### GOV.UK Common Platforms Found
 
-| Platform | Category | Status | Rationale |
-|----------|----------|--------|-----------|
-| GOV.UK One Login | Authentication | ✅ Recommended | Mandatory for public-facing services |
-| GOV.UK Pay | Payments | ✅ Recommended | No setup fees, 1.5% transaction fee |
-| GOV.UK Notify | Notifications | ✅ Recommended | Free for central government |
-| GOV.UK Forms | Forms | ✅ Recommended | Free form builder |
-| GOV.UK Publishing | Content | ⚠️ If applicable | For gov.uk domain content |
+| Platform | Category | Covers | Eligibility | Source |
+|----------|----------|--------|-------------|--------|
+| [Platform] | [Category] | [X of Y capabilities] | [As the platform states] | [Citation] |
 
-**Benefits of GOV.UK Platforms**:
+### Digital Marketplace Listings
 
-- ✅ Free or subsidized for public sector
-- ✅ Pre-built, well-tested, accessible
-- ✅ GDPR compliant, UK data residency
-- ✅ Meets Service Standard and TCoP
-- ✅ Reduces development and operational costs
+| Category | Framework | Listings Found | With Published Price |
+|----------|-----------|----------------|----------------------|
+| [Category] | [G-Cloud 15 / DOS] | [X] | [Y] |
 
-### Digital Marketplace Procurement Strategy
-
-**G-Cloud 14** (Cloud hosting, software, support):
-
-- [X] suppliers found for [category]
-- Top suppliers: [List with day rates or pricing]
-
-**Digital Outcomes and Specialists (DOS)**:
-
-- [X] suppliers found for [specialist role or outcome]
-- Top suppliers: [List with day rates]
-
-**Procurement Approach**:
-
-1. Search Digital Marketplace for relevant categories
-2. Shortlist 3-5 suppliers based on capability, price, past performance
-3. Request further information or quotes
-4. Award directly (if <£100K) or mini-competition (if >£100K)
-5. Use framework terms (no custom contract negotiation)
-
-**Benefits**:
-
-- ✅ Pre-approved suppliers (due diligence done)
-- ✅ SME-friendly (1/3 spend with SMEs target)
-- ✅ Fast procurement (no OJEU if under threshold)
-- ✅ Framework terms enforced (fair pricing)
-
-### Government Cloud and Data Residency
+### Data Residency Evidence
 
 **Data Classification**: [OFFICIAL | OFFICIAL-SENSITIVE | SECRET]
 
-**Hosting Requirements**:
-
-**For OFFICIAL**:
-
-- ✅ Public cloud (AWS, Azure, GCP) acceptable
-- ✅ UK regions preferred but not required
-- ✅ No special accreditation needed
-
-**For OFFICIAL-SENSITIVE**:
-
-- ✅ Public cloud acceptable with additional controls (encryption, logging, MFA)
-- ⚠️ UK data residency may be required by department policy
-- ⚠️ Consider Government Cloud (IL2) if mandated
-
-**For SECRET**:
-
-- ❌ Public cloud NOT acceptable
-- ✅ Government Cloud (IL3+) OR air-gapped infrastructure required
-- ✅ Security-cleared personnel required
-
-**Recommended Approach for This Project**:
-
-- [Public cloud (AWS UK region) | Government Cloud | Air-gapped]
-- [Rationale based on data classification]
+| Option | UK Data Residency | Source |
+|--------|-------------------|--------|
+| [Option] | [Yes, No or not evidenced] | [Citation] |
 
 ---
 
-## Integration with Wardley Mapping
+## Evidence for Wardley Mapping
 
-Research findings inform Wardley Map value chain positioning and evolution:
+> `/arckit:wardley` places each capability on the evolution axis and decides how to source it. This section gives it the market evidence. It does not place anything.
 
-### Value Chain Components by Evolution
+| Capability | Options Covering 70%+ | Vendors | Utility or GOV.UK Platform | Open Source | Existing Map Position |
+|-----------|-----------------------|---------|----------------------------|-------------|-----------------------|
+| [Category 1] | [Z] | [V] | [Name or none] | [Name or none] | [Map ID: evolution 0.xx, sourcing line] or none |
+| [Category 2] | [Z] | [V] | [Name or none] | [Name or none] | [Map ID: evolution 0.xx, sourcing line] or none |
 
-| Component | Evolution Stage | Recommended Approach | Rationale |
-|-----------|----------------|---------------------|-----------|
-| [Component 1] | Genesis (novel) | Build Custom | Unique IP, competitive advantage |
-| [Component 2] | Custom | Build OR Buy Product | No clear commodity, build if differentiating |
-| [Component 3] | Product | Buy SaaS | Mature products available (Stripe, Auth0) |
-| [Component 4] | Commodity | Use Managed Service | Standard infrastructure (AWS S3, RDS) |
-
-**Evolution Axis Guidance**:
-
-- **Genesis** (left): Novel, rare, uncertain → Build if strategic, otherwise wait
-- **Custom** (mid-left): Bespoke, emerging → Build if no product, buy if available
-- **Product** (mid-right): Off-the-shelf, stabilizing → Buy SaaS unless strong rationale to build
-- **Commodity** (right): Standard, ubiquitous → Use cloud/open source, don't build
-
-**Strategic Insights**:
-
-- [Insight 1]: [e.g., "Payments are commoditized - use Stripe, don't build"]
-- [Insight 2]: [e.g., "ML recommendation engine is novel IP - build in-house"]
-- [Insight 3]: [e.g., "Authentication is product - use Auth0 or GOV.UK One Login"]
-
-**Next Steps**:
-
-- Run `/arckit:wardley` to create Wardley Map with research findings
-- Position components on evolution axis based on build/buy decisions
-- Identify strategic plays (e.g., componentize novel features once mature)
+**Next Step**: Run `/arckit:wardley` to place these capabilities and decide how to source each one.
 
 ---
 
-## Integration with SOBC Economic Case
+## Evidence for the Business Case
 
-Research findings feed into Strategic Outline Business Case (SOBC) Economic Case:
-
-### Options Analysis for SOBC
-
-**Option 0: Do Nothing (Baseline)**
-
-- Cost: £0
-- Benefits: None
-- Risk: [Current pain points persist]
-
-**Option 1: Build Everything Custom**
-
-- 3-Year TCO: £[X]
-- Benefits: [Maximum control, flexibility, IP ownership]
-- Risks: [Highest cost, longest delivery, skill dependencies]
-- NPV: £[Y] (if benefits quantified)
-
-**Option 2: Buy Commercial SaaS (Recommended)**
-
-- 3-Year TCO: £[Z]
-- Benefits: [Fast delivery, managed services, proven solutions]
-- Risks: [Vendor lock-in, subscription costs, less control]
-- NPV: £[W] (if benefits quantified)
-
-**Option 3: Open Source + Managed Services**
-
-- 3-Year TCO: £[A]
-- Benefits: [Lower costs, flexibility, avoid lock-in]
-- Risks: [Operational burden, skills required, support limitations]
-- NPV: £[B] (if benefits quantified)
-
-**Option 4: Hybrid (Build Custom for Core, Buy for Commodity)**
-
-- 3-Year TCO: £[C]
-- Benefits: [Balance cost, speed, control, and risk]
-- Risks: [Complexity of integration]
-- NPV: £[D] (if benefits quantified)
-
-**Preferred Option**: [Option X] - [Name]
-
-**Rationale**: [Why this option provides best value for money based on cost, benefits, risk, and strategic fit]
+> `/arckit:sobc` builds the options, appraises value for money and identifies the preferred way forward. This section gives it the costs found. It does not choose an option.
 
 ### Cost Data for SOBC
 
-**CAPEX (Initial Investment)**:
+| Category | Option | One-Off Cost | Annual Cost | 3-Year Cost | Source |
+|----------|--------|--------------|-------------|-------------|--------|
+| [Category] | Build estimate | £[X] | £[Y] | £[TOTAL] | Orchestrator estimate |
+| [Category] | [Option] | £[X] | £[Y] | £[TOTAL] | [Citation] |
 
-- Development: £[X]
-- Setup/Integration: £[Y]
-- Infrastructure: £[Z]
-- **Total CAPEX**: £[TOTAL]
-
-**OPEX (Ongoing Annual)**:
-
-- Subscriptions: £[X]/year
-- Infrastructure: £[Y]/year
-- Maintenance: £[Z]/year
-- Support: £[W]/year
-- **Total OPEX**: £[TOTAL]/year
-
-### Benefits for SOBC
-
-**Quantified Benefits** (from vendor claims, case studies, benchmarks):
-
-- **Cost Savings**: £[X]/year from [automation, efficiency, reduction in manual work]
-- **Revenue Increase**: £[Y]/year from [improved conversion, new features, faster delivery]
-- **Productivity**: [Z] hours/week saved per user × [W] users × £[rate]/hour = £[A]/year
-- **Quality**: [Reduce defects by X%, reduce downtime by Y hours/year = £[B] saved]
-
-**Qualitative Benefits**:
-
-- Improved user experience (CSAT, NPS)
-- Faster time to market
-- Scalability for growth
-- Reduced technical debt
-- Better security posture
-
-**Total Benefits (3-year)**: £[TOTAL]
-
-**Net Present Value (NPV)**: £[Benefits - Costs discounted at 3.5% per Green Book]
+**Unpriced Options**: [Options with no published price; an RFI via `/arckit:sow` would be needed before costing them]
 
 ---
 
-## Vendor Shortlist for Further Evaluation
+## Risks in the Evidence
 
-### Top 3 Vendors/Products Recommended
+Risks the evidence shows for particular options. Weighing them is for `/arckit:sobc`, `/arckit:evaluate` and `/arckit:risk`.
 
-#### 1. [VENDOR/PRODUCT 1] for [Category]
-
-**Overall Rating**: ⭐⭐⭐⭐⭐ (5/5) OR ⭐⭐⭐⭐☆ (4/5)
-
-**Strengths**:
-
-- [Key strength 1]
-- [Key strength 2]
-- [Key strength 3]
-
-**Concerns**:
-
-- [Concern 1 if any]
-- [Concern 2 if any]
-
-**Next Steps**:
-
-- [ ] Schedule demo for [date]
-- [ ] Request formal pricing quote
-- [ ] Technical POC ([duration])
-- [ ] Security review (ISO 27001, SOC 2, penetration test reports)
-- [ ] Check 3 customer references
-
-**Decision Criteria**:
-
-- [ ] Meets all MUST requirements
-- [ ] [X]% of SHOULD requirements met
-- [ ] Pricing within budget (£[X])
-- [ ] Integration feasibility confirmed
-- [ ] Security/compliance approved
-- [ ] References positive
-
-#### 2. [VENDOR/PRODUCT 2] for [Category]
-
-[Repeat structure]
-
-#### 3. [VENDOR/PRODUCT 3] for [Category]
-
-[Repeat structure]
+| Option | Risk Shown by the Evidence | Source |
+|--------|---------------------------|--------|
+| [Option] | [e.g. no UK data residency stated; no export format published; GPL licence] | [Citation] |
 
 ---
 
-## Risks and Mitigations
+## Next Steps
 
-### Vendor Risks
-
-**VR-1: Vendor Lock-in**
-
-- **Risk**: Difficult or expensive to switch vendors after commitment
-- **Impact**: HIGH - Could lead to price increases, feature stagnation
-- **Likelihood**: MEDIUM
-- **Mitigation**:
-  - Negotiate data portability clauses in contract
-  - Use abstraction layers in code (don't couple directly to vendor APIs)
-  - Maintain export capabilities for all data
-  - Annual vendor performance review with exit planning
-
-**VR-2: Vendor Viability**
-
-- **Risk**: Startup vendor fails or gets acquired
-- **Impact**: HIGH - Service discontinuation, forced migration
-- **Likelihood**: LOW (if established vendor) / MEDIUM (if startup)
-- **Mitigation**:
-  - Choose financially stable vendors (funded Series B+, profitable, or public)
-  - Escrow agreements for critical IP
-  - Maintain ability to self-host if open core model
-
-**VR-3: Price Increases**
-
-- **Risk**: SaaS prices increase beyond budget over time
-- **Impact**: MEDIUM - Budget overruns, forced migration
-- **Likelihood**: MEDIUM - SaaS vendors regularly increase prices 10-20%/year
-- **Mitigation**:
-  - Negotiate multi-year fixed pricing
-  - Include price increase caps in contract (e.g., max 10%/year)
-  - Budget 10-15% annual increase in TCO projections
-
-### Technical Risks
-
-**TR-1: Integration Complexity**
-
-- **Risk**: Integration more complex than anticipated
-- **Impact**: MEDIUM - Delays, cost overruns
-- **Likelihood**: MEDIUM
-- **Mitigation**:
-  - Technical POC before commitment
-  - Allocate 20% contingency for integration effort
-  - Engage vendor professional services for initial setup
-
-**TR-2: Performance at Scale**
-
-- **Risk**: Solution doesn't meet performance requirements at projected scale
-- **Impact**: HIGH - SLA breaches, poor user experience
-- **Likelihood**: LOW (if vendor proven) / MEDIUM (if unproven)
-- **Mitigation**:
-  - Load testing during POC
-  - Review vendor SLA and performance track record
-  - Phased rollout to validate performance
-
-**TR-3: Skills Gap**
-
-- **Risk**: Team lacks skills to operate/maintain chosen technology
-- **Impact**: MEDIUM - Operational issues, delays
-- **Likelihood**: MEDIUM (for open source) / LOW (for SaaS)
-- **Mitigation**:
-  - Training budget allocated (£[X])
-  - Hire specialists if needed
-  - Leverage vendor professional services
-
-### Compliance Risks
-
-**CR-1: Data Residency**
-
-- **Risk**: Vendor doesn't support UK data residency (required for GDPR, UK Gov)
-- **Impact**: HIGH - Compliance blocker
-- **Likelihood**: LOW (most major vendors support UK/EU regions)
-- **Mitigation**:
-  - Confirm UK/EU data residency in contract
-  - Review vendor data processing agreement (DPA)
-  - DPIA if required for high-risk processing
-
----
-
-## Next Steps and Recommendations
-
-### Immediate Actions (0-2 weeks)
-
-1. **Stakeholder Review**: Present research findings to [steering committee, CTO, CFO]
-2. **Shortlist Approval**: Confirm top 3 vendors for deeper evaluation
-3. **Budget Approval**: Secure budget for [£X] over 3 years
-4. **Procurement Planning**: Determine procurement route (RFP, Digital Marketplace, direct)
-
-### Vendor Evaluation (2-6 weeks)
-
-5. **Schedule Demos**: Book demos with shortlisted vendors
-6. **Request Pricing**: Formal pricing quotes based on projected usage
-7. **Technical POCs**: 2-week POCs for top 2 vendors per category
-8. **Security Review**: Review ISO 27001, SOC 2, penetration test reports
-9. **Reference Checks**: Contact 3 customers per vendor (similar use cases)
-
-### Decision and Procurement (6-12 weeks)
-
-10. **Vendor Selection**: Make final decision based on evaluation criteria
-11. **Contract Negotiation**: Negotiate SLA, pricing, data protection agreement
-12. **Procurement**: Execute procurement (PO, framework, RFP award)
-13. **Onboarding Plan**: Schedule kickoff, training, integration
-
-### Integration with Other Commands
-
-14. **Update SOBC**: Run `/arckit:sobc` to update Economic Case with research data
-15. **Create Wardley Map**: Run `/arckit:wardley` to map value chain with evolution positioning
-16. **Generate SOW/RFP**: Run `/arckit:sow` to create vendor RFP with technical requirements
-17. **HLD Review**: Run `/arckit:hld-review` once architecture defined, validate against research
+1. **Place and source each capability**: Run `/arckit:wardley` with this research
+2. **Appraise value for money**: Run `/arckit:sobc` with the cost data above
+3. **Score suppliers**: Run `/arckit:evaluate` and `/arckit:score` against weighted criteria
+4. **Request missing prices**: Run `/arckit:sow` for options that publish none
+5. **Record the decision**: Run `/arckit:adr` once build or buy is decided
+6. **Ground the market**: Run `/arckit:tenders` for real awarded contract values (UK public sector)
 
 ---
 
@@ -853,51 +393,47 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 **Data Sources**:
 
 - Vendor websites and documentation
-- G2, Gartner, Forrester reviews and ratings
-- UK Government Digital Marketplace
+- UK Government Digital Marketplace listings and supplier price documents
 - GitHub (for open source projects)
-- Industry analyst reports
-- Customer case studies and references
+- Analyst positions, only where a named source states them
 
-**Evaluation Criteria**:
+**What Was Checked**:
 
-- Requirements fit (MUST/SHOULD/COULD)
-- Pricing and TCO (3-year projection)
-- Vendor maturity and financial stability
-- Security and compliance (ISO 27001, SOC 2, GDPR)
-- Integration capabilities (APIs, SDKs)
-- Support and SLA
-- Customer references and reputation
+- Coverage of each category's required capabilities
+- Certifications, UK data residency and data processing agreements
+- Integration protocols, authentication methods and SDKs
+- Framework listings
+- Data export, licence and deployment models
+- Accessibility conformance
+- Published prices
+
+**Coverage Gaps**: [unfetched_urls and reader_errors]
 
 **Limitations**:
 
-- Pricing based on list prices (discounts may be available)
-- TCO projections include assumptions (see TCO section)
+- Pricing based on published list prices (discounts may be available)
+- Facts are as the supplier states them, checked against the supplier's own pages
 - Market rapidly evolves (research valid for ~6 months)
 
 ### Appendix B: Glossary
 
 [Define terms used in this document]
 
-- **TCO**: Total Cost of Ownership (all costs over time)
-- **CAPEX**: Capital Expenditure (initial investment)
-- **OPEX**: Operational Expenditure (ongoing costs)
 - **SaaS**: Software as a Service
 - **PaaS**: Platform as a Service
 - **IaaS**: Infrastructure as a Service
 - **SLA**: Service Level Agreement
 - **API**: Application Programming Interface
 - **SDK**: Software Development Kit
-- **NPV**: Net Present Value
 - **TCoP**: Technology Code of Practice (UK Government)
 
 ### Appendix C: Vendor Contact Information
 
-[List of shortlisted vendors with contact details, account managers, sales engineering]
+[Contact details as published by the vendors found]
 
 ### Appendix D: Detailed Pricing Sheets
 
-[Attach detailed pricing from vendors if available]
+[Published pricing detail, with sources]
 
 ---
 

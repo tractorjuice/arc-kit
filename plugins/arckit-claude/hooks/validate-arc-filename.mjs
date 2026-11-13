@@ -55,6 +55,8 @@ try {
   process.exit(0);
 }
 
+if (!data || typeof data !== 'object') process.exit(0);
+
 const rawPath = (data.tool_input || {}).file_path || '';
 if (typeof rawPath !== 'string' || !rawPath) process.exit(0);
 

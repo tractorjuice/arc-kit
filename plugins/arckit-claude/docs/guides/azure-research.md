@@ -63,7 +63,7 @@ Outputs: `projects/<id>/research/ARC-<id>-AZRS-v1.0.md`
 claude remote-control
 ```
 
-Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the agent reaches a decision point (service shortlist confirmation, region selection). ArcKit's minimum Claude Code floor (v2.1.287) already covers the v2.1.110 RC requirement.
+Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the agent reaches a decision point (service shortlist confirmation, region selection). ArcKit's minimum Claude Code floor (v2.1.319) already covers the v2.1.110 RC requirement.
 
 Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local `claude` process must keep running.
 
@@ -123,14 +123,14 @@ When UK Government project detected:
 |---------|-------------------|-------------------------|
 | Scope | Multi-cloud, SaaS, open-source | Azure-specific only |
 | Source | Web search, multiple sources | Microsoft Learn MCP (authoritative) |
-| Depth | Build vs buy analysis | Deep Azure service analysis |
+| Depth | Market options, checked facts and costs | Deep Azure service analysis |
 | Compliance | General UK Gov | Azure-specific UK compliance |
 | Code samples | Limited | Bicep, Terraform, SDKs |
 | Cost estimates | High-level | Detailed Azure pricing |
 
 **When to use which**:
 
-- Use `/arckit:research` for cloud-agnostic evaluation or build vs buy
+- Use `/arckit:research` for cloud-agnostic market options and costs
 - Use `/arckit:azure-research` when Azure is the target platform
 
 ---

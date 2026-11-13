@@ -63,7 +63,7 @@ The harness is one Claude Code session away from being your whole governance pip
 <!-- arckit:related-articles -->
 ## Related Articles
 
-- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+- [Wanted: `/arckit:build` Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
 - [Building ClaudeClaw: Autonomous Agents on Claude Code](article-viewer.html?a=2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code)
 - [ArcKit v5.0.0: One Toolkit, Seven Plugins, Install Only What You Need](article-viewer.html?a=2026-05-18-arckit-v5-plugin-split)
 - [The Token Budget Behind ArcKit's Plugin Split](article-viewer.html?a=2026-05-20-plugin-split-token-budget)

@@ -14,18 +14,18 @@ One job per channel, and never the same text in two places. Decided 30 September
 
 | Channel | Address | Its job | What goes there | Voice |
 |---|---|---|---|---|
-| LinkedIn group | linkedin.com/groups/17641034 | **Main place to reach people** | Findings framed as a question, asks for feedback, the adopter ask, office hours. Posts appear under the maintainer's name | Question, "we" |
-| LinkedIn page | linkedin.com/company/**arckit-org** | The official record | Releases and articles, with one image or carousel each. **Not** linkedin.com/company/arckit, which is an unrelated education firm in Dublin | Warm "we" |
+| LinkedIn group | linkedin.com/groups/17641034 | **Main place to reach people** | Findings, asks for feedback, the adopter ask, office hours. Posts appear under the maintainer's name | Maintainer's voice |
+| LinkedIn page | linkedin.com/company/**arckit-org** | The official record | Releases and articles, with one image or carousel each. **Not** linkedin.com/company/arckit, which is an unrelated education firm in Dublin | Maintainer's voice |
 | Maintainer's own LinkedIn | — | Reach | A reshare of the page post with a line of the maintainer's own. The maintainer's call each time, and theirs to post | Theirs |
-| Discord #announcements | ArcKit server (read-only) | For existing users | Releases and "what changed for you", short, linked | Short "we" |
+| Discord #announcements | ArcKit server (read-only) | For existing users | Releases and "what changed for you", short, linked | Maintainer's voice, short |
 | Discord #show-your-working | ArcKit server (open) | Conversation | Results, adopter chat, help; the private route for adopters who can't post a public GitHub issue | Informal |
-| Medium | medium.com/arckit | Article mirrors | The article, unchanged | Article |
-| YouTube | youtube.com/@**arckitorg** (`@arckit` was taken) | Video guides | Narrated guides and explainers, grouped in playlists. Titles carry "(experimental)" while we test AI narration | Warm "we" in descriptions |
+| Medium | medium.com/arckit | Article mirrors | The article, unchanged | Maintainer's voice |
+| YouTube | youtube.com/@**arckitorg** (`@arckit` was taken) | Video guides | Narrated guides and explainers, grouped in playlists. Titles carry "(experimental)" while we test AI narration | Maintainer's voice in descriptions and narration |
 
 **Order for each new piece:**
 
 1. Post it on the ArcKit page.
-2. The same day, post the group's question version, worded differently.
+2. The same day, post the group's version, worded differently.
 3. The maintainer reshares it on their own profile, if they choose to.
 4. Post in Discord #announcements only if it changes something for people who already use ArcKit, such as a release or template fixes.
 
@@ -61,21 +61,26 @@ A series is a recurring shape of post, so each one is quick to make and readers 
 
 From 30 September the page posts daily: *ArcKit Explained* (`series-arckit-explained.md`, 30 September to 13 October), then *From the Articles* (`series-from-the-articles.md`, 14 to 27 October), both scheduled in LinkedIn's scheduler. Keep one slot a week free for anything reactive, such as a release that changes something for users.
 
-**After 27 October**, three campaigns, each with its own file:
+**After 27 October**, four campaigns, each with its own file:
 
 - *Regulation week* (`campaign-regulation-week.md`): 28 October to 1 November, five page posts on what the community EU overlay drafts for NIS2, the CRA, the Data Act, GDPR and the AI Act, on one fictional product, with cards in `out/regulation-week/`.
 - *Bring your own template* (`campaign-bring-your-own-template.md`): call for templates on 2 November, reminder on 16 November, then a monthly showcase. Templates come in through the `template-share` issue form.
 - *Now in the Claude plugin directory* (`campaign-directory-launch.md`, article draft in `drafts/`): goes out the day the core plugin is approved, whichever day that is; it takes that day's slot.
+- *A second look* (`campaign-second-look.md`): five silent films on the independent reviewers and the moderator, one a day on the page from 9 to 13 November, and a group post on 9 November. The changes were released in 6.21.0 the same day, so films 2 to 5 say "Now in ArcKit 6.21.0".
 
 ## Voice
 
-**To be tested, the way the chef kit tests its voices.** Three voices on the same content, one post each, a week apart, judged on LinkedIn's own analytics seven days after each goes up (impressions, reactions, comments, clicks to the share page, and the one that matters: adopter-form submissions that week). Nothing changes the articles' voice; this is for posts only.
+**Everything is written in the maintainer's own voice.** Decided on 7 November 2026, this covers articles, LinkedIn page and group posts, Medium, Discord, YouTube descriptions, and the scripts and narration of new films. The full style guide is kept outside this repo; read it before drafting. In short:
 
-- **Warm "we", first.** The ArcKit page speaking, warm and competent, led by what the reader can use: *"Here's what we learned about getting the best from Sonnet 5.5 with ArcKit."* This replaced the first-person practitioner voice before the first post went out (30 September), because "I" on a company page leaves readers asking who "I" is.
-- **Plain evidence, second.** No first person. The finding, the number, the cost, the link. Reads like a good briefing note.
-- **Question, third.** Opens on the reader's own situation: *"How long does your next spend-control pack take to draft?"* Then the evidence.
+- **Start with the subject.** Name the release, finding or question in the first sentence, with no scene-setting.
+- **Say what was actually done.** Use "I" for the maintainer's own work and views, and "we" for a real team or shared project, which is how the ArcKit page speaks. Claim nothing first-person that the sources don't support.
+- **Give the reader something useful.** A resource, an invitation, an explanation or a consequence.
+- **Keep it plain.** Everyday British English, contractions, short sentences and compact paragraphs.
+- **Stop when the point is made.** A short post can be complete. Ask a question when you want the answer, not as a closing habit.
 
-Whatever the voice: lead with what the reader can use (a model, a practice, a template), not with costs or with what we got wrong. Costs and the full method belong in the article, where there is room to explain them. Plain words, short sentences, no hype words ("revolutionary", "game-changing", "10x"), no emoji beyond the occasional one in Discord, and "GitHub Copilot" always in full. LinkedIn page posts end with three or four hashtags (#EnterpriseArchitecture first); group posts and Discord carry none. Every post ends with one clear next step, or a question for the group.
+Lead with what the reader can use (a model, a practice, a template), not with costs or with what we got wrong. Costs and the full method belong in the article, where there is room to explain them. No hype words ("revolutionary", "game-changing", "10x"), no emoji beyond the occasional one in Discord, and "GitHub Copilot" always in full. LinkedIn page posts end with three or four hashtags (#EnterpriseArchitecture first); group posts and Discord carry none. End with a next step when there is a real one.
+
+The three-voice test planned on 30 September (warm "we", plain evidence, question) has ended. Posts already published keep their words, and their entries below keep the voice they went out in, as a record. Queued drafts written before this change need rewriting before they go out.
 
 ## What never goes on one of these
 
@@ -125,7 +130,7 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:activity:751112733017454182
 > Tried Sonnet 5.5 with ArcKit? Tell us what you're seeing in #show-your-working
 > <https://arckit.org/share/2026-09-29-is-max-effort-worth-it.html?utm_campaign=show-your-working&utm_source=discord>
 
-### Q4. Adopter ask — LinkedIn page, with the `show-your-working` carousel (Plain evidence voice)
+### Q4. Adopter ask — LinkedIn page, with the `show-your-working` carousel (maintainer's voice)
 
 Copy: `docs/articles/2026-09-23-show-your-working-linkedin.md`. Attach `docs/social/out/show-your-working/carousel.pdf` as a document.
 
@@ -509,3 +514,76 @@ Posted: <https://www.linkedin.com/feed/update/urn:li:activity:752304291318274457
 ### Q36. ArcKit 6.19.0 article — Medium, ArcKit publication — published 2 November
 
 Published: <https://medium.com/arckit/arckit-v6-19-0-is-it-legacy-assess-your-existing-systems-against-the-uks-new-definition-dee08f78c53d>. It was imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: Enterprise Architecture, Legacy Systems, Digital Transformation, Government, Claude. The publication's 302 subscribers were notified. The import needed four fixes in the editor: line breaks restored in the install block, empty lines removed under each heading, the byline split off the lead paragraph, and the community links (which were dropped) put back. The mirrored text, with its hero image, is `docs/articles/2026-11-02-arckit-v6-19-is-it-legacy-medium.md`.
+
+### Q37. How Claude Code lets AI coding agents collaborate — Medium, ArcKit publication — published 7 November
+
+Published: <https://medium.com/arckit/how-claude-code-lets-ai-coding-agents-collaborate-across-machines-331c52ccc6ba>. The maintainer published this one directly, so it isn't on arckit.org and has no share page. Medium is its canonical copy.
+
+### Q38. How Claude Code lets AI coding agents collaborate — maintainer's own LinkedIn, as a LinkedIn article — published 7 November
+
+Published: <https://www.linkedin.com/pulse/how-claude-code-lets-ai-coding-agents-collaborate-across-craddock-pbzqe/>. The Medium text, unchanged, with LinkedIn's optional intro line left blank. The first version carried a stray line of Medium's banner text and no diagram caption for a few minutes; both were corrected the same morning.
+
+### Q39. How Claude Code lets AI coding agents collaborate — LinkedIn group (maintainer's voice) — posted 7 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7524771312704147456/>. First posted in the old question voice, then edited the same morning to the text below, so LinkedIn marks it "Edited".
+
+> Just written up how Claude Code sessions talk to each other across machines.
+>
+> The interesting bit is the trust model. Agents can share information but can't give each other orders. If an agent needs your approval, you have to give it directly. Another agent can't pass it on for you.
+>
+> Worth a look if you're running more than one agent:
+> https://www.linkedin.com/pulse/how-claude-code-lets-ai-coding-agents-collaborate-across-craddock-pbzqe/
+
+### Q40. Bring Your Own Template call — LinkedIn group (maintainer's voice) — posted 7 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7524781305960722432/>. Five days after the ArcKit page post, because the group version hadn't gone out on 2 November. Copy: `campaign-bring-your-own-template.md`. LinkedIn added a generic GitHub preview card.
+
+### Q41. ArcKit 6.20.0 article — LinkedIn page, with the article hero (maintainer's voice) — posted 7 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:share:7524865393992052736?actorCompanyId=146637218>. Copy: `docs/articles/2026-11-07-arckit-v6-20-a-bid-cant-mark-its-own-homework-linkedin.md`, with the hero and the alt text recorded in that file. The group and Discord versions haven't gone out.
+
+### Q42. ArcKit 6.20.0 article — Medium, ArcKit publication — published 7 November
+
+Published: <https://medium.com/arckit/arckit-v6-20-0-a-bid-cant-mark-its-own-homework-080851f059a9>. It was imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: Enterprise Architecture, Procurement, Digital Transformation, Government, Claude. The maintainer's 302 subscribers were notified. As well as the four known import fixes, the import dropped the "Before you update" heading, which had to be added back.
+
+### Q43. A second look, film 1 — LinkedIn page, with the 30s `arckit-second-look-01-readers` video (maintainer's voice) — posted 9 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7525463463314309120/>. Copy and the films: `campaign-second-look.md`. It went out without text when Post was clicked straight after the upload, and was edited the same minute to the campaign text, so LinkedIn marks it "Edited". After 6.21.0 shipped the same day, "Coming in the next release" was edited to "Now in ArcKit 6.21.0". Films 2 to 5 follow on the page, one a day to 13 November.
+
+### Q44. A second look, film 1 — LinkedIn group (maintainer's voice) — posted 9 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7525464245493239808/>, with the same film. Copy: `campaign-second-look.md`. It asks people who moderate evaluations or sit on a design authority how they'd want a second look done. After 6.21.0 shipped, "All of this is in the next release:" was edited to "All of this is in ArcKit 6.21.0, out today:".
+
+### Q45. ArcKit 6.21.0 article — LinkedIn page, with the article hero (maintainer's voice) — posted 9 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:activity:7525469396924989440/>. Copy: `docs/articles/2026-11-09-arckit-v6-21-a-second-look-linkedin.md`, with the hero and the alt text recorded in that file. The same day as film 1, so the page had two posts on 9 November. The group and Discord versions haven't gone out.
+
+### Q46. ArcKit 6.21.0 article — Medium, ArcKit publication — published 9 November
+
+Published: <https://medium.com/arckit/arckit-v6-21-0-a-second-look-from-someone-who-wasnt-in-the-room-7b9de499928e>. Imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: Enterprise Architecture, Procurement, Digital Transformation, Government, Claude Code. The maintainer's 301 subscribers were notified. The four known import fixes were needed, plus one more: Medium's alt text takes at most 500 characters, so the image has a shorter version than the LinkedIn alt text. The share page's headings use a non-breaking space before the last word, so match on normalised text when scripting the empty-line fixes.
+
+### Q47. ArcKit 6.22.0 article — LinkedIn page, with the article hero (maintainer's voice) — posted 12 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:share:7526712465062133760>. Copy: `docs/articles/2026-11-12-arckit-v6-22-research-reports-evidence-linkedin.md`, with the redesigned hero and the alt text recorded in that file, plus one added line: "The article also says what a second reader and a blind build estimate found when I pointed them at research." A first version went up minutes earlier with the plain hero and was deleted and recreated on the maintainer's word, because LinkedIn can't swap the image on a published post. The group version is Q50.
+
+### Q48. ArcKit 6.22.0 — Discord #announcements — posted 12 November
+
+Posted: <https://discord.com/channels/1470672254831689893/1552141762754121738/1570505066853695590>, with the redesigned hero attached. Existing users will see a different research report the next time they run the command, so it belongs in #announcements. It says where each decision is now made, lists the other changes, and tells people to update and to run `/arckit:wardley` after research. The first Discord announcement since 6.19.0: 6.20.0 and 6.21.0 had none.
+
+### Q49. ArcKit 6.22.0 article — Medium, ArcKit publication — published 12 November
+
+Published: <https://medium.com/arckit/arckit-v6-22-0-research-reports-the-evidence-you-make-the-decision-3cfde63c0b5e>. Imported from the arckit.org share page, so Medium's canonical link points to arckit.org. Topics: ArcKit, Enterprise Architecture, Procurement, Government, Open Source. The maintainer's 300 subscribers were notified. The known import fixes were needed (empty heading lines, the code block, the byline, the community list), and the image has a shorter alt text because Medium takes at most 500 characters.
+
+### Q50. ArcKit 6.22.0 — LinkedIn group (maintainer's voice) — posted 12 November
+
+Posted: <https://www.linkedin.com/feed/update/urn:li:groupPost:17641034-7526716431405592577>, with the redesigned hero and the same alt text as Q47. Reworded from the page post and ending on a question, because the group is where feedback is asked for:
+
+> ArcKit 6.22.0 is out, and I've taken the verdict out of /arckit:research.
+>
+> It used to score each option, rank them and say build or buy. I didn't trust that. A research report knows what's on the market. It doesn't know how you want to source things, and it hasn't looked at value for money.
+>
+> So it now reports what each option offers, lacks and costs, with sources. The Wardley map decides how to source, and the business case appraises value for money.
+>
+> Does that match how you make build-or-buy calls, or did you find the verdict useful? I'd like to know before the next release.
+>
+> <https://arckit.org/share/2026-11-12-arckit-v6-22-research-reports-evidence.html>

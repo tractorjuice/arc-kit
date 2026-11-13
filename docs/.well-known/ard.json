@@ -1,0 +1,382 @@
+{
+  "entries": [
+    {
+      "identifier": "urn:air:arckit.org:plugin:claude-code",
+      "displayName": "ArcKit for Claude Code",
+      "type": "application/agent-plugins+zip",
+      "url": "https://github.com/tractorjuice/arckit-claude/archive/refs/heads/main.zip",
+      "description": "ArcKit, the enterprise architecture governance harness, as a Claude Code plugin marketplace. The core plugin adds slash commands that write governed architecture documents from templates: principles, stakeholders, requirements, risk register, business case, decision records, diagrams, Wardley maps, research, vendor evaluation, compliance assessments and a traceability matrix. Community plugins add regional, sector and method overlays.",
+      "representativeQueries": [
+        "write a requirements document, risk register and business case for a UK government project",
+        "create architecture decision records and C4 diagrams from project requirements",
+        "check a design against the GDS Service Standard and the Technology Code of Practice",
+        "produce a Wardley map and a build or buy position for each component",
+        "trace every requirement through design to tests"
+      ],
+      "capabilities": [
+        "principles",
+        "stakeholders",
+        "requirements",
+        "risk",
+        "sobc",
+        "adr",
+        "diagram",
+        "wardley",
+        "data-model",
+        "dpia",
+        "research",
+        "evaluate",
+        "hld-review",
+        "tcop",
+        "service-assessment",
+        "secure",
+        "traceability",
+        "backlog"
+      ],
+      "tags": [
+        "enterprise-architecture",
+        "architecture-governance",
+        "uk-government",
+        "compliance",
+        "claude-code"
+      ],
+      "metadata": {
+        "host": "Claude Code",
+        "install": "/plugin marketplace add tractorjuice/arckit-claude",
+        "repository": "https://github.com/tractorjuice/arckit-claude",
+        "documentation": "https://arckit.org/getting-started.html"
+      }
+    },
+    {
+      "identifier": "urn:air:arckit.org:plugin:gemini-cli",
+      "displayName": "ArcKit for Gemini CLI",
+      "type": "application/agent-plugins+zip",
+      "url": "https://github.com/tractorjuice/arckit-gemini/archive/refs/heads/main.zip",
+      "description": "ArcKit as a Gemini CLI extension. It adds the ArcKit commands that write governed architecture documents from templates: requirements, risk register, business case, decision records, diagrams, Wardley maps, research and compliance assessments, with the regional, sector and method overlays included.",
+      "representativeQueries": [
+        "architecture governance commands for Gemini CLI",
+        "write architecture requirements and a risk register with Gemini CLI",
+        "run a UK government Technology Code of Practice review in Gemini CLI"
+      ],
+      "capabilities": [
+        "principles",
+        "stakeholders",
+        "requirements",
+        "risk",
+        "sobc",
+        "adr",
+        "diagram",
+        "wardley",
+        "research",
+        "traceability"
+      ],
+      "tags": [
+        "enterprise-architecture",
+        "architecture-governance",
+        "uk-government",
+        "compliance",
+        "gemini-cli"
+      ],
+      "metadata": {
+        "host": "Gemini CLI",
+        "install": "gemini extensions install https://github.com/tractorjuice/arckit-gemini",
+        "repository": "https://github.com/tractorjuice/arckit-gemini",
+        "documentation": "https://arckit.org/getting-started.html"
+      }
+    },
+    {
+      "identifier": "urn:air:arckit.org:plugin:codex-cli",
+      "displayName": "ArcKit for Codex CLI",
+      "type": "application/agent-plugins+zip",
+      "url": "https://github.com/tractorjuice/arckit-codex/archive/refs/heads/main.zip",
+      "description": "ArcKit as a Codex CLI extension. Each ArcKit command ships as an agent skill that writes one governed architecture document from a template, with agent roles and the MCP server configuration the research commands use.",
+      "representativeQueries": [
+        "architecture governance skills for Codex CLI",
+        "write a strategic outline business case with Codex",
+        "create a data protection impact assessment from a data model with Codex"
+      ],
+      "capabilities": [
+        "principles",
+        "stakeholders",
+        "requirements",
+        "risk",
+        "sobc",
+        "adr",
+        "diagram",
+        "wardley",
+        "research",
+        "traceability"
+      ],
+      "tags": [
+        "enterprise-architecture",
+        "architecture-governance",
+        "uk-government",
+        "compliance",
+        "codex-cli"
+      ],
+      "metadata": {
+        "host": "Codex CLI",
+        "install": "pip install git+https://github.com/tractorjuice/arc-kit.git && arckit init my-project --ai codex",
+        "repository": "https://github.com/tractorjuice/arckit-codex",
+        "documentation": "https://arckit.org/getting-started.html"
+      }
+    },
+    {
+      "identifier": "urn:air:arckit.org:plugin:opencode",
+      "displayName": "ArcKit for OpenCode CLI",
+      "type": "application/agent-plugins+zip",
+      "url": "https://github.com/tractorjuice/arckit-opencode/archive/refs/heads/main.zip",
+      "description": "ArcKit as an OpenCode CLI extension. It adds the ArcKit commands that write governed architecture documents from templates, from principles and requirements to design reviews and traceability.",
+      "representativeQueries": [
+        "architecture governance commands for OpenCode",
+        "write architecture principles and requirements with OpenCode",
+        "review a high-level design against requirements in OpenCode"
+      ],
+      "capabilities": [
+        "principles",
+        "stakeholders",
+        "requirements",
+        "risk",
+        "sobc",
+        "adr",
+        "diagram",
+        "wardley",
+        "research",
+        "traceability"
+      ],
+      "tags": [
+        "enterprise-architecture",
+        "architecture-governance",
+        "uk-government",
+        "compliance",
+        "opencode"
+      ],
+      "metadata": {
+        "host": "OpenCode CLI",
+        "install": "pip install git+https://github.com/tractorjuice/arc-kit.git && arckit init my-project --ai opencode",
+        "repository": "https://github.com/tractorjuice/arckit-opencode",
+        "documentation": "https://arckit.org/getting-started.html"
+      }
+    },
+    {
+      "identifier": "urn:air:arckit.org:plugin:github-copilot",
+      "displayName": "ArcKit for GitHub Copilot",
+      "type": "application/agent-plugins+zip",
+      "url": "https://github.com/tractorjuice/arckit-copilot/archive/refs/heads/main.zip",
+      "description": "ArcKit as prompt files and custom agents for GitHub Copilot. Each prompt writes one governed architecture document from a template, such as requirements, a risk register, a decision record or a compliance assessment.",
+      "representativeQueries": [
+        "architecture governance prompts for GitHub Copilot",
+        "write an architecture decision record with GitHub Copilot",
+        "create a stakeholder analysis and requirements with Copilot"
+      ],
+      "capabilities": [
+        "principles",
+        "stakeholders",
+        "requirements",
+        "risk",
+        "sobc",
+        "adr",
+        "diagram",
+        "wardley",
+        "research",
+        "traceability"
+      ],
+      "tags": [
+        "enterprise-architecture",
+        "architecture-governance",
+        "uk-government",
+        "compliance",
+        "github-copilot"
+      ],
+      "metadata": {
+        "host": "GitHub Copilot",
+        "install": "pip install git+https://github.com/tractorjuice/arc-kit.git && arckit init my-project --ai copilot",
+        "repository": "https://github.com/tractorjuice/arckit-copilot",
+        "documentation": "https://arckit.org/getting-started.html"
+      }
+    },
+    {
+      "identifier": "urn:air:arckit.org:plugin:mistral-vibe",
+      "displayName": "ArcKit for Mistral Vibe CLI",
+      "type": "application/agent-plugins+zip",
+      "url": "https://github.com/tractorjuice/arckit-vibe/archive/refs/heads/main.zip",
+      "description": "ArcKit as a Mistral Vibe CLI extension. It adds the ArcKit commands that write governed architecture documents from templates, with the regional, sector and method overlays included.",
+      "representativeQueries": [
+        "architecture governance commands for Mistral Vibe",
+        "write a risk register and a business case with Mistral Vibe",
+        "assess EU AI Act and NIS2 obligations for a system with Vibe"
+      ],
+      "capabilities": [
+        "principles",
+        "stakeholders",
+        "requirements",
+        "risk",
+        "sobc",
+        "adr",
+        "diagram",
+        "wardley",
+        "research",
+        "traceability"
+      ],
+      "tags": [
+        "enterprise-architecture",
+        "architecture-governance",
+        "uk-government",
+        "compliance",
+        "mistral-vibe"
+      ],
+      "metadata": {
+        "host": "Mistral Vibe CLI",
+        "install": "git clone https://github.com/tractorjuice/arckit-vibe.git && ln -s \"$(pwd)/arckit-vibe\" ~/.vibe/extensions/arckit",
+        "repository": "https://github.com/tractorjuice/arckit-vibe",
+        "documentation": "https://arckit.org/getting-started.html"
+      }
+    },
+    {
+      "identifier": "urn:air:arckit.org:plugin:kimi-code",
+      "displayName": "ArcKit for Kimi Code CLI",
+      "type": "application/agent-plugins+zip",
+      "url": "https://github.com/tractorjuice/arckit-kimi/archive/refs/heads/main.zip",
+      "description": "ArcKit as a Kimi Code CLI plugin. Each ArcKit command ships as an agent skill that writes one governed architecture document from a template, and the plugin manifest carries the MCP servers the research commands use.",
+      "representativeQueries": [
+        "architecture governance skills for Kimi Code",
+        "write architecture requirements and a traceability matrix with Kimi Code",
+        "create a Wardley map with Kimi Code"
+      ],
+      "capabilities": [
+        "principles",
+        "stakeholders",
+        "requirements",
+        "risk",
+        "sobc",
+        "adr",
+        "diagram",
+        "wardley",
+        "research",
+        "traceability"
+      ],
+      "tags": [
+        "enterprise-architecture",
+        "architecture-governance",
+        "uk-government",
+        "compliance",
+        "kimi-code"
+      ],
+      "metadata": {
+        "host": "Kimi Code CLI",
+        "install": "/plugins install https://github.com/tractorjuice/arckit-kimi.git",
+        "repository": "https://github.com/tractorjuice/arckit-kimi",
+        "documentation": "https://arckit.org/getting-started.html"
+      }
+    },
+    {
+      "identifier": "urn:air:arckit.org:skill:architecture-workflow",
+      "displayName": "ArcKit architecture workflow",
+      "type": "application/agent-skills+md",
+      "url": "https://raw.githubusercontent.com/tractorjuice/arckit-claude/main/plugins/arckit/skills/architecture-workflow/SKILL.md",
+      "description": "An agent skill that recommends which ArcKit commands to run, and in what order, for a new or in-flight architecture project, from a short triage of sector, project type, current stage and timeline.",
+      "representativeQueries": [
+        "which architecture documents should a new project produce first",
+        "what order should I run ArcKit commands in for a UK government project",
+        "plan the architecture governance work for a project that is already in delivery"
+      ],
+      "capabilities": [
+        "command-sequencing",
+        "project-triage"
+      ],
+      "tags": [
+        "enterprise-architecture",
+        "architecture-governance",
+        "onboarding"
+      ],
+      "metadata": {
+        "repository": "https://github.com/tractorjuice/arckit-claude",
+        "documentation": "https://arckit.org/getting-started.html"
+      }
+    },
+    {
+      "identifier": "urn:air:arckit.org:skill:wardley-mapping",
+      "displayName": "Wardley Mapping reference",
+      "type": "application/agent-skills+md",
+      "url": "https://raw.githubusercontent.com/tractorjuice/arckit-claude/main/plugins/arckit/skills/wardley-mapping/SKILL.md",
+      "description": "An agent skill for Wardley Mapping: value-chain decomposition, evolution stages, OnlineWardleyMaps syntax, gameplay, doctrine and climatic patterns, build or buy and inertia.",
+      "representativeQueries": [
+        "draw a Wardley map of this value chain",
+        "where does this component sit on the evolution axis",
+        "should we build or buy this capability",
+        "which Wardley gameplay patterns apply to this map"
+      ],
+      "capabilities": [
+        "wardley-map",
+        "value-chain",
+        "evolution",
+        "gameplay",
+        "doctrine",
+        "climatic-patterns"
+      ],
+      "tags": [
+        "wardley-mapping",
+        "strategy",
+        "enterprise-architecture"
+      ],
+      "metadata": {
+        "repository": "https://github.com/tractorjuice/arckit-claude",
+        "documentation": "https://arckit.org/guide/wardley.html"
+      }
+    },
+    {
+      "identifier": "urn:air:arckit.org:skill:mermaid-syntax",
+      "displayName": "Mermaid syntax reference",
+      "type": "application/agent-skills+md",
+      "url": "https://raw.githubusercontent.com/tractorjuice/arckit-claude/main/plugins/arckit/skills/mermaid-syntax/SKILL.md",
+      "description": "An agent skill for writing or fixing a Mermaid diagram: flowchart, sequence, class, state, entity-relationship, Gantt, C4, mindmap and timeline diagrams, node shapes, styling, theming, and why a diagram fails to render.",
+      "representativeQueries": [
+        "why does this Mermaid diagram fail to render",
+        "write a Mermaid sequence diagram for this flow",
+        "draw a C4 container diagram in Mermaid"
+      ],
+      "capabilities": [
+        "mermaid",
+        "flowchart",
+        "sequence-diagram",
+        "c4-diagram"
+      ],
+      "tags": [
+        "diagrams",
+        "mermaid",
+        "enterprise-architecture"
+      ],
+      "metadata": {
+        "repository": "https://github.com/tractorjuice/arckit-claude",
+        "documentation": "https://arckit.org/guide/diagram.html"
+      }
+    },
+    {
+      "identifier": "urn:air:arckit.org:skill:plantuml-syntax",
+      "displayName": "PlantUML syntax reference",
+      "type": "application/agent-skills+md",
+      "url": "https://raw.githubusercontent.com/tractorjuice/arckit-claude/main/plugins/arckit/skills/plantuml-syntax/SKILL.md",
+      "description": "An agent skill for writing or fixing a PlantUML diagram, C4-PlantUML first: sequence, class, activity, state, entity-relationship, component, deployment and use-case diagrams, skinparams and themes, C4 layout conflicts and rendering errors.",
+      "representativeQueries": [
+        "write a C4-PlantUML container diagram for this system",
+        "fix this PlantUML rendering error",
+        "draw a PlantUML deployment diagram"
+      ],
+      "capabilities": [
+        "plantuml",
+        "c4-plantuml",
+        "sequence-diagram",
+        "deployment-diagram"
+      ],
+      "tags": [
+        "diagrams",
+        "plantuml",
+        "enterprise-architecture"
+      ],
+      "metadata": {
+        "repository": "https://github.com/tractorjuice/arckit-claude",
+        "documentation": "https://arckit.org/guide/diagram.html"
+      }
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+# Technical Debt Register: `[PROJECT_NAME]`
+
+## Document Control
+
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time per _partials/RENDERING.md. -->
+
+<!-- Domain-specific fields, retained after the resolved header per the Document Control Standard. -->
+
+| Field | Value |
+|-------|-------|
+| **Open Items** | `[N] of [N]` |
+| **Overdue or Expired** | `[N]` |
+
+### Revision History
+
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| `[VERSION]` | `[YYYY-MM-DD]` | ArcKit AI | Initial creation from `/arckit:arc42-debt` command | `[PENDING]` | `[PENDING]` |
+
+> **About this document**: The technical debt the system carries, consolidated from the audits, assessments, reviews, decisions and risks that recorded it, for arc42 section 11. Each item links the sources that recorded it, which remain authoritative. Interest, principal and severity come from those sources; a value no source states is shown as "Not stated" or "Not rated".
+
+---
+
+## 1. Summary
+
+### 1.1 By Category
+
+| Category | Open | Planned | In Progress | Resolved |
+|----------|------|---------|-------------|----------|
+| Architecture | `[N]` | `[N]` | `[N]` | `[N]` |
+| Code | `[N]` | `[N]` | `[N]` | `[N]` |
+| Test | `[N]` | `[N]` | `[N]` | `[N]` |
+| Infrastructure | `[N]` | `[N]` | `[N]` | `[N]` |
+| Dependency | `[N]` | `[N]` | `[N]` | `[N]` |
+| Security | `[N]` | `[N]` | `[N]` | `[N]` |
+| Data | `[N]` | `[N]` | `[N]` | `[N]` |
+| Documentation | `[N]` | `[N]` | `[N]` | `[N]` |
+
+### 1.2 By Origin and Severity
+
+| Origin | Critical | High | Medium | Low | Not Rated |
+|--------|----------|------|--------|-----|-----------|
+| Deliberate | `[N]` | `[N]` | `[N]` | `[N]` | `[N]` |
+| Inadvertent | `[N]` | `[N]` | `[N]` | `[N]` | `[N]` |
+
+### 1.3 Overdue or Expired
+
+`[Items whose exception has expired or whose due date has passed, or "None".]`
+
+---
+
+## 2. Register
+
+| ID | Title | Category | Origin | Severity | Status | Owner | Due | Linked IDs |
+|----|-------|----------|--------|----------|--------|-------|-----|------------|
+| TD-001 | `[e.g., Booking service writes directly to the reporting database]` | `[Architecture]` | `[Inadvertent]` | `[HIGH]` | `[Open]` | `[PENDING]` | `[—]` | `[F-004, ATD-002]` |
+| TD-002 | `[e.g., Payment adapter on an unsupported SDK version]` | `[Dependency]` | `[Deliberate]` | `[MEDIUM]` | `[Planned]` | `[Owner]` | `[YYYY-MM-DD]` | `[ADR-005, R-007]` |
+
+---
+
+## 3. Item Details
+
+`[One subsection per item, in register order.]`
+
+### TD-001: `[Title]`
+
+| Field | Value |
+|-------|-------|
+| **Category** | `[Category]` |
+| **Origin** | `[Deliberate / Inadvertent]` |
+| **Affected Building Blocks** | `[Building blocks]` |
+| **Interest** | `[What keeping it costs or risks now, from the source, or "Not stated"]` |
+| **Principal** | `[What repaying it would take, from the source, or "Not stated"]` |
+| **Severity** | `[Source's severity, or "Not rated"]` |
+| **Status** | `[Open / Planned / In progress / Resolved]` |
+| **Owner** | `[Owner or [PENDING]]` |
+| **Due** | `[Expiry or planned date, or "—"]` |
+| **Linked IDs** | `[F-004, ATD-002]` |
+| **Sources** | `[ARC-xxx-CDAU-vN.N, ARC-xxx-CONF-vN.N]` |
+
+**Description**: `[What the gap is, summarised from the sources.]`
+
+---
+
+## 4. Repayment Candidates (Proposed)
+
+`[Up to five items the sources show are blocking a quality goal or a decision. The order of repayment is the team's decision.]`
+
+| Rank | Item | Why It Blocks | Source |
+|------|------|---------------|--------|
+| 1 | `[TD-001]` | `[e.g., Prevents the availability target in QS-002]` | `[ARC-xxx-QUAL-vN.N]` |
+
+---
+
+## Gap Register
+
+| Area | What Is Missing | Command to Fill It |
+|------|-----------------|--------------------|
+| `[e.g., Codebase]` | `[No codebase audit for a system with code]` | `[/arckit:repo-audit <repo>]` |
+
+## Source Artefacts
+
+| Document ID | Version | Items Supplied |
+|-------------|---------|----------------|
+| `[ARC-xxx-CDAU-vN.N]` | `[N.N]` | `[TD-001, TD-003]` |
+
+## Assumptions
+
+`[List defaults taken for optional metadata or documents, or "None". These assumptions do not add debt items or estimates.]`
+
+---
+
+## External References
+
+> This section provides traceability from generated content back to source documents.
+> Follow citation instructions in the project's citation reference guide.
+
+### Document Register
+
+| Doc ID | Filename | Type | Source Location | Description |
+|--------|----------|------|-----------------|-------------|
+| *None provided* | — | — | — | — |
+
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
+
+---
+
+**Generated by**: ArcKit `/arckit:arc42-debt` command
+**Generated on**: `[DATE] [TIME] GMT`
+**ArcKit Version**: `{ARCKIT_VERSION}`
+**Project**: `[PROJECT_NAME]` (Project `[PROJECT_ID]`)
+**Model**: `[AI_MODEL]`

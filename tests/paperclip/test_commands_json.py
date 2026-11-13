@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 from pathlib import Path
 import pytest
 
@@ -32,6 +33,7 @@ PLUGIN_COMMAND_DIRS = [
     REPO_ROOT / "plugins" / "arckit-togaf-adm" / "commands",
     REPO_ROOT / "plugins" / "arckit-agent-architecture" / "commands",
     REPO_ROOT / "plugins" / "arckit-oaa" / "commands",
+    REPO_ROOT / "plugins" / "arckit-arc42" / "commands",
 ]
 # arckit-fde, arckit-repo, and arckit-uk-gcloud are absent by design: Claude Code
 # only, excluded from converter.py PLUGIN_SOURCES.
@@ -104,6 +106,36 @@ def test_no_unrewritten_plugin_root_paths(commands):
         if cmd["template"]:
             assert "${CLAUDE_PLUGIN_ROOT}" not in cmd["template"], (
                 f"{cmd['name']} still has ${{CLAUDE_PLUGIN_ROOT}} in template"
+            )
+
+
+PAPERCLIP_DIR = REPO_ROOT / "extensions" / "arckit-paperclip"
+PACKAGE_ROOT_TOKEN = "{arckit_package_root}"
+
+
+def test_plugin_assets_resolve_from_the_package_root(commands):
+    """Templates, references and data are read from the installed package.
+
+    Paperclip replaces {arckit_package_root} at runtime. These paths used to
+    become scripts/bash/references/... and scripts/bash/templates/..., which
+    the package does not contain.
+    """
+    for cmd in commands:
+        found = re.findall(r"scripts/bash/(?:references|templates|schemas|data|skills|hooks)/", cmd["prompt"])
+        assert not found, f"{cmd['name']} points package assets into scripts/bash: {sorted(set(found))}"
+
+
+def test_package_root_assets_exist_and_are_published(commands):
+    published = {entry.rstrip("/") for entry in json.loads((PAPERCLIP_DIR / "package.json").read_text())["files"]}
+    for cmd in commands:
+        for path in re.findall(re.escape(PACKAGE_ROOT_TOKEN) + r"/([^\s`'\")\]]+)", cmd["prompt"]):
+            path = path.rstrip(".,;:")
+            # /arckit-customize lists glob patterns for overlay template folders.
+            if re.search(r"[*{]", path) or path.startswith(".."):
+                continue
+            assert (PAPERCLIP_DIR / path).exists(), f"{cmd['name']}: {path} is missing"
+            assert path.split("/", 1)[0] in published or path in published, (
+                f"{cmd['name']}: {path} is not in package.json files"
             )
 
 

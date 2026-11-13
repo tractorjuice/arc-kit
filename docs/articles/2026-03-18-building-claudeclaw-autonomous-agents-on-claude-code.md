@@ -470,7 +470,7 @@ The remaining question is pace. Two platforms in research preview is a start, no
 
 - [ArcKit v4.13.0: The Build Harness — A Full Architecture in One Session](article-viewer.html?a=2026-05-03-build-harness-parallel-architecture-generation)
 - [The Token Budget Behind ArcKit's Plugin Split](article-viewer.html?a=2026-05-20-plugin-split-token-budget)
-- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+- [Wanted: `/arckit:build` Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
 - [ArcKit v4: First-Class Codex and Gemini Support](article-viewer.html?a=2026-03-08-v4-codex-gemini-support)
 
 <!-- arckit:community-block -->

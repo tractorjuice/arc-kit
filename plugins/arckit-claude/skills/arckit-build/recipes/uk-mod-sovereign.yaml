@@ -50,7 +50,7 @@ optional_targets:
     description: Target organisation research — strategy, structure, existing systems. Output to projects/000-global/research/.
     default: true
   RESEARCH:
-    description: Technology and vendor market research (build vs buy, TCO)
+    description: Technology and vendor market research (options, facts, costs)
     default: true
   AWS_RESEARCH:
     description: AWS service availability and architecture patterns

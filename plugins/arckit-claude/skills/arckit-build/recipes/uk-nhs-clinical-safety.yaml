@@ -47,7 +47,7 @@ optional_targets:
     description: Target NHS organisation research (Trust / ICS / NHSE). Output to projects/000-global/research/.
     default: true
   RESEARCH:
-    description: Technology and vendor market research (build vs buy, TCO)
+    description: Technology and vendor market research (options, facts, costs)
     default: true
   AWS_RESEARCH:
     description: AWS service availability and architecture patterns (skip with --exclude AWS_RESEARCH if AWS not in scope)

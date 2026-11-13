@@ -1,5 +1,5 @@
 {
-  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection (UserPromptSubmit + PostCompact rehydrate + FileChanged external documents), filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns). All entries use the `args: string[]` exec form (Claude Code v2.1.139+) to avoid shell-string parsing. PostToolUse entries set `continueOnBlock: true` (v2.1.139+) so a stamping / telemetry / manifest hook can never derail the user's turn \u2014 they are observational and must fail soft. Ships no Claude Code mod: the Claude plugin directory holds any plugin that includes one for a reviewer.",
+  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection (UserPromptSubmit + PostCompact rehydrate + FileChanged external documents), filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns). All entries use the `args: string[]` exec form (Claude Code v2.1.139+) to avoid shell-string parsing. PostToolUse entries set `continueOnBlock: true` (v2.1.139+) so a stamping / telemetry / manifest hook can never derail the user's turn — they are observational and must fail soft. Ships no Claude Code mod: the Claude plugin directory holds any plugin that includes one for a reviewer.",
   "hooks": {
     "Stop": [
       {
@@ -102,6 +102,14 @@
             "command": "node",
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/secret-detection.mjs"
+            ],
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/supplier-isolation.mjs"
             ],
             "timeout": 5
           }
@@ -214,43 +222,88 @@
     ],
     "PreToolUse": [
       {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/supplier-isolation.mjs"
+            ],
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Read|Grep|Bash|PowerShell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/supplier-isolation.mjs"
+            ],
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Read(**/projects/*/vendors/**)",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/supplier-isolation.mjs"
+            ],
+            "timeout": 15,
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
         "matcher": "Write",
         "hooks": [
           {
             "type": "command",
-            "if": "Write(/projects/**)",
+            "if": "Write(**/ARC-*)",
             "command": "node",
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           },
           {
             "type": "command",
-            "if": "Write(/projects/**/vendors/scores.json)",
+            "if": "Write(**/vendors/scores.json)",
             "command": "node",
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/score-validator.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           },
           {
             "type": "command",
-            "if": "Write(/projects/**/wardley-maps/**)",
+            "if": "Write(**/wardley-maps/**)",
             "command": "node",
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           },
           {
             "type": "command",
-            "if": "Write(/projects/**/ARC-*-BKLG-*.json)",
+            "if": "Write(**/ARC-*-BKLG-*.json)",
             "command": "node",
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/validate-backlog-totals.mjs"
             ],
-            "timeout": 5
+            "timeout": 15,
+            "onFailure": "block"
           }
         ]
       },
@@ -263,7 +316,7 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.mjs"
             ],
-            "timeout": 5
+            "timeout": 15
           },
           {
             "type": "command",
@@ -271,7 +324,57 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/secret-file-scanner.mjs"
             ],
-            "timeout": 5
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Write(**/ARC-*)",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.mjs"
+            ],
+            "timeout": 15,
+            "onFailure": "block"
+          },
+          {
+            "type": "command",
+            "if": "Write(**/ARC-*)",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/secret-file-scanner.mjs"
+            ],
+            "timeout": 15,
+            "onFailure": "block"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Edit(**/ARC-*)",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.mjs"
+            ],
+            "timeout": 15,
+            "onFailure": "block"
+          },
+          {
+            "type": "command",
+            "if": "Edit(**/ARC-*)",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/hooks/secret-file-scanner.mjs"
+            ],
+            "timeout": 15,
+            "onFailure": "block"
           }
         ]
       },
@@ -284,7 +387,7 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.mjs"
             ],
-            "timeout": 5
+            "timeout": 15
           }
         ]
       },
@@ -297,7 +400,7 @@
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/hooks/validate-reader-handoff.mjs"
             ],
-            "timeout": 10
+            "timeout": 15
           }
         ]
       }

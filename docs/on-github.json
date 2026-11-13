@@ -1,19 +1,19 @@
 {
- "week": "2026-11-02",
+ "week": "2026-11-09",
  "summary": {
   "using": 28,
   "artefacts": 22,
   "set_up": 6,
   "organisations": 6,
-  "mentioning": 268,
-  "issues_prs": 137,
-  "commit_repos": 67,
-  "commits": 252,
+  "mentioning": 266,
+  "issues_prs": 156,
+  "commit_repos": 69,
+  "commits": 295,
   "hidden_rows": 0,
   "new": {
-   "using": 2,
-   "mentioning": 8,
-   "issues_prs": 30,
+   "using": 0,
+   "mentioning": 11,
+   "issues_prs": 19,
    "commit_repos": 6
   }
  },
@@ -41,6 +41,14 @@
    "mentioning": 268,
    "issues_prs": 137,
    "commit_repos": 67
+  },
+  {
+   "week": "2026-11-09",
+   "using": 28,
+   "organisations": 6,
+   "mentioning": 266,
+   "issues_prs": 156,
+   "commit_repos": 69
   }
  ],
  "using": [
@@ -170,7 +178,7 @@
    "owner_kind": "Organisation",
    "stars": 1,
    "created": "2026-01-22",
-   "last_push": "2026-10-28",
+   "last_push": "2026-11-05",
    "arc_files": 17,
    "projects": 2,
    "doc_types": "ADR, DIAG, PRIN, REQ, STKE",
@@ -185,14 +193,14 @@
    "owner_kind": "Organisation",
    "stars": 0,
    "created": "2026-10-27",
-   "last_push": "2026-10-31",
+   "last_push": "2026-11-04",
    "arc_files": 16,
    "projects": 2,
    "doc_types": "ADR, DATA, DIAG, HLDR, PRIN, REQ, STKE, TRAC",
    "footprint": "Artefacts",
    "setup": "",
    "description": "",
-   "new": true
+   "new": false
   },
   {
    "repo": "Axurcio/cairn",
@@ -230,14 +238,14 @@
    "owner_kind": "Organisation",
    "stars": 0,
    "created": "2026-10-23",
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-03",
    "arc_files": 9,
    "projects": 2,
    "doc_types": "DATA, DIAG, PRIN, REQ, STKE",
    "footprint": "Artefacts",
    "setup": "",
    "description": "",
-   "new": true
+   "new": false
   },
   {
    "repo": "harishsubash/arckit-usecase-aws-order-processing",
@@ -290,7 +298,7 @@
    "owner_kind": "Organisation",
    "stars": 9,
    "created": "2026-04-05",
-   "last_push": "2026-10-30",
+   "last_push": "2026-11-09",
    "arc_files": 4,
    "projects": 0,
    "doc_types": "DPIA, PRIN, REQ, RISK",
@@ -350,7 +358,7 @@
    "owner_kind": "Person",
    "stars": 0,
    "created": "2026-09-26",
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "arc_files": 1,
    "projects": 1,
    "doc_types": "DSCT",
@@ -380,7 +388,7 @@
    "owner_kind": "Person",
    "stars": 0,
    "created": "2026-03-17",
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "arc_files": 0,
    "projects": 0,
    "doc_types": "",
@@ -395,7 +403,7 @@
    "owner_kind": "Person",
    "stars": 0,
    "created": "2025-08-23",
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "arc_files": 0,
    "projects": 0,
    "doc_types": "",
@@ -425,7 +433,7 @@
    "owner_kind": "Person",
    "stars": 0,
    "created": "2026-10-19",
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "arc_files": 0,
    "projects": 0,
    "doc_types": "",
@@ -470,8 +478,8 @@
    "repo": "anthropics/claude-code",
    "url": "https://github.com/anthropics/claude-code",
    "owner_kind": "Organisation",
-   "stars": 154208,
-   "last_push": "2026-11-01",
+   "stars": 155040,
+   "last_push": "2026-11-06",
    "kind": "Commit messages and issues only",
    "where": "ISSUE: [BUG] after installing arckkit when tern=minal windows ppup get this error",
    "where_url": "https://github.com/anthropics/claude-code/issues/32902",
@@ -482,8 +490,8 @@
    "repo": "Twigpine/openclaude",
    "url": "https://github.com/Twigpine/openclaude",
    "owner_kind": "Organisation",
-   "stars": 34251,
-   "last_push": "2026-11-02",
+   "stars": 34311,
+   "last_push": "2026-11-09",
    "kind": "Commit messages and issues only",
    "where": "PR: fix(plugins): sanitize env before spawning git so /plugin marketplace add works (#751)",
    "where_url": "https://github.com/Twigpine/openclaude/pull/934",
@@ -494,7 +502,7 @@
    "repo": "killop/anything_about_game",
    "url": "https://github.com/killop/anything_about_game",
    "owner_kind": "Person",
-   "stars": 4187,
+   "stars": 4196,
    "last_push": "2026-11-02",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "AI.md",
@@ -515,23 +523,11 @@
    "new": false
   },
   {
-   "repo": "hyunjun/bookmarks",
-   "url": "https://github.com/hyunjun/bookmarks",
-   "owner_kind": "Person",
-   "stars": 1152,
-   "last_push": "2026-11-01",
-   "kind": "Commit messages and issues only",
-   "where": "COMMIT: ArcKit: AI-Powered Enterprise Architecture Toolkit",
-   "where_url": "https://github.com/hyunjun/bookmarks/commit/a0aec2fea8bcfa87279ac13e41391928b63834ed",
-   "description": "",
-   "new": false
-  },
-  {
    "repo": "duanyytop/agents-radar",
    "url": "https://github.com/duanyytop/agents-radar",
    "owner_kind": "Person",
-   "stars": 1146,
-   "last_push": "2026-11-02",
+   "stars": 1158,
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "digests/2026-04-19/ai-trending.md",
    "where_url": "https://github.com/duanyytop/agents-radar/blob/HEAD/digests/2026-04-19/ai-trending.md",
@@ -539,13 +535,25 @@
    "new": false
   },
   {
+   "repo": "hyunjun/bookmarks",
+   "url": "https://github.com/hyunjun/bookmarks",
+   "owner_kind": "Person",
+   "stars": 1157,
+   "last_push": "2026-11-08",
+   "kind": "Commit messages and issues only",
+   "where": "COMMIT: ArcKit: AI-Powered Enterprise Architecture Toolkit",
+   "where_url": "https://github.com/hyunjun/bookmarks/commit/a0aec2fea8bcfa87279ac13e41391928b63834ed",
+   "description": "",
+   "new": false
+  },
+  {
    "repo": "viktorbezdek/awesome-github-projects",
    "url": "https://github.com/viktorbezdek/awesome-github-projects",
    "owner_kind": "Person",
    "stars": 835,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
-   "where": "README: - [arc-kit](https://github.com/tractorjuice/arc-kit) - The Enterprise Architecture Governance Harness — strategy, architecture, delivery, and assurance using AI coding assistants ⭐2,267 `JavaS",
+   "where": "README: - [arc-kit](https://github.com/tractorjuice/arc-kit) - The Enterprise Architecture Governance Harness — strategy, architecture, delivery, and assurance using AI coding assistants ⭐2,276 `JavaS",
    "where_url": "https://github.com/viktorbezdek/awesome-github-projects#readme",
    "description": "Curated list of GitHub projects I starred over the years",
    "new": false
@@ -555,7 +563,7 @@
    "url": "https://github.com/cxyfreedom/website-hot-hub",
    "owner_kind": "Person",
    "stars": 423,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "archives/github/2026-04-18.md",
    "where_url": "https://github.com/cxyfreedom/website-hot-hub/blob/HEAD/archives/github/2026-04-18.md",
@@ -566,8 +574,8 @@
    "repo": "iiecho1/hot_searches_for_apps",
    "url": "https://github.com/iiecho1/hot_searches_for_apps",
    "owner_kind": "Person",
-   "stars": 399,
-   "last_push": "2026-11-02",
+   "stars": 400,
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "archives/GitHub/2026/04/2026-04-18.md",
    "where_url": "https://github.com/iiecho1/hot_searches_for_apps/blob/HEAD/archives/GitHub/2026/04/2026-04-18.md",
@@ -578,7 +586,7 @@
    "repo": "tom-doerr/repo_posts",
    "url": "https://github.com/tom-doerr/repo_posts",
    "owner_kind": "Person",
-   "stars": 328,
+   "stars": 327,
    "last_push": "2026-10-11",
    "kind": "Articles and posts",
    "where": "docs/_posts/2026-02-09-tractorjuice-arc-kit.md",
@@ -590,8 +598,8 @@
    "repo": "Arnon-hs/open-source",
    "url": "https://github.com/Arnon-hs/open-source",
    "owner_kind": "Person",
-   "stars": 263,
-   "last_push": "2026-11-02",
+   "stars": 301,
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "aiml/tractorjuice-arc-kit.md",
    "where_url": "https://github.com/Arnon-hs/open-source/blob/HEAD/aiml/tractorjuice-arc-kit.md",
@@ -603,7 +611,7 @@
    "url": "https://github.com/aneasystone/github-trending",
    "owner_kind": "Person",
    "stars": 210,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "archived/2026-04.md",
    "where_url": "https://github.com/aneasystone/github-trending/blob/HEAD/archived/2026-04.md",
@@ -611,11 +619,23 @@
    "new": false
   },
   {
+   "repo": "boffti/starwire",
+   "url": "https://github.com/boffti/starwire",
+   "owner_kind": "Person",
+   "stars": 169,
+   "last_push": "2026-11-09",
+   "kind": "Docs, data and code that reference ArcKit",
+   "where": "lists/developer-tools.md",
+   "where_url": "https://github.com/boffti/starwire/blob/HEAD/lists/developer-tools.md",
+   "description": "Open source repos worth a look, gathered from across the web and refreshed every two days",
+   "new": true
+  },
+  {
    "repo": "henson/Scraper",
    "url": "https://github.com/henson/Scraper",
    "owner_kind": "Person",
-   "stars": 144,
-   "last_push": "2026-11-01",
+   "stars": 145,
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "2026/04/2026-04-19.md",
    "where_url": "https://github.com/henson/Scraper/blob/HEAD/2026/04/2026-04-19.md",
@@ -626,8 +646,8 @@
    "repo": "vincentmakes/turbo-ea",
    "url": "https://github.com/vincentmakes/turbo-ea",
    "owner_kind": "Person",
-   "stars": 122,
-   "last_push": "2026-11-02",
+   "stars": 127,
+   "last_push": "2026-11-09",
    "kind": "Commit messages and issues only",
    "where": "ISSUE: How about syncing an excellent repo with yours?",
    "where_url": "https://github.com/vincentmakes/turbo-ea/issues/402",
@@ -635,23 +655,11 @@
    "new": false
   },
   {
-   "repo": "Chat2AnyLLM/awesome-claude-plugins",
-   "url": "https://github.com/Chat2AnyLLM/awesome-claude-plugins",
-   "owner_kind": "Organisation",
-   "stars": 118,
-   "last_push": "2026-11-02",
-   "kind": "Lists, catalogues and trend trackers",
-   "where": "README: | [tractorjuice/arckit-claude](https://github.com/tractorjuice/arckit-claude) | 18 | `main` | `.claude-plugin` | ✅ ok |  |",
-   "where_url": "https://github.com/Chat2AnyLLM/awesome-claude-plugins#readme",
-   "description": "A curated list of awesome claude marketplaces and plugins",
-   "new": false
-  },
-  {
    "repo": "SnailDev/github-hot-hub",
    "url": "https://github.com/SnailDev/github-hot-hub",
    "owner_kind": "Person",
-   "stars": 105,
-   "last_push": "2026-11-02",
+   "stars": 108,
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "archives/2026-04-18.md",
    "where_url": "https://github.com/SnailDev/github-hot-hub/blob/HEAD/archives/2026-04-18.md",
@@ -662,8 +670,8 @@
    "repo": "bobkingdom/TrendRadar",
    "url": "https://github.com/bobkingdom/TrendRadar",
    "owner_kind": "Person",
-   "stars": 100,
-   "last_push": "2026-11-02",
+   "stars": 103,
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "output/2026年04月18日/txt/19时14分.txt",
    "where_url": "https://github.com/bobkingdom/TrendRadar/blob/HEAD/output/2026年04月18日/txt/19时14分.txt",
@@ -674,7 +682,7 @@
    "repo": "ThomasMoreAI/legal-skills-open",
    "url": "https://github.com/ThomasMoreAI/legal-skills-open",
    "owner_kind": "Organisation",
-   "stars": 97,
+   "stars": 102,
    "last_push": "2026-10-12",
    "kind": "Commit messages and issues only",
    "where": "COMMIT: harvest(search_skills): +64 скилла с лицензией из plugin.json; обновлены файлы 2 скиллов",
@@ -686,13 +694,13 @@
    "repo": "WeftOS/weftos",
    "url": "https://github.com/WeftOS/weftos",
    "owner_kind": "Organisation",
-   "stars": 86,
-   "last_push": "2026-11-01",
+   "stars": 87,
+   "last_push": "2026-11-07",
    "kind": "Docs, data and code that reference ArcKit",
    "where": ".planning/symposiums/ontology-navigator/session-arckit-findings.md",
    "where_url": "https://github.com/WeftOS/weftos/blob/HEAD/.planning/symposiums/ontology-navigator/session-arckit-findings.md",
    "description": "Agent framework and cognitive OS in Rust: kernel, governed mesh, signed cogs, weft and weaver CLIs",
-   "new": true
+   "new": false
   },
   {
    "repo": "onysakura/news-daily",
@@ -704,18 +712,6 @@
    "where": "ISSUE: 2026-04-21 Github Trending",
    "where_url": "https://github.com/onysakura/news-daily/issues/7201",
    "description": "v2ex rss",
-   "new": false
-  },
-  {
-   "repo": "amalik/convoke-agents",
-   "url": "https://github.com/amalik/convoke-agents",
-   "owner_kind": "Person",
-   "stars": 67,
-   "last_push": "2026-10-31",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "_bmad-output/_archive/superseded/convoke-note-initiatives-backlog.md",
-   "where_url": "https://github.com/amalik/convoke-agents/blob/HEAD/_bmad-output/_archive/superseded/convoke-note-initiatives-backlog.md",
-   "description": "Convoke extends BMAD Method AI agents with two types of installable modules: Teams bring new agents for a domain, Skills add new capabilities to existing agents. Install them independently or combine them.",
    "new": false
   },
   {
@@ -734,11 +730,11 @@
    "repo": "antonkomarev/github-trending-archive",
    "url": "https://github.com/antonkomarev/github-trending-archive",
    "owner_kind": "Person",
-   "stars": 62,
-   "last_push": "2026-11-02",
+   "stars": 61,
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
-   "where": "archive/repository/2026/2026-04-19/(null).json",
-   "where_url": "https://github.com/antonkomarev/github-trending-archive/blob/HEAD/archive/repository/2026/2026-04-19/(null).json",
+   "where": "archive/repository/2026/2026-04-19/html.json",
+   "where_url": "https://github.com/antonkomarev/github-trending-archive/blob/HEAD/archive/repository/2026/2026-04-19/html.json",
    "description": "Daily archive historical GitHub trending repositories & developers by most popular programming and markup languages.",
    "new": false
   },
@@ -747,7 +743,7 @@
    "url": "https://github.com/johe123qwe/github-trending",
    "owner_kind": "Person",
    "stars": 61,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: * 【2026-04-18】[tractorjuice / arc-kit](https://github.com/tractorjuice/arc-kit) - Enterprise Architecture Governance & Vendor Procurement Toolkit",
    "where_url": "https://github.com/johe123qwe/github-trending#readme",
@@ -759,7 +755,7 @@
    "url": "https://github.com/shibing624/github-hot",
    "owner_kind": "Person",
    "stars": 55,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "markdowns/2026-04-18.md",
    "where_url": "https://github.com/shibing624/github-hot/blob/HEAD/markdowns/2026-04-18.md",
@@ -770,8 +766,8 @@
    "repo": "J-nowcow/awesome-korean-agent-skills",
    "url": "https://github.com/J-nowcow/awesome-korean-agent-skills",
    "owner_kind": "Person",
-   "stars": 53,
-   "last_push": "2026-11-01",
+   "stars": 52,
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "categories/documentation.md",
    "where_url": "https://github.com/J-nowcow/awesome-korean-agent-skills/blob/HEAD/categories/documentation.md",
@@ -795,7 +791,7 @@
    "url": "https://github.com/gaahrdner/starred",
    "owner_kind": "Person",
    "stars": 43,
-   "last_push": "2026-10-30",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - [tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit) - The Enterprise Architecture Governance Harness — strategy, architecture, delivery, and assurance using AI coding assistants",
    "where_url": "https://github.com/gaahrdner/starred#readme",
@@ -807,7 +803,7 @@
    "url": "https://github.com/collabnix/awesome-mcp-lists",
    "owner_kind": "Person",
    "stars": 42,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README.md",
    "where_url": "https://github.com/collabnix/awesome-mcp-lists/blob/HEAD/README.md",
@@ -831,7 +827,7 @@
    "url": "https://github.com/zengzzzzz/golang-trending-archive",
    "owner_kind": "Person",
    "stars": 26,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "archived/2026-04.md",
    "where_url": "https://github.com/zengzzzzz/golang-trending-archive/blob/HEAD/archived/2026-04.md",
@@ -843,7 +839,7 @@
    "url": "https://github.com/furkankoykiran/awesome-trending-repos",
    "owner_kind": "Person",
    "stars": 22,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": ".data/snapshots/2026-04-21.json",
    "where_url": "https://github.com/furkankoykiran/awesome-trending-repos/blob/HEAD/.data/snapshots/2026-04-21.json",
@@ -854,7 +850,7 @@
    "repo": "huifeideyu-1121/ai-info-aggregator",
    "url": "https://github.com/huifeideyu-1121/ai-info-aggregator",
    "owner_kind": "Person",
-   "stars": 21,
+   "stars": 22,
    "last_push": "2026-09-28",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "output/AI Daily - 2026-04-19 ✅.md",
@@ -879,7 +875,7 @@
    "url": "https://github.com/rip-tyang/trend-archive",
    "owner_kind": "Person",
    "stars": 20,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "archive/Github/2026-04-18/README.md",
    "where_url": "https://github.com/rip-tyang/trend-archive/blob/HEAD/archive/Github/2026-04-18/README.md",
@@ -887,23 +883,11 @@
    "new": false
   },
   {
-   "repo": "sudosubin/agents.nix",
-   "url": "https://github.com/sudosubin/agents.nix",
-   "owner_kind": "Person",
-   "stars": 20,
-   "last_push": "2026-11-02",
-   "kind": "Lists, catalogues and trend trackers",
-   "where": "data/claude-code-marketplaces/sources.json",
-   "where_url": "https://github.com/sudosubin/agents.nix/blob/HEAD/data/claude-code-marketplaces/sources.json",
-   "description": "Nixpkgs overlay for AI agent skills from skills.sh and skillsdirectory.com",
-   "new": false
-  },
-  {
    "repo": "AustinWp/ai-daily-digest",
    "url": "https://github.com/AustinWp/ai-daily-digest",
    "owner_kind": "Person",
    "stars": 19,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "digests/digest-20260419.md",
    "where_url": "https://github.com/AustinWp/ai-daily-digest/blob/HEAD/digests/digest-20260419.md",
@@ -915,9 +899,9 @@
    "url": "https://github.com/Rodert/awesome-mcp",
    "owner_kind": "Person",
    "stars": 19,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
-   "where": "README: 542. **[arc-kit](https://github.com/tractorjuice/arc-kit)** - ⭐ 2,266",
+   "where": "README: 561. **[arc-kit](https://github.com/tractorjuice/arc-kit)** - ⭐ 2,274",
    "where_url": "https://github.com/Rodert/awesome-mcp#readme",
    "description": "A curated list of MCP servers and related resources.",
    "new": false
@@ -935,11 +919,23 @@
    "new": false
   },
   {
+   "repo": "sudosubin/agents.nix",
+   "url": "https://github.com/sudosubin/agents.nix",
+   "owner_kind": "Person",
+   "stars": 19,
+   "last_push": "2026-11-09",
+   "kind": "Lists, catalogues and trend trackers",
+   "where": "data/claude-code-plugins/sources.json",
+   "where_url": "https://github.com/sudosubin/agents.nix/blob/HEAD/data/claude-code-plugins/sources.json",
+   "description": "Nixpkgs overlay for AI agent skills from skills.sh and skillsdirectory.com",
+   "new": false
+  },
+  {
    "repo": "araguaci/github-trending",
    "url": "https://github.com/araguaci/github-trending",
    "owner_kind": "Person",
    "stars": 17,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "docs/2026/2026-04-18.md",
    "where_url": "https://github.com/araguaci/github-trending/blob/HEAD/docs/2026/2026-04-18.md",
@@ -951,7 +947,7 @@
    "url": "https://github.com/meain/gourcer",
    "owner_kind": "Person",
    "stars": 17,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Commit messages and issues only",
    "where": "COMMIT: Ran https://github.com/tractorjuice/arc-kit",
    "where_url": "https://github.com/meain/gourcer/commit/0f16f2dbde0c4353840e2e115b6d85e42dbf70cf",
@@ -974,8 +970,8 @@
    "repo": "guo-yichen/news-summary",
    "url": "https://github.com/guo-yichen/news-summary",
    "owner_kind": "Person",
-   "stars": 14,
-   "last_push": "2026-11-01",
+   "stars": 15,
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "summaries/2026-04-19.md",
    "where_url": "https://github.com/guo-yichen/news-summary/blob/HEAD/summaries/2026-04-19.md",
@@ -983,11 +979,23 @@
    "new": false
   },
   {
+   "repo": "Rational-Boxes/BIM_Riviera",
+   "url": "https://github.com/Rational-Boxes/BIM_Riviera",
+   "owner_kind": "Organisation",
+   "stars": 13,
+   "last_push": "2026-11-07",
+   "kind": "README mentions",
+   "where": "README: - **Cabinet runs and countertops** (ARC-KIT-001/002). Architecture › Build › Cabinet Run lays",
+   "where_url": "https://github.com/Rational-Boxes/BIM_Riviera#readme",
+   "description": "",
+   "new": true
+  },
+  {
    "repo": "jafshare/GithubTrending",
    "url": "https://github.com/jafshare/GithubTrending",
    "owner_kind": "Person",
    "stars": 13,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "data/2026/04/2026-04-20.json",
    "where_url": "https://github.com/jafshare/GithubTrending/blob/HEAD/data/2026/04/2026-04-20.json",
@@ -995,14 +1003,38 @@
    "new": false
   },
   {
+   "repo": "jeremylongshore/bobs-big-brain-registrar",
+   "url": "https://github.com/jeremylongshore/bobs-big-brain-registrar",
+   "owner_kind": "Person",
+   "stars": 13,
+   "last_push": "2026-11-06",
+   "kind": "Docs, data and code that reference ArcKit",
+   "where": "000-docs/071-AT-DSGN-okf-fixture-exchange.md",
+   "where_url": "https://github.com/jeremylongshore/bobs-big-brain-registrar/blob/HEAD/000-docs/071-AT-DSGN-okf-fixture-exchange.md",
+   "description": "Bob's Big Brain Registrar — the team's memory keeper. Decides what gets in (by code, not by a model), stores what's admitted, and writes hash-chained, tamper-evident receipts. The govern engine of Bob's Big Brain.",
+   "new": true
+  },
+  {
    "repo": "jobcher/new-blog",
    "url": "https://github.com/jobcher/new-blog",
    "owner_kind": "Person",
    "stars": 13,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Articles and posts",
    "where": "content/new/daily/github_trending_2026-04-19.md",
    "where_url": "https://github.com/jobcher/new-blog/blob/HEAD/content/new/daily/github_trending_2026-04-19.md",
+   "description": "",
+   "new": false
+  },
+  {
+   "repo": "uibm/trending-watcher",
+   "url": "https://github.com/uibm/trending-watcher",
+   "owner_kind": "Person",
+   "stars": 13,
+   "last_push": "2026-07-28",
+   "kind": "Lists, catalogues and trend trackers",
+   "where": "ISSUE: Check trending repo: tractorjuice/arc-kit",
+   "where_url": "https://github.com/uibm/trending-watcher/issues/2600",
    "description": "",
    "new": false
   },
@@ -1019,23 +1051,11 @@
    "new": false
   },
   {
-   "repo": "uibm/trending-watcher",
-   "url": "https://github.com/uibm/trending-watcher",
-   "owner_kind": "Person",
-   "stars": 12,
-   "last_push": "2026-07-28",
-   "kind": "Lists, catalogues and trend trackers",
-   "where": "ISSUE: Check trending repo: tractorjuice/arc-kit",
-   "where_url": "https://github.com/uibm/trending-watcher/issues/2600",
-   "description": "",
-   "new": false
-  },
-  {
    "repo": "bhwa233/github-trending-history",
    "url": "https://github.com/bhwa233/github-trending-history",
    "owner_kind": "Person",
    "stars": 11,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "api/github/2026-04-18.json",
    "where_url": "https://github.com/bhwa233/github-trending-history/blob/HEAD/api/github/2026-04-18.json",
@@ -1047,7 +1067,7 @@
    "url": "https://github.com/bhygg/TrendRadar2",
    "owner_kind": "Person",
    "stars": 11,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "output/2026年04月18日/txt/19时31分.txt",
    "where_url": "https://github.com/bhygg/TrendRadar2/blob/HEAD/output/2026年04月18日/txt/19时31分.txt",
@@ -1071,10 +1091,22 @@
    "url": "https://github.com/deideirui/github-trending-crawler",
    "owner_kind": "Person",
    "stars": 10,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "db/2026-04-19-Trending.yaml",
    "where_url": "https://github.com/deideirui/github-trending-crawler/blob/HEAD/db/2026-04-19-Trending.yaml",
+   "description": "",
+   "new": false
+  },
+  {
+   "repo": "yawo/architools",
+   "url": "https://github.com/yawo/architools",
+   "owner_kind": "Person",
+   "stars": 10,
+   "last_push": "2026-10-10",
+   "kind": "Docs, data and code that reference ArcKit",
+   "where": "docs/tooling/tools.md",
+   "where_url": "https://github.com/yawo/architools/blob/HEAD/docs/tooling/tools.md",
    "description": "",
    "new": false
   },
@@ -1083,7 +1115,7 @@
    "url": "https://github.com/AtomChen0425/Global_Trends",
    "owner_kind": "Person",
    "stars": 9,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "reports/Daily_Briefing_2026-04-20_CN.md",
    "where_url": "https://github.com/AtomChen0425/Global_Trends/blob/HEAD/reports/Daily_Briefing_2026-04-20_CN.md",
@@ -1095,7 +1127,7 @@
    "url": "https://github.com/findmio/github-trending-api",
    "owner_kind": "Person",
    "stars": 9,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "raw/archives/2026-04-19/HTML.day.json",
    "where_url": "https://github.com/findmio/github-trending-api/blob/HEAD/raw/archives/2026-04-19/HTML.day.json",
@@ -1103,11 +1135,23 @@
    "new": false
   },
   {
+   "repo": "findscripter/everything-skills",
+   "url": "https://github.com/findscripter/everything-skills",
+   "owner_kind": "Person",
+   "stars": 9,
+   "last_push": "2026-11-08",
+   "kind": "Lists, catalogues and trend trackers",
+   "where": "data/skill-repos.part83.search-provenance.json",
+   "where_url": "https://github.com/findscripter/everything-skills/blob/HEAD/data/skill-repos.part83.search-provenance.json",
+   "description": "Find agent skills by task, connect them into workflows, and install by volume. Includes reproducible examples and an external skill repository directory.",
+   "new": false
+  },
+  {
    "repo": "kun-g/Scraping-Github-trending",
    "url": "https://github.com/kun-g/Scraping-Github-trending",
    "owner_kind": "Person",
    "stars": 9,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "repos/daily/20260419.json",
    "where_url": "https://github.com/kun-g/Scraping-Github-trending/blob/HEAD/repos/daily/20260419.json",
@@ -1119,7 +1163,7 @@
    "url": "https://github.com/seojcarlos/github-trending-daily",
    "owner_kind": "Person",
    "stars": 9,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "trending_history/2026-04-19.md",
    "where_url": "https://github.com/seojcarlos/github-trending-daily/blob/HEAD/trending_history/2026-04-19.md",
@@ -1131,7 +1175,7 @@
    "url": "https://github.com/scriptzteam/GitHub-Trending",
    "owner_kind": "Person",
    "stars": 8,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "trending/2026/04/2026-04-18.md",
    "where_url": "https://github.com/scriptzteam/GitHub-Trending/blob/HEAD/trending/2026/04/2026-04-18.md",
@@ -1139,23 +1183,11 @@
    "new": false
   },
   {
-   "repo": "yawo/architools",
-   "url": "https://github.com/yawo/architools",
-   "owner_kind": "Person",
-   "stars": 8,
-   "last_push": "2026-10-10",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "docs/tooling/tools.md",
-   "where_url": "https://github.com/yawo/architools/blob/HEAD/docs/tooling/tools.md",
-   "description": "",
-   "new": false
-  },
-  {
    "repo": "yiGmMk/producthunt",
    "url": "https://github.com/yiGmMk/producthunt",
    "owner_kind": "Person",
    "stars": 8,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "content/en/post/github-arc-kit.md",
    "where_url": "https://github.com/yiGmMk/producthunt/blob/HEAD/content/en/post/github-arc-kit.md",
@@ -1167,7 +1199,7 @@
    "url": "https://github.com/AgentSafe-AI/tooltrust-directory",
    "owner_kind": "Organisation",
    "stars": 7,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "data/reports/arc-kit.json",
    "where_url": "https://github.com/AgentSafe-AI/tooltrust-directory/blob/HEAD/data/reports/arc-kit.json",
@@ -1179,7 +1211,7 @@
    "url": "https://github.com/Chat2AnyLLM/awesome-repo-configs",
    "owner_kind": "Organisation",
    "stars": 7,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "agent_repos.json",
    "where_url": "https://github.com/Chat2AnyLLM/awesome-repo-configs/blob/HEAD/agent_repos.json",
@@ -1187,15 +1219,15 @@
    "new": false
   },
   {
-   "repo": "findscripter/everything-skills",
-   "url": "https://github.com/findscripter/everything-skills",
+   "repo": "DrishtantKaushal/AwesomeClaudeCodeMods",
+   "url": "https://github.com/DrishtantKaushal/AwesomeClaudeCodeMods",
    "owner_kind": "Person",
-   "stars": 7,
-   "last_push": "2026-11-01",
+   "stars": 6,
+   "last_push": "2026-10-07",
    "kind": "Lists, catalogues and trend trackers",
-   "where": "data/skill-repos.part83.search-provenance.json",
-   "where_url": "https://github.com/findscripter/everything-skills/blob/HEAD/data/skill-repos.part83.search-provenance.json",
-   "description": "A curated, cross-referenced encyclopedia of 1100+ open-source agent skills (native languages kept) and 1600+ indexed skill repos. Install as a Claude Code marketplace plugin.",
+   "where": "README.md",
+   "where_url": "https://github.com/DrishtantKaushal/AwesomeClaudeCodeMods/blob/HEAD/README.md",
+   "description": "Discover Claude Code mods, plugins and extensions with animated demos, category lists and direct source links. Powered by FindMods.dev.",
    "new": false
   },
   {
@@ -1203,7 +1235,7 @@
    "url": "https://github.com/Paraphern/rugsnare",
    "owner_kind": "Person",
    "stars": 6,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "tools/rugsnare-growth-targets-3.md",
    "where_url": "https://github.com/Paraphern/rugsnare/blob/HEAD/tools/rugsnare-growth-targets-3.md",
@@ -1215,7 +1247,7 @@
    "url": "https://github.com/crazy54/awesome-agentic-atlas",
    "owner_kind": "Person",
    "stars": 6,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-07",
    "kind": "Lists, catalogues and trend trackers",
    "where": "docs/repo/tractorjuice/arc-kit/index.html",
    "where_url": "https://github.com/crazy54/awesome-agentic-atlas/blob/HEAD/docs/repo/tractorjuice/arc-kit/index.html",
@@ -1227,7 +1259,7 @@
    "url": "https://github.com/jobcher/jobcher.github.io",
    "owner_kind": "Person",
    "stars": 6,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "archives/page/7/index.html",
    "where_url": "https://github.com/jobcher/jobcher.github.io/blob/HEAD/archives/page/7/index.html",
@@ -1263,7 +1295,7 @@
    "url": "https://github.com/vibewatch/vibewatch.github.io",
    "owner_kind": "Organisation",
    "stars": 6,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "docs/twitter/ai-coding/2026-07-05.md",
    "where_url": "https://github.com/vibewatch/vibewatch.github.io/blob/HEAD/docs/twitter/ai-coding/2026-07-05.md",
@@ -1271,23 +1303,11 @@
    "new": false
   },
   {
-   "repo": "yaoshining/github-insights",
-   "url": "https://github.com/yaoshining/github-insights",
-   "owner_kind": "Person",
-   "stars": 6,
-   "last_push": "2026-11-01",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "reports/2026/04/19.html",
-   "where_url": "https://github.com/yaoshining/github-insights/blob/HEAD/reports/2026/04/19.html",
-   "description": "GitHub 热门项目日报/周报系列",
-   "new": false
-  },
-  {
    "repo": "26medias/awesome-ai-repos",
    "url": "https://github.com/26medias/awesome-ai-repos",
    "owner_kind": "Person",
    "stars": 5,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-05",
    "kind": "Lists, catalogues and trend trackers",
    "where": "types/agent-framework.md",
    "where_url": "https://github.com/26medias/awesome-ai-repos/blob/HEAD/types/agent-framework.md",
@@ -1299,7 +1319,7 @@
    "url": "https://github.com/Chestnuts-Sisyphus/gittok",
    "owner_kind": "Person",
    "stars": 5,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "digests/2026-04-19/ai-trending.md",
    "where_url": "https://github.com/Chestnuts-Sisyphus/gittok/blob/HEAD/digests/2026-04-19/ai-trending.md",
@@ -1307,35 +1327,11 @@
    "new": false
   },
   {
-   "repo": "DrishtantKaushal/AwesomeClaudeCodeMods",
-   "url": "https://github.com/DrishtantKaushal/AwesomeClaudeCodeMods",
-   "owner_kind": "Person",
-   "stars": 5,
-   "last_push": "2026-10-07",
-   "kind": "Lists, catalogues and trend trackers",
-   "where": "README.md",
-   "where_url": "https://github.com/DrishtantKaushal/AwesomeClaudeCodeMods/blob/HEAD/README.md",
-   "description": "Discover Claude Code mods, plugins and extensions with animated demos, category lists and direct source links. Powered by FindMods.dev.",
-   "new": false
-  },
-  {
-   "repo": "horaguchi/github-trending-history",
-   "url": "https://github.com/horaguchi/github-trending-history",
-   "owner_kind": "Person",
-   "stars": 5,
-   "last_push": "2026-11-01",
-   "kind": "Lists, catalogues and trend trackers",
-   "where": "2026/20260427.md",
-   "where_url": "https://github.com/horaguchi/github-trending-history/blob/HEAD/2026/20260427.md",
-   "description": "",
-   "new": false
-  },
-  {
    "repo": "oslook/github-trending",
    "url": "https://github.com/oslook/github-trending",
    "owner_kind": "Person",
    "stars": 5,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "2026-04-19/_daily_trending.json",
    "where_url": "https://github.com/oslook/github-trending/blob/HEAD/2026-04-19/_daily_trending.json",
@@ -1343,11 +1339,23 @@
    "new": false
   },
   {
+   "repo": "yaoshining/github-insights",
+   "url": "https://github.com/yaoshining/github-insights",
+   "owner_kind": "Person",
+   "stars": 5,
+   "last_push": "2026-11-09",
+   "kind": "Docs, data and code that reference ArcKit",
+   "where": "reports/2026/04/19.html",
+   "where_url": "https://github.com/yaoshining/github-insights/blob/HEAD/reports/2026/04/19.html",
+   "description": "GitHub 热门项目日报/周报系列",
+   "new": false
+  },
+  {
    "repo": "AllStreets/ONEXUS-Agents",
    "url": "https://github.com/AllStreets/ONEXUS-Agents",
    "owner_kind": "Person",
    "stars": 4,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "catalog/coding/arc-kit.json",
    "where_url": "https://github.com/AllStreets/ONEXUS-Agents/blob/HEAD/catalog/coding/arc-kit.json",
@@ -1371,7 +1379,7 @@
    "url": "https://github.com/Soulmove/daily-news-ai",
    "owner_kind": "Person",
    "stars": 4,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "archives/raw/2026-04-18/19-05/data_tech.json",
    "where_url": "https://github.com/Soulmove/daily-news-ai/blob/HEAD/archives/raw/2026-04-18/19-05/data_tech.json",
@@ -1383,7 +1391,7 @@
    "url": "https://github.com/liuqinh2s/news",
    "owner_kind": "Person",
    "stars": 4,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "reports/2026-04-19-raw-titles.md",
    "where_url": "https://github.com/liuqinh2s/news/blob/HEAD/reports/2026-04-19-raw-titles.md",
@@ -1407,7 +1415,7 @@
    "url": "https://github.com/wayyoungboy/github-trending-reporter",
    "owner_kind": "Person",
    "stars": 4,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "data/2026/04/2026-04-19.json",
    "where_url": "https://github.com/wayyoungboy/github-trending-reporter/blob/HEAD/data/2026/04/2026-04-19.json",
@@ -1431,7 +1439,7 @@
    "url": "https://github.com/Lceoliu/daily-dose",
    "owner_kind": "Person",
    "stars": 3,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "reports/archive/2026-04-19.json",
    "where_url": "https://github.com/Lceoliu/daily-dose/blob/HEAD/reports/archive/2026-04-19.json",
@@ -1443,7 +1451,7 @@
    "url": "https://github.com/Loopdev-ai/specdev",
    "owner_kind": "Organisation",
    "stars": 3,
-   "last_push": "2026-09-30",
+   "last_push": "2026-11-06",
    "kind": "Commit messages and issues only",
    "where": "COMMIT: Add compliance layer: ISO 27001/42001, SOC 2, NIST 800-53 (files + gen_compliance.py)",
    "where_url": "https://github.com/Loopdev-ai/specdev/commit/ca67f6fcb469cad05dd285b6ab37de2792783d35",
@@ -1455,10 +1463,10 @@
    "url": "https://github.com/LuciferForge/mcp-directory",
    "owner_kind": "Organisation",
    "stars": 3,
-   "last_push": "2026-09-14",
+   "last_push": "2026-11-07",
    "kind": "Lists, catalogues and trend trackers",
-   "where": "docs/blog/weekly-2026-06-20.html",
-   "where_url": "https://github.com/LuciferForge/mcp-directory/blob/HEAD/docs/blog/weekly-2026-06-20.html",
+   "where": "docs/blog/weekly-2026-06-22.html",
+   "where_url": "https://github.com/LuciferForge/mcp-directory/blob/HEAD/docs/blog/weekly-2026-06-22.html",
    "description": "The largest index of MCP servers. 18,146+ Model Context Protocol servers searchable at protodex.io",
    "new": false
   },
@@ -1479,7 +1487,7 @@
    "url": "https://github.com/cumthxy/github-trending-backup",
    "owner_kind": "Person",
    "stars": 3,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "2026/04/2026-04-19.md",
    "where_url": "https://github.com/cumthxy/github-trending-backup/blob/HEAD/2026/04/2026-04-19.md",
@@ -1487,11 +1495,23 @@
    "new": false
   },
   {
+   "repo": "devweekly/devweekly.github.io",
+   "url": "https://github.com/devweekly/devweekly.github.io",
+   "owner_kind": "Organisation",
+   "stars": 3,
+   "last_push": "2026-11-09",
+   "kind": "Lists, catalogues and trend trackers",
+   "where": "src/content/blog/2026Apr27.md",
+   "where_url": "https://github.com/devweekly/devweekly.github.io/blob/HEAD/src/content/blog/2026Apr27.md",
+   "description": "A minimal, accessible and SEO-friendly Astro blog theme",
+   "new": true
+  },
+  {
    "repo": "git-trending-rank/git-trending-rank.github.io",
    "url": "https://github.com/git-trending-rank/git-trending-rank.github.io",
    "owner_kind": "Person",
    "stars": 3,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "content/post/trending-daily-2026-04-18.md",
    "where_url": "https://github.com/git-trending-rank/git-trending-rank.github.io/blob/HEAD/content/post/trending-daily-2026-04-18.md",
@@ -1503,7 +1523,7 @@
    "url": "https://github.com/ikurochkin/awesome-stars",
    "owner_kind": "Person",
    "stars": 3,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - [tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit) - The Enterprise Architecture Governance Harness — strategy, architecture, delivery, and assurance using AI coding assistants",
    "where_url": "https://github.com/ikurochkin/awesome-stars#readme",
@@ -1511,11 +1531,23 @@
    "new": false
   },
   {
+   "repo": "kirineko/github-daily-trends",
+   "url": "https://github.com/kirineko/github-daily-trends",
+   "owner_kind": "Person",
+   "stars": 3,
+   "last_push": "2026-11-08",
+   "kind": "Lists, catalogues and trend trackers",
+   "where": "2026-04/2026-04-19.md",
+   "where_url": "https://github.com/kirineko/github-daily-trends/blob/HEAD/2026-04/2026-04-19.md",
+   "description": "",
+   "new": false
+  },
+  {
    "repo": "laojiahuo2003/github-daily-report",
    "url": "https://github.com/laojiahuo2003/github-daily-report",
    "owner_kind": "Person",
    "stars": 3,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "reports/2026-04-19_04-15.json",
    "where_url": "https://github.com/laojiahuo2003/github-daily-report/blob/HEAD/reports/2026-04-19_04-15.json",
@@ -1529,8 +1561,8 @@
    "stars": 3,
    "last_push": "2026-07-18",
    "kind": "Docs, data and code that reference ArcKit",
-   "where": "full_text/backend-api/656f0200d93f-226fb8ae__arckit-uae-data-sharing.md",
-   "where_url": "https://github.com/lawrence3699/agent-skills-corpus/blob/HEAD/full_text/backend-api/656f0200d93f-226fb8ae__arckit-uae-data-sharing.md",
+   "where": "full_text/data-analytics/deae917b3b25-d7d24082__arckit-at-nisg.md",
+   "where_url": "https://github.com/lawrence3699/agent-skills-corpus/blob/HEAD/full_text/data-analytics/deae917b3b25-d7d24082__arckit-at-nisg.md",
    "description": "Reproducible dataset of 55,698 public Agent Skills (SKILL.md) across GitHub/GitLab/Gitee — deduped, two-axis classified, license-gated. 2026-07-18 snapshot.",
    "new": false
   },
@@ -1551,8 +1583,8 @@
    "url": "https://github.com/sivolko/sec-radar",
    "owner_kind": "Person",
    "stars": 3,
-   "last_push": "2026-10-31",
-   "kind": "Articles and posts",
+   "last_push": "2026-11-08",
+   "kind": "Docs, data and code that reference ArcKit",
    "where": "docs/_data/seen_repos.json",
    "where_url": "https://github.com/sivolko/sec-radar/blob/HEAD/docs/_data/seen_repos.json",
    "description": "",
@@ -1563,10 +1595,10 @@
    "url": "https://github.com/tomzx/blog.tomrochette.com-content",
    "owner_kind": "Person",
    "stars": 3,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Borrows from ArcKit for its own AI tooling",
-   "where": "agents/spec-driven-development/spec-driven-development-feature-matrix/index.md",
-   "where_url": "https://github.com/tomzx/blog.tomrochette.com-content/blob/HEAD/agents/spec-driven-development/spec-driven-development-feature-matrix/index.md",
+   "where": "agents/spec-driven-development/arc-kit/index.md",
+   "where_url": "https://github.com/tomzx/blog.tomrochette.com-content/blob/HEAD/agents/spec-driven-development/arc-kit/index.md",
    "description": "Content of my blog @ http://blog.tomrochette.com",
    "new": false
   },
@@ -1587,7 +1619,7 @@
    "url": "https://github.com/A1pha3/text-matrix",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-10-09",
+   "last_push": "2026-11-08",
    "kind": "Articles and posts",
    "where": "content/posts/tech/arc-kit-enterprise-architecture-governance.md",
    "where_url": "https://github.com/A1pha3/text-matrix/blob/HEAD/content/posts/tech/arc-kit-enterprise-architecture-governance.md",
@@ -1611,7 +1643,7 @@
    "url": "https://github.com/agentboot-dev/agentboot",
    "owner_kind": "Organisation",
    "stars": 2,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Commit messages and issues only",
    "where": "PR: docs: consolidate three compare pages into one; fix prior-art attribution",
    "where_url": "https://github.com/agentboot-dev/agentboot/pull/81",
@@ -1647,7 +1679,7 @@
    "url": "https://github.com/duzhuoshanwai/github-trending-archive",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "data/2026-04/2026-04-18.md",
    "where_url": "https://github.com/duzhuoshanwai/github-trending-archive/blob/HEAD/data/2026-04/2026-04-18.md",
@@ -1659,7 +1691,7 @@
    "url": "https://github.com/fhan235/github-hot-hub",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "data/snapshot_2026-04-19.json",
    "where_url": "https://github.com/fhan235/github-hot-hub/blob/HEAD/data/snapshot_2026-04-19.json",
@@ -1671,7 +1703,7 @@
    "url": "https://github.com/gxcsoccer/augur",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "reports/2026-04-18.md",
    "where_url": "https://github.com/gxcsoccer/augur/blob/HEAD/reports/2026-04-18.md",
@@ -1683,7 +1715,7 @@
    "url": "https://github.com/hosonzuo8848/sync-med",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Commit messages and issues only",
    "where": "ISSUE: 🚨吸收停摆9天 [情报雷达 v3] 2026-08-14 | 抓取 1168 | 精华 6 | 0.6% | glm-4-flash (zhipu cloud)",
    "where_url": "https://github.com/hosonzuo8848/sync-med/issues/300",
@@ -1691,23 +1723,23 @@
    "new": false
   },
   {
-   "repo": "kirineko/github-daily-trends",
-   "url": "https://github.com/kirineko/github-daily-trends",
+   "repo": "jonnyeclectic/boost",
+   "url": "https://github.com/jonnyeclectic/boost",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-01",
-   "kind": "Lists, catalogues and trend trackers",
-   "where": "2026-04/2026-04-18.md",
-   "where_url": "https://github.com/kirineko/github-daily-trends/blob/HEAD/2026-04/2026-04-18.md",
-   "description": "",
-   "new": false
+   "last_push": "2026-11-09",
+   "kind": "Commit messages and issues only",
+   "where": "PR: feat(registries): catalogue 87 registries from the 2026-11-08 sweep",
+   "where_url": "https://github.com/jonnyeclectic/boost/pull/1345",
+   "description": "Package manager for AI coding skills — search, install, and sync SKILL.md skills across Claude Code, Windsurf, and Cursor",
+   "new": true
   },
   {
    "repo": "louyongjiu/github-trending",
    "url": "https://github.com/louyongjiu/github-trending",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "trending/2026/daily/2026-04-19.md",
    "where_url": "https://github.com/louyongjiu/github-trending/blob/HEAD/trending/2026/daily/2026-04-19.md",
@@ -1719,7 +1751,7 @@
    "url": "https://github.com/maheshndev/Trending-Repositories",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: <li class='mb-2'><a href='https://github.com/tractorjuice/arc-kit' class='text-blue-600 hover:underline'>tractorjuice/arc-kit</a> ⭐ 759</li>",
    "where_url": "https://github.com/maheshndev/Trending-Repositories#readme",
@@ -1731,7 +1763,7 @@
    "url": "https://github.com/pjdurden/claude-skills-live",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: | [tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit) | 2,265 | 2026-10-28 |  | The Enterprise Architecture Governance Harness — strategy, architecture, delivery, and assurance usi",
    "where_url": "https://github.com/pjdurden/claude-skills-live#readme",
@@ -1743,7 +1775,7 @@
    "url": "https://github.com/py2ai/py2ai.github.io",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Commit messages and issues only",
    "where": "COMMIT: Add blog post about ArcKit Enterprise Architecture Governance",
    "where_url": "https://github.com/py2ai/py2ai.github.io/commit/d51f57d4cd2593b876464420907b19b74dba044a",
@@ -1755,10 +1787,10 @@
    "url": "https://github.com/siddharthsbhadauria/awesome-ai-discoveries",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
-   "where": "archive/log_2026-10.md",
-   "where_url": "https://github.com/siddharthsbhadauria/awesome-ai-discoveries/blob/HEAD/archive/log_2026-10.md",
+   "where": "data/discoveries.json",
+   "where_url": "https://github.com/siddharthsbhadauria/awesome-ai-discoveries/blob/HEAD/data/discoveries.json",
    "description": "🤖 An automated bot that discovers and archives trending AI repositories daily using GitHub Actions.",
    "new": false
   },
@@ -1767,23 +1799,11 @@
    "url": "https://github.com/teddyli18000/web-ingest",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "github-trending/data/2026/04/19/trending.json",
    "where_url": "https://github.com/teddyli18000/web-ingest/blob/HEAD/github-trending/data/2026/04/19/trending.json",
    "description": "",
-   "new": false
-  },
-  {
-   "repo": "tomevault-io/codex-plugins",
-   "url": "https://github.com/tomevault-io/codex-plugins",
-   "owner_kind": "Organisation",
-   "stars": 2,
-   "last_push": "2026-10-13",
-   "kind": "Commit messages and issues only",
-   "where": "COMMIT: docs: tractorjuice--arc-kit manifest",
-   "where_url": "https://github.com/tomevault-io/codex-plugins/commit/8207ed347f19db173bb6cb8bd851fc0225551733",
-   "description": "Codex instruction files (AGENTS.md), graded against the public Tome Standard and kept current as the models change",
    "new": false
   },
   {
@@ -1803,7 +1823,7 @@
    "url": "https://github.com/tuckerebc-max/map-the-agents",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Borrows from ArcKit for its own AI tooling",
    "where": "corpus/catalog/directory/pages/0709cccb49aff08a4b10beb95a214005a810a363/arc-kit.md",
    "where_url": "https://github.com/tuckerebc-max/map-the-agents/blob/HEAD/corpus/catalog/directory/pages/0709cccb49aff08a4b10beb95a214005a810a363/arc-kit.md",
@@ -1815,7 +1835,7 @@
    "url": "https://github.com/umag/swamp-workspace",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-10-31",
+   "last_push": "2026-11-08",
    "kind": "Commit messages and issues only",
    "where": "COMMIT: fix(arckit): ship overlay templates as per-plugin packs",
    "where_url": "https://github.com/umag/swamp-workspace/commit/7af90c4637216fc3418153342792a882ea544455",
@@ -1827,7 +1847,7 @@
    "url": "https://github.com/wangqiqi/github-trend",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "data/2026/04/20260418.json",
    "where_url": "https://github.com/wangqiqi/github-trend/blob/HEAD/data/2026/04/20260418.json",
@@ -1847,11 +1867,23 @@
    "new": false
   },
   {
+   "repo": "willhama/md-file-study",
+   "url": "https://github.com/willhama/md-file-study",
+   "owner_kind": "Person",
+   "stars": 2,
+   "last_push": "2026-08-04",
+   "kind": "Docs, data and code that reference ArcKit",
+   "where": "corpus_full/tractorjuice__arc-kit/files/AGENTS.md",
+   "where_url": "https://github.com/willhama/md-file-study/blob/HEAD/corpus_full/tractorjuice__arc-kit/files/AGENTS.md",
+   "description": "What the 50 most-starred open-source AI coding-agent projects actually write in their AGENTS.md files, and what that implies for writing one. 1,666 files, 289 repos, measured.",
+   "new": false
+  },
+  {
    "repo": "zhoux77899/claude-code-insights",
    "url": "https://github.com/zhoux77899/claude-code-insights",
    "owner_kind": "Person",
    "stars": 2,
-   "last_push": "2026-10-31",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "plugins/cached-repos.txt",
    "where_url": "https://github.com/zhoux77899/claude-code-insights/blob/HEAD/plugins/cached-repos.txt",
@@ -1863,7 +1895,7 @@
    "url": "https://github.com/AustinXT/github-explore",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Commit messages and issues only",
    "where": "COMMIT: feat(auto): 分析 https://github.com/tractorjuice/arc-kit",
    "where_url": "https://github.com/AustinXT/github-explore/commit/6781b8b081954f876e1671740c06e075cc72812b",
@@ -1875,10 +1907,10 @@
    "url": "https://github.com/Brickea/news-collector",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
-   "where": "docs/archive/2026/04/2026-04-21.md",
-   "where_url": "https://github.com/Brickea/news-collector/blob/HEAD/docs/archive/2026/04/2026-04-21.md",
+   "where": "docs/archive/2026/04/2026-04-22.md",
+   "where_url": "https://github.com/Brickea/news-collector/blob/HEAD/docs/archive/2026/04/2026-04-22.md",
    "description": "",
    "new": false
   },
@@ -1959,7 +1991,7 @@
    "url": "https://github.com/ardjo-s/ardjo-s",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "docs/stars/agent-methods-skills-configuration.md",
    "where_url": "https://github.com/ardjo-s/ardjo-s/blob/HEAD/docs/stars/agent-methods-skills-configuration.md",
@@ -1971,10 +2003,10 @@
    "url": "https://github.com/axisrow/vibetools",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
-   "where": "README.md",
-   "where_url": "https://github.com/axisrow/vibetools/blob/HEAD/README.md",
+   "where": "README.ru.md",
+   "where_url": "https://github.com/axisrow/vibetools/blob/HEAD/README.ru.md",
    "description": "Curated list of tools for vibe coders — AI-assisted development (Claude Code, Cursor, MCP, agents)",
    "new": false
   },
@@ -2007,10 +2039,10 @@
    "url": "https://github.com/clar/daily-10-news",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
-   "where": "github_daily/2026-04-18/trending.md",
-   "where_url": "https://github.com/clar/daily-10-news/blob/HEAD/github_daily/2026-04-18/trending.md",
+   "where": "github_daily/2026-04-19/trending.md",
+   "where_url": "https://github.com/clar/daily-10-news/blob/HEAD/github_daily/2026-04-19/trending.md",
    "description": "daily 10 news",
    "new": false
   },
@@ -2019,7 +2051,7 @@
    "url": "https://github.com/dividez/Github-Trending",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "markdowns/2026/04/2026-04-19.md",
    "where_url": "https://github.com/dividez/Github-Trending/blob/HEAD/markdowns/2026/04/2026-04-19.md",
@@ -2031,7 +2063,7 @@
    "url": "https://github.com/dmissoh/tech-tank",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-07",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "data/tool_landscape_live.csv",
    "where_url": "https://github.com/dmissoh/tech-tank/blob/HEAD/data/tool_landscape_live.csv",
@@ -2043,23 +2075,11 @@
    "url": "https://github.com/habib13352/TrendSpire",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
-   "where": "trends/archive/trending_2026-04-18_12-50-29.json",
-   "where_url": "https://github.com/habib13352/TrendSpire/blob/HEAD/trends/archive/trending_2026-04-18_12-50-29.json",
+   "where": "trends/archive/trending_2026-04-19_01-46-58.md",
+   "where_url": "https://github.com/habib13352/TrendSpire/blob/HEAD/trends/archive/trending_2026-04-19_01-46-58.md",
    "description": "Automatically fetch trending GitHub repos (daily/weekly), generate a beautiful markdown digest",
-   "new": false
-  },
-  {
-   "repo": "hammadshakeelai/super-website-maker",
-   "url": "https://github.com/hammadshakeelai/super-website-maker",
-   "owner_kind": "Person",
-   "stars": 1,
-   "last_push": "2026-09-24",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "research/verify/license_resolved.ndjson",
-   "where_url": "https://github.com/hammadshakeelai/super-website-maker/blob/HEAD/research/verify/license_resolved.ndjson",
-   "description": "A system for building websites that read as authored rather than generated: a 38k-resource index, a creative-web agent skill with an executable anti-slop gate, and on-demand source fetching.",
    "new": false
   },
   {
@@ -2079,7 +2099,7 @@
    "url": "https://github.com/infra-gpt/trending",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "markdowns/2026-04-21.md",
    "where_url": "https://github.com/infra-gpt/trending/blob/HEAD/markdowns/2026-04-21.md",
@@ -2099,26 +2119,14 @@
    "new": false
   },
   {
-   "repo": "marchdoe/dougmar.ch",
-   "url": "https://github.com/marchdoe/dougmar.ch",
-   "owner_kind": "Person",
-   "stars": 1,
-   "last_push": "2026-11-01",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "archive/2026-04-20/build-1776682091872/trace.json",
-   "where_url": "https://github.com/marchdoe/dougmar.ch/blob/HEAD/archive/2026-04-20/build-1776682091872/trace.json",
-   "description": "Personal Site: Evolving work in progress",
-   "new": false
-  },
-  {
    "repo": "maxzyma/github-trending-digest",
    "url": "https://github.com/maxzyma/github-trending-digest",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
-   "where": ".gitmodules",
-   "where_url": "https://github.com/maxzyma/github-trending-digest/blob/HEAD/.gitmodules",
+   "where": "daily/2026-04-19-analysis.md",
+   "where_url": "https://github.com/maxzyma/github-trending-digest/blob/HEAD/daily/2026-04-19-analysis.md",
    "description": "Daily deep analysis of GitHub Trending — not just a list, but community-grounded insights with HN/X/Reddit cross-validation, risk signals, and real-world usage from Issues. 每日 GitHub Trending 深度分析，四源交叉验证，非搬运。",
    "new": false
   },
@@ -2127,19 +2135,19 @@
    "url": "https://github.com/nduyhai/go-mnemonics",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "stars/unknown/starred.md",
    "where_url": "https://github.com/nduyhai/go-mnemonics/blob/HEAD/stars/unknown/starred.md",
    "description": "A personal knowledge stash",
-   "new": true
+   "new": false
   },
   {
    "repo": "nickpclarke/AgentArmyPowerTemplate",
    "url": "https://github.com/nickpclarke/AgentArmyPowerTemplate",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-10-27",
+   "last_push": "2026-11-03",
    "kind": "Borrows from ArcKit for its own AI tooling",
    "where": ".claude/agents/categories/11-enterprise-architecture/README.md",
    "where_url": "https://github.com/nickpclarke/AgentArmyPowerTemplate/blob/HEAD/.claude/agents/categories/11-enterprise-architecture/README.md",
@@ -2151,7 +2159,7 @@
    "url": "https://github.com/policy-as-versioned-flux/policy-as-versioned-flux",
    "owner_kind": "Organisation",
    "stars": 1,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Commit messages and issues only",
    "where": "COMMIT: Build ticket 09: the reliability diagram, and the sweep that will not skip a day",
    "where_url": "https://github.com/policy-as-versioned-flux/policy-as-versioned-flux/commit/14e03b2129768dbb8e5fc724539ebbfabb38fb69",
@@ -2164,9 +2172,9 @@
    "owner_kind": "Person",
    "stars": 1,
    "last_push": "2026-04-30",
-   "kind": "Articles and posts",
-   "where": "LIST.md",
-   "where_url": "https://github.com/queen1052/queen1052.github.io/blob/HEAD/LIST.md",
+   "kind": "Docs, data and code that reference ArcKit",
+   "where": "tmp_list_workflow.patch",
+   "where_url": "https://github.com/queen1052/queen1052.github.io/blob/HEAD/tmp_list_workflow.patch",
    "description": "",
    "new": false
   },
@@ -2183,23 +2191,11 @@
    "new": false
   },
   {
-   "repo": "sifted-network/sifted-awesome-web3",
-   "url": "https://github.com/sifted-network/sifted-awesome-web3",
-   "owner_kind": "Organisation",
-   "stars": 1,
-   "last_push": "2026-11-02",
-   "kind": "Lists, catalogues and trend trackers",
-   "where": "top100/governance.md",
-   "where_url": "https://github.com/sifted-network/sifted-awesome-web3/blob/HEAD/top100/governance.md",
-   "description": "🔥 Auto-updated A curated list of the most starred web3-related repositories on GitHub.",
-   "new": false
-  },
-  {
    "repo": "spock-wen/daily_report_analysis",
    "url": "https://github.com/spock-wen/daily_report_analysis",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "data/briefs/daily/data-2026-04-18.json",
    "where_url": "https://github.com/spock-wen/daily_report_analysis/blob/HEAD/data/briefs/daily/data-2026-04-18.json",
@@ -2216,6 +2212,30 @@
    "where": "README: - **[ArcKit](https://github.com/tractorjuice/arc-kit)** — audit-ready artifact structure; Orange Book risk taxonomy informing Klaus's design; MADR ADRs.",
    "where_url": "https://github.com/systima-ai/project-delivery-framework#readme",
    "description": "Spec-driven, AI-assisted operating system for delivery managers. 10 BMAD-style stage agents and 52 Claude Code workflows covering the full engagement lifecycle from shaping to closure.",
+   "new": false
+  },
+  {
+   "repo": "terrygzhou/terrygzhou.github.io",
+   "url": "https://github.com/terrygzhou/terrygzhou.github.io",
+   "owner_kind": "Person",
+   "stars": 1,
+   "last_push": "2026-11-09",
+   "kind": "Commit messages and issues only",
+   "where": "COMMIT: blog: publish codex-hooks/arckit post, update architects post, un-draft both",
+   "where_url": "https://github.com/terrygzhou/terrygzhou.github.io/commit/ce14339f72914a0897d6adebe4a0546f137fb16f",
+   "description": "Terry Zhou's blog — built with Hugo, hosted on GitHub Pages",
+   "new": true
+  },
+  {
+   "repo": "tomevault-io/codex-plugins",
+   "url": "https://github.com/tomevault-io/codex-plugins",
+   "owner_kind": "Organisation",
+   "stars": 1,
+   "last_push": "2026-10-13",
+   "kind": "Commit messages and issues only",
+   "where": "COMMIT: docs: tractorjuice--arc-kit manifest",
+   "where_url": "https://github.com/tomevault-io/codex-plugins/commit/8207ed347f19db173bb6cb8bd851fc0225551733",
+   "description": "Codex instruction files (AGENTS.md), graded against the public Tome Standard and kept current as the models change",
    "new": false
   },
   {
@@ -2243,18 +2263,6 @@
    "new": false
   },
   {
-   "repo": "willhama/md-file-study",
-   "url": "https://github.com/willhama/md-file-study",
-   "owner_kind": "Person",
-   "stars": 1,
-   "last_push": "2026-08-04",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "corpus_full/tractorjuice__arc-kit/files/AGENTS.md",
-   "where_url": "https://github.com/willhama/md-file-study/blob/HEAD/corpus_full/tractorjuice__arc-kit/files/AGENTS.md",
-   "description": "What the 50 most-starred open-source AI coding-agent projects actually write in their AGENTS.md files, and what that implies for writing one. 1,666 files, 289 repos, measured.",
-   "new": false
-  },
-  {
    "repo": "xjj1001/every_day_news",
    "url": "https://github.com/xjj1001/every_day_news",
    "owner_kind": "Person",
@@ -2271,7 +2279,7 @@
    "url": "https://github.com/zq52xy/AI-CG-NEWS-UPDATE",
    "owner_kind": "Person",
    "stars": 1,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "daily_news/2026-04-19.md",
    "where_url": "https://github.com/zq52xy/AI-CG-NEWS-UPDATE/blob/HEAD/daily_news/2026-04-19.md",
@@ -2283,7 +2291,7 @@
    "url": "https://github.com/AIimagined/Yellowpages",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: | [tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit) [🔗](https://arckit.org/) | The Enterprise Architecture Governance Harness — strategy, architecture, delivery, and assurance us",
    "where_url": "https://github.com/AIimagined/Yellowpages#readme",
@@ -2307,7 +2315,7 @@
    "url": "https://github.com/AwareLiquid/AwareLiquid-Web",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-08",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "tools/customer-outreach/data/leads.sample.csv",
    "where_url": "https://github.com/AwareLiquid/AwareLiquid-Web/blob/HEAD/tools/customer-outreach/data/leads.sample.csv",
@@ -2339,27 +2347,27 @@
    "new": false
   },
   {
+   "repo": "BhaveshMRA/RWPM",
+   "url": "https://github.com/BhaveshMRA/RWPM",
+   "owner_kind": "Person",
+   "stars": 0,
+   "last_push": "2026-11-09",
+   "kind": "Docs, data and code that reference ArcKit",
+   "where": "labeling/validation/html/V056.html",
+   "where_url": "https://github.com/BhaveshMRA/RWPM/blob/HEAD/labeling/validation/html/V056.html",
+   "description": "",
+   "new": true
+  },
+  {
    "repo": "BrkSe/bulten",
    "url": "https://github.com/BrkSe/bulten",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-10-29",
+   "last_push": "2026-11-02",
    "kind": "Docs, data and code that reference ArcKit",
-   "where": "dailytrend/trend-raporu-2026-04-19.md",
-   "where_url": "https://github.com/BrkSe/bulten/blob/HEAD/dailytrend/trend-raporu-2026-04-19.md",
+   "where": "dailytrend/trend-raporu-2026-04-20.md",
+   "where_url": "https://github.com/BrkSe/bulten/blob/HEAD/dailytrend/trend-raporu-2026-04-20.md",
    "description": "Bulten. Agentler onemli gelismeleri gunluk olarak toplar.  https://bulten.burakkutbay.dev",
-   "new": false
-  },
-  {
-   "repo": "DanielMax937/githubsync",
-   "url": "https://github.com/DanielMax937/githubsync",
-   "owner_kind": "Person",
-   "stars": 0,
-   "last_push": "2026-08-31",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "wikistate.json",
-   "where_url": "https://github.com/DanielMax937/githubsync/blob/HEAD/wikistate.json",
-   "description": "",
    "new": false
   },
   {
@@ -2379,7 +2387,7 @@
    "url": "https://github.com/FanWan-AI/fanwan-ai.github.io",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-05",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "data/ai/modelswatch/daily/2026-04-19.github.json",
    "where_url": "https://github.com/FanWan-AI/fanwan-ai.github.io/blob/HEAD/data/ai/modelswatch/daily/2026-04-19.github.json",
@@ -2387,23 +2395,11 @@
    "new": false
   },
   {
-   "repo": "FetchDoge/agent-provenance-benchmark",
-   "url": "https://github.com/FetchDoge/agent-provenance-benchmark",
-   "owner_kind": "Person",
-   "stars": 0,
-   "last_push": "2026-10-15",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "frozen-v14/FRAMEWORKS.md",
-   "where_url": "https://github.com/FetchDoge/agent-provenance-benchmark/blob/HEAD/frozen-v14/FRAMEWORKS.md",
-   "description": "A pre-registered provenance benchmark of the ten most-starred agent frameworks: can the record prove what the agent did? Rubric v14, frozen and published before any run; two-lane sealed scoring; signed scoring transcript.",
-   "new": false
-  },
-  {
    "repo": "GastonZinhow/lab-experimentacao-software",
    "url": "https://github.com/GastonZinhow/lab-experimentacao-software",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-10-29",
+   "last_push": "2026-11-05",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "lab03/code/data/classificacao_c1.csv",
    "where_url": "https://github.com/GastonZinhow/lab-experimentacao-software/blob/HEAD/lab03/code/data/classificacao_c1.csv",
@@ -2451,7 +2447,7 @@
    "url": "https://github.com/KBOZAI/github-trending-daily",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "data/stars/2026/2026-10-09.json",
    "where_url": "https://github.com/KBOZAI/github-trending-daily/blob/HEAD/data/stars/2026/2026-10-09.json",
@@ -2504,7 +2500,7 @@
    "where": ".github/stars/repos.txt",
    "where_url": "https://github.com/Nthhh92/ClaudePanel/blob/HEAD/.github/stars/repos.txt",
    "description": "Écran d'accueil pour ouvrir Claude, Claude Code et gérer ses skills (Windows, bientôt Mac)",
-   "new": true
+   "new": false
   },
   {
    "repo": "Ragnarth-coded/arckit-test-project-v23-ccs-procurement-ai",
@@ -2627,6 +2623,18 @@
    "new": false
   },
   {
+   "repo": "RwandanMtGorilla/github-trending",
+   "url": "https://github.com/RwandanMtGorilla/github-trending",
+   "owner_kind": "Person",
+   "stars": 0,
+   "last_push": "2026-11-09",
+   "kind": "Lists, catalogues and trend trackers",
+   "where": "archived/2026-04.md",
+   "where_url": "https://github.com/RwandanMtGorilla/github-trending/blob/HEAD/archived/2026-04.md",
+   "description": "使用 Github Actions 跟踪 Github 趋势项目。",
+   "new": true
+  },
+  {
    "repo": "SmartTechVentures-au/website",
    "url": "https://github.com/SmartTechVentures-au/website",
    "owner_kind": "Organisation",
@@ -2655,7 +2663,7 @@
    "url": "https://github.com/Tinkerc/github-schedule",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "output/github-trending/2026/2026-04-19.md",
    "where_url": "https://github.com/Tinkerc/github-schedule/blob/HEAD/output/github-trending/2026/2026-04-19.md",
@@ -2691,7 +2699,7 @@
    "url": "https://github.com/Yash-xoxo/git-auto",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-10-31",
+   "last_push": "2026-11-04",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "past-top-repo/19-04-2026.html",
    "where_url": "https://github.com/Yash-xoxo/git-auto/blob/HEAD/past-top-repo/19-04-2026.html",
@@ -2699,23 +2707,11 @@
    "new": false
   },
   {
-   "repo": "arckit11/AIVoicx",
-   "url": "https://github.com/arckit11/AIVoicx",
-   "owner_kind": "Person",
-   "stars": 0,
-   "last_push": "2026-07-07",
-   "kind": "Commit messages and issues only",
-   "where": "COMMIT: Merge pull request #22 from girishchandra-atvisai/arckit",
-   "where_url": "https://github.com/arckit11/AIVoicx/commit/849a9c13163c696ff1b8968b0fcacc252684f4e0",
-   "description": "",
-   "new": false
-  },
-  {
    "repo": "baoduy/DKNet.Templates",
    "url": "https://github.com/baoduy/DKNet.Templates",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-03",
    "kind": "Commit messages and issues only",
    "where": "COMMIT: docs(DRK-1178): state the shipped 10.1.20 list contract in the present tense",
    "where_url": "https://github.com/baoduy/DKNet.Templates/commit/76583a7b83da6e0673d2f490dc0fade8b62d61e4",
@@ -2744,7 +2740,7 @@
    "where": "digests/2026-04-19/ai-trending.md",
    "where_url": "https://github.com/bddt3006-dot/agents-radar-master/blob/HEAD/digests/2026-04-19/ai-trending.md",
    "description": "",
-   "new": true
+   "new": false
   },
   {
    "repo": "beny23/myblog",
@@ -2775,7 +2771,7 @@
    "url": "https://github.com/bubbleatgit/github-trending-daily",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "archive/daily/trending_2026-04-19.json",
    "where_url": "https://github.com/bubbleatgit/github-trending-daily/blob/HEAD/archive/daily/trending_2026-04-19.json",
@@ -2787,7 +2783,7 @@
    "url": "https://github.com/byte-pipe/tech-news",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Articles and posts",
    "where": "data/2026-04-18/content/github-github-tractorjuicearc-kit-enterprise-architecture.md",
    "where_url": "https://github.com/byte-pipe/tech-news/blob/HEAD/data/2026-04-18/content/github-github-tractorjuicearc-kit-enterprise-architecture.md",
@@ -2799,7 +2795,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: # ArcKit Plugin for Claude Code",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit#readme",
@@ -2811,7 +2807,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-at",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - `/arckit:at-barrierefreiheit` — Austrian digital accessibility across both transposition tracks (BaFG, BGBl. I Nr. 76/2023, European Accessibility Act; WZG, BGBl. I Nr. 59/2019; EN 301 549 /",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-at#readme",
@@ -2823,7 +2819,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-au",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - `/arckit:au-e8-posture` — ASD Essential Eight ML0–ML3 maturity assessment (8 mitigation strategies)",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-au#readme",
@@ -2835,7 +2831,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-au-energy",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - `/arckit:au-aescsf` — Australian Energy Sector Cyber Security Framework (AESCSF) maturity assessment for projects with IT, OT, market, and grid-edge dependencies",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-au-energy#readme",
@@ -2847,7 +2843,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-ca",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - `/arckit:ca-aia` — Algorithmic Impact Assessment (TBS Directive on Automated Decision-Making)",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-ca#readme",
@@ -2859,7 +2855,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-eu",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - `/arckit:eu-ai-act` — EU AI Act (Regulation 2024/1689) compliance and risk classification",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-eu#readme",
@@ -2871,7 +2867,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-fde",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-20",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: # ArcKit FDE Site Generator (`arckit-fde`)",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-fde#readme",
@@ -2883,7 +2879,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-fr",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - `/arckit:fr-algorithme-public` — Public algorithm transparency notice (Article L311-3-1 CRPA)",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-fr#readme",
@@ -2895,7 +2891,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-uae",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - `/arckit:uae-ai-autonomy-tier` — AI autonomy tier posture",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-uae#readme",
@@ -2907,7 +2903,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-uk-finance",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - `/arckit:uk-fs-sca-rts` — UK PSD2 SCA-RTS exemption design (UK SCA-RTS Articles 10-18 under PSRs 2017 Reg 100 and 106A, TRA thresholds, fraud-monitoring framework)",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-uk-finance#readme",
@@ -2919,7 +2915,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-uk-nhs",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - `/arckit:uk-nhs-dcb0129` — NHS DCB0129 manufacturer Clinical Safety Case + Hazard Log (3-file output: `SAFETY.md`, `SAFETY-CASE.md`, `HAZARD-LOG.md`)",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-uk-nhs#readme",
@@ -2931,7 +2927,7 @@
    "url": "https://github.com/costrict-plugins-repo/github-trending-arckit-us",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: - `/arckit:us-fisma-categorization` — FIPS 199 categorization (NIST SP 800-60 information types)",
    "where_url": "https://github.com/costrict-plugins-repo/github-trending-arckit-us#readme",
@@ -2979,7 +2975,7 @@
    "url": "https://github.com/edneycaleb-droid/kimi-k3-knowledge-ops",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "generated/adapters/tractorjuice-arc-kit.json",
    "where_url": "https://github.com/edneycaleb-droid/kimi-k3-knowledge-ops/blob/HEAD/generated/adapters/tractorjuice-arc-kit.json",
@@ -3011,6 +3007,18 @@
    "new": false
   },
   {
+   "repo": "feitianchengzi/arckit-skills",
+   "url": "https://github.com/feitianchengzi/arckit-skills",
+   "owner_kind": "Organisation",
+   "stars": 0,
+   "last_push": "2026-11-06",
+   "kind": "README mentions",
+   "where": "README: npx arckit-skills install --agent claude --personal --flat # 安装给 Claude Code",
+   "where_url": "https://github.com/feitianchengzi/arckit-skills#readme",
+   "description": "",
+   "new": true
+  },
+  {
    "repo": "fhupsel-peers/sdlc-forge",
    "url": "https://github.com/fhupsel-peers/sdlc-forge",
    "owner_kind": "Person",
@@ -3035,23 +3043,11 @@
    "new": false
   },
   {
-   "repo": "golove/golove.github.io",
-   "url": "https://github.com/golove/golove.github.io",
-   "owner_kind": "Person",
-   "stars": 0,
-   "last_push": "2026-10-30",
-   "kind": "Articles and posts",
-   "where": "src/content/posts/github-trending-2026-04-21.md",
-   "where_url": "https://github.com/golove/golove.github.io/blob/HEAD/src/content/posts/github-trending-2026-04-21.md",
-   "description": "个人博客",
-   "new": false
-  },
-  {
    "repo": "gosunny2050/github-stars-tracker",
    "url": "https://github.com/gosunny2050/github-stars-tracker",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "data/2026-04-19.json",
    "where_url": "https://github.com/gosunny2050/github-stars-tracker/blob/HEAD/data/2026-04-19.json",
@@ -3099,7 +3095,7 @@
    "url": "https://github.com/hickinson/hickinsons-blog",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-10-30",
+   "last_push": "2026-11-06",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "src/links_quotes_markdown/20260910_agents_engineering_judgement.md",
    "where_url": "https://github.com/hickinson/hickinsons-blog/blob/HEAD/src/links_quotes_markdown/20260910_agents_engineering_judgement.md",
@@ -3123,7 +3119,7 @@
    "url": "https://github.com/iideas18/iideas18.github.io",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "trending/data/2026-04-20-daily.json",
    "where_url": "https://github.com/iideas18/iideas18.github.io/blob/HEAD/trending/data/2026-04-20-daily.json",
@@ -3143,16 +3139,28 @@
    "new": false
   },
   {
+   "repo": "intent-solutions-io/bobs-big-brain-umbrella",
+   "url": "https://github.com/intent-solutions-io/bobs-big-brain-umbrella",
+   "owner_kind": "Organisation",
+   "stars": 0,
+   "last_push": "2026-11-09",
+   "kind": "Docs, data and code that reference ArcKit",
+   "where": "changelogs/bobs-big-brain-registrar.md",
+   "where_url": "https://github.com/intent-solutions-io/bobs-big-brain-umbrella/blob/HEAD/changelogs/bobs-big-brain-registrar.md",
+   "description": "Bob's Big Brain — the governed team brain: cited recall, hash-chained receipts. Local-first, citation-backed, with a tamper-evident audit trail. Compile, then govern; local by default, remote sharing opt-in. Umbrella for ICO + INTKB + qmd + the plugin.",
+   "new": true
+  },
+  {
    "repo": "ishandutta2007/Awesome-Application-Portfolio-Management",
    "url": "https://github.com/ishandutta2007/Awesome-Application-Portfolio-Management",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-04",
    "kind": "Lists, catalogues and trend trackers",
-   "where": "README.md",
-   "where_url": "https://github.com/ishandutta2007/Awesome-Application-Portfolio-Management/blob/HEAD/README.md",
+   "where": "README: | **[Arc Kit](https://github.com/tractorjuice/arc-kit)** | [![Stars](https://img.shields.io/github/stars/tractorjuice/arc-kit?style=social&color=white)](https://github.com/tractorjuice/arc-kit",
+   "where_url": "https://github.com/ishandutta2007/Awesome-Application-Portfolio-Management#readme",
    "description": "Top Application Portfolio Management (Opensource)  Star if you like it! ",
-   "new": true
+   "new": false
   },
   {
    "repo": "ishandutta2007/Awesome-Sourcing-Procurement-Operations",
@@ -3164,7 +3172,7 @@
    "where": "README.md",
    "where_url": "https://github.com/ishandutta2007/Awesome-Sourcing-Procurement-Operations/blob/HEAD/README.md",
    "description": "Top Sourcing Procurement Operations (Opensource)  Star if you like it! ",
-   "new": true
+   "new": false
   },
   {
    "repo": "joaofix/fixturedb",
@@ -3183,7 +3191,7 @@
    "url": "https://github.com/junee12dec/JunVector",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-10-27",
+   "last_push": "2026-11-05",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "05-resources/ai-tools/arckit-enterprise-architecture-ai-toolkit.md",
    "where_url": "https://github.com/junee12dec/JunVector/blob/HEAD/05-resources/ai-tools/arckit-enterprise-architecture-ai-toolkit.md",
@@ -3195,7 +3203,7 @@
    "url": "https://github.com/kanosa0101/ai-research-tool",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "reports/daily_2026-04-20.md",
    "where_url": "https://github.com/kanosa0101/ai-research-tool/blob/HEAD/reports/daily_2026-04-20.md",
@@ -3207,7 +3215,7 @@
    "url": "https://github.com/kingcos/gh-daily",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "data/2026/04/18/daily.json",
    "where_url": "https://github.com/kingcos/gh-daily/blob/HEAD/data/2026/04/18/daily.json",
@@ -3231,7 +3239,7 @@
    "url": "https://github.com/labri-progress/what-are-they-doing",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-30",
+   "last_push": "2026-11-05",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "data/projects/newer_AI_intensive_projects.csv",
    "where_url": "https://github.com/labri-progress/what-are-they-doing/blob/HEAD/data/projects/newer_AI_intensive_projects.csv",
@@ -3267,7 +3275,7 @@
    "url": "https://github.com/liangkuku/github-trending-tracker",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "data/daily/2026/04/2026-04-19.md",
    "where_url": "https://github.com/liangkuku/github-trending-tracker/blob/HEAD/data/daily/2026/04/2026-04-19.md",
@@ -3279,7 +3287,7 @@
    "url": "https://github.com/longkum/trending-agent-skills",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "README: | [tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit) | 2,265 | 2025-10-14 | The Enterprise Architecture Governance Harness — strategy, architecture, delivery, and assurance using ",
    "where_url": "https://github.com/longkum/trending-agent-skills#readme",
@@ -3287,23 +3295,11 @@
    "new": false
   },
   {
-   "repo": "louis-lemon/tidbit-data",
-   "url": "https://github.com/louis-lemon/tidbit-data",
-   "owner_kind": "Person",
-   "stars": 0,
-   "last_push": "2026-11-01",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "v1/feed/engineering.json",
-   "where_url": "https://github.com/louis-lemon/tidbit-data/blob/HEAD/v1/feed/engineering.json",
-   "description": "",
-   "new": false
-  },
-  {
    "repo": "majlisofai/govkit",
    "url": "https://github.com/majlisofai/govkit",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-10-26",
+   "last_push": "2026-11-02",
    "kind": "README mentions",
    "where": "README: **A customizable governance overlay for [ArcKit](https://github.com/tractorjuice/arc-kit).** It adds commands, skills and agents for Claude Code.",
    "where_url": "https://github.com/majlisofai/govkit#readme",
@@ -3315,7 +3311,7 @@
    "url": "https://github.com/matthewww/github-trending",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "dashboard/data/archive/2026-04-19.json",
    "where_url": "https://github.com/matthewww/github-trending/blob/HEAD/dashboard/data/archive/2026-04-19.json",
@@ -3327,7 +3323,7 @@
    "url": "https://github.com/mbaneshi/github-awesome",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "data/2026-04-19.json",
    "where_url": "https://github.com/mbaneshi/github-awesome/blob/HEAD/data/2026-04-19.json",
@@ -3351,7 +3347,7 @@
    "url": "https://github.com/microfiche/github-explore",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "history/2026/04/19",
    "where_url": "https://github.com/microfiche/github-explore/blob/HEAD/history/2026/04/19",
@@ -3387,9 +3383,9 @@
    "url": "https://github.com/nitish3128/real_project",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "README mentions",
-   "where": "README: - [arc-kit](https://github.com/tractorjuice/arc-kit) - The Enterprise Architecture Governance Harness — strategy, architecture, delivery, and assurance using AI coding assistants ⭐2,267 `JavaS",
+   "where": "README: - [arc-kit](https://github.com/tractorjuice/arc-kit) - The Enterprise Architecture Governance Harness — strategy, architecture, delivery, and assurance using AI coding assistants ⭐2,276 `JavaS",
    "where_url": "https://github.com/nitish3128/real_project#readme",
    "description": "",
    "new": false
@@ -3411,7 +3407,7 @@
    "url": "https://github.com/pythias/trending-reports",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "data/history/20260420.json",
    "where_url": "https://github.com/pythias/trending-reports/blob/HEAD/data/history/20260420.json",
@@ -3423,7 +3419,7 @@
    "url": "https://github.com/qiao-925/news-digest",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "docs/news-digest-2026-04-19.md",
    "where_url": "https://github.com/qiao-925/news-digest/blob/HEAD/docs/news-digest-2026-04-19.md",
@@ -3447,23 +3443,23 @@
    "url": "https://github.com/ravisingh11/agentbay-ultimate-list",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "skills/security-and-privacy-65f61c-2.md",
    "where_url": "https://github.com/ravisingh11/agentbay-ultimate-list/blob/HEAD/skills/security-and-privacy-65f61c-2.md",
    "description": "Sourced and maintained by AgentBay: an MIT-licensed curated list of AI skills, agents, frameworks and tools, with JSON/CSV downloads.",
-   "new": true
+   "new": false
   },
   {
    "repo": "shoukai/apframework.com",
    "url": "https://github.com/shoukai/apframework.com",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Articles and posts",
    "where": "data/blog/essay/2026-05-16-ArcKit-AI-Architecture-Governance.mdx",
    "where_url": "https://github.com/shoukai/apframework.com/blob/HEAD/data/blog/essay/2026-05-16-ArcKit-AI-Architecture-Governance.mdx",
-   "description": "",
+   "description": "ApFramework：AI 智能体架构与实践、软件工程、开源项目和阅读思考",
    "new": false
   },
   {
@@ -3483,7 +3479,7 @@
    "url": "https://github.com/spock-wen/trending_analysis_report",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Lists, catalogues and trend trackers",
    "where": "COMMIT: fix(backfill domains): replace keyword-guessed domains with real GitHub data",
    "where_url": "https://github.com/spock-wen/trending_analysis_report/commit/6f8d6e753b48deaf1dc851febd2ffa6b13417974",
@@ -3495,7 +3491,7 @@
    "url": "https://github.com/srihari-tj/eccentric-echoes44880",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "data/derived/meta/tractorjuice__arc-kit.json",
    "where_url": "https://github.com/srihari-tj/eccentric-echoes44880/blob/HEAD/data/derived/meta/tractorjuice__arc-kit.json",
@@ -3519,7 +3515,7 @@
    "url": "https://github.com/surinkim/surinkim.github.io",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-07",
    "kind": "Articles and posts",
    "where": "normal/_posts/2026-04-25-weekly-dev-links-2026w17.md",
    "where_url": "https://github.com/surinkim/surinkim.github.io/blob/HEAD/normal/_posts/2026-04-25-weekly-dev-links-2026w17.md",
@@ -3531,7 +3527,7 @@
    "url": "https://github.com/theKMF/Kartmakare",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-10-29",
+   "last_push": "2026-11-02",
    "kind": "Commit messages and issues only",
    "where": "COMMIT: Add About modal, mobile subbar, animated zoom",
    "where_url": "https://github.com/theKMF/Kartmakare/commit/0b3d6de34f607452aeecb9425e197324b114d9ec",
@@ -3539,23 +3535,11 @@
    "new": false
   },
   {
-   "repo": "tkind94/Akron",
-   "url": "https://github.com/tkind94/Akron",
-   "owner_kind": "Person",
-   "stars": 0,
-   "last_push": "2026-07-13",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "research/01-tool-landscape.md",
-   "where_url": "https://github.com/tkind94/Akron/blob/HEAD/research/01-tool-landscape.md",
-   "description": "Local code exploration: find (semantic search), explain (symbol cards), explore (interactive map of every symbol in a repo). Deterministic similarity channels, Rust.",
-   "new": false
-  },
-  {
    "repo": "tomasyang2020/tomasyang2020.github.io",
    "url": "https://github.com/tomasyang2020/tomasyang2020.github.io",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-04",
    "kind": "Articles and posts",
    "where": "_posts/2026-04-19-Bot-GithubTrending-2026-04-19.md",
    "where_url": "https://github.com/tomasyang2020/tomasyang2020.github.io/blob/HEAD/_posts/2026-04-19-Bot-GithubTrending-2026-04-19.md",
@@ -3599,15 +3583,27 @@
    "new": false
   },
   {
+   "repo": "vgmartinez/tripcord",
+   "url": "https://github.com/vgmartinez/tripcord",
+   "owner_kind": "Person",
+   "stars": 0,
+   "last_push": "2026-11-06",
+   "kind": "Commit messages and issues only",
+   "where": "PR: Triage the 109 high findings on the 1,000-repository benign lock",
+   "where_url": "https://github.com/vgmartinez/tripcord/pull/94",
+   "description": "",
+   "new": true
+  },
+  {
    "repo": "viettdann/arclight-kit",
    "url": "https://github.com/viettdann/arclight-kit",
    "owner_kind": "Person",
    "stars": 0,
    "last_push": "2026-11-01",
-   "kind": "README mentions",
+   "kind": "Lists, catalogues and trend trackers",
    "where": "README: | Block a project's own skills, commands, and CLAUDE.md, or restore them | `/arc-kit:fresh-air` (user-invoked only) |",
    "where_url": "https://github.com/viettdann/arclight-kit#readme",
-   "description": "",
+   "description": "Claude Code plugin marketplace: UI design and review, planning-to-verification workflows, and .NET/Azure DevOps skills.",
    "new": false
   },
   {
@@ -3627,23 +3623,11 @@
    "url": "https://github.com/workrr-trust/ledger",
    "owner_kind": "Organisation",
    "stars": 0,
-   "last_push": "2026-11-02",
+   "last_push": "2026-11-09",
    "kind": "Lists, catalogues and trend trackers",
    "where": "COMMIT: ingest: 40 record(s) from 40 digests",
    "where_url": "https://github.com/workrr-trust/ledger/commit/1cd461d41d0fc92c4483b596a78472a35819fc97",
    "description": "Public, append-only index of workrr Trust certificates and our witness record of Sigstore Rekor",
-   "new": true
-  },
-  {
-   "repo": "xKai808/Hyo",
-   "url": "https://github.com/xKai808/Hyo",
-   "owner_kind": "Person",
-   "stars": 0,
-   "last_push": "2026-07-10",
-   "kind": "Docs, data and code that reference ArcKit",
-   "where": "kai/research/raw/2026-04-19.jsonl",
-   "where_url": "https://github.com/xKai808/Hyo/blob/HEAD/kai/research/raw/2026-04-19.jsonl",
-   "description": "",
    "new": false
   },
   {
@@ -3675,7 +3659,7 @@
    "url": "https://github.com/zwl4488-new/aiagent-club",
    "owner_kind": "Person",
    "stars": 0,
-   "last_push": "2026-11-01",
+   "last_push": "2026-11-08",
    "kind": "Docs, data and code that reference ArcKit",
    "where": "src/discovered.json",
    "where_url": "https://github.com/zwl4488-new/aiagent-club/blob/HEAD/src/discovered.json",
@@ -3685,14 +3669,204 @@
  ],
  "threads": [
   {
+   "date": "2026-11-08",
+   "repo": "terrygzhou/arc-kit",
+   "type": "PR",
+   "state": "closed",
+   "title": "refactor(arckit-mcp): carry split-out wiring to main",
+   "url": "https://github.com/terrygzhou/arc-kit/pull/7",
+   "author": "terrygzhou",
+   "new": true
+  },
+  {
+   "date": "2026-11-08",
+   "repo": "jonnyeclectic/boost",
+   "type": "PR",
+   "state": "closed",
+   "title": "feat(registries): catalogue 87 registries from the 2026-11-08 sweep",
+   "url": "https://github.com/jonnyeclectic/boost/pull/1345",
+   "author": "jonnyeclectic",
+   "new": true
+  },
+  {
+   "date": "2026-11-07",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "agent-skills.github.tractorjuice.arckit-codex: 6.19.0 → 6.20.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/119028",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-07",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "codex-marketplaces.github.tractorjuice.arckit-codex: 6.19.0 → 6.20.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/118743",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-07",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "codex-plugins.github.tractorjuice.arckit-codex: 6.19.0 → 6.20.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/118662",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-07",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "agent-skills.github.tractorjuice.arc-kit: 6.19.0 → 6.20.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/119027",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-07",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "codex-marketplaces.github.tractorjuice.arc-kit: 6.19.0 → 6.20.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/118742",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-07",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "claude-code-plugins.github.tractorjuice.arc-kit: 6.19.0 → 6.20.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/118564",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-07",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "claude-code-marketplaces.github.tractorjuice.arc-kit: 6.19.0 → 6.20.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/118412",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-06",
+   "repo": "terrygzhou/arc-kit",
+   "type": "PR",
+   "state": "closed",
+   "title": "feat(arckit-it4it): IT4IT v3.1 (S261) overlay plugin",
+   "url": "https://github.com/terrygzhou/arc-kit/pull/5",
+   "author": "terrygzhou",
+   "new": true
+  },
+  {
+   "date": "2026-11-05",
+   "repo": "vgmartinez/tripcord",
+   "type": "PR",
+   "state": "closed",
+   "title": "Triage the 109 high findings on the 1,000-repository benign lock",
+   "url": "https://github.com/vgmartinez/tripcord/pull/94",
+   "author": "vgmartinez",
+   "new": true
+  },
+  {
+   "date": "2026-11-04",
+   "repo": "jeremylongshore/bobs-big-brain-registrar",
+   "type": "PR",
+   "state": "closed",
+   "title": "feat(eval): prototype governed OKF exchange on fixtures",
+   "url": "https://github.com/jeremylongshore/bobs-big-brain-registrar/pull/450",
+   "author": "jeremylongshore",
+   "new": true
+  },
+  {
+   "date": "2026-11-02",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "agent-skills.github.tractorjuice.arckit-codex: 6.18.3 → 6.19.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/105687",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-02",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "codex-marketplaces.github.tractorjuice.arckit-codex: 6.18.3 → 6.19.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/105668",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-02",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "codex-plugins.github.tractorjuice.arckit-codex: 6.18.3 → 6.19.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/104979",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-02",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "agent-skills.github.tractorjuice.arc-kit: 6.18.3 → 6.19.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/105685",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-02",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "codex-marketplaces.github.tractorjuice.arc-kit: 6.18.3 → 6.19.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/105666",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-02",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "claude-code-marketplaces.github.tractorjuice.arc-kit: 6.18.3 → 6.19.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/105058",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
+   "date": "2026-11-02",
+   "repo": "sudosubin/agents.nix",
+   "type": "PR",
+   "state": "closed",
+   "title": "claude-code-plugins.github.tractorjuice.arc-kit: 6.18.3 → 6.19.0",
+   "url": "https://github.com/sudosubin/agents.nix/pull/104806",
+   "author": "agents-nix-bot[bot]",
+   "new": true
+  },
+  {
    "date": "2026-10-31",
    "repo": "MauriceIsrael/archinex",
    "type": "PR",
    "state": "closed",
-   "title": "feat(seed): ensemencement complet des 16 sujets LUMICC (seed:lulu)",
+   "title": "feat(seed): ensemencement complet des 16 sujets Lulu (seed:lulu)",
    "url": "https://github.com/MauriceIsrael/archinex/pull/213",
    "author": "MauriceIsrael",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-29",
@@ -3702,7 +3876,7 @@
    "title": "Task 3: the build status in REQ and TRAC",
    "url": "https://github.com/SpillwaveSolutions/prd-forge-viewer/issues/176",
    "author": "RichardHightower",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-29",
@@ -3712,7 +3886,7 @@
    "title": "Plan 8: close out release 1",
    "url": "https://github.com/SpillwaveSolutions/prd-forge-viewer/issues/173",
    "author": "RichardHightower",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-28",
@@ -3722,7 +3896,7 @@
    "title": "Update the PRD to 0.5.0 for PRD Forge 0.8.1",
    "url": "https://github.com/SpillwaveSolutions/prd-forge-viewer/pull/1",
    "author": "RichardHightower",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-28",
@@ -3732,7 +3906,7 @@
    "title": "Release 1 date, ArcKit remap, worklog, plan 1, and the first app build",
    "url": "https://github.com/SpillwaveSolutions/prd-forge-viewer/pull/4",
    "author": "RichardHightower",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-28",
@@ -3742,7 +3916,7 @@
    "title": "Update the PRD to 0.6.0 for PRD Forge 0.9.0",
    "url": "https://github.com/SpillwaveSolutions/prd-forge-viewer/pull/2",
    "author": "RichardHightower",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-28",
@@ -3752,7 +3926,7 @@
    "title": "Approve PRD 0.6.0 and add the release 1 backlog",
    "url": "https://github.com/SpillwaveSolutions/prd-forge-viewer/pull/3",
    "author": "RichardHightower",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-27",
@@ -3762,7 +3936,7 @@
    "title": "Add the ArcKit architecture documents for prd-forge",
    "url": "https://github.com/SpillwaveSolutions/prd-forge/pull/9",
    "author": "RichardHightower",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-27",
@@ -3772,7 +3946,7 @@
    "title": "Regrade the PRD after 0.8.1, and refresh the ArcKit requirements",
    "url": "https://github.com/SpillwaveSolutions/prd-forge/pull/10",
    "author": "RichardHightower",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-27",
@@ -3782,17 +3956,17 @@
    "title": "refactor(api-v1): router l'API v1 avec routeBuilder et des abilities",
    "url": "https://github.com/inclusion-numerique/coop-mediation-numerique/pull/703",
    "author": "marc-gavanier",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-27",
    "repo": "MauriceIsrael/archinex",
    "type": "PR",
    "state": "closed",
-   "title": "feat(seed): ensemencement LUMICC (Lulu) a l'etat juste apres ingestion",
+   "title": "feat(seed): ensemencement Lulu (Lulu) a l'etat juste apres ingestion",
    "url": "https://github.com/MauriceIsrael/archinex/pull/165",
    "author": "MauriceIsrael",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-27",
@@ -3802,7 +3976,7 @@
    "title": "Clear every blocking defect in the PRD, cite sources in the method (0.9.0)",
    "url": "https://github.com/SpillwaveSolutions/prd-forge/pull/11",
    "author": "RichardHightower",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3812,7 +3986,7 @@
    "title": "fix(pages): filter every gitignored path from the manifest and port the guard to Codex",
    "url": "https://github.com/johnfelipe/arc-kit/pull/27",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3822,7 +3996,7 @@
    "title": "fix(codex): drop PreToolUse allow for plugin Reads and script calls",
    "url": "https://github.com/johnfelipe/arc-kit/pull/19",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3832,7 +4006,7 @@
    "title": "fix(hooks): write docs/health.json without following symlinks",
    "url": "https://github.com/johnfelipe/arc-kit/pull/23",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3842,7 +4016,7 @@
    "title": "fix(codex): deny Bash commands that name a protected credential file",
    "url": "https://github.com/johnfelipe/arc-kit/pull/18",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3852,7 +4026,7 @@
    "title": "fix(hooks): fence session history and external file names in SessionStart context",
    "url": "https://github.com/johnfelipe/arc-kit/pull/24",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3862,7 +4036,7 @@
    "title": "fix(hooks): withhold reader replies that fail the handoff check",
    "url": "https://github.com/johnfelipe/arc-kit/pull/21",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3872,7 +4046,7 @@
    "title": "fix(hooks): resolve symlinks and anchor allowed dirs in file-protection",
    "url": "https://github.com/johnfelipe/arc-kit/pull/26",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3882,7 +4056,7 @@
    "title": "fix(import-okf): neutralise HTML from untrusted OKF bundles in RSCH notes",
    "url": "https://github.com/johnfelipe/arc-kit/pull/22",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3892,7 +4066,7 @@
    "title": "fix(hooks): confine validate-arc-filename to the project and stop creating directories",
    "url": "https://github.com/johnfelipe/arc-kit/pull/20",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3902,7 +4076,7 @@
    "title": "fix(kimi): normalise Kimi file-tool payloads and fail closed in security guards",
    "url": "https://github.com/johnfelipe/arc-kit/pull/25",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3912,7 +4086,7 @@
    "title": "fix(certification): make each quiz draw single-use and drop the score from a fail",
    "url": "https://github.com/johnfelipe/arc-kit/pull/17",
    "author": "devin-ai-integration[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3922,7 +4096,7 @@
    "title": "codex-marketplaces.github.tractorjuice.arckit-codex: 6.18.2 → 6.18.3",
    "url": "https://github.com/sudosubin/agents.nix/pull/85918",
    "author": "agents-nix-bot[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3932,7 +4106,7 @@
    "title": "codex-plugins.github.tractorjuice.arckit-codex: 6.18.2 → 6.18.3",
    "url": "https://github.com/sudosubin/agents.nix/pull/85838",
    "author": "agents-nix-bot[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3942,7 +4116,7 @@
    "title": "agent-skills.github.tractorjuice.arckit-codex: 6.18.2 → 6.18.3",
    "url": "https://github.com/sudosubin/agents.nix/pull/85657",
    "author": "agents-nix-bot[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3952,7 +4126,7 @@
    "title": "codex-marketplaces.github.tractorjuice.arc-kit: 6.18.2 → 6.18.3",
    "url": "https://github.com/sudosubin/agents.nix/pull/85916",
    "author": "agents-nix-bot[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3962,7 +4136,7 @@
    "title": "agent-skills.github.tractorjuice.arc-kit: 6.18.2 → 6.18.3",
    "url": "https://github.com/sudosubin/agents.nix/pull/85656",
    "author": "agents-nix-bot[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3972,7 +4146,7 @@
    "title": "claude-code-marketplaces.github.tractorjuice.arc-kit: 6.18.2 → 6.18.3",
    "url": "https://github.com/sudosubin/agents.nix/pull/85954",
    "author": "agents-nix-bot[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-26",
@@ -3982,7 +4156,7 @@
    "title": "claude-code-plugins.github.tractorjuice.arc-kit: 6.18.2 → 6.18.3",
    "url": "https://github.com/sudosubin/agents.nix/pull/85550",
    "author": "agents-nix-bot[bot]",
-   "new": true
+   "new": false
   },
   {
    "date": "2026-10-24",
@@ -4009,7 +4183,7 @@
    "repo": "MauriceIsrael/archinex",
    "type": "PR",
    "state": "closed",
-   "title": "feat(demo): précharger l'engagement LUMICC et l'audit ArcKit pour la démo sans clé API",
+   "title": "feat(demo): pr├®charger l'engagement Lulu et l'audit ArcKit pour la d├®mo sans cl├® API",
    "url": "https://github.com/MauriceIsrael/archinex/pull/149",
    "author": "MauriceIsrael",
    "new": false
@@ -4049,7 +4223,7 @@
    "repo": "MauriceIsrael/archinex",
    "type": "PR",
    "state": "closed",
-   "title": "fix(j0) [Hub —] : une clause d'automatisation n'est plus évacuée par le modèle seul (refs #132)",
+   "title": "fix(j0) [Hub ÔÇö] : une clause d'automatisation n'est plus ├®vacu├®e par le mod├¿le seul (refs #132)",
    "url": "https://github.com/MauriceIsrael/archinex/pull/136",
    "author": "MauriceIsrael",
    "new": false
@@ -4199,7 +4373,7 @@
    "repo": "MauriceIsrael/archinex",
    "type": "PR",
    "state": "closed",
-   "title": "Audit des exigences en étapes, suppression des données de démo et des replis fabriqués, retrait de SmartMemory, CI",
+   "title": "Audit des exigences en ├®tapes, suppression des donn├®es de d├®mo et des replis fabriqu├®s, retrait de SmartMemory, CI",
    "url": "https://github.com/MauriceIsrael/archinex/pull/45",
    "author": "MauriceIsrael",
    "new": false
@@ -5057,12 +5231,60 @@
  ],
  "commits": [
   {
+   "repo": "terrygzhou/arc-kit",
+   "commits": 44,
+   "latest": "2026-11-08",
+   "message": "Merge pull request #7 from terrygzhou/split-mcp-wiring",
+   "url": "https://github.com/terrygzhou/arc-kit/commit/2f6bf77446aa73924a493d4afc74037b16e923d5",
+   "new": true
+  },
+  {
+   "repo": "sudosubin/agents.nix",
+   "commits": 42,
+   "latest": "2026-11-07",
+   "message": "agent-skills.github.tractorjuice.arckit-codex: 6.19.0 → 6.20.0 (#119028)",
+   "url": "https://github.com/sudosubin/agents.nix/commit/d9dae849b7b0495f0f1b5c76e6f66e33bbb01348",
+   "new": true
+  },
+  {
+   "repo": "terrygzhou/terrygzhou.github.io",
+   "commits": 1,
+   "latest": "2026-11-07",
+   "message": "blog: publish codex-hooks/arckit post, update architects post, un-draft both",
+   "url": "https://github.com/terrygzhou/terrygzhou.github.io/commit/ce14339f72914a0897d6adebe4a0546f137fb16f",
+   "new": true
+  },
+  {
+   "repo": "feitianchengzi/arckit-skills",
+   "commits": 19,
+   "latest": "2026-11-06",
+   "message": "feat(install): 添加最小闭环安装选项并支持生成模板包",
+   "url": "https://github.com/feitianchengzi/arckit-skills/commit/cc68a00e98b7846c597e965e2cb29bec142b4076",
+   "new": true
+  },
+  {
+   "repo": "SpillwaveSolutions/prd-forge-viewer",
+   "commits": 7,
+   "latest": "2026-11-04",
+   "message": "prd: 0.7.2 names the approver and fixes the section 11 title (#225)",
+   "url": "https://github.com/SpillwaveSolutions/prd-forge-viewer/commit/55f6f53700fef2f0ea847b214a7554b0d02e7adf",
+   "new": true
+  },
+  {
+   "repo": "jeremylongshore/bobs-big-brain-registrar",
+   "commits": 1,
+   "latest": "2026-11-04",
+   "message": "feat(eval): prototype governed OKF exchange on fixtures (#450)",
+   "url": "https://github.com/jeremylongshore/bobs-big-brain-registrar/commit/7f85dd95196f5a517cf8addb8500c837711bf082",
+   "new": true
+  },
+  {
    "repo": "umag/swamp-workspace",
    "commits": 3,
    "latest": "2026-10-31",
    "message": "fix(arckit): ship overlay templates as per-plugin packs",
    "url": "https://github.com/umag/swamp-workspace/commit/7af90c4637216fc3418153342792a882ea544455",
-   "new": true
+   "new": false
   },
   {
    "repo": "workrr-trust/ledger",
@@ -5070,15 +5292,7 @@
    "latest": "2026-10-29",
    "message": "ingest: 40 record(s) from 40 digests",
    "url": "https://github.com/workrr-trust/ledger/commit/1cd461d41d0fc92c4483b596a78472a35819fc97",
-   "new": true
-  },
-  {
-   "repo": "SpillwaveSolutions/prd-forge-viewer",
-   "commits": 6,
-   "latest": "2026-10-28",
-   "message": "Merge pull request #4 from SpillwaveSolutions/worklog-init",
-   "url": "https://github.com/SpillwaveSolutions/prd-forge-viewer/commit/6d1aa4ed52c266a327c350e9c3038383087cc336",
-   "new": true
+   "new": false
   },
   {
    "repo": "SpillwaveSolutions/prd-forge",
@@ -5086,15 +5300,7 @@
    "latest": "2026-10-26",
    "message": "Merge pull request #10 from SpillwaveSolutions/regrade-0.8.1",
    "url": "https://github.com/SpillwaveSolutions/prd-forge/commit/5589384793d6bfa77d151407e9d8939f67730abd",
-   "new": true
-  },
-  {
-   "repo": "sudosubin/agents.nix",
-   "commits": 28,
-   "latest": "2026-10-26",
-   "message": "codex-marketplaces.github.tractorjuice.arckit-codex: 6.18.2 → 6.18.3 (#85918)",
-   "url": "https://github.com/sudosubin/agents.nix/commit/046a80884dda0a7b1b590fd9b0ccc694b72ae989",
-   "new": true
+   "new": false
   },
   {
    "repo": "MauriceIsrael/archinex",
@@ -5102,14 +5308,6 @@
    "latest": "2026-10-24",
    "message": "feat(demo): précharger l'engagement LUMICC et l'audit ArcKit pour la démo sans clé API (#149)",
    "url": "https://github.com/MauriceIsrael/archinex/commit/5f57ab6d4670fed88c0840d6756d4bae138649eb",
-   "new": false
-  },
-  {
-   "repo": "terrygzhou/arc-kit",
-   "commits": 36,
-   "latest": "2026-10-24",
-   "message": "docs: sync command counts and marketplace descriptions after solution-design",
-   "url": "https://github.com/terrygzhou/arc-kit/commit/583941cb05acdfcebb66c419f32bdd52bf83095f",
    "new": false
   },
   {
@@ -5542,7 +5740,7 @@
    "latest": "2026-04-17",
    "message": "feat(graphify): TopologySchema, IRI identity, unified PI defense, symposium",
    "url": "https://github.com/WeftOS/weftos/commit/83ef396119b2a7dc9b845b964f22c6fd080bc22a",
-   "new": true
+   "new": false
   },
   {
    "repo": "NicoMf2/ARC",
@@ -5574,14 +5772,6 @@
    "latest": "2026-03-01",
    "message": "Add ArcKit documentation site (docs/index.html + manifest.json)",
    "url": "https://github.com/athana-ch/DSA1/commit/d96832cc046d0186c84fea915fc188b8e85d0df4",
-   "new": false
-  },
-  {
-   "repo": "arckit11/AIVoicx",
-   "commits": 1,
-   "latest": "2026-02-26",
-   "message": "Merge pull request #22 from girishchandra-atvisai/arckit",
-   "url": "https://github.com/arckit11/AIVoicx/commit/849a9c13163c696ff1b8968b0fcacc252684f4e0",
    "new": false
   },
   {

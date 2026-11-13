@@ -144,7 +144,7 @@ Output: `projects/<id>/research/ARC-<id>-TNDR-<NNN>-v1.0.md`
 claude remote-control
 ```
 
-Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion. ArcKit's minimum Claude Code floor (v2.1.287) already covers the v2.1.110 RC requirement.
+Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion. ArcKit's minimum Claude Code floor (v2.1.319) already covers the v2.1.110 RC requirement.
 
 Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local `claude` process must keep running.
 
@@ -221,7 +221,7 @@ The reader returns evidence across five procurement portals, ranked internally b
 | **Input** | `/arckit:principles` | Commissioning buyer identified from ARC-000-PRIN |
 | **Output** | `/arckit:sobc` | Median award value anchors the Economic Case cost range |
 | **Output** | `/arckit:risk` | Concentration / single-supplier-dependency risk |
-| **Output** | `/arckit:research` | Build-vs-buy market context; TCO comparison |
+| **Output** | `/arckit:research` | Market context; real awarded values beside published prices |
 | **Output** | `/arckit:adr` | Data source, make-vs-buy, or route-to-market recorded as decisions |
 
 ---
@@ -230,7 +230,7 @@ The reader returns evidence across five procurement portals, ranked internally b
 
 - Anchor the Economic Case with real median award values (`/arckit:sobc`)
 - Register supplier-concentration or single-supplier-dependency risks (`/arckit:risk`)
-- Use market depth evidence in build-vs-buy analysis (`/arckit:research`)
+- Use market depth evidence in market research (`/arckit:research`)
 - Record route-to-market decisions as ADRs (`/arckit:adr`)
 - Escalate `HIGH` concentration findings to commercial lead before procurement scoping
 

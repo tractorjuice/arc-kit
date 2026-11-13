@@ -80,7 +80,7 @@ def main() -> int:
         if name in EXEMPT_COMMANDS:
             continue
         patterns = [
-            rf"/arckit(?:-[a-z-]+)?:{re.escape(name)}\b",
+            rf"/arckit(?:-[a-z0-9-]+)?:{re.escape(name)}\b",
             rf"commands/{re.escape(name)}\.md",
             rf"guides/{re.escape(name)}\.md",
         ]

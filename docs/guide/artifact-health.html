@@ -524,6 +524,18 @@
 </ol>
 <p><strong>Example scenario</strong>: A penetration test report (<code>pentest-report-q1.pdf</code>) is added to <code>external/</code> after the security assessment was written. The existing <code>ARC-001-SECD-v1.0.md</code> does not account for the findings in the new report. The STALE-EXT finding flags this gap and recommends re-running <code>/arckit:secure</code> and <code>/arckit:dpia</code> to incorporate the pentest results.</p>
 <hr />
+<h3 id="stale-view--out-of-date-generated-view">STALE-VIEW — Out-of-date Generated View</h3>
+<p><strong>Severity</strong>: MEDIUM</p>
+<p><strong>What it means</strong>: A generated view, an artifact with a Source Artefacts table such as an arc42 description or an SDD handover pack, was built from sources that have since changed. Either a source it cites now has a newer version, or a document of a type it cites (such as an ADR) exists that its table does not list. Cited global sources count too: when the architecture principles in <code>000-global</code> move to a new version, every view built from the old one is flagged.</p>
+<p><strong>Why it matters</strong>: A view summarises its sources and records the versions it read. Once a source moves on, the view describes an architecture its evidence no longer supports, and readers who rely on the view (reviewers, suppliers, a delivery team) work from out-of-date information.</p>
+<p><strong>How to resolve</strong>:</p>
+<ol>
+<li>Re-run the command named in the finding, for example <code>/arckit-arc42:arc42</code> for an arc42 description</li>
+<li>The command writes the next version beside the old one, and its Source Artefacts table records the current sources</li>
+<li>Do not edit the old view by hand: the sources are authoritative, and a regenerated view keeps the citations correct</li>
+</ol>
+<p><strong>Example scenario</strong>: The arc42 description <code>ARC-001-ARC42-v1.0.md</code> was assembled from <code>ARC-001-REQ-v1.0</code> and two ADRs. The requirements have since moved to v1.1 and a third ADR has been accepted. STALE-VIEW lists both and recommends re-running <code>/arckit-arc42:arc42</code>.</p>
+<hr />
 <h3 id="version-drift--version-drift">VERSION-DRIFT — Version Drift</h3>
 <p><strong>Severity</strong>: LOW</p>
 <p><strong>What it means</strong>: Multiple versions of the same artifact type exist for a project, and the latest version has not been updated in over 3 months. This suggests the artifact was being actively iterated but the iteration has stalled.</p>
@@ -576,6 +588,11 @@
 <td>Unincorporated External Files</td>
 <td>Any age</td>
 <td>External files newer than all artifacts indicate content not yet reflected in governance artifacts. No safe deferral window.</td>
+</tr>
+<tr>
+<td>Out-of-date Generated View</td>
+<td>Any newer source</td>
+<td>A view records the versions it was built from, so any newer source is a precise signal; regenerating it is cheap.</td>
 </tr>
 <tr>
 <td>Version Drift</td>

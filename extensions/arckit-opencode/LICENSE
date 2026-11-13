@@ -1,3 +1,11 @@
+The adapted arc42 template and the Q42-derived quality material (the arc42
+quality template and the Q42 classification in the arc42-quality command),
+including all copied and embedded text, are licensed under
+CC BY-SA 4.0, not the MIT grant below. See the templates' licence and
+attribution notice (arc42-LICENSE.md), https://arc42.org/license/ and
+https://quality.arc42.org. Original ArcKit implementation code remains
+MIT-licensed; project-specific content retains its own rights.
+
 MIT License
 
 Copyright (c) 2024 TractorJuice and Yehuda Korotkin

@@ -69,6 +69,12 @@ DOC_TYPES = {
     "OAAL":       {"name": "ADM Lite Sprint Mapping",                                       "category": "Architecture"},
     "OASEC":      {"name": "Agile Security",                                                "category": "Governance"},
     "OAGOV":      {"name": "Agile Governance",                                              "category": "Governance"},
+    # arc42 overlay
+    "ARC42":      {"name": "arc42 Architecture Description",                                "category": "Architecture"},
+    "QUAL":       {"name": "Quality Scenarios",                                             "category": "Architecture"},
+    "CONC":       {"name": "Crosscutting Concepts",                                         "category": "Architecture"},
+    "DEBT":       {"name": "Technical Debt Register",                                       "category": "Architecture"},
+    "SDDH":       {"name": "SDD Handover Pack",                                             "category": "Planning"},
     # Governance
     "RISK":       {"name": "Risk Register",                                                 "category": "Governance"},
     "TRAC":       {"name": "Traceability Matrix",                                           "category": "Governance"},
