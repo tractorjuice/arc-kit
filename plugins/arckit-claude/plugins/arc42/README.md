@@ -15,8 +15,10 @@ Recipe: `arc42-full` — principles, stakeholders, requirements, two ADRs, data 
 ## Requires arckit core plugin
 
 ```bash
-claude plugin install arckit arckit-arc42
+claude plugin install arckit-arc42 --marketplace tractorjuice/arckit-claude
 ```
+
+This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. It needs Claude Code 2.1.275 or later.
 
 Without `arckit` (core), the recipe cannot resolve the commands the description is assembled from (`arckit:requirements`, `arckit:diagram`, `arckit:adr`, etc.), and `validate-arc-filename` will not recognise the overlay's doc-type codes.
 

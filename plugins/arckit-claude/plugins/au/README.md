@@ -20,8 +20,10 @@ Recipe: `au-federal` (37 default targets across 13 build waves, plus optional de
 ## Requires arckit core plugin
 
 ```bash
-claude plugin install arckit arckit-au
+claude plugin install arckit-au --marketplace tractorjuice/arckit-claude
 ```
+
+This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. It needs Claude Code 2.1.275 or later.
 
 On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy-pasteable disable-chain hint while `arckit-au` is enabled — earlier versions silently broke this overlay. Without `arckit` (core), recipes won't resolve their foundation commands (`arckit:principles`, `arckit:requirements`, etc.) and `validate-arc-filename` won't recognise AU doc-type codes (`AUE8`, `AUISM`, `AUPIA`, `AUNDB`, `AUOT`, `AUSOCI`, `AUDSS`, `AUPSPF`, `AUAIA`, `AUDISP`).
 

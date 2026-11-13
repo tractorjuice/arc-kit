@@ -19,8 +19,10 @@ Recipe: `togaf-adm-full`.
 ## Requires arckit core plugin
 
 ```bash
-claude plugin install arckit arckit-togaf-adm
+claude plugin install arckit-togaf-adm --marketplace tractorjuice/arckit-claude
 ```
+
+This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. It needs Claude Code 2.1.275 or later.
 
 On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy-pasteable disable-chain hint while `arckit-togaf-adm` is enabled. Without `arckit` (core), the recipe will not resolve foundation commands (`arckit:principles`, `arckit:requirements`, etc.) and `validate-arc-filename` will not recognise TOGAF ADM doc-type codes (`ADMP`, `BPCM`, `APP`, `APPR`, `GAPA`, `TRANS`, `BORD`, `ACHG`, `REPO`).
 
