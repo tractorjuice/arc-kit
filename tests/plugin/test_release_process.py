@@ -128,6 +128,12 @@ def test_claude_standalone_marketplace_matches_plugin_version():
 
     assert marketplace["name"] == "arckit-claude"
     assert marketplace["metadata"]["version"] == "1.0.0"
+    # A plugin dropped from the list is uninstalled on users' machines, so a
+    # removal needs a `renames` entry or it leaves no trace for the user.
+    assert marketplace["forceRemoveDeletedPlugins"] is True
+    core_commands = len(list((standalone_path("claude") / "commands").glob("*.md")))
+    core_entry = next(p for p in marketplace["plugins"] if p["name"] == "arckit")
+    assert core_entry["description"].startswith(f"{core_commands} slash commands")
     assert len(marketplace["plugins"]) == len(EXPECTED_CLAUDE_MARKETPLACE_SOURCES)
 
     plugins = {plugin["name"]: plugin for plugin in marketplace["plugins"]}

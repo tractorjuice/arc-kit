@@ -16,8 +16,10 @@ Recipe: `agent-architecture` (foundation artefacts → inventory → design → 
 ## Requires arckit core plugin
 
 ```bash
-claude plugin install arckit arckit-agent-architecture
+claude plugin install arckit-agent-architecture --marketplace tractorjuice/arckit-claude
 ```
+
+This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. It needs Claude Code 2.1.275 or later.
 
 On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy-pasteable disable-chain hint while `arckit-agent-architecture` is enabled. Without `arckit` (core), the recipe will not resolve foundation commands (`arckit:principles`, `arckit:requirements`, etc.) and `validate-arc-filename` will not recognise agent architecture doc-type codes (`AAGI`, `AAGR`, `AAOV`, `AAIN`, `AASE`, `AAMT`).
 
