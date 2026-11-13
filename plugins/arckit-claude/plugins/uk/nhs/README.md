@@ -26,8 +26,10 @@ DUAA 2025 coverage, the assurance-domain register, the hazard-archetype checklis
 ## Requires arckit core plugin
 
 ```bash
-claude plugin install arckit arckit-uk-nhs
+claude plugin install arckit-uk-nhs --marketplace tractorjuice/arckit-claude
 ```
+
+This adds the `arckit-claude` marketplace if you haven't added it and installs `arckit` (core) with the plugin. It needs Claude Code 2.1.275 or later.
 
 Without `arckit` (core), recipes won't resolve their foundation commands (`arckit:principles`, `arckit:requirements`, `dpia`, `atrs`, etc.) and `validate-arc-filename` won't recognise NHS doc-type codes (`NHSDTAC`, `NHSMDR`).
 

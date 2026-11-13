@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **A plugin removed from the `arckit-claude` marketplace is now uninstalled for you.** The marketplace sets `forceRemoveDeletedPlugins`, so if a plugin is ever withdrawn, Claude Code removes it at the next session start and lists it under Flagged in `/plugin`, instead of leaving a copy that reports "not found in marketplace". No plugin is being removed.
+- **Eleven overlay READMEs give an install line that works in one step**: `claude plugin install <overlay> --marketplace tractorjuice/arckit-claude` adds the marketplace if needed and brings the core plugin with it (Claude Code 2.1.275 or later). The old line named no marketplace.
+
+### Fixed
+
+- **The core plugin's marketplace listing said 75 commands.** It has 76.
+
 ## [6.22.0] — 2026-11-12
 
 ### Changed
