@@ -127,11 +127,11 @@ function sanitizeText(text, path, errors) {
   text = text.normalize('NFKC').replace(INVISIBLE, '').replace(CONTROL, ' ');
   const token = SPECIAL_TOKEN.exec(text);
   if (token) {
-    errors.push({ path: pathOrRoot(path), msg: `contains transcript-shaped markup ${JSON.stringify(token[0])}; it is data, not conversation — remove it` });
+    errors.push({ path: pathOrRoot(path), msg: 'contains transcript-shaped markup (a tag such as <system> or <tool_result>, or a <|...|> token); it is data, not conversation — remove it' });
   }
   const turn = TURN_INDICATOR.exec(text);
   if (turn) {
-    errors.push({ path: pathOrRoot(path), msg: `contains a forged turn marker ${JSON.stringify(turn[0].trim())}; remove it` });
+    errors.push({ path: pathOrRoot(path), msg: 'contains a forged turn marker (a role word and a colon opening the text or following a blank line); remove it' });
   }
   return text;
 }
@@ -146,7 +146,12 @@ function sanitize(value, path, errors) {
       // key's invisible characters never reach an error message.
       const keyErrors = [];
       const key = sanitizeText(k, '', keyErrors);
-      const keyPath = `${path}/${key.replace(TAG_CHARS_ALL, '')}`;
+      // "/" and "~" are escaped as in a JSON pointer, so a key holding a
+      // slash stays one path segment.
+      // An empty key would read as its parent's path, so it gets a name no
+      // schema defines.
+      const segment = key.replace(TAG_CHARS_ALL, '').replace(/~/g, '~0').replace(/\//g, '~1');
+      const keyPath = `${path}/${segment === '' ? '(empty key)' : segment}`;
       for (const e of keyErrors) errors.push({ ...e, path: keyPath });
       out[key] = sanitize(v, keyPath, errors);
     }
@@ -168,7 +173,52 @@ export function checkHandoff(schema, rawPayload) {
   if (errors.length === 0) {
     validate(payload, schema, '', schema, errors);
   }
-  return errors.length === 0 ? { ok: true, payload } : { ok: false, errors };
+  return errors.length === 0 ? { ok: true, payload } : { ok: false, errors: reportable(errors, schema) };
+}
+
+// ── Error reporting ────────────────────────────────────────────────────
+
+// An error is read by the orchestrator, which holds Write, Edit and Bash, so
+// it must carry nothing the payload's author chose. Messages never quote a
+// value. A path is built from the payload's own keys, so it is walked against
+// the schema: a segment is kept only while it is a property the schema
+// defines at that position, or an index into an array the schema defines
+// there. The first segment that is neither is shown as UNKNOWN_KEY and the
+// path stops. Identical lines are reported once.
+export const UNKNOWN_KEY = '(unknown key)';
+
+function safePath(path, schema) {
+  if (path === '/' || path === '') return '/';
+  const out = [];
+  let node = schema;
+  for (const raw of path.split('/').slice(1)) {
+    const seg = decodeJsonPointer(raw);
+    if (node && node.$ref) node = resolveRef(node.$ref, schema);
+    if (node && node.properties && Object.hasOwn(node.properties, seg)) {
+      out.push(seg);
+      node = node.properties[seg];
+    } else if (node && node.items && /^\d{1,6}$/.test(seg)) {
+      out.push(seg);
+      node = node.items;
+    } else {
+      out.push(UNKNOWN_KEY);
+      break;
+    }
+  }
+  return `/${out.join('/')}`;
+}
+
+function reportable(errors, schema) {
+  const seen = new Set();
+  const out = [];
+  for (const e of errors) {
+    const path = safePath(e.path, schema);
+    const line = `${path}\u0000${e.msg}`;
+    if (seen.has(line)) continue;
+    seen.add(line);
+    out.push({ path, msg: e.msg });
+  }
+  return out;
 }
 
 function main(argv) {
@@ -190,7 +240,8 @@ function main(argv) {
   try {
     payload = JSON.parse(readFileSync(payloadPath, 'utf8'));
   } catch (e) {
-    emitErrors([{ path: '/', msg: `failed to parse payload: ${e.message}` }]);
+    // Not e.message: a JSON parse error quotes the text around the fault.
+    emitErrors([{ path: '/', msg: `failed to read payload: ${e instanceof SyntaxError ? 'it is not valid JSON' : 'the file could not be read'}` }]);
     process.exit(1);
   }
 
@@ -241,7 +292,7 @@ function validate(value, schemaNode, path, root, errors) {
     if (!schemaNode.enum.some(allowed => deepEqual(allowed, value))) {
       errors.push({
         path: pathOrRoot(path),
-        msg: `must be one of allowlist (${schemaNode.enum.length} values); got ${JSON.stringify(value)}`,
+        msg: `must be one of the ${schemaNode.enum.length} values the schema allows${allowedList(schemaNode.enum)}; the value given is not one of them`,
       });
     }
   }
@@ -301,19 +352,19 @@ function validate(value, schemaNode, path, root, errors) {
     if (schemaNode.required) {
       for (const key of schemaNode.required) {
         if (!(key in value)) {
-          errors.push({ path: `${pathOrRoot(path)}/${key}`, msg: 'required property missing' });
+          errors.push({ path: `${path}/${key}`, msg: 'required property missing' });
         }
       }
     }
     if (schemaNode.additionalProperties === false && schemaNode.properties) {
-      const allowed = new Set(Object.keys(schemaNode.properties));
-      for (const key of Object.keys(value)) {
-        if (!allowed.has(key)) {
-          errors.push({
-            path: `${pathOrRoot(path)}/${key}`,
-            msg: `unknown property (additionalProperties: false) {"additionalProperty":"${key}"}`,
-          });
-        }
+      // One line for the object, naming the schema's keys and not the payload's.
+      const allowed = Object.keys(schemaNode.properties);
+      const unknown = Object.keys(value).filter(key => !Object.hasOwn(schemaNode.properties, key)).length;
+      if (unknown > 0) {
+        errors.push({
+          path: pathOrRoot(path),
+          msg: `has ${unknown} unknown ${unknown === 1 ? 'property' : 'properties'} (additionalProperties: false); the keys the schema allows here are: ${allowed.join(', ')}`,
+        });
       }
     }
     if (schemaNode.properties) {
@@ -330,6 +381,13 @@ function validate(value, schemaNode, path, root, errors) {
 
 function emitErrors(errs) {
   console.log(JSON.stringify({ ok: false, errors: errs }, null, 2));
+}
+
+/** The schema's own enum values, listed when they are short enough to help. */
+function allowedList(values) {
+  if (!values.every(v => typeof v === 'string' || typeof v === 'number' || typeof v === 'boolean' || v === null)) return '';
+  const list = values.map(v => JSON.stringify(v)).join(', ');
+  return list.length <= 160 ? ` (${list})` : '';
 }
 
 function pathOrRoot(path) {
