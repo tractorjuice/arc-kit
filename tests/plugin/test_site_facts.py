@@ -49,3 +49,13 @@ def test_home_agent_figure_matches_the_agents_folder():
     stated = one(r'<div class="app-stat-number">(\d+)</div>\s*<div class="app-stat-label">Agents</div>',
                  read("index.html"), "Agents figure on index.html")
     assert int(stated) == agents
+
+
+def test_plugin_page_figures_match_the_plugin():
+    page = read("claude-code-plugin.html")
+    core = len(list((CORE / "commands").glob("*.md")))
+    agents = len(list((CORE / "agents").glob("arckit-*.md")))
+    commands = set(re.findall(r"(\d+) commands", page))
+    assert commands == {str(core)}, commands
+    stated = set(re.findall(r"(\d+) agents", page))
+    assert stated == {str(agents)}, stated
