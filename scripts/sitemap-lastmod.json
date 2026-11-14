@@ -15,6 +15,10 @@
     "lastmod": "2026-10-14",
     "text_sha256": "66823de899ed8f9b2fb1c0e50c6cbcdda44fd131d646ac925d02ecf23fc51572"
   },
+  "claude-code-plugin.html": {
+    "lastmod": "2026-11-13",
+    "text_sha256": "0c026deccab06cfabd30a3108c1d5c2976a0004971ca762281cc841882f4e70c"
+  },
   "commands.html": {
     "lastmod": "2026-11-10",
     "text_sha256": "5588477537625e75e0281a97a137025bf1c861c0490d5e36fe29669b8a593cbd"
@@ -36,8 +40,8 @@
     "text_sha256": "00a39ac1aac6c32fbbf6ef7ae53116933583b0649e92aa2d208b06372f15b813"
   },
   "getting-started.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "5b41801c5e7f3fb3fabc58fd1cd3a891f511b18a10b0fc40a6e935aa6052125d"
+    "lastmod": "2026-11-13",
+    "text_sha256": "be8e5c90ab944c2a3992d0d62357464ebfa44139ed46b2aeac3ca6b48f286fce"
   },
   "guide/adm-preliminary.html": {
     "lastmod": "2026-07-01",
@@ -1092,24 +1096,24 @@
     "text_sha256": "62bdad0edc0a685ea324b63486c67f95cb7cb594a130f54d3cbf9d75aeb4abcc"
   },
   "index.html": {
-    "lastmod": "2026-11-12",
-    "text_sha256": "65dc82d132eda15fb4cffdfb9842176cdb79e91148232e607ba1b7c63ae248cf"
+    "lastmod": "2026-11-13",
+    "text_sha256": "3b486e1d883cb19d43e7da35dcf0b60121efbcb69f597b3e3ca0c3fe1a1ef625"
   },
   "llms.txt": {
-    "lastmod": "2026-11-10",
-    "text_sha256": "463bd98171c4b1779f67cb41e8605f9062ab9db720ffeb9204e901f11456aaca"
+    "lastmod": "2026-11-13",
+    "text_sha256": "5ef9c6290092757f887b08a04606d29d37eb4fc4d04d8cdcbaf4f29173e0a94c"
   },
   "on-github.html": {
     "lastmod": "2026-11-09",
     "text_sha256": "f29160b31a049e282373bae0870a04ec6c73826e1b7f58f280dc786e9879d9df"
   },
   "privacy.html": {
-    "lastmod": "2026-11-03",
-    "text_sha256": "6efacf5932f519c54c4d7ed7eb90b5bb8d69fa1b0eeb27bf13010efe16728ef0"
+    "lastmod": "2026-11-14",
+    "text_sha256": "44f57ebf52ed6cc19bcddac0c8ea6da0a0254a500a040bf1e18ab0cdc62864a8"
   },
   "public-sector.html": {
-    "lastmod": "2026-10-18",
-    "text_sha256": "4b87848402912e00d31bf1ba2d6086bde1573d81eb2f91edebdf55bc84e59cc0"
+    "lastmod": "2026-11-13",
+    "text_sha256": "ef6c9382951ce9958339b195708fe7a6ae3fb3ce933135d90a663137d0d2578c"
   },
   "roles.html": {
     "lastmod": "2026-06-15",

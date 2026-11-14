@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SX6P1GM31K"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-SX6P1GM31K');
+    </script>
+    <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="ArcKit is a free, open-source Claude Code plugin for enterprise architecture and architecture documentation. Its 76 commands write requirements, architecture decision records, C4 diagrams, Wardley Maps and traceability matrices into your repository.">
+    <title>Claude Code Plugin for Enterprise Architecture | ArcKit</title>
+    <meta name="keywords" content="Claude Code plugin, enterprise architecture, architecture documentation, architecture decision records, requirements, C4 diagrams, Wardley Maps, traceability, TOGAF, arc42, ArcKit">
+    <meta name="author" content="ArcKit">
+    <meta property="og:title" content="Claude Code Plugin for Enterprise Architecture | ArcKit">
+    <meta property="og:description" content="ArcKit is a free, open-source Claude Code plugin for enterprise architecture and architecture documentation. Its 76 commands write requirements, architecture decision records, C4 diagrams, Wardley Maps and traceability matrices into your repository.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arckit.org/claude-code-plugin.html">
+    <meta property="og:site_name" content="ArcKit">
+    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Claude Code Plugin for Enterprise Architecture | ArcKit">
+    <meta name="twitter:description" content="ArcKit is a free, open-source Claude Code plugin for enterprise architecture and architecture documentation. Its 76 commands write requirements, architecture decision records, C4 diagrams, Wardley Maps and traceability matrices into your repository.">
+    <meta name="twitter:image" content="https://arckit.org/og-image.png">
+    <link rel="canonical" href="https://arckit.org/claude-code-plugin.html">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="assets/favicon-192.png">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- GOV.UK Frontend v5.13.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+    <link rel="stylesheet" href="theme.css?v=4.12.3">
+    <link rel="stylesheet" href="heroes.css?v=4.12.3">
+
+    <style>
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+
+        [class*="govuk-"] {
+            font-family: inherit;
+        }
+
+        /* Nav Bar */
+        .app-nav-bar {
+            background: #0B1F33;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #505a5f;
+        }
+
+        .app-nav-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-nav-bar__list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-nav-bar__item a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            border-top: 3px solid transparent;
+            border-bottom: 3px solid transparent;
+        }
+
+        .app-nav-bar__item a:hover,
+        .app-nav-bar__item a:focus {
+            background: #1d1d1d;
+            border-bottom-color: #1d70b8;
+            color: #ffffff;
+        }
+
+        .app-nav-bar__item--active a {
+            border-bottom-color: #1d70b8;
+        }
+
+        .app-nav-bar__brand {
+            color: #ffffff;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            display: block;
+        }
+
+        .app-nav-bar__brand:hover,
+        .app-nav-bar__brand:focus {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .app-nav-bar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 48em) {
+            .app-nav-bar__toggle { display: block; }
+            .app-nav-bar__list { display: none; flex-direction: column; width: 100%; }
+            .app-nav-bar__list--open { display: flex; }
+            .app-nav-bar__inner { flex-wrap: wrap; }
+            .app-nav-bar__item a { padding: 0.75rem 1rem; border-bottom: none; border-left: 3px solid transparent; }
+            .app-nav-bar__item a:hover,
+            .app-nav-bar__item a:focus { border-left-color: #1d70b8; border-bottom: none; }
+            .app-nav-bar__item--active a { border-left-color: #1d70b8; border-bottom: none; }
+        }
+
+        /* Plugin page */
+        .app-ps-section { margin-bottom: 3rem; }
+        .app-ps-section__heading { border-left: 4px solid #1d70b8; padding-left: 1rem; }
+        .app-ps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+        .app-ps-card {
+            border: 2px solid #b1b4b6;
+            padding: 1.25rem;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: border-color 0.15s;
+        }
+        a.app-ps-card:hover { border-color: #1d70b8; background: #f8f8f8; }
+        .app-ps-card__title { font-weight: 700; color: #1d70b8; font-size: 1.125rem; margin-bottom: 0.5rem; }
+        .app-ps-card__badge {
+            display: inline-block;
+            background: #1d70b8;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 2px;
+            font-weight: 700;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+        .app-ps-card__desc { color: #505a5f; font-size: 0.875rem; margin-top: 0.5rem; }
+        .app-ps-cta {
+            border: 3px solid #00703c;
+            padding: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .app-ps-cta .govuk-button { margin-bottom: 0; margin-right: 1rem; }
+        html.dark-mode .app-ps-card { border-color: #555555; background: #2a2a2a; }
+        html.dark-mode a.app-ps-card:hover { border-color: #4da3ff; background: #333333; }
+        html.dark-mode .app-ps-card__title { color: #4da3ff; }
+        html.dark-mode .app-ps-card__desc { color: #a0a8b0; }
+        .app-plugin-code { background: #f3f2f1; border-left: 4px solid #1d70b8; padding: 0.75rem 1rem; margin: 0 0 1.25rem; overflow-x: auto; font-size: 1rem; }
+        .app-plugin-code code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+        html.dark-mode .app-plugin-code { background: #2a2a2a; border-left-color: #4da3ff; color: #f3f2f1; }
+        /* Footer */
+        .app-footer {
+            background: #0b0c0c;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .app-footer a { color: white; text-decoration: underline; }
+        .app-footer a:hover { color: #5694ca; }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "@id": "https://arckit.org/claude-code-plugin.html",
+                "name": "Claude Code Plugin for Enterprise Architecture | ArcKit",
+                "description": "ArcKit is a free, open-source Claude Code plugin for enterprise architecture and architecture documentation. Its 76 commands write requirements, architecture decision records, C4 diagrams, Wardley Maps and traceability matrices into your repository.",
+                "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://arckit.org/" },
+                    { "@type": "ListItem", "position": 2, "name": "Claude Code plugin", "item": "https://arckit.org/claude-code-plugin.html" }
+                ]
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://arckit.org/claude-code-plugin.html#faq",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Is there a Claude Code plugin for enterprise architecture?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. ArcKit is a free, open-source Claude Code plugin for enterprise architecture and architecture documentation. It adds 76 commands that write requirements, architecture decision records, diagrams, Wardley Maps, design reviews and traceability matrices into your repository as Markdown."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Which marketplace do I add?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Add tractorjuice/arckit-claude, then install the arckit plugin from it. An older address, tractorjuice/arc-kit, lists the same plugins under the same names, so adding both registers everything twice. If you added the old one, remove it."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is it free?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. ArcKit is MIT licensed, with no subscription and no usage data collected."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is it only for UK government?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No. The core plugin covers general enterprise architecture: principles, stakeholders, requirements, risk, decisions, diagrams, design reviews and traceability. It also carries the UK Government standards, and separate overlay plugins add other countries, sectors and methods."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Does it work outside Claude Code?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. The same commands and templates ship for Codex CLI, Gemini CLI, GitHub Copilot, OpenCode CLI, Mistral Vibe and Kimi Code CLI. Claude Code gets the most: the automatic checks, the research agents and the parallel build."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Does it replace Ardoq, LeanIX or an ArchiMate modelling tool?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "No. Those hold your inventory and your models. ArcKit writes the documents a design authority, an assurance review or a procurement asks for. It doesn't model in ArchiMate. Put an export from your modelling tool in the project and ArcKit uses it as a cited source."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "a4b4e15f35cb42dabf00541df4adfa72"}'></script><!-- End Cloudflare Web Analytics -->
+</head>
+<body class="govuk-template__body">
+    <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <nav class="app-nav-bar" aria-label="Main navigation">
+        <div class="govuk-width-container app-nav-bar__inner">
+            <a href="index.html" class="app-nav-bar__brand">ArcKit</a>
+            <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
+            <ul class="app-nav-bar__list" id="nav-menu">
+                <li class="app-nav-bar__item"><a href="commands.html">AI Commands</a></li>
+                <li class="app-nav-bar__item"><a href="use-cases.html">Example Projects</a></li>
+                <li class="app-nav-bar__item"><a href="guides.html">Guides</a></li>
+                <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
+                <li class="app-nav-bar__item"><a href="articles.html">Articles</a></li>
+                <li class="app-nav-bar__item"><a href="getting-started.html">Getting Started</a></li>
+                <li class="app-nav-bar__item"><a href="contributors.html">Contributors</a></li>
+                <li class="app-nav-bar__item"><a href="fde/">FDE</a></li>
+            </ul>
+            <div class="app-nav-bar__icons">
+                <a href="https://github.com/tractorjuice/arc-kit" class="app-icon-link" aria-label="GitHub repository" title="GitHub repository">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                </a>
+                <a href="https://discord.gg/HsA4Y3hQ4" target="_blank" rel="noopener" class="app-icon-link" aria-label="Discord community" title="Discord community">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/company/arckit-org/" target="_blank" rel="noopener" class="app-icon-link" aria-label="ArcKit on LinkedIn" title="ArcKit on LinkedIn">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z"/></svg>
+                </a>
+                <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-page-hero app-page-hero--roles">
+        <div class="govuk-width-container app-page-hero__content">
+            <span class="app-page-hero__stat">Claude Code plugin</span>
+            <h1 class="app-page-hero__title">A Claude Code plugin for enterprise architecture</h1>
+            <p class="app-page-hero__description">ArcKit is a free, open-source Claude Code plugin for enterprise architecture and architecture documentation. Its 76 commands write requirements, decision records, diagrams and design reviews into your repository.</p>
+        </div>
+    </div>
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-width-container">
+            <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
+
+            <!-- Install -->
+            <div class="app-ps-section">
+                <h2 class="govuk-heading-l app-ps-section__heading">Install it</h2>
+                <p class="govuk-body">In Claude Code, add the ArcKit marketplace:</p>
+                <pre class="app-plugin-code"><code>/plugin marketplace add tractorjuice/arckit-claude</code></pre>
+                <p class="govuk-body">Then install the plugin from the Discover tab, or from a terminal:</p>
+                <pre class="app-plugin-code"><code>claude plugin install arckit@arckit-claude</code></pre>
+                <p class="govuk-body">Open a project and run <code>/arckit:start</code>. It looks at what the project already has and tells you which command to run next. <a href="getting-started.html" class="govuk-link">Getting started</a> has the full steps.</p>
+            </div>
+
+            <!-- What it writes -->
+            <div class="app-ps-section">
+                <h2 class="govuk-heading-l app-ps-section__heading">What it writes</h2>
+                <p class="govuk-body">Each command writes one document from a template, using what's already in your project. You review it, fix it and sign it off. Every document is Markdown in your repository, with an ID, a version and a status.</p>
+                <div class="app-ps-grid">
+                    <a href="guide/requirements.html" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Requirements</div>
+                        <span class="app-ps-card__badge">/arckit:requirements</span>
+                        <div class="app-ps-card__desc">Business, functional, non-functional, integration and data requirements, each with an ID the later documents refer to.</div>
+                    </a>
+                    <a href="guide/adr.html" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Architecture decision records</div>
+                        <span class="app-ps-card__badge">/arckit:adr</span>
+                        <div class="app-ps-card__desc">One decision per record, with the options you weighed and the requirements it answers.</div>
+                    </a>
+                    <a href="guide/diagram.html" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Architecture diagrams</div>
+                        <span class="app-ps-card__badge">/arckit:diagram</span>
+                        <div class="app-ps-card__desc">C4 context, container and component diagrams in Mermaid or PlantUML, kept as text in your repository.</div>
+                    </a>
+                    <a href="guide/wardley.html" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Wardley Maps</div>
+                        <span class="app-ps-card__badge">/arckit:wardley</span>
+                        <div class="app-ps-card__desc">A map of your value chain to support build, buy or reuse decisions.</div>
+                    </a>
+                    <a href="guide/traceability.html" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Traceability matrix</div>
+                        <span class="app-ps-card__badge">/arckit:traceability</span>
+                        <div class="app-ps-card__desc">Every requirement followed through to the design and tests that cover it, with the gaps listed.</div>
+                    </a>
+                    <a href="guide/hld-review.html" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Design reviews</div>
+                        <span class="app-ps-card__badge">/arckit:hld-review</span>
+                        <div class="app-ps-card__desc">A high-level design checked against your principles and requirements, with a second read by reviewers that haven't seen the draft findings.</div>
+                    </a>
+                    <a href="guide/principles.html" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Architecture principles</div>
+                        <span class="app-ps-card__badge">/arckit:principles</span>
+                        <div class="app-ps-card__desc">The principles every later document is checked against.</div>
+                    </a>
+                    <a href="guide/risk.html" class="app-ps-card govuk-link--no-visited-state">
+                        <div class="app-ps-card__title">Risk register</div>
+                        <span class="app-ps-card__badge">/arckit:risk</span>
+                        <div class="app-ps-card__desc">Risks scored and linked to the requirements they threaten.</div>
+                    </a>
+                </div>
+                <p class="govuk-body govuk-!-margin-top-4">That's eight of 76 commands. The rest cover stakeholders, business cases, data models, research, procurement, security and operations. <a href="commands.html" class="govuk-link">See all commands</a>.</p>
+            </div>
+
+            <!-- What's in it -->
+            <div class="app-ps-section">
+                <h2 class="govuk-heading-l app-ps-section__heading">What's in the plugin</h2>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><strong>76 commands</strong>, each with its own template and usage guide.</li>
+                    <li><strong>38 agents.</strong> Research runs in separate agents, so dozens of web pages and documentation searches don't fill your conversation.</li>
+                    <li><strong>Automatic checks.</strong> They run whatever the AI does: they correct file names and numbering, stop keys and passwords being written into documents, and record how each document was made.</li>
+                    <li><strong>Seven connected sources:</strong> AWS, Microsoft and Google Cloud documentation, UK government code, UK public tenders, Data Commons statistics and Trello.</li>
+                    <li><strong>A parallel build.</strong> <code>/arckit:build</code> writes a whole set of documents from a recipe, in dependency order. <a href="guide/build.html" class="govuk-link">Read the build guide</a>.</li>
+                </ul>
+            </div>
+
+            <!-- Difference -->
+            <div class="app-ps-section">
+                <h2 class="govuk-heading-l app-ps-section__heading">How it differs from documentation plugins</h2>
+                <p class="govuk-body">Most architecture plugins for Claude Code read your code and describe what's there: a C4 diagram, an API reference, a decision record for a change you've just made. That's useful, and it starts from the code.</p>
+                <p class="govuk-body">ArcKit starts earlier, with stakeholders, goals and requirements, and carries them through to the design.</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><strong>Documents are linked.</strong> A decision record names the requirements it answers. A design review checks the design against your principles. The traceability matrix shows what nothing covers yet.</li>
+                    <li><strong>Documents are controlled.</strong> Each one has an ID, a version, an owner, a status and a review date, and starts as a draft.</li>
+                    <li><strong>Claims cite their sources.</strong> When a document draws on a policy, a vendor's submission or a web page, the claim points to it.</li>
+                </ul>
+                <p class="govuk-body">The two kinds work together. Use a code-analysis plugin to describe the system you have, and ArcKit to govern the one you're changing.</p>
+            </div>
+
+            <!-- Overlays -->
+            <div class="app-ps-section">
+                <h2 class="govuk-heading-l app-ps-section__heading">TOGAF, arc42 and other overlays</h2>
+                <p class="govuk-body">The same marketplace holds 19 more plugins. Install only the ones you need.</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><strong>Methods:</strong> TOGAF ADM (<code>arckit-togaf-adm</code>), arc42 (<code>arckit-arc42</code>) and Open Agile Architecture (<code>arckit-oaa</code>).</li>
+                    <li><strong>Countries:</strong> the EU, France, the Netherlands, Austria, Canada, the UAE, Australia and the USA.</li>
+                    <li><strong>Sectors:</strong> UK NHS clinical safety, UK financial services payments, UK legacy IT and Australian energy.</li>
+                    <li><strong>AI systems:</strong> an overlay for the architecture of AI agents.</li>
+                </ul>
+                <p class="govuk-body">The <a href="commands.html" class="govuk-link">command reference</a> lists every overlay command. UK government teams can start with <a href="public-sector.html" class="govuk-link">ArcKit for the UK public sector</a>.</p>
+            </div>
+
+            <!-- FAQ -->
+            <div class="app-ps-section">
+                <h2 class="govuk-heading-l app-ps-section__heading">Questions people ask</h2>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Is there a Claude Code plugin for enterprise architecture?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">Yes. ArcKit is a free, open-source Claude Code plugin for enterprise architecture and architecture documentation. It adds 76 commands that write requirements, architecture decision records, diagrams, Wardley Maps, design reviews and traceability matrices into your repository as Markdown.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Which marketplace do I add?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">Add <code>tractorjuice/arckit-claude</code>, then install the <code>arckit</code> plugin from it. An older address, <code>tractorjuice/arc-kit</code>, lists the same plugins under the same names, so adding both registers everything twice. If you added the old one, remove it.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Is it free?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">Yes. ArcKit is MIT licensed, with no subscription and no usage data collected.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Is it only for UK government?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">No. The core plugin covers general enterprise architecture: principles, stakeholders, requirements, risk, decisions, diagrams, design reviews and traceability. It also carries the UK Government standards, and separate overlay plugins add other countries, sectors and methods.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Does it work outside Claude Code?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">Yes. The same commands and templates ship for Codex CLI, Gemini CLI, GitHub Copilot, OpenCode CLI, Mistral Vibe and Kimi Code CLI. Claude Code gets the most: the automatic checks, the research agents and the parallel build. <a href="getting-started.html" class="govuk-link">Getting started</a> covers each assistant.</p>
+                    </div>
+                </details>
+
+                <details class="govuk-details">
+                    <summary class="govuk-details__summary"><span class="govuk-details__summary-text">Does it replace Ardoq, LeanIX or an ArchiMate modelling tool?</span></summary>
+                    <div class="govuk-details__text">
+                        <p class="govuk-body">No. Those hold your inventory and your models. ArcKit writes the documents a design authority, an assurance review or a procurement asks for. It doesn't model in ArchiMate. Put an export from your modelling tool in the project and ArcKit uses it as a cited source.</p>
+                    </div>
+                </details>
+            </div>
+
+            <!-- CTA -->
+            <div class="app-ps-cta">
+                <h2 class="govuk-heading-m">Try it on a project</h2>
+                <p class="govuk-body">Install the plugin, open a repository and run <code>/arckit:start</code>. The <a href="use-cases.html" class="govuk-link">example projects</a> show what a finished set of documents looks like.</p>
+                <a href="getting-started.html" class="govuk-button" data-module="govuk-button">Get started</a>
+                <a href="https://github.com/tractorjuice/arc-kit" class="govuk-button govuk-button--secondary" data-module="govuk-button">View on GitHub</a>
+            </div>
+        </div>
+    </main>
+    <footer class="app-footer">
+        <div class="govuk-width-container">
+            <p class="govuk-body-s"><a href="index.html" class="govuk-link">Back to ArcKit</a> | <a href="https://github.com/tractorjuice/arc-kit" class="govuk-link">GitHub</a> | MIT License</p>
+        </div>
+    </footer>
+
+    <!-- GOV.UK Frontend JavaScript -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js" integrity="sha384-DwGEYeDIkSBDH4+n4Z+tY7m0/hKLvETQmD6glhDiHn0lFo3hffImqh39zfNvHVrd" crossorigin="anonymous"></script>
+    <script type="module">
+        import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
+        initAll()
+    </script>
+<script src="theme.js"></script>
+</body>
+</html>
