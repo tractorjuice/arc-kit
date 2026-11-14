@@ -66,6 +66,7 @@ This command assesses against **local extracts**, not against remembered NORA or
    | `manual` | The extract was placed by hand or built from a local file, or a file at the extract's name is not an extract; it is not checked against the live source | Continue; quote the line's `note` in *Source limitations*, where it shows that the extract's currency was not checked |
    | `offline` | The source could not be reached, or the extract could not be written; the existing extract files are kept | Continue; quote the line's `note` and `error` in *Source limitations*. The note says what failed and whether the files on disk are a complete set; a newer source version may exist |
    | `missing` | No extract, and none could be built or written | Stop (point 3), quoting the line's `note` and `error` |
+   | *no status line: a usage message, exit code 2* | The call itself was wrong, for example a `--dir` outside the project; nothing was fetched or written | Run the command above again exactly as shown, from the repository root. If the message comes back, stop without writing an artefact and quote it |
 
    Wherever you quote a line's `error`, put it in a code span: it can carry a server's text, which the script cuts to one line.
 
@@ -76,6 +77,7 @@ This command assesses against **local extracts**, not against remembered NORA or
    - **The extract could not be written** (status `missing`, note `the extract could not be written`): quote the `error`, which names the file and the reason, such as a permission or a file held open by another program. An offline build would fail on the same write, so do not offer it; the user fixes the cause and re-runs.
    - **A file at the extract's name is not an extract** (status `manual`, note `not an extract: …`): name the file and quote the note. The script leaves the file alone; the user moves it aside, or re-runs the script with `--force` to replace it.
    - **The script is missing** from this installation: they can place an extract in `projects/000-global/external/` by hand. Do not offer the script you just reported missing.
+   - **Python is not available**, so the script could not run: they can install Python 3 and re-run, or place an extract in `projects/000-global/external/` by hand.
 
    Do not fall back to NORA content from memory, and do not fetch noraonline.nl with any other tool.
 4. **GEMMA principles extract — optional.** Look for a file whose first line is `# GEMMA — Architectuurprincipes (extract)` (conventionally `gemma-principes.md`). Record whether it is present; Step 4 decides whether it is used.
@@ -272,7 +274,7 @@ Next steps:
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-NORA-v{VERSION}.md`
-- ✅ `nl-references.py` run first; its status for each source recorded, and `manual` or `offline` noted under *Source limitations*
+- ✅ `nl-references.py` run first; its status for each source recorded, and a `manual` or `offline` status under *Source limitations* with the line's note and error
 - ✅ NORA extract identified with its source version; command stopped without an artefact if no NORA extract was found
 - ✅ GEMMA mode decided and recorded, with the reason
 - ✅ All 17 NAPs assessed in ID order, each with its stelling quoted verbatim and cited

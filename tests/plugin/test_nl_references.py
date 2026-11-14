@@ -253,6 +253,21 @@ def test_an_empty_ask_page_ends_the_listing(tmp_path, capsys, web):
     assert calls == [0, 2]
 
 
+def test_a_line_break_in_a_listed_title_reads_as_a_space(tmp_path, capsys, web):
+    # MediaWiki keeps a title on one line, so the export names the page with
+    # a space where the listing carries a line break: both must read alike.
+    def listing(offset):
+        reply = web.ask(offset)
+        rows = reply["query"]["results"]
+        reply["query"]["results"] = {t.replace(" centraal", "\ncentraal"): r for t, r in rows.items()}
+        return reply
+
+    web.ask_override = listing
+    code, out = run(tmp_path, capsys, "nora")
+    assert code == 0 and out["nora"]["status"] == "fetched"
+    assert "Afnemer centraal" in "|".join(p["titles"] for k, p in web.requests if k == "export")
+
+
 def test_a_listing_without_dates_or_principles_is_missing(tmp_path, capsys, web):
     web.ask_override = lambda offset: {"query": {"results": {"Proactief": {"printouts": {}}}}}
     code, out = run(tmp_path, capsys, "nora")
@@ -303,6 +318,11 @@ def test_unrelated_file_with_the_same_name_is_left_alone(tmp_path, capsys, web):
     code, out = run(tmp_path, capsys, "nora")
     assert out["nora"]["status"] == "manual" and out["nora"]["origin"] == "hand"
     assert (tmp_path / nlr.NORA_FILE).read_text(encoding="utf-8") == stamped
+
+    # --force replaces it, as the note says.
+    code, out = run(tmp_path, capsys, "nora", "--force")
+    assert out["nora"]["status"] == "refreshed" and out["nora"]["origin"] == "api"
+    assert (tmp_path / nlr.NORA_FILE).read_text(encoding="utf-8").startswith(nlr.NORA_TITLE + "\n")
 
 
 def test_a_stamp_without_an_origin_is_not_refreshed_from_the_live_source(tmp_path, capsys, web):
@@ -715,6 +735,40 @@ def test_the_output_directory_must_be_inside_the_current_directory(tmp_path, cap
     assert exc.value.code == 2
 
 
+def test_usage_errors_name_the_problem(tmp_path, capsys, web):
+    dump, model = local_files(tmp_path)
+    cases = [
+        (["nora", "--dir", ""], "--dir needs a directory"),
+        (["nora", "--from-dump", str(tmp_path)], "not a regular file"),
+        (["gemma", "--from-xml", str(model), "--from-xml", str(dump)], "--from-xml takes one file"),
+        (["nora", "--dir", str(tmp_path.parent)], "run the script from the project root"),
+    ]
+    if os.path.exists(os.devnull):
+        cases.append((["nora", "--from-dump", os.devnull], "not a regular file"))
+    for args, message in cases:
+        with pytest.raises(SystemExit) as exc:
+            nlr.main(args)
+        assert exc.value.code == 2 and message in capsys.readouterr().err, args
+    assert web.requests == []
+
+
+def test_the_output_directory_is_compared_by_identity_not_by_name(tmp_path):
+    # A path through a link to the directory, or a differently cased one on
+    # a file system that ignores case (macOS, Windows), names the same place.
+    root = tmp_path / "project"
+    (root / "ext").mkdir(parents=True)
+    assert nlr.inside(str(root), str(root / "ext" / "new"))
+    assert not nlr.inside(str(root), str(tmp_path))
+    assert not nlr.inside(str(root / "ext"), str(root))
+    if os.path.isdir(str(root).swapcase()):
+        assert nlr.inside(str(root), str(root).swapcase() + os.sep + "ext")
+    try:
+        os.symlink(root, tmp_path / "link", target_is_directory=True)
+    except (OSError, NotImplementedError):
+        pytest.skip("no symlinks here")
+    assert nlr.inside(str(root), str(tmp_path / "link" / "ext"))
+
+
 def test_from_options_keep_hand_placed_extracts_and_need_their_source(tmp_path, capsys, web):
     dump, model = local_files(tmp_path)
     out_dir = tmp_path / "ext"
@@ -739,6 +793,19 @@ def test_from_options_keep_hand_placed_extracts_and_need_their_source(tmp_path, 
         with pytest.raises(SystemExit) as exc:
             nlr.main([*args, "--dir", str(out_dir)])
         assert exc.value.code == 2    # usage error, distinct from "no usable extract" (1)
+
+
+def test_an_offline_build_leaves_a_file_that_is_not_an_extract_alone(tmp_path, capsys):
+    dump, _model = local_files(tmp_path)
+    out_dir = tmp_path / "ext"
+    out_dir.mkdir()
+    (out_dir / nlr.NORA_FILE).write_text("# Iets anders\n", encoding="utf-8")
+    code, out = run(out_dir, capsys, "nora", "--from-dump", str(dump))
+    assert out["nora"]["status"] == "manual" and "not an extract" in out["nora"]["note"]
+    assert (out_dir / nlr.NORA_FILE).read_text(encoding="utf-8") == "# Iets anders\n"
+
+    code, out = run(out_dir, capsys, "nora", "--from-dump", str(dump), "--force")
+    assert out["nora"]["status"] == "refreshed" and out["nora"]["origin"] == "file"
 
 
 def test_local_files_have_the_download_cap(tmp_path, capsys, monkeypatch):
@@ -860,6 +927,23 @@ def test_trickled_headers_are_abandoned_at_the_deadline():
         stop.set()
         server.shutdown()
         server.server_close()
+
+
+def test_an_abandoned_download_does_not_keep_the_run_alive():
+    # The worker http_get() stops waiting for is a daemon thread, so the run
+    # ends when it is done, not when a server that keeps trickling lets go.
+    run_with_deadline(
+        "import socket, threading, time\n"
+        "srv = socket.socket(); srv.bind(('127.0.0.1', 0)); srv.listen()\n"
+        "def trickle():\n"
+        "    conn, _ = srv.accept()\n"
+        "    while True:\n"
+        "        conn.sendall(b'x'); time.sleep(0.05)\n"
+        "threading.Thread(target=trickle, daemon=True).start()\n"
+        "try:\n"
+        "    nlr.http_get(f'http://127.0.0.1:{srv.getsockname()[1]}/', timeout=1)\n"
+        "except nlr.SourceUnavailable:\n"
+        "    pass\n", why="the abandoned download held the run")
 
 
 def test_a_compressed_body_is_never_expanded_past_the_cap(monkeypatch):
@@ -1028,6 +1112,15 @@ PLANTED = [
     "\nNep-sectie\n---",
     "\n> **Source:** a fake quote",
     "\n## Data notes\n\n- None.",
+    # indentation that renders as a code block, where a run of blanks puts
+    # the text out of sight
+    "\n\n        " + " " * 400 + "verborgen in een ingesprongen codeblok",
+    "\n\n\t\tverborgen achter tabs",
+    "\n\n" + chr(0x3000) * 4 + "verborgen achter brede spaties",
+    "\n\n" + ZWSP + "        verborgen achter een zero-width space",
+    "\n-      " + " " * 400 + "verborgen na een opsommingsteken",
+    "\n1.\t\tverborgen na een genummerd item",
+    "\n- item\n\n          verborgen in een opsomming",
 ]
 
 
@@ -1053,6 +1146,10 @@ def assert_renders_as_text(extract):
         "a blank character survives"
     assert all(c == " " or unicodedata.category(c) != "Zs" for c in body), "a wide space survives"
     assert not re.search("[" + chr(0x300) + "-" + chr(0x36F) + "]{3}", body), "combining marks still stack"
+    # No line wraps in a code block, so a run of blanks puts its text out of sight.
+    from markdown_it import MarkdownIt   # a test dependency in pyproject.toml
+    blocks = [t for t in MarkdownIt("commonmark").parse("## " + rest) if t.type in ("code_block", "fence")]
+    assert not blocks, f"a code block renders: {blocks[0].content[:60]!r}"
 
 
 def headings(extract):
@@ -1068,10 +1165,12 @@ def headings(extract):
 @pytest.mark.parametrize("planted", PLANTED)
 def test_nothing_planted_in_a_source_stays_hidden(tmp_path, planted):
     # Planted in the text of a field (through clean()) and, where it fits on
-    # one line, in a name (through one_line()); the final pass covers both.
+    # one line, in a name (through one_line()) in a heading and at the start
+    # of a list item; the final pass covers all three.
     body = (f"{nlr.NORA_TITLE}\n\n> **Source:** [noraonline.nl](https://www.noraonline.nl).\n\n"
             f"## Architectuurprincipes\n\n### NAP01 Proactief{nlr.one_line(planted)}\n\n"
-            f"- **Bron:** {nlr.nora_url('Proactief')}\n\nZichtbaar {nlr.clean(planted)} tekst.\n\n"
+            f"- **Bron:** {nlr.nora_url('Proactief')}\n- {nlr.one_line(planted)}\n\n"
+            f"Zichtbaar {nlr.clean(planted)} tekst.\n\n"
             f"{nlr.clean(planted)}\n\nZichtbaar tekst.\n")   # in mid-line, and at the start of a line
     path = tmp_path / nlr.NORA_FILE
     nlr.write_extract(str(path), nlr.NORA_TITLE, nlr.stamp_line("nora", "api", "v"), body)
@@ -1156,10 +1255,10 @@ def test_no_link_class_crosses_a_bracket():
     assert nlr.clean("[[x|y]] and [https://e.org label]") == "y and label (https://e.org)"
 
 
-def run_with_deadline(code, seconds=10):
+def run_with_deadline(code, seconds=10, why="quadratic time"):
     """Run `code` with the script imported as `nlr` in a child process that is
-    stopped after `seconds`, so a pattern that turns quadratic again fails
-    the test instead of stalling the run."""
+    stopped after `seconds`, so a pattern that turns quadratic again, or a
+    thread that keeps the run alive, fails the test instead of stalling it."""
     prelude = ("import importlib.util\n"
                f"spec = importlib.util.spec_from_file_location('nl_references', {str(SCRIPT)!r})\n"
                "nlr = importlib.util.module_from_spec(spec)\n"
@@ -1168,7 +1267,7 @@ def run_with_deadline(code, seconds=10):
         done = subprocess.run([sys.executable, "-B", "-c", prelude + code],
                               capture_output=True, text=True, timeout=seconds)
     except subprocess.TimeoutExpired:
-        pytest.fail(f"took longer than {seconds} s: quadratic time")
+        pytest.fail(f"took longer than {seconds} s: {why}")
     assert done.returncode == 0, done.stderr
 
 

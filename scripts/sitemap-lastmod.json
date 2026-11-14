@@ -616,12 +616,12 @@
     "text_sha256": "28a34ed153cb2ba7a9736b203453eb8d4f0667f98225558160ab276e59bfb4ce"
   },
   "guide/nl-nora.html": {
-    "lastmod": "2026-10-27",
-    "text_sha256": "96050aed96d11f079301f1e549332a1515390dc93a7f2c0068aa92a47cd7b684"
+    "lastmod": "2026-11-13",
+    "text_sha256": "5a2dd77afbe809ec662e8b7baa6f93d9eea2ecf5750a1a49c68cb9f438d478eb"
   },
   "guide/nl-overlay.html": {
-    "lastmod": "2026-10-30",
-    "text_sha256": "204287c19e54ef911c10561e82a268754d4bb75f19f062aec5d3fe20dd2d494b"
+    "lastmod": "2026-11-13",
+    "text_sha256": "3ce2b67481b944cc5199a3cccb3c94722231bdcf6c5579b3a3e47a4b71acdc6f"
   },
   "guide/nl-tbb.html": {
     "lastmod": "2026-10-27",
