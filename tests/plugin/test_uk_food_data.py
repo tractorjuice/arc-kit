@@ -368,7 +368,7 @@ def test_page_object_title_and_blocks_count_on_its_page(tmp_path):
 # front.json and diary.json hold one page object for every page the page map gives them, in page order,
 # so that the coverage test, which compares only the pages a file declares, cannot skip a page.
 PART_PAGES = {"front": list(range(1, 11)), "diary": list(range(78, 101))}
-REQUIRED_PARTS: list[str] = []
+REQUIRED_PARTS = ["front"]
 
 
 @pytest.mark.parametrize("part", list(PART_PAGES))
