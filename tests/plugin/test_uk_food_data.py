@@ -51,8 +51,10 @@ def page_words(data_dir: Path, files: list[str] | None = None) -> dict[int, Coun
 
 def _subtract_furniture(tokens: list[str], furniture: list[str]) -> Counter:
     """Normalised fixture words for a page, minus each furniture phrase once where
-    its tokens occur contiguously exactly as printed."""
-    remaining = [t.strip() for t in tokens if t.strip()]
+    its tokens occur contiguously exactly as printed. A token is split at any
+    whitespace inside it, because PyMuPDF splits words only at ASCII spaces and
+    so keeps an em space printed between two words inside one token."""
+    remaining = [word for t in tokens for word in t.split()]
     for phrase in furniture:
         target = phrase.split()
         for i in range(len(remaining) - len(target) + 1):
@@ -181,8 +183,18 @@ def test_furniture_is_matched_as_printed_never_in_body_text(tmp_path):
     assert page_differences(_fake_dir(tmp_path, "Train on this safe method."), unlabelled, exceptions) == {}
 
 
+def test_a_fixture_token_holding_two_printed_words_is_split_at_its_inner_space(tmp_path):
+    # Page 63 prints "Do you do this?" and "Yes" apart; PyMuPDF splits words only at ASCII spaces, so the
+    # text layer holds "this?", an em space, "Yes" and an en space as one token.
+    fixture = {"pages": {"1": ["Do", "you", "do", "this?\u2003Yes\u2002"]}}
+    no_exceptions = {"furniture": [], "pages": {}}
+    assert page_differences(_fake_dir(tmp_path, "Do you do this? Yes"), fixture, no_exceptions) == {}
+    diff = page_differences(_fake_dir(tmp_path, "Do you do this?"), fixture, no_exceptions)
+    assert diff[1]["missing"] == Counter({"yes": 1}) and not diff[1]["extra"]
+
+
 def test_page_exceptions_add_tokens_the_page_does_not_print(tmp_path):
-    fixture = {"pages": {"1": ["WASH", " "]}}
+    fixture = {"pages": {"1": ["WASH", "\u2002"]}}
     # A token that normalises to nothing is ignored on both sides; a real one is added.
     exceptions = {"furniture": [], "pages": {"1": [{"token": "zz", "count": 1, "reason": "test"}]}}
     diff = page_differences(_fake_dir(tmp_path, "wash"), fixture, exceptions)
