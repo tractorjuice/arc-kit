@@ -35,6 +35,12 @@
     ],
     "46": [
       {"parts": ["cross-", "contamination."], "as": "cross-contamination.", "reason": "CH-04 WHY cell 'Using containers and freezer bags prevents cross-contamination.': the word breaks after the hyphen at a line end"}
+    ],
+    "61": [
+      {"parts": ["R", "eview"], "as": "Review", "reason": "CK-06 prevent bullet 'Review your hot holding safe method.': the text layer gives 'R' and 'eview' as two tokens (a separate one-character space span sits between them mid-line); the image prints 'Review' as one unbroken word"}
+    ],
+    "63": [
+      {"parts": ["Ready-", "to-eat"], "as": "Ready-to-eat", "reason": "CK-07 'on the original product label. Ready-to-eat foods should be kept': the word breaks after the first hyphen at a line end, and the image prints the hyphen"}
     ]
   }
 }

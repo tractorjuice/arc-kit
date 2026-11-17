@@ -1,0 +1,1299 @@
+{
+  "schema": "uk-food-sfbb-data-1.0",
+  "data": "sfbb-caterers-2026-11-17",
+  "section": {
+    "id": "CK",
+    "code": "FOODCOOK",
+    "title": "COOKING",
+    "pages": [
+      48,
+      49
+    ],
+    "intro": [
+      {
+        "text": "It is essential to cook food properly to kill any harmful bacteria. If it is not cooked properly, it might not be safe for your customers to eat.",
+        "page": 48
+      },
+      {
+        "text": "It is essential to cook food properly to kill any harmful bacteria. If it is not cooked properly, it might not be safe for your customers to eat.",
+        "page": 49
+      },
+      {
+        "text": "It is also very important to handle ready-to-eat food carefully to protect it from harmful bacteria. This is because it will not be cooked or reheated before serving.",
+        "page": 49
+      },
+      {
+        "text": "Do not forget that cooking does not remove allergens from food, so you need to handle food that contains allergens carefully.",
+        "page": 49
+      },
+      {
+        "text": "This section includes information on cooking safely, foods that need extra care, reheating, hot holding and ready-to-eat food.",
+        "page": 49
+      }
+    ]
+  },
+  "methods": [
+    {
+      "id": "CK-01",
+      "title": "COOKING SAFELY",
+      "summary": "Thorough cooking kills harmful bacteria.",
+      "pages": [
+        50,
+        51
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?"
+          ],
+          "rows": [
+            {
+              "id": "CK-01-P01",
+              "point": "Where appropriate, follow the manufacturer’s cooking instructions for food products.",
+              "why": "The manufacturer has tried and tested safe cooking methods specifically for its products.",
+              "page": 50,
+              "questions": []
+            },
+            {
+              "id": "CK-01-P02",
+              "point": "Preheat equipment such as ovens and grills before cooking as per manufacturer instructions if available. Read more in 'Cooking Safely'.",
+              "why": "If you use equipment before it has preheated, food will take longer to cook. This means that recommended cooking times in recipes or manufacturer’s instructions might not be long enough.",
+              "page": 50,
+              "questions": []
+            },
+            {
+              "id": "CK-01-P03",
+              "point": "Do not let raw food touch or drip onto cooked food e.g. when adding food to the grill/barbecue. Never use the same utensils, plates or containers for raw and cooked or ready-to-eat food.\nIt is a good idea to fully cook poultry in an oven first, then finish it on the barbecue.\nIf you are using left over marinade as a sauce, make sure it is cooked until steaming hot.",
+              "why": "Raw food can carry harmful bacteria, which could spread onto cooked food and stop it being safe.\nThis will make sure that the poultry is cooked thoroughly. Juices should be clear, with no pink or red in them.\nMarinades can carry bacteria from the raw meat or poultry, if not cooked thoroughly.",
+              "page": 50,
+              "questions": []
+            },
+            {
+              "id": "CK-01-P04",
+              "point": "If you serve beef or lamb rare (whole cuts such as steaks and whole joints only), make sure all of the outside surfaces are fully cooked, e.g. by sealing in a pan.",
+              "why": "This will kill harmful bacteria on the outside of the meat. Pork and rolled joints should not be served rare.\nWhole cuts of meat, such as steaks and joints, only ever have bacteria on the outside surface of the meat.",
+              "page": 50,
+              "questions": []
+            },
+            {
+              "id": "CK-01-P05",
+              "point": "Liver and offal, including dishes such as liver pate or parfait, must be cooked to a safe temperature in the centre of the meat (see ‘Prove it’). Read more in 'Cooking Safely'.",
+              "why": "Harmful bacteria can be found in the centre of liver as well as the outside.",
+              "page": 50,
+              "questions": []
+            },
+            {
+              "id": "CK-01-P06",
+              "point": "Turn meat during cooking. Read more in 'Cooking Safely'.",
+              "why": "This helps it cook more evenly and thoroughly.",
+              "page": 50,
+              "questions": []
+            },
+            {
+              "id": "CK-01-P07",
+              "point": "Make sure liquid dishes, e.g. gravy, soups, sauces and stews, are simmering and stir them frequently.",
+              "why": "This is to make sure the food is hot enough to kill bacteria. Stirring will help make sure the food is the same temperature all the way through.",
+              "page": 50,
+              "questions": []
+            }
+          ],
+          "page": 50
+        },
+        {
+          "kind": "table",
+          "heading": "CHECK IT – USE THESE CHECKS TO TELL IF FOOD IS PROPERLY COOKED.",
+          "columns": [],
+          "rows": [
+            [
+              "Check whole birds are cooked to a safe temperature in the thickest ares which is between the leg and breast. (see ‘Prove it’). The meat should not be pink or red and the juices should be clear.",
+              "The largest piece of meat in stews, curries etc. should be cooked to a safe temperature in the centre with no pink or red (see ‘Prove it’)."
+            ],
+            [
+              "Check whole cuts of pork and processed meat products, such as sausages and burgers, are cooked to a safe temperature in the centre with no pink or red (see ‘Prove it’).",
+              "Check combination dishes (e.g. contains meat and vegetables) are cooked to a safe temperature in the centre (see ‘Prove it’). If you are cooking a large dish or batch, check in several places."
+            ],
+            [
+              "Stir liquid dishes regularly and check they bubble rapidly and are heated to a safe temperature in several places before serving (see ‘Prove it’).",
+              "Check that all the outside surfaces of whole cuts of meat and whole joints (beef or lamb) are fully cooked."
+            ],
+            [
+              "Check fish is cooked to a safe temperature in the centre and the colour and texture has changed (see ‘Prove it’).\nSome fish (e.g. tuna) may be served ‘rare’ as long as they have been correctly frozen beforehand to kill any parasites which may be present and are fully seared on the outside to kill any harmful bacteria that may be present. Further guidance is available at the FSA website",
+              "Check pork joints or rolled meat joints are cooked to a safe temperature in the centre (see ‘Prove it’). The juices should not have any pink or red in them."
+            ]
+          ],
+          "page": 51
+        },
+        {
+          "kind": "prove-it",
+          "heading": "PROVE IT",
+          "text": "Use a disinfected temperature probe to check dishes are properly cooked or reheated. Examples of safe time/temperature combinations for cooking include:\n80°C for at least 6 seconds\n75°C for at least 30 seconds\n70°C for at least 2 minutes\n65°C for at least 10 minutes\n60°C for at least 45 minutes\n(See the ‘Prove it’ safe method in the Management section for advice on using probes safely).",
+          "page": 51
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "• Cook the food for longer.",
+            "• Speed up the cooking process, for example by dividing the food into smaller quantities, or using different equipment."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "• Review your cooking method. You might need to increase the time or temperature or use different equipment.",
+            "• Train staff again on this safe method.",
+            "• Improve staff supervision.",
+            "• Maintain equipment in good working order and service to repair or replace equipment when needed."
+          ],
+          "diaryNote": "Write down what went wrong and what you did about it in your diary.",
+          "page": 51
+        }
+      ]
+    },
+    {
+      "id": "CK-02",
+      "title": "FOODS THAT NEED EXTRA CARE",
+      "summary": "Some foods need to be treated with extra care to make sure they are safe to eat.\nRemember that raw food is one of the main sources of bacteria in the kitchen. Follow the advice in the ‘Cooking safely’ safe method on how to cook these foods. You should also take care with the following foods.",
+      "pages": [
+        52,
+        53
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "CK-02-P01",
+              "point": "Eggs\nCook eggs and foods containing eggs thoroughly until they are steaming hot or, if serving eggs or egg dishes lightly cooked (e.g. soft boiled or in fresh mayonnaise or mousse), either use:\n• Pasteurised egg, or\n• British Lion code or equivalent assurance scheme",
+              "why": "Eggs can contain harmful bacteria. If you cook them thoroughly this kills any bacteria.\nThe British Lion code or equivalent assurance schemes demonstrates eggs have been produced in a safe manner and therefore can be eaten less than thoroughly cooked. Pasteurisation also kills harmful bacteria.",
+              "page": 52,
+              "questions": [
+                {
+                  "id": "CK-02-Q01",
+                  "text": "List the dishes containing eggs that you prepare or cook.",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "CK-02-Q02",
+                  "text": "Do you cook eggs and food containing eggs thoroughly until they are steaming hot?",
+                  "type": "yes-no-else",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": "If not, what do you do?"
+                }
+              ]
+            },
+            {
+              "id": "CK-02-P02",
+              "point": "Make sure you rotate stock and use the oldest eggs first. Use eggs within the ’best before’ date. You can freeze them for use later if required.\nBuy eggs from a reputable supplier.\nStore eggs in a cool, dry place.",
+              "why": "Harmful bacteria can grow in eggs that are not handled or stored correctly",
+              "page": 52,
+              "questions": []
+            },
+            {
+              "id": "CK-02-P03",
+              "point": "Rice\nWhen you have cooked rice, make sure you keep it hot until serving or chill it down as quickly as possible and then keep it in the fridge.\nYou can make rice chill down more quickly by dividing it into smaller portions, spreading it out on a clean tray, or running it under cold water (make sure the water is clean and drinking quality).",
+              "why": "Rice can contain spores of a type of harmful bacteria that may not be killed by cooking or reheating.\nIf cooked rice is left at room temperature, spores can multiply and produce toxins that cause food poisoning. Reheating will not get rid of these",
+              "page": 52,
+              "questions": [
+                {
+                  "id": "CK-02-Q03",
+                  "text": "How do you keep rice hot before serving?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "CK-02-Q04",
+                  "text": "If you chill down rice how do you do this?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-02-P04",
+              "point": "Pulses\nFollow the instructions on the packaging on how to soak and cook dried pulses, such as beans.",
+              "why": "Pulses can contain natural toxins that could make people ill unless they are destroyed by the proper method of soaking and cooking.\nTinned pulses will have been soaked and cooked already.",
+              "page": 52,
+              "questions": [
+                {
+                  "id": "CK-02-Q05",
+                  "text": "Do you follow the manufacturer’s instructions when cooking pulses?",
+                  "type": "yes-no-else",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": "If not, what do you do?"
+                }
+              ]
+            },
+            {
+              "id": "CK-02-P05",
+              "point": "Shellfish (molluscs and crustaceans)\nMake sure you buy shellfish from a reputable supplier. Keep the product label for 60 days, after opening.",
+              "why": "If you do not use a reputable supplier, you cannot be confident that shellfish have been caught and handled safely.\nIt is a legal requirement to keep labels for 60 days to trace suppliers, if needed.",
+              "page": 52,
+              "questions": []
+            }
+          ],
+          "page": 52
+        },
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "CK-02-P06",
+              "point": "Crabs, crayfish, lobster and scallops should be prepared by someone with specialist knowledge.",
+              "why": "Some parts of these shellfish cannot be eaten and some are poisonous, so it is important to know how to remove these parts safely.",
+              "page": 53,
+              "questions": [
+                {
+                  "id": "CK-02-Q06",
+                  "text": "If you prepare crabs, crayfish, lobster and scallops, are these prepared by someone with specialist knowledge?",
+                  "type": "yes-no-else",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": "If not, what do you do?"
+                }
+              ]
+            },
+            {
+              "id": "CK-02-P07",
+              "point": "Crustaceans and molluscs such as prawns and scallops will change in colour and texture when they are cooked.\nFor example, prawns turn from blue-grey to pink and scallops become milky white and firm.\nLangoustines (also called scampi or Dublin Bay prawns) are pink when raw and the flesh becomes firm and pink-white when they are cooked.\nAlways follow the manufacturer’s instructions for preparation and storage.",
+              "why": null,
+              "page": 53,
+              "questions": [
+                {
+                  "id": "CK-02-Q07",
+                  "text": "List the types of shellfish you serve or use as an ingredient.",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-02-P08",
+              "point": "Before cooking mussels and clams, throw away any with open or damaged shells.",
+              "why": "If the shell is damaged or open before cooking, the shellfish might not be safe to eat.",
+              "page": 53,
+              "questions": []
+            },
+            {
+              "id": "CK-02-P09",
+              "point": "To check that a mussel or clam is cooked, make sure the shell is open and that the mussel or clam has shrunk inside the shell. If the shell has not opened during cooking, throw it away.",
+              "why": "If the shell has not opened during cooking, the shellfish might not be safe to eat.",
+              "page": 53,
+              "questions": []
+            },
+            {
+              "id": "CK-02-P10",
+              "point": "Fish: Make sure you buy fish from a reputable supplier.\nIf you buy fresh fish make sure you store it between 0°C and 4°C. If you buy frozen fish then keep it frozen until you are ready to use it.",
+              "why": "Certain types of fish, such as mackerel, tuna, anchovies and herrings, can cause food poisoning if not kept at the correct temperature.",
+              "page": 53,
+              "questions": []
+            }
+          ],
+          "page": 53
+        },
+        {
+          "kind": "text",
+          "heading": "Other foods that need extra care:",
+          "text": "Some businesses produce certain foods or use certain processes other than those included in this pack (some examples are provided below). If this is the case for your business, you must be able to demonstrate that you do these safely. Contact your the Environmental Health Team at your local council for additional guidance.\nExample processes include: Vacuum packing, sous vide, low temperature cooking, fermenting, smoking or curing meat/fish\nExample foods include: Kebabs, sushi/sashimi, liver parfait, fish/meat carpaccio and tartare, less than thoroughly cooked burgers",
+          "page": 53
+        }
+      ]
+    },
+    {
+      "id": "CK-03",
+      "title": "REHEATING",
+      "summary": "It is very important to reheat food properly to kill harmful bacteria that may have grown since the food was cooked.",
+      "pages": [
+        54,
+        55
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?"
+          ],
+          "rows": [
+            {
+              "id": "CK-03-P01",
+              "point": "Make sure you use equipment that reheats or cooks food effectively and follow the equipment manufacturer’s instructions.\nCheck equipment regularly to make sure it is working properly.",
+              "why": "If equipment is not suitable for reheating, or is not used properly, the food might not get hot enough to kill bacteria.",
+              "page": 54,
+              "questions": []
+            },
+            {
+              "id": "CK-03-P02",
+              "point": "Preheat equipment such as ovens and grills before reheating.",
+              "why": "Food will take longer to reheat if you use equipment before it has preheated. This means that recommended reheating times in recipes or manufacturer’s instructions might not be long enough.",
+              "page": 54,
+              "questions": []
+            },
+            {
+              "id": "CK-03-P03",
+              "point": "If you are reheating food in a microwave, follow the product manufacturer’s instructions, including advice on standing and stirring.\nIf you use a microwave to reheat food that you have cooked, you should stir it while reheating.",
+              "why": "The manufacturer has tested its instructions to make sure that products will be properly reheated. Standing and stirring are part of the process of cooking or reheating in a microwave and help make sure the food is the same temperature all the way through.\nWhen food is microwaved, it can be very hot at the edges and still be cold in the centre – stirring helps to prevent this.",
+              "page": 54,
+              "questions": []
+            },
+            {
+              "id": "CK-03-P04",
+              "point": "Serve reheated food immediately, or put it straight into hot holding.",
+              "why": "If food is not served immediately, the temperature will drop and harmful bacteria could grow.",
+              "page": 54,
+              "questions": []
+            }
+          ],
+          "page": 54
+        },
+        {
+          "kind": "think-twice",
+          "heading": "THINK TWICE!",
+          "text": "Remember, reheating means cooking again, not just warming up. Always reheat food thoroughly until it reaches a safe temperature in the centre (see ‘Prove It’ in ‘Cooking Safely’). You should only reheat once. Do not put food into hot holding without reheating it properly first.",
+          "page": 54
+        },
+        {
+          "kind": "check-it",
+          "heading": "CHECK IT",
+          "text": "Check dishes reach a safe temperature in the centre (see ‘Prove it’ in ‘Cooking Safely’). When checking microwaved foods, test in a number of different areas in case of cold spots.",
+          "page": 55
+        },
+        {
+          "kind": "table",
+          "heading": null,
+          "columns": [
+            "YOUR CHECK",
+            "TYPES OF DISH"
+          ],
+          "rows": [],
+          "questions": [
+            {
+              "id": "CK-03-Q01",
+              "text": "If you use a different check, you will need to prove that it is safe. See the ‘Prove it’ safe method in the Management section. Give details of your check here:",
+              "type": "text",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CK-03-Q02",
+              "text": "",
+              "type": "list",
+              "options": [],
+              "elseText": null
+            }
+          ],
+          "page": 55
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "• If reheated food is not hot enough, and the equipment seems to be working, reheat the dish for longer then test it again.",
+            "• Speed up the reheating process by using smaller portions."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "• Check your equipment is working correctly.",
+            "• Review your reheating method – you may need to increase the time and/or temperature, use different equipment or change the size of portions.",
+            "• Train staff again on this safe method.",
+            "• Improve staff supervision."
+          ],
+          "diaryNote": "Write down what went wrong and what you did about it in your diary.",
+          "page": 55
+        }
+      ]
+    },
+    {
+      "id": "CK-04",
+      "title": "ACRYLAMIDE",
+      "summary": "It is important not to over-cook certain foods",
+      "pages": [
+        56,
+        57
+      ],
+      "blocks": [
+        {
+          "kind": "text",
+          "heading": "WHAT IS ACRYLAMIDE?",
+          "text": "Acrylamide is a chemical that is formed naturally when some foods are cooked at high temperatures (above 120⁰C) such as by frying, roasting, baking, grilling and toasting.\nLegislation is in place to reduce acrylamide levels in food, as it has the potential to cause cancer in humans.",
+          "page": 56
+        },
+        {
+          "kind": "text",
+          "heading": "WHAT FOODS?",
+          "text": "If you cook the following types of foods, you must put in place practical steps to reduce acrylamide.",
+          "page": 56
+        },
+        {
+          "kind": "table",
+          "heading": null,
+          "columns": [],
+          "rows": [
+            [
+              "Raw potato products such as chips, French fries, other cut (deep-fried) and sliced potato crisps made from fresh potatoes, including potatoes that are deep fried and finished in the oven.",
+              "Bread products such as loaves, bread rolls and baguettes, toast and toasted sandwiches.",
+              "Sweet bakery products such as cookies, biscuits, scones, gingerbread, wafers, crumpets.",
+              "Savoury bakery products such as crackers, crisp bread, breadsticks."
+            ]
+          ],
+          "page": 56
+        },
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?",
+            "TICK IF YOU DO THIS"
+          ],
+          "rows": [
+            {
+              "id": "CK-04-P01",
+              "point": "Purchasing, receipt and storage",
+              "why": null,
+              "page": 56,
+              "questions": []
+            },
+            {
+              "id": "CK-04-P02",
+              "point": "When buying raw potatoes ask your supplier for advice on the best variety to use for the type of cooking you are doing.",
+              "why": "Certain potato varieties are lower in natural sugars and using these will help to keep acrylamide levels lower.",
+              "page": 56,
+              "questions": [
+                {
+                  "id": "CK-04-Q01",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P03",
+              "point": "Store raw, unpeeled potatoes that are going to be fried, baked or roasted in the fridge or a cool, dark place.",
+              "why": "Storage of potatoes in the fridge doesn’t increase acrylamide forming potential when compared to storage in a cool, dark place. So, you can choose to store either in the fridge or in a cool, dark place.",
+              "page": 56,
+              "questions": [
+                {
+                  "id": "CK-04-Q02",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P04",
+              "point": "When buying cooked products from a supplier tell them you will not accept over-baked or burnt products.",
+              "why": "Check deliveries and reject products that are over-baked or burnt as these will have higher levels of acrylamide.",
+              "page": 56,
+              "questions": [
+                {
+                  "id": "CK-04-Q03",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P05",
+              "point": "Ask your cooking oil supplier for advice on the best oil to use for the type of cooking you are doing.",
+              "why": "Cooking foods in the right oil for the type of cooking will help foods to fry quicker and keep acrylamide levels lower.",
+              "page": 56,
+              "questions": [
+                {
+                  "id": "CK-04-Q04",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P06",
+              "point": "Preparation",
+              "why": null,
+              "page": 56,
+              "questions": []
+            },
+            {
+              "id": "CK-04-P07",
+              "point": "Cut foods, such as potatoes, to similar sizes.",
+              "why": "This will help all foods to cook more evenly.",
+              "page": 56,
+              "questions": [
+                {
+                  "id": "CK-04-Q05",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P08",
+              "point": "Where possible, when making home-made chips, or cut potatoes that are going to be deep-fried, follow one of these steps:",
+              "why": null,
+              "page": 56,
+              "questions": []
+            },
+            {
+              "id": "CK-04-P09",
+              "point": "Soak (for 30–180 mins) in cold water after cutting. Rinse with clean water and drain.",
+              "why": "These steps will remove excess sugars and help to keep acrylamide levels lower.",
+              "page": 56,
+              "questions": [
+                {
+                  "id": "CK-04-Q06",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P10",
+              "point": "Or - Soak for a few minutes in warm water. Rinse with clean water and drain.",
+              "why": null,
+              "page": 56,
+              "questions": [
+                {
+                  "id": "CK-04-Q07",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P11",
+              "point": "Or - blanch potatoes before cooking.",
+              "why": null,
+              "page": 56,
+              "questions": [
+                {
+                  "id": "CK-04-Q08",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P12",
+              "point": "Where possible, and when the preparation process allows, when making bread or dough products follow this step:",
+              "why": null,
+              "page": 56,
+              "questions": []
+            },
+            {
+              "id": "CK-04-P13",
+              "point": "Extend the yeast fermentation time.",
+              "why": "This will help to keep acrylamide levels lower in the finished product.",
+              "page": 56,
+              "questions": [
+                {
+                  "id": "CK-04-Q09",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 56
+        },
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?",
+            "TICK IF YOU DO THIS"
+          ],
+          "rows": [
+            {
+              "id": "CK-04-P14",
+              "point": "Cooking",
+              "why": null,
+              "page": 57,
+              "questions": []
+            },
+            {
+              "id": "CK-04-P15",
+              "point": "Cook foods to a golden yellow, or lighter colour",
+              "why": null,
+              "page": 57,
+              "questions": []
+            },
+            {
+              "id": "CK-04-P16",
+              "point": "Where appropriate, follow the manufacturer’s cooking instructions for food products.",
+              "why": "The manufacturer has tried and tested cooking methods specifically for its products.",
+              "page": 57,
+              "questions": [
+                {
+                  "id": "CK-04-Q10",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P17",
+              "point": "Deep-fry potato products, such as chips and French fries to a golden yellow, or lighter colour. The oil temperature for cooking should ideally be below 175⁰C.",
+              "why": "Cooking to a golden yellow, or lighter colour, and deep-frying at lower temperatures will keep acrylamide levels low.",
+              "page": 57,
+              "questions": [
+                {
+                  "id": "CK-04-Q11",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P18",
+              "point": "When deep-frying take care not to over-fill baskets. Fill the basket only half way.",
+              "why": "This will help the foods to cook more evenly.",
+              "page": 57,
+              "questions": [
+                {
+                  "id": "CK-04-Q12",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P19",
+              "point": "Keep cooking oil quality at its best by skimming often to remove crumbs and food particles left in the oil.",
+              "why": "This will prevent crumbs and food particles left in the oil from burning and will keep the oil quality for longer.",
+              "page": 57,
+              "questions": [
+                {
+                  "id": "CK-04-Q13",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P20",
+              "point": "Filter, change oils and clean cooking equipment as often as needed or as recommended by suppliers.",
+              "why": "Reusing old, dirty oil and cooking equipment will increase the levels of acrylamide in deep-fried foods.",
+              "page": 57,
+              "questions": [
+                {
+                  "id": "CK-04-Q14",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P21",
+              "point": "When baking bread and sweet or savoury bakery products cook to a golden yellow, or lighter colour. Use the lowest oven temperature possible for the food.",
+              "why": "Baking foods to a golden yellow, or lighter colour, and at lower oven temperatures will reduce acrylamide levels.",
+              "page": 57,
+              "questions": [
+                {
+                  "id": "CK-04-Q15",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P22",
+              "point": "When cooking foods such as toast and toasted sandwiches do not over-toast or burn.",
+              "why": "Cooking bread to a golden colour, or lighter, will help to keep acrylamide levels lower.",
+              "page": 57,
+              "questions": [
+                {
+                  "id": "CK-04-Q16",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-04-P23",
+              "point": "Where possible, set a timer to mark the cooking time. This could be on the oven or fryer or you can use a separate timer.",
+              "why": "This will remind you to remove foods at the right time to prevent foods from becoming over-cooked or burnt.",
+              "page": 57,
+              "questions": [
+                {
+                  "id": "CK-04-Q17",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 57
+        },
+        {
+          "kind": "think-twice",
+          "heading": "THINK TWICE!",
+          "text": "Over-cooking or burning certain foods means that these foods can be higher in acrylamide.\nColour charts\nSome suppliers have produced colour charts to show what colour is the best for certain foods to keep acrylamide levels low. You can ask if your supplier has these available. You do not have to use colour charts, but they can be useful for training your staff. Colour charts for fries can be found at: http://goodfries.eu/en/",
+          "page": 57
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "• Dispose of foods that are over-cooked or burnt."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "• Review your cooking method.",
+            "• You might need to lower the cooking temperature or use different equipment.",
+            "• Train staff again on this safe method.",
+            "• Improve staff supervision.",
+            "• Repair or replace equipment that is broken or not working."
+          ],
+          "diaryNote": "Write down what went wrong and what you did about it in your diary.",
+          "page": 57
+        }
+      ]
+    },
+    {
+      "id": "CK-05",
+      "title": "CHECKING YOUR MENU",
+      "summary": "It is important to show how you check that cooked dishes on your menu are properly cooked.",
+      "pages": [
+        58,
+        59
+      ],
+      "blocks": [
+        {
+          "kind": "text",
+          "heading": "HOW TO USE THIS SHEET",
+          "text": "This sheet is for you to show how you check key cooked dishes. It focuses on types of dishes where proper cooking is essential to kill harmful bacteria. Before you start, make sure you have read the ‘Cooking safely’ and ‘Foods that need extra care’ safe methods.\nDifferent checks are suitable for different types of dishes.\nFor each type of key cooked dish on your menu, choose a check. You do not need to write down eggs and pulses, these are covered by the ‘Foods that need extra care’ safe method.\nAlso, fruit and vegetables and ready-to-eat food are included in the ‘Ready-to-eat food’ safe method.",
+          "page": 58
+        },
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "CHECK",
+            "TYPES OF DISH"
+          ],
+          "rows": [
+            {
+              "id": "CK-05-P01",
+              "point": "If you serve beef or lamb rare (whole cuts such as steaks and whole joints only), make sure all of the outside surfaces are fully cooked.",
+              "why": null,
+              "page": 58,
+              "questions": [
+                {
+                  "id": "CK-05-Q01",
+                  "text": "e.g. steaks, leg of lamb",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-05-P02",
+              "point": "Check whole birds are cooked to a safe temperature in the thickest part of the leg (see ‘Prove it’ in ‘Cooking Safely’). The meat should not be pink or red. The juices should be clear and not have any pink or red in them.",
+              "why": null,
+              "page": 58,
+              "questions": [
+                {
+                  "id": "CK-05-Q02",
+                  "text": "e.g. roast chicken, turkey",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-05-P03",
+              "point": "Check rolled meat joints, whole cuts of pork and processed meat products, such as sausages and burgers, are cooked to a safe temperature in the centre with no pink or red (see ‘Prove it’ in ‘Cooking Safely’).",
+              "why": null,
+              "page": 58,
+              "questions": [
+                {
+                  "id": "CK-05-Q03",
+                  "text": "e.g. sausages, burgers, rolled joint",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-05-P04",
+              "point": "Liver and offal must be cooked to a safe temperature in the centre of the meat (see ‘Prove it’ in ‘Cooking Safely’). When preparing dishes such as liver pâté or parfait, the liver should be cooked until there is no pink meat left.",
+              "why": null,
+              "page": 58,
+              "questions": [
+                {
+                  "id": "CK-05-Q04",
+                  "text": "e.g. fried liver, pâté, parfait",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-05-P05",
+              "point": "Check liquid dishes are heated to a safe temperature in several places in case of cold spots. (see ‘Prove it’ in ‘Cooking Safely’).",
+              "why": null,
+              "page": 58,
+              "questions": [
+                {
+                  "id": "CK-05-Q05",
+                  "text": "e.g. gravy, soup, sauces, stews",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-05-P06",
+              "point": "Check fish is cooked to a safe temperature in the centre and the colour and texture has changed (see ‘Prove it’ in ‘Cooking Safely’).\nSome fish (e.g. tuna) may be served ‘rare’ as long as they have been frozen correctly beforehand – see Cooking Safely.",
+              "why": null,
+              "page": 58,
+              "questions": [
+                {
+                  "id": "CK-05-Q06",
+                  "text": "e.g. salmon, cod",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 58
+        },
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "CHECK",
+            "TYPES OF DISH"
+          ],
+          "rows": [
+            {
+              "id": "CK-05-P07",
+              "point": "The largest piece of meat in stews, curries etc. should be cooked to a safe temperature in the centre with no pink or red (see ‘Prove it’ in ‘Cooking Safely’).",
+              "why": null,
+              "page": 59,
+              "questions": [
+                {
+                  "id": "CK-05-Q07",
+                  "text": "e.g. curries, casseroles",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-05-P08",
+              "point": "Check combination dishes (e.g. contains meat and vegetables) are cooked to a safe temperature. (see ‘Prove it’ in ‘Cooking Safely’). If you are cooking a large dish or batch, check in several places.",
+              "why": null,
+              "page": 59,
+              "questions": [
+                {
+                  "id": "CK-05-Q08",
+                  "text": "e.g. lasagne, fish pie",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-05-P09",
+              "point": "Check that shellfish such as prawns have changed in colour and texture.",
+              "why": null,
+              "page": 59,
+              "questions": [
+                {
+                  "id": "CK-05-Q09",
+                  "text": "e.g. prawns in garlic butter",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-05-P10",
+              "point": "To check that a mussel or clam is cooked, make sure the shell is open and the mussel or clam has shrunk inside the shell.",
+              "why": null,
+              "page": 59,
+              "questions": [
+                {
+                  "id": "CK-05-Q10",
+                  "text": "e.g. moules marinière",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 59
+        },
+        {
+          "kind": "prove-it",
+          "heading": "PROVE IT",
+          "text": "You should use a disinfected temperature probe to check dishes are properly cooked or reheated. See the ‘Prove it’ safe method in the Management section.\nYou may also wish to record some of your temperature checks in the diary pages.",
+          "page": 59
+        },
+        {
+          "kind": "text",
+          "heading": null,
+          "text": "If your menu changes, you may need to fill out this sheet again.",
+          "page": 59
+        }
+      ]
+    },
+    {
+      "id": "CK-06",
+      "title": "HOT HOLDING",
+      "summary": "It is very important to keep food hot until serving to prevent harmful bacteria from growing.",
+      "pages": [
+        60,
+        61
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "CK-06-P01",
+              "point": "If you need to keep food hot before serving, you should use suitable equipment.",
+              "why": "It is difficult to hold food at a consistent, safe temperature without suitable equipment.\nBain-marie\nSoup kettle",
+              "page": 60,
+              "questions": [
+                {
+                  "id": "CK-06-Q01",
+                  "text": "Do you hot hold?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "CK-06-Q02",
+                  "text": "What equipment do you use?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-06-P02",
+              "point": "Preheat hot holding equipment before you put any food in it.",
+              "why": "Putting food into cold equipment means it might not be kept hot enough to stop harmful bacteria growing.",
+              "page": 60,
+              "questions": []
+            },
+            {
+              "id": "CK-06-P03",
+              "point": "Food must be cooked thoroughly and steaming hot before hot holding begins.",
+              "why": "Hot holding equipment is for hot holding only. It should not be used to cook or reheat food.",
+              "page": 60,
+              "questions": [
+                {
+                  "id": "CK-06-Q03",
+                  "text": "Do you do this?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-06-P04",
+              "point": "If you offer food deliveries, make sure the food is kept hot or cold until it is collected by the delivery driver or customer. Also make sure food is kept hot or cold during delivery until it arrives at the customer’s home. It is a good idea to use an insulated bag or box to transport food and make sure it stays covered until delivered.",
+              "why": "If food is not kept either hot or cold, harmful bacteria can grow in it.\nUsing an insulated bag or box to transport food will help keep it at the correct temperature and in its best condition.",
+              "page": 60,
+              "questions": [
+                {
+                  "id": "CK-06-Q04",
+                  "text": "How do you keep food at the right temperature until it is delivered to a customer?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 60
+        },
+        {
+          "kind": "think-twice",
+          "heading": "THINK TWICE!",
+          "text": "Hot food must be kept at 63°C or above, except for certain exceptions.\nWhen you display hot food, e.g. on a buffet, you should use suitable hot holding equipment to keep it above 63°C. If this is not possible, you can take food out of hot holding to display it for up to two hours, but you can only do this once.\nFood that has not been used within two hours, should either be reheated until it is steaming hot and put back in hot holding or chilled down as quickly as possible to 8°C or below. If it has been out for more than two hours throw it away. Remember to keep the food at a safe temperature until it is used.\nIf you do take food out of hot holding to display it, remember not to mix new food with the food that is already on display. This could lead to the older food being left out for too long.",
+          "page": 60
+        },
+        {
+          "kind": "check-it",
+          "heading": "CHECK IT",
+          "text": "Once it is cooked, keep food at 63°C or above until it is served.",
+          "questions": [
+            {
+              "id": "CK-06-Q05",
+              "text": "How do you do this?",
+              "type": "text",
+              "options": [],
+              "elseText": null
+            }
+          ],
+          "page": 61
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "If a dish is not hot enough at any point during hot holding:",
+            "• reheat it until it is a safe temperature and put back into hot holding (you should only do this once), or",
+            "• chill down the food safely (see the ‘Chilling down hot food’ safe method in the Chilling section) and reheat it later before serving.",
+            "If you cannot do either of these things, throw the food away.",
+            "Remember some foods need extra care. See the ‘Foods that need extra care’ safe method."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "• Check your equipment is working correctly.",
+            "• Review your hot holding safe method. Try using a higher temperature setting or smaller quantities of food.",
+            "• Train staff again on this safe method.",
+            "• Improve staff supervision."
+          ],
+          "diaryNote": "Write down what went wrong and what you did about it in your diary.",
+          "page": 61
+        },
+        {
+          "kind": "prove-it",
+          "heading": "PROVE IT",
+          "text": "Use a disinfected temperature probe to prove your method keeps food at a safe temperature of 63°C or above. (See the ‘Prove it’ method in the Management section for advice on using probes safely).",
+          "page": 61
+        }
+      ]
+    },
+    {
+      "id": "CK-07",
+      "title": "READY-TO-EAT FOOD",
+      "summary": "It is important to handle ready-to-eat food safely to protect it from harmful bacteria and allergens.\nReady-to-eat food is food that will not be cooked or reheated before serving. This includes salads, cooked meats, smoked fish, desserts, sandwiches, cheese and food that you have cooked in advance to serve cold.",
+      "pages": [
+        62,
+        63
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "CK-07-P01",
+              "point": "When preparing and handling food, you should:\n• keep ready-to-eat food completely separate from raw meat, poultry, fish, eggs and unwashed vegetables\n• make sure work surfaces, chopping boards, knives etc. are clean (and disinfected if you have prepared raw food)\n• ideally, use separate colour coded chopping boards and utensils for ready-to-eat food\n• keep ready-to-eat food covered at all times during preparation and storage.",
+              "why": "This protects food from harmful bacteria and allergens. This is especially important for ready-to-eat food because it will not be cooked or reheated before serving.\nIt also helps keep allergens from spreading.",
+              "page": 62,
+              "questions": [
+                {
+                  "id": "CK-07-Q01",
+                  "text": "List the types of ready-to-eat food you use and how you handle them:",
+                  "type": "list",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-07-P02",
+              "point": "Follow the manufacturer’s instructions on how to store and prepare the food, if these are available.",
+              "why": "The manufacturer’s instructions are designed to keep the food safe.",
+              "page": 62,
+              "questions": [
+                {
+                  "id": "CK-07-Q02",
+                  "text": "Are you confident that you do this for all ready-to-eat food where instructions are available?",
+                  "type": "tick",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CK-07-P03",
+              "point": "When preparing fruit, vegetables and salad ingredients:\n• peel, trim, or remove the outer parts, as appropriate\n• wash them thoroughly by rubbing vigorously in a bowl of clean water\n• wash the cleanest ones first\nWash your hands before and after handling fruit and vegetables.\nIf you have prepared vegetables that have dirt or soil on the outside, clean and then disinfect chopping boards and work surfaces before preparing other food.",
+              "why": "The dirt on vegetables and salad ingredients can contain harmful bacteria. Peeling and washing helps to remove the dirt and bacteria.",
+              "page": 62,
+              "questions": [
+                {
+                  "id": "CK-07-Q03",
+                  "text": "Do you do this?",
+                  "type": "yes-no-else",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": "If not, what do you do?"
+                }
+              ]
+            }
+          ],
+          "page": 62
+        },
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "CK-07-P04",
+              "point": "Make sure you keep ready-to-eat food cold enough. See ‘Chilled storage and displaying chilled food’ in the Chilling section.\nDo not use ready-to-eat food after the ‘use by’ date, if there is one.\nFor food you have prepared, or removed from its original packaging, use stickers or another method to keep track of when food should be used by or thrown away.\nFor guidance on how long to keep food once prepared or opened, follow manufacturer’s storage instructions on the original product label. Ready-to-eat foods should be kept for a maximum of 3 days in total (day of cook/opening + 2) unless you have evidence that it is safe to keep them for longer. Cooked rice should only be kept for 1 day once prepared.",
+              "why": "If these types of food are not kept cold enough, harmful bacteria could grow.\nYou should never use food that has passed its ‘use by’ date because it might not be safe to eat.",
+              "page": 63,
+              "questions": [
+                {
+                  "id": "CK-07-Q04",
+                  "text": "Do you do this?",
+                  "type": "yes-no-else",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": "If not, what do you do?"
+                }
+              ]
+            },
+            {
+              "id": "CK-07-P05",
+              "point": "If you slice cooked meat:\n• follow the manufacturer’s instructions when you clean the slicer\n• avoid handling the meat as much as possible – use clean tongs or slice meat straight onto a plate",
+              "why": "Meat slicers need careful cleaning and disinfecting to prevent dirt building up and to stop harmful bacteria growing, in particular on the slicing blade.\nHands can easily spread harmful bacteria onto food.",
+              "page": 63,
+              "questions": [
+                {
+                  "id": "CK-07-Q05",
+                  "text": "Are staff trained how to clean the meat slicer properly, or supervised?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 63
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "• If you think that a food delivery has not been handled safely, reject the delivery.",
+            "• If ready-to-eat vegetables, fruit or salad ingredients have not been washed properly, wash them following the advice on the first side of this Safe method and clean any work surfaces etc. they have touched.",
+            "• If ready-to-eat food has been prepared on a work surface or with a knife that has been used for raw meat, poultry, fish, eggs or unwashed fruit and vegetables, throw the food away.",
+            "• If ready-to-eat food has not been chilled safely, throw the food away.",
+            "• If ready-to-eat food is past it’s use-by date, throw it away."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "• If you do not think a supplier handles food safely, consider changing to a new supplier.",
+            "• Review the way you receive deliveries.",
+            "• Review the way you store and prepare ready-to-eat food.",
+            "• Train staff again on this safe method.",
+            "• Improve staff supervision."
+          ],
+          "diaryNote": "Write down what went wrong and what you did about it in your diary.",
+          "page": 63
+        },
+        {
+          "kind": "think-twice",
+          "heading": "THINK TWICE!",
+          "text": "You should not use the same equipment, such as vacuum packing machines, slicers and mincers, for both raw and ready-to-eat food. These are complex pieces of machinery with lots of moving parts and it is very difficult to clean them sufficiently, so bacteria from raw food could easily be transferred to ready-to-eat food.\nIf you are preparing both raw and ready-to-eat food, you should make sure where possible this is done in separate clean and disinfected areas. If this is not possible, surface and utensils used must be thoroughly cleaned and then disinfected between tasks.\nMake sure staff wash their hands thoroughly between tasks, especially when working with raw and ready-to-eat food. This stops bacteria and allergens being spread onto foods, surfaces and equipment.",
+          "page": 63
+        }
+      ]
+    }
+  ]
+}
