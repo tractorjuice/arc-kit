@@ -1499,8 +1499,9 @@ function misplaced(file, found, wanted, project) {
 // Reads and parses a project's worksheets: those of `sections`, every one unless given, in HASH_ORDER.
 // This is the one place a worksheet is read. Returns a Map from section to null when its file does not
 // exist; to { section, name, file, readError } when it cannot be read; or to { section, name, file,
-// text, parsed, problems, wrongData, misplaced, clean }. `problems` are the parser's, as
-// file:line: message. A worksheet in the wrong file has `misplaced`, what to do about it, as one more.
+// text, parsed, problems, wrongData, belongsTo, clean }. `problems` are the parser's, exactly what
+// parse-worksheet lists, as file:line: message. A worksheet for other data has `wrongData`; one in the
+// wrong file has `belongsTo`, the section it is the worksheet of. Neither is clean.
 function readWorksheets(project, data, sections = HASH_ORDER) {
   const sheets = new Map();
   for (const section of HASH_ORDER.filter((name) => sections.includes(name))) {
@@ -1520,9 +1521,8 @@ function readWorksheets(project, data, sections = HASH_ORDER) {
     sheet.problems = sheet.parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`);
     sheet.wrongData = sheet.parsed.data !== null && sheet.parsed.data !== DATA_ID;
     const found = sheet.parsed.section;
-    sheet.misplaced = found !== null && found !== section ? misplaced(file, found, section, project) : null;
-    if (sheet.misplaced) sheet.problems.push(sheet.misplaced);
-    sheet.clean = sheet.problems.length === 0;
+    sheet.belongsTo = found !== null && found !== section ? found : null;
+    sheet.clean = sheet.problems.length === 0 && !sheet.wrongData && !sheet.belongsTo;
     sheets.set(section, sheet);
   }
   return sheets;
@@ -1557,8 +1557,8 @@ function readSources(doc, project, data) {
     } else if (sheet.wrongData) {
       refused.push(`${file} answers data ${sheet.parsed.data}, but the helper's data is ${DATA_ID}. Keep a copy of it, make a ` +
         `worksheet for this data with: ${makeWorksheet(section, file)}, and copy the answers across.`);
-    } else if (sheet.misplaced) {
-      refused.push(sheet.misplaced);
+    } else if (sheet.belongsTo) {
+      refused.push(misplaced(file, sheet.belongsTo, section, project));
     } else {
       problems.push(...sheet.problems);
     }
@@ -1651,8 +1651,10 @@ function firstDifference(expected, found) {
 }
 
 // Checks that the body between the markers of the document in `report` equals a fresh render, line
-// by line. Returns { exit, ok, line, column, expected, found, expectedChar, foundChar, message }, or
-// { exit, messages } when there is nothing to compare. A file saved with Windows line endings reads
+// by line. Returns { exit, ok, line, column, expected, found, expectedChar, foundChar, message, reason },
+// or { exit, messages } when there is nothing to compare. `reason`, on a failure, is check's first
+// reason as one clause that follows "document <file>" and ends with the next step: status and
+// sign-off give it as it is. A file saved with Windows line endings reads
 // as the same text: each CRLF is read as LF before comparing, which keeps every line number. Text
 // outside the markers is not compared, but holding a heading of the pack there fails the check.
 export function checkDocument(doc, project, report, data) {
@@ -1660,19 +1662,24 @@ export function checkDocument(doc, project, report, data) {
   try {
     text = readFileSync(report, 'utf8');
   } catch (error) {
-    return { exit: 2, messages: [`cannot read ${report}: ${error.message}`] };
+    return { exit: 2, messages: [`cannot read ${report}: ${error.message}`],
+      reason: `cannot be read (${error.message}): check that the file is there and can be opened` };
   }
   // A byte order mark at the start of the file is not part of its first line.
   const lines = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').split('\n');
   const body = findBody(lines, doc);
   if (body.problem) {
-    return { exit: 1, ok: false, line: body.line, message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}` };
+    return { exit: 1, ok: false, line: body.line, message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}`,
+      reason: `has its UK-FOOD markers missing or damaged (${body.problem}${body.line ? `, at line ${body.line}` : ''}): write the ` +
+        'document again from its worksheet' };
   }
   const outside = packHeadingOutside(lines, body, data);
   if (outside >= 0) {
     return { exit: 1, ok: false, line: outside + 1, message: `${report}:${outside + 1}: this heading is the pack's text, ` +
       'outside the UK-FOOD markers, where it is not checked: write the document again from a fresh render, with the ' +
-      'pack\'s text only between the markers.' };
+      'pack\'s text only between the markers.',
+    reason: `holds the pack's text outside its UK-FOOD markers, at line ${outside + 1}, where it is not checked: write the ` +
+      'document again from its worksheet, with the pack\'s text only between the markers' };
   }
   const fresh = renderDocument(doc, project, data);
   if (fresh.exit) return fresh;
@@ -1688,15 +1695,23 @@ export function checkDocument(doc, project, report, data) {
   // The completion record also depends on which documents are written, in step and signed off, so
   // any difference means it no longer matches the project.
   let what = `this line is not what a fresh render of ${doc} gives.`;
-  if (doc === COMPLETION_RECORD) what = COMPLETION_STALE;
-  else if (stale) what = 'the worksheets have changed since this body was rendered: render the document again.';
+  let reason = `was changed between its UK-FOOD markers, at line ${line}: make the change in its worksheet instead, and write ` +
+    'the document again from its worksheet';
+  if (doc === COMPLETION_RECORD) {
+    what = COMPLETION_STALE;
+    reason = 'is out of date, as it no longer matches the project: render it again';
+  } else if (stale) {
+    what = 'the worksheets have changed since this body was rendered: render the document again.';
+    reason = 'is out of date, as its worksheets have changed since it was written: write the document again from its worksheet';
+  }
   const [want, got] = [expected[at] ?? '', region[at] ?? ''];
   const { column, expectedChar, foundChar } = firstDifference(want, got);
   return {
     exit: 1, ok: false, line, column, expected: want, found: got, expectedChar, foundChar,
     message: `${report}:${line}: ${what} The lines first differ at column ${column}, where the render has ${expectedChar} ` +
       `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}` +
-      (doc === COMPLETION_RECORD ? '' : `\n${CHECK_ADVICE}`)
+      (doc === COMPLETION_RECORD ? '' : `\n${CHECK_ADVICE}`),
+    reason
   };
 }
 
@@ -1966,13 +1981,27 @@ const notStartedLine = (section) => `worksheet ${sheetPath(section)} is not star
 const problemsLine = (section, n) => `worksheet ${sheetPath(section)} has ${counted(n, 'problem', 'problems')}, so none of ` +
   `its answers counts until ${n === 1 ? 'it is' : 'they are'} fixed: parse-worksheet --file ${sheetPath(section)} lists ` +
   `${n === 1 ? 'it' : 'them'}`;
-const outOfDateLine = (file) => `document ${file} is out of date, as it does not match its worksheets: write the document ` +
-  'again from its worksheet';
+// A written document that fails check: check's own first reason, with its next step.
+const checkLine = (file, check) => `document ${file} ${check.reason ?? `does not pass check: ${check.messages?.[0] ?? check.message}`}`;
 const changedLine = (record) => `signed off by ${record.name} on ${record.date}, but changed since: sign off again`;
 const uncoveredLine = (name) => `${name} has no own entry: add an own entry of kind special-process whose Process is ${name}, ` +
   'and confirm it';
 const awaitingLine = (entry) => `own entry ${entry.id} (${entry.title}) is awaiting environmental health review: once the ` +
   'council has replied, record the review\'s date and outcome in the entry\'s EH-review field';
+// The line for a worksheet for other data, or in the wrong file: what to do, and for one in the wrong
+// file where it probably belongs. Null for any other worksheet.
+function misplacedLine(section, sheet, project) {
+  if (sheet?.wrongData) {
+    return `worksheet ${sheetPath(section)} answers data ${sheet.parsed.data}, not this helper's data ${DATA_ID}: keep a copy ` +
+      `of it, make a new one with worksheet --section ${section} and copy the answers across`;
+  }
+  if (!sheet?.belongsTo) return null;
+  const found = sheet.belongsTo;
+  const taken = existsSync(worksheetFile(project, found)) ? ' (a file is already there: compare the two first)' : '';
+  return `worksheet ${sheetPath(section)} is the ${found} worksheet, not the ${section} one: move or rename it first, so that ` +
+    `it is not overwritten, as it probably belongs in ${sheetPath(found)}${taken}, then make the ${section} worksheet with ` +
+    `worksheet --section ${section}`;
+}
 // What a document asks a person to answer: questions, or for the own methods document its entries.
 const nounsOf = (code) => (code === 'FOODOWN' ? ['own entry', 'own entries'] : ['question', 'questions']);
 
@@ -2023,19 +2052,26 @@ function collectStatus(project, data) {
   const uncovered = !own || own.clean ? specialProcesses.filter((process) => !process.ownEntry).map(({ name }) => uncoveredLine(name)) : [];
   const hashes = new Map();
   const blockers = new Map();
+  const matched = new Map();
   const documents = STATUS_ORDER.map((code) => {
     const { reads, needs } = worksheetsOf(code);
     const current = files.get(code) ?? null;
-    const inSync = Boolean(current) && checkDocument(code, project, join(project, current.file), data).exit === 0;
+    const check = current ? checkDocument(code, project, join(project, current.file), data) : null;
+    const inSync = check?.exit === 0;
     const hash = answersHash(sheets, reads);
     const counts = countsOf(code, sheets.get(reads[0]), data);
     const missing = reads.filter((section) => needs.includes(section) && !sheets.get(section));
-    const troubled = reads.filter((section) => sheets.get(section)?.problems.length);
+    // A worksheet for other data or in the wrong file is told by what to do about it; any other with
+    // problems by how many parse-worksheet lists.
+    const advice = new Map(reads.map((section) => [section, misplacedLine(section, sheets.get(section), project)]));
+    const wrong = reads.filter((section) => advice.get(section));
+    const troubled = reads.filter((section) => !advice.get(section) && sheets.get(section)?.problems.length);
     const doc = {
       code,
       worksheets: reads.map(worksheetName),
       missingWorksheets: missing.map(worksheetName),
-      problems: troubled.reduce((sum, section) => sum + sheets.get(section).problems.length, 0),
+      problems: reads.reduce((sum, section) => sum + (sheets.get(section)?.problems.length ?? 0), 0),
+      misplaced: wrong.length ? advice.get(wrong[0]) : null,
       questions: counts.questions,
       confirmed: counts.confirmed,
       proposed: counts.proposed,
@@ -2047,25 +2083,30 @@ function collectStatus(project, data) {
       rendered: Boolean(current),
       inSync
     };
-    // A worksheet with problems gives one line and none from its counts; a document whose worksheets
-    // are missing or have problems cannot be checked, so it is not called out of date.
-    const fileLines = !current ? [NOT_WRITTEN] : !inSync && !missing.length && !troubled.length ? [outOfDateLine(current.file)] : [];
+    // A worksheet that is not clean gives one line and none from its counts. A document whose worksheets
+    // are missing, misplaced or have problems cannot be checked; any other that fails check is given
+    // check's own first reason.
+    const fileLines = !current ? [NOT_WRITTEN] : !inSync && !missing.length && !wrong.length && !troubled.length ? [checkLine(current.file, check)] : [];
+    const first = sheets.get(reads[0]);
     const docLines = [
-      ...(troubled.includes(reads[0]) ? [] : countLines(code, counts, reads[0])),
+      ...(first && !first.clean ? [] : countLines(code, counts, reads[0])),
       ...fileLines
     ];
+    const lineFor = (section) => (!sheets.get(section) ? notStartedLine(section) : advice.get(section) ??
+      problemsLine(section, sheets.get(section).problems.length));
     const held = [
-      ...reads.filter((section) => missing.includes(section) || troubled.includes(section)).map((section) => ({
-        what: sheets.get(section) ? problemsLine(section, sheets.get(section).problems.length) : notStartedLine(section), sheet: section
-      })),
+      ...reads.filter((section) => missing.includes(section) || wrong.includes(section) || troubled.includes(section))
+        .map((section) => ({ what: lineFor(section), sheet: section })),
       ...docLines.map((what) => ({ what, sheet: null })),
       ...(code === 'FOODOWN' ? uncovered : []).map((what) => ({ what, sheet: null, after: true }))
     ];
     const record = signOffs.records.filter((entry) => entry.doc === code).at(-1) ?? null;
     // Signed off only when finished, and the newest sign-off for it names it as it is now.
-    doc.signedOff = held.length === 0 && Boolean(record && record.answers === hash && record.version === current.version &&
+    const matches = Boolean(record && current && record.answers === hash && record.version === current.version &&
       record.file === current.file);
+    doc.signedOff = held.length === 0 && matches;
     doc.signOff = record;
+    matched.set(code, matches);
     hashes.set(code, hash);
     blockers.set(code, held);
     return doc;
@@ -2075,7 +2116,10 @@ function collectStatus(project, data) {
   const unfinished = documents.flatMap((doc) => {
     const [mine] = worksheetsOf(doc.code).reads;
     const lines = blockers.get(doc.code).filter(({ sheet, after }) => !after && (sheet === null || sheet === mine)).map(({ what }) => what);
-    if (!doc.signedOff) lines.push(doc.signOff ? changedLine(doc.signOff) : NOT_SIGNED);
+    // A newest sign-off that still names the document as it is now has not been changed since: the
+    // lines above say what is unfinished, and nothing more is said of it.
+    if (!doc.signedOff && !doc.signOff) lines.push(NOT_SIGNED);
+    else if (!doc.signedOff && !matched.get(doc.code)) lines.push(changedLine(doc.signOff));
     return lines.map((what) => ({ code: doc.code, what }));
   });
   unfinished.push(...uncovered.map((what) => ({ code: 'FOODOWN', what })),
@@ -2217,7 +2261,7 @@ export function signOffDocument(code, project, person, data) {
 
 // The status as short lines a person can read: one for each document, then the special processes and
 // the own entries awaiting review, then what is unfinished.
-function statusLines(status, data) {
+function statusLines(status, data, sheets) {
   const lines = [`Food safety status, data ${status.data}`];
   for (const doc of status.documents) {
     const [, many] = nounsOf(doc.code);
@@ -2232,7 +2276,11 @@ function statusLines(status, data) {
     ];
     lines.push(`${doc.code} (${docName(doc.code, data)}): ${parts.join('; ')}`);
   }
-  if (status.specialProcesses.length) {
+  const own = sheets.get('own');
+  if (status.specialProcesses.length && own && !own.clean) {
+    lines.push(`Special processes and foods: ${status.specialProcesses.map(({ name }) => name).join('; ')} (the own worksheet ` +
+      'could not be read, so which own entries cover them is not known)');
+  } else if (status.specialProcesses.length) {
     lines.push(`Special processes and foods: ${status.specialProcesses.map(({ name, ownEntry, ehReview }) =>
       (ownEntry ? `${name} (own entry ${ownEntry}, environmental health review: ${ehReview})` : `${name} (no own entry)`)).join('; ')}`);
   }
@@ -2249,7 +2297,7 @@ export function statusCommand(args, io = { out: console.log, err: console.error 
   if (dataError) return failure(io, { exit: 2, messages: [dataError] });
   const result = collectStatus(options.project, data);
   if (result.exit) return failure(io, result);
-  io.out(options.json ? JSON.stringify(result.status, null, 2) : statusLines(result.status, data).join('\n'));
+  io.out(options.json ? JSON.stringify(result.status, null, 2) : statusLines(result.status, data, result.sheets).join('\n'));
   return 0;
 }
 

@@ -89,7 +89,20 @@ const UNCOVERED = 'low temperature cooking has no own entry: add an own entry of
   'low temperature cooking, and confirm it';
 const AWAITING = 'own entry OWN-02 (Sous vide eggs) is awaiting environmental health review: once the council has replied, ' +
   'record the review\'s date and outcome in the entry\'s EH-review field';
-const outOfDate = (file) => `document ${file} is out of date, as it does not match its worksheets: write the document again from its worksheet`;
+// A written document that fails check, by check's own first reason.
+const staleLine = (file) => `document ${file} is out of date, as its worksheets have changed since it was written: write the ` +
+  'document again from its worksheet';
+const editedLine = (file, line) => `document ${file} was changed between its UK-FOOD markers, at line ${line}: make the change in ` +
+  'its worksheet instead, and write the document again from its worksheet';
+const outsideLine = (file, line) => `document ${file} holds the pack's text outside its UK-FOOD markers, at line ${line}, where it ` +
+  'is not checked: write the document again from its worksheet, with the pack\'s text only between the markers';
+const markersLine = (file, problem) => `document ${file} has its UK-FOOD markers missing or damaged (${problem}): write the ` +
+  'document again from its worksheet';
+// A worksheet in the wrong file: where it probably belongs, and what to do.
+const misplacedLine = (section, found, taken) => `worksheet food-safety/answers-${section}.md is the ${found} worksheet, not the ` +
+  `${section} one: move or rename it first, so that it is not overwritten, as it probably belongs in food-safety/answers-${found}.md` +
+  `${taken ? ' (a file is already there: compare the two first)' : ''}, then make the ${section} worksheet with worksheet --section ${section}`;
+const lineOfCheck = (dir, file) => checkDocument('FOODCOOK', dir, file, data).line;
 const notStarted = (section) => `worksheet food-safety/answers-${section}.md is not started yet: make it with worksheet --section ${section} and fill it in`;
 const problemsLine = (section, n) => `worksheet food-safety/answers-${section}.md has ${n} ${n === 1 ? 'problem' : 'problems'}, so none of ` +
   `its answers counts until ${n === 1 ? 'it is' : 'they are'} fixed: parse-worksheet --file food-safety/answers-${section}.md lists ` +
@@ -160,10 +173,10 @@ test('the status JSON has the documented shape: the seven documents in order, th
   assert.deepEqual(result.documents.map((d) => d.code), ['FOODPROF', 'FOODXC', 'FOODCLN', 'FOODCHL', 'FOODCOOK', 'FOODMGT', 'FOODOWN']);
   assert.deepEqual(STATUS_ORDER, result.documents.map((d) => d.code));
   for (const doc of result.documents) {
-    assert.deepEqual(Object.keys(doc), ['code', 'worksheets', 'missingWorksheets', 'problems', 'questions', 'confirmed', 'proposed',
+    assert.deepEqual(Object.keys(doc), ['code', 'worksheets', 'missingWorksheets', 'problems', 'misplaced', 'questions', 'confirmed', 'proposed',
       'unanswered', 'notRelevantMethods', 'adaptedMethods', 'file', 'version', 'rendered', 'inSync', 'signedOff', 'signOff'], doc.code);
     assert.deepEqual([doc.file, doc.version, doc.rendered, doc.inSync, doc.signedOff, doc.signOff], [null, null, false, false, false, null], doc.code);
-    assert.deepEqual([doc.missingWorksheets, doc.problems], [[], 0], doc.code);
+    assert.deepEqual([doc.missingWorksheets, doc.problems, doc.misplaced], [[], 0, null], doc.code);
   }
   const worksheets = Object.fromEntries(result.documents.map((d) => [d.code, d.worksheets]));
   assert.deepEqual(worksheets.FOODCOOK, ['answers-CK.md', 'answers-profile.md']);
@@ -290,11 +303,11 @@ test('a worksheet with problems has none of its answers counted as confirmed', (
   assert.equal(cook.problems, 1);
   assert.equal(cook.confirmed, 0);
   assert.equal(cook.unanswered, cook.questions);
-  // A worksheet in the wrong file is a problem too, and nothing in it is counted.
+  // Nothing in a worksheet in the wrong file is counted either.
   setSheet(dir, 'CK', sheet(dir, 'XC'));
   const misplaced = docStatus(dir, 'FOODCOOK');
-  assert.equal(misplaced.problems, 1);
-  assert.equal(misplaced.confirmed, 0);
+  assert.deepEqual([misplaced.problems, misplaced.confirmed], [0, 0]);
+  assert.ok(misplaced.misplaced);
 });
 
 test('status exits 0 however unfinished the work, prints readable lines without --json, and exits 2 on a usage or input error', () => {
@@ -336,7 +349,7 @@ test('of several versions of a document, the highest by number is current: 1.10 
   assert.equal(docStatus(dir, 'FOODCOOK').version, '2');
 });
 
-test('a document is in step only when it passes check: an edited document is out of date', () => {
+test('a document is in step only when it passes check: an edited document fails it, and the line says where', () => {
   const dir = cafe();
   const file = writeDocument(dir, 'FOODCOOK');
   const cook = docStatus(dir, 'FOODCOOK');
@@ -344,7 +357,7 @@ test('a document is in step only when it passes check: an edited document is out
   assert.deepEqual(linesFor(dir, 'FOODCOOK'), [NOT_SIGNED]);
   writeFileSync(file, swap(readFileSync(file, 'utf8'), 'Poached eggs', 'Boiled eggs'));
   assert.equal(docStatus(dir, 'FOODCOOK').inSync, false);
-  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [outOfDate('ARC-001-FOODCOOK-v1.0.md'), NOT_SIGNED]);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [editedLine('ARC-001-FOODCOOK-v1.0.md', lineOfCheck(dir, file)), NOT_SIGNED]);
 });
 
 test('a special process is covered by the confirmed own entry whose Process names it, never by an entry\'s title', () => {
@@ -363,6 +376,79 @@ test('a special process is covered by the confirmed own entry whose Process name
     { name: 'low temperature cooking', ownEntry: null, ehReview: null },
     { name: 'smoking or curing meat/fish', ownEntry: 'OWN-03', ehReview: '2026-12-01 accepted' }
   ]);
+});
+
+test('a worksheet in the wrong file is its own state: its line says where it belongs and what to do, and problems counts only what parse-worksheet lists', () => {
+  const dir = cafe();
+  writeDocument(dir, 'FOODCOOK');
+  setSheet(dir, 'CK', sheet(dir, 'XC'));
+  const listed = run('parse-worksheet', '--file', sheetFile(dir, 'CK'));
+  assert.equal(listed.status, 0, listed.stdout);
+  const advice = misplacedLine('CK', 'XC', true);
+  const cook = docStatus(dir, 'FOODCOOK');
+  assert.deepEqual([cook.problems, cook.misplaced, cook.confirmed], [0, advice, 0]);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [advice, NOT_SIGNED]);
+  const refused = signOff(dir, 'FOODCOOK');
+  assert.equal(refused.status, 1);
+  assert.deepEqual(reasons(refused.stderr), [advice]);
+  // With problems of its own as well, problems is the number parse-worksheet lists, and the line is still the advice.
+  setSheet(dir, 'CK', `${sheet(dir, 'XC')}a stray line\nand another\n`);
+  const twice = run('parse-worksheet', '--file', sheetFile(dir, 'CK'));
+  assert.equal(twice.stdout.trim().split('\n').length, 2, twice.stdout);
+  assert.equal(docStatus(dir, 'FOODCOOK').problems, 2);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [advice, NOT_SIGNED]);
+  // When the file it belongs in is free, the line says only where that is.
+  setSheet(dir, 'CK', sheet(dir, 'XC'));
+  rmSync(sheetFile(dir, 'XC'));
+  assert.equal(docStatus(dir, 'FOODCOOK').misplaced, misplacedLine('CK', 'XC', false));
+  // A worksheet for other data: parse-worksheet lists the one problem, and the line says what to do.
+  const other = cafe();
+  setSheet(other, 'CK', swap(sheet(other, 'CK'), `data=${DATA_ID}`, 'data=sfbb-caterers-2025-01-01'));
+  assert.equal(run('parse-worksheet', '--file', sheetFile(other, 'CK')).stdout.trim().split('\n').length, 1);
+  const data2025 = 'worksheet food-safety/answers-CK.md answers data sfbb-caterers-2025-01-01, not this helper\'s data ' +
+    `${DATA_ID}: keep a copy of it, make a new one with worksheet --section CK and copy the answers across`;
+  assert.deepEqual([docStatus(other, 'FOODCOOK').problems, docStatus(other, 'FOODCOOK').misplaced], [1, data2025]);
+  assert.deepEqual(linesFor(other, 'FOODCOOK'), [data2025, NOT_WRITTEN, NOT_SIGNED]);
+});
+
+test('a written document that fails check is given check\'s own first reason, with its next step, in status and in the refusal', () => {
+  const dir = cafe();
+  const file = writeDocument(dir, 'FOODCOOK');
+  const name = basename(file);
+  const body = readFileSync(file, 'utf8');
+  for (const [text, expected] of [
+    [swap(body, 'Poached eggs', 'Boiled eggs'), (check) => editedLine(name, check.line)],
+    [swap(body, 'Header text for FOODCOOK.', '## COOKING'), () => outsideLine(name, 1)],
+    [swap(body, '<!-- UK-FOOD:END -->', ''), () => markersLine(name, 'there is no UK-FOOD:END marker line, so there is no rendered body to check')]
+  ]) {
+    writeFileSync(file, text);
+    const check = checkDocument('FOODCOOK', dir, file, data);
+    assert.equal(check.exit, 1);
+    // The line is check's own reason, taken from check.
+    assert.equal(`document ${name} ${check.reason}`, expected(check));
+    assert.deepEqual(linesFor(dir, 'FOODCOOK'), [expected(check), NOT_SIGNED]);
+    const refused = signOff(dir, 'FOODCOOK');
+    assert.equal(refused.status, 1);
+    assert.deepEqual(reasons(refused.stderr), [expected(check)]);
+  }
+  // Out of date: the worksheet changed after the document was written.
+  writeFileSync(file, body);
+  setSheet(dir, 'CK', swap(sheet(dir, 'CK'), 'Answer: Baked beans', 'Answer: Baked beans and soup'));
+  assert.equal(`document ${name} ${checkDocument('FOODCOOK', dir, file, data).reason}`, staleLine(name));
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [staleLine(name), NOT_SIGNED]);
+});
+
+test('the readable status says the own worksheet could not be read, not that a special process has no own entry, when it has problems or is in the wrong file', () => {
+  const dir = cafe();
+  const special = () => run('status', '--project', dir).stdout.split('\n').find((line) => line.startsWith('Special processes and foods:'));
+  assert.equal(special(), 'Special processes and foods: sous vide (own entry OWN-02, environmental health review: pending); ' +
+    'low temperature cooking (no own entry)');
+  const unread = 'Special processes and foods: sous vide; low temperature cooking (the own worksheet could not be read, so which ' +
+    'own entries cover them is not known)';
+  setSheet(dir, 'own', `${sheet(dir, 'own')}a stray line\n`);
+  assert.equal(special(), unread);
+  setSheet(dir, 'own', sheet(dir, 'CK'));
+  assert.equal(special(), unread);
 });
 
 // ---- Sign-off ----
@@ -445,10 +531,14 @@ test('sign-off is refused, writing nothing, when the document is not written, is
   const file = writeDocument(dir, 'FOODCOOK');
   refused(['--version', '1.1'], /^- the current FOODCOOK document is ARC-001-FOODCOOK-v1\.0\.md, version 1\.0, not version 1\.1: give --version 1\.0 to sign off the current document$/m);
   writeFileSync(file, swap(readFileSync(file, 'utf8'), 'Poached eggs', 'Boiled eggs'));
-  assert.deepEqual(reasons(signOff(dir, 'FOODCOOK').stderr), [outOfDate('ARC-001-FOODCOOK-v1.0.md')]);
+  const edited = signOff(dir, 'FOODCOOK');
+  assert.equal(edited.status, 1);
+  assert.deepEqual(reasons(edited.stderr), [editedLine('ARC-001-FOODCOOK-v1.0.md', lineOfCheck(dir, file))]);
   writeDocument(dir, 'FOODCOOK');
   rmSync(sheetFile(dir, 'profile'));
-  assert.deepEqual(reasons(signOff(dir, 'FOODCOOK').stderr), [notStarted('profile')]);
+  const noProfile = signOff(dir, 'FOODCOOK');
+  assert.equal(noProfile.status, 1);
+  assert.deepEqual(reasons(noProfile.stderr), [notStarted('profile')]);
   assert.ok(!existsSync(signOffsFile(dir)));
 });
 
@@ -461,7 +551,7 @@ test('Review Focus 5a: editing one CK answer after sign-off makes it not signed 
   assert.equal(cook.signedOff, false);
   assert.equal(cook.inSync, false);
   assert.equal(cook.signOff.name, 'Sam Okafor');
-  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [outOfDate('ARC-001-FOODCOOK-v1.0.md'),
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [staleLine('ARC-001-FOODCOOK-v1.0.md'),
     'signed off by Sam Okafor on 2026-11-21, but changed since: sign off again']);
 });
 
@@ -565,6 +655,10 @@ test('R50b: a sign-off recorded for an unfinished document does not make it sign
     const doc = docStatus(dir, code);
     assert.deepEqual([doc.inSync, doc.signedOff, doc.signOff.name], [true, false, 'Forged Name'], code);
   }
+  // Nothing has changed since the record, so it is not said to have; the lines say only what is unfinished.
+  const xc = outstanding(dir, 'XC');
+  assert.deepEqual(linesFor(dir, 'FOODXC'), [unansweredLine('XC', xc.unanswered), proposedLine('XC', xc.proposed)]);
+  assert.deepEqual(linesFor(dir, 'FOODOWN'), [UNCOVERED, AWAITING]);
   const rows = tableRows(rendered('FOODCMP', dir));
   rows.forEach((row, i) => assert.deepEqual(row.slice(1, 3), targets[i].section === 'CK' ? ['2026-11-21', 'Forged Name'] : [PENDING, PENDING], row[0]));
   // FOODCOOK is finished, so a matching record makes it signed off, whoever wrote it: the record is the business's to keep.
