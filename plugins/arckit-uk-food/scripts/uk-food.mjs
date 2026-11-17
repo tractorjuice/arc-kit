@@ -512,11 +512,13 @@ const isIsoDate = (value) => {
 const andList = (items) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`);
 // A character as its code point, U+ and four or more hex digits, so that one that looks like another shows.
 const codePoint = (char) => `U+${char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`;
-// Characters a reader cannot see, or that change the direction of the text around them, so that a
-// document could show something other than what was written: the zero-width characters and marks
-// (U+200B to U+200F), the bidirectional controls (U+202A to U+202E and U+2066 to U+2069), a byte
-// order mark inside the text (U+FEFF) and the soft hyphen (U+00AD).
-const HIDDEN = /[\u00AD\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g;
+// Characters that can hide text or reorder what a reader sees, so that a document could show something
+// other than what was written: the direction overrides and embeddings (U+202A to U+202E), the
+// direction isolates (U+2066 to U+2069), the zero-width space (U+200B), the word joiner (U+2060) and a
+// byte order mark inside the text (U+FEFF). Allowed, because writing needs them: the joiners that
+// Persian, Urdu, Hindi and other scripts and many emoji use (U+200C, U+200D), the direction marks
+// editors put around right-to-left text (U+200E, U+200F) and the soft hyphen (U+00AD).
+const HIDDEN = /[\u200B\u2060\uFEFF\u202A-\u202E\u2066-\u2069]/g;
 // The hidden characters in a line, each once, in the order they first appear: "U+202E and U+200B".
 const hiddenIn = (text) => andList([...new Set(text.match(HIDDEN) ?? [])].map(codePoint));
 

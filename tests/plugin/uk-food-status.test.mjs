@@ -283,6 +283,21 @@ test('sign-off takes today\'s date and paper signed "no" when they are not given
   assert.equal(record.paperSigned, 'no');
 });
 
+test('a sign-off name written with a joiner or a direction mark is accepted and recorded as given; a direction override is not', () => {
+  const dir = cafe();
+  writeDocument(dir, 'FOODCOOK');
+  // Hindi with a joiner, then Arabic followed by a left-to-right mark.
+  const name = '\u092a\u0926\u094d\u200d\u092e\u093e \u0645\u0631\u064a\u0645\u200e';
+  const refused = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Sam\u202eOkafor', '--role', 'Owner', '--version', '1.0');
+  assert.equal(refused.status, 2);
+  const result = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', name, '--role', 'Owner', '--version', '1.0',
+    '--date', '2026-11-21');
+  assert.equal(result.status, 0, result.stderr);
+  assert.equal(docStatus(dir, 'FOODCOOK').signOff.name, name);
+  assert.equal(docStatus(dir, 'FOODCOOK').signedOff, true);
+  assert.ok(tableRows(rendered('FOODCMP', dir)).some((row) => row[2] === name));
+});
+
 test('sign-off of XC is refused, saying why, and nothing is written', () => {
   const dir = cafe();
   writeDocument(dir, 'FOODXC');

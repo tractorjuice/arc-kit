@@ -582,10 +582,35 @@ test('a comment inside an answer is a problem, and the answer is not used: it wo
   assert.match(reason.problems[0].message, /comment/);
 });
 
-// Characters a reader cannot see, or that change the direction of the text around them, written as escapes.
-const HIDDEN = ['\u200b', '\u200c', '\u200d', '\u200e', '\u200f', '\u202a', '\u202b', '\u202c', '\u202d', '\u202e',
-  '\u2066', '\u2067', '\u2068', '\u2069', '\ufeff', '\u00ad'];
+// The characters a value may not hold, written as escapes: the direction overrides and embeddings
+// (U+202A to U+202E), the direction isolates (U+2066 to U+2069), the zero-width space, the word joiner
+// and a byte order mark. Each can hide text or reorder what a reader sees.
+const HIDDEN = ['\u202a', '\u202b', '\u202c', '\u202d', '\u202e', '\u2066', '\u2067', '\u2068', '\u2069', '\u200b', '\u2060', '\ufeff'];
+// Characters that look invisible but that writing needs, and that a value may hold: the joiners that
+// Persian, Urdu, Hindi and other scripts and many emoji use (U+200C, U+200D), the direction marks
+// editors put around right-to-left text (U+200E, U+200F) and the soft hyphen (U+00AD).
+const ALLOWED = ['\u200c', '\u200d', '\u200e', '\u200f', '\u00ad'];
+// Names and words that use them: Persian and Urdu with a non-joiner, Hindi with a joiner, a woman cook
+// emoji (woman, joiner, cooking), Arabic followed by a left-to-right mark, Hebrew followed by a
+// right-to-left mark, and a soft hyphen.
+const WRITTEN = ['\u0639\u0644\u06cc\u200c\u0631\u0636\u0627', '\u092a\u0926\u094d\u200d\u092e\u093e', '\u{1f469}\u200d\u{1f373}',
+  '\u0645\u0631\u064a\u0645\u200e (Maryam)', '\u05e9\u05e8\u05d4\u200f (Sarah)', 'sand\u00adwiches'];
 const codePoint = (char) => `U+${char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`;
+
+test('names and words that need a joiner, a direction mark or a soft hyphen are read as written, and count as answered', () => {
+  assert.deepEqual(ALLOWED.filter((char) => !WRITTEN.some((word) => word.includes(char))), []);
+  for (const word of WRITTEN) {
+    const text = fill(blankWorksheet('CK', data), 'CK-06-Q02', `Answer: Kept hot by ${word}`, 'State: confirmed', `By: ${word}`,
+      'On: 2026-11-20', 'Source:');
+    const parsed = parse(text);
+    assert.deepEqual(parsed.problems, [], word);
+    const answer = parsed.answers.get('CK-06-Q02');
+    assert.deepEqual([answer.answer, answer.by, answer.answered], [`Kept hot by ${word}`, word, true], word);
+  }
+  const own = parse(fixture('own').replace('## OWN-01 Opened milk', `## OWN-01 ${WRITTEN[0]} opened milk`));
+  assert.deepEqual(own.problems, []);
+  assert.equal(own.entries.get('OWN-01').answered, true);
+});
 
 test('an invisible or direction-changing character in an answer is reported with its line and code point, and the answer is not used', () => {
   for (const char of HIDDEN) {
@@ -613,13 +638,13 @@ test('an invisible or direction-changing character in a method\'s status, an own
   assert.equal(reason.problems.length, 1);
   assert.match(reason.problems[0].message, /U\+2066/);
   const own = fixture('own');
-  for (const [from, to] of [['Hazard: Milk going off', 'Hazard: Milk\u00ad going off'], ['## OWN-01 Opened milk', '## OWN-01 Opened\u200f milk'],
+  for (const [from, to] of [['Hazard: Milk going off', 'Hazard: Milk\u2060 going off'], ['## OWN-01 Opened milk', '## OWN-01 Opened\u202d milk'],
     ['  Eggs are served straight away', '  Eggs are served\ufeff straight away']]) {
     assert.ok(own.includes(from), from);
     const parsed = parse(own.replace(from, to));
     assert.equal(parsed.problems.length, 1, `${to}: ${messages(parsed)}`);
     assert.equal(parsed.problems[0].line, lineOf(own, from));
-    assert.match(parsed.problems[0].message, /U\+00AD|U\+200F|U\+FEFF/);
+    assert.match(parsed.problems[0].message, /U\+2060|U\+202D|U\+FEFF/);
     assert.equal([...parsed.entries.values()].filter((entry) => entry.answered).length, 1, to);
   }
   const profile = parse(fixture('profile').replace('Answer: Bramble Cafe', 'Answer: Bramble\u200b Cafe'));
@@ -630,9 +655,9 @@ test('an invisible or direction-changing character in a method\'s status, an own
 test('the pack\'s own text on a > line is not a value: an invisible character there is not reported', () => {
   const marked = structuredClone(data);
   const question = questionsOf(marked.sections.get('CK').methods.find((m) => m.id === 'CK-06')).find((q) => q.id === 'CK-06-Q02');
-  question.text = `${question.text}\u00ad\u200b`;
+  question.text = `${question.text}\u202e\u200b`;
   const text = blankWorksheet('CK', marked);
-  assert.ok(text.includes('\u00ad\u200b'));
+  assert.ok(text.includes('\u202e\u200b'));
   assert.deepEqual(parseWorksheet(text, marked).problems, []);
 });
 

@@ -263,6 +263,16 @@ test('a dollar sign in business text is escaped, so a viewer that reads $...$ as
   assert.equal(checkDocument('FOODCOOK', dir, writeReport(dir, text), data).exit, 0);
 });
 
+test('an answer holding a joiner, a direction mark or a soft hyphen is printed as written, and the document passes check', () => {
+  // Persian and Urdu with a non-joiner, Hindi with a joiner, a woman cook emoji, Arabic with a left-to-right mark, a soft hyphen.
+  const words = ['\u0639\u0644\u06cc\u200c\u0631\u0636\u0627', '\u092a\u0926\u094d\u200d\u092e\u093e', '\u{1f469}\u200d\u{1f373}',
+    '\u0645\u0631\u064a\u0645\u200e', 'sand\u00adwiches'];
+  const dir = cafe({ CK: swap(cafeText('CK'), 'Answer: We do not cook rice.', `Answer: ${words.join(' ')}`) });
+  const text = rendered('FOODCOOK', dir);
+  assert.ok(text.includes(`**Our answer:** ${words.join(' ')} [answered by Sam Okafor, 2026-11-20]`));
+  assert.equal(checkDocument('FOODCOOK', dir, writeReport(dir, text), data).exit, 0);
+});
+
 test('Review Focus 3: a worksheet for other data makes render exit 2, naming both data identifiers', () => {
   const dir = cafe({ CK: swap(cafeText('CK'), `data=${DATA_ID}`, 'data=sfbb-caterers-2025-01-01') });
   const result = render('FOODCOOK', dir);
