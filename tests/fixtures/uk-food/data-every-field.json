@@ -1,0 +1,186 @@
+{
+  "source": {
+    "title": "Safer food, better business for caterers",
+    "publisher": "Food Standards Agency",
+    "url": "https://assets.publishing.service.gov.uk/media/69c5247ecdfd19de13d0f6ca/sfbb-caterers-pack-fixed_0_3.pdf",
+    "publication": "https://www.gov.uk/government/publications/safer-food-better-business-for-caterers",
+    "retrieved": "2026-11-17",
+    "file": "sfbb-caterers-pack-fixed_0_3.pdf",
+    "sha256": "35b2eea9a33741cca907e0902847ca003fabc792bb4149216987102441952838",
+    "pages": 100,
+    "licence": "OGL-3.0",
+    "attribution": "Contains public sector information licensed under the Open Government Licence v3.0."
+  },
+  "section": {
+    "schema": "uk-food-sfbb-data-1.0",
+    "data": "sfbb-caterers-2026-11-17",
+    "section": {
+      "id": "CK",
+      "code": "FOODCOOK",
+      "title": "Cooking",
+      "pages": [
+        55,
+        56
+      ],
+      "intro": [
+        {
+          "text": "Cook it",
+          "page": 55
+        }
+      ]
+    },
+    "methods": [
+      {
+        "id": "CK-06",
+        "title": "Hot holding",
+        "summary": null,
+        "pages": [
+          65,
+          66
+        ],
+        "blocks": [
+          {
+            "kind": "points",
+            "heading": "SAFE METHOD",
+            "columns": [
+              "SAFETY POINT",
+              "WHY?",
+              "HOW DO YOU DO THIS?"
+            ],
+            "rows": [
+              {
+                "id": "CK-06-P01",
+                "point": "Keep it hot",
+                "why": null,
+                "page": 65,
+                "questions": [
+                  {
+                    "id": "CK-06-Q01",
+                    "text": "",
+                    "type": "tick",
+                    "options": [
+                      "Yes",
+                      "No"
+                    ],
+                    "elseText": "If not, what do you do?"
+                  }
+                ]
+              }
+            ],
+            "page": 65
+          },
+          {
+            "kind": "manage-it",
+            "heading": "MANAGE IT",
+            "columns": [
+              "A"
+            ],
+            "rows": [
+              {
+                "id": "CK-06-P02",
+                "point": "Keep it hot",
+                "why": null,
+                "page": 65,
+                "questions": [
+                  {
+                    "id": "CK-06-Q03",
+                    "text": "",
+                    "type": "tick",
+                    "options": [
+                      "Yes",
+                      "No"
+                    ],
+                    "elseText": "If not, what do you do?"
+                  }
+                ]
+              }
+            ],
+            "page": 66
+          },
+          {
+            "kind": "think-twice",
+            "heading": "THINK TWICE!",
+            "text": "Think",
+            "page": 65
+          },
+          {
+            "kind": "check-it",
+            "heading": "CHECK IT",
+            "text": null,
+            "rows": [
+              {
+                "id": "CK-06-P03",
+                "point": "Keep it hot",
+                "why": null,
+                "page": 65,
+                "questions": [
+                  {
+                    "id": "CK-06-Q04",
+                    "text": "",
+                    "type": "tick",
+                    "options": [
+                      "Yes",
+                      "No"
+                    ],
+                    "elseText": "If not, what do you do?"
+                  }
+                ]
+              }
+            ],
+            "questions": [
+              {
+                "id": "CK-06-Q02",
+                "text": "Done?",
+                "type": "yes-no"
+              }
+            ],
+            "page": 66
+          },
+          {
+            "kind": "prove-it",
+            "heading": "PROVE IT",
+            "text": "Prove",
+            "page": 66
+          },
+          {
+            "kind": "wrong",
+            "heading": "WHAT IF",
+            "wrongHeading": "WHAT CAN GO WRONG",
+            "wrong": [
+              "a"
+            ],
+            "preventHeading": "PREVENT IT",
+            "prevent": [
+              "b"
+            ],
+            "diaryNote": null,
+            "page": 66
+          },
+          {
+            "kind": "table",
+            "heading": "T",
+            "columns": [
+              "a",
+              "b"
+            ],
+            "rows": [
+              [
+                "x\n• y",
+                "z"
+              ]
+            ],
+            "questions": [],
+            "page": 66
+          },
+          {
+            "kind": "text",
+            "heading": "H",
+            "text": "words",
+            "page": 66,
+            "fromImage": false
+          }
+        ]
+      }
+    ]
+  }
+}

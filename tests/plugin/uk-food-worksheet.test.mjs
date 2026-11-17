@@ -1,18 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { mkdtempSync, writeFileSync } from 'node:fs';
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { loadData, validateData, main } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
 const helper = 'plugins/arckit-uk-food/scripts/uk-food.mjs';
 const run = (...args) => spawnSync('node', [helper, ...args], { encoding: 'utf8' });
-const source = () => ({
-  title: 'T', publisher: 'Food Standards Agency', url: 'https://example.test/a.pdf',
-  publication: 'https://example.test/', retrieved: '2026-11-17', file: 'a.pdf',
-  sha256: 'a'.repeat(64), pages: 100, licence: 'OGL-3.0', attribution: 'x'
-});
+const source = () =>
+  JSON.parse(readFileSync('plugins/arckit-uk-food/data/sfbb-caterers-2026-11-17/source.json', 'utf8'));
 const base = () => ({
   source: source(), front: null, diary: null, limits: null,
   sections: new Map([['CK', {
@@ -76,3 +73,34 @@ test('the CLI exits 1 on invalid data and 2 on usage errors', () => {
   assert.equal(run('validate-data', '--bogus').status, 2);
   assert.equal(main(['nope'], { out() {}, err() {} }), 2);
 });
+
+// The shared fixture and mutation table, also run by tests/plugin/test_uk_food_data.py,
+// keep validateData and the JSON schema accepting and rejecting the same files.
+const shared = (name) => JSON.parse(readFileSync(`tests/fixtures/uk-food/${name}`, 'utf8'));
+const asData = (doc) => ({
+  source: doc.source, front: null, diary: null, limits: null,
+  sections: new Map([[doc.section.section.id, doc.section]])
+});
+const apply = (doc, ops) => {
+  const copy = structuredClone(doc);
+  for (const { op, path, value } of ops) {
+    const keys = path.split('/').slice(1).map((k) => (/^\d+$/.test(k) ? Number(k) : k));
+    const last = keys.pop();
+    const parent = keys.reduce((node, key) => node[key], copy);
+    if (op === 'delete') delete parent[last];
+    else parent[last] = value;
+  }
+  return copy;
+};
+
+test('the shared all-fields fixture validates', () => {
+  assert.deepEqual(validateData(asData(shared('data-every-field.json'))), []);
+});
+
+for (const mutation of shared('data-mutations.json')) {
+  if (!(mutation.checkedBy ?? ['node', 'schema']).includes('node')) continue;
+  test(`validateData rejects: ${mutation.name}`, () => {
+    const doc = apply(shared('data-every-field.json'), mutation.ops);
+    assert.notDeepEqual(validateData(asData(doc)), []);
+  });
+}

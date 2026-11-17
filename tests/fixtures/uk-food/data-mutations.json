@@ -1,0 +1,533 @@
+[
+ {
+  "name": "unknown block kind",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/2/kind",
+    "value": "think twice"
+   }
+  ]
+ },
+ {
+  "name": "stray questions on think-twice",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/2/questions",
+    "value": []
+   }
+  ]
+ },
+ {
+  "name": "think-twice without text",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/2/text"
+   }
+  ]
+ },
+ {
+  "name": "prove-it without text",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/4/text"
+   }
+  ]
+ },
+ {
+  "name": "text block without text",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/7/text"
+   }
+  ]
+ },
+ {
+  "name": "text block with non-string text",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/7/text",
+    "value": 5
+   }
+  ]
+ },
+ {
+  "name": "wrong block without wrong",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/5/wrong"
+   }
+  ]
+ },
+ {
+  "name": "wrong block without prevent",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/5/prevent"
+   }
+  ]
+ },
+ {
+  "name": "wrong items not strings",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/5/wrong",
+    "value": [
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "name": "wrong block with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/5/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "table without columns",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/6/columns"
+   }
+  ]
+ },
+ {
+  "name": "table without rows",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/6/rows"
+   }
+  ]
+ },
+ {
+  "name": "table rows not an array",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/6/rows",
+    "value": "x"
+   }
+  ]
+ },
+ {
+  "name": "table row not an array",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/6/rows",
+    "value": [
+     "x"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "table columns not strings",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/6/columns",
+    "value": [
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "name": "points block without rows",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/0/rows"
+   }
+  ]
+ },
+ {
+  "name": "block without page",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/2/page"
+   }
+  ]
+ },
+ {
+  "name": "block page outside 1 to 100",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/2/page",
+    "value": 101
+   }
+  ]
+ },
+ {
+  "name": "fromImage not a boolean",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/7/fromImage",
+    "value": "no"
+   }
+  ]
+ },
+ {
+  "name": "heading not a string",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/2/heading",
+    "value": 5
+   }
+  ]
+ },
+ {
+  "name": "method id not two letters and two digits",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/id",
+    "value": "CK-6"
+   }
+  ]
+ },
+ {
+  "name": "method id with the wrong section prefix",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/id",
+    "value": "XC-06"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "duplicate identifier",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/1/rows/0/id",
+    "value": "CK-06-P01"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "method pages empty",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/pages",
+    "value": []
+   }
+  ]
+ },
+ {
+  "name": "method page outside 1 to 100",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/pages",
+    "value": [
+     0
+    ]
+   }
+  ]
+ },
+ {
+  "name": "method with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "method without title",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/title"
+   }
+  ]
+ },
+ {
+  "name": "row without id",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/0/rows/0/id"
+   }
+  ]
+ },
+ {
+  "name": "row without page",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/methods/0/blocks/0/rows/0/page"
+   }
+  ]
+ },
+ {
+  "name": "row with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "row point not a string",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/point",
+    "value": 3
+   }
+  ]
+ },
+ {
+  "name": "question type outside the five",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/0/type",
+    "value": "maybe"
+   }
+  ]
+ },
+ {
+  "name": "question options not an array",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/0/options",
+    "value": "Yes"
+   }
+  ]
+ },
+ {
+  "name": "question options not strings",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/0/options",
+    "value": [
+     1
+    ]
+   }
+  ]
+ },
+ {
+  "name": "question with empty text and not a tick",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/3/questions/0/text",
+    "value": ""
+   }
+  ]
+ },
+ {
+  "name": "question with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/3/questions/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "question elseText not a string",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/0/elseText",
+    "value": 4
+   }
+  ]
+ },
+ {
+  "name": "section file wrong schema",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/schema",
+    "value": "other"
+   }
+  ]
+ },
+ {
+  "name": "section file wrong data id",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/data",
+    "value": "other"
+   }
+  ]
+ },
+ {
+  "name": "section file with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "section id outside the five",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/section/id",
+    "value": "ZZ"
+   }
+  ]
+ },
+ {
+  "name": "section without title",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/section/title"
+   }
+  ]
+ },
+ {
+  "name": "section with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/section/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "intro item without page",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/section/section/intro/0/page"
+   }
+  ]
+ },
+ {
+  "name": "intro item with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/section/intro/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "source sha256 wrong",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/sha256",
+    "value": "abc"
+   }
+  ]
+ },
+ {
+  "name": "source pages not 100",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/pages",
+    "value": 99
+   }
+  ]
+ },
+ {
+  "name": "source licence not OGL-3.0",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/licence",
+    "value": "MIT"
+   }
+  ]
+ },
+ {
+  "name": "source attribution altered",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/attribution",
+    "value": "Contains data"
+   }
+  ]
+ },
+ {
+  "name": "source publisher altered",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/publisher",
+    "value": "Someone"
+   }
+  ]
+ },
+ {
+  "name": "source retrieved not a date",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/retrieved",
+    "value": "17 November"
+   }
+  ]
+ },
+ {
+  "name": "source without url",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/source/url"
+   }
+  ]
+ },
+ {
+  "name": "source with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/source/surprise",
+    "value": 1
+   }
+  ]
+ }
+]

@@ -197,26 +197,8 @@ def test_section_title_counts_on_its_first_page():
 
 SCHEMA = _load(ROOT / "plugins" / "arckit-uk-food" / "schemas" / "uk-food-sfbb-data-1.0.schema.json")
 VALIDATOR = Draft202012Validator(SCHEMA, format_checker=FormatChecker())
-ROW = {"id": "CK-06-P01", "point": "Keep it hot", "why": None, "page": 65,
-       "questions": [{"id": "CK-06-Q01", "text": "", "type": "tick", "options": ["Yes", "No"],
-                      "elseText": "If not, what do you do?"}]}
-EVERY_FIELD = {
-    "schema": "uk-food-sfbb-data-1.0", "data": DATA_ID,
-    "section": {"id": "CK", "code": "FOODCOOK", "title": "Cooking", "pages": [55, 56],
-                "intro": [{"text": "Cook it", "page": 55}]},
-    "methods": [{"id": "CK-06", "title": "Hot holding", "summary": None, "pages": [65, 66], "blocks": [
-        {"kind": "points", "heading": "SAFE METHOD", "columns": ["SAFETY POINT", "WHY?", "HOW DO YOU DO THIS?"],
-         "rows": [ROW], "page": 65},
-        {"kind": "manage-it", "heading": "MANAGE IT", "columns": ["A"], "rows": [ROW], "page": 66},
-        {"kind": "think-twice", "heading": "THINK TWICE!", "text": "Think", "page": 65},
-        {"kind": "check-it", "heading": "CHECK IT", "text": None, "rows": [ROW],
-         "questions": [{"id": "CK-06-Q02", "text": "Done?", "type": "yes-no"}], "page": 66},
-        {"kind": "prove-it", "heading": "PROVE IT", "text": "Prove", "page": 66},
-        {"kind": "wrong", "heading": "WHAT IF", "wrongHeading": "WHAT CAN GO WRONG", "wrong": ["a"],
-         "preventHeading": "PREVENT IT", "prevent": ["b"], "diaryNote": None, "page": 66},
-        {"kind": "table", "heading": "T", "columns": ["a", "b"], "rows": [["x\n\u2022 y", "z"]],
-         "questions": [], "page": 66},
-        {"kind": "text", "heading": "H", "text": "words", "page": 66, "fromImage": False}]}]}
+SHARED = ROOT / "tests" / "fixtures" / "uk-food"
+EVERY_FIELD = _load(SHARED / "data-every-field.json")["section"]
 
 
 def test_schema_is_valid_and_accepts_every_documented_field():
@@ -259,3 +241,37 @@ def test_compare_reading_exit_codes(tmp_path):
     result = _run_compare(data, reading)
     assert result.returncode == 1 and "in data, not in reading" in result.stdout
     assert _run_compare(data).returncode == 2
+
+
+# The shared fixture and mutation table, also run by tests/plugin/uk-food-worksheet.test.mjs,
+# keep the helper's validateData and the JSON schema accepting and rejecting the same files.
+
+def _apply(fixture, ops):
+    doc = json.loads(json.dumps(fixture))
+    for op in ops:
+        *parents, last = [int(k) if k.isdigit() else k for k in op["path"].split("/")[1:]]
+        node = doc
+        for key in parents:
+            node = node[key]
+        if op["op"] == "delete":
+            del node[last]
+        else:
+            node[last] = op["value"]
+    return doc
+
+
+MUTATIONS = [m for m in _load(SHARED / "data-mutations.json") if "schema" in m.get("checkedBy", ["node", "schema"])]
+
+
+def _schema_ok(doc):
+    return VALIDATOR.is_valid(doc["source"]) and VALIDATOR.is_valid(doc["section"])
+
+
+def test_shared_fixture_validates():
+    assert _schema_ok(_load(SHARED / "data-every-field.json"))
+
+
+@pytest.mark.parametrize("mutation", MUTATIONS, ids=[m["name"] for m in MUTATIONS])
+def test_schema_rejects_each_mutation(mutation):
+    doc = _apply(_load(SHARED / "data-every-field.json"), mutation["ops"])
+    assert not _schema_ok(doc)

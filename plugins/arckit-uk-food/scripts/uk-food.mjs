@@ -45,8 +45,45 @@ export function loadData(dataDir) {
 
 const isPage = (value) => Number.isInteger(value) && value >= 1 && value <= 100;
 const isObject = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);
-const isStringArray = (value) =>
-  Array.isArray(value) && value.every((item) => typeof item === 'string');
+const isString = (value) => typeof value === 'string';
+const isStringOrNull = (value) => value === null || isString(value);
+const isStringArray = (value) => Array.isArray(value) && value.every(isString);
+const isRowsOfStrings = (value) => Array.isArray(value) && value.every(isStringArray);
+
+export const SOURCE_VALUES = {
+  title: isString, url: isString, publication: isString, file: isString,
+  publisher: (v) => v === 'Food Standards Agency',
+  retrieved: (v) => isString(v) && /^\d{4}-\d{2}-\d{2}$/.test(v) && !Number.isNaN(Date.parse(v)),
+  sha256: (v) => isString(v) && /^[0-9a-f]{64}$/.test(v),
+  pages: (v) => v === 100,
+  licence: (v) => v === 'OGL-3.0',
+  attribution: (v) =>
+    v === 'Contains public sector information licensed under the Open Government Licence v3.0.'
+};
+
+// Every block carries kind and page, and may carry heading. `required` and `fields` list the rest,
+// each with the check its value must pass. Any other key is rejected.
+const ROWS = (v) => Array.isArray(v);
+const BLOCK_KINDS = {
+  points: { required: ['rows'], fields: { columns: isStringArray, rows: ROWS } },
+  'manage-it': { required: ['rows'], fields: { columns: isStringArray, rows: ROWS } },
+  'check-it': { required: [], fields: { text: isStringOrNull, rows: ROWS, questions: ROWS } },
+  'think-twice': { required: ['text'], fields: { text: isString } },
+  'prove-it': { required: ['text'], fields: { text: isString } },
+  text: { required: ['text'], fields: { text: isString, fromImage: (v) => typeof v === 'boolean' } },
+  wrong: {
+    required: ['wrong', 'prevent'],
+    fields: {
+      wrongHeading: isStringOrNull, preventHeading: isStringOrNull, wrong: isStringArray,
+      prevent: isStringArray, diaryNote: isStringOrNull
+    }
+  },
+  table: {
+    required: ['columns', 'rows'],
+    fields: { columns: isStringArray, rows: isRowsOfStrings, questions: ROWS }
+  }
+};
+const BLOCK_COMMON = { kind: isString, heading: isStringOrNull, page: () => true };
 
 // Returns a list of problems; an empty list means the data is valid.
 export function validateData(data) {
@@ -61,55 +98,90 @@ export function validateData(data) {
     if (value === undefined || value === null) errors.push(`${where}: no page`);
     else if (!isPage(value)) errors.push(`${where}: page ${JSON.stringify(value)} is outside 1 to 100`);
   };
+  // Rejects keys outside `allowed` and absent keys in `required`; checks each present value.
+  const shape = (object, where, allowed, required) => {
+    if (!isObject(object)) {
+      errors.push(`${where}: is not an object`);
+      return false;
+    }
+    for (const key of Object.keys(object)) {
+      if (!Object.hasOwn(allowed, key)) errors.push(`${where}: unknown key ${key}`);
+      else if (!allowed[key](object[key])) errors.push(`${where}: invalid value for ${key}`);
+    }
+    for (const key of required) {
+      if (object[key] === undefined) errors.push(`${where}: missing ${key}`);
+    }
+    return true;
+  };
 
   const source = data.source;
   if (!isObject(source)) errors.push('source.json: missing');
-  else {
-    for (const field of SOURCE_FIELDS) {
-      if (source[field] === undefined || source[field] === null || source[field] === '') {
-        errors.push(`source.json: missing ${field}`);
-      }
-    }
-  }
+  else shape(source, 'source.json', SOURCE_VALUES, SOURCE_FIELDS);
 
+  const QUESTION = {
+    id: isString, text: isString, type: isString,
+    options: isStringArray, elseText: isStringOrNull
+  };
   const questions = (list, where) => {
     if (list === undefined) return;
     if (!Array.isArray(list)) return errors.push(`${where}: questions is not an array`);
     for (const question of list) {
       const at = `${where} question ${question && question.id}`;
-      claim(question && question.id, at);
-      if (!QUESTION_TYPES.includes(question && question.type)) {
-        errors.push(`${at}: type ${JSON.stringify(question && question.type)} is not one of ${QUESTION_TYPES.join(', ')}`);
+      if (!shape(question, at, QUESTION, ['id', 'text', 'type'])) continue;
+      claim(question.id, at);
+      if (!QUESTION_TYPES.includes(question.type)) {
+        errors.push(`${at}: type ${JSON.stringify(question.type)} is not one of ${QUESTION_TYPES.join(', ')}`);
       }
       if (question.options !== undefined && !isStringArray(question.options)) {
         errors.push(`${at}: options is not an array of strings`);
       }
-      if (typeof question.text !== 'string' || (question.text === '' && question.type !== 'tick')) {
-        errors.push(`${at}: text must be a string, empty only for type tick`);
+      if (question.text === '' && question.type !== 'tick') {
+        errors.push(`${at}: text may be empty only for type tick`);
       }
     }
   };
+  const ROW = { id: isString, point: isStringOrNull, why: isStringOrNull, page: () => true, questions: ROWS };
   const rows = (list, where) => {
     if (!Array.isArray(list)) return errors.push(`${where}: rows is not an array`);
     for (const row of list) {
       const at = `${where} row ${row && row.id}`;
-      claim(row && row.id, at);
-      needPage(row && row.page, at);
-      questions(row && row.questions, at);
+      if (!shape(row, at, ROW, ['id', 'page'])) continue;
+      claim(row.id, at);
+      needPage(row.page, at);
+      questions(row.questions, at);
     }
   };
 
+  const FILE = { schema: isString, data: isString, section: isObject, methods: Array.isArray };
+  const SECTION = {
+    id: isString, code: isString, title: isString, pages: Array.isArray, intro: Array.isArray
+  };
+  const METHOD = {
+    id: isString, title: isString, summary: isStringOrNull, pages: Array.isArray, blocks: Array.isArray
+  };
   for (const [key, file] of data.sections) {
-    const section = file.section || {};
-    if (section.id !== key) errors.push(`${key}.json: section id is ${section.id}`);
+    if (!shape(file, `${key}.json`, FILE, ['schema', 'data', 'section', 'methods'])) continue;
+    const section = file.section;
+    shape(section, `${key}.json section`, SECTION, ['id', 'code', 'title', 'intro']);
+    if (section.id !== key || !SECTION_IDS.includes(section.id)) {
+      errors.push(`${key}.json: section id ${section.id} is not ${key}`);
+    }
     if (file.schema !== SCHEMA_ID) errors.push(`${key}.json: schema is not ${SCHEMA_ID}`);
     if (file.data !== DATA_ID) errors.push(`${key}.json: data is not ${DATA_ID}`);
-    for (const item of section.intro || []) needPage(item.page, `${key} intro`);
-    for (const page of section.pages || []) needPage(page, `${key} section pages`);
-    for (const method of file.methods || []) {
-      const at = `method ${method.id}`;
+    for (const item of Array.isArray(section.intro) ? section.intro : []) {
+      if (shape(item, `${key} intro`, { text: isString, page: () => true }, ['text', 'page'])) {
+        needPage(item.page, `${key} intro`);
+      }
+    }
+    for (const page of Array.isArray(section.pages) ? section.pages : []) needPage(page, `${key} section pages`);
+    for (const method of file.methods) {
+      const at = `method ${method && method.id}`;
+      if (!shape(method, at, METHOD, ['id', 'title', 'pages', 'blocks'])) continue;
       claim(method.id, at);
-      if (typeof method.id === 'string' && !method.id.startsWith(`${key}-`)) {
+      if (isString(method.id) && !/^[A-Z]{2}-[0-9]{2}$/.test(method.id)) {
+        errors.push(`${at}: identifier is not two capital letters, a hyphen and two digits`);
+      }
+      if (isString(method.id) && !method.id.startsWith(`${key}-`)) {
         errors.push(`${at}: identifier does not start with ${key}-`);
       }
       if (!Array.isArray(method.pages) || method.pages.length === 0) {
@@ -117,11 +189,20 @@ export function validateData(data) {
       } else {
         for (const page of method.pages) needPage(page, `${at} pages`);
       }
-      for (const block of method.blocks || []) {
-        const here = `${at} ${block.kind} block`;
+      if (!Array.isArray(method.blocks)) continue;
+      for (const block of method.blocks) {
+        const kind = block && block.kind;
+        const here = `${at} ${kind} block`;
+        if (!Object.hasOwn(BLOCK_KINDS, kind)) {
+          errors.push(`${at}: unknown block kind ${JSON.stringify(kind)}`);
+          continue;
+        }
+        const { required, fields } = BLOCK_KINDS[kind];
+        if (!shape(block, here, { ...BLOCK_COMMON, ...fields }, ['page', ...required])) continue;
         needPage(block.page, here);
-        if (block.kind === 'points' || block.kind === 'manage-it') rows(block.rows, here);
-        else if (block.rows !== undefined && block.kind === 'check-it') rows(block.rows, here);
+        if (kind === 'points' || kind === 'manage-it' || (kind === 'check-it' && block.rows !== undefined)) {
+          rows(block.rows, here);
+        }
         questions(block.questions, here);
       }
     }
