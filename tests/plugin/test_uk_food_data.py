@@ -9,15 +9,17 @@ layer but are not words printed on the page.
 """
 import importlib.util
 import json
+import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
 
 import pytest
+from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts" / "uk-food"))
-from textlayer import declared_pages, normalise, strings_of, word_counter, words_of  # noqa: E402,F401
+from textlayer import declared_pages, normalise, strings_of, words_of  # noqa: E402
 
 DATA_ID = "sfbb-caterers-2026-11-17"
 DATA_DIR = ROOT / "plugins" / "arckit-uk-food" / "data" / DATA_ID
@@ -183,3 +185,77 @@ def test_compare_reading_reports_both_directions(tmp_path):
     assert module.compare(data, "# Heading\nwash\nDry your hands\n") == ([], [])
     missing, extra = module.compare(data, "wash\nrinse\n")
     assert missing == [(1, "Dry your hands.", "XC-01")] and extra == ["rinse"]
+
+
+def test_section_title_counts_on_its_first_page():
+    section = {"id": "XC", "title": "Cross-contamination", "pages": [3, 4], "intro": [{"text": "Keep apart", "page": 4}]}
+    found = [(page, text) for page, text, _ in strings_of({"section": section})]
+    assert (3, "Cross-contamination") in found and (4, "Keep apart") in found
+
+
+# The JSON schema, checked against the same files the helper validates by hand.
+
+SCHEMA = _load(ROOT / "plugins" / "arckit-uk-food" / "schemas" / "uk-food-sfbb-data-1.0.schema.json")
+VALIDATOR = Draft202012Validator(SCHEMA, format_checker=FormatChecker())
+ROW = {"id": "CK-06-P01", "point": "Keep it hot", "why": None, "page": 65,
+       "questions": [{"id": "CK-06-Q01", "text": "", "type": "tick", "options": ["Yes", "No"],
+                      "elseText": "If not, what do you do?"}]}
+EVERY_FIELD = {
+    "schema": "uk-food-sfbb-data-1.0", "data": DATA_ID,
+    "section": {"id": "CK", "code": "FOODCOOK", "title": "Cooking", "pages": [55, 56],
+                "intro": [{"text": "Cook it", "page": 55}]},
+    "methods": [{"id": "CK-06", "title": "Hot holding", "summary": None, "pages": [65, 66], "blocks": [
+        {"kind": "points", "heading": "SAFE METHOD", "columns": ["SAFETY POINT", "WHY?", "HOW DO YOU DO THIS?"],
+         "rows": [ROW], "page": 65},
+        {"kind": "manage-it", "heading": "MANAGE IT", "columns": ["A"], "rows": [ROW], "page": 66},
+        {"kind": "think-twice", "heading": "THINK TWICE!", "text": "Think", "page": 65},
+        {"kind": "check-it", "heading": "CHECK IT", "text": None, "rows": [ROW],
+         "questions": [{"id": "CK-06-Q02", "text": "Done?", "type": "yes-no"}], "page": 66},
+        {"kind": "prove-it", "heading": "PROVE IT", "text": "Prove", "page": 66},
+        {"kind": "wrong", "heading": "WHAT IF", "wrongHeading": "WHAT CAN GO WRONG", "wrong": ["a"],
+         "preventHeading": "PREVENT IT", "prevent": ["b"], "diaryNote": None, "page": 66},
+        {"kind": "table", "heading": "T", "columns": ["a", "b"], "rows": [["x\n\u2022 y", "z"]],
+         "questions": [], "page": 66},
+        {"kind": "text", "heading": "H", "text": "words", "page": 66, "fromImage": False}]}]}
+
+
+def test_schema_is_valid_and_accepts_every_documented_field():
+    Draft202012Validator.check_schema(SCHEMA)
+    VALIDATOR.validate(EVERY_FIELD)
+
+
+def test_schema_rejects_unknown_keys_and_bad_pages():
+    bad = json.loads(json.dumps(EVERY_FIELD))
+    bad["methods"][0]["blocks"][0]["rows"][0]["page"] = 101
+    assert not VALIDATOR.is_valid(bad)
+    bad = json.loads(json.dumps(EVERY_FIELD))
+    bad["methods"][0]["blocks"][2]["surprise"] = 1
+    assert not VALIDATOR.is_valid(bad)
+
+
+def test_data_files_match_schema():
+    for name in ["source", *DATA_FILES]:
+        path = DATA_DIR / f"{name}.json"
+        if path.is_file() and name not in ("front", "diary"):
+            VALIDATOR.validate(_load(path))
+
+
+# compare-reading.py run as a program: exit 0 clean, 1 differences, 2 usage error.
+
+def _run_compare(*args):
+    return subprocess.run([sys.executable, str(ROOT / "scripts" / "uk-food" / "compare-reading.py"), *map(str, args)],
+                          capture_output=True, text=True)
+
+
+def test_compare_reading_exit_codes(tmp_path):
+    data = tmp_path / "data.json"
+    data.write_text(json.dumps({"methods": [{"id": "XC-01", "title": "Wash", "pages": [1],
+                                              "blocks": [{"kind": "text", "text": "Dry", "page": 1}]}]}),
+                    encoding="utf-8")
+    reading = tmp_path / "reading.txt"
+    reading.write_text("wash\ndry\n", encoding="utf-8")
+    assert _run_compare(data, reading).returncode == 0
+    reading.write_text("wash\n", encoding="utf-8")
+    result = _run_compare(data, reading)
+    assert result.returncode == 1 and "in data, not in reading" in result.stdout
+    assert _run_compare(data).returncode == 2

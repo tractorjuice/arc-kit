@@ -40,8 +40,9 @@ def strings_of(node, page=None, method=None) -> Iterator[tuple[int | None, str, 
     """Yield (page, string, method id) for every page-text string in a data file.
 
     A dict's own `page` applies to its strings; a dict with `pages` and no
-    `page` (a method) uses its first page; anything else inherits the page of
-    its parent. Strings with no page in context are not yielded. Elements with
+    `page` (a method or a section) uses its first page, so its `title` and
+    `summary` count on `pages[0]`; anything else inherits the page of its
+    parent. Strings with no page in context are not yielded. Elements with
     "fromImage": true are left out.
     """
     if isinstance(node, str):
@@ -57,7 +58,8 @@ def strings_of(node, page=None, method=None) -> Iterator[tuple[int | None, str, 
             page = node["page"]
         elif isinstance(node.get("pages"), list) and node["pages"]:
             page = node["pages"][0]
-        if "methods" not in node and isinstance(node.get("id"), str) and "pages" in node:
+        if ("methods" not in node and "intro" not in node
+                and isinstance(node.get("id"), str) and "pages" in node):
             method = node["id"]
         for key, value in node.items():
             if _is_page_text_key(key, value):
