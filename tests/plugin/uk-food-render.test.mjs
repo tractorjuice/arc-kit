@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
@@ -45,6 +45,13 @@ const swap = (text, from, to) => {
 };
 // A string as it is printed in a table cell: pipes escaped, line breaks as <br>.
 const cellText = (text) => text.replace(/\|/g, '\\|').replace(/\n/g, '<br>');
+// A business's words as a document prints them: <, > and & as entities, and the characters Markdown
+// reads as markup after a backslash, so that nothing a business types can hide or change the text.
+const escaped = (text) => text.replace(/[\\`*_[\]~]/g, '\\$&').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const OUR_ANSWER = '**Our answer:** ';
+const UNSET = `${OUR_ANSWER}${UNANSWERED}`;
+const confirmedText = (a) => `${OUR_ANSWER}${escaped(a.answer)} [answered by ${escaped(a.by)}, ${escaped(a.on)}]`;
+const proposedText = (a) => `${UNSET} (proposed from ${escaped(a.source)}: \u201c${escaped(a.answer)}\u201d)`;
 const count = (text, needle) => text.split(needle).length - 1;
 // The cells of a Markdown table row, split where GitHub splits them: at each pipe not escaped.
 const cellsOf = (row) => {
@@ -92,14 +99,20 @@ const OUTSIDE = 'Safer food, better business applies to England and Wales. This 
   'and Northern Ireland have their own guidance.';
 const notice = (business) => `This is ${business}'s own food safety record. It is not legal advice. The food business operator ` +
   'is responsible for it, and the local council\'s environmental health team is the authority on whether it is adequate.';
+const OWN_LINE = 'The methods in this document are this business\'s own. They are not Food Standards Agency wording, and the ' +
+  'Food Standards Agency has not reviewed or endorsed this document.';
+// The labels the pack prints beside its tick boxes, as the reference prints them: each alone, and joined.
+const OPTION_LABELS = new Set([...data.sections.values()].flatMap((file) => file.methods).flatMap((method) =>
+  method.blocks.flatMap((block) => [block, ...(block.kind !== 'table' && Array.isArray(block.rows) ? block.rows : [])])
+    .flatMap((holder) => holder.questions ?? []).flatMap((q) => (q.options?.length ? [...q.options, q.options.join(' / ')] : []))));
 
 // A block's rows and the block itself: the two places a question can sit.
 const holders = (block) => [block, ...(block.kind !== 'table' && Array.isArray(block.rows) ? block.rows : [])];
 const questionsOf = (method) => method.blocks.flatMap(holders).flatMap((h) => h.questions ?? []);
 // Every string of a method that the pack prints: its summary, points and reasons, question texts and
-// notes, option labels and follow-ups, headings, box texts, bullets, columns, column-group labels,
-// table cells and diary notes.
-const pageTexts = (method) => {
+// notes, option labels (unless `options` is false: a business's document leaves them out) and
+// follow-ups, headings, box texts, bullets, columns, column-group labels, table cells and diary notes.
+const pageTexts = (method, { options = true } = {}) => {
   const texts = [method.summary];
   for (const block of method.blocks) {
     texts.push(block.heading, block.text, block.wrongHeading, block.preventHeading, block.diaryNote,
@@ -108,13 +121,32 @@ const pageTexts = (method) => {
     if (block.kind === 'table') texts.push(...block.rows.flat());
     for (const holder of holders(block)) {
       if (holder !== block) texts.push(holder.point, holder.why);
-      for (const question of holder.questions ?? []) texts.push(question.text, ...(question.options ?? []), question.elseText);
+      for (const question of holder.questions ?? []) texts.push(question.text, ...(options ? question.options ?? [] : []), question.elseText);
     }
   }
   return texts.filter((text) => typeof text === 'string' && text !== '');
 };
 // Whether a render shows a string of the pack unchanged: whole in a cell, or line by line in paragraphs.
 const shows = (text, value) => text.includes(cellText(value)) || value.split('\n').every((line) => text.includes(line));
+// The table cells of a render, each split into its lines.
+const cellLines = (text) => text.split('\n').filter((line) => line.startsWith('| ') && !line.startsWith('| ---'))
+  .flatMap(cellsOf).flatMap((cell) => cell.split('<br>'));
+// A render without its fenced code blocks.
+const outsideFences = (text) => {
+  let fence = null;
+  return text.split('\n').filter((line) => {
+    const open = /^(`{3,})/.exec(line);
+    if (fence) {
+      if (open && line.trim() === fence) fence = null;
+      return false;
+    }
+    if (open) {
+      fence = open[1];
+      return false;
+    }
+    return true;
+  }).join('\n');
+};
 
 // A worksheet for a section in which the first method is not relevant, the second adapted and the
 // rest apply, and the questions of the methods that apply are confirmed, proposed and left
@@ -193,25 +225,25 @@ test('a proposed answer renders as not yet answered, and is counted with the una
   assert.equal(proposed.length, 2);
   const text = rendered('FOODXC', CAFE);
   for (const answer of proposed) {
-    assert.ok(text.includes(cellText(`${UNANSWERED} (proposed from ${answer.source}: \u201c${answer.answer}\u201d)`)), answer.id);
-    if (answer.type !== 'yes-no') assert.ok(!text.includes(`${cellText(answer.answer)} [answered by`), answer.id);
+    assert.ok(text.includes(cellText(proposedText(answer))), answer.id);
+    if (answer.type !== 'yes-no') assert.ok(!text.includes(`${cellText(escaped(answer.answer))} [answered by`), answer.id);
   }
   assert.equal(count(text, UNANSWERED), answers.filter((a) => !a.answered).length);
 });
 
 test('a confirmed answer is printed with who answered it and when', () => {
   const text = rendered('FOODCOOK', CAFE);
-  assert.ok(text.includes('Scrambled eggs on toast<br>Poached eggs<br>Sous vide eggs<br>Egg mayonnaise sandwiches, made ' +
+  assert.ok(text.includes('<br>**Our answer:** Scrambled eggs on toast<br>Poached eggs<br>Sous vide eggs<br>Egg mayonnaise sandwiches, made ' +
     'with bought mayonnaise [answered by Sam Okafor, 2026-11-20]'));
 });
 
 test('Review Focus 2: an answer with a pipe, a code span and a second line keeps its row at three columns, and passes check', () => {
   const dir = cafe({ CK: swap(cafeText('CK'), 'Answer: We do not cook rice.', 'Answer: a | b `c`\n  and a second line') });
   const text = rendered('FOODCOOK', dir);
-  const row = text.split('\n').find((line) => line.includes('a \\| b `c`'));
+  const row = text.split('\n').find((line) => line.includes('a \\| b'));
   assert.ok(row, 'the answer is not in the render');
   assert.equal(cellsOf(row).length, 3, row);
-  assert.ok(row.includes('a \\| b `c`<br>and a second line [answered by Sam Okafor, 2026-11-20]'), row);
+  assert.ok(row.includes('**Our answer:** a \\| b \\`c\\`<br>and a second line [answered by Sam Okafor, 2026-11-20]'), row);
   const report = writeReport(dir, text);
   assert.equal(checkDocument('FOODCOOK', dir, report, data).exit, 0);
 });
@@ -251,6 +283,10 @@ test('Review Focus 4: a changed temperature in the file fails check, with its li
   assert.equal(result.exit, 1);
   assert.equal(result.line, line);
   assert.ok(result.expected.includes(DEGREE_63) && result.found.includes('65\u00b0C'));
+  assert.equal(result.column, Array.from(result.expected).indexOf('3') + 1);
+  assert.match(result.message, new RegExp(`column ${result.column}\\b`));
+  assert.match(result.message, /U\+0033/);
+  assert.match(result.message, /U\+0035/);
   assert.ok(result.message.includes(`${report}:${line}:`), result.message);
   assert.match(result.message, /edit the worksheet/);
   assert.ok(result.message.includes(result.expected));
@@ -316,7 +352,9 @@ test('check: missing or repeated markers, and a doc or data in the marker that d
     [body.replace('doc=FOODCOOK', 'doc=FOODXC'), /doc=FOODXC.*FOODCOOK/],
     [body.replace(`data=${DATA_ID}`, 'data=sfbb-caterers-2025-01-01'), new RegExp(`sfbb-caterers-2025-01-01.*${DATA_ID}`)],
     [body.replace(/answers=\S+/, 'answers'), /not understood/],
-    [`<!-- UK-FOOD:END -->\n\n${body.replace('<!-- UK-FOOD:END -->', '')}`, /before/]
+    [`<!-- UK-FOOD:END -->\n\n${body.replace('<!-- UK-FOOD:END -->', '')}`, /before/],
+    [body.replace('<!-- UK-FOOD:BEGIN', '  <!-- UK-FOOD:BEGIN'), /UK-FOOD:BEGIN marker line is indented/],
+    [body.replace('<!-- UK-FOOD:END -->', '\t<!-- UK-FOOD:END -->'), /UK-FOOD:END marker line is indented/]
   ];
   cases.forEach(([text, pattern], i) => {
     const result = checkDocument('FOODCOOK', dir, writeReport(dir, text, { name: `case-${i}.md` }), data);
@@ -413,7 +451,7 @@ test('the BEGIN marker names the document, the data and the sha256 of its worksh
     assert.equal(lines[0], `<!-- UK-FOOD:BEGIN doc=${doc} data=${DATA_ID} answers=${sha(CAFE, ...sections)} -->`, doc);
     assert.equal(lines[1], '');
     assert.equal(lines.at(-1), '<!-- UK-FOOD:END -->');
-    assert.equal(lines.at(-3), SOURCE_LINE);
+    assert.equal(lines.at(-3), doc === 'FOODOWN' ? OWN_LINE : SOURCE_LINE);
   }
   const partial = project({ profile: cafeText('profile'), CK: cafeText('CK'), own: cafeText('own') });
   assert.ok(rendered('FOODPROF', partial).startsWith(`<!-- UK-FOOD:BEGIN doc=FOODPROF data=${DATA_ID} answers=${sha(partial, 'profile', 'CK', 'own')} -->`));
@@ -473,11 +511,9 @@ test('a not-relevant method shows its heading and the not-relevant line only; an
   assert.ok(cl.decidedBy);
   assert.equal(methodLines(clean, 'CL-04').at(-1),
     `Our variation: ${cl.variation} Reason: ${cl.reason} Shown to be safe by: ${cl.provedSafe} Decided by: ${cl.decidedBy}`);
-  for (const [text, section, skip] of [[cook, 'CK', 'CK-06'], [clean, 'CL', 'CL-04']]) {
-    for (const method of data.sections.get(section).methods) {
-      if (method.id !== skip) assert.equal(methodLines(text, method.id).at(-1), 'Our variation: none', method.id);
-    }
-  }
+  // A method that applies prints no variation line: applies is the worksheet's blank default, which nobody stated.
+  assert.equal(count(cook, 'Our variation'), 0);
+  assert.equal(count(clean, 'Our variation'), 1);
 });
 
 test('a note is printed in place among its row\'s questions, and is never shown as answered or unanswered', () => {
@@ -487,13 +523,13 @@ test('a note is printed in place among its row\'s questions, and is never shown 
   const row = text.split('\n').find((line) => line.startsWith(`| ${cellText(first.point)} |`));
   assert.ok(row, 'MG-02\'s first row is not in the render');
   // WHAT TO DO, then DETAILS OF CHECK (the pack's note), then HOW OFTEN? (the business's answer).
-  assert.deepEqual(cellsOf(row), [cellText(first.point), first.questions[0].text, UNANSWERED]);
+  assert.deepEqual(cellsOf(row), [cellText(first.point), first.questions[0].text, UNSET]);
   // MG-02's "Additional checks" prints three questions with no text of their own, one under each column.
   const last = text.split('\n').find((line) => line.startsWith('| Additional checks'));
-  assert.deepEqual(cellsOf(last), [`Additional checks<br><br>${UNANSWERED}`, UNANSWERED, UNANSWERED]);
+  assert.deepEqual(cellsOf(last), [`Additional checks<br><br>${UNSET}`, UNSET, UNSET]);
 });
 
-test('questions stacked in one cell keep their printed order, notes included, each with its options and follow-up', () => {
+test('questions stacked in one cell keep their printed order, notes included, each with its follow-up but not its tick labels', () => {
   const text = rendered('FOODCLN', CAFE);
   const box = data.sections.get('CL').methods[0].blocks.find((b) => b.kind === 'check-it');
   const row = text.split('\n').find((line) => line.startsWith(`| ${cellText(box.text)} |`));
@@ -501,16 +537,17 @@ test('questions stacked in one cell keep their printed order, notes included, ea
   const parsed = parseWorksheet(cafeText('CL'), data);
   const said = (q) => {
     const answer = parsed.answers.get(q.id);
-    return answer.answered ? `${cellText(answer.answer)} [answered by ` : UNANSWERED;
+    return answer.answered ? `${OUR_ANSWER}${cellText(escaped(answer.answer))} [answered by ` : UNSET;
   };
-  const expected = box.questions.map((q) => [q.text, ...(q.options.length ? [q.options.join(' / ')] : []),
-    ...(q.elseText ? [q.elseText] : []), q.type === 'note' ? null : said(q)].filter(Boolean).join('<br>'));
+  const expected = box.questions.map((q) => [q.text, ...(q.elseText ? [q.elseText] : []), q.type === 'note' ? null : said(q)]
+    .filter(Boolean).join('<br>'));
   const answers = cellsOf(row)[1].split('<br><br>');
   assert.equal(answers.length, box.questions.length);
   answers.forEach((answer, i) => assert.ok(answer.startsWith(expected[i]), `${answer}\n${expected[i]}`));
+  assert.ok(box.questions.some((q) => q.options.length > 0), 'the box prints tick labels');
 });
 
-test('a question that spans a tick column and an "if not" column shows the pack\'s label in the first and the answer in the second', () => {
+test('a question that spans a tick column and an "if not" column shows the answer in the first and leaves the second empty', () => {
   const text = rendered('FOODXC', CAFE);
   const block = data.sections.get('XC').methods.find((m) => m.id === 'XC-02').blocks.find((b) => b.heading === 'DIFFERENT CLOTHS FOR DIFFERENT JOBS');
   const row = block.rows[0];
@@ -518,9 +555,13 @@ test('a question that spans a tick column and an "if not" column shows the pack\
   const cells = cellsOf(line);
   assert.equal(cells.length, block.columns.length);
   assert.equal(cells[1], '');
-  assert.equal(cells[2], row.questions[0].options.join(' / '));
   const answer = parseWorksheet(cafeText('XC'), data).answers.get(row.questions[0].id);
-  assert.ok(cells[3] === UNANSWERED || cells[3].startsWith(cellText(answer.answer)), cells[3]);
+  assert.ok(answer.answered);
+  assert.equal(cells[2], confirmedText(answer));
+  assert.equal(cells[3], '');
+  // The reference keeps the pack's tick label, where the pack prints it.
+  const reference = referenceText('XC', data).split('\n').find((l) => l.startsWith(`| ${cellText(row.point)} |`));
+  assert.deepEqual(cellsOf(reference), [cellText(row.point), '', row.questions[0].options.join(' / '), '']);
 });
 
 test('a table\'s column group label is printed above each column it spans', () => {
@@ -555,7 +596,7 @@ test('the section document opens with the section\'s title and its introduction,
 
 test('every document ends with the closing notice, naming the business when its name is confirmed, then the source line', () => {
   assert.equal(sourceLine(data.source), SOURCE_LINE);
-  for (const doc of DOC_CODES) {
+  for (const doc of DOC_CODES.filter((code) => code !== 'FOODOWN')) {
     const lines = rendered(doc, CAFE).split('\n');
     assert.deepEqual(lines.slice(-5), [notice('Bramble Cafe'), '', SOURCE_LINE, '', '<!-- UK-FOOD:END -->'], doc);
   }
@@ -573,7 +614,7 @@ test('the profile shows the special processes said yes to, and the pack\'s own p
   assert.match(paragraph, /demonstrate that you do these safely/);
   assert.match(paragraph, /Environmental Health Team at your local council/);
   assert.ok(text.includes(`- sous vide\n- low temperature cooking\n`));
-  assert.ok(text.includes(`\n> ${paragraph}\n`));
+  assert.ok(text.includes(`\nWhat the pack says about these processes and foods:\n\n> ${paragraph}\n`));
   for (const name of [...EXTRA_CARE.processes, ...EXTRA_CARE.foods].filter((n) => !['sous vide', 'low temperature cooking'].includes(n))) {
     assert.ok(!text.includes(`- ${name}\n`), name);
   }
@@ -586,7 +627,7 @@ test('the profile lists every answer, every safe method\'s status and the own me
   const profile = parseWorksheet(cafeText('profile'), data);
   for (const question of PROFILE_QUESTIONS) {
     const answer = profile.answers.get(question.id);
-    assert.ok(text.includes(`| ${question.text} | ${cellText(answer.answer)} [answered by ${answer.by}, ${answer.on}] |`), question.id);
+    assert.ok(text.includes(`| ${question.text} | ${cellText(confirmedText(answer))} |`), question.id);
   }
   const ck = parseWorksheet(cafeText('CK'), data).methods.get('CK-06');
   assert.ok(text.includes(`| CK-06 | HOT HOLDING | not relevant | ${ck.reason} | ${ck.decidedBy} |`));
@@ -604,7 +645,7 @@ test('the own methods document shows each confirmed entry under its heading, and
     assert.ok(text.includes(`### ${entry.id} ${entry.title} (this business's own method, not Food Standards Agency wording)\n`), entry.id);
   }
   const special = own.get('OWN-02');
-  assert.ok(text.includes(`\n${special.suppliedText.split('\n').map((line) => `> ${line}`).join('\n>\n')}\n`));
+  assert.ok(text.includes(`\n\`\`\`text\n${special.suppliedText}\n\`\`\`\n`));
   assert.ok(text.includes('| Environmental health review | pending |'));
   assert.ok(text.includes(`| Limit | ${own.get('OWN-01').limit} |`));
 });
@@ -629,7 +670,7 @@ test('every string the pack prints for each applicable method appears unchanged;
     const text = rendered(DOC_OF[section], cafe({ [section]: worksheet }));
     const [ignored, ...applying] = data.sections.get(section).methods;
     for (const method of applying) {
-      for (const value of pageTexts(method)) assert.ok(shows(text, value), `${method.id}: ${value}`);
+      for (const value of pageTexts(method, { options: false })) assert.ok(shows(text, value), `${method.id}: ${value}`);
     }
     assert.deepEqual(methodLines(text, ignored.id), [`### ${ignored.id} ${ignored.title}`, '',
       `Not relevant to this business: We have no need of ${ignored.id}. (decided by Dee Cider).`], section);
@@ -656,37 +697,134 @@ test('no answer appears in a render unless the parser marks it answered; a propo
       if (!answer.answered) unanswered++;
       const distinct = !['yes-no', 'tick'].includes(answer.type) && answer.answer !== '';
       if (answer.answered) {
-        const shown = count(text, cellText(`${answer.answer} [answered by Tess Tester, 2026-11-20]`));
+        const shown = count(text, cellText(confirmedText(answer)));
         assert.ok(distinct ? shown === 1 : shown >= 1, answer.id);
       } else if (answer.state === 'proposed') {
-        assert.ok(text.includes(cellText(`${UNANSWERED} (proposed from ${answer.source}: \u201c${answer.answer}\u201d)`)), answer.id);
-        if (distinct) assert.equal(count(text, cellText(answer.answer)), 1, answer.id);
+        assert.ok(text.includes(cellText(proposedText(answer))), answer.id);
+        if (distinct) assert.equal(count(text, cellText(escaped(answer.answer))), 1, answer.id);
       }
     }
     assert.equal(count(text, UNANSWERED), unanswered, section);
+    assert.equal(count(text, UNANSWERED), count(text, UNSET), section);
+    assert.equal(count(text, OUR_ANSWER), [...parsed.answers.values()]
+      .filter((a) => parsed.methods.get(a.id.slice(0, 5)).status !== 'not-relevant').length, section);
     assert.ok(unanswered > 0 && unanswered < parsed.answers.size, section);
   }
 });
 
-test('the render of blank worksheets holds no business text: every question shows the unanswered string', () => {
+// The data with every option label taken out: the reference of this is the pack's text as a business's document prints it.
+const withoutOptions = () => {
+  const bare = structuredClone(data);
+  for (const file of bare.sections.values()) {
+    for (const method of file.methods) for (const question of questionsOf(method)) question.options = [];
+  }
+  return bare;
+};
+
+test('a blank render is the reference less its tick labels, plus "Our answer" and the unanswered string after each question', () => {
+  const bare = withoutOptions();
   for (const section of SECTION_IDS) {
     const dir = project({ profile: blankWorksheet('profile', data), [section]: blankWorksheet(section, data) });
     const text = rendered(DOC_OF[section], dir);
-    const methods = data.sections.get(section).methods;
-    const asked = methods.flatMap(questionsOf).filter((q) => q.type !== 'note').length;
+    const lines = text.split('\n');
+    const asked = data.sections.get(section).methods.flatMap(questionsOf).filter((q) => q.type !== 'note').length;
+    // What a blank render has that the reference lacks: the two marker lines; after each question the
+    // answer label and the unanswered string; and at the end the closing notice and the source line.
+    assert.ok(lines[0].startsWith(`<!-- UK-FOOD:BEGIN doc=${DOC_OF[section]} `), section);
+    assert.deepEqual(lines.slice(-6), ['', notice('the business'), '', SOURCE_LINE, '', '<!-- UK-FOOD:END -->'], section);
+    assert.equal(count(text, UNSET), asked, section);
+    assert.equal(count(text, OUR_ANSWER), asked, section);
     assert.equal(count(text, UNANSWERED), asked, section);
-    for (const word of ['[answered by', '(proposed from', 'Not relevant to this business', 'Our variation: We']) {
+    const body = lines.slice(2, -6).join('\n').replaceAll(`<br><br>${UNSET}`, '').replaceAll(`<br>${UNSET}`, '').replaceAll(UNSET, '');
+    // What the reference has that a blank render lacks: the source line at the top, and the labels
+    // the pack prints beside its tick boxes. Nothing else differs: no sentence about the business.
+    const reference = referenceText(section, bare).split('\n');
+    assert.equal(reference[0], SOURCE_LINE);
+    assert.equal(body, reference.slice(2).join('\n'), section);
+    for (const word of ['[answered by', '(proposed from', 'Not relevant to this business', 'Our variation']) {
       assert.ok(!text.includes(word), `${section}: ${word}`);
     }
-    for (const method of methods) assert.equal(methodLines(text, method.id).at(-1), 'Our variation: none', method.id);
-    assert.ok(text.includes(notice('the business')), section);
-    // Take away the unanswered strings and the helper's own lines, and what is left is the reference.
-    const reference = referenceText(section, data).split('\n').slice(2).join('\n');
-    const stripped = text.split('\n').slice(2, -6).filter((line) => line !== 'Our variation: none').join('\n')
-      .replace(/\n\n\n+/g, '\n\n').replaceAll(`<br><br>${UNANSWERED}`, '').replaceAll(`<br>${UNANSWERED}`, '')
-      .replaceAll(UNANSWERED, '');
-    assert.equal(stripped.replace(/\n+$/, ''), reference, section);
   }
+  // The tick labels are all the two references differ by.
+  const labels = [...OPTION_LABELS].sort((a, b) => b.length - a.length);
+  for (const section of SECTION_IDS) {
+    const strip = (text) => labels.reduce((t, label) => t.replaceAll(`<br>${label}<br>`, '<br>').replaceAll(`<br>${label} |`, ' |')
+      .replaceAll(`| ${label}<br>`, '| ').replaceAll(`| ${label} |`, '|  |'), text);
+    assert.equal(strip(referenceText(section, data)), referenceText(section, bare), section);
+  }
+});
+
+test('no render prints a tick label on its own, where a reader could take it for an answer', () => {
+  for (const section of SECTION_IDS) {
+    for (const dir of [CAFE, project({ profile: blankWorksheet('profile', data), [section]: blankWorksheet(section, data) })]) {
+      const shown = cellLines(rendered(DOC_OF[section], dir)).filter((line) => OPTION_LABELS.has(line));
+      assert.deepEqual(shown, [], section);
+    }
+    assert.ok(cellLines(referenceText(section, data)).some((line) => OPTION_LABELS.has(line)) || section === 'MG', section);
+  }
+});
+
+test('worksheets saved with Windows line endings and a byte order mark render the same body, hash included', () => {
+  const crlf = (text) => `\ufeff${text.replace(/\n/g, '\r\n')}`;
+  const windows = project(Object.fromEntries(WORKSHEETS.map((s) => [s, crlf(cafeText(s))])));
+  for (const doc of DOC_CODES) assert.equal(rendered(doc, windows), rendered(doc, CAFE), doc);
+  const report = writeReport(windows, rendered('FOODCOOK', CAFE));
+  assert.equal(checkDocument('FOODCOOK', windows, report, data).exit, 0);
+});
+
+// Markup a business might type, which must be shown as typed and never change or hide the document.
+const NASTY_LINE = '<details><summary>open</summary> <div hidden> <div style="display:none"> <img src=x onerror=alert(1)> ' +
+  '[link](http://example.com) ![image](http://example.com/i.png) **bold _em_ ~~struck~~ `code` & \\ #Heading';
+const NASTY = `${NASTY_LINE}\n- a list item\n1. a numbered item`;
+// Each piece of NASTY's markup as it would read unescaped: a character Markdown reads as markup
+// counts only when no backslash comes before it.
+const RAW = [/<details/, /<summary/, /<div/, /<img/, /(?<!\\)\[link/, /(?<!\\)\]\(http/, /(?<!\\)!\[image/,
+  /(?<!\\)\*\*bold/, /(?<!\\)_em/, /(?<!\\)~~struck/, /(?<!\\)`code/, /& \\/];
+// The cafe with every business field it can hold replaced by NASTY.
+function nastyCafe() {
+  const worksheets = {};
+  for (const section of WORKSHEETS) {
+    const parsed = parseWorksheet(cafeText(section), data);
+    for (const answer of parsed.answers.values()) {
+      if (answer.state === 'unanswered') continue;
+      if (['text', 'list', 'yes-no-else'].includes(answer.type) && answer.id !== 'PR-Q06') answer.answer = NASTY;
+      if (answer.state === 'confirmed') answer.by = NASTY_LINE;
+      if (answer.state === 'proposed') answer.source = NASTY;
+    }
+    for (const method of parsed.methods.values()) {
+      for (const field of ['reason', 'decidedBy', 'variation', 'provedSafe']) if (method[field]) method[field] = NASTY;
+    }
+    for (const entry of parsed.entries.values()) {
+      entry.title = NASTY_LINE;
+      for (const field of ['hazard', 'control', 'limit', 'limitSource', 'check', 'ifItFails']) if (entry[field]) entry[field] = NASTY;
+      if (entry.suppliedText) entry.suppliedText = `${NASTY}\n\`\`\`\`four backticks\`\`\`\``;
+      if (entry.ehReview === 'pending') entry.ehReview = `2026-12-01 ${NASTY_LINE}`;
+    }
+    const text = emitWorksheet(parsed, data);
+    assert.deepEqual(parseWorksheet(text, data).problems, [], section);
+    worksheets[section] = text;
+  }
+  return project(worksheets);
+}
+
+test('business text is escaped wherever it is printed, so no markup in it can hide or change the document', () => {
+  const dir = nastyCafe();
+  for (const doc of DOC_CODES) {
+    const text = rendered(doc, dir);
+    const outside = outsideFences(text);
+    for (const raw of RAW) assert.doesNotMatch(outside, raw, doc);
+    assert.ok(outside.includes(escaped(NASTY_LINE)), doc);
+    // Each field holding NASTY shows it whole, its lines joined by <br>.
+    assert.ok(outside.includes(escaped(NASTY).replace(/\n/g, '<br>')) || doc === 'FOODOWN', doc);
+  }
+  const cook = rendered('FOODCOOK', dir);
+  assert.ok(cook.includes(`Not relevant to this business: ${escaped(NASTY).replace(/\n/g, '<br>')} (decided by `));
+  assert.ok(cook.includes(`\n${notice(escaped(NASTY).replace(/\n/g, '<br>'))}\n`));
+  assert.ok(rendered('FOODCLN', dir).includes(`Decided by: ${escaped(NASTY).replace(/\n/g, '<br>')}`));
+  const own = rendered('FOODOWN', dir);
+  assert.ok(own.includes(`### OWN-01 ${escaped(NASTY_LINE)} (this business's own method, not Food Standards Agency wording)`));
+  // A special process's own text is printed word for word in a fence longer than any run of backticks in it.
+  assert.ok(own.includes(`\n\`\`\`\`\`text\n${NASTY}\n\`\`\`\`four backticks\`\`\`\`\n\`\`\`\`\`\n`));
 });
 
 // ---- The commands ----
@@ -695,7 +833,6 @@ test('render, check and reference exit 2 on a usage error', () => {
   for (const args of [
     ['render'], ['render', '--doc', 'FOODCOOK'], ['render', '--doc', 'FOODNONE', '--project', CAFE], ['render', '--doc', 'FOODCOOK', '--project'],
     ['check', '--doc', 'FOODCOOK', '--project', CAFE], ['check', '--doc', 'FOODCOOK', '--report', 'x.md'],
-    ['check', '--doc', 'FOODCOOK', '--project', CAFE, '--report', join(CAFE, 'no-such-file.md')],
     ['reference'], ['reference', '--section', 'profile'], ['reference', '--section', 'CK', '--extra']
   ]) {
     const result = run(...args);
@@ -703,4 +840,82 @@ test('render, check and reference exit 2 on a usage error', () => {
     assert.equal(result.stdout, '', args.join(' '));
     assert.match(result.stderr, /usage: uk-food\.mjs/, args.join(' '));
   }
+});
+
+test('an input error says what is wrong and what to do next, without the usage text', () => {
+  const noCk = project({ profile: cafeText('profile') });
+  const file = join(noCk, 'food-safety', 'answers-CK.md');
+  const missing = run('render', '--doc', 'FOODCOOK', '--project', noCk);
+  assert.equal(missing.status, 2);
+  assert.ok(missing.stderr.includes(`worksheet --section CK > "${file}"`), missing.stderr);
+  const noProfile = project({ CK: cafeText('CK') });
+  const profile = run('render', '--doc', 'FOODPROF', '--project', noProfile);
+  assert.equal(profile.status, 2);
+  assert.ok(profile.stderr.includes(`worksheet --section profile > "${join(noProfile, 'food-safety', 'answers-profile.md')}"`), profile.stderr);
+  const other = run('render', '--doc', 'FOODCOOK', '--project', cafe({ CK: swap(cafeText('CK'), `data=${DATA_ID}`, 'data=sfbb-caterers-2025-01-01') }));
+  assert.match(other.stderr, /worksheet --section CK > /);
+  const wrong = run('render', '--doc', 'FOODCOOK', '--project', cafe({ CK: cafeText('XC') }));
+  assert.match(wrong.stderr, /answers-XC\.md/);
+  const unreadable = run('check', '--doc', 'FOODCOOK', '--project', CAFE, '--report', join(CAFE, 'no-such-file.md'));
+  for (const result of [missing, profile, other, wrong, unreadable]) {
+    assert.equal(result.status, 2);
+    assert.equal(result.stdout, '');
+    assert.doesNotMatch(result.stderr, /usage:/);
+  }
+});
+
+test('the own methods document ends with the closing notice and a line saying it quotes nothing from the pack', () => {
+  const text = rendered('FOODOWN', CAFE);
+  assert.deepEqual(text.split('\n').slice(-5), [notice('Bramble Cafe'), '', OWN_LINE, '', '<!-- UK-FOOD:END -->']);
+  assert.ok(!text.includes('Contains public sector information'));
+  assert.ok(!text.includes('Safety points, reasons and checks are quoted'));
+});
+
+test('check fails when a safe method or section heading of the pack is outside the markers, where it is not checked', () => {
+  const dir = cafe();
+  const body = rendered('FOODCOOK', dir);
+  for (const extra of ['### CK-01 COOKING SAFELY\n\nThorough cooking is optional.\n', '## COOKING\n']) {
+    for (const report of [writeReport(dir, body, { footer: `\n${extra}`, name: 'after.md' }),
+      writeReport(dir, body, { header: `${HEADER}${extra}\n`, name: 'before.md' })]) {
+      const result = checkDocument('FOODCOOK', dir, report, data);
+      assert.equal(result.exit, 1, extra);
+      // The heading is in the body too: the line named is the copy outside the markers.
+      const text = readFileSync(report, 'utf8');
+      const heading = extra.split('\n')[0];
+      const at = report.endsWith('after.md') ? text.lastIndexOf(`\n${heading}\n`) + 1 : text.indexOf(`\n${heading}\n`) + 1;
+      assert.equal(result.line, text.slice(0, at).split('\n').length, extra);
+      assert.match(result.message, /outside the UK-FOOD markers/);
+      assert.match(result.message, /fresh render/);
+    }
+  }
+});
+
+test('check names the column and the code points where a line first differs, so a look-alike character is visible', () => {
+  const dir = cafe();
+  const body = rendered('FOODCOOK', dir);
+  const lookAlike = body.replace('80\u00b0C', '80\u00baC');
+  const result = checkDocument('FOODCOOK', dir, writeReport(dir, lookAlike), data);
+  assert.equal(result.exit, 1);
+  assert.equal(result.column, 3);
+  assert.match(result.message, /U\+00B0/);
+  assert.match(result.message, /U\+00BA/);
+  const shorter = body.replace('80\u00b0C for at least 6 seconds', '80\u00b0C for at least 6');
+  const end = checkDocument('FOODCOOK', dir, writeReport(dir, shorter, { name: 'short.md' }), data);
+  assert.match(end.message, /end of the line/);
+});
+
+test('a data folder whose CK.json lacks the box on page 53 makes the profile exit 2 with a clear message', () => {
+  const folder = mkdtempSync(join(tmpdir(), 'uk-food-data-'));
+  cpSync(DEFAULT_DATA_DIR, folder, { recursive: true });
+  const ck = JSON.parse(readFileSync(join(folder, 'CK.json'), 'utf8'));
+  const method = ck.methods.find((m) => m.id === EXTRA_CARE_BOX.method);
+  method.blocks = method.blocks.filter((b) => !(b.kind === 'text' && b.page === EXTRA_CARE_BOX.page));
+  writeFileSync(join(folder, 'CK.json'), JSON.stringify(ck));
+  const thin = loadData(folder);
+  const result = renderDocument('FOODPROF', CAFE, thin);
+  assert.equal(result.exit, 2);
+  assert.match(result.messages.join('\n'), /CK-02.*page 53/);
+  const cli = run('render', '--doc', 'FOODPROF', '--project', CAFE, '--data', folder);
+  assert.equal(cli.status, 2, cli.stderr);
+  assert.doesNotMatch(cli.stderr, /TypeError|usage:/);
 });

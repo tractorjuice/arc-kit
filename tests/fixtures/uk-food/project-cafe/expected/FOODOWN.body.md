@@ -29,16 +29,15 @@
 
 The text below is the business's own, and this tool did not write or check it.
 
-> Our sous vide egg method, written with our equipment supplier.
->
-> We cook British Lion eggs in their shells, in a covered water bath.
->
-> The bath is set and checked to the time and temperature in the supplier's instructions before any eggs go in.
->
-> Eggs are served straight away and never kept for later.
+```text
+Our sous vide egg method, written with our equipment supplier.
+We cook British Lion eggs in their shells, in a covered water bath.
+The bath is set and checked to the time and temperature in the supplier's instructions before any eggs go in.
+Eggs are served straight away and never kept for later.
+```
 
 This is Bramble Cafe's own food safety record. It is not legal advice. The food business operator is responsible for it, and the local council's environmental health team is the authority on whether it is adequate.
 
-Safety points, reasons and checks are quoted from the Food Standards Agency's Safer food, better business for caterers, retrieved 17 November 2026. Contains public sector information licensed under the Open Government Licence v3.0. The Food Standards Agency has not reviewed or endorsed this document.
+The methods in this document are this business's own. They are not Food Standards Agency wording, and the Food Standards Agency has not reviewed or endorsed this document.
 
 <!-- UK-FOOD:END -->

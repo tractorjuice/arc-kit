@@ -55,8 +55,6 @@ Use a disinfected temperature probe to check dishes are properly cooked or rehea
 
 Write down what went wrong and what you did about it in your diary.
 
-Our variation: none
-
 ### CK-02 FOODS THAT NEED EXTRA CARE
 
 Some foods need to be treated with extra care to make sure they are safe to eat.
@@ -65,16 +63,16 @@ Remember that raw food is one of the main sources of bacteria in the kitchen. Fo
 
 | SAFETY POINT | WHY? | HOW DO YOU DO THIS? |
 | --- | --- | --- |
-| Eggs<br>Cook eggs and foods containing eggs thoroughly until they are steaming hot or, if serving eggs or egg dishes lightly cooked (e.g. soft boiled or in fresh mayonnaise or mousse), either use:<br>• Pasteurised egg, or<br>• British Lion code or equivalent assurance scheme | Eggs can contain harmful bacteria. If you cook them thoroughly this kills any bacteria.<br>The British Lion code or equivalent assurance schemes demonstrates eggs have been produced in a safe manner and therefore can be eaten less than thoroughly cooked. Pasteurisation also kills harmful bacteria. | List the dishes containing eggs that you prepare or cook.<br>Scrambled eggs on toast<br>Poached eggs<br>Sous vide eggs<br>Egg mayonnaise sandwiches, made with bought mayonnaise [answered by Sam Okafor, 2026-11-20]<br><br>Do you cook eggs and food containing eggs thoroughly until they are steaming hot?<br>Yes<br>If not, what do you do?<br>Scrambled eggs are cooked until steaming hot. Poached and sous vide eggs are served with runny yolks, so we only buy British Lion eggs. [answered by Sam Okafor, 2026-11-20] |
+| Eggs<br>Cook eggs and foods containing eggs thoroughly until they are steaming hot or, if serving eggs or egg dishes lightly cooked (e.g. soft boiled or in fresh mayonnaise or mousse), either use:<br>• Pasteurised egg, or<br>• British Lion code or equivalent assurance scheme | Eggs can contain harmful bacteria. If you cook them thoroughly this kills any bacteria.<br>The British Lion code or equivalent assurance schemes demonstrates eggs have been produced in a safe manner and therefore can be eaten less than thoroughly cooked. Pasteurisation also kills harmful bacteria. | List the dishes containing eggs that you prepare or cook.<br>**Our answer:** Scrambled eggs on toast<br>Poached eggs<br>Sous vide eggs<br>Egg mayonnaise sandwiches, made with bought mayonnaise [answered by Sam Okafor, 2026-11-20]<br><br>Do you cook eggs and food containing eggs thoroughly until they are steaming hot?<br>If not, what do you do?<br>**Our answer:** Scrambled eggs are cooked until steaming hot. Poached and sous vide eggs are served with runny yolks, so we only buy British Lion eggs. [answered by Sam Okafor, 2026-11-20] |
 | Make sure you rotate stock and use the oldest eggs first. Use eggs within the ’best before’ date. You can freeze them for use later if required.<br>Buy eggs from a reputable supplier.<br>Store eggs in a cool, dry place. | Harmful bacteria can grow in eggs that are not handled or stored correctly |  |
-| Rice<br>When you have cooked rice, make sure you keep it hot until serving or chill it down as quickly as possible and then keep it in the fridge.<br>You can make rice chill down more quickly by dividing it into smaller portions, spreading it out on a clean tray, or running it under cold water (make sure the water is clean and drinking quality). | Rice can contain spores of a type of harmful bacteria that may not be killed by cooking or reheating.<br>If cooked rice is left at room temperature, spores can multiply and produce toxins that cause food poisoning. Reheating will not get rid of these | How do you keep rice hot before serving?<br>We do not cook rice. [answered by Sam Okafor, 2026-11-20]<br><br>If you chill down rice how do you do this?<br>We do not cook or chill rice. [answered by Sam Okafor, 2026-11-20] |
-| Pulses<br>Follow the instructions on the packaging on how to soak and cook dried pulses, such as beans. | Pulses can contain natural toxins that could make people ill unless they are destroyed by the proper method of soaking and cooking.<br>Tinned pulses will have been soaked and cooked already. | Do you follow the manufacturer’s instructions when cooking pulses?<br>Yes<br>If not, what do you do?<br>yes [answered by Sam Okafor, 2026-11-20] |
+| Rice<br>When you have cooked rice, make sure you keep it hot until serving or chill it down as quickly as possible and then keep it in the fridge.<br>You can make rice chill down more quickly by dividing it into smaller portions, spreading it out on a clean tray, or running it under cold water (make sure the water is clean and drinking quality). | Rice can contain spores of a type of harmful bacteria that may not be killed by cooking or reheating.<br>If cooked rice is left at room temperature, spores can multiply and produce toxins that cause food poisoning. Reheating will not get rid of these | How do you keep rice hot before serving?<br>**Our answer:** We do not cook rice. [answered by Sam Okafor, 2026-11-20]<br><br>If you chill down rice how do you do this?<br>**Our answer:** We do not cook or chill rice. [answered by Sam Okafor, 2026-11-20] |
+| Pulses<br>Follow the instructions on the packaging on how to soak and cook dried pulses, such as beans. | Pulses can contain natural toxins that could make people ill unless they are destroyed by the proper method of soaking and cooking.<br>Tinned pulses will have been soaked and cooked already. | Do you follow the manufacturer’s instructions when cooking pulses?<br>If not, what do you do?<br>**Our answer:** yes [answered by Sam Okafor, 2026-11-20] |
 | Shellfish (molluscs and crustaceans)<br>Make sure you buy shellfish from a reputable supplier. Keep the product label for 60 days, after opening. | If you do not use a reputable supplier, you cannot be confident that shellfish have been caught and handled safely.<br>It is a legal requirement to keep labels for 60 days to trace suppliers, if needed. |  |
 
 | SAFETY POINT | WHY? | HOW DO YOU DO THIS? |
 | --- | --- | --- |
-| Crabs, crayfish, lobster and scallops should be prepared by someone with specialist knowledge. | Some parts of these shellfish cannot be eaten and some are poisonous, so it is important to know how to remove these parts safely. | If you prepare crabs, crayfish, lobster and scallops, are these prepared by someone with specialist knowledge?<br>Yes<br>If not, what do you do?<br>We do not prepare crabs, crayfish, lobster or scallops. [answered by Sam Okafor, 2026-11-20] |
-| Crustaceans and molluscs such as prawns and scallops will change in colour and texture when they are cooked.<br>For example, prawns turn from blue-grey to pink and scallops become milky white and firm.<br>Langoustines (also called scampi or Dublin Bay prawns) are pink when raw and the flesh becomes firm and pink-white when they are cooked.<br>Always follow the manufacturer’s instructions for preparation and storage. |  | List the types of shellfish you serve or use as an ingredient.<br>Cooked, peeled prawns, bought frozen, for prawn mayonnaise sandwiches [answered by Sam Okafor, 2026-11-20] |
+| Crabs, crayfish, lobster and scallops should be prepared by someone with specialist knowledge. | Some parts of these shellfish cannot be eaten and some are poisonous, so it is important to know how to remove these parts safely. | If you prepare crabs, crayfish, lobster and scallops, are these prepared by someone with specialist knowledge?<br>If not, what do you do?<br>**Our answer:** We do not prepare crabs, crayfish, lobster or scallops. [answered by Sam Okafor, 2026-11-20] |
+| Crustaceans and molluscs such as prawns and scallops will change in colour and texture when they are cooked.<br>For example, prawns turn from blue-grey to pink and scallops become milky white and firm.<br>Langoustines (also called scampi or Dublin Bay prawns) are pink when raw and the flesh becomes firm and pink-white when they are cooked.<br>Always follow the manufacturer’s instructions for preparation and storage. |  | List the types of shellfish you serve or use as an ingredient.<br>**Our answer:** Cooked, peeled prawns, bought frozen, for prawn mayonnaise sandwiches [answered by Sam Okafor, 2026-11-20] |
 | Before cooking mussels and clams, throw away any with open or damaged shells. | If the shell is damaged or open before cooking, the shellfish might not be safe to eat. |  |
 | To check that a mussel or clam is cooked, make sure the shell is open and that the mussel or clam has shrunk inside the shell. If the shell has not opened during cooking, throw it away. | If the shell has not opened during cooking, the shellfish might not be safe to eat. |  |
 | Fish: Make sure you buy fish from a reputable supplier.<br>If you buy fresh fish make sure you store it between 0°C and 4°C. If you buy frozen fish then keep it frozen until you are ready to use it. | Certain types of fish, such as mackerel, tuna, anchovies and herrings, can cause food poisoning if not kept at the correct temperature. |  |
@@ -86,8 +84,6 @@ Some businesses produce certain foods or use certain processes other than those 
 Example processes include: Vacuum packing, sous vide, low temperature cooking, fermenting, smoking or curing meat/fish
 
 Example foods include: Kebabs, sushi/sashimi, liver parfait, fish/meat carpaccio and tartare, less than thoroughly cooked burgers
-
-Our variation: none
 
 ### CK-03 REHEATING
 
@@ -110,15 +106,13 @@ Check dishes reach a safe temperature in the centre (see ‘Prove it’ in ‘Co
 
 | YOUR CHECK | TYPES OF DISH |
 | --- | --- |
-| If you use a different check, you will need to prove that it is safe. See the ‘Prove it’ safe method in the Management section. Give details of your check here:<br>We do not use a different check: we use the probe thermometer as the pack describes. [answered by Sam Okafor, 2026-11-20] | None: we do not use a different check. [answered by Sam Okafor, 2026-11-20] |
+| If you use a different check, you will need to prove that it is safe. See the ‘Prove it’ safe method in the Management section. Give details of your check here:<br>**Our answer:** We do not use a different check: we use the probe thermometer as the pack describes. [answered by Sam Okafor, 2026-11-20] | **Our answer:** None: we do not use a different check. [answered by Sam Okafor, 2026-11-20] |
 
 | WHAT TO DO IF THINGS GO WRONG | HOW TO STOP THIS HAPPENING AGAIN |
 | --- | --- |
 | • If reheated food is not hot enough, and the equipment seems to be working, reheat the dish for longer then test it again.<br>• Speed up the reheating process by using smaller portions. | • Check your equipment is working correctly.<br>• Review your reheating method – you may need to increase the time and/or temperature, use different equipment or change the size of portions.<br>• Train staff again on this safe method.<br>• Improve staff supervision. |
 
 Write down what went wrong and what you did about it in your diary.
-
-Our variation: none
 
 ### CK-04 ACRYLAMIDE
 
@@ -141,31 +135,31 @@ If you cook the following types of foods, you must put in place practical steps 
 | SAFETY POINT | WHY? | TICK IF YOU DO THIS |
 | --- | --- | --- |
 | Purchasing, receipt and storage |  |  |
-| When buying raw potatoes ask your supplier for advice on the best variety to use for the type of cooking you are doing. | Certain potato varieties are lower in natural sugars and using these will help to keep acrylamide levels lower. | no [answered by Sam Okafor, 2026-11-20] |
-| Store raw, unpeeled potatoes that are going to be fried, baked or roasted in the fridge or a cool, dark place. | Storage of potatoes in the fridge doesn’t increase acrylamide forming potential when compared to storage in a cool, dark place. So, you can choose to store either in the fridge or in a cool, dark place. | no [answered by Sam Okafor, 2026-11-20] |
-| When buying cooked products from a supplier tell them you will not accept over-baked or burnt products. | Check deliveries and reject products that are over-baked or burnt as these will have higher levels of acrylamide. | yes [answered by Sam Okafor, 2026-11-20] |
-| Ask your cooking oil supplier for advice on the best oil to use for the type of cooking you are doing. | Cooking foods in the right oil for the type of cooking will help foods to fry quicker and keep acrylamide levels lower. | no [answered by Sam Okafor, 2026-11-20] |
+| When buying raw potatoes ask your supplier for advice on the best variety to use for the type of cooking you are doing. | Certain potato varieties are lower in natural sugars and using these will help to keep acrylamide levels lower. | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
+| Store raw, unpeeled potatoes that are going to be fried, baked or roasted in the fridge or a cool, dark place. | Storage of potatoes in the fridge doesn’t increase acrylamide forming potential when compared to storage in a cool, dark place. So, you can choose to store either in the fridge or in a cool, dark place. | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
+| When buying cooked products from a supplier tell them you will not accept over-baked or burnt products. | Check deliveries and reject products that are over-baked or burnt as these will have higher levels of acrylamide. | **Our answer:** yes [answered by Sam Okafor, 2026-11-20] |
+| Ask your cooking oil supplier for advice on the best oil to use for the type of cooking you are doing. | Cooking foods in the right oil for the type of cooking will help foods to fry quicker and keep acrylamide levels lower. | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
 | Preparation |  |  |
-| Cut foods, such as potatoes, to similar sizes. | This will help all foods to cook more evenly. | no [answered by Sam Okafor, 2026-11-20] |
+| Cut foods, such as potatoes, to similar sizes. | This will help all foods to cook more evenly. | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
 | Where possible, when making home-made chips, or cut potatoes that are going to be deep-fried, follow one of these steps: |  |  |
-| Soak (for 30–180 mins) in cold water after cutting. Rinse with clean water and drain. | These steps will remove excess sugars and help to keep acrylamide levels lower. | no [answered by Sam Okafor, 2026-11-20] |
-| Or - Soak for a few minutes in warm water. Rinse with clean water and drain. |  | no [answered by Sam Okafor, 2026-11-20] |
-| Or - blanch potatoes before cooking. |  | no [answered by Sam Okafor, 2026-11-20] |
+| Soak (for 30–180 mins) in cold water after cutting. Rinse with clean water and drain. | These steps will remove excess sugars and help to keep acrylamide levels lower. | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
+| Or - Soak for a few minutes in warm water. Rinse with clean water and drain. |  | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
+| Or - blanch potatoes before cooking. |  | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
 | Where possible, and when the preparation process allows, when making bread or dough products follow this step: |  |  |
-| Extend the yeast fermentation time. | This will help to keep acrylamide levels lower in the finished product. | no [answered by Sam Okafor, 2026-11-20] |
+| Extend the yeast fermentation time. | This will help to keep acrylamide levels lower in the finished product. | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
 
 | SAFETY POINT | WHY? | TICK IF YOU DO THIS |
 | --- | --- | --- |
 | Cooking |  |  |
 | Cook foods to a golden yellow, or lighter colour |  |  |
-| Where appropriate, follow the manufacturer’s cooking instructions for food products. | The manufacturer has tried and tested cooking methods specifically for its products. | yes [answered by Sam Okafor, 2026-11-20] |
-| Deep-fry potato products, such as chips and French fries to a golden yellow, or lighter colour. The oil temperature for cooking should ideally be below 175⁰C. | Cooking to a golden yellow, or lighter colour, and deep-frying at lower temperatures will keep acrylamide levels low. | no [answered by Sam Okafor, 2026-11-20] |
-| When deep-frying take care not to over-fill baskets. Fill the basket only half way. | This will help the foods to cook more evenly. | no [answered by Sam Okafor, 2026-11-20] |
-| Keep cooking oil quality at its best by skimming often to remove crumbs and food particles left in the oil. | This will prevent crumbs and food particles left in the oil from burning and will keep the oil quality for longer. | no [answered by Sam Okafor, 2026-11-20] |
-| Filter, change oils and clean cooking equipment as often as needed or as recommended by suppliers. | Reusing old, dirty oil and cooking equipment will increase the levels of acrylamide in deep-fried foods. | no [answered by Sam Okafor, 2026-11-20] |
-| When baking bread and sweet or savoury bakery products cook to a golden yellow, or lighter colour. Use the lowest oven temperature possible for the food. | Baking foods to a golden yellow, or lighter colour, and at lower oven temperatures will reduce acrylamide levels. | yes [answered by Sam Okafor, 2026-11-20] |
-| When cooking foods such as toast and toasted sandwiches do not over-toast or burn. | Cooking bread to a golden colour, or lighter, will help to keep acrylamide levels lower. | yes [answered by Sam Okafor, 2026-11-20] |
-| Where possible, set a timer to mark the cooking time. This could be on the oven or fryer or you can use a separate timer. | This will remind you to remove foods at the right time to prevent foods from becoming over-cooked or burnt. | yes [answered by Sam Okafor, 2026-11-20] |
+| Where appropriate, follow the manufacturer’s cooking instructions for food products. | The manufacturer has tried and tested cooking methods specifically for its products. | **Our answer:** yes [answered by Sam Okafor, 2026-11-20] |
+| Deep-fry potato products, such as chips and French fries to a golden yellow, or lighter colour. The oil temperature for cooking should ideally be below 175⁰C. | Cooking to a golden yellow, or lighter colour, and deep-frying at lower temperatures will keep acrylamide levels low. | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
+| When deep-frying take care not to over-fill baskets. Fill the basket only half way. | This will help the foods to cook more evenly. | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
+| Keep cooking oil quality at its best by skimming often to remove crumbs and food particles left in the oil. | This will prevent crumbs and food particles left in the oil from burning and will keep the oil quality for longer. | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
+| Filter, change oils and clean cooking equipment as often as needed or as recommended by suppliers. | Reusing old, dirty oil and cooking equipment will increase the levels of acrylamide in deep-fried foods. | **Our answer:** no [answered by Sam Okafor, 2026-11-20] |
+| When baking bread and sweet or savoury bakery products cook to a golden yellow, or lighter colour. Use the lowest oven temperature possible for the food. | Baking foods to a golden yellow, or lighter colour, and at lower oven temperatures will reduce acrylamide levels. | **Our answer:** yes [answered by Sam Okafor, 2026-11-20] |
+| When cooking foods such as toast and toasted sandwiches do not over-toast or burn. | Cooking bread to a golden colour, or lighter, will help to keep acrylamide levels lower. | **Our answer:** yes [answered by Sam Okafor, 2026-11-20] |
+| Where possible, set a timer to mark the cooking time. This could be on the oven or fryer or you can use a separate timer. | This will remind you to remove foods at the right time to prevent foods from becoming over-cooked or burnt. | **Our answer:** yes [answered by Sam Okafor, 2026-11-20] |
 
 **THINK TWICE!**
 
@@ -180,8 +174,6 @@ Some suppliers have produced colour charts to show what colour is the best for c
 | • Dispose of foods that are over-cooked or burnt. | • Review your cooking method.<br>• You might need to lower the cooking temperature or use different equipment.<br>• Train staff again on this safe method.<br>• Improve staff supervision.<br>• Repair or replace equipment that is broken or not working. |
 
 Write down what went wrong and what you did about it in your diary.
-
-Our variation: none
 
 ### CK-05 CHECKING YOUR MENU
 
@@ -199,19 +191,19 @@ Also, fruit and vegetables and ready-to-eat food are included in the ‘Ready-to
 
 | CHECK | TYPES OF DISH |
 | --- | --- |
-| If you serve beef or lamb rare (whole cuts such as steaks and whole joints only), make sure all of the outside surfaces are fully cooked. | e.g. steaks, leg of lamb<br>None: we do not serve beef or lamb rare. [answered by Sam Okafor, 2026-11-20] |
-| Check whole birds are cooked to a safe temperature in the thickest part of the leg (see ‘Prove it’ in ‘Cooking Safely’). The meat should not be pink or red. The juices should be clear and not have any pink or red in them. | e.g. roast chicken, turkey<br>None: we do not cook whole birds. [answered by Sam Okafor, 2026-11-20] |
-| Check rolled meat joints, whole cuts of pork and processed meat products, such as sausages and burgers, are cooked to a safe temperature in the centre with no pink or red (see ‘Prove it’ in ‘Cooking Safely’). | e.g. sausages, burgers, rolled joint<br>Pork sausages, for breakfast<br>Bacon, for breakfast and sandwiches [answered by Sam Okafor, 2026-11-20] |
-| Liver and offal must be cooked to a safe temperature in the centre of the meat (see ‘Prove it’ in ‘Cooking Safely’). When preparing dishes such as liver pâté or parfait, the liver should be cooked until there is no pink meat left. | e.g. fried liver, pâté, parfait<br>None: we do not serve liver or offal. [answered by Sam Okafor, 2026-11-20] |
-| Check liquid dishes are heated to a safe temperature in several places in case of cold spots. (see ‘Prove it’ in ‘Cooking Safely’). | e.g. gravy, soup, sauces, stews<br>Baked beans [answered by Sam Okafor, 2026-11-20] |
-| Check fish is cooked to a safe temperature in the centre and the colour and texture has changed (see ‘Prove it’ in ‘Cooking Safely’).<br>Some fish (e.g. tuna) may be served ‘rare’ as long as they have been frozen correctly beforehand – see Cooking Safely. | e.g. salmon, cod<br>None: we do not cook fish. [answered by Sam Okafor, 2026-11-20] |
+| If you serve beef or lamb rare (whole cuts such as steaks and whole joints only), make sure all of the outside surfaces are fully cooked. | e.g. steaks, leg of lamb<br>**Our answer:** None: we do not serve beef or lamb rare. [answered by Sam Okafor, 2026-11-20] |
+| Check whole birds are cooked to a safe temperature in the thickest part of the leg (see ‘Prove it’ in ‘Cooking Safely’). The meat should not be pink or red. The juices should be clear and not have any pink or red in them. | e.g. roast chicken, turkey<br>**Our answer:** None: we do not cook whole birds. [answered by Sam Okafor, 2026-11-20] |
+| Check rolled meat joints, whole cuts of pork and processed meat products, such as sausages and burgers, are cooked to a safe temperature in the centre with no pink or red (see ‘Prove it’ in ‘Cooking Safely’). | e.g. sausages, burgers, rolled joint<br>**Our answer:** Pork sausages, for breakfast<br>Bacon, for breakfast and sandwiches [answered by Sam Okafor, 2026-11-20] |
+| Liver and offal must be cooked to a safe temperature in the centre of the meat (see ‘Prove it’ in ‘Cooking Safely’). When preparing dishes such as liver pâté or parfait, the liver should be cooked until there is no pink meat left. | e.g. fried liver, pâté, parfait<br>**Our answer:** None: we do not serve liver or offal. [answered by Sam Okafor, 2026-11-20] |
+| Check liquid dishes are heated to a safe temperature in several places in case of cold spots. (see ‘Prove it’ in ‘Cooking Safely’). | e.g. gravy, soup, sauces, stews<br>**Our answer:** Baked beans [answered by Sam Okafor, 2026-11-20] |
+| Check fish is cooked to a safe temperature in the centre and the colour and texture has changed (see ‘Prove it’ in ‘Cooking Safely’).<br>Some fish (e.g. tuna) may be served ‘rare’ as long as they have been frozen correctly beforehand – see Cooking Safely. | e.g. salmon, cod<br>**Our answer:** None: we do not cook fish. [answered by Sam Okafor, 2026-11-20] |
 
 | CHECK | TYPES OF DISH |
 | --- | --- |
-| The largest piece of meat in stews, curries etc. should be cooked to a safe temperature in the centre with no pink or red (see ‘Prove it’ in ‘Cooking Safely’). | e.g. curries, casseroles<br>None: we do not make stews or curries. [answered by Sam Okafor, 2026-11-20] |
-| Check combination dishes (e.g. contains meat and vegetables) are cooked to a safe temperature. (see ‘Prove it’ in ‘Cooking Safely’). If you are cooking a large dish or batch, check in several places. | e.g. lasagne, fish pie<br>Ham and cheese toasties<br>Breakfast muffins with egg and bacon [answered by Sam Okafor, 2026-11-20] |
-| Check that shellfish such as prawns have changed in colour and texture. | e.g. prawns in garlic butter<br>None: our prawns are bought cooked. [answered by Sam Okafor, 2026-11-20] |
-| To check that a mussel or clam is cooked, make sure the shell is open and the mussel or clam has shrunk inside the shell. | e.g. moules marinière<br>None: we do not serve mussels or clams. [answered by Sam Okafor, 2026-11-20] |
+| The largest piece of meat in stews, curries etc. should be cooked to a safe temperature in the centre with no pink or red (see ‘Prove it’ in ‘Cooking Safely’). | e.g. curries, casseroles<br>**Our answer:** None: we do not make stews or curries. [answered by Sam Okafor, 2026-11-20] |
+| Check combination dishes (e.g. contains meat and vegetables) are cooked to a safe temperature. (see ‘Prove it’ in ‘Cooking Safely’). If you are cooking a large dish or batch, check in several places. | e.g. lasagne, fish pie<br>**Our answer:** Ham and cheese toasties<br>Breakfast muffins with egg and bacon [answered by Sam Okafor, 2026-11-20] |
+| Check that shellfish such as prawns have changed in colour and texture. | e.g. prawns in garlic butter<br>**Our answer:** None: our prawns are bought cooked. [answered by Sam Okafor, 2026-11-20] |
+| To check that a mussel or clam is cooked, make sure the shell is open and the mussel or clam has shrunk inside the shell. | e.g. moules marinière<br>**Our answer:** None: we do not serve mussels or clams. [answered by Sam Okafor, 2026-11-20] |
 
 **PROVE IT**
 
@@ -220,8 +212,6 @@ You should use a disinfected temperature probe to check dishes are properly cook
 You may also wish to record some of your temperature checks in the diary pages.
 
 If your menu changes, you may need to fill out this sheet again.
-
-Our variation: none
 
 ### CK-06 HOT HOLDING
 
@@ -235,14 +225,14 @@ Ready-to-eat food is food that will not be cooked or reheated before serving. Th
 
 | SAFETY POINT | WHY? | HOW DO YOU DO THIS? |
 | --- | --- | --- |
-| When preparing and handling food, you should:<br>• keep ready-to-eat food completely separate from raw meat, poultry, fish, eggs and unwashed vegetables<br>• make sure work surfaces, chopping boards, knives etc. are clean (and disinfected if you have prepared raw food)<br>• ideally, use separate colour coded chopping boards and utensils for ready-to-eat food<br>• keep ready-to-eat food covered at all times during preparation and storage. | This protects food from harmful bacteria and allergens. This is especially important for ready-to-eat food because it will not be cooked or reheated before serving.<br>It also helps keep allergens from spreading. | List the types of ready-to-eat food you use and how you handle them:<br>Ham: sliced here, kept covered in its own tub on the top shelf of the sandwich fridge<br>Cheese: kept covered in its own tub in the sandwich fridge<br>Salad: washed, then kept covered in the sandwich fridge<br>Cakes and scones: kept under covers on the counter [answered by Sam Okafor, 2026-11-20] |
-| Follow the manufacturer’s instructions on how to store and prepare the food, if these are available. | The manufacturer’s instructions are designed to keep the food safe. | Are you confident that you do this for all ready-to-eat food where instructions are available?<br>Yes<br>yes [answered by Sam Okafor, 2026-11-20] |
-| When preparing fruit, vegetables and salad ingredients:<br>• peel, trim, or remove the outer parts, as appropriate<br>• wash them thoroughly by rubbing vigorously in a bowl of clean water<br>• wash the cleanest ones first<br>Wash your hands before and after handling fruit and vegetables.<br>If you have prepared vegetables that have dirt or soil on the outside, clean and then disinfect chopping boards and work surfaces before preparing other food. | The dirt on vegetables and salad ingredients can contain harmful bacteria. Peeling and washing helps to remove the dirt and bacteria. | Do you do this?<br>Yes<br>If not, what do you do?<br>yes [answered by Sam Okafor, 2026-11-20] |
+| When preparing and handling food, you should:<br>• keep ready-to-eat food completely separate from raw meat, poultry, fish, eggs and unwashed vegetables<br>• make sure work surfaces, chopping boards, knives etc. are clean (and disinfected if you have prepared raw food)<br>• ideally, use separate colour coded chopping boards and utensils for ready-to-eat food<br>• keep ready-to-eat food covered at all times during preparation and storage. | This protects food from harmful bacteria and allergens. This is especially important for ready-to-eat food because it will not be cooked or reheated before serving.<br>It also helps keep allergens from spreading. | List the types of ready-to-eat food you use and how you handle them:<br>**Our answer:** Ham: sliced here, kept covered in its own tub on the top shelf of the sandwich fridge<br>Cheese: kept covered in its own tub in the sandwich fridge<br>Salad: washed, then kept covered in the sandwich fridge<br>Cakes and scones: kept under covers on the counter [answered by Sam Okafor, 2026-11-20] |
+| Follow the manufacturer’s instructions on how to store and prepare the food, if these are available. | The manufacturer’s instructions are designed to keep the food safe. | Are you confident that you do this for all ready-to-eat food where instructions are available?<br>**Our answer:** yes [answered by Sam Okafor, 2026-11-20] |
+| When preparing fruit, vegetables and salad ingredients:<br>• peel, trim, or remove the outer parts, as appropriate<br>• wash them thoroughly by rubbing vigorously in a bowl of clean water<br>• wash the cleanest ones first<br>Wash your hands before and after handling fruit and vegetables.<br>If you have prepared vegetables that have dirt or soil on the outside, clean and then disinfect chopping boards and work surfaces before preparing other food. | The dirt on vegetables and salad ingredients can contain harmful bacteria. Peeling and washing helps to remove the dirt and bacteria. | Do you do this?<br>If not, what do you do?<br>**Our answer:** yes [answered by Sam Okafor, 2026-11-20] |
 
 | SAFETY POINT | WHY? | HOW DO YOU DO THIS? |
 | --- | --- | --- |
-| Make sure you keep ready-to-eat food cold enough. See ‘Chilled storage and displaying chilled food’ in the Chilling section.<br>Do not use ready-to-eat food after the ‘use by’ date, if there is one.<br>For food you have prepared, or removed from its original packaging, use stickers or another method to keep track of when food should be used by or thrown away.<br>For guidance on how long to keep food once prepared or opened, follow manufacturer’s storage instructions on the original product label. Ready-to-eat foods should be kept for a maximum of 3 days in total (day of cook/opening + 2) unless you have evidence that it is safe to keep them for longer. Cooked rice should only be kept for 1 day once prepared. | If these types of food are not kept cold enough, harmful bacteria could grow.<br>You should never use food that has passed its ‘use by’ date because it might not be safe to eat. | Do you do this?<br>Yes<br>If not, what do you do?<br>yes [answered by Sam Okafor, 2026-11-20] |
-| If you slice cooked meat:<br>• follow the manufacturer’s instructions when you clean the slicer<br>• avoid handling the meat as much as possible – use clean tongs or slice meat straight onto a plate | Meat slicers need careful cleaning and disinfecting to prevent dirt building up and to stop harmful bacteria growing, in particular on the slicing blade.<br>Hands can easily spread harmful bacteria onto food. | Are staff trained how to clean the meat slicer properly, or supervised?<br>Yes / No<br>yes [answered by Sam Okafor, 2026-11-20] |
+| Make sure you keep ready-to-eat food cold enough. See ‘Chilled storage and displaying chilled food’ in the Chilling section.<br>Do not use ready-to-eat food after the ‘use by’ date, if there is one.<br>For food you have prepared, or removed from its original packaging, use stickers or another method to keep track of when food should be used by or thrown away.<br>For guidance on how long to keep food once prepared or opened, follow manufacturer’s storage instructions on the original product label. Ready-to-eat foods should be kept for a maximum of 3 days in total (day of cook/opening + 2) unless you have evidence that it is safe to keep them for longer. Cooked rice should only be kept for 1 day once prepared. | If these types of food are not kept cold enough, harmful bacteria could grow.<br>You should never use food that has passed its ‘use by’ date because it might not be safe to eat. | Do you do this?<br>If not, what do you do?<br>**Our answer:** yes [answered by Sam Okafor, 2026-11-20] |
+| If you slice cooked meat:<br>• follow the manufacturer’s instructions when you clean the slicer<br>• avoid handling the meat as much as possible – use clean tongs or slice meat straight onto a plate | Meat slicers need careful cleaning and disinfecting to prevent dirt building up and to stop harmful bacteria growing, in particular on the slicing blade.<br>Hands can easily spread harmful bacteria onto food. | Are staff trained how to clean the meat slicer properly, or supervised?<br>**Our answer:** yes [answered by Sam Okafor, 2026-11-20] |
 
 | WHAT TO DO IF THINGS GO WRONG | HOW TO STOP THIS HAPPENING AGAIN |
 | --- | --- |
@@ -257,8 +247,6 @@ You should not use the same equipment, such as vacuum packing machines, slicers 
 If you are preparing both raw and ready-to-eat food, you should make sure where possible this is done in separate clean and disinfected areas. If this is not possible, surface and utensils used must be thoroughly cleaned and then disinfected between tasks.
 
 Make sure staff wash their hands thoroughly between tasks, especially when working with raw and ready-to-eat food. This stops bacteria and allergens being spread onto foods, surfaces and equipment.
-
-Our variation: none
 
 This is Bramble Cafe's own food safety record. It is not legal advice. The food business operator is responsible for it, and the local council's environmental health team is the authority on whether it is adequate.
 

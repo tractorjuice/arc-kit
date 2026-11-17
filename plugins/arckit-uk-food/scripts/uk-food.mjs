@@ -1109,8 +1109,9 @@ export const worksheetJson = (parsed) =>
 // - "## " and the section's title, then its introduction, one paragraph per line of the data. A
 //   paragraph already printed is not printed again: each section's title page repeats its first.
 // - Each safe method under "### ", its identifier and title. A method that is not relevant shows
-//   only the not-relevant line. Any other shows its summary, its boxes in order and its variation
-//   line.
+//   only the not-relevant line. Any other shows its summary and its boxes in order; an adapted one
+//   then shows its variation line. A method that applies has no line about the business: applies
+//   is the worksheet's blank default, which nobody at the business stated.
 // - A box heading is a line in bold above its box. The text of a box that asks nothing (think
 //   twice, prove it, text, and a CHECK IT box with no questions) is one paragraph per line.
 // - The rows of a points, manage it or check it box are a table, and so are a CHECK IT box's own
@@ -1122,26 +1123,34 @@ export const worksheetJson = (parsed) =>
 //   67, where "Additional checks" asks for one entry under each column. Otherwise the questions
 //   are stacked in the last column, an empty line apart, and a row that holds nothing but
 //   questions is printed one question to a row.
-// - A question shows its text, its option labels joined by " / " and its follow-up, one to a line,
-//   then the answer. A question that takes a tick column and an "if not" column (spanOf) shows
-//   its labels in the first and the answer in the second. A note is printed in place, with no
-//   answer. Nothing else is shown for a question: no identifier, no tick box.
+// - A question shows its text and its follow-up, one to a line, then OUR_ANSWER and the answer, or
+//   the unanswered or proposed string. The labels the pack prints beside its tick boxes ("Yes",
+//   "No") are left out: without the boxes a reader would take them for answers. The reference keeps
+//   them, joined by " / ", after the question's text. A question that takes a tick column and an
+//   "if not" column (spanOf) is printed in the first, and the second is left empty. A note is
+//   printed in place, with no answer. Nothing else is shown for a question: no identifier, no box.
 // - A table prints its columns, then its rows, then its questions as above. A column group's
 //   label is printed above the name of each column it spans, in that column's header cell. A
 //   table that prints no columns has an empty header row.
 // - A "what to do if things go wrong" box is a table of its two headings over their bullets,
 //   then its diary line.
-// - In a cell, "|" is escaped (any backslashes just before it are doubled, so they stay text) and
-//   a line break is <br>. In a line of the helper's that quotes a business's words, a line break
-//   is <br>. Nothing is cut, reordered or reworded.
+// - In a cell, "|" is escaped (a run of backslashes just before it is made even, so they stay text)
+//   and a line break is <br>. In a line of the helper's that quotes a business's words, a line
+//   break is <br>. Nothing is cut, reordered or reworded.
+// - A business's words are escaped wherever they are printed (businessText), so that nothing typed
+//   can hide or change the document. The one exception is a special process's own text, printed
+//   word for word in a fenced code block. The pack's text is never escaped beyond the cell escaping.
 // profileChunks and ownChunks describe the FOODPROF and FOODOWN bodies. Every body ends with the
-// closing notice and the source line, between the UK-FOOD:BEGIN and UK-FOOD:END marker lines.
+// closing notice and the source line (FOODOWN, which quotes nothing from the pack, with a line that
+// says so instead), between the UK-FOOD:BEGIN and UK-FOOD:END marker lines.
 // A body is built as chunks, each a list of lines, joined by an empty line.
 // ---------------------------------------------------------------------------------------------
 
 export const SECTION_DOCS = { FOODXC: 'XC', FOODCLN: 'CL', FOODCHL: 'CH', FOODCOOK: 'CK', FOODMGT: 'MG' };
 export const DOC_CODES = [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN'];
 export const UNANSWERED = '**NOT YET ANSWERED**';
+// Printed before every answer in a business's document, and before the unanswered and proposed strings.
+export const OUR_ANSWER = '**Our answer:** ';
 const END_MARKER = '<!-- UK-FOOD:END -->';
 const BEGIN_MARKER = /^<!-- UK-FOOD:BEGIN doc=(\S+) data=(\S+) answers=(\S+) -->$/;
 const beginMarker = (doc, hash) => `<!-- UK-FOOD:BEGIN doc=${doc} data=${DATA_ID} answers=${hash} -->`;
@@ -1174,9 +1183,27 @@ const OWN_ROWS = [['Kind', 'kind'], ['Hazard', 'hazard'], ['Control', 'control']
   ['Environmental health review', 'ehReview']];
 const CHECK_ADVICE = 'The text between the UK-FOOD markers is generated, so it is not changed there: to change what ' +
   'it says, edit the worksheet and render the document again.';
+// FOODOWN's last line in place of the source line: it quotes nothing from the pack.
+const OWN_SOURCE_LINE = 'The methods in this document are this business\'s own. They are not Food Standards Agency ' +
+  'wording, and the Food Standards Agency has not reviewed or endorsed this document.';
+// The helper itself, for the commands a message tells a person to run next.
+const HELPER = fileURLToPath(import.meta.url);
+const makeWorksheet = (section, file) => `node "${HELPER}" worksheet --section ${section} > "${file}"`;
 
 const inline = (text) => String(text).replace(/\n/g, '<br>');
-const cell = (text) => inline(String(text).replace(/(\\*)\|/g, (_, slashes) => `${slashes}${slashes}\\|`));
+const cell = (text) => inline(String(text).replace(/(\\*)\|/g, (_, slashes) => `${slashes}${slashes.length % 2 ? '\\' : ''}\\|`));
+// A business's words as a document prints them: <, > and & as entities, and each character Markdown
+// reads as markup (\ ` * _ [ ] ~) after a backslash, so that nothing typed can hide or change the
+// document. Line breaks are left for the caller: <br> in a cell or a line of the helper's.
+const businessText = (text) => String(text).replace(/[\\`*_[\]~]/g, '\\$&').replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const said = (text) => inline(businessText(text));
+// Text printed word for word in a fenced code block, so that nothing in it is read as markup. The
+// fence is longer than the longest run of backticks in the text, so no line of it can close the block.
+const fenced = (text) => {
+  const fence = '`'.repeat(Math.max(3, ...(text.match(/`+/g) ?? []).map((run) => run.length + 1)));
+  return [`${fence}text`, ...text.split('\n'), fence];
+};
 const andList = (items) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`);
 const longDate = (iso) => {
   const [year, month, day] = iso.split('-').map(Number);
@@ -1185,14 +1212,15 @@ const longDate = (iso) => {
 export const sourceLine = (source) => `Safety points, reasons and checks are quoted from the ${source.publisher}'s ` +
   `${source.title}, retrieved ${longDate(source.retrieved)}. ${source.attribution} The ${source.publisher} has not ` +
   'reviewed or endorsed this document.';
-const closingNotice = (name) => `This is ${name ? `${inline(name)}'s` : 'the business\'s'} own food safety record. It ` +
+const closingNotice = (name) => `This is ${name ? `${said(name)}'s` : 'the business\'s'} own food safety record. It ` +
   'is not legal advice. The food business operator is responsible for it, and the local council\'s environmental ' +
   'health team is the authority on whether it is adequate.';
 // What a document prints for an answer: the answer itself only when the parser marks it answered.
 const answerOf = (record) => {
-  if (record?.answered) return `${record.answer} [answered by ${record.by}, ${record.on}]`;
-  if (record?.state === 'proposed') return `${UNANSWERED} (proposed from ${record.source}: \u201c${record.answer}\u201d)`;
-  return UNANSWERED;
+  const [answer, by, on, source] = [record?.answer, record?.by, record?.on, record?.source].map((v) => businessText(v ?? ''));
+  if (record?.answered) return `${OUR_ANSWER}${answer} [answered by ${by}, ${on}]`;
+  if (record?.state === 'proposed') return `${OUR_ANSWER}${UNANSWERED} (proposed from ${source}: \u201c${answer}\u201d)`;
+  return `${OUR_ANSWER}${UNANSWERED}`;
 };
 
 const paragraphs = (text) => (text ? text.split('\n').filter((line) => line !== '').map((line) => [line]) : []);
@@ -1200,8 +1228,10 @@ const tableLines = (header, rows) => {
   const line = (cells) => `| ${cells.map(cell).join(' | ')} |`;
   return [line(header), `|${' --- |'.repeat(header.length)}`, ...rows.map(line)];
 };
-// What the pack prints for a question: its text, the labels beside its tick boxes and its follow-up.
-const printedParts = (q) => [q.text, (q.options ?? []).join(' / '), q.elseText ?? ''].filter((part) => part !== '');
+// What the pack prints for a question: its text, the labels beside its tick boxes (when `labels`) and
+// its follow-up.
+const printedParts = (q, labels) => [q.text, labels ? (q.options ?? []).join(' / ') : '', q.elseText ?? '']
+  .filter((part) => part !== '');
 
 // Where each question of a row goes: its first column and how many it takes. See the layout above.
 function placements(questions, { left, width }) {
@@ -1212,48 +1242,48 @@ function placements(questions, { left, width }) {
   return { fits, places: spans.map((span) => (fits ? { at: (at += span) - span, span } : { at: width - 1, span: 1 })) };
 }
 
-// The cells of one row. `answer` gives what to print for a question, or null to print none.
-function rowCells(row, layout, answer) {
+// The cells of one row. A question goes in the first column of those it takes. `view.parts` gives
+// what to print of a question, and `view.answer` its answer, or null to print none.
+function rowCells(row, layout, view) {
   const cells = Array.from({ length: layout.width }, () => []);
   if (row.point) cells[0].push(row.point);
   if (row.why) cells[Number(layout.hasPoint)].push(row.why);
   const questions = row.questions ?? [];
-  placements(questions, layout).places.forEach(({ at, span }, i) => {
-    const said = questions[i].type === 'note' ? null : answer(questions[i]);
-    const lines = [...printedParts(questions[i]), ...(said && span === 1 ? [said] : [])];
+  placements(questions, layout).places.forEach(({ at }, i) => {
+    const answer = questions[i].type === 'note' ? null : view.answer(questions[i]);
+    const lines = [...view.parts(questions[i]), ...(answer ? [answer] : [])];
     if (lines.length) cells[at].push(lines.join('\n'));
-    if (said && span === 2) cells[at + 1].push(said);
   });
   return cells.map((segments) => segments.join('\n\n'));
 }
 
 // The table rows of one row: one, or one for each question of a row of nothing but questions that
 // cannot each have a column.
-function tableRowsOf(row, layout, answer) {
+function tableRowsOf(row, layout, view) {
   const questions = row.questions ?? [];
-  if (layout.left > 0 || questions.length < 2 || placements(questions, layout).fits) return [rowCells(row, layout, answer)];
-  return questions.map((question) => rowCells({ point: null, why: null, questions: [question] }, layout, answer));
+  if (layout.left > 0 || questions.length < 2 || placements(questions, layout).fits) return [rowCells(row, layout, view)];
+  return questions.map((question) => rowCells({ point: null, why: null, questions: [question] }, layout, view));
 }
 
-function rowTable(columns, rows, answer) {
+function rowTable(columns, rows, view) {
   const hasPoint = rows.some((row) => row.point != null);
   const left = Number(hasPoint) + Number(rows.some((row) => row.why != null));
   const asks = rows.some((row) => (row.questions ?? []).length > 0);
   const layout = { hasPoint, left, width: Math.max(columns.length, left + Number(asks), 1) };
   const header = [...Array(layout.width - columns.length).fill(''), ...columns];
-  return tableLines(header, rows.flatMap((row) => tableRowsOf(row, layout, answer)));
+  return tableLines(header, rows.flatMap((row) => tableRowsOf(row, layout, view)));
 }
 
 // A CHECK IT box: its text beside its own questions, or above its rows, or alone.
-function checkItChunks(block, answer) {
+function checkItChunks(block, view) {
   const rows = [...(block.rows ?? [])];
   const asks = (block.questions ?? []).length > 0;
   const textApart = Boolean(block.text) && (rows.length > 0 || !asks);
   if (asks) rows.push({ point: textApart ? null : block.text ?? null, why: null, questions: block.questions });
-  return [...(textApart ? paragraphs(block.text) : []), ...(rows.length ? [rowTable(block.columns ?? [], rows, answer)] : [])];
+  return [...(textApart ? paragraphs(block.text) : []), ...(rows.length ? [rowTable(block.columns ?? [], rows, view)] : [])];
 }
 
-function tableChunk(block, answer) {
+function tableChunk(block, view) {
   const { columns, rows } = block;
   const questions = block.questions ?? [];
   const width = Math.max(columns.length, ...rows.map((row) => row.length), 1);
@@ -1262,7 +1292,7 @@ function tableChunk(block, answer) {
     const group = groupOf(i);
     return group ? `${group.label}\n${columns[i]}` : columns[i] ?? '';
   });
-  const asked = questions.length ? tableRowsOf({ point: null, why: null, questions }, { hasPoint: false, left: 0, width }, answer) : [];
+  const asked = questions.length ? tableRowsOf({ point: null, why: null, questions }, { hasPoint: false, left: 0, width }, view) : [];
   return tableLines(header, [...rows.map((row) => [...row, ...Array(width - row.length).fill('')]), ...asked]);
 }
 
@@ -1273,29 +1303,27 @@ function wrongChunks(block) {
     ...paragraphs(block.diaryNote)];
 }
 
-function blockChunks(block, answer) {
+function blockChunks(block, view) {
   const heading = block.heading ? [[`**${block.heading}**`]] : [];
-  if (block.kind === 'points' || block.kind === 'manage-it') return [...heading, rowTable(block.columns ?? [], block.rows, answer)];
-  if (block.kind === 'check-it') return [...heading, ...checkItChunks(block, answer)];
-  if (block.kind === 'table') return [...heading, tableChunk(block, answer)];
+  if (block.kind === 'points' || block.kind === 'manage-it') return [...heading, rowTable(block.columns ?? [], block.rows, view)];
+  if (block.kind === 'check-it') return [...heading, ...checkItChunks(block, view)];
+  if (block.kind === 'table') return [...heading, tableChunk(block, view)];
   if (block.kind === 'wrong') return [...heading, ...wrongChunks(block)];
   return [...heading, ...paragraphs(block.text)];
 }
 
 // A safe method. `view.method` gives the business's record of it (null in the reference, which
-// prints no status and no variation line); `view.answer` what to print for a question.
+// prints no status and no variation line); `view.parts` and `view.answer` what to print of a question.
 function methodChunks(method, view) {
   const heading = [`### ${method.id} ${method.title}`];
   const record = view.method(method.id);
   if (record?.status === 'not-relevant') {
-    return [heading, [`Not relevant to this business: ${inline(record.reason)} (decided by ${inline(record.decidedBy)}).`]];
+    return [heading, [`Not relevant to this business: ${said(record.reason)} (decided by ${said(record.decidedBy)}).`]];
   }
-  const chunks = [heading, ...paragraphs(method.summary), ...method.blocks.flatMap((block) => blockChunks(block, view.answer))];
-  if (!record) return chunks;
-  return [...chunks, [record.status === 'adapted'
-    ? `Our variation: ${inline(record.variation)} Reason: ${inline(record.reason)} Shown to be safe by: ${inline(record.provedSafe)} ` +
-      `Decided by: ${inline(record.decidedBy)}`
-    : 'Our variation: none']];
+  const chunks = [heading, ...paragraphs(method.summary), ...method.blocks.flatMap((block) => blockChunks(block, view))];
+  if (record?.status !== 'adapted') return chunks;
+  return [...chunks, [`Our variation: ${said(record.variation)} Reason: ${said(record.reason)} Shown to be safe by: ` +
+    `${said(record.provedSafe)} Decided by: ${said(record.decidedBy)}`]];
 }
 
 function sectionChunks(file, view) {
@@ -1305,9 +1333,10 @@ function sectionChunks(file, view) {
 
 const sectionView = (parsed) => ({
   method: (id) => parsed.methods.get(id) ?? null,
+  parts: (question) => printedParts(question, false),
   answer: (question) => answerOf(parsed.answers.get(question.id))
 });
-const REFERENCE_VIEW = { method: () => null, answer: () => null };
+const REFERENCE_VIEW = { method: () => null, parts: (question) => printedParts(question, true), answer: () => null };
 
 // The profile document: the business's answers about itself, each safe method's status from the
 // section worksheets, the special processes and foods it has said it does with the pack's own
@@ -1333,8 +1362,9 @@ function methodStatusChunks(sources, data) {
   const names = missing.map((id) => `${sentenceCase(data.sections.get(id).section.title)} (${id})`);
   const rows = [...data.sections].flatMap(([id, file]) => file.methods.map((method) => {
     const record = sources.get(id)?.parsed.methods.get(method.id);
+    const stated = record && record.status !== 'applies';
     return [method.id, method.title, record ? STATUS_WORDS[record.status] : 'not yet started',
-      record && record.status !== 'applies' ? record.reason : '', record && record.status !== 'applies' ? record.decidedBy : ''];
+      stated ? businessText(record.reason) : '', stated ? businessText(record.decidedBy) : ''];
   }));
   return [
     ['## Safe methods'],
@@ -1351,16 +1381,18 @@ function extraCareChunks(profile, data) {
     return [heading, ['The business has not confirmed that it does any of the special processes or makes or serves any ' +
       'of the foods that need extra care. Its answers are in the first table.']];
   }
-  const box = data.sections.get('CK').methods.find((method) => method.id === EXTRA_CARE_BOX.method).blocks
-    .find((block) => block.kind === 'text' && block.page === EXTRA_CARE_BOX.page);
   return [heading, ['The business has confirmed that it does these, which the pack says need extra care:'],
-    done.map(({ name }) => `- ${name}`),
-    [`What the pack says about each of them (${EXTRA_CARE_BOX.method}, page ${EXTRA_CARE_BOX.page}):`],
-    [`> ${box.text.split('\n')[0]}`]];
+    done.map(({ name }) => `- ${name}`), ['What the pack says about these processes and foods:'],
+    [`> ${extraCareParagraph(data)}`]];
 }
 
+// The paragraph the profile quotes about the special processes and foods: the first of the box
+// EXTRA_CARE_BOX names. Null when the data lacks the box.
+const extraCareParagraph = (data) => data.sections.get('CK')?.methods.find((method) => method.id === EXTRA_CARE_BOX.method)
+  ?.blocks.find((block) => block.kind === 'text' && block.page === EXTRA_CARE_BOX.page)?.text.split('\n')[0] ?? null;
+
 const notConfirmed = (entries) => {
-  const ids = entries.filter((entry) => !entry.answered).map((entry) => entry.id);
+  const ids = entries.filter((entry) => !entry.answered).map((entry) => said(entry.id));
   return ids.length ? [[`Not yet confirmed, so not shown: ${andList(ids)}.`]] : [];
 };
 const NO_OWN = 'The business has not confirmed any methods of its own.';
@@ -1369,13 +1401,14 @@ function ownListChunks(own) {
   if (!own) return [['The worksheet for the business\'s own methods has not been started yet.']];
   const entries = [...own.entries.values()];
   const confirmed = entries.filter((entry) => entry.answered);
-  const rows = confirmed.map((entry) => [`${entry.id} ${entry.title}`, KIND_WORDS[entry.kind], entry.ehReview]);
+  const rows = confirmed.map((entry) => [`${entry.id} ${businessText(entry.title)}`, KIND_WORDS[entry.kind], businessText(entry.ehReview)]);
   return [confirmed.length ? tableLines(['Own method', 'Kind', 'Environmental health review'], rows) : [NO_OWN],
     ...notConfirmed(entries)];
 }
 
 // The own methods document: each confirmed own entry under its heading, its filled-in fields as a
-// table, and any text the business supplied quoted exactly. An entry not confirmed is named only.
+// table, and any text the business supplied printed word for word in a fenced code block. An entry
+// not confirmed is named only.
 function ownChunks(sources) {
   const entries = [...sources.get('own').parsed.entries.values()];
   const confirmed = entries.filter((entry) => entry.answered);
@@ -1385,12 +1418,11 @@ function ownChunks(sources) {
 
 function ownEntryChunks(entry) {
   const rows = OWN_ROWS.filter(([, field]) => entry[field] !== '')
-    .map(([label, field]) => [label, field === 'kind' ? KIND_WORDS[entry.kind] : entry[field]]);
-  const chunks = [[`### ${entry.id} ${entry.title} (this business's own method, not Food Standards Agency wording)`],
-    tableLines(['Field', 'Value'], [...rows, ['Agreed by', `${entry.by}, ${entry.on}`]])];
+    .map(([label, field]) => [label, field === 'kind' ? KIND_WORDS[entry.kind] : businessText(entry[field])]);
+  const chunks = [[`### ${entry.id} ${said(entry.title)} (this business's own method, not Food Standards Agency wording)`],
+    tableLines(['Field', 'Value'], [...rows, ['Agreed by', `${businessText(entry.by)}, ${businessText(entry.on)}`]])];
   if (!entry.suppliedText) return chunks;
-  return [...chunks, ['The text below is the business\'s own, and this tool did not write or check it.'],
-    entry.suppliedText.split('\n').flatMap((line, i) => (i ? ['>', `> ${line}`] : [`> ${line}`]))];
+  return [...chunks, ['The text below is the business\'s own, and this tool did not write or check it.'], fenced(entry.suppliedText)];
 }
 
 // Reads and parses the worksheets a document renders from, and hashes them in HASH_ORDER. Returns
@@ -1404,9 +1436,7 @@ function readSources(doc, project, data) {
   for (const section of HASH_ORDER.filter((name) => uses.includes(name))) {
     const file = join(project, 'food-safety', `answers-${section}.md`);
     if (!existsSync(file)) {
-      if (needs.includes(section)) {
-        refused.push(`${file} does not exist: make it with "uk-food.mjs worksheet --section ${section}", then fill it in`);
-      }
+      if (needs.includes(section)) refused.push(`${file} does not exist. Make it with: ${makeWorksheet(section, file)}, then fill it in.`);
       continue;
     }
     let bytes;
@@ -1416,12 +1446,18 @@ function readSources(doc, project, data) {
       refused.push(`cannot read ${file}: ${error.message}`);
       continue;
     }
-    hash.update(bytes);
-    const parsed = parseWorksheet(bytes.toString('utf8'), data);
+    const text = bytes.toString('utf8');
+    // The hash is of the text as the parser reads it: a byte order mark and Windows line endings do
+    // not change it, so a worksheet saved on Windows renders the same body.
+    hash.update(text.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n'));
+    const parsed = parseWorksheet(text, data);
     if (parsed.data !== null && parsed.data !== DATA_ID) {
-      refused.push(`${file}: this worksheet answers data ${parsed.data}, but the helper's data is ${DATA_ID}`);
+      refused.push(`${file} answers data ${parsed.data}, but the helper's data is ${DATA_ID}. Keep a copy of it, make a ` +
+        `worksheet for this data with: ${makeWorksheet(section, file)}, and copy the answers across.`);
     } else if (parsed.section !== null && parsed.section !== section) {
-      refused.push(`${file} is the ${parsed.section} worksheet, not the ${section} one`);
+      refused.push(`${file} is the ${parsed.section} worksheet, not the ${section} one. It belongs in ` +
+        `${join(project, 'food-safety', `answers-${parsed.section}.md`)}; make the ${section} worksheet with: ` +
+        `${makeWorksheet(section, file)}.`);
     } else {
       problems.push(...parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`));
     }
@@ -1440,19 +1476,29 @@ export function renderDocument(doc, project, data) {
   // The profile quotes the special-processes paragraph from CK.json.
   const dataNeeded = section ?? (doc === 'FOODPROF' ? 'CK' : null);
   if (dataNeeded && !data.sections.has(dataNeeded)) return { exit: 2, messages: [`the data has no ${dataNeeded}.json`] };
+  if (doc === 'FOODPROF' && !extraCareParagraph(data)) {
+    return { exit: 2, messages: [`the data's CK.json has no text box in ${EXTRA_CARE_BOX.method} on page ${EXTRA_CARE_BOX.page}, ` +
+      'whose first paragraph the profile quotes about special processes and foods'] };
+  }
   const read = readSources(doc, project, data);
   if (read.exit) return read;
   let body;
   if (section) body = sectionChunks(data.sections.get(section), sectionView(read.sources.get(section).parsed));
   else body = doc === 'FOODPROF' ? profileChunks(read.sources, data) : ownChunks(read.sources);
   const name = read.sources.get('profile').parsed.answers.get(NAME_QUESTION);
-  const chunks = [...body, [closingNotice(name?.answered ? name.answer : null)], [sourceLine(data.source)]];
+  const chunks = [...body, [closingNotice(name?.answered ? name.answer : null)],
+    [doc === 'FOODOWN' ? OWN_SOURCE_LINE : sourceLine(data.source)]];
   return { exit: 0, text: [beginMarker(doc, read.hash), ...chunks.map((chunk) => chunk.join('\n')), END_MARKER].join('\n\n') };
 }
 
 // Finds the one rendered body in a document's lines: { begin, end, marker } (1-based line numbers),
 // or { line, problem }, where line is null when the problem has no line of its own.
 function findBody(lines, doc) {
+  const indented = lines.findIndex((line) => /^\s+<!-- UK-FOOD:(BEGIN|END)/.test(line));
+  if (indented >= 0) {
+    const [, name] = /UK-FOOD:(BEGIN|END)/.exec(lines[indented]);
+    return { line: indented + 1, problem: `this UK-FOOD:${name} marker line is indented: a marker line starts at the beginning of its line` };
+  }
   const at = (name) => lines.flatMap((line, i) => (line.startsWith(`<!-- UK-FOOD:${name}`) ? [i + 1] : []));
   const [begins, ends] = [at('BEGIN'), at('END')];
   for (const [name, found] of [['BEGIN', begins], ['END', ends]]) {
@@ -1472,10 +1518,33 @@ function findBody(lines, doc) {
   return { begin, end, marker };
 }
 
+// The first line outside the body that is a heading of the pack: a Markdown heading whose text
+// starts with a section's title, or with a safe method's identifier and title, as the data has
+// them. The pack's text outside the markers is not checked, so a document may not hold any. -1 if none.
+function packHeadingOutside(lines, body, data) {
+  const titles = [...data.sections.values()].flatMap((file) => [file.section.title, ...file.methods.map((m) => `${m.id} ${m.title}`)]);
+  return lines.findIndex((line, i) => {
+    if (i >= body.begin - 1 && i < body.end) return false;
+    const heading = /^ {0,3}#{1,6}[ \t]+(.*)$/.exec(line);
+    return Boolean(heading) && titles.some((title) => heading[1].startsWith(title));
+  });
+}
+
+// Where two lines first differ: the column, counted in characters from 1, and each line's character
+// there as a code point (so that a look-alike shows), or the end of the line.
+function firstDifference(expected, found) {
+  const [a, b] = [Array.from(expected), Array.from(found)];
+  let i = 0;
+  while (i < a.length && i < b.length && a[i] === b[i]) i++;
+  const point = (char) => (char === undefined ? 'the end of the line' : `U+${char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`);
+  return { column: i + 1, expectedChar: point(a[i]), foundChar: point(b[i]) };
+}
+
 // Checks that the body between the markers of the document in `report` equals a fresh render, line
-// by line. Returns { exit, ok, line, expected, found, message }, or { exit, messages } when there is
-// nothing to compare. A file saved with Windows line endings reads as the same text: each CRLF is
-// read as LF before comparing, which keeps every line number. Text outside the markers is not read.
+// by line. Returns { exit, ok, line, column, expected, found, expectedChar, foundChar, message }, or
+// { exit, messages } when there is nothing to compare. A file saved with Windows line endings reads
+// as the same text: each CRLF is read as LF before comparing, which keeps every line number. Text
+// outside the markers is not compared, but holding a heading of the pack there fails the check.
 export function checkDocument(doc, project, report, data) {
   let text;
   try {
@@ -1487,6 +1556,12 @@ export function checkDocument(doc, project, report, data) {
   const body = findBody(lines, doc);
   if (body.problem) {
     return { exit: 1, ok: false, line: body.line, message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}` };
+  }
+  const outside = packHeadingOutside(lines, body, data);
+  if (outside >= 0) {
+    return { exit: 1, ok: false, line: outside + 1, message: `${report}:${outside + 1}: this heading is the pack's text, ` +
+      'outside the UK-FOOD markers, where it is not checked: write the document again from a fresh render, with the ' +
+      'pack\'s text only between the markers.' };
   }
   const fresh = renderDocument(doc, project, data);
   if (fresh.exit) return fresh;
@@ -1502,9 +1577,12 @@ export function checkDocument(doc, project, report, data) {
   const what = stale
     ? 'the worksheets have changed since this body was rendered: render the document again.'
     : `this line is not what a fresh render of ${doc} gives.`;
+  const [want, got] = [expected[at] ?? '', region[at] ?? ''];
+  const { column, expectedChar, foundChar } = firstDifference(want, got);
   return {
-    exit: 1, ok: false, line, expected: expected[at] ?? '', found: region[at] ?? '',
-    message: `${report}:${line}: ${what}\n  expected: ${expected[at] ?? ''}\n  found:    ${region[at] ?? ''}\n${CHECK_ADVICE}`
+    exit: 1, ok: false, line, column, expected: want, found: got, expectedChar, foundChar,
+    message: `${report}:${line}: ${what} The lines first differ at column ${column}, where the render has ${expectedChar} ` +
+      `and the file has ${foundChar}.\n  expected: ${want}\n  found:    ${got}\n${CHECK_ADVICE}`
   };
 }
 
@@ -1515,26 +1593,29 @@ export function referenceText(section, data) {
   return chunks.map((chunk) => chunk.join('\n')).join('\n\n');
 }
 
-// Prints a result that is not a success: an input error with the usage, a refusal on its own.
+// Prints the messages of a result that is not a success, each with what to do next, and returns its
+// exit code: 2 for an input error (a missing or wrong worksheet, data or file), 1 for a refusal. The
+// usage is printed only for a usage error, by usageError.
 function failure(io, result) {
-  if (result.exit === 2) return usageError(io, result.messages.join('\n'));
   for (const message of result.messages) io.err(message);
   return result.exit;
 }
 
 // The options render and check share: --doc, --project and --data, checked, with the data loaded.
+// Returns { options, data }, { usage } for a usage error or { input } for data that will not load.
 function documentOptions(args, valued, flags = []) {
   const { options, error } = readOptions(args, ['doc', 'project', 'data', ...valued], flags);
-  if (error) return { error };
-  if (!DOC_CODES.includes(options.doc)) return { error: `--doc is one of ${DOC_CODES.join(', ')}` };
-  if (!options.project) return { error: '--project names the project folder that holds food-safety/' };
+  if (error) return { usage: error };
+  if (!DOC_CODES.includes(options.doc)) return { usage: `--doc is one of ${DOC_CODES.join(', ')}` };
+  if (!options.project) return { usage: '--project names the project folder that holds food-safety/' };
   const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
-  return dataError ? { error: dataError } : { options, data };
+  return dataError ? { input: dataError } : { options, data };
 }
 
 export function renderCommand(args, io = { out: console.log, err: console.error }) {
-  const { options, data, error } = documentOptions(args, []);
-  if (error) return usageError(io, error);
+  const { options, data, usage, input } = documentOptions(args, []);
+  if (usage) return usageError(io, usage);
+  if (input) return failure(io, { exit: 2, messages: [input] });
   const result = renderDocument(options.doc, options.project, data);
   if (result.exit) return failure(io, result);
   io.out(result.text);
@@ -1542,9 +1623,10 @@ export function renderCommand(args, io = { out: console.log, err: console.error 
 }
 
 export function checkCommand(args, io = { out: console.log, err: console.error }) {
-  const { options, data, error } = documentOptions(args, ['report'], ['json']);
-  if (error) return usageError(io, error);
+  const { options, data, usage, input } = documentOptions(args, ['report'], ['json']);
+  if (usage) return usageError(io, usage);
   if (!options.report) return usageError(io, 'check needs --report: the document to check');
+  if (input) return failure(io, { exit: 2, messages: [input] });
   const result = checkDocument(options.doc, options.project, options.report, data);
   if (options.json) {
     io.out(JSON.stringify({ doc: options.doc, report: options.report, ok: result.exit === 0, ...result }, null, 2));
@@ -1561,8 +1643,8 @@ export function referenceCommand(args, io = { out: console.log, err: console.err
   if (!SECTION_IDS.includes(options.section)) return usageError(io, `--section is one of ${SECTION_IDS.join(', ')}`);
   const dir = options.data ?? DEFAULT_DATA_DIR;
   const { data, error: dataError } = loadValidData(dir);
-  if (dataError) return usageError(io, dataError);
-  if (!data.sections.has(options.section)) return usageError(io, `the data in ${dir} has no ${options.section}.json`);
+  if (dataError) return failure(io, { exit: 2, messages: [dataError] });
+  if (!data.sections.has(options.section)) return failure(io, { exit: 2, messages: [`the data in ${dir} has no ${options.section}.json`] });
   io.out(referenceText(options.section, data));
   return 0;
 }

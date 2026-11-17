@@ -4,26 +4,26 @@
 
 | Question | Answer |
 | --- | --- |
-| What is the business called? | Bramble Cafe [answered by Sam Okafor, 2026-11-18] |
-| Who is the food business operator: the person or company legally responsible for the business? | Bramble Cafe Ltd, whose director is Sam Okafor [answered by Sam Okafor, 2026-11-18] |
-| What is the address of the premises? If the business has none, write "no premises". | 4 Mill Lane, Exampleton XX1 1XX [answered by Sam Okafor, 2026-11-18] |
-| Which council is the business registered with? | Exampleton District Council [answered by Sam Okafor, 2026-11-18] |
-| On what date was the business registered with the council? | 2025-03-14 [answered by Sam Okafor, 2026-11-18] |
-| Which nation is the business in? | England [answered by Sam Okafor, 2026-11-18] |
-| Who is in charge of keeping this pack up to date? | Sam Okafor, owner [answered by Sam Okafor, 2026-11-18] |
-| What food and drink does the business sell? | Hot and cold drinks, cooked breakfasts, sandwiches, toasties, salads, quiche, and cakes and scones baked here. Our bread comes from a local bakery. We serve no chips or other potato dishes, and have no deep fat fryer. [answered by Sam Okafor, 2026-11-18] |
-| What equipment do you use to store, prepare, cook and serve food? | Two upright fridges<br>Under-counter sandwich fridge<br>Drinks fridge<br>Chest freezer<br>Oven<br>Two-ring hob<br>Contact grill for toasties<br>Toaster<br>Sous vide water bath<br>Meat slicer<br>Salad spinner<br>Probe thermometer<br>Dishwasher<br>Washing machine, for cloths<br>Coffee machine [answered by Sam Okafor, 2026-11-18] |
-| Who works with food, and what is each person's role? | Sam Okafor: owner; cooks, serves and runs the cafe<br>Priya Shah: manager; cooks and trains new staff<br>Tom Reid: part-time; serves and washes up [answered by Sam Okafor, 2026-11-18] |
-| Do you use this process, which needs extra care: Vacuum packing? | no [answered by Sam Okafor, 2026-11-18] |
-| Do you use this process, which needs extra care: sous vide? | yes [answered by Sam Okafor, 2026-11-18] |
-| Do you use this process, which needs extra care: low temperature cooking? | yes [answered by Sam Okafor, 2026-11-18] |
-| Do you use this process, which needs extra care: fermenting? | no [answered by Sam Okafor, 2026-11-18] |
-| Do you use this process, which needs extra care: smoking or curing meat/fish? | no [answered by Sam Okafor, 2026-11-18] |
-| Do you make or serve this food, which needs extra care: Kebabs? | no [answered by Sam Okafor, 2026-11-18] |
-| Do you make or serve this food, which needs extra care: sushi/sashimi? | no [answered by Sam Okafor, 2026-11-18] |
-| Do you make or serve this food, which needs extra care: liver parfait? | no [answered by Sam Okafor, 2026-11-18] |
-| Do you make or serve this food, which needs extra care: fish/meat carpaccio and tartare? | no [answered by Sam Okafor, 2026-11-18] |
-| Do you make or serve this food, which needs extra care: less than thoroughly cooked burgers? | no [answered by Sam Okafor, 2026-11-18] |
+| What is the business called? | **Our answer:** Bramble Cafe [answered by Sam Okafor, 2026-11-18] |
+| Who is the food business operator: the person or company legally responsible for the business? | **Our answer:** Bramble Cafe Ltd, whose director is Sam Okafor [answered by Sam Okafor, 2026-11-18] |
+| What is the address of the premises? If the business has none, write "no premises". | **Our answer:** 4 Mill Lane, Exampleton XX1 1XX [answered by Sam Okafor, 2026-11-18] |
+| Which council is the business registered with? | **Our answer:** Exampleton District Council [answered by Sam Okafor, 2026-11-18] |
+| On what date was the business registered with the council? | **Our answer:** 2025-03-14 [answered by Sam Okafor, 2026-11-18] |
+| Which nation is the business in? | **Our answer:** England [answered by Sam Okafor, 2026-11-18] |
+| Who is in charge of keeping this pack up to date? | **Our answer:** Sam Okafor, owner [answered by Sam Okafor, 2026-11-18] |
+| What food and drink does the business sell? | **Our answer:** Hot and cold drinks, cooked breakfasts, sandwiches, toasties, salads, quiche, and cakes and scones baked here. Our bread comes from a local bakery. We serve no chips or other potato dishes, and have no deep fat fryer. [answered by Sam Okafor, 2026-11-18] |
+| What equipment do you use to store, prepare, cook and serve food? | **Our answer:** Two upright fridges<br>Under-counter sandwich fridge<br>Drinks fridge<br>Chest freezer<br>Oven<br>Two-ring hob<br>Contact grill for toasties<br>Toaster<br>Sous vide water bath<br>Meat slicer<br>Salad spinner<br>Probe thermometer<br>Dishwasher<br>Washing machine, for cloths<br>Coffee machine [answered by Sam Okafor, 2026-11-18] |
+| Who works with food, and what is each person's role? | **Our answer:** Sam Okafor: owner; cooks, serves and runs the cafe<br>Priya Shah: manager; cooks and trains new staff<br>Tom Reid: part-time; serves and washes up [answered by Sam Okafor, 2026-11-18] |
+| Do you use this process, which needs extra care: Vacuum packing? | **Our answer:** no [answered by Sam Okafor, 2026-11-18] |
+| Do you use this process, which needs extra care: sous vide? | **Our answer:** yes [answered by Sam Okafor, 2026-11-18] |
+| Do you use this process, which needs extra care: low temperature cooking? | **Our answer:** yes [answered by Sam Okafor, 2026-11-18] |
+| Do you use this process, which needs extra care: fermenting? | **Our answer:** no [answered by Sam Okafor, 2026-11-18] |
+| Do you use this process, which needs extra care: smoking or curing meat/fish? | **Our answer:** no [answered by Sam Okafor, 2026-11-18] |
+| Do you make or serve this food, which needs extra care: Kebabs? | **Our answer:** no [answered by Sam Okafor, 2026-11-18] |
+| Do you make or serve this food, which needs extra care: sushi/sashimi? | **Our answer:** no [answered by Sam Okafor, 2026-11-18] |
+| Do you make or serve this food, which needs extra care: liver parfait? | **Our answer:** no [answered by Sam Okafor, 2026-11-18] |
+| Do you make or serve this food, which needs extra care: fish/meat carpaccio and tartare? | **Our answer:** no [answered by Sam Okafor, 2026-11-18] |
+| Do you make or serve this food, which needs extra care: less than thoroughly cooked burgers? | **Our answer:** no [answered by Sam Okafor, 2026-11-18] |
 
 ## Safe methods
 
@@ -68,7 +68,7 @@ The business has confirmed that it does these, which the pack says need extra ca
 - sous vide
 - low temperature cooking
 
-What the pack says about each of them (CK-02, page 53):
+What the pack says about these processes and foods:
 
 > Some businesses produce certain foods or use certain processes other than those included in this pack (some examples are provided below). If this is the case for your business, you must be able to demonstrate that you do these safely. Contact your the Environmental Health Team at your local council for additional guidance.
 
