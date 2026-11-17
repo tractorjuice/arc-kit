@@ -4,7 +4,7 @@ import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 import {
   COMPLETION_ROWS, DATA_ID, DEFAULT_DATA_DIR, PENDING, PROFILE_QUESTIONS, SECTION_DOCS, SECTION_IDS, SIGN_OFFS_SCHEMA,
   STATUS_ORDER, blankWorksheet, checkDocument, completionTargets, emitWorksheet, loadData, parseWorksheet, projectStatus,
@@ -80,6 +80,42 @@ const tableRows = (text) => {
 // The section each row of the completion record belongs to, and its method (null for a section's own row).
 const targets = completionTargets(recordRows, data).rows;
 
+// The lines status, the completion record and sign-off use, each saying what to do next: the
+// specification for their words.
+const HOW = 'an answer counts when its State is confirmed and By and On are filled in';
+const NOT_WRITTEN = 'document not written yet: write the document from its worksheet';
+const NOT_SIGNED = 'document not signed off yet: once it is finished, a named person signs it off';
+const UNCOVERED = 'low temperature cooking has no own entry: add an own entry of kind special-process whose Process is ' +
+  'low temperature cooking, and confirm it';
+const AWAITING = 'own entry OWN-02 (Sous vide eggs) is awaiting environmental health review: once the council has replied, ' +
+  'record the review\'s date and outcome in the entry\'s EH-review field';
+const outOfDate = (file) => `document ${file} is out of date, as it does not match its worksheets: write the document again from its worksheet`;
+const notStarted = (section) => `worksheet food-safety/answers-${section}.md is not started yet: make it with worksheet --section ${section} and fill it in`;
+const problemsLine = (section, n) => `worksheet food-safety/answers-${section}.md has ${n} ${n === 1 ? 'problem' : 'problems'}, so none of ` +
+  `its answers counts until ${n === 1 ? 'it is' : 'they are'} fixed: parse-worksheet --file food-safety/answers-${section}.md lists ` +
+  `${n === 1 ? 'it' : 'them'}`;
+const andList = (items) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`);
+// Up to five identifiers, then how many more.
+const someOf = (ids) => (ids.length <= 5 ? andList(ids) : `${ids.slice(0, 5).join(', ')} and ${ids.length - 5} more`);
+const unansweredLine = (section, ids) => `${ids.length} ${ids.length === 1 ? 'question' : 'questions'} in food-safety/answers-${section}.md ` +
+  `${ids.length === 1 ? 'is' : 'are'} not yet answered (${someOf(ids)}): ${HOW}`;
+const proposedLine = (section, ids) => `${ids.length} ${ids.length === 1 ? 'answer' : 'answers'} in food-safety/answers-${section}.md ` +
+  `${ids.length === 1 ? 'is' : 'are'} proposed but not confirmed (${someOf(ids)}): ${HOW}`;
+// A section's questions a person must answer that are not yet answered, and those only proposed, in order.
+const outstanding = (dir, section) => {
+  const parsed = parseWorksheet(sheet(dir, section), data);
+  const asked = data.sections.get(section).methods.filter((m) => parsed.methods.get(m.id).status !== 'not-relevant').flatMap(askedOf)
+    .map((q) => parsed.answers.get(q.id));
+  return { unanswered: asked.filter((a) => !a.answered && a.state !== 'proposed').map((a) => a.id),
+    proposed: asked.filter((a) => a.state === 'proposed').map((a) => a.id) };
+};
+// The reasons a refused sign-off gives, one to a line.
+const reasons = (stderr) => stderr.split('\n').filter((line) => line.startsWith('- ')).map((line) => line.slice(2));
+// A confirmed own entry of kind special-process.
+const specialEntry = (id, title, process, review = 'pending') => [`## ${id} ${title}`, '', 'Kind: special-process', `Process: ${process}`,
+  'Hazard:', 'Control:', 'Limit:', 'Limit-source:', 'Check:', 'If-it-fails:', 'Supplied-text: Our written method', `EH-review: ${review}`,
+  'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20'].join('\n');
+
 // ---- Status ----
 
 test('status counts each document\'s questions from its worksheet, and the cafe\'s CK and XC are as the fixture holds them', () => {
@@ -144,43 +180,107 @@ test('the status JSON has the documented shape: the seven documents in order, th
   assert.deepEqual(JSON.parse(cli.stdout), result);
 });
 
-test('the unfinished list says, for each document in order, everything outstanding, then each special process with no own entry and each own entry awaiting review', () => {
+test('the unfinished list says, for each document in order, what is outstanding and what to do next, then each special process with no own entry and each own entry awaiting review', () => {
   const dir = cafe();
+  const xc = outstanding(dir, 'XC');
+  assert.deepEqual(xc.proposed, ['XC-02-Q01', 'XC-06-Q02']);
   assert.deepEqual(status(dir).unfinished, [
-    { code: 'FOODPROF', what: 'document not written' },
-    { code: 'FOODPROF', what: 'document not signed off' },
-    { code: 'FOODXC', what: `${docStatus(dir, 'FOODXC').unanswered} questions not yet answered` },
-    { code: 'FOODXC', what: '2 answers proposed and not confirmed' },
-    { code: 'FOODXC', what: 'document not written' },
-    { code: 'FOODXC', what: 'document not signed off' },
-    { code: 'FOODCLN', what: `${docStatus(dir, 'FOODCLN').questions} questions not yet answered` },
-    { code: 'FOODCLN', what: 'document not written' },
-    { code: 'FOODCLN', what: 'document not signed off' },
-    { code: 'FOODCHL', what: `${docStatus(dir, 'FOODCHL').unanswered} questions not yet answered` },
-    { code: 'FOODCHL', what: 'document not written' },
-    { code: 'FOODCHL', what: 'document not signed off' },
-    { code: 'FOODCOOK', what: 'document not written' },
-    { code: 'FOODCOOK', what: 'document not signed off' },
-    { code: 'FOODMGT', what: `${docStatus(dir, 'FOODMGT').questions} questions not yet answered` },
-    { code: 'FOODMGT', what: 'document not written' },
-    { code: 'FOODMGT', what: 'document not signed off' },
-    { code: 'FOODOWN', what: 'document not written' },
-    { code: 'FOODOWN', what: 'document not signed off' },
-    { code: 'FOODOWN', what: 'low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it' },
-    { code: 'FOODOWN', what: 'own entry OWN-02 (Sous vide eggs) awaiting environmental health review' }
+    { code: 'FOODPROF', what: NOT_WRITTEN },
+    { code: 'FOODPROF', what: NOT_SIGNED },
+    { code: 'FOODXC', what: unansweredLine('XC', xc.unanswered) },
+    { code: 'FOODXC', what: '2 answers in food-safety/answers-XC.md are proposed but not confirmed (XC-02-Q01 and XC-06-Q02): an ' +
+      'answer counts when its State is confirmed and By and On are filled in' },
+    { code: 'FOODXC', what: NOT_WRITTEN },
+    { code: 'FOODXC', what: NOT_SIGNED },
+    { code: 'FOODCLN', what: unansweredLine('CL', outstanding(dir, 'CL').unanswered) },
+    { code: 'FOODCLN', what: NOT_WRITTEN },
+    { code: 'FOODCLN', what: NOT_SIGNED },
+    { code: 'FOODCHL', what: unansweredLine('CH', outstanding(dir, 'CH').unanswered) },
+    { code: 'FOODCHL', what: NOT_WRITTEN },
+    { code: 'FOODCHL', what: NOT_SIGNED },
+    { code: 'FOODCOOK', what: NOT_WRITTEN },
+    { code: 'FOODCOOK', what: NOT_SIGNED },
+    { code: 'FOODMGT', what: unansweredLine('MG', outstanding(dir, 'MG').unanswered) },
+    { code: 'FOODMGT', what: NOT_WRITTEN },
+    { code: 'FOODMGT', what: NOT_SIGNED },
+    { code: 'FOODOWN', what: NOT_WRITTEN },
+    { code: 'FOODOWN', what: NOT_SIGNED },
+    { code: 'FOODOWN', what: UNCOVERED },
+    { code: 'FOODOWN', what: AWAITING }
   ]);
-  // A worksheet not started, and one with problems, come first.
+  // Up to five identifiers are named, then how many more.
+  assert.match(linesFor(dir, 'FOODXC')[0], /^25 questions in food-safety\/answers-XC\.md are not yet answered \((XC-\d\d-Q\d\d, ){4}XC-\d\d-Q\d\d and 20 more\): /);
+  // A worksheet not started comes first, and its questions are all unanswered.
   rmSync(sheetFile(dir, 'CK'));
-  setSheet(dir, 'MG', `${sheet(dir, 'MG')}a line that is not understood\nand another\n`);
+  const ck = data.sections.get('CK').methods.flatMap(askedOf).map((q) => q.id);
+  assert.deepEqual(docStatus(dir, 'FOODCOOK').missingWorksheets, ['answers-CK.md']);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [notStarted('CK'), unansweredLine('CK', ck), NOT_WRITTEN, NOT_SIGNED]);
+  // One question is "is", and names it.
+  const one = cafe();
+  setSheet(one, 'CK', swap(sheet(one, 'CK'), 'Answer: We do not cook rice.\nState: confirmed\nBy: Sam Okafor\nOn: 2026-11-20',
+    'Answer:\nState: unanswered\nBy:\nOn:'));
+  assert.equal(linesFor(one, 'FOODCOOK')[0], `1 question in food-safety/answers-CK.md is not yet answered (CK-02-Q03): ${HOW}`);
+});
+
+test('P1: a worksheet with problems gives one line, under its own document, naming it and how to list its problems, and no line from its counts', () => {
+  const dir = cafe();
+  writeDocument(dir, 'FOODCOOK');
+  setSheet(dir, 'CK', `${sheet(dir, 'CK')}a stray line\n`);
+  // The counts stay as they are: nothing confirmed, with problems saying why.
   const cook = docStatus(dir, 'FOODCOOK');
-  assert.deepEqual(cook.missingWorksheets, ['answers-CK.md']);
-  assert.equal(cook.questions, data.sections.get('CK').methods.flatMap(askedOf).length);
-  assert.deepEqual(linesFor(dir, 'FOODCOOK').slice(0, 2), ['worksheet answers-CK.md not started', `${cook.questions} questions not yet answered`]);
-  assert.equal(docStatus(dir, 'FOODMGT').problems, 2);
-  assert.equal(linesFor(dir, 'FOODMGT')[0], 'worksheet answers-MG.md has 2 problems');
-  // The profile reads every worksheet, so it cannot be rendered while one has problems.
-  assert.equal(docStatus(dir, 'FOODPROF').problems, 2);
-  assert.equal(linesFor(dir, 'FOODPROF')[0], 'worksheet answers-MG.md has 2 problems');
+  assert.deepEqual([cook.problems, cook.confirmed, cook.unanswered], [1, 0, cook.questions]);
+  // The document cannot be checked until the worksheet is put right, so it is not called out of date.
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [problemsLine('CK', 1), NOT_SIGNED]);
+  const refused = signOff(dir, 'FOODCOOK');
+  assert.equal(refused.status, 1);
+  assert.deepEqual(reasons(refused.stderr), [problemsLine('CK', 1)]);
+  assert.match(run('parse-worksheet', '--file', sheetFile(dir, 'CK')).stdout, /answers-CK\.md:\d+: line not understood/);
+  // Two worksheets with problems: each named once, under the document it belongs to.
+  setSheet(dir, 'MG', `${sheet(dir, 'MG')}a line that is not understood\nand another\n`);
+  assert.deepEqual(linesFor(dir, 'FOODMGT'), [problemsLine('MG', 2), NOT_WRITTEN, NOT_SIGNED]);
+  // The profile reads every worksheet, so it counts their problems, but does not repeat their lines.
+  assert.equal(docStatus(dir, 'FOODPROF').problems, 3);
+  assert.deepEqual(linesFor(dir, 'FOODPROF'), [NOT_WRITTEN, NOT_SIGNED]);
+  // A problem in the own worksheet: no special process is said to lack an entry, and no entry to await review.
+  setSheet(dir, 'own', `${sheet(dir, 'own')}a stray line\n`);
+  assert.deepEqual(linesFor(dir, 'FOODOWN'), [problemsLine('own', 1), NOT_WRITTEN, NOT_SIGNED]);
+  // A problem in the profile: one line, under the profile; another document's refusal gives it as its reason.
+  const other = cafe();
+  writeDocument(other, 'FOODCOOK');
+  setSheet(other, 'profile', `${sheet(other, 'profile')}a stray line\n`);
+  assert.equal(status(other).unfinished.filter((line) => line.what === problemsLine('profile', 1)).length, 1);
+  assert.equal(linesFor(other, 'FOODPROF')[0], problemsLine('profile', 1));
+  assert.deepEqual(reasons(signOff(other, 'FOODCOOK').stderr), [problemsLine('profile', 1)]);
+});
+
+test('I1: a status read from a worksheet with problems is not used: the method counts as applying, and the record leaves its tick empty', () => {
+  for (const [from, to] of [[/^Reason: We never keep food hot.*$/m, 'Reason:'], [/^Decided-by: Sam Okafor$/m, 'Decided-by:']]) {
+    const dir = cafe();
+    setSheet(dir, 'CK', sheet(dir, 'CK').replace(from, to));
+    assert.match(run('parse-worksheet', '--file', sheetFile(dir, 'CK')).stdout, /CK-06 is not-relevant, so it needs/);
+    const cook = docStatus(dir, 'FOODCOOK');
+    assert.equal(cook.problems, 1);
+    assert.deepEqual(cook.notRelevantMethods, []);
+    assert.equal(cook.questions, data.sections.get('CK').methods.flatMap(askedOf).length);
+    assert.deepEqual(tableRows(rendered('FOODCMP', dir)).find((row) => row[0] === 'Hot holding'), ['Hot holding', PENDING, PENDING, '']);
+  }
+  const dir = cafe();
+  setSheet(dir, 'CL', sheet(dir, 'CL').replace(/^Proved-safe: .*$/m, 'Proved-safe:'));
+  assert.deepEqual([docStatus(dir, 'FOODCLN').problems, docStatus(dir, 'FOODCLN').adaptedMethods], [1, []]);
+});
+
+test('P2: a refusal for unanswered or proposed answers names the worksheet, the questions and how an answer counts; the usage names every refusal', () => {
+  const dir = cafe();
+  writeDocument(dir, 'FOODXC');
+  const refused = signOff(dir, 'FOODXC');
+  assert.equal(refused.status, 1);
+  const xc = outstanding(dir, 'XC');
+  assert.deepEqual(reasons(refused.stderr), [unansweredLine('XC', xc.unanswered), proposedLine('XC', xc.proposed)]);
+  const usage = run('sign-off').stderr;
+  for (const words of ['a worksheet it needs is missing or has problems', 'an answer is not confirmed', 'is not written',
+    'is not that version', 'does not pass check', 'a special process the profile confirms has no own entry']) {
+    assert.ok(usage.replace(/\s+/g, ' ').includes(words), words);
+  }
 });
 
 test('a worksheet with problems has none of its answers counted as confirmed', () => {
@@ -241,11 +341,10 @@ test('a document is in step only when it passes check: an edited document is out
   const file = writeDocument(dir, 'FOODCOOK');
   const cook = docStatus(dir, 'FOODCOOK');
   assert.deepEqual([cook.file, cook.version, cook.rendered, cook.inSync], ['ARC-001-FOODCOOK-v1.0.md', '1.0', true, true]);
-  assert.deepEqual(linesFor(dir, 'FOODCOOK'), ['document not signed off']);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [NOT_SIGNED]);
   writeFileSync(file, swap(readFileSync(file, 'utf8'), 'Poached eggs', 'Boiled eggs'));
   assert.equal(docStatus(dir, 'FOODCOOK').inSync, false);
-  assert.deepEqual(linesFor(dir, 'FOODCOOK'), ['document ARC-001-FOODCOOK-v1.0.md out of date: it does not match its worksheets',
-    'document not signed off']);
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [outOfDate('ARC-001-FOODCOOK-v1.0.md'), NOT_SIGNED]);
 });
 
 test('a special process is covered by the confirmed own entry whose Process names it, never by an entry\'s title', () => {
@@ -322,9 +421,9 @@ test('sign-off of XC is refused, saying why, and nothing is written', () => {
   const refused = signOff(dir, 'FOODXC');
   assert.equal(refused.status, 1);
   assert.equal(refused.stdout, '');
-  const xc = docStatus(dir, 'FOODXC');
-  assert.ok(refused.stderr.includes(`${xc.unanswered} questions not yet answered`), refused.stderr);
-  assert.ok(refused.stderr.includes('2 answers proposed and not confirmed'), refused.stderr);
+  const xc = outstanding(dir, 'XC');
+  assert.ok(refused.stderr.includes(unansweredLine('XC', xc.unanswered)), refused.stderr);
+  assert.ok(refused.stderr.includes(proposedLine('XC', xc.proposed)), refused.stderr);
   assert.ok(!existsSync(signOffsFile(dir)));
   // With a sign-offs file already there, it is left byte for byte as it was.
   writeDocument(dir, 'FOODCOOK');
@@ -342,14 +441,15 @@ test('sign-off is refused, writing nothing, when the document is not written, is
     assert.match(result.stderr, pattern, args.join(' '));
     assert.ok(!existsSync(signOffsFile(dir)), args.join(' '));
   };
-  refused([], /no FOODCOOK document/);
+  refused([], new RegExp(`^- ${NOT_WRITTEN}$`, 'm'));
   const file = writeDocument(dir, 'FOODCOOK');
-  refused(['--version', '1.1'], /ARC-001-FOODCOOK-v1\.0\.md, version 1\.0, not version 1\.1/);
+  refused(['--version', '1.1'], /^- the current FOODCOOK document is ARC-001-FOODCOOK-v1\.0\.md, version 1\.0, not version 1\.1: give --version 1\.0 to sign off the current document$/m);
   writeFileSync(file, swap(readFileSync(file, 'utf8'), 'Poached eggs', 'Boiled eggs'));
-  refused([], /does not pass check/);
+  assert.deepEqual(reasons(signOff(dir, 'FOODCOOK').stderr), [outOfDate('ARC-001-FOODCOOK-v1.0.md')]);
   writeDocument(dir, 'FOODCOOK');
   rmSync(sheetFile(dir, 'profile'));
-  refused([], /answers-profile\.md does not exist/);
+  assert.deepEqual(reasons(signOff(dir, 'FOODCOOK').stderr), [notStarted('profile')]);
+  assert.ok(!existsSync(signOffsFile(dir)));
 });
 
 test('Review Focus 5a: editing one CK answer after sign-off makes it not signed off, and says who signed it and that it changed', () => {
@@ -361,7 +461,7 @@ test('Review Focus 5a: editing one CK answer after sign-off makes it not signed 
   assert.equal(cook.signedOff, false);
   assert.equal(cook.inSync, false);
   assert.equal(cook.signOff.name, 'Sam Okafor');
-  assert.deepEqual(linesFor(dir, 'FOODCOOK'), ['document ARC-001-FOODCOOK-v1.0.md out of date: it does not match its worksheets',
+  assert.deepEqual(linesFor(dir, 'FOODCOOK'), [outOfDate('ARC-001-FOODCOOK-v1.0.md'),
     'signed off by Sam Okafor on 2026-11-21, but changed since: sign off again']);
 });
 
@@ -401,8 +501,8 @@ test('Review Focus 5b: a section with every method not relevant, each with its r
   setSheet(other, 'CL', swap(none, 'Reason: We have no need of CL-02.', 'Reason:'));
   const result = signOff(other, 'FOODCLN');
   assert.equal(result.status, 1);
-  assert.match(result.stderr, /answers-CL\.md has 1 problem/);
-  assert.match(result.stderr, /CL-02 is not-relevant, so it needs Reason/);
+  assert.deepEqual(reasons(result.stderr), [problemsLine('CL', 1)]);
+  assert.match(run('parse-worksheet', '--file', sheetFile(other, 'CL')).stdout, /CL-02 is not-relevant, so it needs Reason/);
   assert.ok(!existsSync(signOffsFile(other)));
   assert.equal(docStatus(other, 'FOODCLN').problems, 1);
 });
@@ -436,6 +536,39 @@ test('two sign-offs for one document: the newest governs', () => {
   rmSync(later);
   const cook = docStatus(dir, 'FOODCOOK');
   assert.deepEqual([cook.version, cook.signedOff, cook.signOff.version], ['1.0', false, '1.1']);
+});
+
+test('R50a: the own methods document is not signed off while a special process the profile confirms has no own entry naming it', () => {
+  const dir = cafe();
+  writeDocument(dir, 'FOODOWN');
+  const refused = signOff(dir, 'FOODOWN');
+  assert.equal(refused.status, 1);
+  assert.deepEqual(reasons(refused.stderr), [UNCOVERED]);
+  assert.ok(!existsSync(signOffsFile(dir)));
+  // Once an own entry names low temperature cooking in its Process, it can be. An entry awaiting
+  // environmental health review does not hold it up.
+  setSheet(dir, 'own', `${sheet(dir, 'own')}\n${specialEntry('OWN-03', 'Slow-cooked eggs', 'low temperature cooking')}\n`);
+  writeDocument(dir, 'FOODOWN');
+  assert.equal(signOff(dir, 'FOODOWN').status, 0);
+  assert.equal(docStatus(dir, 'FOODOWN').signedOff, true);
+  assert.deepEqual(status(dir).ownAwaitingReview, ['OWN-02', 'OWN-03']);
+});
+
+test('R50b: a sign-off recorded for an unfinished document does not make it signed off, nor fill its rows of the completion record', () => {
+  const dir = cafe();
+  const forged = (doc, file) => ({ doc, version: '1.0', file: basename(file), name: 'Forged Name', role: 'Owner', date: '2026-11-21',
+    paperSigned: 'no', answers: markerHash(file) });
+  // XC has questions unanswered and proposed; the own methods document has a special process with no entry.
+  const records = ['FOODXC', 'FOODOWN', 'FOODCOOK'].map((doc) => forged(doc, writeDocument(dir, doc)));
+  writeFileSync(signOffsFile(dir), `${JSON.stringify({ schema: SIGN_OFFS_SCHEMA, signOffs: records }, null, 2)}\n`);
+  for (const code of ['FOODXC', 'FOODOWN']) {
+    const doc = docStatus(dir, code);
+    assert.deepEqual([doc.inSync, doc.signedOff, doc.signOff.name], [true, false, 'Forged Name'], code);
+  }
+  const rows = tableRows(rendered('FOODCMP', dir));
+  rows.forEach((row, i) => assert.deepEqual(row.slice(1, 3), targets[i].section === 'CK' ? ['2026-11-21', 'Forged Name'] : [PENDING, PENDING], row[0]));
+  // FOODCOOK is finished, so a matching record makes it signed off, whoever wrote it: the record is the business's to keep.
+  assert.equal(docStatus(dir, 'FOODCOOK').signedOff, true);
 });
 
 test('a sign-offs.json that is not valid JSON or has the wrong shape: status, the completion record and sign-off exit 2, say so, and never change it', () => {
@@ -561,9 +694,9 @@ test('the completion record lists what is unfinished, the sous vide entry awaiti
   const dir = cafe();
   const text = rendered('FOODCMP', dir);
   const list = text.slice(text.indexOf('\n## Unfinished\n'));
-  assert.ok(list.includes('\n- Own methods (FOODOWN): own entry OWN-02 (Sous vide eggs) awaiting environmental health review\n'), list);
-  assert.ok(list.includes('\n- Own methods (FOODOWN): low temperature cooking has no own entry: add an own entry of kind special-process whose Process is low temperature cooking, and confirm it\n'));
-  assert.ok(list.includes('\n- Cooking (FOODCOOK): document not written\n'));
+  assert.ok(list.includes(`\n- Own methods (FOODOWN): ${AWAITING}\n`), list);
+  assert.ok(list.includes(`\n- Own methods (FOODOWN): ${UNCOVERED}\n`));
+  assert.ok(list.includes(`\n- Cooking (FOODCOOK): ${NOT_WRITTEN}\n`));
   assert.equal(list.split('\n').filter((line) => line.startsWith('- ')).length, status(dir).unfinished.length);
   writeDocument(dir, 'FOODCOOK');
   const odd = run('sign-off', '--doc', 'FOODCOOK', '--project', dir, '--name', 'Sam *Okafor* <b>$x$</b>', '--role', 'Owner', '--version', '1.0',

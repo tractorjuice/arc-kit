@@ -1422,9 +1422,13 @@ function methodStatusChunks(sources, data) {
   ];
 }
 
+// The special processes and foods the profile confirms the business does, as EXTRA_CARE_ASKED lists them.
+const extraCareDone = (profile) => EXTRA_CARE_ASKED.filter(({ id }) => profile.answers.get(id)?.answered &&
+  profile.answers.get(id).value === 'yes');
+
 function extraCareChunks(profile, data) {
   const heading = ['## Special processes and foods that need extra care'];
-  const done = EXTRA_CARE_ASKED.filter(({ id }) => profile.answers.get(id)?.answered && profile.answers.get(id).value === 'yes');
+  const done = extraCareDone(profile);
   if (!done.length) {
     return [heading, ['The business has not confirmed that it does any of the special processes or makes or serves any ' +
       'of the foods that need extra care. Its answers are in the first table.']];
@@ -1492,45 +1496,76 @@ function misplaced(file, found, wanted, project) {
     `${makeWorksheet(wanted, file)}.`;
 }
 
-// Reads and parses the worksheets a document renders from, and hashes them in HASH_ORDER. Returns
-// { sources, hash }, or { exit, messages }: 2 for a missing or wrong worksheet, 1 for problems.
-function readSources(doc, project, data) {
-  const { uses, needs } = sourcesOf(doc);
-  const sources = new Map();
-  const hash = createHash('sha256');
-  const refused = [];
-  const problems = [];
-  for (const section of HASH_ORDER.filter((name) => uses.includes(name))) {
+// Reads and parses a project's worksheets: those of `sections`, every one unless given, in HASH_ORDER.
+// This is the one place a worksheet is read. Returns a Map from section to null when its file does not
+// exist; to { section, name, file, readError } when it cannot be read; or to { section, name, file,
+// text, parsed, problems, wrongData, misplaced, clean }. `problems` are the parser's, as
+// file:line: message. A worksheet in the wrong file has `misplaced`, what to do about it, as one more.
+function readWorksheets(project, data, sections = HASH_ORDER) {
+  const sheets = new Map();
+  for (const section of HASH_ORDER.filter((name) => sections.includes(name))) {
     const file = worksheetFile(project, section);
     if (!existsSync(file)) {
-      if (needs.includes(section)) refused.push(`${file} does not exist. Make it with: ${makeWorksheet(section, file)}, then fill it in.`);
+      sheets.set(section, null);
       continue;
     }
-    let bytes;
+    const sheet = { section, name: worksheetName(section), file };
     try {
-      bytes = readFileSync(file);
+      sheet.text = readFileSync(file, 'utf8');
     } catch (error) {
-      refused.push(`cannot read ${file}: ${error.message}`);
+      sheets.set(section, { ...sheet, readError: `cannot read ${file}: ${error.message}` });
       continue;
     }
-    const text = bytes.toString('utf8');
-    // The hash is of the text as the parser reads it (normalised), so a worksheet saved on Windows,
-    // say, renders the same body. answersHash, in the status part, hashes in the same way.
-    hash.update(normalised(text));
-    const parsed = parseWorksheet(text, data);
-    if (parsed.data !== null && parsed.data !== DATA_ID) {
-      refused.push(`${file} answers data ${parsed.data}, but the helper's data is ${DATA_ID}. Keep a copy of it, make a ` +
+    sheet.parsed = parseWorksheet(sheet.text, data);
+    sheet.problems = sheet.parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`);
+    sheet.wrongData = sheet.parsed.data !== null && sheet.parsed.data !== DATA_ID;
+    const found = sheet.parsed.section;
+    sheet.misplaced = found !== null && found !== section ? misplaced(file, found, section, project) : null;
+    if (sheet.misplaced) sheet.problems.push(sheet.misplaced);
+    sheet.clean = sheet.problems.length === 0;
+    sheets.set(section, sheet);
+  }
+  return sheets;
+}
+
+// The answers hash render puts in a document's BEGIN marker: the sha256 of the worksheets of
+// `sections` that were read, each normalised, in HASH_ORDER, then of any further texts given. This is
+// the one place the hash is made, so a document, its status and its sign-off always agree on it.
+function answersHash(sheets, sections, more = []) {
+  const hash = createHash('sha256');
+  for (const [section, sheet] of sheets) {
+    if (sections.includes(section) && sheet?.text !== undefined) hash.update(normalised(sheet.text));
+  }
+  for (const text of more) hash.update(normalised(text));
+  return hash.digest('hex');
+}
+
+// Reads and parses the worksheets a document renders from, and hashes them. Returns { sources, hash },
+// sources holding only the worksheets that exist, or { exit, messages }: 2 for a missing, unreadable
+// or wrong worksheet, 1 for problems.
+function readSources(doc, project, data) {
+  const { uses, needs } = sourcesOf(doc);
+  const sheets = readWorksheets(project, data, uses);
+  const refused = [];
+  const problems = [];
+  for (const [section, sheet] of sheets) {
+    const file = worksheetFile(project, section);
+    if (!sheet) {
+      if (needs.includes(section)) refused.push(`${file} does not exist. Make it with: ${makeWorksheet(section, file)}, then fill it in.`);
+    } else if (sheet.readError) {
+      refused.push(sheet.readError);
+    } else if (sheet.wrongData) {
+      refused.push(`${file} answers data ${sheet.parsed.data}, but the helper's data is ${DATA_ID}. Keep a copy of it, make a ` +
         `worksheet for this data with: ${makeWorksheet(section, file)}, and copy the answers across.`);
-    } else if (parsed.section !== null && parsed.section !== section) {
-      refused.push(misplaced(file, parsed.section, section, project));
+    } else if (sheet.misplaced) {
+      refused.push(sheet.misplaced);
     } else {
-      problems.push(...parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`));
+      problems.push(...sheet.problems);
     }
-    sources.set(section, { file, parsed });
   }
   if (refused.length) return { exit: 2, messages: refused };
   if (problems.length) return { exit: 1, messages: problems };
-  return { sources, hash: hash.digest('hex') };
+  return { sources: new Map([...sheets].filter(([, sheet]) => sheet)), hash: answersHash(sheets, uses) };
 }
 
 // Renders a document's body from the worksheets in `project`/food-safety. Returns { exit: 0, text }
@@ -1742,13 +1777,14 @@ export function referenceCommand(args, io = { out: console.log, err: console.err
 // A document is a file in the project folder (not in food-safety/) named
 // ARC-<3 digits>-<CODE>-v<version>.md. Of several for one code, the current one has the highest
 // version, compared part by part as numbers, so 1.10 comes after 1.9. Sign-offs are appended to
-// food-safety/sign-offs.json and never changed. A document is signed off only when the last sign-off
-// recorded for its code names the current file and version and carries the answers hash the document
-// has now, and the document passes check.
+// food-safety/sign-offs.json and never changed. A document is signed off only when it is finished
+// (nothing blocks it: see collectStatus) and the last sign-off recorded for its code names the current
+// file and version and carries the answers hash the document has now.
 //
 // Nothing counts as answered unless the parser marks it answered, and nothing in a worksheet with
-// problems is relied on: none of its answers counts as confirmed, and the special processes it names
-// or the own entries it holds are not read from it.
+// problems is relied on: none of its answers counts as confirmed, no method's status is read from it,
+// and the special processes it names or the own entries it holds are not read from it. Such a
+// worksheet is told as one line, naming it and how to list its problems.
 // ---------------------------------------------------------------------------------------------
 
 // The documents status lists, in its order. The completion record is not one: it reports on them.
@@ -1775,8 +1811,6 @@ const docName = (code, data) => DOC_NAMES[code] ?? sentenceCase(data.sections.ge
 // cannot be seen.
 const isPersonText = (value) => isString(value) && value.trim() !== '' && !/[\x00-\x1F\x7F]/.test(value) && !hiddenIn(value);
 const counted = (n, one, many) => `${n} ${n === 1 ? one : many}`;
-// What a document asks a person to answer, and what an answer to it is called.
-const nounsOf = (code) => (code === 'FOODOWN' ? ['own entry', 'own entries', 'own entry', 'own entries'] : ['question', 'questions', 'answer', 'answers']);
 const signOffsFile = (project) => join(project, 'food-safety', 'sign-offs.json');
 const localToday = () => {
   const now = new Date();
@@ -1791,38 +1825,6 @@ const worksheetsOf = (code) => {
   const own = SECTION_DOCS[code] ?? (code === 'FOODOWN' ? 'own' : 'profile');
   return { reads: [own, ...uses.filter((section) => section !== own)], needs };
 };
-
-// Reads and parses every worksheet in the project: a Map from section, in HASH_ORDER, to null when its
-// file does not exist, or to { name, file, text, parsed, problems, clean }. `problems` are the
-// parser's, as file:line: message, and a worksheet in the wrong file is one. Throws when a file exists
-// but cannot be read.
-function readWorksheets(project, data) {
-  const sheets = new Map();
-  for (const section of HASH_ORDER) {
-    const file = worksheetFile(project, section);
-    if (!existsSync(file)) {
-      sheets.set(section, null);
-      continue;
-    }
-    const text = readFileSync(file, 'utf8');
-    const parsed = parseWorksheet(text, data);
-    const problems = parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`);
-    if (parsed.section !== null && parsed.section !== section) problems.push(misplaced(file, parsed.section, section, project));
-    sheets.set(section, { name: worksheetName(section), file, text, parsed, problems, clean: problems.length === 0 });
-  }
-  return sheets;
-}
-
-// A document's answers hash, as render puts it in the BEGIN marker: the sha256 of the worksheets it
-// reads that exist, normalised, in HASH_ORDER, then of any further texts given.
-function answersHash(sheets, sections, more = []) {
-  const hash = createHash('sha256');
-  for (const section of HASH_ORDER) {
-    if (sections.includes(section) && sheets.get(section)) hash.update(normalised(sheets.get(section).text));
-  }
-  for (const text of more) hash.update(normalised(text));
-  return hash.digest('hex');
-}
 
 // Compares two versions part by part, as numbers: negative when `a` comes first.
 const compareVersions = (a, b) => {
@@ -1904,80 +1906,96 @@ function signOffProblems(value) {
 
 // How many questions a person must answer for a document, from its own worksheet, and where they
 // stand: the profile's questions; an own worksheet's entries, each confirmed when the parser marks it
-// answered; or a section's questions under the methods not marked not relevant. Nothing in a
-// worksheet with problems counts as confirmed.
+// answered; or a section's questions under the methods not marked not relevant. With the identifiers
+// of those not yet answered and of those only proposed, in order. Nothing in a worksheet with problems
+// counts as confirmed, and no method's status is read from one: each method then counts as applying,
+// as in a blank worksheet.
 function countsOf(code, sheet, data) {
   const parsed = sheet?.parsed;
-  const counts = { questions: 0, confirmed: 0, proposed: 0, notRelevantMethods: [], adaptedMethods: [] };
-  const count = (record) => {
+  const counts = { questions: 0, confirmed: 0, proposed: 0, notRelevantMethods: [], adaptedMethods: [], unansweredIds: [], proposedIds: [] };
+  const count = (id, record) => {
     counts.questions++;
     if (sheet?.clean && record?.answered) counts.confirmed++;
-    else if (record?.state === 'proposed') counts.proposed++;
+    else if (record?.state === 'proposed') {
+      counts.proposed++;
+      counts.proposedIds.push(id);
+    } else counts.unansweredIds.push(id);
   };
-  if (code === 'FOODPROF') PROFILE_QUESTIONS.forEach((question) => count(parsed?.answers.get(question.id)));
-  else if (code === 'FOODOWN') [...(parsed?.entries.values() ?? [])].forEach(count);
+  if (code === 'FOODPROF') PROFILE_QUESTIONS.forEach((question) => count(question.id, parsed?.answers.get(question.id)));
+  else if (code === 'FOODOWN') [...(parsed?.entries.values() ?? [])].forEach((entry) => count(entry.id, entry));
   else {
     for (const method of data.sections.get(SECTION_DOCS[code]).methods) {
-      const status = parsed?.methods.get(method.id)?.status;
+      const status = sheet?.clean ? parsed.methods.get(method.id)?.status : 'applies';
       if (status === 'not-relevant') {
         counts.notRelevantMethods.push(method.id);
         continue;
       }
       if (status === 'adapted') counts.adaptedMethods.push(method.id);
-      for (const { question } of methodQuestions(method)) count(parsed?.answers.get(question.id));
+      for (const { question } of methodQuestions(method)) count(question.id, parsed?.answers.get(question.id));
     }
   }
   return { ...counts, unanswered: counts.questions - counts.confirmed - counts.proposed };
 }
 
-// The special processes and foods the profile confirms the business does, each with the confirmed own
-// entry of kind special-process whose Process names it (never its title) and that entry's review;
-// and the confirmed own entries whose environmental health review is pending.
+// The special processes and foods a clean profile confirms the business does, each with the confirmed
+// own entry of kind special-process whose Process names it (never its title) and that entry's review;
+// and the confirmed own entries whose environmental health review is pending. Nothing is read from an
+// own worksheet with problems.
 function specialProcessesOf(sheets) {
   const profile = sheets.get('profile');
   const own = sheets.get('own');
-  const yes = (id) => profile.parsed.answers.get(id)?.answered && profile.parsed.answers.get(id).value === 'yes';
-  const done = profile?.clean ? EXTRA_CARE_ASKED.filter(({ id }) => yes(id)) : [];
   const entries = own?.clean ? [...own.parsed.entries.values()].filter((entry) => entry.answered) : [];
-  const specialProcesses = done.map(({ name }) => {
+  const specialProcesses = (profile?.clean ? extraCareDone(profile.parsed) : []).map(({ name }) => {
     const entry = entries.find((e) => e.kind === 'special-process' && e.process === name);
     return { name, ownEntry: entry?.id ?? null, ehReview: entry?.ehReview ?? null };
   });
   return { specialProcesses, awaiting: entries.filter((entry) => entry.ehReview === 'pending') };
 }
 
-// Everything not finished, in plain English, one { code, what } a line: for each document in order, a
-// worksheet not started or with problems, questions not yet answered or only proposed, the document not
-// written or out of date, and not signed off; then each special process or food with no own entry, and
-// each own entry awaiting environmental health review. Empty when nothing is outstanding.
-function unfinishedOf(documents, sheets, specialProcesses, awaiting) {
-  const lines = [];
-  const add = (code, what) => lines.push({ code, what });
-  for (const doc of documents) {
-    const [one, many, answer, answers] = nounsOf(doc.code);
-    for (const name of doc.missingWorksheets) add(doc.code, `worksheet ${name} not started`);
-    for (const section of worksheetsOf(doc.code).reads) {
-      const problems = sheets.get(section)?.problems.length;
-      if (problems) add(doc.code, `worksheet ${worksheetName(section)} has ${counted(problems, 'problem', 'problems')}`);
-    }
-    if (doc.unanswered) add(doc.code, `${counted(doc.unanswered, one, many)} not yet answered`);
-    if (doc.proposed) add(doc.code, `${counted(doc.proposed, answer, answers)} proposed and not confirmed`);
-    if (!doc.rendered) add(doc.code, 'document not written');
-    else if (!doc.inSync) add(doc.code, `document ${doc.file} out of date: it does not match its worksheets`);
-    if (!doc.signedOff) {
-      add(doc.code, doc.signOff ? `signed off by ${doc.signOff.name} on ${doc.signOff.date}, but changed since: sign off again`
-        : 'document not signed off');
-    }
-  }
-  for (const { name, ownEntry } of specialProcesses) {
-    if (!ownEntry) add('FOODOWN', `${name} has no own entry: add an own entry of kind special-process whose Process is ${name}, and confirm it`);
-  }
-  for (const entry of awaiting) add('FOODOWN', `own entry ${entry.id} (${entry.title}) awaiting environmental health review`);
-  return lines;
+// The lines of status's unfinished list, the completion record's list and sign-off's reasons. Each is
+// one sentence that says what is outstanding and what to do next. A worksheet is named by its path in
+// the project folder, so that the completion record holds no path of this computer's.
+const sheetPath = (section) => `food-safety/${worksheetName(section)}`;
+// Up to five identifiers, then how many more.
+const someOf = (ids) => (ids.length <= 5 ? andList(ids) : `${ids.slice(0, 5).join(', ')} and ${ids.length - 5} more`);
+const isAre = (n) => (n === 1 ? 'is' : 'are');
+const NOT_WRITTEN = 'document not written yet: write the document from its worksheet';
+const NOT_SIGNED = 'document not signed off yet: once it is finished, a named person signs it off';
+const notStartedLine = (section) => `worksheet ${sheetPath(section)} is not started yet: make it with worksheet --section ` +
+  `${section} and fill it in`;
+const problemsLine = (section, n) => `worksheet ${sheetPath(section)} has ${counted(n, 'problem', 'problems')}, so none of ` +
+  `its answers counts until ${n === 1 ? 'it is' : 'they are'} fixed: parse-worksheet --file ${sheetPath(section)} lists ` +
+  `${n === 1 ? 'it' : 'them'}`;
+const outOfDateLine = (file) => `document ${file} is out of date, as it does not match its worksheets: write the document ` +
+  'again from its worksheet';
+const changedLine = (record) => `signed off by ${record.name} on ${record.date}, but changed since: sign off again`;
+const uncoveredLine = (name) => `${name} has no own entry: add an own entry of kind special-process whose Process is ${name}, ` +
+  'and confirm it';
+const awaitingLine = (entry) => `own entry ${entry.id} (${entry.title}) is awaiting environmental health review: once the ` +
+  'council has replied, record the review\'s date and outcome in the entry\'s EH-review field';
+// What a document asks a person to answer: questions, or for the own methods document its entries.
+const nounsOf = (code) => (code === 'FOODOWN' ? ['own entry', 'own entries'] : ['question', 'questions']);
+
+// The lines for a document's questions not yet answered and its answers only proposed, naming the
+// worksheet and up to five identifiers.
+function countLines(code, counts, section) {
+  const entries = code === 'FOODOWN';
+  const [one, many] = nounsOf(code);
+  const how = `${entries ? 'an entry' : 'an answer'} counts when its State is confirmed and By and On are filled in`;
+  const { unansweredIds: open, proposedIds: proposed } = counts;
+  return [
+    ...(open.length ? [`${counted(open.length, one, many)} in ${sheetPath(section)} ${isAre(open.length)} not yet ` +
+      `${entries ? 'confirmed' : 'answered'} (${someOf(open)}): ${how}`] : []),
+    ...(proposed.length ? [`${counted(proposed.length, entries ? one : 'answer', entries ? many : 'answers')} in ` +
+      `${sheetPath(section)} ${isAre(proposed.length)} proposed but not confirmed (${someOf(proposed)}): ${how}`] : [])
+  ];
 }
 
 // Everything status reports, with what sign-off and the completion record need besides: { status,
-// sheets, hashes, signOffs }, or { exit: 2, messages } when the project cannot be read.
+// sheets, hashes, blockers, signOffs }, or { exit: 2, messages } when the project cannot be read.
+// `blockers` holds, for each document, what keeps it from being finished: { what, sheet, after }, where
+// `sheet` is the worksheet a line is about (null for the document's own lines) and `after` marks a
+// line the unfinished list gives after the documents.
 function collectStatus(project, data) {
   const lacking = SECTION_IDS.find((id) => !data.sections.has(id));
   if (lacking) return { exit: 2, messages: [`the data has no ${lacking}.json`] };
@@ -1990,28 +2008,34 @@ function collectStatus(project, data) {
   if (!folder) return { exit: 2, messages: [`${project} is not a folder: --project names the project folder that holds food-safety/`] };
   const signOffs = readSignOffs(project);
   if (signOffs.error) return { exit: 2, messages: [signOffs.error] };
-  let sheets;
+  const sheets = readWorksheets(project, data);
+  const unreadable = [...sheets.values()].find((sheet) => sheet?.readError);
+  if (unreadable) return { exit: 2, messages: [unreadable.readError] };
   let files;
   try {
-    sheets = readWorksheets(project, data);
     files = currentDocuments(project);
   } catch (error) {
     return { exit: 2, messages: [`cannot read the project in ${project}: ${error.message}`] };
   }
+  const { specialProcesses, awaiting } = specialProcessesOf(sheets);
+  // A special process is said to have no entry only when the own worksheet, if there is one, has no problems.
+  const own = sheets.get('own');
+  const uncovered = !own || own.clean ? specialProcesses.filter((process) => !process.ownEntry).map(({ name }) => uncoveredLine(name)) : [];
   const hashes = new Map();
+  const blockers = new Map();
   const documents = STATUS_ORDER.map((code) => {
     const { reads, needs } = worksheetsOf(code);
     const current = files.get(code) ?? null;
     const inSync = Boolean(current) && checkDocument(code, project, join(project, current.file), data).exit === 0;
     const hash = answersHash(sheets, reads);
-    hashes.set(code, hash);
-    const signOff = signOffs.records.filter((record) => record.doc === code).at(-1) ?? null;
     const counts = countsOf(code, sheets.get(reads[0]), data);
-    return {
+    const missing = reads.filter((section) => needs.includes(section) && !sheets.get(section));
+    const troubled = reads.filter((section) => sheets.get(section)?.problems.length);
+    const doc = {
       code,
       worksheets: reads.map(worksheetName),
-      missingWorksheets: reads.filter((section) => needs.includes(section) && !sheets.get(section)).map(worksheetName),
-      problems: reads.reduce((sum, section) => sum + (sheets.get(section)?.problems.length ?? 0), 0),
+      missingWorksheets: missing.map(worksheetName),
+      problems: troubled.reduce((sum, section) => sum + sheets.get(section).problems.length, 0),
       questions: counts.questions,
       confirmed: counts.confirmed,
       proposed: counts.proposed,
@@ -2021,18 +2045,43 @@ function collectStatus(project, data) {
       file: current?.file ?? null,
       version: current?.version ?? null,
       rendered: Boolean(current),
-      inSync,
-      signedOff: Boolean(signOff && inSync && signOff.answers === hash && signOff.version === current.version &&
-        signOff.file === current.file),
-      signOff
+      inSync
     };
+    // A worksheet with problems gives one line and none from its counts; a document whose worksheets
+    // are missing or have problems cannot be checked, so it is not called out of date.
+    const fileLines = !current ? [NOT_WRITTEN] : !inSync && !missing.length && !troubled.length ? [outOfDateLine(current.file)] : [];
+    const docLines = [
+      ...(troubled.includes(reads[0]) ? [] : countLines(code, counts, reads[0])),
+      ...fileLines
+    ];
+    const held = [
+      ...reads.filter((section) => missing.includes(section) || troubled.includes(section)).map((section) => ({
+        what: sheets.get(section) ? problemsLine(section, sheets.get(section).problems.length) : notStartedLine(section), sheet: section
+      })),
+      ...docLines.map((what) => ({ what, sheet: null })),
+      ...(code === 'FOODOWN' ? uncovered : []).map((what) => ({ what, sheet: null, after: true }))
+    ];
+    const record = signOffs.records.filter((entry) => entry.doc === code).at(-1) ?? null;
+    // Signed off only when finished, and the newest sign-off for it names it as it is now.
+    doc.signedOff = held.length === 0 && Boolean(record && record.answers === hash && record.version === current.version &&
+      record.file === current.file);
+    doc.signOff = record;
+    hashes.set(code, hash);
+    blockers.set(code, held);
+    return doc;
   });
-  const { specialProcesses, awaiting } = specialProcessesOf(sheets);
-  const status = {
-    data: DATA_ID, documents, specialProcesses, ownAwaitingReview: awaiting.map((entry) => entry.id),
-    unfinished: unfinishedOf(documents, sheets, specialProcesses, awaiting)
-  };
-  return { status, sheets, hashes, signOffs };
+  // The unfinished list tells each worksheet's state once, under the document it belongs to, then the
+  // special processes with no entry and the entries awaiting review.
+  const unfinished = documents.flatMap((doc) => {
+    const [mine] = worksheetsOf(doc.code).reads;
+    const lines = blockers.get(doc.code).filter(({ sheet, after }) => !after && (sheet === null || sheet === mine)).map(({ what }) => what);
+    if (!doc.signedOff) lines.push(doc.signOff ? changedLine(doc.signOff) : NOT_SIGNED);
+    return lines.map((what) => ({ code: doc.code, what }));
+  });
+  unfinished.push(...uncovered.map((what) => ({ code: 'FOODOWN', what })),
+    ...awaiting.map((entry) => ({ code: 'FOODOWN', what: awaitingLine(entry) })));
+  const status = { data: DATA_ID, documents, specialProcesses, ownAwaitingReview: awaiting.map((entry) => entry.id), unfinished };
+  return { status, sheets, hashes, blockers, signOffs };
 }
 
 // The status of the project in `project`, as status --json prints it, or { exit: 2, messages }.
@@ -2130,40 +2179,22 @@ function completionRecordDocument(project, data) {
 }
 
 // Records that a named person has confirmed a document, when it is finished: its worksheets present
-// and free of problems, every question confirmed, and its current file of the version given and in
-// step. `person` is { name, role, version, date, paperSigned }. Returns { exit: 0, record, message }, or
-// { exit, messages }: 1 for a refusal, which writes nothing, and 2 when the project cannot be read.
+// and free of problems, every question confirmed, its current file of the version given and in step,
+// and, for the own methods document, an own entry for each special process the profile confirms.
+// `person` is { name, role, version, date, paperSigned }. Returns { exit: 0, record, message }, or
+// { exit, messages }: 1 for a refusal, which writes nothing and gives every reason with what to do
+// next, and 2 when the project cannot be read.
 export function signOffDocument(code, project, person, data) {
   const collected = collectStatus(project, data);
   if (collected.exit) return collected;
-  const { status, sheets, hashes, signOffs } = collected;
+  const { status, hashes, blockers, signOffs } = collected;
   const doc = status.documents.find((d) => d.code === code);
-  const { reads, needs } = worksheetsOf(code);
-  const [one, many, answer, answers] = nounsOf(code);
-  const reasons = [];
-  for (const section of reads) {
-    const sheet = sheets.get(section);
-    if (!sheet && needs.includes(section)) {
-      const file = worksheetFile(project, section);
-      reasons.push(`the worksheet ${file} does not exist: make it with: ${makeWorksheet(section, file)}, then fill it in`);
-    } else if (sheet?.problems.length) {
-      reasons.push(`${sheet.name} has ${counted(sheet.problems.length, 'problem', 'problems')}:`, ...sheet.problems.map((problem) => `  ${problem}`));
-    }
+  const reasons = blockers.get(code).map(({ what }) => what);
+  if (doc.rendered && doc.version !== person.version) {
+    reasons.push(`the current ${code} document is ${doc.file}, version ${doc.version}, not version ${person.version}: give ` +
+      `--version ${doc.version} to sign off the current document`);
   }
-  if (doc.unanswered) reasons.push(`${counted(doc.unanswered, one, many)} not yet answered: every ${one} must be confirmed before sign-off`);
-  if (doc.proposed) reasons.push(`${counted(doc.proposed, answer, answers)} proposed and not confirmed: a proposed answer counts only once the business confirms it`);
-  if (!doc.rendered) {
-    reasons.push(`no ${code} document exists in ${project}: a document is a file there named ARC-<3 digits>-${code}-v<version>.md, holding a fresh render`);
-  } else {
-    if (doc.version !== person.version) reasons.push(`the current ${code} document is ${doc.file}, version ${doc.version}, not version ${person.version}`);
-    if (!doc.inSync) {
-      reasons.push(`${doc.file} does not pass check: it is out of date or was edited by hand. To see where, run: node "${HELPER}" check ` +
-        `--doc ${code} --project "${project}" --report "${join(project, doc.file)}"`);
-    }
-  }
-  if (reasons.length) {
-    return { exit: 1, messages: [`${code} is not signed off, and nothing was written, because:`, ...reasons.map((r) => (r.startsWith('  ') ? r : `- ${r}`))] };
-  }
+  if (reasons.length) return { exit: 1, messages: [`${code} is not signed off, and nothing was written, because:`, ...reasons.map((r) => `- ${r}`)] };
   const record = { doc: code, version: doc.version, file: doc.file, name: person.name, role: person.role, date: person.date,
     paperSigned: person.paperSigned, answers: hashes.get(code) };
   const file = signOffsFile(project);
@@ -2275,9 +2306,12 @@ commands:
                                                      document; exit 0 whenever the project can be read
   sign-off --doc DOC --project DIR --name NAME       record that a named person has confirmed a
            --role ROLE --version VERSION             finished document, in DIR/food-safety/
-           [--paper-signed yes|no] [--date DATE]     sign-offs.json; exit 1, writing nothing, when it
-           [--data DIR]                              has a question not confirmed, is not written, is
-                                                     not that version or does not pass check. DATE is
+           [--paper-signed yes|no] [--date DATE]     sign-offs.json; exit 1, writing nothing, when
+           [--data DIR]                              a worksheet it needs is missing or has
+                                                     problems, an answer is not confirmed, it is
+                                                     not written, is not that version or does not
+                                                     pass check, or (for FOODOWN) a special process
+                                                     the profile confirms has no own entry. DATE is
                                                      YYYY-MM-DD, today when not given
 `;
 
