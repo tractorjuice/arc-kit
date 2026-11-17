@@ -1973,6 +1973,29 @@
             return String(text).toLowerCase().replace(/[^\w]+/g, '-');
         }
 
+        // What an address hash names: a view, a document, a document and one of
+        // its sections ("a/b.md#risks"), or only a section of the page on show.
+        // A document path always has a folder or an extension; a heading id has neither.
+        function parseHash(hash) {
+            if (['dashboard', 'guides', 'roles', 'dependency-map'].includes(hash)) return { view: hash };
+            const at = hash.indexOf('#');
+            const doc = at < 0 ? hash : hash.slice(0, at);
+            const section = at < 0 ? '' : hash.slice(at + 1);
+            if (!doc.includes('/') && !doc.includes('.') && !doc.includes('%2F')) return { section: doc };
+            return { doc, section };
+        }
+
+        function scrollToSection(id) {
+            let name = id;
+            try { name = decodeURIComponent(id); } catch (e) { /* keep it as written */ }
+            const target = document.getElementById(name) || document.getElementById(headingId(name));
+            if (target) target.scrollIntoView({ behavior: 'smooth' });
+            return !!target;
+        }
+
+        // The hash of the view or document on show, so a link to a section can put it back.
+        let shownHash = '';
+
         function getRawUrl(path) {
             return `../${path}`;
         }
@@ -4551,7 +4574,16 @@
                 const docDir = path.substring(0, path.lastIndexOf('/') + 1);
                 content.querySelectorAll('.app-markdown a[href]').forEach(a => {
                     const href = a.getAttribute('href');
-                    if (!href || href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:')) return;
+                    if (!href || href.startsWith('http') || href.startsWith('mailto:')) return;
+                    if (href.startsWith('#')) {
+                        // A link to a heading in this document. Left alone it would
+                        // change the hash, and the hash is how a document is opened.
+                        a.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            scrollToSection(href.slice(1));
+                        });
+                        return;
+                    }
                     if (!href.endsWith('.md') && !href.includes('.md#')) return;
                     // Resolve relative path against current document directory
                     const parts = (docDir + href.split('#')[0]).split('/');
@@ -4565,8 +4597,8 @@
                     a.href = '#' + resolvedPath;
                     a.addEventListener('click', function(e) {
                         e.preventDefault();
+                        // The hashchange handler loads the document and goes to its section.
                         window.location.hash = resolvedPath;
-                        loadDocument(resolved.join('/'));
                     });
                 });
 
@@ -5214,8 +5246,10 @@
                 });
 
                 // Handle initial hash or load dashboard
-                if (window.location.hash) {
-                    const path = window.location.hash.slice(1);
+                const initial = parseHash(window.location.hash.slice(1));
+                if (initial.view || initial.doc) {
+                    const path = initial.view || initial.doc;
+                    shownHash = window.location.hash.slice(1);
                     if (path === 'dashboard') {
                         showDashboard(healthData);
                     } else if (path === 'guides') {
@@ -5225,7 +5259,7 @@
                     } else if (path === 'dependency-map') {
                         showDependencyMap();
                     } else {
-                        loadDocument(path);
+                        loadDocument(path).then(() => { if (initial.section) scrollToSection(initial.section); });
 
                         // Mark as active — check both direct links and version selects
                         let link = document.querySelector(`a[data-path="${path}"]`);
@@ -5246,8 +5280,10 @@
                         if (link) link.classList.add('active');
                     }
                 } else {
-                    // Dashboard is the default landing page
-                    window.location.hash = 'dashboard';
+                    // Dashboard is the default landing page. A hash that names only a
+                    // section has no document to open, so it lands here too.
+                    shownHash = 'dashboard';
+                    history.replaceState(null, '', '#dashboard');
                     showDashboard(healthData);
                 }
 
@@ -5284,7 +5320,16 @@
 
         // Hash change handler
         window.addEventListener('hashchange', () => {
-            const path = window.location.hash.slice(1);
+            const target = parseHash(window.location.hash.slice(1));
+            if (!target.view && !target.doc) {
+                // A link to a heading on the page on show: go to it, and keep the
+                // address on that page so a reload or a shared link opens it again.
+                scrollToSection(target.section);
+                history.replaceState(null, '', '#' + (shownHash || 'dashboard'));
+                return;
+            }
+            const path = target.view || target.doc;
+            shownHash = window.location.hash.slice(1);
             if (path === 'dashboard') {
                 showDashboard(healthData);
             } else if (path === 'guides') {
@@ -5294,7 +5339,7 @@
             } else if (path === 'dependency-map') {
                 showDependencyMap();
             } else if (path) {
-                loadDocument(path);
+                loadDocument(path).then(() => { if (target.section) scrollToSection(target.section); });
 
                 // Update active state
                 document.querySelectorAll('#nav-container a').forEach(a => {
