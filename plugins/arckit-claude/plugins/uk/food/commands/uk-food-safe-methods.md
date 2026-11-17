@@ -70,7 +70,7 @@ The pack's order is the order of this table.
 ### 1. Read what this command needs
 
 - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`, for the document header.
-- The template: the first that exists of `.arckit/templates-custom/uk-food-safe-methods-template.md`, `.arckit/templates/uk-food-safe-methods-template.md` and `${CLAUDE_PLUGIN_ROOT}/templates/uk-food-safe-methods-template.md`.
+- The template: `.arckit/templates-custom/uk-food-safe-methods-template.md` if it exists, then `.arckit/templates/uk-food-safe-methods-template.md`, then `${CLAUDE_PLUGIN_ROOT}/templates/uk-food-safe-methods-template.md`.
 - `${CLAUDE_PLUGIN_ROOT}/references/uk-food-quality-checklist.md`, the checks to run before the summary.
 
 Read nothing else from the overlay to write the document: the helper reads the pack for you. The overlay needs no other ArcKit document (no principles, requirements or stakeholders), so do not ask for one or say that one is missing.

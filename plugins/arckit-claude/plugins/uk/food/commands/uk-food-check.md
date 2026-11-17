@@ -52,7 +52,7 @@ $ARGUMENTS
 ### 1. Read what this command needs
 
 - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`, for the document header.
-- The template: the first that exists of `.arckit/templates-custom/uk-food-check-template.md`, `.arckit/templates/uk-food-check-template.md` and `${CLAUDE_PLUGIN_ROOT}/templates/uk-food-check-template.md`.
+- The template: `.arckit/templates-custom/uk-food-check-template.md` if it exists, then `.arckit/templates/uk-food-check-template.md`, then `${CLAUDE_PLUGIN_ROOT}/templates/uk-food-check-template.md`.
 - `${CLAUDE_PLUGIN_ROOT}/references/uk-food-quality-checklist.md`, the checks to run before the summary.
 
 Read nothing else from the overlay: the helper reads the pack for you. The overlay needs no other ArcKit document (no principles, requirements or stakeholders), so do not ask for one or say that one is missing.
