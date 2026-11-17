@@ -755,6 +755,34 @@ def test_no_figure_is_unaccounted_for():
     assert accounts["limit"] > 0
 
 
+# render-limits-check.py renders limits.json as a table for reading against the PDF page by page.
+
+def _run_render_limits_check(*args):
+    script = ROOT / "scripts" / "uk-food" / "render-limits-check.py"
+    return subprocess.run([sys.executable, str(script), *map(str, args)], capture_output=True, text=True)
+
+
+def test_render_limits_check_writes_one_row_per_limit(tmp_path):
+    out = tmp_path / "limits-check.md"
+    result = _run_render_limits_check(DATA_DIR, out)
+    assert result.returncode == 0, result.stderr
+    text = out.read_text(encoding="utf-8")
+    assert _load(DATA_DIR / "source.json")["file"] in text.split("\n\n")[1]  # the introduction names the PDF
+    rows = [line for line in text.splitlines() if line.startswith("| ")
+            and not line.startswith(("| Value |", "| --- |"))]
+    limits = _limits()
+    assert len(rows) == len(limits)
+    # Grouped by section in page order, which is limits.json's own order.
+    for limit, row in zip(limits, rows):
+        cells = [cell.strip() for cell in row.strip("|").split(" | ")]
+        assert cells[0] == limit["value"] and cells[1] == limit["text"] and cells[3] == str(limit["page"])
+        assert cells[2].endswith(f"({limit['method']})")
+
+
+def test_render_limits_check_usage():
+    assert _run_render_limits_check().returncode == 2
+
+
 # differences.md: where the FSA's 38 individual sheets, published beside the full pack, differ from it in
 # wording. The sheets are never committed, so their file names are listed here and the note must name each.
 SHEET_FILES = [
