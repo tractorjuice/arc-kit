@@ -61,6 +61,7 @@ data/
 # The UK food overlay carries the transcribed FSA pack as tracked source data.
 !plugins/arckit-uk-food/data/
 !plugins/arckit-claude/plugins/uk/legacy/data/
+!plugins/arckit-claude/plugins/uk/food/data/
 !plugins/arckit-claude/plugins/eu/data/
 
 # Plugin runtime caches — ephemeral, project-scoped, regenerated each session

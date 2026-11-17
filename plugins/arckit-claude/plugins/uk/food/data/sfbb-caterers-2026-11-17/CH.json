@@ -1,0 +1,913 @@
+{
+  "schema": "uk-food-sfbb-data-1.0",
+  "data": "sfbb-caterers-2026-11-17",
+  "section": {
+    "id": "CH",
+    "code": "FOODCHL",
+    "title": "CHILLING",
+    "pages": [
+      38,
+      39
+    ],
+    "intro": [
+      {
+        "text": "Chilling food properly helps to stop harmful bacteria from growing.",
+        "page": 38
+      },
+      {
+        "text": "Chilling food properly helps to stop harmful bacteria from growing.",
+        "page": 39
+      },
+      {
+        "text": "Some foods need to be kept chilled to keep them safe, such as sandwiches, cooked meat and fish, cooked rice and pasta, cream-based desserts, food with a ‘use-by’ date and food that says ‘keep refrigerated’ on the label.",
+        "page": 39
+      }
+    ]
+  },
+  "methods": [
+    {
+      "id": "CH-01",
+      "title": "CHILLED STORAGE AND DISPLAYING CHILLED FOOD",
+      "summary": "Harmful bacteria can grow in food that is not chilled properly.",
+      "pages": [
+        40,
+        41
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "CH-01-P01",
+              "point": "Certain foods need to be kept chilled to keep them safe, for example:\n• food with a ‘use by’ date\n• food that says ‘keep refrigerated’ on the label\n• food you have cooked and will not serve immediately\n• ready-to-eat food such as salads, cooked meats, sandwiches and desserts.",
+              "why": "If these types of food are not kept cold enough harmful bacteria could grow.",
+              "page": 40,
+              "questions": [
+                {
+                  "id": "CH-01-Q01",
+                  "text": "Do you check regularly that these types of food are kept chilled?",
+                  "type": "yes-no-else",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": "If not, what do you do?"
+                }
+              ]
+            },
+            {
+              "id": "CH-01-P02",
+              "point": "Make sure you use food before its ‘use by’ date.\nFor dishes you have prepared or cooked, use stickers, or another method of labelling, to keep track of when food should be used or thrown away.\nFor guidance on how long to keep food, follow manufacturer’s storage instructions on the product label. High risk ready to eat foods should be kept for a maximum of 3 days in total (day of cook/opening + 2) unless you have evidence that it is safe to keep them for longer.",
+              "why": "Food with ‘use by’ dates, cooked dishes and other ready-to-eat food have a limited shelf life. Food cannot be supplied or served after its ‘use by date’.",
+              "page": 40,
+              "questions": [
+                {
+                  "id": "CH-01-Q02",
+                  "text": "How do you keep track of when food should be used or thrown away?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-01-P03",
+              "point": "Follow the manufacturer’s instructions on how to use fridges and chilled display equipment.",
+              "why": "It is important to use equipment properly to make sure food is kept cold enough.",
+              "page": 40,
+              "questions": [
+                {
+                  "id": "CH-01-Q03",
+                  "text": "Do you follow the manufacturer’s instructions for using your:",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-01-Q04",
+                  "text": "Fridge?",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-01-Q05",
+                  "text": "Chilled display unit?",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-01-Q06",
+                  "text": "If not, what do you do?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-01-P04",
+              "point": "• Pre-cool the display unit before you put chilled food in it.\n• Only display as much food as you think you will need.\n• Display food for the shortest time possible.\nYou could also:\n• use a ‘dummy’ portion for display (which will not be eaten)\n• use photographs to show customers what the food looks like.",
+              "why": "It is important to keep chilled food cold while it is on display to prevent harmful bacteria from growing in the food.",
+              "page": 40,
+              "questions": [
+                {
+                  "id": "CH-01-Q07",
+                  "text": "What do you do to make sure chilled food is displayed safely?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 40
+        },
+        {
+          "kind": "check-it",
+          "heading": "CHECK IT",
+          "columns": [
+            "HOW DO YOU DO THIS?"
+          ],
+          "text": "It is recommended that fridges and chilled display equipment should be set at 5°C or below.\nThis is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.\nYou should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).\nTo make sure equipment is working properly, check temperatures in-between packs of chilled food using a clean, disinfected probe thermometer.",
+          "questions": [
+            {
+              "id": "CH-01-Q08",
+              "text": "Some equipment will have a digital display or dial to show what temperature it is set at. You can use this to check the temperature of your equipment.\nIf you do this, you should check regularly that the temperature shown on the display/dial is accurate using either a fridge thermometer or a probe thermometer.",
+              "type": "note",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q09",
+              "text": "How do you check the temperature of chilling equipment?",
+              "type": "note",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q10",
+              "text": "Fridge:",
+              "type": "note",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q11",
+              "text": "Digital display",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q12",
+              "text": "Dial thermometer",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q13",
+              "text": "Fridge thermometer",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q14",
+              "text": "Between chilled foods using probe thermometer",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q15",
+              "text": "Chilled display unit:",
+              "type": "note",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q16",
+              "text": "Digital display",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q17",
+              "text": "Dial thermometer",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q18",
+              "text": "Fridge thermometer",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q19",
+              "text": "Between chilled foods using probe thermometer",
+              "type": "tick",
+              "options": [],
+              "elseText": null
+            },
+            {
+              "id": "CH-01-Q20",
+              "text": "If you do not do this, what do you do?",
+              "type": "text",
+              "options": [],
+              "elseText": null
+            }
+          ],
+          "page": 41
+        },
+        {
+          "kind": "think-twice",
+          "heading": "THINK TWICE!",
+          "text": "When you display cold food (e.g. on a buffet) you should use suitable chilled display equipment to keep it at 8°C or below. If this is not possible there is a ‘4 hour rule’ exception: You can display food out of chilled storage for up to four hours, but you can only do this once.\nMake sure you know how long food has been on display or kept out of chilled storage. It is a good idea to label foods with the time they were taken out of the fridge or write this information in your diary so you can check the time easily. Food which has been displayed for less than four hours can be put back in the fridge and kept at 8°C or below until it is used. If it has been out for more than four hours it must be thrown away.\nIf you do take food out of chilled storage to display it, remove a small amount at a time. Make sure that food on display is used up before you add new food. This will make it easier to ensure that food is not left on display longer than 4 hours.\nSome foods require storage at temperatures lower than 8°C to keep them safe so always follow the manufacturer’s storage guidance.\nMinimise the time chilled foods are kept out at room temperature during preparation. You can help do this by only preparing small batches one at a time.",
+          "page": 41
+        },
+        {
+          "kind": "prove-it",
+          "heading": "PROVE IT",
+          "text": "To check chilling equipment is working effectively you can use a disinfected temperature probe to check the food is kept at a safe temperature. (See the ‘Prove it’ safe method in the Management section for advice on using probes safely).",
+          "page": 41
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "• If your fridge or display equipment breaks down, use other equipment, or move the food to a cold area. If you cannot do this, or you do not know how long the equipment has been broken down, contact the Environmental Health Team at your local council for advice.",
+            "• If food which requires refrigeration has not been kept chilled for more than four hours, throw it away.",
+            "Remember that some foods need extra care e.g. rice. See the safe method ‘Foods that need extra care’ in the Cooking section."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "• Review your chilled display method and see if you can make it safer (using the front of this sheet).",
+            "• Train staff again on this safe method.",
+            "• Improve staff supervision.",
+            "• If you have frequent problems with your chilling equipment, consider whether it is suitable for your business. Generally, commercial equipment will be more suitable for catering."
+          ],
+          "diaryNote": "Write down what went wrong and what you did about it in your diary.",
+          "page": 41
+        }
+      ]
+    },
+    {
+      "id": "CH-02",
+      "title": "CHILLING DOWN HOT FOOD",
+      "summary": "Harmful bacteria can grow in food that is not chilled down as quickly as possible.",
+      "pages": [
+        42,
+        43
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?"
+          ],
+          "rows": [
+            {
+              "id": "CH-02-P01",
+              "point": "If you have cooked food that you will not serve immediately, chill it down as quickly as possible and then put it in the fridge.",
+              "why": "Harmful bacteria can grow in food that is left to chill slowly.",
+              "page": 42,
+              "questions": []
+            },
+            {
+              "id": "CH-02-P02",
+              "point": "Avoid cooking large quantities of food in advance, unless you need to.",
+              "why": "Large quantities of food are more difficult to chill down quickly, especially solid food.",
+              "page": 42,
+              "questions": []
+            }
+          ],
+          "page": 42
+        },
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "OPTIONS FOR CHILLING DOWN FOOD (YOU CAN USE ONE OR MORE OF THESE)",
+            "WHY?",
+            "TICK IF YOU DO THIS"
+          ],
+          "rows": [
+            {
+              "id": "CH-02-P03",
+              "point": "Divide food into smaller portions.",
+              "why": "Smaller amounts of food chill down more quickly.",
+              "page": 42,
+              "questions": [
+                {
+                  "id": "CH-02-Q01",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-02-P04",
+              "point": "Cut joints of meat in half.",
+              "why": "Smaller pieces of meat will cool more quickly.",
+              "page": 42,
+              "questions": [
+                {
+                  "id": "CH-02-Q02",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-02-P05",
+              "point": "Cover pans of hot food and move them to a colder area, e.g. a storage room, or stand them in cold water.\nYou can also also use ice to speed up chilling.",
+              "why": "This will make the food chill more quickly.",
+              "page": 42,
+              "questions": [
+                {
+                  "id": "CH-02-Q03",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-02-P06",
+              "point": "Stir food regularly while it is chilling down.",
+              "why": "Stirring helps food chill more evenly.",
+              "page": 42,
+              "questions": [
+                {
+                  "id": "CH-02-Q04",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-02-P07",
+              "point": "Spread food out on a tray e.g. rice.",
+              "why": "Spreading the food out will help it cool more quickly.",
+              "page": 42,
+              "questions": [
+                {
+                  "id": "CH-02-Q05",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 42
+        },
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "OPTIONS FOR CHILLING DOWN FOOD (YOU CAN USE ONE OR MORE OF THESE)",
+            "WHY?",
+            "TICK IF YOU DO THIS"
+          ],
+          "rows": [
+            {
+              "id": "CH-02-P08",
+              "point": "If you have a ‘cool’ setting on your oven, use it to chill down food.",
+              "why": "Some ovens have a ‘cool’ setting, which can help to chill down food by increasing the air flow around it. (The oven should be cool first.)",
+              "page": 43,
+              "questions": [
+                {
+                  "id": "CH-02-Q06",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-02-P09",
+              "point": "Use a blast chiller to chill down food.",
+              "why": "A blast chiller is specially designed to chill down hot foods quickly and safely.",
+              "page": 43,
+              "questions": [
+                {
+                  "id": "CH-02-Q07",
+                  "text": "",
+                  "type": "tick",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-02-P10",
+              "point": null,
+              "why": null,
+              "page": 43,
+              "questions": [
+                {
+                  "id": "CH-02-Q08",
+                  "text": "If you have another method of chilling down hot food, e.g. putting pasta under cold running water, write the details here:",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 43
+        },
+        {
+          "kind": "prove-it",
+          "heading": "PROVE IT",
+          "text": "If you would like to compare different chilling options, try them out with the same food. You will only need to do this once.\nWhen you have just cooked the food, use a probe to test its temperature. (See the ‘Prove it’ method in the Management section for advice on using probes safely.) Then test the temperature again at regular intervals to find out how fast the food is being chilled down. Remember to use a clean probe each time you check the food.\nRepeat the process with different chilling options to find out which is most effective.",
+          "page": 43
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "If food has not been chilled down safely, re-cook it, if appropriate, or throw it away.",
+            "Remember that some foods need extra care e.g. rice. See the safe method ‘Foods that need extra care’ in the Cooking section."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "• Review your chilling methods to make sure they are working properly. If appropriate, try out different methods and choose the one that best meets your needs.",
+            "• Make sure you always allow enough time and make portions small enough.",
+            "• Train staff again on this safe method.",
+            "• Improve staff supervision.",
+            "• If you chill down lots of hot food in your business you may wish to consider using a blast chiller."
+          ],
+          "diaryNote": "Write down what went wrong and what you did about it in your diary.",
+          "page": 43
+        }
+      ]
+    },
+    {
+      "id": "CH-03",
+      "title": "DEFROSTING",
+      "summary": "Harmful bacteria can grow in food that is not defrosted properly.",
+      "pages": [
+        44,
+        45
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "CH-03-P01",
+              "point": "Food should be thoroughly defrosted before cooking (unless the manufacturer’s instructions tell you to cook from frozen or you have a proven safe method).",
+              "why": "If food is still frozen or partially frozen, it will take longer to cook.\nThe outside of the food could be cooked, but the centre might not be, which means it could contain harmful bacteria.",
+              "page": 44,
+              "questions": [
+                {
+                  "id": "CH-03-Q01",
+                  "text": "Do you check food is thoroughly defrosted before cooking?",
+                  "type": "yes-no-else",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": "If not, what do you do?"
+                }
+              ]
+            }
+          ],
+          "page": 44
+        },
+        {
+          "kind": "points",
+          "heading": "OPTIONS FOR DEFROSTING FOOD",
+          "columns": [],
+          "rows": [
+            {
+              "id": "CH-03-P02",
+              "point": "1. Ideally, plan ahead to leave enough time and space to defrost small amounts of food in the fridge.",
+              "why": "Putting food in the fridge will keep it at a safe temperature while it is defrosting.",
+              "page": 44,
+              "questions": [
+                {
+                  "id": "CH-03-Q02",
+                  "text": "Do you use this method?",
+                  "type": "tick",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-03-Q03",
+                  "text": "How much time do you allow for defrosting?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-03-P03",
+              "point": "2. If you cannot defrost food in the fridge, you could put it in a container and then place it under cold running water.",
+              "why": "Cold water will help to speed up defrosting without allowing the outside of the food to get too warm.",
+              "page": 44,
+              "questions": [
+                {
+                  "id": "CH-03-Q04",
+                  "text": "Do you use this method?",
+                  "type": "tick",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-03-Q05",
+                  "text": "Which foods do you defrost in this way?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-03-P04",
+              "point": "3. Raw meat and poultry (including large joints and whole birds), should not be defrosted under cold running water unless they are in a sealed container. For more information visit the FSA website.",
+              "why": "Harmful bacteria could be spread, contaminating sinks, taps and surfaces.",
+              "page": 44,
+              "questions": [
+                {
+                  "id": "CH-03-Q06",
+                  "text": "How do you defrost raw meat and poultry?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-03-P05",
+              "point": "4. If you use the sink to defrost some foods, make sure the sink is clean and empty. The sink should be cleaned and then disinfected after being used for defrosting.",
+              "why": "Cold running water will help speed up defrosting.",
+              "page": 44,
+              "questions": [
+                {
+                  "id": "CH-03-Q07",
+                  "text": "Do you use this method?",
+                  "type": "tick",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-03-Q08",
+                  "text": "Which foods do you defrost in this way?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 44
+        },
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINTS",
+            "WHY?",
+            "HOW DO YOU DO THIS"
+          ],
+          "rows": [
+            {
+              "id": "CH-03-P06",
+              "point": "5. Or you could defrost food in the microwave on the ‘defrost’ setting.",
+              "why": "This is a fast way to defrost food.",
+              "page": 45,
+              "questions": [
+                {
+                  "id": "CH-03-Q09",
+                  "text": "Do you use this method?",
+                  "type": "tick",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-03-Q10",
+                  "text": "Which foods do you defrost in this way?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-03-P07",
+              "point": "6. If necessary you could defrost food at room temperature. Follow the manufacturer’s defrosting instructions. Food should be left out at room temperature for the shortest time possible. Ideally, defrost these foods in the fridge.",
+              "why": "Foods will defrost quite quickly at room temperature, but harmful bacteria could grow in food if it gets too warm while defrosting.",
+              "page": 45,
+              "questions": [
+                {
+                  "id": "CH-03-Q11",
+                  "text": "Do you use this method?",
+                  "type": "tick",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-03-Q12",
+                  "text": "Which foods do you defrost in this way?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-03-P08",
+              "point": null,
+              "why": null,
+              "page": 45,
+              "questions": [
+                {
+                  "id": "CH-03-Q13",
+                  "text": "7. If you have another method of defrosting, write the details here:",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-03-Q14",
+                  "text": "Which foods do you defrost in this way?",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 45
+        },
+        {
+          "kind": "think-twice",
+          "heading": "THINK TWICE!",
+          "text": "Keep meat/poultry separate from other food when it is defrosting, to prevent cross-contamination. Once food has been defrosted you should cook until it is piping hot all the way through. See the 'Cooking Safely' section. After cooking, use the food immediately or chill or freeze it safely straight away.",
+          "page": 45
+        },
+        {
+          "kind": "check-it",
+          "heading": "CHECK IT",
+          "columns": [
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "text": null,
+          "rows": [
+            {
+              "id": "CH-03-P09",
+              "point": "When you think food has defrosted, it is important to check to make sure.",
+              "why": "The outside may look defrosted but the inside could still be frozen.",
+              "page": 45,
+              "questions": [
+                {
+                  "id": "CH-03-Q15",
+                  "text": "Check for ice crystals in the food using your hand or a skewer.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-03-Q16",
+                  "text": "Do you use this check?",
+                  "type": "tick",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-03-Q17",
+                  "text": "With birds, check the joints are flexible.",
+                  "type": "note",
+                  "options": [],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-03-Q18",
+                  "text": "Do you use this check?",
+                  "type": "tick",
+                  "options": [
+                    "Yes"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-03-Q19",
+                  "text": "If you use another check, write the details here:",
+                  "type": "text",
+                  "options": [],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 45
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "• If food has not fully defrosted, continue to defrost the food until no ice crystals are left. Test again before cooking or reheating.",
+            "• Speed up the defrosting process e.g. by using cold water or a microwave (see the front of this sheet).",
+            "• Use an alternative menu item. If you do not have time to defrost for longer, replace the dish with a similar dish that is ready to serve."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "• Change your defrosting method and make it safer, e.g. defrost smaller amounts.",
+            "• Make sure you allow enough time to defrost.",
+            "• Train staff again on this safe method.",
+            "• Improve staff supervision.",
+            "• If you defrost lots of food in your business you may wish to consider creating extra fridge space or using a special defrosting cabinet."
+          ],
+          "diaryNote": "Write down what went wrong and what you did about it in your diary.",
+          "page": 45
+        }
+      ]
+    },
+    {
+      "id": "CH-04",
+      "title": "FREEZING",
+      "summary": "It is important to take care when freezing food and handle frozen food safely.",
+      "pages": [
+        46,
+        47
+      ],
+      "blocks": [
+        {
+          "kind": "points",
+          "heading": null,
+          "columns": [
+            "SAFETY POINT",
+            "WHY?",
+            "HOW DO YOU DO THIS?"
+          ],
+          "rows": [
+            {
+              "id": "CH-04-P01",
+              "point": "Put frozen food in the freezer as soon as it is delivered.",
+              "why": "If frozen food starts to defrost, harmful bacteria could grow.",
+              "page": 46,
+              "questions": [
+                {
+                  "id": "CH-04-Q01",
+                  "text": "Is frozen food put in the freezer as soon as it is delivered?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-04-P02",
+              "point": "If you are freezing fresh food, freeze it as soon as it has been delivered or prepared.\nFreeze hot food as soon as it has been properly chilled down.",
+              "why": "The longer you wait before freezing food, the greater the chance of harmful bacteria growing. (See the ‘Chilling down hot food’ method.)",
+              "page": 46,
+              "questions": [
+                {
+                  "id": "CH-04-Q02",
+                  "text": "Is fresh and cooked food put in the freezer as soon as it has been delivered, prepared, or chilled down?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                }
+              ]
+            },
+            {
+              "id": "CH-04-P03",
+              "point": "Divide food into smaller portions and put it in containers or freezer bags before freezing.",
+              "why": "Smaller portions will freeze (and defrost) more quickly.\nThe centre of larger portions takes longer to freeze, allowing harmful bacteria to grow.\nUsing containers and freezer bags prevents cross-contamination.",
+              "page": 46,
+              "questions": [
+                {
+                  "id": "CH-04-Q03",
+                  "text": "Is food divided into smaller portions to help it freeze better?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                },
+                {
+                  "id": "CH-04-Q04",
+                  "text": "Is frozen food stored in containers or freezer bags?",
+                  "type": "yes-no",
+                  "options": [
+                    "Yes",
+                    "No"
+                  ],
+                  "elseText": null
+                }
+              ]
+            }
+          ],
+          "page": 46
+        },
+        {
+          "kind": "table",
+          "heading": "HOW DO YOU DO THIS?",
+          "columns": [],
+          "rows": [],
+          "questions": [
+            {
+              "id": "CH-04-Q05",
+              "text": "If you answered ‘No’ to any of the above questions, write down what you do:",
+              "type": "text",
+              "options": [],
+              "elseText": null
+            }
+          ],
+          "page": 46
+        },
+        {
+          "kind": "think-twice",
+          "heading": "THINK TWICE!",
+          "text": "Once the food is defrosted it’s shelf life depends on the amount of days left until expiry when it was frozen down.",
+          "page": 47
+        },
+        {
+          "kind": "prove-it",
+          "heading": "PROVE IT",
+          "text": "You can use the digital display, a dial thermometer or a probe thermometer to check your freezer is keeping food at a safe temperature. (See the ‘Prove it’ pages in the Management section for advice on using probes safely).",
+          "page": 47
+        },
+        {
+          "kind": "wrong",
+          "heading": null,
+          "wrongHeading": "WHAT TO DO IF THINGS GO WRONG",
+          "wrong": [
+            "If you find that your freezer is not working properly, you should do the following things:",
+            "• Food that is still frozen (i.e. hard and icy) should be moved to an alternative freezer straight away. If there is no alternative freezer, defrost food using the ‘Defrosting’ safe method.",
+            "• Food that has begun to defrost (i.e. starting to get soft and/or with liquid coming out of it) should be moved to a suitable place to continue defrosting using the ‘Defrosting’ safe method.",
+            "• Fully defrosted food (i.e. soft and warm) should be cooked, if appropriate (e.g. raw meat and poultry), until it is piping hot all the way through. After cooking, use the food immediately or chill or freeze it safely straight away. If this is not possible, throw it away.",
+            "• Food that has to be kept frozen (e.g. ice cream) cannot be re-frozen once it has started to defrost. You will have to use it immediately or throw it away.",
+            "Remember, some foods need extra care. See the ‘Foods that need extra care’ safe method in the Cooking section."
+          ],
+          "preventHeading": "HOW TO STOP THIS HAPPENING AGAIN",
+          "prevent": [
+            "• Get your freezer mended or buy a new one.",
+            "• Have freezers serviced regularly and check that they are working properly as part of your opening checks.",
+            "• Re-organise freezers so there is more space and they are kept closed as much as possible.",
+            "• Train staff again on this safe method.",
+            "• Increase staff supervision."
+          ],
+          "diaryNote": "Write down what went wrong and what you did about it in your diary.",
+          "page": 47
+        }
+      ]
+    }
+  ]
+}

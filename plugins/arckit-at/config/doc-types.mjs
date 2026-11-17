@@ -275,6 +275,18 @@ export const DOC_TYPES = {
   // (clinical-safety/SAFETY-CASE.md) rather than document ID.
   'NHSDTAC':   { name: 'NHS Digital Technology Assessment Criteria (DTAC)', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
   'NHSMDR':    { name: 'UK MDR + EU MDR SaMD/AIaMD Classification',       category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  // UK Food Safety Overlay (arckit-uk-food) — community-contributed, EXPERIMENTAL. England and Wales only.
+  // A small caterer's food safety documents built from the FSA's "Safer food, better business for caterers"
+  // pack. None carries a severity and none repeats within a project. The pack's wording reaches a document
+  // only through the overlay's helper script. Documents stay DRAFT until a named person signs them off.
+  'FOODPROF':  { name: 'Food Business Profile',                           category: 'Compliance', regime: 'UK' },
+  'FOODXC':    { name: 'Cross-contamination Safe Methods',                category: 'Compliance', regime: 'UK' },
+  'FOODCLN':   { name: 'Cleaning Safe Methods',                           category: 'Compliance', regime: 'UK' },
+  'FOODCHL':   { name: 'Chilling Safe Methods',                           category: 'Compliance', regime: 'UK' },
+  'FOODCOOK':  { name: 'Cooking Safe Methods',                            category: 'Compliance', regime: 'UK' },
+  'FOODMGT':   { name: 'Management Safe Methods',                         category: 'Compliance', regime: 'UK' },
+  'FOODOWN':   { name: 'Additional Safe Methods',                         category: 'Compliance', regime: 'UK' },
+  'FOODCMP':   { name: 'Safe Method Completion and Readiness Record',     category: 'Compliance', regime: 'UK' },
   'MMOD':      { name: 'Maturity Model Assessment',       category: 'Governance', severity: 'HIGH' },
 };
 

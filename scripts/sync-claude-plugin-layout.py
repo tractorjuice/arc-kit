@@ -24,6 +24,7 @@ PLUGIN_LAYOUT = (
     ("plugins/arckit-uk-finance", "plugins/uk/finance"),
     ("plugins/arckit-uk-nhs", "plugins/uk/nhs"),
     ("plugins/arckit-uk-legacy", "plugins/uk/legacy"),
+    ("plugins/arckit-uk-food", "plugins/uk/food"),
     ("plugins/arckit-fde", "plugins/fde"),
     ("plugins/arckit-uk-gcloud", "plugins/uk/gcloud"),
     ("plugins/arckit-togaf-adm", "plugins/togaf/adm"),

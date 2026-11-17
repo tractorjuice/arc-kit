@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit UK Food Safety Overlay">
+<title>ArcKit UK Food Safety Overlay</title>
+
+<!-- Navy rounded tile -->
+<rect width="512" height="512" rx="96" fill="#0B1F33"/>
+
+<!-- A covered serving dish (cloche) above a tick: a plain mark for a food safety record -->
+<g fill="none" stroke="#FFFFFF" stroke-width="20" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M96 292 A160 160 0 0 1 416 292 Z"/>
+  <line x1="72" y1="332" x2="440" y2="332"/>
+</g>
+<circle cx="256" cy="108" r="24" fill="#FFFFFF"/>
+<polyline points="196,404 240,448 324,360" fill="none" stroke="#1ED3C6" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
