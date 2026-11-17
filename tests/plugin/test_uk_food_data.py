@@ -249,6 +249,19 @@ def test_any_string_field_counts_but_excluded_keys_do_not(tmp_path):
     assert diff[1]["extra"] == Counter({"yes": 1, "no": 1}) and not diff[1]["missing"]
 
 
+def test_column_group_label_counts_on_its_block_page(tmp_path):
+    # A label printed across several columns is page text on the table's page; from and to are not.
+    table = {"kind": "table", "heading": None, "columns": ["Wash", "your"], "page": 1, "rows": [],
+             "columnGroups": [{"label": "Hands.", "from": 0, "to": 1}]}
+    (tmp_path / "XC.json").write_text(json.dumps({"methods": [{"id": "XC-01", "pages": [2], "blocks": [table]}]}),
+                                      encoding="utf-8")
+    assert page_differences(tmp_path, FAKE_FIXTURE, FAKE_EXCEPTIONS) == {}
+    table["columnGroups"] = []
+    (tmp_path / "XC.json").write_text(json.dumps({"methods": [{"id": "XC-01", "pages": [2], "blocks": [table]}]}),
+                                      encoding="utf-8")
+    assert page_differences(tmp_path, FAKE_FIXTURE, FAKE_EXCEPTIONS)[1]["missing"] == Counter({"hands": 1})
+
+
 def test_normalise_changes_only_case_quotes_dashes_and_edges():
     assert normalise("Don’t,") == "don't"
     assert normalise("(63°C)") == "63°c"

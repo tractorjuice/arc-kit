@@ -194,6 +194,39 @@
             "text": "words",
             "page": 66,
             "fromImage": false
+          },
+          {
+            "kind": "table",
+            "heading": null,
+            "columns": [
+              "Item",
+              "After use",
+              "Daily",
+              "Gloves",
+              "Goggles"
+            ],
+            "columnGroups": [
+              {
+                "label": "Frequency",
+                "from": 1,
+                "to": 2
+              },
+              {
+                "label": "Precautions",
+                "from": 3,
+                "to": 4
+              }
+            ],
+            "rows": [
+              [
+                "Fridge",
+                "",
+                "X",
+                "X",
+                ""
+              ]
+            ],
+            "page": 66
           }
         ]
       }

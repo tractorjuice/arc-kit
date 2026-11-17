@@ -270,6 +270,30 @@
         "$ref": "#/$defs/question"
       }
     },
+    "columnGroup": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "from",
+        "to"
+      ],
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "from": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "to": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "$comment": "A label printed across several columns of a two-level table header, over the block's columns from `from` to `to` (0-based, inclusive). The label is page text. validateData also checks what the schema cannot express: from is not after to, to is a column of the block, and groups do not overlap."
+    },
     "row": {
       "type": "object",
       "additionalProperties": false,
@@ -574,6 +598,12 @@
               "type": "array",
               "items": {
                 "type": "string"
+              }
+            },
+            "columnGroups": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/columnGroup"
               }
             },
             "rows": {

@@ -149,6 +149,75 @@
   ]
  },
  {
+  "name": "column group with an empty label",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/0/label",
+    "value": ""
+   }
+  ]
+ },
+ {
+  "name": "column group from below 0",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/0/from",
+    "value": -1
+   }
+  ]
+ },
+ {
+  "name": "column group from greater than to",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/0/to",
+    "value": 0
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "column group to beyond the last column",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/1/to",
+    "value": 5
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "column groups that overlap",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/1/from",
+    "value": 2
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "column group with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/8/columnGroups/0/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
   "name": "points block without rows",
   "ops": [
    {

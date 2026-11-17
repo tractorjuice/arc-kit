@@ -81,7 +81,7 @@ const BLOCK_KINDS = {
   },
   table: {
     required: ['columns', 'rows'],
-    fields: { columns: isStringArray, rows: isRowsOfStrings, questions: ROWS }
+    fields: { columns: isStringArray, columnGroups: ROWS, rows: isRowsOfStrings, questions: ROWS }
   }
 };
 const BLOCK_COMMON = { kind: isString, heading: isStringOrNull, page: () => true };
@@ -149,6 +149,31 @@ export function validateData(data) {
       }
     }
   };
+  // A label printed across several columns of a two-level table header, over the block's
+  // columns `from` to `to` (0-based, inclusive). Groups do not overlap.
+  const COLUMN_GROUP = { label: isString, from: Number.isInteger, to: Number.isInteger };
+  const columnGroups = (list, columns, where) => {
+    if (!Array.isArray(list)) return; // absent, or already reported by shape
+    const width = isStringArray(columns) ? columns.length : 0;
+    const spans = [];
+    for (const group of list) {
+      const at = `${where} column group ${JSON.stringify(group && group.label)}`;
+      if (!shape(group, at, COLUMN_GROUP, ['label', 'from', 'to'])) continue;
+      if (group.label === '') errors.push(`${at}: label is empty`);
+      const { from, to } = group;
+      if (!Number.isInteger(from) || !Number.isInteger(to)) continue;
+      if (from < 0) errors.push(`${at}: from ${from} is below 0`);
+      else if (from > to) errors.push(`${at}: from ${from} is after to ${to}`);
+      else if (to >= width) errors.push(`${at}: to ${to} is beyond the last column, ${width - 1}`);
+      else spans.push({ from, to, at });
+    }
+    spans.sort((a, b) => a.from - b.from);
+    let reach = -1; // the last column covered by the groups so far
+    for (const span of spans) {
+      if (span.from <= reach) errors.push(`${span.at}: overlaps another column group`);
+      reach = Math.max(reach, span.to);
+    }
+  };
   const ROW = { id: isString, point: isStringOrNull, why: isStringOrNull, page: () => true, questions: ROWS };
   const rows = (list, where) => {
     if (!Array.isArray(list)) return errors.push(`${where}: rows is not an array`);
@@ -212,6 +237,7 @@ export function validateData(data) {
         if (kind === 'points' || kind === 'manage-it' || (kind === 'check-it' && block.rows !== undefined)) {
           rows(block.rows, here);
         }
+        if (kind === 'table') columnGroups(block.columnGroups, block.columns, here);
         questions(block.questions, here);
       }
     }

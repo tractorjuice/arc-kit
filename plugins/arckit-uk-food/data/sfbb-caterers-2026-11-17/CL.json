@@ -691,7 +691,7 @@
         },
         {
           "kind": "table",
-          "heading": "Frequency of cleaning",
+          "heading": null,
           "columns": [
             "Item",
             "After use",
@@ -701,6 +701,13 @@
             "Other",
             "Precautions e.g. wear gloves or goggles",
             "Method of cleaning"
+          ],
+          "columnGroups": [
+            {
+              "label": "Frequency of cleaning",
+              "from": 1,
+              "to": 5
+            }
           ],
           "rows": [
             [
