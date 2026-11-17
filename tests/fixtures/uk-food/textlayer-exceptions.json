@@ -41,6 +41,13 @@
     ],
     "63": [
       {"parts": ["Ready-", "to-eat"], "as": "Ready-to-eat", "reason": "CK-07 'on the original product label. Ready-to-eat foods should be kept': the word breaks after the first hyphen at a line end, and the image prints the hyphen"}
+    ],
+    "67": [
+      {"parts": ["fridge/", "freezer"], "as": "fridge/freezer", "reason": "MG-02 'e.g. Clear drains and fridge/freezer condensers.': the word breaks after the slash at a line end; the image prints 'fridge/' ending one line and 'freezer' starting the next, and page 66 prints 'fridge/freezer' whole on one line"}
+    ],
+    "71": [
+      {"parts": ["up-to-", "date?"], "as": "up-to-date?", "reason": "MG-04 'what do you do to ensure your allergen information is up-to-date?': the word breaks after the second hyphen at a line end, and the image prints the hyphen"},
+      {"parts": ["phone/", "website"], "as": "phone/website", "reason": "MG-04 'Are your staff trained in how to take orders over the phone/website for food allergy customers?': the word breaks after the slash at a line end; the same row's WHY cell prints 'phone/online' whole on one line"}
     ]
   }
 }
