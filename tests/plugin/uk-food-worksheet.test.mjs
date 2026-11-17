@@ -4,7 +4,9 @@ import { spawnSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { loadData, validateData, main } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
+import {
+  FORMS, FROM_IMAGE_PAGES, QUESTION_TYPES, loadData, validateData, main
+} from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
 const helper = 'plugins/arckit-uk-food/scripts/uk-food.mjs';
 const run = (...args) => spawnSync('node', [helper, ...args], { encoding: 'utf8' });
@@ -78,7 +80,7 @@ test('the CLI exits 1 on invalid data and 2 on usage errors', () => {
 // keep validateData and the JSON schema accepting and rejecting the same files.
 const shared = (name) => JSON.parse(readFileSync(`tests/fixtures/uk-food/${name}`, 'utf8'));
 const asData = (doc) => ({
-  source: doc.source, front: doc.front ?? null, diary: null, limits: null,
+  source: doc.source, front: doc.front ?? null, diary: doc.diary ?? null, limits: null,
   sections: new Map([[doc.section.section.id, doc.section]])
 });
 const apply = (doc, ops) => {
@@ -95,6 +97,28 @@ const apply = (doc, ops) => {
 
 test('the shared all-fields fixture validates', () => {
   assert.deepEqual(validateData(asData(shared('data-every-field.json'))), []);
+});
+
+// validateData and the JSON schema each write out the form names and the question types; the two
+// copies must stay the same list.
+const schema = () =>
+  JSON.parse(readFileSync('plugins/arckit-uk-food/schemas/uk-food-sfbb-data-1.0.schema.json', 'utf8'));
+
+test('the form names in validateData are the schema\'s form names', () => {
+  assert.deepEqual(FORMS, schema().$defs.form.enum);
+});
+
+test('the question types in validateData are the schema\'s question types', () => {
+  assert.deepEqual(QUESTION_TYPES, schema().$defs.question.properties.type.enum);
+});
+
+// fromImage hides a block from the coverage test, so only the diary pages named here may use it.
+test('the pages allowed fromImage are diary pages, in order, each once', () => {
+  assert.ok(Array.isArray(FROM_IMAGE_PAGES));
+  for (const [i, page] of FROM_IMAGE_PAGES.entries()) {
+    assert.ok(Number.isInteger(page) && page >= 78 && page <= 100, `${page} is not a diary page`);
+    if (i > 0) assert.ok(page > FROM_IMAGE_PAGES[i - 1], `${page} is out of order or repeated`);
+  }
 });
 
 test('loadData returns front.json as its page objects, and validateData checks them', () => {

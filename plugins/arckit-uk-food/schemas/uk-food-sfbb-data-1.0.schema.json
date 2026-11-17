@@ -208,11 +208,18 @@
     "sectionBlock": {
       "$ref": "#/$defs/block",
       "not": {
-        "required": [
-          "form"
+        "anyOf": [
+          {
+            "required": [
+              "form"
+            ]
+          },
+          {
+            "$ref": "#/$defs/fromImageBlock"
+          }
         ]
       },
-      "$comment": "A block in a section file: any block but one carrying form, which only front.json and diary.json use."
+      "$comment": "A block in a section file: any block but one carrying form, which only front.json and diary.json use, or fromImage: true, which only diary.json uses."
     },
     "form": {
       "enum": [
@@ -232,6 +239,17 @@
         "packCompletion"
       ],
       "$comment": "Marks a block that later work renders a business's own form from. It is not page text, and is allowed only on blocks in front.json and diary.json."
+    },
+    "fromImageBlock": {
+      "required": [
+        "fromImage"
+      ],
+      "properties": {
+        "fromImage": {
+          "const": true
+        }
+      },
+      "$comment": "A text block whose words are transcribed from the page image because the PDF's text layer does not hold them. The coverage test cannot see it, so it is allowed only in diary.json, and validateData allows it only on the diary pages listed in FROM_IMAGE_PAGES in uk-food.mjs."
     },
     "pagesFile": {
       "type": "object",
@@ -263,7 +281,34 @@
           }
         }
       },
-      "$comment": "front.json (part front) and diary.json (part diary): the pack's pages that are not safe methods, one page object per printed page. validateData also checks what the schema cannot express: part names its own file, pages are in order and each appears once, every block's and row's page is its page object's page, and row and question identifiers are FR-<page>-Pnn and FR-<page>-Qnn in front.json, DY-<page>-Pnn and DY-<page>-Qnn in diary.json, with the page as two digits (three for page 100)."
+      "if": {
+        "properties": {
+          "part": {
+            "const": "front"
+          }
+        },
+        "required": [
+          "part"
+        ]
+      },
+      "then": {
+        "properties": {
+          "pages": {
+            "items": {
+              "properties": {
+                "blocks": {
+                  "items": {
+                    "not": {
+                      "$ref": "#/$defs/fromImageBlock"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "$comment": "front.json (part front) and diary.json (part diary): the pack's pages that are not safe methods, one page object per printed page. validateData also checks what the schema cannot express: part names its own file, pages are in order and each appears once, every block's and row's page is its page object's page, fromImage: true appears only on the diary pages listed in FROM_IMAGE_PAGES, and row and question identifiers are FR-<page>-Pnn and FR-<page>-Qnn in front.json, DY-<page>-Pnn and DY-<page>-Qnn in diary.json, with the page as two digits (three for page 100)."
     },
     "pageObject": {
       "type": "object",
@@ -282,7 +327,8 @@
             "string",
             "null"
           ],
-          "$comment": "The page's printed title, or null when it prints none. Page text on this page."
+          "minLength": 1,
+          "$comment": "The page's printed title, or null when it prints none; never an empty string. Page text on this page."
         },
         "blocks": {
           "type": "array",

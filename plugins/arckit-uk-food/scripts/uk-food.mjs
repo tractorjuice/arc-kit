@@ -16,6 +16,10 @@ export const FORMS = [
   'cleaningSchedule', 'proveItRecords', 'weekPage', 'fourWeeklyReview', 'completionRecord',
   'workingWithFood', 'reviewLog', 'packCompletion'
 ];
+// The diary pages whose text blocks may carry `fromImage: true`: words printed on the page that are not in
+// the PDF's text layer, transcribed from the page image. The coverage test cannot see such a block, so it is
+// allowed nowhere else.
+export const FROM_IMAGE_PAGES = [];
 // `note` is FSA text printed in an answer column that asks nothing: never asked, never unanswered.
 export const QUESTION_TYPES = ['yes-no', 'yes-no-else', 'tick', 'text', 'list', 'note'];
 export const SOURCE_FIELDS = [
@@ -225,7 +229,12 @@ export function validateData(data) {
   // front.json and diary.json: one page object per printed page, in page order. Everything on a
   // page object is on its page, and row and question identifiers name the part and the page.
   const PAGES_FILE = { schema: isString, data: isString, part: isString, pages: Array.isArray };
-  const PAGE_OBJECT = { page: () => true, title: isStringOrNull, blocks: Array.isArray };
+  // A page's printed title, or null when it prints none: never an empty string.
+  const isTitle = (v) => v === null || (isString(v) && v !== '');
+  const PAGE_OBJECT = { page: () => true, title: isTitle, blocks: Array.isArray };
+  // fromImage text is invisible to the coverage test, so it is allowed only on the diary pages listed.
+  const fromImageAllowed = (name, page) => name === 'diary' && FROM_IMAGE_PAGES.includes(page);
+  const FROM_IMAGE_ONLY = `fromImage is allowed only on diary.json pages ${FROM_IMAGE_PAGES.join(', ') || '(none)'}`;
   const pagesFile = (name) => {
     const file = data[name];
     const where = `${name}.json`;
@@ -253,6 +262,7 @@ export function validateData(data) {
         if (isPage(value.page) && value.page !== page) {
           errors.push(`${here}: page ${value.page} is not its page object's page ${page}`);
         }
+        if (value.fromImage === true && !fromImageAllowed(name, page)) errors.push(`${here}: ${FROM_IMAGE_ONLY}`);
         for (const row of rowsOf(value)) {
           if (isString(row.id) && !new RegExp(`^${tag}-P[0-9]{2}$`).test(row.id)) {
             errors.push(`${here} row ${row.id}: identifier is not ${tag}-P and two digits`);
@@ -310,9 +320,11 @@ export function validateData(data) {
       }
       if (!Array.isArray(method.blocks)) continue;
       for (const value of method.blocks) {
-        if (block(value, at) && Object.hasOwn(value, 'form')) {
+        if (!block(value, at)) continue;
+        if (Object.hasOwn(value, 'form')) {
           errors.push(`${at} ${value.kind} block: form is allowed only in front.json and diary.json`);
         }
+        if (value.fromImage === true) errors.push(`${at} ${value.kind} block: ${FROM_IMAGE_ONLY}`);
       }
     }
   }

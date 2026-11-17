@@ -389,12 +389,14 @@ VALIDATOR = Draft202012Validator(SCHEMA, format_checker=FormatChecker())
 SHARED = ROOT / "tests" / "fixtures" / "uk-food"
 EVERY_FIELD = _load(SHARED / "data-every-field.json")["section"]
 EVERY_FIELD_FRONT = _load(SHARED / "data-every-field.json")["front"]
+EVERY_FIELD_DIARY = _load(SHARED / "data-every-field.json")["diary"]
 
 
 def test_schema_is_valid_and_accepts_every_documented_field():
     Draft202012Validator.check_schema(SCHEMA)
     VALIDATOR.validate(EVERY_FIELD)
     VALIDATOR.validate(EVERY_FIELD_FRONT)
+    VALIDATOR.validate(EVERY_FIELD_DIARY)
 
 
 def test_schema_rejects_unknown_keys_and_bad_pages():
@@ -455,7 +457,7 @@ MUTATIONS = [m for m in _load(SHARED / "data-mutations.json") if "schema" in m.g
 
 
 def _schema_ok(doc):
-    return all(VALIDATOR.is_valid(doc[part]) for part in ("source", "section", "front"))
+    return all(VALIDATOR.is_valid(doc[part]) for part in ("source", "section", "front", "diary"))
 
 
 def test_shared_fixture_validates():

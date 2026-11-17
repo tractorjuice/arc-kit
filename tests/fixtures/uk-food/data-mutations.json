@@ -798,5 +798,74 @@
   "checkedBy": [
    "node"
   ]
+ },
+ {
+  "name": "page title empty",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/1/title",
+    "value": ""
+   }
+  ]
+ },
+ {
+  "name": "fromImage true in a section file",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/7/fromImage",
+    "value": true
+   }
+  ]
+ },
+ {
+  "name": "fromImage true in front.json",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/front/pages/0/blocks/0/fromImage",
+    "value": true
+   }
+  ]
+ },
+ {
+  "name": "fromImage true on a diary page not in the list",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/diary/pages/0/blocks/0/fromImage",
+    "value": true
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "diary row identifier with the front prefix",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/diary/pages/1/blocks/0/rows/0/id",
+    "value": "FR-100-P01"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "diary question identifier with the front prefix",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/diary/pages/1/blocks/1/questions/0/id",
+    "value": "FR-100-Q02"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
  }
 ]

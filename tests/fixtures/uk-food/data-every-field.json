@@ -306,5 +306,78 @@
         ]
       }
     ]
+  },
+  "diary": {
+    "schema": "uk-food-sfbb-data-1.0",
+    "data": "sfbb-caterers-2026-11-17",
+    "part": "diary",
+    "pages": [
+      {
+        "page": 81,
+        "title": "INTRODUCTION",
+        "blocks": [
+          {
+            "kind": "text",
+            "heading": "HOW DOES THIS DIARY WORK?",
+            "text": "words",
+            "page": 81,
+            "fromImage": false
+          }
+        ]
+      },
+      {
+        "page": 100,
+        "title": null,
+        "blocks": [
+          {
+            "kind": "points",
+            "heading": null,
+            "columns": [
+              "SAFE METHOD",
+              "CHECK LIST"
+            ],
+            "rows": [
+              {
+                "id": "DY-100-P01",
+                "point": "Reviewed?",
+                "why": null,
+                "page": 100,
+                "questions": [
+                  {
+                    "id": "DY-100-Q01",
+                    "text": "",
+                    "type": "yes-no",
+                    "options": [
+                      "Yes",
+                      "No"
+                    ],
+                    "elseText": null
+                  }
+                ]
+              }
+            ],
+            "page": 100,
+            "form": "fourWeeklyReview"
+          },
+          {
+            "kind": "table",
+            "heading": null,
+            "columns": [],
+            "rows": [],
+            "questions": [
+              {
+                "id": "DY-100-Q02",
+                "text": "NAME:",
+                "type": "text",
+                "options": [],
+                "elseText": null
+              }
+            ],
+            "page": 100,
+            "form": "fourWeeklyReview"
+          }
+        ]
+      }
+    ]
   }
 }
