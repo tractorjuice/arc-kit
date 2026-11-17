@@ -755,6 +755,41 @@ def test_no_figure_is_unaccounted_for():
     assert accounts["limit"] > 0
 
 
+# differences.md: where the FSA's 38 individual sheets, published beside the full pack, differ from it in
+# wording. The sheets are never committed, so their file names are listed here and the note must name each.
+SHEET_FILES = [
+    "02-sfbb-caterers-personal_hygiene_0_0.pdf", "03-sfbb-caterers-pack-food-allergies_0.pdf",
+    "04-sfbb-caterers-cloths_0.pdf", "05-sfbb-caterers-separating-foods_2.pdf",
+    "06-fsa-sfbb-chinese-cuisine-cross-contamination-physical_and_chemical_contamination_2__1_.pdf",
+    "07-sfbb-caterers-pack-pest-control_0_4.pdf", "08-fsa-sfbb-chinese-cuisine-pack-maintenance_1.pdf",
+    "09-sfbb-indian-cuisines-handwashing_0.pdf", "10-sfbb-cleaning-04-your-cleaning-schedule-fix_1.pdf",
+    "11-sfbb-chinese-cleaning-02-cleaning-effectively.pdf", "12-sfbb-indian-cuisines-clean-clear-as-you-go_0.pdf",
+    "13-sfbb-chilling-01-chilled-storage-and-display_4.pdf", "14-fsa-sfbb-chinese-cuisine-chilling_1.pdf",
+    "15-sfbb-chilling-03-defrosting_3_1.pdf", "16-sfbb-chilling-04-freezing.pdf",
+    "17-sfbb-caterer-cooking-01-cooking-safely_0.pdf", "18-sfbb-caterer-cooking-02-foods-that-need-extra-care_0.pdf",
+    "19-sfbb-caterer-cooking-03-reheating_2.pdf", "20-sfbb-caterer-cooking-05-checking-your-menu_0.pdf",
+    "21-sfbb-caterer-cooking-06-hot-holding_0.pdf", "22-sfbb-caterer-cooking-07-ready-to-eat-food.pdf",
+    "23-sfbb-caterer-cooking-04-acrylamide_0.pdf", "24-sfbb-management-01-opening-closing-checks__1__1.pdf",
+    "25-sfbb-management-02-prove-it_4.pdf", "26-sfbb-management-03-managing-food-allergen-information_2_3.pdf",
+    "27-sfbb-management-04-training-and-supervison-customers_4.pdf",
+    "28-sfbb-management-05-suppliers-and-contractors.pdf", "29-sfbb-management-06-stock-control_4.pdf",
+    "30-sfbb-management-07-product-recall_4.pdf", "31-sfbb-management-08-safe-method-completion-record.pdf",
+    "32-fsa-sfbb-diary-front-cover_0.pdf", "33-sfbb-diary-02-introduction_4.pdf",
+    "34-fsa-sfbb-diary-training-record_0.pdf", "35-fsa-sfbb-diary-suppliers-list_1.pdf",
+    "36-fsa-sfbb-contacts-list_0.pdf", "37-fsa-sfbb-cleaning-schedule_0.pdf", "38-fsa-sfbb-prove-it.pdf",
+    "39-sfbb-diary-07-diary-and-4-weekly-review-fixed_0.pdf",
+]
+
+
+def test_differences_names_every_sheet():
+    path = DATA_DIR / "differences.md"
+    assert path.is_file(), "differences.md is missing"
+    text = path.read_text(encoding="utf-8")
+    assert len(SHEET_FILES) == len(set(SHEET_FILES)) == 38
+    assert [name for name in SHEET_FILES if f"`{name}`" not in text] == []
+    assert "Contains public sector information licensed under the Open Government Licence v3.0." in text
+
+
 # The JSON schema, checked against the same files the helper validates by hand.
 
 SCHEMA = _load(ROOT / "plugins" / "arckit-uk-food" / "schemas" / "uk-food-sfbb-data-1.0.schema.json")
