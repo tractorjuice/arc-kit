@@ -230,7 +230,10 @@ def test_a_run_with_nobody_to_answer_finishes_without_inventing(name):
 def test_a_gathering_command_never_invents_an_answer(name):
     _, body = split(command(name))
     assert "never fill in an answer the person has not given" in body
-    assert "NOT YET ANSWERED" in body
+    # How the document shows what nobody confirmed: a question prints NOT YET ANSWERED; an own
+    # entry that is not confirmed is named and its contents left out.
+    shown = "not yet confirmed" if name == "uk-food-own-methods" else "NOT YET ANSWERED"
+    assert shown in body
     assert "proposed" in body and "confirmed" in body
     # Ruling 2: this is a deliberate exception to ArcKit's interview pattern.
     assert "exception" in body and "interview pattern" in body
@@ -319,9 +322,9 @@ def test_no_hand_written_file_restates_a_figure_or_standard(path):
 
 # A word that claims something about a business or a document. Allowed only in a sentence that
 # forbids or denies it, as the header status APPROVED (ruling 18), as the field names Approved By
-# and Proved-safe, and as the pack's own "safe method(s)" (ruling 28).
+# and Proved-safe, as the pack's own "safe method(s)" (ruling 28) and in the command's name.
 CLAIMS = re.compile(r"\b(compliant|compliance|approved|inspected|safe)\b", re.I)
-ALLOWED = re.compile(r"\bAPPROVED\b|\bApproved By\b|Proved-safe|\b[Ss]afe [Mm]ethods?\b")
+ALLOWED = re.compile(r"\bAPPROVED\b|\bApproved By\b|Proved-safe|\b[Ss]afe [Mm]ethods?\b|uk-food-safe-methods")
 DENIAL = re.compile(
     r"\b(never|not|no|nothing|nobody|none|neither|nor|without|cannot|forbids?|avoid|refuses?)\b|n't\b", re.I)
 
@@ -479,6 +482,25 @@ def test_a_body_changed_by_one_character_fails_check(code, project):
     path.write_text("\n".join(lines), encoding="utf-8")
     result = check(code, project, path)
     assert result.returncode == 1, result.stdout + result.stderr
+
+
+@pytest.mark.skipif(shutil.which("node") is None, reason="needs node")
+def test_marking_the_header_after_sign_off_keeps_it_signed_off(project):
+    """The sign-off command edits the header outside the markers, after the helper records the sign-off."""
+    path = build("FOODCOOK", project)
+    signed = run(HELPER, "sign-off", "--doc", "FOODCOOK", "--project", project,
+                 "--name", "Sam Okafor", "--role", "owner", "--version", "1.0", "--date", "2026-11-21")
+    assert signed.returncode == 0, signed.stderr
+    text = path.read_text(encoding="utf-8")
+    for field, value in [("Status", "APPROVED"), ("Reviewed By", "Sam Okafor, owner, 2026-11-21"),
+                         ("Approved By", "Sam Okafor, owner, 2026-11-21")]:
+        old = re.search(rf"^\| \*\*{field}\*\* \| .* \|$", text, re.M).group(0)
+        text = text.replace(old, f"| **{field}** | {value} |")
+    path.write_text(text, encoding="utf-8")
+    assert check("FOODCOOK", project, path).returncode == 0
+    status = json.loads(run(HELPER, "status", "--project", project, "--json").stdout)
+    doc = next(d for d in status["documents"] if d["code"] == "FOODCOOK")
+    assert doc["signedOff"] and doc["signOff"]["file"] == path.name, doc
 
 
 # --- the README and CHANGELOG -----------------------------------------------------
