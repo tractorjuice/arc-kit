@@ -818,12 +818,51 @@ def _run_render_limits_check(*args):
     return subprocess.run([sys.executable, str(script), *map(str, args)], capture_output=True, text=True)
 
 
+def _render_module():
+    spec = importlib.util.spec_from_file_location("render_limits_check",
+                                                  ROOT / "scripts" / "uk-food" / "render-limits-check.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _introduction(text: str) -> str:
+    return text.split("\n## ")[0]
+
+
+def test_render_limits_check_introduction(tmp_path):
+    out = tmp_path / "limits-check.md"
+    assert _run_render_limits_check(DATA_DIR, out).returncode == 0
+    intro = _introduction(out.read_text(encoding="utf-8"))
+    # The PDF as it is on the owner's disk, by default; the FSA's own file name lacks the "01-" prefix.
+    assert "`01-sfbb-caterers-pack-fixed_0_3.pdf` in `~/Documents/ArcKit/food-safety-overlay/sfbb-caterers/`" in intro
+    for words in ("figures and named standards", "not a list of every frequency", "every day",
+                  "beginning of the day", "daily and weekly", "same sentence", "more than one figure",
+                  "safe time and temperature combinations", "page 51", "prints no page numbers"):
+        assert words in intro, words
+    # The two places the pack prints differently, with the pages taken from limits.json.
+    note = next(line for line in intro.splitlines() if "printed differently in two places" in line.lower())
+    assert "\"keep it above 63°C\" (page 60)" in note and "\"kept at 63°C or above\" (page 60)" in note
+    assert "\"High risk ready to eat foods\" (page 40)" in note and "\"Ready-to-eat foods\" (page 63)" in note
+    other = tmp_path / "other.md"
+    assert _run_render_limits_check("--pdf", "/elsewhere/pack.pdf", DATA_DIR, other).returncode == 0
+    assert "`pack.pdf` in `/elsewhere/`" in _introduction(other.read_text(encoding="utf-8"))
+
+
+def test_printed_differently_phrases_are_in_the_data():
+    # Each phrase the note quotes is in the text of a limit with that value, which test_limit_text_is_quoted
+    # holds to the transcribed data.
+    limits = _limits()
+    for value, *phrases in _render_module().PRINTED_DIFFERENTLY:
+        for phrase in phrases:
+            assert any(limit["value"] == value and phrase in limit["text"] for limit in limits), (value, phrase)
+
+
 def test_render_limits_check_writes_one_row_per_limit(tmp_path):
     out = tmp_path / "limits-check.md"
     result = _run_render_limits_check(DATA_DIR, out)
     assert result.returncode == 0, result.stderr
     text = out.read_text(encoding="utf-8")
-    assert _load(DATA_DIR / "source.json")["file"] in text.split("\n\n")[1]  # the introduction names the PDF
     rows = [line for line in text.splitlines() if line.startswith("| ")
             and not line.startswith(("| Value |", "| --- |"))]
     limits = _limits()
@@ -836,7 +875,9 @@ def test_render_limits_check_writes_one_row_per_limit(tmp_path):
 
 
 def test_render_limits_check_usage():
-    assert _run_render_limits_check().returncode == 2
+    # Python itself exits 2 when the script is missing, so the usage message is checked too.
+    result = _run_render_limits_check()
+    assert result.returncode == 2 and "usage:" in result.stderr and "--pdf" in result.stderr, result.stderr
 
 
 # differences.md: where the FSA's 38 individual sheets, published beside the full pack, differ from it in
