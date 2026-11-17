@@ -503,6 +503,24 @@ def test_marking_the_header_after_sign_off_keeps_it_signed_off(project):
     assert doc["signedOff"] and doc["signOff"]["file"] == path.name, doc
 
 
+# --- the generated targets ---------------------------------------------------------
+
+PAPERCLIP_COMMANDS = ROOT / "extensions" / "arckit-paperclip" / "src" / "data" / "commands.json"
+
+
+@pytest.mark.skipif(not PAPERCLIP_COMMANDS.exists(), reason="run scripts/converter.py first")
+@pytest.mark.parametrize("name", WRITING)
+def test_paperclip_runs_the_helper_from_its_package_and_create_project_from_the_project(name):
+    """Only the declared runtime assets ship in Paperclip's package; create-project.sh is the project's."""
+    entries = json.loads(PAPERCLIP_COMMANDS.read_text(encoding="utf-8"))
+    prompt = next(e for e in entries if e["name"] == f"arckit-{name}")["prompt"]
+    assert 'node "{arckit_package_root}/scripts/uk-food.mjs"' in prompt
+    assert 'node "{arckit_package_root}/scripts/generate-document-id.mjs"' in prompt
+    assert "{arckit_package_root}/scripts/bash/" not in prompt
+    if name in GATHERING:
+        assert "bash scripts/bash/create-project.sh --json --force" in prompt
+
+
 # --- the README and CHANGELOG -----------------------------------------------------
 
 

@@ -705,7 +705,7 @@ def convert(commands_dirs, agents_dir):
         frontmatter, command_prompt = extract_frontmatter_and_prompt(command_content)
         description = frontmatter.get("description", "")
         handoffs = frontmatter.get("handoffs", [])
-        has_runtime_assets = bool(frontmatter.get("runtime-assets"))
+        runtime_scripts = [asset for asset in frontmatter.get("runtime-assets") or [] if asset.startswith("scripts/")]
         # Strip Claude-only fields — they have no meaning for Codex/OpenCode/Gemini/Copilot targets
         for field in CLAUDE_ONLY_COMMAND_FIELDS:
             frontmatter.pop(field, None)
@@ -729,11 +729,14 @@ def convert(commands_dirs, agents_dir):
         # Collect entry for Paperclip JSON format
         if "paperclip" in AGENT_CONFIG:
             pc_config = AGENT_CONFIG["paperclip"]
-            # This command runs a bundled calculator, not a project bash helper,
-            # so its scripts also resolve from the installed package.
-            if has_runtime_assets:
-                pc_config = {**pc_config, "script_path_prefix": "{arckit_package_root}/scripts"}
-            pc_prompt = rewrite_paths(prompt, pc_config)
+            # A script the command declares as a runtime asset is bundled, so it
+            # resolves from the installed package. Any other script it runs,
+            # such as the project helper create-project.sh, keeps the project
+            # prefix: the package does not ship it.
+            pc_source = prompt
+            for script in runtime_scripts:
+                pc_source = pc_source.replace(f"${{CLAUDE_PLUGIN_ROOT}}/{script}", f"{{arckit_package_root}}/{script}")
+            pc_prompt = rewrite_paths(pc_source, pc_config)
             pc_prompt = rewrite_hook_dependencies(pc_prompt, pc_config)
             pc_prompt = neutralise_question_tool(pc_prompt)
             template_content = read_template_for_command(

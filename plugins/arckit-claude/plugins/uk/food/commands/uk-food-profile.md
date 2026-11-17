@@ -25,7 +25,6 @@ allowed-tools:
   - Bash(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
   - Bash(bash "${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh" *)
   - Bash(${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh *)
-  - Bash(mkdir -p projects)
   - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/uk-food.mjs" *)
   - Bash(node "${CLAUDE_PLUGIN_ROOT}/scripts/generate-document-id.mjs" *)
 ---
