@@ -864,5 +864,200 @@
   "checkedBy": [
    "node"
   ]
+ },
+ {
+  "name": "limits file wrong schema",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/schema",
+    "value": "other"
+   }
+  ]
+ },
+ {
+  "name": "limits file wrong data id",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/data",
+    "value": "other"
+   }
+  ]
+ },
+ {
+  "name": "limits file with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "limits file with no limits",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits",
+    "value": []
+   }
+  ]
+ },
+ {
+  "name": "limit with unknown key",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/surprise",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "name": "limit without text",
+  "ops": [
+   {
+    "op": "delete",
+    "path": "/limits/limits/1/text"
+   }
+  ]
+ },
+ {
+  "name": "limit with an empty value",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/value",
+    "value": ""
+   }
+  ]
+ },
+ {
+  "name": "limit page outside 1 to 100",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/page",
+    "value": 101
+   }
+  ]
+ },
+ {
+  "name": "limit identifier not L and two digits",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/id",
+    "value": "L2"
+   }
+  ]
+ },
+ {
+  "name": "limit identifier repeated",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/id",
+    "value": "L-01"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "limit identifier out of sequence",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/id",
+    "value": "L-03"
+   },
+   {
+    "op": "set",
+    "path": "/limits/limits/2/id",
+    "value": "L-02"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "limit method neither a safe method nor front nor diary",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/method",
+    "value": "cooking"
+   }
+  ]
+ },
+ {
+  "name": "limit method naming a safe method that does not exist",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/method",
+    "value": "CK-07"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "limit page outside its safe method's pages",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/page",
+    "value": 67
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "front limit page outside 1 to 10",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/0/page",
+    "value": 11
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "diary limit page outside 78 to 100",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/2/page",
+    "value": 77
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
+ },
+ {
+  "name": "limit text that does not contain its value",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/limits/limits/1/value",
+    "value": "75°C"
+   }
+  ],
+  "checkedBy": [
+   "node"
+  ]
  }
 ]

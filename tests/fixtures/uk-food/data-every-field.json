@@ -379,5 +379,32 @@
         ]
       }
     ]
+  },
+  "limits": {
+    "schema": "uk-food-sfbb-data-1.0",
+    "data": "sfbb-caterers-2026-11-17",
+    "limits": [
+      {
+        "id": "L-01",
+        "value": "28 days",
+        "text": "Register at least 28 days before you open.",
+        "method": "front",
+        "page": 2
+      },
+      {
+        "id": "L-02",
+        "value": "63°C",
+        "text": "Keep it hot, at 63°C or above.",
+        "method": "CK-06",
+        "page": 65
+      },
+      {
+        "id": "L-03",
+        "value": "4 weeks",
+        "text": "Calibrated in the last 4 weeks?",
+        "method": "diary",
+        "page": 100
+      }
+    ]
   }
 }

@@ -23,6 +23,8 @@ export const FORMS = [
 // lacks Friday's printed prompt), 99 the example 4-weekly review. The schema's $defs.fromImagePage repeats
 // this list; a Node test keeps the two the same.
 export const FROM_IMAGE_PAGES = [87, 89, 94, 99];
+// The pages of front.json and diary.json, first and last: a limit outside a safe method lies within them.
+export const PART_PAGE_RANGES = { front: [1, 10], diary: [78, 100] };
 // `note` is FSA text printed in an answer column that asks nothing: never asked, never unanswered.
 export const QUESTION_TYPES = ['yes-no', 'yes-no-else', 'tick', 'text', 'list', 'note'];
 export const SOURCE_FIELDS = [
@@ -43,8 +45,9 @@ const readJson = (path) => {
 const readOptional = (dir, name) =>
   existsSync(join(dir, `${name}.json`)) ? readJson(join(dir, `${name}.json`)) : null;
 
-// Loads every data file that exists. front, diary and limits are null until they are transcribed;
-// front and diary are each { schema, data, part, pages: [{ page, title, blocks }] }.
+// Loads every data file that exists; a file that does not exist is null. front and diary are each
+// { schema, data, part, pages: [{ page, title, blocks }] }; limits is { schema, data, limits: [{ id,
+// value, text, method, page }] }, derived from the other files rather than transcribed.
 export function loadData(dataDir) {
   const sections = new Map();
   for (const id of SECTION_IDS) {
@@ -332,6 +335,58 @@ export function validateData(data) {
     }
   }
   pagesFile('diary');
+
+  // limits.json: one entry per place the pack prints a figure a business must work to, numbered in order.
+  const LIMITS_FILE = { schema: isString, data: isString, limits: Array.isArray };
+  const isText = (v) => isString(v) && v !== '';
+  const LIMIT = { id: isString, value: isText, text: isText, method: isString, page: () => true };
+  const methodPages = new Map();
+  for (const [, file] of data.sections) {
+    for (const method of Array.isArray(file?.methods) ? file.methods : []) {
+      if (isObject(method) && isString(method.id) && Array.isArray(method.pages)) {
+        methodPages.set(method.id, method.pages);
+      }
+    }
+  }
+  const limitsFile = () => {
+    const file = data.limits;
+    const where = 'limits.json';
+    if (file === null || file === undefined) return;
+    if (!shape(file, where, LIMITS_FILE, ['schema', 'data', 'limits'])) return;
+    if (file.schema !== SCHEMA_ID) errors.push(`${where}: schema is not ${SCHEMA_ID}`);
+    if (file.data !== DATA_ID) errors.push(`${where}: data is not ${DATA_ID}`);
+    if (!Array.isArray(file.limits)) return;
+    if (file.limits.length === 0) errors.push(`${where}: limits is empty`);
+    file.limits.forEach((limit, index) => {
+      const at = `${where} limit ${limit && limit.id}`;
+      if (!shape(limit, at, LIMIT, Object.keys(LIMIT))) return;
+      claim(limit.id, at);
+      const expected = `L-${String(index + 1).padStart(2, '0')}`;
+      if (isString(limit.id) && limit.id !== expected) {
+        errors.push(`${at}: identifier is not ${expected}; limits are numbered L-01, L-02 and so on in order`);
+      }
+      needPage(limit.page, at);
+      let pages = null;
+      let described = '';
+      if (Object.hasOwn(PART_PAGE_RANGES, limit.method)) {
+        const [first, last] = PART_PAGE_RANGES[limit.method];
+        pages = Array.from({ length: last - first + 1 }, (_, i) => first + i);
+        described = `${first} to ${last}`;
+      } else if (methodPages.has(limit.method)) {
+        pages = methodPages.get(limit.method);
+        described = pages.join(', ');
+      } else {
+        errors.push(`${at}: method ${JSON.stringify(limit.method)} is not a safe method, front or diary`);
+      }
+      if (pages && isPage(limit.page) && !pages.includes(limit.page)) {
+        errors.push(`${at}: page ${limit.page} is not one of ${limit.method}'s pages (${described})`);
+      }
+      if (isText(limit.text) && isText(limit.value) && !limit.text.includes(limit.value)) {
+        errors.push(`${at}: text does not contain value ${JSON.stringify(limit.value)}`);
+      }
+    });
+  };
+  limitsFile();
   return errors;
 }
 

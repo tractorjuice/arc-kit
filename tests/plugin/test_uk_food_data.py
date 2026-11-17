@@ -12,11 +12,13 @@ in two at a line break.
 """
 import importlib.util
 import json
+import re
 import shutil
 import subprocess
 import sys
 from collections import Counter
 from pathlib import Path
+from typing import NamedTuple
 
 import pytest
 from jsonschema import Draft202012Validator, FormatChecker
@@ -534,6 +536,225 @@ def test_completion_record_is_in_printed_order():
     assert names == COMPLETION_RECORD_ORDER
 
 
+# limits.json: every number, limit and standard the pack prints that a business must work to, one entry
+# for each place it is printed. It is derived from the transcribed files, not page text, so the coverage
+# tests never read it; instead each entry's text must be quoted exactly from the data.
+
+LIMITS = DATA_DIR / "limits.json"
+
+
+def _limits() -> list[dict]:
+    assert LIMITS.is_file(), "limits.json is missing"
+    return _load(LIMITS)["limits"]
+
+
+def _file_of(method: str) -> str:
+    """The data file a limit's method points to: front, diary, or the section its identifier starts with."""
+    return method if method in PART_PAGES else method[:2]
+
+
+def _parts(name: str) -> list[tuple[int, str | None, str]]:
+    """(page, method id, part) for each "\\n"-separated part of each page-text string in a data file."""
+    return [(page, method, part) for page, text, method in strings_of(_load(DATA_DIR / f"{name}.json"))
+            for part in text.split("\n")]
+
+
+def unquoted_limits(limits: list[dict]) -> list[str]:
+    """Identifiers of limits whose text is not part of a string on their page, in their method's file."""
+    parts = {name: _parts(name) for name in DATA_FILES}
+    unquoted = []
+    for limit in limits:
+        name = _file_of(limit["method"])
+        owner = None if name in PART_PAGES else limit["method"]  # front and diary strings belong to no method
+        if not any(page == limit["page"] and method == owner and limit["text"] in part
+                   for page, method, part in parts[name]):
+            unquoted.append(limit["id"])
+    return unquoted
+
+
+def test_limit_text_is_quoted():
+    assert not unquoted_limits(_limits())
+
+
+def _limit(limits: list[dict], value: str, page: int) -> dict:
+    return next(limit for limit in limits if (limit["value"], limit["page"]) == (value, page))
+
+
+def test_a_limit_not_quoted_from_its_page_is_reported():
+    limits = json.loads(json.dumps(_limits()))
+    reworded = _limit(limits, "63°C", 60)
+    reworded["text"] = reworded["text"].replace("at 63°C or above", "above 63°C")
+    moved = _limit(limits, "90°C", 15)
+    moved["page"] = 16
+    assert unquoted_limits(limits) == [moved["id"], reworded["id"]]
+
+
+def test_a_figure_with_no_limit_is_reported():
+    limits = [limit for limit in _limits() if limit["value"] != "90°C"]
+    _, unaccounted, _ = figure_accounts(limits)
+    assert [(name, page, figure) for name, page, _, figure, _ in unaccounted] == [("XC", 15, "90°C")]
+
+
+# Figures the table must hold, each as the data prints it: the degree sign U+00B0, the raised zero U+2070
+# that pages 56, 57 and 67 print instead, and the en dash U+2013. (value, method, page, words its text must
+# also hold, where the value alone does not say which rule it is.) A cooking temperature and its time are
+# one printed cell, so they are one value and cannot be separated.
+EXPECTED_LIMITS = [
+    ("63°C", "CK-06", 60, None),
+    ("8°C", "CH-01", 41, None),
+    ("5°C", "CH-01", 41, None),
+    ("-18°C", "MG-03", 68, None),
+    ("80°C for at least 6 seconds", "CK-01", 51, None),
+    ("75°C for at least 30 seconds", "CK-01", 51, None),
+    ("70°C for at least 2 minutes", "CK-01", 51, None),
+    ("65°C for at least 10 minutes", "CK-01", 51, None),
+    ("60°C for at least 45 minutes", "CK-01", 51, None),
+    ("between -1°C and 1°C", "MG-03", 69, "iced water"),
+    ("between 99°C and 101°C", "MG-03", 69, "boiling water"),
+    ("48 hours", "XC-01", 14, None),
+    ("90°C", "XC-02", 15, None),
+    ("3 days", "CH-01", 40, None),
+    ("3 days", "CK-07", 63, None),
+    ("1 day", "CK-07", 63, "Cooked rice"),
+    ("four hours", "CH-01", 41, "‘4 hour rule’"),  # the four-hour rule
+    ("two hours", "CK-06", 60, "up to two hours, but you can only do this once"),  # the two-hour rule
+    ("between 0°C and 4°C", "CK-02", 53, None),
+    ("60 days", "CK-02", 52, None),
+    ("28 days", "front", 2, None),
+    ("120⁰C", "CK-04", 56, "Acrylamide"),
+    ("175⁰C", "CK-04", 57, "oil temperature"),
+    ("30–180 mins", "CK-04", 56, "Soak"),
+    ("BS EN 1276", "CL-02", 31, None),
+    ("BS EN 13697", "CL-02", 31, None),
+    ("BS EN 1499", "CL-01", 29, None),
+    ("BS EN 1500", "CL-01", 30, None),
+    ("10mg/ kg", "XC-04", 20, "Sulphur dioxide"),
+    ("within 1⁰C of 100⁰C and 0⁰C", "MG-02", 67, "boiling water and melting ice"),
+]
+
+
+@pytest.mark.parametrize("value, method, page, words", EXPECTED_LIMITS,
+                         ids=[f"{v} {m} p{p}" for v, m, p, _ in EXPECTED_LIMITS])
+def test_limits_present(value, method, page, words):
+    found = [limit for limit in _limits() if (limit["value"], limit["method"], limit["page"]) == (value, method, page)
+             and (words is None or words in limit["text"])]
+    assert found, (value, method, page, words)
+
+
+# Completeness: every figure in the front matter and the five section files (not the diary's forms and
+# worked examples) is either inside some limit's text on its page, in its own method, or matched by one
+# of these patterns for things that are not limits. Each pattern is narrow, names the pages it may match,
+# and gives its reason; a figure matched by neither fails the test, and so does a pattern that matches
+# nothing, so the list cannot go stale.
+FIGURE = re.compile(r"\S*\d\S*")
+NUMBER_WORD = re.compile(r"\b(?:one|two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen"
+                         r"|fourteen|once|twice|half)\b", re.IGNORECASE)
+
+
+class NotALimit(NamedTuple):
+    where: dict[str, tuple[int, ...]]
+    pattern: str
+    reason: str
+
+
+THINK_TWICE_PAGES = {"XC": (18, 20, 22, 24), "CL": (30, 33), "CH": (41, 45, 47), "CK": (54, 57, 60, 63),
+                     "MG": (77,)}
+NOT_LIMITS = [
+    NotALimit(THINK_TWICE_PAGES, r"^THINK TWICE!$", "the heading of a THINK TWICE! box"),
+    NotALimit({"front": (8,)}, r"\brating between 0 and 5\b|^[0-5] – ",
+              "the food hygiene rating scale an inspector awards, not a figure the business works to"),
+    NotALimit({"front": (10,), "CL": (29,)}, r"^Step [1-6]:", "the number of a handwashing step"),
+    NotALimit({"CL": (31, 37), "CH": (44, 45), "MG": (75,)}, r"^[1-7]\. ", "the number of an item in a numbered list"),
+    NotALimit({"front": (5,), "MG": (73,)}, r"\b4-weekly review\b",
+              "the name of the diary's 4-weekly review, a form, not a figure"),
+    NotALimit({"XC": (20,)}, r"\bring 999\b", "the emergency telephone number in the allergic reaction box"),
+    NotALimit({"MG": (70,)}, r"\bSince October 2021\b", "the date a labelling law came in; a date, not a limit"),
+    NotALimit({"XC": (17, 18), "CL": (31, 32, 33)},
+              r"‘2 stage clean’|\btwo stage clean(?:ing)?\b|\btwo stages\b",
+              "the name of the two stage clean, a procedure CL-02 sets out step by step: a count of stages,"
+              " not a figure to measure against"),
+    NotALimit({"CL": (37,)}, r"\bA two-in-one product\b", "the name of a kind of product (a sanitiser)"),
+    NotALimit({"front": (4,), "XC": (11, 12, 13, 15), "CK": (52, 56)},
+              r"\bone of (?:these symbols|the most common causes|the best ways|the top causes|the main sources"
+              r"|these steps)\b",
+              "'one of', picking one of several things, not a quantity"),
+    NotALimit({"XC": (24, 26), "CL": (34,), "CH": (43, 47), "CK": (63,), "MG": (69,)},
+              r"\b(?:if you do not have one already|if you have one|or one that has been washed|choose the one that"
+              r"|buy a new one|if there is one|if it has one)\b",
+              "'one' as a pronoun standing for something already named"),
+    NotALimit({"front": (6,), "CH": (41,)}, r"\bone section at a time\b|\bsmall batches one at a time\b",
+              "the order of working, one thing after another, not a quantity"),
+    NotALimit({"front": (10,), "CL": (29,)}, r"\bpalm of one hand\b", "which hand, in a handwashing step"),
+    NotALimit({"XC": (19,)}, r"\bfrom one food to another\b", "how allergens move between foods, not a quantity"),
+    NotALimit({"CL": (32,)}, r"\bIf you only have one sink\b", "a kitchen layout the method asks about"),
+    NotALimit({"CH": (42, 43)}, r"\bYOU CAN USE ONE OR MORE OF THESE\b",
+              "how many of the printed chilling options the reader may choose"),
+    NotALimit({"MG": (68, 73)}, r"\bmore than one (?:way|person|shift|signature)\b|\busing one option\b",
+              "a description of several ways, people or shifts, not a quantity to work to"),
+    NotALimit({"MG": (72,)}, r"\bone-off dishes\b", "'one-off', meaning occasional"),
+    NotALimit({"XC": (19,), "CH": (45, 47), "CK": (63,), "MG": (73,)},
+              r"\b(?:foods once opened|Once food has been defrosted|Once the food is defrosted"
+              r"|once it has started to defrost|keep food once prepared or opened|Once you have worked)\b",
+              "'once' meaning 'after' or 'as soon as', not a count"),
+    NotALimit({"XC": (22,)}, r"\bdesigned to be used once\b", "how packaging is designed, not a rule for the business"),
+    NotALimit({"CH": (43,)}, r"\bYou will only need to do this once\b",
+              "a trial of chilling options run one time, not a limit"),
+    NotALimit({"CH": (42,)}, r"\bCut joints of meat in half\b",
+              "a way to chill a joint faster: a technique, not a figure to measure against"),
+]
+
+
+def _figures(part: str) -> list[tuple[int, int]]:
+    """Spans of the figures in a part: each token holding a digit, less any punctuation at its edges, and each
+    number word."""
+    spans = []
+    for match in FIGURE.finditer(part):
+        start, end = match.span()
+        while not (part[start].isalnum() or part[start] == "°"):
+            start += 1
+        while not (part[end - 1].isalnum() or part[end - 1] == "°"):
+            end -= 1
+        spans.append((start, end))
+    return spans + [match.span() for match in NUMBER_WORD.finditer(part)]
+
+
+def _inside(pattern: re.Pattern, part: str, start: int, end: int) -> bool:
+    """Whether the span lies inside a match of `pattern` in `part`."""
+    return any(m.start() <= start and end <= m.end() for m in pattern.finditer(part))
+
+
+def figure_accounts(limits: list[dict]) -> tuple[Counter, list, set[int]]:
+    """Each figure's account: "limit" or the reason of the pattern that matched it. Returns the count per
+    account, the figures with none, and the indices of the patterns used."""
+    patterns = [re.compile(entry.pattern) for entry in NOT_LIMITS]
+    accounts: Counter = Counter()
+    unaccounted, used = [], set()
+    for name in ["front", *METHOD_COUNTS]:
+        for page, method, part in _parts(name):
+            owner = "front" if name == "front" else method
+            texts = [re.compile(re.escape(limit["text"])) for limit in limits
+                     if limit["page"] == page and limit["method"] == owner]
+            for start, end in _figures(part):
+                if any(_inside(text, part, start, end) for text in texts):
+                    accounts["limit"] += 1
+                    continue
+                matched = [i for i, entry in enumerate(NOT_LIMITS)
+                           if page in entry.where.get(name, ()) and _inside(patterns[i], part, start, end)]
+                if matched:
+                    used.update(matched)
+                    accounts[NOT_LIMITS[matched[0]].reason] += 1
+                else:
+                    unaccounted.append((name, page, method, part[start:end], part))
+    return accounts, unaccounted, used
+
+
+def test_no_figure_is_unaccounted_for():
+    accounts, unaccounted, used = figure_accounts(_limits())
+    assert not unaccounted, unaccounted
+    assert used == set(range(len(NOT_LIMITS))), [NOT_LIMITS[i].pattern for i in set(range(len(NOT_LIMITS))) - used]
+    assert accounts["limit"] > 0
+
+
 # The JSON schema, checked against the same files the helper validates by hand.
 
 SCHEMA = _load(ROOT / "plugins" / "arckit-uk-food" / "schemas" / "uk-food-sfbb-data-1.0.schema.json")
@@ -542,6 +763,7 @@ SHARED = ROOT / "tests" / "fixtures" / "uk-food"
 EVERY_FIELD = _load(SHARED / "data-every-field.json")["section"]
 EVERY_FIELD_FRONT = _load(SHARED / "data-every-field.json")["front"]
 EVERY_FIELD_DIARY = _load(SHARED / "data-every-field.json")["diary"]
+EVERY_FIELD_LIMITS = _load(SHARED / "data-every-field.json")["limits"]
 
 
 def test_schema_is_valid_and_accepts_every_documented_field():
@@ -549,6 +771,7 @@ def test_schema_is_valid_and_accepts_every_documented_field():
     VALIDATOR.validate(EVERY_FIELD)
     VALIDATOR.validate(EVERY_FIELD_FRONT)
     VALIDATOR.validate(EVERY_FIELD_DIARY)
+    VALIDATOR.validate(EVERY_FIELD_LIMITS)
 
 
 def test_schema_rejects_unknown_keys_and_bad_pages():
@@ -561,7 +784,8 @@ def test_schema_rejects_unknown_keys_and_bad_pages():
 
 
 def test_data_files_match_schema():
-    for name in ["source", *DATA_FILES]:
+    assert LIMITS.is_file(), "limits.json is missing"
+    for name in ["source", *DATA_FILES, "limits"]:
         path = DATA_DIR / f"{name}.json"
         if path.is_file():
             VALIDATOR.validate(_load(path))
@@ -609,7 +833,7 @@ MUTATIONS = [m for m in _load(SHARED / "data-mutations.json") if "schema" in m.g
 
 
 def _schema_ok(doc):
-    return all(VALIDATOR.is_valid(doc[part]) for part in ("source", "section", "front", "diary"))
+    return all(VALIDATOR.is_valid(doc[part]) for part in ("source", "section", "front", "diary", "limits"))
 
 
 def test_shared_fixture_validates():

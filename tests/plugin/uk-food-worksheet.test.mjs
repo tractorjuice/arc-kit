@@ -5,7 +5,7 @@ import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import {
-  FORMS, FROM_IMAGE_PAGES, QUESTION_TYPES, loadData, validateData, main
+  DEFAULT_DATA_DIR, FORMS, FROM_IMAGE_PAGES, QUESTION_TYPES, loadData, validateData, main
 } from '../../plugins/arckit-uk-food/scripts/uk-food.mjs';
 
 const helper = 'plugins/arckit-uk-food/scripts/uk-food.mjs';
@@ -80,7 +80,7 @@ test('the CLI exits 1 on invalid data and 2 on usage errors', () => {
 // keep validateData and the JSON schema accepting and rejecting the same files.
 const shared = (name) => JSON.parse(readFileSync(`tests/fixtures/uk-food/${name}`, 'utf8'));
 const asData = (doc) => ({
-  source: doc.source, front: doc.front ?? null, diary: doc.diary ?? null, limits: null,
+  source: doc.source, front: doc.front ?? null, diary: doc.diary ?? null, limits: doc.limits ?? null,
   sections: new Map([[doc.section.section.id, doc.section]])
 });
 const apply = (doc, ops) => {
@@ -150,6 +150,27 @@ test('loadData returns front.json as its page objects, and validateData checks t
   assert.deepEqual(validateData(d), []);
   d.front.part = 'diary';
   assert.match(validateData(d).join('\n'), /front\.json: part "diary" is not front/);
+});
+
+test('loadData returns limits.json, and validateData checks it against the safe methods', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'uk-food-'));
+  const { section, front, diary, limits } = shared('data-every-field.json');
+  writeFileSync(join(dir, 'source.json'), JSON.stringify(source()));
+  writeFileSync(join(dir, `${section.section.id}.json`), JSON.stringify(section));
+  writeFileSync(join(dir, 'front.json'), JSON.stringify(front));
+  writeFileSync(join(dir, 'diary.json'), JSON.stringify(diary));
+  writeFileSync(join(dir, 'limits.json'), JSON.stringify(limits));
+  const d = loadData(dir);
+  assert.deepEqual(d.limits, limits);
+  assert.deepEqual(validateData(d), []);
+  d.sections.clear();
+  assert.match(validateData(d).join('\n'), /limit L-02: method "CK-06" is not a safe method, front or diary/);
+});
+
+test('the shipped limits.json is loaded and valid', () => {
+  const d = loadData(DEFAULT_DATA_DIR);
+  assert.ok(d.limits && d.limits.limits.length > 0, 'limits.json is missing or empty');
+  assert.deepEqual(validateData(d), []);
 });
 
 for (const mutation of shared('data-mutations.json')) {

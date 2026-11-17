@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://arckit.org/schemas/uk-food-sfbb-data-1.0.schema.json",
   "title": "UK food overlay: SFBB caterers pack data, version 1.0",
-  "description": "Shape of every file in plugins/arckit-uk-food/data/<data id>/. Each file validates against one entry of the oneOf below; the limits file is added to it later.",
+  "description": "Shape of every JSON file in plugins/arckit-uk-food/data/<data id>/. Each file validates against one entry of the oneOf below.",
   "oneOf": [
     {
       "$ref": "#/$defs/source"
@@ -12,6 +12,9 @@
     },
     {
       "$ref": "#/$defs/pagesFile"
+    },
+    {
+      "$ref": "#/$defs/limitsFile"
     }
   ],
   "$defs": {
@@ -318,6 +321,65 @@
         }
       },
       "$comment": "front.json (part front) and diary.json (part diary): the pack's pages that are not safe methods, one page object per printed page. validateData also checks what the schema cannot express: part names its own file, pages are in order and each appears once, every block's and row's page is its page object's page, and row and question identifiers are FR-<page>-Pnn and FR-<page>-Qnn in front.json, DY-<page>-Pnn and DY-<page>-Qnn in diary.json, with the page as two digits (three for page 100)."
+    },
+    "limitsFile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "data",
+        "limits"
+      ],
+      "properties": {
+        "schema": {
+          "const": "uk-food-sfbb-data-1.0"
+        },
+        "data": {
+          "const": "sfbb-caterers-2026-11-17"
+        },
+        "limits": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/limit"
+          }
+        }
+      },
+      "$comment": "limits.json: every number, limit and standard the pack prints that a business must work to, one entry for each place it is printed. It is derived from the transcribed files, not page text. validateData also checks what the schema cannot express: identifiers are L-01, L-02 and so on in order, none repeated; method names a safe method in the section files, or is front or diary; page is one of that safe method's pages, or 1 to 10 for front, 78 to 100 for diary; text contains value."
+    },
+    "limit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "value",
+        "text",
+        "method",
+        "page"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^L-[0-9]{2,}$"
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "$comment": "The figure exactly as the data holds it, character for character: a raised zero (U+2070) where the pack prints one, never tidied to a degree sign."
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "$comment": "The FSA sentence or cell paragraph the figure comes from, quoted exactly from one part of a data string on the page."
+        },
+        "method": {
+          "type": "string",
+          "pattern": "^(?:[A-Z]{2}-[0-9]{2}|front|diary)$"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        }
+      }
     },
     "pageObject": {
       "type": "object",
