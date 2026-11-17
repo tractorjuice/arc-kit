@@ -249,7 +249,16 @@
           "const": true
         }
       },
-      "$comment": "A text block whose words are transcribed from the page image because the PDF's text layer does not hold them. The coverage test cannot see it, so it is allowed only in diary.json, and validateData allows it only on the diary pages listed in FROM_IMAGE_PAGES in uk-food.mjs."
+      "$comment": "A text block whose words are transcribed from the page image because the PDF's text layer does not hold them. The coverage test cannot see it, so it is allowed only in diary.json, on the pages in fromImagePage."
+    },
+    "fromImagePage": {
+      "enum": [
+        87,
+        89,
+        94,
+        99
+      ],
+      "$comment": "The diary pages whose blocks may carry fromImage: true. It must equal FROM_IMAGE_PAGES in uk-food.mjs; a Node test ties the two."
     },
     "pagesFile": {
       "type": "object",
@@ -308,7 +317,7 @@
           }
         }
       },
-      "$comment": "front.json (part front) and diary.json (part diary): the pack's pages that are not safe methods, one page object per printed page. validateData also checks what the schema cannot express: part names its own file, pages are in order and each appears once, every block's and row's page is its page object's page, fromImage: true appears only on the diary pages listed in FROM_IMAGE_PAGES, and row and question identifiers are FR-<page>-Pnn and FR-<page>-Qnn in front.json, DY-<page>-Pnn and DY-<page>-Qnn in diary.json, with the page as two digits (three for page 100)."
+      "$comment": "front.json (part front) and diary.json (part diary): the pack's pages that are not safe methods, one page object per printed page. validateData also checks what the schema cannot express: part names its own file, pages are in order and each appears once, every block's and row's page is its page object's page, and row and question identifiers are FR-<page>-Pnn and FR-<page>-Qnn in front.json, DY-<page>-Pnn and DY-<page>-Qnn in diary.json, with the page as two digits (three for page 100)."
     },
     "pageObject": {
       "type": "object",
@@ -334,6 +343,29 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/block"
+          }
+        }
+      },
+      "if": {
+        "not": {
+          "properties": {
+            "page": {
+              "$ref": "#/$defs/fromImagePage"
+            }
+          },
+          "required": [
+            "page"
+          ]
+        }
+      },
+      "then": {
+        "properties": {
+          "blocks": {
+            "items": {
+              "not": {
+                "$ref": "#/$defs/fromImageBlock"
+              }
+            }
           }
         }
       }

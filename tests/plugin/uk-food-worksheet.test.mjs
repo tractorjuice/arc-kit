@@ -112,6 +112,10 @@ test('the question types in validateData are the schema\'s question types', () =
   assert.deepEqual(QUESTION_TYPES, schema().$defs.question.properties.type.enum);
 });
 
+test('the pages allowed fromImage in validateData are the schema\'s pages', () => {
+  assert.deepEqual(FROM_IMAGE_PAGES, schema().$defs.fromImagePage.enum);
+});
+
 // fromImage hides a block from the coverage test, so only the diary pages named here may use it.
 test('the pages allowed fromImage are diary pages, in order, each once', () => {
   assert.ok(Array.isArray(FROM_IMAGE_PAGES));
