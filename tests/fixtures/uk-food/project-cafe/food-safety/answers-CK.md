@@ -183,6 +183,7 @@ On: 2026-11-20
 Source:
 
 ### CK-04-Q06
+> Where possible, when making home-made chips, or cut potatoes that are going to be deep-fried, follow one of these steps:
 > Soak (for 30–180 mins) in cold water after cutting. Rinse with clean water and drain.
 > TICK IF YOU DO THIS  (yes if you do this / no)
 Answer: no
@@ -192,6 +193,7 @@ On: 2026-11-20
 Source:
 
 ### CK-04-Q07
+> Where possible, when making home-made chips, or cut potatoes that are going to be deep-fried, follow one of these steps:
 > Or - Soak for a few minutes in warm water. Rinse with clean water and drain.
 > TICK IF YOU DO THIS  (yes if you do this / no)
 Answer: no
@@ -201,6 +203,7 @@ On: 2026-11-20
 Source:
 
 ### CK-04-Q08
+> Where possible, when making home-made chips, or cut potatoes that are going to be deep-fried, follow one of these steps:
 > Or - blanch potatoes before cooking.
 > TICK IF YOU DO THIS  (yes if you do this / no)
 Answer: no
@@ -210,6 +213,7 @@ On: 2026-11-20
 Source:
 
 ### CK-04-Q09
+> Where possible, and when the preparation process allows, when making bread or dough products follow this step:
 > Extend the yeast fermentation time.
 > TICK IF YOU DO THIS  (yes if you do this / no)
 Answer: no

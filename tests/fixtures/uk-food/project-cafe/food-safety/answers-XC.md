@@ -185,6 +185,7 @@ Source:
 
 ### XC-02-Q04
 > DIFFERENT CLOTHS FOR DIFFERENT JOBS
+> Use disposable cloths or paper towels for the following jobs:
 > Wiping surfaces
 > DO YOU DO THIS? / IF NOT, WHAT DO YOU DO?  (yes, or say what you do instead)
 Answer: yes
@@ -195,6 +196,7 @@ Source:
 
 ### XC-02-Q05
 > DIFFERENT CLOTHS FOR DIFFERENT JOBS
+> Use disposable cloths or paper towels for the following jobs:
 > Mopping up spills
 > DO YOU DO THIS? / IF NOT, WHAT DO YOU DO?  (yes, or say what you do instead)
 Answer: yes
@@ -205,6 +207,7 @@ Source:
 
 ### XC-02-Q06
 > DIFFERENT CLOTHS FOR DIFFERENT JOBS
+> Use disposable cloths or paper towels for the following jobs:
 > Wiping hands
 > DO YOU DO THIS? / IF NOT, WHAT DO YOU DO?  (yes, or say what you do instead)
 Answer: yes
@@ -215,6 +218,7 @@ Source:
 
 ### XC-02-Q07
 > DIFFERENT CLOTHS FOR DIFFERENT JOBS
+> Use disposable cloths or paper towels for the following jobs:
 > Wiping sides of dishes before serving
 > DO YOU DO THIS? / IF NOT, WHAT DO YOU DO?  (yes, or say what you do instead)
 Answer: yes
@@ -225,6 +229,7 @@ Source:
 
 ### XC-02-Q08
 > DIFFERENT CLOTHS FOR DIFFERENT JOBS
+> Use disposable cloths or paper towels for the following jobs:
 > Drying ingredients
 > DO YOU DO THIS? / IF NOT, WHAT DO YOU DO?  (yes, or say what you do instead)
 Answer: We never dry ingredients with a cloth: salad leaves go through a salad spinner.

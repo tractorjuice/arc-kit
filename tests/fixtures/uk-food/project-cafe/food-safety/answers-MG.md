@@ -221,6 +221,8 @@ On:
 Source:
 
 ### MG-02-Q06
+> Maintenance
+> e.g. Clear drains and fridge/freezer condensers.
 > Follow up on any outstanding repairs.
 > HOW OFTEN?  (write your answer)
 Answer:
@@ -241,6 +243,8 @@ On:
 Source:
 
 ### MG-02-Q10
+> Dishwasher
+> Remove food debris and limescale from water jets, filters and drains. Clean around door seals, etc.
 > Check effectiveness of washing and report any problems.
 > HOW OFTEN?  (write your answer)
 Answer:
@@ -272,6 +276,8 @@ On:
 Source:
 
 ### MG-02-Q16
+> Pest control
+> e.g. Look for signs of damage to walls, doors, etc. that could let in pests, and signs of pests.
 > Make sure food is covered properly in storage areas.
 > HOW OFTEN?  (write your answer)
 Answer:
@@ -281,6 +287,8 @@ On:
 Source:
 
 ### MG-02-Q18
+> Pest control
+> e.g. Look for signs of damage to walls, doors, etc. that could let in pests, and signs of pests.
 > Check structure for holes and other places where pests could get in.
 > HOW OFTEN?  (write your answer)
 Answer:

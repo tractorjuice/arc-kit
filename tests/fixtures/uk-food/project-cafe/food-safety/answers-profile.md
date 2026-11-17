@@ -51,7 +51,7 @@ On: 2026-11-18
 Source:
 
 ### PR-Q06
-> Which nation is the business in?  (England / Wales / other)
+> Which nation is the business in?  (England / Wales / Scotland / Northern Ireland / other)
 Answer: England
 State: confirmed
 By: Sam Okafor

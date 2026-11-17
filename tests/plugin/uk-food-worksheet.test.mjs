@@ -47,11 +47,15 @@ const promptOf = (text, qid) => {
   assert.ok(start >= 0, `${qid} is not in the worksheet`);
   const prompt = [];
   for (const line of lines.slice(start + 1)) {
+    if (line === '' && prompt.length === 0) continue;
     if (!line.startsWith('>')) break;
     prompt.push(line);
   }
   return prompt;
 };
+// Whether a prompt prints every paragraph of a piece of the pack's text, each whole on its own line.
+const shows = (prompt, text) => text.split('\n').every((paragraph) => prompt.includes(`> ${paragraph}`.trimEnd()));
+const askedOf = (rowId) => rowOf(rowId).questions.filter((q) => q.type !== 'note').map((q) => q.id);
 const messages = (parsed) => parsed.problems.map((p) => p.message).join('\n');
 const parse = (text) => parseWorksheet(text, data);
 
@@ -168,6 +172,61 @@ test('a note printed before a question in its row or box is shown with that ques
   assert.deepEqual(prompt, [`> ${box.heading}`, ...box.text.split('\n').map((p) => `> ${p}`), '> How do you do this?  (write your answer)']);
 });
 
+test('a lead-in row that asks nothing and ends with a colon is shown with each row it leads into', () => {
+  const xc = blankWorksheet('XC', data);
+  const cloths = rowOf('XC-02-P07').point;
+  for (const row of ['XC-02-P08', 'XC-02-P09', 'XC-02-P10', 'XC-02-P11', 'XC-02-P12']) {
+    for (const id of askedOf(row)) assert.ok(shows(promptOf(xc, id), cloths), id);
+  }
+  for (const id of [...askedOf('XC-02-P05'), ...askedOf('XC-02-P06')]) assert.ok(!shows(promptOf(xc, id), cloths), id);
+  const ck = blankWorksheet('CK', data);
+  const chips = rowOf('CK-04-P08').point;
+  const bread = rowOf('CK-04-P12').point;
+  for (const id of ['CK-04-P09', 'CK-04-P10', 'CK-04-P11'].flatMap(askedOf)) {
+    assert.ok(shows(promptOf(ck, id), chips), id);
+    assert.ok(!shows(promptOf(ck, id), bread), id);
+  }
+  for (const id of askedOf('CK-04-P13')) {
+    assert.ok(shows(promptOf(ck, id), bread), id);
+    assert.ok(!shows(promptOf(ck, id), chips), id);
+  }
+  // A lead-in reaches only the rows after it, up to the next row that asks nothing.
+  for (const id of askedOf('CK-04-P07')) assert.ok(!shows(promptOf(ck, id), chips), id);
+});
+
+test('a row that continues a spanning cell is shown with that cell\'s point; a row that is a prompt of its own is not', () => {
+  const mg = blankWorksheet('MG', data);
+  for (const [row, cell] of [['MG-02-P03', 'MG-02-P02'], ['MG-02-P05', 'MG-02-P04'], ['MG-02-P08', 'MG-02-P07'], ['MG-02-P09', 'MG-02-P07']]) {
+    for (const id of askedOf(row)) assert.ok(shows(promptOf(mg, id), rowOf(cell).point), id);
+  }
+  // Pages 43 and 45 print these as rows of their own, each asking about another method; the row
+  // above them is a different method, and showing it would mislead.
+  const ch = blankWorksheet('CH', data);
+  for (const [row, above] of [['CH-02-P10', 'CH-02-P09'], ['CH-03-P08', 'CH-03-P07']]) {
+    for (const id of askedOf(row)) assert.ok(!shows(promptOf(ch, id), rowOf(above).point), id);
+  }
+});
+
+test('every question that prints no text says what it is about, unless its box has nothing to say it with', () => {
+  const bare = [];
+  for (const section of SECTION_IDS) {
+    const text = blankWorksheet(section, data);
+    for (const method of data.sections.get(section).methods) {
+      for (const block of method.blocks) {
+        // What can say what a question is about: a box heading, a CHECK IT box's text, a row's point.
+        const about = [block.heading, block.text, ...(block.rows ?? []).map((row) => row.point)].filter(Boolean);
+        for (const question of holders(block).flatMap((h) => h.questions ?? [])) {
+          if (question.type === 'note' || question.text !== '') continue;
+          if (!about.some((piece) => shows(promptOf(text, question.id), piece))) bare.push(question.id);
+        }
+      }
+    }
+  }
+  assert.deepEqual(bare, ['CK-03-Q02']);
+  const box = methodOf('CK-03').blocks.find((b) => (b.questions ?? []).some((q) => q.id === 'CK-03-Q02'));
+  assert.ok(!box.heading && !box.text && box.rows.length === 0, 'CK-03-Q02\'s box has a heading, text or row after all');
+});
+
 // ---- Round trip ----
 
 test('generate, parse, emit, parse is stable for every section', () => {
@@ -202,12 +261,14 @@ test('answers keep every field through parse and emit', () => {
   assert.equal(rice.answered, false);
 });
 
-test('emit keeps a value that is not valid, so the person can still see and mend it', () => {
+test('emitWorksheet refuses a worksheet with problems, since writing it would drop what was set aside', () => {
   const text = fill(blankWorksheet('CK', data), 'CK-06-Q01', 'Answer: maybe', 'State: done', 'By:', 'On:', 'Source:');
   const parsed = parse(text);
   assert.match(messages(parsed), /maybe/);
   assert.match(messages(parsed), /done/);
-  assert.equal(emitWorksheet(parsed, data), text);
+  assert.throws(() => emitWorksheet(parsed, data), /has 2 problems/);
+  const repeated = blankWorksheet('CK', data).replace('### CK-06-Q02\n', '### CK-06-Q01\n');
+  assert.throws(() => emitWorksheet(parse(repeated), data), /problem/);
 });
 
 // ---- Hand-edited slips: each is read correctly or reported with its line number ----
@@ -314,6 +375,64 @@ test('an answer typed onto a question line is reported, not dropped', () => {
   assert.deepEqual(parse(blankWorksheet('CK', data).replace('> Do you hot hold?  (yes / no)\n', '')).problems, []);
 });
 
+test('a comment inside an answer is a problem, and the answer is not used: it would be hidden once rendered', () => {
+  for (const lines of [['Answer: A bain-marie', '  <!-- ask Sam if this is still true -->'], ['Answer: A bain-marie <!-- ask Sam if this is still true -->']]) {
+    const text = fill(blankWorksheet('CK', data), 'CK-06-Q02', ...lines, ...confirmed('').slice(1));
+    const parsed = parse(text);
+    assert.equal(parsed.problems.length, 1, lines.join(' / '));
+    assert.equal(parsed.problems[0].line, lineOf(text, '<!-- ask Sam'));
+    assert.match(parsed.problems[0].message, /comment/);
+    assert.equal(parsed.answers.get('CK-06-Q02').answered, false);
+  }
+  const reason = parse(blankWorksheet('CK', data).replace(/(## CK-06 [^\n]*\n\n?Status: )applies\nReason:\nDecided-by:\n/,
+    '$1not-relevant\nReason: We never hot hold.\n  <!-- check with Sam -->\nDecided-by: Sam Okafor\n'));
+  assert.equal(reason.problems.length, 1);
+  assert.match(reason.problems[0].message, /comment/);
+});
+
+test('an own entry filled in inside the commented template is reported, not dropped', () => {
+  const blank = blankWorksheet('own', data);
+  const text = blank.replace('Kind:\n', 'Kind: additional\n').replace('State: unanswered\n', 'State: confirmed\n');
+  const parsed = parse(text);
+  assert.equal(parsed.entries.size, 0);
+  assert.equal(parsed.problems.length, 1);
+  assert.equal(parsed.problems[0].line, lineOf(text, 'Kind: additional'));
+  assert.match(parsed.problems[0].message, /nothing inside a comment is read: copy the entry below the comment/);
+  // The same check guards each worksheet's guidance; a comment of a person's own elsewhere is not read and not a problem.
+  const noted = blankWorksheet('CK', data).replace('Proved-safe:\n', 'Proved-safe:\n<!-- Sam to check -->\n<!--\nAnd this.\n-->\n');
+  assert.deepEqual(parse(noted).problems, []);
+  const changed = blankWorksheet('CK', data).replace('How to fill this in.', 'Answer: yes. How to fill this in.');
+  assert.match(messages(parse(changed)), /nothing inside a comment is read/);
+});
+
+test('text after the end of a comment is reported, not dropped', () => {
+  const blank = blankWorksheet('CK', data);
+  for (const insert of ['<!-- note --> yes\n', '<!--\nnote\n--> yes\n']) {
+    const text = blank.replace('### CK-06-Q02\n', `${insert}### CK-06-Q02\n`);
+    const parsed = parse(text);
+    assert.equal(parsed.problems.length, 1, insert);
+    assert.equal(parsed.problems[0].line, lineOf(text, '--> yes'), insert);
+    assert.match(parsed.problems[0].message, /after the end of a comment/);
+  }
+});
+
+test('text after a question\'s identifier, or a method heading that is not the method\'s title, is reported', () => {
+  const blank = blankWorksheet('CK', data);
+  const question = fill(blank, 'CK-06-Q01', ...confirmed('yes')).replace('### CK-06-Q01\n', '### CK-06-Q01 yes we do\n');
+  const parsedQuestion = parse(question);
+  assert.equal(parsedQuestion.problems.length, 1);
+  assert.equal(parsedQuestion.problems[0].line, lineOf(question, '### CK-06-Q01 yes we do'));
+  assert.match(parsedQuestion.problems[0].message, /yes we do/);
+  assert.equal(parsedQuestion.answers.get('CK-06-Q01').answered, false);
+  const method = blank.replace('## CK-06 Hot holding\n', '## CK-06 Hot holding - NOT RELEVANT\n');
+  const parsedMethod = parse(method);
+  assert.equal(parsedMethod.problems.length, 1);
+  assert.equal(parsedMethod.problems[0].line, lineOf(method, '## CK-06 Hot holding - NOT RELEVANT'));
+  assert.match(parsedMethod.problems[0].message, /NOT RELEVANT/);
+  // Letter case and spacing in a method's title are not changes.
+  assert.deepEqual(parse(blank.replace('## CK-06 Hot holding\n', '## CK-06   HOT   holding\n')).problems, []);
+});
+
 // ---- State, Status and answer types ----
 
 test('a confirmed answer with no By is a problem, and is not used', () => {
@@ -380,12 +499,38 @@ test('an Answer that does not fit its question is reported with its line number,
 });
 
 test('a yes-no-else question takes yes in any case, or what the business does instead', () => {
-  const yes = parse(fill(blankWorksheet('CK', data), 'CK-02-Q02', ...confirmed('YES')));
-  assert.equal(yes.answers.get('CK-02-Q02').value, 'yes');
+  for (const answer of ['YES', 'yes', 'Yes.']) {
+    const yes = parse(fill(blankWorksheet('CK', data), 'CK-02-Q02', ...confirmed(answer)));
+    assert.deepEqual(yes.problems, [], answer);
+    assert.equal(yes.answers.get('CK-02-Q02').value, 'yes', answer);
+  }
   const instead = parse(fill(blankWorksheet('CK', data), 'CK-02-Q02', 'Answer: We only use pasteurised liquid egg,',
     '  so nothing is served lightly cooked.', ...confirmed('').slice(1)));
   assert.deepEqual(instead.problems, []);
   assert.equal(instead.answers.get('CK-02-Q02').value, 'We only use pasteurised liquid egg,\nso nothing is served lightly cooked.');
+});
+
+test('a yes-no-else answer that is only no, or another yes-or-no word, is reported: it says nothing done instead', () => {
+  for (const answer of ['no', 'No.', 'n', 'nope', 'Not', 'never', 'y', 'Yeah', 'yep!', 'yes!', 'yse', 'ok']) {
+    const text = fill(blankWorksheet('CK', data), 'CK-02-Q02', ...confirmed(answer));
+    const parsed = parse(text);
+    assert.equal(parsed.problems.length, 1, answer);
+    assert.equal(parsed.problems[0].line, lineOf(text, `Answer: ${answer}`, '### CK-02-Q02'), answer);
+    assert.match(parsed.problems[0].message, /say what you do instead/, answer);
+    assert.equal(parsed.answers.get('CK-02-Q02').answered, false, answer);
+    assert.equal(parsed.answers.get('CK-02-Q02').value, null, answer);
+  }
+  // A sentence that starts with no is what the business does instead.
+  const sentence = parse(fill(blankWorksheet('CK', data), 'CK-02-Q02', ...confirmed('No: we only use pasteurised liquid egg.')));
+  assert.deepEqual(sentence.problems, []);
+});
+
+test('yes and no may end with a full stop, and nothing else', () => {
+  const read = (qid, answer) => parse(fill(blankWorksheet('CK', data), qid, ...confirmed(answer)));
+  assert.equal(read('CK-06-Q01', 'Yes.').answers.get('CK-06-Q01').value, 'yes');
+  assert.equal(read('CK-06-Q01', 'no.').answers.get('CK-06-Q01').value, 'no');
+  assert.equal(read('CK-04-Q01', 'YES.').answers.get('CK-04-Q01').value, 'yes');
+  for (const answer of ['yes!', 'no..', 'yes, always']) assert.match(messages(read('CK-06-Q01', answer)), /yes or no/, answer);
 });
 
 test('a text answer is read whole, and a list answer one item per line', () => {
@@ -399,7 +544,7 @@ test('a text answer is read whole, and a list answer one item per line', () => {
 
 // Replaces a method's blank status fields in a worksheet with the lines given.
 const statusFields = (text, id, lines) => text.replace(
-  new RegExp(`(## ${id} [^\\n]*\\n)Status: applies\\nReason:\\nDecided-by:\\nVariation:\\nProved-safe:\\n`),
+  new RegExp(`(## ${id} [^\\n]*\\n\\n?)Status: applies\\nReason:\\nDecided-by:\\nVariation:\\nProved-safe:\\n`),
   `$1${lines.map((l) => `${l}\n`).join('')}`);
 
 test('a not-relevant method needs a Reason and a Decided-by', () => {
@@ -415,7 +560,7 @@ test('a not-relevant method needs a Reason and a Decided-by', () => {
   assert.equal(parsed.problems[0].line, lineOf(text, 'Reason:', '## CK-06'));
   assert.match(parsed.problems[0].message, /CK-06.*Reason/);
   // A field line that is missing altogether is reported at the method's heading.
-  const gone = text.replace(/(## CK-06 [^\n]*\nStatus: not-relevant\n)Reason:\n/, '$1');
+  const gone = text.replace(/(## CK-06 [^\n]*\n\n?Status: not-relevant\n)Reason:\n/, '$1');
   assert.equal(parse(gone).problems[0].line, lineOf(gone, '## CK-06'));
   const noDecider = parse(statusFields(blank, 'CK-06', ['Status: Not-Relevant', 'Reason: We never keep food hot.', 'Decided-by:', 'Variation:', 'Proved-safe:']));
   assert.equal(noDecider.problems.length, 1);
@@ -455,7 +600,6 @@ test('answers given for a method marked not relevant are reported, and not used'
   assert.match(parsed.problems[0].message, /answers given for a method marked not relevant/);
   assert.equal(parsed.problems[0].line, lineOf(text, 'Answer: no'));
   assert.equal(parsed.answers.get('CK-06-Q01').answered, false);
-  assert.equal(emitWorksheet(parsed, data), text);
 });
 
 // ---- Structure ----
@@ -608,7 +752,7 @@ test('the profile asks the fixed questions, PR-Q01 onward, with no status lines'
   assert.doesNotMatch(text, /^(Status|Reason|Decided-by|Variation|Proved-safe):/m);
   assert.doesNotMatch(text, /^## /m);
   assert.equal(PROFILE_QUESTIONS[5].type, 'nation');
-  assert.match(promptOf(text, 'PR-Q06').at(-1), /\(England \/ Wales \/ other\)$/);
+  assert.match(promptOf(text, 'PR-Q06').at(-1), /\(England \/ Wales \/ Scotland \/ Northern Ireland \/ other\)$/);
   const extra = PROFILE_QUESTIONS.slice(10);
   assert.ok(extra.every((q) => q.type === 'yes-no'));
   for (const [i, name] of [...EXTRA_CARE.processes, ...EXTRA_CARE.foods].entries()) assert.ok(extra[i].text.includes(name), name);
@@ -623,13 +767,23 @@ test('the special processes and foods are named as printed in CK-02\'s "Other fo
   assert.equal(new Set([...EXTRA_CARE.processes, ...EXTRA_CARE.foods]).size, EXTRA_CARE.processes.length + EXTRA_CARE.foods.length);
 });
 
-test('the nation question takes England or Wales in any case, or names another nation', () => {
+test('the nation is England, Wales, Scotland, Northern Ireland or other, in any letter case', () => {
   const blank = blankWorksheet('profile', data);
-  assert.equal(parse(fill(blank, 'PR-Q06', ...confirmed('england'))).answers.get('PR-Q06').value, 'England');
-  assert.equal(parse(fill(blank, 'PR-Q06', ...confirmed('WALES'))).answers.get('PR-Q06').value, 'Wales');
-  const scotland = parse(fill(blank, 'PR-Q06', ...confirmed('Scotland')));
-  assert.deepEqual(scotland.problems, []);
-  assert.equal(scotland.answers.get('PR-Q06').value, 'Scotland');
+  const read = (answer) => parse(fill(blank, 'PR-Q06', ...confirmed(answer)));
+  for (const [answer, value] of [['england', 'England'], ['WALES', 'Wales'], ['scotland', 'Scotland'],
+    ['northern  ireland', 'Northern Ireland'], ['Other', 'other']]) {
+    const parsed = read(answer);
+    assert.deepEqual(parsed.problems, [], answer);
+    assert.equal(parsed.answers.get('PR-Q06').value, value, answer);
+    assert.equal(parsed.answers.get('PR-Q06').answered, true, answer);
+  }
+  for (const answer of ['Cornwall', 'UK', 'England and Wales']) {
+    const parsed = read(answer);
+    assert.equal(parsed.problems.length, 1, answer);
+    assert.match(parsed.problems[0].message, /England, Wales, Scotland, Northern Ireland or other/, answer);
+    assert.equal(parsed.answers.get('PR-Q06').answered, false, answer);
+    assert.equal(parsed.answers.get('PR-Q06').value, null, answer);
+  }
   assert.match(messages(parse(fill(blank, 'PR-Q11', ...confirmed('sometimes')))), /yes or no/);
 });
 
@@ -724,6 +878,14 @@ test('worksheet exits 2 on a usage error', () => {
   }
   const empty = mkdtempSync(join(tmpdir(), 'uk-food-'));
   assert.equal(run('worksheet', '--section', 'CK', '--data', empty).status, 2);
+  // Data that is valid but has no file for the section asked for.
+  const partial = mkdtempSync(join(tmpdir(), 'uk-food-'));
+  writeFileSync(join(partial, 'source.json'), readFileSync(join(DEFAULT_DATA_DIR, 'source.json')));
+  const result = run('worksheet', '--section', 'XC', '--data', partial);
+  assert.equal(result.status, 2, result.stderr);
+  assert.match(result.stderr, /XC\.json/);
+  assert.match(result.stderr, /usage:/);
+  assert.equal(run('worksheet', '--section', 'own', '--data', partial).status, 0);
 });
 
 test('parse-worksheet exits 0 with no problems, 1 with problems and 2 on a usage error', () => {
