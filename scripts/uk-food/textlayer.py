@@ -79,7 +79,8 @@ def words_of(text: str) -> list[str]:
     return [w for w in (normalise(t) for t in text.split()) if w]
 
 
-def strings_of(node, page=None, method=None) -> Iterator[tuple[int | None, str, str | None]]:
+def strings_of(node, page=None, method=None,
+               include_from_image=False) -> Iterator[tuple[int | None, str, str | None]]:
     """Yield (page, string, method id) for every page-text string in a data file.
 
     A dict's own `page` applies to its strings, so a page object's `title`
@@ -87,16 +88,18 @@ def strings_of(node, page=None, method=None) -> Iterator[tuple[int | None, str, 
     `page` (a method or a section) uses its first page, so its `title` and
     `summary` count on `pages[0]`; anything else inherits the page of its
     parent. Strings with no page in context are not yielded. Elements with
-    "fromImage": true are left out.
+    "fromImage": true are left out, because the text layer cannot hold their
+    words, unless `include_from_image` is set: compare-reading.py sets it, so
+    the second reading checks the words the coverage test cannot.
     """
     if isinstance(node, str):
         if page is not None:
             yield page, node, method
     elif isinstance(node, list):
         for item in node:
-            yield from strings_of(item, page, method)
+            yield from strings_of(item, page, method, include_from_image)
     elif isinstance(node, dict):
-        if node.get("fromImage") is True:
+        if node.get("fromImage") is True and not include_from_image:
             return
         if isinstance(node.get("page"), int):
             page = node["page"]
@@ -107,7 +110,7 @@ def strings_of(node, page=None, method=None) -> Iterator[tuple[int | None, str, 
             method = node["id"]
         for key, value in node.items():
             if _is_page_text_key(key, value):
-                yield from strings_of(value, page, method)
+                yield from strings_of(value, page, method, include_from_image)
 
 
 def declared_pages(node) -> set[int]:

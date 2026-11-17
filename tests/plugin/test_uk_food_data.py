@@ -344,6 +344,23 @@ def test_compare_reading_matches_each_paragraph_and_bullet_of_a_cell(tmp_path):
     assert missing == [(15, "Dry them properly.", "XC-02"), (16, "• towels", "XC-02")] and extra == []
 
 
+def test_compare_reading_includes_from_image_text():
+    # The coverage test cannot see fromImage text, so the comparison with the second reading must.
+    spec = importlib.util.spec_from_file_location("compare_reading", ROOT / "scripts" / "uk-food" / "compare-reading.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    data = {"schema": "x", "data": DATA_ID, "part": "diary", "pages": [{"page": 94, "title": None, "blocks": [
+        {"kind": "table", "heading": "Monday", "columns": [], "rows": [], "page": 94,
+         "questions": [{"id": "DY-94-Q01", "text": "Name", "type": "text"}]},
+        {"kind": "text", "heading": None, "text": "John Smith\nPacket of cooked ham.", "page": 94, "fromImage": True}]}]}
+    assert module.compare(data, "Monday\nName\nJohn Smith\nPacket of cooked ham.\n") == ([], [])
+    missing, extra = module.compare(data, "Monday\nName\nJohn Smith\n")
+    assert missing == [(94, "Packet of cooked ham.", None)] and extra == []
+    # The coverage walker still leaves it out unless asked.
+    assert [text for _, text, _ in strings_of(data)] == ["Monday", "Name"]
+    assert [text for _, text, _ in strings_of(data, include_from_image=True)][-1] == "John Smith\nPacket of cooked ham."
+
+
 def test_section_title_counts_on_its_first_page():
     section = {"id": "XC", "title": "Cross-contamination", "pages": [3, 4], "intro": [{"text": "Keep apart", "page": 4}]}
     found = [(page, text) for page, text, _ in strings_of({"section": section})]
@@ -368,7 +385,7 @@ def test_page_object_title_and_blocks_count_on_its_page(tmp_path):
 # front.json and diary.json hold one page object for every page the page map gives them, in page order,
 # so that the coverage test, which compares only the pages a file declares, cannot skip a page.
 PART_PAGES = {"front": list(range(1, 11)), "diary": list(range(78, 101))}
-REQUIRED_PARTS = ["front"]
+REQUIRED_PARTS = ["front", "diary"]
 
 
 @pytest.mark.parametrize("part", list(PART_PAGES))
@@ -380,6 +397,50 @@ def test_part_pages(part):
     data = _load(path)
     assert data["part"] == part
     assert [page["page"] for page in data["pages"]] == PART_PAGES[part]
+
+
+def _diary_page(number: int) -> dict:
+    path = DATA_DIR / "diary.json"
+    if not path.is_file():
+        assert "diary" not in REQUIRED_PARTS, "diary.json is required but missing"
+        pytest.skip("diary.json not transcribed yet")
+    return next(page for page in _load(path)["pages"] if page["page"] == number)
+
+
+def test_review_has_twelve_checklist_questions():
+    # The blank 4-weekly review, page 100: its SAFE METHOD | CHECK LIST table asks twelve questions, each
+    # with the printed Yes and No boxes.
+    blocks = [block for block in _diary_page(100)["blocks"] if block.get("form") == "fourWeeklyReview"]
+    checklists = [block for block in blocks if "CHECK LIST" in block.get("columns", [])]
+    assert len(checklists) == 1
+    questions = checklists[0]["questions"]
+    assert len(questions) == 12
+    assert all(q["type"] == "yes-no" and q["options"] == ["Yes", "No"] and q["text"] for q in questions)
+
+
+# The completion record names a safe method in its own words. Where those words differ from the method's
+# printed title (after letter case and spacing), the pack's own difference is listed here.
+COMPLETION_RECORD_NAMES = {
+    "Personal hygiene": "XC-01",  # the method's title is "PERSONAL HYGIENE AND FITNESS TO WORK"
+    "Food allergies": "XC-04",    # the method's title is "FOOD HYPERSENSITIVITY"
+}
+
+
+def test_completion_record_lists_each_safe_method_once():
+    rows = [row for number in (78, 79) for block in _diary_page(number)["blocks"]
+            if block.get("form") == "completionRecord" for row in block["rows"]]
+    sections = {_title_key(_load(DATA_DIR / f"{s}.json")["section"]["title"]) for s in METHOD_COUNTS}
+    methods = {_title_key(m["title"]): m["id"] for s in METHOD_COUNTS for m in _load(DATA_DIR / f"{s}.json")["methods"]}
+    # Every row is a name and three blank cells: date, signature, and the box to tick if not relevant.
+    assert all(len(row) == 4 and row[0] and row[1:] == ["", "", ""] for row in rows), rows
+    headings = [row[0] for row in rows if _title_key(row[0]) in sections]
+    assert [_title_key(h) for h in headings] == ["cross-contamination", "cleaning", "chilling", "cooking",
+                                                 "management"]
+    names = [row[0] for row in rows if _title_key(row[0]) not in sections]
+    assert len(names) == 31
+    ids = [COMPLETION_RECORD_NAMES.get(name) or methods.get(_title_key(name)) for name in names]
+    assert None not in ids, [name for name, id_ in zip(names, ids) if id_ is None]
+    assert sorted(ids) == sorted(methods.values())  # one to one: each of the 31 methods exactly once
 
 
 # The JSON schema, checked against the same files the helper validates by hand.

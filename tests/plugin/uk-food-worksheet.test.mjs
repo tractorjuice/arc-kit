@@ -121,6 +121,20 @@ test('the pages allowed fromImage are diary pages, in order, each once', () => {
   }
 });
 
+test('validateData accepts fromImage on each listed diary page and refuses it on any other', () => {
+  const diaryWith = (pages) => ({
+    schema: 'uk-food-sfbb-data-1.0', data: 'sfbb-caterers-2026-11-17', part: 'diary',
+    pages: pages.map((page) => ({ page, title: null, blocks: [
+      { kind: 'text', heading: null, text: 'words', page, fromImage: true }] }))
+  });
+  const d = asData(shared('data-every-field.json'));
+  d.diary = diaryWith(FROM_IMAGE_PAGES);
+  assert.deepEqual(validateData(d), []);
+  const unlisted = Array.from({ length: 23 }, (_, i) => 78 + i).filter((p) => !FROM_IMAGE_PAGES.includes(p));
+  d.diary = diaryWith(unlisted);
+  assert.equal(validateData(d).filter((m) => /fromImage is allowed only/.test(m)).length, unlisted.length);
+});
+
 test('loadData returns front.json as its page objects, and validateData checks them', () => {
   const dir = mkdtempSync(join(tmpdir(), 'uk-food-'));
   const { front } = shared('data-every-field.json');

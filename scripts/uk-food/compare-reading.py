@@ -6,9 +6,10 @@
 The reading has one paragraph or bullet per line; lines starting with # are
 headings and are ignored. A data string holding several paragraphs or bullets
 (separated by "\\n") is split into one item per part, each keeping its page and
-method. After the same word-by-word normalisation the test suite uses, this
-reports (a) every data item with no matching line, and (b) every reading line
-that matches no data item.
+method. Text marked "fromImage": true is included: the coverage test cannot
+check it against the text layer, so this comparison is its check. After the same
+word-by-word normalisation the test suite uses, this reports (a) every data item
+with no matching line, and (b) every reading line that matches no data item.
 Exit 0 when both lists are empty, 1 otherwise, 2 on a usage error.
 """
 import json
@@ -23,7 +24,7 @@ from textlayer import string_key, strings_of  # noqa: E402
 def compare(data: dict, reading: str):
     """Return (unmatched data items, unmatched reading lines)."""
     by_key: dict[str, list[tuple[int, str, str | None]]] = defaultdict(list)
-    for page, text, method in strings_of(data):
+    for page, text, method in strings_of(data, include_from_image=True):
         for part in text.split("\n"):
             key = string_key(part)
             if key:

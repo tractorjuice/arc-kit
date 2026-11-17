@@ -18,8 +18,10 @@ export const FORMS = [
 ];
 // The diary pages whose text blocks may carry `fromImage: true`: words printed on the page that are not in
 // the PDF's text layer, transcribed from the page image. The coverage test cannot see such a block, so it is
-// allowed nowhere else.
-export const FROM_IMAGE_PAGES = [];
+// allowed nowhere else. Each page here is a picture, or holds one, whose filled-in example entries are not in
+// the text layer: 87 the example supplier, 89 the example contact, 94 the example week (whose text layer also
+// lacks Friday's printed prompt), 99 the example 4-weekly review.
+export const FROM_IMAGE_PAGES = [87, 89, 94, 99];
 // `note` is FSA text printed in an answer column that asks nothing: never asked, never unanswered.
 export const QUESTION_TYPES = ['yes-no', 'yes-no-else', 'tick', 'text', 'list', 'note'];
 export const SOURCE_FIELDS = [

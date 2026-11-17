@@ -3,7 +3,16 @@
     "Food Standards Agency l food.gov.uk/sfbb",
     "SAFE METHOD:"
   ],
-  "pages": {},
+  "pages": {
+    "94": [
+      {"token": "_________", "count": 2, "reason": "Example week: the text layer draws the writing lines under Name and Signed as runs of underscores, not words. Two Signed lines (Tuesday, EXTRA CHECKS) are each split into a run of 9 and a run of 12; pages 95 to 98 draw the same lines as graphics"},
+      {"token": "____________", "count": 2, "reason": "Example week: the other part of the two split Signed lines (Tuesday, EXTRA CHECKS), runs of 12 underscores; a writing line, not a word"},
+      {"token": "__________________", "count": 8, "reason": "Example week: the eight Name writing lines (seven days and EXTRA CHECKS), each a run of 18 underscores in the text layer; a writing line, not a word"},
+      {"token": "_____________________", "count": 6, "reason": "Example week: the six unsplit Signed writing lines (Monday, Wednesday, Thursday, Friday, Saturday, Sunday), each a run of 21 underscores in the text layer; a writing line, not a word"},
+      {"token": "Opening", "count": 1, "reason": "Example week, Thursday: the text layer draws 'Opening checks' twice at the same place (x 46.9, y 710.2); the page prints it once (a duplicated run)"},
+      {"token": "checks", "count": 1, "reason": "Example week, Thursday: the second word of the duplicated 'Opening checks' run at x 46.9, y 710.2; the page prints it once"}
+    ]
+  },
   "joins": {
     "14": [
       {"parts": ["and/", "or"], "as": "and/or", "reason": "XC-01 'Staff who have had diarrhoea and/or vomiting': the word breaks after the slash at a line end"},
