@@ -63,6 +63,22 @@
                       "No"
                     ],
                     "elseText": "If not, what do you do?"
+                  },
+                  {
+                    "id": "CK-06-Q05",
+                    "text": "",
+                    "type": "yes-no-else",
+                    "options": [
+                      "Yes"
+                    ],
+                    "elseText": null
+                  },
+                  {
+                    "id": "CK-06-Q06",
+                    "text": "Make a note in your diary.",
+                    "type": "note",
+                    "options": [],
+                    "elseText": null
                   }
                 ]
               }

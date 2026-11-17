@@ -187,6 +187,20 @@ def test_compare_reading_reports_both_directions(tmp_path):
     assert missing == [(1, "Dry your hands.", "XC-01")] and extra == ["rinse"]
 
 
+def test_compare_reading_matches_each_paragraph_and_bullet_of_a_cell(tmp_path):
+    spec = importlib.util.spec_from_file_location("compare_reading", ROOT / "scripts" / "uk-food" / "compare-reading.py")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    data = {"methods": [{"id": "XC-02", "title": "Cloths", "pages": [15], "blocks": [
+        {"kind": "points", "page": 15, "rows": [{"id": "XC-02-P01", "page": 15,
+                                                  "point": "Wash cloths.\nDry them properly.", "why": None}]},
+        {"kind": "wrong", "page": 16, "wrong": ["Throw it away:\n• food\n• towels"], "prevent": []}]}]}
+    reading = "Cloths\nWash cloths.\nDry them properly.\nThrow it away:\n• food\n• towels\n"
+    assert module.compare(data, reading) == ([], [])
+    missing, extra = module.compare(data, "Cloths\nWash cloths.\nThrow it away:\n• food\n")
+    assert missing == [(15, "Dry them properly.", "XC-02"), (16, "• towels", "XC-02")] and extra == []
+
+
 def test_section_title_counts_on_its_first_page():
     section = {"id": "XC", "title": "Cross-contamination", "pages": [3, 4], "intro": [{"text": "Keep apart", "page": 4}]}
     found = [(page, text) for page, text, _ in strings_of({"section": section})]

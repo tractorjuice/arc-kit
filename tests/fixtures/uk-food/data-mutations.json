@@ -312,7 +312,7 @@
   ]
  },
  {
-  "name": "question type outside the five",
+  "name": "question type outside the six",
   "ops": [
    {
     "op": "set",
@@ -344,12 +344,34 @@
   ]
  },
  {
-  "name": "question with empty text and not a tick",
+  "name": "note with empty text",
   "ops": [
    {
     "op": "set",
-    "path": "/section/methods/0/blocks/3/questions/0/text",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/2/text",
     "value": ""
+   }
+  ]
+ },
+ {
+  "name": "note with options",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/2/options",
+    "value": [
+     "Yes"
+    ]
+   }
+  ]
+ },
+ {
+  "name": "note with elseText",
+  "ops": [
+   {
+    "op": "set",
+    "path": "/section/methods/0/blocks/0/rows/0/questions/2/elseText",
+    "value": "If not, what do you do?"
    }
   ]
  },

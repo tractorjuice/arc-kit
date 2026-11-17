@@ -28,7 +28,7 @@ test('valid data has no problems', () => assert.deepEqual(validateData(base()), 
 
 const rejects = [
   ['a duplicate identifier', (d) => { method(d).blocks[0].rows.push({ ...row(d) }); }, /duplicate identifier CK-06-P01/],
-  ['a question type outside the five', (d) => { row(d).questions[0].type = 'maybe'; }, /type "maybe"/],
+  ['a question type outside the six', (d) => { row(d).questions[0].type = 'maybe'; }, /type "maybe"/],
   ['a row with no page', (d) => { delete row(d).page; }, /no page/],
   ['a method whose identifier does not start with its section', (d) => { method(d).id = 'CL-06'; }, /does not start with CK-/],
   ['a page outside 1 to 100', (d) => { row(d).page = 101; }, /outside 1 to 100/],

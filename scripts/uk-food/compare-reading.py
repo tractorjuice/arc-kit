@@ -3,10 +3,12 @@
 
     python3 scripts/uk-food/compare-reading.py DATA_JSON READING_TXT
 
-The reading has one table cell or paragraph per line; lines starting with # are
-headings and are ignored. After the same word-by-word normalisation the test
-suite uses, this reports (a) every page-text string in DATA_JSON with no
-matching line, and (b) every reading line that matches no data string.
+The reading has one paragraph or bullet per line; lines starting with # are
+headings and are ignored. A data string holding several paragraphs or bullets
+(separated by "\\n") is split into one item per part, each keeping its page and
+method. After the same word-by-word normalisation the test suite uses, this
+reports (a) every data item with no matching line, and (b) every reading line
+that matches no data item.
 Exit 0 when both lists are empty, 1 otherwise, 2 on a usage error.
 """
 import json
@@ -19,12 +21,13 @@ from textlayer import string_key, strings_of  # noqa: E402
 
 
 def compare(data: dict, reading: str):
-    """Return (unmatched data strings, unmatched reading lines)."""
+    """Return (unmatched data items, unmatched reading lines)."""
     by_key: dict[str, list[tuple[int, str, str | None]]] = defaultdict(list)
     for page, text, method in strings_of(data):
-        key = string_key(text)
-        if key:
-            by_key[key].append((page, text, method))
+        for part in text.split("\n"):
+            key = string_key(part)
+            if key:
+                by_key[key].append((page, part, method))
     lines: Counter = Counter()
     originals: dict[str, str] = {}
     for line in reading.splitlines():

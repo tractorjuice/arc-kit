@@ -8,7 +8,8 @@ import { fileURLToPath } from 'node:url';
 export const DATA_ID = 'sfbb-caterers-2026-11-17';
 export const SCHEMA_ID = 'uk-food-sfbb-data-1.0';
 export const SECTION_IDS = ['XC', 'CL', 'CH', 'CK', 'MG'];
-export const QUESTION_TYPES = ['yes-no', 'yes-no-else', 'tick', 'text', 'list'];
+// `note` is FSA text printed in an answer column that asks nothing: never asked, never unanswered.
+export const QUESTION_TYPES = ['yes-no', 'yes-no-else', 'tick', 'text', 'list', 'note'];
 export const SOURCE_FIELDS = [
   'title', 'publisher', 'url', 'publication', 'retrieved',
   'file', 'sha256', 'pages', 'licence', 'attribution'
@@ -135,8 +136,16 @@ export function validateData(data) {
       if (question.options !== undefined && !isStringArray(question.options)) {
         errors.push(`${at}: options is not an array of strings`);
       }
-      if (question.text === '' && question.type !== 'tick') {
-        errors.push(`${at}: text may be empty only for type tick`);
+      // Any question but a note may have empty text: its prompt is then its block's column
+      // headings and its row's point. A note is printed FSA text that asks nothing.
+      if (question.type === 'note') {
+        if (question.text === '') errors.push(`${at}: a note must have text`);
+        if (Array.isArray(question.options) && question.options.length > 0) {
+          errors.push(`${at}: a note has no options`);
+        }
+        if (question.elseText !== undefined && question.elseText !== null) {
+          errors.push(`${at}: a note has no elseText`);
+        }
       }
     }
   };

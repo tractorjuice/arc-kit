@@ -223,7 +223,8 @@
             "yes-no-else",
             "tick",
             "text",
-            "list"
+            "list",
+            "note"
           ]
         },
         "options": {
@@ -241,12 +242,11 @@
           "default": null
         }
       },
+      "$comment": "Any question but a note may have empty text: its prompt is then its block's column headings and its row's point. A note is FSA text printed in an answer column that asks nothing.",
       "if": {
         "properties": {
           "type": {
-            "not": {
-              "const": "tick"
-            }
+            "const": "note"
           }
         }
       },
@@ -254,6 +254,12 @@
         "properties": {
           "text": {
             "minLength": 1
+          },
+          "options": {
+            "maxItems": 0
+          },
+          "elseText": {
+            "const": null
           }
         }
       }
