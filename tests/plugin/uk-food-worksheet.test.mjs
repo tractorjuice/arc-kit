@@ -582,6 +582,60 @@ test('a comment inside an answer is a problem, and the answer is not used: it wo
   assert.match(reason.problems[0].message, /comment/);
 });
 
+// Characters a reader cannot see, or that change the direction of the text around them, written as escapes.
+const HIDDEN = ['\u200b', '\u200c', '\u200d', '\u200e', '\u200f', '\u202a', '\u202b', '\u202c', '\u202d', '\u202e',
+  '\u2066', '\u2067', '\u2068', '\u2069', '\ufeff', '\u00ad'];
+const codePoint = (char) => `U+${char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`;
+
+test('an invisible or direction-changing character in an answer is reported with its line and code point, and the answer is not used', () => {
+  for (const char of HIDDEN) {
+    for (const [at, lines] of [['Answer: A bain', confirmed(`A bain${char}marie`)],
+      ['  then', ['Answer: A bain-marie', `  then ${char}kept hot`, ...confirmed('').slice(1)]],
+      ['By: Sam', ['Answer: A bain-marie', 'State: confirmed', `By: Sam${char} Okafor`, 'On: 2026-11-20', 'Source:']]]) {
+      const text = fill(blankWorksheet('CK', data), 'CK-06-Q02', ...lines);
+      const parsed = parse(text);
+      assert.equal(parsed.problems.length, 1, `${codePoint(char)} ${at}: ${messages(parsed)}`);
+      assert.equal(parsed.problems[0].line, lineOf(text, at, '### CK-06-Q02'), codePoint(char));
+      assert.ok(parsed.problems[0].message.includes(codePoint(char)), parsed.problems[0].message);
+      assert.match(parsed.problems[0].message, /not used/);
+      assert.equal(parsed.answers.get('CK-06-Q02').answered, false, codePoint(char));
+    }
+  }
+  // Two on one line are both named, once each.
+  const two = parse(fill(blankWorksheet('CK', data), 'CK-06-Q02', ...confirmed('a\u202eb\u200bc\u202ed')));
+  assert.equal(two.problems.length, 1);
+  assert.match(two.problems[0].message, /U\+202E and U\+200B/);
+});
+
+test('an invisible or direction-changing character in a method\'s status, an own entry or the profile is reported, and the value is not used', () => {
+  const reason = parse(blankWorksheet('CK', data).replace(/(## CK-06 [^\n]*\n\n?Status: )applies\nReason:\nDecided-by:\n/,
+    '$1not-relevant\nReason: We never hot\u2066 hold.\nDecided-by: Sam Okafor\n'));
+  assert.equal(reason.problems.length, 1);
+  assert.match(reason.problems[0].message, /U\+2066/);
+  const own = fixture('own');
+  for (const [from, to] of [['Hazard: Milk going off', 'Hazard: Milk\u00ad going off'], ['## OWN-01 Opened milk', '## OWN-01 Opened\u200f milk'],
+    ['  Eggs are served straight away', '  Eggs are served\ufeff straight away']]) {
+    assert.ok(own.includes(from), from);
+    const parsed = parse(own.replace(from, to));
+    assert.equal(parsed.problems.length, 1, `${to}: ${messages(parsed)}`);
+    assert.equal(parsed.problems[0].line, lineOf(own, from));
+    assert.match(parsed.problems[0].message, /U\+00AD|U\+200F|U\+FEFF/);
+    assert.equal([...parsed.entries.values()].filter((entry) => entry.answered).length, 1, to);
+  }
+  const profile = parse(fixture('profile').replace('Answer: Bramble Cafe', 'Answer: Bramble\u200b Cafe'));
+  assert.equal(profile.problems.length, 1);
+  assert.equal(profile.answers.get('PR-Q01').answered, false);
+});
+
+test('the pack\'s own text on a > line is not a value: an invisible character there is not reported', () => {
+  const marked = structuredClone(data);
+  const question = questionsOf(marked.sections.get('CK').methods.find((m) => m.id === 'CK-06')).find((q) => q.id === 'CK-06-Q02');
+  question.text = `${question.text}\u00ad\u200b`;
+  const text = blankWorksheet('CK', marked);
+  assert.ok(text.includes('\u00ad\u200b'));
+  assert.deepEqual(parseWorksheet(text, marked).problems, []);
+});
+
 test('an own entry filled in inside the commented template is reported, not dropped', () => {
   const blank = blankWorksheet('own', data);
   const text = blank.replace('Kind:\n', 'Kind: additional\n').replace('State: unanswered\n', 'State: confirmed\n');

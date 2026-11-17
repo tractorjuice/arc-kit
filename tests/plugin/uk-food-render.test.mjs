@@ -47,7 +47,7 @@ const swap = (text, from, to) => {
 const cellText = (text) => text.replace(/\|/g, '\\|').replace(/\n/g, '<br>');
 // A business's words as a document prints them: <, > and & as entities, and the characters Markdown
 // reads as markup after a backslash, so that nothing a business types can hide or change the text.
-const escaped = (text) => text.replace(/[\\`*_[\]~]/g, '\\$&').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+const escaped = (text) => text.replace(/[\\`*_[\]~$]/g, '\\$&').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const OUR_ANSWER = '**Our answer:** ';
 const UNSET = `${OUR_ANSWER}${UNANSWERED}`;
 const confirmedText = (a) => `${OUR_ANSWER}${escaped(a.answer)} [answered by ${escaped(a.by)}, ${escaped(a.on)}]`;
@@ -248,11 +248,19 @@ test('Review Focus 2: an answer with a pipe, a code span and a second line keeps
   assert.equal(checkDocument('FOODCOOK', dir, report, data).exit, 0);
 });
 
-test('a pipe after backslashes in an answer stays text: the backslashes are doubled before it is escaped', () => {
+test('a pipe after a backslash in an answer stays text, and its row keeps its columns: the backslash and the pipe are each escaped', () => {
   const dir = cafe({ CK: swap(cafeText('CK'), 'Answer: We do not cook rice.', 'Answer: end\\| x') });
   const row = rendered('FOODCOOK', dir).split('\n').find((line) => line.includes('end\\\\\\| x'));
   assert.ok(row);
   assert.equal(cellsOf(row).length, 3, row);
+});
+
+test('a dollar sign in business text is escaped, so a viewer that reads $...$ as mathematics shows it as typed', () => {
+  const dir = cafe({ CK: swap(cafeText('CK'), 'Answer: We do not cook rice.', 'Answer: Soup is $5 and a roll $1.') });
+  const text = rendered('FOODCOOK', dir);
+  assert.ok(text.includes('**Our answer:** Soup is \\$5 and a roll \\$1. [answered by'), text);
+  assert.doesNotMatch(text, /(?<!\\)\$/);
+  assert.equal(checkDocument('FOODCOOK', dir, writeReport(dir, text), data).exit, 0);
 });
 
 test('Review Focus 3: a worksheet for other data makes render exit 2, naming both data identifiers', () => {
@@ -638,7 +646,7 @@ test('the profile lists every answer, every safe method\'s status and the own me
   assert.ok(text.includes('| OWN-02 Sous vide eggs | special process | pending |'));
 });
 
-test('the own methods document shows each confirmed entry under its heading, and a supplied text in a blockquote', () => {
+test('the own methods document shows each confirmed entry under its heading, and a supplied text in a fenced code block', () => {
   const text = rendered('FOODOWN', CAFE);
   const own = parseWorksheet(cafeText('own'), data).entries;
   for (const entry of own.values()) {
@@ -774,12 +782,12 @@ test('worksheets saved with Windows line endings and a byte order mark render th
 
 // Markup a business might type, which must be shown as typed and never change or hide the document.
 const NASTY_LINE = '<details><summary>open</summary> <div hidden> <div style="display:none"> <img src=x onerror=alert(1)> ' +
-  '[link](http://example.com) ![image](http://example.com/i.png) **bold _em_ ~~struck~~ `code` & \\ #Heading';
+  '[link](http://example.com) ![image](http://example.com/i.png) **bold _em_ ~~struck~~ `code` $x^2$ & \\ #Heading';
 const NASTY = `${NASTY_LINE}\n- a list item\n1. a numbered item`;
 // Each piece of NASTY's markup as it would read unescaped: a character Markdown reads as markup
 // counts only when no backslash comes before it.
 const RAW = [/<details/, /<summary/, /<div/, /<img/, /(?<!\\)\[link/, /(?<!\\)\]\(http/, /(?<!\\)!\[image/,
-  /(?<!\\)\*\*bold/, /(?<!\\)_em/, /(?<!\\)~~struck/, /(?<!\\)`code/, /& \\/];
+  /(?<!\\)\*\*bold/, /(?<!\\)_em/, /(?<!\\)~~struck/, /(?<!\\)`code/, /(?<!\\)\$x/, /& \\/];
 // The cafe with every business field it can hold replaced by NASTY.
 function nastyCafe() {
   const worksheets = {};
@@ -888,6 +896,69 @@ test('check fails when a safe method or section heading of the pack is outside t
       assert.match(result.message, /fresh render/);
     }
   }
+});
+
+test('check: a heading of the business\'s own that starts with a section\'s title passes; the title alone, or a method heading, fails', () => {
+  const dir = cafe();
+  const body = rendered('FOODCOOK', dir);
+  const report = (heading, name) => writeReport(dir, body, { header: `${heading}\n\n${HEADER}`, name });
+  for (const heading of ['# COOKING RECORD FOR BRAMBLE CAFE', '## COOKING AND CHILLING CHECKS', '## Cooking', '### MANAGEMENTS']) {
+    const result = checkDocument('FOODCOOK', dir, report(heading, 'own-heading.md'), data);
+    assert.equal(result.exit, 0, `${heading}: ${result.message}`);
+  }
+  for (const heading of ['# COOKING', '##   COOKING  ', '## COOKING ##', '#### MANAGEMENT', '### CK-01 COOKING SAFELY at Bramble Cafe']) {
+    const result = checkDocument('FOODCOOK', dir, report(heading, 'pack-heading.md'), data);
+    assert.equal(result.exit, 1, heading);
+    assert.equal(result.line, 1, heading);
+    assert.match(result.message, /outside the UK-FOOD markers/, heading);
+  }
+});
+
+test('check: a marker quoted indented in the document\'s own part is not a marker, unless the document has no other', () => {
+  const dir = cafe();
+  const body = rendered('FOODCOOK', dir);
+  const [begin] = body.split('\n');
+  const quoting = `\nThe generated part starts and ends with lines like these:\n\n    ${begin}\n    <!-- UK-FOOD:END -->\n`;
+  for (const options of [{ footer: `${FOOTER}${quoting}`, name: 'after.md' }, { header: `${HEADER}${quoting}\n`, name: 'before.md' }]) {
+    const result = checkDocument('FOODCOOK', dir, writeReport(dir, body, options), data);
+    assert.equal(result.exit, 0, result.message);
+  }
+  // With no marker at the start of a line, the indented one is named, as before.
+  const indented = writeReport(dir, body.replace('<!-- UK-FOOD:BEGIN', '  <!-- UK-FOOD:BEGIN'), { footer: `${FOOTER}${quoting}`, name: 'only.md' });
+  const result = checkDocument('FOODCOOK', dir, indented, data);
+  assert.equal(result.exit, 1);
+  assert.equal(result.line, lineOf(`${HEADER}${body}`, '<!-- UK-FOOD:BEGIN'));
+  assert.match(result.message, /UK-FOOD:BEGIN marker line is indented/);
+});
+
+test('check: a byte order mark before a BEGIN marker on the first line is dropped, not read as an indent', () => {
+  const dir = cafe();
+  const body = rendered('FOODCOOK', dir);
+  const file = join(dir, 'bom.md');
+  writeFileSync(file, `\ufeff${body}\n${FOOTER}`);
+  const result = checkDocument('FOODCOOK', dir, file, data);
+  assert.equal(result.exit, 0, result.message);
+  writeFileSync(file, `\ufeff${swap(body, 'Poached eggs', 'Boiled eggs')}\n${FOOTER}`);
+  const changed = checkDocument('FOODCOOK', dir, file, data);
+  assert.equal(changed.exit, 1);
+  assert.equal(changed.line, lineOf(body, 'Poached eggs'));
+  assert.equal(run('check', '--doc', 'FOODCOOK', '--project', dir, '--report', file).status, 1);
+});
+
+test('a misplaced worksheet: the message says to move or rename it first, and where it probably belongs, then how to make the right one', () => {
+  const misplaced = (dir) => {
+    const message = render('FOODCOOK', dir).messages.join('\n');
+    const move = message.search(/move or rename it first/i);
+    assert.ok(move >= 0, message);
+    assert.ok(message.indexOf(join(dir, 'food-safety', 'answers-XC.md')) > move, message);
+    assert.ok(message.indexOf('worksheet --section CK') > move, message);
+    return message;
+  };
+  // The XC worksheet's own file is free: it can go straight there.
+  const free = project({ profile: cafeText('profile'), CK: cafeText('XC') });
+  assert.doesNotMatch(misplaced(free), /already/);
+  // The cafe already has an XC worksheet, so the message says so.
+  assert.match(misplaced(cafe({ CK: cafeText('XC') })), /already a file there/);
 });
 
 test('check names the column and the code points where a line first differs, so a look-alike character is visible', () => {

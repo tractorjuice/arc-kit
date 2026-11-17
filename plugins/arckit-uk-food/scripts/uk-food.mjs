@@ -509,6 +509,16 @@ const isIsoDate = (value) => {
   const date = new Date(`${value}T00:00:00Z`);
   return !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === value;
 };
+const andList = (items) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`);
+// A character as its code point, U+ and four or more hex digits, so that one that looks like another shows.
+const codePoint = (char) => `U+${char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`;
+// Characters a reader cannot see, or that change the direction of the text around them, so that a
+// document could show something other than what was written: the zero-width characters and marks
+// (U+200B to U+200F), the bidirectional controls (U+202A to U+202E and U+2066 to U+2069), a byte
+// order mark inside the text (U+FEFF) and the soft hyphen (U+00AD).
+const HIDDEN = /[\u00AD\u200B-\u200F\u202A-\u202E\u2066-\u2069\uFEFF]/g;
+// The hidden characters in a line, each once, in the order they first appear: "U+202E and U+200B".
+const hiddenIn = (text) => andList([...new Set(text.match(HIDDEN) ?? [])].map(codePoint));
 
 // Where a method's questions sit: on a block, and on each row of any block but a table.
 const holdersOf = (block) => [
@@ -842,11 +852,24 @@ export function parseWorksheet(text, data) {
   };
   // Adds a line to a field's value. A comment in a value would be hidden once a document is
   // rendered, so the document would say something no reader could see: reported, value not used.
-  const take = (target, text, at) => {
+  // So would a character that cannot be seen or that turns the text around (HIDDEN), looked for in
+  // the whole line as written, `raw`, since trimming would drop one at either end unseen.
+  const take = (target, text, at, raw) => {
     target.lines.push(text);
-    if (target.block && text.includes('<!--')) {
+    if (!target.block) return;
+    if (text.includes('<!--')) {
       report(at, 'a comment inside a value would be hidden once the document is rendered, so the value is not used: take the comment out', target.block);
     }
+    hidden(raw, at, target.block);
+  };
+  // Reports any HIDDEN character in a line that holds a value: the value is not used.
+  const hidden = (raw, at, owner) => {
+    const found = hiddenIn(raw);
+    if (!found) return;
+    const one = !found.includes(' and ');
+    report(at, `this line holds ${found}: ${one ? 'a character that cannot be seen or that changes' : 'characters that cannot be seen or that change'} ` +
+      'the direction of the text, so a document could show something other than what is written. The value is not used: ' +
+      `delete ${one ? 'the character' : 'them'}, or type the line again`, owner);
   };
   for (let i = markerAt + 1; i < lines.length; i++) {
     const at = i + 1;
@@ -878,7 +901,7 @@ export function parseWorksheet(text, data) {
         if (field.block) report(at, `this indented line follows an empty ${field.name}: line, so it is not read: a value starts on its field's own line, after the colon`, block);
         field = { lines: [] };
       } else if (field) {
-        take(field, text, at);
+        take(field, text, at, lines[i]);
       } else {
         report(at, 'this indented line does not continue a field: a continued line follows its field\'s line directly, with no blank line between, and starts with two spaces', block);
       }
@@ -908,6 +931,8 @@ export function parseWorksheet(text, data) {
         else {
           block = open('entry', id, at, { title: rest });
           seen.entry.set(id, block);
+          // The title is printed in the documents, so it is a value like any other.
+          hidden(lines[i], at, block);
           continue;
         }
       } else if (methodIds.has(id)) {
@@ -977,7 +1002,7 @@ export function parseWorksheet(text, data) {
         field.block = block;
         block.fields.set(name, field);
       }
-      if (match[2].trim() !== '') take(field, match[2].trim(), at);
+      if (match[2].trim() !== '') take(field, match[2].trim(), at, lines[i]);
     } else {
       report(at, 'line not understood: a field starts with its name and a colon, and a value carries on to a line that starts with two spaces', block);
     }
@@ -1194,8 +1219,9 @@ const inline = (text) => String(text).replace(/\n/g, '<br>');
 const cell = (text) => inline(String(text).replace(/(\\*)\|/g, (_, slashes) => `${slashes}${slashes.length % 2 ? '\\' : ''}\\|`));
 // A business's words as a document prints them: <, > and & as entities, and each character Markdown
 // reads as markup (\ ` * _ [ ] ~) after a backslash, so that nothing typed can hide or change the
-// document. Line breaks are left for the caller: <br> in a cell or a line of the helper's.
-const businessText = (text) => String(text).replace(/[\\`*_[\]~]/g, '\\$&').replace(/&/g, '&amp;')
+// document. So is $, which some Markdown viewers read as the start of mathematics. Line breaks are
+// left for the caller: <br> in a cell or a line of the helper's.
+const businessText = (text) => String(text).replace(/[\\`*_[\]~$]/g, '\\$&').replace(/&/g, '&amp;')
   .replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const said = (text) => inline(businessText(text));
 // Text printed word for word in a fenced code block, so that nothing in it is read as markup. The
@@ -1204,7 +1230,6 @@ const fenced = (text) => {
   const fence = '`'.repeat(Math.max(3, ...(text.match(/`+/g) ?? []).map((run) => run.length + 1)));
   return [`${fence}text`, ...text.split('\n'), fence];
 };
-const andList = (items) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`);
 const longDate = (iso) => {
   const [year, month, day] = iso.split('-').map(Number);
   return `${day} ${MONTHS[month - 1]} ${year}`;
@@ -1425,6 +1450,16 @@ function ownEntryChunks(entry) {
   return [...chunks, ['The text below is the business\'s own, and this tool did not write or check it.'], fenced(entry.suppliedText)];
 }
 
+// What to do about `file`, which holds the `found` worksheet where the `wanted` one should be. Making
+// the wanted worksheet in its place would overwrite it, so it is moved or renamed first.
+function misplaced(file, found, wanted, project) {
+  const home = join(project, 'food-safety', `answers-${found}.md`);
+  const taken = existsSync(home) ? ', but there is already a file there: compare the two before you move it' : '';
+  return `${file} is the ${found} worksheet, not the ${wanted} one. Move or rename it first, so that it is not ` +
+    `overwritten: it probably belongs in ${home}${taken}. Then make the ${wanted} worksheet with: ` +
+    `${makeWorksheet(wanted, file)}.`;
+}
+
 // Reads and parses the worksheets a document renders from, and hashes them in HASH_ORDER. Returns
 // { sources, hash }, or { exit, messages }: 2 for a missing or wrong worksheet, 1 for problems.
 function readSources(doc, project, data) {
@@ -1455,9 +1490,7 @@ function readSources(doc, project, data) {
       refused.push(`${file} answers data ${parsed.data}, but the helper's data is ${DATA_ID}. Keep a copy of it, make a ` +
         `worksheet for this data with: ${makeWorksheet(section, file)}, and copy the answers across.`);
     } else if (parsed.section !== null && parsed.section !== section) {
-      refused.push(`${file} is the ${parsed.section} worksheet, not the ${section} one. It belongs in ` +
-        `${join(project, 'food-safety', `answers-${parsed.section}.md`)}; make the ${section} worksheet with: ` +
-        `${makeWorksheet(section, file)}.`);
+      refused.push(misplaced(file, parsed.section, section, project));
     } else {
       problems.push(...parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`));
     }
@@ -1493,16 +1526,19 @@ export function renderDocument(doc, project, data) {
 
 // Finds the one rendered body in a document's lines: { begin, end, marker } (1-based line numbers),
 // or { line, problem }, where line is null when the problem has no line of its own.
+// A marker indented in the document's own part is a quotation of one, not a marker; it is named only
+// when the document has no marker of that name at the start of a line.
 function findBody(lines, doc) {
-  const indented = lines.findIndex((line) => /^\s+<!-- UK-FOOD:(BEGIN|END)/.test(line));
-  if (indented >= 0) {
-    const [, name] = /UK-FOOD:(BEGIN|END)/.exec(lines[indented]);
-    return { line: indented + 1, problem: `this UK-FOOD:${name} marker line is indented: a marker line starts at the beginning of its line` };
-  }
   const at = (name) => lines.flatMap((line, i) => (line.startsWith(`<!-- UK-FOOD:${name}`) ? [i + 1] : []));
   const [begins, ends] = [at('BEGIN'), at('END')];
   for (const [name, found] of [['BEGIN', begins], ['END', ends]]) {
-    if (found.length === 0) return { line: null, problem: `there is no UK-FOOD:${name} marker line, so there is no rendered body to check` };
+    if (found.length === 0) {
+      const indented = lines.findIndex((line) => new RegExp(`^\\s+<!-- UK-FOOD:${name}`).test(line));
+      if (indented >= 0) {
+        return { line: indented + 1, problem: `this UK-FOOD:${name} marker line is indented: a marker line starts at the beginning of its line` };
+      }
+      return { line: null, problem: `there is no UK-FOOD:${name} marker line, so there is no rendered body to check` };
+    }
     if (found.length > 1) return { line: found[1], problem: `there is more than one UK-FOOD:${name} marker line; a document holds one rendered body` };
   }
   const [begin, end] = [begins[0], ends[0]];
@@ -1518,15 +1554,21 @@ function findBody(lines, doc) {
   return { begin, end, marker };
 }
 
-// The first line outside the body that is a heading of the pack: a Markdown heading whose text
-// starts with a section's title, or with a safe method's identifier and title, as the data has
-// them. The pack's text outside the markers is not checked, so a document may not hold any. -1 if none.
+// The first line outside the body that is a heading of the pack: a Markdown heading whose text is a
+// section's title, or starts with a safe method's identifier and title, as the data has them. A
+// heading's text is what Markdown reads: trimmed, without a closing run of #. The pack's text outside
+// the markers is not checked, so a document may not hold any; a heading of its own that only starts
+// with a section's title, such as "COOKING RECORD FOR BRAMBLE CAFE", is its own. -1 if none.
 function packHeadingOutside(lines, body, data) {
-  const titles = [...data.sections.values()].flatMap((file) => [file.section.title, ...file.methods.map((m) => `${m.id} ${m.title}`)]);
+  const files = [...data.sections.values()];
+  const sections = files.map((file) => file.section.title);
+  const methods = files.flatMap((file) => file.methods.map((m) => `${m.id} ${m.title}`));
   return lines.findIndex((line, i) => {
     if (i >= body.begin - 1 && i < body.end) return false;
     const heading = /^ {0,3}#{1,6}[ \t]+(.*)$/.exec(line);
-    return Boolean(heading) && titles.some((title) => heading[1].startsWith(title));
+    if (!heading) return false;
+    const text = heading[1].replace(/[ \t]+#+[ \t]*$/, '').trim();
+    return sections.includes(text) || methods.some((title) => text.startsWith(title));
   });
 }
 
@@ -1536,7 +1578,7 @@ function firstDifference(expected, found) {
   const [a, b] = [Array.from(expected), Array.from(found)];
   let i = 0;
   while (i < a.length && i < b.length && a[i] === b[i]) i++;
-  const point = (char) => (char === undefined ? 'the end of the line' : `U+${char.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`);
+  const point = (char) => (char === undefined ? 'the end of the line' : codePoint(char));
   return { column: i + 1, expectedChar: point(a[i]), foundChar: point(b[i]) };
 }
 
@@ -1552,7 +1594,8 @@ export function checkDocument(doc, project, report, data) {
   } catch (error) {
     return { exit: 2, messages: [`cannot read ${report}: ${error.message}`] };
   }
-  const lines = text.replace(/\r\n/g, '\n').split('\n');
+  // A byte order mark at the start of the file is not part of its first line.
+  const lines = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').split('\n');
   const body = findBody(lines, doc);
   if (body.problem) {
     return { exit: 1, ok: false, line: body.line, message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}` };
