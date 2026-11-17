@@ -616,20 +616,20 @@ EXPECTED_LIMITS = [
     ("3 days", "CH-01", 40, None),
     ("3 days", "CK-07", 63, None),
     ("1 day", "CK-07", 63, "Cooked rice"),
-    ("four hours", "CH-01", 41, "‘4 hour rule’"),  # the four-hour rule
+    ("four hours", "CH-01", 41, "\u20184 hour rule\u2019"),  # the four-hour rule
     ("two hours", "CK-06", 60, "up to two hours, but you can only do this once"),  # the two-hour rule
     ("between 0°C and 4°C", "CK-02", 53, None),
     ("60 days", "CK-02", 52, None),
     ("28 days", "front", 2, None),
-    ("120⁰C", "CK-04", 56, "Acrylamide"),
-    ("175⁰C", "CK-04", 57, "oil temperature"),
-    ("30–180 mins", "CK-04", 56, "Soak"),
+    ("120\u2070C", "CK-04", 56, "Acrylamide"),
+    ("175\u2070C", "CK-04", 57, "oil temperature"),
+    ("30\u2013180 mins", "CK-04", 56, "Soak"),
     ("BS EN 1276", "CL-02", 31, None),
     ("BS EN 13697", "CL-02", 31, None),
     ("BS EN 1499", "CL-01", 29, None),
     ("BS EN 1500", "CL-01", 30, None),
     ("10mg/ kg", "XC-04", 20, "Sulphur dioxide"),
-    ("within 1⁰C of 100⁰C and 0⁰C", "MG-02", 67, "boiling water and melting ice"),
+    ("within 1\u2070C of 100\u2070C and 0\u2070C", "MG-02", 67, "boiling water and melting ice"),
 ]
 
 
@@ -661,7 +661,7 @@ THINK_TWICE_PAGES = {"XC": (18, 20, 22, 24), "CL": (30, 33), "CH": (41, 45, 47),
                      "MG": (77,)}
 NOT_LIMITS = [
     NotALimit(THINK_TWICE_PAGES, r"^THINK TWICE!$", "the heading of a THINK TWICE! box"),
-    NotALimit({"front": (8,)}, r"\brating between 0 and 5\b|^[0-5] – ",
+    NotALimit({"front": (8,)}, r"\brating between 0 and 5\b|^[0-5] \u2013 ",
               "the food hygiene rating scale an inspector awards, not a figure the business works to"),
     NotALimit({"front": (10,), "CL": (29,)}, r"^Step [1-6]:", "the number of a handwashing step"),
     NotALimit({"CL": (31, 37), "CH": (44, 45), "MG": (75,)}, r"^[1-7]\. ", "the number of an item in a numbered list"),
@@ -670,7 +670,7 @@ NOT_LIMITS = [
     NotALimit({"XC": (20,)}, r"\bring 999\b", "the emergency telephone number in the allergic reaction box"),
     NotALimit({"MG": (70,)}, r"\bSince October 2021\b", "the date a labelling law came in; a date, not a limit"),
     NotALimit({"XC": (17, 18), "CL": (31, 32, 33)},
-              r"‘2 stage clean’|\btwo stage clean(?:ing)?\b|\btwo stages\b",
+              r"\u20182 stage clean\u2019|\btwo stage clean(?:ing)?\b|\btwo stages\b",
               "the name of the two stage clean, a procedure CL-02 sets out step by step: a count of stages,"
               " not a figure to measure against"),
     NotALimit({"CL": (37,)}, r"\bA two-in-one product\b", "the name of a kind of product (a sanitiser)"),
