@@ -7,14 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.22.1] — 2026-11-17
+
 ### Changed
 
+- **Every film now has the larger text.** All 76 command films, the 128 overlay films and the recipes explainer have been re-made and re-uploaded with English captions, and the guide pages and command reference link to the new ones. The first 101 went up with 6.22.0.
+- **A build can run without progress summaries.** While a build's workers run, Claude Code makes extra requests to write a one-line summary of each. The build guide now says how to turn them off (`CLAUDE_CODE_DISABLE_AGENT_PROGRESS_SUMMARIES=1`, from Claude Code v2.1.318) and what you lose.
+- **The enterprise guide shows how to keep the retired `tractorjuice/arc-kit` marketplace off managed machines**, so nobody adds it beside `arckit-claude` and gets every plugin twice.
+- **arckit.org has a page for ArcKit as a Claude Code plugin**, with the install steps, what the plugin contains and which marketplace to add. The home page links to it.
+- **arckit.org also counts visits with Cloudflare Web Analytics**, alongside Google Analytics. It sets no cookies. The privacy page says what it sends.
 - **ArcKit now needs Claude Code v2.1.319 or later.** That release closes three ways a command could get past a permission check or the sandbox. It also runs ArcKit's after-write steps on an artefact written just as you send a new message; earlier versions skipped them, leaving the artefact with no provenance block and no entry in the published index. Run `claude update`, and if you set `minimumVersion` or `requiredMinimumVersion`, raise it to `2.1.319`. Below it ArcKit still runs and warns at session start.
 - **A plugin removed from the `arckit-claude` marketplace is now uninstalled for you.** The marketplace sets `forceRemoveDeletedPlugins`, so if a plugin is ever withdrawn, Claude Code removes it at the next session start and lists it under Flagged in `/plugin`, instead of leaving a copy that reports "not found in marketplace". No plugin is being removed.
 - **Eleven overlay READMEs give an install line that works in one step**: `claude plugin install <overlay> --marketplace tractorjuice/arckit-claude` adds the marketplace if needed and brings the core plugin with it (Claude Code 2.1.275 or later). The old line named no marketplace.
 
 ### Fixed
 
+- **Figures on arckit.org were out of date.** The getting-started page named an old minimum Claude Code version, and the home page undercounted the UK commands, agents, jurisdictions and sectors. They are corrected, and a test now compares them with the repository.
 - **Section links in a published documentation site no longer show "Document not found".** A link to a heading inside a document, such as a contents list written in the document's own Markdown, was treated as the name of a file to open. It now scrolls to the heading. A link to another document can also name a section (`ARC-001-REQ-v1.0.md#executive-summary`) and the site goes to it. Run `/arckit:pages` again to pick up the fix on an existing site.
 - **The core plugin's marketplace listing said 75 commands.** It has 76.
 - **The research handoff check no longer repeats a reader's own words in its errors.** When a reader's reply failed the check, the error lines named the offending key or value, so text a web page had planted could reach the main session inside ArcKit's own message. Errors now name positions in the schema only: unknown keys are one line that lists the keys the schema allows, and no value is quoted. The validator script used by the non-Claude extensions reports errors the same way. Follow-up to #1020.
