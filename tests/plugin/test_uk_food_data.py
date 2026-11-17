@@ -12,6 +12,7 @@ in two at a line break.
 """
 import importlib.util
 import json
+import shutil
 import subprocess
 import sys
 from collections import Counter
@@ -64,21 +65,31 @@ def _subtract_furniture(tokens: list[str], furniture: list[str]) -> Counter:
     return Counter(w for w in (normalise(t) for t in remaining) if w)
 
 
+def page_claims(data_dir: Path) -> dict[int, list[str]]:
+    """The data files that declare each page, in DATA_FILES order."""
+    claims: dict[int, list[str]] = {}
+    for name in existing_files(data_dir):
+        for page in declared_pages(_load(data_dir / f"{name}.json")):
+            claims.setdefault(page, []).append(name)
+    return claims
+
+
 def page_differences(data_dir: Path, fixture: dict, exceptions: dict,
-                     files: list[str] | None = None) -> dict[int, dict[str, Counter]]:
+                     files: list[str] | None = None, pages=None) -> dict[int, dict[str, Counter]]:
     """Pages where the data's words and the fixture's words differ.
 
     Returns {page: {"missing": words only in the fixture, "extra": words only in
-    the data}} for differing pages; an empty dict means a perfect match. Only
-    pages a file declares are compared.
+    the data}} for differing pages; an empty dict means a perfect match. The
+    pages compared are `pages` when given, otherwise the pages the files declare.
     """
     names = files if files is not None else existing_files(data_dir)
-    declared: set[int] = set()
-    for name in names:
-        declared |= declared_pages(_load(data_dir / f"{name}.json"))
+    if pages is None:
+        pages = set()
+        for name in names:
+            pages |= declared_pages(_load(data_dir / f"{name}.json"))
     transcribed = page_words(data_dir, names)
     result: dict[int, dict[str, Counter]] = {}
-    for page in sorted(declared):
+    for page in sorted(pages):
         tokens = apply_joins(fixture["pages"].get(str(page), []), exceptions.get("joins", {}).get(str(page), []))
         expected = _subtract_furniture(tokens, exceptions.get("furniture", []))
         have = Counter(transcribed.get(page, Counter()))
@@ -98,6 +109,56 @@ def test_section_pages_covered(name):
         pytest.skip(f"{name}.json not transcribed yet")
     differences = page_differences(DATA_DIR, _load(FIXTURE), _load(EXCEPTIONS), [name])
     assert not differences, differences
+
+
+# The per-file test compares only the pages a file declares, so a file that dropped a page from its
+# `pages` and its blocks would pass it. The whole pack is therefore also compared page by page, whichever
+# file declares each page, and every page must be declared by exactly one of the seven files.
+WHOLE_PACK = range(1, 101)
+
+
+def test_whole_pack_covered():
+    missing_files = [name for name in DATA_FILES if not (DATA_DIR / f"{name}.json").is_file()]
+    assert not missing_files, missing_files
+    claims = page_claims(DATA_DIR)
+    assert sorted(claims) == list(WHOLE_PACK), sorted(set(WHOLE_PACK) - set(claims))
+    assert {page: names for page, names in claims.items() if len(names) > 1} == {}
+    differences = page_differences(DATA_DIR, _load(FIXTURE), _load(EXCEPTIONS), DATA_FILES, pages=WHOLE_PACK)
+    assert not differences, differences
+
+
+def _drop_page(node, page: int):
+    """A copy of a data file with every element on `page` removed and `page` taken out of every page list."""
+    if isinstance(node, list):
+        return [_drop_page(item, page) for item in node if not (isinstance(item, dict) and item.get("page") == page)]
+    if isinstance(node, dict):
+        return {key: ([p for p in value if p != page]
+                      if key == "pages" and isinstance(value, list) and all(isinstance(p, int) for p in value)
+                      else _drop_page(value, page))
+                for key, value in node.items()}
+    return node
+
+
+def test_whole_pack_check_catches_a_dropped_page(tmp_path):
+    data_dir = tmp_path / "data"
+    shutil.copytree(DATA_DIR, data_dir)
+    (data_dir / "CL.json").write_text(json.dumps(_drop_page(_load(data_dir / "CL.json"), 37)), encoding="utf-8")
+    fixture, exceptions = _load(FIXTURE), _load(EXCEPTIONS)
+    # The per-file comparison sees only the pages CL.json still declares, so it passes...
+    assert page_differences(data_dir, fixture, exceptions, ["CL"]) == {}
+    # ...but no file now claims page 37, and the whole-pack comparison finds its words missing.
+    assert 37 not in page_claims(data_dir)
+    differences = page_differences(data_dir, fixture, exceptions, DATA_FILES, pages=WHOLE_PACK)
+    assert list(differences) == [37] and differences[37]["missing"] and not differences[37]["extra"]
+
+
+def test_page_claims_finds_a_page_two_files_declare(tmp_path):
+    data_dir = tmp_path / "data"
+    shutil.copytree(DATA_DIR, data_dir)
+    xc = _load(data_dir / "XC.json")
+    xc["section"]["pages"] = [10, *xc["section"]["pages"]]
+    (data_dir / "XC.json").write_text(json.dumps(xc), encoding="utf-8")
+    assert page_claims(data_dir)[10] == ["front", "XC"]
 
 
 def test_fixture_matches_declared_source():
@@ -404,7 +465,14 @@ def _diary_page(number: int) -> dict:
     if not path.is_file():
         assert "diary" not in REQUIRED_PARTS, "diary.json is required but missing"
         pytest.skip("diary.json not transcribed yet")
-    return next(page for page in _load(path)["pages"] if page["page"] == number)
+    found = next((page for page in _load(path)["pages"] if page["page"] == number), None)
+    assert found is not None, f"diary.json has no page {number}"
+    return found
+
+
+def test_diary_page_reports_a_missing_page():
+    with pytest.raises(AssertionError, match="diary.json has no page 101"):
+        _diary_page(101)
 
 
 def test_review_has_twelve_checklist_questions():
@@ -441,6 +509,29 @@ def test_completion_record_lists_each_safe_method_once():
     ids = [COMPLETION_RECORD_NAMES.get(name) or methods.get(_title_key(name)) for name in names]
     assert None not in ids, [name for name, id_ in zip(names, ids) if id_ is None]
     assert sorted(ids) == sorted(methods.values())  # one to one: each of the 31 methods exactly once
+
+
+# The completion record's first column as printed on pages 78 and 79, top to bottom: five section
+# headings, each followed by its safe methods. The order is the pack's own, which is not always the
+# order of the methods' pages: page 79 prints Acrylamide (CK-04) last in Cooking.
+COMPLETION_RECORD_ORDER = [
+    "Cross-contamination", "Personal hygiene", "Cloths", "Separating foods", "Food allergies",
+    "Physical and chemical contamination", "Pest control", "Maintenance",
+    "Cleaning", "Handwashing", "Cleaning effectively", "Clear and clean as you go", "Your cleaning schedule",
+    "Chilling", "Chilled storage and displaying chilled food", "Chilling down hot food", "Defrosting", "Freezing",
+    "Cooking", "Cooking safely", "Foods that need extra care", "Reheating", "Checking your menu", "Hot holding",
+    "Ready-to-eat food", "Acrylamide",
+    "Management", "Opening and closing checks", "Extra checks", "Prove it", "Managing food allergen information",
+    "Training and supervision", "Customers", "Suppliers and contractors", "Stock control",
+    "Product withdrawal and recall",
+]
+
+
+def test_completion_record_is_in_printed_order():
+    assert len(COMPLETION_RECORD_ORDER) == 5 + 31
+    names = [row[0] for number in (78, 79) for block in _diary_page(number)["blocks"]
+             if block.get("form") == "completionRecord" for row in block["rows"]]
+    assert names == COMPLETION_RECORD_ORDER
 
 
 # The JSON schema, checked against the same files the helper validates by hand.
