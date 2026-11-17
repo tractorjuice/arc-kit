@@ -278,10 +278,17 @@ test('a note or question ending with a colon is shown above the questions after 
     assert.ok(shows(promptOf(ch, id), textOf('CH-01-Q10')), id);
     assert.ok(!shows(promptOf(ch, id), textOf('CH-01-Q15')), id);
   }
-  for (const id of ['CH-01-Q16', 'CH-01-Q17', 'CH-01-Q18', 'CH-01-Q19', 'CH-01-Q20']) {
+  for (const id of ['CH-01-Q16', 'CH-01-Q17', 'CH-01-Q18', 'CH-01-Q19']) {
     assert.ok(shows(promptOf(ch, id), textOf('CH-01-Q15')), id);
     assert.ok(!shows(promptOf(ch, id), textOf('CH-01-Q10')), id);
   }
+  // Page 41 prints "If you do not do this, what do you do?" after a gap below both groups: it is
+  // about all chilling equipment, so it is shown neither group's lead-in. It is shown the question
+  // the two groups answer, which "this" refers to.
+  const q20 = promptOf(ch, 'CH-01-Q20');
+  assert.ok(!shows(q20, textOf('CH-01-Q10')) && !shows(q20, textOf('CH-01-Q15')));
+  assert.ok(shows(q20, textOf('CH-01-Q09')));
+  assert.equal(q20.at(-2), `> ${textOf('CH-01-Q09')}`);
   // "If not, what do you do?" follows "Do you follow the manufacturer's instructions for using your:".
   for (const id of ['CH-01-Q04', 'CH-01-Q05', 'CH-01-Q06']) assert.ok(shows(promptOf(ch, id), textOf('CH-01-Q03')), id);
   // "Which foods do you defrost in this way?" is about row 7's own method.
@@ -495,9 +502,50 @@ test('a heading of the worksheet after a Build Provenance section is read again,
   const repeated = parse(ck);
   assert.equal(repeated.problems.length, 1);
   assert.match(repeated.problems[0].message, /CK-07-Q01 appears more than once/);
-  // A method heading after it is read as before; anything else in it is still not read.
-  const method = parse(blankWorksheet('CK', data).replace('## CK-07 ', '## Build Provenance\n\n## Notes\n\nAnswer: x\n\n## CK-07 '));
+  // A method heading after it is read as before.
+  const method = parse(blankWorksheet('CK', data).replace('## CK-07 ', '## Build Provenance\n\n| x | y |\n\n## CK-07 '));
   assert.deepEqual(method.problems, []);
+});
+
+test('whatever follows a Build Provenance section is read or reported, never silently unread', () => {
+  const section = '## Build Provenance\n\n*Stamped automatically.*\n\n| Field | Value |\n|---|---|\n| x | y |\n';
+  // Any ## heading but Build Provenance ends the section, as before: an unknown one is reported.
+  const notes = blankWorksheet('CK', data).replace('## CK-07 ', `${section}\n## Notes\n\nAnswer: x\n\n## CK-07 `);
+  const parsedNotes = parse(notes);
+  assert.equal(parsedNotes.problems.length, 1);
+  assert.equal(parsedNotes.problems[0].line, lineOf(notes, '## Notes'));
+  // An own entry with a mistyped identifier after the section is reported, as it is without one.
+  const entry = ['## OWN-3 Milk for coffee', '', 'Kind: additional', 'Hazard: h', 'Control: c', 'Check: k', 'If-it-fails: f',
+    'State: confirmed', 'By: Sam Okafor', 'On: 2026-11-20'];
+  const own = `${blankWorksheet('own', data)}\n${section}\n${entry.join('\n')}\n`;
+  const parsedOwn = parse(own);
+  assert.equal(parsedOwn.problems.length, 1);
+  assert.equal(parsedOwn.problems[0].line, lineOf(own, '## OWN-3'));
+  // The tool's end marker ends the section: what follows it is read.
+  const ended = `${blankWorksheet('CK', data)}\n<!-- arckit-provenance:start -->\n\n${section}\n<!-- arckit-provenance:end -->\n\nWe also wash the fridge\n`;
+  const parsedEnded = parse(ended);
+  assert.equal(parsedEnded.problems.length, 1);
+  assert.equal(parsedEnded.problems[0].line, lineOf(ended, 'We also wash the fridge'));
+  assert.match(parsedEnded.problems[0].message, /not understood/);
+});
+
+test('an indented line after an empty field line is credited to no field, Answer included', () => {
+  // Meant for CK-06-Q02, typed under CK-06-Q01's empty Source: it must not become that Source.
+  const text = fill(blankWorksheet('CK', data), 'CK-06-Q01', ...confirmed('yes'), '  A bain-marie, preheated before service');
+  const parsed = parse(text);
+  assert.equal(parsed.problems.length, 1);
+  assert.equal(parsed.problems[0].line, lineOf(text, '  A bain-marie, preheated'));
+  assert.match(parsed.problems[0].message, /empty/);
+  assert.equal(parsed.answers.get('CK-06-Q01').source, '');
+  assert.equal(parsed.answers.get('CK-06-Q01').answered, false);
+  // A list answer starts on the Answer: line; items under an empty Answer: line are not read.
+  const list = fill(blankWorksheet('CK', data), 'CK-02-Q01', 'Answer:', '  Quiche', '  Scrambled eggs', ...confirmed('').slice(1));
+  const parsedList = parse(list);
+  const indented = parsedList.problems.find((p) => p.line === lineOf(list, '  Quiche'));
+  assert.ok(indented, messages(parsedList));
+  assert.match(indented.message, /empty/);
+  assert.equal(parsedList.answers.get('CK-02-Q01').answer, '');
+  assert.equal(parsedList.answers.get('CK-02-Q01').answered, false);
 });
 
 test('a second line of an answer that is not indented is reported with its line number, and the answer is not used', () => {
@@ -694,7 +742,7 @@ test('a yes-no-else answer that is only no, or another yes-or-no word, is report
 });
 
 test('a yes-no-else answer that is a refused word with any run of marks, or a non-answer, is reported', () => {
-  const refused = ['no...', 'No…', 'NO!!', 'no!?', 'Nope!!', 'Nah.', 'Yes!!', 'yes...', 'Yes…', 'yes..', 'N/A', 'n/a',
+  const refused = ['no...', 'No\u2026', 'NO!!', 'no!?', 'Nope!!', 'Nah.', 'Yes!!', 'yes...', 'Yes\u2026', 'yes..', 'N/A', 'n/a',
     'na', 'NA.', 'none', 'None.', 'nil', '-', '?', '...', 'No,', 'No -'];
   for (const answer of refused) {
     const parsed = parse(fill(blankWorksheet('CK', data), 'CK-02-Q02', ...confirmed(answer)));
@@ -705,6 +753,31 @@ test('a yes-no-else answer that is a refused word with any run of marks, or a no
   for (const answer of ['yes', 'Yes.', 'Never: we use liquid egg', 'No fryer on site, we oven-bake', 'no thanks, we use liquid egg']) {
     const parsed = parse(fill(blankWorksheet('CK', data), 'CK-02-Q02', ...confirmed(answer)));
     assert.deepEqual(parsed.problems, [], answer);
+  }
+});
+
+test('not applicable, n.a. and a lone em or en dash are refused for yes-no-else, and the message offers why it does not apply', () => {
+  for (const answer of ['Not applicable', 'not applicable.', 'n.a.', 'N.A', '\u2014', '\u2013']) {
+    const parsed = parse(fill(blankWorksheet('CK', data), 'CK-02-Q06', ...confirmed(answer)));
+    assert.equal(parsed.problems.length, 1, answer);
+    assert.match(parsed.problems[0].message, /write yes, or say what you do instead, or say why it does not apply$/, answer);
+    assert.equal(parsed.answers.get('CK-02-Q06').answered, false, answer);
+  }
+  // A sentence saying why it does not apply is an answer.
+  assert.deepEqual(parse(fill(blankWorksheet('CK', data), 'CK-02-Q06', ...confirmed('Not applicable: we do not prepare shellfish'))).problems, []);
+});
+
+test('a question\'s own else text, and a hint without its brackets or with a full stop, are copied hints', () => {
+  const cases = [
+    ['CK', 'CK-02-Q06', 'If not, what do you do?'], ['CK', 'CK-06-Q02', 'write your answer'], ['CK', 'CK-06-Q02', '(write your answer).'],
+    ['CK', 'CK-06-Q02', 'Write your answer.'], ['CK', 'CK-02-Q02', 'yes, or say what you do instead'], ['CK', 'CK-06-Q01', 'yes / no.'],
+    ['CK', 'CK-02-Q01', 'one item per line'], ['CL', 'CL-01-Q01', 'If no, what do you use?']
+  ];
+  for (const [section, qid, answer] of cases) {
+    const parsed = parse(fill(blankWorksheet(section, data), qid, ...confirmed(answer)));
+    assert.equal(parsed.problems.length, 1, `${qid} ${answer}`);
+    assert.match(parsed.problems[0].message, /hint/, `${qid} ${answer}`);
+    assert.equal(parsed.answers.get(qid).answered, false, `${qid} ${answer}`);
   }
 });
 

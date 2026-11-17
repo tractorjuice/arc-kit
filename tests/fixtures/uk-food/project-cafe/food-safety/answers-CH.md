@@ -225,12 +225,12 @@ Source:
 > This is to make sure that chilled food is kept at 8°C or below. This is a legal requirement in England, Wales and Northern Ireland, and recommended in Scotland.
 > You should check the temperature of your fridges and chilled display equipment at least once a day starting with your opening checks (see the ‘Management’ section).
 > To make sure equipment is working properly, check temperatures in-between packs of chilled food using a clean, disinfected probe thermometer.
-> Chilled display unit:
+> How do you check the temperature of chilling equipment?
 > If you do not do this, what do you do?  (write your answer)
-Answer:
-State: unanswered
-By:
-On:
+Answer: We do this for all our chilling equipment: every morning we check both upright fridges, the sandwich fridge and the drinks fridge with the probe thermometer between packs of food, and write the readings in the diary. We have no chilled display unit.
+State: confirmed
+By: Priya Shah
+On: 2026-11-21
 Source:
 
 ## CH-02 Chilling down hot food

@@ -421,14 +421,21 @@ const HINTS = {
   text: '(write your answer)', list: '(one item per line)', nation: '(England / Wales / Scotland / Northern Ireland / other)'
 };
 const NATIONS = ['England', 'Wales', 'Scotland', 'Northern Ireland', 'other'];
+// The two lists below, of refused words and of copied hints, are a convenience, not the guard. The
+// guards are that nothing typed is dropped or credited to the wrong place without a problem, that
+// only confirmed answers count, and that a named person reads the rendered document before
+// sign-off. Do not grow these lists word by word.
+//
 // Only yes (or yes.) is yes. An answer to a yes-no-else question that is nothing but one of these
-// words, or a non-answer (n/a, none, a dash, a question mark), followed by any run of marks (. ! ?
-// an ellipsis, and also , ; : - and spaces), says neither yes nor what the business does instead,
-// so it is reported and not used. So is an answer made only of such marks.
-const NOT_AN_INSTEAD = new RegExp('^(?:(?:no|n|nope|nah|not|never|none|nil|na|n/a|y|ye|yea|yeah|yep|yup|yes|yess|yse|ys|yrs|' +
-  'ues|ok|okay|true|false)[\\s.!?\u2026,;:-]*|[\\s.!?\u2026,;:-]+)$', 'i');
-// The bracketed hints, lower-cased: an answer line that is one of them was copied from the prompt.
-const HINT_TEXTS = Object.values(HINTS).map((hint) => hint.toLowerCase());
+// words, or a non-answer (n/a, n.a., not applicable, none, a dash, a question mark), followed by
+// any run of marks (. ! ? an ellipsis, and also , ; : - and spaces), says neither yes nor what the
+// business does instead, so it is reported and not used. So is an answer made only of such marks,
+// or a lone em or en dash.
+const NOT_AN_INSTEAD = new RegExp('^(?:(?:no|n|nope|nah|not|never|none|nil|na|n/a|n\\.a|not applicable|y|ye|yea|yeah|yep|' +
+  'yup|yes|yess|yse|ys|yrs|ues|ok|okay|true|false)[\\s.!?\u2026,;:-]*|[\\s.!?\u2026,;:\u2013\u2014-]+)$', 'i');
+// The hints printed after each question, each with and without its brackets: an answer line that
+// is one of them, or the question's own else text, was copied from the prompt.
+const HINT_TEXTS = Object.values(HINTS).flatMap((hint) => [hint, hint.slice(1, -1)]).map((hint) => hint.toLowerCase());
 // The special processes and foods the pack names in CK-02's box "Other foods that need extra care"
 // (page 53), spelt as printed there. A test checks that each is in that box's text.
 export const EXTRA_CARE = {
@@ -534,7 +541,11 @@ function columnsFor(questions, columns) {
 //   method ..."), and the row above is a different method, so it is shown nothing;
 // - a lead-in within the row or box: the latest note or question before it whose text ends with
 //   a colon ("Fridge:", "7. If you have another method of defrosting, write the details here:"),
-//   until the next one;
+//   until the next one. Where a row or box holds two or more such lead-ins, each heading a group
+//   of questions of one type, a question after the last group whose type differs from that
+//   group's is outside every group (CH-01-Q20 on page 41, printed below both groups), so it is
+//   shown none of them; it is shown instead the note printed just before the first lead-in, when
+//   that note ends with "?", as the question the groups answer;
 // - the notes printed before it in its row or box since the question before, in printed order;
 // - for a question that prints no text, the column headings it sits under.
 // A note asks nothing, so it is never listed itself.
@@ -550,6 +561,12 @@ function methodQuestions(method) {
       const point = row?.point ?? (row && asked.some((q) => q.text === '') ? cell : null);
       if (row?.point) cell = row.point;
       const columns = columnsFor(questions, block.columns ?? []);
+      const leads = questions.map((q, i) => (endsWithColon(q.text) ? i : -1)).filter((i) => i >= 0);
+      const lastLead = leads.length >= 2 ? leads.at(-1) : -1;
+      const groupType = questions.slice(lastLead + 1).find((q) => q.type !== 'note')?.type;
+      const before = questions[leads[0] - 1];
+      const groupsAnswer = before?.type === 'note' && /\?\s*$/.test(before.text) ? before : null;
+      let outside = false;
       let notes = [];
       let leadIn = null;
       questions.forEach((question, i) => {
@@ -558,12 +575,14 @@ function methodQuestions(method) {
           if (endsWithColon(question.text)) leadIn = question;
           return;
         }
+        if (lastLead >= 0 && i > lastLead && question.type !== groupType) outside = true;
         const context = [];
         if (block.heading) context.push(block.heading);
         if (block.kind === 'check-it' && block.text && !row?.point) context.push(block.text);
         if (row && leadInRow) context.push(leadInRow);
         if (point) context.push(point);
-        if (leadIn && !notes.includes(leadIn)) context.push(leadIn.text);
+        if (outside && groupsAnswer) context.push(groupsAnswer.text);
+        else if (!outside && leadIn && !notes.includes(leadIn)) context.push(leadIn.text);
         context.push(...notes.map((note) => note.text));
         listed.push({ question, context, columns: question.text === '' ? columns[i] : [] });
         notes = [];
@@ -680,7 +699,9 @@ function readValue(question, answer) {
       return /^(yes|no)\.?$/i.test(answer) ? { value: answer.replace(/\.$/, '').toLowerCase() } : { error: 'is not yes or no' };
     case 'yes-no-else':
       if (/^yes\.?$/i.test(answer)) return { value: 'yes' };
-      if (NOT_AN_INSTEAD.test(answer)) return { error: 'does not say what you do instead: write yes, or say what you do instead' };
+      if (NOT_AN_INSTEAD.test(answer)) {
+        return { error: 'does not say what you do instead: write yes, or say what you do instead, or say why it does not apply' };
+      }
       return { value: answer };
     case 'nation': {
       const nation = standard(answer.replace(/\s+/g, ' '), NATIONS);
@@ -807,14 +828,13 @@ export function parseWorksheet(text, data) {
       report(held.at, 'nothing inside a comment is read, and this comment holds a line of the worksheet: take the comment marks away for it to be read, or delete it', block);
     }
   };
-  // Inside a "## Build Provenance" section another tool appended, only a heading of this worksheet
-  // is read again: a method or own-entry heading, or a question heading. Everything else is not.
-  const resumesAfterProvenance = (line) => {
+  // A "## Build Provenance" section another tool appended is not read. It ends at the tool's end
+  // marker or at any other ## heading (read as usual: an unknown one is reported), and a question
+  // heading of this worksheet resumes reading. So nothing after it is left unread without a word.
+  const endsProvenance = (line) => {
     const heading = /^(#{2,3})[ \t]+(\S+)/.exec(line);
-    if (!heading) return false;
-    const id = heading[2].toUpperCase();
-    if (heading[1].length === 3) return asked.has(id);
-    return methodIds.has(id) || (section === 'own' && /^OWN-\d{2}$/.test(id));
+    if (heading) return heading[1].length === 2 || asked.has(heading[2].toUpperCase());
+    return /^<!--\s*arckit-provenance:end\s*-->$/.test(line.trim());
   };
   // Adds a line to a field's value. A comment in a value would be hidden once a document is
   // rendered, so the document would say something no reader could see: reported, value not used.
@@ -840,14 +860,18 @@ export function parseWorksheet(text, data) {
       continue;
     }
     if (provenance) {
-      if (!resumesAfterProvenance(line)) continue;
+      if (!endsProvenance(line)) continue;
       provenance = false;
+      if (line.trim().startsWith('<!--')) continue;
     }
     if (/^[ \t]/.test(line)) {
       const text = line.trim();
       const looks = FIELD.exec(text);
       if ((looks && FIELD_NAMES.has(looks[1].toLowerCase())) || /^#{1,6}[ \t]/.test(text)) {
         report(at, `a ${looks ? 'field' : 'heading'} must start at the beginning of the line: this indented line is not read`, block);
+        field = { lines: [] };
+      } else if (field?.empty) {
+        if (field.block) report(at, `this indented line follows an empty ${field.name}: line, so it is not read: a value starts on its field's own line, after the colon`, block);
         field = { lines: [] };
       } else if (field) {
         take(field, text, at);
@@ -941,7 +965,7 @@ export function parseWorksheet(text, data) {
     } else if (match) {
       const name = FIELD_NAMES.get(match[1].toLowerCase());
       const allowed = FIELDS_OF[block?.kind];
-      field = { line: at, lines: [], block: null };
+      field = { line: at, lines: [], block: null, name: match[1], empty: match[2].trim() === '' };
       if (!allowed) report(at, `${match[1]} is not read: a field belongs under a heading`);
       else if (!allowed.includes(name)) report(at, `${match[1]} is not a field of ${block.kind === 'entry' ? 'an own entry' : `a ${block.kind}`}: the fields are ${allowed.join(', ')}`, block);
       else if (block.fields.has(name)) report(at, `${name} is given twice in ${block.id}; only the first is read`, block);
@@ -989,8 +1013,10 @@ export function parseWorksheet(text, data) {
     }
     if (record.answer && record.state !== 'unanswered') {
       // A hint copied from the prompt into the answer, alone on a line, is not an answer.
-      const hints = [...HINT_TEXTS, ...(question.elseText ? [`${HINTS['yes-no-else']} ${question.elseText}`.toLowerCase()] : [])];
-      const read = record.answer.split('\n').some((line) => hints.includes(line.trim().replace(/\s+/g, ' ').toLowerCase()))
+      const plain = (text) => text.trim().replace(/\s+/g, ' ').replace(/\.+$/, '').toLowerCase();
+      const hints = [...HINT_TEXTS, ...(question.elseText ? [`${HINTS['yes-no-else']} ${question.elseText}`, question.elseText] : [])]
+        .map(plain);
+      const read = record.answer.split('\n').some((line) => hints.includes(plain(line)))
         ? { error: 'is the hint printed after the question, not an answer: write the business\'s own answer' }
         : readValue(question, record.answer);
       if (read.error) report(lineOf(b, 'Answer'), `${question.id}: Answer "${record.answer}" ${read.error}`, b);
