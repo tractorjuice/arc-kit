@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // UK food overlay helper. Standard library only.
 // Commands are entries in COMMANDS; each is one exported function returning an exit code.
+import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, realpathSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -515,12 +516,15 @@ const holdersOf = (block) => [
   ...(block.kind !== 'table' && Array.isArray(block.rows) ? block.rows.map((row) => ({ questions: row.questions ?? [], row })) : [])
 ];
 
+// The columns a question takes: a yes-no-else question with no printed follow-up takes two, its
+// tick column and the "if not" column beside it; any other takes one.
+const spanOf = (q) => (q.type === 'yes-no-else' && !q.elseText ? 2 : 1);
+
 // The printed column headings each question of a row or box sits under. The questions fill the
-// rightmost columns in order, after the point and its reason; a yes-no-else question with no
-// printed follow-up takes two, its tick column and the "if not" column beside it. Questions that
-// outnumber the columns are stacked in one column, so each sits under the last.
+// rightmost columns in order, after the point and its reason, each taking spanOf columns.
+// Questions that outnumber the columns are stacked in one column, so each sits under the last.
 function columnsFor(questions, columns) {
-  const widths = questions.map((q) => (q.type === 'yes-no-else' && !q.elseText ? 2 : 1));
+  const widths = questions.map(spanOf);
   const total = widths.reduce((sum, width) => sum + width, 0);
   if (total > columns.length) return widths.map((width) => columns.slice(-width));
   let at = columns.length - total;
@@ -1095,6 +1099,473 @@ export function parseWorksheet(text, data) {
 export const worksheetJson = (parsed) =>
   JSON.stringify(parsed, (_, value) => (value instanceof Map ? Object.fromEntries(value) : value), 2);
 
+// ---------------------------------------------------------------------------------------------
+// Documents: `render` writes a document body from the pack's text, read from the data, and a
+// business's confirmed answers; `check` proves that a body written into a document still equals a
+// fresh render; `reference` prints a section's pack text with no answers. Every word of the pack
+// that reaches a document comes from the data here: the helper adds only its own labels and lines.
+//
+// How a section document (FOODXC, FOODCLN, FOODCHL, FOODCOOK, FOODMGT) is laid out:
+// - "## " and the section's title, then its introduction, one paragraph per line of the data. A
+//   paragraph already printed is not printed again: each section's title page repeats its first.
+// - Each safe method under "### ", its identifier and title. A method that is not relevant shows
+//   only the not-relevant line. Any other shows its summary, its boxes in order and its variation
+//   line.
+// - A box heading is a line in bold above its box. The text of a box that asks nothing (think
+//   twice, prove it, text, and a CHECK IT box with no questions) is one paragraph per line.
+// - The rows of a points, manage it or check it box are a table, and so are a CHECK IT box's own
+//   questions, beside its text as on the page. The header row is the box's printed columns, after
+//   an empty cell for each cell the rows hold that the box prints no heading over (a MANAGE IT box
+//   prints none over its points). A row holds its point, its reason (when any row of the box has
+//   one), then its questions in the rightmost columns, each in a column of its own when there is
+//   room. Questions that print no text of their own may also use the point's column, as on page
+//   67, where "Additional checks" asks for one entry under each column. Otherwise the questions
+//   are stacked in the last column, an empty line apart, and a row that holds nothing but
+//   questions is printed one question to a row.
+// - A question shows its text, its option labels joined by " / " and its follow-up, one to a line,
+//   then the answer. A question that takes a tick column and an "if not" column (spanOf) shows
+//   its labels in the first and the answer in the second. A note is printed in place, with no
+//   answer. Nothing else is shown for a question: no identifier, no tick box.
+// - A table prints its columns, then its rows, then its questions as above. A column group's
+//   label is printed above the name of each column it spans, in that column's header cell. A
+//   table that prints no columns has an empty header row.
+// - A "what to do if things go wrong" box is a table of its two headings over their bullets,
+//   then its diary line.
+// - In a cell, "|" is escaped (any backslashes just before it are doubled, so they stay text) and
+//   a line break is <br>. In a line of the helper's that quotes a business's words, a line break
+//   is <br>. Nothing is cut, reordered or reworded.
+// profileChunks and ownChunks describe the FOODPROF and FOODOWN bodies. Every body ends with the
+// closing notice and the source line, between the UK-FOOD:BEGIN and UK-FOOD:END marker lines.
+// A body is built as chunks, each a list of lines, joined by an empty line.
+// ---------------------------------------------------------------------------------------------
+
+export const SECTION_DOCS = { FOODXC: 'XC', FOODCLN: 'CL', FOODCHL: 'CH', FOODCOOK: 'CK', FOODMGT: 'MG' };
+export const DOC_CODES = [...Object.keys(SECTION_DOCS), 'FOODPROF', 'FOODOWN'];
+export const UNANSWERED = '**NOT YET ANSWERED**';
+const END_MARKER = '<!-- UK-FOOD:END -->';
+const BEGIN_MARKER = /^<!-- UK-FOOD:BEGIN doc=(\S+) data=(\S+) answers=(\S+) -->$/;
+const beginMarker = (doc, hash) => `<!-- UK-FOOD:BEGIN doc=${doc} data=${DATA_ID} answers=${hash} -->`;
+// The worksheets in the order the answers hash takes them.
+const HASH_ORDER = ['profile', ...SECTION_IDS, 'own'];
+// The worksheets a document renders from, and those it cannot be rendered without. The profile
+// document says which section worksheets and own worksheet are missing; the others refuse.
+const sourcesOf = (doc) => {
+  if (doc === 'FOODPROF') return { uses: HASH_ORDER, needs: ['profile'] };
+  const own = SECTION_DOCS[doc] ?? 'own';
+  return { uses: ['profile', own], needs: ['profile', own] };
+};
+const OUTSIDE_COVERAGE = 'Safer food, better business applies to England and Wales. This business is outside that ' +
+  'coverage: Scotland and Northern Ireland have their own guidance.';
+const COVERED_NATIONS = ['England', 'Wales'];
+const NAME_QUESTION = PROFILE_QUESTIONS[0].id;
+const NATION_QUESTION = PROFILE_QUESTIONS.find((q) => q.type === 'nation').id;
+// The profile's last questions ask about the special processes and foods, in EXTRA_CARE's order.
+const EXTRA_CARE_NAMES = [...EXTRA_CARE.processes, ...EXTRA_CARE.foods];
+const EXTRA_CARE_ASKED = PROFILE_QUESTIONS.slice(-EXTRA_CARE_NAMES.length).map((q, i) => ({ id: q.id, name: EXTRA_CARE_NAMES[i] }));
+// The text box that names them; its first paragraph says what a business that does them must do.
+export const EXTRA_CARE_BOX = { method: 'CK-02', page: 53 };
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+  'November', 'December'];
+const STATUS_WORDS = { applies: 'applies', adapted: 'adapted', 'not-relevant': 'not relevant' };
+const KIND_WORDS = { additional: 'additional control', 'special-process': 'special process' };
+// An own entry's fields as the own methods document labels them. Supplied-text is quoted below.
+const OWN_ROWS = [['Kind', 'kind'], ['Hazard', 'hazard'], ['Control', 'control'], ['Limit', 'limit'],
+  ['Where the limit comes from', 'limitSource'], ['Check', 'check'], ['If it fails', 'ifItFails'],
+  ['Environmental health review', 'ehReview']];
+const CHECK_ADVICE = 'The text between the UK-FOOD markers is generated, so it is not changed there: to change what ' +
+  'it says, edit the worksheet and render the document again.';
+
+const inline = (text) => String(text).replace(/\n/g, '<br>');
+const cell = (text) => inline(String(text).replace(/(\\*)\|/g, (_, slashes) => `${slashes}${slashes}\\|`));
+const andList = (items) => (items.length < 2 ? items.join('') : `${items.slice(0, -1).join(', ')} and ${items.at(-1)}`);
+const longDate = (iso) => {
+  const [year, month, day] = iso.split('-').map(Number);
+  return `${day} ${MONTHS[month - 1]} ${year}`;
+};
+export const sourceLine = (source) => `Safety points, reasons and checks are quoted from the ${source.publisher}'s ` +
+  `${source.title}, retrieved ${longDate(source.retrieved)}. ${source.attribution} The ${source.publisher} has not ` +
+  'reviewed or endorsed this document.';
+const closingNotice = (name) => `This is ${name ? `${inline(name)}'s` : 'the business\'s'} own food safety record. It ` +
+  'is not legal advice. The food business operator is responsible for it, and the local council\'s environmental ' +
+  'health team is the authority on whether it is adequate.';
+// What a document prints for an answer: the answer itself only when the parser marks it answered.
+const answerOf = (record) => {
+  if (record?.answered) return `${record.answer} [answered by ${record.by}, ${record.on}]`;
+  if (record?.state === 'proposed') return `${UNANSWERED} (proposed from ${record.source}: \u201c${record.answer}\u201d)`;
+  return UNANSWERED;
+};
+
+const paragraphs = (text) => (text ? text.split('\n').filter((line) => line !== '').map((line) => [line]) : []);
+const tableLines = (header, rows) => {
+  const line = (cells) => `| ${cells.map(cell).join(' | ')} |`;
+  return [line(header), `|${' --- |'.repeat(header.length)}`, ...rows.map(line)];
+};
+// What the pack prints for a question: its text, the labels beside its tick boxes and its follow-up.
+const printedParts = (q) => [q.text, (q.options ?? []).join(' / '), q.elseText ?? ''].filter((part) => part !== '');
+
+// Where each question of a row goes: its first column and how many it takes. See the layout above.
+function placements(questions, { left, width }) {
+  const spans = questions.map(spanOf);
+  const total = spans.reduce((sum, span) => sum + span, 0);
+  const fits = total <= width - left || (total <= width && questions.every((q) => q.text === ''));
+  let at = width - total;
+  return { fits, places: spans.map((span) => (fits ? { at: (at += span) - span, span } : { at: width - 1, span: 1 })) };
+}
+
+// The cells of one row. `answer` gives what to print for a question, or null to print none.
+function rowCells(row, layout, answer) {
+  const cells = Array.from({ length: layout.width }, () => []);
+  if (row.point) cells[0].push(row.point);
+  if (row.why) cells[Number(layout.hasPoint)].push(row.why);
+  const questions = row.questions ?? [];
+  placements(questions, layout).places.forEach(({ at, span }, i) => {
+    const said = questions[i].type === 'note' ? null : answer(questions[i]);
+    const lines = [...printedParts(questions[i]), ...(said && span === 1 ? [said] : [])];
+    if (lines.length) cells[at].push(lines.join('\n'));
+    if (said && span === 2) cells[at + 1].push(said);
+  });
+  return cells.map((segments) => segments.join('\n\n'));
+}
+
+// The table rows of one row: one, or one for each question of a row of nothing but questions that
+// cannot each have a column.
+function tableRowsOf(row, layout, answer) {
+  const questions = row.questions ?? [];
+  if (layout.left > 0 || questions.length < 2 || placements(questions, layout).fits) return [rowCells(row, layout, answer)];
+  return questions.map((question) => rowCells({ point: null, why: null, questions: [question] }, layout, answer));
+}
+
+function rowTable(columns, rows, answer) {
+  const hasPoint = rows.some((row) => row.point != null);
+  const left = Number(hasPoint) + Number(rows.some((row) => row.why != null));
+  const asks = rows.some((row) => (row.questions ?? []).length > 0);
+  const layout = { hasPoint, left, width: Math.max(columns.length, left + Number(asks), 1) };
+  const header = [...Array(layout.width - columns.length).fill(''), ...columns];
+  return tableLines(header, rows.flatMap((row) => tableRowsOf(row, layout, answer)));
+}
+
+// A CHECK IT box: its text beside its own questions, or above its rows, or alone.
+function checkItChunks(block, answer) {
+  const rows = [...(block.rows ?? [])];
+  const asks = (block.questions ?? []).length > 0;
+  const textApart = Boolean(block.text) && (rows.length > 0 || !asks);
+  if (asks) rows.push({ point: textApart ? null : block.text ?? null, why: null, questions: block.questions });
+  return [...(textApart ? paragraphs(block.text) : []), ...(rows.length ? [rowTable(block.columns ?? [], rows, answer)] : [])];
+}
+
+function tableChunk(block, answer) {
+  const { columns, rows } = block;
+  const questions = block.questions ?? [];
+  const width = Math.max(columns.length, ...rows.map((row) => row.length), 1);
+  const groupOf = (i) => (block.columnGroups ?? []).find((group) => i >= group.from && i <= group.to);
+  const header = Array.from({ length: width }, (_, i) => {
+    const group = groupOf(i);
+    return group ? `${group.label}\n${columns[i]}` : columns[i] ?? '';
+  });
+  const asked = questions.length ? tableRowsOf({ point: null, why: null, questions }, { hasPoint: false, left: 0, width }, answer) : [];
+  return tableLines(header, [...rows.map((row) => [...row, ...Array(width - row.length).fill('')]), ...asked]);
+}
+
+function wrongChunks(block) {
+  const sides = [[block.wrongHeading, block.wrong], [block.preventHeading, block.prevent]]
+    .filter(([heading, bullets]) => heading != null || bullets.length > 0);
+  return [tableLines(sides.map(([heading]) => heading ?? ''), [sides.map(([, bullets]) => bullets.join('\n'))]),
+    ...paragraphs(block.diaryNote)];
+}
+
+function blockChunks(block, answer) {
+  const heading = block.heading ? [[`**${block.heading}**`]] : [];
+  if (block.kind === 'points' || block.kind === 'manage-it') return [...heading, rowTable(block.columns ?? [], block.rows, answer)];
+  if (block.kind === 'check-it') return [...heading, ...checkItChunks(block, answer)];
+  if (block.kind === 'table') return [...heading, tableChunk(block, answer)];
+  if (block.kind === 'wrong') return [...heading, ...wrongChunks(block)];
+  return [...heading, ...paragraphs(block.text)];
+}
+
+// A safe method. `view.method` gives the business's record of it (null in the reference, which
+// prints no status and no variation line); `view.answer` what to print for a question.
+function methodChunks(method, view) {
+  const heading = [`### ${method.id} ${method.title}`];
+  const record = view.method(method.id);
+  if (record?.status === 'not-relevant') {
+    return [heading, [`Not relevant to this business: ${inline(record.reason)} (decided by ${inline(record.decidedBy)}).`]];
+  }
+  const chunks = [heading, ...paragraphs(method.summary), ...method.blocks.flatMap((block) => blockChunks(block, view.answer))];
+  if (!record) return chunks;
+  return [...chunks, [record.status === 'adapted'
+    ? `Our variation: ${inline(record.variation)} Reason: ${inline(record.reason)} Shown to be safe by: ${inline(record.provedSafe)}`
+    : 'Our variation: none']];
+}
+
+function sectionChunks(file, view) {
+  const intro = [...new Set(file.section.intro.map((item) => item.text))];
+  return [[`## ${file.section.title}`], ...intro.flatMap(paragraphs), ...file.methods.flatMap((method) => methodChunks(method, view))];
+}
+
+const sectionView = (parsed) => ({
+  method: (id) => parsed.methods.get(id) ?? null,
+  answer: (question) => answerOf(parsed.answers.get(question.id))
+});
+const REFERENCE_VIEW = { method: () => null, answer: () => null };
+
+// The profile document: the business's answers about itself, each safe method's status from the
+// section worksheets, the special processes and foods it has said it does with the pack's own
+// paragraph about them, and its own methods. When its nation is confirmed and is neither England
+// nor Wales, it opens by saying the business is outside the pack's coverage.
+function profileChunks(sources, data) {
+  const profile = sources.get('profile').parsed;
+  const nation = profile.answers.get(NATION_QUESTION);
+  return [
+    ...(nation?.answered && !COVERED_NATIONS.includes(nation.value) ? [[OUTSIDE_COVERAGE]] : []),
+    ['## The business'],
+    tableLines(['Question', 'Answer'], PROFILE_QUESTIONS.map((q) => [q.text, answerOf(profile.answers.get(q.id))])),
+    ...methodStatusChunks(sources, data),
+    ...extraCareChunks(profile, data),
+    ['## The business\'s own methods'],
+    ...ownListChunks(sources.get('own')?.parsed)
+  ];
+}
+
+function methodStatusChunks(sources, data) {
+  const missing = SECTION_IDS.filter((id) => data.sections.has(id) && !sources.has(id));
+  const one = missing.length === 1;
+  const names = missing.map((id) => `${sentenceCase(data.sections.get(id).section.title)} (${id})`);
+  const rows = [...data.sections].flatMap(([id, file]) => file.methods.map((method) => {
+    const record = sources.get(id)?.parsed.methods.get(method.id);
+    return [method.id, method.title, record ? STATUS_WORDS[record.status] : 'not yet started',
+      record && record.status !== 'applies' ? record.reason : '', record?.status === 'not-relevant' ? record.decidedBy : ''];
+  }));
+  return [
+    ['## Safe methods'],
+    ...(missing.length ? [[`The worksheet${one ? '' : 's'} for ${andList(names)} ${one ? 'has' : 'have'} not been started ` +
+      `yet, so ${one ? 'its' : 'their'} safe methods show as not yet started.`]] : []),
+    tableLines(['Safe method', 'Title', 'Status', 'Reason', 'Decided by'], rows)
+  ];
+}
+
+function extraCareChunks(profile, data) {
+  const heading = ['## Special processes and foods that need extra care'];
+  const done = EXTRA_CARE_ASKED.filter(({ id }) => profile.answers.get(id)?.answered && profile.answers.get(id).value === 'yes');
+  if (!done.length) {
+    return [heading, ['The business has not confirmed that it does any of the special processes or makes or serves any ' +
+      'of the foods that need extra care. Its answers are in the first table.']];
+  }
+  const box = data.sections.get('CK').methods.find((method) => method.id === EXTRA_CARE_BOX.method).blocks
+    .find((block) => block.kind === 'text' && block.page === EXTRA_CARE_BOX.page);
+  return [heading, ['The business has confirmed that it does these, which the pack says need extra care:'],
+    done.map(({ name }) => `- ${name}`),
+    [`What the pack says about each of them (${EXTRA_CARE_BOX.method}, page ${EXTRA_CARE_BOX.page}):`],
+    [`> ${box.text.split('\n')[0]}`]];
+}
+
+const notConfirmed = (entries) => {
+  const ids = entries.filter((entry) => !entry.answered).map((entry) => entry.id);
+  return ids.length ? [[`Not yet confirmed, so not shown: ${andList(ids)}.`]] : [];
+};
+const NO_OWN = 'The business has not confirmed any methods of its own.';
+
+function ownListChunks(own) {
+  if (!own) return [['The worksheet for the business\'s own methods has not been started yet.']];
+  const entries = [...own.entries.values()];
+  const confirmed = entries.filter((entry) => entry.answered);
+  const rows = confirmed.map((entry) => [`${entry.id} ${entry.title}`, KIND_WORDS[entry.kind], entry.ehReview]);
+  return [confirmed.length ? tableLines(['Own method', 'Kind', 'Environmental health review'], rows) : [NO_OWN],
+    ...notConfirmed(entries)];
+}
+
+// The own methods document: each confirmed own entry under its heading, its filled-in fields as a
+// table, and any text the business supplied quoted exactly. An entry not confirmed is named only.
+function ownChunks(sources) {
+  const entries = [...sources.get('own').parsed.entries.values()];
+  const confirmed = entries.filter((entry) => entry.answered);
+  return [['## The business\'s own methods'], ...(confirmed.length ? confirmed.flatMap(ownEntryChunks) : [[NO_OWN]]),
+    ...notConfirmed(entries)];
+}
+
+function ownEntryChunks(entry) {
+  const rows = OWN_ROWS.filter(([, field]) => entry[field] !== '')
+    .map(([label, field]) => [label, field === 'kind' ? KIND_WORDS[entry.kind] : entry[field]]);
+  const chunks = [[`### ${entry.id} ${entry.title} (this business's own method, not Food Standards Agency wording)`],
+    tableLines(['Field', 'Value'], [...rows, ['Agreed by', `${entry.by}, ${entry.on}`]])];
+  if (!entry.suppliedText) return chunks;
+  return [...chunks, ['The text below is the business\'s own, and this tool did not write or check it.'],
+    entry.suppliedText.split('\n').flatMap((line, i) => (i ? ['>', `> ${line}`] : [`> ${line}`]))];
+}
+
+// Reads and parses the worksheets a document renders from, and hashes them in HASH_ORDER. Returns
+// { sources, hash }, or { exit, messages }: 2 for a missing or wrong worksheet, 1 for problems.
+function readSources(doc, project, data) {
+  const { uses, needs } = sourcesOf(doc);
+  const sources = new Map();
+  const hash = createHash('sha256');
+  const refused = [];
+  const problems = [];
+  for (const section of HASH_ORDER.filter((name) => uses.includes(name))) {
+    const file = join(project, 'food-safety', `answers-${section}.md`);
+    if (!existsSync(file)) {
+      if (needs.includes(section)) {
+        refused.push(`${file} does not exist: make it with "uk-food.mjs worksheet --section ${section}", then fill it in`);
+      }
+      continue;
+    }
+    let bytes;
+    try {
+      bytes = readFileSync(file);
+    } catch (error) {
+      refused.push(`cannot read ${file}: ${error.message}`);
+      continue;
+    }
+    hash.update(bytes);
+    const parsed = parseWorksheet(bytes.toString('utf8'), data);
+    if (parsed.data !== null && parsed.data !== DATA_ID) {
+      refused.push(`${file}: this worksheet answers data ${parsed.data}, but the helper's data is ${DATA_ID}`);
+    } else if (parsed.section !== null && parsed.section !== section) {
+      refused.push(`${file} is the ${parsed.section} worksheet, not the ${section} one`);
+    } else {
+      problems.push(...parsed.problems.map(({ line, message }) => `${file}:${line}: ${message}`));
+    }
+    sources.set(section, { file, parsed });
+  }
+  if (refused.length) return { exit: 2, messages: refused };
+  if (problems.length) return { exit: 1, messages: problems };
+  return { sources, hash: hash.digest('hex') };
+}
+
+// Renders a document's body from the worksheets in `project`/food-safety. Returns { exit: 0, text }
+// or { exit, messages }; nothing is rendered from a worksheet the parser could not read cleanly.
+export function renderDocument(doc, project, data) {
+  if (!DOC_CODES.includes(doc)) return { exit: 2, messages: [`--doc is one of ${DOC_CODES.join(', ')}`] };
+  const section = SECTION_DOCS[doc];
+  // The profile quotes the special-processes paragraph from CK.json.
+  const dataNeeded = section ?? (doc === 'FOODPROF' ? 'CK' : null);
+  if (dataNeeded && !data.sections.has(dataNeeded)) return { exit: 2, messages: [`the data has no ${dataNeeded}.json`] };
+  const read = readSources(doc, project, data);
+  if (read.exit) return read;
+  let body;
+  if (section) body = sectionChunks(data.sections.get(section), sectionView(read.sources.get(section).parsed));
+  else body = doc === 'FOODPROF' ? profileChunks(read.sources, data) : ownChunks(read.sources);
+  const name = read.sources.get('profile').parsed.answers.get(NAME_QUESTION);
+  const chunks = [...body, [closingNotice(name?.answered ? name.answer : null)], [sourceLine(data.source)]];
+  return { exit: 0, text: [beginMarker(doc, read.hash), ...chunks.map((chunk) => chunk.join('\n')), END_MARKER].join('\n\n') };
+}
+
+// Finds the one rendered body in a document's lines: { begin, end, marker } (1-based line numbers),
+// or { line, problem }, where line is null when the problem has no line of its own.
+function findBody(lines, doc) {
+  const at = (name) => lines.flatMap((line, i) => (line.startsWith(`<!-- UK-FOOD:${name}`) ? [i + 1] : []));
+  const [begins, ends] = [at('BEGIN'), at('END')];
+  for (const [name, found] of [['BEGIN', begins], ['END', ends]]) {
+    if (found.length === 0) return { line: null, problem: `there is no UK-FOOD:${name} marker line, so there is no rendered body to check` };
+    if (found.length > 1) return { line: found[1], problem: `there is more than one UK-FOOD:${name} marker line; a document holds one rendered body` };
+  }
+  const [begin, end] = [begins[0], ends[0]];
+  const marker = BEGIN_MARKER.exec(lines[begin - 1]);
+  if (end < begin) return { line: end, problem: 'the UK-FOOD:END marker line comes before the UK-FOOD:BEGIN marker line' };
+  if (!marker || lines[end - 1] !== END_MARKER) {
+    return { line: marker ? end : begin, problem: 'this marker line is not understood: render the document and copy its output whole' };
+  }
+  if (marker[1] !== doc) return { line: begin, problem: `the rendered body is doc=${marker[1]}, not ${doc}` };
+  if (marker[2] !== DATA_ID) {
+    return { line: begin, problem: `the rendered body is from data ${marker[2]}, but the helper's data is ${DATA_ID}: render it again` };
+  }
+  return { begin, end, marker };
+}
+
+// Checks that the body between the markers of the document in `report` equals a fresh render, line
+// by line. Returns { exit, ok, line, expected, found, message }, or { exit, messages } when there is
+// nothing to compare. A file saved with Windows line endings reads as the same text: each CRLF is
+// read as LF before comparing, which keeps every line number. Text outside the markers is not read.
+export function checkDocument(doc, project, report, data) {
+  let text;
+  try {
+    text = readFileSync(report, 'utf8');
+  } catch (error) {
+    return { exit: 2, messages: [`cannot read ${report}: ${error.message}`] };
+  }
+  const lines = text.replace(/\r\n/g, '\n').split('\n');
+  const body = findBody(lines, doc);
+  if (body.problem) {
+    return { exit: 1, ok: false, line: body.line, message: `${report}:${body.line ? `${body.line}:` : ''} ${body.problem}` };
+  }
+  const fresh = renderDocument(doc, project, data);
+  if (fresh.exit) return fresh;
+  const expected = fresh.text.split('\n');
+  const region = lines.slice(body.begin - 1, body.end);
+  const index = expected.findIndex((line, i) => region[i] !== line);
+  if (index < 0 && region.length === expected.length) {
+    return { exit: 0, ok: true, message: `${report}: the rendered body of ${doc} matches a fresh render` };
+  }
+  const at = index < 0 ? Math.min(region.length, expected.length) : index;
+  const line = body.begin + at;
+  const stale = at === 0 && body.marker[3] !== BEGIN_MARKER.exec(expected[0])[3];
+  const what = stale
+    ? 'the worksheets have changed since this body was rendered: render the document again.'
+    : `this line is not what a fresh render of ${doc} gives.`;
+  return {
+    exit: 1, ok: false, line, expected: expected[at] ?? '', found: region[at] ?? '',
+    message: `${report}:${line}: ${what}\n  expected: ${expected[at] ?? ''}\n  found:    ${region[at] ?? ''}\n${CHECK_ADVICE}`
+  };
+}
+
+// A section's pack text as readable Markdown, opening with the source line: the section document's
+// layout with no answers, no status and no variation lines.
+export function referenceText(section, data) {
+  const chunks = [[sourceLine(data.source)], ...sectionChunks(data.sections.get(section), REFERENCE_VIEW)];
+  return chunks.map((chunk) => chunk.join('\n')).join('\n\n');
+}
+
+// Prints a result that is not a success: an input error with the usage, a refusal on its own.
+function failure(io, result) {
+  if (result.exit === 2) return usageError(io, result.messages.join('\n'));
+  for (const message of result.messages) io.err(message);
+  return result.exit;
+}
+
+// The options render and check share: --doc, --project and --data, checked, with the data loaded.
+function documentOptions(args, valued, flags = []) {
+  const { options, error } = readOptions(args, ['doc', 'project', 'data', ...valued], flags);
+  if (error) return { error };
+  if (!DOC_CODES.includes(options.doc)) return { error: `--doc is one of ${DOC_CODES.join(', ')}` };
+  if (!options.project) return { error: '--project names the project folder that holds food-safety/' };
+  const { data, error: dataError } = loadValidData(options.data ?? DEFAULT_DATA_DIR);
+  return dataError ? { error: dataError } : { options, data };
+}
+
+export function renderCommand(args, io = { out: console.log, err: console.error }) {
+  const { options, data, error } = documentOptions(args, []);
+  if (error) return usageError(io, error);
+  const result = renderDocument(options.doc, options.project, data);
+  if (result.exit) return failure(io, result);
+  io.out(result.text);
+  return 0;
+}
+
+export function checkCommand(args, io = { out: console.log, err: console.error }) {
+  const { options, data, error } = documentOptions(args, ['report'], ['json']);
+  if (error) return usageError(io, error);
+  if (!options.report) return usageError(io, 'check needs --report: the document to check');
+  const result = checkDocument(options.doc, options.project, options.report, data);
+  if (options.json) {
+    io.out(JSON.stringify({ doc: options.doc, report: options.report, ok: result.exit === 0, ...result }, null, 2));
+    return result.exit;
+  }
+  if (result.messages) return failure(io, result);
+  io.out(result.message);
+  return result.exit;
+}
+
+export function referenceCommand(args, io = { out: console.log, err: console.error }) {
+  const { options, error } = readOptions(args, ['section', 'data']);
+  if (error) return usageError(io, error);
+  if (!SECTION_IDS.includes(options.section)) return usageError(io, `--section is one of ${SECTION_IDS.join(', ')}`);
+  const dir = options.data ?? DEFAULT_DATA_DIR;
+  const { data, error: dataError } = loadValidData(dir);
+  if (dataError) return usageError(io, dataError);
+  if (!data.sections.has(options.section)) return usageError(io, `the data in ${dir} has no ${options.section}.json`);
+  io.out(referenceText(options.section, data));
+  return 0;
+}
+
 const USAGE = `usage: uk-food.mjs <command> [options]
 
 commands:
@@ -1104,6 +1575,15 @@ commands:
   parse-worksheet --file FILE [--data DIR] [--json]  check a worksheet: print its problems (or, with
                                                      --json, what was read); exit 0 with no problems,
                                                      1 with problems
+  render --doc DOC --project DIR [--data DIR]        print a document's body, from the worksheets in
+                                                     DIR/food-safety; DOC is one of FOODXC, FOODCLN,
+                                                     FOODCHL, FOODCOOK, FOODMGT, FOODPROF, FOODOWN;
+                                                     exit 1, printing nothing, when a worksheet has
+                                                     problems
+  check --doc DOC --project DIR --report FILE        exit 0 when the body between the UK-FOOD markers
+        [--data DIR] [--json]                        in FILE equals a fresh render, 1 when it does not
+  reference --section SECTION [--data DIR]           print a section's text from the pack, with no
+                                                     answers; SECTION is one of XC, CL, CH, CK, MG
 `;
 
 export function validateDataCommand(args, io = { out: console.log, err: console.error }) {
@@ -1189,11 +1669,14 @@ export function parseWorksheetCommand(args, io = { out: console.log, err: consol
   return parsed.problems.length ? 1 : 0;
 }
 
-// Later tasks add render, check, reference, status and sign-off here.
+// Later tasks add status and sign-off here.
 export const COMMANDS = {
   'validate-data': validateDataCommand,
   worksheet: worksheetCommand,
-  'parse-worksheet': parseWorksheetCommand
+  'parse-worksheet': parseWorksheetCommand,
+  render: renderCommand,
+  check: checkCommand,
+  reference: referenceCommand
 };
 
 export function main(argv, io = { out: console.log, err: console.error }) {
