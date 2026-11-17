@@ -1,0 +1,95 @@
+"""Shared helpers for comparing the UK food overlay's data with the pack's text layer.
+
+Used by tests/plugin/test_uk_food_data.py and scripts/uk-food/compare-reading.py.
+"""
+import re
+from collections import Counter
+from typing import Iterator
+
+# Keys whose values are identifiers or structure, never words printed on a page.
+# Every other string anywhere inside an element is page text. `section` is
+# excluded only when it is an identifier string (a section file's own `section`
+# is an object whose intro items are page text).
+NOT_PAGE_TEXT = {"id", "kind", "type", "schema", "data", "code", "section", "page", "pages", "fromImage"}
+
+
+def _is_page_text_key(key: str, value) -> bool:
+    if key == "section":
+        return not isinstance(value, str)
+    return key not in NOT_PAGE_TEXT
+
+_EDGE = re.compile(r"^[^\w°]+|[^\w°]+$")
+_TRANSLATE = str.maketrans({"’": "'", "‘": "'", "–": "-", "—": "-"})
+
+
+def normalise(word: str) -> str:
+    """Lower-case, straighten curly quotes and dashes, trim non-word edges.
+
+    Nothing else: no Unicode folding, because the pack prints both 120⁰C and
+    63°C and a digit must never be normalised away.
+    """
+    return _EDGE.sub("", word.lower().translate(_TRANSLATE))
+
+
+def words_of(text: str) -> list[str]:
+    """Normalised words of a string, dropping any that normalise to nothing."""
+    return [w for w in (normalise(t) for t in text.split()) if w]
+
+
+def strings_of(node, page=None, method=None) -> Iterator[tuple[int | None, str, str | None]]:
+    """Yield (page, string, method id) for every page-text string in a data file.
+
+    A dict's own `page` applies to its strings; a dict with `pages` and no
+    `page` (a method) uses its first page; anything else inherits the page of
+    its parent. Strings with no page in context are not yielded. Elements with
+    "fromImage": true are left out.
+    """
+    if isinstance(node, str):
+        if page is not None:
+            yield page, node, method
+    elif isinstance(node, list):
+        for item in node:
+            yield from strings_of(item, page, method)
+    elif isinstance(node, dict):
+        if node.get("fromImage") is True:
+            return
+        if isinstance(node.get("page"), int):
+            page = node["page"]
+        elif isinstance(node.get("pages"), list) and node["pages"]:
+            page = node["pages"][0]
+        if "methods" not in node and isinstance(node.get("id"), str) and "pages" in node:
+            method = node["id"]
+        for key, value in node.items():
+            if _is_page_text_key(key, value):
+                yield from strings_of(value, page, method)
+
+
+def declared_pages(node) -> set[int]:
+    """Every page number a data file declares, in `page` and `pages` keys."""
+    found: set[int] = set()
+    if isinstance(node, list):
+        for item in node:
+            found |= declared_pages(item)
+    elif isinstance(node, dict):
+        if node.get("fromImage") is True:
+            return found
+        if isinstance(node.get("page"), int):
+            found.add(node["page"])
+        if isinstance(node.get("pages"), list):
+            found |= {p for p in node["pages"] if isinstance(p, int)}
+        for key, value in node.items():
+            if _is_page_text_key(key, value):
+                found |= declared_pages(value)
+    return found
+
+
+def string_key(text: str) -> str:
+    """A string's normalised words joined by single spaces, for matching lines."""
+    return " ".join(words_of(text))
+
+
+def word_counter(strings: Iterator[str]) -> Counter:
+    counter: Counter = Counter()
+    for text in strings:
+        counter.update(words_of(text))
+    return counter
